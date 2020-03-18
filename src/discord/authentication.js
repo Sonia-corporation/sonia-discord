@@ -1,38 +1,38 @@
-const DiscordModule = require('discord.js');
 const LoggerModule = require('../logger/logger');
 const chalk = require('../logger/chalk');
+const DiscordClientModule = require('./client');
+const DiscordBotModule = require('./bot');
 
 class DiscordAuthentication {
-  logger;
-  client;
+  constructor() {
+    this._logger = new LoggerModule.Logger().getInstance();
+    this._client = new DiscordClientModule.Client().getInstance().getClient();
+    this._bot = new DiscordBotModule.Bot().getInstance();
 
-  constructor(environment) {
-    this.logger = new LoggerModule.logger().getInstance();
-    this.client = new DiscordModule.Client();
-
-    this.init(environment);
+    this._init();
   }
 
-  init(environment) {
+  _init() {
     this._listen();
-    this._login(environment);
+    this._login();
   }
 
   _listen() {
-    this.client.on('ready', () => {
-      this.logger.log('DiscordAuthentication', chalk.white(`authenticated as: ${chalk.cyan(`"${this.client.user.tag}`)}"`));
+    this._client.on('ready', () => {
+      this._logger.log(this.constructor.name, chalk.white(`authenticated as: ${chalk.cyan(`"${this._client.user.tag}`)}"`));
     });
   }
 
-  _login(environment) {
-    this.client.login(environment.discord.botSecretToken).then(() => {
-      this.logger.debug('DiscordAuthentication', chalk.white(`authentication successful`));
-    }).catch(() => {
-      this.logger.error('DiscordAuthentication', chalk.white(`authentication failed`));
+  _login() {
+    this._client.login(this._bot.getSecretToken()).then(() => {
+      this._logger.debug(this.constructor.name, chalk.white(`authentication successful`));
+    }).catch((error) => {
+      this._logger.error(this.constructor.name, chalk.white(`authentication failed`));
+      this._logger.error(this.constructor.name, chalk.red(error));
     });
 
-    this.logger.debug('DiscordAuthentication', chalk.white(`authenticating...`));
+    this._logger.debug(this.constructor.name, chalk.white(`authenticating...`));
   }
 }
 
-module.exports.authentication = DiscordAuthentication;
+module.exports.Authentication = DiscordAuthentication;

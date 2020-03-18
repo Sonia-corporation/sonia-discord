@@ -1,8 +1,0 @@
-{
-  "discord": {
-    "botSecretToken": "Njg5ODI5Nzc1MzE3MTM5NDYw.XnIw6A.LzZFt5prcS-QEWQXFjIzbrBWfGc"
-  },
-  "logger": {
-    "level": "debug"
-  }
-}

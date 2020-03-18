@@ -1,22 +1,38 @@
 const DiscordAuthenticationModule = require('./authentication');
+const DiscordGuildModule = require('./guild');
+const DiscordMessageModule = require('./message');
+const DiscordBotModule = require('./bot');
 const LoggerModule = require('../logger/logger');
 
 class Discord {
-  logger;
-
   constructor(environment) {
-    this.logger = new LoggerModule.logger().getInstance();
+    this._logger = new LoggerModule.Logger().getInstance();
 
-    this.main(environment);
+    this._init(environment);
   }
 
-  main(environment) {
-    this.authenticate(environment);
+  _init(environment) {
+    this._bot(environment.discord);
+    this._authenticate();
+    // this._handleGuilds();
+    this._handleMessages();
   }
 
-  authenticate(environment) {
-    new DiscordAuthenticationModule.authentication(environment);
+  _bot(discord) {
+    new DiscordBotModule.Bot(discord).getInstance();
+  }
+
+  _authenticate() {
+    new DiscordAuthenticationModule.Authentication();
+  }
+
+  _handleGuilds() {
+    new DiscordGuildModule.Guild();
+  }
+
+  _handleMessages() {
+    new DiscordMessageModule.Message();
   }
 }
 
-module.exports.discord = Discord;
+module.exports.Discord = Discord;

@@ -29,6 +29,7 @@
     "discord-bot",
     "sonia"
   ],
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/C0ZEN/sonia-il-est-midi.git"
@@ -46,22 +47,26 @@
     "access": "public"
   },
   "private": false,
-  "bin": {
-    "create-discord-bot": "./src/index.js"
-  },
+  "main": "./src/index.ts",
   "scripts": {
-    "start": "node ./src/index.js",
+    "start": "ts-node-dev --respawn --transpileOnly .",
     "cz": "git add . && git-cz && git push-upstream",
     "semver": "npx semantic-release",
-    "commitmsg": "cz-customizable-ghooks"
+    "commitmsg": "cz-customizable-ghooks",
+    "lint": "eslint . --fix",
+    "tsc": "tsc",
+    "prod": "npm run tsc && node ./dist/index.js"
   },
   "dependencies": {
     "discord.js": "12.0.2",
-    "lodash": "4.17.15"
+    "express": "4.17.1",
+    "lodash": "4.17.15",
+    "moment": "2.24.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "5.0.0",
     "@semantic-release/git": "9.0.0",
+    "@types/express": "4.17.3",
     "@types/fs-extra": "8.1.0",
     "@types/lodash": "4.14.149",
     "@types/node": "12.11.1",
@@ -69,8 +74,14 @@
     "commitizen": "4.0.3",
     "cz-customizable": "6.2.0",
     "cz-customizable-ghooks": "1.5.0",
+    "eslint": "6.8.0",
+    "eslint-config-google": "0.14.0",
+    "eslint-config-recommended": "4.0.0",
     "fs-extra": "8.1.0",
     "husky": "4.2.3",
-    "semantic-release": "17.0.4"
+    "semantic-release": "17.0.4",
+    "ts-node-dev": "1.0.0-pre.44",
+    "tsconfig-paths": "3.9.0",
+    "typescript": "3.8.3"
   }
 }
