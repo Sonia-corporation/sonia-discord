@@ -56,14 +56,20 @@
     "commitmsg": "cz-customizable-ghooks"
   },
   "dependencies": {
-    "discord.js": "12.0.2"
+    "discord.js": "12.0.2",
+    "lodash": "4.17.15"
   },
   "devDependencies": {
     "@semantic-release/changelog": "5.0.0",
     "@semantic-release/git": "9.0.0",
+    "@types/fs-extra": "8.1.0",
+    "@types/lodash": "4.14.149",
+    "@types/node": "12.11.1",
+    "chalk": "3.0.0",
     "commitizen": "4.0.3",
     "cz-customizable": "6.2.0",
     "cz-customizable-ghooks": "1.5.0",
+    "fs-extra": "8.1.0",
     "husky": "4.2.3",
     "semantic-release": "17.0.4"
   }

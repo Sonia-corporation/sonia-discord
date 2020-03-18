@@ -1,13 +1,10 @@
-#!/usr/bin/env node
+const fs = require('fs-extra');
+const DiscordModule = require('./discord/main');
+const LoggerModule = require('./logger/logger');
 
-const { Client } = require('discord.js');
-const { token } = require('./config');
-
-const client = new Client();
-
-require('./core/loadWidgetListeners')(client);
-
-client.login(token).catch(error => {
-  console.error(error);
-  process.exit(1);
+fs.readJson('./environment.json').then((environment) => {
+  new LoggerModule.logger(environment.logger).getInstance();
+  new DiscordModule.discord(environment);
+}).catch(() => {
+  console.error('Failed to read the environment');
 });
