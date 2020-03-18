@@ -1,87 +1,35 @@
-# Create Discord Bot
+# Sonia il est midi
 
-Create Discord bots using a simple widget-based framework.
+> *Dark Heresy application for the role-playing game*
 
-## Bot Setup
+[![Downloads](https://img.shields.io/npm/dt/@dark-heresy/front-end.svg?style=flat-square)]()
+[![Build Status](https://travis-ci.com/Dark-Heresy/front-end.svg?branch=develop&style=flat-square)](https://travis-ci.com/Dark-Heresy/front-end)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
+[![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
+[![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]()
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
+[![Maintainability](https://api.codeclimate.com/v1/badges/db32cd18a29bb54553e4/maintainability?style=flat-square)](https://codeclimate.com/github/Dark-Heresy/front-end/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/db32cd18a29bb54553e4/test_coverage?style=flat-square)](https://codeclimate.com/github/Dark-Heresy/front-end/test_coverage)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/474fece6-33b0-4472-8c2f-25cbb4493ecb/deploy-status)](https://app.netlify.com/sites/dark-heresy/deploys)
+[![Coverage Status](https://coveralls.io/repos/github/Dark-Heresy/front-end/badge.svg?branch=develop)](https://coveralls.io/github/Dark-Heresy/front-end?branch=develop)
+[![spectator](https://img.shields.io/badge/tested%20with-spectator-2196F3.svg?style=flat-square)]()
 
-### Create Bot
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
 
-1. Go to Discord's [Developer Portal](https://discordapp.com/developers/applications/).
-2. Create a new application.
-3. Add a bot user to your app.
-4. Find your bot token, you will need this in the next section.
+## Contributing
 
-> Keep this token and any file containing it **private**! If your token ever leaks or you suspect it may have leaked, simply `regenerate` a new token to invalidate your compromised token.
+Check out the [Contributing](CONTRIBUTING.md) file before helping us.
 
-5. Invite your bot to a server using: [https://discordapp.com/oauth2/authorize?scope=bot&client_id=COPY_PASTE_YOUR_DISCORD_BOT_CLIENT_ID_HERE](https://discordapp.com/oauth2/authorize?scope=bot&client_id=COPY_PASTE_YOUR_DISCORD_BOT_CLIENT_ID_HERE)
+## License
 
-> A Discord bot's client ID is not the same as its token!
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
-### Get Bot
+## Contributors 
 
-1. `git clone https://github.com/peterthehan/create-discord-bot.git` to download the project.
-2. `cd create-discord-bot/` to navigate into the project.
-3. `npm install` to install project dependencies.
-4. Rename [example.token.json](https://github.com/peterthehan/create-discord-bot/blob/master/example.token.json) to `token.json`.
-5. Open the file and add the bot token found in the previous section:
+Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
-```js
-{
-  "TOKEN": "COPY_PASTE_YOUR_DISCORD_BOT_TOKEN_HERE"
-}
-```
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
-### Run Bot
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
 
-1. `npm start` to start the bot.
-
-> The bot should go from offline to online. Verify the bot is working by using the [ping](https://github.com/peterthehan/create-discord-bot/blob/master/src/widgets/command/commands/ping.js) command.
-
-> The default command prefix is `.`. You can configure the [command](https://github.com/peterthehan/create-discord-bot/blob/master/src/widgets/command/) widget's settings in [src/widgets/command/config.js](https://github.com/peterthehan/create-discord-bot/blob/master/src/widgets/command/config.js).
-
-🎉 You're ready to create your own widgets! 🎉
-
-## Widgets Setup
-
-### Design
-
-`create-discord-bot` comes with a [command](https://github.com/peterthehan/create-discord-bot/blob/master/src/widgets/command/) widget. Simply follow the design of the [ping](https://github.com/peterthehan/create-discord-bot/blob/master/src/widgets/command/commands/ping.js) command to start building your own commands.
-
-Each widget **must** live under the [src/widgets](https://github.com/peterthehan/create-discord-bot/blob/master/src/widgets/) folder and **must** have a `handlers` folder containing **only** event handler files. In other words, a file tree diagram of these requirements would look like:
-
-```
-widgets
-├───widget1
-│   ├───handlers
-|   |   ├───eventHandler1.js*
-|   |   ├───eventHandler2.js
-|   |   └───other event handlers
-├───widget2
-│   ├───handlers
-|   |   ├───eventHandler1.js
-|   |   ├───eventHandler2.js
-|   |   └───other event handlers
-```
-
-> \*: All event handler files must be named exactly the same as the emitted events found on the [Client](https://discord.js.org/#/docs/main/master/class/Client) page.
-
-<div align="center">
-  <img src="https://raw.githubusercontent.com/peterthehan/create-discord-bot/master/assets/diagram.png" />
-</div>
-
-### Examples
-
-The following widgets can be used by this framework by moving them into the [src/widgets](https://github.com/peterthehan/create-discord-bot/blob/master/src/widgets/) folder:
-
-- https://github.com/peterthehan/discord-active-role-bot
-- https://github.com/peterthehan/discord-audit-log-bot
-- https://github.com/peterthehan/discord-birthday-role-bot
-- https://github.com/peterthehan/discord-emoji-log-bot
-- https://github.com/peterthehan/discord-reaction-role-bot
-- https://github.com/peterthehan/discord-region-role-bot
-
-Visit for more help or information!
-
-<a href="https://discord.gg/WjEFnzC">
-  <img src="https://discordapp.com/api/guilds/258167954913361930/embed.png?style=banner2" title="Discord Server"/>
-</a>

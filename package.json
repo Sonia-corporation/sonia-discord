@@ -1,37 +1,70 @@
 {
-  "name": "create-discord-bot",
-  "version": "2.0.0",
-  "description": "Create Discord bots using a simple widget-based framework.",
+  "name": "sonia-il-est-midi",
+  "version": "1.0.0",
+  "author": {
+    "email": "geoffrey.testelin@gmail.com",
+    "name": "Geoffrey 'C0ZEN' Testelin",
+    "url": "https://github.com/C0ZEN"
+  },
+  "contributors": [
+    {
+      "email": "geoffrey.testelin@gmail.com",
+      "name": "Geoffrey 'C0ZEN' Testelin",
+      "url": "https://github.com/C0ZEN"
+    }
+  ],
+  "description": "The sonia bot for the famous quote: il est midi",
+  "homepage": "https://github.com/C0ZEN/sonia-il-est-midi",
+  "maintainers": [
+    {
+      "email": "geoffrey.testelin@gmail.com",
+      "name": "Geoffrey 'C0ZEN' Testelin",
+      "url": "https://github.com/C0ZEN"
+    }
+  ],
+  "license": "MIT",
   "keywords": [
     "discord",
     "bot",
     "discord-bot",
-    "framework",
-    "template",
-    "widget"
+    "sonia"
   ],
-  "homepage": "https://github.com/peterthehan/create-discord-bot",
-  "bugs": {
-    "url": "https://github.com/peterthehan/create-discord-bot/issues",
-    "email": "peter.han.9493@gmail.com"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/C0ZEN/sonia-il-est-midi.git"
   },
-  "license": "MIT",
-  "author": {
-    "name": "Peter Han",
-    "email": "peter.han.9493@gmail.com",
-    "url": "https://github.com/peterthehan"
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./scripts/commitizen.js"
+    }
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/",
+    "access": "public"
+  },
+  "private": false,
   "bin": {
     "create-discord-bot": "./src/index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/peterthehan/create-discord-bot.git"
-  },
   "scripts": {
-    "start": "node ./src/index.js"
+    "start": "node ./src/index.js",
+    "cz": "git add . && git-cz && git push-upstream",
+    "semver": "npx semantic-release",
+    "commitmsg": "cz-customizable-ghooks"
   },
   "dependencies": {
-    "discord.js": "github:discordjs/discord.js#master"
+    "discord.js": "12.0.2"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "5.0.0",
+    "@semantic-release/git": "9.0.0",
+    "commitizen": "4.0.3",
+    "cz-customizable": "6.2.0",
+    "cz-customizable-ghooks": "1.5.0",
+    "husky": "4.2.3",
+    "semantic-release": "17.0.4"
   }
 }
