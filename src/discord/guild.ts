@@ -29,6 +29,7 @@ export class DiscordGuild {
   }
 
   private _listen(): void {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     this._client.on('ready', (): void => {
     });
   }

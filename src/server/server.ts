@@ -1,8 +1,8 @@
 import express, { Express } from 'express';
 import _ from 'lodash';
 import {
-  CHALK_CYAN,
-  CHALK_WHITE
+  chalkCyan,
+  chalkWhite
 } from '../logger/chalk';
 import { Logger } from '../logger/logger';
 
@@ -31,7 +31,7 @@ export class Server {
 
   private _listen(): void {
     this._app.listen(this._port, () => {
-      this._logger.log('Server', CHALK_WHITE(`listening on port: ${CHALK_CYAN(this._port)}`));
+      this._logger.log('Server', chalkWhite(`listening on port: ${chalkCyan(this._port)}`));
     });
   }
 }

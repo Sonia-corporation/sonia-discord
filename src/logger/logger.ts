@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import { Time } from '../time/time';
 import {
-  CHALK_CONTEXT,
-  CHALK_CYAN,
-  CHALK_WHITE
+  chalkContext,
+  chalkCyan,
+  chalkWhite
 } from './chalk';
 import { LoggerConfigLevelEnum } from './enums/logger-config-level.enum';
 import { ILoggerConfig } from './interfaces/logger-config';
@@ -31,7 +31,7 @@ export class Logger {
     if (!_.isNil(config) && _.isPlainObject(config)) {
       this.updateLevel(config);
 
-      this.debug(this.constructor.name, CHALK_WHITE(`configuration updated`));
+      this.debug(this.constructor.name, chalkWhite(`configuration updated`));
     }
   }
 
@@ -39,7 +39,7 @@ export class Logger {
     if (_.isString(config.level)) {
       this._config.level = config.level;
 
-      this.log(this.constructor.name, CHALK_WHITE(`level updated to: ${CHALK_CYAN(`"${config.level}"`)}`));
+      this.log(this.constructor.name, chalkWhite(`level updated to: ${chalkCyan(`"${config.level}"`)}`));
     }
   }
 
@@ -86,6 +86,6 @@ export class Logger {
   }
 
   private _context(name: Readonly<string>): string {
-    return CHALK_CONTEXT(`[${name}][${this._time.now()}] `);
+    return chalkContext(`[${name}][${this._time.now()}] `);
   }
 }

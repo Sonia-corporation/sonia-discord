@@ -1,9 +1,9 @@
 import { Client } from 'discord.js';
 import _ from 'lodash';
 import {
-  CHALK_CYAN,
-  CHALK_RED,
-  CHALK_WHITE
+  chalkCyan,
+  chalkRed,
+  chalkWhite
 } from '../logger/chalk';
 import { Logger } from '../logger/logger';
 import { DiscordBot } from './bot';
@@ -40,21 +40,21 @@ export class DiscordAuthentication {
   private _listen(): void {
     this._client.on('ready', (): void => {
       if (!_.isNil(this._client.user)) {
-        this._logger.log(this.constructor.name, CHALK_WHITE(`authenticated as: ${CHALK_CYAN(`"${this._client.user.tag}`)}"`));
+        this._logger.log(this.constructor.name, chalkWhite(`authenticated as: ${chalkCyan(`"${this._client.user.tag}`)}"`));
       } else {
-        this._logger.log(this.constructor.name, CHALK_WHITE(`authenticated as: ${CHALK_CYAN(`unknown user`)}`));
+        this._logger.log(this.constructor.name, chalkWhite(`authenticated as: ${chalkCyan(`unknown user`)}`));
       }
     });
   }
 
   private _login(): void {
     this._client.login(this._bot.getSecretToken()).then((): void => {
-      this._logger.debug(this.constructor.name, CHALK_WHITE(`authentication successful`));
-    }).catch((error: any): void => {
-      this._logger.error(this.constructor.name, CHALK_WHITE(`authentication failed`));
-      this._logger.error(this.constructor.name, CHALK_RED(error));
+      this._logger.debug(this.constructor.name, chalkWhite(`authentication successful`));
+    }).catch((error: unknown): void => {
+      this._logger.error(this.constructor.name, chalkWhite(`authentication failed`));
+      this._logger.error(this.constructor.name, chalkRed(error));
     });
 
-    this._logger.debug(this.constructor.name, CHALK_WHITE(`authenticating...`));
+    this._logger.debug(this.constructor.name, chalkWhite(`authenticating...`));
   }
 }

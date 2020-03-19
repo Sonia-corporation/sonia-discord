@@ -1,6 +1,6 @@
 import discord, { Client } from 'discord.js';
 import _ from 'lodash';
-import { CHALK_WHITE } from '../logger/chalk';
+import { chalkWhite } from '../logger/chalk';
 import { Logger } from '../logger/logger';
 
 export class DiscordClient {
@@ -21,7 +21,7 @@ export class DiscordClient {
     this._logger = Logger.getInstance();
     this._client = new discord.Client();
 
-    this._logger.debug(this.constructor.name, CHALK_WHITE(`client created`));
+    this._logger.debug(this.constructor.name, chalkWhite(`client created`));
   }
 
   public getClient(): Client {

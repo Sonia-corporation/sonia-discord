@@ -53,7 +53,7 @@
     "cz": "git add . && git-cz && git push-upstream",
     "semver": "npx semantic-release",
     "commitmsg": "cz-customizable-ghooks",
-    "lint": "eslint . --fix",
+    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
     "tsc": "tsc",
     "prod": "npm run tsc && node ./dist/index.js"
   },
@@ -70,6 +70,8 @@
     "@types/fs-extra": "8.1.0",
     "@types/lodash": "4.14.149",
     "@types/node": "12.11.1",
+    "@typescript-eslint/eslint-plugin": "2.24.0",
+    "@typescript-eslint/parser": "2.24.0",
     "chalk": "3.0.0",
     "commitizen": "4.0.3",
     "cz-customizable": "6.2.0",

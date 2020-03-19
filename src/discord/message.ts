@@ -5,8 +5,8 @@ import {
 } from 'discord.js';
 import _ from 'lodash';
 import {
-  CHALK_RED,
-  CHALK_WHITE
+  chalkRed,
+  chalkWhite
 } from '../logger/chalk';
 import { Logger } from '../logger/logger';
 import { DiscordBot } from './bot';
@@ -44,7 +44,7 @@ export class DiscordMessage {
       this._handleMessage(message);
     });
 
-    this._logger.debug(this.constructor.name, CHALK_WHITE(`listen messages`));
+    this._logger.debug(this.constructor.name, chalkWhite(`listen messages`));
   }
 
   private _handleMessage(message: Readonly<Message | PartialMessage>): void {
@@ -72,16 +72,16 @@ export class DiscordMessage {
   }
 
   private _sendMessage(
-    message: Readonly<Message | PartialMessage>,
-    responseMessage: Readonly<string>
+      message: Readonly<Message | PartialMessage>,
+      responseMessage: Readonly<string>
   ): void {
-    this._logger.debug(this.constructor.name, CHALK_WHITE(`sending message...`));
+    this._logger.debug(this.constructor.name, chalkWhite(`sending message...`));
 
     message.channel.send(responseMessage).then((): void => {
-      this._logger.log(this.constructor.name, CHALK_WHITE(`message sent`));
-    }).catch((error: any): void => {
-      this._logger.error(this.constructor.name, CHALK_WHITE(`message sending failed`));
-      this._logger.error(this.constructor.name, CHALK_RED(error));
+      this._logger.log(this.constructor.name, chalkWhite(`message sent`));
+    }).catch((error: unknown): void => {
+      this._logger.error(this.constructor.name, chalkWhite(`message sending failed`));
+      this._logger.error(this.constructor.name, chalkRed(error));
     });
   }
 }

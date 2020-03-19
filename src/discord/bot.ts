@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { CHALK_CYAN } from '../logger/chalk';
+import { chalkCyan } from '../logger/chalk';
 import { Logger } from '../logger/logger';
 import { IDiscordConfig } from './interfaces/discord-config';
 
@@ -35,7 +35,7 @@ export class DiscordBot {
     if (_.isString(id)) {
       this._id = id;
 
-      this._logger.log(this.constructor.name, `id updated to: ${CHALK_CYAN(`"${id}"`)}`);
+      this._logger.log(this.constructor.name, `id updated to: ${chalkCyan(`"${id}"`)}`);
     }
   }
 
@@ -47,7 +47,7 @@ export class DiscordBot {
     if (_.isString(secretToken)) {
       this._secretToken = secretToken;
 
-      this._logger.log(this.constructor.name, `secretToken updated to: ${CHALK_CYAN(`"********"`)}`);
+      this._logger.log(this.constructor.name, `secretToken updated to: ${chalkCyan(`"********"`)}`);
     }
   }
 }

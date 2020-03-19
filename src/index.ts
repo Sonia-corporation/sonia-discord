@@ -8,7 +8,7 @@ fs.readJson('./src/environment/environment.json').then((environment: IEnvironmen
   Logger.getInstance(environment.logger);
   Server.getInstance();
   Discord.getInstance(environment.discord);
-}).catch((error: any): void => {
+}).catch((error: unknown): void => {
   console.error('Failed to read the environment');
   console.error(error);
 });
