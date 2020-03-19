@@ -1,5 +1,5 @@
 {
-  "projectName": "front-end",
+  "projectName": "sonia-il-est-midi",
   "projectOwner": "C0ZEN",
   "repoType": "github",
   "repoHost": "https://github.com",
@@ -21,8 +21,16 @@
         "infra",
         "ideas",
         "blog",
-        "doc"
+        "doc",
+        "tool",
+        "security",
+        "review",
+        "question",
+        "maintenance",
+        "bug"
       ]
     }
-  ]
+  ],
+  "skipCi": true,
+  "contributorsPerLine": 7
 }
