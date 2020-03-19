@@ -1,5 +1,5 @@
-import { EnvironmentLoggerLevelEnum } from '../enums/environment-logger-level.enum';
+import { LoggerConfigLevelEnum } from '../../logger/enums/logger-config-level.enum';
 
 export interface IEnvironmentLogger {
-  level: EnvironmentLoggerLevelEnum;
+  level: LoggerConfigLevelEnum;
 }

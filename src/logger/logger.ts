@@ -1,32 +1,45 @@
+import _ from 'lodash';
 import { Time } from '../time/time';
+import {
+  CHALK_CONTEXT,
+  CHALK_CYAN,
+  CHALK_WHITE
+} from './chalk';
 import { LoggerConfigLevelEnum } from './enums/logger-config-level.enum';
 import { ILoggerConfig } from './interfaces/logger-config';
 
-const _ = require('lodash');
-const chalk = require('./chalk');
+export class Logger {
+  private static _instance: Logger;
 
-class Logger {
-  private _time: Time;
-  private _config: ILoggerConfig;
+  public static getInstance(config?: Readonly<Partial<ILoggerConfig>>): Logger {
+    if (_.isNil(Logger._instance)) {
+      Logger._instance = new Logger(config);
+    }
 
-  public constructor(config: Readonly<ILoggerConfig>) {
+    return Logger._instance;
+  }
+
+  private readonly _time: Time;
+  private readonly _config: ILoggerConfig;
+
+  public constructor(config?: Readonly<Partial<ILoggerConfig>>) {
     this._time = Time.getInstance();
     this._config = {
       level: LoggerConfigLevelEnum.OFF
     };
 
-    if (_.isPlainObject(config)) {
+    if (!_.isNil(config) && _.isPlainObject(config)) {
       this.updateLevel(config);
 
-      this.debug(this.constructor.name, chalk.white(`configuration updated`));
+      this.debug(this.constructor.name, CHALK_WHITE(`configuration updated`));
     }
   }
 
-  public updateLevel(config: Readonly<ILoggerConfig>): void {
+  public updateLevel(config: Readonly<Partial<ILoggerConfig>>): void {
     if (_.isString(config.level)) {
       this._config.level = config.level;
 
-      this.log(this.constructor.name, chalk.white(`level updated to: ${chalk.cyan(`"${config.level}"`)}`));
+      this.log(this.constructor.name, CHALK_WHITE(`level updated to: ${CHALK_CYAN(`"${config.level}"`)}`));
     }
   }
 
@@ -73,22 +86,6 @@ class Logger {
   }
 
   private _context(name: Readonly<string>): string {
-    return chalk.context(`[${name}][${this._time.now()}] `);
+    return CHALK_CONTEXT(`[${name}][${this._time.now()}] `);
   }
 }
-
-class Singleton {
-  private static _instance: Logger;
-
-  public constructor(config: Readonly<ILoggerConfig>) {
-    if (_.isNil(Singleton._instance)) {
-      Singleton._instance = new Logger(config);
-    }
-  }
-
-  public getInstance(): Logger {
-    return Singleton._instance;
-  }
-}
-
-module.exports.Logger = Singleton;

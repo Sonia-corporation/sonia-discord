@@ -1,5 +1,5 @@
-const _ = require('lodash');
-const moment = require('moment');
+import _ from 'lodash';
+import moment from 'moment';
 
 export class Time {
   private static _instance: Time;

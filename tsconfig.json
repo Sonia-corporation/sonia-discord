@@ -9,7 +9,7 @@
     "downlevelIteration": true,
     "baseUrl": "./",
     "importHelpers": true,
-    "module": "esnext",
+    "module": "CommonJS",
     "outDir": "./dist",
     "sourceMap": true,
     "declaration": false,
