@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { chalkCyan } from '../logger/chalk';
 import { Logger } from '../logger/logger';
-import { DiscordClient } from './client';
+import { DiscordClient } from './discord-client';
 import { isDiscordClientUser } from './functions/is-discord-client-user';
 import { IDiscordConfig } from './interfaces/discord-config';
 import { Sonia } from './types/sonia';

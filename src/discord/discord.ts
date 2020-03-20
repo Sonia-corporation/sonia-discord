@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import { DiscordAuthentication } from './authentication';
-import { DiscordSonia } from './sonia';
-import { DiscordGuild } from './guild';
+import { DiscordAuthentication } from './discord-authentication';
+import { DiscordSonia } from './discord-sonia';
+import { DiscordGuild } from './discord-guild';
 import { IDiscordConfig } from './interfaces/discord-config';
-import { DiscordMessage } from './message';
+import { DiscordMessage } from './discord-message';
 
 export class Discord {
   private static _instance: Discord;

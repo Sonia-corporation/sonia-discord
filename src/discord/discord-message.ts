@@ -5,11 +5,11 @@ import {
   chalkWhite
 } from '../logger/chalk';
 import { Logger } from '../logger/logger';
-import { DiscordAuthor } from './author';
-import { DiscordSonia } from './sonia';
-import { DiscordChannel } from './channel';
-import { DiscordClient } from './client';
-import { DiscordMention } from './mention';
+import { DiscordAuthor } from './discord-author';
+import { DiscordSonia } from './discord-sonia';
+import { DiscordChannel } from './discord-channel';
+import { DiscordClient } from './discord-client';
+import { DiscordMention } from './discord-mention';
 import { AnyDiscordMessage } from './types/any-discord-message';
 import { Sonia } from './types/sonia';
 

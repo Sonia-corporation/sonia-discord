@@ -6,8 +6,8 @@ import {
   chalkWhite
 } from '../logger/chalk';
 import { Logger } from '../logger/logger';
-import { DiscordSonia } from './sonia';
-import { DiscordClient } from './client';
+import { DiscordSonia } from './discord-sonia';
+import { DiscordClient } from './discord-client';
 
 export class DiscordAuthentication {
   private static _instance: DiscordAuthentication;
