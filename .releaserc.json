@@ -31,8 +31,13 @@
           "commitsSort": [
             "subject",
             "scope"
-          ]
-        }
+          ],
+          "owner": "C0ZEN"
+        },
+        "linkCompare": true,
+        "linkReferences": true,
+        "commit": "commit",
+        "issue": "issues"
       }
     ],
     [
