@@ -1,0 +1,31 @@
+# Semantic Versioning Changelog
+
+# 1.0.0 (2020-03-20)
+
+
+### Bug Fixes
+
+* **ci:** [warning]No scopes with read permission were found on the request. ([c2d475f](https://github.com/C0ZEN/sonia-il-est-midi/commit/c2d475fdc3e964a6d3a8b4f7fcde597658b26cdc)), closes [/github.com/actions/cache/issues/107#issuecomment-556037278](https://github.com//github.com/actions/cache/issues/107/issues/issuecomment-556037278)
+* **ci:** add checks to avoid build error ([081befa](https://github.com/C0ZEN/sonia-il-est-midi/commit/081befa374bbe8543c3f7d704916d6f7ad501bc2))
+* **ci:** add checks to avoid build error ([c742d6c](https://github.com/C0ZEN/sonia-il-est-midi/commit/c742d6c5cb799ecb7e01940f9ea0b439d1befce0))
+* **build:** add new dependency to avoid build error ([dcd39b8](https://github.com/C0ZEN/sonia-il-est-midi/commit/dcd39b87e64f90d613162b0be44f0a2f71dff333))
+* **publish:** change the user name and the npm token name ([3c70c5a](https://github.com/C0ZEN/sonia-il-est-midi/commit/3c70c5a2da3794e12ae94a2933766636c0740ea5))
+* **build:** remove useless variables to fix the build ([3811958](https://github.com/C0ZEN/sonia-il-est-midi/commit/3811958d2403b56b08062308ee1cace78938e367))
+* **ci:** the lint will now works as expected ([1d84d88](https://github.com/C0ZEN/sonia-il-est-midi/commit/1d84d88d1e153e0837260b358fd524554ab66d75))
+
+
+### Features
+
+* **scaffolding:** add a bunch of configuration files ([e5d4e46](https://github.com/C0ZEN/sonia-il-est-midi/commit/e5d4e46b8df4bd8e00deceb38050d3cfa1080b4a))
+* **ci:** add cache for node_modules ([82af0e8](https://github.com/C0ZEN/sonia-il-est-midi/commit/82af0e87920355d1014694a8ce5c08e137bc7e1e))
+* **label:** add configuration file ([81da990](https://github.com/C0ZEN/sonia-il-est-midi/commit/81da9907ac70a4fbc25c4aefe80d94192b682893))
+* **ci:** add lint step ([464281a](https://github.com/C0ZEN/sonia-il-est-midi/commit/464281aa288fbdf6ba93df3d7299d4d14fe01592))
+* **publish:** add new script to run the ci build ([2dfb5de](https://github.com/C0ZEN/sonia-il-est-midi/commit/2dfb5de2d4a4921fdd22c892bd25d307eaf36eed))
+* **ts:** add ts (wip) ([cbe21b7](https://github.com/C0ZEN/sonia-il-est-midi/commit/cbe21b7f7800836120d289ee9879b3bb676264ce))
+* **ci:** add workflow to configure the CI for GitHub ([ba4d249](https://github.com/C0ZEN/sonia-il-est-midi/commit/ba4d249b4913f43ec536418e6144bab7d819cc3d))
+* **ci:** build on develop too ([381437f](https://github.com/C0ZEN/sonia-il-est-midi/commit/381437f9637c6fe4ccbcfb6e87814fe670301bc8))
+* **lint:** configure eslint to use ts ([5009d7a](https://github.com/C0ZEN/sonia-il-est-midi/commit/5009d7a2e5d5438f4a2a8106ec0d18bb3a6ca479))
+* **bot:** create a simple listener with powerful logs ([de2e0e8](https://github.com/C0ZEN/sonia-il-est-midi/commit/de2e0e8e599ada34010be76a19023f5daba60d1a))
+* **ci:** do not build on develop ([bc87c11](https://github.com/C0ZEN/sonia-il-est-midi/commit/bc87c11831aece1704be9f7736ee3b2690ca52ac))
+* **publish:** force to publish public packages ([8ee1ea4](https://github.com/C0ZEN/sonia-il-est-midi/commit/8ee1ea4e8fbe0042e1fc4dd5340329d0dfa203f8))
+* **ts:** use ts instead of pure js ([c4ab45e](https://github.com/C0ZEN/sonia-il-est-midi/commit/c4ab45e645256f31fe81c15343f0988fce8bae4d))
