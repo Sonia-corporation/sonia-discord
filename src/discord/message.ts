@@ -6,7 +6,7 @@ import {
 } from '../logger/chalk';
 import { Logger } from '../logger/logger';
 import { DiscordAuthor } from './author';
-import { DiscordBot } from './bot';
+import { DiscordSonia } from './sonia';
 import { DiscordChannel } from './channel';
 import { DiscordClient } from './client';
 import { DiscordMention } from './mention';
@@ -26,7 +26,7 @@ export class DiscordMessage {
 
   private readonly _logger: Logger;
   private readonly _client: Client;
-  private readonly _discordBot: DiscordBot;
+  private readonly _discordSonia: DiscordSonia;
   private readonly _discordChannel: DiscordChannel;
   private readonly _discordAuthor: DiscordAuthor;
   private readonly _discordMention: DiscordMention;
@@ -34,7 +34,7 @@ export class DiscordMessage {
   public constructor() {
     this._logger = Logger.getInstance();
     this._client = DiscordClient.getInstance().getClient();
-    this._discordBot = DiscordBot.getInstance();
+    this._discordSonia = DiscordSonia.getInstance();
     this._discordChannel = DiscordChannel.getInstance();
     this._discordAuthor = DiscordAuthor.getInstance();
     this._discordMention = DiscordMention.getInstance();
@@ -66,7 +66,7 @@ export class DiscordMessage {
 
   private _dmMessage(message: Readonly<AnyDiscordMessage>): void {
     if (this._discordAuthor.isValidAuthor(message.author)) {
-      if (!this._discordBot.isSonia(message.author.id)) {
+      if (!this._discordSonia.isSonia(message.author.id)) {
         this._replyToAuthor(message);
       }
     }
@@ -74,15 +74,15 @@ export class DiscordMessage {
 
   private _textMessage(message: Readonly<AnyDiscordMessage>): void {
     if (this._discordAuthor.isValidAuthor(message.author)) {
-      if (!this._discordBot.isSonia(message.author.id)) {
+      if (!this._discordSonia.isSonia(message.author.id)) {
         console.log(message);
         if (this._discordMention.isValidMessageMentions(message.mentions)) {
           if (this._discordMention.isMentionForEveryone(message.mentions)) {
             this._sendMessage(message, 'Il est midi tout le monde !');
           } else {
-            const sonia: Sonia | null = this._discordBot.getSonia();
+            const sonia: Sonia | null = this._discordSonia.getSonia();
 
-            if (this._discordBot.isSoniaValid(sonia)) {
+            if (this._discordSonia.isSoniaValid(sonia)) {
               if (this._discordMention.isUserMentioned(message.mentions, sonia)) {
                 this._replyToAuthor(message);
               }

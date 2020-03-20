@@ -6,15 +6,15 @@ import { isDiscordClientUser } from './functions/is-discord-client-user';
 import { IDiscordConfig } from './interfaces/discord-config';
 import { Sonia } from './types/sonia';
 
-export class DiscordBot {
-  private static _instance: DiscordBot;
+export class DiscordSonia {
+  private static _instance: DiscordSonia;
 
-  public static getInstance(config?: Readonly<Partial<IDiscordConfig>>): DiscordBot {
-    if (_.isNil(DiscordBot._instance)) {
-      DiscordBot._instance = new DiscordBot(config);
+  public static getInstance(config?: Readonly<Partial<IDiscordConfig>>): DiscordSonia {
+    if (_.isNil(DiscordSonia._instance)) {
+      DiscordSonia._instance = new DiscordSonia(config);
     }
 
-    return DiscordBot._instance;
+    return DiscordSonia._instance;
   }
 
   private readonly _logger: Logger;

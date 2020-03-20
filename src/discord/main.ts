@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { DiscordAuthentication } from './authentication';
-import { DiscordBot } from './bot';
+import { DiscordSonia } from './sonia';
 import { DiscordGuild } from './guild';
 import { IDiscordConfig } from './interfaces/discord-config';
 import { DiscordMessage } from './message';
@@ -17,7 +17,7 @@ export class Discord {
   }
 
   private static _bot(config?: Readonly<Partial<IDiscordConfig>>): void {
-    DiscordBot.getInstance(config);
+    DiscordSonia.getInstance(config);
   }
 
   private static _authenticate(): void {
