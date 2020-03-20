@@ -1,5 +1,19 @@
 # Semantic Versioning Changelog
 
+# [1.1.0](https://github.com/C0ZEN/sonia-il-est-midi/compare/1.0.0...1.1.0) (2020-03-20)
+
+
+### Bug Fixes
+
+* **semver:** add missing preset dependency ([caf0db4](https://github.com/C0ZEN/sonia-il-est-midi/commit/caf0db4818af0e8e8baf287862b7fbdc299cce98))
+* **semver:** rewrite the name of the branch to trigger the release ([05b78d1](https://github.com/C0ZEN/sonia-il-est-midi/commit/05b78d1718ed5dc0793407fadcb6851f8b8536a8))
+
+
+### Features
+
+* **semver:** add more options for the changelog ([dba5f53](https://github.com/C0ZEN/sonia-il-est-midi/commit/dba5f53796f7877d019e872d5d2cc50ecd558ec6))
+* **ci:** add new ci step to use semver on master ([7c1fc49](https://github.com/C0ZEN/sonia-il-est-midi/commit/7c1fc49067f77ca48befb8f79b9b17d7cb44d868))
+
 # 1.0.0 (2020-03-20)
 
 
