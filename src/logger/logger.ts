@@ -24,20 +24,18 @@ export class Logger {
     return Logger._instance;
   }
 
-  private readonly _time: Time;
-  private readonly _config: ILoggerConfig;
+  private readonly _time = Time.getInstance();
+  private readonly _config: ILoggerConfig = {
+    level: LoggerConfigLevelEnum.OFF
+  };
   private readonly _logPrefix = '● ';
+  private readonly _className = 'Logger';
 
   public constructor(config?: Readonly<Partial<ILoggerConfig>>) {
-    this._time = Time.getInstance();
-    this._config = {
-      level: LoggerConfigLevelEnum.OFF
-    };
-
     if (!_.isNil(config) && _.isPlainObject(config)) {
       this.updateLevel(config);
 
-      this.debug(this.constructor.name, chalkText(`configuration updated`));
+      this.debug(this._className, chalkText(`configuration updated`));
     }
   }
 
@@ -45,7 +43,7 @@ export class Logger {
     if (_.isString(config.level)) {
       this._config.level = config.level;
 
-      this.log(this.constructor.name, chalkText(`level updated to: ${chalkValue(`"${config.level}"`)}`));
+      this.log(this._className, chalkText(`level updated to: ${chalkValue(`"${config.level}"`)}`));
     }
   }
 

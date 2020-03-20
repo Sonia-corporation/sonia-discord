@@ -20,14 +20,13 @@ export class DiscordSonia {
     return DiscordSonia._instance;
   }
 
-  private readonly _logger: Logger;
-  private readonly _discordClient: DiscordClient;
+  private readonly _logger = Logger.getInstance();
+  private readonly _discordClient = DiscordClient.getInstance();
+  private readonly _className = 'DiscordSonia';
   private _id: string;
   private _secretToken: string;
 
   public constructor(config?: Readonly<Partial<IDiscordConfig>>) {
-    this._logger = Logger.getInstance();
-    this._discordClient = DiscordClient.getInstance();
     this._id = '';
     this._secretToken = '';
 
@@ -43,7 +42,7 @@ export class DiscordSonia {
     if (_.isString(id)) {
       this._id = id;
 
-      this._logger.log(this.constructor.name, chalkText(`id updated to: ${chalkValue(`"${id}"`)}`));
+      this._logger.log(this._className, chalkText(`id updated to: ${chalkValue(`"${id}"`)}`));
     }
   }
 
@@ -55,7 +54,7 @@ export class DiscordSonia {
     if (_.isString(secretToken)) {
       this._secretToken = secretToken;
 
-      this._logger.log(this.constructor.name, chalkText(`secretToken updated to: ${chalkValue(`"********"`)} (hidden)`));
+      this._logger.log(this._className, chalkText(`secretToken updated to: ${chalkValue(`"********"`)} (hidden)`));
     }
   }
 
