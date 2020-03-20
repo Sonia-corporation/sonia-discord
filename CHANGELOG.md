@@ -1,5 +1,16 @@
 # Semantic Versioning Changelog
 
+# [1.3.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.2.1...1.3.0) (2020-03-20)
+
+
+### Features
+
+* **discord:** add new class for author and channel handling ([c57e918](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c57e9187ad4778f7100e87679dcdf0ec5e108eb3))
+* **discord:** add new class to handle the mention ([0868c3e](https://github.com/Sonia-corporation/il-est-midi-discord/commit/0868c3e4daa95183551a5bbdfc2761568f638bc9))
+* **discord:** add new pure functions to checks the class instances validity ([c22925a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c22925a2f3fe545d3bfc120dc2f959769eec985d))
+* **discord:** sonia will now responds cleverly ([a79923e](https://github.com/Sonia-corporation/il-est-midi-discord/commit/a79923e14c47a604ba7580db14be3d49d0ffa356))
+* **discord:** sonia will send better responses to an author ([7f97cb1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7f97cb1f8066fdac6fbaaf012a39018d8ff691b1))
+
 ## [1.2.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.2.0...1.2.1) (2020-03-20)
 
 
