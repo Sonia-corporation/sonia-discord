@@ -55,8 +55,6 @@
     "start": "ts-node-dev --respawn --transpileOnly .",
     "start:prod": "npm run build && node ./dist/index.js",
     "tsc": "tsc",
-    "\n# CI SCRIPTS:": "",
-    "ci": "npm run lint",
     "\n# TEST SCRIPTS:": "",
     "test": "",
     "\n# LINT SCRIPTS:": "",
