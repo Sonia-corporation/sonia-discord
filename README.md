@@ -7,7 +7,7 @@
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]()
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/474fece6-33b0-4472-8c2f-25cbb4493ecb/deploy-status)](https://app.netlify.com/sites/dark-heresy/deploys)
-![Build](https://github.com/C0ZEN/sonia-il-est-midi/workflows/Node.js%20CI/badge.svg?branch=master&style=flat-square)
+![Build](https://github.com/C0ZEN/sonia-il-est-midi/workflows/Build/badge.svg?branch=master&style=flat-square)
 ![Release](https://github.com/C0ZEN/sonia-il-est-midi/workflows/Release/badge.svg?branch=master&style=flat-square)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
