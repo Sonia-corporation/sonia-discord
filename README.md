@@ -10,8 +10,6 @@
 ![Build](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Build/badge.svg?branch=master&style=flat-square)
 ![Release](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Release/badge.svg?branch=master&style=flat-square)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
-
 ## Contributing
 
 Check out the [Contributing](CONTRIBUTING.md) file before helping us.

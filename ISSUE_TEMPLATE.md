@@ -36,9 +36,6 @@ https://stackblitz.com or similar.
 ## Environment
 
 <pre><code>
-Angular version: X.Y.Z
-<!-- Check whether this is still an issue in the most recent Angular version -->
-
 Browser:
 - [ ] Chrome (desktop) version XX
 - [ ] Chrome (Android) version XX
