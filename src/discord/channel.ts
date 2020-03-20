@@ -1,8 +1,6 @@
-import {
-  DMChannel,
-  TextChannel
-} from 'discord.js';
 import _ from 'lodash';
+import { isDiscordDmChannel } from './functions/is-discord-dm-channel';
+import { isDiscordTextChannel } from './functions/is-discord-text-channel';
 import { AnyDiscordChannel } from './types/any-discord-channel';
 
 export class DiscordChannel {
@@ -17,20 +15,12 @@ export class DiscordChannel {
   }
 
   public isValidChannel(channel: unknown): channel is AnyDiscordChannel {
-    if (this.isTextChannel(channel)) {
+    if (isDiscordTextChannel(channel)) {
       return true;
-    } else if (this.isDmChannel(channel)) {
+    } else if (isDiscordDmChannel(channel)) {
       return true;
     }
 
     return false;
-  }
-
-  public isTextChannel(channel: unknown): boolean {
-    return channel instanceof TextChannel;
-  }
-
-  public isDmChannel(channel: unknown): boolean {
-    return channel instanceof DMChannel;
   }
 }

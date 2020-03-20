@@ -1,5 +1,5 @@
-import { User } from 'discord.js';
 import _ from 'lodash';
+import { isDiscordUser } from './functions/is-discord-user';
 import { AnyDiscordAuthor } from './types/any-discord-author';
 
 export class DiscordAuthor {
@@ -14,10 +14,6 @@ export class DiscordAuthor {
   }
 
   public isValidAuthor(author: unknown): author is AnyDiscordAuthor {
-    return this.isUser(author);
-  }
-
-  public isUser(author: unknown): boolean {
-    return author instanceof User;
+    return isDiscordUser(author);
   }
 }

@@ -1,11 +1,11 @@
 import {
   GuildChannel,
   GuildMember,
-  MessageMentions,
   Role,
   User
 } from 'discord.js';
 import _ from 'lodash';
+import { isDiscordMessageMentions } from './functions/is-discord-message-mentions';
 import { AnyDiscordMessageMentions } from './types/any-discord-message-mentions';
 
 export class DiscordMention {
@@ -20,15 +20,11 @@ export class DiscordMention {
   }
 
   public isValidMessageMentions(mention: unknown): mention is AnyDiscordMessageMentions {
-    return this.isMessageMentions(mention);
-  }
-
-  public isMessageMentions(mention: unknown): boolean {
-    return mention instanceof MessageMentions;
+    return isDiscordMessageMentions(mention);
   }
 
   public isMentionForEveryone(mention: AnyDiscordMessageMentions): boolean {
-    return mention.everyone;
+    return _.isEqual(mention.everyone, true);
   }
 
   public isUserMentioned(
