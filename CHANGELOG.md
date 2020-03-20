@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+# [1.2.0](https://github.com/C0ZEN/sonia-il-est-midi/compare/1.1.0...1.2.0) (2020-03-20)
+
+
+### Features
+
+* **release:** add a new standalone workflow for the release ([3c3f852](https://github.com/C0ZEN/sonia-il-est-midi/commit/3c3f852306bdf012504a3f027ae7920c82b8e252))
+* **readme:** add new badge for the build status on the master branch ([ce5d4d7](https://github.com/C0ZEN/sonia-il-est-midi/commit/ce5d4d713ff6af9175c93bc06cfc7d090c1eaed1))
+
 # [1.1.0](https://github.com/C0ZEN/sonia-il-est-midi/compare/1.0.0...1.1.0) (2020-03-20)
 
 
