@@ -1,13 +1,13 @@
-import { Client } from 'discord.js';
-import _ from 'lodash';
 import {
-  chalkValue,
   chalkError,
-  chalkText
+  chalkText,
+  chalkValue
 } from '../logger/chalk';
 import { Logger } from '../logger/logger';
-import { DiscordSonia } from './discord-sonia';
 import { DiscordClient } from './discord-client';
+import { DiscordSonia } from './discord-sonia';
+import { Client } from 'discord.js';
+import _ from 'lodash';
 
 export class DiscordAuthentication {
   private static _instance: DiscordAuthentication;

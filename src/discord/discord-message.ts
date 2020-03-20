@@ -1,17 +1,17 @@
-import { Client } from 'discord.js';
-import _ from 'lodash';
 import {
   chalkError,
   chalkText
 } from '../logger/chalk';
 import { Logger } from '../logger/logger';
 import { DiscordAuthor } from './discord-author';
-import { DiscordSonia } from './discord-sonia';
 import { DiscordChannel } from './discord-channel';
 import { DiscordClient } from './discord-client';
 import { DiscordMention } from './discord-mention';
+import { DiscordSonia } from './discord-sonia';
 import { AnyDiscordMessage } from './types/any-discord-message';
 import { Sonia } from './types/sonia';
+import { Client } from 'discord.js';
+import _ from 'lodash';
 
 export class DiscordMessage {
   private static _instance: DiscordMessage;

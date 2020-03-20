@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
   chalkValue,
   chalkText
@@ -8,6 +7,7 @@ import { DiscordClient } from './discord-client';
 import { isDiscordClientUser } from './functions/is-discord-client-user';
 import { IDiscordConfig } from './interfaces/discord-config';
 import { Sonia } from './types/sonia';
+import _ from 'lodash';
 
 export class DiscordSonia {
   private static _instance: DiscordSonia;

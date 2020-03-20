@@ -1,10 +1,10 @@
-import express, { Express } from 'express';
-import _ from 'lodash';
 import {
   chalkValue,
   chalkText
 } from '../logger/chalk';
 import { Logger } from '../logger/logger';
+import express, { Express } from 'express';
+import _ from 'lodash';
 
 export class Server {
   private static _instance: Server;

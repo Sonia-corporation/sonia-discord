@@ -1,6 +1,6 @@
-import _ from 'lodash';
 import { isDiscordUser } from './functions/is-discord-user';
 import { AnyDiscordAuthor } from './types/any-discord-author';
+import _ from 'lodash';
 
 export class DiscordAuthor {
   private static _instance: DiscordAuthor;

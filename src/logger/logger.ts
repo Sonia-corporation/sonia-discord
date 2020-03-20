@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { Time } from '../time/time';
 import {
   chalkContext,
@@ -12,6 +11,7 @@ import {
 import { LoggerConfigLevelEnum } from './enums/logger-config-level.enum';
 import { LoggerLogTypeEnum } from './enums/logger-log-type.enum';
 import { ILoggerConfig } from './interfaces/logger-config';
+import _ from 'lodash';
 
 export class Logger {
   private static _instance: Logger;
