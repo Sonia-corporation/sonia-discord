@@ -6,8 +6,8 @@ import {
   chalkWhite
 } from '../logger/chalk';
 import { Logger } from '../logger/logger';
-import { DiscordBot } from './bot';
-import { DiscordClient } from './client';
+import { DiscordSonia } from './discord-sonia';
+import { DiscordClient } from './discord-client';
 
 export class DiscordAuthentication {
   private static _instance: DiscordAuthentication;
@@ -22,12 +22,12 @@ export class DiscordAuthentication {
 
   private readonly _logger: Logger;
   private readonly _client: Client;
-  private readonly _bot: DiscordBot;
+  private readonly _discordSonia: DiscordSonia;
 
   public constructor() {
     this._logger = Logger.getInstance();
     this._client = DiscordClient.getInstance().getClient();
-    this._bot = DiscordBot.getInstance();
+    this._discordSonia = DiscordSonia.getInstance();
 
     this._init();
   }
@@ -48,7 +48,7 @@ export class DiscordAuthentication {
   }
 
   private _login(): void {
-    this._client.login(this._bot.getSecretToken()).then((): void => {
+    this._client.login(this._discordSonia.getSoniaSecretToken()).then((): void => {
       this._logger.debug(this.constructor.name, chalkWhite(`authentication successful`));
     }).catch((error: unknown): void => {
       this._logger.error(this.constructor.name, chalkWhite(`authentication failed`));
