@@ -1,5 +1,5 @@
 {
-  "name": "sonia-il-est-midi",
+  "name": "@sonia-organization/sonia-il-est-midi",
   "version": "1.2.0",
   "author": {
     "email": "geoffrey.testelin@gmail.com",
@@ -13,7 +13,7 @@
       "url": "https://github.com/C0ZEN"
     }
   ],
-  "description": "The sonia bot for the famous quote: il est midi",
+  "description": "The Sonia Discord bot for the famous quote: il est midi",
   "homepage": "https://github.com/C0ZEN/sonia-il-est-midi",
   "maintainers": [
     {
@@ -42,10 +42,6 @@
     "cz-customizable": {
       "config": "./scripts/commitizen.js"
     }
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/",
-    "access": "public"
   },
   "private": false,
   "main": "./src/index.ts",
