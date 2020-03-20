@@ -1,5 +1,31 @@
 # Semantic Versioning Changelog
 
+# [1.4.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.3.0...1.4.0) (2020-03-20)
+
+
+### Bug Fixes
+
+* **logs:** add missing chalk wrapper for some logs ([f32e1e1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f32e1e1300c8aa91f9ebdd7e1764861c356b3606))
+* **logs:** do not use constructor.name for the logs ([53f8f45](https://github.com/Sonia-corporation/il-est-midi-discord/commit/53f8f45d90a5fa73b8e93928a116533c5d1cbe30))
+* **serve:** fix runtime error for the prod server ([bfd5939](https://github.com/Sonia-corporation/il-est-midi-discord/commit/bfd5939c4a7a53e135f0b2c9a1bf62d4fa72787e))
+* **ci:** fix test step ([efc147a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/efc147ac3db54dc12dde324450d8464ec7a5f74d))
+
+
+### Features
+
+* **logger:** add fractional seconds when using the context ([7c7c0af](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7c7c0af2f76b5e3243636f0c874677929608bd2c))
+* **logger:** add fractional seconds when using the context ([77d944e](https://github.com/Sonia-corporation/il-est-midi-discord/commit/77d944e5f03c65a4faef477ccd61439edafbaf2d))
+* **lint:** add new rules ([c2e7a5b](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c2e7a5b570ab0bd7ab5fc53fe42648f32b9d194c))
+* **logger:** add prefix for all logs with a bullet ([aedc764](https://github.com/Sonia-corporation/il-est-midi-discord/commit/aedc764584d02df31931249c540788eaadd65eff))
+* **logger:** add success log ([8f24d47](https://github.com/Sonia-corporation/il-est-midi-discord/commit/8f24d4778654191d1b045c003e8c870db1587b6a))
+* **build:** build with parcel instead of tsc ([d5d0469](https://github.com/Sonia-corporation/il-est-midi-discord/commit/d5d0469f0954117a916fe136d13364591d4d186d))
+* **ci:** use dedicated scripts for the CI ([c80ad98](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c80ad98f1cadbe02a5a5477047897e059446c4d8))
+
+
+### Performance Improvements
+
+* **lint:** add cache ([9537d41](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9537d4100565e0ff090b07aff7e1d0ba0817003a))
+
 # [1.3.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.2.1...1.3.0) (2020-03-20)
 
 
