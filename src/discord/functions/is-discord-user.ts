@@ -1,5 +1,5 @@
 import { User } from 'discord.js';
 
-export function isDiscordUser(author: unknown): boolean {
-  return author instanceof User;
+export function isDiscordUser(user: unknown): boolean {
+  return user instanceof User;
 }

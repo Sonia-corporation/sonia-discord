@@ -15,6 +15,7 @@ import { DiscordChannel } from './channel';
 import { DiscordClient } from './client';
 import { DiscordMention } from './mention';
 import { AnyDiscordMessage } from './types/any-discord-message';
+import { Sonia } from './types/sonia';
 
 export class DiscordMessage {
   private static _instance: DiscordMessage;
@@ -69,7 +70,7 @@ export class DiscordMessage {
 
   private _dmMessage(message: Readonly<AnyDiscordMessage>): void {
     if (this._discordAuthor.isValidAuthor(message.author)) {
-      if (!this._discordBot.isSoniaBot(message.author.id)) {
+      if (!this._discordBot.isSonia(message.author.id)) {
         this._sendMessage(message, 'Il est midi !');
       }
     }
@@ -77,11 +78,19 @@ export class DiscordMessage {
 
   private _textMessage(message: Readonly<AnyDiscordMessage>): void {
     if (this._discordAuthor.isValidAuthor(message.author)) {
-      if (!this._discordBot.isSoniaBot(message.author.id)) {
+      if (!this._discordBot.isSonia(message.author.id)) {
         console.log(message);
         if (this._discordMention.isValidMessageMentions(message.mentions)) {
-          if (this._discordMention.isUserMentioned(message.mentions, this._discordBot.getSonia())) {
+          if (this._discordMention.isMentionForEveryone(message.mentions)) {
             this._sendMessage(message, 'Il est midi tout le monde !');
+          } else {
+            const sonia: Sonia | null = this._discordBot.getSonia();
+
+            if (this._discordBot.isSoniaValid(sonia)) {
+              if (this._discordMention.isUserMentioned(message.mentions, sonia)) {
+                this._sendMessage(message, 'Il est midi !');
+              }
+            }
           }
         }
       }

@@ -1,9 +1,10 @@
-import { ClientUser } from 'discord.js';
 import _ from 'lodash';
 import { chalkCyan } from '../logger/chalk';
 import { Logger } from '../logger/logger';
 import { DiscordClient } from './client';
+import { isDiscordClientUser } from './functions/is-discord-client-user';
 import { IDiscordConfig } from './interfaces/discord-config';
+import { Sonia } from './types/sonia';
 
 export class DiscordBot {
   private static _instance: DiscordBot;
@@ -55,11 +56,15 @@ export class DiscordBot {
     }
   }
 
-  public isSoniaBot(id: Readonly<string>): boolean {
+  public isSonia(id: Readonly<string>): boolean {
     return _.isEqual(id, this.getSoniaId());
   }
 
-  public getSonia(): ClientUser | null {
+  public getSonia(): Sonia | null {
     return this._discordClient.getClient().user;
+  }
+
+  public isSoniaValid(sonia: unknown): sonia is Sonia {
+    return isDiscordClientUser(sonia);
   }
 }

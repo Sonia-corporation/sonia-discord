@@ -15,12 +15,20 @@ export class DiscordChannel {
   }
 
   public isValidChannel(channel: unknown): channel is AnyDiscordChannel {
-    if (isDiscordTextChannel(channel)) {
+    if (this.isTextChannel(channel)) {
       return true;
-    } else if (isDiscordDmChannel(channel)) {
+    } else if (this.isDmChannel(channel)) {
       return true;
     }
 
     return false;
+  }
+
+  public isTextChannel(channel: unknown): boolean {
+    return isDiscordTextChannel(channel);
+  }
+
+  public isDmChannel(channel: unknown): boolean {
+    return isDiscordDmChannel(channel);
   }
 }
