@@ -1,5 +1,8 @@
 import _ from 'lodash';
-import { chalkCyan } from '../logger/chalk';
+import {
+  chalkCyan,
+  chalkWhite
+} from '../logger/chalk';
 import { Logger } from '../logger/logger';
 import { DiscordClient } from './discord-client';
 import { isDiscordClientUser } from './functions/is-discord-client-user';
@@ -40,7 +43,7 @@ export class DiscordSonia {
     if (_.isString(id)) {
       this._id = id;
 
-      this._logger.log(this.constructor.name, `id updated to: ${chalkCyan(`"${id}"`)}`);
+      this._logger.log(this.constructor.name, chalkWhite(`id updated to: ${chalkCyan(`"${id}"`)}`));
     }
   }
 
@@ -52,7 +55,7 @@ export class DiscordSonia {
     if (_.isString(secretToken)) {
       this._secretToken = secretToken;
 
-      this._logger.log(this.constructor.name, `secretToken updated to: ${chalkCyan(`"********"`)}`);
+      this._logger.log(this.constructor.name, chalkWhite(`secretToken updated to: ${chalkCyan(`"********"`)}`));
     }
   }
 
