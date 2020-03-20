@@ -1,6 +1,6 @@
 # Sonia il est midi
 
-> *Dark Heresy application for the role-playing game*
+> *Sonia "il est midi" application for Discord*
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 [![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
