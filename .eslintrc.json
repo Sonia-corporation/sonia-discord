@@ -8,7 +8,10 @@
     "eslint:recommended",
     "google",
     "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended"
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -22,7 +25,30 @@
   "plugins": [
     "@typescript-eslint"
   ],
+  "settings": {
+    "import/extensions": [
+      ".js",
+      ".ts"
+    ],
+    "import/parsers": {
+      "@typescript-eslint/parser": [
+        ".ts"
+      ]
+    },
+    "import/cache": {
+      "lifetime": "Infinity"
+    }
+  },
   "rules": {
+    "import/no-namespace": "error",
+    "import/first": "error",
+    "import/exports-last": "error",
+    "import/no-duplicates": "error",
+    "import/order": "error",
+    "indent": [
+      "error",
+      2
+    ],
     "@typescript-eslint/interface-name-prefix": [
       "error",
       {
