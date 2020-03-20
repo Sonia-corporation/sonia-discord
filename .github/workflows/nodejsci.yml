@@ -56,3 +56,7 @@ jobs:
         run: npm run build
         env:
           CI: true
+
+      - name: Release (${{ github.ref }})
+        if: github.ref == 'ref/head/master'
+        run: npm run semver
