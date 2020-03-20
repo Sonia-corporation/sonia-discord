@@ -48,10 +48,12 @@ export class DiscordMessage {
   }
 
   private _handleMessage(message: Readonly<Message | PartialMessage>): void {
-    if (_.isEqual(message.channel.type, 'dm')) {
-      this._dmMessage(message);
-    } else if (_.isEqual(message.channel.type, 'text')) {
-      this._textMessage(message);
+    if (!_.isNil(message.channel)) {
+      if (_.isEqual(message.channel.type, 'dm')) {
+        this._dmMessage(message);
+      } else if (_.isEqual(message.channel.type, 'text')) {
+        this._textMessage(message);
+      }
     }
   }
 
