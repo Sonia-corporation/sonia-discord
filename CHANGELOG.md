@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.2.1](https://github.com/C0ZEN/sonia-il-est-midi/compare/1.2.0...1.2.1) (2020-03-20)
+
+
+### Bug Fixes
+
+* **release:** fix the publication of packages ([dcddd05](https://github.com/C0ZEN/sonia-il-est-midi/commit/dcddd0552e11de9d7749bfdb28637c6b703ca968))
+
 # [1.2.0](https://github.com/C0ZEN/sonia-il-est-midi/compare/1.1.0...1.2.0) (2020-03-20)
 
 
