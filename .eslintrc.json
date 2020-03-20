@@ -82,7 +82,7 @@
       "always"
     ],
     "linebreak-style": [
-      "warn",
+      "error",
       "windows"
     ],
     "computed-property-spacing": [
