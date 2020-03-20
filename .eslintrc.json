@@ -40,6 +40,7 @@
     }
   },
   "rules": {
+    "sort-imports": "off",
     "import/no-namespace": "error",
     "import/first": "error",
     "import/exports-last": "error",
@@ -81,10 +82,7 @@
       "error",
       "always"
     ],
-    "linebreak-style": [
-      "error",
-      "windows"
-    ],
+    "linebreak-style": "off",
     "computed-property-spacing": [
       "error",
       "always"

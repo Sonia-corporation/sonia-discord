@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
   chalkError,
   chalkText
@@ -11,6 +10,7 @@ import { DiscordMention } from './discord-mention';
 import { DiscordSonia } from './discord-sonia';
 import { AnyDiscordMessage } from './types/any-discord-message';
 import { Sonia } from './types/sonia';
+import _ from 'lodash';
 
 export class DiscordMessage {
   private static _instance: DiscordMessage;

@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
   chalkError,
   chalkText,
@@ -7,6 +6,7 @@ import {
 import { Logger } from '../logger/logger';
 import { DiscordClient } from './discord-client';
 import { DiscordSonia } from './discord-sonia';
+import _ from 'lodash';
 
 export class DiscordAuthentication {
   private static _instance: DiscordAuthentication;

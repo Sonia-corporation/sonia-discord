@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import { DiscordClient } from './discord-client';
+import _ from 'lodash';
 
 export class DiscordGuild {
   private static _instance: DiscordGuild;
