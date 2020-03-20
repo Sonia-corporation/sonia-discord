@@ -1,9 +1,9 @@
 import { Client } from 'discord.js';
 import _ from 'lodash';
 import {
-  chalkCyan,
-  chalkRed,
-  chalkWhite
+  chalkValue,
+  chalkError,
+  chalkText
 } from '../logger/chalk';
 import { Logger } from '../logger/logger';
 import { DiscordSonia } from './discord-sonia';
@@ -40,21 +40,21 @@ export class DiscordAuthentication {
   private _listen(): void {
     this._client.on('ready', (): void => {
       if (!_.isNil(this._client.user)) {
-        this._logger.log(this.constructor.name, chalkWhite(`authenticated as: ${chalkCyan(`"${this._client.user.tag}`)}"`));
+        this._logger.log(this.constructor.name, chalkText(`authenticated as: ${chalkValue(`"${this._client.user.tag}`)}"`));
       } else {
-        this._logger.log(this.constructor.name, chalkWhite(`authenticated as: ${chalkCyan(`unknown user`)}`));
+        this._logger.log(this.constructor.name, chalkText(`authenticated as: ${chalkValue(`unknown user`)}`));
       }
     });
   }
 
   private _login(): void {
     this._client.login(this._discordSonia.getSoniaSecretToken()).then((): void => {
-      this._logger.success(this.constructor.name, chalkWhite(`authentication successful`));
+      this._logger.success(this.constructor.name, chalkText(`authentication successful`));
     }).catch((error: unknown): void => {
-      this._logger.error(this.constructor.name, chalkWhite(`authentication failed`));
-      this._logger.error(this.constructor.name, chalkRed(error));
+      this._logger.error(this.constructor.name, chalkText(`authentication failed`));
+      this._logger.error(this.constructor.name, chalkError(error));
     });
 
-    this._logger.debug(this.constructor.name, chalkWhite(`authenticating...`));
+    this._logger.debug(this.constructor.name, chalkText(`authenticating...`));
   }
 }

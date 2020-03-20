@@ -2,10 +2,15 @@ import _ from 'lodash';
 import { Time } from '../time/time';
 import {
   chalkContext,
-  chalkCyan,
-  chalkWhite
+  chalkDebug,
+  chalkError,
+  chalkLog,
+  chalkSuccess,
+  chalkText,
+  chalkValue
 } from './chalk';
 import { LoggerConfigLevelEnum } from './enums/logger-config-level.enum';
+import { LoggerLogTypeEnum } from './enums/logger-log-type.enum';
 import { ILoggerConfig } from './interfaces/logger-config';
 
 export class Logger {
@@ -21,6 +26,7 @@ export class Logger {
 
   private readonly _time: Time;
   private readonly _config: ILoggerConfig;
+  private readonly _logPrefix = '● ';
 
   public constructor(config?: Readonly<Partial<ILoggerConfig>>) {
     this._time = Time.getInstance();
@@ -31,7 +37,7 @@ export class Logger {
     if (!_.isNil(config) && _.isPlainObject(config)) {
       this.updateLevel(config);
 
-      this.debug(this.constructor.name, chalkWhite(`configuration updated`));
+      this.debug(this.constructor.name, chalkText(`configuration updated`));
     }
   }
 
@@ -39,7 +45,7 @@ export class Logger {
     if (_.isString(config.level)) {
       this._config.level = config.level;
 
-      this.log(this.constructor.name, chalkWhite(`level updated to: ${chalkCyan(`"${config.level}"`)}`));
+      this.log(this.constructor.name, chalkText(`level updated to: ${chalkValue(`"${config.level}"`)}`));
     }
   }
 
@@ -50,9 +56,9 @@ export class Logger {
       const numberOfArguments = _.size(arguments);
 
       if (_.isEqual(numberOfArguments, 1)) {
-        console.log(`${arguments[ 0 ]}`);
+        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.ERROR)}${arguments[ 0 ]}`);
       } else if (_.isEqual(numberOfArguments, 2)) {
-        console.log(`${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.ERROR)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
       }
     }
   }
@@ -64,9 +70,9 @@ export class Logger {
       const numberOfArguments = _.size(arguments);
 
       if (_.isEqual(numberOfArguments, 1)) {
-        console.log(`${arguments[ 0 ]}`);
+        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.SUCCESS)}${arguments[ 0 ]}`);
       } else if (_.isEqual(numberOfArguments, 2)) {
-        console.log(`${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.SUCCESS)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
       }
     }
   }
@@ -78,9 +84,9 @@ export class Logger {
       const numberOfArguments = _.size(arguments);
 
       if (_.isEqual(numberOfArguments, 1)) {
-        console.log(`${arguments[ 0 ]}`);
+        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.LOG)}${arguments[ 0 ]}`);
       } else if (_.isEqual(numberOfArguments, 2)) {
-        console.log(`${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.LOG)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
       }
     }
   }
@@ -92,14 +98,28 @@ export class Logger {
       const numberOfArguments = _.size(arguments);
 
       if (_.isEqual(numberOfArguments, 1)) {
-        console.log(`${arguments[ 0 ]}`);
+        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.DEBUG)}${arguments[ 0 ]}`);
       } else if (_.isEqual(numberOfArguments, 2)) {
-        console.log(`${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.DEBUG)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
       }
     }
   }
 
   private _context(name: Readonly<string>): string {
     return chalkContext(`[${name}][${this._time.now('HH:mm:ss:SSS')}] `);
+  }
+
+  private _getLogTypePrefix(logType: LoggerLogTypeEnum): string {
+    if (logType === LoggerLogTypeEnum.ERROR) {
+      return chalkError(this._logPrefix);
+    } else if (logType === LoggerLogTypeEnum.SUCCESS) {
+      return chalkSuccess(this._logPrefix);
+    } else if (logType === LoggerLogTypeEnum.LOG) {
+      return chalkLog(this._logPrefix);
+    } else if (logType === LoggerLogTypeEnum.DEBUG) {
+      return chalkDebug(this._logPrefix);
+    }
+
+    return chalkDebug(this._logPrefix);
   }
 }
