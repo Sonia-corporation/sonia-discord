@@ -1,7 +1,7 @@
 ## PR Checklist
 Please check if your PR fulfills the following requirements:
 
-- [ ] The commit message follows our guidelines: https://github.com/C0ZEN/sonia-il-est-midi/blob/master/CONTRIBUTING.md
+- [ ] The commit message follows our guidelines: https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md
 - [ ] Tests for the changes have been added (for bug fixes / features)
 - [ ] Docs have been added / updated (for bug fixes / features)
 

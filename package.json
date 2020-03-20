@@ -14,7 +14,7 @@
     }
   ],
   "description": "The Sonia Discord bot for the famous quote: il est midi",
-  "homepage": "https://github.com/C0ZEN/sonia-il-est-midi",
+  "homepage": "https://github.com/Sonia-corporation/il-est-midi-discord",
   "maintainers": [
     {
       "email": "geoffrey.testelin@gmail.com",
@@ -33,7 +33,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/C0ZEN/sonia-il-est-midi.git"
+    "url": "https://github.com/Sonia-corporation/il-est-midi-discord.git"
   },
   "config": {
     "commitizen": {
