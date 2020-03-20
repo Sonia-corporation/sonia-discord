@@ -1,8 +1,4 @@
-import {
-  Client,
-  Message,
-  PartialMessage
-} from 'discord.js';
+import { Client } from 'discord.js';
 import _ from 'lodash';
 import {
   chalkRed,
@@ -71,7 +67,7 @@ export class DiscordMessage {
   private _dmMessage(message: Readonly<AnyDiscordMessage>): void {
     if (this._discordAuthor.isValidAuthor(message.author)) {
       if (!this._discordBot.isSonia(message.author.id)) {
-        this._sendMessage(message, 'Il est midi !');
+        this._replyToAuthor(message);
       }
     }
   }
@@ -88,7 +84,7 @@ export class DiscordMessage {
 
             if (this._discordBot.isSoniaValid(sonia)) {
               if (this._discordMention.isUserMentioned(message.mentions, sonia)) {
-                this._sendMessage(message, 'Il est midi !');
+                this._replyToAuthor(message);
               }
             }
           }
@@ -97,14 +93,26 @@ export class DiscordMessage {
     }
   }
 
+  private _replyToAuthor(message: Readonly<AnyDiscordMessage>): void {
+    let response = 'Il est midi !';
+
+    if (this._discordAuthor.isValidAuthor(message.author)) {
+      if (this._discordAuthor.hasValidAuthorUsername(message.author)) {
+        response = `Il est midi ${message.author.username} !`;
+      }
+    }
+
+    this._sendMessage(message, response);
+  }
+
   private _sendMessage(
     message: Readonly<AnyDiscordMessage>,
-    responseMessage: Readonly<string>
+    response: Readonly<string>
   ): void {
     this._logger.debug(this.constructor.name, chalkWhite(`sending message...`));
 
     if (this._discordChannel.isValidChannel(message.channel)) {
-      message.channel.send(responseMessage).then((): void => {
+      message.channel.send(response).then((): void => {
         this._logger.log(this.constructor.name, chalkWhite(`message sent`));
       }).catch((error: unknown): void => {
         this._logger.error(this.constructor.name, chalkWhite(`message sending failed`));

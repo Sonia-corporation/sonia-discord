@@ -16,4 +16,8 @@ export class DiscordAuthor {
   public isValidAuthor(author: unknown): author is AnyDiscordAuthor {
     return isDiscordUser(author);
   }
+
+  public hasValidAuthorUsername(author: AnyDiscordAuthor): boolean {
+    return _.isString(author.username) && !_.isEmpty(author.username);
+  }
 }
