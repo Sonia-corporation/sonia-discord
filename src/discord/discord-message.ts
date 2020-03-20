@@ -1,17 +1,16 @@
-import { Client } from 'discord.js';
-import _ from 'lodash';
 import {
-  chalkRed,
-  chalkWhite
+  chalkError,
+  chalkText
 } from '../logger/chalk';
 import { Logger } from '../logger/logger';
 import { DiscordAuthor } from './discord-author';
-import { DiscordSonia } from './discord-sonia';
 import { DiscordChannel } from './discord-channel';
 import { DiscordClient } from './discord-client';
 import { DiscordMention } from './discord-mention';
+import { DiscordSonia } from './discord-sonia';
 import { AnyDiscordMessage } from './types/any-discord-message';
 import { Sonia } from './types/sonia';
+import _ from 'lodash';
 
 export class DiscordMessage {
   private static _instance: DiscordMessage;
@@ -24,21 +23,15 @@ export class DiscordMessage {
     return DiscordMessage._instance;
   }
 
-  private readonly _logger: Logger;
-  private readonly _client: Client;
-  private readonly _discordSonia: DiscordSonia;
-  private readonly _discordChannel: DiscordChannel;
-  private readonly _discordAuthor: DiscordAuthor;
-  private readonly _discordMention: DiscordMention;
+  private readonly _logger = Logger.getInstance();
+  private readonly _client = DiscordClient.getInstance().getClient();
+  private readonly _discordSonia = DiscordSonia.getInstance();
+  private readonly _discordChannel = DiscordChannel.getInstance();
+  private readonly _discordAuthor = DiscordAuthor.getInstance();
+  private readonly _discordMention = DiscordMention.getInstance();
+  private readonly _className = 'DiscordMessage';
 
   public constructor() {
-    this._logger = Logger.getInstance();
-    this._client = DiscordClient.getInstance().getClient();
-    this._discordSonia = DiscordSonia.getInstance();
-    this._discordChannel = DiscordChannel.getInstance();
-    this._discordAuthor = DiscordAuthor.getInstance();
-    this._discordMention = DiscordMention.getInstance();
-
     this._init();
   }
 
@@ -51,7 +44,7 @@ export class DiscordMessage {
       this._handleMessage(message);
     });
 
-    this._logger.debug(this.constructor.name, chalkWhite(`listen messages`));
+    this._logger.debug(this._className, chalkText(`listen messages`));
   }
 
   private _handleMessage(message: Readonly<AnyDiscordMessage>): void {
@@ -109,14 +102,14 @@ export class DiscordMessage {
     message: Readonly<AnyDiscordMessage>,
     response: Readonly<string>
   ): void {
-    this._logger.debug(this.constructor.name, chalkWhite(`sending message...`));
+    this._logger.debug(this._className, chalkText(`sending message...`));
 
     if (this._discordChannel.isValidChannel(message.channel)) {
       message.channel.send(response).then((): void => {
-        this._logger.log(this.constructor.name, chalkWhite(`message sent`));
+        this._logger.log(this._className, chalkText(`message sent`));
       }).catch((error: unknown): void => {
-        this._logger.error(this.constructor.name, chalkWhite(`message sending failed`));
-        this._logger.error(this.constructor.name, chalkRed(error));
+        this._logger.error(this._className, chalkText(`message sending failed`));
+        this._logger.error(this._className, chalkError(error));
       });
     }
   }

@@ -1,5 +1,4 @@
-export enum LoggerConfigLevelEnum {
-  OFF = 'off',
+export enum LoggerLogTypeEnum {
   ERROR = 'error',
   SUCCESS = 'success',
   LOG = 'log',

@@ -1,10 +1,13 @@
-import _ from 'lodash';
-import { chalkCyan } from '../logger/chalk';
+import {
+  chalkValue,
+  chalkText
+} from '../logger/chalk';
 import { Logger } from '../logger/logger';
 import { DiscordClient } from './discord-client';
 import { isDiscordClientUser } from './functions/is-discord-client-user';
 import { IDiscordConfig } from './interfaces/discord-config';
 import { Sonia } from './types/sonia';
+import _ from 'lodash';
 
 export class DiscordSonia {
   private static _instance: DiscordSonia;
@@ -17,14 +20,13 @@ export class DiscordSonia {
     return DiscordSonia._instance;
   }
 
-  private readonly _logger: Logger;
-  private readonly _discordClient: DiscordClient;
+  private readonly _logger = Logger.getInstance();
+  private readonly _discordClient = DiscordClient.getInstance();
+  private readonly _className = 'DiscordSonia';
   private _id: string;
   private _secretToken: string;
 
   public constructor(config?: Readonly<Partial<IDiscordConfig>>) {
-    this._logger = Logger.getInstance();
-    this._discordClient = DiscordClient.getInstance();
     this._id = '';
     this._secretToken = '';
 
@@ -40,7 +42,7 @@ export class DiscordSonia {
     if (_.isString(id)) {
       this._id = id;
 
-      this._logger.log(this.constructor.name, `id updated to: ${chalkCyan(`"${id}"`)}`);
+      this._logger.log(this._className, chalkText(`id updated to: ${chalkValue(`"${id}"`)}`));
     }
   }
 
@@ -52,7 +54,7 @@ export class DiscordSonia {
     if (_.isString(secretToken)) {
       this._secretToken = secretToken;
 
-      this._logger.log(this.constructor.name, `secretToken updated to: ${chalkCyan(`"********"`)}`);
+      this._logger.log(this._className, chalkText(`secretToken updated to: ${chalkValue(`"********"`)} (hidden)`));
     }
   }
 

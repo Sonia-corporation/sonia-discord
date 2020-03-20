@@ -1,7 +1,7 @@
-import _ from 'lodash';
 import { isDiscordDmChannel } from './functions/is-discord-dm-channel';
 import { isDiscordTextChannel } from './functions/is-discord-text-channel';
 import { AnyDiscordChannel } from './types/any-discord-channel';
+import _ from 'lodash';
 
 export class DiscordChannel {
   private static _instance: DiscordChannel;

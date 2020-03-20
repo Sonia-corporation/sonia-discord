@@ -1,8 +1,8 @@
-import fs from 'fs-extra';
 import { Discord } from './discord/discord';
 import { IEnvironment } from './environment/interfaces/environment';
 import { Logger } from './logger/logger';
 import { Server } from './server/server';
+import fs from 'fs-extra';
 
 fs.readJson('./src/environment/environment.json').then((environment: IEnvironment): void => {
   Logger.getInstance(environment.logger);
