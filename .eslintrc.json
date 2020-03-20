@@ -40,27 +40,10 @@
     }
   },
   "rules": {
-    "sort-imports": "off",
     "import/no-namespace": "error",
     "import/first": "error",
     "import/exports-last": "error",
     "import/no-duplicates": "error",
-    "import/order": [
-      "error",
-      {
-        "groups": [
-          "builtin",
-          "external",
-          "parent",
-          "sibling",
-          "index"
-        ],
-        "alphabetize": {
-          "order": "asc",
-          "caseInsensitive": false
-        }
-      }
-    ],
     "indent": [
       "error",
       2
