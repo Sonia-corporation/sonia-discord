@@ -1,6 +1,8 @@
+import { ClientUser } from 'discord.js';
 import _ from 'lodash';
 import { chalkCyan } from '../logger/chalk';
 import { Logger } from '../logger/logger';
+import { DiscordClient } from './client';
 import { IDiscordConfig } from './interfaces/discord-config';
 
 export class DiscordBot {
@@ -15,23 +17,25 @@ export class DiscordBot {
   }
 
   private readonly _logger: Logger;
+  private readonly _discordClient: DiscordClient;
   private _id: string;
   private _secretToken: string;
 
   public constructor(config?: Readonly<Partial<IDiscordConfig>>) {
     this._logger = Logger.getInstance();
+    this._discordClient = DiscordClient.getInstance();
     this._id = '';
     this._secretToken = '';
 
-    this.updateId(config?.botId);
-    this.updateSecretToken(config?.botSecretToken);
+    this.updateSoniaId(config?.botId);
+    this.updateSoniaSecretToken(config?.botSecretToken);
   }
 
-  public getId(): string {
+  public getSoniaId(): string {
     return this._id;
   }
 
-  public updateId(id?: Readonly<string>): void {
+  public updateSoniaId(id?: Readonly<string>): void {
     if (_.isString(id)) {
       this._id = id;
 
@@ -39,11 +43,11 @@ export class DiscordBot {
     }
   }
 
-  public getSecretToken(): string {
+  public getSoniaSecretToken(): string {
     return this._secretToken;
   }
 
-  public updateSecretToken(secretToken?: Readonly<string>): void {
+  public updateSoniaSecretToken(secretToken?: Readonly<string>): void {
     if (_.isString(secretToken)) {
       this._secretToken = secretToken;
 
@@ -51,7 +55,11 @@ export class DiscordBot {
     }
   }
 
-  public isSoniaBot(userId: Readonly<string>): boolean {
-    return _.isEqual(userId, this.getId())
+  public isSoniaBot(id: Readonly<string>): boolean {
+    return _.isEqual(id, this.getSoniaId());
+  }
+
+  public getSonia(): ClientUser | null {
+    return this._discordClient.getClient().user;
   }
 }

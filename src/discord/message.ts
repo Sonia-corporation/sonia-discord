@@ -13,6 +13,7 @@ import { DiscordAuthor } from './author';
 import { DiscordBot } from './bot';
 import { DiscordChannel } from './channel';
 import { DiscordClient } from './client';
+import { DiscordMention } from './mention';
 import { AnyDiscordMessage } from './types/any-discord-message';
 
 export class DiscordMessage {
@@ -31,6 +32,7 @@ export class DiscordMessage {
   private readonly _discordBot: DiscordBot;
   private readonly _discordChannel: DiscordChannel;
   private readonly _discordAuthor: DiscordAuthor;
+  private readonly _discordMention: DiscordMention;
 
   public constructor() {
     this._logger = Logger.getInstance();
@@ -38,6 +40,7 @@ export class DiscordMessage {
     this._discordBot = DiscordBot.getInstance();
     this._discordChannel = DiscordChannel.getInstance();
     this._discordAuthor = DiscordAuthor.getInstance();
+    this._discordMention = DiscordMention.getInstance();
 
     this._init();
   }
@@ -76,7 +79,11 @@ export class DiscordMessage {
     if (this._discordAuthor.isValidAuthor(message.author)) {
       if (!this._discordBot.isSoniaBot(message.author.id)) {
         console.log(message);
-        this._sendMessage(message, 'Il est midi !');
+        if (this._discordMention.isValidMessageMentions(message.mentions)) {
+          if (this._discordMention.isUserMentioned(message.mentions, this._discordBot.getSonia())) {
+            this._sendMessage(message, 'Il est midi tout le monde !');
+          }
+        }
       }
     }
   }
