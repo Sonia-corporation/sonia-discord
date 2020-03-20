@@ -1,6 +1,5 @@
-import { DiscordClient } from './discord-client';
-import { Client } from 'discord.js';
 import _ from 'lodash';
+import { DiscordClient } from './discord-client';
 
 export class DiscordGuild {
   private static _instance: DiscordGuild;
@@ -13,11 +12,9 @@ export class DiscordGuild {
     return DiscordGuild._instance;
   }
 
-  private readonly _client: Client;
+  private readonly _client = DiscordClient.getInstance().getClient();
 
   public constructor() {
-    this._client = DiscordClient.getInstance().getClient();
-
     this._init();
   }
 

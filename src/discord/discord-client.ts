@@ -14,14 +14,12 @@ export class DiscordClient {
     return DiscordClient._instance;
   }
 
-  private readonly _logger: Logger;
-  private readonly _client: Client;
+  private readonly _logger = Logger.getInstance();
+  private readonly _client = new Client();
+  private readonly _className = 'DiscordClient';
 
   public constructor() {
-    this._logger = Logger.getInstance();
-    this._client = new Client();
-
-    this._logger.debug(this.constructor.name, chalkText(`client created`));
+    this._logger.debug(this._className, chalkText(`client created`));
   }
 
   public getClient(): Client {
