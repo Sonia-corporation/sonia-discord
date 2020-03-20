@@ -1,6 +1,5 @@
 import { Client } from 'discord.js';
 import _ from 'lodash';
-import { Logger } from '../logger/logger';
 import { DiscordClient } from './client';
 
 export class DiscordGuild {
@@ -14,11 +13,9 @@ export class DiscordGuild {
     return DiscordGuild._instance;
   }
 
-  private readonly _logger: Logger;
   private readonly _client: Client;
 
   public constructor() {
-    this._logger = Logger.getInstance();
     this._client = DiscordClient.getInstance().getClient();
 
     this._init();
