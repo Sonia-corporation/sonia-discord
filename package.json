@@ -1,6 +1,6 @@
 {
   "name": "sonia-il-est-midi",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "author": {
     "email": "geoffrey.testelin@gmail.com",
     "name": "Geoffrey 'C0ZEN' Testelin",
@@ -27,7 +27,8 @@
     "discord",
     "bot",
     "discord-bot",
-    "sonia"
+    "sonia",
+    "il-est-midi"
   ],
   "type": "module",
   "repository": {
@@ -55,7 +56,9 @@
     "commitmsg": "cz-customizable-ghooks",
     "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
     "tsc": "tsc",
-    "prod": "npm run tsc && node ./dist/index.js"
+    "prod": "npm run tsc && node ./dist/index.js",
+    "ci": "npm run tsc",
+    "test": ""
   },
   "dependencies": {
     "discord.js": "12.0.2",
@@ -70,6 +73,7 @@
     "@types/fs-extra": "8.1.0",
     "@types/lodash": "4.14.149",
     "@types/node": "12.11.1",
+    "@types/ws": "7.2.3",
     "@typescript-eslint/eslint-plugin": "2.24.0",
     "@typescript-eslint/parser": "2.24.0",
     "chalk": "3.0.0",

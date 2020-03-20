@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { Logger } from '../logger/logger';
 import { DiscordAuthentication } from './authentication';
 import { DiscordBot } from './bot';
 import { DiscordGuild } from './guild';
@@ -40,11 +39,7 @@ export class Discord {
     Discord._handleMessages();
   }
 
-  private readonly _logger: Logger;
-
   public constructor(config?: Readonly<Partial<IDiscordConfig>>) {
-    this._logger = Logger.getInstance();
-
     Discord._init(config);
   }
 }
