@@ -1,17 +1,17 @@
-import { Client } from 'discord.js';
-import _ from 'lodash';
 import {
-  chalkRed,
-  chalkWhite
+  chalkError,
+  chalkText
 } from '../logger/chalk';
 import { Logger } from '../logger/logger';
 import { DiscordAuthor } from './discord-author';
-import { DiscordSonia } from './discord-sonia';
 import { DiscordChannel } from './discord-channel';
 import { DiscordClient } from './discord-client';
 import { DiscordMention } from './discord-mention';
+import { DiscordSonia } from './discord-sonia';
 import { AnyDiscordMessage } from './types/any-discord-message';
 import { Sonia } from './types/sonia';
+import { Client } from 'discord.js';
+import _ from 'lodash';
 
 export class DiscordMessage {
   private static _instance: DiscordMessage;
@@ -51,7 +51,7 @@ export class DiscordMessage {
       this._handleMessage(message);
     });
 
-    this._logger.debug(this.constructor.name, chalkWhite(`listen messages`));
+    this._logger.debug(this.constructor.name, chalkText(`listen messages`));
   }
 
   private _handleMessage(message: Readonly<AnyDiscordMessage>): void {
@@ -109,14 +109,14 @@ export class DiscordMessage {
     message: Readonly<AnyDiscordMessage>,
     response: Readonly<string>
   ): void {
-    this._logger.debug(this.constructor.name, chalkWhite(`sending message...`));
+    this._logger.debug(this.constructor.name, chalkText(`sending message...`));
 
     if (this._discordChannel.isValidChannel(message.channel)) {
       message.channel.send(response).then((): void => {
-        this._logger.log(this.constructor.name, chalkWhite(`message sent`));
+        this._logger.log(this.constructor.name, chalkText(`message sent`));
       }).catch((error: unknown): void => {
-        this._logger.error(this.constructor.name, chalkWhite(`message sending failed`));
-        this._logger.error(this.constructor.name, chalkRed(error));
+        this._logger.error(this.constructor.name, chalkText(`message sending failed`));
+        this._logger.error(this.constructor.name, chalkError(error));
       });
     }
   }

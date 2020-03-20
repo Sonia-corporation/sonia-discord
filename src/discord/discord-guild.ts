@@ -1,6 +1,6 @@
+import { DiscordClient } from './discord-client';
 import { Client } from 'discord.js';
 import _ from 'lodash';
-import { DiscordClient } from './discord-client';
 
 export class DiscordGuild {
   private static _instance: DiscordGuild;

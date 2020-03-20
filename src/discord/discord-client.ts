@@ -1,7 +1,7 @@
-import discord, { Client } from 'discord.js';
-import _ from 'lodash';
-import { chalkWhite } from '../logger/chalk';
+import { chalkText } from '../logger/chalk';
 import { Logger } from '../logger/logger';
+import { Client } from 'discord.js';
+import _ from 'lodash';
 
 export class DiscordClient {
   private static _instance: DiscordClient;
@@ -19,9 +19,9 @@ export class DiscordClient {
 
   public constructor() {
     this._logger = Logger.getInstance();
-    this._client = new discord.Client();
+    this._client = new Client();
 
-    this._logger.debug(this.constructor.name, chalkWhite(`client created`));
+    this._logger.debug(this.constructor.name, chalkText(`client created`));
   }
 
   public getClient(): Client {

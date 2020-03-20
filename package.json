@@ -30,7 +30,6 @@
     "sonia",
     "il-est-midi"
   ],
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/Sonia-corporation/il-est-midi-discord.git"
@@ -53,8 +52,10 @@
     "tsc": "tsc",
     "\n# TEST SCRIPTS:": "",
     "test": "",
+    "test:ci": "",
     "\n# LINT SCRIPTS:": "",
-    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
+    "lint": "eslint --fix --ext .js,.ts --cache scripts/ src/",
+    "lint:ci": "eslint --ext .js,.ts scripts/ src/",
     "\n# UTILS SCRIPTS:": "",
     "commitmsg": "cz-customizable-ghooks",
     "cz": "git add . && git-cz && git push-upstream",
@@ -84,6 +85,7 @@
     "eslint": "6.8.0",
     "eslint-config-google": "0.14.0",
     "eslint-config-recommended": "4.0.0",
+    "eslint-plugin-import": "2.20.1",
     "fs-extra": "9.0.0",
     "husky": "4.2.3",
     "semantic-release": "17.0.4",
