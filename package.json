@@ -50,15 +50,21 @@
   "private": false,
   "main": "./src/index.ts",
   "scripts": {
+    "\n# BUILD SCRIPTS:": "",
+    "build": "npm run tsc",
     "start": "ts-node-dev --respawn --transpileOnly .",
-    "cz": "git add . && git-cz && git push-upstream",
-    "semver": "npx semantic-release",
-    "commitmsg": "cz-customizable-ghooks",
-    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
+    "start:prod": "npm run build && node ./dist/index.js",
     "tsc": "tsc",
-    "prod": "npm run tsc && node ./dist/index.js",
-    "ci": "npm run tsc",
-    "test": ""
+    "\n# CI SCRIPTS:": "",
+    "ci": "npm run lint",
+    "\n# TEST SCRIPTS:": "",
+    "test": "",
+    "\n# LINT SCRIPTS:": "",
+    "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
+    "\n# UTILS SCRIPTS:": "",
+    "commitmsg": "cz-customizable-ghooks",
+    "cz": "git add . && git-cz && git push-upstream",
+    "semver": "npx semantic-release"
   },
   "dependencies": {
     "discord.js": "12.0.2",
