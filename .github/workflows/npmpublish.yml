@@ -2,13 +2,10 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
 
 name: Node.js Package
-
 on:
   release:
-    types: [
-      created
-    ]
-
+    types:
+      - created
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,7 +16,6 @@ jobs:
           node-version: 12
       - run: npm ci
       - run: npm test
-
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
@@ -33,7 +29,6 @@ jobs:
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
   publish-gpr:
     needs: build
     runs-on: ubuntu-latest
