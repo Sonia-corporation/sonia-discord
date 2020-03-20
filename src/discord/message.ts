@@ -79,11 +79,13 @@ export class DiscordMessage {
   ): void {
     this._logger.debug(this.constructor.name, chalkWhite(`sending message...`));
 
-    message.channel.send(responseMessage).then((): void => {
-      this._logger.log(this.constructor.name, chalkWhite(`message sent`));
-    }).catch((error: unknown): void => {
-      this._logger.error(this.constructor.name, chalkWhite(`message sending failed`));
-      this._logger.error(this.constructor.name, chalkRed(error));
-    });
+    if (!_.isNil(message.channel)) {
+      message.channel.send(responseMessage).then((): void => {
+        this._logger.log(this.constructor.name, chalkWhite(`message sent`));
+      }).catch((error: unknown): void => {
+        this._logger.error(this.constructor.name, chalkWhite(`message sending failed`));
+        this._logger.error(this.constructor.name, chalkRed(error));
+      });
+    }
   }
 }
