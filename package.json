@@ -57,7 +57,8 @@
     "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
     "tsc": "tsc",
     "prod": "npm run tsc && node ./dist/index.js",
-    "ci": "npm run tsc"
+    "ci": "npm run tsc",
+    "test": ""
   },
   "dependencies": {
     "discord.js": "12.0.2",
