@@ -55,7 +55,7 @@ export class DiscordSonia {
     if (_.isString(secretToken)) {
       this._secretToken = secretToken;
 
-      this._logger.log(this.constructor.name, chalkWhite(`secretToken updated to: ${chalkCyan(`"********"`)}`));
+      this._logger.log(this.constructor.name, chalkWhite(`secretToken updated to: ${chalkCyan(`"********"`)} (hidden)`));
     }
   }
 
