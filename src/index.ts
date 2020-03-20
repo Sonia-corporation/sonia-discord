@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-import { Discord } from './discord/main';
+import { Discord } from './discord/discord';
 import { IEnvironment } from './environment/interfaces/environment';
 import { Logger } from './logger/logger';
 import { Server } from './server/server';
