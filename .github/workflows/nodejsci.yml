@@ -57,6 +57,6 @@ jobs:
         env:
           CI: true
 
-      - name: Release (${{ github.ref }})
+      - name: Release
         if: github.ref == 'refs/heads/master'
         run: npm run semver
