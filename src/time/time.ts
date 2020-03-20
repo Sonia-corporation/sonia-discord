@@ -12,7 +12,7 @@ export class Time {
     return Time._instance;
   }
 
-  public now(format = 'HH:mm:ss:SSS'): string {
+  public now(format?: string): string {
     return moment().format(format);
   }
 }

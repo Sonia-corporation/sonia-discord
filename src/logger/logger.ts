@@ -100,6 +100,6 @@ export class Logger {
   }
 
   private _context(name: Readonly<string>): string {
-    return chalkContext(`[${name}][${this._time.now()}] `);
+    return chalkContext(`[${name}][${this._time.now('HH:mm:ss:SSS')}] `);
   }
 }
