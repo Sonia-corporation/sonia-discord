@@ -1,5 +1,5 @@
 {
-  "name": "@sonia-organization/sonia-il-est-midi",
+  "name": "@sonia-corporation/il-est-midi-discord",
   "version": "1.2.1",
   "author": {
     "email": "geoffrey.testelin@gmail.com",
@@ -14,7 +14,7 @@
     }
   ],
   "description": "The Sonia Discord bot for the famous quote: il est midi",
-  "homepage": "https://github.com/C0ZEN/sonia-il-est-midi",
+  "homepage": "https://github.com/Sonia-corporation/il-est-midi-discord",
   "maintainers": [
     {
       "email": "geoffrey.testelin@gmail.com",
@@ -33,7 +33,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/C0ZEN/sonia-il-est-midi.git"
+    "url": "https://github.com/Sonia-corporation/il-est-midi-discord.git"
   },
   "config": {
     "commitizen": {
@@ -72,7 +72,7 @@
     "@types/express": "4.17.3",
     "@types/fs-extra": "8.1.0",
     "@types/lodash": "4.14.149",
-    "@types/node": "12.11.1",
+    "@types/node": "12.12.30",
     "@types/ws": "7.2.3",
     "@typescript-eslint/eslint-plugin": "2.24.0",
     "@typescript-eslint/parser": "2.24.0",
@@ -84,7 +84,7 @@
     "eslint": "6.8.0",
     "eslint-config-google": "0.14.0",
     "eslint-config-recommended": "4.0.0",
-    "fs-extra": "8.1.0",
+    "fs-extra": "9.0.0",
     "husky": "4.2.3",
     "semantic-release": "17.0.4",
     "ts-node-dev": "1.0.0-pre.44",
