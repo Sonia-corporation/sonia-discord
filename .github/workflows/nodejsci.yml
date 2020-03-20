@@ -6,11 +6,13 @@ name: Node.js CI
 on:
   push:
     branches: [
-      master
+      master,
+      develop
     ]
   pull_request:
     branches: [
-      master
+      master,
+      develop
     ]
 
 jobs:
@@ -29,6 +31,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Cache node_modules
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: actions/cache@v1
         env:
           cache-name: cache-node-modules
@@ -44,7 +47,7 @@ jobs:
         run: npm ci
 
       - name: Lint
-        run: npm lint
+        run: npm run lint
 
       - name: Test
         run: npm test
