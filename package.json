@@ -56,7 +56,8 @@
     "commitmsg": "cz-customizable-ghooks",
     "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx",
     "tsc": "tsc",
-    "prod": "npm run tsc && node ./dist/index.js"
+    "prod": "npm run tsc && node ./dist/index.js",
+    "ci": "npm run tsc"
   },
   "dependencies": {
     "discord.js": "12.0.2",
