@@ -50,4 +50,8 @@ export class DiscordBot {
       this._logger.log(this.constructor.name, `secretToken updated to: ${chalkCyan(`"********"`)}`);
     }
   }
+
+  public isSoniaBot(userId: Readonly<string>): boolean {
+    return _.isEqual(userId, this.getId())
+  }
 }

@@ -9,8 +9,11 @@ import {
   chalkWhite
 } from '../logger/chalk';
 import { Logger } from '../logger/logger';
+import { DiscordAuthor } from './author';
 import { DiscordBot } from './bot';
+import { DiscordChannel } from './channel';
 import { DiscordClient } from './client';
+import { AnyDiscordMessage } from './types/any-discord-message';
 
 export class DiscordMessage {
   private static _instance: DiscordMessage;
@@ -25,12 +28,16 @@ export class DiscordMessage {
 
   private readonly _logger: Logger;
   private readonly _client: Client;
-  private readonly _bot: DiscordBot;
+  private readonly _discordBot: DiscordBot;
+  private readonly _discordChannel: DiscordChannel;
+  private readonly _discordAuthor: DiscordAuthor;
 
   public constructor() {
     this._logger = Logger.getInstance();
     this._client = DiscordClient.getInstance().getClient();
-    this._bot = DiscordBot.getInstance();
+    this._discordBot = DiscordBot.getInstance();
+    this._discordChannel = DiscordChannel.getInstance();
+    this._discordAuthor = DiscordAuthor.getInstance();
 
     this._init();
   }
@@ -40,46 +47,47 @@ export class DiscordMessage {
   }
 
   private _listen(): void {
-    this._client.on('message', (message: Readonly<Message | PartialMessage>): void => {
+    this._client.on('message', (message: Readonly<AnyDiscordMessage>): void => {
       this._handleMessage(message);
     });
 
     this._logger.debug(this.constructor.name, chalkWhite(`listen messages`));
   }
 
-  private _handleMessage(message: Readonly<Message | PartialMessage>): void {
-    if (!_.isNil(message.channel)) {
-      if (_.isEqual(message.channel.type, 'dm')) {
+  private _handleMessage(message: Readonly<AnyDiscordMessage>): void {
+    if (this._discordChannel.isValidChannel(message.channel)) {
+      if (this._discordChannel.isDmChannel(message.channel)) {
         this._dmMessage(message);
-      } else if (_.isEqual(message.channel.type, 'text')) {
+      } else if (this._discordChannel.isTextChannel(message.channel)) {
         this._textMessage(message);
       }
     }
   }
 
-  private _dmMessage(message: Readonly<Message | PartialMessage>): void {
-    if (!_.isNil(message.author)) {
-      if (!_.isEqual(message.author.id, this._bot.getId())) {
+  private _dmMessage(message: Readonly<AnyDiscordMessage>): void {
+    if (this._discordAuthor.isValidAuthor(message.author)) {
+      if (!this._discordBot.isSoniaBot(message.author.id)) {
         this._sendMessage(message, 'Il est midi !');
       }
     }
   }
 
-  private _textMessage(message: Readonly<Message | PartialMessage>): void {
-    if (!_.isNil(message.author)) {
-      if (!_.isEqual(message.author.id, this._bot.getId())) {
+  private _textMessage(message: Readonly<AnyDiscordMessage>): void {
+    if (this._discordAuthor.isValidAuthor(message.author)) {
+      if (!this._discordBot.isSoniaBot(message.author.id)) {
+        console.log(message);
         this._sendMessage(message, 'Il est midi !');
       }
     }
   }
 
   private _sendMessage(
-      message: Readonly<Message | PartialMessage>,
-      responseMessage: Readonly<string>
+    message: Readonly<AnyDiscordMessage>,
+    responseMessage: Readonly<string>
   ): void {
     this._logger.debug(this.constructor.name, chalkWhite(`sending message...`));
 
-    if (!_.isNil(message.channel)) {
+    if (this._discordChannel.isValidChannel(message.channel)) {
       message.channel.send(responseMessage).then((): void => {
         this._logger.log(this.constructor.name, chalkWhite(`message sent`));
       }).catch((error: unknown): void => {

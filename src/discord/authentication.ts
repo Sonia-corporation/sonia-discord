@@ -22,12 +22,12 @@ export class DiscordAuthentication {
 
   private readonly _logger: Logger;
   private readonly _client: Client;
-  private readonly _bot: DiscordBot;
+  private readonly _discordBot: DiscordBot;
 
   public constructor() {
     this._logger = Logger.getInstance();
     this._client = DiscordClient.getInstance().getClient();
-    this._bot = DiscordBot.getInstance();
+    this._discordBot = DiscordBot.getInstance();
 
     this._init();
   }
@@ -48,7 +48,7 @@ export class DiscordAuthentication {
   }
 
   private _login(): void {
-    this._client.login(this._bot.getSecretToken()).then((): void => {
+    this._client.login(this._discordBot.getSecretToken()).then((): void => {
       this._logger.debug(this.constructor.name, chalkWhite(`authentication successful`));
     }).catch((error: unknown): void => {
       this._logger.error(this.constructor.name, chalkWhite(`authentication failed`));
