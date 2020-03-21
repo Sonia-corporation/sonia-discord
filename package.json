@@ -47,7 +47,7 @@
   "scripts": {
     "\n# BUILD SCRIPTS:": "",
     "build": "npm run clean:dist && concurrently \"parcel build ./src/index.ts --target node\" \"npm run build:environment:copy\" && npm run build:environment:rewrite-path",
-    "build:environment:copy": "node ./scripts/build-environment.js",
+    "build:environment:copy": "node scripts/build-environment-copy.js",
     "build:environment:rewrite-path": "node ./scripts/build-environment-rewrite-path.js",
     "start": "ts-node-dev --respawn --transpileOnly .",
     "start:prod": "npm run build && node ./dist/index.js",

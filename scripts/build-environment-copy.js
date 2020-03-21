@@ -3,7 +3,7 @@ const CHALK = require('./chalk');
 const LOGGER = require('./logger');
 const APP_ROOT_PATH = require('app-root-path');
 
-const CONTEXT = 'build-environment';
+const CONTEXT = 'build-environment-copy';
 
 LOGGER.debug(CONTEXT, CHALK.chalkText('Copy environment file to dist...'));
 
