@@ -10,6 +10,42 @@
 ![Build](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Build/badge.svg?branch=master&style=flat-square)
 ![Release](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Release/badge.svg?branch=master&style=flat-square)
 
+## Sonia bot
+
+### Sonia commands
+
+### Sonia behavior
+
+Sonia will never responds to herself - no infinite loop :(  
+Sonia will never responds to another bot - love between them will not be tolerated.
+
+#### In a private channel (also known as DM)
+
+Sonia will respond to each of your messages.  
+Special commands will be handled on the first hand.  
+
+When your message is very simple, Sonia will tell you that it is noon, as usual (even if it is a lie).  
+The message could be variable though.
+
+#### In a public text channel (also known as text)
+
+For now, Sonia will not be configurable over which channel she responds to.  
+In the future, Sonia should be disabled by default on all channels.  
+A command will enable Sonia on the given channel (a command will be also available to disable her).  
+This dev is a bit more complicated because Sonia will have to store in a database which channels are ready for her or not.
+
+To avoid flood, Sonia will tell you that it is noon on some conditions.  
+First of all, she will tell the channel that it is noon when it is noon.  
+That is the main goal after all...
+
+When a message on the channel is sent, Sonia will responds only if she is mentioned personally.  
+This count as a DM response for Sonia, so prepare to have a friendly message dedicated to you.
+
+Example:  
+`@Sonia-il-est-midi#0863 yo`
+
+On global mentions like `@here` and `@everyone`, Sonia will sends a message to tell everybody it is noon (even if it is a lie).
+
 ## Contributing
 
 Check out the [Contributing](CONTRIBUTING.md) file before helping us.
