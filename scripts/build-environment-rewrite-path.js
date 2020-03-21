@@ -6,6 +6,16 @@ const APP_ROOT_PATH = require('app-root-path');
 
 const CONTEXT = 'build-environment-rewrite-path';
 
+function updateEnvironmentPath(index) {
+  const updatedIndex = _.replace(index, '/src/environment/environment.json', '/dist/environment.json');
+
+  if (_.isEqual(_.toString(index), _.toString(updatedIndex))) {
+    LOGGER.warning(CONTEXT, CHALK.chalkText('Index file from dist was not updated'));
+  }
+
+  return updatedIndex;
+}
+
 LOGGER.debug(CONTEXT, CHALK.chalkText('Read index file from dist...'));
 
 FS.readFile(`${APP_ROOT_PATH.path}/dist/index.js`).then((index) => {
@@ -21,13 +31,3 @@ FS.readFile(`${APP_ROOT_PATH.path}/dist/index.js`).then((index) => {
   LOGGER.error(CONTEXT, CHALK.chalkText('Failed to read index file from dist'));
   throw new Error(error);
 });
-
-function updateEnvironmentPath(index) {
-  const updatedIndex = _.replace(index, '/src/environment/environment.json', '/dist/environment.json');
-
-  if (_.isEqual(_.toString(index), _.toString(updatedIndex))) {
-    LOGGER.warning(CONTEXT, CHALK.chalkText('Index file from dist was not updated'))
-  }
-
-  return updatedIndex;
-}
