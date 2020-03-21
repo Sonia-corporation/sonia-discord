@@ -1,5 +1,9 @@
 # Contributing
 
+## Package scripts
+
+
+
 ## Git
 
 ### Alias

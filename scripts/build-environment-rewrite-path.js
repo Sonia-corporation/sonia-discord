@@ -25,9 +25,10 @@ FS.readFile(`${APP_ROOT_PATH.path}/dist/index.js`).then((index) => {
     LOGGER.success(CONTEXT, CHALK.chalkText('Index file successfully updated from dist'));
   }).catch((error) => {
     LOGGER.error(CONTEXT, CHALK.chalkText('Failed to update index file from dist'));
-    throw new Error(error);
+    LOGGER.error(CONTEXT, CHALK.chalkText(error));
   });
 }).catch((error) => {
   LOGGER.error(CONTEXT, CHALK.chalkText('Failed to read index file from dist'));
-  throw new Error(error);
+  LOGGER.error(CONTEXT, CHALK.chalkText(error));
+  throw new Error('The update of the index file from dist failed');
 });
