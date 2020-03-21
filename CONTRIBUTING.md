@@ -1,5 +1,31 @@
 # Contributing
 
+## First step
+
+### Create the secret environment file
+
+This step is mandatory.  
+You must create the `secret-environment.json` file in the [environment folder](./src/environment/secret-environment.json).  
+This file should contains at least the bot secret token required by Discord.  
+
+__Example:__
+```json
+{
+  "discord": {
+    "botSecretToken": "TO_DEFINE"
+  }
+}
+```
+
+This token is private and there two ways to have access to it:
+- Asks an admin (like [C0ZEN](https://github.com/C0ZEN))
+- Access to the [Discord bot page](https://discordapp.com/developers/applications/689829775317139460/bot) to reveal the token
+
+### Install the dependencies
+
+Run `npm i` to install the dependencies.  
+Run `npm run start` to start the local development server.
+
 ## Package scripts
 
 `npm run build`: create a Node.js app in the dist folder
@@ -25,7 +51,7 @@ The configuration of the alias is a [local one](.gitconfig).
 
 This alias is used by the `cz` script to automatically push on the remote with a dynamic branch name.  
 
-**Troubleshooting:**
+__Troubleshooting:__
 
 If the command `push-upstream` does not exists, you can link it to your git:  
 Run `git config --local include.path ../.gitconfig`.
