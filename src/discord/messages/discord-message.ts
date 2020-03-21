@@ -6,6 +6,7 @@ import {
 import { Logger } from '../../logger/logger';
 import { DiscordChannel } from '../channels/discord-channel';
 import { DiscordClient } from '../discord-client';
+import { DiscordAuthor } from '../users/discord-author';
 import { DiscordMessageDm } from './discord-message-dm';
 import { DiscordMessageText } from './discord-message-text';
 import { AnyDiscordMessage } from './types/any-discord-message';
@@ -26,6 +27,7 @@ export class DiscordMessage {
   private readonly _discordChannel = DiscordChannel.getInstance();
   private readonly _discordMessageDm = DiscordMessageDm.getInstance();
   private readonly _discordMessageText = DiscordMessageText.getInstance();
+  private readonly _discordAuthor = DiscordAuthor.getInstance();
   private readonly _className = 'DiscordMessage';
 
   public constructor() {
@@ -45,12 +47,20 @@ export class DiscordMessage {
   }
 
   private _handleMessage(message: Readonly<AnyDiscordMessage>): void {
-    if (this._discordChannel.isValidChannel(message.channel)) {
-      if (this._discordChannel.isDmChannel(message.channel)) {
-        this._dmMessage(message);
-      } else if (this._discordChannel.isTextChannel(message.channel)) {
-        this._textMessage(message);
+    if (this._discordAuthor.isValidAuthor(message.author)) {
+      if (this._discordAuthor.isBotAuthor(message.author)) {
+        return;
       }
+    }
+
+    if (!this._discordChannel.isValidChannel(message.channel)) {
+      return;
+    }
+
+    if (this._discordChannel.isDmChannel(message.channel)) {
+      this._dmMessage(message);
+    } else if (this._discordChannel.isTextChannel(message.channel)) {
+      this._textMessage(message);
     }
   }
 
@@ -76,13 +86,15 @@ export class DiscordMessage {
   ): void {
     this._logger.debug(this._className, chalkText(`sending message...`));
 
-    if (this._discordChannel.isValidChannel(message.channel)) {
-      message.channel.send(response).then((): void => {
-        this._logger.log(this._className, chalkText(`message sent`));
-      }).catch((error: unknown): void => {
-        this._logger.error(this._className, chalkText(`message sending failed`));
-        this._logger.error(this._className, chalkError(error));
-      });
+    if (!this._discordChannel.isValidChannel(message.channel)) {
+      return;
     }
+
+    message.channel.send(response).then((): void => {
+      this._logger.log(this._className, chalkText(`message sent`));
+    }).catch((error: unknown): void => {
+      this._logger.error(this._className, chalkText(`message sending failed`));
+      this._logger.error(this._className, chalkError(error));
+    });
   }
 }

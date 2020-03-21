@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import { isDiscordUser } from './functions/is-discord-user';
 import { AnyDiscordAuthor } from './types/any-discord-author';
-import _ from 'lodash';
 
 export class DiscordAuthor {
   private static _instance: DiscordAuthor;
@@ -19,5 +19,9 @@ export class DiscordAuthor {
 
   public hasValidAuthorUsername(author: Readonly<AnyDiscordAuthor>): boolean {
     return _.isString(author.username) && !_.isEmpty(author.username);
+  }
+
+  public isBotAuthor(author: Readonly<AnyDiscordAuthor>): boolean {
+    return _.isEqual(author.bot, true);
   }
 }
