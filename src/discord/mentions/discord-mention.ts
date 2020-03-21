@@ -1,12 +1,12 @@
-import { isDiscordMessageMentions } from './functions/is-discord-message-mentions';
-import { AnyDiscordMessageMentions } from './types/any-discord-message-mentions';
 import {
   GuildChannel,
   GuildMember,
   Role,
   User
-} from 'src/discord/discord.js';
+} from 'discord.js';
 import _ from 'lodash';
+import { isDiscordMessageMentions } from './functions/is-discord-message-mentions';
+import { AnyDiscordMessageMentions } from './types/any-discord-message-mentions';
 
 export class DiscordMention {
   private static _instance: DiscordMention;

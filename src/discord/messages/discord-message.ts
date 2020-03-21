@@ -1,16 +1,14 @@
+import _ from 'lodash';
 import {
   chalkError,
   chalkText
 } from '../../logger/chalk';
 import { Logger } from '../../logger/logger';
-import { DiscordAuthor } from '../users/discord-author';
 import { DiscordChannel } from '../channels/discord-channel';
 import { DiscordClient } from '../discord-client';
-import { DiscordMention } from '../mentions/discord-mention';
-import { DiscordSonia } from '../users/discord-sonia';
+import { DiscordMessageDm } from './discord-message-dm';
+import { DiscordMessageText } from './discord-message-text';
 import { AnyDiscordMessage } from './types/any-discord-message';
-import { Sonia } from '../users/types/sonia';
-import _ from 'lodash';
 
 export class DiscordMessage {
   private static _instance: DiscordMessage;
@@ -25,10 +23,9 @@ export class DiscordMessage {
 
   private readonly _logger = Logger.getInstance();
   private readonly _client = DiscordClient.getInstance().getClient();
-  private readonly _discordSonia = DiscordSonia.getInstance();
   private readonly _discordChannel = DiscordChannel.getInstance();
-  private readonly _discordAuthor = DiscordAuthor.getInstance();
-  private readonly _discordMention = DiscordMention.getInstance();
+  private readonly _discordMessageDm = DiscordMessageDm.getInstance();
+  private readonly _discordMessageText = DiscordMessageText.getInstance();
   private readonly _className = 'DiscordMessage';
 
   public constructor() {
@@ -58,44 +55,19 @@ export class DiscordMessage {
   }
 
   private _dmMessage(message: Readonly<AnyDiscordMessage>): void {
-    if (this._discordAuthor.isValidAuthor(message.author)) {
-      if (!this._discordSonia.isSonia(message.author.id)) {
-        this._replyToAuthor(message);
-      }
+    const response: string | null = this._discordMessageDm.getDmMessage(message);
+
+    if (_.isString(response)) {
+      this._sendMessage(message, response);
     }
   }
 
   private _textMessage(message: Readonly<AnyDiscordMessage>): void {
-    if (this._discordAuthor.isValidAuthor(message.author)) {
-      if (!this._discordSonia.isSonia(message.author.id)) {
-        console.log(message);
-        if (this._discordMention.isValidMessageMentions(message.mentions)) {
-          if (this._discordMention.isMentionForEveryone(message.mentions)) {
-            this._sendMessage(message, 'Il est midi tout le monde !');
-          } else {
-            const sonia: Sonia | null = this._discordSonia.getSonia();
+    const response: string | null = this._discordMessageText.getTextMessage(message);
 
-            if (this._discordSonia.isSoniaValid(sonia)) {
-              if (this._discordMention.isUserMentioned(message.mentions, sonia)) {
-                this._replyToAuthor(message);
-              }
-            }
-          }
-        }
-      }
+    if (_.isString(response)) {
+      this._sendMessage(message, response);
     }
-  }
-
-  private _replyToAuthor(message: Readonly<AnyDiscordMessage>): void {
-    let response = 'Il est midi !';
-
-    if (this._discordAuthor.isValidAuthor(message.author)) {
-      if (this._discordAuthor.hasValidAuthorUsername(message.author)) {
-        response = `Il est midi ${message.author.username} !`;
-      }
-    }
-
-    this._sendMessage(message, response);
   }
 
   private _sendMessage(
