@@ -9,6 +9,12 @@ function error(scope, message) {
 
 module.exports.error = error;
 
+function warning(scope, message) {
+  console.log(`${getLogTypePrefix('warning')}${context(scope)}${message}`);
+}
+
+module.exports.warning = warning;
+
 function success(scope, message) {
   console.log(`${getLogTypePrefix('success')}${context(scope)}${message}`);
 }
@@ -34,6 +40,8 @@ function context(scope) {
 function getLogTypePrefix(logType) {
   if (logType === 'error') {
     return CHALK.chalkError(LOG_PREFIX);
+  } else if (logType === 'warning') {
+    return CHALK.chalkWarning(LOG_PREFIX);
   } else if (logType === 'success') {
     return CHALK.chalkSuccess(LOG_PREFIX);
   } else if (logType === 'log') {

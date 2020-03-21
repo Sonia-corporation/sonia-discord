@@ -6,7 +6,8 @@ import {
   chalkLog,
   chalkSuccess,
   chalkText,
-  chalkValue
+  chalkValue,
+  chalkWarning
 } from './chalk';
 import { LoggerConfigLevelEnum } from './enums/logger-config-level.enum';
 import { LoggerLogTypeEnum } from './enums/logger-log-type.enum';
@@ -50,13 +51,27 @@ export class Logger {
   public error(message: Readonly<string>): void;
   public error(context: Readonly<string>, message: Readonly<string>): void;
   public error(): void {
-    if (this._config.level === 'debug' || this._config.level === 'log' || this._config.level === 'success' || this._config.level === 'error') {
+    if (this._config.level === 'debug' || this._config.level === 'log' || this._config.level === 'success' || this._config.level === 'warning' || this._config.level === 'error') {
       const numberOfArguments = _.size(arguments);
 
       if (_.isEqual(numberOfArguments, 1)) {
         console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.ERROR)}${arguments[ 0 ]}`);
       } else if (_.isEqual(numberOfArguments, 2)) {
         console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.ERROR)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+      }
+    }
+  }
+
+  public warning(message: Readonly<string>): void;
+  public warning(context: Readonly<string>, message: Readonly<string>): void;
+  public warning(): void {
+    if (this._config.level === 'debug' || this._config.level === 'log' || this._config.level === 'success' || this._config.level === 'warning') {
+      const numberOfArguments = _.size(arguments);
+
+      if (_.isEqual(numberOfArguments, 1)) {
+        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.WARNING)}${arguments[ 0 ]}`);
+      } else if (_.isEqual(numberOfArguments, 2)) {
+        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.WARNING)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
       }
     }
   }
@@ -110,6 +125,8 @@ export class Logger {
   private _getLogTypePrefix(logType: LoggerLogTypeEnum): string {
     if (logType === LoggerLogTypeEnum.ERROR) {
       return chalkError(this._logPrefix);
+    } else if (logType === LoggerLogTypeEnum.WARNING) {
+      return chalkWarning(this._logPrefix);
     } else if (logType === LoggerLogTypeEnum.SUCCESS) {
       return chalkSuccess(this._logPrefix);
     } else if (logType === LoggerLogTypeEnum.LOG) {
