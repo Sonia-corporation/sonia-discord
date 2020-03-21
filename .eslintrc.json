@@ -40,6 +40,8 @@
     }
   },
   "rules": {
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
     "import/no-namespace": "error",
     "import/first": "error",
     "import/exports-last": "error",
@@ -92,5 +94,20 @@
         "functions": "never"
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": [
+          "error"
+        ],
+        "@typescript-eslint/no-var-requires": [
+          "error"
+        ]
+      }
+    }
+  ]
 }
