@@ -1,5 +1,22 @@
 # Semantic Versioning Changelog
 
+# [1.5.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.4.0...1.5.0) (2020-03-21)
+
+
+### Bug Fixes
+
+* **build:** change the way to read the environment file to avoid path error ([04f2abd](https://github.com/Sonia-corporation/il-est-midi-discord/commit/04f2abdd5901a9a08609215244c8d1e6fdee9a41))
+
+
+### Features
+
+* **scripts:** add chalk configuration ([d791894](https://github.com/Sonia-corporation/il-est-midi-discord/commit/d79189410c4636d0ef1db44c56a69189a9eda1ce))
+* **build:** add handler for the environment file ([417590c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/417590c135b811f98419bb568187bda06f60c8f1))
+* **scripts:** add logger configuration ([89788b7](https://github.com/Sonia-corporation/il-est-midi-discord/commit/89788b7ccfd03fb75b34ce3bda16a624ba57d1ab))
+* **env:** add new script to rewrite the path of the environment file inside the index ([3743a12](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3743a1278b99dcf5418da10954098894db632091))
+* **env:** add script to copy the environment file to the dist ([90b8a85](https://github.com/Sonia-corporation/il-est-midi-discord/commit/90b8a853d4e2e38b850f44d525d9d6087b9baa2e))
+* **logger:** add warning log type ([bbd247f](https://github.com/Sonia-corporation/il-est-midi-discord/commit/bbd247f791ceee5c6ff0c5a8eb1ce486215d5962))
+
 # [1.4.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.3.0...1.4.0) (2020-03-20)
 
 
