@@ -23,7 +23,7 @@ FS.readFile(`${APP_ROOT_PATH.path}/dist/index.js`).then((index) => {
 });
 
 function updateEnvironmentPath(index) {
-  const updatedIndex = _.replace(index, './src/environment/environment.json', './environment.json');
+  const updatedIndex = _.replace(index, '/src/environment/environment.json', '/dist/environment.json');
 
   if (_.isEqual(_.toString(index), _.toString(updatedIndex))) {
     LOGGER.warning(CONTEXT, CHALK.chalkText('Index file from dist was not updated'))
