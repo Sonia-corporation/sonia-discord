@@ -3,6 +3,5 @@ export enum LoggerConfigLevelEnum {
   WARNING = 'warning',
   SUCCESS = 'success',
   LOG = 'log',
-  DEBUG = 'debug',
-  OFF = 'off'
+  DEBUG = 'debug'
 }

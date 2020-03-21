@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { Time } from '../time/time';
 import {
   chalkContext,
@@ -12,7 +13,6 @@ import {
 import { LoggerConfigLevelEnum } from './enums/logger-config-level.enum';
 import { LoggerLogTypeEnum } from './enums/logger-log-type.enum';
 import { ILoggerConfig } from './interfaces/logger-config';
-import _ from 'lodash';
 
 export class Logger {
   private static _instance: Logger;
@@ -27,16 +27,26 @@ export class Logger {
 
   private readonly _time = Time.getInstance();
   private readonly _config: ILoggerConfig = {
-    level: LoggerConfigLevelEnum.OFF
+    isEnabled: false,
+    level: LoggerConfigLevelEnum.DEBUG
   };
   private readonly _logPrefix = '● ';
   private readonly _className = 'Logger';
 
   public constructor(config?: Readonly<Partial<ILoggerConfig>>) {
     if (!_.isNil(config) && _.isPlainObject(config)) {
+      this.updateEnabledState(config);
       this.updateLevel(config);
 
       this.debug(this._className, chalkText(`configuration updated`));
+    }
+  }
+
+  public updateEnabledState(config: Readonly<Partial<ILoggerConfig>>): void {
+    if (_.isBoolean(config.isEnabled)) {
+      this._config.isEnabled = config.isEnabled;
+
+      this.log(this._className, chalkText(`enabled state updated to: ${chalkValue(config.isEnabled)}`));
     }
   }
 
@@ -51,13 +61,15 @@ export class Logger {
   public error(message: Readonly<string>): void;
   public error(context: Readonly<string>, message: Readonly<string>): void;
   public error(): void {
-    if (this._config.level === 'debug' || this._config.level === 'log' || this._config.level === 'success' || this._config.level === 'warning' || this._config.level === 'error') {
-      const numberOfArguments = _.size(arguments);
+    if (_.isEqual(this._config.isEnabled, true)) {
+      if (this._config.level === 'debug' || this._config.level === 'log' || this._config.level === 'success' || this._config.level === 'warning' || this._config.level === 'error') {
+        const numberOfArguments = _.size(arguments);
 
-      if (_.isEqual(numberOfArguments, 1)) {
-        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.ERROR)}${arguments[ 0 ]}`);
-      } else if (_.isEqual(numberOfArguments, 2)) {
-        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.ERROR)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        if (_.isEqual(numberOfArguments, 1)) {
+          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.ERROR)}${arguments[ 0 ]}`);
+        } else if (_.isEqual(numberOfArguments, 2)) {
+          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.ERROR)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        }
       }
     }
   }
@@ -65,13 +77,15 @@ export class Logger {
   public warning(message: Readonly<string>): void;
   public warning(context: Readonly<string>, message: Readonly<string>): void;
   public warning(): void {
-    if (this._config.level === 'debug' || this._config.level === 'log' || this._config.level === 'success' || this._config.level === 'warning') {
-      const numberOfArguments = _.size(arguments);
+    if (_.isEqual(this._config.isEnabled, true)) {
+      if (this._config.level === 'debug' || this._config.level === 'log' || this._config.level === 'success' || this._config.level === 'warning') {
+        const numberOfArguments = _.size(arguments);
 
-      if (_.isEqual(numberOfArguments, 1)) {
-        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.WARNING)}${arguments[ 0 ]}`);
-      } else if (_.isEqual(numberOfArguments, 2)) {
-        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.WARNING)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        if (_.isEqual(numberOfArguments, 1)) {
+          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.WARNING)}${arguments[ 0 ]}`);
+        } else if (_.isEqual(numberOfArguments, 2)) {
+          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.WARNING)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        }
       }
     }
   }
@@ -79,13 +93,15 @@ export class Logger {
   public success(message: Readonly<string>): void;
   public success(context: Readonly<string>, message: Readonly<string>): void;
   public success(): void {
-    if (this._config.level === 'debug' || this._config.level === 'log' || this._config.level === 'success') {
-      const numberOfArguments = _.size(arguments);
+    if (_.isEqual(this._config.isEnabled, true)) {
+      if (this._config.level === 'debug' || this._config.level === 'log' || this._config.level === 'success') {
+        const numberOfArguments = _.size(arguments);
 
-      if (_.isEqual(numberOfArguments, 1)) {
-        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.SUCCESS)}${arguments[ 0 ]}`);
-      } else if (_.isEqual(numberOfArguments, 2)) {
-        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.SUCCESS)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        if (_.isEqual(numberOfArguments, 1)) {
+          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.SUCCESS)}${arguments[ 0 ]}`);
+        } else if (_.isEqual(numberOfArguments, 2)) {
+          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.SUCCESS)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        }
       }
     }
   }
@@ -93,13 +109,15 @@ export class Logger {
   public log(message: Readonly<string>): void;
   public log(context: Readonly<string>, message: Readonly<string>): void;
   public log(): void {
-    if (this._config.level === 'debug' || this._config.level === 'log') {
-      const numberOfArguments = _.size(arguments);
+    if (_.isEqual(this._config.isEnabled, true)) {
+      if (this._config.level === 'debug' || this._config.level === 'log') {
+        const numberOfArguments = _.size(arguments);
 
-      if (_.isEqual(numberOfArguments, 1)) {
-        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.LOG)}${arguments[ 0 ]}`);
-      } else if (_.isEqual(numberOfArguments, 2)) {
-        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.LOG)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        if (_.isEqual(numberOfArguments, 1)) {
+          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.LOG)}${arguments[ 0 ]}`);
+        } else if (_.isEqual(numberOfArguments, 2)) {
+          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.LOG)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        }
       }
     }
   }
@@ -107,13 +125,15 @@ export class Logger {
   public debug(message: Readonly<string>): void;
   public debug(context: Readonly<string>, message: Readonly<string>): void;
   public debug(): void {
-    if (this._config.level === 'debug') {
-      const numberOfArguments = _.size(arguments);
+    if (_.isEqual(this._config.isEnabled, true)) {
+      if (this._config.level === 'debug') {
+        const numberOfArguments = _.size(arguments);
 
-      if (_.isEqual(numberOfArguments, 1)) {
-        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.DEBUG)}${arguments[ 0 ]}`);
-      } else if (_.isEqual(numberOfArguments, 2)) {
-        console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.DEBUG)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        if (_.isEqual(numberOfArguments, 1)) {
+          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.DEBUG)}${arguments[ 0 ]}`);
+        } else if (_.isEqual(numberOfArguments, 2)) {
+          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.DEBUG)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        }
       }
     }
   }

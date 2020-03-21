@@ -1,9 +1,10 @@
 {
   "discord": {
-    "botSecretToken": "Njg5ODI5Nzc1MzE3MTM5NDYw.XnJgsA.cosIMcuxrY5C5m9Ok606_UgXX24",
+    "botSecretToken": "Njg5ODI5Nzc1MzE3MTM5NDYw.XnXQjw.LoBUvl5cFWjT56Rie-vck3xK7tw",
     "botId": "689829775317139460"
   },
   "logger": {
+    "isEnabled": true,
     "level": "debug"
   }
 }
