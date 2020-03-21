@@ -1,7 +1,7 @@
-import { DiscordAuthentication } from './discord-authentication';
-import { DiscordGuild } from './discord-guild';
-import { DiscordMessage } from './discord-message';
-import { DiscordSonia } from './discord-sonia';
+import { DiscordAuthentication } from './authentications/discord-authentication';
+import { DiscordGuild } from './guilds/discord-guild';
+import { DiscordMessage } from './messages/discord-message';
+import { DiscordSonia } from './users/discord-sonia';
 import { IDiscordConfig } from './interfaces/discord-config';
 import _ from 'lodash';
 

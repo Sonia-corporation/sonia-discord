@@ -1,11 +1,11 @@
 import {
   chalkValue,
   chalkText
-} from '../logger/chalk';
-import { Logger } from '../logger/logger';
-import { DiscordClient } from './discord-client';
+} from '../../logger/chalk';
+import { Logger } from '../../logger/logger';
+import { DiscordClient } from '../discord-client';
 import { isDiscordClientUser } from './functions/is-discord-client-user';
-import { IDiscordConfig } from './interfaces/discord-config';
+import { IDiscordConfig } from '../interfaces/discord-config';
 import { Sonia } from './types/sonia';
 import _ from 'lodash';
 

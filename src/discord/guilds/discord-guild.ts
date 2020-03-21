@@ -1,4 +1,4 @@
-import { DiscordClient } from './discord-client';
+import { DiscordClient } from '../discord-client';
 import _ from 'lodash';
 
 export class DiscordGuild {

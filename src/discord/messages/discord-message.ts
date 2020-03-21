@@ -1,15 +1,15 @@
 import {
   chalkError,
   chalkText
-} from '../logger/chalk';
-import { Logger } from '../logger/logger';
-import { DiscordAuthor } from './discord-author';
-import { DiscordChannel } from './discord-channel';
-import { DiscordClient } from './discord-client';
-import { DiscordMention } from './discord-mention';
-import { DiscordSonia } from './discord-sonia';
+} from '../../logger/chalk';
+import { Logger } from '../../logger/logger';
+import { DiscordAuthor } from '../users/discord-author';
+import { DiscordChannel } from '../channels/discord-channel';
+import { DiscordClient } from '../discord-client';
+import { DiscordMention } from '../mentions/discord-mention';
+import { DiscordSonia } from '../users/discord-sonia';
 import { AnyDiscordMessage } from './types/any-discord-message';
-import { Sonia } from './types/sonia';
+import { Sonia } from '../users/types/sonia';
 import _ from 'lodash';
 
 export class DiscordMessage {

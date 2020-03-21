@@ -2,10 +2,10 @@ import {
   chalkError,
   chalkText,
   chalkValue
-} from '../logger/chalk';
-import { Logger } from '../logger/logger';
-import { DiscordClient } from './discord-client';
-import { DiscordSonia } from './discord-sonia';
+} from '../../logger/chalk';
+import { Logger } from '../../logger/logger';
+import { DiscordClient } from '../discord-client';
+import { DiscordSonia } from '../users/discord-sonia';
 import _ from 'lodash';
 
 export class DiscordAuthentication {

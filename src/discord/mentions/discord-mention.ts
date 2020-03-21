@@ -5,7 +5,7 @@ import {
   GuildMember,
   Role,
   User
-} from 'discord.js';
+} from 'src/discord/discord.js';
 import _ from 'lodash';
 
 export class DiscordMention {
