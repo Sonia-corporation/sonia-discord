@@ -1,6 +1,6 @@
-import chalkI from 'chalk';
+const CHALKI = require('chalk');
+const CHALK = new CHALKI.Instance();
 
-const CHALK = new chalkI.Instance();
 const COLOR_AURORA_GREEN = '#78E08F';
 const COLOR_BLUE_CARACAO = '#3DC1D3';
 const COLOR_DEEP_ROSE = '#C44569';
@@ -10,34 +10,50 @@ const COLOR_SOFT_BLUE = '#778BEB';
 const COLOR_PURPLE_MOUNTAIN_MAJESTY = '#786FA6';
 const COLOR_SAWTOOTH_AAK = '#F19066';
 
-export function chalkSuccess(message: Readonly<string> | unknown): string {
+function chalkSuccess(message) {
   return CHALK.hex(COLOR_AURORA_GREEN)(message);
 }
 
-export function chalkContext(message: Readonly<string> | unknown): string {
+module.exports.chalkSuccess = chalkSuccess;
+
+function chalkContext(message) {
   return CHALK.hex(COLOR_ROSY_HIGHLIGHT)(message);
 }
 
-export function chalkValue(message: Readonly<string> | unknown): string {
+module.exports.chalkContext = chalkContext;
+
+function chalkValue(message) {
   return CHALK.hex(COLOR_BLUE_CARACAO)(message);
 }
 
-export function chalkError(message: Readonly<string> | unknown): string {
+module.exports.chalkValue = chalkValue;
+
+function chalkError(message) {
   return CHALK.hex(COLOR_DEEP_ROSE)(message);
 }
 
-export function chalkWarning(message: Readonly<string> | unknown): string {
+module.exports.chalkError = chalkError;
+
+function chalkWarning(message) {
   return CHALK.hex(COLOR_SAWTOOTH_AAK)(message);
 }
 
-export function chalkText(message: Readonly<string> | unknown): string {
+module.exports.chalkWarning = chalkWarning;
+
+function chalkText(message) {
   return CHALK.hex(COLOR_WHITE)(message);
 }
 
-export function chalkLog(message: Readonly<string> | unknown): string {
+module.exports.chalkText = chalkText;
+
+function chalkLog(message) {
   return CHALK.hex(COLOR_SOFT_BLUE)(message);
 }
 
-export function chalkDebug(message: Readonly<string> | unknown): string {
+module.exports.chalkLog = chalkLog;
+
+function chalkDebug(message) {
   return CHALK.hex(COLOR_PURPLE_MOUNTAIN_MAJESTY)(message);
 }
+
+module.exports.chalkDebug = chalkDebug;
