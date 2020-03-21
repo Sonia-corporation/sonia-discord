@@ -142,7 +142,7 @@ export class Logger {
     return chalkContext(`[${name}][${this._time.now('HH:mm:ss:SSS')}] `);
   }
 
-  private _getLogTypePrefix(logType: LoggerLogTypeEnum): string {
+  private _getLogTypePrefix(logType: Readonly<LoggerLogTypeEnum>): string {
     if (logType === LoggerLogTypeEnum.ERROR) {
       return chalkError(this._logPrefix);
     } else if (logType === LoggerLogTypeEnum.WARNING) {

@@ -23,12 +23,12 @@ export class DiscordMention {
     return isDiscordMessageMentions(mention);
   }
 
-  public isMentionForEveryone(mention: AnyDiscordMessageMentions): boolean {
+  public isMentionForEveryone(mention: Readonly<AnyDiscordMessageMentions>): boolean {
     return _.isEqual(mention.everyone, true);
   }
 
   public isUserMentioned(
-    mention: AnyDiscordMessageMentions,
+    mention: Readonly<AnyDiscordMessageMentions>,
     user: User | GuildMember | Role | GuildChannel
   ): boolean {
     return mention.has(user);

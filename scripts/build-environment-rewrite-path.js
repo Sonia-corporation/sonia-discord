@@ -7,7 +7,7 @@ const APP_ROOT_PATH = require('app-root-path');
 const CONTEXT = 'build-environment-rewrite-path';
 
 function updateEnvironmentPath(index) {
-  const updatedIndex = _.replace(index, '/src/environment/environment.json', '/dist/environment.json');
+  const updatedIndex = _.replace(index, '/src/environment/secret-environment.json', '/dist/environment.json');
 
   if (_.isEqual(_.toString(index), _.toString(updatedIndex))) {
     LOGGER.warning(CONTEXT, CHALK.chalkText('Index file from dist was not updated'));
