@@ -21,6 +21,8 @@ LOGGER.debug(CONTEXT, CHALK.chalkText(`Read index file from dist...`));
 FS.readFile(`${APP_ROOT_PATH.path}/dist/index.js`).then((index) => {
   const updatedIndex = updateEnvironmentPath(index);
 
+  LOGGER.debug(CONTEXT, CHALK.chalkText(`Update index file from dist...`));
+
   FS.writeFile(`${APP_ROOT_PATH.path}/dist/index.js`, updatedIndex).then(() => {
     LOGGER.success(CONTEXT, CHALK.chalkText(`Index file successfully updated from dist`));
   }).catch((error) => {
