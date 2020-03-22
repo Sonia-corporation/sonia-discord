@@ -1,5 +1,5 @@
+import { Client } from 'discord.js';
 import _ from 'lodash';
-import { Client } from 'src/features/discord/discord-service.js';
 import { chalkText } from '../logger/chalk';
 import { LoggerService } from '../logger/logger-service';
 

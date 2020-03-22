@@ -3,13 +3,17 @@ import { IEnvironment } from './interfaces/environment';
 
 export const ENVIRONMENT: IEnvironment = {
   discord: {
-    botId: '689829775317139460',
-    botSecretToken: 'TO_DEFINE_ON_THE_SERVER',
-    commands: {
-      prefix: [
-        '--',
-        '!'
-      ]
+    message: {
+      commands: {
+        prefix: [
+          '--',
+          '!'
+        ]
+      }
+    },
+    sonia: {
+      id: '689829775317139460',
+      secretToken: 'TO_DEFINE_ON_THE_SERVER'
     }
   },
   logger: {

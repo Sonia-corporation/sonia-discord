@@ -3,6 +3,7 @@ import {
   chalkText,
   chalkValue
 } from './chalk';
+import { LoggerConfigLevelEnum } from './enums/logger-config-level.enum';
 import { ILoggerConfig } from './interfaces/logger-config';
 import { LOGGER_CONFIG } from './logger-config';
 import { LoggerService } from './logger-service';
@@ -30,12 +31,20 @@ export class LoggerConfigService {
     }
   }
 
+  public isEnabled(): boolean {
+    return LOGGER_CONFIG.isEnabled;
+  }
+
   public updateEnabledState(config: Readonly<Partial<ILoggerConfig>>): void {
     if (_.isBoolean(config.isEnabled)) {
       LOGGER_CONFIG.isEnabled = config.isEnabled;
 
       this._loggerService.log(this._className, chalkText(`enabled state updated to: ${chalkValue(LOGGER_CONFIG.isEnabled)}`));
     }
+  }
+
+  public getLevel(): LoggerConfigLevelEnum {
+    return LOGGER_CONFIG.level;
   }
 
   public updateLevel(config: Readonly<Partial<ILoggerConfig>>): void {

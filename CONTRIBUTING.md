@@ -12,7 +12,9 @@ __Example:__
 ```json
 {
   "discord": {
-    "botSecretToken": "TO_DEFINE"
+    "sonia": {
+      "secretToken": "TO_DEFINE"
+    } 
   }
 }
 ```

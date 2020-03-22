@@ -9,16 +9,16 @@ import { DiscordSoniaService } from './users/discord-sonia-service';
 export class DiscordService {
   private static _instance: DiscordService;
 
-  public static getInstance(config?: Readonly<PartialNested<IDiscordConfig>>): DiscordService {
+  public static getInstance(): DiscordService {
     if (_.isNil(DiscordService._instance)) {
-      DiscordService._instance = new DiscordService(config);
+      DiscordService._instance = new DiscordService();
     }
 
     return DiscordService._instance;
   }
 
-  private static _bot(config?: Readonly<PartialNested<IDiscordConfig>>): void {
-    DiscordSoniaService.getInstance(config);
+  private static _bot(): void {
+    DiscordSoniaService.getInstance();
   }
 
   private static _authenticate(): void {
@@ -29,18 +29,18 @@ export class DiscordService {
     DiscordGuildService.getInstance();
   }
 
-  private static _handleMessages(config?: Readonly<PartialNested<IDiscordConfig>>): void {
-    DiscordMessageService.getInstance(config);
+  private static _handleMessages(): void {
+    DiscordMessageService.getInstance();
   }
 
-  private static _init(config?: Readonly<PartialNested<IDiscordConfig>>): void {
-    DiscordService._bot(config);
+  private static _init(): void {
+    DiscordService._bot();
     DiscordService._authenticate();
     DiscordService._handleGuilds();
-    DiscordService._handleMessages(config);
+    DiscordService._handleMessages();
   }
 
-  public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
-    DiscordService._init(config);
+  public constructor() {
+    DiscordService._init();
   }
 }

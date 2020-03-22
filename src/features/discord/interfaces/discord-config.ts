@@ -1,7 +1,7 @@
-import { IDiscordCommandsConfig } from './discord-commands-config';
+import { IDiscordMessageConfig } from './discord-message-config';
+import { IDiscordSoniaConfig } from './discord-sonia-config';
 
 export interface IDiscordConfig {
-  botSecretToken: string;
-  botId: string;
-  commands: IDiscordCommandsConfig;
+  sonia: IDiscordSoniaConfig;
+  message: IDiscordMessageConfig;
 }
