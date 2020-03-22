@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { AppConfigService } from '../../app/app-config-service';
 import { IDiscordMessageCommandVersionConfig } from '../interfaces/discord-message-command-version-config';
 import { DiscordSoniaService } from '../users/discord-sonia-service';
+import { DiscordSoniaMentalStateEnum } from '../users/enums/discord-sonia-mental-state.enum';
 import { DiscordMessageConfigService } from './discord-message-config-service';
 import { IDiscordMessageResponse } from './interfaces/discord-message-response';
 
@@ -22,10 +23,11 @@ export class DiscordMessageCommandVersionService {
   private readonly _discordMessageConfigService = DiscordMessageConfigService.getInstance();
 
   public handle(): IDiscordMessageResponse {
-    const version: string = this._appConfigService.getVersion();
-    const releaseDate: string = this._appConfigService.getReleaseDateHumanized();
+    const appVersion: string = this._appConfigService.getVersion();
+    const appReleaseDate: string = this._appConfigService.getReleaseDateHumanized();
     const author: MessageEmbedAuthor = this._discordSoniaService.getCorporationMessageEmbedAuthor();
     const soniaFullName: string | null = this._discordSoniaService.getSoniaFullName();
+    const soniaMentalState: DiscordSoniaMentalStateEnum = this._discordSoniaService.getMentalState();
     const commandVersionConfig: IDiscordMessageCommandVersionConfig = this._discordMessageConfigService.getMessageCommandVersion();
 
     return {
@@ -36,11 +38,11 @@ export class DiscordMessageCommandVersionService {
           fields: [
             {
               name: `Application version`,
-              value: `[${version}](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${version})`
+              value: `[${appVersion}](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${appVersion})`
             },
             {
               name: `Release date`,
-              value: releaseDate
+              value: appReleaseDate
             },
             {
               name: `Release notes`,
@@ -52,7 +54,7 @@ export class DiscordMessageCommandVersionService {
             },
             {
               name: `Mental state`,
-              value: `Crazy`
+              value: _.capitalize(soniaMentalState)
             }
           ],
           thumbnail: {

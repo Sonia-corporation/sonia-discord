@@ -1,7 +1,9 @@
 import { MessageEmbedAuthor } from 'discord.js';
 import _ from 'lodash';
+import { getRandomValueFromEnum } from '../../../functions/get-random-value-from-enum';
 import { DiscordClientService } from '../discord-client-service';
 import { DiscordSoniaConfigService } from './discord-sonia-config-service';
+import { DiscordSoniaMentalStateEnum } from './enums/discord-sonia-mental-state.enum';
 import { isDiscordClientUser } from './functions/is-discord-client-user';
 import { Sonia } from './types/sonia';
 
@@ -43,5 +45,9 @@ export class DiscordSoniaService {
 
   public getCorporationMessageEmbedAuthor(): MessageEmbedAuthor {
     return this._discordSoniaConfigService.getCorporationMessageEmbedAuthor();
+  }
+
+  public getMentalState(): DiscordSoniaMentalStateEnum {
+    return getRandomValueFromEnum(DiscordSoniaMentalStateEnum);
   }
 }
