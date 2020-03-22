@@ -6,6 +6,7 @@ import { Sonia } from '../users/types/sonia';
 import { DiscordMessageAuthorService } from './discord-message-author-service';
 import { DiscordMessageCommandService } from './discord-message-command-service';
 import { DiscordMessageContentService } from './discord-message-content-service';
+import { IDiscordMessageResponse } from './interfaces/discord-message-response';
 import { AnyDiscordMessage } from './types/any-discord-message';
 
 export class DiscordMessageTextService {
@@ -26,12 +27,14 @@ export class DiscordMessageTextService {
   private readonly _discordMessageCommandService = DiscordMessageCommandService.getInstance();
   private readonly _discordMessageContentService = DiscordMessageContentService.getInstance();
 
-  public getMessage(message: Readonly<AnyDiscordMessage>): string | null {
+  public getMessage(message: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
     if (this._discordAuthorService.isValid(message.author)) {
       if (!this._discordSoniaService.isSonia(message.author.id)) {
         if (this._discordMentionService.isValid(message.mentions)) {
           if (this._discordMentionService.isForEveryone(message.mentions)) {
-            return 'Il est midi tout le monde !';
+            return {
+              response: 'Il est midi tout le monde !'
+            };
           }
           const sonia: Sonia | null = this._discordSoniaService.getSonia();
 

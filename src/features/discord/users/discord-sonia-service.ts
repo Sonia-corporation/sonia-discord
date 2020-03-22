@@ -1,3 +1,4 @@
+import { MessageEmbedAuthor } from "discord.js";
 import _ from 'lodash';
 import { DiscordClientService } from '../discord-client-service';
 import { DiscordSoniaConfigService } from './discord-sonia-config-service';
@@ -28,5 +29,9 @@ export class DiscordSoniaService {
 
   public isValid(sonia: unknown): sonia is Sonia {
     return isDiscordClientUser(sonia);
+  }
+
+  public getCorporationMessageEmbedAuthor(): MessageEmbedAuthor {
+    return this._discordSoniaConfigService.getCorporationMessageEmbedAuthor();
   }
 }

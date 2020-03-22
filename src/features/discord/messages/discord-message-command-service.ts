@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { DiscordMessageCommandVersionService } from './discord-message-command-version-service';
 import { DiscordMessageConfigService } from './discord-message-config-service';
 import { DiscordMessageCommandEnum } from './enums/discord-message-command.enum';
+import { IDiscordMessageResponse } from './interfaces/discord-message-response';
 
 export class DiscordMessageCommandService {
   private static _instance: DiscordMessageCommandService;
@@ -55,11 +56,11 @@ export class DiscordMessageCommandService {
     return this._hasThisCommand(message, DiscordMessageCommandEnum.VERSION);
   }
 
-  public handleVersionCommand(): string {
+  public handleVersionCommand(): IDiscordMessageResponse {
     return this._discordMessageCommandVersionService.handle();
   }
 
-  public handleCommands(message: Readonly<string>): string | null {
+  public handleCommands(message: Readonly<string>): IDiscordMessageResponse | null {
     if (this.hasVersionCommand(message)) {
       return this.handleVersionCommand();
     }

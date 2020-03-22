@@ -40,6 +40,10 @@
     }
   },
   "rules": {
+    "quotes": [
+      "error",
+      "backtick"
+    ],
     "no-else-return": [
       "error",
       {

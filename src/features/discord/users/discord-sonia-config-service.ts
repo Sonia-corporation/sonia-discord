@@ -1,3 +1,4 @@
+import { MessageEmbedAuthor } from "discord.js";
 import _ from 'lodash';
 import { PartialNested } from '../../../types/partial-nested';
 import { ChalkService } from '../../logger/chalk-service';
@@ -66,5 +67,9 @@ export class DiscordSoniaConfigService {
 
       this._loggerService.log(this._className, this._loggerService.getHiddenValueUpdate('secretToken updated to: ', true));
     }
+  }
+
+  public getCorporationMessageEmbedAuthor(): MessageEmbedAuthor {
+    return DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor;
   }
 }

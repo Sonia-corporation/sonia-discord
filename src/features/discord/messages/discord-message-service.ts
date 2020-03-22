@@ -6,6 +6,7 @@ import { DiscordClientService } from '../discord-client-service';
 import { DiscordAuthorService } from '../users/discord-author-service';
 import { DiscordMessageDmService } from './discord-message-dm-service';
 import { DiscordMessageTextService } from './discord-message-text-service';
+import { IDiscordMessageResponse } from './interfaces/discord-message-response';
 import { AnyDiscordMessage } from './types/any-discord-message';
 
 export class DiscordMessageService {
@@ -61,24 +62,24 @@ export class DiscordMessageService {
   }
 
   private _dmMessage(message: Readonly<AnyDiscordMessage>): void {
-    const response: string | null = this._discordMessageDmService.getMessage(message);
+    const response: IDiscordMessageResponse | null = this._discordMessageDmService.getMessage(message);
 
-    if (_.isString(response)) {
+    if (!_.isNil(response)) {
       this._sendMessage(message, response);
     }
   }
 
   private _textMessage(message: Readonly<AnyDiscordMessage>): void {
-    const response: string | null = this._discordMessageTextService.getMessage(message);
+    const response: IDiscordMessageResponse | null = this._discordMessageTextService.getMessage(message);
 
-    if (_.isString(response)) {
+    if (!_.isNil(response)) {
       this._sendMessage(message, response);
     }
   }
 
   private _sendMessage(
     message: Readonly<AnyDiscordMessage>,
-    response: Readonly<string>
+    messageResponse: Readonly<IDiscordMessageResponse>
   ): void {
     this._loggerService.debug(this._className, this._chalkService.text(`sending message...`));
 
@@ -86,7 +87,7 @@ export class DiscordMessageService {
       return;
     }
 
-    message.channel.send(response).then((): void => {
+    message.channel.send(messageResponse.response, messageResponse.options).then((): void => {
       this._loggerService.log(this._className, this._chalkService.text(`message sent`));
     }).catch((error: unknown): void => {
       this._loggerService.error(this._className, this._chalkService.text(`message sending failed`));

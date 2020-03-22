@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { DiscordAuthorService } from '../users/discord-author-service';
+import { IDiscordMessageResponse } from './interfaces/discord-message-response';
 import { AnyDiscordMessage } from './types/any-discord-message';
 
 export class DiscordMessageAuthorService {
@@ -15,7 +16,7 @@ export class DiscordMessageAuthorService {
 
   private readonly _discordAuthorService = DiscordAuthorService.getInstance();
 
-  public reply(message: Readonly<AnyDiscordMessage>): string {
+  public reply(message: Readonly<AnyDiscordMessage>): IDiscordMessageResponse {
     let response = 'Il est midi !';
 
     if (this._discordAuthorService.isValid(message.author)) {
@@ -24,6 +25,8 @@ export class DiscordMessageAuthorService {
       }
     }
 
-    return response;
+    return {
+      response
+    };
   }
 }
