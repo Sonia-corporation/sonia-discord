@@ -1,7 +1,9 @@
 import _ from 'lodash';
+import moment from 'moment';
 import { PartialNested } from '../../types/partial-nested';
 import { ChalkService } from '../logger/chalk-service';
 import { LoggerService } from '../logger/logger-service';
+import { isNodeProduction } from '../node/functions/is-node-production';
 import { APP_CONFIG } from './app-config';
 import { IAppConfig } from './interfaces/app-config';
 
@@ -21,6 +23,7 @@ export class AppConfigService {
   private readonly _className = `AppConfigService`;
 
   public constructor(config?: Readonly<PartialNested<IAppConfig>>) {
+    this._defineBuildDate();
     this.updateConfig(config);
   }
 
@@ -53,6 +56,14 @@ export class AppConfigService {
       APP_CONFIG.releaseDate = date;
 
       this._loggerService.log(this._className, this._chalkService.text(`app release date updated to: ${this._chalkService.value(`"${APP_CONFIG.releaseDate}"`)}`));
+    }
+  }
+
+  private _defineBuildDate(): void {
+    const isProduction: boolean = isNodeProduction();
+
+    if (_.isEqual(isProduction, false)) {
+      this.updateReleaseDate(moment().format());
     }
   }
 }

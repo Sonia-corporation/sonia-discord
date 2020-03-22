@@ -34,7 +34,8 @@ Run `npm run start` to start the local development server.
 `npm run build:environment:copy`: copy the secret environment file inside the dist folder
 `npm run build:environment:rewrite-path`: rename the environment file path of the Node.js app inside the dist folder
 `npm run start`: run the Node.js app for the local development
-`npm run start:prod`: run the Node.js app like it will be once deployed in the server for local development or server debugging
+`npm run start:prod`: build and run the Node.js app like it will be once deployed in the server for local development or server debugging
+`npm run run:prod`: run the Node.js app like it will be once deployed in the server for local development or server debugging
 `npm run tsc`: compile the TypeScript app to Node.js app
 `npm run test`: run the tests and watch
 `npm run test:ci`: run the tests once
