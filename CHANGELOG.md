@@ -1,5 +1,17 @@
 # Semantic Versioning Changelog
 
+# [1.8.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.7.0...1.8.0) (2020-03-22)
+
+
+### Bug Fixes
+
+* **package:** change the needs to avoid an error ([0750b5d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/0750b5dc4b769919f8d6cb24013be0658d4d1767))
+
+
+### Features
+
+* **release:** create a new workflow for the release ([8306f45](https://github.com/Sonia-corporation/il-est-midi-discord/commit/8306f45a98d5d5e5a459049d77a82903c0ea3944))
+
 # [1.7.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.6.0...1.7.0) (2020-03-22)
 
 
