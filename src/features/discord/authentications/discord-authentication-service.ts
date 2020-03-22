@@ -6,7 +6,7 @@ import {
 } from '../../logger/chalk';
 import { LoggerService } from '../../logger/logger-service';
 import { DiscordClientService } from '../discord-client-service';
-import { DiscordSoniaService } from '../users/discord-sonia-service';
+import { DiscordSoniaConfigService } from '../users/discord-sonia-config-service';
 
 export class DiscordAuthenticationService {
   private static _instance: DiscordAuthenticationService;
@@ -21,7 +21,7 @@ export class DiscordAuthenticationService {
 
   private readonly _loggerService = LoggerService.getInstance();
   private readonly _discordClientService = DiscordClientService.getInstance().getClient();
-  private readonly _discordSoniaService = DiscordSoniaService.getInstance();
+  private readonly _discordSoniaConfigService = DiscordSoniaConfigService.getInstance();
   private readonly _className = 'DiscordAuthenticationService';
 
   public constructor() {
@@ -44,7 +44,7 @@ export class DiscordAuthenticationService {
   }
 
   private _login(): void {
-    this._discordClientService.login(this._discordSoniaService.getSecretToken()).then((): void => {
+    this._discordClientService.login(this._discordSoniaConfigService.getSecretToken()).then((): void => {
       this._loggerService.success(this._className, chalkText(`authentication successful`));
     }).catch((error: unknown): void => {
       this._loggerService.error(this._className, chalkText(`authentication failed`));

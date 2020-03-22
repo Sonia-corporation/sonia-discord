@@ -3,6 +3,7 @@ import fs from 'fs-extra';
 import _ from 'lodash';
 import { ENVIRONMENT } from './environment/environment';
 import { IEnvironment } from './environment/interfaces/environment';
+import { DiscordService } from './features/discord/discord-service';
 import { DiscordMessageConfigService } from './features/discord/messages/discord-message-config-service';
 import { DiscordSoniaConfigService } from './features/discord/users/discord-sonia-config-service';
 import { LoggerConfigService } from './features/logger/logger-config-service';
@@ -12,6 +13,7 @@ function startApp(environment: Readonly<IEnvironment>): void {
   LoggerConfigService.getInstance(environment.logger);
   DiscordSoniaConfigService.getInstance(environment.discord);
   DiscordMessageConfigService.getInstance(environment.discord);
+  DiscordService.getInstance();
   ServerService.getInstance();
 }
 
