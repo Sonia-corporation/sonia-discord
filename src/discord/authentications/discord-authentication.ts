@@ -44,7 +44,7 @@ export class DiscordAuthentication {
   }
 
   private _login(): void {
-    this._client.login(this._discordSonia.getSoniaSecretToken()).then((): void => {
+    this._client.login(this._discordSonia.getSecretToken()).then((): void => {
       this._logger.success(this._className, chalkText(`authentication successful`));
     }).catch((error: unknown): void => {
       this._logger.error(this._className, chalkText(`authentication failed`));

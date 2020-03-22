@@ -1,13 +1,13 @@
+import _ from 'lodash';
 import {
-  chalkValue,
-  chalkText
+  chalkText,
+  chalkValue
 } from '../../logger/chalk';
 import { Logger } from '../../logger/logger';
 import { DiscordClient } from '../discord-client';
-import { isDiscordClientUser } from './functions/is-discord-client-user';
 import { IDiscordConfig } from '../interfaces/discord-config';
+import { isDiscordClientUser } from './functions/is-discord-client-user';
 import { Sonia } from './types/sonia';
-import _ from 'lodash';
 
 export class DiscordSonia {
   private static _instance: DiscordSonia;
@@ -23,22 +23,21 @@ export class DiscordSonia {
   private readonly _logger = Logger.getInstance();
   private readonly _discordClient = DiscordClient.getInstance();
   private readonly _className = 'DiscordSonia';
-  private _id: string;
-  private _secretToken: string;
+  private _id = '';
+  private _secretToken = '';
 
   public constructor(config?: Readonly<Partial<IDiscordConfig>>) {
-    this._id = '';
-    this._secretToken = '';
-
-    this.updateSoniaId(config?.botId);
-    this.updateSoniaSecretToken(config?.botSecretToken);
+    if (!_.isNil(config)) {
+      this.updateId(config.botId);
+      this.updateSecretToken(config.botSecretToken);
+    }
   }
 
-  public getSoniaId(): string {
+  public getId(): string {
     return this._id;
   }
 
-  public updateSoniaId(id?: Readonly<string>): void {
+  public updateId(id?: Readonly<string>): void {
     if (_.isString(id)) {
       this._id = id;
 
@@ -46,11 +45,11 @@ export class DiscordSonia {
     }
   }
 
-  public getSoniaSecretToken(): string {
+  public getSecretToken(): string {
     return this._secretToken;
   }
 
-  public updateSoniaSecretToken(secretToken?: Readonly<string>): void {
+  public updateSecretToken(secretToken?: Readonly<string>): void {
     if (_.isString(secretToken)) {
       this._secretToken = secretToken;
 
@@ -59,14 +58,14 @@ export class DiscordSonia {
   }
 
   public isSonia(id: Readonly<string>): boolean {
-    return _.isEqual(id, this.getSoniaId());
+    return _.isEqual(id, this.getId());
   }
 
   public getSonia(): Sonia | null {
     return this._discordClient.getClient().user;
   }
 
-  public isSoniaValid(sonia: unknown): sonia is Sonia {
+  public isValid(sonia: unknown): sonia is Sonia {
     return isDiscordClientUser(sonia);
   }
 }

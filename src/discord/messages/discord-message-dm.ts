@@ -19,10 +19,10 @@ export class DiscordMessageDm {
   private readonly _discordAuthor = DiscordAuthor.getInstance();
   private readonly _discordMessageAuthor = DiscordMessageAuthor.getInstance();
 
-  public getDmMessage(message: Readonly<AnyDiscordMessage>): string | null {
-    if (this._discordAuthor.isValidAuthor(message.author)) {
+  public getMessage(message: Readonly<AnyDiscordMessage>): string | null {
+    if (this._discordAuthor.isValid(message.author)) {
       if (!this._discordSonia.isSonia(message.author.id)) {
-        return this._discordMessageAuthor.replyToAuthor(message);
+        return this._discordMessageAuthor.reply(message);
       }
     }
 

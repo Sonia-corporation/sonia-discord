@@ -4,7 +4,13 @@ import { IEnvironment } from './interfaces/environment';
 export const ENVIRONMENT: IEnvironment = {
   discord: {
     botId: '689829775317139460',
-    botSecretToken: 'TO_DEFINE_ON_THE_SERVER'
+    botSecretToken: 'TO_DEFINE_ON_THE_SERVER',
+    commands: {
+      prefix: [
+        '--',
+        '!'
+      ]
+    }
   },
   logger: {
     isEnabled: true,

@@ -40,6 +40,12 @@
     }
   },
   "rules": {
+    "no-else-return": [
+      "error",
+      {
+        "allowElseIf": true
+      }
+    ],
     "sort-keys": [
       "error",
       "asc",

@@ -4,6 +4,8 @@ import { DiscordAuthor } from '../users/discord-author';
 import { DiscordSonia } from '../users/discord-sonia';
 import { Sonia } from '../users/types/sonia';
 import { DiscordMessageAuthor } from './discord-message-author';
+import { DiscordMessageCommand } from './discord-message-command';
+import { DiscordMessageContent } from './discord-message-content';
 import { AnyDiscordMessage } from './types/any-discord-message';
 
 export class DiscordMessageText {
@@ -21,21 +23,29 @@ export class DiscordMessageText {
   private readonly _discordAuthor = DiscordAuthor.getInstance();
   private readonly _discordMention = DiscordMention.getInstance();
   private readonly _discordMessageAuthor = DiscordMessageAuthor.getInstance();
+  private readonly _discordMessageCommand = DiscordMessageCommand.getInstance();
+  private readonly _discordMessageContent = DiscordMessageContent.getInstance();
 
-  public getTextMessage(message: Readonly<AnyDiscordMessage>): string | null {
-    if (this._discordAuthor.isValidAuthor(message.author)) {
+  public getMessage(message: Readonly<AnyDiscordMessage>): string | null {
+    if (this._discordAuthor.isValid(message.author)) {
       if (!this._discordSonia.isSonia(message.author.id)) {
-        console.log(message);
-        if (this._discordMention.isValidMessageMentions(message.mentions)) {
-          if (this._discordMention.isMentionForEveryone(message.mentions)) {
+        if (this._discordMention.isValid(message.mentions)) {
+          if (this._discordMention.isForEveryone(message.mentions)) {
             return 'Il est midi tout le monde !';
-          } else {
-            const sonia: Sonia | null = this._discordSonia.getSonia();
+          }
+          const sonia: Sonia | null = this._discordSonia.getSonia();
 
-            if (this._discordSonia.isSoniaValid(sonia)) {
-              if (this._discordMention.isUserMentioned(message.mentions, sonia)) {
-                return this._discordMessageAuthor.replyToAuthor(message);
+          if (this._discordSonia.isValid(sonia)) {
+            if (this._discordMention.isUserMentioned(message.mentions, sonia)) {
+              console.log(message.content);
+
+              if (this._discordMessageContent.hasContent(message.content)) {
+                if (this._discordMessageCommand.hasCommand(message.content)) {
+                  return this._discordMessageCommand.handleCommands(message.content);
+                }
               }
+
+              return this._discordMessageAuthor.reply(message);
             }
           }
         }

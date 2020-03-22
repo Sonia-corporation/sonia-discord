@@ -1,11 +1,14 @@
 import _ from 'lodash';
 import {
   chalkError,
-  chalkText
+  chalkText,
+  chalkValue
 } from '../../logger/chalk';
 import { Logger } from '../../logger/logger';
 import { DiscordChannel } from '../channels/discord-channel';
 import { DiscordClient } from '../discord-client';
+import { IDiscordCommandsConfig } from '../interfaces/discord-commands-config';
+import { IDiscordConfig } from '../interfaces/discord-config';
 import { DiscordAuthor } from '../users/discord-author';
 import { DiscordMessageDm } from './discord-message-dm';
 import { DiscordMessageText } from './discord-message-text';
@@ -14,9 +17,9 @@ import { AnyDiscordMessage } from './types/any-discord-message';
 export class DiscordMessage {
   private static _instance: DiscordMessage;
 
-  public static getInstance(): DiscordMessage {
+  public static getInstance(config?: Readonly<Partial<IDiscordConfig>>): DiscordMessage {
     if (_.isNil(DiscordMessage._instance)) {
-      DiscordMessage._instance = new DiscordMessage();
+      DiscordMessage._instance = new DiscordMessage(config);
     }
 
     return DiscordMessage._instance;
@@ -29,9 +32,40 @@ export class DiscordMessage {
   private readonly _discordMessageText = DiscordMessageText.getInstance();
   private readonly _discordAuthor = DiscordAuthor.getInstance();
   private readonly _className = 'DiscordMessage';
+  private _commands: IDiscordCommandsConfig = {
+    prefix: '!'
+  };
 
-  public constructor() {
+  public constructor(config?: Readonly<Partial<IDiscordConfig>>) {
+    if (!_.isNil(config)) {
+      this.updateCommands(config.commands);
+
+      this._logger.debug(this._className, chalkText(`configuration updated`));
+    }
+
     this._init();
+  }
+
+  public getCommands(): IDiscordCommandsConfig {
+    return this._commands;
+  }
+
+  public updateCommands(commands?: Readonly<Partial<IDiscordCommandsConfig>>): void {
+    if (!_.isNil(commands)) {
+      this.updateCommandsPrefix(commands.prefix);
+    }
+  }
+
+  public updateCommandsPrefix(prefix?: Readonly<string | string[]>): void {
+    if (_.isString(prefix)) {
+      this._commands.prefix = prefix;
+
+      this._logger.log(this._className, chalkText(`commands prefix updated to: ${chalkValue(`"${prefix}"`)}`));
+    } else if (_.isArray(prefix)) {
+      this._commands.prefix = prefix;
+
+      this._logger.log(this._className, chalkText(`commands prefix updated to: ${chalkValue(this._logger.getStringArray(prefix))}`));
+    }
   }
 
   private _init(): void {
@@ -47,25 +81,23 @@ export class DiscordMessage {
   }
 
   private _handleMessage(message: Readonly<AnyDiscordMessage>): void {
-    if (this._discordAuthor.isValidAuthor(message.author)) {
-      if (this._discordAuthor.isBotAuthor(message.author)) {
+    if (this._discordAuthor.isValid(message.author)) {
+      if (this._discordAuthor.isBot(message.author)) {
         return;
       }
     }
 
-    if (!this._discordChannel.isValidChannel(message.channel)) {
-      return;
-    }
-
-    if (this._discordChannel.isDmChannel(message.channel)) {
-      this._dmMessage(message);
-    } else if (this._discordChannel.isTextChannel(message.channel)) {
-      this._textMessage(message);
+    if (this._discordChannel.isValid(message.channel)) {
+      if (this._discordChannel.isDm(message.channel)) {
+        this._dmMessage(message);
+      } else if (this._discordChannel.isText(message.channel)) {
+        this._textMessage(message);
+      }
     }
   }
 
   private _dmMessage(message: Readonly<AnyDiscordMessage>): void {
-    const response: string | null = this._discordMessageDm.getDmMessage(message);
+    const response: string | null = this._discordMessageDm.getMessage(message);
 
     if (_.isString(response)) {
       this._sendMessage(message, response);
@@ -73,7 +105,7 @@ export class DiscordMessage {
   }
 
   private _textMessage(message: Readonly<AnyDiscordMessage>): void {
-    const response: string | null = this._discordMessageText.getTextMessage(message);
+    const response: string | null = this._discordMessageText.getMessage(message);
 
     if (_.isString(response)) {
       this._sendMessage(message, response);
@@ -86,7 +118,7 @@ export class DiscordMessage {
   ): void {
     this._logger.debug(this._className, chalkText(`sending message...`));
 
-    if (!this._discordChannel.isValidChannel(message.channel)) {
+    if (!this._discordChannel.isValid(message.channel)) {
       return;
     }
 

@@ -13,15 +13,15 @@ export class DiscordAuthor {
     return DiscordAuthor._instance;
   }
 
-  public isValidAuthor(author: unknown): author is AnyDiscordAuthor {
+  public isValid(author: unknown): author is AnyDiscordAuthor {
     return isDiscordUser(author);
   }
 
-  public hasValidAuthorUsername(author: Readonly<AnyDiscordAuthor>): boolean {
+  public hasValidUsername(author: Readonly<AnyDiscordAuthor>): boolean {
     return _.isString(author.username) && !_.isEmpty(author.username);
   }
 
-  public isBotAuthor(author: Readonly<AnyDiscordAuthor>): boolean {
+  public isBot(author: Readonly<AnyDiscordAuthor>): boolean {
     return _.isEqual(author.bot, true);
   }
 }

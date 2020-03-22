@@ -138,6 +138,10 @@ export class Logger {
     }
   }
 
+  public getStringArray(array: string[]): string {
+    return `[ ${_.join(_.map(array, (value) => `"${value}"`), ', ')} ]`;
+  }
+
   private _context(name: Readonly<string>): string {
     return chalkContext(`[${name}][${this._time.now('HH:mm:ss:SSS')}] `);
   }

@@ -15,11 +15,11 @@ export class DiscordMessageAuthor {
 
   private readonly _discordAuthor = DiscordAuthor.getInstance();
 
-  public replyToAuthor(message: Readonly<AnyDiscordMessage>): string {
+  public reply(message: Readonly<AnyDiscordMessage>): string {
     let response = 'Il est midi !';
 
-    if (this._discordAuthor.isValidAuthor(message.author)) {
-      if (this._discordAuthor.hasValidAuthorUsername(message.author)) {
+    if (this._discordAuthor.isValid(message.author)) {
+      if (this._discordAuthor.hasValidUsername(message.author)) {
         response = `Il est midi ${message.author.username} !`;
       }
     }

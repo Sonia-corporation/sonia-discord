@@ -14,21 +14,21 @@ export class DiscordChannel {
     return DiscordChannel._instance;
   }
 
-  public isValidChannel(channel: unknown): channel is AnyDiscordChannel {
-    if (this.isTextChannel(channel)) {
+  public isValid(channel: unknown): channel is AnyDiscordChannel {
+    if (this.isText(channel)) {
       return true;
-    } else if (this.isDmChannel(channel)) {
+    } else if (this.isDm(channel)) {
       return true;
     }
 
     return false;
   }
 
-  public isTextChannel(channel: unknown): boolean {
+  public isText(channel: unknown): boolean {
     return isDiscordTextChannel(channel);
   }
 
-  public isDmChannel(channel: unknown): boolean {
+  public isDm(channel: unknown): boolean {
     return isDiscordDmChannel(channel);
   }
 }

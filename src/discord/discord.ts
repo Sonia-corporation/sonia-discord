@@ -28,15 +28,15 @@ export class Discord {
     DiscordGuild.getInstance();
   }
 
-  private static _handleMessages(): void {
-    DiscordMessage.getInstance();
+  private static _handleMessages(config?: Readonly<Partial<IDiscordConfig>>): void {
+    DiscordMessage.getInstance(config);
   }
 
   private static _init(config?: Readonly<Partial<IDiscordConfig>>): void {
     Discord._bot(config);
     Discord._authenticate();
     Discord._handleGuilds();
-    Discord._handleMessages();
+    Discord._handleMessages(config);
   }
 
   public constructor(config?: Readonly<Partial<IDiscordConfig>>) {

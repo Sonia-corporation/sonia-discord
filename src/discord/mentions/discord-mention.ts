@@ -19,11 +19,11 @@ export class DiscordMention {
     return DiscordMention._instance;
   }
 
-  public isValidMessageMentions(mention: unknown): mention is AnyDiscordMessageMentions {
+  public isValid(mention: unknown): mention is AnyDiscordMessageMentions {
     return isDiscordMessageMentions(mention);
   }
 
-  public isMentionForEveryone(mention: Readonly<AnyDiscordMessageMentions>): boolean {
+  public isForEveryone(mention: Readonly<AnyDiscordMessageMentions>): boolean {
     return _.isEqual(mention.everyone, true);
   }
 
