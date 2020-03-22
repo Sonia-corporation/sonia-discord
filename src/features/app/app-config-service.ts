@@ -51,6 +51,14 @@ export class AppConfigService {
     return APP_CONFIG.releaseDate;
   }
 
+  public getReleaseDateHumanized(): string {
+    if (moment(APP_CONFIG.releaseDate).isValid()) {
+      return _.capitalize(moment(APP_CONFIG.releaseDate).fromNow());
+    }
+
+    return APP_CONFIG.releaseDate;
+  }
+
   public updateReleaseDate(date?: string): void {
     if (_.isString(date)) {
       APP_CONFIG.releaseDate = date;

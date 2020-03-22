@@ -23,7 +23,7 @@ export class DiscordMessageCommandVersionService {
 
   public handle(): IDiscordMessageResponse {
     const version: string = this._appConfigService.getVersion();
-    const releaseDate: string = this._appConfigService.getReleaseDate();
+    const releaseDate: string = this._appConfigService.getReleaseDateHumanized();
     const author: MessageEmbedAuthor = this._discordSoniaService.getCorporationMessageEmbedAuthor();
     const soniaFullName: string | null = this._discordSoniaService.getSoniaFullName();
     const commandVersionConfig: IDiscordMessageCommandVersionConfig = this._discordMessageConfigService.getMessageCommandVersion();
