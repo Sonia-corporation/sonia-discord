@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { DiscordAuthenticationService } from './authentications/discord-authentication-service';
+import { DiscordGuildMemberAddService } from './guilds/discord-guild-member-add-service';
 import { DiscordGuildService } from './guilds/discord-guild-service';
 import { DiscordMessageService } from './messages/discord-message-service';
 import { DiscordSoniaService } from './users/discord-sonia-service';
@@ -25,6 +26,7 @@ export class DiscordService {
 
   private static _handleGuilds(): void {
     DiscordGuildService.getInstance();
+    DiscordGuildMemberAddService.getInstance();
   }
 
   private static _handleMessages(): void {

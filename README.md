@@ -64,6 +64,10 @@ When a message on the channel is sent, Sonia will responds only if she is mentio
 This count as a DM response for Sonia, so prepare to have a friendly message dedicated to you.  
 Special commands will be handled on the first hand.  
 
+When a newcomer joins the channel, Sonia will send a friendly message to welcome him.  
+For now, the only channel receiving welcome messages will be the `general`.  
+It will also works if there is some accents like `général`.  
+
 __Example:__  
 
 `@Sonia-il-est-midi yo`
