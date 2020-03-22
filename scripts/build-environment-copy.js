@@ -13,5 +13,5 @@ FS.copy(`${APP_ROOT_PATH.path}/src/environment/secret-environment.json`, `${APP_
   LOGGER.error(CONTEXT, CHALK.chalkText('Failed to copy environment file to dist'));
   LOGGER.error(CONTEXT, CHALK.chalkText(error));
   LOGGER.debug(CONTEXT, CHALK.chalkText('On the CI, this is not a problem since the file should be already set up on the server'));
-  LOGGER.debug(CONTEXT, CHALK.chalkText('On local development, it means that you HAVE to create the file with at least a "discord.botSecretToken" inside it'));
+  LOGGER.debug(CONTEXT, CHALK.chalkText('On local development, it means that you HAVE to create the file with at least a "discord.sonia.secretToken" inside it'));
 });

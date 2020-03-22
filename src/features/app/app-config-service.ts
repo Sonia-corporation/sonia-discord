@@ -21,6 +21,10 @@ export class AppConfigService {
   private readonly _className = 'AppConfigService';
 
   public constructor(config?: Readonly<PartialNested<IAppConfig>>) {
+    this.updateConfig(config);
+  }
+
+  public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
     if (!_.isNil(config)) {
       this.updateVersion(config.version);
 

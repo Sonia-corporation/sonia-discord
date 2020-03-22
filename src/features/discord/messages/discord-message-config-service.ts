@@ -24,6 +24,10 @@ export class DiscordMessageConfigService {
   private readonly _className = 'DiscordMessageConfigService';
 
   public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
+    this.updateConfig(config);
+  }
+
+  public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
     if (!_.isNil(config)) {
       this.updateMessage(config.message);
 

@@ -22,6 +22,10 @@ export class DiscordSoniaConfigService {
   private readonly _className = 'DiscordSoniaConfigService';
 
   public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
+    this.updateConfig(config);
+  }
+
+  public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
     if (!_.isNil(config)) {
       this.updateSonia(config.sonia);
 

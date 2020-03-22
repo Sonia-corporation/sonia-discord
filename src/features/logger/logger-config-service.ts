@@ -21,6 +21,10 @@ export class LoggerConfigService {
   private readonly _className = 'LoggerConfigService';
 
   public constructor(config?: Readonly<Partial<ILoggerConfig>>) {
+    this.updateConfig(config);
+  }
+
+  public updateConfig(config?: Readonly<Partial<ILoggerConfig>>): void {
     if (!_.isNil(config) && _.isPlainObject(config)) {
       this.updateEnabledState(config);
       this.updateLevel(config);
