@@ -19,7 +19,7 @@ export class DiscordAuthenticationService {
   private readonly _discordClientService = DiscordClientService.getInstance().getClient();
   private readonly _discordSoniaConfigService = DiscordSoniaConfigService.getInstance();
   private readonly _chalkService = ChalkService.getInstance();
-  private readonly _className = 'DiscordAuthenticationService';
+  private readonly _className = `DiscordAuthenticationService`;
 
   public constructor() {
     this._init();
@@ -31,7 +31,7 @@ export class DiscordAuthenticationService {
   }
 
   private _listen(): void {
-    this._discordClientService.on('ready', (): void => {
+    this._discordClientService.on(`ready`, (): void => {
       if (!_.isNil(this._discordClientService.user)) {
         this._loggerService.log(this._className, this._chalkService.text(`authenticated as: ${this._chalkService.value(`"${this._discordClientService.user.tag}`)}"`));
       } else {

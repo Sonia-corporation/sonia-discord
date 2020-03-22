@@ -24,7 +24,7 @@ export class DiscordGuildService {
 
   private _listen(): void {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    this._discordClientService.on('ready', (): void => {
+    this._discordClientService.on(`ready`, (): void => {
     });
   }
 }

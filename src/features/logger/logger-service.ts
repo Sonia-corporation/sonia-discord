@@ -17,13 +17,13 @@ export class LoggerService {
 
   private readonly _timeService = TimeService.getInstance();
   private readonly _chalkService = ChalkService.getInstance();
-  private readonly _logPrefix = '● ';
+  private readonly _logPrefix = `● `;
 
   public error(message: Readonly<string>): void;
   public error(context: Readonly<string>, message: Readonly<string>): void;
   public error(): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
-      if (LOGGER_CONFIG.level === 'debug' || LOGGER_CONFIG.level === 'log' || LOGGER_CONFIG.level === 'success' || LOGGER_CONFIG.level === 'warning' || LOGGER_CONFIG.level === 'error') {
+      if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log` || LOGGER_CONFIG.level === `success` || LOGGER_CONFIG.level === `warning` || LOGGER_CONFIG.level === `error`) {
         const numberOfArguments = _.size(arguments);
 
         if (_.isEqual(numberOfArguments, 1)) {
@@ -39,7 +39,7 @@ export class LoggerService {
   public warning(context: Readonly<string>, message: Readonly<string>): void;
   public warning(): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
-      if (LOGGER_CONFIG.level === 'debug' || LOGGER_CONFIG.level === 'log' || LOGGER_CONFIG.level === 'success' || LOGGER_CONFIG.level === 'warning') {
+      if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log` || LOGGER_CONFIG.level === `success` || LOGGER_CONFIG.level === `warning`) {
         const numberOfArguments = _.size(arguments);
 
         if (_.isEqual(numberOfArguments, 1)) {
@@ -55,7 +55,7 @@ export class LoggerService {
   public success(context: Readonly<string>, message: Readonly<string>): void;
   public success(): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
-      if (LOGGER_CONFIG.level === 'debug' || LOGGER_CONFIG.level === 'log' || LOGGER_CONFIG.level === 'success') {
+      if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log` || LOGGER_CONFIG.level === `success`) {
         const numberOfArguments = _.size(arguments);
 
         if (_.isEqual(numberOfArguments, 1)) {
@@ -71,7 +71,7 @@ export class LoggerService {
   public log(context: Readonly<string>, message: Readonly<string>): void;
   public log(): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
-      if (LOGGER_CONFIG.level === 'debug' || LOGGER_CONFIG.level === 'log') {
+      if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log`) {
         const numberOfArguments = _.size(arguments);
 
         if (_.isEqual(numberOfArguments, 1)) {
@@ -87,7 +87,7 @@ export class LoggerService {
   public debug(context: Readonly<string>, message: Readonly<string>): void;
   public debug(): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
-      if (LOGGER_CONFIG.level === 'debug') {
+      if (LOGGER_CONFIG.level === `debug`) {
         const numberOfArguments = _.size(arguments);
 
         if (_.isEqual(numberOfArguments, 1)) {
@@ -100,7 +100,7 @@ export class LoggerService {
   }
 
   public getStringArray(array: Readonly<string>[]): string {
-    return `[ ${_.join(_.map(array, (value) => `"${value}"`), ', ')} ]`;
+    return `[ ${_.join(_.map(array, (value) => `"${value}"`), `, `)} ]`;
   }
 
   public getValueUpdateWithHint(
@@ -115,17 +115,17 @@ export class LoggerService {
     text: Readonly<string>,
     isStringValue = false
   ): string {
-    let value = '********';
+    let value = `********`;
 
     if (_.isEqual(isStringValue, true)) {
       value = `"${value}"`;
     }
 
-    return this.getValueUpdateWithHint(text, value, ' (hidden)');
+    return this.getValueUpdateWithHint(text, value, ` (hidden)`);
   }
 
   private _context(name: Readonly<string>): string {
-    return this._chalkService.text(`[${name}][${this._timeService.now('HH:mm:ss:SSS')}] `);
+    return this._chalkService.text(`[${name}][${this._timeService.now(`HH:mm:ss:SSS`)}] `);
   }
 
   private _getLogTypePrefix(logType: Readonly<LoggerLogTypeEnum>): string {

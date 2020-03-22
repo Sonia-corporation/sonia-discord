@@ -18,7 +18,7 @@ export class ServerService {
   private readonly _chalkService = ChalkService.getInstance();
   private readonly _port = 3001;
   private readonly _app = express();
-  private readonly _className = 'ServerService';
+  private readonly _className = `ServerService`;
 
   public constructor() {
     this._listen();

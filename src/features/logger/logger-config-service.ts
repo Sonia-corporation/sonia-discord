@@ -18,7 +18,7 @@ export class LoggerConfigService {
 
   private readonly _chalkService = ChalkService.getInstance();
   private readonly _loggerService = LoggerService.getInstance();
-  private readonly _className = 'LoggerConfigService';
+  private readonly _className = `LoggerConfigService`;
 
   public constructor(config?: Readonly<Partial<ILoggerConfig>>) {
     this.updateConfig(config);

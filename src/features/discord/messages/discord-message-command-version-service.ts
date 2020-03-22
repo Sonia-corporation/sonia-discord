@@ -1,6 +1,9 @@
+import { MessageEmbedAuthor } from 'discord.js';
 import _ from 'lodash';
 import { AppConfigService } from '../../app/app-config-service';
+import { IDiscordMessageCommandVersionConfig } from '../interfaces/discord-message-command-version-config';
 import { DiscordSoniaService } from '../users/discord-sonia-service';
+import { DiscordMessageConfigService } from './discord-message-config-service';
 import { IDiscordMessageResponse } from './interfaces/discord-message-response';
 
 export class DiscordMessageCommandVersionService {
@@ -16,40 +19,50 @@ export class DiscordMessageCommandVersionService {
 
   private readonly _appConfigService = AppConfigService.getInstance();
   private readonly _discordSoniaService = DiscordSoniaService.getInstance();
-  private readonly _versionImageUrl = 'https://i.ibb.co/ph17BqP/icons8-artificial-intelligence-512.png';
-  private readonly _versionImageColor = 11912416;
+  private readonly _discordMessageConfigService = DiscordMessageConfigService.getInstance();
 
   public handle(): IDiscordMessageResponse {
     const version: string = this._appConfigService.getVersion();
+    const releaseDate: string = this._appConfigService.getReleaseDate();
+    const author: MessageEmbedAuthor = this._discordSoniaService.getCorporationMessageEmbedAuthor();
+    const soniaFullName: string | null = this._discordSoniaService.getSoniaFullName();
+    const commandVersionConfig: IDiscordMessageCommandVersionConfig = this._discordMessageConfigService.getMessageCommandVersion();
 
     return {
       options: {
         embed: {
-          author: this._discordSoniaService.getCorporationMessageEmbedAuthor(),
-          color: this._versionImageColor,
+          author,
+          color: commandVersionConfig.imageColor,
           fields: [
             {
-              name: 'Application version',
-              value: version
+              name: `Application version`,
+              value: `[${version}](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${version})`
             },
             {
-              name: 'Status',
-              value: 'Ready'
+              name: `Release date`,
+              value: releaseDate
             },
             {
-              name: 'Mental state',
+              name: `Release notes`,
+              value: `[CHANGELOG](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md)`
+            },
+            {
+              name: `Status`,
+              value: `Ready`
+            },
+            {
+              name: `Mental state`,
               value: `Crazy`
             }
           ],
           thumbnail: {
-            url: this._versionImageUrl
+            url: commandVersionConfig.imageUrl
           },
-          title: 'Sonia-il-est-midi version',
-          url: `https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${version}`
+          title: `${soniaFullName} version`
         },
         split: true
       },
-      response: ''
+      response: ``
     };
   }
 }

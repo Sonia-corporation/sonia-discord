@@ -27,7 +27,7 @@ export class DiscordMessageService {
   private readonly _discordMessageTextService = DiscordMessageTextService.getInstance();
   private readonly _discordAuthorService = DiscordAuthorService.getInstance();
   private readonly _chalkService = ChalkService.getInstance();
-  private readonly _className = 'DiscordMessageService';
+  private readonly _className = `DiscordMessageService`;
 
   public constructor() {
     this._init();
@@ -38,7 +38,7 @@ export class DiscordMessageService {
   }
 
   private _listen(): void {
-    this._discordClientService.on('message', (message: Readonly<AnyDiscordMessage>): void => {
+    this._discordClientService.on(`message`, (message: Readonly<AnyDiscordMessage>): void => {
       this._handleMessage(message);
     });
 

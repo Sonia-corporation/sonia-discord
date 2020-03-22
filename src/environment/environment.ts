@@ -6,14 +6,14 @@ export const ENVIRONMENT: IEnvironment = {
     message: {
       command: {
         prefix: [
-          '--',
-          '!'
+          `--`,
+          `!`
         ]
       }
     },
     sonia: {
-      id: '689829775317139460',
-      secretToken: 'TO_DEFINE_ON_THE_SERVER'
+      id: `689829775317139460`,
+      secretToken: `TO_DEFINE_ON_THE_SERVER`
     }
   },
   logger: {

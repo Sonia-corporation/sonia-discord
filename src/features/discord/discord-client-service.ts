@@ -17,7 +17,7 @@ export class DiscordClientService {
   private readonly _loggerService = LoggerService.getInstance();
   private readonly _chalkService = ChalkService.getInstance();
   private readonly _client = new Client();
-  private readonly _className = 'DiscordClientService';
+  private readonly _className = `DiscordClientService`;
 
   public constructor() {
     this._loggerService.debug(this._className, this._chalkService.text(`client created`));

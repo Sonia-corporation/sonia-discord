@@ -33,7 +33,7 @@ export class DiscordMessageTextService {
         if (this._discordMentionService.isValid(message.mentions)) {
           if (this._discordMentionService.isForEveryone(message.mentions)) {
             return {
-              response: 'Il est midi tout le monde !'
+              response: `Il est midi tout le monde !`
             };
           }
           const sonia: Sonia | null = this._discordSoniaService.getSonia();

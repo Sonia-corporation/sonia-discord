@@ -17,7 +17,7 @@ export class DiscordMessageAuthorService {
   private readonly _discordAuthorService = DiscordAuthorService.getInstance();
 
   public reply(message: Readonly<AnyDiscordMessage>): IDiscordMessageResponse {
-    let response = 'Il est midi !';
+    let response = `Il est midi !`;
 
     if (this._discordAuthorService.isValid(message.author)) {
       if (this._discordAuthorService.hasValidUsername(message.author)) {

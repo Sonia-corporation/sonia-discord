@@ -17,7 +17,7 @@ function configureAppFromPackage(): void {
       version: data.version
     });
   }).catch((error: unknown): void => {
-    console.error('Failed to read the package file');
+    console.error(`Failed to read the package file`);
     console.error(error);
   });
 }
@@ -57,8 +57,8 @@ function mergeEnvironments(
 fs.readJson(`${appRootPath}/src/environment/secret-environment.json`).then((environment: Readonly<IEnvironment>): void => {
   startApp(mergeEnvironments(ENVIRONMENT, environment));
 }).catch((error: unknown): void => {
-  console.error('Failed to read the environment file');
+  console.error(`Failed to read the environment file`);
   console.error(error);
-  throw new Error('The app must have an environment file with at least a "discord.sonia.secretToken" inside it');
+  throw new Error(`The app must have an environment file with at least a "discord.sonia.secretToken" inside it`);
 });
 

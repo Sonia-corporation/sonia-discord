@@ -18,7 +18,7 @@ export class AppConfigService {
 
   private readonly _loggerService = LoggerService.getInstance();
   private readonly _chalkService = ChalkService.getInstance();
-  private readonly _className = 'AppConfigService';
+  private readonly _className = `AppConfigService`;
 
   public constructor(config?: Readonly<PartialNested<IAppConfig>>) {
     this.updateConfig(config);
@@ -41,6 +41,18 @@ export class AppConfigService {
       APP_CONFIG.version = version;
 
       this._loggerService.log(this._className, this._chalkService.text(`app version updated to: ${this._chalkService.value(`"${APP_CONFIG.version}"`)}`));
+    }
+  }
+
+  public getReleaseDate(): string {
+    return APP_CONFIG.releaseDate;
+  }
+
+  public updateReleaseDate(date?: string): void {
+    if (_.isString(date)) {
+      APP_CONFIG.releaseDate = date;
+
+      this._loggerService.log(this._className, this._chalkService.text(`app release date updated to: ${this._chalkService.value(`"${APP_CONFIG.releaseDate}"`)}`));
     }
   }
 }

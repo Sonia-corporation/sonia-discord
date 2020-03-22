@@ -20,7 +20,7 @@ export class DiscordSoniaConfigService {
 
   private readonly _loggerService = LoggerService.getInstance();
   private readonly _chalkService = ChalkService.getInstance();
-  private readonly _className = 'DiscordSoniaConfigService';
+  private readonly _className = `DiscordSoniaConfigService`;
 
   public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
     this.updateConfig(config);
@@ -65,7 +65,7 @@ export class DiscordSoniaConfigService {
     if (_.isString(secretToken)) {
       DISCORD_SONIA_CONFIG.secretToken = secretToken;
 
-      this._loggerService.log(this._className, this._loggerService.getHiddenValueUpdate('secretToken updated to: ', true));
+      this._loggerService.log(this._className, this._loggerService.getHiddenValueUpdate(`secretToken updated to: `, true));
     }
   }
 

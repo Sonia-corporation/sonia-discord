@@ -1,4 +1,4 @@
-import { MessageEmbedAuthor } from "discord.js";
+import { MessageEmbedAuthor } from 'discord.js';
 import _ from 'lodash';
 import { DiscordClientService } from '../discord-client-service';
 import { DiscordSoniaConfigService } from './discord-sonia-config-service';
@@ -25,6 +25,16 @@ export class DiscordSoniaService {
 
   public getSonia(): Sonia | null {
     return this._discordClientService.getClient().user;
+  }
+
+  public getSoniaFullName(): string | null {
+    const sonia: Sonia | null = this.getSonia();
+
+    if (!_.isNil(sonia)) {
+      return `${sonia.username}#${sonia.discriminator}`;
+    }
+
+    return null;
   }
 
   public isValid(sonia: unknown): sonia is Sonia {

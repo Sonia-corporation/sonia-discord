@@ -5,6 +5,7 @@ import { ChalkService } from '../../logger/chalk-service';
 import { LoggerService } from '../../logger/logger-service';
 import { IDiscordConfig } from '../interfaces/discord-config';
 import { IDiscordMessageCommandConfig } from '../interfaces/discord-message-command-config';
+import { IDiscordMessageCommandVersionConfig } from '../interfaces/discord-message-command-version-config';
 import { IDiscordMessageConfig } from '../interfaces/discord-message-config';
 import { DISCORD_MESSAGE_CONFIG } from './discord-message-config';
 
@@ -21,7 +22,7 @@ export class DiscordMessageConfigService {
 
   private readonly _loggerService = LoggerService.getInstance();
   private readonly _chalkService = ChalkService.getInstance();
-  private readonly _className = 'DiscordMessageConfigService';
+  private readonly _className = `DiscordMessageConfigService`;
 
   public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
     this.updateConfig(config);
@@ -69,5 +70,9 @@ export class DiscordMessageConfigService {
 
       this._loggerService.log(this._className, this._chalkService.text(`message command prefix updated to: ${this._chalkService.value(this._loggerService.getStringArray(DISCORD_MESSAGE_CONFIG.command.prefix))}`));
     }
+  }
+
+  public getMessageCommandVersion(): IDiscordMessageCommandVersionConfig {
+    return DISCORD_MESSAGE_CONFIG.command.version;
   }
 }
