@@ -74,14 +74,6 @@
             "path": "dist/index.js",
             "name": "sonia-${nextRelease.gitTag}.js",
             "label": "Sonia v${nextRelease.gitTag} distribution"
-          },
-          {
-            "path": [
-              "dist/index.js",
-              "dist/index.js.map"
-            ],
-            "name": "sonia-${nextRelease.gitTag}-debug.js",
-            "label": "Sonia v${nextRelease.gitTag} debug distribution"
           }
         ]
       }
