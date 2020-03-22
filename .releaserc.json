@@ -71,18 +71,17 @@
       {
         "assets": [
           {
-            "path": [
-              "dist/index.js",
-              "package.json"
-            ],
-            "label": "Sonia distribution"
+            "path": "dist/index.js",
+            "name": "sonia-${nextRelease.gitTag}.js",
+            "label": "Sonia v${nextRelease.gitTag} distribution"
           },
           {
             "path": [
-              "dist/**",
-              "package.json"
+              "dist/index.js",
+              "dist/index.js.map"
             ],
-            "label": "Sonia debug distribution"
+            "name": "sonia-${nextRelease.gitTag}-debug.js",
+            "label": "Sonia v${nextRelease.gitTag} debug distribution"
           }
         ]
       }
