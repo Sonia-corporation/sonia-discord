@@ -10,9 +10,9 @@ import { ServerService } from './features/server/server-service';
 
 function startApp(environment: Readonly<IEnvironment>): void {
   LoggerConfigService.getInstance(environment.logger);
-  ServerService.getInstance();
   DiscordSoniaConfigService.getInstance(environment.discord);
   DiscordMessageConfigService.getInstance(environment.discord);
+  ServerService.getInstance();
 }
 
 function mergeEnvironments(

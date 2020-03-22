@@ -39,7 +39,7 @@ export class LoggerConfigService {
     if (_.isBoolean(config.isEnabled)) {
       LOGGER_CONFIG.isEnabled = config.isEnabled;
 
-      this._loggerService.log(this._className, chalkText(`enabled state updated to: ${chalkValue(LOGGER_CONFIG.isEnabled)}`));
+      this._loggerService.log(this._className, chalkText(`enable state updated to: ${chalkValue(LOGGER_CONFIG.isEnabled)}`));
     }
   }
 

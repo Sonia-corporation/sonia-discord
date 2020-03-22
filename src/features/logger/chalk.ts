@@ -9,6 +9,7 @@ const COLOR_WHITE = '#FFFFFF';
 const COLOR_SOFT_BLUE = '#778BEB';
 const COLOR_PURPLE_MOUNTAIN_MAJESTY = '#786FA6';
 const COLOR_SAWTOOTH_AAK = '#F19066';
+const COLOR_OLD_GERANIUM = '#CF6A87';
 
 export function chalkSuccess(message: Readonly<string> | unknown): string {
   return CHALK.hex(COLOR_AURORA_GREEN)(message);
@@ -20,6 +21,10 @@ export function chalkContext(message: Readonly<string> | unknown): string {
 
 export function chalkValue(message: Readonly<string> | unknown): string {
   return CHALK.hex(COLOR_BLUE_CARACAO)(message);
+}
+
+export function chalkHint(message: Readonly<string> | unknown): string {
+  return CHALK.hex(COLOR_OLD_GERANIUM)(message);
 }
 
 export function chalkError(message: Readonly<string> | unknown): string {

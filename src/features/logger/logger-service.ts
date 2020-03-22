@@ -4,8 +4,11 @@ import {
   chalkContext,
   chalkDebug,
   chalkError,
+  chalkHint,
   chalkLog,
   chalkSuccess,
+  chalkText,
+  chalkValue,
   chalkWarning
 } from './chalk';
 import { LoggerLogTypeEnum } from './enums/logger-log-type.enum';
@@ -105,8 +108,29 @@ export class LoggerService {
     }
   }
 
-  public getStringArray(array: string[]): string {
+  public getStringArray(array: Readonly<string>[]): string {
     return `[ ${_.join(_.map(array, (value) => `"${value}"`), ', ')} ]`;
+  }
+
+  public getValueUpdateWithHint(
+    text: Readonly<string>,
+    value: Readonly<string>,
+    hint: Readonly<string>
+  ): string {
+    return `${chalkText(text)}${chalkValue(value)}${chalkHint(hint)}`;
+  }
+
+  public getHiddenValueUpdate(
+    text: Readonly<string>,
+    isStringValue = false
+  ): string {
+    let value = '********';
+
+    if (_.isEqual(isStringValue, true)) {
+      value = `"${value}"`;
+    }
+
+    return this.getValueUpdateWithHint(text, value, ' (hidden)');
   }
 
   private _context(name: Readonly<string>): string {

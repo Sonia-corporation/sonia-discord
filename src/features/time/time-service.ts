@@ -12,7 +12,7 @@ export class TimeService {
     return TimeService._instance;
   }
 
-  public now(format?: string): string {
+  public now(format?: Readonly<string>): string {
     return moment().format(format);
   }
 }
