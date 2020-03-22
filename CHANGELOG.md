@@ -1,5 +1,89 @@
 # Semantic Versioning Changelog
 
+# [1.6.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.5.0...1.6.0) (2020-03-22)
+
+
+### Bug Fixes
+
+* **discord:** add the missing service instance creation in the index ([f4689c8](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f4689c85e4fa90a06e44521debfc99d2ac804ca4))
+* **build:** fix build error due to env file not available ([d5da197](https://github.com/Sonia-corporation/il-est-midi-discord/commit/d5da1978501ab06dec129a5ab3dce42f844be4ae))
+* **imports:** fix imports errors ([5ccd545](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5ccd545066ee3d3c02208461462f4f45cafe67e8))
+* **types:** fix type error due to partial on nested objects ([13d3a06](https://github.com/Sonia-corporation/il-est-midi-discord/commit/13d3a06093d74f20339d79bb5a296ef3ad518aeb))
+
+
+### Features
+
+* **sonia:** add a list of mental states and always get a random one ([2fb9017](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2fb90179f9d6abbbc68dccc6e618e2c0be4f879d))
+* **logger:** add a new color for the hint when a hidden configuration value is updated ([7159dcb](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7159dcb15ecb518e23fb11ee500431d73130c809))
+* **version:** add more content when using the version command ([7339544](https://github.com/Sonia-corporation/il-est-midi-discord/commit/733954439da900dadbe4245765970b060490b3f3))
+* **env:** add new configuration to define the prefix of the commands ([e3fe519](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e3fe5192baa7b32d410ca7bc05f4f01b141edb0f))
+* **logger:** add new configuration variable to enable or disable the logger ([9531025](https://github.com/Sonia-corporation/il-est-midi-discord/commit/953102586640d69c27f9b48d1506acdafa53b763))
+* **app:** add new service to store the app configuration ([e782d50](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e782d5039ca24281796e750192e6e42f83219a00))
+* **env:** allow to configure the release date ([2c6e020](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2c6e020a01a433c58d1d897fa30c9a79d1b4b5ab))
+* **release-date:** auto set the release date during the production build ([b96d9f7](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b96d9f72afd65db66b19aaafcda6728c22249e07))
+* **message:** change the type to use a more complex object when sending messages ([556ec54](https://github.com/Sonia-corporation/il-est-midi-discord/commit/556ec544054ceb4a241c44eee44b8cdf7af3d49a))
+* **env:** change the way to create the environment ([b9def6c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b9def6cc0c5eefef72de7c25d64aa87e62f3326a))
+* **logger:** create a new const and a service dedicated to the config ([28e7bae](https://github.com/Sonia-corporation/il-est-midi-discord/commit/28e7bae16eb453ab736b2d361ffd20cf11347401))
+* **release-date:** display a humanized date with version command ([f5aa4da](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f5aa4da65b181831fe940d6c6ada95947d73ae9a))
+* **message:** do not send messages when the author is a bot ([b39a95e](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b39a95e1450021ff83ed823f08c739aefad13f0d))
+* **message:** handle the version command properly ([be6c122](https://github.com/Sonia-corporation/il-est-midi-discord/commit/be6c12212c846e396b206836cc2710f48e4ed439))
+* **app:** update the app version from the package on local development ([8bf87d9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/8bf87d97e9d1e629a15be257a1c3358c26e89743))
+* **release-date:** update the build date when on dev ([9ead8d1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9ead8d10460c5a59619e9cf968307d5f28f2a3ca))
+
+# [1.5.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.4.0...1.5.0) (2020-03-21)
+
+
+### Bug Fixes
+
+* **build:** change the way to read the environment file to avoid path error ([04f2abd](https://github.com/Sonia-corporation/il-est-midi-discord/commit/04f2abdd5901a9a08609215244c8d1e6fdee9a41))
+
+
+### Features
+
+* **scripts:** add chalk configuration ([d791894](https://github.com/Sonia-corporation/il-est-midi-discord/commit/d79189410c4636d0ef1db44c56a69189a9eda1ce))
+* **build:** add handler for the environment file ([417590c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/417590c135b811f98419bb568187bda06f60c8f1))
+* **scripts:** add logger configuration ([89788b7](https://github.com/Sonia-corporation/il-est-midi-discord/commit/89788b7ccfd03fb75b34ce3bda16a624ba57d1ab))
+* **env:** add new script to rewrite the path of the environment file inside the index ([3743a12](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3743a1278b99dcf5418da10954098894db632091))
+* **env:** add script to copy the environment file to the dist ([90b8a85](https://github.com/Sonia-corporation/il-est-midi-discord/commit/90b8a853d4e2e38b850f44d525d9d6087b9baa2e))
+* **logger:** add warning log type ([bbd247f](https://github.com/Sonia-corporation/il-est-midi-discord/commit/bbd247f791ceee5c6ff0c5a8eb1ce486215d5962))
+
+# [1.4.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.3.0...1.4.0) (2020-03-20)
+
+
+### Bug Fixes
+
+* **logs:** add missing chalk wrapper for some logs ([f32e1e1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f32e1e1300c8aa91f9ebdd7e1764861c356b3606))
+* **logs:** do not use constructor.name for the logs ([53f8f45](https://github.com/Sonia-corporation/il-est-midi-discord/commit/53f8f45d90a5fa73b8e93928a116533c5d1cbe30))
+* **serve:** fix runtime error for the prod server ([bfd5939](https://github.com/Sonia-corporation/il-est-midi-discord/commit/bfd5939c4a7a53e135f0b2c9a1bf62d4fa72787e))
+* **ci:** fix test step ([efc147a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/efc147ac3db54dc12dde324450d8464ec7a5f74d))
+
+
+### Features
+
+* **logger:** add fractional seconds when using the context ([7c7c0af](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7c7c0af2f76b5e3243636f0c874677929608bd2c))
+* **logger:** add fractional seconds when using the context ([77d944e](https://github.com/Sonia-corporation/il-est-midi-discord/commit/77d944e5f03c65a4faef477ccd61439edafbaf2d))
+* **lint:** add new rules ([c2e7a5b](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c2e7a5b570ab0bd7ab5fc53fe42648f32b9d194c))
+* **logger:** add prefix for all logs with a bullet ([aedc764](https://github.com/Sonia-corporation/il-est-midi-discord/commit/aedc764584d02df31931249c540788eaadd65eff))
+* **logger:** add success log ([8f24d47](https://github.com/Sonia-corporation/il-est-midi-discord/commit/8f24d4778654191d1b045c003e8c870db1587b6a))
+* **build:** build with parcel instead of tsc ([d5d0469](https://github.com/Sonia-corporation/il-est-midi-discord/commit/d5d0469f0954117a916fe136d13364591d4d186d))
+* **ci:** use dedicated scripts for the CI ([c80ad98](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c80ad98f1cadbe02a5a5477047897e059446c4d8))
+
+
+### Performance Improvements
+
+* **lint:** add cache ([9537d41](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9537d4100565e0ff090b07aff7e1d0ba0817003a))
+
+# [1.3.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.2.1...1.3.0) (2020-03-20)
+
+
+### Features
+
+* **discord:** add new class for author and channel handling ([c57e918](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c57e9187ad4778f7100e87679dcdf0ec5e108eb3))
+* **discord:** add new class to handle the mention ([0868c3e](https://github.com/Sonia-corporation/il-est-midi-discord/commit/0868c3e4daa95183551a5bbdfc2761568f638bc9))
+* **discord:** add new pure functions to checks the class instances validity ([c22925a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c22925a2f3fe545d3bfc120dc2f959769eec985d))
+* **discord:** sonia will now responds cleverly ([a79923e](https://github.com/Sonia-corporation/il-est-midi-discord/commit/a79923e14c47a604ba7580db14be3d49d0ffa356))
+* **discord:** sonia will send better responses to an author ([7f97cb1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7f97cb1f8066fdac6fbaaf012a39018d8ff691b1))
+
 ## [1.2.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.2.0...1.2.1) (2020-03-20)
 
 
