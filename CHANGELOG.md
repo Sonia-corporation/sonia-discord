@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.9.2](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.9.1...1.9.2) (2020-03-22)
+
+
+### Bug Fixes
+
+* **release:** merge the multiple steps into one ([50f38e0](https://github.com/Sonia-corporation/il-est-midi-discord/commit/50f38e083ba6187cdf0e77b7e5e05e18f44c9aed))
+
 ## [1.9.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.9.0...1.9.1) (2020-03-22)
 
 
