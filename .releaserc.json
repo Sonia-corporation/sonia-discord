@@ -64,6 +64,25 @@
         ],
         "message": "build(release): new version ${nextRelease.version}"
       }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": [
+          {
+            "path": "dist/index.js",
+            "label": "Sonia distribution"
+          },
+          {
+            "path": "dist/index.js.map",
+            "label": "Sonia debug distribution"
+          },
+          {
+            "path": "dist/environment.json",
+            "label": "Environment distribution"
+          }
+        ]
+      }
     ]
   ],
   "dryRun": false,
