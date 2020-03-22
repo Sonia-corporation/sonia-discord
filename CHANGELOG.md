@@ -1,5 +1,35 @@
 # Semantic Versioning Changelog
 
+# [1.6.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.5.0...1.6.0) (2020-03-22)
+
+
+### Bug Fixes
+
+* **discord:** add the missing service instance creation in the index ([f4689c8](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f4689c85e4fa90a06e44521debfc99d2ac804ca4))
+* **build:** fix build error due to env file not available ([d5da197](https://github.com/Sonia-corporation/il-est-midi-discord/commit/d5da1978501ab06dec129a5ab3dce42f844be4ae))
+* **imports:** fix imports errors ([5ccd545](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5ccd545066ee3d3c02208461462f4f45cafe67e8))
+* **types:** fix type error due to partial on nested objects ([13d3a06](https://github.com/Sonia-corporation/il-est-midi-discord/commit/13d3a06093d74f20339d79bb5a296ef3ad518aeb))
+
+
+### Features
+
+* **sonia:** add a list of mental states and always get a random one ([2fb9017](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2fb90179f9d6abbbc68dccc6e618e2c0be4f879d))
+* **logger:** add a new color for the hint when a hidden configuration value is updated ([7159dcb](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7159dcb15ecb518e23fb11ee500431d73130c809))
+* **version:** add more content when using the version command ([7339544](https://github.com/Sonia-corporation/il-est-midi-discord/commit/733954439da900dadbe4245765970b060490b3f3))
+* **env:** add new configuration to define the prefix of the commands ([e3fe519](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e3fe5192baa7b32d410ca7bc05f4f01b141edb0f))
+* **logger:** add new configuration variable to enable or disable the logger ([9531025](https://github.com/Sonia-corporation/il-est-midi-discord/commit/953102586640d69c27f9b48d1506acdafa53b763))
+* **app:** add new service to store the app configuration ([e782d50](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e782d5039ca24281796e750192e6e42f83219a00))
+* **env:** allow to configure the release date ([2c6e020](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2c6e020a01a433c58d1d897fa30c9a79d1b4b5ab))
+* **release-date:** auto set the release date during the production build ([b96d9f7](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b96d9f72afd65db66b19aaafcda6728c22249e07))
+* **message:** change the type to use a more complex object when sending messages ([556ec54](https://github.com/Sonia-corporation/il-est-midi-discord/commit/556ec544054ceb4a241c44eee44b8cdf7af3d49a))
+* **env:** change the way to create the environment ([b9def6c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b9def6cc0c5eefef72de7c25d64aa87e62f3326a))
+* **logger:** create a new const and a service dedicated to the config ([28e7bae](https://github.com/Sonia-corporation/il-est-midi-discord/commit/28e7bae16eb453ab736b2d361ffd20cf11347401))
+* **release-date:** display a humanized date with version command ([f5aa4da](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f5aa4da65b181831fe940d6c6ada95947d73ae9a))
+* **message:** do not send messages when the author is a bot ([b39a95e](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b39a95e1450021ff83ed823f08c739aefad13f0d))
+* **message:** handle the version command properly ([be6c122](https://github.com/Sonia-corporation/il-est-midi-discord/commit/be6c12212c846e396b206836cc2710f48e4ed439))
+* **app:** update the app version from the package on local development ([8bf87d9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/8bf87d97e9d1e629a15be257a1c3358c26e89743))
+* **release-date:** update the build date when on dev ([9ead8d1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9ead8d10460c5a59619e9cf968307d5f28f2a3ca))
+
 # [1.5.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.4.0...1.5.0) (2020-03-21)
 
 
