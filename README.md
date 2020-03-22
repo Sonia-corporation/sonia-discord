@@ -9,7 +9,6 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/474fece6-33b0-4472-8c2f-25cbb4493ecb/deploy-status)](https://app.netlify.com/sites/dark-heresy/deploys)
 ![Build](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Build/badge.svg?branch=master&style=flat-square)
 ![Release](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Release/badge.svg?branch=master&style=flat-square)
-![Tag](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Tag/badge.svg?branch=master&style=flat-square)
 ![NPM](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/NPM/badge.svg?branch=master&style=flat-square)
 ![GPR](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/GPR/badge.svg?branch=master&style=flat-square)
 
