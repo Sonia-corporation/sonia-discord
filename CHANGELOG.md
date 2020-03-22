@@ -1,5 +1,14 @@
 # Semantic Versioning Changelog
 
+# [1.7.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.6.0...1.7.0) (2020-03-22)
+
+
+### Features
+
+* **guild:** add new service config to enable or disable the guild member add service feature ([4036a2c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4036a2cd5e405cb226de4edc6b4085ea2722d0c6))
+* **guild:** add welcome messages on the general channel for newcomers ([dc061eb](https://github.com/Sonia-corporation/il-est-midi-discord/commit/dc061eb7b47f39e386286991c3bbf1d14672b0b9))
+* **package:** trigger npm and gpr packages on release publication ([d962522](https://github.com/Sonia-corporation/il-est-midi-discord/commit/d9625225c17d52e1581fa46a7e8538b1b6952b67))
+
 # [1.6.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.5.0...1.6.0) (2020-03-22)
 
 
