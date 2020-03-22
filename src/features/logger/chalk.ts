@@ -1,4 +1,4 @@
-import chalkI from 'src/features/logger/chalk';
+import chalkI from 'chalk';
 
 const CHALK = new chalkI.Instance();
 const COLOR_AURORA_GREEN = '#78E08F';

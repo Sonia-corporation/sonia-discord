@@ -1,7 +1,7 @@
+import { Client } from 'discord.js';
+import _ from 'lodash';
 import { chalkText } from '../logger/chalk';
 import { Logger } from '../logger/logger';
-import { Client } from 'src/features/discord/discord.js';
-import _ from 'lodash';
 
 export class DiscordClient {
   private static _instance: DiscordClient;
