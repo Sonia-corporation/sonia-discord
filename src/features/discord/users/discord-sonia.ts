@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { PartialNested } from '../../../types/partial-nested';
 import {
   chalkText,
   chalkValue
@@ -12,7 +13,7 @@ import { Sonia } from './types/sonia';
 export class DiscordSonia {
   private static _instance: DiscordSonia;
 
-  public static getInstance(config?: Readonly<Partial<IDiscordConfig>>): DiscordSonia {
+  public static getInstance(config?: Readonly<PartialNested<IDiscordConfig>>): DiscordSonia {
     if (_.isNil(DiscordSonia._instance)) {
       DiscordSonia._instance = new DiscordSonia(config);
     }
@@ -26,7 +27,7 @@ export class DiscordSonia {
   private _id = '';
   private _secretToken = '';
 
-  public constructor(config?: Readonly<Partial<IDiscordConfig>>) {
+  public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
     if (!_.isNil(config)) {
       this.updateId(config.botId);
       this.updateSecretToken(config.botSecretToken);
@@ -41,7 +42,7 @@ export class DiscordSonia {
     if (_.isString(id)) {
       this._id = id;
 
-      this._logger.log(this._className, chalkText(`id updated to: ${chalkValue(`"${id}"`)}`));
+      this._logger.log(this._className, chalkText(`id updated to: ${chalkValue(`"${this._id}"`)}`));
     }
   }
 

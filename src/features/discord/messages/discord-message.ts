@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import { removeUndefined } from '../../../functions/remove-undefined';
+import { PartialNested } from '../../../types/partial-nested';
 import {
   chalkError,
   chalkText,
@@ -17,7 +19,7 @@ import { AnyDiscordMessage } from './types/any-discord-message';
 export class DiscordMessage {
   private static _instance: DiscordMessage;
 
-  public static getInstance(config?: Readonly<Partial<IDiscordConfig>>): DiscordMessage {
+  public static getInstance(config?: Readonly<PartialNested<IDiscordConfig>>): DiscordMessage {
     if (_.isNil(DiscordMessage._instance)) {
       DiscordMessage._instance = new DiscordMessage(config);
     }
@@ -36,7 +38,7 @@ export class DiscordMessage {
     prefix: '!'
   };
 
-  public constructor(config?: Readonly<Partial<IDiscordConfig>>) {
+  public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
     if (!_.isNil(config)) {
       this.updateCommands(config.commands);
 
@@ -50,21 +52,21 @@ export class DiscordMessage {
     return this._commands;
   }
 
-  public updateCommands(commands?: Readonly<Partial<IDiscordCommandsConfig>>): void {
+  public updateCommands(commands?: Readonly<PartialNested<IDiscordCommandsConfig>>): void {
     if (!_.isNil(commands)) {
       this.updateCommandsPrefix(commands.prefix);
     }
   }
 
-  public updateCommandsPrefix(prefix?: Readonly<string | string[]>): void {
+  public updateCommandsPrefix(prefix?: string | (string | undefined)[]): void {
     if (_.isString(prefix)) {
       this._commands.prefix = prefix;
 
       this._logger.log(this._className, chalkText(`commands prefix updated to: ${chalkValue(`"${prefix}"`)}`));
     } else if (_.isArray(prefix)) {
-      this._commands.prefix = prefix;
+      this._commands.prefix = removeUndefined(prefix);
 
-      this._logger.log(this._className, chalkText(`commands prefix updated to: ${chalkValue(this._logger.getStringArray(prefix))}`));
+      this._logger.log(this._className, chalkText(`commands prefix updated to: ${chalkValue(this._logger.getStringArray(this._commands.prefix))}`));
     }
   }
 

@@ -46,7 +46,7 @@ export class Logger {
     if (_.isBoolean(config.isEnabled)) {
       this._config.isEnabled = config.isEnabled;
 
-      this.log(this._className, chalkText(`enabled state updated to: ${chalkValue(config.isEnabled)}`));
+      this.log(this._className, chalkText(`enabled state updated to: ${chalkValue(this._config.isEnabled)}`));
     }
   }
 
@@ -54,7 +54,7 @@ export class Logger {
     if (_.isString(config.level)) {
       this._config.level = config.level;
 
-      this.log(this._className, chalkText(`level updated to: ${chalkValue(`"${config.level}"`)}`));
+      this.log(this._className, chalkText(`level updated to: ${chalkValue(`"${this._config.level}"`)}`));
     }
   }
 

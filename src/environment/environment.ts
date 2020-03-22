@@ -1,4 +1,4 @@
-import { LoggerConfigLevelEnum } from '../logger/enums/logger-config-level.enum';
+import { LoggerConfigLevelEnum } from '../features/logger/enums/logger-config-level.enum';
 import { IEnvironment } from './interfaces/environment';
 
 export const ENVIRONMENT: IEnvironment = {

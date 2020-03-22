@@ -1,3 +1,4 @@
+import { PartialNested } from '../../types/partial-nested';
 import { DiscordAuthentication } from './authentications/discord-authentication';
 import { DiscordGuild } from './guilds/discord-guild';
 import { DiscordMessage } from './messages/discord-message';
@@ -8,7 +9,7 @@ import _ from 'lodash';
 export class Discord {
   private static _instance: Discord;
 
-  public static getInstance(config?: Readonly<Partial<IDiscordConfig>>): Discord {
+  public static getInstance(config?: Readonly<PartialNested<IDiscordConfig>>): Discord {
     if (_.isNil(Discord._instance)) {
       Discord._instance = new Discord(config);
     }
@@ -16,7 +17,7 @@ export class Discord {
     return Discord._instance;
   }
 
-  private static _bot(config?: Readonly<Partial<IDiscordConfig>>): void {
+  private static _bot(config?: Readonly<PartialNested<IDiscordConfig>>): void {
     DiscordSonia.getInstance(config);
   }
 
@@ -28,18 +29,18 @@ export class Discord {
     DiscordGuild.getInstance();
   }
 
-  private static _handleMessages(config?: Readonly<Partial<IDiscordConfig>>): void {
+  private static _handleMessages(config?: Readonly<PartialNested<IDiscordConfig>>): void {
     DiscordMessage.getInstance(config);
   }
 
-  private static _init(config?: Readonly<Partial<IDiscordConfig>>): void {
+  private static _init(config?: Readonly<PartialNested<IDiscordConfig>>): void {
     Discord._bot(config);
     Discord._authenticate();
     Discord._handleGuilds();
     Discord._handleMessages(config);
   }
 
-  public constructor(config?: Readonly<Partial<IDiscordConfig>>) {
+  public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
     Discord._init(config);
   }
 }

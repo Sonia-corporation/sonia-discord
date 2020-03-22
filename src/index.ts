@@ -1,11 +1,11 @@
 import appRootPath from 'app-root-path';
 import fs from 'fs-extra';
 import _ from 'lodash';
-import { Discord } from './discord/discord';
+import { Discord } from './features/discord/discord';
 import { ENVIRONMENT } from './environment/environment';
 import { IEnvironment } from './environment/interfaces/environment';
-import { Logger } from './logger/logger';
-import { Server } from './server/server';
+import { Logger } from './features/logger/logger';
+import { Server } from './features/server/server';
 
 function startApp(environment: Readonly<IEnvironment>): void {
   Logger.getInstance(environment.logger);

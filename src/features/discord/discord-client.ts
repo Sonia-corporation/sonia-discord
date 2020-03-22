@@ -1,6 +1,6 @@
 import { chalkText } from '../logger/chalk';
 import { Logger } from '../logger/logger';
-import { Client } from 'discord.js';
+import { Client } from 'src/features/discord/discord.js';
 import _ from 'lodash';
 
 export class DiscordClient {
