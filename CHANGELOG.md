@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.12.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.11.0...1.12.0) (2020-03-22)
+
+
+### Features
+
+* **release:** remove the debug distribution ([1512261](https://github.com/Sonia-corporation/il-est-midi-discord/commit/1512261359c8b5df7d94e9ed07f84e610cf1f56d))
+
 # [1.11.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.10.0...1.11.0) (2020-03-22)
 
 
