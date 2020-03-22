@@ -26,6 +26,7 @@ function configureAppFromEnvironment(environment: Readonly<IEnvironment>): void 
   LoggerConfigService.getInstance().updateConfig(environment.logger);
   DiscordSoniaConfigService.getInstance().updateConfig(environment.discord);
   DiscordMessageConfigService.getInstance().updateConfig(environment.discord);
+  AppConfigService.getInstance().updateConfig(environment.app);
 }
 
 function configureApp(environment: Readonly<IEnvironment>): void {

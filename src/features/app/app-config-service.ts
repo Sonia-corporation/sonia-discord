@@ -30,6 +30,7 @@ export class AppConfigService {
   public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
     if (!_.isNil(config)) {
       this.updateVersion(config.version);
+      this.updateReleaseDate(config.releaseDate);
 
       this._loggerService.debug(this._className, this._chalkService.text(`configuration updated`));
     }
