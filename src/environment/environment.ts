@@ -4,7 +4,7 @@ import { IEnvironment } from './interfaces/environment';
 export const ENVIRONMENT: IEnvironment = {
   discord: {
     message: {
-      commands: {
+      command: {
         prefix: [
           '--',
           '!'

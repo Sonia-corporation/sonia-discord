@@ -1,5 +1,5 @@
-import { IDiscordMessageCommandsConfig } from './discord-message-commands-config';
+import { IDiscordMessageCommandConfig } from './discord-message-command-config';
 
 export interface IDiscordMessageConfig {
-  commands: IDiscordMessageCommandsConfig;
+  command: IDiscordMessageCommandConfig;
 }

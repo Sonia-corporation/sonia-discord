@@ -1,5 +1,5 @@
-import { IEnvironmentDiscordMessageCommands } from './environment-discord-message-commands';
+import { IEnvironmentDiscordMessageCommand } from './environment-discord-message-command';
 
 export interface IEnvironmentDiscordMessage {
-  commands?: IEnvironmentDiscordMessageCommands;
+  command?: IEnvironmentDiscordMessageCommand;
 }
