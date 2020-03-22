@@ -74,12 +74,8 @@
             "label": "Sonia distribution"
           },
           {
-            "path": "dist/index.js.map",
+            "path": "dist/**",
             "label": "Sonia debug distribution"
-          },
-          {
-            "path": "dist/environment.json",
-            "label": "Environment distribution"
           }
         ]
       }
