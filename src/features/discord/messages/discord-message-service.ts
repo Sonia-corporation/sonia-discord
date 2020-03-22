@@ -1,8 +1,5 @@
 import _ from 'lodash';
-import {
-  chalkError,
-  chalkText
-} from '../../logger/chalk';
+import { ChalkService } from '../../logger/chalk-service';
 import { LoggerService } from '../../logger/logger-service';
 import { DiscordChannelService } from '../channels/discord-channel-service';
 import { DiscordClientService } from '../discord-client-service';
@@ -28,6 +25,7 @@ export class DiscordMessageService {
   private readonly _discordMessageDmService = DiscordMessageDmService.getInstance();
   private readonly _discordMessageTextService = DiscordMessageTextService.getInstance();
   private readonly _discordAuthorService = DiscordAuthorService.getInstance();
+  private readonly _chalkService = ChalkService.getInstance();
   private readonly _className = 'DiscordMessageService';
 
   public constructor() {
@@ -43,7 +41,7 @@ export class DiscordMessageService {
       this._handleMessage(message);
     });
 
-    this._loggerService.debug(this._className, chalkText(`listen messages`));
+    this._loggerService.debug(this._className, this._chalkService.text(`listen messages`));
   }
 
   private _handleMessage(message: Readonly<AnyDiscordMessage>): void {
@@ -82,17 +80,17 @@ export class DiscordMessageService {
     message: Readonly<AnyDiscordMessage>,
     response: Readonly<string>
   ): void {
-    this._loggerService.debug(this._className, chalkText(`sending message...`));
+    this._loggerService.debug(this._className, this._chalkService.text(`sending message...`));
 
     if (!this._discordChannelService.isValid(message.channel)) {
       return;
     }
 
     message.channel.send(response).then((): void => {
-      this._loggerService.log(this._className, chalkText(`message sent`));
+      this._loggerService.log(this._className, this._chalkService.text(`message sent`));
     }).catch((error: unknown): void => {
-      this._loggerService.error(this._className, chalkText(`message sending failed`));
-      this._loggerService.error(this._className, chalkError(error));
+      this._loggerService.error(this._className, this._chalkService.text(`message sending failed`));
+      this._loggerService.error(this._className, this._chalkService.error(error));
     });
   }
 }

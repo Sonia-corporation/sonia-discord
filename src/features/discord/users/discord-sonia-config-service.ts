@@ -1,9 +1,6 @@
 import _ from 'lodash';
 import { PartialNested } from '../../../types/partial-nested';
-import {
-  chalkText,
-  chalkValue
-} from '../../logger/chalk';
+import { ChalkService } from '../../logger/chalk-service';
 import { LoggerService } from '../../logger/logger-service';
 import { IDiscordConfig } from '../interfaces/discord-config';
 import { IDiscordSoniaConfig } from '../interfaces/discord-sonia-config';
@@ -21,13 +18,14 @@ export class DiscordSoniaConfigService {
   }
 
   private readonly _loggerService = LoggerService.getInstance();
+  private readonly _chalkService = ChalkService.getInstance();
   private readonly _className = 'DiscordSoniaConfigService';
 
   public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
     if (!_.isNil(config)) {
       this.updateSonia(config.sonia);
 
-      this._loggerService.debug(this._className, chalkText(`configuration updated`));
+      this._loggerService.debug(this._className, this._chalkService.text(`configuration updated`));
     }
   }
 
@@ -50,7 +48,7 @@ export class DiscordSoniaConfigService {
     if (_.isString(id)) {
       DISCORD_SONIA_CONFIG.id = id;
 
-      this._loggerService.log(this._className, chalkText(`id updated to: ${chalkValue(`"${DISCORD_SONIA_CONFIG.id}"`)}`));
+      this._loggerService.log(this._className, this._chalkService.text(`id updated to: ${this._chalkService.value(`"${DISCORD_SONIA_CONFIG.id}"`)}`));
     }
   }
 

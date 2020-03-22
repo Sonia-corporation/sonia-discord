@@ -1,16 +1,6 @@
 import _ from 'lodash';
 import { TimeService } from '../time/time-service';
-import {
-  chalkContext,
-  chalkDebug,
-  chalkError,
-  chalkHint,
-  chalkLog,
-  chalkSuccess,
-  chalkText,
-  chalkValue,
-  chalkWarning
-} from './chalk';
+import { ChalkService } from './chalk-service';
 import { LoggerLogTypeEnum } from './enums/logger-log-type.enum';
 import { LOGGER_CONFIG } from './logger-config';
 
@@ -26,6 +16,7 @@ export class LoggerService {
   }
 
   private readonly _timeService = TimeService.getInstance();
+  private readonly _chalkService = ChalkService.getInstance();
   private readonly _logPrefix = '● ';
 
   public error(message: Readonly<string>): void;
@@ -117,7 +108,7 @@ export class LoggerService {
     value: Readonly<string>,
     hint: Readonly<string>
   ): string {
-    return `${chalkText(text)}${chalkValue(value)}${chalkHint(hint)}`;
+    return `${this._chalkService.text(text)}${this._chalkService.value(value)}${this._chalkService.hint(hint)}`;
   }
 
   public getHiddenValueUpdate(
@@ -134,22 +125,22 @@ export class LoggerService {
   }
 
   private _context(name: Readonly<string>): string {
-    return chalkContext(`[${name}][${this._timeService.now('HH:mm:ss:SSS')}] `);
+    return this._chalkService.text(`[${name}][${this._timeService.now('HH:mm:ss:SSS')}] `);
   }
 
   private _getLogTypePrefix(logType: Readonly<LoggerLogTypeEnum>): string {
     if (logType === LoggerLogTypeEnum.ERROR) {
-      return chalkError(this._logPrefix);
+      return this._chalkService.error(this._logPrefix);
     } else if (logType === LoggerLogTypeEnum.WARNING) {
-      return chalkWarning(this._logPrefix);
+      return this._chalkService.warning(this._logPrefix);
     } else if (logType === LoggerLogTypeEnum.SUCCESS) {
-      return chalkSuccess(this._logPrefix);
+      return this._chalkService.success(this._logPrefix);
     } else if (logType === LoggerLogTypeEnum.LOG) {
-      return chalkLog(this._logPrefix);
+      return this._chalkService.log(this._logPrefix);
     } else if (logType === LoggerLogTypeEnum.DEBUG) {
-      return chalkDebug(this._logPrefix);
+      return this._chalkService.debug(this._logPrefix);
     }
 
-    return chalkDebug(this._logPrefix);
+    return this._chalkService.debug(this._logPrefix);
   }
 }

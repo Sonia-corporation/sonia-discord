@@ -1,9 +1,6 @@
 import express from 'express';
 import _ from 'lodash';
-import {
-  chalkText,
-  chalkValue
-} from '../logger/chalk';
+import { ChalkService } from '../logger/chalk-service';
 import { LoggerService } from '../logger/logger-service';
 
 export class ServerService {
@@ -18,6 +15,7 @@ export class ServerService {
   }
 
   private readonly _loggerService = LoggerService.getInstance();
+  private readonly _chalkService = ChalkService.getInstance();
   private readonly _port = 3001;
   private readonly _app = express();
   private readonly _className = 'ServerService';
@@ -28,7 +26,7 @@ export class ServerService {
 
   private _listen(): void {
     this._app.listen(this._port, () => {
-      this._loggerService.log(this._className, chalkText(`listening on port: ${chalkValue(this._port)}`));
+      this._loggerService.log(this._className, this._chalkService.text(`listening on port: ${this._chalkService.value(this._port)}`));
     });
   }
 }

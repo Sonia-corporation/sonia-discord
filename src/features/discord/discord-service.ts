@@ -1,8 +1,6 @@
 import _ from 'lodash';
-import { PartialNested } from '../../types/partial-nested';
 import { DiscordAuthenticationService } from './authentications/discord-authentication-service';
 import { DiscordGuildService } from './guilds/discord-guild-service';
-import { IDiscordConfig } from './interfaces/discord-config';
 import { DiscordMessageService } from './messages/discord-message-service';
 import { DiscordSoniaService } from './users/discord-sonia-service';
 

@@ -1,8 +1,5 @@
 import _ from 'lodash';
-import {
-  chalkText,
-  chalkValue
-} from './chalk';
+import { ChalkService } from './chalk-service';
 import { LoggerConfigLevelEnum } from './enums/logger-config-level.enum';
 import { ILoggerConfig } from './interfaces/logger-config';
 import { LOGGER_CONFIG } from './logger-config';
@@ -19,6 +16,7 @@ export class LoggerConfigService {
     return LoggerConfigService._instance;
   }
 
+  private readonly _chalkService = ChalkService.getInstance();
   private readonly _loggerService = LoggerService.getInstance();
   private readonly _className = 'LoggerConfigService';
 
@@ -27,7 +25,7 @@ export class LoggerConfigService {
       this.updateEnabledState(config);
       this.updateLevel(config);
 
-      this._loggerService.debug(this._className, chalkText(`configuration updated`));
+      this._loggerService.debug(this._className, this._chalkService.text(`configuration updated`));
     }
   }
 
@@ -39,7 +37,7 @@ export class LoggerConfigService {
     if (_.isBoolean(config.isEnabled)) {
       LOGGER_CONFIG.isEnabled = config.isEnabled;
 
-      this._loggerService.log(this._className, chalkText(`enable state updated to: ${chalkValue(LOGGER_CONFIG.isEnabled)}`));
+      this._loggerService.log(this._className, this._chalkService.text(`enable state updated to: ${this._chalkService.value(LOGGER_CONFIG.isEnabled)}`));
     }
   }
 
@@ -51,7 +49,7 @@ export class LoggerConfigService {
     if (_.isString(config.level)) {
       LOGGER_CONFIG.level = config.level;
 
-      this._loggerService.log(this._className, chalkText(`level updated to: ${chalkValue(`"${LOGGER_CONFIG.level}"`)}`));
+      this._loggerService.log(this._className, this._chalkService.text(`level updated to: ${this._chalkService.value(`"${LOGGER_CONFIG.level}"`)}`));
     }
   }
 }

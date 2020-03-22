@@ -1,6 +1,6 @@
 import { Client } from 'discord.js';
 import _ from 'lodash';
-import { chalkText } from '../logger/chalk';
+import { ChalkService } from '../logger/chalk-service';
 import { LoggerService } from '../logger/logger-service';
 
 export class DiscordClientService {
@@ -15,11 +15,12 @@ export class DiscordClientService {
   }
 
   private readonly _loggerService = LoggerService.getInstance();
+  private readonly _chalkService = ChalkService.getInstance();
   private readonly _client = new Client();
   private readonly _className = 'DiscordClientService';
 
   public constructor() {
-    this._loggerService.debug(this._className, chalkText(`client created`));
+    this._loggerService.debug(this._className, this._chalkService.text(`client created`));
   }
 
   public getClient(): Client {
