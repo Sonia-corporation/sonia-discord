@@ -3,7 +3,6 @@ on:
   release:
     types:
       - created
-      - published
 jobs:
   build:
     name: Build
@@ -38,7 +37,7 @@ jobs:
         env:
           CI: true
   publish-gpr:
-    needs: release
+    needs: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
