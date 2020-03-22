@@ -1,5 +1,17 @@
 # Semantic Versioning Changelog
 
+# [1.10.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.9.2...1.10.0) (2020-03-22)
+
+
+### Bug Fixes
+
+* **release:** add missing script for the debug distribution ([3c2fd10](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3c2fd10c731af11e6f439ead716deab1bdbeafc7))
+
+
+### Features
+
+* **npm:** use semver to do the npm package instead of github workflow ([3f66986](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3f66986d33e6827a798e1a955f1c708d89f752cd))
+
 ## [1.9.2](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.9.1...1.9.2) (2020-03-22)
 
 
