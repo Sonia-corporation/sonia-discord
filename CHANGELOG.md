@@ -1,5 +1,17 @@
 # Semantic Versioning Changelog
 
+# [1.9.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.8.0...1.9.0) (2020-03-22)
+
+
+### Bug Fixes
+
+* **release:** use a deeper wildcard to find the new tag for the release ([7dbf794](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7dbf794885febb99de9a8fe5b58cca95ec5e3452))
+
+
+### Features
+
+* **readme:** add more badges for the status of the workflows ([9417219](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9417219ea785e5e802730e9378b519b782ca4ea9))
+
 # [1.8.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.7.0...1.8.0) (2020-03-22)
 
 
