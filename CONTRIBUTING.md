@@ -1,5 +1,51 @@
 # Contributing
 
+## First step
+
+### Create the secret environment file
+
+This step is mandatory.  
+You must create the `secret-environment.json` file in the [environment folder](./src/environment/secret-environment.json).  
+This file should contains at least the bot secret token required by Discord.  
+
+__Example:__
+```json
+{
+  "discord": {
+    "sonia": {
+      "secretToken": "TO_DEFINE"
+    } 
+  }
+}
+```
+
+This token is private and there two ways to have access to it:
+- Asks an admin (like [C0ZEN](https://github.com/C0ZEN))
+- Access to the [Discord bot page](https://discordapp.com/developers/applications/689829775317139460/bot) to reveal the token
+
+### Install the dependencies
+
+Run `npm i` to install the dependencies.  
+Run `npm run start` to start the local development server.
+
+## Package scripts
+
+- `npm run build`: create a Node.js app in the dist folder  
+- `npm run build:environment:copy`: copy the secret environment file inside the dist folder  
+- `npm run build:environment:rewrite-path`: rename the environment file path of the Node.js app inside the dist folder  
+- `npm run build:update-app-release-date`: update the app release date inside the environment file from the dist folder  
+- `npm run start`: run the Node.js app for the local development  
+- `npm run start:prod`: build and run the Node.js app like it will be once deployed in the server for local development or server debugging  
+- `npm run run:prod`: run the Node.js app like it will be once deployed in the server for local development or server debugging  
+- `npm run tsc`: compile the TypeScript app to Node.js app  
+- `npm run test`: run the tests and watch  
+- `npm run test:ci`: run the tests once  
+- `npm run lint`: run the linter and fix the errors  
+- `npm run lint:ci`: run the linter  
+- `npm run cz`: run a CLI to easily push and commit by following the commit convention of this project  
+- `npm run semver`: create a new version, a new tag and update the [CHANGELOG](CHANGELOG.md) file  
+- `npm run clean:dist`: remove the dist folder  
+
 ## Git
 
 ### Alias
@@ -9,7 +55,7 @@ The configuration of the alias is a [local one](.gitconfig).
 
 This alias is used by the `cz` script to automatically push on the remote with a dynamic branch name.  
 
-**Troubleshooting:**
+__Troubleshooting:__
 
 If the command `push-upstream` does not exists, you can link it to your git:  
 Run `git config --local include.path ../.gitconfig`.

@@ -1,14 +1,14 @@
-const CHALKI = require('chalk');
+const CHALKI = require(`chalk`);
 const CHALK = new CHALKI.Instance();
 
-const COLOR_AURORA_GREEN = '#78E08F';
-const COLOR_BLUE_CARACAO = '#3DC1D3';
-const COLOR_DEEP_ROSE = '#C44569';
-const COLOR_ROSY_HIGHLIGHT = '#F7D794';
-const COLOR_WHITE = '#FFFFFF';
-const COLOR_SOFT_BLUE = '#778BEB';
-const COLOR_PURPLE_MOUNTAIN_MAJESTY = '#786FA6';
-const COLOR_SAWTOOTH_AAK = '#F19066';
+const COLOR_AURORA_GREEN = `#78E08F`;
+const COLOR_BLUE_CARACAO = `#3DC1D3`;
+const COLOR_DEEP_ROSE = `#C44569`;
+const COLOR_ROSY_HIGHLIGHT = `#F7D794`;
+const COLOR_WHITE = `#FFFFFF`;
+const COLOR_SOFT_BLUE = `#778BEB`;
+const COLOR_PURPLE_MOUNTAIN_MAJESTY = `#786FA6`;
+const COLOR_SAWTOOTH_AAK = `#F19066`;
 
 function chalkSuccess(message) {
   return CHALK.hex(COLOR_AURORA_GREEN)(message);

@@ -40,6 +40,25 @@
     }
   },
   "rules": {
+    "quotes": [
+      "error",
+      "backtick"
+    ],
+    "no-else-return": [
+      "error",
+      {
+        "allowElseIf": true
+      }
+    ],
+    "sort-keys": [
+      "error",
+      "asc",
+      {
+        "caseSensitive": true,
+        "natural": true,
+        "minKeys": 2
+      }
+    ],
     "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "import/no-namespace": "error",
