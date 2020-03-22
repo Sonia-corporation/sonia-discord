@@ -7,6 +7,7 @@ import { isDiscordGuildChannel } from '../channels/functions/is-discord-guild-ch
 import { AnyDiscordChannel } from '../channels/types/any-discord-channel';
 import { DiscordClientService } from '../discord-client-service';
 import { IDiscordMessageResponse } from '../messages/interfaces/discord-message-response';
+import { DiscordGuildConfigService } from './discord-guild-config-service';
 import { isDiscordGuild } from './functions/is-discord-guild';
 import { AnyGuildMember } from './types/any-guild-member';
 
@@ -23,6 +24,7 @@ export class DiscordGuildMemberAddService {
 
   private readonly _discordClientService = DiscordClientService.getInstance().getClient();
   private readonly _discordChannelGuildService = DiscordChannelGuildService.getInstance();
+  private readonly _discordGuildConfigService = DiscordGuildConfigService.getInstance();
   private readonly _loggerService = LoggerService.getInstance();
   private readonly _chalkService = ChalkService.getInstance();
   private readonly _className = `DiscordGuildMemberAddService`;
@@ -37,7 +39,9 @@ export class DiscordGuildMemberAddService {
 
   private _listen(): void {
     this._discordClientService.on(`guildMemberAdd`, (member: Readonly<AnyGuildMember>): void => {
-      this._handleMember(member);
+      if (this._discordGuildConfigService.shouldWelcomeNewMembers()) {
+        this._handleMember(member);
+      }
     });
   }
 
