@@ -1,4 +1,7 @@
+import { IEnvironmentDiscordMessage } from './environment-discord-message';
+import { IEnvironmentDiscordSonia } from './environment-discord-sonia';
+
 export interface IEnvironmentDiscord {
-  botSecretToken: string;
-  botId: string;
+  sonia: IEnvironmentDiscordSonia;
+  message?: IEnvironmentDiscordMessage;
 }
