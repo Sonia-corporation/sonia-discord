@@ -1,3 +1,7 @@
+import {
+  DMChannel,
+  TextChannel
+} from 'discord.js';
 import _ from 'lodash';
 import { isDiscordDmChannel } from './functions/is-discord-dm-channel';
 import { isDiscordTextChannel } from './functions/is-discord-text-channel';
@@ -24,11 +28,11 @@ export class DiscordChannelService {
     return false;
   }
 
-  public isText(channel: unknown): boolean {
+  public isText(channel: unknown): channel is TextChannel {
     return isDiscordTextChannel(channel);
   }
 
-  public isDm(channel: unknown): boolean {
+  public isDm(channel: unknown): channel is DMChannel {
     return isDiscordDmChannel(channel);
   }
 }
