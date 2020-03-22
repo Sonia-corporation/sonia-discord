@@ -50,7 +50,7 @@
     [
       "@semantic-release/npm",
       {
-        "npmPublish": false
+        "npmPublish": true
       }
     ],
     [
@@ -59,8 +59,9 @@
         "assets": [
           "package.json",
           "package-lock.json",
-          "yarn.lock",
-          "CHANGELOG.md"
+          "CHANGELOG.md",
+          "README.md",
+          "npm-shrinkwrap.json"
         ],
         "message": "build(release): new version ${nextRelease.version}"
       }
@@ -70,16 +71,18 @@
       {
         "assets": [
           {
-            "path": "dist/index.js",
+            "path": [
+              "dist/index.js",
+              "package.json"
+            ],
             "label": "Sonia distribution"
           },
           {
-            "path": "dist/index.js.map",
+            "path": [
+              "dist/**",
+              "package.json"
+            ],
             "label": "Sonia debug distribution"
-          },
-          {
-            "path": "dist/environment.json",
-            "label": "Environment distribution"
           }
         ]
       }
