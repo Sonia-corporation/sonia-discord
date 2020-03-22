@@ -1,17 +1,17 @@
+import _ from 'lodash';
 import { isDiscordDmChannel } from './functions/is-discord-dm-channel';
 import { isDiscordTextChannel } from './functions/is-discord-text-channel';
 import { AnyDiscordChannel } from './types/any-discord-channel';
-import _ from 'lodash';
 
-export class DiscordChannel {
-  private static _instance: DiscordChannel;
+export class DiscordChannelService {
+  private static _instance: DiscordChannelService;
 
-  public static getInstance(): DiscordChannel {
-    if (_.isNil(DiscordChannel._instance)) {
-      DiscordChannel._instance = new DiscordChannel();
+  public static getInstance(): DiscordChannelService {
+    if (_.isNil(DiscordChannelService._instance)) {
+      DiscordChannelService._instance = new DiscordChannelService();
     }
 
-    return DiscordChannel._instance;
+    return DiscordChannelService._instance;
   }
 
   public isValid(channel: unknown): channel is AnyDiscordChannel {

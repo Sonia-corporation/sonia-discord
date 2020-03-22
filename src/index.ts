@@ -1,16 +1,16 @@
 import appRootPath from 'app-root-path';
 import fs from 'fs-extra';
 import _ from 'lodash';
-import { Discord } from './features/discord/discord';
 import { ENVIRONMENT } from './environment/environment';
 import { IEnvironment } from './environment/interfaces/environment';
-import { Logger } from './features/logger/logger';
-import { Server } from './features/server/server';
+import { DiscordService } from './features/discord/discord-service';
+import { LoggerConfigService } from './features/logger/logger-config-service';
+import { ServerService } from './features/server/server-service';
 
 function startApp(environment: Readonly<IEnvironment>): void {
-  Logger.getInstance(environment.logger);
-  Server.getInstance();
-  Discord.getInstance(environment.discord);
+  LoggerConfigService.getInstance(environment.logger);
+  ServerService.getInstance();
+  DiscordService.getInstance(environment.discord);
 }
 
 function mergeEnvironments(

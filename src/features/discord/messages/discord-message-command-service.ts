@@ -1,15 +1,15 @@
 import _ from 'lodash';
 import { DiscordMessageCommandEnum } from './enums/discord-message-command.enum';
 
-export class DiscordMessageCommand {
-  private static _instance: DiscordMessageCommand;
+export class DiscordMessageCommandService {
+  private static _instance: DiscordMessageCommandService;
 
-  public static getInstance(): DiscordMessageCommand {
-    if (_.isNil(DiscordMessageCommand._instance)) {
-      DiscordMessageCommand._instance = new DiscordMessageCommand();
+  public static getInstance(): DiscordMessageCommandService {
+    if (_.isNil(DiscordMessageCommandService._instance)) {
+      DiscordMessageCommandService._instance = new DiscordMessageCommandService();
     }
 
-    return DiscordMessageCommand._instance;
+    return DiscordMessageCommandService._instance;
   }
 
   public hasCommand(message: Readonly<string>): boolean {

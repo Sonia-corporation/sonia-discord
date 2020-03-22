@@ -4,26 +4,26 @@ import {
   chalkText,
   chalkValue
 } from '../../logger/chalk';
-import { Logger } from '../../logger/logger';
-import { DiscordClient } from '../discord-client';
+import { LoggerService } from '../../logger/logger-service';
+import { DiscordClientService } from '../discord-client-service';
 import { IDiscordConfig } from '../interfaces/discord-config';
 import { isDiscordClientUser } from './functions/is-discord-client-user';
 import { Sonia } from './types/sonia';
 
-export class DiscordSonia {
-  private static _instance: DiscordSonia;
+export class DiscordSoniaService {
+  private static _instance: DiscordSoniaService;
 
-  public static getInstance(config?: Readonly<PartialNested<IDiscordConfig>>): DiscordSonia {
-    if (_.isNil(DiscordSonia._instance)) {
-      DiscordSonia._instance = new DiscordSonia(config);
+  public static getInstance(config?: Readonly<PartialNested<IDiscordConfig>>): DiscordSoniaService {
+    if (_.isNil(DiscordSoniaService._instance)) {
+      DiscordSoniaService._instance = new DiscordSoniaService(config);
     }
 
-    return DiscordSonia._instance;
+    return DiscordSoniaService._instance;
   }
 
-  private readonly _logger = Logger.getInstance();
-  private readonly _discordClient = DiscordClient.getInstance();
-  private readonly _className = 'DiscordSonia';
+  private readonly _loggerService = LoggerService.getInstance();
+  private readonly _discordClientService = DiscordClientService.getInstance();
+  private readonly _className = 'DiscordSoniaService';
   private _id = '';
   private _secretToken = '';
 
@@ -42,7 +42,7 @@ export class DiscordSonia {
     if (_.isString(id)) {
       this._id = id;
 
-      this._logger.log(this._className, chalkText(`id updated to: ${chalkValue(`"${this._id}"`)}`));
+      this._loggerService.log(this._className, chalkText(`id updated to: ${chalkValue(`"${this._id}"`)}`));
     }
   }
 
@@ -54,7 +54,7 @@ export class DiscordSonia {
     if (_.isString(secretToken)) {
       this._secretToken = secretToken;
 
-      this._logger.log(this._className, chalkText(`secretToken updated to: ${chalkValue(`"********"`)} (hidden)`));
+      this._loggerService.log(this._className, chalkText(`secretToken updated to: ${chalkValue(`"********"`)} (hidden)`));
     }
   }
 
@@ -63,7 +63,7 @@ export class DiscordSonia {
   }
 
   public getSonia(): Sonia | null {
-    return this._discordClient.getClient().user;
+    return this._discordClientService.getClient().user;
   }
 
   public isValid(sonia: unknown): sonia is Sonia {

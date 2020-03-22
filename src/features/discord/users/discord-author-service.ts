@@ -2,15 +2,15 @@ import _ from 'lodash';
 import { isDiscordUser } from './functions/is-discord-user';
 import { AnyDiscordAuthor } from './types/any-discord-author';
 
-export class DiscordAuthor {
-  private static _instance: DiscordAuthor;
+export class DiscordAuthorService {
+  private static _instance: DiscordAuthorService;
 
-  public static getInstance(): DiscordAuthor {
-    if (_.isNil(DiscordAuthor._instance)) {
-      DiscordAuthor._instance = new DiscordAuthor();
+  public static getInstance(): DiscordAuthorService {
+    if (_.isNil(DiscordAuthorService._instance)) {
+      DiscordAuthorService._instance = new DiscordAuthorService();
     }
 
-    return DiscordAuthor._instance;
+    return DiscordAuthorService._instance;
   }
 
   public isValid(author: unknown): author is AnyDiscordAuthor {
