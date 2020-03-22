@@ -59,11 +59,11 @@ export class DiscordMessageConfigService {
     if (_.isString(prefix)) {
       DISCORD_MESSAGE_CONFIG.command.prefix = prefix;
 
-      this._loggerService.log(this._className, this._chalkService.text(`command prefix updated to: ${this._chalkService.value(`"${prefix}"`)}`));
+      this._loggerService.log(this._className, this._chalkService.text(`message command prefix updated to: ${this._chalkService.value(`"${DISCORD_MESSAGE_CONFIG.command.prefix}"`)}`));
     } else if (_.isArray(prefix)) {
       DISCORD_MESSAGE_CONFIG.command.prefix = removeUndefined(prefix);
 
-      this._loggerService.log(this._className, this._chalkService.text(`command prefix updated to: ${this._chalkService.value(this._loggerService.getStringArray(DISCORD_MESSAGE_CONFIG.command.prefix))}`));
+      this._loggerService.log(this._className, this._chalkService.text(`message command prefix updated to: ${this._chalkService.value(this._loggerService.getStringArray(DISCORD_MESSAGE_CONFIG.command.prefix))}`));
     }
   }
 }
