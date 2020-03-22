@@ -37,6 +37,7 @@ jobs:
         env:
           CI: true
   publish-npm:
+    name: NPM
     needs: build
     runs-on: ubuntu-latest
     strategy:
