@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+## [1.9.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.9.0...1.9.1) (2020-03-22)
+
+
+### Bug Fixes
+
+* **gpr:** remove the custom scope ([f26af29](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f26af29aa33ce993a18a865e6ad7555475a063be))
+* **release:** remove the release workflow ([2695cf5](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2695cf582bf604016ca7971274918ba5984bd9e7))
+
 # [1.9.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.8.0...1.9.0) (2020-03-22)
 
 
