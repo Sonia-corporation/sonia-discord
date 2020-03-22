@@ -14,6 +14,28 @@
 
 ### Sonia commands
 
+Sonia will treat one command at a time.  
+You can either use `--` or `!` as prefix for the commands.
+
+__Example:__
+
+`@Sonia-il-est-midi !version`  
+`@Sonia-il-est-midi --version`  
+
+#### Version
+
+Sonia will send you a message containing:
+
+- The application version (as a link)
+- The application release date
+- The application release notes (as a link)
+- The application status
+- Her mental state
+
+__Example:__
+
+`@Sonia-il-est-midi !version`
+
 ### Sonia behavior
 
 Sonia will never responds to herself - no infinite loop :(  
@@ -39,12 +61,20 @@ First of all, she will tell the channel that it is noon when it is noon.
 That is the main goal after all...
 
 When a message on the channel is sent, Sonia will responds only if she is mentioned personally.  
-This count as a DM response for Sonia, so prepare to have a friendly message dedicated to you.
+This count as a DM response for Sonia, so prepare to have a friendly message dedicated to you.  
+Special commands will be handled on the first hand.  
 
-Example:  
-`@Sonia-il-est-midi#0863 yo`
+__Example:__  
+
+`@Sonia-il-est-midi yo`
 
 On global mentions like `@here` and `@everyone`, Sonia will sends a message to tell everybody it is noon (even if it is a lie).
+
+To use a command, you must ask her personally.
+
+__Example:__
+
+`@Sonia-il-est-midi !version`
 
 ## Contributing
 

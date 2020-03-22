@@ -30,20 +30,21 @@ Run `npm run start` to start the local development server.
 
 ## Package scripts
 
-`npm run build`: create a Node.js app in the dist folder
-`npm run build:environment:copy`: copy the secret environment file inside the dist folder
-`npm run build:environment:rewrite-path`: rename the environment file path of the Node.js app inside the dist folder
-`npm run start`: run the Node.js app for the local development
-`npm run start:prod`: build and run the Node.js app like it will be once deployed in the server for local development or server debugging
-`npm run run:prod`: run the Node.js app like it will be once deployed in the server for local development or server debugging
-`npm run tsc`: compile the TypeScript app to Node.js app
-`npm run test`: run the tests and watch
-`npm run test:ci`: run the tests once
-`npm run lint`: run the linter and fix the errors
-`npm run lint:ci`: run the linter
-`npm run cz`: run a CLI to easily push and commit by following the commit convention of this project
-`npm run semver`: create a new version, a new tag and update the [CHANGELOG](CHANGELOG.md) file
-`npm run clean:dist`: remove the dist folder
+- `npm run build`: create a Node.js app in the dist folder  
+- `npm run build:environment:copy`: copy the secret environment file inside the dist folder  
+- `npm run build:environment:rewrite-path`: rename the environment file path of the Node.js app inside the dist folder  
+- `npm run build:update-app-release-date`: update the app release date inside the environment file from the dist folder  
+- `npm run start`: run the Node.js app for the local development  
+- `npm run start:prod`: build and run the Node.js app like it will be once deployed in the server for local development or server debugging  
+- `npm run run:prod`: run the Node.js app like it will be once deployed in the server for local development or server debugging  
+- `npm run tsc`: compile the TypeScript app to Node.js app  
+- `npm run test`: run the tests and watch  
+- `npm run test:ci`: run the tests once  
+- `npm run lint`: run the linter and fix the errors  
+- `npm run lint:ci`: run the linter  
+- `npm run cz`: run a CLI to easily push and commit by following the commit convention of this project  
+- `npm run semver`: create a new version, a new tag and update the [CHANGELOG](CHANGELOG.md) file  
+- `npm run clean:dist`: remove the dist folder  
 
 ## Git
 
