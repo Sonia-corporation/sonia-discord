@@ -1,5 +1,5 @@
 export interface IAppConfig {
-  isProduction: string;
+  isProduction: boolean;
   releaseDate: string;
-  version: boolean;
+  version: string;
 }
