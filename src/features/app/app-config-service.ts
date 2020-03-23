@@ -5,6 +5,7 @@ import { ChalkService } from '../logger/chalk-service';
 import { LoggerService } from '../logger/logger-service';
 import { isNodeProduction } from '../node/functions/is-node-production';
 import { APP_CONFIG } from './app-config';
+import { AppProductionStateEnum } from './enums/app-production-state.enum';
 import { IAppConfig } from './interfaces/app-config';
 
 export class AppConfigService {
@@ -71,6 +72,10 @@ export class AppConfigService {
 
   public isProduction(): boolean {
     return APP_CONFIG.isProduction;
+  }
+
+  public getProductionStateHumanized(): AppProductionStateEnum {
+    return APP_CONFIG.isProduction ? AppProductionStateEnum.PRODUCTION : AppProductionStateEnum.DEVELOPMENT;
   }
 
   public updateProductionState(isProduction?: Readonly<boolean>): void {
