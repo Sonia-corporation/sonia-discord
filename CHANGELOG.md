@@ -1,5 +1,87 @@
 # Semantic Versioning Changelog
 
+# [1.13.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.12.0...1.13.0) (2020-03-23)
+
+
+### Features
+
+* **logger:** add a logger to display the warn and error messages from discord ([4dcc851](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4dcc85124626e2b2124c14d3929c1b797eed1816))
+
+# [1.12.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.11.0...1.12.0) (2020-03-22)
+
+
+### Features
+
+* **release:** remove the debug distribution ([1512261](https://github.com/Sonia-corporation/il-est-midi-discord/commit/1512261359c8b5df7d94e9ed07f84e610cf1f56d))
+
+# [1.11.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.10.0...1.11.0) (2020-03-22)
+
+
+### Features
+
+* **release:** change the distributions ([65a83e4](https://github.com/Sonia-corporation/il-est-midi-discord/commit/65a83e41535146109a918d98731eff9849dd0107))
+* **release:** change the distributions ([00a3ed6](https://github.com/Sonia-corporation/il-est-midi-discord/commit/00a3ed645dd0944152a0abf87317e865b243cda2))
+
+# [1.10.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.9.2...1.10.0) (2020-03-22)
+
+
+### Bug Fixes
+
+* **release:** add missing script for the debug distribution ([3c2fd10](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3c2fd10c731af11e6f439ead716deab1bdbeafc7))
+
+
+### Features
+
+* **npm:** use semver to do the npm package instead of github workflow ([3f66986](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3f66986d33e6827a798e1a955f1c708d89f752cd))
+
+## [1.9.2](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.9.1...1.9.2) (2020-03-22)
+
+
+### Bug Fixes
+
+* **release:** merge the multiple steps into one ([50f38e0](https://github.com/Sonia-corporation/il-est-midi-discord/commit/50f38e083ba6187cdf0e77b7e5e05e18f44c9aed))
+
+## [1.9.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.9.0...1.9.1) (2020-03-22)
+
+
+### Bug Fixes
+
+* **gpr:** remove the custom scope ([f26af29](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f26af29aa33ce993a18a865e6ad7555475a063be))
+* **release:** remove the release workflow ([2695cf5](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2695cf582bf604016ca7971274918ba5984bd9e7))
+
+# [1.9.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.8.0...1.9.0) (2020-03-22)
+
+
+### Bug Fixes
+
+* **release:** use a deeper wildcard to find the new tag for the release ([7dbf794](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7dbf794885febb99de9a8fe5b58cca95ec5e3452))
+
+
+### Features
+
+* **readme:** add more badges for the status of the workflows ([9417219](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9417219ea785e5e802730e9378b519b782ca4ea9))
+
+# [1.8.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.7.0...1.8.0) (2020-03-22)
+
+
+### Bug Fixes
+
+* **package:** change the needs to avoid an error ([0750b5d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/0750b5dc4b769919f8d6cb24013be0658d4d1767))
+
+
+### Features
+
+* **release:** create a new workflow for the release ([8306f45](https://github.com/Sonia-corporation/il-est-midi-discord/commit/8306f45a98d5d5e5a459049d77a82903c0ea3944))
+
+# [1.7.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.6.0...1.7.0) (2020-03-22)
+
+
+### Features
+
+* **guild:** add new service config to enable or disable the guild member add service feature ([4036a2c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4036a2cd5e405cb226de4edc6b4085ea2722d0c6))
+* **guild:** add welcome messages on the general channel for newcomers ([dc061eb](https://github.com/Sonia-corporation/il-est-midi-discord/commit/dc061eb7b47f39e386286991c3bbf1d14672b0b9))
+* **package:** trigger npm and gpr packages on release publication ([d962522](https://github.com/Sonia-corporation/il-est-midi-discord/commit/d9625225c17d52e1581fa46a7e8538b1b6952b67))
+
 # [1.6.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.5.0...1.6.0) (2020-03-22)
 
 
