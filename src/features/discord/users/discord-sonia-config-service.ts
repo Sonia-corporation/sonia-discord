@@ -1,4 +1,4 @@
-import { MessageEmbedAuthor } from "discord.js";
+import { MessageEmbedAuthor } from 'discord.js';
 import _ from 'lodash';
 import { PartialNested } from '../../../types/partial-nested';
 import { ChalkService } from '../../logger/chalk-service';
