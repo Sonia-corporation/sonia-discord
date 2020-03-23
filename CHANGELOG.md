@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.13.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.12.0...1.13.0) (2020-03-23)
+
+
+### Features
+
+* **logger:** add a logger to display the warn and error messages from discord ([4dcc851](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4dcc85124626e2b2124c14d3929c1b797eed1816))
+
 # [1.12.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.11.0...1.12.0) (2020-03-22)
 
 
