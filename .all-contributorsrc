@@ -1,6 +1,6 @@
 {
   "projectName": "il-est-midi-discord",
-  "projectOwner": "C0ZEN",
+  "projectOwner": "Sonia-corporation",
   "repoType": "github",
   "repoHost": "https://github.com",
   "commitConvention": "angular",
@@ -28,6 +28,17 @@
         "question",
         "maintenance",
         "bug"
+      ]
+    },
+    {
+      "login": "semantic-release-bot",
+      "name": "Semantic Release Bot",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/32174276?v=4",
+      "profile": "http://semantic-release.org/",
+      "contributions": [
+        "doc",
+        "tool",
+        "security"
       ]
     }
   ],
