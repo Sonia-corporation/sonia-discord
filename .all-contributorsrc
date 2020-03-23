@@ -31,6 +31,16 @@
       ]
     },
     {
+      "login": "all-contributors",
+      "name": "All Contributors",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/46410174?v=4",
+      "profile": "https://allcontributors.org",
+      "contributions": [
+        "tool",
+        "doc"
+      ]
+     },
+     {
       "login": "renovate-bot",
       "name": "WhiteSource Renovate",
       "avatar_url": "https://avatars0.githubusercontent.com/u/25180681?v=4",
