@@ -26,6 +26,7 @@ export class DiscordMessageCommandVersionService {
 
   public handle(): IDiscordMessageResponse {
     const appVersion: string = this._appConfigService.getVersion();
+    const totalReleaseCountHumanized: string = this._appConfigService.getTotalReleaseCountHumanized();
     const appReleaseDateHumanized: string = this._appConfigService.getReleaseDateHumanized();
     const appProductionStateHumanized: AppProductionStateEnum = this._appConfigService.getProductionStateHumanized();
     const author: MessageEmbedAuthor = this._discordSoniaService.getCorporationMessageEmbedAuthor();
@@ -63,7 +64,7 @@ export class DiscordMessageCommandVersionService {
           ],
           footer: {
             iconURL: soniaImageUrl || ``,
-            text: `18 releases`
+            text: totalReleaseCountHumanized
           },
           thumbnail: {
             url: commandVersionConfig.imageUrl
