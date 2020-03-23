@@ -22,7 +22,7 @@ export class DiscordGuildMemberAddService {
     return DiscordGuildMemberAddService._instance;
   }
 
-  private readonly _discordClientService = DiscordClientService.getInstance().getClient();
+  private readonly _discordClientServiceClient = DiscordClientService.getInstance().getClient();
   private readonly _discordChannelGuildService = DiscordChannelGuildService.getInstance();
   private readonly _discordGuildConfigService = DiscordGuildConfigService.getInstance();
   private readonly _loggerService = LoggerService.getInstance();
@@ -38,18 +38,20 @@ export class DiscordGuildMemberAddService {
   }
 
   private _listen(): void {
-    this._discordClientService.on(`guildMemberAdd`, (member: Readonly<AnyGuildMember>): void => {
-      if (this._discordGuildConfigService.shouldWelcomeNewMembers()) {
-        this._handleMember(member);
-      }
+    this._discordClientServiceClient.on(`guildMemberAdd`, (member: Readonly<AnyGuildMember>): void => {
+      this._handleGuildMemberAdd(member);
     });
+
+    this._loggerService.debug(this._className, this._chalkService.text(`listen "guildMemberAdd" event`));
   }
 
-  private _handleMember(member: Readonly<AnyGuildMember>): void {
-    const memberChannel: GuildChannel | null = this._getPrimaryChannel(member);
+  private _handleGuildMemberAdd(member: Readonly<AnyGuildMember>): void {
+    if (this._discordGuildConfigService.shouldWelcomeNewMembers()) {
+      const memberChannel: GuildChannel | null = this._getPrimaryChannel(member);
 
-    if (isDiscordGuildChannel(memberChannel)) {
-      this._sendMessage(memberChannel, member);
+      if (isDiscordGuildChannel(memberChannel)) {
+        this._sendMessage(memberChannel, member);
+      }
     }
   }
 
