@@ -102,7 +102,7 @@ export class AppConfigService {
   }
 
   public updateTotalReleaseCount(count?: Readonly<number>): void {
-    if (_.isBoolean(count)) {
+    if (_.isNumber(count)) {
       APP_CONFIG.totalReleaseCount = count;
 
       this._loggerService.log(this._className, this._chalkService.text(`app total release count updated to: ${this._chalkService.value(APP_CONFIG.totalReleaseCount)}`));

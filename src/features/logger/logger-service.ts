@@ -19,8 +19,8 @@ export class LoggerService {
   private readonly _chalkService = ChalkService.getInstance();
   private readonly _logPrefix = `● `;
 
-  public error(message: Readonly<string>): void;
-  public error(context: Readonly<string>, message: Readonly<string>): void;
+  public error(message: unknown): void;
+  public error(context: Readonly<string>, message: unknown): void;
   public error(): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
       if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log` || LOGGER_CONFIG.level === `success` || LOGGER_CONFIG.level === `warning` || LOGGER_CONFIG.level === `error`) {
@@ -35,8 +35,8 @@ export class LoggerService {
     }
   }
 
-  public warning(message: Readonly<string>): void;
-  public warning(context: Readonly<string>, message: Readonly<string>): void;
+  public warning(message: unknown): void;
+  public warning(context: Readonly<string>, message: unknown): void;
   public warning(): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
       if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log` || LOGGER_CONFIG.level === `success` || LOGGER_CONFIG.level === `warning`) {
@@ -51,8 +51,8 @@ export class LoggerService {
     }
   }
 
-  public success(message: Readonly<string>): void;
-  public success(context: Readonly<string>, message: Readonly<string>): void;
+  public success(message: unknown): void;
+  public success(context: Readonly<string>, message: unknown): void;
   public success(): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
       if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log` || LOGGER_CONFIG.level === `success`) {
@@ -67,8 +67,8 @@ export class LoggerService {
     }
   }
 
-  public log(message: Readonly<string>): void;
-  public log(context: Readonly<string>, message: Readonly<string>): void;
+  public log(message: unknown): void;
+  public log(context: Readonly<string>, message: unknown): void;
   public log(): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
       if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log`) {
@@ -83,8 +83,8 @@ export class LoggerService {
     }
   }
 
-  public debug(message: Readonly<string>): void;
-  public debug(context: Readonly<string>, message: Readonly<string>): void;
+  public debug(message: unknown): void;
+  public debug(context: Readonly<string>, message: unknown): void;
   public debug(): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
       if (LOGGER_CONFIG.level === `debug`) {
