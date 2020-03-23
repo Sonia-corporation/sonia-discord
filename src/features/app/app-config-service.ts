@@ -5,6 +5,7 @@ import { ChalkService } from '../logger/chalk-service';
 import { LoggerService } from '../logger/logger-service';
 import { isNodeProduction } from '../node/functions/is-node-production';
 import { APP_CONFIG } from './app-config';
+import { AppProductionStateEnum } from './enums/app-production-state.enum';
 import { IAppConfig } from './interfaces/app-config';
 
 export class AppConfigService {
@@ -23,6 +24,7 @@ export class AppConfigService {
   private readonly _className = `AppConfigService`;
 
   public constructor(config?: Readonly<PartialNested<IAppConfig>>) {
+    this._defineProductionState();
     this._defineBuildDate();
     this.updateConfig(config);
   }
@@ -40,7 +42,7 @@ export class AppConfigService {
     return APP_CONFIG.version;
   }
 
-  public updateVersion(version?: string): void {
+  public updateVersion(version?: Readonly<string>): void {
     if (_.isString(version)) {
       APP_CONFIG.version = version;
 
@@ -60,7 +62,7 @@ export class AppConfigService {
     return APP_CONFIG.releaseDate;
   }
 
-  public updateReleaseDate(date?: string): void {
+  public updateReleaseDate(date?: Readonly<string>): void {
     if (_.isString(date)) {
       APP_CONFIG.releaseDate = date;
 
@@ -68,10 +70,28 @@ export class AppConfigService {
     }
   }
 
-  private _defineBuildDate(): void {
-    const isProduction: boolean = isNodeProduction();
+  public isProduction(): boolean {
+    return APP_CONFIG.isProduction;
+  }
 
-    if (_.isEqual(isProduction, false)) {
+  public getProductionStateHumanized(): AppProductionStateEnum {
+    return APP_CONFIG.isProduction ? AppProductionStateEnum.PRODUCTION : AppProductionStateEnum.DEVELOPMENT;
+  }
+
+  public updateProductionState(isProduction?: Readonly<boolean>): void {
+    if (_.isBoolean(isProduction)) {
+      APP_CONFIG.isProduction = isProduction;
+
+      this._loggerService.log(this._className, this._chalkService.text(`app production state updated to: ${this._chalkService.value(APP_CONFIG.isProduction)}`));
+    }
+  }
+
+  private _defineProductionState(): void {
+    this.updateProductionState(isNodeProduction());
+  }
+
+  private _defineBuildDate(): void {
+    if (!this.isProduction()) {
       this.updateReleaseDate(moment().format());
     }
   }

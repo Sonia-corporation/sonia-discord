@@ -1,6 +1,7 @@
 import { MessageEmbedAuthor } from 'discord.js';
 import _ from 'lodash';
 import { AppConfigService } from '../../app/app-config-service';
+import { AppProductionStateEnum } from '../../app/enums/app-production-state.enum';
 import { IDiscordMessageCommandVersionConfig } from '../interfaces/discord-message-command-version-config';
 import { DiscordSoniaService } from '../users/discord-sonia-service';
 import { DiscordSoniaMentalStateEnum } from '../users/enums/discord-sonia-mental-state.enum';
@@ -24,7 +25,8 @@ export class DiscordMessageCommandVersionService {
 
   public handle(): IDiscordMessageResponse {
     const appVersion: string = this._appConfigService.getVersion();
-    const appReleaseDate: string = this._appConfigService.getReleaseDateHumanized();
+    const appReleaseDateHumanized: string = this._appConfigService.getReleaseDateHumanized();
+    const appProductionStateHumanized: AppProductionStateEnum = this._appConfigService.getProductionStateHumanized();
     const author: MessageEmbedAuthor = this._discordSoniaService.getCorporationMessageEmbedAuthor();
     const soniaFullName: string | null = this._discordSoniaService.getSoniaFullName();
     const soniaMentalState: DiscordSoniaMentalStateEnum = this._discordSoniaService.getMentalState();
@@ -42,7 +44,7 @@ export class DiscordMessageCommandVersionService {
             },
             {
               name: `Release date`,
-              value: appReleaseDate
+              value: appReleaseDateHumanized
             },
             {
               name: `Release notes`,
@@ -50,7 +52,7 @@ export class DiscordMessageCommandVersionService {
             },
             {
               name: `Status`,
-              value: `Ready`
+              value: `Running in *${appProductionStateHumanized}*`
             },
             {
               name: `Mental state`,
