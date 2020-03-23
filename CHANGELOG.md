@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+# [1.14.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.13.0...1.14.0) (2020-03-23)
+
+
+### Features
+
+* **app-config:** add new property isProduction ([90a6dc4](https://github.com/Sonia-corporation/il-est-midi-discord/commit/90a6dc45dadb45db6d32d5e17f3820e9c25bfc0f))
+* **discord-command-version:** add the real status of the app ([cd51158](https://github.com/Sonia-corporation/il-est-midi-discord/commit/cd511582f1d253fa2d4163f6b7ce786c4c6f2823))
+
 # [1.13.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.12.0...1.13.0) (2020-03-23)
 
 
