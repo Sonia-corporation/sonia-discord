@@ -1,4 +1,6 @@
 import _ from 'lodash';
+import { ChalkService } from '../../logger/chalk-service';
+import { LoggerService } from '../../logger/logger-service';
 import { DiscordClientService } from '../discord-client-service';
 
 export class DiscordGuildService {
@@ -12,7 +14,10 @@ export class DiscordGuildService {
     return DiscordGuildService._instance;
   }
 
-  private readonly _discordClientService = DiscordClientService.getInstance().getClient();
+  private readonly _discordClientServiceClient = DiscordClientService.getInstance().getClient();
+  private readonly _loggerService = LoggerService.getInstance();
+  private readonly _chalkService = ChalkService.getInstance();
+  private readonly _className = `DiscordGuildService`;
 
   public constructor() {
     this._init();
@@ -24,7 +29,9 @@ export class DiscordGuildService {
 
   private _listen(): void {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    this._discordClientService.on(`ready`, (): void => {
+    this._discordClientServiceClient.on(`ready`, (): void => {
     });
+
+    this._loggerService.debug(this._className, this._chalkService.text(`listen "ready" event`));
   }
 }
