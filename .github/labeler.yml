@@ -1,6 +1,9 @@
 documentation:
-  - ./README.md
-  - LICENSE
-  - CONTRIBUTING.md
-  - CODE_OF_CONDUCT.md
+  - .github/workflows/greetings.yml
   - .all-contributorsrc
+  - CODE_OF_CONDUCT.md
+  - CONTRIBUTING.md
+  - ISSUE_TEMPLATE.md
+  - LICENSE
+  - PULL_REQUEST_TEMPLATE.md
+  - README.md
