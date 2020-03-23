@@ -1,4 +1,5 @@
 export interface IAppConfig {
+  isProduction: string;
   releaseDate: string;
-  version: string;
+  version: boolean;
 }

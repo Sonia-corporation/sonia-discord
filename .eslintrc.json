@@ -23,7 +23,8 @@
   },
   "parser": "@typescript-eslint/parser",
   "plugins": [
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "typescript-sort-keys"
   ],
   "settings": {
     "import/extensions": [
@@ -40,6 +41,22 @@
     }
   },
   "rules": {
+    "typescript-sort-keys/interface": [
+      "error",
+      "asc",
+      {
+        "caseSensitive": true,
+        "natural": true
+      }
+    ],
+    "typescript-sort-keys/string-enum": [
+      "error",
+      "asc",
+      {
+        "caseSensitive": true,
+        "natural": true
+      }
+    ],
     "quotes": [
       "error",
       "backtick"

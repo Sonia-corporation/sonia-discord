@@ -50,7 +50,7 @@ export class DiscordMessageCommandVersionService {
             },
             {
               name: `Status`,
-              value: `Ready`
+              value: `Running in ***production***`
             },
             {
               name: `Mental state`,
