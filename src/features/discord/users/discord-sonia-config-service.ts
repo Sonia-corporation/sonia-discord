@@ -72,4 +72,8 @@ export class DiscordSoniaConfigService {
   public getCorporationMessageEmbedAuthor(): MessageEmbedAuthor {
     return DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor;
   }
+
+  public getCorporationImageUrl(): string {
+    return DISCORD_SONIA_CONFIG.corporationImageUrl;
+  }
 }

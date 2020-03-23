@@ -29,7 +29,7 @@ export class DiscordSoniaService {
     return this._discordClientService.getClient().user;
   }
 
-  public getSoniaFullName(): string | null {
+  public getFullName(): string | null {
     const sonia: Sonia | null = this.getSonia();
 
     if (!_.isNil(sonia)) {
@@ -45,6 +45,20 @@ export class DiscordSoniaService {
 
   public getCorporationMessageEmbedAuthor(): MessageEmbedAuthor {
     return this._discordSoniaConfigService.getCorporationMessageEmbedAuthor();
+  }
+
+  public getCorporationImageUrl(): string {
+    return this._discordSoniaConfigService.getCorporationImageUrl();
+  }
+
+  public getImageUrl(): string | null {
+    const sonia: Sonia | null = this.getSonia();
+
+    if (!_.isNil(sonia)) {
+      return sonia.displayAvatarURL();
+    }
+
+    return null;
   }
 
   public getMentalState(): DiscordSoniaMentalStateEnum {
