@@ -21,7 +21,7 @@ export class DiscordMessageService {
   }
 
   private readonly _loggerService = LoggerService.getInstance();
-  private readonly _discordClientService = DiscordClientService.getInstance().getClient();
+  private readonly _discordClientServiceClient = DiscordClientService.getInstance().getClient();
   private readonly _discordChannelService = DiscordChannelService.getInstance();
   private readonly _discordMessageDmService = DiscordMessageDmService.getInstance();
   private readonly _discordMessageTextService = DiscordMessageTextService.getInstance();
@@ -38,11 +38,11 @@ export class DiscordMessageService {
   }
 
   private _listen(): void {
-    this._discordClientService.on(`message`, (message: Readonly<AnyDiscordMessage>): void => {
+    this._discordClientServiceClient.on(`message`, (message: Readonly<AnyDiscordMessage>): void => {
       this._handleMessage(message);
     });
 
-    this._loggerService.debug(this._className, this._chalkService.text(`listen messages`));
+    this._loggerService.debug(this._className, this._chalkService.text(`listen "message" event`));
   }
 
   private _handleMessage(message: Readonly<AnyDiscordMessage>): void {

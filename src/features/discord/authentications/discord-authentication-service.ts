@@ -16,7 +16,7 @@ export class DiscordAuthenticationService {
   }
 
   private readonly _loggerService = LoggerService.getInstance();
-  private readonly _discordClientService = DiscordClientService.getInstance().getClient();
+  private readonly _discordClientServiceClient = DiscordClientService.getInstance().getClient();
   private readonly _discordSoniaConfigService = DiscordSoniaConfigService.getInstance();
   private readonly _chalkService = ChalkService.getInstance();
   private readonly _className = `DiscordAuthenticationService`;
@@ -31,17 +31,23 @@ export class DiscordAuthenticationService {
   }
 
   private _listen(): void {
-    this._discordClientService.on(`ready`, (): void => {
-      if (!_.isNil(this._discordClientService.user)) {
-        this._loggerService.log(this._className, this._chalkService.text(`authenticated as: ${this._chalkService.value(`"${this._discordClientService.user.tag}`)}"`));
-      } else {
-        this._loggerService.log(this._className, this._chalkService.text(`authenticated as: ${this._chalkService.value(`unknown user`)}`));
-      }
+    this._discordClientServiceClient.on(`ready`, (): void => {
+      this._handleReady();
     });
+
+    this._loggerService.debug(this._className, this._chalkService.text(`listen "ready" event`));
+  }
+
+  private _handleReady(): void {
+    if (!_.isNil(this._discordClientServiceClient.user)) {
+      this._loggerService.log(this._className, this._chalkService.text(`authenticated as: ${this._chalkService.value(`"${this._discordClientServiceClient.user.tag}`)}"`));
+    } else {
+      this._loggerService.log(this._className, this._chalkService.text(`authenticated as: ${this._chalkService.value(`unknown user`)}`));
+    }
   }
 
   private _login(): void {
-    this._discordClientService.login(this._discordSoniaConfigService.getSecretToken()).then((): void => {
+    this._discordClientServiceClient.login(this._discordSoniaConfigService.getSecretToken()).then((): void => {
       this._loggerService.success(this._className, this._chalkService.text(`authentication successful`));
     }).catch((error: unknown): void => {
       this._loggerService.error(this._className, this._chalkService.text(`authentication failed`));
