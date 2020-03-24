@@ -46,6 +46,8 @@ export class DiscordMessageService {
   }
 
   private _handleMessage(message: Readonly<AnyDiscordMessage>): void {
+    this._loggerService.log(this._className, this._loggerService.getSnowflakeContext(message.id, message.content), true);
+
     if (this._discordAuthorService.isValid(message.author)) {
       if (this._discordAuthorService.isBot(message.author)) {
         return;
@@ -62,6 +64,8 @@ export class DiscordMessageService {
   }
 
   private _dmMessage(message: Readonly<AnyDiscordMessage>): void {
+    this._loggerService.debug(this._className, this._loggerService.getSnowflakeContext(message.id, `dm message`), true);
+
     const response: IDiscordMessageResponse | null = this._discordMessageDmService.getMessage(message);
 
     if (!_.isNil(response)) {
@@ -70,6 +74,8 @@ export class DiscordMessageService {
   }
 
   private _textMessage(message: Readonly<AnyDiscordMessage>): void {
+    this._loggerService.debug(this._className, this._loggerService.getSnowflakeContext(message.id, `text message`), true);
+
     const response: IDiscordMessageResponse | null = this._discordMessageTextService.getMessage(message);
 
     if (!_.isNil(response)) {
@@ -81,17 +87,17 @@ export class DiscordMessageService {
     message: Readonly<AnyDiscordMessage>,
     messageResponse: Readonly<IDiscordMessageResponse>
   ): void {
-    this._loggerService.debug(this._className, this._chalkService.text(`sending message...`));
+    this._loggerService.debug(this._className, this._loggerService.getSnowflakeContext(message.id, `sending message...`), true);
 
     if (!this._discordChannelService.isValid(message.channel)) {
       return;
     }
 
     message.channel.send(messageResponse.response, messageResponse.options).then((): void => {
-      this._loggerService.log(this._className, this._chalkService.text(`message sent`));
+      this._loggerService.log(this._className, this._loggerService.getSnowflakeContext(message.id, `message sent`), true);
     }).catch((error: unknown): void => {
-      this._loggerService.error(this._className, this._chalkService.text(`message sending failed`));
-      this._loggerService.error(this._className, this._chalkService.error(error));
+      this._loggerService.error(this._className, this._loggerService.getSnowflakeContext(message.id, `message sending failed`), true);
+      this._loggerService.error(this._className, this._loggerService.getSnowflakeContext(message.id, error), true);
     });
   }
 }

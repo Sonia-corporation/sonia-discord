@@ -16,6 +16,9 @@ export const ENVIRONMENT: IEnvironment = {
       secretToken: `TO_DEFINE_ON_THE_SERVER`
     }
   },
+  github: {
+    personalAccessToken: `TO_DEFINE_ON_THE_SERVER`
+  },
   logger: {
     isEnabled: true,
     level: LoggerConfigLevelEnum.DEBUG
