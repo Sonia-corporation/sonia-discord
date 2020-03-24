@@ -11,6 +11,7 @@ import { DiscordService } from '../discord/discord-service';
 import { DiscordMessageConfigService } from '../discord/messages/discord-message-config-service';
 import { DiscordSoniaConfigService } from '../discord/users/discord-sonia-config-service';
 import { GITHUB_API_URL } from '../github/constants/github-api-url';
+import { GITHUB_QUERY_RELEASES_TOTAL_COUNT } from '../github/constants/queries/github-query-releases-total-count';
 import { GithubConfigService } from '../github/github-config-service';
 import { ChalkService } from '../logger/chalk-service';
 import { LoggerConfigService } from '../logger/logger-config-service';
@@ -82,13 +83,7 @@ export class InitService {
   private _configureAppTotalReleaseCount(): void {
     axios({
       data: {
-        query: `{
-        repository(owner: "Sonia-corporation", name: "il-est-midi-discord") {
-          releases {
-            totalCount
-          }
-        }
-      }`
+        query: GITHUB_QUERY_RELEASES_TOTAL_COUNT
       },
       headers: {
         Authorization: getBearer(GithubConfigService.getInstance().getPersonalAccessToken())
