@@ -1,4 +1,4 @@
-import { readEnvironment } from './features/init/functions/read-environment';
+import { InitService } from './features/init/init-service';
 
-readEnvironment();
+InitService.getInstance();
 

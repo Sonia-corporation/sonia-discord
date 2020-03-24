@@ -1,7 +1,7 @@
-export interface IGithubTagsTotalCount {
+export interface IGithubReleasesTotalCount {
   data: {
     repository: {
-      refs: {
+      releases: {
         totalCount: number;
       };
     };
