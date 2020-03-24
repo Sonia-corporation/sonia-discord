@@ -11,13 +11,13 @@ import { DiscordService } from '../discord/discord-service';
 import { DiscordMessageConfigService } from '../discord/messages/discord-message-config-service';
 import { DiscordSoniaConfigService } from '../discord/users/discord-sonia-config-service';
 import { GITHUB_API_URL } from '../github/constants/github-api-url';
-import { GITHUB_QUERY_RELEASES_TOTAL_COUNT } from '../github/constants/queries/github-query-releases-total-count';
+import { GITHUB_QUERY_RELEASES_LATEST } from '../github/constants/queries/github-query-releases-latest';
 import { GithubConfigService } from '../github/github-config-service';
+import { IGithubReleasesLatest } from '../github/interfaces/github-releases-latest';
 import { ChalkService } from '../logger/chalk-service';
 import { LoggerConfigService } from '../logger/logger-config-service';
 import { LoggerService } from '../logger/logger-service';
 import { ServerService } from '../server/server-service';
-import { IGithubReleasesTotalCount } from './interfaces/github-releases-total-count';
 
 export class InitService {
   private static _instance: InitService;
@@ -60,7 +60,7 @@ export class InitService {
   private _configureApp(environment: Readonly<IEnvironment>): void {
     this._configureAppFromEnvironment(environment);
     this._configureAppFromPackage();
-    this._configureAppTotalReleaseCount();
+    this._configureAppFromGitHubReleases();
   }
 
   private _configureAppFromEnvironment(environment: Readonly<IEnvironment>): void {
@@ -80,18 +80,19 @@ export class InitService {
     });
   }
 
-  private _configureAppTotalReleaseCount(): void {
+  private _configureAppFromGitHubReleases(): void {
     axios({
       data: {
-        query: GITHUB_QUERY_RELEASES_TOTAL_COUNT
+        query: GITHUB_QUERY_RELEASES_LATEST
       },
       headers: {
         Authorization: getBearer(GithubConfigService.getInstance().getPersonalAccessToken())
       },
       method: `post`,
       url: GITHUB_API_URL
-    }).then((axiosResponse: AxiosResponse<IGithubReleasesTotalCount>): void => {
+    }).then((axiosResponse: AxiosResponse<IGithubReleasesLatest>): void => {
       AppConfigService.getInstance().updateTotalReleaseCount(axiosResponse.data.data.repository.releases.totalCount);
+      AppConfigService.getInstance().updateReleaseDate(axiosResponse.data.data.repository.releases.edges[ 0 ].node.updatedAt);
     }).catch((): void => {
       this._loggerService.error(this._chalkService.text(`Failed to get the app total release count from GitHub API`));
     });
