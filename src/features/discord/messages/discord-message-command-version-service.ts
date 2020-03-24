@@ -35,6 +35,7 @@ export class DiscordMessageCommandVersionService {
     const totalReleaseCountHumanized: string = this._appConfigService.getTotalReleaseCountHumanized();
     const appReleaseDateHumanized: string = this._appConfigService.getReleaseDateHumanized();
     const appInitializationDateHumanized: string = this._appConfigService.getInitializationDateHumanized();
+    const appReleaseNotes: string = this._appConfigService.getReleaseNotes();
     const appProductionStateHumanized: AppProductionStateEnum = this._appConfigService.getProductionStateHumanized();
     const author: MessageEmbedAuthor = this._discordSoniaService.getCorporationMessageEmbedAuthor();
     const soniaFullName: string | null = this._discordSoniaService.getFullName();
@@ -64,7 +65,7 @@ export class DiscordMessageCommandVersionService {
             },
             {
               name: `Release notes`,
-              value: `Checkout the complete [CHANGELOG](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md)`
+              value: `${appReleaseNotes} Checkout the complete [CHANGELOG](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md)`
             },
             {
               inline: true,

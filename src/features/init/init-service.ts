@@ -12,6 +12,7 @@ import { DiscordMessageConfigService } from '../discord/messages/discord-message
 import { DiscordSoniaConfigService } from '../discord/users/discord-sonia-config-service';
 import { GITHUB_API_URL } from '../github/constants/github-api-url';
 import { GITHUB_QUERY_RELEASES_LATEST } from '../github/constants/queries/github-query-releases-latest';
+import { getHumanizedReleaseNotes } from '../github/functions/get-humanized-release-notes';
 import { GithubConfigService } from '../github/github-config-service';
 import { IGithubReleasesLatest } from '../github/interfaces/github-releases-latest';
 import { ChalkService } from '../logger/chalk-service';
@@ -93,6 +94,7 @@ export class InitService {
     }).then((axiosResponse: AxiosResponse<IGithubReleasesLatest>): void => {
       AppConfigService.getInstance().updateTotalReleaseCount(axiosResponse.data.data.repository.releases.totalCount);
       AppConfigService.getInstance().updateReleaseDate(axiosResponse.data.data.repository.releases.edges[ 0 ].node.updatedAt);
+      AppConfigService.getInstance().updateReleaseNotes(getHumanizedReleaseNotes(axiosResponse.data.data.repository.releases.edges[ 0 ].node.description));
     }).catch((): void => {
       this._loggerService.error(this._chalkService.text(`Failed to get the app total release count from GitHub API`));
     });

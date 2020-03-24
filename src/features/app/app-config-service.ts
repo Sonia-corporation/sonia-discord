@@ -36,6 +36,7 @@ export class AppConfigService {
       this.updateReleaseDate(config.releaseDate);
       this.updateInitializationDate(config.initializationDate);
       this.updateTotalReleaseCount(config.totalReleaseCount);
+      this.updateReleaseNotes(config.releaseNotes);
 
       this._loggerService.debug(this._className, this._chalkService.text(`configuration updated`));
     }
@@ -129,6 +130,18 @@ export class AppConfigService {
       APP_CONFIG.totalReleaseCount = count;
 
       this._loggerService.log(this._className, this._chalkService.text(`app total release count updated to: ${this._chalkService.value(APP_CONFIG.totalReleaseCount)}`));
+    }
+  }
+
+  public getReleaseNotes(): string {
+    return APP_CONFIG.releaseNotes;
+  }
+
+  public updateReleaseNotes(notes?: Readonly<string>): void {
+    if (_.isString(notes)) {
+      APP_CONFIG.releaseNotes = notes;
+
+      this._loggerService.log(this._className, this._chalkService.text(`app release notes updated`));
     }
   }
 
