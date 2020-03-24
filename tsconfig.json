@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "allowJs": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -31,7 +32,8 @@
       "dom"
     ],
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true

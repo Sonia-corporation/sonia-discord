@@ -42,6 +42,11 @@
       "config": "./scripts/commitizen.js"
     }
   },
+  "majestic": {
+    "env": {
+      "CI": "true"
+    }
+  },
   "private": false,
   "main": "./src/index.ts",
   "scripts": {
@@ -55,8 +60,10 @@
     "run:prod": "node ./dist/index.js --prod true",
     "tsc": "tsc",
     "\n# TEST SCRIPTS:": "",
-    "test": "",
-    "test:ci": "",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "test:majestic": "majestic --port 3002 --noOpen",
+    "test:ci": "jest",
     "\n# LINT SCRIPTS:": "",
     "lint": "eslint --fix --ext .js,.ts --cache scripts/ src/",
     "lint:ci": "eslint --ext .js,.ts scripts/ src/",
@@ -80,6 +87,7 @@
     "@types/app-root-path": "1.2.4",
     "@types/express": "4.17.3",
     "@types/fs-extra": "8.1.0",
+    "@types/jest": "25.1.4",
     "@types/lodash": "4.14.149",
     "@types/node": "12.12.30",
     "@types/ws": "7.2.3",
@@ -96,12 +104,16 @@
     "eslint-config-google": "0.14.0",
     "eslint-config-recommended": "4.0.0",
     "eslint-plugin-import": "2.20.1",
+    "eslint-plugin-jest": "23.8.2",
     "eslint-plugin-typescript-sort-keys": "0.5.0",
     "fs-extra": "9.0.0",
     "husky": "4.2.3",
+    "jest": "25.1.0",
+    "majestic": "1.6.2",
     "parcel-bundler": "1.12.4",
     "rimraf": "3.0.2",
     "semantic-release": "17.0.4",
+    "ts-jest": "25.2.1",
     "ts-node-dev": "1.0.0-pre.44",
     "tsconfig-paths": "3.9.0",
     "typescript": "3.8.3"
