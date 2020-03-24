@@ -28,9 +28,11 @@ Sonia will send you a message containing:
 
 - The application version (as a link)
 - The application release date
+- The application initialization date
 - The application release notes (as a link)
 - The application status
 - Her mental state
+- The total release count
 
 __Example:__
 

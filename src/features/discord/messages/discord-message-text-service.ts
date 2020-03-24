@@ -36,6 +36,8 @@ export class DiscordMessageTextService {
         this._loggerService.debug(this._className, this._loggerService.getSnowflakeContext(message.id, `message with valid mention`), true);
 
         if (this._discordMentionService.isForEveryone(message.mentions)) {
+          this._loggerService.debug(this._className, this._loggerService.getSnowflakeContext(message.id, `everyone mention`), true);
+
           return {
             response: `Il est midi tout le monde !`
           };
@@ -49,7 +51,7 @@ export class DiscordMessageTextService {
 
             if (this._discordMessageContentService.hasContent(message.content)) {
               if (this._discordMessageCommandService.hasCommand(message.content)) {
-                return this._discordMessageCommandService.handleCommands(message.content);
+                return this._discordMessageCommandService.handleCommands(message);
               }
             }
 

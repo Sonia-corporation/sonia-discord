@@ -1,3 +1,3 @@
 export interface IEnvironmentApp {
-  releaseDate?: string;
+  initializationDate?: string;
 }
