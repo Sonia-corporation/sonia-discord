@@ -6,15 +6,35 @@
 
 This step is mandatory.  
 You must create the `secret-environment.json` file in the [environment folder](./src/environment/secret-environment.json).  
-This file should contains at least the bot secret token required by Discord.  
+
+This file should contains at least:
+- A discord sonia secret token required by Discord API
+- A GitHub personal access token required by GitHub API
+
+__Note:__
+
+The GitHub personal access token should contains the following scopes:
+- user
+- public_repo
+- repo
+- repo_deployment
+- repo:status
+- read:repo_hook
+- read:org
+- read:public_key
+- read:gpg_key
 
 __Example:__
+
 ```json
 {
   "discord": {
     "sonia": {
       "secretToken": "TO_DEFINE"
     } 
+  },
+  "github": {
+    "personalAccessToken": "TO_DEFINE"
   }
 }
 ```
@@ -81,7 +101,7 @@ format that includes a **type**, a **scope** and a **subject**:
 
 The **type** and the **subject** is mandatory and the other stuff is optional.
 
-Any line of the commit message cannot be longer 100 characters!  
+Any line of the commit message cannot be longer 144 characters!  
 This allows the message to be easier to read on GitHub as well as in various git tools.
 
 ### Revert

@@ -19,8 +19,8 @@ export class LoggerService {
   private readonly _chalkService = ChalkService.getInstance();
   private readonly _logPrefix = `● `;
 
-  public error(message: Readonly<string>): void;
-  public error(context: Readonly<string>, message: Readonly<string>): void;
+  public error(message: unknown): void;
+  public error(context: Readonly<string>, message: unknown, extendedContext?: Readonly<boolean>): void;
   public error(): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
       if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log` || LOGGER_CONFIG.level === `success` || LOGGER_CONFIG.level === `warning` || LOGGER_CONFIG.level === `error`) {
@@ -28,15 +28,15 @@ export class LoggerService {
 
         if (_.isEqual(numberOfArguments, 1)) {
           console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.ERROR)}${arguments[ 0 ]}`);
-        } else if (_.isEqual(numberOfArguments, 2)) {
-          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.ERROR)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        } else if (_.gt(numberOfArguments, 1)) {
+          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.ERROR)}${this._context(arguments[ 0 ], arguments[ 2 ])}${arguments[ 1 ]}`);
         }
       }
     }
   }
 
-  public warning(message: Readonly<string>): void;
-  public warning(context: Readonly<string>, message: Readonly<string>): void;
+  public warning(message: unknown): void;
+  public warning(context: Readonly<string>, message: unknown, extendedContext?: Readonly<boolean>): void;
   public warning(): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
       if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log` || LOGGER_CONFIG.level === `success` || LOGGER_CONFIG.level === `warning`) {
@@ -44,15 +44,15 @@ export class LoggerService {
 
         if (_.isEqual(numberOfArguments, 1)) {
           console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.WARNING)}${arguments[ 0 ]}`);
-        } else if (_.isEqual(numberOfArguments, 2)) {
-          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.WARNING)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        } else if (_.gt(numberOfArguments, 1)) {
+          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.WARNING)}${this._context(arguments[ 0 ], arguments[ 2 ])}${arguments[ 1 ]}`);
         }
       }
     }
   }
 
-  public success(message: Readonly<string>): void;
-  public success(context: Readonly<string>, message: Readonly<string>): void;
+  public success(message: unknown): void;
+  public success(context: Readonly<string>, message: unknown, extendedContext?: Readonly<boolean>): void;
   public success(): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
       if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log` || LOGGER_CONFIG.level === `success`) {
@@ -60,15 +60,15 @@ export class LoggerService {
 
         if (_.isEqual(numberOfArguments, 1)) {
           console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.SUCCESS)}${arguments[ 0 ]}`);
-        } else if (_.isEqual(numberOfArguments, 2)) {
-          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.SUCCESS)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        } else if (_.gt(numberOfArguments, 1)) {
+          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.SUCCESS)}${this._context(arguments[ 0 ], arguments[ 2 ])}${arguments[ 1 ]}`);
         }
       }
     }
   }
 
-  public log(message: Readonly<string>): void;
-  public log(context: Readonly<string>, message: Readonly<string>): void;
+  public log(message: unknown): void;
+  public log(context: Readonly<string>, message: unknown, extendedContext?: Readonly<boolean>): void;
   public log(): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
       if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log`) {
@@ -76,15 +76,15 @@ export class LoggerService {
 
         if (_.isEqual(numberOfArguments, 1)) {
           console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.LOG)}${arguments[ 0 ]}`);
-        } else if (_.isEqual(numberOfArguments, 2)) {
-          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.LOG)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        } else if (_.gt(numberOfArguments, 1)) {
+          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.LOG)}${this._context(arguments[ 0 ], arguments[ 2 ])}${arguments[ 1 ]}`);
         }
       }
     }
   }
 
-  public debug(message: Readonly<string>): void;
-  public debug(context: Readonly<string>, message: Readonly<string>): void;
+  public debug(message: unknown): void;
+  public debug(context: Readonly<string>, message: unknown, extendedContext?: Readonly<boolean>): void;
   public debug(): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
       if (LOGGER_CONFIG.level === `debug`) {
@@ -92,8 +92,8 @@ export class LoggerService {
 
         if (_.isEqual(numberOfArguments, 1)) {
           console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.DEBUG)}${arguments[ 0 ]}`);
-        } else if (_.isEqual(numberOfArguments, 2)) {
-          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.DEBUG)}${this._context(arguments[ 0 ])}${arguments[ 1 ]}`);
+        } else if (_.gt(numberOfArguments, 1)) {
+          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.DEBUG)}${this._context(arguments[ 0 ], arguments[ 2 ])}${arguments[ 1 ]}`);
         }
       }
     }
@@ -124,8 +124,24 @@ export class LoggerService {
     return this.getValueUpdateWithHint(text, value, ` (hidden)`);
   }
 
-  private _context(name: Readonly<string>): string {
-    return this._chalkService.text(`[${name}][${this._timeService.now(`HH:mm:ss:SSS`)}] `);
+  public getSnowflakeContext(
+    context: Readonly<string>,
+    message: Readonly<string | null | undefined> | unknown
+  ): string {
+    return `${this._chalkService.context(`[${context}] `)}${this._chalkService.text(message)}`;
+  }
+
+  private _context(
+    name: Readonly<string>,
+    extendedContext: Readonly<boolean> = false
+  ): string {
+    let message = `[${name}][${this._timeService.now(`HH:mm:ss:SSS`)}]`;
+
+    if (_.isEqual(extendedContext, false)) {
+      message = `${message} `;
+    }
+
+    return this._chalkService.text(message);
   }
 
   private _getLogTypePrefix(logType: Readonly<LoggerLogTypeEnum>): string {

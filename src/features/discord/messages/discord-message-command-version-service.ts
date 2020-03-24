@@ -1,5 +1,6 @@
 import { MessageEmbedAuthor } from 'discord.js';
 import _ from 'lodash';
+import moment from 'moment';
 import { AppConfigService } from '../../app/app-config-service';
 import { AppProductionStateEnum } from '../../app/enums/app-production-state.enum';
 import { IDiscordMessageCommandVersionConfig } from '../interfaces/discord-message-command-version-config';
@@ -25,10 +26,12 @@ export class DiscordMessageCommandVersionService {
 
   public handle(): IDiscordMessageResponse {
     const appVersion: string = this._appConfigService.getVersion();
+    const totalReleaseCountHumanized: string = this._appConfigService.getTotalReleaseCountHumanized();
     const appReleaseDateHumanized: string = this._appConfigService.getReleaseDateHumanized();
     const appProductionStateHumanized: AppProductionStateEnum = this._appConfigService.getProductionStateHumanized();
     const author: MessageEmbedAuthor = this._discordSoniaService.getCorporationMessageEmbedAuthor();
-    const soniaFullName: string | null = this._discordSoniaService.getSoniaFullName();
+    const soniaFullName: string | null = this._discordSoniaService.getFullName();
+    const soniaImageUrl: string | null = this._discordSoniaService.getImageUrl();
     const soniaMentalState: DiscordSoniaMentalStateEnum = this._discordSoniaService.getMentalState();
     const commandVersionConfig: IDiscordMessageCommandVersionConfig = this._discordMessageConfigService.getMessageCommandVersion();
 
@@ -59,9 +62,14 @@ export class DiscordMessageCommandVersionService {
               value: _.capitalize(soniaMentalState)
             }
           ],
+          footer: {
+            iconURL: soniaImageUrl || ``,
+            text: totalReleaseCountHumanized
+          },
           thumbnail: {
             url: commandVersionConfig.imageUrl
           },
+          timestamp: moment().toDate(),
           title: `${soniaFullName} version`
         },
         split: true

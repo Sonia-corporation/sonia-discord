@@ -17,16 +17,16 @@ export class DiscordService {
     return DiscordService._instance;
   }
 
-  private static _init(): void {
+  public constructor() {
+    this._init();
+  }
+
+  private _init(): void {
     DiscordSoniaService.getInstance();
     DiscordLoggerService.getInstance();
     DiscordGuildService.getInstance();
     DiscordGuildMemberAddService.getInstance();
     DiscordMessageService.getInstance();
     DiscordAuthenticationService.getInstance();
-  }
-
-  public constructor() {
-    DiscordService._init();
   }
 }

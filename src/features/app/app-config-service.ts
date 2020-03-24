@@ -86,6 +86,29 @@ export class AppConfigService {
     }
   }
 
+  public getTotalReleaseCount(): number {
+    return APP_CONFIG.totalReleaseCount;
+  }
+
+  public getTotalReleaseCountHumanized(): string {
+    const totalReleaseCount: number = this.getTotalReleaseCount();
+    let sentence = `${this.getTotalReleaseCount()} version`;
+
+    if (_.gt(totalReleaseCount, 1)) {
+      sentence = `${sentence}s`;
+    }
+
+    return sentence;
+  }
+
+  public updateTotalReleaseCount(count?: Readonly<number>): void {
+    if (_.isNumber(count)) {
+      APP_CONFIG.totalReleaseCount = count;
+
+      this._loggerService.log(this._className, this._chalkService.text(`app total release count updated to: ${this._chalkService.value(APP_CONFIG.totalReleaseCount)}`));
+    }
+  }
+
   private _defineProductionState(): void {
     this.updateProductionState(isNodeProduction());
   }

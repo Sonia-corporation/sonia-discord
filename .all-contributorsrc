@@ -7,8 +7,9 @@
   "files": [
     "README.md"
   ],
-  "imageSize": 100,
+  "imageSize": 80,
   "commit": true,
+  "contributorsSortAlphabetically": true,
   "contributors": [
     {
       "login": "C0ZEN",
@@ -36,8 +37,8 @@
       "avatar_url": "https://avatars1.githubusercontent.com/u/46410174?v=4",
       "profile": "https://allcontributors.org",
       "contributions": [
-        "tool",
-        "doc"
+        "doc",
+        "tool"
       ]
      },
      {

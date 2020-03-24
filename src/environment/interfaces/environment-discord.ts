@@ -2,6 +2,6 @@ import { IEnvironmentDiscordMessage } from './environment-discord-message';
 import { IEnvironmentDiscordSonia } from './environment-discord-sonia';
 
 export interface IEnvironmentDiscord {
-  message: IEnvironmentDiscordSonia;
-  sonia?: IEnvironmentDiscordMessage;
+  message: IEnvironmentDiscordMessage;
+  sonia?: IEnvironmentDiscordSonia;
 }
