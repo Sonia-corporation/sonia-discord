@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import moment from 'moment';
+import { isValidDate } from '../../functions/is-valid-date';
 import { PartialNested } from '../../types/partial-nested';
 import { ChalkService } from '../logger/chalk-service';
 import { LoggerService } from '../logger/logger-service';
@@ -33,6 +34,8 @@ export class AppConfigService {
     if (!_.isNil(config)) {
       this.updateVersion(config.version);
       this.updateReleaseDate(config.releaseDate);
+      this.updateInitializationDate(config.initializationDate);
+      this.updateTotalReleaseCount(config.totalReleaseCount);
 
       this._loggerService.debug(this._className, this._chalkService.text(`configuration updated`));
     }
@@ -55,7 +58,7 @@ export class AppConfigService {
   }
 
   public getReleaseDateHumanized(): string {
-    if (moment(APP_CONFIG.releaseDate).isValid()) {
+    if (isValidDate(APP_CONFIG.releaseDate)) {
       return _.capitalize(moment(APP_CONFIG.releaseDate).fromNow());
     }
 
@@ -67,6 +70,26 @@ export class AppConfigService {
       APP_CONFIG.releaseDate = date;
 
       this._loggerService.log(this._className, this._chalkService.text(`app release date updated to: ${this._chalkService.value(`"${APP_CONFIG.releaseDate}"`)}`));
+    }
+  }
+
+  public getInitializationDate(): string {
+    return APP_CONFIG.initializationDate;
+  }
+
+  public getInitializationDateHumanized(): string {
+    if (isValidDate(APP_CONFIG.initializationDate)) {
+      return _.capitalize(moment(APP_CONFIG.initializationDate).fromNow());
+    }
+
+    return APP_CONFIG.initializationDate;
+  }
+
+  public updateInitializationDate(date?: Readonly<string>): void {
+    if (_.isString(date)) {
+      APP_CONFIG.initializationDate = date;
+
+      this._loggerService.log(this._className, this._chalkService.text(`app initialization date updated to: ${this._chalkService.value(`"${APP_CONFIG.initializationDate}"`)}`));
     }
   }
 
@@ -115,7 +138,7 @@ export class AppConfigService {
 
   private _defineBuildDate(): void {
     if (!this.isProduction()) {
-      this.updateReleaseDate(moment().format());
+      this.updateInitializationDate(moment().format());
     }
   }
 }

@@ -1,8 +1,10 @@
 import _ from 'lodash';
 import { DiscordMessageCommandVersionService } from './discord-message-command-version-service';
 import { DiscordMessageConfigService } from './discord-message-config-service';
+import { DiscordMessageContentService } from './discord-message-content-service';
 import { DiscordMessageCommandEnum } from './enums/discord-message-command.enum';
 import { IDiscordMessageResponse } from './interfaces/discord-message-response';
+import { AnyDiscordMessage } from './types/any-discord-message';
 
 export class DiscordMessageCommandService {
   private static _instance: DiscordMessageCommandService;
@@ -17,6 +19,7 @@ export class DiscordMessageCommandService {
 
   private readonly _discordMessageConfigService = DiscordMessageConfigService.getInstance();
   private readonly _discordMessageCommandVersionService = DiscordMessageCommandVersionService.getInstance();
+  private readonly _discordMessageContentService = DiscordMessageContentService.getInstance();
 
   public hasCommand(message: Readonly<string>): boolean {
     if (this.hasVersionCommand(message)) {
@@ -30,13 +33,15 @@ export class DiscordMessageCommandService {
     return this._hasThisCommand(message, DiscordMessageCommandEnum.VERSION);
   }
 
-  public handleVersionCommand(): IDiscordMessageResponse {
-    return this._discordMessageCommandVersionService.handle();
+  public handleVersionCommand(message: Readonly<AnyDiscordMessage>): IDiscordMessageResponse {
+    return this._discordMessageCommandVersionService.handle(message);
   }
 
-  public handleCommands(message: Readonly<string>): IDiscordMessageResponse | null {
-    if (this.hasVersionCommand(message)) {
-      return this.handleVersionCommand();
+  public handleCommands(message: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
+    if (this._discordMessageContentService.hasContent(message.content)) {
+      if (this.hasVersionCommand(message.content)) {
+        return this.handleVersionCommand(message);
+      }
     }
 
     return null;

@@ -31,7 +31,7 @@ export class DiscordMessageDmService {
         if (this._discordMessageCommandService.hasCommand(message.content)) {
           this._loggerService.debug(this._className, this._loggerService.getSnowflakeContext(message.id, `message with command`), true);
 
-          return this._discordMessageCommandService.handleCommands(message.content);
+          return this._discordMessageCommandService.handleCommands(message);
         }
       }
 
