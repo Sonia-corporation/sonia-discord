@@ -1,3 +1,0 @@
-type GitHubRepository {
-  repository(owner: String, name: String): GitHubReleases
-}

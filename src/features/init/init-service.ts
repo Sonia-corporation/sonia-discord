@@ -1,6 +1,8 @@
 import appRootPath from 'app-root-path';
 import axios, { AxiosResponse } from 'axios';
 import fs from 'fs-extra';
+import { importSchema } from 'graphql-import';
+import { makeExecutableSchema } from 'graphql-tools';
 import _ from 'lodash';
 import { ENVIRONMENT } from '../../environment/environment';
 import { IEnvironment } from '../../environment/interfaces/environment';
@@ -20,12 +22,6 @@ import { IGithubReleasesTotalCount } from './interfaces/github-releases-total-co
 
 export class InitService {
   private static _instance: InitService;
-  private readonly _chalkService = ChalkService.getInstance();
-  private readonly _loggerService = LoggerService.getInstance();
-
-  public constructor() {
-    this._init();
-  }
 
   public static getInstance(): InitService {
     if (_.isNil(InitService._instance)) {
@@ -33,6 +29,13 @@ export class InitService {
     }
 
     return InitService._instance;
+  }
+
+  private readonly _chalkService = ChalkService.getInstance();
+  private readonly _loggerService = LoggerService.getInstance();
+
+  public constructor() {
+    this._init();
   }
 
   private _mergeEnvironments(

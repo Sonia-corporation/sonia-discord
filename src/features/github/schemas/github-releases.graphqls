@@ -1,3 +1,0 @@
-type GitHubReleases {
-  totalCount: Int
-}
