@@ -1,8 +1,6 @@
 import appRootPath from 'app-root-path';
 import axios, { AxiosResponse } from 'axios';
 import fs from 'fs-extra';
-import { importSchema } from 'graphql-import';
-import { makeExecutableSchema } from 'graphql-tools';
 import _ from 'lodash';
 import { ENVIRONMENT } from '../../environment/environment';
 import { IEnvironment } from '../../environment/interfaces/environment';
