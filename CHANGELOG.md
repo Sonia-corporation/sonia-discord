@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.16.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.15.0...1.16.0) (2020-03-24)
+
+
+### Features
+
+* **command-version:** add new date for release and enhance the UI ([014b844](https://github.com/Sonia-corporation/il-est-midi-discord/commit/014b8442518e2fdceb296109e1c923986080d362))
+
 # [1.15.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.14.0...1.15.0) (2020-03-24)
 
 
