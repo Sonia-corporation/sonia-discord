@@ -2,7 +2,6 @@ import appRootPath from 'app-root-path';
 import axios, { AxiosResponse } from 'axios';
 import fs from 'fs-extra';
 import _ from 'lodash';
-import { GITHUB_API_URL } from '../github/constants/github-api-url';
 import { ENVIRONMENT } from '../../environment/environment';
 import { IEnvironment } from '../../environment/interfaces/environment';
 import { getBearer } from '../../functions/get-bearer';
@@ -11,17 +10,21 @@ import { AppConfigService } from '../app/app-config-service';
 import { DiscordService } from '../discord/discord-service';
 import { DiscordMessageConfigService } from '../discord/messages/discord-message-config-service';
 import { DiscordSoniaConfigService } from '../discord/users/discord-sonia-config-service';
+import { GITHUB_API_URL } from '../github/constants/github-api-url';
 import { ChalkService } from '../logger/chalk-service';
 import { LoggerConfigService } from '../logger/logger-config-service';
 import { LoggerService } from '../logger/logger-service';
 import { ServerService } from '../server/server-service';
-import {
-  IGithubReleasesTotalCount,
-  IGithubTagsTotalCount
-} from './interfaces/github-releases-total-count';
+import { IGithubReleasesTotalCount } from './interfaces/github-releases-total-count';
 
 export class InitService {
   private static _instance: InitService;
+  private readonly _chalkService = ChalkService.getInstance();
+  private readonly _loggerService = LoggerService.getInstance();
+
+  public constructor() {
+    this._init();
+  }
 
   public static getInstance(): InitService {
     if (_.isNil(InitService._instance)) {
@@ -31,7 +34,7 @@ export class InitService {
     return InitService._instance;
   }
 
-  private static _mergeEnvironments(
+  private _mergeEnvironments(
     environmentA: Readonly<IEnvironment>,
     environmentB: Readonly<IEnvironment>
   ): IEnvironment {
@@ -42,16 +45,9 @@ export class InitService {
     );
   }
 
-  private static _runApp(): void {
+  private _runApp(): void {
     DiscordService.getInstance();
     ServerService.getInstance();
-  }
-
-  private readonly _chalkService = ChalkService.getInstance();
-  private readonly _loggerService = LoggerService.getInstance();
-
-  public constructor() {
-    this._init();
   }
 
   private _init(): void {
@@ -83,7 +79,6 @@ export class InitService {
   private _configureAppTotalReleaseCount(): void {
     axios({
       data: {
-        dad: relay
         query: `{
         repository(owner: "Sonia-corporation", name: "il-est-midi-discord") {
           releases {
@@ -106,7 +101,7 @@ export class InitService {
 
   private _readEnvironment(): void {
     fs.readJson(`${appRootPath}/src/environment/secret-environment.json`).then((environment: Readonly<IEnvironment>): void => {
-      this._startApp(InitService._mergeEnvironments(ENVIRONMENT, environment));
+      this._startApp(this._mergeEnvironments(ENVIRONMENT, environment));
     }).catch((error: unknown): void => {
       console.error(`Failed to read the environment file`);
       console.error(error);
@@ -116,6 +111,6 @@ export class InitService {
 
   private _startApp(environment: Readonly<IEnvironment>): void {
     this._configureApp(environment);
-    InitService._runApp();
+    this._runApp();
   }
 }

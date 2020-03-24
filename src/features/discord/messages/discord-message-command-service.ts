@@ -15,32 +15,6 @@ export class DiscordMessageCommandService {
     return DiscordMessageCommandService._instance;
   }
 
-  private static _containsThisCommandWithPrefix(
-    message: Readonly<string>,
-    prefix: Readonly<string>,
-    command: Readonly<DiscordMessageCommandEnum>
-  ): boolean {
-    return _.includes(message, `${prefix}${command}`);
-  }
-
-  private static _containsThisCommandWithOneOfThesePrefixes(
-    message: Readonly<string>,
-    prefixes: Readonly<string[]>,
-    command: Readonly<DiscordMessageCommandEnum>
-  ): boolean {
-    let containsThisCommand = false;
-
-    _.forEach(prefixes, (prefix: Readonly<string>): false | void => {
-      if (DiscordMessageCommandService._containsThisCommandWithPrefix(message, prefix, command)) {
-        containsThisCommand = true;
-
-        return false;
-      }
-    });
-
-    return containsThisCommand;
-  }
-
   private readonly _discordMessageConfigService = DiscordMessageConfigService.getInstance();
   private readonly _discordMessageCommandVersionService = DiscordMessageCommandVersionService.getInstance();
 
@@ -68,6 +42,32 @@ export class DiscordMessageCommandService {
     return null;
   }
 
+  private _containsThisCommandWithPrefix(
+    message: Readonly<string>,
+    prefix: Readonly<string>,
+    command: Readonly<DiscordMessageCommandEnum>
+  ): boolean {
+    return _.includes(message, `${prefix}${command}`);
+  }
+
+  private _containsThisCommandWithOneOfThesePrefixes(
+    message: Readonly<string>,
+    prefixes: Readonly<string[]>,
+    command: Readonly<DiscordMessageCommandEnum>
+  ): boolean {
+    let containsThisCommand = false;
+
+    _.forEach(prefixes, (prefix: Readonly<string>): false | void => {
+      if (this._containsThisCommandWithPrefix(message, prefix, command)) {
+        containsThisCommand = true;
+
+        return false;
+      }
+    });
+
+    return containsThisCommand;
+  }
+
   private _hasThisCommand(
     message: Readonly<string>,
     command: Readonly<DiscordMessageCommandEnum>
@@ -75,9 +75,9 @@ export class DiscordMessageCommandService {
     const prefix: string | string[] = this._discordMessageConfigService.getMessageCommandPrefix();
 
     if (_.isString(prefix)) {
-      return DiscordMessageCommandService._containsThisCommandWithPrefix(message, prefix, command);
+      return this._containsThisCommandWithPrefix(message, prefix, command);
     } else if (_.isArray(prefix)) {
-      return DiscordMessageCommandService._containsThisCommandWithOneOfThesePrefixes(message, prefix, command);
+      return this._containsThisCommandWithOneOfThesePrefixes(message, prefix, command);
     }
 
     return false;
