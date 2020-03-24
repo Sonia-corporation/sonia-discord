@@ -90,7 +90,7 @@ export class InitService {
       }`
       },
       headers: {
-        Authorization: getBearer(`dummy`)
+        Authorization: getBearer(GithubConfigService.getInstance().getPersonalAccessToken())
       },
       method: `post`,
       url: GITHUB_API_URL
