@@ -65,7 +65,7 @@ export class DiscordSoniaConfigService {
     if (_.isString(secretToken)) {
       DISCORD_SONIA_CONFIG.secretToken = secretToken;
 
-      this._loggerService.log(this._className, this._loggerService.getHiddenValueUpdate(`secretToken updated to: `, true));
+      this._loggerService.log(this._className, this._loggerService.getHiddenValueUpdate(`secret token updated to: `, true));
     }
   }
 

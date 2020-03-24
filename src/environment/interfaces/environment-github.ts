@@ -1,3 +1,3 @@
 export interface IEnvironmentGithub {
-  apiToken?: string;
+  personalAccessToken?: string;
 }

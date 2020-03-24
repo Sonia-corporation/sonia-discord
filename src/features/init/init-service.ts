@@ -11,6 +11,7 @@ import { DiscordService } from '../discord/discord-service';
 import { DiscordMessageConfigService } from '../discord/messages/discord-message-config-service';
 import { DiscordSoniaConfigService } from '../discord/users/discord-sonia-config-service';
 import { GITHUB_API_URL } from '../github/constants/github-api-url';
+import { GithubConfigService } from '../github/github-config-service';
 import { ChalkService } from '../logger/chalk-service';
 import { LoggerConfigService } from '../logger/logger-config-service';
 import { LoggerService } from '../logger/logger-service';
@@ -62,6 +63,7 @@ export class InitService {
 
   private _configureAppFromEnvironment(environment: Readonly<IEnvironment>): void {
     LoggerConfigService.getInstance().updateConfig(environment.logger);
+    GithubConfigService.getInstance().updateConfig(environment.github);
     DiscordSoniaConfigService.getInstance().updateConfig(environment.discord);
     DiscordMessageConfigService.getInstance().updateConfig(environment.discord);
     AppConfigService.getInstance().updateConfig(environment.app);
