@@ -81,7 +81,7 @@ format that includes a **type**, a **scope** and a **subject**:
 
 The **type** and the **subject** is mandatory and the other stuff is optional.
 
-Any line of the commit message cannot be longer 100 characters!  
+Any line of the commit message cannot be longer 144 characters!  
 This allows the message to be easier to read on GitHub as well as in various git tools.
 
 ### Revert

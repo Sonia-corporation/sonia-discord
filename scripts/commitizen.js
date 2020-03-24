@@ -19,7 +19,7 @@ module.exports = {
   skipQuestions: [
     `footer`
   ],
-  subjectLimit: 100,
+  subjectLimit: 144,
   types: [
     {
       name: `feat:     A new feature`,
