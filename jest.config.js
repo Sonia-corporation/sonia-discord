@@ -12,7 +12,7 @@ module.exports = {
   // browser: false,
 
   // The directory where Jest should store its cached dependency information
-  cacheDirectory: `.\\.cache-jest`,
+  cacheDirectory: `./.cache-jest`,
 
   // Automatically clear mock calls and instances between every test
   clearMocks: true,
@@ -34,9 +34,8 @@ module.exports = {
   // A list of reporter names that Jest uses when writing coverage reports
   coverageReporters: [
     `json`,
-    `text`,
-    `lcov`,
-    `clover`
+    `text-summary`,
+    `lcov`
   ],
 
   // An object that configures minimum threshold enforcement for coverage results
@@ -72,7 +71,7 @@ module.exports = {
 
   // An array of directory names to be searched recursively up from the requiring module's location
   moduleDirectories: [
-    `node_modules`
+    `./node_modules`
   ],
 
   // A map from regular expressions to module names that allow to stub out resources with a single module
@@ -85,9 +84,7 @@ module.exports = {
   moduleFileExtensions: [
     `js`,
     `json`,
-    `jsx`,
     `ts`,
-    `tsx`,
     `node`
   ],
 
@@ -104,7 +101,7 @@ module.exports = {
   // reporters: undefined,
 
   // A preset that is used as a base for Jest's configuration
-  preset: `ts-jest`,
+  preset: `ts-jest/presets/js-with-ts`,
 
   // Automatically reset mock state between every test
   resetMocks: true,
@@ -118,10 +115,8 @@ module.exports = {
   // The root directory that Jest should scan for tests and modules within
   // rootDir: undefined,
 
-  // A list of paths to directories that Jest should use to search for files in
-  // roots: [
-  //   "<rootDir>"
-  // ],
+  // Reset the module registry before running each individual test
+  resetModules: true,
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
@@ -135,8 +130,11 @@ module.exports = {
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],
 
-  // Reset the module registry before running each individual test
-  resetModules: true,
+  // A list of paths to directories that Jest should use to search for files in
+  roots: [
+    `./src`,
+    `./scripts`
+  ],
 
   // The test environment that will be used for testing
   testEnvironment: `node`,
