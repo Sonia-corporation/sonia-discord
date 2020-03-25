@@ -31,7 +31,8 @@ Sonia will send you a message containing:
 - The application version (as a link)
 - The application release date
 - The application initialization date
-- The application release notes (as a link)
+- The application release notes (first 800 chars)
+- The application [changelog](CHANGELOG.md) link
 - The application status
 - Her mental state
 - The total release count
@@ -83,6 +84,15 @@ To use a command, you must ask her personally.
 __Example:__
 
 `@Sonia-il-est-midi !version`
+
+### Errors
+
+If Sonia receive a Discord error after sending a message,  
+She will send a new message containing this error to help you to debug it.  
+
+Nevertheless, sometimes the error is purely on the development side and this is why Sonia will provide:
+- A link to create a new [GitHub issue](https://github.com/Sonia-corporation/il-est-midi-discord/issues/new?assignees=&labels=bug&template=bug_report.md&title=&projects=sonia-corporation/il-est-midi-discord/1)
+- A link to reach us in [Discord](https://discord.gg/PW4JSkv)
 
 ## Contributing
 
