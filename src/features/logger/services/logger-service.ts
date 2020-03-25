@@ -2,7 +2,10 @@ import _ from 'lodash';
 import { wrapInQuotes } from '../../../functions/wrap-in-quotes';
 import { TimeService } from '../../time/services/time-service';
 import { LOGGER_CONFIG } from '../constants/logger-config';
+import { LoggerConfigLevelEnum } from '../enums/logger-config-level.enum';
 import { LoggerLogTypeEnum } from '../enums/logger-log-type.enum';
+import { ILoggerLog } from '../interfaces/logger-log';
+import { ILoggerLogInternal } from '../interfaces/logger-log-internal';
 import { ChalkService } from './chalk-service';
 
 export class LoggerService {
@@ -20,83 +23,58 @@ export class LoggerService {
   private readonly _chalkService = ChalkService.getInstance();
   private readonly _logPrefix = `● `;
 
-  public error(message: unknown): void;
-  public error(context: Readonly<string>, message: unknown, extendedContext?: Readonly<boolean>): void;
-  public error(): void {
-    if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
-      if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log` || LOGGER_CONFIG.level === `success` || LOGGER_CONFIG.level === `warning` || LOGGER_CONFIG.level === `error`) {
-        const numberOfArguments = _.size(arguments);
-
-        if (_.isEqual(numberOfArguments, 1)) {
-          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.ERROR)}${arguments[ 0 ]}`);
-        } else if (_.gt(numberOfArguments, 1)) {
-          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.ERROR)}${this._context(arguments[ 0 ], arguments[ 2 ])}${arguments[ 1 ]}`);
-        }
-      }
+  public error(loggerLog: Readonly<ILoggerLog>): void {
+    if (LOGGER_CONFIG.level === LoggerConfigLevelEnum.DEBUG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.LOG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.SUCCESS || LOGGER_CONFIG.level === LoggerConfigLevelEnum.WARNING || LOGGER_CONFIG.level === LoggerConfigLevelEnum.ERROR) {
+      this._log({
+        context: loggerLog.context,
+        extendedContext: loggerLog.extendedContext,
+        loggerLogType: LoggerLogTypeEnum.ERROR,
+        message: loggerLog.message
+      });
     }
   }
 
-  public warning(message: unknown): void;
-  public warning(context: Readonly<string>, message: unknown, extendedContext?: Readonly<boolean>): void;
-  public warning(): void {
-    if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
-      if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log` || LOGGER_CONFIG.level === `success` || LOGGER_CONFIG.level === `warning`) {
-        const numberOfArguments = _.size(arguments);
-
-        if (_.isEqual(numberOfArguments, 1)) {
-          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.WARNING)}${arguments[ 0 ]}`);
-        } else if (_.gt(numberOfArguments, 1)) {
-          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.WARNING)}${this._context(arguments[ 0 ], arguments[ 2 ])}${arguments[ 1 ]}`);
-        }
-      }
+  public warning(loggerLog: Readonly<ILoggerLog>): void {
+    if (LOGGER_CONFIG.level === LoggerConfigLevelEnum.DEBUG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.LOG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.SUCCESS || LOGGER_CONFIG.level === LoggerConfigLevelEnum.WARNING) {
+      this._log({
+        context: loggerLog.context,
+        extendedContext: loggerLog.extendedContext,
+        loggerLogType: LoggerLogTypeEnum.WARNING,
+        message: loggerLog.message
+      });
     }
   }
 
-  public success(message: unknown): void;
-  public success(context: Readonly<string>, message: unknown, extendedContext?: Readonly<boolean>): void;
-  public success(): void {
-    if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
-      if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log` || LOGGER_CONFIG.level === `success`) {
-        const numberOfArguments = _.size(arguments);
-
-        if (_.isEqual(numberOfArguments, 1)) {
-          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.SUCCESS)}${arguments[ 0 ]}`);
-        } else if (_.gt(numberOfArguments, 1)) {
-          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.SUCCESS)}${this._context(arguments[ 0 ], arguments[ 2 ])}${arguments[ 1 ]}`);
-        }
-      }
+  public success(loggerLog: Readonly<ILoggerLog>): void {
+    if (LOGGER_CONFIG.level === LoggerConfigLevelEnum.DEBUG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.LOG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.SUCCESS) {
+      this._log({
+        context: loggerLog.context,
+        extendedContext: loggerLog.extendedContext,
+        loggerLogType: LoggerLogTypeEnum.SUCCESS,
+        message: loggerLog.message
+      });
     }
   }
 
-  public log(message: unknown): void;
-  public log(context: Readonly<string>, message: unknown, extendedContext?: Readonly<boolean>): void;
-  public log(): void {
-    if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
-      if (LOGGER_CONFIG.level === `debug` || LOGGER_CONFIG.level === `log`) {
-        const numberOfArguments = _.size(arguments);
-
-        if (_.isEqual(numberOfArguments, 1)) {
-          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.LOG)}${arguments[ 0 ]}`);
-        } else if (_.gt(numberOfArguments, 1)) {
-          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.LOG)}${this._context(arguments[ 0 ], arguments[ 2 ])}${arguments[ 1 ]}`);
-        }
-      }
+  public log(loggerLog: Readonly<ILoggerLog>): void {
+    if (LOGGER_CONFIG.level === LoggerConfigLevelEnum.DEBUG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.LOG) {
+      this._log({
+        context: loggerLog.context,
+        extendedContext: loggerLog.extendedContext,
+        loggerLogType: LoggerLogTypeEnum.LOG,
+        message: loggerLog.message
+      });
     }
   }
 
-  public debug(message: unknown): void;
-  public debug(context: Readonly<string>, message: unknown, extendedContext?: Readonly<boolean>): void;
-  public debug(): void {
-    if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
-      if (LOGGER_CONFIG.level === `debug`) {
-        const numberOfArguments = _.size(arguments);
-
-        if (_.isEqual(numberOfArguments, 1)) {
-          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.DEBUG)}${arguments[ 0 ]}`);
-        } else if (_.gt(numberOfArguments, 1)) {
-          console.log(`${this._getLogTypePrefix(LoggerLogTypeEnum.DEBUG)}${this._context(arguments[ 0 ], arguments[ 2 ])}${arguments[ 1 ]}`);
-        }
-      }
+  public debug(loggerLog: Readonly<ILoggerLog>): void {
+    if (LOGGER_CONFIG.level === LoggerConfigLevelEnum.DEBUG) {
+      this._log({
+        context: loggerLog.context,
+        extendedContext: loggerLog.extendedContext,
+        loggerLogType: LoggerLogTypeEnum.DEBUG,
+        message: loggerLog.message
+      });
     }
   }
 
@@ -134,13 +112,25 @@ export class LoggerService {
     return `${this._chalkService.context(`[${context}] `)}${this._chalkService.text(message)}`;
   }
 
+  private _log(loggerLogInternal: Readonly<ILoggerLogInternal>): void {
+    if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
+      const logTypePrefix: string = this._getLogTypePrefix(loggerLogInternal.loggerLogType);
+
+      if (_.isString(loggerLogInternal.context) && !_.isEmpty(loggerLogInternal.context)) {
+        console.log(`${logTypePrefix}${this._context(loggerLogInternal.context, loggerLogInternal.extendedContext)}${loggerLogInternal.message}`);
+      } else {
+        console.log(`${logTypePrefix}${loggerLogInternal.message}`);
+      }
+    }
+  }
+
   private _context(
     name: Readonly<string>,
     extendedContext: Readonly<boolean> = false
   ): string {
     let message = `[${name}][${this._timeService.now(`HH:mm:ss:SSS`)}]`;
 
-    if (_.isEqual(extendedContext, false)) {
+    if (_.isEqual(extendedContext, false) || !_.isBoolean(extendedContext)) {
       message = `${message} `;
     }
 
