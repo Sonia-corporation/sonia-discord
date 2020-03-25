@@ -58,13 +58,16 @@ Run `npm run start` to start the local development server.
 - `npm run start:prod`: build and run the Node.js app like it will be once deployed in the server for local development or server debugging  
 - `npm run run:prod`: run the Node.js app like it will be once deployed in the server for local development or server debugging  
 - `npm run tsc`: compile the TypeScript app to Node.js app  
-- `npm run test`: run the tests and watch  
-- `npm run test:ci`: run the tests once  
+- `npm run test`: run the tests once  
+- `npm run test:watch`: run the tests and watch them  
+- `npm run test:majestic`: run the tests in the browser (beautiful UI)
+- `npm run test:ci`: run the tests once and stop asap on error 
 - `npm run lint`: run the linter and fix the errors  
 - `npm run lint:ci`: run the linter  
 - `npm run cz`: run a CLI to easily push and commit by following the commit convention of this project  
 - `npm run semver`: create a new version, a new tag and update the [CHANGELOG](CHANGELOG.md) file  
 - `npm run clean:dist`: remove the dist folder  
+- `npm run commit`: create a commit by using the cz
 
 ## Git
 
