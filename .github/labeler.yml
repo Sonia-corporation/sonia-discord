@@ -1,9 +1,12 @@
 documentation:
-  - ./.github/workflows/greetings.yml
-  - ./.all-contributorsrc
-  - ./CODE_OF_CONDUCT.md
-  - ./CONTRIBUTING.md
-  - ./ISSUE_TEMPLATE.md
-  - ./LICENSE
-  - ./PULL_REQUEST_TEMPLATE.md
-  - ./README.md
+  - .all-contributorsrc
+  - CODE_OF_CONDUCT.md
+  - CONTRIBUTING.md
+  - ISSUE_TEMPLATE.md
+  - LICENSE
+  - PULL_REQUEST_TEMPLATE.md
+  - README.md
+
+test:
+  - src/**/*.spec.ts
+  - src/**/*.spec.js
