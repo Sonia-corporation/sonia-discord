@@ -40,4 +40,4 @@ exclude_patterns:
   - "coverage/"
   - "node_modules/"
   - ".eslintcache"
-  - - "**/*.spec.ts"
+  - "**/*.spec.ts"
