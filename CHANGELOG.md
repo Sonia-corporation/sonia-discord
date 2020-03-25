@@ -1,5 +1,23 @@
 # Semantic Versioning Changelog
 
+# [1.17.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.16.0...1.17.0) (2020-03-25)
+
+
+### Bug Fixes
+
+* **test:** change the test:ci script bail option to fix error ([3ab3f7c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3ab3f7c06cf54755f0decb90be2dec36de3f3853))
+* **commit:** fix husky hook ([4821bf7](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4821bf7b9eec81a75e28e4c063bde6afc639e8d5))
+* **release-note:** make sure to delete the tag only if the note start with # ([6da49d5](https://github.com/Sonia-corporation/il-est-midi-discord/commit/6da49d59850ac4ae3c4ec9a781fdac035a61c684))
+
+
+### Features
+
+* **discord:** add better error handling ([6636874](https://github.com/Sonia-corporation/il-est-midi-discord/commit/6636874bb9be0d78cd4ccae6a90a117204bda50b))
+* **discord-message:** add new service to handle the errors ([38ca6fa](https://github.com/Sonia-corporation/il-est-midi-discord/commit/38ca6fa3676b50ba184cd4f1ca74f79092c48a2f))
+* **command-version:** add some release notes ([5cba5e3](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5cba5e350be03b8897fe0350e52cb7f0aaf0615d))
+* **command-version:** fetch the release date from github ([b423ede](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b423edeb330cae2c9b71eb11c359c5ea7ccfa548))
+* **release-notes:** format even more the release note from github ([0445884](https://github.com/Sonia-corporation/il-est-midi-discord/commit/04458849360b2eb189939bc6ea4d307288e8b99f))
+
 # [1.16.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.15.0...1.16.0) (2020-03-24)
 
 
