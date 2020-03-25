@@ -24,6 +24,8 @@ checks:
   return-statements:
     config:
       threshold: 4
+  exclude_patterns:
+    - "**/*.spec.ts"
 plugins:
   eslint:
     enabled: true
