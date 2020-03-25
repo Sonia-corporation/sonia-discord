@@ -9,6 +9,8 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/474fece6-33b0-4472-8c2f-25cbb4493ecb/deploy-status)](https://app.netlify.com/sites/dark-heresy/deploys)
 ![Build](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Build/badge.svg?branch=master&style=flat-square)
 ![Release](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Release/badge.svg?branch=master&style=flat-square)
+[![Maintainability](https://api.codeclimate.com/v1/badges/6f8a651120877a0842b3/maintainability?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/il-est-midi-discord/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/6f8a651120877a0842b3/test_coverage?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/il-est-midi-discord/test_coverage)
 
 ## Sonia bot
 
