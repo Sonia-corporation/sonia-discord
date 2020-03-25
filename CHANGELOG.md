@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.17.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.17.0...1.17.1) (2020-03-25)
+
+
+### Bug Fixes
+
+* **logger:** the context logger will now have once more a specific color ([4a3d5cb](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4a3d5cb9f73bd29ab29d607946d68382621943f3))
+
 # [1.17.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.16.0...1.17.0) (2020-03-25)
 
 
