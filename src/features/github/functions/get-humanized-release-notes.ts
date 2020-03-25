@@ -5,7 +5,7 @@ export function getHumanizedReleaseNotes(releaseNotes: Readonly<string>): string
 
   // Remove the tag
   // Like "# [1.15.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.14.0...1.15.0) (2020-03-24)\n\n\n" by ""
-  updatedReleaseNotes = _.replace(updatedReleaseNotes, /^.+?(\n\n\n)/mi, ``);
+  updatedReleaseNotes = _.replace(updatedReleaseNotes, /^#.+?(\n\n\n)/mi, ``);
 
   // Change the h3
   // Like "* **logs:**"
