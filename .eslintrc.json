@@ -153,7 +153,12 @@
       ],
       "rules": {
         "@typescript-eslint/explicit-function-return-type": [
-          "error"
+          "error",
+          {
+            "allowExpressions": false,
+            "allowTypedFunctionExpressions": false,
+            "allowHigherOrderFunctions": false
+          }
         ],
         "@typescript-eslint/no-var-requires": [
           "error"
