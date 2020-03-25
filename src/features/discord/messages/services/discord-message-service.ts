@@ -45,11 +45,18 @@ export class DiscordMessageService {
       this._handleMessage(message);
     });
 
-    this._loggerService.debug(this._className, this._chalkService.text(`listen ${wrapInQuotes(`message`)} event`));
+    this._loggerService.debug({
+      context: this._className,
+      message: this._chalkService.text(`listen ${wrapInQuotes(`message`)} event`)
+    });
   }
 
   private _handleMessage(message: Readonly<AnyDiscordMessage>): void {
-    this._loggerService.log(this._className, this._loggerService.getSnowflakeContext(message.id, message.content), true);
+    this._loggerService.log({
+      context: this._className,
+      extendedContext: true,
+      message: this._loggerService.getSnowflakeContext(message.id, message.content)
+    });
 
     if (this._discordAuthorService.isValid(message.author)) {
       if (this._discordAuthorService.isBot(message.author)) {
@@ -67,7 +74,11 @@ export class DiscordMessageService {
   }
 
   private _dmMessage(message: Readonly<AnyDiscordMessage>): void {
-    this._loggerService.debug(this._className, this._loggerService.getSnowflakeContext(message.id, `dm message`), true);
+    this._loggerService.debug({
+      context: this._className,
+      extendedContext: true,
+      message: this._loggerService.getSnowflakeContext(message.id, `dm message`)
+    });
 
     const response: IDiscordMessageResponse | null = this._discordMessageDmService.getMessage(message);
 
@@ -77,7 +88,11 @@ export class DiscordMessageService {
   }
 
   private _textMessage(message: Readonly<AnyDiscordMessage>): void {
-    this._loggerService.debug(this._className, this._loggerService.getSnowflakeContext(message.id, `text message`), true);
+    this._loggerService.debug({
+      context: this._className,
+      extendedContext: true,
+      message: this._loggerService.getSnowflakeContext(message.id, `text message`)
+    });
 
     const response: IDiscordMessageResponse | null = this._discordMessageTextService.getMessage(message);
 
@@ -90,11 +105,19 @@ export class DiscordMessageService {
     message: Readonly<AnyDiscordMessage>,
     messageResponse: Readonly<IDiscordMessageResponse>
   ): void {
-    this._loggerService.debug(this._className, this._loggerService.getSnowflakeContext(message.id, `sending message...`), true);
+    this._loggerService.debug({
+      context: this._className,
+      extendedContext: true,
+      message: this._loggerService.getSnowflakeContext(message.id, `sending message...`)
+    });
 
     if (this._discordChannelService.isValid(message.channel)) {
       message.channel.send(messageResponse.response, messageResponse.options).then((): void => {
-        this._loggerService.log(this._className, this._loggerService.getSnowflakeContext(message.id, `message sent`), true);
+        this._loggerService.log({
+          context: this._className,
+          extendedContext: true,
+          message: this._loggerService.getSnowflakeContext(message.id, `message sent`)
+        });
       }).catch((error: unknown): void => {
         this._discordMessageErrorService.handleError(error, message);
       });

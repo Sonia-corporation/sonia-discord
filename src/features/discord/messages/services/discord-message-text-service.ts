@@ -33,10 +33,18 @@ export class DiscordMessageTextService {
   public getMessage(message: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
     if (this._discordAuthorService.isValid(message.author)) {
       if (this._discordMentionService.isValid(message.mentions)) {
-        this._loggerService.debug(this._className, this._loggerService.getSnowflakeContext(message.id, `message with valid mention`), true);
+        this._loggerService.debug({
+          context: this._className,
+          extendedContext: true,
+          message: this._loggerService.getSnowflakeContext(message.id, `message with valid mention`)
+        });
 
         if (this._discordMentionService.isForEveryone(message.mentions)) {
-          this._loggerService.debug(this._className, this._loggerService.getSnowflakeContext(message.id, `everyone mention`), true);
+          this._loggerService.debug({
+            context: this._className,
+            extendedContext: true,
+            message: this._loggerService.getSnowflakeContext(message.id, `everyone mention`)
+          });
 
           return {
             response: `Il est midi tout le monde !`
@@ -47,7 +55,11 @@ export class DiscordMessageTextService {
 
         if (this._discordSoniaService.isValid(sonia)) {
           if (this._discordMentionService.isUserMentioned(message.mentions, sonia)) {
-            this._loggerService.debug(this._className, this._loggerService.getSnowflakeContext(message.id, `sonia was mentioned`), true);
+            this._loggerService.debug({
+              context: this._className,
+              extendedContext: true,
+              message: this._loggerService.getSnowflakeContext(message.id, `sonia was mentioned`)
+            });
 
             if (this._discordMessageContentService.hasContent(message.content)) {
               if (this._discordMessageCommandService.hasCommand(message.content)) {

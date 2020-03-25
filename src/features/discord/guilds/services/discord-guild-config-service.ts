@@ -30,7 +30,10 @@ export class DiscordGuildConfigService {
     if (!_.isNil(config)) {
       this.updateGuild(config.guild);
 
-      this._loggerService.debug(this._className, this._chalkService.text(`configuration updated`));
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
+      });
     }
   }
 
@@ -52,7 +55,10 @@ export class DiscordGuildConfigService {
     if (_.isBoolean(welcomeNewMembers)) {
       DISCORD_GUILD_CONFIG.shouldWelcomeNewMembers = welcomeNewMembers;
 
-      this._loggerService.log(this._className, this._chalkService.text(`welcome new members state updated to: ${this._chalkService.value(DISCORD_GUILD_CONFIG.shouldWelcomeNewMembers)}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`welcome new members state updated to: ${this._chalkService.value(DISCORD_GUILD_CONFIG.shouldWelcomeNewMembers)}`)
+      });
     }
   }
 
@@ -64,7 +70,10 @@ export class DiscordGuildConfigService {
     if (_.isString(soniaPermanentGuildInviteUrl)) {
       DISCORD_GUILD_CONFIG.soniaPermanentGuildInviteUrl = soniaPermanentGuildInviteUrl;
 
-      this._loggerService.log(this._className, this._chalkService.text(`sonia permanent guild invite url updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_GUILD_CONFIG.soniaPermanentGuildInviteUrl))}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`sonia permanent guild invite url updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_GUILD_CONFIG.soniaPermanentGuildInviteUrl))}`)
+      });
     }
   }
 }

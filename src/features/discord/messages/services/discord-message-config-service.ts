@@ -34,7 +34,10 @@ export class DiscordMessageConfigService {
     if (!_.isNil(config)) {
       this.updateMessage(config.message);
 
-      this._loggerService.debug(this._className, this._chalkService.text(`configuration updated`));
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
+      });
     }
   }
 
@@ -66,11 +69,17 @@ export class DiscordMessageConfigService {
     if (_.isString(prefix)) {
       DISCORD_MESSAGE_CONFIG.command.prefix = prefix;
 
-      this._loggerService.log(this._className, this._chalkService.text(`message command prefix updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_MESSAGE_CONFIG.command.prefix))}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`message command prefix updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_MESSAGE_CONFIG.command.prefix))}`)
+      });
     } else if (_.isArray(prefix)) {
       DISCORD_MESSAGE_CONFIG.command.prefix = removeUndefined(prefix);
 
-      this._loggerService.log(this._className, this._chalkService.text(`message command prefix updated to: ${this._chalkService.value(this._loggerService.getStringArray(DISCORD_MESSAGE_CONFIG.command.prefix))}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`message command prefix updated to: ${this._chalkService.value(this._loggerService.getStringArray(DISCORD_MESSAGE_CONFIG.command.prefix))}`)
+      });
     }
   }
 

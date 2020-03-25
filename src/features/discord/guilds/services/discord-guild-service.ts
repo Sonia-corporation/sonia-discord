@@ -33,6 +33,9 @@ export class DiscordGuildService {
     this._discordClientServiceClient.on(`ready`, (): void => {
     });
 
-    this._loggerService.debug(this._className, this._chalkService.text(`listen ${wrapInQuotes(`ready`)} event`));
+    this._loggerService.debug({
+      context: this._className,
+      message: this._chalkService.text(`listen ${wrapInQuotes(`ready`)} event`)
+    });
   }
 }

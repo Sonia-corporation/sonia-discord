@@ -28,9 +28,16 @@ plugins:
   eslint:
     enabled: true
     channel: "eslint-6"
+    exclude_patterns:
+      - ".cache/"
+      - ".cache-jest/"
+      - "coverage/"
+      - "node_modules/"
+      - ".eslintcache"
 exclude_patterns:
   - ".cache/"
   - ".cache-jest/"
   - "coverage/"
   - "node_modules/"
   - ".eslintcache"
+  - "**/*.spec.ts"

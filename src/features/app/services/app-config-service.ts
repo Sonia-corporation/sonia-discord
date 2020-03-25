@@ -39,7 +39,10 @@ export class AppConfigService {
       this.updateTotalReleaseCount(config.totalReleaseCount);
       this.updateReleaseNotes(config.releaseNotes);
 
-      this._loggerService.debug(this._className, this._chalkService.text(`configuration updated`));
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
+      });
     }
   }
 
@@ -51,7 +54,10 @@ export class AppConfigService {
     if (_.isString(version)) {
       APP_CONFIG.version = version;
 
-      this._loggerService.log(this._className, this._chalkService.text(`app version updated to: ${this._chalkService.value(wrapInQuotes(APP_CONFIG.version))}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`app version updated to: ${this._chalkService.value(wrapInQuotes(APP_CONFIG.version))}`)
+      });
     }
   }
 
@@ -71,7 +77,10 @@ export class AppConfigService {
     if (_.isString(date)) {
       APP_CONFIG.releaseDate = date;
 
-      this._loggerService.log(this._className, this._chalkService.text(`app release date updated to: ${this._chalkService.value(wrapInQuotes(APP_CONFIG.releaseDate))}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`app release date updated to: ${this._chalkService.value(wrapInQuotes(APP_CONFIG.releaseDate))}`)
+      });
     }
   }
 
@@ -91,7 +100,10 @@ export class AppConfigService {
     if (_.isString(date)) {
       APP_CONFIG.initializationDate = date;
 
-      this._loggerService.log(this._className, this._chalkService.text(`app initialization date updated to: ${this._chalkService.value(wrapInQuotes(APP_CONFIG.initializationDate))}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`app initialization date updated to: ${this._chalkService.value(wrapInQuotes(APP_CONFIG.initializationDate))}`)
+      });
     }
   }
 
@@ -107,7 +119,10 @@ export class AppConfigService {
     if (_.isBoolean(isProduction)) {
       APP_CONFIG.isProduction = isProduction;
 
-      this._loggerService.log(this._className, this._chalkService.text(`app production state updated to: ${this._chalkService.value(APP_CONFIG.isProduction)}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`app production state updated to: ${this._chalkService.value(APP_CONFIG.isProduction)}`)
+      });
     }
   }
 
@@ -130,7 +145,10 @@ export class AppConfigService {
     if (_.isNumber(count)) {
       APP_CONFIG.totalReleaseCount = count;
 
-      this._loggerService.log(this._className, this._chalkService.text(`app total release count updated to: ${this._chalkService.value(APP_CONFIG.totalReleaseCount)}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`app total release count updated to: ${this._chalkService.value(APP_CONFIG.totalReleaseCount)}`)
+      });
     }
   }
 
@@ -142,7 +160,10 @@ export class AppConfigService {
     if (_.isString(notes)) {
       APP_CONFIG.releaseNotes = notes;
 
-      this._loggerService.log(this._className, this._chalkService.text(`app release notes updated`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`app release notes updated`)
+      });
     }
   }
 
