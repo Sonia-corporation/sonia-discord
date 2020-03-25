@@ -73,9 +73,9 @@ rules:
     - error
     - 2
   #  Temporarily disabled due to code climate error (37259)
-  #  '@typescript-eslint/interface-name-prefix':
-  #    - error
-  #    - prefixWithI: 'always'
+  '@typescript-eslint/interface-name-prefix':
+    - off
+  #  - prefixWithI: 'always'
   '@typescript-eslint/no-explicit-any':
     - error
     - fixToUnknown: false
