@@ -74,7 +74,7 @@ rules:
     - 2
   '@typescript-eslint/interface-name-prefix':
     - error
-    - prefixWithI: always
+    - prefixWithI: 'always'
   '@typescript-eslint/no-explicit-any':
     - error
     - fixToUnknown: false
