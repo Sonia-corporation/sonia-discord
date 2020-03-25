@@ -134,7 +134,7 @@ export class LoggerService {
       message = `${message} `;
     }
 
-    return this._chalkService.text(message);
+    return this._chalkService.context(message);
   }
 
   private _getLogTypePrefix(logType: Readonly<LoggerLogTypeEnum>): string {
