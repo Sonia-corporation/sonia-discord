@@ -1,5 +1,6 @@
 import { GuildChannel } from 'discord.js';
 import _ from 'lodash';
+import { wrapInQuotes } from '../../../functions/wrap-in-quotes';
 import { ChalkService } from '../../logger/chalk-service';
 import { LoggerService } from '../../logger/logger-service';
 import { DiscordChannelGuildService } from '../channels/discord-channel-guild-service';
@@ -42,7 +43,7 @@ export class DiscordGuildMemberAddService {
       this._handleGuildMemberAdd(member);
     });
 
-    this._loggerService.debug(this._className, this._chalkService.text(`listen "guildMemberAdd" event`));
+    this._loggerService.debug(this._className, this._chalkService.text(`listen ${wrapInQuotes(`guildMemberAdd`)} event`));
   }
 
   private _handleGuildMemberAdd(member: Readonly<AnyGuildMember>): void {

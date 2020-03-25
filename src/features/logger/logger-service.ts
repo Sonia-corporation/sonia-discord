@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { wrapInQuotes } from '../../functions/wrap-in-quotes';
 import { TimeService } from '../time/time-service';
 import { ChalkService } from './chalk-service';
 import { LoggerLogTypeEnum } from './enums/logger-log-type.enum';
@@ -100,7 +101,9 @@ export class LoggerService {
   }
 
   public getStringArray(array: Readonly<string>[]): string {
-    return `[ ${_.join(_.map(array, (value) => `"${value}"`), `, `)} ]`;
+    return `[ ${_.join(_.map(array, (value: Readonly<string>): string => {
+      return wrapInQuotes(value);
+    }), `, `)} ]`;
   }
 
   public getValueUpdateWithHint(
@@ -118,7 +121,7 @@ export class LoggerService {
     let value = `********`;
 
     if (_.isEqual(isStringValue, true)) {
-      value = `"${value}"`;
+      value = wrapInQuotes(value);
     }
 
     return this.getValueUpdateWithHint(text, value, ` (hidden)`);

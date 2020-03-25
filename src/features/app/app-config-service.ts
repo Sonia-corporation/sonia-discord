@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import moment from 'moment';
 import { isValidDate } from '../../functions/is-valid-date';
+import { wrapInQuotes } from '../../functions/wrap-in-quotes';
 import { PartialNested } from '../../types/partial-nested';
 import { ChalkService } from '../logger/chalk-service';
 import { LoggerService } from '../logger/logger-service';
@@ -50,7 +51,7 @@ export class AppConfigService {
     if (_.isString(version)) {
       APP_CONFIG.version = version;
 
-      this._loggerService.log(this._className, this._chalkService.text(`app version updated to: ${this._chalkService.value(`"${APP_CONFIG.version}"`)}`));
+      this._loggerService.log(this._className, this._chalkService.text(`app version updated to: ${this._chalkService.value(wrapInQuotes(APP_CONFIG.version))}`));
     }
   }
 
@@ -70,7 +71,7 @@ export class AppConfigService {
     if (_.isString(date)) {
       APP_CONFIG.releaseDate = date;
 
-      this._loggerService.log(this._className, this._chalkService.text(`app release date updated to: ${this._chalkService.value(`"${APP_CONFIG.releaseDate}"`)}`));
+      this._loggerService.log(this._className, this._chalkService.text(`app release date updated to: ${this._chalkService.value(wrapInQuotes(APP_CONFIG.releaseDate))}`));
     }
   }
 
@@ -90,7 +91,7 @@ export class AppConfigService {
     if (_.isString(date)) {
       APP_CONFIG.initializationDate = date;
 
-      this._loggerService.log(this._className, this._chalkService.text(`app initialization date updated to: ${this._chalkService.value(`"${APP_CONFIG.initializationDate}"`)}`));
+      this._loggerService.log(this._className, this._chalkService.text(`app initialization date updated to: ${this._chalkService.value(wrapInQuotes(APP_CONFIG.initializationDate))}`));
     }
   }
 

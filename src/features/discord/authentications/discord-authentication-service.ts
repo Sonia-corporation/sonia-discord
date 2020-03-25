@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { wrapInQuotes } from '../../../functions/wrap-in-quotes';
 import { ChalkService } from '../../logger/chalk-service';
 import { LoggerService } from '../../logger/logger-service';
 import { DiscordClientService } from '../discord-client-service';
@@ -35,12 +36,12 @@ export class DiscordAuthenticationService {
       this._handleReady();
     });
 
-    this._loggerService.debug(this._className, this._chalkService.text(`listen "ready" event`));
+    this._loggerService.debug(this._className, this._chalkService.text(`listen ${wrapInQuotes(`ready`)}" event`));
   }
 
   private _handleReady(): void {
     if (!_.isNil(this._discordClientServiceClient.user)) {
-      this._loggerService.log(this._className, this._chalkService.text(`authenticated as: ${this._chalkService.value(`"${this._discordClientServiceClient.user.tag}`)}"`));
+      this._loggerService.log(this._className, this._chalkService.text(`authenticated as: ${this._chalkService.value(wrapInQuotes(this._discordClientServiceClient.user.tag))}`));
     } else {
       this._loggerService.log(this._className, this._chalkService.text(`authenticated as: ${this._chalkService.value(`unknown user`)}`));
     }

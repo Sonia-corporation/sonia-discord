@@ -1,5 +1,6 @@
 import { MessageEmbedAuthor } from 'discord.js';
 import _ from 'lodash';
+import { wrapInQuotes } from '../../../functions/wrap-in-quotes';
 import { PartialNested } from '../../../types/partial-nested';
 import { ChalkService } from '../../logger/chalk-service';
 import { LoggerService } from '../../logger/logger-service';
@@ -53,7 +54,7 @@ export class DiscordSoniaConfigService {
     if (_.isString(id)) {
       DISCORD_SONIA_CONFIG.id = id;
 
-      this._loggerService.log(this._className, this._chalkService.text(`id updated to: ${this._chalkService.value(`"${DISCORD_SONIA_CONFIG.id}"`)}`));
+      this._loggerService.log(this._className, this._chalkService.text(`id updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_SONIA_CONFIG.id))}`));
     }
   }
 

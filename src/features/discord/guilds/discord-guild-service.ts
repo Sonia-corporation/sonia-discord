@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { wrapInQuotes } from '../../../functions/wrap-in-quotes';
 import { ChalkService } from '../../logger/chalk-service';
 import { LoggerService } from '../../logger/logger-service';
 import { DiscordClientService } from '../discord-client-service';
@@ -32,6 +33,6 @@ export class DiscordGuildService {
     this._discordClientServiceClient.on(`ready`, (): void => {
     });
 
-    this._loggerService.debug(this._className, this._chalkService.text(`listen "ready" event`));
+    this._loggerService.debug(this._className, this._chalkService.text(`listen ${wrapInQuotes(`ready`)} event`));
   }
 }

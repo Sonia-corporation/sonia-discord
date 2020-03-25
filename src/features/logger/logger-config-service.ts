@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { wrapInQuotes } from '../../functions/wrap-in-quotes';
 import { ChalkService } from './chalk-service';
 import { LoggerConfigLevelEnum } from './enums/logger-config-level.enum';
 import { ILoggerConfig } from './interfaces/logger-config';
@@ -53,7 +54,7 @@ export class LoggerConfigService {
     if (_.isString(config.level)) {
       LOGGER_CONFIG.level = config.level;
 
-      this._loggerService.log(this._className, this._chalkService.text(`level updated to: ${this._chalkService.value(`"${LOGGER_CONFIG.level}"`)}`));
+      this._loggerService.log(this._className, this._chalkService.text(`level updated to: ${this._chalkService.value(wrapInQuotes(LOGGER_CONFIG.level))}`));
     }
   }
 }

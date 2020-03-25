@@ -1,26 +1,26 @@
 import _ from 'lodash';
 
-export function getHumanizedReleaseNotes(notes: Readonly<string>): string {
-  let updatedNotes: string = _.clone(notes);
+export function getHumanizedReleaseNotes(releaseNotes: Readonly<string>): string {
+  let updatedReleaseNotes: string = _.clone(releaseNotes);
 
   // Remove the #
-  updatedNotes = _.replace(updatedNotes, /(#\\s)/mi, ``);
+  updatedReleaseNotes = _.replace(updatedReleaseNotes, /(#\\s)/mi, ``);
 
   // Change the main title typography
-  updatedNotes = _.replace(updatedNotes, /(###\\s.*?\\n)/gmi, (note: Readonly<string>): string => {
-    let updatedNote: string = _.clone(note);
+  updatedReleaseNotes = _.replace(updatedReleaseNotes, /(###\\s.*?\\n)/gmi, (releaseNote: Readonly<string>): string => {
+    let updatedReleaseNote: string = _.clone(releaseNote);
 
     // Replace the "### " by "*"
-    updatedNote = _.replace(updatedNote, /(###\\s)/gmi, `*`);
+    updatedReleaseNote = _.replace(updatedReleaseNote, /(###\\s)/gmi, `*`);
 
     // Replace "\n" by "*"
-    updatedNote = _.replace(updatedNote, /(\\n)/gmi, `*`);
+    updatedReleaseNote = _.replace(updatedReleaseNote, /(\\n)/gmi, `*`);
 
-    return updatedNote;
+    return updatedReleaseNote;
   });
 
   // Remove markdown and links
-  updatedNotes = _.replace(updatedNotes, /(\*\s\*\*|\\n|\*\*|\(.*?\)|\[.*?]|\))/gmi, ``);
+  updatedReleaseNotes = _.replace(updatedReleaseNotes, /(\*\s\*\*|\\n|\*\*|\(.*?\)|\[.*?]|\))/gmi, ``);
 
-  return updatedNotes;
+  return updatedReleaseNotes;
 }

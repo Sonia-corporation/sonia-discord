@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { removeUndefined } from '../../../functions/remove-undefined';
+import { wrapInQuotes } from '../../../functions/wrap-in-quotes';
 import { PartialNested } from '../../../types/partial-nested';
 import { ChalkService } from '../../logger/chalk-service';
 import { LoggerService } from '../../logger/logger-service';
@@ -64,7 +65,7 @@ export class DiscordMessageConfigService {
     if (_.isString(prefix)) {
       DISCORD_MESSAGE_CONFIG.command.prefix = prefix;
 
-      this._loggerService.log(this._className, this._chalkService.text(`message command prefix updated to: ${this._chalkService.value(`"${DISCORD_MESSAGE_CONFIG.command.prefix}"`)}`));
+      this._loggerService.log(this._className, this._chalkService.text(`message command prefix updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_MESSAGE_CONFIG.command.prefix))}`));
     } else if (_.isArray(prefix)) {
       DISCORD_MESSAGE_CONFIG.command.prefix = removeUndefined(prefix);
 

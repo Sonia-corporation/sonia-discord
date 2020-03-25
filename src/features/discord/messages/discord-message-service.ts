@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { wrapInQuotes } from '../../../functions/wrap-in-quotes';
 import { ChalkService } from '../../logger/chalk-service';
 import { LoggerService } from '../../logger/logger-service';
 import { DiscordChannelService } from '../channels/discord-channel-service';
@@ -42,7 +43,7 @@ export class DiscordMessageService {
       this._handleMessage(message);
     });
 
-    this._loggerService.debug(this._className, this._chalkService.text(`listen "message" event`));
+    this._loggerService.debug(this._className, this._chalkService.text(`listen ${wrapInQuotes(`message`)} event`));
   }
 
   private _handleMessage(message: Readonly<AnyDiscordMessage>): void {
