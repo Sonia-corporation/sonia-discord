@@ -71,7 +71,8 @@
     "commitmsg": "cz-customizable-ghooks",
     "cz": "git add . && git-cz && git push-upstream",
     "semver": "npx semantic-release",
-    "clean:dist": "rimraf dist"
+    "clean:dist": "rimraf dist",
+    "commit": "npm run cz"
   },
   "dependencies": {
     "axios": "0.19.2",
