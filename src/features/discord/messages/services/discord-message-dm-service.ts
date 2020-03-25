@@ -29,7 +29,11 @@ export class DiscordMessageDmService {
     if (this._discordAuthorService.isValid(message.author)) {
       if (this._discordMessageContentService.hasContent(message.content)) {
         if (this._discordMessageCommandService.hasCommand(message.content)) {
-          this._loggerService.debug(this._className, this._loggerService.getSnowflakeContext(message.id, `message with command`), true);
+          this._loggerService.debug({
+            context: this._className,
+            extendedContext: true,
+            message: this._loggerService.getSnowflakeContext(message.id, `message with command`)
+          });
 
           return this._discordMessageCommandService.handleCommands(message);
         }

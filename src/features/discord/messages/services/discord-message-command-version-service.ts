@@ -30,7 +30,11 @@ export class DiscordMessageCommandVersionService {
   private readonly _className = `DiscordMessageCommandVersionService`;
 
   public handle(message: Readonly<AnyDiscordMessage>): IDiscordMessageResponse {
-    this._loggerService.debug(this._className, this._loggerService.getSnowflakeContext(message.id, `version command detected`), true);
+    this._loggerService.debug({
+      context: this._className,
+      extendedContext: true,
+      message: this._loggerService.getSnowflakeContext(message.id, `version command detected`)
+    });
 
     const appVersion: string = this._appConfigService.getVersion();
     const totalReleaseCountHumanized: string = this._appConfigService.getTotalReleaseCountHumanized();

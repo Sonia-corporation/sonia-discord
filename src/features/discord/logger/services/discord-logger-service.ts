@@ -34,11 +34,17 @@ export class DiscordLoggerService {
       this._handleWarn(message);
     });
 
-    this._loggerService.debug(this._className, this._chalkService.text(`listen ${wrapInQuotes(`warn`)} event`));
+    this._loggerService.debug({
+      context: this._className,
+      message: this._chalkService.text(`listen ${wrapInQuotes(`warn`)} event`)
+    });
   }
 
   private _handleWarn(message: Readonly<string>): void {
-    this._loggerService.warning(this._className, this._chalkService.text(message));
+    this._loggerService.warning({
+      context: this._className,
+      message: this._chalkService.text(message)
+    });
   }
 
   private _listenForErrors(): void {
@@ -46,10 +52,16 @@ export class DiscordLoggerService {
       this._handleError(message);
     });
 
-    this._loggerService.debug(this._className, this._chalkService.text(`listen ${wrapInQuotes(`error`)} event`));
+    this._loggerService.debug({
+      context: this._className,
+      message: this._chalkService.text(`listen ${wrapInQuotes(`error`)} event`)
+    });
   }
 
   private _handleError(message: Readonly<string>): void {
-    this._loggerService.error(this._className, this._chalkService.text(message));
+    this._loggerService.error({
+      context: this._className,
+      message: this._chalkService.text(message)
+    });
   }
 }

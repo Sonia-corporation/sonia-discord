@@ -48,7 +48,11 @@ export class DiscordMessageErrorService {
       const messageResponse: IDiscordMessageResponse = this._getMessageResponse(error, message);
 
       message.channel.send(messageResponse.response, messageResponse.options).then((): void => {
-        this._loggerService.log(this._className, this._loggerService.getSnowflakeContext(message.id, `message sent`), true);
+        this._loggerService.log({
+          context: this._className,
+          extendedContext: true,
+          message: this._loggerService.getSnowflakeContext(message.id, `message sent`)
+        });
       }).catch((error: unknown): void => {
         this._logOnError(error, message);
       });
@@ -59,8 +63,16 @@ export class DiscordMessageErrorService {
     error: unknown,
     message: Readonly<AnyDiscordMessage>
   ): void {
-    this._loggerService.error(this._className, this._loggerService.getSnowflakeContext(message.id, `message sending failed`), true);
-    this._loggerService.error(this._className, this._loggerService.getSnowflakeContext(message.id, error), true);
+    this._loggerService.error({
+      context: this._className,
+      extendedContext: true,
+      message: this._loggerService.getSnowflakeContext(message.id, `message sending failed`)
+    });
+    this._loggerService.error({
+      context: this._className,
+      extendedContext: true,
+      message: this._loggerService.getSnowflakeContext(message.id, error)
+    });
   }
 
   private _getMessageResponse(

@@ -1,5 +1,5 @@
 export interface ILoggerLog {
-  context: Readonly<string>;
-  extendedContext?: Readonly<boolean>;
+  context?: string;
+  extendedContext?: boolean;
   message: unknown;
 }

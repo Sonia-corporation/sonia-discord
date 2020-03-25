@@ -76,8 +76,12 @@ export class InitService {
     fs.readJson(`${appRootPath}/package.json`).then((data: Readonly<IPackage>): void => {
       AppConfigService.getInstance().updateVersion(data.version);
     }).catch((error: unknown): void => {
-      this._loggerService.error(this._chalkService.text(`Failed to read the package file`));
-      this._loggerService.error(this._chalkService.text(error));
+      this._loggerService.error({
+        message: this._chalkService.text(`Failed to read the package file`)
+      });
+      this._loggerService.error({
+        message: this._chalkService.text(error)
+      });
     });
   }
 
@@ -96,7 +100,9 @@ export class InitService {
       AppConfigService.getInstance().updateReleaseDate(axiosResponse.data.data.repository.releases.edges[ 0 ].node.updatedAt);
       AppConfigService.getInstance().updateReleaseNotes(getHumanizedReleaseNotes(axiosResponse.data.data.repository.releases.edges[ 0 ].node.description));
     }).catch((): void => {
-      this._loggerService.error(this._chalkService.text(`Failed to get the app total release count from GitHub API`));
+      this._loggerService.error({
+        message: this._chalkService.text(`Failed to get the app total release count from GitHub API`)
+      });
     });
   }
 

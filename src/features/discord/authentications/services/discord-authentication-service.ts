@@ -36,25 +36,46 @@ export class DiscordAuthenticationService {
       this._handleReady();
     });
 
-    this._loggerService.debug(this._className, this._chalkService.text(`listen ${wrapInQuotes(`ready`)}" event`));
+    this._loggerService.debug({
+      context: this._className,
+      message: this._chalkService.text(`listen ${wrapInQuotes(`ready`)}" event`)
+    });
   }
 
   private _handleReady(): void {
     if (!_.isNil(this._discordClientServiceClient.user)) {
-      this._loggerService.log(this._className, this._chalkService.text(`authenticated as: ${this._chalkService.value(wrapInQuotes(this._discordClientServiceClient.user.tag))}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`authenticated as: ${this._chalkService.value(wrapInQuotes(this._discordClientServiceClient.user.tag))}`)
+      });
     } else {
-      this._loggerService.log(this._className, this._chalkService.text(`authenticated as: ${this._chalkService.value(`unknown user`)}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`authenticated as: ${this._chalkService.value(`unknown user`)}`)
+      });
     }
   }
 
   private _login(): void {
     this._discordClientServiceClient.login(this._discordSoniaConfigService.getSecretToken()).then((): void => {
-      this._loggerService.success(this._className, this._chalkService.text(`authentication successful`));
+      this._loggerService.success({
+        context: this._className,
+        message: this._chalkService.text(`authentication successful`)
+      });
     }).catch((error: unknown): void => {
-      this._loggerService.error(this._className, this._chalkService.text(`authentication failed`));
-      this._loggerService.error(this._className, this._chalkService.error(error));
+      this._loggerService.error({
+        context: this._className,
+        message: this._chalkService.text(`authentication failed`)
+      });
+      this._loggerService.error({
+        context: this._className,
+        message: this._chalkService.error(error)
+      });
     });
 
-    this._loggerService.debug(this._className, this._chalkService.text(`authenticating...`));
+    this._loggerService.debug({
+      context: this._className,
+      message: this._chalkService.text(`authenticating...`)
+    });
   }
 }

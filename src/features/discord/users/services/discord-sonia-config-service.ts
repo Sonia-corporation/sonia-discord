@@ -31,7 +31,10 @@ export class DiscordSoniaConfigService {
     if (!_.isNil(config)) {
       this.updateSonia(config.sonia);
 
-      this._loggerService.debug(this._className, this._chalkService.text(`configuration updated`));
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
+      });
     }
   }
 
@@ -54,7 +57,10 @@ export class DiscordSoniaConfigService {
     if (_.isString(id)) {
       DISCORD_SONIA_CONFIG.id = id;
 
-      this._loggerService.log(this._className, this._chalkService.text(`id updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_SONIA_CONFIG.id))}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`id updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_SONIA_CONFIG.id))}`)
+      });
     }
   }
 
@@ -66,7 +72,10 @@ export class DiscordSoniaConfigService {
     if (_.isString(secretToken)) {
       DISCORD_SONIA_CONFIG.secretToken = secretToken;
 
-      this._loggerService.log(this._className, this._loggerService.getHiddenValueUpdate(`secret token updated to: `, true));
+      this._loggerService.log({
+        context: this._className,
+        message: this._loggerService.getHiddenValueUpdate(`secret token updated to: `, true)
+      });
     }
   }
 

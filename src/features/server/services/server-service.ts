@@ -26,7 +26,10 @@ export class ServerService {
 
   private _listen(): void {
     this._app.listen(this._port, (): void => {
-      this._loggerService.log(this._className, this._chalkService.text(`listening on port: ${this._chalkService.value(this._port)}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`listening on port: ${this._chalkService.value(this._port)}`)
+      });
     });
   }
 }

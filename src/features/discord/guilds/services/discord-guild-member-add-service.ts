@@ -43,7 +43,10 @@ export class DiscordGuildMemberAddService {
       this._handleGuildMemberAdd(member);
     });
 
-    this._loggerService.debug(this._className, this._chalkService.text(`listen ${wrapInQuotes(`guildMemberAdd`)} event`));
+    this._loggerService.debug({
+      context: this._className,
+      message: this._chalkService.text(`listen ${wrapInQuotes(`guildMemberAdd`)} event`)
+    });
   }
 
   private _handleGuildMemberAdd(member: Readonly<AnyGuildMember>): void {
@@ -62,13 +65,25 @@ export class DiscordGuildMemberAddService {
   ): void {
     const messageResponse: IDiscordMessageResponse = this._getMessageResponse(member);
 
-    this._loggerService.debug(this._className, this._chalkService.text(`sending message for the new guild member...`));
+    this._loggerService.debug({
+      context: this._className,
+      message: this._chalkService.text(`sending message for the new guild member...`)
+    });
 
     (channel as AnyDiscordChannel).send(messageResponse.response, messageResponse.options).then((): void => {
-      this._loggerService.log(this._className, this._chalkService.text(`welcome message for the new guild message sent`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`welcome message for the new guild message sent`)
+      });
     }).catch((error: unknown): void => {
-      this._loggerService.error(this._className, this._chalkService.text(`message sending for the new guild member failed`));
-      this._loggerService.error(this._className, this._chalkService.error(error));
+      this._loggerService.error({
+        context: this._className,
+        message: this._chalkService.text(`message sending for the new guild member failed`)
+      });
+      this._loggerService.error({
+        context: this._className,
+        message: this._chalkService.error(error)
+      });
     });
   }
 
