@@ -8,6 +8,7 @@ import { IDiscordConfig } from '../interfaces/discord-config';
 import { IDiscordMessageCommandConfig } from '../interfaces/discord-message-command-config';
 import { IDiscordMessageCommandVersionConfig } from '../interfaces/discord-message-command-version-config';
 import { IDiscordMessageConfig } from '../interfaces/discord-message-config';
+import { IDiscordMessageErrorConfig } from '../interfaces/discord-message-error-config';
 import { DISCORD_MESSAGE_CONFIG } from './discord-message-config';
 
 export class DiscordMessageConfigService {
@@ -75,5 +76,9 @@ export class DiscordMessageConfigService {
 
   public getMessageCommandVersion(): IDiscordMessageCommandVersionConfig {
     return DISCORD_MESSAGE_CONFIG.command.version;
+  }
+
+  public getMessageError(): IDiscordMessageErrorConfig {
+    return DISCORD_MESSAGE_CONFIG.error;
   }
 }

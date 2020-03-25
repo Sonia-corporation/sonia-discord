@@ -41,13 +41,13 @@ export class DiscordMessageCommandVersionService {
     const soniaFullName: string | null = this._discordSoniaService.getFullName();
     const soniaImageUrl: string | null = this._discordSoniaService.getImageUrl();
     const soniaMentalState: DiscordSoniaMentalStateEnum = this._discordSoniaService.getMentalState();
-    const commandVersionConfig: IDiscordMessageCommandVersionConfig = this._discordMessageConfigService.getMessageCommandVersion();
+    const discordMessageCommandVersionConfig: IDiscordMessageCommandVersionConfig = this._discordMessageConfigService.getMessageCommandVersion();
 
     return {
       options: {
         embed: {
           author,
-          color: commandVersionConfig.imageColor,
+          color: discordMessageCommandVersionConfig.imageColor,
           fields: [
             {
               name: `Application version`,
@@ -65,7 +65,7 @@ export class DiscordMessageCommandVersionService {
             },
             {
               name: `Release notes`,
-              value: `${appReleaseNotes} Checkout the complete [CHANGELOG](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md)`
+              value: `${appReleaseNotes}\n\nCheckout the complete [CHANGELOG](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md)`
             },
             {
               inline: true,
@@ -79,11 +79,11 @@ export class DiscordMessageCommandVersionService {
             }
           ],
           footer: {
-            iconURL: soniaImageUrl || ``,
+            iconURL: soniaImageUrl || undefined,
             text: totalReleaseCountHumanized
           },
           thumbnail: {
-            url: commandVersionConfig.imageUrl
+            url: discordMessageCommandVersionConfig.imageUrl
           },
           timestamp: moment().toDate(),
           title: `${soniaFullName} version`
