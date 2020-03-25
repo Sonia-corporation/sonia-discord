@@ -22,7 +22,5 @@ export function getHumanizedReleaseNotes(notes: Readonly<string>): string {
   // Remove markdown and links
   updatedNotes = _.replace(updatedNotes, /(\*\s\*\*|\\n|\*\*|\(.*?\)|\[.*?]|\))/gmi, ``);
 
-  console.log(updatedNotes);
-
   return updatedNotes;
 }
