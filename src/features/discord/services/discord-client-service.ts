@@ -20,7 +20,10 @@ export class DiscordClientService {
   private readonly _className = `DiscordClientService`;
 
   public constructor() {
-    this._loggerService.debug(this._className, this._chalkService.text(`client created`));
+    this._loggerService.debug({
+      context: this._className,
+      message: this._chalkService.text(`client created`)
+    });
   }
 
   public getClient(): Client {

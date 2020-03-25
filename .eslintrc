@@ -72,9 +72,10 @@ rules:
   indent:
     - error
     - 2
+  #  Temporarily disabled due to code climate error (37259)
   '@typescript-eslint/interface-name-prefix':
-    - error
-    - prefixWithI: 'always'
+    - off
+  #  - prefixWithI: 'always'
   '@typescript-eslint/no-explicit-any':
     - error
     - fixToUnknown: false

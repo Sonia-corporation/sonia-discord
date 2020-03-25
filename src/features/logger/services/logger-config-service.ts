@@ -30,7 +30,10 @@ export class LoggerConfigService {
       this.updateEnabledState(config);
       this.updateLevel(config);
 
-      this._loggerService.debug(this._className, this._chalkService.text(`configuration updated`));
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
+      });
     }
   }
 
@@ -42,7 +45,10 @@ export class LoggerConfigService {
     if (_.isBoolean(config.isEnabled)) {
       LOGGER_CONFIG.isEnabled = config.isEnabled;
 
-      this._loggerService.log(this._className, this._chalkService.text(`enable state updated to: ${this._chalkService.value(LOGGER_CONFIG.isEnabled)}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`enable state updated to: ${this._chalkService.value(LOGGER_CONFIG.isEnabled)}`)
+      });
     }
   }
 
@@ -54,7 +60,10 @@ export class LoggerConfigService {
     if (_.isString(config.level)) {
       LOGGER_CONFIG.level = config.level;
 
-      this._loggerService.log(this._className, this._chalkService.text(`level updated to: ${this._chalkService.value(wrapInQuotes(LOGGER_CONFIG.level))}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`level updated to: ${this._chalkService.value(wrapInQuotes(LOGGER_CONFIG.level))}`)
+      });
     }
   }
 }

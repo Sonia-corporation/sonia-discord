@@ -29,7 +29,10 @@ export class GithubConfigService {
     if (!_.isNil(config)) {
       this.updatePersonalAccessToken(config.personalAccessToken);
 
-      this._loggerService.debug(this._className, this._chalkService.text(`configuration updated`));
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
+      });
     }
   }
 
@@ -41,7 +44,10 @@ export class GithubConfigService {
     if (_.isString(token)) {
       GITHUB_CONFIG.personalAccessToken = token;
 
-      this._loggerService.log(this._className, this._loggerService.getHiddenValueUpdate(`personal access token updated to:`, true));
+      this._loggerService.log({
+        context: this._className,
+        message: this._loggerService.getHiddenValueUpdate(`personal access token updated to:`, true)
+      });
     }
   }
 
@@ -53,7 +59,10 @@ export class GithubConfigService {
     if (_.isString(bugReportUrl)) {
       GITHUB_CONFIG.bugReportUrl = bugReportUrl;
 
-      this._loggerService.log(this._className, this._chalkService.text(`bug report url updated to: ${this._chalkService.value(wrapInQuotes(GITHUB_CONFIG.bugReportUrl))}`));
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`bug report url updated to: ${this._chalkService.value(wrapInQuotes(GITHUB_CONFIG.bugReportUrl))}`)
+      });
     }
   }
 }
