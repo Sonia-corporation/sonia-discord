@@ -1,4 +1,10 @@
-import { MessageEmbedAuthor } from 'discord.js';
+import {
+  EmbedFieldData,
+  MessageEmbedAuthor,
+  MessageEmbedFooter,
+  MessageEmbedOptions,
+  MessageEmbedThumbnail
+} from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment';
 import { ellipsis } from '../../../../functions/ellipsis';
@@ -86,45 +92,84 @@ export class DiscordMessageErrorService {
     error: unknown,
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
-    const soniaImageUrl: string | null = this._discordSoniaService.getImageUrl();
-    const author: MessageEmbedAuthor = this._discordSoniaService.getCorporationMessageEmbedAuthor();
-    const discordMessageErrorConfig: IDiscordMessageErrorConfig = this._discordMessageConfigService.getMessageError();
-    const githubBugReportUrl: string = this._githubConfigService.getBugReportUrl();
-    const discordSoniaPermanentGuildInviteUrl: string = this._discordGuildConfigService.getSoniaPermanentGuildInviteUrl();
-
     return {
       options: {
-        embed: {
-          author,
-          color: discordMessageErrorConfig.imageColor,
-          fields: [
-            {
-              name: `The message's id that killed me`,
-              value: anyDiscordMessage.id
-            },
-            {
-              name: `My blood trace`,
-              value: ellipsis(_.toString(error))
-            },
-            {
-              name: `Help me to help you`,
-              value: `You can create a [bug report](${githubBugReportUrl}) or reach my creators on [discord](${discordSoniaPermanentGuildInviteUrl}).`
-            }
-          ],
-          footer: {
-            iconURL: soniaImageUrl || undefined,
-            text: `I am very sorry for that`
-          },
-          thumbnail: {
-            url: discordMessageErrorConfig.imageUrl
-          },
-          timestamp: moment().toDate(),
-          title: `Oops, you have found a bug`
-        },
+        embed: this._getMessageEmbed(error, anyDiscordMessage),
         split: true
       },
       response: ``
     };
+  }
+
+  private _getMessageEmbed(
+    error: unknown,
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): MessageEmbedOptions {
+    return {
+      author: this._getMessageEmbedAuthor(),
+      color: this._getMessageEmbedColor(),
+      fields: this._getMessageEmbedFields(error, anyDiscordMessage),
+      footer: this._getMessageEmbedFooter(),
+      thumbnail: this._getMessageEmbedThumbnail(),
+      timestamp: this._getMessageEmbedTimestamp(),
+      title: this._getMessageEmbedTitle()
+    };
+  }
+
+  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+    return this._discordSoniaService.getCorporationMessageEmbedAuthor();
+  }
+
+  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+    const discordMessageErrorConfig: IDiscordMessageErrorConfig = this._discordMessageConfigService.getMessageError();
+
+    return {
+      url: discordMessageErrorConfig.imageUrl
+    };
+  }
+
+  private _getMessageEmbedFooter(): MessageEmbedFooter {
+    const soniaImageUrl: string | null = this._discordSoniaService.getImageUrl();
+
+    return {
+      iconURL: soniaImageUrl || undefined,
+      text: `I am very sorry for that`
+    };
+  }
+
+  private _getMessageEmbedColor(): number {
+    return this._discordMessageConfigService.getMessageError().imageColor;
+  }
+
+  private _getMessageEmbedTimestamp(): Date {
+    return moment().toDate();
+  }
+
+  private _getMessageEmbedTitle(): string {
+    return `Oops, you have found a bug`;
+  }
+
+  private _getMessageEmbedFields(
+    error: unknown,
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): EmbedFieldData[] {
+    const githubBugReportUrl: string = this._githubConfigService.getBugReportUrl();
+    const discordSoniaPermanentGuildInviteUrl: string = this._discordGuildConfigService.getSoniaPermanentGuildInviteUrl();
+
+    return [
+      {
+        name: `The message's id that killed me`,
+        value: anyDiscordMessage.id
+      },
+      {
+        name: `My blood trace`,
+        value: ellipsis(_.toString(error))
+      },
+      {
+        name: `Help me to help you`,
+        value: `You can create a [bug report](${githubBugReportUrl}) or reach my creators on [discord](${discordSoniaPermanentGuildInviteUrl}).`
+      }
+    ];
   }
 }
 
