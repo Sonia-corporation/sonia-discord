@@ -33,58 +33,58 @@ export class DiscordMessageErrorService {
 
   public handleError(
     error: unknown,
-    message: Readonly<AnyDiscordMessage>
+    discordMessage: Readonly<AnyDiscordMessage>
   ): void {
-    this._logOnError(error, message);
+    this._logOnError(error, discordMessage);
 
-    this._sendMessage(error, message);
+    this._sendMessage(error, discordMessage);
   }
 
   private _sendMessage(
     error: unknown,
-    message: Readonly<AnyDiscordMessage>
+    discordMessage: Readonly<AnyDiscordMessage>
   ): void {
-    if (this._discordChannelService.isValid(message.channel)) {
-      const messageResponse: IDiscordMessageResponse = this._getMessageResponse(error, message);
+    if (this._discordChannelService.isValid(discordMessage.channel)) {
+      const messageResponse: IDiscordMessageResponse = this._getMessageResponse(error, discordMessage);
 
-      message.channel.send(messageResponse.response, messageResponse.options).then((): void => {
+      discordMessage.channel.send(messageResponse.response, messageResponse.options).then((): void => {
         this._loggerService.log({
           context: this._className,
           extendedContext: true,
-          message: this._loggerService.getSnowflakeContext(message.id, `message sent`)
+          message: this._loggerService.getSnowflakeContext(discordMessage.id, `message sent`)
         });
       }).catch((error: unknown): void => {
-        this._logOnError(error, message);
+        this._logOnError(error, discordMessage);
       });
     }
   }
 
   private _logOnError(
     error: unknown,
-    message: Readonly<AnyDiscordMessage>
+    discordMessage: Readonly<AnyDiscordMessage>
   ): void {
     this._loggerService.error({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(message.id, `message sending failed`)
+      message: this._loggerService.getSnowflakeContext(discordMessage.id, `message sending failed`)
     });
     this._loggerService.error({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(message.id, error)
+      message: this._loggerService.getSnowflakeContext(discordMessage.id, error)
     });
   }
 
   private _getMessageResponse(
     error: unknown,
-    message: Readonly<AnyDiscordMessage>
+    discordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
-    return this._getErrorMessageResponse(error, message);
+    return this._getErrorMessageResponse(error, discordMessage);
   }
 
   private _getErrorMessageResponse(
     error: unknown,
-    message: Readonly<AnyDiscordMessage>
+    discordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
     const soniaImageUrl: string | null = this._discordSoniaService.getImageUrl();
     const author: MessageEmbedAuthor = this._discordSoniaService.getCorporationMessageEmbedAuthor();
@@ -100,7 +100,7 @@ export class DiscordMessageErrorService {
           fields: [
             {
               name: `The message's id that killed me`,
-              value: message.id
+              value: discordMessage.id
             },
             {
               name: `My blood trace`,

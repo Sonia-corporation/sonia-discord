@@ -30,20 +30,20 @@ export class DiscordMessageTextService {
   private readonly _discordMessageContentService = DiscordMessageContentService.getInstance();
   private readonly _className = `DiscordMessageTextService`;
 
-  public getMessage(message: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
-    if (this._discordAuthorService.isValid(message.author)) {
-      if (this._discordMentionService.isValid(message.mentions)) {
+  public getMessage(discordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
+    if (this._discordAuthorService.isValid(discordMessage.author)) {
+      if (this._discordMentionService.isValid(discordMessage.mentions)) {
         this._loggerService.debug({
           context: this._className,
           extendedContext: true,
-          message: this._loggerService.getSnowflakeContext(message.id, `message with valid mention`)
+          message: this._loggerService.getSnowflakeContext(discordMessage.id, `message with valid mention`)
         });
 
-        if (this._discordMentionService.isForEveryone(message.mentions)) {
+        if (this._discordMentionService.isForEveryone(discordMessage.mentions)) {
           this._loggerService.debug({
             context: this._className,
             extendedContext: true,
-            message: this._loggerService.getSnowflakeContext(message.id, `everyone mention`)
+            message: this._loggerService.getSnowflakeContext(discordMessage.id, `everyone mention`)
           });
 
           return {
@@ -54,20 +54,20 @@ export class DiscordMessageTextService {
         const sonia: Sonia | null = this._discordSoniaService.getSonia();
 
         if (this._discordSoniaService.isValid(sonia)) {
-          if (this._discordMentionService.isUserMentioned(message.mentions, sonia)) {
+          if (this._discordMentionService.isUserMentioned(discordMessage.mentions, sonia)) {
             this._loggerService.debug({
               context: this._className,
               extendedContext: true,
-              message: this._loggerService.getSnowflakeContext(message.id, `sonia was mentioned`)
+              message: this._loggerService.getSnowflakeContext(discordMessage.id, `sonia was mentioned`)
             });
 
-            if (this._discordMessageContentService.hasContent(message.content)) {
-              if (this._discordMessageCommandService.hasCommand(message.content)) {
-                return this._discordMessageCommandService.handleCommands(message);
+            if (this._discordMessageContentService.hasContent(discordMessage.content)) {
+              if (this._discordMessageCommandService.hasCommand(discordMessage.content)) {
+                return this._discordMessageCommandService.handleCommands(discordMessage);
               }
             }
 
-            return this._discordMessageAuthorService.reply(message);
+            return this._discordMessageAuthorService.reply(discordMessage);
           }
         }
       }

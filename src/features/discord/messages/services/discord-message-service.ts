@@ -41,8 +41,8 @@ export class DiscordMessageService {
   }
 
   private _listen(): void {
-    this._discordClientServiceClient.on(`message`, (message: Readonly<AnyDiscordMessage>): void => {
-      this._handleMessage(message);
+    this._discordClientServiceClient.on(`message`, (discordMessage: Readonly<AnyDiscordMessage>): void => {
+      this._handleMessage(discordMessage);
     });
 
     this._loggerService.debug({
@@ -51,75 +51,75 @@ export class DiscordMessageService {
     });
   }
 
-  private _handleMessage(message: Readonly<AnyDiscordMessage>): void {
+  private _handleMessage(discordMessage: Readonly<AnyDiscordMessage>): void {
     this._loggerService.log({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(message.id, message.content)
+      message: this._loggerService.getSnowflakeContext(discordMessage.id, discordMessage.content)
     });
 
-    if (this._discordAuthorService.isValid(message.author)) {
-      if (this._discordAuthorService.isBot(message.author)) {
+    if (this._discordAuthorService.isValid(discordMessage.author)) {
+      if (this._discordAuthorService.isBot(discordMessage.author)) {
         return;
       }
     }
 
-    if (this._discordChannelService.isValid(message.channel)) {
-      if (this._discordChannelService.isDm(message.channel)) {
-        this._dmMessage(message);
-      } else if (this._discordChannelService.isText(message.channel)) {
-        this._textMessage(message);
+    if (this._discordChannelService.isValid(discordMessage.channel)) {
+      if (this._discordChannelService.isDm(discordMessage.channel)) {
+        this._dmMessage(discordMessage);
+      } else if (this._discordChannelService.isText(discordMessage.channel)) {
+        this._textMessage(discordMessage);
       }
     }
   }
 
-  private _dmMessage(message: Readonly<AnyDiscordMessage>): void {
+  private _dmMessage(discordMessage: Readonly<AnyDiscordMessage>): void {
     this._loggerService.debug({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(message.id, `dm message`)
+      message: this._loggerService.getSnowflakeContext(discordMessage.id, `dm message`)
     });
 
-    const response: IDiscordMessageResponse | null = this._discordMessageDmService.getMessage(message);
+    const response: IDiscordMessageResponse | null = this._discordMessageDmService.getMessage(discordMessage);
 
     if (!_.isNil(response)) {
-      this._sendMessage(message, response);
+      this._sendMessage(discordMessage, response);
     }
   }
 
-  private _textMessage(message: Readonly<AnyDiscordMessage>): void {
+  private _textMessage(discordMessage: Readonly<AnyDiscordMessage>): void {
     this._loggerService.debug({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(message.id, `text message`)
+      message: this._loggerService.getSnowflakeContext(discordMessage.id, `text message`)
     });
 
-    const response: IDiscordMessageResponse | null = this._discordMessageTextService.getMessage(message);
+    const response: IDiscordMessageResponse | null = this._discordMessageTextService.getMessage(discordMessage);
 
     if (!_.isNil(response)) {
-      this._sendMessage(message, response);
+      this._sendMessage(discordMessage, response);
     }
   }
 
   private _sendMessage(
-    message: Readonly<AnyDiscordMessage>,
+    discordMessage: Readonly<AnyDiscordMessage>,
     messageResponse: Readonly<IDiscordMessageResponse>
   ): void {
     this._loggerService.debug({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(message.id, `sending message...`)
+      message: this._loggerService.getSnowflakeContext(discordMessage.id, `sending message...`)
     });
 
-    if (this._discordChannelService.isValid(message.channel)) {
-      message.channel.send(messageResponse.response, messageResponse.options).then((): void => {
+    if (this._discordChannelService.isValid(discordMessage.channel)) {
+      discordMessage.channel.send(messageResponse.response, messageResponse.options).then((): void => {
         this._loggerService.log({
           context: this._className,
           extendedContext: true,
-          message: this._loggerService.getSnowflakeContext(message.id, `message sent`)
+          message: this._loggerService.getSnowflakeContext(discordMessage.id, `message sent`)
         });
       }).catch((error: unknown): void => {
-        this._discordMessageErrorService.handleError(error, message);
+        this._discordMessageErrorService.handleError(error, discordMessage);
       });
     }
   }
