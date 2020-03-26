@@ -52,7 +52,7 @@ export class LoggerConfigService extends ConfigService<ILoggerConfig> {
     }
   }
 
-  protected updateConfig(config?: Readonly<Partial<ILoggerConfig>>): void {
+  public updateConfig(config?: Readonly<Partial<ILoggerConfig>>): void {
     if (!_.isNil(config) && _.isPlainObject(config)) {
       this.updateEnabledState(config);
       this.updateLevel(config);

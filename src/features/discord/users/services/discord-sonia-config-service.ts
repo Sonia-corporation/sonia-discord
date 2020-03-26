@@ -73,7 +73,7 @@ export class DiscordSoniaConfigService extends ConfigService<IDiscordConfig> {
     return DISCORD_SONIA_CONFIG.corporationImageUrl;
   }
 
-  protected updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
+  public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
     if (!_.isNil(config)) {
       this.updateSonia(config.sonia);
 
