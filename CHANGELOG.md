@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.19.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.19.0...1.19.1) (2020-03-26)
+
+
+### Bug Fixes
+
+* **config-service:** use public accessors for the updateConfig method to avoid scope error ([92ff7df](https://github.com/Sonia-corporation/il-est-midi-discord/commit/92ff7df949523e4e7cb846f0402b7442fe0ede57))
+
 # [1.19.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.18.0...1.19.0) (2020-03-26)
 
 
