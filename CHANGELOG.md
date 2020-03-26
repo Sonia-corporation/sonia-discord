@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.19.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.18.0...1.19.0) (2020-03-26)
+
+
+### Features
+
+* **server:** configure a home page with express ([50dffa9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/50dffa9a0cb3f2c9f23719889594410dfb08a317))
+
 # [1.18.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.17.1...1.18.0) (2020-03-26)
 
 
