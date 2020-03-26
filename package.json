@@ -75,6 +75,7 @@
     "commit": "npm run cz"
   },
   "dependencies": {
+    "@scout_apm/scout-apm": "0.1.8",
     "axios": "0.19.2",
     "discord.js": "12.0.2",
     "express": "4.17.1",
