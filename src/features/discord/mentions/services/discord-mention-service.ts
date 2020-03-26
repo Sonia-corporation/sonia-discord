@@ -23,14 +23,14 @@ export class DiscordMentionService {
     return isDiscordMessageMentions(mention);
   }
 
-  public isForEveryone(mention: Readonly<AnyDiscordMessageMentions>): boolean {
-    return _.isEqual(mention.everyone, true);
+  public isForEveryone(anyDiscordMessageMentions: Readonly<AnyDiscordMessageMentions>): boolean {
+    return _.isEqual(anyDiscordMessageMentions.everyone, true);
   }
 
   public isUserMentioned(
-    mention: Readonly<AnyDiscordMessageMentions>,
+    anyDiscordMessageMentions: Readonly<AnyDiscordMessageMentions>,
     user: User | GuildMember | Role | GuildChannel
   ): boolean {
-    return mention.has(user);
+    return anyDiscordMessageMentions.has(user);
   }
 }

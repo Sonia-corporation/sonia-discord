@@ -16,12 +16,12 @@ export class DiscordMessageAuthorService {
 
   private readonly _discordAuthorService = DiscordAuthorService.getInstance();
 
-  public reply(discordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse {
+  public reply(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse {
     let response = `Il est midi !`;
 
-    if (this._discordAuthorService.isValid(discordMessage.author)) {
-      if (this._discordAuthorService.hasValidUsername(discordMessage.author)) {
-        response = `Il est midi ${discordMessage.author.username} !`;
+    if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
+      if (this._discordAuthorService.hasValidUsername(anyDiscordMessage.author)) {
+        response = `Il est midi ${anyDiscordMessage.author.username} !`;
       }
     }
 
