@@ -7,7 +7,7 @@ const APP_ROOT_PATH = require(`app-root-path`);
 
 const CONTEXT = `build-update-app-initialization-date`;
 
-function updateEnvironmentAppInitializationDate(environment) {
+function _updateEnvironmentAppInitializationDate(environment) {
   if (!_.has(environment, `app`)) {
     environment.app = {};
   }
@@ -21,7 +21,7 @@ function updateEnvironmentAppInitializationDate(environment) {
 LOGGER.debug(CONTEXT, CHALK.text(`Read environment file from dist folder...`));
 
 FS.readJson(`${APP_ROOT_PATH.path}/dist/environment.json`).then((environment) => {
-  const updatedEnvironment = updateEnvironmentAppInitializationDate(environment);
+  const updatedEnvironment = _updateEnvironmentAppInitializationDate(environment);
 
   LOGGER.debug(CONTEXT, CHALK.text(`Update environment app initialization date inside dist folder...`));
 

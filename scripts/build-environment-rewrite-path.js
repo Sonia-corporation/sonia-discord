@@ -6,7 +6,7 @@ const APP_ROOT_PATH = require(`app-root-path`);
 
 const CONTEXT = `build-environment-rewrite-path`;
 
-function updateEnvironmentPath(index) {
+function _updateEnvironmentPath(index) {
   const updatedIndex = _.replace(index, `/src/environment/secret-environment.json`, `/dist/environment.json`);
 
   if (_.isEqual(_.toString(index), _.toString(updatedIndex))) {
@@ -19,7 +19,7 @@ function updateEnvironmentPath(index) {
 LOGGER.debug(CONTEXT, CHALK.text(`Read index file from dist...`));
 
 FS.readFile(`${APP_ROOT_PATH.path}/dist/index.js`).then((index) => {
-  const updatedIndex = updateEnvironmentPath(index);
+  const updatedIndex = _updateEnvironmentPath(index);
 
   LOGGER.debug(CONTEXT, CHALK.text(`Update index file from dist...`));
 
