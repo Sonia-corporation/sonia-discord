@@ -32,41 +32,47 @@ export class DiscordMessageTextService {
   private readonly _discordMessageContentService = DiscordMessageContentService.getInstance();
   private readonly _className = `DiscordMessageTextService`;
 
-  public getMessage(discordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
-    if (this._discordAuthorService.isValid(discordMessage.author)) {
-      if (this._discordMentionService.isValid(discordMessage.mentions)) {
-        return this._getMessageFromMention(discordMessage);
+  public getMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
+    if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
+      if (this._discordMentionService.isValid(anyDiscordMessage.mentions)) {
+        return this._getAnyDiscordMessageResponse(anyDiscordMessage);
       }
     }
 
     return null;
   }
 
-  private _getMessageFromMention(discordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
+  private _getAnyDiscordMessageResponse(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
     this._loggerService.debug({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(discordMessage.id, `message with valid mention`)
+      message: this._loggerService.getSnowflakeContext(anyDiscordMessage.id, `message with valid mention`)
     });
 
-    if (isDiscordMessage(discordMessage)) {
-      if (this._discordMentionService.isForEveryone(discordMessage.mentions)) {
-        return this._getEveryoneMentionMessageResponse(discordMessage);
-      }
+    if (isDiscordMessage(anyDiscordMessage)) {
+      return this._getDiscordMessageResponse(anyDiscordMessage);
+    }
 
-      const sonia: Sonia | null = this._discordSoniaService.getSonia();
+    return null;
+  }
 
-      if (this._discordSoniaService.isValid(sonia)) {
-        if (this._discordMentionService.isUserMentioned(discordMessage.mentions, sonia)) {
-          return this._getSoniaMentionMessageResponse(discordMessage);
-        }
+  private _getDiscordMessageResponse(discordMessage: Readonly<DiscordMessage>): IDiscordMessageResponse | null {
+    if (this._discordMentionService.isForEveryone(discordMessage.mentions)) {
+      return this._getEveryoneMentionMessageResponse(discordMessage);
+    }
+
+    const sonia: Sonia | null = this._discordSoniaService.getSonia();
+
+    if (this._discordSoniaService.isValid(sonia)) {
+      if (this._discordMentionService.isUserMentioned(discordMessage.mentions, sonia)) {
+        return this._getSoniaMentionMessageResponse(discordMessage);
       }
     }
 
     return null;
   }
 
-  private _getEveryoneMentionMessageResponse(discordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse {
+  private _getEveryoneMentionMessageResponse(discordMessage: Readonly<DiscordMessage>): IDiscordMessageResponse {
     this._loggerService.debug({
       context: this._className,
       extendedContext: true,
