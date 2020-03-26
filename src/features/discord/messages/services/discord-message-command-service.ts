@@ -33,14 +33,14 @@ export class DiscordMessageCommandService {
     return this._hasThisCommand(message, DiscordMessageCommandEnum.VERSION);
   }
 
-  public handleVersionCommand(message: Readonly<AnyDiscordMessage>): IDiscordMessageResponse {
-    return this._discordMessageCommandVersionService.handle(message);
+  public handleVersionCommand(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse {
+    return this._discordMessageCommandVersionService.handle(anyDiscordMessage);
   }
 
-  public handleCommands(message: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
-    if (this._discordMessageContentService.hasContent(message.content)) {
-      if (this.hasVersionCommand(message.content)) {
-        return this.handleVersionCommand(message);
+  public handleCommands(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
+    if (this._discordMessageContentService.hasContent(anyDiscordMessage.content)) {
+      if (this.hasVersionCommand(anyDiscordMessage.content)) {
+        return this.handleVersionCommand(anyDiscordMessage);
       }
     }
 

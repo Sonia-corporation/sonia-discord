@@ -4,8 +4,10 @@ import { DiscordMentionService } from '../../mentions/services/discord-mention-s
 import { DiscordAuthorService } from '../../users/services/discord-author-service';
 import { DiscordSoniaService } from '../../users/services/discord-sonia-service';
 import { Sonia } from '../../users/types/sonia';
+import { isDiscordMessage } from '../functions/is-discord-message';
 import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
 import { AnyDiscordMessage } from '../types/any-discord-message';
+import { DiscordMessage } from '../types/discord-message';
 import { DiscordMessageAuthorService } from './discord-message-author-service';
 import { DiscordMessageCommandService } from './discord-message-command-service';
 import { DiscordMessageContentService } from './discord-message-content-service';
@@ -30,49 +32,71 @@ export class DiscordMessageTextService {
   private readonly _discordMessageContentService = DiscordMessageContentService.getInstance();
   private readonly _className = `DiscordMessageTextService`;
 
-  public getMessage(message: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
-    if (this._discordAuthorService.isValid(message.author)) {
-      if (this._discordMentionService.isValid(message.mentions)) {
-        this._loggerService.debug({
-          context: this._className,
-          extendedContext: true,
-          message: this._loggerService.getSnowflakeContext(message.id, `message with valid mention`)
-        });
-
-        if (this._discordMentionService.isForEveryone(message.mentions)) {
-          this._loggerService.debug({
-            context: this._className,
-            extendedContext: true,
-            message: this._loggerService.getSnowflakeContext(message.id, `everyone mention`)
-          });
-
-          return {
-            response: `Il est midi tout le monde !`
-          };
-        }
-
-        const sonia: Sonia | null = this._discordSoniaService.getSonia();
-
-        if (this._discordSoniaService.isValid(sonia)) {
-          if (this._discordMentionService.isUserMentioned(message.mentions, sonia)) {
-            this._loggerService.debug({
-              context: this._className,
-              extendedContext: true,
-              message: this._loggerService.getSnowflakeContext(message.id, `sonia was mentioned`)
-            });
-
-            if (this._discordMessageContentService.hasContent(message.content)) {
-              if (this._discordMessageCommandService.hasCommand(message.content)) {
-                return this._discordMessageCommandService.handleCommands(message);
-              }
-            }
-
-            return this._discordMessageAuthorService.reply(message);
-          }
-        }
+  public getMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
+    if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
+      if (this._discordMentionService.isValid(anyDiscordMessage.mentions)) {
+        return this._getAnyDiscordMessageResponse(anyDiscordMessage);
       }
     }
 
     return null;
+  }
+
+  private _getAnyDiscordMessageResponse(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
+    this._loggerService.debug({
+      context: this._className,
+      extendedContext: true,
+      message: this._loggerService.getSnowflakeContext(anyDiscordMessage.id, `message with valid mention`)
+    });
+
+    if (isDiscordMessage(anyDiscordMessage)) {
+      return this._getDiscordMessageResponse(anyDiscordMessage);
+    }
+
+    return null;
+  }
+
+  private _getDiscordMessageResponse(discordMessage: Readonly<DiscordMessage>): IDiscordMessageResponse | null {
+    if (this._discordMentionService.isForEveryone(discordMessage.mentions)) {
+      return this._getEveryoneMentionMessageResponse(discordMessage);
+    }
+
+    const sonia: Sonia | null = this._discordSoniaService.getSonia();
+
+    if (this._discordSoniaService.isValid(sonia)) {
+      if (this._discordMentionService.isUserMentioned(discordMessage.mentions, sonia)) {
+        return this._getSoniaMentionMessageResponse(discordMessage);
+      }
+    }
+
+    return null;
+  }
+
+  private _getEveryoneMentionMessageResponse(discordMessage: Readonly<DiscordMessage>): IDiscordMessageResponse {
+    this._loggerService.debug({
+      context: this._className,
+      extendedContext: true,
+      message: this._loggerService.getSnowflakeContext(discordMessage.id, `everyone mention`)
+    });
+
+    return {
+      response: `Il est midi tout le monde !`
+    };
+  }
+
+  private _getSoniaMentionMessageResponse(discordMessage: Readonly<DiscordMessage>): IDiscordMessageResponse | null {
+    this._loggerService.debug({
+      context: this._className,
+      extendedContext: true,
+      message: this._loggerService.getSnowflakeContext(discordMessage.id, `sonia was mentioned`)
+    });
+
+    if (this._discordMessageContentService.hasContent(discordMessage.content)) {
+      if (this._discordMessageCommandService.hasCommand(discordMessage.content)) {
+        return this._discordMessageCommandService.handleCommands(discordMessage);
+      }
+    }
+
+    return this._discordMessageAuthorService.reply(discordMessage);
   }
 }
