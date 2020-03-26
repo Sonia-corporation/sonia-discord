@@ -152,7 +152,7 @@ export class AppConfigService extends ConfigService<IAppConfig> {
     this._defineBuildDate();
   }
 
-  protected updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
+  public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
     if (!_.isNil(config)) {
       this.updateVersion(config.version);
       this.updateReleaseDate(config.releaseDate);
