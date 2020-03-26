@@ -3,6 +3,8 @@ import _ from 'lodash';
 import { AppConfigService } from '../../app/services/app-config-service';
 import { ChalkService } from '../../logger/services/chalk-service';
 import { LoggerService } from '../../logger/services/logger-service';
+import { getEnvironmentPort } from '../../node/functions/get-environment-port';
+import { isValidPort } from '../../node/functions/is-valid-port';
 
 export class ServerService {
   private static _instance: ServerService;
@@ -18,17 +20,26 @@ export class ServerService {
   private readonly _loggerService = LoggerService.getInstance();
   private readonly _chalkService = ChalkService.getInstance();
   private readonly _appConfigService = AppConfigService.getInstance();
-  private readonly _port = 3001;
   private readonly _app = express();
   private readonly _className = `ServerService`;
+  private _port = 3001;
 
   public constructor() {
     this._initializeApp();
   }
 
   private _initializeApp(): void {
+    this._setEnvironmentPort();
     this._createScoutMiddleware();
     this._listen();
+  }
+
+  private _setEnvironmentPort(): void {
+    const environmentPort: number | null = getEnvironmentPort();
+
+    if (isValidPort(environmentPort)) {
+      this._port = _.clone(environmentPort);
+    }
   }
 
   private _listen(): void {

@@ -1,6 +1,6 @@
 import { GuildChannel } from 'discord.js';
 import _ from 'lodash';
-import { wrapInQuotes } from '../../../../functions/wrap-in-quotes';
+import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
 import { ChalkService } from '../../../logger/services/chalk-service';
 import { LoggerService } from '../../../logger/services/logger-service';
 import { isDiscordGuildChannel } from '../../channels/functions/is-discord-guild-channel';

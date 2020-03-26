@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import moment from 'moment';
 import { ConfigService } from '../../../classes/config-service';
-import { isValidDate } from '../../../functions/is-valid-date';
-import { wrapInQuotes } from '../../../functions/wrap-in-quotes';
+import { isValidDate } from '../../../functions/checks/is-valid-date';
+import { wrapInQuotes } from '../../../functions/formatters/wrap-in-quotes';
 import { PartialNested } from '../../../types/partial-nested';
 import { isNodeProduction } from '../../node/functions/is-node-production';
 import { APP_CONFIG } from '../constants/app-config';
