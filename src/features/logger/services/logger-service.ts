@@ -26,10 +26,8 @@ export class LoggerService {
   public error(loggerLog: Readonly<ILoggerLog>): void {
     if (this._isErrorEnabled()) {
       this._log({
-        context: loggerLog.context,
-        extendedContext: loggerLog.extendedContext,
-        loggerLogType: LoggerLogTypeEnum.ERROR,
-        message: loggerLog.message
+        loggerLog,
+        loggerLogType: LoggerLogTypeEnum.ERROR
       });
     }
   }
@@ -37,10 +35,8 @@ export class LoggerService {
   public warning(loggerLog: Readonly<ILoggerLog>): void {
     if (this._isWarningEnabled()) {
       this._log({
-        context: loggerLog.context,
-        extendedContext: loggerLog.extendedContext,
-        loggerLogType: LoggerLogTypeEnum.WARNING,
-        message: loggerLog.message
+        loggerLog,
+        loggerLogType: LoggerLogTypeEnum.WARNING
       });
     }
   }
@@ -48,10 +44,8 @@ export class LoggerService {
   public success(loggerLog: Readonly<ILoggerLog>): void {
     if (this._isSuccessEnabled()) {
       this._log({
-        context: loggerLog.context,
-        extendedContext: loggerLog.extendedContext,
-        loggerLogType: LoggerLogTypeEnum.SUCCESS,
-        message: loggerLog.message
+        loggerLog,
+        loggerLogType: LoggerLogTypeEnum.SUCCESS
       });
     }
   }
@@ -59,10 +53,8 @@ export class LoggerService {
   public log(loggerLog: Readonly<ILoggerLog>): void {
     if (this._isLogEnabled()) {
       this._log({
-        context: loggerLog.context,
-        extendedContext: loggerLog.extendedContext,
-        loggerLogType: LoggerLogTypeEnum.LOG,
-        message: loggerLog.message
+        loggerLog,
+        loggerLogType: LoggerLogTypeEnum.LOG
       });
     }
   }
@@ -70,10 +62,8 @@ export class LoggerService {
   public debug(loggerLog: Readonly<ILoggerLog>): void {
     if (this._isDebugEnabled()) {
       this._log({
-        context: loggerLog.context,
-        extendedContext: loggerLog.extendedContext,
-        loggerLogType: LoggerLogTypeEnum.DEBUG,
-        message: loggerLog.message
+        loggerLog,
+        loggerLogType: LoggerLogTypeEnum.DEBUG
       });
     }
   }
@@ -116,10 +106,10 @@ export class LoggerService {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
       const logTypePrefix: string = this._getLogTypePrefix(loggerLogInternal.loggerLogType);
 
-      if (_.isString(loggerLogInternal.context) && !_.isEmpty(loggerLogInternal.context)) {
-        console.log(`${logTypePrefix}${this._context(loggerLogInternal.context, loggerLogInternal.extendedContext)}${loggerLogInternal.message}`);
+      if (_.isString(loggerLogInternal.loggerLog.context) && !_.isEmpty(loggerLogInternal.loggerLog.context)) {
+        console.log(`${logTypePrefix}${this._context(loggerLogInternal.loggerLog.context, loggerLogInternal.loggerLog.extendedContext)}${loggerLogInternal.loggerLog.message}`);
       } else {
-        console.log(`${logTypePrefix}${loggerLogInternal.message}`);
+        console.log(`${logTypePrefix}${loggerLogInternal.loggerLog.message}`);
       }
     }
   }
