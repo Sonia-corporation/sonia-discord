@@ -8,12 +8,19 @@ export abstract class ConfigService<C> {
   protected readonly abstract _className: string;
 
   protected constructor(config?: Readonly<PartialNested<C>>) {
-    this.init();
+    this.preUpdateConfig();
     this.updateConfig(config);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  protected init(): void {
+  /**
+   * @description
+   * This method should be used to perform actions before the update of the config
+   *
+   * This is quite handy when you want to set up a default configuration
+   * Just before the config override it
+   */
+  protected preUpdateConfig(): void {
+    // Avoid lint error :)
   }
 
   protected abstract updateConfig(config?: Readonly<PartialNested<C>>): void;

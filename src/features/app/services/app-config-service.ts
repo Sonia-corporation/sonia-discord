@@ -22,23 +22,8 @@ export class AppConfigService extends ConfigService<IAppConfig> {
 
   protected readonly _className = `AppConfigService`;
 
-  public constructor(config?: Readonly<PartialNested<IAppConfig>>) {
+  protected constructor(config?: Readonly<PartialNested<IAppConfig>>) {
     super(config);
-  }
-
-  public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
-    if (!_.isNil(config)) {
-      this.updateVersion(config.version);
-      this.updateReleaseDate(config.releaseDate);
-      this.updateInitializationDate(config.initializationDate);
-      this.updateTotalReleaseCount(config.totalReleaseCount);
-      this.updateReleaseNotes(config.releaseNotes);
-
-      this._loggerService.debug({
-        context: this._className,
-        message: this._chalkService.text(`configuration updated`)
-      });
-    }
   }
 
   public getVersion(): string {
@@ -162,9 +147,24 @@ export class AppConfigService extends ConfigService<IAppConfig> {
     }
   }
 
-  protected init(): void {
+  protected preUpdateConfig(): void {
     this._defineProductionState();
     this._defineBuildDate();
+  }
+
+  protected updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
+    if (!_.isNil(config)) {
+      this.updateVersion(config.version);
+      this.updateReleaseDate(config.releaseDate);
+      this.updateInitializationDate(config.initializationDate);
+      this.updateTotalReleaseCount(config.totalReleaseCount);
+      this.updateReleaseNotes(config.releaseNotes);
+
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
+      });
+    }
   }
 
   private _defineProductionState(): void {
