@@ -1,7 +1,7 @@
 import { MessageEmbedAuthor } from 'discord.js';
 import _ from 'lodash';
 import { ConfigService } from '../../../../classes/config-service';
-import { wrapInQuotes } from '../../../../functions/wrap-in-quotes';
+import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
 import { PartialNested } from '../../../../types/partial-nested';
 import { IDiscordConfig } from '../../interfaces/discord-config';
 import { IDiscordSoniaConfig } from '../../interfaces/discord-sonia-config';

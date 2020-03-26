@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 import _ from 'lodash';
 import { ENVIRONMENT } from '../../../environment/environment';
 import { IEnvironment } from '../../../environment/interfaces/environment';
-import { getBearer } from '../../../functions/get-bearer';
+import { getBearer } from '../../../functions/formatters/get-bearer';
 import { IPackage } from '../../../interfaces/package';
 import { AppConfigService } from '../../app/services/app-config-service';
 import { DiscordMessageConfigService } from '../../discord/messages/services/discord-message-config-service';

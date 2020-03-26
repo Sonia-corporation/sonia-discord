@@ -1,6 +1,6 @@
 import { MessageEmbedAuthor } from 'discord.js';
 import _ from 'lodash';
-import { getRandomValueFromEnum } from '../../../../functions/get-random-value-from-enum';
+import { getRandomValueFromEnum } from '../../../../functions/randoms/get-random-value-from-enum';
 import { DiscordClientService } from '../../services/discord-client-service';
 import { DiscordSoniaMentalStateEnum } from '../enums/discord-sonia-mental-state.enum';
 import { isDiscordClientUser } from '../functions/is-discord-client-user';
