@@ -1,13 +1,12 @@
 import _ from 'lodash';
+import { ConfigService } from '../../../../classes/config-service';
 import { wrapInQuotes } from '../../../../functions/wrap-in-quotes';
 import { PartialNested } from '../../../../types/partial-nested';
-import { ChalkService } from '../../../logger/services/chalk-service';
-import { LoggerService } from '../../../logger/services/logger-service';
 import { IDiscordConfig } from '../../interfaces/discord-config';
 import { IDiscordGuildConfig } from '../../interfaces/discord-guild-config';
 import { DISCORD_GUILD_CONFIG } from '../constants/discord-guild-config';
 
-export class DiscordGuildConfigService {
+export class DiscordGuildConfigService extends ConfigService<IDiscordConfig> {
   private static _instance: DiscordGuildConfigService;
 
   public static getInstance(config?: Readonly<PartialNested<IDiscordConfig>>): DiscordGuildConfigService {
@@ -18,23 +17,10 @@ export class DiscordGuildConfigService {
     return DiscordGuildConfigService._instance;
   }
 
-  private readonly _loggerService = LoggerService.getInstance();
-  private readonly _chalkService = ChalkService.getInstance();
-  private readonly _className = `DiscordGuildConfigService`;
+  protected readonly _className = `DiscordGuildConfigService`;
 
-  public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
-    this.updateConfig(config);
-  }
-
-  public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
-    if (!_.isNil(config)) {
-      this.updateGuild(config.guild);
-
-      this._loggerService.debug({
-        context: this._className,
-        message: this._chalkService.text(`configuration updated`)
-      });
-    }
+  protected constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
+    super(config);
   }
 
   public getGuild(): IDiscordGuildConfig {
@@ -73,6 +59,17 @@ export class DiscordGuildConfigService {
       this._loggerService.log({
         context: this._className,
         message: this._chalkService.text(`sonia permanent guild invite url updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_GUILD_CONFIG.soniaPermanentGuildInviteUrl))}`)
+      });
+    }
+  }
+
+  protected updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
+    if (!_.isNil(config)) {
+      this.updateGuild(config.guild);
+
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
       });
     }
   }

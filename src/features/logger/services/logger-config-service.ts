@@ -1,12 +1,11 @@
 import _ from 'lodash';
+import { ConfigService } from '../../../classes/config-service';
 import { wrapInQuotes } from '../../../functions/wrap-in-quotes';
 import { LOGGER_CONFIG } from '../constants/logger-config';
 import { LoggerConfigLevelEnum } from '../enums/logger-config-level.enum';
 import { ILoggerConfig } from '../interfaces/logger-config';
-import { ChalkService } from './chalk-service';
-import { LoggerService } from './logger-service';
 
-export class LoggerConfigService {
+export class LoggerConfigService extends ConfigService<ILoggerConfig> {
   private static _instance: LoggerConfigService;
 
   public static getInstance(config?: Readonly<Partial<ILoggerConfig>>): LoggerConfigService {
@@ -17,24 +16,10 @@ export class LoggerConfigService {
     return LoggerConfigService._instance;
   }
 
-  private readonly _chalkService = ChalkService.getInstance();
-  private readonly _loggerService = LoggerService.getInstance();
-  private readonly _className = `LoggerConfigService`;
+  protected readonly _className = `LoggerConfigService`;
 
-  public constructor(config?: Readonly<Partial<ILoggerConfig>>) {
-    this.updateConfig(config);
-  }
-
-  public updateConfig(config?: Readonly<Partial<ILoggerConfig>>): void {
-    if (!_.isNil(config) && _.isPlainObject(config)) {
-      this.updateEnabledState(config);
-      this.updateLevel(config);
-
-      this._loggerService.debug({
-        context: this._className,
-        message: this._chalkService.text(`configuration updated`)
-      });
-    }
+  protected constructor(config?: Readonly<Partial<ILoggerConfig>>) {
+    super(config);
   }
 
   public isEnabled(): boolean {
@@ -63,6 +48,18 @@ export class LoggerConfigService {
       this._loggerService.log({
         context: this._className,
         message: this._chalkService.text(`level updated to: ${this._chalkService.value(wrapInQuotes(LOGGER_CONFIG.level))}`)
+      });
+    }
+  }
+
+  protected updateConfig(config?: Readonly<Partial<ILoggerConfig>>): void {
+    if (!_.isNil(config) && _.isPlainObject(config)) {
+      this.updateEnabledState(config);
+      this.updateLevel(config);
+
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
       });
     }
   }

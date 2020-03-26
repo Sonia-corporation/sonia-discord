@@ -1,16 +1,15 @@
 import _ from 'lodash';
 import moment from 'moment';
+import { ConfigService } from '../../../classes/config-service';
 import { isValidDate } from '../../../functions/is-valid-date';
 import { wrapInQuotes } from '../../../functions/wrap-in-quotes';
 import { PartialNested } from '../../../types/partial-nested';
-import { ChalkService } from '../../logger/services/chalk-service';
-import { LoggerService } from '../../logger/services/logger-service';
 import { isNodeProduction } from '../../node/functions/is-node-production';
 import { APP_CONFIG } from '../constants/app-config';
 import { AppProductionStateEnum } from '../enums/app-production-state.enum';
 import { IAppConfig } from '../interfaces/app-config';
 
-export class AppConfigService {
+export class AppConfigService extends ConfigService<IAppConfig> {
   private static _instance: AppConfigService;
 
   public static getInstance(config?: Readonly<PartialNested<IAppConfig>>): AppConfigService {
@@ -21,29 +20,10 @@ export class AppConfigService {
     return AppConfigService._instance;
   }
 
-  private readonly _loggerService = LoggerService.getInstance();
-  private readonly _chalkService = ChalkService.getInstance();
-  private readonly _className = `AppConfigService`;
+  protected readonly _className = `AppConfigService`;
 
-  public constructor(config?: Readonly<PartialNested<IAppConfig>>) {
-    this._defineProductionState();
-    this._defineBuildDate();
-    this.updateConfig(config);
-  }
-
-  public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
-    if (!_.isNil(config)) {
-      this.updateVersion(config.version);
-      this.updateReleaseDate(config.releaseDate);
-      this.updateInitializationDate(config.initializationDate);
-      this.updateTotalReleaseCount(config.totalReleaseCount);
-      this.updateReleaseNotes(config.releaseNotes);
-
-      this._loggerService.debug({
-        context: this._className,
-        message: this._chalkService.text(`configuration updated`)
-      });
-    }
+  protected constructor(config?: Readonly<PartialNested<IAppConfig>>) {
+    super(config);
   }
 
   public getVersion(): string {
@@ -163,6 +143,26 @@ export class AppConfigService {
       this._loggerService.log({
         context: this._className,
         message: this._chalkService.text(`app release notes updated`)
+      });
+    }
+  }
+
+  protected preUpdateConfig(): void {
+    this._defineProductionState();
+    this._defineBuildDate();
+  }
+
+  protected updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
+    if (!_.isNil(config)) {
+      this.updateVersion(config.version);
+      this.updateReleaseDate(config.releaseDate);
+      this.updateInitializationDate(config.initializationDate);
+      this.updateTotalReleaseCount(config.totalReleaseCount);
+      this.updateReleaseNotes(config.releaseNotes);
+
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
       });
     }
   }
