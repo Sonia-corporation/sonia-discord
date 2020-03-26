@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { wrapInQuotes } from '../../../functions/wrap-in-quotes';
 import { TimeService } from '../../time/services/time-service';
 import { LOGGER_CONFIG } from '../constants/logger-config';
-import { LoggerConfigLevelEnum } from '../enums/logger-config-level.enum';
+import { LoggerConfigLevelValueEnum } from '../enums/logger-config-level-value.enum';
 import { LoggerLogTypeEnum } from '../enums/logger-log-type.enum';
 import { ILoggerLog } from '../interfaces/logger-log';
 import { ILoggerLogInternal } from '../interfaces/logger-log-internal';
@@ -24,56 +24,46 @@ export class LoggerService {
   private readonly _logPrefix = `● `;
 
   public error(loggerLog: Readonly<ILoggerLog>): void {
-    if (LOGGER_CONFIG.level === LoggerConfigLevelEnum.DEBUG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.LOG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.SUCCESS || LOGGER_CONFIG.level === LoggerConfigLevelEnum.WARNING || LOGGER_CONFIG.level === LoggerConfigLevelEnum.ERROR) {
+    if (this._isErrorEnabled()) {
       this._log({
-        context: loggerLog.context,
-        extendedContext: loggerLog.extendedContext,
-        loggerLogType: LoggerLogTypeEnum.ERROR,
-        message: loggerLog.message
+        ...loggerLog,
+        loggerLogType: LoggerLogTypeEnum.ERROR
       });
     }
   }
 
   public warning(loggerLog: Readonly<ILoggerLog>): void {
-    if (LOGGER_CONFIG.level === LoggerConfigLevelEnum.DEBUG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.LOG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.SUCCESS || LOGGER_CONFIG.level === LoggerConfigLevelEnum.WARNING) {
+    if (this._isWarningEnabled()) {
       this._log({
-        context: loggerLog.context,
-        extendedContext: loggerLog.extendedContext,
-        loggerLogType: LoggerLogTypeEnum.WARNING,
-        message: loggerLog.message
+        ...loggerLog,
+        loggerLogType: LoggerLogTypeEnum.WARNING
       });
     }
   }
 
   public success(loggerLog: Readonly<ILoggerLog>): void {
-    if (LOGGER_CONFIG.level === LoggerConfigLevelEnum.DEBUG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.LOG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.SUCCESS) {
+    if (this._isSuccessEnabled()) {
       this._log({
-        context: loggerLog.context,
-        extendedContext: loggerLog.extendedContext,
-        loggerLogType: LoggerLogTypeEnum.SUCCESS,
-        message: loggerLog.message
+        ...loggerLog,
+        loggerLogType: LoggerLogTypeEnum.SUCCESS
       });
     }
   }
 
   public log(loggerLog: Readonly<ILoggerLog>): void {
-    if (LOGGER_CONFIG.level === LoggerConfigLevelEnum.DEBUG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.LOG) {
+    if (this._isLogEnabled()) {
       this._log({
-        context: loggerLog.context,
-        extendedContext: loggerLog.extendedContext,
-        loggerLogType: LoggerLogTypeEnum.LOG,
-        message: loggerLog.message
+        ...loggerLog,
+        loggerLogType: LoggerLogTypeEnum.LOG
       });
     }
   }
 
   public debug(loggerLog: Readonly<ILoggerLog>): void {
-    if (LOGGER_CONFIG.level === LoggerConfigLevelEnum.DEBUG) {
+    if (this._isDebugEnabled()) {
       this._log({
-        context: loggerLog.context,
-        extendedContext: loggerLog.extendedContext,
-        loggerLogType: LoggerLogTypeEnum.DEBUG,
-        message: loggerLog.message
+        ...loggerLog,
+        loggerLogType: LoggerLogTypeEnum.DEBUG
       });
     }
   }
@@ -138,18 +128,26 @@ export class LoggerService {
   }
 
   private _getLogTypePrefix(logType: Readonly<LoggerLogTypeEnum>): string {
-    if (logType === LoggerLogTypeEnum.ERROR) {
-      return this._chalkService.error(this._logPrefix);
-    } else if (logType === LoggerLogTypeEnum.WARNING) {
-      return this._chalkService.warning(this._logPrefix);
-    } else if (logType === LoggerLogTypeEnum.SUCCESS) {
-      return this._chalkService.success(this._logPrefix);
-    } else if (logType === LoggerLogTypeEnum.LOG) {
-      return this._chalkService.log(this._logPrefix);
-    } else if (logType === LoggerLogTypeEnum.DEBUG) {
-      return this._chalkService.debug(this._logPrefix);
-    }
+    return this._chalkService[ logType ](this._logPrefix);
+  }
 
-    return this._chalkService.debug(this._logPrefix);
+  private _isErrorEnabled(): boolean {
+    return _.gte(LoggerConfigLevelValueEnum[ LOGGER_CONFIG.level ], 0);
+  }
+
+  private _isWarningEnabled(): boolean {
+    return _.gte(LoggerConfigLevelValueEnum[ LOGGER_CONFIG.level ], 1);
+  }
+
+  private _isSuccessEnabled(): boolean {
+    return _.gte(LoggerConfigLevelValueEnum[ LOGGER_CONFIG.level ], 2);
+  }
+
+  private _isLogEnabled(): boolean {
+    return _.gte(LoggerConfigLevelValueEnum[ LOGGER_CONFIG.level ], 3);
+  }
+
+  private _isDebugEnabled(): boolean {
+    return _.gte(LoggerConfigLevelValueEnum[ LOGGER_CONFIG.level ], 4);
   }
 }

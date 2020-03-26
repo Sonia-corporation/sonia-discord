@@ -25,21 +25,21 @@ export class DiscordMessageDmService {
   private readonly _loggerService = LoggerService.getInstance();
   private readonly _className = `DiscordMessageDmService`;
 
-  public getMessage(message: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
-    if (this._discordAuthorService.isValid(message.author)) {
-      if (this._discordMessageContentService.hasContent(message.content)) {
-        if (this._discordMessageCommandService.hasCommand(message.content)) {
+  public getMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
+    if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
+      if (this._discordMessageContentService.hasContent(anyDiscordMessage.content)) {
+        if (this._discordMessageCommandService.hasCommand(anyDiscordMessage.content)) {
           this._loggerService.debug({
             context: this._className,
             extendedContext: true,
-            message: this._loggerService.getSnowflakeContext(message.id, `message with command`)
+            message: this._loggerService.getSnowflakeContext(anyDiscordMessage.id, `message with command`)
           });
 
-          return this._discordMessageCommandService.handleCommands(message);
+          return this._discordMessageCommandService.handleCommands(anyDiscordMessage);
         }
       }
 
-      return this._discordMessageAuthorService.reply(message);
+      return this._discordMessageAuthorService.reply(anyDiscordMessage);
     }
 
     return null;
