@@ -27,21 +27,29 @@ export class DiscordMessageDmService {
 
   public getMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
     if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
-      if (this._discordMessageContentService.hasContent(anyDiscordMessage.content)) {
-        if (this._discordMessageCommandService.hasCommand(anyDiscordMessage.content)) {
-          this._loggerService.debug({
-            context: this._className,
-            extendedContext: true,
-            message: this._loggerService.getSnowflakeContext(anyDiscordMessage.id, `message with command`)
-          });
-
-          return this._discordMessageCommandService.handleCommands(anyDiscordMessage);
-        }
-      }
-
-      return this._discordMessageAuthorService.reply(anyDiscordMessage);
+      return this._getMessageResponse(anyDiscordMessage);
     }
 
     return null;
+  }
+
+  private _getMessageResponse(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
+    if (this._discordMessageContentService.hasContent(anyDiscordMessage.content)) {
+      if (this._discordMessageCommandService.hasCommand(anyDiscordMessage.content)) {
+        return this._getCommandMessageResponse(anyDiscordMessage);
+      }
+    }
+
+    return this._discordMessageAuthorService.reply(anyDiscordMessage);
+  }
+
+  private _getCommandMessageResponse(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
+    this._loggerService.debug({
+      context: this._className,
+      extendedContext: true,
+      message: this._loggerService.getSnowflakeContext(anyDiscordMessage.id, `message with command`)
+    });
+
+    return this._discordMessageCommandService.handleCommands(anyDiscordMessage);
   }
 }
