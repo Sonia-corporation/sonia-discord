@@ -10,50 +10,50 @@ const COLOR_SOFT_BLUE = `#778BEB`;
 const COLOR_PURPLE_MOUNTAIN_MAJESTY = `#786FA6`;
 const COLOR_SAWTOOTH_AAK = `#F19066`;
 
-function chalkSuccess(message) {
+function success(message) {
   return CHALK.hex(COLOR_AURORA_GREEN)(message);
 }
 
-module.exports.chalkSuccess = chalkSuccess;
+module.exports.success = success;
 
-function chalkContext(message) {
+function context(message) {
   return CHALK.hex(COLOR_ROSY_HIGHLIGHT)(message);
 }
 
-module.exports.chalkContext = chalkContext;
+module.exports.context = context;
 
-function chalkValue(message) {
+function value(message) {
   return CHALK.hex(COLOR_BLUE_CARACAO)(message);
 }
 
-module.exports.chalkValue = chalkValue;
+module.exports.value = value;
 
-function chalkError(message) {
+function error(message) {
   return CHALK.hex(COLOR_DEEP_ROSE)(message);
 }
 
-module.exports.chalkError = chalkError;
+module.exports.error = error;
 
-function chalkWarning(message) {
+function warning(message) {
   return CHALK.hex(COLOR_SAWTOOTH_AAK)(message);
 }
 
-module.exports.chalkWarning = chalkWarning;
+module.exports.warning = warning;
 
-function chalkText(message) {
+function text(message) {
   return CHALK.hex(COLOR_WHITE)(message);
 }
 
-module.exports.chalkText = chalkText;
+module.exports.text = text;
 
-function chalkLog(message) {
+function log(message) {
   return CHALK.hex(COLOR_SOFT_BLUE)(message);
 }
 
-module.exports.chalkLog = chalkLog;
+module.exports.log = log;
 
-function chalkDebug(message) {
+function debug(message) {
   return CHALK.hex(COLOR_PURPLE_MOUNTAIN_MAJESTY)(message);
 }
 
-module.exports.chalkDebug = chalkDebug;
+module.exports.debug = debug;
