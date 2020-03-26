@@ -77,7 +77,7 @@ export class DiscordMessageConfigService extends ConfigService<IDiscordConfig> {
     return DISCORD_MESSAGE_CONFIG.error;
   }
 
-  protected updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
+  public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
     if (!_.isNil(config)) {
       this.updateMessage(config.message);
 

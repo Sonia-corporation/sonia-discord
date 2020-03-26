@@ -63,7 +63,7 @@ export class DiscordGuildConfigService extends ConfigService<IDiscordConfig> {
     }
   }
 
-  protected updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
+  public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
     if (!_.isNil(config)) {
       this.updateGuild(config.guild);
 

@@ -52,7 +52,7 @@ export class GithubConfigService extends ConfigService<IGithubConfig> {
     }
   }
 
-  protected updateConfig(config?: Readonly<PartialNested<IGithubConfig>>): void {
+  public updateConfig(config?: Readonly<PartialNested<IGithubConfig>>): void {
     if (!_.isNil(config)) {
       this.updatePersonalAccessToken(config.personalAccessToken);
 
