@@ -7,7 +7,7 @@ const APP_ROOT_PATH = require(`app-root-path`);
 
 const CONTEXT = `build-update-app-initialization-date`;
 
-function updateEnvironmentAppInitializationDate(environment) {
+function _updateEnvironmentAppInitializationDate(environment) {
   if (!_.has(environment, `app`)) {
     environment.app = {};
   }
@@ -18,21 +18,21 @@ function updateEnvironmentAppInitializationDate(environment) {
   return environment;
 }
 
-LOGGER.debug(CONTEXT, CHALK.chalkText(`Read environment file from dist folder...`));
+LOGGER.debug(CONTEXT, CHALK.text(`Read environment file from dist folder...`));
 
 FS.readJson(`${APP_ROOT_PATH.path}/dist/environment.json`).then((environment) => {
-  const updatedEnvironment = updateEnvironmentAppInitializationDate(environment);
+  const updatedEnvironment = _updateEnvironmentAppInitializationDate(environment);
 
-  LOGGER.debug(CONTEXT, CHALK.chalkText(`Update environment app initialization date inside dist folder...`));
+  LOGGER.debug(CONTEXT, CHALK.text(`Update environment app initialization date inside dist folder...`));
 
   FS.writeJson(`${APP_ROOT_PATH.path}/dist/environment.json`, updatedEnvironment).then(() => {
-    LOGGER.success(CONTEXT, CHALK.chalkText(`Environment app initialization date successfully updated inside dist folder`));
+    LOGGER.success(CONTEXT, CHALK.text(`Environment app initialization date successfully updated inside dist folder`));
   }).catch((error) => {
-    LOGGER.error(CONTEXT, CHALK.chalkText(`Failed to update environment app initialization date inside dist folder`));
-    LOGGER.error(CONTEXT, CHALK.chalkText(error));
+    LOGGER.error(CONTEXT, CHALK.text(`Failed to update environment app initialization date inside dist folder`));
+    LOGGER.error(CONTEXT, CHALK.text(error));
   });
 }).catch((error) => {
-  LOGGER.error(CONTEXT, CHALK.chalkText(`Failed to read environment file from dist folder`));
-  LOGGER.error(CONTEXT, CHALK.chalkText(error));
+  LOGGER.error(CONTEXT, CHALK.text(`Failed to read environment file from dist folder`));
+  LOGGER.error(CONTEXT, CHALK.text(error));
   throw new Error(`The update of the environment file from dist folder failed`);
 });

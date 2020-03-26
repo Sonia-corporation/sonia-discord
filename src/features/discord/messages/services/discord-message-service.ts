@@ -65,11 +65,15 @@ export class DiscordMessageService {
     }
 
     if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
-      if (this._discordChannelService.isDm(anyDiscordMessage.channel)) {
-        this._dmMessage(anyDiscordMessage);
-      } else if (this._discordChannelService.isText(anyDiscordMessage.channel)) {
-        this._textMessage(anyDiscordMessage);
-      }
+      this._handleChannelMessage(anyDiscordMessage);
+    }
+  }
+
+  private _handleChannelMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): void {
+    if (this._discordChannelService.isDm(anyDiscordMessage.channel)) {
+      this._dmMessage(anyDiscordMessage);
+    } else if (this._discordChannelService.isText(anyDiscordMessage.channel)) {
+      this._textMessage(anyDiscordMessage);
     }
   }
 

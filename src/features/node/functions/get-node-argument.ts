@@ -1,15 +1,17 @@
 import _ from 'lodash';
+import { getArgumentIndex } from './get-argument-index';
+import { hasCommandLineArguments } from './has-command-line-arguments';
+import { isExistingArgument } from './is-existing-argument';
+import { isValidArgumentIndex } from './is-valid-argument-index';
 
 export function getNodeArgument(name: Readonly<string>): unknown | null {
-  if (!_.isNil(process) && !_.isNil(process.argv)) {
-    const argumentIndex: number = _.findIndex(process.argv, (argument: Readonly<string>): boolean => {
-      return _.isEqual(_.toLower(argument), _.toLower(`--${name}`));
-    });
+  if (hasCommandLineArguments()) {
+    const argumentIndex: number = getArgumentIndex(name);
 
-    if (_.isFinite(argumentIndex) && _.gte(argumentIndex, 0)) {
+    if (isValidArgumentIndex(argumentIndex)) {
       const originArgumentValueIndex: number = _.add(argumentIndex, 1);
 
-      if (_.lte(originArgumentValueIndex, _.subtract(_.size(process.argv), 1))) {
+      if (isExistingArgument(originArgumentValueIndex)) {
         return process.argv[ originArgumentValueIndex ];
       }
     }
