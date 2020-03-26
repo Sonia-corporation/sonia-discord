@@ -1,4 +1,4 @@
-export enum LoggerConfigLevelAEnum {
+export enum LoggerConfigLevelValueEnum {
   error,
   warning,
   success,
