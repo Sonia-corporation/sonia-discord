@@ -28,7 +28,10 @@
     "bot",
     "discord-bot",
     "sonia",
-    "il-est-midi"
+    "il-est-midi",
+    "node",
+    "express",
+    "heroku"
   ],
   "repository": {
     "type": "git",
@@ -46,6 +49,9 @@
     "env": {
       "CI": "true"
     }
+  },
+  "engines": {
+    "node": "12.x"
   },
   "private": false,
   "main": "./src/index.ts",
@@ -115,6 +121,7 @@
     "lint-staged": "10.0.9",
     "majestic": "1.6.2",
     "parcel-bundler": "1.12.4",
+    "pug": "2.0.4",
     "rimraf": "3.0.2",
     "semantic-release": "17.0.4",
     "ts-jest": "25.2.1",
