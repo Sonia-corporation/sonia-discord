@@ -1,3 +1,4 @@
+import { path } from 'app-root-path';
 import express from 'express';
 import _ from 'lodash';
 import { AppConfigService } from '../../app/services/app-config-service';
@@ -30,7 +31,10 @@ export class ServerService {
 
   private _initializeApp(): void {
     this._setEnvironmentPort();
-    this._createScoutMiddleware();
+    this._setScoutMiddleware();
+    this._setViews();
+    this._setViewEngine();
+    this._serveHomePage();
     this._listen();
   }
 
@@ -51,7 +55,7 @@ export class ServerService {
     });
   }
 
-  private _createScoutMiddleware(): void {
+  private _setScoutMiddleware(): void {
     if (this._appConfigService.isProduction()) {
       /**
        * @description
@@ -62,5 +66,20 @@ export class ServerService {
        * this._app.use(scout.expressMiddleware());
        */
     }
+  }
+
+  private _setViews(): void {
+    this._app.set(`views`, `${path}/src/views`);
+  }
+
+  private _setViewEngine(): void {
+    this._app.set(`view engine`, `pug`);
+  }
+
+  private _serveHomePage(): void {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    this._app.get(`/`, (_req: any, res: any): any => {
+      return res.render(`home/home`);
+    });
   }
 }
