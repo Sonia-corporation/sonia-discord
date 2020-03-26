@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { wrapInQuotes } from '../../../../functions/wrap-in-quotes';
+import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
 import { ChalkService } from '../../../logger/services/chalk-service';
 import { LoggerService } from '../../../logger/services/logger-service';
 import { DiscordClientService } from '../../services/discord-client-service';

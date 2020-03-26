@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { wrapInQuotes } from '../../../functions/wrap-in-quotes';
+import { wrapInQuotes } from '../../../functions/formatters/wrap-in-quotes';
 import { TimeService } from '../../time/services/time-service';
 import { LOGGER_CONFIG } from '../constants/logger-config';
 import { LoggerConfigLevelValueEnum } from '../enums/logger-config-level-value.enum';

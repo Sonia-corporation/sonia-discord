@@ -39,6 +39,7 @@
     "esModuleInterop": true
   },
   "include": [
+    "./src/types.d.ts",
     "./src/index.ts"
   ]
 }

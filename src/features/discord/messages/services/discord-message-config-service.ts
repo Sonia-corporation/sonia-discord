@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { ConfigService } from '../../../../classes/config-service';
-import { removeUndefined } from '../../../../functions/remove-undefined';
-import { wrapInQuotes } from '../../../../functions/wrap-in-quotes';
+import { removeUndefined } from '../../../../functions/formatters/remove-undefined';
+import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
 import { PartialNested } from '../../../../types/partial-nested';
 import { IDiscordConfig } from '../../interfaces/discord-config';
 import { IDiscordMessageCommandConfig } from '../../interfaces/discord-message-command-config';
