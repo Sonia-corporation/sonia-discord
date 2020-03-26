@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { wrapInQuotes } from '../../../functions/wrap-in-quotes';
 import { TimeService } from '../../time/services/time-service';
 import { LOGGER_CONFIG } from '../constants/logger-config';
+import { LoggerConfigLevelAEnum } from '../enums/logger-config-level-a.enum';
 import { LoggerConfigLevelEnum } from '../enums/logger-config-level.enum';
 import { LoggerLogTypeEnum } from '../enums/logger-log-type.enum';
 import { ILoggerLog } from '../interfaces/logger-log';
@@ -24,7 +25,7 @@ export class LoggerService {
   private readonly _logPrefix = `● `;
 
   public error(loggerLog: Readonly<ILoggerLog>): void {
-    if (LOGGER_CONFIG.level === LoggerConfigLevelEnum.DEBUG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.LOG || LOGGER_CONFIG.level === LoggerConfigLevelEnum.SUCCESS || LOGGER_CONFIG.level === LoggerConfigLevelEnum.WARNING || LOGGER_CONFIG.level === LoggerConfigLevelEnum.ERROR) {
+    if (this._isErrorEnabled()) {
       this._log({
         context: loggerLog.context,
         extendedContext: loggerLog.extendedContext,
@@ -151,5 +152,9 @@ export class LoggerService {
     }
 
     return this._chalkService.debug(this._logPrefix);
+  }
+
+  private _isErrorEnabled(): boolean {
+    return _.gte(LoggerConfigLevelAEnum[ LOGGER_CONFIG.level ], 0);
   }
 }
