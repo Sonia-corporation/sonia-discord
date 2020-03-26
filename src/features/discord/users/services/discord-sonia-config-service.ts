@@ -1,14 +1,13 @@
 import { MessageEmbedAuthor } from 'discord.js';
 import _ from 'lodash';
+import { ConfigService } from '../../../../classes/config-service';
 import { wrapInQuotes } from '../../../../functions/wrap-in-quotes';
 import { PartialNested } from '../../../../types/partial-nested';
-import { ChalkService } from '../../../logger/services/chalk-service';
-import { LoggerService } from '../../../logger/services/logger-service';
 import { IDiscordConfig } from '../../interfaces/discord-config';
 import { IDiscordSoniaConfig } from '../../interfaces/discord-sonia-config';
 import { DISCORD_SONIA_CONFIG } from '../constants/discord-sonia-config';
 
-export class DiscordSoniaConfigService {
+export class DiscordSoniaConfigService extends ConfigService<IDiscordConfig> {
   private static _instance: DiscordSoniaConfigService;
 
   public static getInstance(config?: Readonly<PartialNested<IDiscordConfig>>): DiscordSoniaConfigService {
@@ -19,23 +18,10 @@ export class DiscordSoniaConfigService {
     return DiscordSoniaConfigService._instance;
   }
 
-  private readonly _loggerService = LoggerService.getInstance();
-  private readonly _chalkService = ChalkService.getInstance();
-  private readonly _className = `DiscordSoniaConfigService`;
+  protected readonly _className = `DiscordSoniaConfigService`;
 
-  public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
-    this.updateConfig(config);
-  }
-
-  public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
-    if (!_.isNil(config)) {
-      this.updateSonia(config.sonia);
-
-      this._loggerService.debug({
-        context: this._className,
-        message: this._chalkService.text(`configuration updated`)
-      });
-    }
+  protected constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
+    super(config);
   }
 
   public getSonia(): IDiscordSoniaConfig {
@@ -85,5 +71,16 @@ export class DiscordSoniaConfigService {
 
   public getCorporationImageUrl(): string {
     return DISCORD_SONIA_CONFIG.corporationImageUrl;
+  }
+
+  protected updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
+    if (!_.isNil(config)) {
+      this.updateSonia(config.sonia);
+
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
+      });
+    }
   }
 }

@@ -1,9 +1,8 @@
 import _ from 'lodash';
+import { ConfigService } from '../../../../classes/config-service';
 import { removeUndefined } from '../../../../functions/remove-undefined';
 import { wrapInQuotes } from '../../../../functions/wrap-in-quotes';
 import { PartialNested } from '../../../../types/partial-nested';
-import { ChalkService } from '../../../logger/services/chalk-service';
-import { LoggerService } from '../../../logger/services/logger-service';
 import { IDiscordConfig } from '../../interfaces/discord-config';
 import { IDiscordMessageCommandConfig } from '../../interfaces/discord-message-command-config';
 import { IDiscordMessageCommandVersionConfig } from '../../interfaces/discord-message-command-version-config';
@@ -11,7 +10,7 @@ import { IDiscordMessageConfig } from '../../interfaces/discord-message-config';
 import { IDiscordMessageErrorConfig } from '../../interfaces/discord-message-error-config';
 import { DISCORD_MESSAGE_CONFIG } from '../constants/discord-message-config';
 
-export class DiscordMessageConfigService {
+export class DiscordMessageConfigService extends ConfigService<IDiscordConfig> {
   private static _instance: DiscordMessageConfigService;
 
   public static getInstance(config?: Readonly<PartialNested<IDiscordConfig>>): DiscordMessageConfigService {
@@ -22,23 +21,10 @@ export class DiscordMessageConfigService {
     return DiscordMessageConfigService._instance;
   }
 
-  private readonly _loggerService = LoggerService.getInstance();
-  private readonly _chalkService = ChalkService.getInstance();
-  private readonly _className = `DiscordMessageConfigService`;
+  protected readonly _className = `DiscordMessageConfigService`;
 
-  public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
-    this.updateConfig(config);
-  }
-
-  public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
-    if (!_.isNil(config)) {
-      this.updateMessage(config.message);
-
-      this._loggerService.debug({
-        context: this._className,
-        message: this._chalkService.text(`configuration updated`)
-      });
-    }
+  protected constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
+    super(config);
   }
 
   public getMessage(): IDiscordMessageConfig {
@@ -89,5 +75,16 @@ export class DiscordMessageConfigService {
 
   public getMessageError(): IDiscordMessageErrorConfig {
     return DISCORD_MESSAGE_CONFIG.error;
+  }
+
+  protected updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
+    if (!_.isNil(config)) {
+      this.updateMessage(config.message);
+
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
+      });
+    }
   }
 }
