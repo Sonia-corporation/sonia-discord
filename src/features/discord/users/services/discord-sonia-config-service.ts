@@ -1,6 +1,6 @@
 import { MessageEmbedAuthor } from 'discord.js';
 import _ from 'lodash';
-import { ConfigService } from '../../../../classes/config-service';
+import { AbstractConfigService } from '../../../../classes/abstract-config-service';
 import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
 import { PartialNested } from '../../../../types/partial-nested';
 import { IDiscordConfig } from '../../interfaces/discord-config';
@@ -8,7 +8,7 @@ import { IDiscordSoniaConfig } from '../../interfaces/discord-sonia-config';
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from '../../interfaces/discord-sonia-corporation-message-embed-author-config';
 import { DISCORD_SONIA_CONFIG } from '../constants/discord-sonia-config';
 
-export class DiscordSoniaConfigService extends ConfigService<IDiscordConfig> {
+export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordConfig> {
   private static _instance: DiscordSoniaConfigService;
 
   public static getInstance(config?: Readonly<PartialNested<IDiscordConfig>>): DiscordSoniaConfigService {

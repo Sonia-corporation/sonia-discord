@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import moment from 'moment';
-import { ConfigService } from '../../../classes/config-service';
+import { AbstractConfigService } from '../../../classes/abstract-config-service';
 import { isValidDate } from '../../../functions/checks/is-valid-date';
 import { wrapInQuotes } from '../../../functions/formatters/wrap-in-quotes';
 import { PartialNested } from '../../../types/partial-nested';
@@ -9,7 +9,7 @@ import { APP_CONFIG } from '../constants/app-config';
 import { AppProductionStateEnum } from '../enums/app-production-state.enum';
 import { IAppConfig } from '../interfaces/app-config';
 
-export class AppConfigService extends ConfigService<IAppConfig> {
+export class AppConfigService extends AbstractConfigService<IAppConfig> {
   private static _instance: AppConfigService;
 
   public static getInstance(config?: Readonly<PartialNested<IAppConfig>>): AppConfigService {

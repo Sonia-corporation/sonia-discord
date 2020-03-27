@@ -1,12 +1,12 @@
 import _ from 'lodash';
-import { ConfigService } from '../../../../classes/config-service';
+import { AbstractConfigService } from '../../../../classes/abstract-config-service';
 import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
 import { PartialNested } from '../../../../types/partial-nested';
 import { IDiscordConfig } from '../../interfaces/discord-config';
 import { IDiscordGuildConfig } from '../../interfaces/discord-guild-config';
 import { DISCORD_GUILD_CONFIG } from '../constants/discord-guild-config';
 
-export class DiscordGuildConfigService extends ConfigService<IDiscordConfig> {
+export class DiscordGuildConfigService extends AbstractConfigService<IDiscordConfig> {
   private static _instance: DiscordGuildConfigService;
 
   public static getInstance(config?: Readonly<PartialNested<IDiscordConfig>>): DiscordGuildConfigService {

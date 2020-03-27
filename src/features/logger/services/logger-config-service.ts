@@ -1,11 +1,11 @@
 import _ from 'lodash';
-import { ConfigService } from '../../../classes/config-service';
+import { AbstractConfigService } from '../../../classes/abstract-config-service';
 import { wrapInQuotes } from '../../../functions/formatters/wrap-in-quotes';
 import { LOGGER_CONFIG } from '../constants/logger-config';
 import { LoggerConfigLevelEnum } from '../enums/logger-config-level.enum';
 import { ILoggerConfig } from '../interfaces/logger-config';
 
-export class LoggerConfigService extends ConfigService<ILoggerConfig> {
+export class LoggerConfigService extends AbstractConfigService<ILoggerConfig> {
   private static _instance: LoggerConfigService;
 
   public static getInstance(config?: Readonly<Partial<ILoggerConfig>>): LoggerConfigService {

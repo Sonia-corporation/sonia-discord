@@ -11,9 +11,34 @@ This file should contains at least:
 - A discord Sonia secret token required by Discord API
 - A GitHub personal access token required by GitHub API
 
-__Note:__
+__Example:__
 
-The GitHub personal access token should contains the following scopes:
+```json
+{
+  "discord": {
+    "sonia": {
+      "secretToken": "TO_DEFINE_BY_ASKING_IT"
+    } 
+  },
+  "github": {
+    "personalAccessToken": "TO_DEFINE_BY_YOU"
+  }
+}
+```
+
+__Note for the Discord Sonia secret token:__
+
+The Discord Sonia secret token is private and there two ways to have access to it:
+- Asks an admin (like [C0ZEN](https://github.com/C0ZEN))
+- Access to the [Discord bot page](https://discordapp.com/developers/applications/689829775317139460/bot) to reveal the token
+
+If somehow this token is made public, Discord will revoke it.
+
+__Note for the GitHub personal access token:__
+
+The GitHub personal access token is strictly personal to each developer.  
+You have to create your own on your GitHub account.  
+It should contains the following scopes:
 - user
 - public_repo
 - repo
@@ -23,25 +48,6 @@ The GitHub personal access token should contains the following scopes:
 - read:org
 - read:public_key
 - read:gpg_key
-
-__Example:__
-
-```json
-{
-  "discord": {
-    "sonia": {
-      "secretToken": "TO_DEFINE"
-    } 
-  },
-  "github": {
-    "personalAccessToken": "TO_DEFINE"
-  }
-}
-```
-
-This token is private and there two ways to have access to it:
-- Asks an admin (like [C0ZEN](https://github.com/C0ZEN))
-- Access to the [Discord bot page](https://discordapp.com/developers/applications/689829775317139460/bot) to reveal the token
 
 ### Install the dependencies
 

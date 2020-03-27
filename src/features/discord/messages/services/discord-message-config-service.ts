@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { ConfigService } from '../../../../classes/config-service';
+import { AbstractConfigService } from '../../../../classes/abstract-config-service';
 import { removeUndefined } from '../../../../functions/formatters/remove-undefined';
 import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
 import { PartialNested } from '../../../../types/partial-nested';
@@ -10,7 +10,7 @@ import { IDiscordMessageConfig } from '../../interfaces/discord-message-config';
 import { IDiscordMessageErrorConfig } from '../../interfaces/discord-message-error-config';
 import { DISCORD_MESSAGE_CONFIG } from '../constants/discord-message-config';
 
-export class DiscordMessageConfigService extends ConfigService<IDiscordConfig> {
+export class DiscordMessageConfigService extends AbstractConfigService<IDiscordConfig> {
   private static _instance: DiscordMessageConfigService;
 
   public static getInstance(config?: Readonly<PartialNested<IDiscordConfig>>): DiscordMessageConfigService {
@@ -98,14 +98,12 @@ export class DiscordMessageConfigService extends ConfigService<IDiscordConfig> {
   }
 
   public updateMessageCommandVersionImageColor(imageColor?: Readonly<number>): void {
-    if (_.isNumber(imageColor)) {
-      DISCORD_MESSAGE_CONFIG.command.version.imageColor = imageColor;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`message command version image color updated to: ${this._chalkService.value(DISCORD_MESSAGE_CONFIG.command.version.imageColor)}`)
-      });
-    }
+    DISCORD_MESSAGE_CONFIG.command.version.imageColor = this._configService.getUpdatedNumber({
+      context: this._className,
+      newValue: imageColor,
+      oldValue: DISCORD_MESSAGE_CONFIG.command.version.imageColor,
+      valueName: `message command version image color`
+    });
   }
 
   public getMessageCommandVersionImageUrl(): string {

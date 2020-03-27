@@ -16,7 +16,11 @@ describe(`LoggerService`, (): void => {
   describe(`error()`, (): void => {
     let loggerLog: ILoggerLog;
 
-    const consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    let consoleLogSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    });
 
     describe(`when the given log contains a simple message`, (): void => {
       beforeEach((): void => {
@@ -759,7 +763,11 @@ describe(`LoggerService`, (): void => {
   describe(`warning()`, (): void => {
     let loggerLog: ILoggerLog;
 
-    const consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    let consoleLogSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    });
 
     describe(`when the given log contains a simple message`, (): void => {
       beforeEach((): void => {
@@ -1498,7 +1506,11 @@ describe(`LoggerService`, (): void => {
   describe(`success()`, (): void => {
     let loggerLog: ILoggerLog;
 
-    const consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    let consoleLogSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    });
 
     describe(`when the given log contains a simple message`, (): void => {
       beforeEach((): void => {
@@ -2233,7 +2245,11 @@ describe(`LoggerService`, (): void => {
   describe(`log()`, (): void => {
     let loggerLog: ILoggerLog;
 
-    const consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    let consoleLogSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    });
 
     describe(`when the given log contains a simple message`, (): void => {
       beforeEach((): void => {
@@ -2964,7 +2980,11 @@ describe(`LoggerService`, (): void => {
   describe(`debug()`, (): void => {
     let loggerLog: ILoggerLog;
 
-    const consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    let consoleLogSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    });
 
     describe(`when the given log contains a simple message`, (): void => {
       beforeEach((): void => {

@@ -1,10 +1,12 @@
+import { ConfigService } from '../features/config/services/config-service';
 import { ChalkService } from '../features/logger/services/chalk-service';
 import { LoggerService } from '../features/logger/services/logger-service';
 import { PartialNested } from '../types/partial-nested';
 
-export abstract class ConfigService<C> {
+export abstract class AbstractConfigService<C> {
   protected readonly _loggerService = LoggerService.getInstance();
   protected readonly _chalkService = ChalkService.getInstance();
+  protected readonly _configService = ConfigService.getInstance();
   protected readonly abstract _className: string;
 
   protected constructor(config?: Readonly<PartialNested<C>>) {
