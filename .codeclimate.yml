@@ -45,4 +45,4 @@ exclude_patterns:
   - "node_modules/"
   - ".eslintcache"
   - "**/*.spec.ts"
-  - "**/__mocks__/*.ts"
+  - "**/__mocks__/"
