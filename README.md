@@ -3,7 +3,6 @@
 > *Sonia "il est midi" application for Discord*
 
 __Quality:__  
-
 ![GitHub last commit](https://img.shields.io/github/last-commit/sonia-corporation/il-est-midi-discord?style=flat-square)
 [![Maintainability](https://api.codeclimate.com/v1/badges/6f8a651120877a0842b3/maintainability?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/il-est-midi-discord/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/6f8a651120877a0842b3/test_coverage?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/il-est-midi-discord/test_coverage)
@@ -15,7 +14,6 @@ __Quality:__
 ![David](https://img.shields.io/david/sonia-corporation/il-est-midi-discord?style=flat-square)
 
 __Community:__  
-
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
 [![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]()
@@ -23,7 +21,6 @@ __Community:__
 ![Discord](https://img.shields.io/discord/689833865279307782?style=flat-square)
 
 __Statistics:__  
-
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/sonia-corporation/il-est-midi-discord?style=flat-square)
 ![GitHub top language](https://img.shields.io/github/languages/top/sonia-corporation/il-est-midi-discord?style=flat-square)
 ![GitHub repo size](https://img.shields.io/github/repo-size/sonia-corporation/il-est-midi-discord?style=flat-square)
