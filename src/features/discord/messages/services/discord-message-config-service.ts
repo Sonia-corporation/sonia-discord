@@ -5,9 +5,9 @@ import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
 import { PartialNested } from '../../../../types/partial-nested';
 import { IDiscordConfig } from '../../interfaces/discord-config';
 import { IDiscordMessageCommandConfig } from '../../interfaces/discord-message-command-config';
+import { IDiscordMessageCommandErrorConfig } from '../../interfaces/discord-message-command-error-config';
 import { IDiscordMessageCommandVersionConfig } from '../../interfaces/discord-message-command-version-config';
 import { IDiscordMessageConfig } from '../../interfaces/discord-message-config';
-import { IDiscordMessageErrorConfig } from '../../interfaces/discord-message-error-config';
 import { DISCORD_MESSAGE_CONFIG } from '../constants/discord-message-config';
 
 export class DiscordMessageConfigService extends ConfigService<IDiscordConfig> {
@@ -44,6 +44,8 @@ export class DiscordMessageConfigService extends ConfigService<IDiscordConfig> {
   public updateMessageCommand(command?: Readonly<PartialNested<IDiscordMessageCommandConfig>>): void {
     if (!_.isNil(command)) {
       this.updateMessageCommandPrefix(command.prefix);
+      this.updateMessageCommandVersion(command.version);
+      this.updateMessageCommandError(command.error);
     }
   }
 
@@ -73,8 +75,82 @@ export class DiscordMessageConfigService extends ConfigService<IDiscordConfig> {
     return DISCORD_MESSAGE_CONFIG.command.version;
   }
 
-  public getMessageError(): IDiscordMessageErrorConfig {
-    return DISCORD_MESSAGE_CONFIG.error;
+  public updateMessageCommandVersion(version?: Readonly<PartialNested<IDiscordMessageCommandVersionConfig>>): void {
+    if (!_.isNil(version) && _.isPlainObject(version)) {
+      this.updateMessageCommandVersionImageColor(version.imageColor);
+      this.updateMessageCommandVersionImageUrl(version.imageUrl);
+    }
+  }
+
+  public getMessageCommandVersionImageColor(): number {
+    return DISCORD_MESSAGE_CONFIG.command.version.imageColor;
+  }
+
+  public updateMessageCommandVersionImageColor(imageColor?: Readonly<number>): void {
+    if (_.isNumber(imageColor)) {
+      DISCORD_MESSAGE_CONFIG.command.version.imageColor = imageColor;
+
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`message command version image color updated to: ${this._chalkService.value(DISCORD_MESSAGE_CONFIG.command.version.imageColor)}`)
+      });
+    }
+  }
+
+  public getMessageCommandVersionImageUrl(): string {
+    return DISCORD_MESSAGE_CONFIG.command.version.imageUrl;
+  }
+
+  public updateMessageCommandVersionImageUrl(imageUrl?: Readonly<string>): void {
+    if (_.isString(imageUrl)) {
+      DISCORD_MESSAGE_CONFIG.command.version.imageUrl = imageUrl;
+
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`message command version image color updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_MESSAGE_CONFIG.command.version.imageUrl))}`)
+      });
+    }
+  }
+
+  public getMessageCommandError(): IDiscordMessageCommandErrorConfig {
+    return DISCORD_MESSAGE_CONFIG.command.error;
+  }
+
+  public updateMessageCommandError(error?: Readonly<PartialNested<IDiscordMessageCommandErrorConfig>>): void {
+    if (!_.isNil(error) && _.isPlainObject(error)) {
+      this.updateMessageCommandErrorImageColor(error.imageColor);
+      this.updateMessageCommandErrorImageUrl(error.imageUrl);
+    }
+  }
+
+  public getMessageCommandErrorImageColor(): number {
+    return DISCORD_MESSAGE_CONFIG.command.error.imageColor;
+  }
+
+  public updateMessageCommandErrorImageColor(imageColor?: Readonly<number>): void {
+    if (_.isNumber(imageColor)) {
+      DISCORD_MESSAGE_CONFIG.command.error.imageColor = imageColor;
+
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`message command error image color updated to: ${this._chalkService.value(DISCORD_MESSAGE_CONFIG.command.error.imageColor)}`)
+      });
+    }
+  }
+
+  public getMessageCommandErrorImageUrl(): string {
+    return DISCORD_MESSAGE_CONFIG.command.error.imageUrl;
+  }
+
+  public updateMessageCommandErrorImageUrl(imageUrl?: Readonly<string>): void {
+    if (_.isString(imageUrl)) {
+      DISCORD_MESSAGE_CONFIG.command.error.imageUrl = imageUrl;
+
+      this._loggerService.log({
+        context: this._className,
+        message: this._chalkService.text(`message command error image color updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_MESSAGE_CONFIG.command.error.imageUrl))}`)
+      });
+    }
   }
 
   public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {

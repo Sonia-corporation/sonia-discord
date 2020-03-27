@@ -12,7 +12,6 @@ import { GithubConfigService } from '../../../github/services/github-config-serv
 import { LoggerService } from '../../../logger/services/logger-service';
 import { DiscordChannelService } from '../../channels/services/discord-channel-service';
 import { DiscordGuildConfigService } from '../../guilds/services/discord-guild-config-service';
-import { IDiscordMessageErrorConfig } from '../../interfaces/discord-message-error-config';
 import { DiscordSoniaService } from '../../users/services/discord-sonia-service';
 import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
 import { AnyDiscordMessage } from '../types/any-discord-message';
@@ -121,10 +120,8 @@ export class DiscordMessageErrorService {
   }
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
-    const discordMessageErrorConfig: IDiscordMessageErrorConfig = this._discordMessageConfigService.getMessageError();
-
     return {
-      url: discordMessageErrorConfig.imageUrl
+      url: this._discordMessageConfigService.getMessageCommandErrorImageUrl()
     };
   }
 
@@ -138,7 +135,7 @@ export class DiscordMessageErrorService {
   }
 
   private _getMessageEmbedColor(): number {
-    return this._discordMessageConfigService.getMessageError().imageColor;
+    return this._discordMessageConfigService.getMessageCommandErrorImageColor();
   }
 
   private _getMessageEmbedTimestamp(): Date {
