@@ -1,4 +1,5 @@
 import { LoggerService } from '../../logger/services/logger-service';
+import { IConfigUpdateBoolean } from '../interfaces/config-update-boolean';
 import { IConfigUpdateNumber } from '../interfaces/config-update-number';
 import { IConfigUpdateString } from '../interfaces/config-update-string';
 import { ConfigService } from './config-service';
@@ -193,6 +194,97 @@ describe(`ConfigService`, (): void => {
         const result = service.getUpdatedString(configUpdateString);
 
         expect(result).toStrictEqual(`marco-polo`);
+      });
+    });
+  });
+
+  describe(`getUpdatedBoolean()`, (): void => {
+    let configUpdateBoolean: IConfigUpdateBoolean;
+
+    let loggerServiceLogSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      configUpdateBoolean = {
+        context: `dummy-context`,
+        newValue: true,
+        oldValue: false,
+        valueName: `dummy-value-name`
+      };
+
+      loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
+    });
+
+    describe(`when the given config update boolean new value is undefined`, (): void => {
+      beforeEach((): void => {
+        configUpdateBoolean.newValue = undefined;
+      });
+
+      it(`should not log`, (): void => {
+        expect.assertions(1);
+
+        service.getUpdatedBoolean(configUpdateBoolean);
+
+        expect(loggerServiceLogSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should return the old value`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getUpdatedBoolean(configUpdateBoolean);
+
+        expect(result).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given config update boolean new value is false`, (): void => {
+      beforeEach((): void => {
+        configUpdateBoolean.newValue = false;
+      });
+
+      it(`should log`, (): void => {
+        expect.assertions(2);
+
+        service.getUpdatedBoolean(configUpdateBoolean);
+
+        expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+          context: `dummy-context`,
+          message: `dummy-value-name updated to: false`
+        });
+      });
+
+      it(`should return the new value`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getUpdatedBoolean(configUpdateBoolean);
+
+        expect(result).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given config update boolean new value is true`, (): void => {
+      beforeEach((): void => {
+        configUpdateBoolean.newValue = true;
+      });
+
+      it(`should log`, (): void => {
+        expect.assertions(2);
+
+        service.getUpdatedBoolean(configUpdateBoolean);
+
+        expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+          context: `dummy-context`,
+          message: `dummy-value-name updated to: true`
+        });
+      });
+
+      it(`should return the new value`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getUpdatedBoolean(configUpdateBoolean);
+
+        expect(result).toStrictEqual(true);
       });
     });
   });
