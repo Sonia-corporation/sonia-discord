@@ -20,6 +20,7 @@
 ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/sonia-corporation/il-est-midi-discord?style=flat-square)
 ![GitHub](https://img.shields.io/github/license/sonia-corporation/il-est-midi-discord?style=flat-square)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/sonia-corporation/il-est-midi-discord?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/sonia-corporation/il-est-midi-discord?style=flat-square)
 
 ## Sonia bot
 
