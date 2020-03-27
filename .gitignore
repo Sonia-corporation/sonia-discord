@@ -52,3 +52,6 @@ token.json
 .DS_Store
 Thumbs.db
 /src/environment/secret-environment.json
+
+# stryker temp files
+.stryker-tmp
