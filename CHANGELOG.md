@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.19.2](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.19.1...1.19.2) (2020-03-27)
+
+
+### Performance Improvements
+
+* **webstorm:** update the configuration file to exclude more files ([fd8282e](https://github.com/Sonia-corporation/il-est-midi-discord/commit/fd8282e5daf6c25a2f8b45ec202e2bd20b748632))
+
 ## [1.19.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.19.0...1.19.1) (2020-03-26)
 
 
