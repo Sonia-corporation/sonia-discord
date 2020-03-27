@@ -18,6 +18,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/sonia-corporation/il-est-midi-discord?style=flat-square)
 ![GitHub issues](https://img.shields.io/github/issues-raw/sonia-corporation/il-est-midi-discord?style=flat-square)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/sonia-corporation/il-est-midi-discord?style=flat-square)
+![GitHub](https://img.shields.io/github/license/sonia-corporation/il-est-midi-discord?style=flat-square)
 
 ## Sonia bot
 
