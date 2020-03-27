@@ -8,6 +8,7 @@
 .eslintcache
 .cache
 .cache-jest
+/reports
 
 # Only exists if Bazel was run
 /bazel-out
@@ -52,3 +53,6 @@ token.json
 .DS_Store
 Thumbs.db
 /src/environment/secret-environment.json
+
+# stryker temp files
+stryker-tmp
