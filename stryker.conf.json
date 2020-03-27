@@ -3,10 +3,10 @@
   "mutator": "typescript",
   "packageManager": "npm",
   "reporters": [
-    "html",
     "clear-text",
     "progress",
-    "dashboard"
+    "dots",
+    "html"
   ],
   "testRunner": "jest",
   "transpilers": [
@@ -15,6 +15,21 @@
   "coverageAnalysis": "off",
   "tsconfigFile": "tsconfig.json",
   "mutate": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "!src/**/*.spec.ts"
+  ],
+  "allowConsoleColors": true,
+  "dashboard": {
+    "baseUrl": "https://dashboard.stryker-mutator.io/api/reports",
+    "reportType": "full"
+  },
+  "fileLogLevel": "info",
+  "logLevel": "info",
+  "symlinkNodeModules": true,
+  "tempDirName": "stryker-tmp",
+  "timeoutFactor": 1.5,
+  "timeoutMS": 5000,
+  "plugins": [
+    "@stryker-mutator/*"
   ]
 }
