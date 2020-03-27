@@ -2,15 +2,25 @@
 
 > *Sonia "il est midi" application for Discord*
 
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/sonia-corporation/il-est-midi-discord?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/sonia-corporation/il-est-midi-discord?style=flat-square)
+[![Maintainability](https://api.codeclimate.com/v1/badges/6f8a651120877a0842b3/maintainability?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/il-est-midi-discord/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/6f8a651120877a0842b3/test_coverage?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/il-est-midi-discord/test_coverage)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FSonia-corporation%2Fil-est-midi-discord%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/Sonia-corporation/il-est-midi-discord/master)
+![GitHub issues](https://img.shields.io/github/issues-raw/sonia-corporation/il-est-midi-discord?style=flat-square)
+![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/sonia-corporation/il-est-midi-discord?style=flat-square)
+![Build](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Build/badge.svg?branch=master&style=flat-square)
+![Release](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Release/badge.svg?branch=master&style=flat-square)
+![David](https://img.shields.io/david/sonia-corporation/il-est-midi-discord?style=flat-square)
+![Discord](https://img.shields.io/discord/689833865279307782?style=flat-square)
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
 [![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]()
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/474fece6-33b0-4472-8c2f-25cbb4493ecb/deploy-status)](https://app.netlify.com/sites/dark-heresy/deploys)
-![Build](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Build/badge.svg?branch=master&style=flat-square)
-![Release](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Release/badge.svg?branch=master&style=flat-square)
-[![Maintainability](https://api.codeclimate.com/v1/badges/6f8a651120877a0842b3/maintainability?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/il-est-midi-discord/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/6f8a651120877a0842b3/test_coverage?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/il-est-midi-discord/test_coverage)
+![GitHub top language](https://img.shields.io/github/languages/top/sonia-corporation/il-est-midi-discord?style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/sonia-corporation/il-est-midi-discord?style=flat-square)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/sonia-corporation/il-est-midi-discord?style=flat-square)
+![GitHub](https://img.shields.io/github/license/sonia-corporation/il-est-midi-discord?style=flat-square)
 
 ## Sonia bot
 
