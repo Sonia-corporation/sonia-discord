@@ -2,7 +2,7 @@ import appRootPath from 'app-root-path';
 import axios, { AxiosResponse } from 'axios';
 import fs from 'fs-extra';
 import _ from 'lodash';
-import { ENVIRONMENT } from '../../../environment/environment';
+import { ENVIRONMENT } from '../../../environment/constants/environment';
 import { IEnvironment } from '../../../environment/interfaces/environment';
 import { getBearer } from '../../../functions/formatters/get-bearer';
 import { IPackage } from '../../../interfaces/package';
