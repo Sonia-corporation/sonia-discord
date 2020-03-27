@@ -147,11 +147,6 @@ export class AppConfigService extends ConfigService<IAppConfig> {
     }
   }
 
-  protected preUpdateConfig(): void {
-    this._defineProductionState();
-    this._defineBuildDate();
-  }
-
   public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
     if (!_.isNil(config)) {
       this.updateVersion(config.version);
@@ -165,6 +160,13 @@ export class AppConfigService extends ConfigService<IAppConfig> {
         message: this._chalkService.text(`configuration updated`)
       });
     }
+  }
+
+  public init(): AppConfigService {
+    this._defineProductionState();
+    this._defineBuildDate();
+
+    return this;
   }
 
   private _defineProductionState(): void {

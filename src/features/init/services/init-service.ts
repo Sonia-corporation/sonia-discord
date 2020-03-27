@@ -69,7 +69,7 @@ export class InitService {
     GithubConfigService.getInstance().updateConfig(environment.github);
     DiscordSoniaConfigService.getInstance().updateConfig(environment.discord);
     DiscordMessageConfigService.getInstance().updateConfig(environment.discord);
-    AppConfigService.getInstance().updateConfig(environment.app);
+    AppConfigService.getInstance().init().updateConfig(environment.app);
   }
 
   private _configureAppFromPackage(): void {

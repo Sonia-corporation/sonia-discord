@@ -10,6 +10,7 @@ export abstract class ConfigService<C> {
   protected constructor(config?: Readonly<PartialNested<C>>) {
     this.preUpdateConfig();
     this.updateConfig(config);
+    this.postUpdateConfig();
   }
 
   /**
@@ -20,6 +21,17 @@ export abstract class ConfigService<C> {
    * Just before the config override it
    */
   protected preUpdateConfig(): void {
+    // Avoid lint error :)
+  }
+
+  /**
+   * @description
+   * This method should be used to perform actions after the update of the config
+   *
+   * This is quite handy when you want to set up a default configuration
+   * Just after the config override it
+   */
+  protected postUpdateConfig(): void {
     // Avoid lint error :)
   }
 
