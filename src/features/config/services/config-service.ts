@@ -1,7 +1,9 @@
 import _ from 'lodash';
+import { wrapInQuotes } from '../../../functions/formatters/wrap-in-quotes';
 import { ChalkService } from '../../logger/services/chalk-service';
 import { LoggerService } from '../../logger/services/logger-service';
 import { IConfigUpdateNumber } from '../interfaces/config-update-number';
+import { IConfigUpdateString } from '../interfaces/config-update-string';
 
 export class ConfigService {
   private static _instance: ConfigService;
@@ -28,5 +30,18 @@ export class ConfigService {
     }
 
     return configUpdateNumber.oldValue;
+  }
+
+  public getUpdatedString(configUpdateString: Readonly<IConfigUpdateString>): string {
+    if (_.isString(configUpdateString.newValue)) {
+      this._loggerService.log({
+        context: configUpdateString.context,
+        message: this._chalkService.text(`${configUpdateString.valueName} updated to: ${this._chalkService.value(wrapInQuotes(configUpdateString.newValue))}`)
+      });
+
+      return configUpdateString.newValue;
+    }
+
+    return configUpdateString.oldValue;
   }
 }
