@@ -27,7 +27,7 @@
   "logLevel": "info",
   "symlinkNodeModules": true,
   "tempDirName": "stryker-tmp",
-  "timeoutFactor": 1.5,
+  "timeoutFactor": 2,
   "timeoutMS": 5000,
   "plugins": [
     "@stryker-mutator/*"
