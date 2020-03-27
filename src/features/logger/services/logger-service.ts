@@ -3,7 +3,7 @@ import { wrapInQuotes } from '../../../functions/formatters/wrap-in-quotes';
 import { TimeService } from '../../time/services/time-service';
 import { LOGGER_CONFIG } from '../constants/logger-config';
 import { LoggerConfigLevelValueEnum } from '../enums/logger-config-level-value.enum';
-import { LoggerLogTypeEnum } from '../enums/logger-log-type.enum';
+import { LoggerConfigLevelEnum } from '../enums/logger-config-level.enum';
 import { ILoggerLog } from '../interfaces/logger-log';
 import { ILoggerLogInternal } from '../interfaces/logger-log-internal';
 import { ChalkService } from './chalk-service';
@@ -27,7 +27,7 @@ export class LoggerService {
     if (this._isErrorEnabled()) {
       this._log({
         ...loggerLog,
-        loggerLogType: LoggerLogTypeEnum.ERROR
+        loggerLogType: LoggerConfigLevelEnum.ERROR
       });
     }
   }
@@ -36,7 +36,7 @@ export class LoggerService {
     if (this._isWarningEnabled()) {
       this._log({
         ...loggerLog,
-        loggerLogType: LoggerLogTypeEnum.WARNING
+        loggerLogType: LoggerConfigLevelEnum.WARNING
       });
     }
   }
@@ -45,7 +45,7 @@ export class LoggerService {
     if (this._isSuccessEnabled()) {
       this._log({
         ...loggerLog,
-        loggerLogType: LoggerLogTypeEnum.SUCCESS
+        loggerLogType: LoggerConfigLevelEnum.SUCCESS
       });
     }
   }
@@ -54,7 +54,7 @@ export class LoggerService {
     if (this._isLogEnabled()) {
       this._log({
         ...loggerLog,
-        loggerLogType: LoggerLogTypeEnum.LOG
+        loggerLogType: LoggerConfigLevelEnum.LOG
       });
     }
   }
@@ -63,7 +63,7 @@ export class LoggerService {
     if (this._isDebugEnabled()) {
       this._log({
         ...loggerLog,
-        loggerLogType: LoggerLogTypeEnum.DEBUG
+        loggerLogType: LoggerConfigLevelEnum.DEBUG
       });
     }
   }
@@ -127,7 +127,7 @@ export class LoggerService {
     return this._chalkService.context(message);
   }
 
-  private _getLogTypePrefix(logType: Readonly<LoggerLogTypeEnum>): string {
+  private _getLogTypePrefix(logType: Readonly<LoggerConfigLevelEnum>): string {
     return this._chalkService[ logType ](this._logPrefix);
   }
 
