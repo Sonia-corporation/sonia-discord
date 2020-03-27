@@ -6,7 +6,7 @@ import { LoggerService } from './logger-service';
 jest.mock(`./chalk-service`);
 jest.mock(`../../time/services/time-service`);
 
-describe(`loggerService`, (): void => {
+describe(`LoggerService`, (): void => {
   let service: LoggerService;
 
   beforeEach((): void => {

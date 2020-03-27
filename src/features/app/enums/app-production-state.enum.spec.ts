@@ -1,6 +1,6 @@
 import { AppProductionStateEnum } from './app-production-state.enum';
 
-describe(`appProductionStateEnum`, (): void => {
+describe(`AppProductionStateEnum`, (): void => {
   it(`should have a member "DEVELOPMENT"`, (): void => {
     expect.assertions(1);
 

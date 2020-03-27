@@ -1,6 +1,6 @@
 import { DiscordEmojiEnum } from './discord-emoji.enum';
 
-describe(`discordEmojiEnum`, (): void => {
+describe(`DiscordEmojiEnum`, (): void => {
   it(`should have a member "FACE_WITH_SYMBOLS_OVER_MOUSE"`, (): void => {
     expect.assertions(1);
 

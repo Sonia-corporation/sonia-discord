@@ -1,6 +1,6 @@
 import { LoggerConfigLevelValueEnum } from './logger-config-level-value.enum';
 
-describe(`loggerConfigLevelValueEnum`, (): void => {
+describe(`LoggerConfigLevelValueEnum`, (): void => {
   it(`should have a member "error"`, (): void => {
     expect.assertions(1);
 

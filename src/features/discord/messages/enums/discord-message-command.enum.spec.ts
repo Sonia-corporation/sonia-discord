@@ -1,6 +1,6 @@
 import { DiscordMessageCommandEnum } from './discord-message-command.enum';
 
-describe(`discordMessageCommandEnum`, (): void => {
+describe(`DiscordMessageCommandEnum`, (): void => {
   it(`should have a member "VERSION"`, (): void => {
     expect.assertions(1);
 
