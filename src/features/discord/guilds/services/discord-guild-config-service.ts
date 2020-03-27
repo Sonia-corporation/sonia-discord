@@ -23,6 +23,17 @@ export class DiscordGuildConfigService extends ConfigService<IDiscordConfig> {
     super(config);
   }
 
+  public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
+    if (!_.isNil(config)) {
+      this.updateGuild(config.guild);
+
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
+      });
+    }
+  }
+
   public getGuild(): IDiscordGuildConfig {
     return DISCORD_GUILD_CONFIG;
   }
@@ -59,17 +70,6 @@ export class DiscordGuildConfigService extends ConfigService<IDiscordConfig> {
       this._loggerService.log({
         context: this._className,
         message: this._chalkService.text(`sonia permanent guild invite url updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_GUILD_CONFIG.soniaPermanentGuildInviteUrl))}`)
-      });
-    }
-  }
-
-  public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
-    if (!_.isNil(config)) {
-      this.updateGuild(config.guild);
-
-      this._loggerService.debug({
-        context: this._className,
-        message: this._chalkService.text(`configuration updated`)
       });
     }
   }

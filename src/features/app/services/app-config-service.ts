@@ -26,6 +26,28 @@ export class AppConfigService extends ConfigService<IAppConfig> {
     super(config);
   }
 
+  public init(): AppConfigService {
+    this._defineProductionState();
+    this._defineBuildDate();
+
+    return this;
+  }
+
+  public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
+    if (!_.isNil(config)) {
+      this.updateVersion(config.version);
+      this.updateReleaseDate(config.releaseDate);
+      this.updateInitializationDate(config.initializationDate);
+      this.updateTotalReleaseCount(config.totalReleaseCount);
+      this.updateReleaseNotes(config.releaseNotes);
+
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
+      });
+    }
+  }
+
   public getVersion(): string {
     return APP_CONFIG.version;
   }
@@ -145,28 +167,6 @@ export class AppConfigService extends ConfigService<IAppConfig> {
         message: this._chalkService.text(`app release notes updated`)
       });
     }
-  }
-
-  public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
-    if (!_.isNil(config)) {
-      this.updateVersion(config.version);
-      this.updateReleaseDate(config.releaseDate);
-      this.updateInitializationDate(config.initializationDate);
-      this.updateTotalReleaseCount(config.totalReleaseCount);
-      this.updateReleaseNotes(config.releaseNotes);
-
-      this._loggerService.debug({
-        context: this._className,
-        message: this._chalkService.text(`configuration updated`)
-      });
-    }
-  }
-
-  public init(): AppConfigService {
-    this._defineProductionState();
-    this._defineBuildDate();
-
-    return this;
   }
 
   private _defineProductionState(): void {

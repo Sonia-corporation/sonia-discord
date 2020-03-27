@@ -27,6 +27,17 @@ export class DiscordMessageConfigService extends ConfigService<IDiscordConfig> {
     super(config);
   }
 
+  public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
+    if (!_.isNil(config)) {
+      this.updateMessage(config.message);
+
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
+      });
+    }
+  }
+
   public getMessage(): IDiscordMessageConfig {
     return DISCORD_MESSAGE_CONFIG;
   }
@@ -149,17 +160,6 @@ export class DiscordMessageConfigService extends ConfigService<IDiscordConfig> {
       this._loggerService.log({
         context: this._className,
         message: this._chalkService.text(`message error image color updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_MESSAGE_CONFIG.error.imageUrl))}`)
-      });
-    }
-  }
-
-  public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
-    if (!_.isNil(config)) {
-      this.updateMessage(config.message);
-
-      this._loggerService.debug({
-        context: this._className,
-        message: this._chalkService.text(`configuration updated`)
       });
     }
   }

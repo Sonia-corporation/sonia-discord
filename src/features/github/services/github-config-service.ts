@@ -22,6 +22,17 @@ export class GithubConfigService extends ConfigService<IGithubConfig> {
     super(config);
   }
 
+  public updateConfig(config?: Readonly<PartialNested<IGithubConfig>>): void {
+    if (!_.isNil(config)) {
+      this.updatePersonalAccessToken(config.personalAccessToken);
+
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
+      });
+    }
+  }
+
   public getPersonalAccessToken(): string {
     return GITHUB_CONFIG.personalAccessToken;
   }
@@ -48,17 +59,6 @@ export class GithubConfigService extends ConfigService<IGithubConfig> {
       this._loggerService.log({
         context: this._className,
         message: this._chalkService.text(`bug report url updated to: ${this._chalkService.value(wrapInQuotes(GITHUB_CONFIG.bugReportUrl))}`)
-      });
-    }
-  }
-
-  public updateConfig(config?: Readonly<PartialNested<IGithubConfig>>): void {
-    if (!_.isNil(config)) {
-      this.updatePersonalAccessToken(config.personalAccessToken);
-
-      this._loggerService.debug({
-        context: this._className,
-        message: this._chalkService.text(`configuration updated`)
       });
     }
   }
