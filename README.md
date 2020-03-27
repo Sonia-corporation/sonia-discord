@@ -16,6 +16,7 @@
 ![David](https://img.shields.io/david/sonia-corporation/il-est-midi-discord?style=flat-square)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/sonia-corporation/il-est-midi-discord?style=flat-square)
 ![GitHub repo size](https://img.shields.io/github/repo-size/sonia-corporation/il-est-midi-discord?style=flat-square)
+![GitHub issues](https://img.shields.io/github/issues-raw/sonia-corporation/il-est-midi-discord?style=flat-square)
 
 ## Sonia bot
 
