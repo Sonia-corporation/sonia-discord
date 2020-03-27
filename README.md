@@ -13,6 +13,7 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/6f8a651120877a0842b3/test_coverage?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/il-est-midi-discord/test_coverage)
 ![GitHub top language](https://img.shields.io/github/languages/top/sonia-corporation/il-est-midi-discord?style=flat-square)
 ![Discord](https://img.shields.io/discord/689833865279307782?style=flat-square)
+![David](https://img.shields.io/david/sonia-corporation/il-est-midi-discord?style=flat-square)
 
 ## Sonia bot
 
