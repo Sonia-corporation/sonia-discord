@@ -1,5 +1,34 @@
 # Semantic Versioning Changelog
 
+## [1.19.2](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.19.1...1.19.2) (2020-03-27)
+
+
+### Performance Improvements
+
+* **webstorm:** update the configuration file to exclude more files ([fd8282e](https://github.com/Sonia-corporation/il-est-midi-discord/commit/fd8282e5daf6c25a2f8b45ec202e2bd20b748632))
+
+## [1.19.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.19.0...1.19.1) (2020-03-26)
+
+
+### Bug Fixes
+
+* **config-service:** use public accessors for the updateConfig method to avoid scope error ([92ff7df](https://github.com/Sonia-corporation/il-est-midi-discord/commit/92ff7df949523e4e7cb846f0402b7442fe0ede57))
+
+# [1.19.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.18.0...1.19.0) (2020-03-26)
+
+
+### Features
+
+* **server:** configure a home page with express ([50dffa9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/50dffa9a0cb3f2c9f23719889594410dfb08a317))
+
+# [1.18.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.17.1...1.18.0) (2020-03-26)
+
+
+### Features
+
+* **assert:** add new assert functions ([58bb00d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/58bb00d43d0d5e1d92c4e58fb9e814860ea427c5))
+* **server-service:** use the environment port if available ([1235c98](https://github.com/Sonia-corporation/il-est-midi-discord/commit/1235c98725ee82b3e952ff9490a8689eb0322bc8))
+
 ## [1.17.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.17.0...1.17.1) (2020-03-25)
 
 
