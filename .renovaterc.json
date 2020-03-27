@@ -26,5 +26,6 @@
       ],
       "automerge": true
     }
-  ]
+  ],
+  "semanticCommits": true
 }
