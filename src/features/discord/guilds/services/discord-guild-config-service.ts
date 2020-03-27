@@ -69,7 +69,7 @@ export class DiscordGuildConfigService extends ConfigService<IDiscordConfig> {
 
       this._loggerService.log({
         context: this._className,
-        message: this._chalkService.text(`sonia permanent guild invite url updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_GUILD_CONFIG.soniaPermanentGuildInviteUrl))}`)
+        message: this._chalkService.text(`Sonia permanent guild invite url updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_GUILD_CONFIG.soniaPermanentGuildInviteUrl))}`)
       });
     }
   }

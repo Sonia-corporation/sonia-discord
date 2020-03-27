@@ -8,7 +8,7 @@ This step is mandatory.
 You must create the `secret-environment.json` file in the [environment folder](./src/environment/secret-environment.json).  
 
 This file should contains at least:
-- A discord sonia secret token required by Discord API
+- A discord Sonia secret token required by Discord API
 - A GitHub personal access token required by GitHub API
 
 __Note:__

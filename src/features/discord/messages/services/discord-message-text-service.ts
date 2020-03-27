@@ -88,7 +88,7 @@ export class DiscordMessageTextService {
     this._loggerService.debug({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(discordMessage.id, `sonia was mentioned`)
+      message: this._loggerService.getSnowflakeContext(discordMessage.id, `Sonia was mentioned`)
     });
 
     if (this._discordMessageContentService.hasContent(discordMessage.content)) {
