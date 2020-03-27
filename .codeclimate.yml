@@ -34,8 +34,10 @@ plugins:
       - "coverage/"
       - "node_modules/"
       - ".eslintcache"
-      - "!**/*.ts"
-      - "!**/*.js"
+      - "!src/**/*.ts"
+      - "!src/**/*.js"
+      - "!scripts/**/*.ts"
+      - "!scripts/**/*.js"
 exclude_patterns:
   - ".cache/"
   - ".cache-jest/"
