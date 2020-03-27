@@ -91,7 +91,7 @@
     "moment": "2.24.0"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "5.0.0",
+    "@semantic-release/changelog": "5.0.1",
     "@semantic-release/git": "9.0.0",
     "@semantic-release/github": "7.0.5",
     "@stryker-mutator/core": "3.0.2",
@@ -121,7 +121,7 @@
     "eslint-plugin-typescript-sort-keys": "0.5.0",
     "fs-extra": "9.0.0",
     "husky": "4.2.3",
-    "jest": "25.2.2",
+    "jest": "25.2.3",
     "jest-silent-reporter": "0.2.1",
     "lint-staged": "10.0.9",
     "majestic": "1.6.2",
