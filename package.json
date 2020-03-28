@@ -66,7 +66,7 @@
     "run:prod": "node ./dist/index.js --prod true",
     "tsc": "tsc",
     "\n# TEST SCRIPTS:": "",
-    "test": "jest --detectOpenHandles",
+    "test": "jest",
     "test:watch": "jest --watchAll",
     "test:majestic": "majestic --port 3002 --noOpen",
     "test:ci": "jest --bail=1 --ci",
