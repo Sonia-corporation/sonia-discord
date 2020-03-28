@@ -111,14 +111,12 @@ export class DiscordMessageConfigService extends AbstractConfigService<IDiscordC
   }
 
   public updateMessageCommandVersionImageUrl(imageUrl?: Readonly<string>): void {
-    if (_.isString(imageUrl)) {
-      DISCORD_MESSAGE_CONFIG.command.version.imageUrl = imageUrl;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`message command version image color updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_MESSAGE_CONFIG.command.version.imageUrl))}`)
-      });
-    }
+    DISCORD_MESSAGE_CONFIG.command.version.imageUrl = this._configService.getUpdatedString({
+      context: this._className,
+      newValue: imageUrl,
+      oldValue: DISCORD_MESSAGE_CONFIG.command.version.imageUrl,
+      valueName: `message command version image url`
+    });
   }
 
   public getMessageError(): IDiscordMessageErrorConfig {
@@ -137,14 +135,12 @@ export class DiscordMessageConfigService extends AbstractConfigService<IDiscordC
   }
 
   public updateMessageErrorImageColor(imageColor?: Readonly<number>): void {
-    if (_.isNumber(imageColor)) {
-      DISCORD_MESSAGE_CONFIG.error.imageColor = imageColor;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`message error image color updated to: ${this._chalkService.value(DISCORD_MESSAGE_CONFIG.error.imageColor)}`)
-      });
-    }
+    DISCORD_MESSAGE_CONFIG.error.imageColor = this._configService.getUpdatedNumber({
+      context: this._className,
+      newValue: imageColor,
+      oldValue: DISCORD_MESSAGE_CONFIG.error.imageColor,
+      valueName: `message error image color`
+    });
   }
 
   public getMessageCommandErrorImageUrl(): string {
@@ -152,13 +148,11 @@ export class DiscordMessageConfigService extends AbstractConfigService<IDiscordC
   }
 
   public updateMessageErrorImageUrl(imageUrl?: Readonly<string>): void {
-    if (_.isString(imageUrl)) {
-      DISCORD_MESSAGE_CONFIG.error.imageUrl = imageUrl;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`message error image color updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_MESSAGE_CONFIG.error.imageUrl))}`)
-      });
-    }
+    DISCORD_MESSAGE_CONFIG.error.imageUrl = this._configService.getUpdatedString({
+      context: this._className,
+      newValue: imageUrl,
+      oldValue: DISCORD_MESSAGE_CONFIG.error.imageUrl,
+      valueName: `message error image url`
+    });
   }
 }
