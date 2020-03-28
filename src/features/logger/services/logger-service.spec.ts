@@ -6,7 +6,7 @@ import { LoggerService } from './logger-service';
 jest.mock(`./chalk-service`);
 jest.mock(`../../time/services/time-service`);
 
-describe(`loggerService`, (): void => {
+describe(`LoggerService`, (): void => {
   let service: LoggerService;
 
   beforeEach((): void => {
@@ -16,7 +16,11 @@ describe(`loggerService`, (): void => {
   describe(`error()`, (): void => {
     let loggerLog: ILoggerLog;
 
-    const consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    let consoleLogSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    });
 
     describe(`when the given log contains a simple message`, (): void => {
       beforeEach((): void => {
@@ -759,7 +763,11 @@ describe(`loggerService`, (): void => {
   describe(`warning()`, (): void => {
     let loggerLog: ILoggerLog;
 
-    const consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    let consoleLogSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    });
 
     describe(`when the given log contains a simple message`, (): void => {
       beforeEach((): void => {
@@ -1498,7 +1506,11 @@ describe(`loggerService`, (): void => {
   describe(`success()`, (): void => {
     let loggerLog: ILoggerLog;
 
-    const consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    let consoleLogSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    });
 
     describe(`when the given log contains a simple message`, (): void => {
       beforeEach((): void => {
@@ -2233,7 +2245,11 @@ describe(`loggerService`, (): void => {
   describe(`log()`, (): void => {
     let loggerLog: ILoggerLog;
 
-    const consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    let consoleLogSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    });
 
     describe(`when the given log contains a simple message`, (): void => {
       beforeEach((): void => {
@@ -2964,7 +2980,11 @@ describe(`loggerService`, (): void => {
   describe(`debug()`, (): void => {
     let loggerLog: ILoggerLog;
 
-    const consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    let consoleLogSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    });
 
     describe(`when the given log contains a simple message`, (): void => {
       beforeEach((): void => {

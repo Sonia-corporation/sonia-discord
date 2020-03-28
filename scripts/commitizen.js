@@ -20,6 +20,7 @@ module.exports = {
     `footer`
   ],
   subjectLimit: 144,
+  // Any changes should also me made on the [semantic config](#/.github/semantic.yml)
   types: [
     {
       name: `feat:     A new feature`,

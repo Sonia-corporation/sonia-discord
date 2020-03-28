@@ -34,6 +34,10 @@ settings:
   import/cache:
     lifetime: Infinity
 rules:
+  jest/lowercase-name:
+    - error
+    - ignore:
+        - describe
   jest/no-hooks:
     - error
     - allow:

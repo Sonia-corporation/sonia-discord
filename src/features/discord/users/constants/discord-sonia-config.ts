@@ -7,6 +7,6 @@ export const DISCORD_SONIA_CONFIG: IDiscordSoniaConfig = {
     name: `Sonia`,
     url: `https://github.com/Sonia-corporation?type=source`
   },
-  id: ``,
-  secretToken: ``
+  id: `unknown`,
+  secretToken: `unknown`
 };

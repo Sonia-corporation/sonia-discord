@@ -1,11 +1,11 @@
 import _ from 'lodash';
-import { ConfigService } from '../../../classes/config-service';
+import { AbstractConfigService } from '../../../classes/abstract-config-service';
 import { wrapInQuotes } from '../../../functions/formatters/wrap-in-quotes';
 import { PartialNested } from '../../../types/partial-nested';
 import { GITHUB_CONFIG } from '../constants/github-config';
 import { IGithubConfig } from '../interfaces/github-config';
 
-export class GithubConfigService extends ConfigService<IGithubConfig> {
+export class GithubConfigService extends AbstractConfigService<IGithubConfig> {
   private static _instance: GithubConfigService;
 
   public static getInstance(config?: Readonly<PartialNested<IGithubConfig>>): GithubConfigService {
@@ -20,6 +20,17 @@ export class GithubConfigService extends ConfigService<IGithubConfig> {
 
   protected constructor(config?: Readonly<PartialNested<IGithubConfig>>) {
     super(config);
+  }
+
+  public updateConfig(config?: Readonly<PartialNested<IGithubConfig>>): void {
+    if (!_.isNil(config)) {
+      this.updatePersonalAccessToken(config.personalAccessToken);
+
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
+      });
+    }
   }
 
   public getPersonalAccessToken(): string {
@@ -48,17 +59,6 @@ export class GithubConfigService extends ConfigService<IGithubConfig> {
       this._loggerService.log({
         context: this._className,
         message: this._chalkService.text(`bug report url updated to: ${this._chalkService.value(wrapInQuotes(GITHUB_CONFIG.bugReportUrl))}`)
-      });
-    }
-  }
-
-  public updateConfig(config?: Readonly<PartialNested<IGithubConfig>>): void {
-    if (!_.isNil(config)) {
-      this.updatePersonalAccessToken(config.personalAccessToken);
-
-      this._loggerService.debug({
-        context: this._className,
-        message: this._chalkService.text(`configuration updated`)
       });
     }
   }

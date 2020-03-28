@@ -15,5 +15,17 @@
     "group:monorepos",
     "group:recommended",
     "helpers:disableTypesNodeMajor"
-  ]
+  ],
+  "packageRules": [
+    {
+      "updateTypes": [
+        "patch"
+      ],
+      "depTypeList": [
+        "devDependencies"
+      ],
+      "automerge": true
+    }
+  ],
+  "semanticCommits": true
 }

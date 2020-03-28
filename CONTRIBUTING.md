@@ -8,12 +8,37 @@ This step is mandatory.
 You must create the `secret-environment.json` file in the [environment folder](./src/environment/secret-environment.json).  
 
 This file should contains at least:
-- A discord sonia secret token required by Discord API
+- A discord Sonia secret token required by Discord API
 - A GitHub personal access token required by GitHub API
 
-__Note:__
+__Example:__
 
-The GitHub personal access token should contains the following scopes:
+```json
+{
+  "discord": {
+    "sonia": {
+      "secretToken": "TO_DEFINE_BY_ASKING_IT"
+    } 
+  },
+  "github": {
+    "personalAccessToken": "TO_DEFINE_BY_YOU"
+  }
+}
+```
+
+__Note for the Discord Sonia secret token:__
+
+The Discord Sonia secret token is private and there two ways to have access to it:
+- Asks an admin (like [C0ZEN](https://github.com/C0ZEN))
+- Access to the [Discord bot page](https://discordapp.com/developers/applications/689829775317139460/bot) to reveal the token
+
+If somehow this token is made public, Discord will revoke it.
+
+__Note for the GitHub personal access token:__
+
+The GitHub personal access token is strictly personal to each developer.  
+You have to create your own on your GitHub account.  
+It should contains the following scopes:
 - user
 - public_repo
 - repo
@@ -23,25 +48,6 @@ The GitHub personal access token should contains the following scopes:
 - read:org
 - read:public_key
 - read:gpg_key
-
-__Example:__
-
-```json
-{
-  "discord": {
-    "sonia": {
-      "secretToken": "TO_DEFINE"
-    } 
-  },
-  "github": {
-    "personalAccessToken": "TO_DEFINE"
-  }
-}
-```
-
-This token is private and there two ways to have access to it:
-- Asks an admin (like [C0ZEN](https://github.com/C0ZEN))
-- Access to the [Discord bot page](https://discordapp.com/developers/applications/689829775317139460/bot) to reveal the token
 
 ### Install the dependencies
 
@@ -62,6 +68,9 @@ Run `npm run start` to start the local development server.
 - `npm run test:watch`: run the tests and watch them  
 - `npm run test:majestic`: run the tests in the browser (beautiful UI)
 - `npm run test:ci`: run the tests once and stop asap on error 
+- `npm run test:ci:coverage`: run the tests once with code coverage and stop asap on error 
+- `npm run test:mutant`: run the mutation testing once
+- `npm run test:mutant:ci`: run the mutation testing once and update Stryker dashboard
 - `npm run lint`: run the linter and fix the errors  
 - `npm run lint:ci`: run the linter  
 - `npm run cz`: run a CLI to easily push and commit by following the commit convention of this project  
