@@ -1,4 +1,5 @@
 import { ConfigService } from '../../../config/services/config-service';
+import { IDiscordMessageConfig } from '../../interfaces/discord-message-config';
 import { DISCORD_MESSAGE_CONFIG } from '../constants/discord-message-config';
 import { DiscordMessageConfigService } from './discord-message-config-service';
 
@@ -45,7 +46,7 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageColor: 8,
           imageUrl: `dummy-image-url`
         }
-      });
+      } as IDiscordMessageConfig);
     });
   });
 

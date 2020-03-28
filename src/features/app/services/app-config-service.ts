@@ -2,7 +2,6 @@ import _ from 'lodash';
 import moment from 'moment';
 import { AbstractConfigService } from '../../../classes/abstract-config-service';
 import { isValidDate } from '../../../functions/checks/is-valid-date';
-import { wrapInQuotes } from '../../../functions/formatters/wrap-in-quotes';
 import { PartialNested } from '../../../types/partial-nested';
 import { isNodeProduction } from '../../node/functions/is-node-production';
 import { APP_CONFIG } from '../constants/app-config';
@@ -26,6 +25,7 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
     super(config);
   }
 
+  // @todo add coverage
   public init(): AppConfigService {
     this._defineProductionState();
     this._defineBuildDate();
@@ -33,6 +33,7 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
     return this;
   }
 
+  // @todo add coverage
   public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
     if (!_.isNil(config)) {
       this.updateVersion(config.version);
@@ -48,19 +49,21 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
     }
   }
 
+  public getConfig(): IAppConfig {
+    return APP_CONFIG;
+  }
+
   public getVersion(): string {
     return APP_CONFIG.version;
   }
 
   public updateVersion(version?: Readonly<string>): void {
-    if (_.isString(version)) {
-      APP_CONFIG.version = version;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`app version updated to: ${this._chalkService.value(wrapInQuotes(APP_CONFIG.version))}`)
-      });
-    }
+    APP_CONFIG.version = this._configService.getUpdatedString({
+      context: this._className,
+      newValue: version,
+      oldValue: APP_CONFIG.version,
+      valueName: `version`
+    });
   }
 
   public getReleaseDate(): string {
@@ -75,15 +78,13 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
     return APP_CONFIG.releaseDate;
   }
 
-  public updateReleaseDate(date?: Readonly<string>): void {
-    if (_.isString(date)) {
-      APP_CONFIG.releaseDate = date;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`app release date updated to: ${this._chalkService.value(wrapInQuotes(APP_CONFIG.releaseDate))}`)
-      });
-    }
+  public updateReleaseDate(releaseDate?: Readonly<string>): void {
+    APP_CONFIG.releaseDate = this._configService.getUpdatedString({
+      context: this._className,
+      newValue: releaseDate,
+      oldValue: APP_CONFIG.releaseDate,
+      valueName: `release date`
+    });
   }
 
   public getInitializationDate(): string {
@@ -98,15 +99,13 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
     return APP_CONFIG.initializationDate;
   }
 
-  public updateInitializationDate(date?: Readonly<string>): void {
-    if (_.isString(date)) {
-      APP_CONFIG.initializationDate = date;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`app initialization date updated to: ${this._chalkService.value(wrapInQuotes(APP_CONFIG.initializationDate))}`)
-      });
-    }
+  public updateInitializationDate(initializationDate?: Readonly<string>): void {
+    APP_CONFIG.initializationDate = this._configService.getUpdatedString({
+      context: this._className,
+      newValue: initializationDate,
+      oldValue: APP_CONFIG.initializationDate,
+      valueName: `initialization date`
+    });
   }
 
   public isProduction(): boolean {
@@ -118,14 +117,12 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
   }
 
   public updateProductionState(isProduction?: Readonly<boolean>): void {
-    if (_.isBoolean(isProduction)) {
-      APP_CONFIG.isProduction = isProduction;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`app production state updated to: ${this._chalkService.value(APP_CONFIG.isProduction)}`)
-      });
-    }
+    APP_CONFIG.isProduction = this._configService.getUpdatedBoolean({
+      context: this._className,
+      newValue: isProduction,
+      oldValue: APP_CONFIG.isProduction,
+      valueName: `production state`
+    });
   }
 
   public getTotalReleaseCount(): number {
@@ -143,30 +140,27 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
     return sentence;
   }
 
-  public updateTotalReleaseCount(count?: Readonly<number>): void {
-    if (_.isNumber(count)) {
-      APP_CONFIG.totalReleaseCount = count;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`app total release count updated to: ${this._chalkService.value(APP_CONFIG.totalReleaseCount)}`)
-      });
-    }
+  public updateTotalReleaseCount(totalReleaseCount?: Readonly<number>): void {
+    APP_CONFIG.totalReleaseCount = this._configService.getUpdatedNumber({
+      context: this._className,
+      newValue: totalReleaseCount,
+      oldValue: APP_CONFIG.totalReleaseCount,
+      valueName: `total release count`
+    });
   }
 
   public getReleaseNotes(): string {
     return APP_CONFIG.releaseNotes;
   }
 
-  public updateReleaseNotes(notes?: Readonly<string>): void {
-    if (_.isString(notes)) {
-      APP_CONFIG.releaseNotes = notes;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`app release notes updated`)
-      });
-    }
+  public updateReleaseNotes(releaseNotes?: Readonly<string>): void {
+    APP_CONFIG.releaseNotes = this._configService.getUpdatedString({
+      context: this._className,
+      isValueHidden: true,
+      newValue: releaseNotes,
+      oldValue: APP_CONFIG.releaseNotes,
+      valueName: `release notes`
+    });
   }
 
   private _defineProductionState(): void {
