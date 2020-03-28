@@ -122,6 +122,7 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
   public updateId(id?: Readonly<string>): void {
     DISCORD_SONIA_CONFIG.id = this._configService.getUpdatedString({
       context: this._className,
+      isValueHidden: true,
       newValue: id,
       oldValue: DISCORD_SONIA_CONFIG.id,
       valueName: `id`
@@ -135,6 +136,7 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
   public updateSecretToken(secretToken?: Readonly<string>): void {
     DISCORD_SONIA_CONFIG.secretToken = this._configService.getUpdatedString({
       context: this._className,
+      isValueHidden: true,
       newValue: secretToken,
       oldValue: DISCORD_SONIA_CONFIG.secretToken,
       valueName: `secret token`

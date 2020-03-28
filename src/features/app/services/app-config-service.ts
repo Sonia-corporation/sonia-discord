@@ -4,6 +4,7 @@ import { AbstractConfigService } from '../../../classes/abstract-config-service'
 import { isValidDate } from '../../../functions/checks/is-valid-date';
 import { PartialNested } from '../../../types/partial-nested';
 import { isNodeProduction } from '../../node/functions/is-node-production';
+import { TimeService } from '../../time/services/time-service';
 import { APP_CONFIG } from '../constants/app-config';
 import { AppProductionStateEnum } from '../enums/app-production-state.enum';
 import { IAppConfig } from '../interfaces/app-config';
@@ -20,6 +21,7 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
   }
 
   protected readonly _className = `AppConfigService`;
+  private readonly _timeService = TimeService.getInstance();
 
   protected constructor(config?: Readonly<PartialNested<IAppConfig>>) {
     super(config);
@@ -169,7 +171,7 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
 
   private _defineBuildDate(): void {
     if (!this.isProduction()) {
-      this.updateInitializationDate(moment().format());
+      this.updateInitializationDate(this._timeService.now());
     }
   }
 }

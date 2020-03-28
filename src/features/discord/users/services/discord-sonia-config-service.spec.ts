@@ -298,6 +298,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordSoniaConfigService`,
+        isValueHidden: true,
         newValue: `dummy-id`,
         oldValue: `id`,
         valueName: `id`
@@ -347,6 +348,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordSoniaConfigService`,
+        isValueHidden: true,
         newValue: `dummy-secret-token`,
         oldValue: `secret-token`,
         valueName: `secret token`
