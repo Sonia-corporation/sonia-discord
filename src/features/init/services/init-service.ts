@@ -2,7 +2,7 @@ import appRootPath from 'app-root-path';
 import axios, { AxiosResponse } from 'axios';
 import fs from 'fs-extra';
 import _ from 'lodash';
-import { ENVIRONMENT } from '../../../environment/environment';
+import { ENVIRONMENT } from '../../../environment/constants/environment';
 import { IEnvironment } from '../../../environment/interfaces/environment';
 import { getBearer } from '../../../functions/formatters/get-bearer';
 import { IPackage } from '../../../interfaces/package';
@@ -11,7 +11,7 @@ import { DiscordMessageConfigService } from '../../discord/messages/services/dis
 import { DiscordService } from '../../discord/services/discord-service';
 import { DiscordSoniaConfigService } from '../../discord/users/services/discord-sonia-config-service';
 import { GITHUB_API_URL } from '../../github/constants/github-api-url';
-import { GITHUB_QUERY_RELEASES_LATEST } from '../../github/constants/queries/github-query-releases-latest';
+import { GITHUB_QUERY_RELEASES_LATEST_AND_TOTAL_COUNT } from '../../github/constants/queries/github-query-releases-latest-and-total-count';
 import { getHumanizedReleaseNotes } from '../../github/functions/get-humanized-release-notes';
 import { IGithubReleasesLatest } from '../../github/interfaces/github-releases-latest';
 import { GithubConfigService } from '../../github/services/github-config-service';
@@ -69,7 +69,7 @@ export class InitService {
     GithubConfigService.getInstance().updateConfig(environment.github);
     DiscordSoniaConfigService.getInstance().updateConfig(environment.discord);
     DiscordMessageConfigService.getInstance().updateConfig(environment.discord);
-    AppConfigService.getInstance().updateConfig(environment.app);
+    AppConfigService.getInstance().init().updateConfig(environment.app);
   }
 
   private _configureAppFromPackage(): void {
@@ -88,7 +88,7 @@ export class InitService {
   private _configureAppFromGitHubReleases(): void {
     axios({
       data: {
-        query: GITHUB_QUERY_RELEASES_LATEST
+        query: GITHUB_QUERY_RELEASES_LATEST_AND_TOTAL_COUNT
       },
       headers: {
         Authorization: getBearer(GithubConfigService.getInstance().getPersonalAccessToken())

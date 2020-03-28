@@ -4,8 +4,7 @@ on:
     branches:
       - master
 jobs:
-  release:
-    name: Release
+  Release:
     runs-on: ubuntu-latest
     strategy:
       matrix:

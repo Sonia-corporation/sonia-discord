@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import moment from 'moment';
-import { ConfigService } from '../../../classes/config-service';
+import { AbstractConfigService } from '../../../classes/abstract-config-service';
 import { isValidDate } from '../../../functions/checks/is-valid-date';
 import { wrapInQuotes } from '../../../functions/formatters/wrap-in-quotes';
 import { PartialNested } from '../../../types/partial-nested';
@@ -9,7 +9,7 @@ import { APP_CONFIG } from '../constants/app-config';
 import { AppProductionStateEnum } from '../enums/app-production-state.enum';
 import { IAppConfig } from '../interfaces/app-config';
 
-export class AppConfigService extends ConfigService<IAppConfig> {
+export class AppConfigService extends AbstractConfigService<IAppConfig> {
   private static _instance: AppConfigService;
 
   public static getInstance(config?: Readonly<PartialNested<IAppConfig>>): AppConfigService {
@@ -24,6 +24,28 @@ export class AppConfigService extends ConfigService<IAppConfig> {
 
   protected constructor(config?: Readonly<PartialNested<IAppConfig>>) {
     super(config);
+  }
+
+  public init(): AppConfigService {
+    this._defineProductionState();
+    this._defineBuildDate();
+
+    return this;
+  }
+
+  public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
+    if (!_.isNil(config)) {
+      this.updateVersion(config.version);
+      this.updateReleaseDate(config.releaseDate);
+      this.updateInitializationDate(config.initializationDate);
+      this.updateTotalReleaseCount(config.totalReleaseCount);
+      this.updateReleaseNotes(config.releaseNotes);
+
+      this._loggerService.debug({
+        context: this._className,
+        message: this._chalkService.text(`configuration updated`)
+      });
+    }
   }
 
   public getVersion(): string {
@@ -143,26 +165,6 @@ export class AppConfigService extends ConfigService<IAppConfig> {
       this._loggerService.log({
         context: this._className,
         message: this._chalkService.text(`app release notes updated`)
-      });
-    }
-  }
-
-  protected preUpdateConfig(): void {
-    this._defineProductionState();
-    this._defineBuildDate();
-  }
-
-  public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
-    if (!_.isNil(config)) {
-      this.updateVersion(config.version);
-      this.updateReleaseDate(config.releaseDate);
-      this.updateInitializationDate(config.initializationDate);
-      this.updateTotalReleaseCount(config.totalReleaseCount);
-      this.updateReleaseNotes(config.releaseNotes);
-
-      this._loggerService.debug({
-        context: this._className,
-        message: this._chalkService.text(`configuration updated`)
       });
     }
   }

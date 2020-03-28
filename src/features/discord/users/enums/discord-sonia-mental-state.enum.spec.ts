@@ -1,6 +1,6 @@
 import { DiscordSoniaMentalStateEnum } from './discord-sonia-mental-state.enum';
 
-describe(`discordSoniaMentalStateEnum`, (): void => {
+describe(`DiscordSoniaMentalStateEnum`, (): void => {
   it(`should have a member "AGITATED"`, (): void => {
     expect.assertions(1);
 
