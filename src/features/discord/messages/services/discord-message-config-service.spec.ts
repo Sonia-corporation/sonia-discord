@@ -13,6 +13,116 @@ describe(`DiscordMessageConfigService`, (): void => {
     configService = ConfigService.getInstance();
   });
 
+  describe(`getMessage()`, (): void => {
+    beforeEach((): void => {
+      DISCORD_MESSAGE_CONFIG.command = {
+        prefix: `dummy-prefix`,
+        version: {
+          imageColor: 8,
+          imageUrl: `dummy-image-url`
+        }
+      };
+      DISCORD_MESSAGE_CONFIG.error = {
+        imageColor: 8,
+        imageUrl: `dummy-image-url`
+      };
+    });
+
+    it(`should return the Discord message config`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessage();
+
+      expect(result).toStrictEqual({
+        command: {
+          prefix: `dummy-prefix`,
+          version: {
+            imageColor: 8,
+            imageUrl: `dummy-image-url`
+          }
+        },
+        error: {
+          imageColor: 8,
+          imageUrl: `dummy-image-url`
+        }
+      });
+    });
+  });
+
+  describe(`getMessageCommand()`, (): void => {
+    beforeEach((): void => {
+      DISCORD_MESSAGE_CONFIG.command = {
+        prefix: `dummy-prefix`,
+        version: {
+          imageColor: 8,
+          imageUrl: `dummy-image-url`
+        }
+      };
+    });
+
+    it(`should return the Discord message config command`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommand();
+
+      expect(result).toStrictEqual({
+        prefix: `dummy-prefix`,
+        version: {
+          imageColor: 8,
+          imageUrl: `dummy-image-url`
+        }
+      });
+    });
+  });
+
+  describe(`getMessageCommandPrefix()`, (): void => {
+    beforeEach((): void => {
+      DISCORD_MESSAGE_CONFIG.command.prefix = `dummy-prefix`;
+    });
+
+    it(`should return the Discord message config command prefix`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandPrefix();
+
+      expect(result).toStrictEqual(`dummy-prefix`);
+    });
+  });
+
+  describe(`getMessageCommandVersion()`, (): void => {
+    beforeEach((): void => {
+      DISCORD_MESSAGE_CONFIG.command.version = {
+        imageColor: 8,
+        imageUrl: `dummy-image-url`
+      };
+    });
+
+    it(`should return the Discord message config command version`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandVersion();
+
+      expect(result).toStrictEqual({
+        imageColor: 8,
+        imageUrl: `dummy-image-url`
+      });
+    });
+  });
+
+  describe(`getMessageCommandVersionImageColor()`, (): void => {
+    beforeEach((): void => {
+      DISCORD_MESSAGE_CONFIG.command.version.imageColor = 8;
+    });
+
+    it(`should return the Discord message config command version image color`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandVersionImageColor();
+
+      expect(result).toStrictEqual(8);
+    });
+  });
+
   describe(`updateMessageCommandVersionImageColor()`, (): void => {
     let imageColor: number;
 
@@ -45,6 +155,20 @@ describe(`DiscordMessageConfigService`, (): void => {
       service.updateMessageCommandVersionImageColor(imageColor);
 
       expect(DISCORD_MESSAGE_CONFIG.command.version.imageColor).toStrictEqual(8);
+    });
+  });
+
+  describe(`getMessageCommandVersionImageUrl()`, (): void => {
+    beforeEach((): void => {
+      DISCORD_MESSAGE_CONFIG.command.version.imageUrl = `dummy-image-url`;
+    });
+
+    it(`should return the Discord message config command version image url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandVersionImageUrl();
+
+      expect(result).toStrictEqual(`dummy-image-url`);
     });
   });
 
@@ -83,6 +207,40 @@ describe(`DiscordMessageConfigService`, (): void => {
     });
   });
 
+  describe(`getMessageError()`, (): void => {
+    beforeEach((): void => {
+      DISCORD_MESSAGE_CONFIG.error = {
+        imageColor: 8,
+        imageUrl: `dummy-image-url`
+      };
+    });
+
+    it(`should return the Discord message config error`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageError();
+
+      expect(result).toStrictEqual({
+        imageColor: 8,
+        imageUrl: `dummy-image-url`
+      });
+    });
+  });
+
+  describe(`getMessageCommandErrorImageColor()`, (): void => {
+    beforeEach((): void => {
+      DISCORD_MESSAGE_CONFIG.error.imageColor = 8;
+    });
+
+    it(`should return the Discord message config error image color`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandErrorImageColor();
+
+      expect(result).toStrictEqual(8);
+    });
+  });
+
   describe(`updateMessageErrorImageColor()`, (): void => {
     let imageColor: number;
 
@@ -115,6 +273,20 @@ describe(`DiscordMessageConfigService`, (): void => {
       service.updateMessageErrorImageColor(imageColor);
 
       expect(DISCORD_MESSAGE_CONFIG.error.imageColor).toStrictEqual(8);
+    });
+  });
+
+  describe(`getMessageCommandErrorImageUrl()`, (): void => {
+    beforeEach((): void => {
+      DISCORD_MESSAGE_CONFIG.error.imageUrl = `dummy-image-url`;
+    });
+
+    it(`should return the Discord message config error image url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandErrorImageUrl();
+
+      expect(result).toStrictEqual(`dummy-image-url`);
     });
   });
 

@@ -27,6 +27,7 @@ export class DiscordMessageConfigService extends AbstractConfigService<IDiscordC
     super(config);
   }
 
+  // @todo add coverage
   public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
     if (!_.isNil(config)) {
       this.updateMessage(config.message);
@@ -42,6 +43,7 @@ export class DiscordMessageConfigService extends AbstractConfigService<IDiscordC
     return DISCORD_MESSAGE_CONFIG;
   }
 
+  // @todo add coverage
   public updateMessage(message?: Readonly<PartialNested<IDiscordMessageConfig>>): void {
     if (!_.isNil(message)) {
       this.updateMessageCommand(message.command);
@@ -53,6 +55,7 @@ export class DiscordMessageConfigService extends AbstractConfigService<IDiscordC
     return DISCORD_MESSAGE_CONFIG.command;
   }
 
+  // @todo add coverage
   public updateMessageCommand(command?: Readonly<PartialNested<IDiscordMessageCommandConfig>>): void {
     if (!_.isNil(command)) {
       this.updateMessageCommandPrefix(command.prefix);
@@ -64,6 +67,8 @@ export class DiscordMessageConfigService extends AbstractConfigService<IDiscordC
     return DISCORD_MESSAGE_CONFIG.command.prefix;
   }
 
+  // @todo add coverage
+  // @todo refactor to use the config service
   public updateMessageCommandPrefix(prefix?: string | (string | undefined)[]): void {
     if (_.isString(prefix)) {
       DISCORD_MESSAGE_CONFIG.command.prefix = prefix;
@@ -86,6 +91,7 @@ export class DiscordMessageConfigService extends AbstractConfigService<IDiscordC
     return DISCORD_MESSAGE_CONFIG.command.version;
   }
 
+  // @todo add coverage
   public updateMessageCommandVersion(version?: Readonly<PartialNested<IDiscordMessageCommandVersionConfig>>): void {
     if (!_.isNil(version) && _.isPlainObject(version)) {
       this.updateMessageCommandVersionImageColor(version.imageColor);
@@ -123,6 +129,7 @@ export class DiscordMessageConfigService extends AbstractConfigService<IDiscordC
     return DISCORD_MESSAGE_CONFIG.error;
   }
 
+  // @todo add coverage
   public updateMessageError(error?: Readonly<PartialNested<IDiscordMessageErrorConfig>>): void {
     if (!_.isNil(error) && _.isPlainObject(error)) {
       this.updateMessageErrorImageColor(error.imageColor);
