@@ -1,5 +1,7 @@
+import { IConfigUpdateString } from '../../../config/interfaces/config-update-string';
 import { ConfigService } from '../../../config/services/config-service';
 import { IDiscordSoniaConfig } from '../../interfaces/discord-sonia-config';
+import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from '../../interfaces/discord-sonia-corporation-message-embed-author-config';
 import { DISCORD_SONIA_CONFIG } from '../constants/discord-sonia-config';
 import { DiscordSoniaConfigService } from './discord-sonia-config-service';
 
@@ -81,7 +83,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
         newValue: `dummy-corporation-image-url`,
         oldValue: `corporation-image-url`,
         valueName: `corporation image url`
-      });
+      } as IConfigUpdateString);
     });
 
     it(`should update the Discord Sonia config corporation image url with the updated string`, (): void => {
@@ -111,7 +113,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
         iconURL: `dummy-icon-url`,
         name: `dummy-name`,
         url: `dummy-url`
-      });
+      } as IDiscordSoniaCorporationMessageEmbedAuthorConfig);
     });
   });
 
@@ -152,7 +154,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
         newValue: `dummy-icon-url`,
         oldValue: `icon-url`,
         valueName: `corporation message embed author icon url`
-      });
+      } as IConfigUpdateString);
     });
 
     it(`should update the Discord Sonia config corporation message embed author icon url with the updated string`, (): void => {
@@ -201,7 +203,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
         newValue: `dummy-name`,
         oldValue: `name`,
         valueName: `corporation message embed author name`
-      });
+      } as IConfigUpdateString);
     });
 
     it(`should update the Discord Sonia config corporation message embed author name with the updated string`, (): void => {
@@ -250,7 +252,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
         newValue: `dummy-url`,
         oldValue: `url`,
         valueName: `corporation message embed author url`
-      });
+      } as IConfigUpdateString);
     });
 
     it(`should update the Discord Sonia config corporation message embed author url with the updated string`, (): void => {
@@ -299,7 +301,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
         newValue: `dummy-id`,
         oldValue: `id`,
         valueName: `id`
-      });
+      } as IConfigUpdateString);
     });
 
     it(`should update the Discord Sonia config id with the updated string`, (): void => {
@@ -348,7 +350,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
         newValue: `dummy-secret-token`,
         oldValue: `secret-token`,
         valueName: `secret token`
-      });
+      } as IConfigUpdateString);
     });
 
     it(`should update the Discord Sonia config secret token with the updated string`, (): void => {

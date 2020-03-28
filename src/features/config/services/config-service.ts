@@ -37,13 +37,19 @@ export class ConfigService {
     if (_.isString(configUpdateString.newValue)) {
       let message = `${configUpdateString.valueName} updated`;
 
-      if (!_.isEqual(configUpdateString.isValueHidden, true)) {
-        message = `${message} to: ${this._chalkService.value(wrapInQuotes(configUpdateString.newValue))}`;
+      if (_.isEqual(configUpdateString.isValueHidden, true)) {
+        message = this._loggerService.getHiddenValueUpdate(`${message} to: `, true);
+      } else {
+        if (!_.isEqual(configUpdateString.isValueDisplay, false)) {
+          message = this._chalkService.text(`${message} to: ${this._chalkService.value(wrapInQuotes(configUpdateString.newValue))}`);
+        } else {
+          message = this._chalkService.text(message);
+        }
       }
 
       this._loggerService.log({
         context: configUpdateString.context,
-        message: this._chalkService.text(message)
+        message: message
       });
 
       return configUpdateString.newValue;

@@ -156,7 +156,7 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
   public updateReleaseNotes(releaseNotes?: Readonly<string>): void {
     APP_CONFIG.releaseNotes = this._configService.getUpdatedString({
       context: this._className,
-      isValueHidden: true,
+      isValueDisplay: false,
       newValue: releaseNotes,
       oldValue: APP_CONFIG.releaseNotes,
       valueName: `release notes`

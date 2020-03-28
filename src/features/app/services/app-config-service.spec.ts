@@ -1,8 +1,11 @@
+import moment from 'moment';
+import { IConfigUpdateBoolean } from '../../config/interfaces/config-update-boolean';
+import { IConfigUpdateNumber } from '../../config/interfaces/config-update-number';
+import { IConfigUpdateString } from '../../config/interfaces/config-update-string';
 import { ConfigService } from '../../config/services/config-service';
 import { APP_CONFIG } from '../constants/app-config';
 import { IAppConfig } from '../interfaces/app-config';
 import { AppConfigService } from './app-config-service';
-import moment = require(`moment`);
 
 jest.mock(`../../config/services/config-service`);
 
@@ -78,7 +81,7 @@ describe(`AppConfigService`, (): void => {
         newValue: `dummy-version`,
         oldValue: `version`,
         valueName: `version`
-      });
+      } as IConfigUpdateString);
     });
 
     it(`should update the app config version with the updated string`, (): void => {
@@ -203,7 +206,7 @@ describe(`AppConfigService`, (): void => {
         newValue: `dummy-release-date`,
         oldValue: `release-date`,
         valueName: `release date`
-      });
+      } as IConfigUpdateString);
     });
 
     it(`should update the app config release date with the updated string`, (): void => {
@@ -328,7 +331,7 @@ describe(`AppConfigService`, (): void => {
         newValue: `dummy-initialization-date`,
         oldValue: `initialization-date`,
         valueName: `initialization date`
-      });
+      } as IConfigUpdateString);
     });
 
     it(`should update the app config initialization date with the updated string`, (): void => {
@@ -431,7 +434,7 @@ describe(`AppConfigService`, (): void => {
         newValue: false,
         oldValue: true,
         valueName: `production state`
-      });
+      } as IConfigUpdateBoolean);
     });
 
     it(`should update the app config production state with the updated boolean`, (): void => {
@@ -542,7 +545,7 @@ describe(`AppConfigService`, (): void => {
         newValue: 8,
         oldValue: 5,
         valueName: `total release count`
-      });
+      } as IConfigUpdateNumber);
     });
 
     it(`should update the app config total release count with the updated number`, (): void => {
@@ -588,11 +591,11 @@ describe(`AppConfigService`, (): void => {
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `AppConfigService`,
-        isValueHidden: true,
+        isValueDisplay: false,
         newValue: `dummy-release-notes`,
         oldValue: `release-notes`,
         valueName: `release notes`
-      });
+      } as IConfigUpdateString);
     });
 
     it(`should update the app config release notes with the updated string`, (): void => {
