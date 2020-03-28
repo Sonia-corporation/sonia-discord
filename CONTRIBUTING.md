@@ -68,6 +68,7 @@ Run `npm run start` to start the local development server.
 - `npm run test:watch`: run the tests and watch them  
 - `npm run test:majestic`: run the tests in the browser (beautiful UI)
 - `npm run test:ci`: run the tests once and stop asap on error 
+- `npm run test:ci:coverage`: run the tests once with code coverage and stop asap on error 
 - `npm run test:mutant`: run the mutation testing once
 - `npm run test:mutant:ci`: run the mutation testing once and update Stryker dashboard
 - `npm run lint`: run the linter and fix the errors  
