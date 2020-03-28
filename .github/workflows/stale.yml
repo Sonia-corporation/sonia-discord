@@ -3,8 +3,7 @@ on:
   schedule:
     - cron: "0 0 * * *"
 jobs:
-  stale:
-    name: Stale
+  Stale:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/stale@v1

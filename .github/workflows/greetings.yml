@@ -3,8 +3,7 @@ on:
   - pull_request
   - issues
 jobs:
-  greeting:
-    name: Greetings
+  Greetings:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/first-interaction@v1

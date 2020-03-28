@@ -12,8 +12,7 @@ on:
       - master
       - develop
 jobs:
-  build:
-    name: Build
+  Build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -44,8 +43,7 @@ jobs:
         run: npm run build
         env:
           CI: true
-  lint:
-    name: Lint
+  Lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -74,8 +72,7 @@ jobs:
         run: npm ci
       - name: Lint
         run: npm run lint:ci
-  test:
-    name: Test
+  Test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -104,8 +101,7 @@ jobs:
         run: npm ci
       - name: Test
         run: npm run test:ci
-  coverage:
-    name: Coverage
+  Coverage:
     runs-on: ubuntu-latest
     strategy:
       matrix:

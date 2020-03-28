@@ -7,8 +7,7 @@ on:
     branches:
       - develop
 jobs:
-  build:
-    name: Mutant
+  Mutant:
     runs-on: ubuntu-latest
     strategy:
       matrix:
