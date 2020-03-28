@@ -33,7 +33,7 @@ export class ConfigService {
     return configUpdateNumber.oldValue;
   }
 
-  public getUpdatedString(configUpdateString: Readonly<IConfigUpdateString>): string {
+  public getUpdatedString<T>(configUpdateString: Readonly<IConfigUpdateString<T>>): T {
     if (_.isString(configUpdateString.newValue)) {
       let message = `${configUpdateString.valueName} updated`;
 

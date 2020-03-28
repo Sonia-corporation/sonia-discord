@@ -33,9 +33,19 @@ export class ConfigService {
 
   public getUpdatedString(configUpdateString: Readonly<IConfigUpdateString>): string {
     if (_.isString(configUpdateString.newValue)) {
+      let message = `${configUpdateString.valueName} updated`;
+
+      if (_.isEqual(configUpdateString.isValueHidden, true)) {
+        message = this._loggerService.getHiddenValueUpdate(`${message} to: `, true);
+      } else {
+        if (!_.isEqual(configUpdateString.isValueDisplay, false)) {
+          message = `${message} to: ${wrapInQuotes(configUpdateString.newValue)}`;
+        }
+      }
+
       this._loggerService.log({
         context: configUpdateString.context,
-        message: `${configUpdateString.valueName} updated to: ${wrapInQuotes(configUpdateString.newValue)}`
+        message: message
       });
 
       return configUpdateString.newValue;
