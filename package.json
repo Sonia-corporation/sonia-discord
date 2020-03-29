@@ -125,7 +125,7 @@
     "husky": "4.2.3",
     "jest": "25.2.3",
     "jest-silent-reporter": "0.2.1",
-    "lint-staged": "10.0.9",
+    "lint-staged": "10.0.10",
     "majestic": "1.6.2",
     "parcel-bundler": "1.12.4",
     "pug": "2.0.4",
