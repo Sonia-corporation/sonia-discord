@@ -150,23 +150,35 @@ export class DiscordMessageErrorService {
     error: unknown,
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): EmbedFieldData[] {
+    return [
+      this._getMessageEmbedFieldMessageId(anyDiscordMessage),
+      this._getMessageEmbedFieldError(error),
+      this._getMessageEmbedFieldHint()
+    ];
+  }
+
+  private _getMessageEmbedFieldMessageId(anyDiscordMessage: Readonly<AnyDiscordMessage>): EmbedFieldData {
+    return {
+      name: `The message's id that killed me`,
+      value: anyDiscordMessage.id
+    };
+  }
+
+  private _getMessageEmbedFieldError(error: unknown): EmbedFieldData {
+    return {
+      name: `My blood trace`,
+      value: ellipsis(_.toString(error))
+    };
+  }
+
+  private _getMessageEmbedFieldHint(): EmbedFieldData {
     const githubBugReportUrl: string = this._githubConfigService.getBugReportUrl();
     const discordSoniaPermanentGuildInviteUrl: string = this._discordGuildConfigService.getSoniaPermanentGuildInviteUrl();
 
-    return [
-      {
-        name: `The message's id that killed me`,
-        value: anyDiscordMessage.id
-      },
-      {
-        name: `My blood trace`,
-        value: ellipsis(_.toString(error))
-      },
-      {
-        name: `Help me to help you`,
-        value: `You can create a [bug report](${githubBugReportUrl}) or reach my creators on [discord](${discordSoniaPermanentGuildInviteUrl}).`
-      }
-    ];
+    return {
+      name: `Help me to help you`,
+      value: `You can create a [bug report](${githubBugReportUrl}) or reach my creators on [discord](${discordSoniaPermanentGuildInviteUrl}).`
+    };
   }
 }
 
