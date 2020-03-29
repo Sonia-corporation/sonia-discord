@@ -1,5 +1,33 @@
 # Semantic Versioning Changelog
 
+# [1.21.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.20.0...1.21.0) (2020-03-29)
+
+
+### Bug Fixes
+
+* **discord-logger-service:** fix typing error due to new discord version update ([5f38423](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5f3842369eca931382dc67cd69a77dab64daa78b))
+* **deps:** update dependency discord.js to v12.1.1 ([015fa43](https://github.com/Sonia-corporation/il-est-midi-discord/commit/015fa436bb1b214b42303947f558600a56784e06))
+
+
+### Features
+
+* **config-service:** add new options to the string update to hide the value of just do not display it ([aceee56](https://github.com/Sonia-corporation/il-est-midi-discord/commit/aceee563a656102c14a000b0d5d299fc89f1751b))
+
+# [1.20.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.19.2...1.20.0) (2020-03-28)
+
+
+### Bug Fixes
+
+* **app-config:** change the way to setup the initial configuration ([06fb1a9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/06fb1a981bf21ed95e6b2091a1e6e4f2de6b4303))
+
+
+### Features
+
+* **discord-sonia-config:** add more methods to update the config ([674275d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/674275d05c8a83869ac423793be59145f80f04c2))
+* **config:** add new config service ([c85ac44](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c85ac445181b2e3f0114b5c23c7d8dc295957cc5))
+* **config-service:** add new method getUpdatedBoolean ([a813694](https://github.com/Sonia-corporation/il-est-midi-discord/commit/a813694563bf98ee99c9c9dc77f992434f7a53f0))
+* **config-service:** add new method getUpdatedString ([94c2705](https://github.com/Sonia-corporation/il-est-midi-discord/commit/94c2705768cc9ca6650f9a2cfa3ab929cc42402e))
+
 ## [1.19.2](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.19.1...1.19.2) (2020-03-27)
 
 
