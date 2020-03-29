@@ -60,6 +60,7 @@ Run `npm run start` to start the local development server.
 - `npm run start:prod`: build and run the Node.js app like it will be once deployed in the server for local development or server debugging  
 - `npm run build`: create a Node.js app in the dist folder  
 - `npm run build:environment:copy`: copy the secret environment file inside the dist folder  
+- `npm run build:environment:create`: create the environment file inside the dist folder with some default values used for the CI 
 - `npm run build:environment:rewrite-path`: rename the environment file path of the Node.js app inside the dist folder  
 - `npm run build:update-app-initialization-date`: update the app initialization date inside the environment file from the dist folder  
 - `npm run run:prod`: run the Node.js app like it will be once deployed in the server for local development or server debugging  
