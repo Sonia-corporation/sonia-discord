@@ -11,7 +11,8 @@ __Quality:__
 ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/sonia-corporation/il-est-midi-discord?style=flat-square)
 ![Build](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Build/badge.svg?branch=master&style=flat-square)
 ![Release](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Release/badge.svg?branch=master&style=flat-square)
-![David](https://img.shields.io/david/sonia-corporation/il-est-midi-discord?style=flat-square)
+![Dependencies](https://img.shields.io/david/sonia-corporation/il-est-midi-discord?style=flat-square)
+![Dev Dependencies](https://img.shields.io/david/dev/sonia-corporation/il-est-midi-discord?style=flat-square)
 
 __Community:__  
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)

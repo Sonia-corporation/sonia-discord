@@ -48,8 +48,8 @@ export class DiscordLoggerService {
   }
 
   private _listenForErrors(): void {
-    this._discordClientServiceClient.on(`error`, (message: Readonly<string>): void => {
-      this._handleError(message);
+    this._discordClientServiceClient.on(`error`, (error: Readonly<Error>): void => {
+      this._handleError(error);
     });
 
     this._loggerService.debug({
@@ -58,10 +58,10 @@ export class DiscordLoggerService {
     });
   }
 
-  private _handleError(message: Readonly<string>): void {
+  private _handleError(error: Readonly<Error>): void {
     this._loggerService.error({
       context: this._className,
-      message: this._chalkService.text(message)
+      message: this._chalkService.text(error)
     });
   }
 }
