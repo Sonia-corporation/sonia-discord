@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+# [1.22.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.21.0...1.22.0) (2020-03-29)
+
+
+### Features
+
+* **release-notes:** add : after the h1 ([e683bff](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e683bfff6594d219598165ecaced9aa62d1410f3))
+* **discord-message-command-service:** allow to use the shortcut v instead of just version ([7dc163a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7dc163a1d8710072b4c2013c46388015bdeabd82))
+
 # [1.21.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.20.0...1.21.0) (2020-03-29)
 
 
