@@ -149,7 +149,7 @@ export class DiscordMessageCommandVersionService {
 
     return {
       inline: true,
-      name: `Where am I ?`,
+      name: `My location`,
       value: `Running in ${appProductionStateHumanized}`
     };
   }
@@ -159,7 +159,7 @@ export class DiscordMessageCommandVersionService {
 
     return {
       inline: true,
-      name: `How am I ?`,
+      name: `My mental state`,
       value: _.capitalize(soniaMentalState)
     };
   }

@@ -6,4 +6,10 @@ describe(`DiscordMessageCommandEnum`, (): void => {
 
     expect(DiscordMessageCommandEnum.VERSION).toStrictEqual(`version`);
   });
+
+  it(`should have a member "V"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandEnum.V).toStrictEqual(`v`);
+  });
 });

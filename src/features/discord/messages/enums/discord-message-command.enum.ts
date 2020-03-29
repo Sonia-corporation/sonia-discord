@@ -1,3 +1,7 @@
 export enum DiscordMessageCommandEnum {
-  VERSION = `version`
+  VERSION = `version`,
+  /**
+   * Shortcut for {@link VERSION}
+   */
+  V = `v`
 }
