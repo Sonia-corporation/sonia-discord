@@ -14,11 +14,11 @@ FS.createFile(`${APP_ROOT_PATH.path}/dist/environment.json`).then(() => {
   FS.writeJson(`${APP_ROOT_PATH.path}/dist/environment.json`, {
     discord: {
       sonia: {
-        secretToken: `{{ DISCORD_SONIA_SECRET_TOKEN }}`
+        secretToken: process.env.DISCORD_SONIA_SECRET_TOKEN || `unknown`
       }
     },
     github: {
-      personalAccessToken: `{{ GITHUB_PERSONAL_ACCESS_TOKEN }}`
+      personalAccessToken: process.env.GITHUB_PERSONAL_ACCESS_TOKEN || `unknown`
     }
   }).then(() => {
     LOGGER.success(CONTEXT, CHALK.text(`Environment file content successfully rewritten into dist`));
