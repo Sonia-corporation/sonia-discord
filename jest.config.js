@@ -62,7 +62,11 @@ module.exports = {
   // globalTeardown: undefined,
 
   // A set of global variables that need to be available in all test environments
-  // globals: {},
+  globals: {
+    'ts-jest': {
+      compiler: `ttypescript`
+    }
+  },
 
   // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
   // maxWorkers: "50%",
@@ -130,8 +134,11 @@ module.exports = {
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
 
-  // The paths to modules that run some code to configure or set up the testing environment before each test
-  // setupFiles: [],
+  // A list of paths to directories that Jest should use to search for files in
+  roots: [
+    `./src`,
+    `./scripts`
+  ],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   // setupFilesAfterEnv: [],
@@ -139,10 +146,9 @@ module.exports = {
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],
 
-  // A list of paths to directories that Jest should use to search for files in
-  roots: [
-    `./src`,
-    `./scripts`
+  // The paths to modules that run some code to configure or set up the testing environment before each test
+  setupFiles: [
+    `./config.ts`
   ],
 
   // The test environment that will be used for testing
@@ -179,8 +185,8 @@ module.exports = {
 
   testTimeout: 5000,
 
-  // A map from regular expressions to paths to transformers
-  // transform: undefined,
+  // Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
+  timers: `fake`,
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
@@ -190,8 +196,10 @@ module.exports = {
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
 
-  // Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
-  timers: `fake`,
+  // A map from regular expressions to paths to transformers
+  transform: {
+    '.ts': `ts-jest`
+  },
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
   // watchPathIgnorePatterns: [],
