@@ -22,31 +22,15 @@ describe(`DiscordMessageCommandService`, (): void => {
   describe(`hasCommand()`, (): void => {
     let message: string;
 
-    let hasVersionCommandSpy: jest.SpyInstance;
-
     beforeEach((): void => {
       message = `dummy-message`;
 
-      hasVersionCommandSpy = jest.spyOn(service, `hasVersionCommand`).mockImplementation();
-    });
-
-    describe(`when the given message contains the version command`, (): void => {
-      beforeEach((): void => {
-        hasVersionCommandSpy.mockReturnValue(true);
-      });
-
-      it(`should return true`, (): void => {
-        expect.assertions(1);
-
-        const result = service.hasCommand(message);
-
-        expect(result).toStrictEqual(true);
-      });
+      jest.spyOn(discordMessageConfigService, `getMessageCommandPrefix`).mockReturnValue(`--`);
     });
 
     describe(`when the given message does not contains the version command`, (): void => {
       beforeEach((): void => {
-        hasVersionCommandSpy.mockReturnValue(false);
+        message = `dummy-message`;
       });
 
       it(`should return false`, (): void => {
@@ -55,6 +39,20 @@ describe(`DiscordMessageCommandService`, (): void => {
         const result = service.hasCommand(message);
 
         expect(result).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given message contains the version command`, (): void => {
+      beforeEach((): void => {
+        message = `--version`;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.hasCommand(message);
+
+        expect(result).toStrictEqual(true);
       });
     });
   });
@@ -767,8 +765,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let discordMessageResponse: IDiscordMessageResponse;
 
     let discordMessageContentServiceHasContentSpy: jest.SpyInstance;
-    let serviceHasVersionCommandSpy: jest.SpyInstance;
-    let serviceHandleVersionCommandSpy: jest.SpyInstance;
+    let discordMessageCommandVersionServiceHandleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       // @todo replace with real mock
@@ -776,8 +773,8 @@ describe(`DiscordMessageCommandService`, (): void => {
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
       discordMessageContentServiceHasContentSpy = jest.spyOn(discordMessageContentService, `hasContent`).mockImplementation();
-      serviceHasVersionCommandSpy = jest.spyOn(service, `hasVersionCommand`).mockImplementation();
-      serviceHandleVersionCommandSpy = jest.spyOn(service, `handleVersionCommand`).mockReturnValue(discordMessageResponse);
+      discordMessageCommandVersionServiceHandleSpy = jest.spyOn(discordMessageCommandVersionService, `handle`).mockReturnValue(discordMessageResponse);
+      jest.spyOn(discordMessageConfigService, `getMessageCommandPrefix`).mockReturnValue(`--`);
     });
 
     describe(`when the given discord message has no content`, (): void => {
@@ -790,7 +787,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
         service.handleCommands(anyDiscordMessage);
 
-        expect(serviceHandleVersionCommandSpy).not.toHaveBeenCalled();
+        expect(discordMessageCommandVersionServiceHandleSpy).not.toHaveBeenCalled();
       });
 
       it(`should return null`, (): void => {
@@ -809,7 +806,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
       describe(`when the message does not contains the version command`, (): void => {
         beforeEach((): void => {
-          serviceHasVersionCommandSpy.mockReturnValue(false);
+          anyDiscordMessage.content = `dummy-content`;
         });
 
         it(`should not handle the version command`, (): void => {
@@ -817,7 +814,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
           service.handleCommands(anyDiscordMessage);
 
-          expect(serviceHandleVersionCommandSpy).not.toHaveBeenCalled();
+          expect(discordMessageCommandVersionServiceHandleSpy).not.toHaveBeenCalled();
         });
 
         it(`should return null`, (): void => {
@@ -831,7 +828,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
       describe(`when the message contains the version command`, (): void => {
         beforeEach((): void => {
-          serviceHasVersionCommandSpy.mockReturnValue(true);
+          anyDiscordMessage.content = `--version`;
         });
 
         it(`should handle the version command`, (): void => {
@@ -839,8 +836,8 @@ describe(`DiscordMessageCommandService`, (): void => {
 
           service.handleCommands(anyDiscordMessage);
 
-          expect(serviceHandleVersionCommandSpy).toHaveBeenCalledTimes(1);
-          expect(serviceHandleVersionCommandSpy).toHaveBeenCalledWith(anyDiscordMessage);
+          expect(discordMessageCommandVersionServiceHandleSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessageCommandVersionServiceHandleSpy).toHaveBeenCalledWith(anyDiscordMessage);
         });
 
         it(`should return the Discord message response for the version command`, (): void => {
