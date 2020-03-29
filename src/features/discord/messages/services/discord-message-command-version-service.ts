@@ -100,42 +100,67 @@ export class DiscordMessageCommandVersionService {
   }
 
   private _getMessageEmbedFields(): EmbedFieldData[] {
+    return [
+      this._getMessageEmbedFieldApplicationVersion(),
+      this._getMessageEmbedFieldReleaseDate(),
+      this._getMessageEmbedFieldInitializationDate(),
+      this._getMessageEmbedFieldReleaseNotes(),
+      this._getMessageEmbedFieldStatus(),
+      this._getMessageEmbedFieldMentalState()
+    ];
+  }
+
+  private _getMessageEmbedFieldApplicationVersion(): EmbedFieldData {
     const appVersion: string = this._appConfigService.getVersion();
-    const appReleaseDateHumanized: string = this._appConfigService.getReleaseDateHumanized();
-    const appInitializationDateHumanized: string = this._appConfigService.getInitializationDateHumanized();
+
+    return {
+      name: `Application version`,
+      value: `[${appVersion}](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${appVersion})`
+    };
+  }
+
+  private _getMessageEmbedFieldReleaseDate(): EmbedFieldData {
+    return {
+      inline: true,
+      name: `Release date`,
+      value: this._appConfigService.getReleaseDateHumanized()
+    };
+  }
+
+  private _getMessageEmbedFieldInitializationDate(): EmbedFieldData {
+    return {
+      inline: true,
+      name: `Initialization date`,
+      value: this._appConfigService.getInitializationDateHumanized()
+    };
+  }
+
+  private _getMessageEmbedFieldReleaseNotes(): EmbedFieldData {
     const appReleaseNotes: string = this._appConfigService.getReleaseNotes();
+
+    return {
+      name: `Release notes`,
+      value: `${ellipsis(appReleaseNotes, 800)}\n\nCheckout the complete [CHANGELOG](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md)`
+    };
+  }
+
+  private _getMessageEmbedFieldStatus(): EmbedFieldData {
     const appProductionStateHumanized: AppProductionStateEnum = this._appConfigService.getProductionStateHumanized();
+
+    return {
+      inline: true,
+      name: `Status`,
+      value: `Running in ${appProductionStateHumanized}`
+    };
+  }
+
+  private _getMessageEmbedFieldMentalState(): EmbedFieldData {
     const soniaMentalState: DiscordSoniaMentalStateEnum = this._discordSoniaService.getMentalState();
 
-    return [
-      {
-        name: `Application version`,
-        value: `[${appVersion}](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${appVersion})`
-      },
-      {
-        inline: true,
-        name: `Release date`,
-        value: appReleaseDateHumanized
-      },
-      {
-        inline: true,
-        name: `Initialization date`,
-        value: appInitializationDateHumanized
-      },
-      {
-        name: `Release notes`,
-        value: `${ellipsis(appReleaseNotes, 800)}\n\nCheckout the complete [CHANGELOG](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md)`
-      },
-      {
-        inline: true,
-        name: `Status`,
-        value: `Running in ${appProductionStateHumanized}`
-      },
-      {
-        inline: true,
-        name: `Mental state`,
-        value: _.capitalize(soniaMentalState)
-      }
-    ];
+    return {
+      inline: true,
+      name: `Mental state`,
+      value: _.capitalize(soniaMentalState)
+    };
   }
 }
