@@ -114,7 +114,7 @@ export class DiscordMessageCommandVersionService {
     const appVersion: string = this._appConfigService.getVersion();
 
     return {
-      name: `Application version`,
+      name: `My age`,
       value: `[${appVersion}](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${appVersion})`
     };
   }
@@ -122,7 +122,7 @@ export class DiscordMessageCommandVersionService {
   private _getMessageEmbedFieldReleaseDate(): EmbedFieldData {
     return {
       inline: true,
-      name: `Release date`,
+      name: `My last birthday`,
       value: this._appConfigService.getReleaseDateHumanized()
     };
   }
@@ -130,7 +130,7 @@ export class DiscordMessageCommandVersionService {
   private _getMessageEmbedFieldInitializationDate(): EmbedFieldData {
     return {
       inline: true,
-      name: `Initialization date`,
+      name: `The last time I woken up`,
       value: this._appConfigService.getInitializationDateHumanized()
     };
   }
@@ -139,8 +139,8 @@ export class DiscordMessageCommandVersionService {
     const appReleaseNotes: string = this._appConfigService.getReleaseNotes();
 
     return {
-      name: `Release notes`,
-      value: `${ellipsis(appReleaseNotes, 800)}\n\nCheckout the complete [CHANGELOG](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md)`
+      name: `My birthday card`,
+      value: `${ellipsis(appReleaseNotes, 1000)}\n\nCheckout all my [birthday cards](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md).`
     };
   }
 
@@ -149,7 +149,7 @@ export class DiscordMessageCommandVersionService {
 
     return {
       inline: true,
-      name: `Status`,
+      name: `Where am I ?`,
       value: `Running in ${appProductionStateHumanized}`
     };
   }
@@ -159,7 +159,7 @@ export class DiscordMessageCommandVersionService {
 
     return {
       inline: true,
-      name: `Mental state`,
+      name: `How am I ?`,
       value: _.capitalize(soniaMentalState)
     };
   }
