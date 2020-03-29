@@ -30,7 +30,10 @@ export class DiscordMessageCommandService {
   }
 
   public hasVersionCommand(message: Readonly<string>): boolean {
-    return this._hasThisCommand(message, DiscordMessageCommandEnum.VERSION);
+    return this._hasThisCommand(message, [
+      DiscordMessageCommandEnum.VERSION,
+      DiscordMessageCommandEnum.V
+    ]);
   }
 
   public handleVersionCommand(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse {
@@ -50,20 +53,43 @@ export class DiscordMessageCommandService {
   private _containsThisCommandWithPrefix(
     message: Readonly<string>,
     prefix: Readonly<string>,
+    commands: Readonly<DiscordMessageCommandEnum> | Readonly<DiscordMessageCommandEnum>[]
+  ): boolean {
+    let containsThisCommandWithPrefix = false;
+
+    if (_.isString(commands)) {
+      containsThisCommandWithPrefix = this._strictlyContainsThisCommandWithPrefix(message, prefix, commands);
+    } else if (_.isArray(commands)) {
+      _.forEach(commands, (command: Readonly<DiscordMessageCommandEnum>): false | void => {
+        if (this._strictlyContainsThisCommandWithPrefix(message, prefix, command)) {
+          containsThisCommandWithPrefix = true;
+
+          return false;
+        }
+      });
+    }
+
+    return containsThisCommandWithPrefix;
+  }
+
+  private _strictlyContainsThisCommandWithPrefix(
+    message: Readonly<string>,
+    prefix: Readonly<string>,
     command: Readonly<DiscordMessageCommandEnum>
   ): boolean {
-    return _.includes(message, `${prefix}${command}`);
+    // @todo could be better to use a RegExp instead of pure white space
+    return _.includes(message, `${prefix}${command} `) || _.endsWith(message, `${prefix}${command}`);
   }
 
   private _containsThisCommandWithOneOfThesePrefixes(
     message: Readonly<string>,
     prefixes: Readonly<string[]>,
-    command: Readonly<DiscordMessageCommandEnum>
+    commands: Readonly<DiscordMessageCommandEnum> | Readonly<DiscordMessageCommandEnum>[]
   ): boolean {
     let containsThisCommand = false;
 
     _.forEach(prefixes, (prefix: Readonly<string>): false | void => {
-      if (this._containsThisCommandWithPrefix(message, prefix, command)) {
+      if (this._containsThisCommandWithPrefix(message, prefix, commands)) {
         containsThisCommand = true;
 
         return false;
@@ -75,14 +101,14 @@ export class DiscordMessageCommandService {
 
   private _hasThisCommand(
     message: Readonly<string>,
-    command: Readonly<DiscordMessageCommandEnum>
+    commands: Readonly<DiscordMessageCommandEnum> | Readonly<DiscordMessageCommandEnum>[]
   ): boolean {
     const prefix: string | string[] = this._discordMessageConfigService.getMessageCommandPrefix();
 
     if (_.isString(prefix)) {
-      return this._containsThisCommandWithPrefix(message, prefix, command);
+      return this._containsThisCommandWithPrefix(message, prefix, commands);
     } else if (_.isArray(prefix)) {
-      return this._containsThisCommandWithOneOfThesePrefixes(message, prefix, command);
+      return this._containsThisCommandWithOneOfThesePrefixes(message, prefix, commands);
     }
 
     return false;

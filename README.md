@@ -42,6 +42,11 @@ __Example:__
 
 #### Version
 
+__Commands:__
+
+- version
+- v *(shortcut)*
+
 Sonia will send you a message containing:
 
 - The application version (as a link)
