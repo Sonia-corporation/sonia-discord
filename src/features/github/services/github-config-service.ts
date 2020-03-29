@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import { AbstractConfigService } from '../../../classes/abstract-config-service';
-import { wrapInQuotes } from '../../../functions/formatters/wrap-in-quotes';
 import { PartialNested } from '../../../types/partial-nested';
 import { GITHUB_CONFIG } from '../constants/github-config';
 import { IGithubConfig } from '../interfaces/github-config';
@@ -22,8 +21,10 @@ export class GithubConfigService extends AbstractConfigService<IGithubConfig> {
     super(config);
   }
 
+  // @todo add coverage
   public updateConfig(config?: Readonly<PartialNested<IGithubConfig>>): void {
     if (!_.isNil(config)) {
+      this.updateBugReportUrl(config.bugReportUrl);
       this.updatePersonalAccessToken(config.personalAccessToken);
 
       this._loggerService.debug({
@@ -33,19 +34,8 @@ export class GithubConfigService extends AbstractConfigService<IGithubConfig> {
     }
   }
 
-  public getPersonalAccessToken(): string {
-    return GITHUB_CONFIG.personalAccessToken;
-  }
-
-  public updatePersonalAccessToken(token?: Readonly<string>): void {
-    if (_.isString(token)) {
-      GITHUB_CONFIG.personalAccessToken = token;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._loggerService.getHiddenValueUpdate(`personal access token updated to:`, true)
-      });
-    }
+  public getGithub(): IGithubConfig {
+    return GITHUB_CONFIG;
   }
 
   public getBugReportUrl(): string {
@@ -53,13 +43,25 @@ export class GithubConfigService extends AbstractConfigService<IGithubConfig> {
   }
 
   public updateBugReportUrl(bugReportUrl?: Readonly<string>): void {
-    if (_.isString(bugReportUrl)) {
-      GITHUB_CONFIG.bugReportUrl = bugReportUrl;
+    GITHUB_CONFIG.bugReportUrl = this._configService.getUpdatedString({
+      context: this._className,
+      newValue: bugReportUrl,
+      oldValue: GITHUB_CONFIG.bugReportUrl,
+      valueName: `bug report url`
+    });
+  }
 
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`bug report url updated to: ${this._chalkService.value(wrapInQuotes(GITHUB_CONFIG.bugReportUrl))}`)
-      });
-    }
+  public getPersonalAccessToken(): string {
+    return GITHUB_CONFIG.personalAccessToken;
+  }
+
+  public updatePersonalAccessToken(personalAccessToken?: Readonly<string>): void {
+    GITHUB_CONFIG.personalAccessToken = this._configService.getUpdatedString({
+      context: this._className,
+      isValueHidden: true,
+      newValue: personalAccessToken,
+      oldValue: GITHUB_CONFIG.personalAccessToken,
+      valueName: `personal access token`
+    });
   }
 }
