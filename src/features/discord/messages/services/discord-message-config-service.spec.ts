@@ -1,4 +1,10 @@
+import { IConfigUpdateNumber } from '../../../config/interfaces/config-update-number';
+import { IConfigUpdateString } from '../../../config/interfaces/config-update-string';
 import { ConfigService } from '../../../config/services/config-service';
+import { IDiscordMessageCommandConfig } from '../../interfaces/discord-message-command-config';
+import { IDiscordMessageCommandVersionConfig } from '../../interfaces/discord-message-command-version-config';
+import { IDiscordMessageConfig } from '../../interfaces/discord-message-config';
+import { IDiscordMessageErrorConfig } from '../../interfaces/discord-message-error-config';
 import { DISCORD_MESSAGE_CONFIG } from '../constants/discord-message-config';
 import { DiscordMessageConfigService } from './discord-message-config-service';
 
@@ -45,7 +51,7 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageColor: 8,
           imageUrl: `dummy-image-url`
         }
-      });
+      } as IDiscordMessageConfig);
     });
   });
 
@@ -71,7 +77,7 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageColor: 8,
           imageUrl: `dummy-image-url`
         }
-      });
+      } as IDiscordMessageCommandConfig);
     });
   });
 
@@ -105,7 +111,7 @@ describe(`DiscordMessageConfigService`, (): void => {
       expect(result).toStrictEqual({
         imageColor: 8,
         imageUrl: `dummy-image-url`
-      });
+      } as IDiscordMessageCommandVersionConfig);
     });
   });
 
@@ -146,7 +152,7 @@ describe(`DiscordMessageConfigService`, (): void => {
         newValue: 8,
         oldValue: 10,
         valueName: `message command version image color`
-      });
+      } as IConfigUpdateNumber);
     });
 
     it(`should update the Discord message config command version image color with the updated number`, (): void => {
@@ -195,7 +201,7 @@ describe(`DiscordMessageConfigService`, (): void => {
         newValue: `dummy-image-url`,
         oldValue: `image-url`,
         valueName: `message command version image url`
-      });
+      } as IConfigUpdateString);
     });
 
     it(`should update the Discord message config command version image url with the updated string`, (): void => {
@@ -223,7 +229,7 @@ describe(`DiscordMessageConfigService`, (): void => {
       expect(result).toStrictEqual({
         imageColor: 8,
         imageUrl: `dummy-image-url`
-      });
+      } as IDiscordMessageErrorConfig);
     });
   });
 
@@ -264,7 +270,7 @@ describe(`DiscordMessageConfigService`, (): void => {
         newValue: 8,
         oldValue: 10,
         valueName: `message error image color`
-      });
+      } as IConfigUpdateNumber);
     });
 
     it(`should update the Discord message config error image color with the updated number`, (): void => {
@@ -313,7 +319,7 @@ describe(`DiscordMessageConfigService`, (): void => {
         newValue: `dummy-image-url`,
         oldValue: `image-url`,
         valueName: `message error image url`
-      });
+      } as IConfigUpdateString);
     });
 
     it(`should update the Discord message config error image url with the updated string`, (): void => {

@@ -1,3 +1,4 @@
+import { ILoggerLog } from '../../logger/interfaces/logger-log';
 import { LoggerService } from '../../logger/services/logger-service';
 import { IConfigUpdateBoolean } from '../interfaces/config-update-boolean';
 import { IConfigUpdateNumber } from '../interfaces/config-update-number';
@@ -68,7 +69,7 @@ describe(`ConfigService`, (): void => {
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
           message: `dummy-value-name updated to: 5`
-        });
+        } as ILoggerLog);
       });
 
       it(`should return the new value`, (): void => {
@@ -94,7 +95,7 @@ describe(`ConfigService`, (): void => {
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
           message: `dummy-value-name updated to: 6`
-        });
+        } as ILoggerLog);
       });
 
       it(`should return the new value`, (): void => {
@@ -150,24 +151,208 @@ describe(`ConfigService`, (): void => {
         configUpdateString.newValue = `new-value`;
       });
 
-      it(`should log`, (): void => {
-        expect.assertions(2);
+      describe(`when the given config update string value hidden state is undefined`, (): void => {
+        beforeEach((): void => {
+          configUpdateString.isValueHidden = undefined;
+        });
 
-        service.getUpdatedString(configUpdateString);
+        describe(`when the given config update string value display state is undefined`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = undefined;
+          });
 
-        expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
-        expect(loggerServiceLogSpy).toHaveBeenCalledWith({
-          context: `dummy-context`,
-          message: `dummy-value-name updated to: "new-value"`
+          it(`should log`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated to: "new-value"`
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the given config update string value display state is false`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = false;
+          });
+
+          it(`should log without the value`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated`
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the given config update string value display state is true`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = true;
+          });
+
+          it(`should log`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated to: "new-value"`
+            } as ILoggerLog);
+          });
+        });
+
+        it(`should return the new value`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getUpdatedString(configUpdateString);
+
+          expect(result).toStrictEqual(`new-value`);
         });
       });
 
-      it(`should return the new value`, (): void => {
-        expect.assertions(1);
+      describe(`when the given config update string value hidden state is false`, (): void => {
+        beforeEach((): void => {
+          configUpdateString.isValueHidden = false;
+        });
 
-        const result = service.getUpdatedString(configUpdateString);
+        describe(`when the given config update string value display state is undefined`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = undefined;
+          });
 
-        expect(result).toStrictEqual(`new-value`);
+          it(`should log`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated to: "new-value"`
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the given config update string value display state is false`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = false;
+          });
+
+          it(`should log without the value`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated`
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the given config update string value display state is true`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = true;
+          });
+
+          it(`should log`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated to: "new-value"`
+            } as ILoggerLog);
+          });
+        });
+
+        it(`should return the new value`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getUpdatedString(configUpdateString);
+
+          expect(result).toStrictEqual(`new-value`);
+        });
+      });
+
+      describe(`when the given config update string value hidden state is true`, (): void => {
+        beforeEach((): void => {
+          configUpdateString.isValueHidden = true;
+        });
+
+        describe(`when the given config update string value display state is undefined`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = undefined;
+          });
+
+          it(`should log and hide the value`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated to: "********" (hidden)`
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the given config update string value display state is false`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = false;
+          });
+
+          it(`should log and hide the value`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated to: "********" (hidden)`
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the given config update string value display state is true`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = true;
+          });
+
+          it(`should log and hide the value`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated to: "********" (hidden)`
+            } as ILoggerLog);
+          });
+        });
+
+        it(`should return the new value`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getUpdatedString(configUpdateString);
+
+          expect(result).toStrictEqual(`new-value`);
+        });
       });
     });
 
@@ -176,24 +361,208 @@ describe(`ConfigService`, (): void => {
         configUpdateString.newValue = `marco-polo`;
       });
 
-      it(`should log`, (): void => {
-        expect.assertions(2);
+      describe(`when the given config update string value hidden state is undefined`, (): void => {
+        beforeEach((): void => {
+          configUpdateString.isValueHidden = undefined;
+        });
 
-        service.getUpdatedString(configUpdateString);
+        describe(`when the given config update string value display state is undefined`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = undefined;
+          });
 
-        expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
-        expect(loggerServiceLogSpy).toHaveBeenCalledWith({
-          context: `dummy-context`,
-          message: `dummy-value-name updated to: "marco-polo"`
+          it(`should log`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated to: "marco-polo"`
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the given config update string value display state is false`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = false;
+          });
+
+          it(`should log without the value`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated`
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the given config update string value display state is true`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = true;
+          });
+
+          it(`should log`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated to: "marco-polo"`
+            } as ILoggerLog);
+          });
+        });
+
+        it(`should return the new value`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getUpdatedString(configUpdateString);
+
+          expect(result).toStrictEqual(`marco-polo`);
         });
       });
 
-      it(`should return the new value`, (): void => {
-        expect.assertions(1);
+      describe(`when the given config update string value hidden state is false`, (): void => {
+        beforeEach((): void => {
+          configUpdateString.isValueHidden = false;
+        });
 
-        const result = service.getUpdatedString(configUpdateString);
+        describe(`when the given config update string value display state is undefined`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = undefined;
+          });
 
-        expect(result).toStrictEqual(`marco-polo`);
+          it(`should log`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated to: "marco-polo"`
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the given config update string value display state is false`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = false;
+          });
+
+          it(`should log without the value`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated`
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the given config update string value display state is true`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = true;
+          });
+
+          it(`should log`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated to: "marco-polo"`
+            } as ILoggerLog);
+          });
+        });
+
+        it(`should return the new value`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getUpdatedString(configUpdateString);
+
+          expect(result).toStrictEqual(`marco-polo`);
+        });
+      });
+
+      describe(`when the given config update string value hidden state is true`, (): void => {
+        beforeEach((): void => {
+          configUpdateString.isValueHidden = true;
+        });
+
+        describe(`when the given config update string value display state is undefined`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = undefined;
+          });
+
+          it(`should log and hide the value`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated to: "********" (hidden)`
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the given config update string value display state is false`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = false;
+          });
+
+          it(`should log and hide the value`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated to: "********" (hidden)`
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the given config update string value display state is true`, (): void => {
+          beforeEach((): void => {
+            configUpdateString.isValueDisplay = true;
+          });
+
+          it(`should log and hide the value`, (): void => {
+            expect.assertions(2);
+
+            service.getUpdatedString(configUpdateString);
+
+            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              context: `dummy-context`,
+              message: `dummy-value-name updated to: "********" (hidden)`
+            } as ILoggerLog);
+          });
+        });
+
+        it(`should return the new value`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getUpdatedString(configUpdateString);
+
+          expect(result).toStrictEqual(`marco-polo`);
+        });
       });
     });
   });
@@ -250,7 +619,7 @@ describe(`ConfigService`, (): void => {
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
           message: `dummy-value-name updated to: false`
-        });
+        } as ILoggerLog);
       });
 
       it(`should return the new value`, (): void => {
@@ -276,7 +645,7 @@ describe(`ConfigService`, (): void => {
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
           message: `dummy-value-name updated to: true`
-        });
+        } as ILoggerLog);
       });
 
       it(`should return the new value`, (): void => {

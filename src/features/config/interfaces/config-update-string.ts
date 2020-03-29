@@ -1,3 +1,6 @@
 import { IConfigUpdateValue } from './config-update-value';
 
-export type IConfigUpdateString = IConfigUpdateValue<string>;
+export interface IConfigUpdateString<T = string> extends IConfigUpdateValue<T> {
+  isValueDisplay?: boolean;
+  isValueHidden?: boolean;
+}

@@ -1,7 +1,6 @@
 import { MessageEmbedAuthor } from 'discord.js';
 import _ from 'lodash';
 import { AbstractConfigService } from '../../../../classes/abstract-config-service';
-import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
 import { PartialNested } from '../../../../types/partial-nested';
 import { IDiscordConfig } from '../../interfaces/discord-config';
 import { IDiscordSoniaConfig } from '../../interfaces/discord-sonia-config';
@@ -25,6 +24,7 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
     super(config);
   }
 
+  // @todo add coverage
   public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
     if (!_.isNil(config)) {
       this.updateSonia(config.sonia);
@@ -40,6 +40,7 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
     return DISCORD_SONIA_CONFIG;
   }
 
+  // @todo add coverage
   public updateSonia(sonia?: Readonly<PartialNested<IDiscordSoniaConfig>>): void {
     if (!_.isNil(sonia)) {
       this.updateCorporationImageUrl(sonia.corporationImageUrl);
@@ -54,20 +55,19 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
   }
 
   public updateCorporationImageUrl(corporationImageUrl?: Readonly<string>): void {
-    if (_.isString(corporationImageUrl)) {
-      DISCORD_SONIA_CONFIG.corporationImageUrl = corporationImageUrl;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`corporation image url updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_SONIA_CONFIG.corporationImageUrl))}`)
-      });
-    }
+    DISCORD_SONIA_CONFIG.corporationImageUrl = this._configService.getUpdatedString({
+      context: this._className,
+      newValue: corporationImageUrl,
+      oldValue: DISCORD_SONIA_CONFIG.corporationImageUrl,
+      valueName: `corporation image url`
+    });
   }
 
   public getCorporationMessageEmbedAuthor(): MessageEmbedAuthor {
     return DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor;
   }
 
+  // @todo add coverage
   public updateCorporationMessageEmbedAuthor(corporationMessageEmbedAuthor?: Readonly<PartialNested<IDiscordSoniaCorporationMessageEmbedAuthorConfig>>): void {
     if (!_.isNil(corporationMessageEmbedAuthor) && _.isPlainObject(corporationMessageEmbedAuthor)) {
       this.updateCorporationMessageEmbedAuthorIconUrl(corporationMessageEmbedAuthor.iconURL);
@@ -81,14 +81,12 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
   }
 
   public updateCorporationMessageEmbedAuthorIconUrl(iconUrl?: Readonly<string>): void {
-    if (_.isString(iconUrl)) {
-      DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.iconURL = iconUrl;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`corporation message embed author icon url updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.iconURL))}`)
-      });
-    }
+    DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.iconURL = this._configService.getUpdatedString({
+      context: this._className,
+      newValue: iconUrl,
+      oldValue: DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.iconURL,
+      valueName: `corporation message embed author icon url`
+    });
   }
 
   public getCorporationMessageEmbedAuthorName(): string {
@@ -96,14 +94,12 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
   }
 
   public updateCorporationMessageEmbedAuthorName(name?: Readonly<string>): void {
-    if (_.isString(name)) {
-      DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.name = name;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`corporation message embed author name updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.name))}`)
-      });
-    }
+    DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.name = this._configService.getUpdatedString({
+      context: this._className,
+      newValue: name,
+      oldValue: DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.name,
+      valueName: `corporation message embed author name`
+    });
   }
 
   public getCorporationMessageEmbedAuthorUrl(): string {
@@ -111,14 +107,12 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
   }
 
   public updateCorporationMessageEmbedAuthorUrl(url?: Readonly<string>): void {
-    if (_.isString(url)) {
-      DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.url = url;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`corporation message embed author url updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.url))}`)
-      });
-    }
+    DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.url = this._configService.getUpdatedString({
+      context: this._className,
+      newValue: url,
+      oldValue: DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.url,
+      valueName: `corporation message embed author url`
+    });
   }
 
   public getId(): string {
@@ -126,14 +120,13 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
   }
 
   public updateId(id?: Readonly<string>): void {
-    if (_.isString(id)) {
-      DISCORD_SONIA_CONFIG.id = id;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._chalkService.text(`id updated to: ${this._chalkService.value(wrapInQuotes(DISCORD_SONIA_CONFIG.id))}`)
-      });
-    }
+    DISCORD_SONIA_CONFIG.id = this._configService.getUpdatedString({
+      context: this._className,
+      isValueHidden: true,
+      newValue: id,
+      oldValue: DISCORD_SONIA_CONFIG.id,
+      valueName: `id`
+    });
   }
 
   public getSecretToken(): string {
@@ -141,13 +134,12 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
   }
 
   public updateSecretToken(secretToken?: Readonly<string>): void {
-    if (_.isString(secretToken)) {
-      DISCORD_SONIA_CONFIG.secretToken = secretToken;
-
-      this._loggerService.log({
-        context: this._className,
-        message: this._loggerService.getHiddenValueUpdate(`secret token updated to: `, true)
-      });
-    }
+    DISCORD_SONIA_CONFIG.secretToken = this._configService.getUpdatedString({
+      context: this._className,
+      isValueHidden: true,
+      newValue: secretToken,
+      oldValue: DISCORD_SONIA_CONFIG.secretToken,
+      valueName: `secret token`
+    });
   }
 }
