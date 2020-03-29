@@ -1,5 +1,18 @@
 # Semantic Versioning Changelog
 
+# [1.21.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.20.0...1.21.0) (2020-03-29)
+
+
+### Bug Fixes
+
+* **discord-logger-service:** fix typing error due to new discord version update ([5f38423](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5f3842369eca931382dc67cd69a77dab64daa78b))
+* **deps:** update dependency discord.js to v12.1.1 ([015fa43](https://github.com/Sonia-corporation/il-est-midi-discord/commit/015fa436bb1b214b42303947f558600a56784e06))
+
+
+### Features
+
+* **config-service:** add new options to the string update to hide the value of just do not display it ([aceee56](https://github.com/Sonia-corporation/il-est-midi-discord/commit/aceee563a656102c14a000b0d5d299fc89f1751b))
+
 # [1.20.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.19.2...1.20.0) (2020-03-28)
 
 
