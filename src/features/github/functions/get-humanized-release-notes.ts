@@ -15,8 +15,8 @@ export function getHumanizedReleaseNotes(releaseNotes: Readonly<string>): string
     // Replace the "### " by "**__"
     updatedH3 = _.replace(updatedH3, /(###\s)/i, `**__`);
 
-    // Replace "\n" by "__**"
-    updatedH3 = _.replace(updatedH3, /(\n)/i, `__**`);
+    // Replace "\n" by ":__**"
+    updatedH3 = _.replace(updatedH3, /(\n)/i, `:__**`);
 
     return updatedH3;
   });
