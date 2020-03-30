@@ -1,14 +1,16 @@
-import _ from 'lodash';
-import { AbstractConfigService } from '../../../classes/abstract-config-service';
-import { PartialNested } from '../../../types/partial-nested';
-import { getEnvironmentPort } from '../../node/functions/get-environment-port';
-import { SERVER_CONFIG } from '../constants/server-config';
-import { IServerConfig } from '../interfaces/server-config';
+import _ from "lodash";
+import { AbstractConfigService } from "../../../classes/abstract-config-service";
+import { PartialNested } from "../../../types/partial-nested";
+import { getEnvironmentPort } from "../../node/functions/get-environment-port";
+import { SERVER_CONFIG } from "../constants/server-config";
+import { IServerConfig } from "../interfaces/server-config";
 
 export class ServerConfigService extends AbstractConfigService<IServerConfig> {
   private static _instance: ServerConfigService;
 
-  public static getInstance(config?: Readonly<PartialNested<IServerConfig>>): ServerConfigService {
+  public static getInstance(
+    config?: Readonly<PartialNested<IServerConfig>>
+  ): ServerConfigService {
     if (_.isNil(ServerConfigService._instance)) {
       ServerConfigService._instance = new ServerConfigService(config);
     }
@@ -36,7 +38,7 @@ export class ServerConfigService extends AbstractConfigService<IServerConfig> {
 
       this._loggerService.debug({
         context: this._className,
-        message: this._chalkService.text(`configuration updated`)
+        message: this._chalkService.text(`configuration updated`),
       });
     }
   }
@@ -54,7 +56,7 @@ export class ServerConfigService extends AbstractConfigService<IServerConfig> {
       context: this._className,
       newValue: port,
       oldValue: SERVER_CONFIG.port,
-      valueName: `port`
+      valueName: `port`,
     });
   }
 

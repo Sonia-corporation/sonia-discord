@@ -1,4 +1,4 @@
-import { LoggerConfigLevelValueEnum } from './logger-config-level-value.enum';
+import { LoggerConfigLevelValueEnum } from "./logger-config-level-value.enum";
 
 describe(`LoggerConfigLevelValueEnum`, (): void => {
   it(`should have a member "error"`, (): void => {

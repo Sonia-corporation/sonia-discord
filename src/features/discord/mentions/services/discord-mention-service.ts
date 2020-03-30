@@ -1,12 +1,7 @@
-import {
-  GuildChannel,
-  GuildMember,
-  Role,
-  User
-} from 'discord.js';
-import _ from 'lodash';
-import { isDiscordMessageMentions } from '../functions/is-discord-message-mentions';
-import { AnyDiscordMessageMentions } from '../types/any-discord-message-mentions';
+import { GuildChannel, GuildMember, Role, User } from "discord.js";
+import _ from "lodash";
+import { isDiscordMessageMentions } from "../functions/is-discord-message-mentions";
+import { AnyDiscordMessageMentions } from "../types/any-discord-message-mentions";
 
 export class DiscordMentionService {
   private static _instance: DiscordMentionService;
@@ -23,7 +18,9 @@ export class DiscordMentionService {
     return isDiscordMessageMentions(mention);
   }
 
-  public isForEveryone(anyDiscordMessageMentions: Readonly<AnyDiscordMessageMentions>): boolean {
+  public isForEveryone(
+    anyDiscordMessageMentions: Readonly<AnyDiscordMessageMentions>
+  ): boolean {
     return _.isEqual(anyDiscordMessageMentions.everyone, true);
   }
 

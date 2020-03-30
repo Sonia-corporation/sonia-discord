@@ -1,4 +1,4 @@
-import { AppProductionStateEnum } from './app-production-state.enum';
+import { AppProductionStateEnum } from "./app-production-state.enum";
 
 describe(`AppProductionStateEnum`, (): void => {
   it(`should have a member "DEVELOPMENT"`, (): void => {

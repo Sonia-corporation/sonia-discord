@@ -1,4 +1,4 @@
-import { SERVER_CONFIG } from './server-config';
+import { SERVER_CONFIG } from "./server-config";
 
 describe(`SERVER_CONFIG`, (): void => {
   it(`should have a port`, (): void => {

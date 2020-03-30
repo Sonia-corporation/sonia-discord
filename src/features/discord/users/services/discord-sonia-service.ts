@@ -1,11 +1,11 @@
-import { MessageEmbedAuthor } from 'discord.js';
-import _ from 'lodash';
-import { getRandomValueFromEnum } from '../../../../functions/randoms/get-random-value-from-enum';
-import { DiscordClientService } from '../../services/discord-client-service';
-import { DiscordSoniaMentalStateEnum } from '../enums/discord-sonia-mental-state.enum';
-import { isDiscordClientUser } from '../functions/is-discord-client-user';
-import { Sonia } from '../types/sonia';
-import { DiscordSoniaConfigService } from './discord-sonia-config-service';
+import { MessageEmbedAuthor } from "discord.js";
+import _ from "lodash";
+import { getRandomValueFromEnum } from "../../../../functions/randoms/get-random-value-from-enum";
+import { DiscordClientService } from "../../services/discord-client-service";
+import { DiscordSoniaMentalStateEnum } from "../enums/discord-sonia-mental-state.enum";
+import { isDiscordClientUser } from "../functions/is-discord-client-user";
+import { Sonia } from "../types/sonia";
+import { DiscordSoniaConfigService } from "./discord-sonia-config-service";
 
 export class DiscordSoniaService {
   private static _instance: DiscordSoniaService;

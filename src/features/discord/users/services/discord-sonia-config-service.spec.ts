@@ -1,9 +1,9 @@
-import { IConfigUpdateString } from '../../../config/interfaces/config-update-string';
-import { ConfigService } from '../../../config/services/config-service';
-import { IDiscordSoniaConfig } from '../../interfaces/discord-sonia-config';
-import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from '../../interfaces/discord-sonia-corporation-message-embed-author-config';
-import { DISCORD_SONIA_CONFIG } from '../constants/discord-sonia-config';
-import { DiscordSoniaConfigService } from './discord-sonia-config-service';
+import { IConfigUpdateString } from "../../../config/interfaces/config-update-string";
+import { ConfigService } from "../../../config/services/config-service";
+import { IDiscordSoniaConfig } from "../../interfaces/discord-sonia-config";
+import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../interfaces/discord-sonia-corporation-message-embed-author-config";
+import { DISCORD_SONIA_CONFIG } from "../constants/discord-sonia-config";
+import { DiscordSoniaConfigService } from "./discord-sonia-config-service";
 
 jest.mock(`../../../config/services/config-service`);
 
@@ -22,7 +22,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
       DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor = {
         iconURL: `dummy-icon-url`,
         name: `dummy-name`,
-        url: `dummy-url`
+        url: `dummy-url`,
       };
       DISCORD_SONIA_CONFIG.id = `dummy-id`;
       DISCORD_SONIA_CONFIG.secretToken = `dummy-secret-token`;
@@ -38,10 +38,10 @@ describe(`DiscordSoniaConfigService`, (): void => {
         corporationMessageEmbedAuthor: {
           iconURL: `dummy-icon-url`,
           name: `dummy-name`,
-          url: `dummy-url`
+          url: `dummy-url`,
         },
         id: `dummy-id`,
-        secretToken: `dummy-secret-token`
+        secretToken: `dummy-secret-token`,
       } as IDiscordSoniaConfig);
     });
   });
@@ -69,7 +69,9 @@ describe(`DiscordSoniaConfigService`, (): void => {
       corporationImageUrl = `dummy-corporation-image-url`;
       DISCORD_SONIA_CONFIG.corporationImageUrl = `corporation-image-url`;
 
-      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(`dummy-corporation-image-url`);
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`dummy-corporation-image-url`);
     });
 
     it(`should get the updated string`, (): void => {
@@ -82,7 +84,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
         context: `DiscordSoniaConfigService`,
         newValue: `dummy-corporation-image-url`,
         oldValue: `corporation-image-url`,
-        valueName: `corporation image url`
+        valueName: `corporation image url`,
       } as IConfigUpdateString);
     });
 
@@ -91,7 +93,9 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
       service.updateCorporationImageUrl(corporationImageUrl);
 
-      expect(DISCORD_SONIA_CONFIG.corporationImageUrl).toStrictEqual(`dummy-corporation-image-url`);
+      expect(DISCORD_SONIA_CONFIG.corporationImageUrl).toStrictEqual(
+        `dummy-corporation-image-url`
+      );
     });
   });
 
@@ -100,7 +104,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
       DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor = {
         iconURL: `dummy-icon-url`,
         name: `dummy-name`,
-        url: `dummy-url`
+        url: `dummy-url`,
       };
     });
 
@@ -112,7 +116,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
       expect(result).toStrictEqual({
         iconURL: `dummy-icon-url`,
         name: `dummy-name`,
-        url: `dummy-url`
+        url: `dummy-url`,
       } as IDiscordSoniaCorporationMessageEmbedAuthorConfig);
     });
   });
@@ -140,7 +144,9 @@ describe(`DiscordSoniaConfigService`, (): void => {
       iconUrl = `dummy-icon-url`;
       DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.iconURL = `icon-url`;
 
-      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(`dummy-icon-url`);
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`dummy-icon-url`);
     });
 
     it(`should get the updated string`, (): void => {
@@ -153,7 +159,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
         context: `DiscordSoniaConfigService`,
         newValue: `dummy-icon-url`,
         oldValue: `icon-url`,
-        valueName: `corporation message embed author icon url`
+        valueName: `corporation message embed author icon url`,
       } as IConfigUpdateString);
     });
 
@@ -162,7 +168,9 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
       service.updateCorporationMessageEmbedAuthorIconUrl(iconUrl);
 
-      expect(DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.iconURL).toStrictEqual(`dummy-icon-url`);
+      expect(
+        DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.iconURL
+      ).toStrictEqual(`dummy-icon-url`);
     });
   });
 
@@ -189,7 +197,9 @@ describe(`DiscordSoniaConfigService`, (): void => {
       name = `dummy-name`;
       DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.name = `name`;
 
-      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(`dummy-name`);
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`dummy-name`);
     });
 
     it(`should get the updated string`, (): void => {
@@ -202,7 +212,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
         context: `DiscordSoniaConfigService`,
         newValue: `dummy-name`,
         oldValue: `name`,
-        valueName: `corporation message embed author name`
+        valueName: `corporation message embed author name`,
       } as IConfigUpdateString);
     });
 
@@ -211,7 +221,9 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
       service.updateCorporationMessageEmbedAuthorName(name);
 
-      expect(DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.name).toStrictEqual(`dummy-name`);
+      expect(
+        DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.name
+      ).toStrictEqual(`dummy-name`);
     });
   });
 
@@ -238,7 +250,9 @@ describe(`DiscordSoniaConfigService`, (): void => {
       url = `dummy-url`;
       DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.url = `url`;
 
-      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(`dummy-url`);
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`dummy-url`);
     });
 
     it(`should get the updated string`, (): void => {
@@ -251,7 +265,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
         context: `DiscordSoniaConfigService`,
         newValue: `dummy-url`,
         oldValue: `url`,
-        valueName: `corporation message embed author url`
+        valueName: `corporation message embed author url`,
       } as IConfigUpdateString);
     });
 
@@ -260,7 +274,9 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
       service.updateCorporationMessageEmbedAuthorUrl(url);
 
-      expect(DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.url).toStrictEqual(`dummy-url`);
+      expect(
+        DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.url
+      ).toStrictEqual(`dummy-url`);
     });
   });
 
@@ -287,7 +303,9 @@ describe(`DiscordSoniaConfigService`, (): void => {
       id = `dummy-id`;
       DISCORD_SONIA_CONFIG.id = `id`;
 
-      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(`dummy-id`);
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`dummy-id`);
     });
 
     it(`should get the updated string`, (): void => {
@@ -301,7 +319,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
         isValueHidden: true,
         newValue: `dummy-id`,
         oldValue: `id`,
-        valueName: `id`
+        valueName: `id`,
       } as IConfigUpdateString);
     });
 
@@ -337,7 +355,9 @@ describe(`DiscordSoniaConfigService`, (): void => {
       secretToken = `dummy-secret-token`;
       DISCORD_SONIA_CONFIG.secretToken = `secret-token`;
 
-      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(`dummy-secret-token`);
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`dummy-secret-token`);
     });
 
     it(`should get the updated string`, (): void => {
@@ -351,7 +371,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
         isValueHidden: true,
         newValue: `dummy-secret-token`,
         oldValue: `secret-token`,
-        valueName: `secret token`
+        valueName: `secret token`,
       } as IConfigUpdateString);
     });
 
@@ -360,7 +380,9 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
       service.updateSecretToken(secretToken);
 
-      expect(DISCORD_SONIA_CONFIG.secretToken).toStrictEqual(`dummy-secret-token`);
+      expect(DISCORD_SONIA_CONFIG.secretToken).toStrictEqual(
+        `dummy-secret-token`
+      );
     });
   });
 });

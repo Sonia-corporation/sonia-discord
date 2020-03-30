@@ -3,5 +3,5 @@ export enum LoggerConfigLevelValueEnum {
   warning,
   success,
   log,
-  debug
+  debug,
 }

@@ -1,18 +1,24 @@
-import { MessageEmbedAuthor } from 'discord.js';
-import _ from 'lodash';
-import { AbstractConfigService } from '../../../../classes/abstract-config-service';
-import { PartialNested } from '../../../../types/partial-nested';
-import { IDiscordConfig } from '../../interfaces/discord-config';
-import { IDiscordSoniaConfig } from '../../interfaces/discord-sonia-config';
-import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from '../../interfaces/discord-sonia-corporation-message-embed-author-config';
-import { DISCORD_SONIA_CONFIG } from '../constants/discord-sonia-config';
+import { MessageEmbedAuthor } from "discord.js";
+import _ from "lodash";
+import { AbstractConfigService } from "../../../../classes/abstract-config-service";
+import { PartialNested } from "../../../../types/partial-nested";
+import { IDiscordConfig } from "../../interfaces/discord-config";
+import { IDiscordSoniaConfig } from "../../interfaces/discord-sonia-config";
+import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../interfaces/discord-sonia-corporation-message-embed-author-config";
+import { DISCORD_SONIA_CONFIG } from "../constants/discord-sonia-config";
 
-export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordConfig> {
+export class DiscordSoniaConfigService extends AbstractConfigService<
+  IDiscordConfig
+> {
   private static _instance: DiscordSoniaConfigService;
 
-  public static getInstance(config?: Readonly<PartialNested<IDiscordConfig>>): DiscordSoniaConfigService {
+  public static getInstance(
+    config?: Readonly<PartialNested<IDiscordConfig>>
+  ): DiscordSoniaConfigService {
     if (_.isNil(DiscordSoniaConfigService._instance)) {
-      DiscordSoniaConfigService._instance = new DiscordSoniaConfigService(config);
+      DiscordSoniaConfigService._instance = new DiscordSoniaConfigService(
+        config
+      );
     }
 
     return DiscordSoniaConfigService._instance;
@@ -31,7 +37,7 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
 
       this._loggerService.debug({
         context: this._className,
-        message: this._chalkService.text(`configuration updated`)
+        message: this._chalkService.text(`configuration updated`),
       });
     }
   }
@@ -41,10 +47,14 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
   }
 
   // @todo add coverage
-  public updateSonia(sonia?: Readonly<PartialNested<IDiscordSoniaConfig>>): void {
+  public updateSonia(
+    sonia?: Readonly<PartialNested<IDiscordSoniaConfig>>
+  ): void {
     if (!_.isNil(sonia)) {
       this.updateCorporationImageUrl(sonia.corporationImageUrl);
-      this.updateCorporationMessageEmbedAuthor(sonia.corporationMessageEmbedAuthor);
+      this.updateCorporationMessageEmbedAuthor(
+        sonia.corporationMessageEmbedAuthor
+      );
       this.updateId(sonia.id);
       this.updateSecretToken(sonia.secretToken);
     }
@@ -54,13 +64,17 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
     return DISCORD_SONIA_CONFIG.corporationImageUrl;
   }
 
-  public updateCorporationImageUrl(corporationImageUrl?: Readonly<string>): void {
-    DISCORD_SONIA_CONFIG.corporationImageUrl = this._configService.getUpdatedString({
-      context: this._className,
-      newValue: corporationImageUrl,
-      oldValue: DISCORD_SONIA_CONFIG.corporationImageUrl,
-      valueName: `corporation image url`
-    });
+  public updateCorporationImageUrl(
+    corporationImageUrl?: Readonly<string>
+  ): void {
+    DISCORD_SONIA_CONFIG.corporationImageUrl = this._configService.getUpdatedString(
+      {
+        context: this._className,
+        newValue: corporationImageUrl,
+        oldValue: DISCORD_SONIA_CONFIG.corporationImageUrl,
+        valueName: `corporation image url`,
+      }
+    );
   }
 
   public getCorporationMessageEmbedAuthor(): MessageEmbedAuthor {
@@ -68,11 +82,24 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
   }
 
   // @todo add coverage
-  public updateCorporationMessageEmbedAuthor(corporationMessageEmbedAuthor?: Readonly<PartialNested<IDiscordSoniaCorporationMessageEmbedAuthorConfig>>): void {
-    if (!_.isNil(corporationMessageEmbedAuthor) && _.isPlainObject(corporationMessageEmbedAuthor)) {
-      this.updateCorporationMessageEmbedAuthorIconUrl(corporationMessageEmbedAuthor.iconURL);
-      this.updateCorporationMessageEmbedAuthorName(corporationMessageEmbedAuthor.name);
-      this.updateCorporationMessageEmbedAuthorUrl(corporationMessageEmbedAuthor.url);
+  public updateCorporationMessageEmbedAuthor(
+    corporationMessageEmbedAuthor?: Readonly<
+      PartialNested<IDiscordSoniaCorporationMessageEmbedAuthorConfig>
+    >
+  ): void {
+    if (
+      !_.isNil(corporationMessageEmbedAuthor) &&
+      _.isPlainObject(corporationMessageEmbedAuthor)
+    ) {
+      this.updateCorporationMessageEmbedAuthorIconUrl(
+        corporationMessageEmbedAuthor.iconURL
+      );
+      this.updateCorporationMessageEmbedAuthorName(
+        corporationMessageEmbedAuthor.name
+      );
+      this.updateCorporationMessageEmbedAuthorUrl(
+        corporationMessageEmbedAuthor.url
+      );
     }
   }
 
@@ -80,26 +107,34 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
     return DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.iconURL;
   }
 
-  public updateCorporationMessageEmbedAuthorIconUrl(iconUrl?: Readonly<string>): void {
-    DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.iconURL = this._configService.getUpdatedString({
-      context: this._className,
-      newValue: iconUrl,
-      oldValue: DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.iconURL,
-      valueName: `corporation message embed author icon url`
-    });
+  public updateCorporationMessageEmbedAuthorIconUrl(
+    iconUrl?: Readonly<string>
+  ): void {
+    DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.iconURL = this._configService.getUpdatedString(
+      {
+        context: this._className,
+        newValue: iconUrl,
+        oldValue: DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.iconURL,
+        valueName: `corporation message embed author icon url`,
+      }
+    );
   }
 
   public getCorporationMessageEmbedAuthorName(): string {
     return DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.name;
   }
 
-  public updateCorporationMessageEmbedAuthorName(name?: Readonly<string>): void {
-    DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.name = this._configService.getUpdatedString({
-      context: this._className,
-      newValue: name,
-      oldValue: DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.name,
-      valueName: `corporation message embed author name`
-    });
+  public updateCorporationMessageEmbedAuthorName(
+    name?: Readonly<string>
+  ): void {
+    DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.name = this._configService.getUpdatedString(
+      {
+        context: this._className,
+        newValue: name,
+        oldValue: DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.name,
+        valueName: `corporation message embed author name`,
+      }
+    );
   }
 
   public getCorporationMessageEmbedAuthorUrl(): string {
@@ -107,12 +142,14 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
   }
 
   public updateCorporationMessageEmbedAuthorUrl(url?: Readonly<string>): void {
-    DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.url = this._configService.getUpdatedString({
-      context: this._className,
-      newValue: url,
-      oldValue: DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.url,
-      valueName: `corporation message embed author url`
-    });
+    DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.url = this._configService.getUpdatedString(
+      {
+        context: this._className,
+        newValue: url,
+        oldValue: DISCORD_SONIA_CONFIG.corporationMessageEmbedAuthor.url,
+        valueName: `corporation message embed author url`,
+      }
+    );
   }
 
   public getId(): string {
@@ -125,7 +162,7 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
       isValueHidden: true,
       newValue: id,
       oldValue: DISCORD_SONIA_CONFIG.id,
-      valueName: `id`
+      valueName: `id`,
     });
   }
 
@@ -139,7 +176,7 @@ export class DiscordSoniaConfigService extends AbstractConfigService<IDiscordCon
       isValueHidden: true,
       newValue: secretToken,
       oldValue: DISCORD_SONIA_CONFIG.secretToken,
-      valueName: `secret token`
+      valueName: `secret token`,
     });
   }
 }

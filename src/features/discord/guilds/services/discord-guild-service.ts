@@ -1,8 +1,8 @@
-import _ from 'lodash';
-import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
-import { ChalkService } from '../../../logger/services/chalk-service';
-import { LoggerService } from '../../../logger/services/logger-service';
-import { DiscordClientService } from '../../services/discord-client-service';
+import _ from "lodash";
+import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
+import { ChalkService } from "../../../logger/services/chalk-service";
+import { LoggerService } from "../../../logger/services/logger-service";
+import { DiscordClientService } from "../../services/discord-client-service";
 
 export class DiscordGuildService {
   private static _instance: DiscordGuildService;
@@ -30,12 +30,11 @@ export class DiscordGuildService {
 
   private _listen(): void {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    this._discordClientServiceClient.on(`ready`, (): void => {
-    });
+    this._discordClientServiceClient.on(`ready`, (): void => {});
 
     this._loggerService.debug({
       context: this._className,
-      message: this._chalkService.text(`listen ${wrapInQuotes(`ready`)} event`)
+      message: this._chalkService.text(`listen ${wrapInQuotes(`ready`)} event`),
     });
   }
 }

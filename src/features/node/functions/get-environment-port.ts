@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import { isValidPort } from './is-valid-port';
+import _ from "lodash";
+import { isValidPort } from "./is-valid-port";
 
 export function getEnvironmentPort(): number | null {
   const port: string | undefined = process.env.PORT;

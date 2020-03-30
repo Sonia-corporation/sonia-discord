@@ -32,11 +32,7 @@ module.exports = {
   // ],
 
   // A list of reporter names that Jest uses when writing coverage reports
-  coverageReporters: [
-    `json`,
-    `text-summary`,
-    `lcov`
-  ],
+  coverageReporters: [`json`, `text-summary`, `lcov`],
 
   // An object that configures minimum threshold enforcement for coverage results
   // coverageThreshold: undefined,
@@ -46,7 +42,7 @@ module.exports = {
 
   displayName: {
     color: `magenta`,
-    name: `Sonia`
+    name: `Sonia`,
   },
 
   // Make calling deprecated APIs throw helpful error messages
@@ -63,9 +59,9 @@ module.exports = {
 
   // A set of global variables that need to be available in all test environments
   globals: {
-    'ts-jest': {
-      compiler: `ttypescript`
-    }
+    "ts-jest": {
+      compiler: `ttypescript`,
+    },
   },
 
   // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
@@ -74,9 +70,7 @@ module.exports = {
   maxConcurrency: 5,
 
   // An array of directory names to be searched recursively up from the requiring module's location
-  moduleDirectories: [
-    `./node_modules`
-  ],
+  moduleDirectories: [`./node_modules`],
 
   // A map from regular expressions to module names that allow to stub out resources with a single module
   // moduleNameMapper: {},
@@ -85,12 +79,7 @@ module.exports = {
   // modulePathIgnorePatterns: [],
 
   // An array of file extensions your modules use
-  moduleFileExtensions: [
-    `js`,
-    `json`,
-    `ts`,
-    `node`
-  ],
+  moduleFileExtensions: [`js`, `json`, `ts`, `node`],
 
   // Activates notifications for test results
   notify: true,
@@ -104,6 +93,8 @@ module.exports = {
   // A preset that is used as a base for Jest's configuration
   preset: `ts-jest/presets/js-with-ts`,
 
+  prettierPath: `prettier`,
+
   // Use this configuration option to add custom reporters to Jest
   reporters: [
     [
@@ -111,13 +102,10 @@ module.exports = {
       {
         showPaths: true,
         showWarnings: true,
-        useDots: true
-      }
-    ]
+        useDots: true,
+      },
+    ],
   ],
-
-  // Automatically reset mock state between every test
-  resetMocks: true,
 
   // A path to a custom resolver
   // resolver: undefined,
@@ -128,17 +116,14 @@ module.exports = {
   // The root directory that Jest should scan for tests and modules within
   // rootDir: undefined,
 
-  // Reset the module registry before running each individual test
-  resetModules: true,
+  // Automatically reset mock state between every test
+  resetMocks: true,
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
 
-  // A list of paths to directories that Jest should use to search for files in
-  roots: [
-    `./src`,
-    `./scripts`
-  ],
+  // Reset the module registry before running each individual test
+  resetModules: true,
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   // setupFilesAfterEnv: [],
@@ -146,10 +131,11 @@ module.exports = {
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],
 
+  // A list of paths to directories that Jest should use to search for files in
+  roots: [`./src`, `./scripts`],
+
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  setupFiles: [
-    `./config.ts`
-  ],
+  setupFiles: [`./config.ts`],
 
   // The test environment that will be used for testing
   testEnvironment: `node`,
@@ -198,7 +184,7 @@ module.exports = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '.ts': `ts-jest`
+    ".ts": `ts-jest`,
   },
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
@@ -208,5 +194,5 @@ module.exports = {
   verbose: true,
 
   // Whether to use watchman for file crawling
-  watchman: true
+  watchman: true,
 };

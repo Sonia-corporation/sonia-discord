@@ -1,4 +1,4 @@
-import { APP_CONFIG } from './app-config';
+import { APP_CONFIG } from "./app-config";
 
 describe(`APP_CONFIG`, (): void => {
   it(`should have a unknown initialization date`, (): void => {

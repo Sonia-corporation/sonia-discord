@@ -3,20 +3,20 @@ import {
   MessageEmbedAuthor,
   MessageEmbedFooter,
   MessageEmbedOptions,
-  MessageEmbedThumbnail
-} from 'discord.js';
-import _ from 'lodash';
-import moment from 'moment';
-import { ellipsis } from '../../../../functions/formatters/ellipsis';
-import { AppProductionStateEnum } from '../../../app/enums/app-production-state.enum';
-import { AppConfigService } from '../../../app/services/app-config-service';
-import { LoggerService } from '../../../logger/services/logger-service';
-import { IDiscordMessageCommandVersionConfig } from '../../interfaces/discord-message-command-version-config';
-import { DiscordSoniaMentalStateEnum } from '../../users/enums/discord-sonia-mental-state.enum';
-import { DiscordSoniaService } from '../../users/services/discord-sonia-service';
-import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
-import { AnyDiscordMessage } from '../types/any-discord-message';
-import { DiscordMessageConfigService } from './discord-message-config-service';
+  MessageEmbedThumbnail,
+} from "discord.js";
+import _ from "lodash";
+import moment from "moment";
+import { ellipsis } from "../../../../functions/formatters/ellipsis";
+import { AppProductionStateEnum } from "../../../app/enums/app-production-state.enum";
+import { AppConfigService } from "../../../app/services/app-config-service";
+import { LoggerService } from "../../../logger/services/logger-service";
+import { IDiscordMessageCommandVersionConfig } from "../../interfaces/discord-message-command-version-config";
+import { DiscordSoniaMentalStateEnum } from "../../users/enums/discord-sonia-mental-state.enum";
+import { DiscordSoniaService } from "../../users/services/discord-sonia-service";
+import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
+import { AnyDiscordMessage } from "../types/any-discord-message";
+import { DiscordMessageConfigService } from "./discord-message-config-service";
 
 export class DiscordMessageCommandVersionService {
   private static _instance: DiscordMessageCommandVersionService;
@@ -35,19 +35,24 @@ export class DiscordMessageCommandVersionService {
   private readonly _loggerService = LoggerService.getInstance();
   private readonly _className = `DiscordMessageCommandVersionService`;
 
-  public handle(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse {
+  public handle(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): IDiscordMessageResponse {
     this._loggerService.debug({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(anyDiscordMessage.id, `version command detected`)
+      message: this._loggerService.getSnowflakeContext(
+        anyDiscordMessage.id,
+        `version command detected`
+      ),
     });
 
     return {
       options: {
         embed: this._getMessageEmbed(),
-        split: true
+        split: true,
       },
-      response: ``
+      response: ``,
     };
   }
 
@@ -59,7 +64,7 @@ export class DiscordMessageCommandVersionService {
       footer: this._getMessageEmbedFooter(),
       thumbnail: this._getMessageEmbedThumbnail(),
       timestamp: this._getMessageEmbedTimestamp(),
-      title: this._getMessageEmbedTitle()
+      title: this._getMessageEmbedTitle(),
     };
   }
 
@@ -71,22 +76,25 @@ export class DiscordMessageCommandVersionService {
     const discordMessageCommandVersionConfig: IDiscordMessageCommandVersionConfig = this._discordMessageConfigService.getMessageCommandVersion();
 
     return {
-      url: discordMessageCommandVersionConfig.imageUrl
+      url: discordMessageCommandVersionConfig.imageUrl,
     };
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
-    const soniaImageUrl: string | null = this._discordSoniaService.getImageUrl();
+    const soniaImageUrl:
+      | string
+      | null = this._discordSoniaService.getImageUrl();
     const totalReleaseCountHumanized: string = this._appConfigService.getTotalReleaseCountHumanized();
 
     return {
       iconURL: soniaImageUrl || undefined,
-      text: totalReleaseCountHumanized
+      text: totalReleaseCountHumanized,
     };
   }
 
   private _getMessageEmbedColor(): number {
-    return this._discordMessageConfigService.getMessageCommandVersion().imageColor;
+    return this._discordMessageConfigService.getMessageCommandVersion()
+      .imageColor;
   }
 
   private _getMessageEmbedTimestamp(): Date {
@@ -94,7 +102,9 @@ export class DiscordMessageCommandVersionService {
   }
 
   private _getMessageEmbedTitle(): string {
-    const soniaFullName: string | null = this._discordSoniaService.getFullName();
+    const soniaFullName:
+      | string
+      | null = this._discordSoniaService.getFullName();
 
     return `${soniaFullName} version`;
   }
@@ -106,7 +116,7 @@ export class DiscordMessageCommandVersionService {
       this._getMessageEmbedFieldInitializationDate(),
       this._getMessageEmbedFieldReleaseNotes(),
       this._getMessageEmbedFieldStatus(),
-      this._getMessageEmbedFieldMentalState()
+      this._getMessageEmbedFieldMentalState(),
     ];
   }
 
@@ -115,7 +125,7 @@ export class DiscordMessageCommandVersionService {
 
     return {
       name: `My age`,
-      value: `[${appVersion}](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${appVersion})`
+      value: `[${appVersion}](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${appVersion})`,
     };
   }
 
@@ -123,7 +133,7 @@ export class DiscordMessageCommandVersionService {
     return {
       inline: true,
       name: `My last birthday`,
-      value: this._appConfigService.getReleaseDateHumanized()
+      value: this._appConfigService.getReleaseDateHumanized(),
     };
   }
 
@@ -131,7 +141,7 @@ export class DiscordMessageCommandVersionService {
     return {
       inline: true,
       name: `The last time I woken up`,
-      value: this._appConfigService.getInitializationDateHumanized()
+      value: this._appConfigService.getInitializationDateHumanized(),
     };
   }
 
@@ -140,7 +150,10 @@ export class DiscordMessageCommandVersionService {
 
     return {
       name: `My birthday card`,
-      value: `${ellipsis(appReleaseNotes, 1000)}\n\nCheckout all my [birthday cards](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md).`
+      value: `${ellipsis(
+        appReleaseNotes,
+        1000
+      )}\n\nCheckout all my [birthday cards](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md).`,
     };
   }
 
@@ -150,7 +163,7 @@ export class DiscordMessageCommandVersionService {
     return {
       inline: true,
       name: `My location`,
-      value: `Running in ${appProductionStateHumanized}`
+      value: `Running in ${appProductionStateHumanized}`,
     };
   }
 
@@ -160,7 +173,7 @@ export class DiscordMessageCommandVersionService {
     return {
       inline: true,
       name: `My mental state`,
-      value: _.capitalize(soniaMentalState)
+      value: _.capitalize(soniaMentalState),
     };
   }
 }
