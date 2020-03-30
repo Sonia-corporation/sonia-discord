@@ -1,18 +1,24 @@
-import { Client, Guild } from "discord.js";
-import { isDiscordGuild } from "./is-discord-guild";
+import {
+  Client,
+  Guild,
+  Message,
+  MessageMentions,
+  TextChannel,
+} from "discord.js";
+import { isDiscordMessageMentions } from "./is-discord-message-mentions";
 
-describe(`isDiscordGuild()`, (): void => {
-  let guild: unknown;
+describe(`isDiscordMessageMentions()`, (): void => {
+  let mention: unknown;
 
   describe(`when the given value is undefined`, (): void => {
     beforeEach((): void => {
-      guild = undefined;
+      mention = undefined;
     });
 
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordGuild(guild);
+      const result = isDiscordMessageMentions(mention);
 
       expect(result).toStrictEqual(false);
     });
@@ -20,13 +26,13 @@ describe(`isDiscordGuild()`, (): void => {
 
   describe(`when the given value is null`, (): void => {
     beforeEach((): void => {
-      guild = null;
+      mention = null;
     });
 
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordGuild(guild);
+      const result = isDiscordMessageMentions(mention);
 
       expect(result).toStrictEqual(false);
     });
@@ -34,13 +40,13 @@ describe(`isDiscordGuild()`, (): void => {
 
   describe(`when the given value is an empty object`, (): void => {
     beforeEach((): void => {
-      guild = {};
+      mention = {};
     });
 
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordGuild(guild);
+      const result = isDiscordMessageMentions(mention);
 
       expect(result).toStrictEqual(false);
     });
@@ -48,7 +54,7 @@ describe(`isDiscordGuild()`, (): void => {
 
   describe(`when the given value is an object`, (): void => {
     beforeEach((): void => {
-      guild = {
+      mention = {
         key: `value`,
       };
     });
@@ -56,23 +62,32 @@ describe(`isDiscordGuild()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordGuild(guild);
+      const result = isDiscordMessageMentions(mention);
 
       expect(result).toStrictEqual(false);
     });
   });
 
-  describe(`when the given value is a "Guild" instance`, (): void => {
+  describe(`when the given value is a "MessageMentions" instance`, (): void => {
     beforeEach((): void => {
       // @todo replace with real mock
-      guild = new Guild(new Client(), {});
+      mention = new MessageMentions(
+        new Message(
+          new Client(),
+          {},
+          new TextChannel(new Guild(new Client(), {}))
+        ),
+        [],
+        [],
+        true
+      );
     });
 
     // @todo fix it omg this should works
     it.skip(`should return true`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordGuild(guild);
+      const result = isDiscordMessageMentions(mention);
 
       expect(result).toStrictEqual(true);
     });
