@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.23.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.22.0...1.23.0) (2020-03-30)
+
+
+### Features
+
+* **server:** add a server config service ([fbf0f4c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/fbf0f4c00e7271a904027e84959dbf123c59cbc5))
+
 # [1.22.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.21.0...1.22.0) (2020-03-29)
 
 
