@@ -18,6 +18,7 @@ import { GithubConfigService } from '../../github/services/github-config-service
 import { ChalkService } from '../../logger/services/chalk-service';
 import { LoggerConfigService } from '../../logger/services/logger-config-service';
 import { LoggerService } from '../../logger/services/logger-service';
+import { ServerConfigService } from '../../server/services/server-config-service';
 import { ServerService } from '../../server/services/server-service';
 
 export class InitService {
@@ -70,6 +71,7 @@ export class InitService {
     DiscordSoniaConfigService.getInstance().updateConfig(environment.discord);
     DiscordMessageConfigService.getInstance().updateConfig(environment.discord);
     AppConfigService.getInstance().init().updateConfig(environment.app);
+    ServerConfigService.getInstance().init();
   }
 
   private _configureAppFromPackage(): void {
