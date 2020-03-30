@@ -72,6 +72,9 @@ rules:
       minKeys: 2
   '@typescript-eslint/no-var-requires': 'off'
   '@typescript-eslint/explicit-function-return-type': 'off'
+  '@typescript-eslint/no-unused-vars':
+    - 'error'
+    - 'argsIgnorePattern': '^_'
   import/no-namespace: 'error'
   import/first: 'error'
   import/exports-last: 'error'

@@ -22,7 +22,7 @@ export abstract class AbstractConfigService<C> {
    * This is quite handy when you want to set up a default configuration
    * Just before the config override it
    */
-  protected preUpdateConfig(): void {
+  public preUpdateConfig(): void {
     // Avoid lint error :)
   }
 
@@ -33,9 +33,9 @@ export abstract class AbstractConfigService<C> {
    * This is quite handy when you want to set up a default configuration
    * Just after the config override it
    */
-  protected postUpdateConfig(): void {
+  public postUpdateConfig(): void {
     // Avoid lint error :)
   }
 
-  protected abstract updateConfig(config?: Readonly<PartialNested<C>>): void;
+  public abstract updateConfig(config?: Readonly<PartialNested<C>>): void;
 }
