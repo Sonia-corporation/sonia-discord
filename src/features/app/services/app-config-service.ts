@@ -29,8 +29,8 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
 
   // @todo add coverage
   public init(): AppConfigService {
-    this._defineProductionState();
-    this._defineBuildDate();
+    this._setProductionState();
+    this._setBuildDate();
 
     return this;
   }
@@ -165,11 +165,11 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
     });
   }
 
-  private _defineProductionState(): void {
+  private _setProductionState(): void {
     this.updateProductionState(isNodeProduction());
   }
 
-  private _defineBuildDate(): void {
+  private _setBuildDate(): void {
     if (!this.isProduction()) {
       this.updateInitializationDate(this._timeService.now());
     }

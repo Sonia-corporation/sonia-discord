@@ -24,7 +24,7 @@ export class ServerConfigService extends AbstractConfigService<IServerConfig> {
 
   // @todo add coverage
   public init(): ServerConfigService {
-    this._definePort();
+    this._setPort();
 
     return this;
   }
@@ -58,7 +58,7 @@ export class ServerConfigService extends AbstractConfigService<IServerConfig> {
     });
   }
 
-  private _definePort(): void {
+  private _setPort(): void {
     const environmentPort: number | null = getEnvironmentPort();
 
     if (!_.isNil(environmentPort)) {
