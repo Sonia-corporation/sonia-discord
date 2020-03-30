@@ -1,22 +1,17 @@
 import { Message } from "discord.js";
 import { createMock } from "ts-auto-mock";
+import { DISCORD_MESSAGE_CONFIG } from "../constants/discord-message-config";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { DiscordMessageCommandService } from "./discord-message-command-service";
 import { DiscordMessageCommandVersionService } from "./discord-message-command-version-service";
-import { DiscordMessageConfigService } from "./discord-message-config-service";
-import { DiscordMessageContentService } from "./discord-message-content-service";
 
 describe(`DiscordMessageCommandService`, (): void => {
   let service: DiscordMessageCommandService;
-  let discordMessageConfigService: DiscordMessageConfigService;
   let discordMessageCommandVersionService: DiscordMessageCommandVersionService;
-  let discordMessageContentService: DiscordMessageContentService;
 
   beforeEach((): void => {
     service = DiscordMessageCommandService.getInstance();
-    discordMessageConfigService = DiscordMessageConfigService.getInstance();
     discordMessageCommandVersionService = DiscordMessageCommandVersionService.getInstance();
-    discordMessageContentService = DiscordMessageContentService.getInstance();
   });
 
   describe(`hasCommand()`, (): void => {
@@ -25,9 +20,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     beforeEach((): void => {
       message = `dummy-message`;
 
-      jest
-        .spyOn(discordMessageConfigService, `getMessageCommandPrefix`)
-        .mockReturnValue(`--`);
+      DISCORD_MESSAGE_CONFIG.command.prefix = `--`;
     });
 
     describe(`when the given message does not contains the version command`, (): void => {
@@ -62,21 +55,13 @@ describe(`DiscordMessageCommandService`, (): void => {
   describe(`hasVersionCommand()`, (): void => {
     let message: string;
 
-    let discordMessageConfigServiceGetMessageCommandPrefixSpy: jest.SpyInstance;
-
     beforeEach((): void => {
       message = `dummy-message`;
-
-      discordMessageConfigServiceGetMessageCommandPrefixSpy = jest
-        .spyOn(discordMessageConfigService, `getMessageCommandPrefix`)
-        .mockImplementation();
     });
 
     describe(`when the message command prefix is "@"`, (): void => {
       beforeEach((): void => {
-        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
-          `@`
-        );
+        DISCORD_MESSAGE_CONFIG.command.prefix = `@`;
       });
 
       describe(`when the given message is an empty string`, (): void => {
@@ -404,10 +389,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     describe(`when the message command prefix is "--" or "!"`, (): void => {
       beforeEach((): void => {
-        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
-          `--`,
-          `!`,
-        ]);
+        DISCORD_MESSAGE_CONFIG.command.prefix = [`--`, `!`];
       });
 
       describe(`when the given message is an empty string`, (): void => {
@@ -776,28 +758,22 @@ describe(`DiscordMessageCommandService`, (): void => {
     let anyDiscordMessage: Message;
     let discordMessageResponse: IDiscordMessageResponse;
 
-    let discordMessageContentServiceHasContentSpy: jest.SpyInstance;
     let discordMessageCommandVersionServiceHandleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       // @todo replace with real mock
       anyDiscordMessage = {} as Message;
       discordMessageResponse = createMock<IDiscordMessageResponse>();
+      DISCORD_MESSAGE_CONFIG.command.prefix = `--`;
 
-      discordMessageContentServiceHasContentSpy = jest
-        .spyOn(discordMessageContentService, `hasContent`)
-        .mockImplementation();
       discordMessageCommandVersionServiceHandleSpy = jest
         .spyOn(discordMessageCommandVersionService, `handle`)
         .mockReturnValue(discordMessageResponse);
-      jest
-        .spyOn(discordMessageConfigService, `getMessageCommandPrefix`)
-        .mockReturnValue(`--`);
     });
 
     describe(`when the given discord message has no content`, (): void => {
       beforeEach((): void => {
-        discordMessageContentServiceHasContentSpy.mockReturnValue(false);
+        anyDiscordMessage.content = ``;
       });
 
       it(`should not handle the version command`, (): void => {
@@ -821,7 +797,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     describe(`when the given discord message has content`, (): void => {
       beforeEach((): void => {
-        discordMessageContentServiceHasContentSpy.mockReturnValue(true);
+        anyDiscordMessage.content = `dummy-content`;
       });
 
       describe(`when the message does not contains the version command`, (): void => {

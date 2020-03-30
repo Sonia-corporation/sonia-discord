@@ -36,6 +36,7 @@ settings:
   import/cache:
     lifetime: 'Infinity'
 rules:
+  jest/no-disabled-tests: 'off'
   prettier/prettier: 'error'
   jest/lowercase-name:
     - 'error'
