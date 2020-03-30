@@ -21,7 +21,6 @@ export class DiscordGuildMemberAddService {
     if (_.isNil(DiscordGuildMemberAddService._instance)) {
       DiscordGuildMemberAddService._instance = new DiscordGuildMemberAddService();
     }
-
     return DiscordGuildMemberAddService._instance;
   }
 
@@ -120,7 +119,10 @@ export class DiscordGuildMemberAddService {
 
   private _getMessageResponseWithEnvPrefix(response: Readonly<string>): string {
     if (!this._appConfigService.isProduction()) {
-      return addDiscordDevPrefix(response);
+      return addDiscordDevPrefix(
+        this._loggerService.getProfileNameForDev(),
+        response
+      );
     }
 
     return response;

@@ -10,6 +10,7 @@ You must create the `secret-environment.json` file in the [environment folder](.
 This file should contains at least:
 - A discord Sonia secret token required by Discord API
 - A GitHub personal access token required by GitHub API
+- A personal name to know when you interact with sonia bot which bot you are
 
 __Example:__
 
@@ -22,6 +23,11 @@ __Example:__
   },
   "github": {
     "personalAccessToken": "TO_DEFINE_BY_YOU"
+  },
+  "logger": {
+    "profile": {
+      "name": "TO_DEFINE_BY_YOU"
+    }
   }
 }
 ```

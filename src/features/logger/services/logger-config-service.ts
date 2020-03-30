@@ -3,6 +3,7 @@ import { AbstractConfigService } from "../../../classes/abstract-config-service"
 import { LOGGER_CONFIG } from "../constants/logger-config";
 import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
 import { ILoggerConfig } from "../interfaces/logger-config";
+import { LoggerConfigProfile } from "../interfaces/logger-config-profil";
 
 export class LoggerConfigService extends AbstractConfigService<ILoggerConfig> {
   private static _instance: LoggerConfigService;
@@ -28,6 +29,7 @@ export class LoggerConfigService extends AbstractConfigService<ILoggerConfig> {
     if (!_.isNil(config) && _.isPlainObject(config)) {
       this.updateEnabledState(config.isEnabled);
       this.updateLevel(config.level);
+      this.updateProfile(config.profile);
 
       this._loggerService.debug({
         context: this._className,
@@ -64,5 +66,11 @@ export class LoggerConfigService extends AbstractConfigService<ILoggerConfig> {
       oldValue: LOGGER_CONFIG.level,
       valueName: `level`,
     });
+  }
+
+  public updateProfile(profile?: Readonly<LoggerConfigProfile>): void {
+    if (!_.isNil(profile)) {
+      LOGGER_CONFIG.profile = profile;
+    }
   }
 }

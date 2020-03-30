@@ -4,4 +4,7 @@ import { ILoggerConfig } from "../interfaces/logger-config";
 export const LOGGER_CONFIG: ILoggerConfig = {
   isEnabled: false,
   level: LoggerConfigLevelEnum.DEBUG,
+  profile: {
+    name: ``,
+  },
 };
