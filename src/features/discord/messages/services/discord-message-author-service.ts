@@ -1,4 +1,6 @@
 import _ from "lodash";
+import { AppConfigService } from "../../../app/services/app-config-service";
+import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
 import { DiscordAuthorService } from "../../users/services/discord-author-service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
@@ -15,6 +17,7 @@ export class DiscordMessageAuthorService {
   }
 
   private readonly _discordAuthorService = DiscordAuthorService.getInstance();
+  private readonly _appConfigService = AppConfigService.getInstance();
 
   public reply(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
@@ -30,7 +33,15 @@ export class DiscordMessageAuthorService {
     }
 
     return {
-      response,
+      response: this._getReplyWithEnvPrefix(response),
     };
+  }
+
+  private _getReplyWithEnvPrefix(response: Readonly<string>): string {
+    if (!this._appConfigService.isProduction()) {
+      return addDiscordDevPrefix(response);
+    }
+
+    return response;
   }
 }
