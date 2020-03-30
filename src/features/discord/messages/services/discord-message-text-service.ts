@@ -1,5 +1,7 @@
 import _ from "lodash";
+import { AppConfigService } from "../../../app/services/app-config-service";
 import { LoggerService } from "../../../logger/services/logger-service";
+import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
 import { DiscordMentionService } from "../../mentions/services/discord-mention-service";
 import { DiscordAuthorService } from "../../users/services/discord-author-service";
 import { DiscordSoniaService } from "../../users/services/discord-sonia-service";
@@ -30,6 +32,7 @@ export class DiscordMessageTextService {
   private readonly _discordMessageAuthorService = DiscordMessageAuthorService.getInstance();
   private readonly _discordMessageCommandService = DiscordMessageCommandService.getInstance();
   private readonly _discordMessageContentService = DiscordMessageContentService.getInstance();
+  private readonly _appConfigService = AppConfigService.getInstance();
   private readonly _className = `DiscordMessageTextService`;
 
   public getMessage(
@@ -99,8 +102,20 @@ export class DiscordMessageTextService {
     });
 
     return {
-      response: `Il est midi tout le monde !`,
+      response: this._getEveryoneMentionMessageResponseWithEnvPrefix(
+        `Il est midi tout le monde !`
+      ),
     };
+  }
+
+  private _getEveryoneMentionMessageResponseWithEnvPrefix(
+    response: Readonly<string>
+  ): string {
+    if (!this._appConfigService.isProduction()) {
+      return addDiscordDevPrefix(response);
+    }
+
+    return response;
   }
 
   private _getSoniaMentionMessageResponse(
