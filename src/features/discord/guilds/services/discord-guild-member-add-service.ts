@@ -1,11 +1,13 @@
 import { GuildChannel } from "discord.js";
 import _ from "lodash";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
+import { AppConfigService } from "../../../app/services/app-config-service";
 import { ChalkService } from "../../../logger/services/chalk-service";
 import { LoggerService } from "../../../logger/services/logger-service";
 import { isDiscordGuildChannel } from "../../channels/functions/is-discord-guild-channel";
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild-service";
 import { AnyDiscordChannel } from "../../channels/types/any-discord-channel";
+import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
 import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
 import { DiscordClientService } from "../../services/discord-client-service";
 import { isDiscordGuild } from "../functions/is-discord-guild";
@@ -28,6 +30,7 @@ export class DiscordGuildMemberAddService {
   private readonly _discordGuildConfigService = DiscordGuildConfigService.getInstance();
   private readonly _loggerService = LoggerService.getInstance();
   private readonly _chalkService = ChalkService.getInstance();
+  private readonly _appConfigService = AppConfigService.getInstance();
   private readonly _className = `DiscordGuildMemberAddService`;
 
   public constructor() {
@@ -109,8 +112,18 @@ export class DiscordGuildMemberAddService {
     member: Readonly<AnyGuildMember>
   ): IDiscordMessageResponse {
     return {
-      response: `Bienvenue **${member.displayName}**, il est midi !`,
+      response: this._getMessageResponseWithEnvPrefix(
+        `Bienvenue **${member.displayName}**, il est midi !`
+      ),
     };
+  }
+
+  private _getMessageResponseWithEnvPrefix(response: Readonly<string>): string {
+    if (!this._appConfigService.isProduction()) {
+      return addDiscordDevPrefix(response);
+    }
+
+    return response;
   }
 
   private _getPrimaryChannel(
