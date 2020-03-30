@@ -38,7 +38,7 @@ export class DiscordAuthenticationService {
 
     this._loggerService.debug({
       context: this._className,
-      message: this._chalkService.text(`listen ${wrapInQuotes(`ready`)}" event`)
+      message: this._chalkService.text(`listen ${wrapInQuotes(`ready`)} event`)
     });
   }
 
