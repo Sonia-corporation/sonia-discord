@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.24.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.23.0...1.24.0) (2020-03-30)
+
+
+### Features
+
+* **discord:** add dev prefix when sonia is sending simple messages in dev env ([62d5400](https://github.com/Sonia-corporation/il-est-midi-discord/commit/62d5400fc42b74370dc88d24ff373d72832c29a1))
+
 # [1.23.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.22.0...1.23.0) (2020-03-30)
 
 
