@@ -1,7 +1,7 @@
-import { IEnvironmentApp } from './environment-app';
-import { IEnvironmentDiscord } from './environment-discord';
-import { IEnvironmentGithub } from './environment-github';
-import { IEnvironmentLogger } from './environment-logger';
+import { IEnvironmentApp } from "./environment-app";
+import { IEnvironmentDiscord } from "./environment-discord";
+import { IEnvironmentGithub } from "./environment-github";
+import { IEnvironmentLogger } from "./environment-logger";
 
 export interface IEnvironment {
   app?: IEnvironmentApp;

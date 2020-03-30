@@ -1,5 +1,5 @@
-import { GuildChannel } from 'discord.js';
-import _ from 'lodash';
+import { GuildChannel } from "discord.js";
+import _ from "lodash";
 
 export class DiscordChannelGuildService {
   private static _instance: DiscordChannelGuildService;

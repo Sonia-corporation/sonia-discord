@@ -1,4 +1,4 @@
-import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from './discord-sonia-corporation-message-embed-author-config';
+import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "./discord-sonia-corporation-message-embed-author-config";
 
 export interface IDiscordSoniaConfig {
   corporationImageUrl: string;

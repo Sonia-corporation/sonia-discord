@@ -1,6 +1,3 @@
-import {
-  Message,
-  PartialMessage
-} from 'discord.js';
+import { Message, PartialMessage } from "discord.js";
 
 export type AnyDiscordMessage = Message | PartialMessage;

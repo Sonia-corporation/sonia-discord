@@ -1,9 +1,9 @@
-import { IConfigUpdateBoolean } from '../../../config/interfaces/config-update-boolean';
-import { IConfigUpdateString } from '../../../config/interfaces/config-update-string';
-import { ConfigService } from '../../../config/services/config-service';
-import { IDiscordGuildConfig } from '../../interfaces/discord-guild-config';
-import { DISCORD_GUILD_CONFIG } from '../constants/discord-guild-config';
-import { DiscordGuildConfigService } from './discord-guild-config-service';
+import { IConfigUpdateBoolean } from "../../../config/interfaces/config-update-boolean";
+import { IConfigUpdateString } from "../../../config/interfaces/config-update-string";
+import { ConfigService } from "../../../config/services/config-service";
+import { IDiscordGuildConfig } from "../../interfaces/discord-guild-config";
+import { DISCORD_GUILD_CONFIG } from "../constants/discord-guild-config";
+import { DiscordGuildConfigService } from "./discord-guild-config-service";
 
 jest.mock(`../../../config/services/config-service`);
 
@@ -29,7 +29,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
       expect(result).toStrictEqual({
         shouldWelcomeNewMembers: true,
-        soniaPermanentGuildInviteUrl: `dummy-sonia-permanent-guild-invite-url`
+        soniaPermanentGuildInviteUrl: `dummy-sonia-permanent-guild-invite-url`,
       } as IDiscordGuildConfig);
     });
   });
@@ -57,7 +57,9 @@ describe(`DiscordGuildConfigService`, (): void => {
       shouldWelcomeNewMembers = true;
       DISCORD_GUILD_CONFIG.shouldWelcomeNewMembers = false;
 
-      configServiceGetUpdatedBooleanSpy = jest.spyOn(configService, `getUpdatedBoolean`).mockReturnValue(true);
+      configServiceGetUpdatedBooleanSpy = jest
+        .spyOn(configService, `getUpdatedBoolean`)
+        .mockReturnValue(true);
     });
 
     it(`should get the updated boolean`, (): void => {
@@ -70,7 +72,7 @@ describe(`DiscordGuildConfigService`, (): void => {
         context: `DiscordGuildConfigService`,
         newValue: true,
         oldValue: false,
-        valueName: `welcome new members state`
+        valueName: `welcome new members state`,
       } as IConfigUpdateBoolean);
     });
 
@@ -106,7 +108,9 @@ describe(`DiscordGuildConfigService`, (): void => {
       soniaPermanentGuildInviteUrl = `dummy-sonia-permanent-guild-invite-url`;
       DISCORD_GUILD_CONFIG.soniaPermanentGuildInviteUrl = `sonia-permanent-guild-invite-url`;
 
-      configServiceGetUpdatedBooleanSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(`dummy-sonia-permanent-guild-invite-url`);
+      configServiceGetUpdatedBooleanSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`dummy-sonia-permanent-guild-invite-url`);
     });
 
     it(`should get the updated string`, (): void => {
@@ -119,7 +123,7 @@ describe(`DiscordGuildConfigService`, (): void => {
         context: `DiscordGuildConfigService`,
         newValue: `dummy-sonia-permanent-guild-invite-url`,
         oldValue: `sonia-permanent-guild-invite-url`,
-        valueName: `Sonia permanent guild invite url`
+        valueName: `Sonia permanent guild invite url`,
       } as IConfigUpdateString);
     });
 
@@ -128,7 +132,9 @@ describe(`DiscordGuildConfigService`, (): void => {
 
       service.updateSoniaPermanentGuildInviteUrl(soniaPermanentGuildInviteUrl);
 
-      expect(DISCORD_GUILD_CONFIG.soniaPermanentGuildInviteUrl).toStrictEqual(`dummy-sonia-permanent-guild-invite-url`);
+      expect(DISCORD_GUILD_CONFIG.soniaPermanentGuildInviteUrl).toStrictEqual(
+        `dummy-sonia-permanent-guild-invite-url`
+      );
     });
   });
 });

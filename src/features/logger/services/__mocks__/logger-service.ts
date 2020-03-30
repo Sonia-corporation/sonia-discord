@@ -1,8 +1,8 @@
-import _ from 'lodash';
-import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
-import { LoggerConfigLevelEnum } from '../../enums/logger-config-level.enum';
-import { ILoggerLog } from '../../interfaces/logger-log';
-import { ILoggerLogInternal } from '../../interfaces/logger-log-internal';
+import _ from "lodash";
+import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
+import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
+import { ILoggerLog } from "../../interfaces/logger-log";
+import { ILoggerLogInternal } from "../../interfaces/logger-log-internal";
 
 export class LoggerService {
   private static _instance: LoggerService;
@@ -20,42 +20,45 @@ export class LoggerService {
   public error(loggerLog: Readonly<ILoggerLog>): void {
     this._log({
       ...loggerLog,
-      loggerLogType: LoggerConfigLevelEnum.ERROR
+      loggerLogType: LoggerConfigLevelEnum.ERROR,
     });
   }
 
   public warning(loggerLog: Readonly<ILoggerLog>): void {
     this._log({
       ...loggerLog,
-      loggerLogType: LoggerConfigLevelEnum.WARNING
+      loggerLogType: LoggerConfigLevelEnum.WARNING,
     });
   }
 
   public success(loggerLog: Readonly<ILoggerLog>): void {
     this._log({
       ...loggerLog,
-      loggerLogType: LoggerConfigLevelEnum.SUCCESS
+      loggerLogType: LoggerConfigLevelEnum.SUCCESS,
     });
   }
 
   public log(loggerLog: Readonly<ILoggerLog>): void {
     this._log({
       ...loggerLog,
-      loggerLogType: LoggerConfigLevelEnum.LOG
+      loggerLogType: LoggerConfigLevelEnum.LOG,
     });
   }
 
   public debug(loggerLog: Readonly<ILoggerLog>): void {
     this._log({
       ...loggerLog,
-      loggerLogType: LoggerConfigLevelEnum.DEBUG
+      loggerLogType: LoggerConfigLevelEnum.DEBUG,
     });
   }
 
   public getStringArray(array: Readonly<string>[]): string {
-    return `[ ${_.join(_.map(array, (value: Readonly<string>): string => {
-      return wrapInQuotes(value);
-    }), `, `)} ]`;
+    return `[ ${_.join(
+      _.map(array, (value: Readonly<string>): string => {
+        return wrapInQuotes(value);
+      }),
+      `, `
+    )} ]`;
   }
 
   public getValueUpdateWithHint(
@@ -89,8 +92,16 @@ export class LoggerService {
   private _log(loggerLogInternal: Readonly<ILoggerLogInternal>): void {
     const logTypePrefix: string = this._getLogTypePrefix();
 
-    if (_.isString(loggerLogInternal.context) && !_.isEmpty(loggerLogInternal.context)) {
-      console.log(`${logTypePrefix}${this._context(loggerLogInternal.context, loggerLogInternal.extendedContext)}${loggerLogInternal.message}`);
+    if (
+      _.isString(loggerLogInternal.context) &&
+      !_.isEmpty(loggerLogInternal.context)
+    ) {
+      console.log(
+        `${logTypePrefix}${this._context(
+          loggerLogInternal.context,
+          loggerLogInternal.extendedContext
+        )}${loggerLogInternal.message}`
+      );
     } else {
       console.log(`${logTypePrefix}${loggerLogInternal.message}`);
     }

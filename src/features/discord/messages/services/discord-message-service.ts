@@ -1,15 +1,15 @@
-import _ from 'lodash';
-import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
-import { ChalkService } from '../../../logger/services/chalk-service';
-import { LoggerService } from '../../../logger/services/logger-service';
-import { DiscordChannelService } from '../../channels/services/discord-channel-service';
-import { DiscordClientService } from '../../services/discord-client-service';
-import { DiscordAuthorService } from '../../users/services/discord-author-service';
-import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
-import { AnyDiscordMessage } from '../types/any-discord-message';
-import { DiscordMessageDmService } from './discord-message-dm-service';
-import { DiscordMessageErrorService } from './discord-message-error-service';
-import { DiscordMessageTextService } from './discord-message-text-service';
+import _ from "lodash";
+import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
+import { ChalkService } from "../../../logger/services/chalk-service";
+import { LoggerService } from "../../../logger/services/logger-service";
+import { DiscordChannelService } from "../../channels/services/discord-channel-service";
+import { DiscordClientService } from "../../services/discord-client-service";
+import { DiscordAuthorService } from "../../users/services/discord-author-service";
+import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
+import { AnyDiscordMessage } from "../types/any-discord-message";
+import { DiscordMessageDmService } from "./discord-message-dm-service";
+import { DiscordMessageErrorService } from "./discord-message-error-service";
+import { DiscordMessageTextService } from "./discord-message-text-service";
 
 export class DiscordMessageService {
   private static _instance: DiscordMessageService;
@@ -41,13 +41,18 @@ export class DiscordMessageService {
   }
 
   private _listen(): void {
-    this._discordClientServiceClient.on(`message`, (anyDiscordMessage: Readonly<AnyDiscordMessage>): void => {
-      this._handleMessage(anyDiscordMessage);
-    });
+    this._discordClientServiceClient.on(
+      `message`,
+      (anyDiscordMessage: Readonly<AnyDiscordMessage>): void => {
+        this._handleMessage(anyDiscordMessage);
+      }
+    );
 
     this._loggerService.debug({
       context: this._className,
-      message: this._chalkService.text(`listen ${wrapInQuotes(`message`)} event`)
+      message: this._chalkService.text(
+        `listen ${wrapInQuotes(`message`)} event`
+      ),
     });
   }
 
@@ -55,7 +60,10 @@ export class DiscordMessageService {
     this._loggerService.log({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(anyDiscordMessage.id, anyDiscordMessage.content)
+      message: this._loggerService.getSnowflakeContext(
+        anyDiscordMessage.id,
+        anyDiscordMessage.content
+      ),
     });
 
     if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
@@ -69,7 +77,9 @@ export class DiscordMessageService {
     }
   }
 
-  private _handleChannelMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): void {
+  private _handleChannelMessage(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): void {
     if (this._discordChannelService.isDm(anyDiscordMessage.channel)) {
       this._dmMessage(anyDiscordMessage);
     } else if (this._discordChannelService.isText(anyDiscordMessage.channel)) {
@@ -81,10 +91,15 @@ export class DiscordMessageService {
     this._loggerService.debug({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(anyDiscordMessage.id, `dm message`)
+      message: this._loggerService.getSnowflakeContext(
+        anyDiscordMessage.id,
+        `dm message`
+      ),
     });
 
-    const response: IDiscordMessageResponse | null = this._discordMessageDmService.getMessage(anyDiscordMessage);
+    const response: IDiscordMessageResponse | null = this._discordMessageDmService.getMessage(
+      anyDiscordMessage
+    );
 
     if (!_.isNil(response)) {
       this._sendMessage(anyDiscordMessage, response);
@@ -95,10 +110,15 @@ export class DiscordMessageService {
     this._loggerService.debug({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(anyDiscordMessage.id, `text message`)
+      message: this._loggerService.getSnowflakeContext(
+        anyDiscordMessage.id,
+        `text message`
+      ),
     });
 
-    const response: IDiscordMessageResponse | null = this._discordMessageTextService.getMessage(anyDiscordMessage);
+    const response: IDiscordMessageResponse | null = this._discordMessageTextService.getMessage(
+      anyDiscordMessage
+    );
 
     if (!_.isNil(response)) {
       this._sendMessage(anyDiscordMessage, response);
@@ -112,19 +132,31 @@ export class DiscordMessageService {
     this._loggerService.debug({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(anyDiscordMessage.id, `sending message...`)
+      message: this._loggerService.getSnowflakeContext(
+        anyDiscordMessage.id,
+        `sending message...`
+      ),
     });
 
     if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
-      anyDiscordMessage.channel.send(discordMessageResponse.response, discordMessageResponse.options).then((): void => {
-        this._loggerService.log({
-          context: this._className,
-          extendedContext: true,
-          message: this._loggerService.getSnowflakeContext(anyDiscordMessage.id, `message sent`)
+      anyDiscordMessage.channel
+        .send(discordMessageResponse.response, discordMessageResponse.options)
+        .then((): void => {
+          this._loggerService.log({
+            context: this._className,
+            extendedContext: true,
+            message: this._loggerService.getSnowflakeContext(
+              anyDiscordMessage.id,
+              `message sent`
+            ),
+          });
+        })
+        .catch((error: unknown): void => {
+          this._discordMessageErrorService.handleError(
+            error,
+            anyDiscordMessage
+          );
         });
-      }).catch((error: unknown): void => {
-        this._discordMessageErrorService.handleError(error, anyDiscordMessage);
-      });
     }
   }
 }

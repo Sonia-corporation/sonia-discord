@@ -1,4 +1,4 @@
-import { DiscordSoniaMentalStateEnum } from './discord-sonia-mental-state.enum';
+import { DiscordSoniaMentalStateEnum } from "./discord-sonia-mental-state.enum";
 
 describe(`DiscordSoniaMentalStateEnum`, (): void => {
   it(`should have a member "AGITATED"`, (): void => {
@@ -34,7 +34,9 @@ describe(`DiscordSoniaMentalStateEnum`, (): void => {
   it(`should have a member "COMFORTABLE"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordSoniaMentalStateEnum.COMFORTABLE).toStrictEqual(`comfortable`);
+    expect(DiscordSoniaMentalStateEnum.COMFORTABLE).toStrictEqual(
+      `comfortable`
+    );
   });
 
   it(`should have a member "CONCERNED"`, (): void => {
@@ -88,7 +90,9 @@ describe(`DiscordSoniaMentalStateEnum`, (): void => {
   it(`should have a member "ENLIGHTENED"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordSoniaMentalStateEnum.ENLIGHTENED).toStrictEqual(`enlightened`);
+    expect(DiscordSoniaMentalStateEnum.ENLIGHTENED).toStrictEqual(
+      `enlightened`
+    );
   });
 
   it(`should have a member "EUPHORIC"`, (): void => {
@@ -124,7 +128,9 @@ describe(`DiscordSoniaMentalStateEnum`, (): void => {
   it(`should have a member "MELANCHOLIC"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordSoniaMentalStateEnum.MELANCHOLIC).toStrictEqual(`melancholic`);
+    expect(DiscordSoniaMentalStateEnum.MELANCHOLIC).toStrictEqual(
+      `melancholic`
+    );
   });
 
   it(`should have a member "MISERABLE"`, (): void => {

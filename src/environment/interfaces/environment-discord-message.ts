@@ -1,4 +1,4 @@
-import { IEnvironmentDiscordMessageCommand } from './environment-discord-message-command';
+import { IEnvironmentDiscordMessageCommand } from "./environment-discord-message-command";
 
 export interface IEnvironmentDiscordMessage {
   command?: IEnvironmentDiscordMessageCommand;

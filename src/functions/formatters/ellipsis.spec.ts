@@ -1,4 +1,4 @@
-import { ellipsis } from './ellipsis';
+import { ellipsis } from "./ellipsis";
 
 describe(`ellipsis()`, (): void => {
   let value: string;

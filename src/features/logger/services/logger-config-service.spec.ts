@@ -1,10 +1,10 @@
-import { IConfigUpdateBoolean } from '../../config/interfaces/config-update-boolean';
-import { IConfigUpdateString } from '../../config/interfaces/config-update-string';
-import { ConfigService } from '../../config/services/config-service';
-import { LOGGER_CONFIG } from '../constants/logger-config';
-import { LoggerConfigLevelEnum } from '../enums/logger-config-level.enum';
-import { ILoggerConfig } from '../interfaces/logger-config';
-import { LoggerConfigService } from './logger-config-service';
+import { IConfigUpdateBoolean } from "../../config/interfaces/config-update-boolean";
+import { IConfigUpdateString } from "../../config/interfaces/config-update-string";
+import { ConfigService } from "../../config/services/config-service";
+import { LOGGER_CONFIG } from "../constants/logger-config";
+import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
+import { ILoggerConfig } from "../interfaces/logger-config";
+import { LoggerConfigService } from "./logger-config-service";
 
 jest.mock(`../../config/services/config-service`);
 
@@ -30,7 +30,7 @@ describe(`LoggerConfigService`, (): void => {
 
       expect(result).toStrictEqual({
         isEnabled: true,
-        level: LoggerConfigLevelEnum.DEBUG
+        level: LoggerConfigLevelEnum.DEBUG,
       } as ILoggerConfig);
     });
   });
@@ -78,7 +78,9 @@ describe(`LoggerConfigService`, (): void => {
       isEnabled = true;
       LOGGER_CONFIG.isEnabled = false;
 
-      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedBoolean`).mockReturnValue(true);
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedBoolean`)
+        .mockReturnValue(true);
     });
 
     it(`should get the updated boolean`, (): void => {
@@ -91,7 +93,7 @@ describe(`LoggerConfigService`, (): void => {
         context: `LoggerConfigService`,
         newValue: true,
         oldValue: false,
-        valueName: `enable state`
+        valueName: `enable state`,
       } as IConfigUpdateBoolean);
     });
 
@@ -127,7 +129,9 @@ describe(`LoggerConfigService`, (): void => {
       level = LoggerConfigLevelEnum.DEBUG;
       LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
 
-      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(LoggerConfigLevelEnum.DEBUG);
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(LoggerConfigLevelEnum.DEBUG);
     });
 
     it(`should get the updated string`, (): void => {
@@ -140,7 +144,7 @@ describe(`LoggerConfigService`, (): void => {
         context: `LoggerConfigService`,
         newValue: LoggerConfigLevelEnum.DEBUG,
         oldValue: LoggerConfigLevelEnum.SUCCESS,
-        valueName: `level`
+        valueName: `level`,
       } as IConfigUpdateString<LoggerConfigLevelEnum>);
     });
 

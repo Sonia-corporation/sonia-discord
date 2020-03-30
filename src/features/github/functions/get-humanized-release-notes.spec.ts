@@ -1,4 +1,4 @@
-import { getHumanizedReleaseNotes } from './get-humanized-release-notes';
+import { getHumanizedReleaseNotes } from "./get-humanized-release-notes";
 
 describe(`getHumanizedReleaseNotes()`, (): void => {
   let releaseNotes: string;
@@ -111,7 +111,9 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(`**__Bug Fixes:__\nlabeler:** fix build error\n**environment:** fix type error due to --fix tslint option failing\n**__Features:__\ncommand-version:** add a footer\n**app-total-release-count:** add axios xhr call to get the total tags from the github api\n**logs:** add more logs for the messages\n**github:** add new github config service\n**command-version:** add the real number of release in the footer\n**init-service:** used the github config service to get the personal access token`);
+      expect(result).toStrictEqual(
+        `**__Bug Fixes:__\nlabeler:** fix build error\n**environment:** fix type error due to --fix tslint option failing\n**__Features:__\ncommand-version:** add a footer\n**app-total-release-count:** add axios xhr call to get the total tags from the github api\n**logs:** add more logs for the messages\n**github:** add new github config service\n**command-version:** add the real number of release in the footer\n**init-service:** used the github config service to get the personal access token`
+      );
     });
   });
 });

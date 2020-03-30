@@ -1,4 +1,4 @@
-import { ellipsis } from './ellipsis';
+import { ellipsis } from "./ellipsis";
 
 export function limitTo(
   value: Readonly<string>,

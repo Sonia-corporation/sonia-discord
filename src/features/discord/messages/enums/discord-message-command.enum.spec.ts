@@ -1,4 +1,4 @@
-import { DiscordMessageCommandEnum } from './discord-message-command.enum';
+import { DiscordMessageCommandEnum } from "./discord-message-command.enum";
 
 describe(`DiscordMessageCommandEnum`, (): void => {
   it(`should have a member "VERSION"`, (): void => {

@@ -1,11 +1,8 @@
-import {
-  DMChannel,
-  TextChannel
-} from 'discord.js';
-import _ from 'lodash';
-import { isDiscordDmChannel } from '../functions/is-discord-dm-channel';
-import { isDiscordTextChannel } from '../functions/is-discord-text-channel';
-import { AnyDiscordChannel } from '../types/any-discord-channel';
+import { DMChannel, TextChannel } from "discord.js";
+import _ from "lodash";
+import { isDiscordDmChannel } from "../functions/is-discord-dm-channel";
+import { isDiscordTextChannel } from "../functions/is-discord-text-channel";
+import { AnyDiscordChannel } from "../types/any-discord-channel";
 
 export class DiscordChannelService {
   private static _instance: DiscordChannelService;

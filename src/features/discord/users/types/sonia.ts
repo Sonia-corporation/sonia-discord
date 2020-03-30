@@ -1,3 +1,3 @@
-import { ClientUser } from 'discord.js';
+import { ClientUser } from "discord.js";
 
 export type Sonia = ClientUser;

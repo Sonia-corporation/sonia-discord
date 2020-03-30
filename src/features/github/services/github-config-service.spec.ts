@@ -1,8 +1,8 @@
-import { IConfigUpdateString } from '../../config/interfaces/config-update-string';
-import { ConfigService } from '../../config/services/config-service';
-import { GITHUB_CONFIG } from '../constants/github-config';
-import { IGithubConfig } from '../interfaces/github-config';
-import { GithubConfigService } from './github-config-service';
+import { IConfigUpdateString } from "../../config/interfaces/config-update-string";
+import { ConfigService } from "../../config/services/config-service";
+import { GITHUB_CONFIG } from "../constants/github-config";
+import { IGithubConfig } from "../interfaces/github-config";
+import { GithubConfigService } from "./github-config-service";
 
 jest.mock(`../../config/services/config-service`);
 
@@ -28,7 +28,7 @@ describe(`GithubConfigService`, (): void => {
 
       expect(result).toStrictEqual({
         bugReportUrl: `dummy-bug-report-url`,
-        personalAccessToken: `dummy-personal-access-token`
+        personalAccessToken: `dummy-personal-access-token`,
       } as IGithubConfig);
     });
   });
@@ -56,7 +56,9 @@ describe(`GithubConfigService`, (): void => {
       bugReportUrl = `bug-report-url`;
       GITHUB_CONFIG.bugReportUrl = `dummy-bug-report-url`;
 
-      configServiceGetUpdatedNumberSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(`bug-report-url`);
+      configServiceGetUpdatedNumberSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`bug-report-url`);
     });
 
     it(`should get the updated string`, (): void => {
@@ -69,7 +71,7 @@ describe(`GithubConfigService`, (): void => {
         context: `GithubConfigService`,
         newValue: `bug-report-url`,
         oldValue: `dummy-bug-report-url`,
-        valueName: `bug report url`
+        valueName: `bug report url`,
       } as IConfigUpdateString);
     });
 
@@ -105,7 +107,9 @@ describe(`GithubConfigService`, (): void => {
       personalAccessToken = `personal-access-token`;
       GITHUB_CONFIG.personalAccessToken = `dummy-personal-access-token`;
 
-      configServiceGetUpdatedNumberSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(`personal-access-token`);
+      configServiceGetUpdatedNumberSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`personal-access-token`);
     });
 
     it(`should get the updated string`, (): void => {
@@ -119,7 +123,7 @@ describe(`GithubConfigService`, (): void => {
         isValueHidden: true,
         newValue: `personal-access-token`,
         oldValue: `dummy-personal-access-token`,
-        valueName: `personal access token`
+        valueName: `personal access token`,
       } as IConfigUpdateString);
     });
 
@@ -128,7 +132,9 @@ describe(`GithubConfigService`, (): void => {
 
       service.updatePersonalAccessToken(personalAccessToken);
 
-      expect(GITHUB_CONFIG.personalAccessToken).toStrictEqual(`personal-access-token`);
+      expect(GITHUB_CONFIG.personalAccessToken).toStrictEqual(
+        `personal-access-token`
+      );
     });
   });
 });

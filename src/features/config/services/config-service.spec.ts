@@ -1,9 +1,9 @@
-import { ILoggerLog } from '../../logger/interfaces/logger-log';
-import { LoggerService } from '../../logger/services/logger-service';
-import { IConfigUpdateBoolean } from '../interfaces/config-update-boolean';
-import { IConfigUpdateNumber } from '../interfaces/config-update-number';
-import { IConfigUpdateString } from '../interfaces/config-update-string';
-import { ConfigService } from './config-service';
+import { ILoggerLog } from "../../logger/interfaces/logger-log";
+import { LoggerService } from "../../logger/services/logger-service";
+import { IConfigUpdateBoolean } from "../interfaces/config-update-boolean";
+import { IConfigUpdateNumber } from "../interfaces/config-update-number";
+import { IConfigUpdateString } from "../interfaces/config-update-string";
+import { ConfigService } from "./config-service";
 
 jest.mock(`../../logger/services/chalk-service`);
 jest.mock(`../../logger/services/logger-service`);
@@ -27,10 +27,12 @@ describe(`ConfigService`, (): void => {
         context: `dummy-context`,
         newValue: 0,
         oldValue: 8,
-        valueName: `dummy-value-name`
+        valueName: `dummy-value-name`,
       };
 
-      loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
+      loggerServiceLogSpy = jest
+        .spyOn(loggerService, `log`)
+        .mockImplementation();
     });
 
     describe(`when the given config update number new value is undefined`, (): void => {
@@ -68,7 +70,7 @@ describe(`ConfigService`, (): void => {
         expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
-          message: `dummy-value-name updated to: 5`
+          message: `dummy-value-name updated to: 5`,
         } as ILoggerLog);
       });
 
@@ -94,7 +96,7 @@ describe(`ConfigService`, (): void => {
         expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
-          message: `dummy-value-name updated to: 6`
+          message: `dummy-value-name updated to: 6`,
         } as ILoggerLog);
       });
 
@@ -118,10 +120,12 @@ describe(`ConfigService`, (): void => {
         context: `dummy-context`,
         newValue: `dummy-new-value`,
         oldValue: `dummy-old-value`,
-        valueName: `dummy-value-name`
+        valueName: `dummy-value-name`,
       };
 
-      loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
+      loggerServiceLogSpy = jest
+        .spyOn(loggerService, `log`)
+        .mockImplementation();
     });
 
     describe(`when the given config update string new value is undefined`, (): void => {
@@ -169,7 +173,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "new-value"`
+              message: `dummy-value-name updated to: "new-value"`,
             } as ILoggerLog);
           });
         });
@@ -187,7 +191,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated`
+              message: `dummy-value-name updated`,
             } as ILoggerLog);
           });
         });
@@ -205,7 +209,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "new-value"`
+              message: `dummy-value-name updated to: "new-value"`,
             } as ILoggerLog);
           });
         });
@@ -237,7 +241,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "new-value"`
+              message: `dummy-value-name updated to: "new-value"`,
             } as ILoggerLog);
           });
         });
@@ -255,7 +259,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated`
+              message: `dummy-value-name updated`,
             } as ILoggerLog);
           });
         });
@@ -273,7 +277,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "new-value"`
+              message: `dummy-value-name updated to: "new-value"`,
             } as ILoggerLog);
           });
         });
@@ -305,7 +309,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "********" (hidden)`
+              message: `dummy-value-name updated to: "********" (hidden)`,
             } as ILoggerLog);
           });
         });
@@ -323,7 +327,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "********" (hidden)`
+              message: `dummy-value-name updated to: "********" (hidden)`,
             } as ILoggerLog);
           });
         });
@@ -341,7 +345,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "********" (hidden)`
+              message: `dummy-value-name updated to: "********" (hidden)`,
             } as ILoggerLog);
           });
         });
@@ -379,7 +383,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "marco-polo"`
+              message: `dummy-value-name updated to: "marco-polo"`,
             } as ILoggerLog);
           });
         });
@@ -397,7 +401,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated`
+              message: `dummy-value-name updated`,
             } as ILoggerLog);
           });
         });
@@ -415,7 +419,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "marco-polo"`
+              message: `dummy-value-name updated to: "marco-polo"`,
             } as ILoggerLog);
           });
         });
@@ -447,7 +451,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "marco-polo"`
+              message: `dummy-value-name updated to: "marco-polo"`,
             } as ILoggerLog);
           });
         });
@@ -465,7 +469,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated`
+              message: `dummy-value-name updated`,
             } as ILoggerLog);
           });
         });
@@ -483,7 +487,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "marco-polo"`
+              message: `dummy-value-name updated to: "marco-polo"`,
             } as ILoggerLog);
           });
         });
@@ -515,7 +519,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "********" (hidden)`
+              message: `dummy-value-name updated to: "********" (hidden)`,
             } as ILoggerLog);
           });
         });
@@ -533,7 +537,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "********" (hidden)`
+              message: `dummy-value-name updated to: "********" (hidden)`,
             } as ILoggerLog);
           });
         });
@@ -551,7 +555,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "********" (hidden)`
+              message: `dummy-value-name updated to: "********" (hidden)`,
             } as ILoggerLog);
           });
         });
@@ -577,10 +581,12 @@ describe(`ConfigService`, (): void => {
         context: `dummy-context`,
         newValue: true,
         oldValue: false,
-        valueName: `dummy-value-name`
+        valueName: `dummy-value-name`,
       };
 
-      loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
+      loggerServiceLogSpy = jest
+        .spyOn(loggerService, `log`)
+        .mockImplementation();
     });
 
     describe(`when the given config update boolean new value is undefined`, (): void => {
@@ -618,7 +624,7 @@ describe(`ConfigService`, (): void => {
         expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
-          message: `dummy-value-name updated to: false`
+          message: `dummy-value-name updated to: false`,
         } as ILoggerLog);
       });
 
@@ -644,7 +650,7 @@ describe(`ConfigService`, (): void => {
         expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
-          message: `dummy-value-name updated to: true`
+          message: `dummy-value-name updated to: true`,
         } as ILoggerLog);
       });
 

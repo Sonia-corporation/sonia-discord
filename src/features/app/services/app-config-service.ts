@@ -1,18 +1,20 @@
-import _ from 'lodash';
-import moment from 'moment';
-import { AbstractConfigService } from '../../../classes/abstract-config-service';
-import { isValidDate } from '../../../functions/checks/is-valid-date';
-import { PartialNested } from '../../../types/partial-nested';
-import { isNodeProduction } from '../../node/functions/is-node-production';
-import { TimeService } from '../../time/services/time-service';
-import { APP_CONFIG } from '../constants/app-config';
-import { AppProductionStateEnum } from '../enums/app-production-state.enum';
-import { IAppConfig } from '../interfaces/app-config';
+import _ from "lodash";
+import moment from "moment";
+import { AbstractConfigService } from "../../../classes/abstract-config-service";
+import { isValidDate } from "../../../functions/checks/is-valid-date";
+import { PartialNested } from "../../../types/partial-nested";
+import { isNodeProduction } from "../../node/functions/is-node-production";
+import { TimeService } from "../../time/services/time-service";
+import { APP_CONFIG } from "../constants/app-config";
+import { AppProductionStateEnum } from "../enums/app-production-state.enum";
+import { IAppConfig } from "../interfaces/app-config";
 
 export class AppConfigService extends AbstractConfigService<IAppConfig> {
   private static _instance: AppConfigService;
 
-  public static getInstance(config?: Readonly<PartialNested<IAppConfig>>): AppConfigService {
+  public static getInstance(
+    config?: Readonly<PartialNested<IAppConfig>>
+  ): AppConfigService {
     if (_.isNil(AppConfigService._instance)) {
       AppConfigService._instance = new AppConfigService(config);
     }
@@ -46,7 +48,7 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
 
       this._loggerService.debug({
         context: this._className,
-        message: this._chalkService.text(`configuration updated`)
+        message: this._chalkService.text(`configuration updated`),
       });
     }
   }
@@ -64,7 +66,7 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
       context: this._className,
       newValue: version,
       oldValue: APP_CONFIG.version,
-      valueName: `version`
+      valueName: `version`,
     });
   }
 
@@ -85,7 +87,7 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
       context: this._className,
       newValue: releaseDate,
       oldValue: APP_CONFIG.releaseDate,
-      valueName: `release date`
+      valueName: `release date`,
     });
   }
 
@@ -106,7 +108,7 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
       context: this._className,
       newValue: initializationDate,
       oldValue: APP_CONFIG.initializationDate,
-      valueName: `initialization date`
+      valueName: `initialization date`,
     });
   }
 
@@ -115,7 +117,9 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
   }
 
   public getProductionStateHumanized(): AppProductionStateEnum {
-    return APP_CONFIG.isProduction ? AppProductionStateEnum.PRODUCTION : AppProductionStateEnum.DEVELOPMENT;
+    return APP_CONFIG.isProduction
+      ? AppProductionStateEnum.PRODUCTION
+      : AppProductionStateEnum.DEVELOPMENT;
   }
 
   public updateProductionState(isProduction?: Readonly<boolean>): void {
@@ -123,7 +127,7 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
       context: this._className,
       newValue: isProduction,
       oldValue: APP_CONFIG.isProduction,
-      valueName: `production state`
+      valueName: `production state`,
     });
   }
 
@@ -147,7 +151,7 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
       context: this._className,
       newValue: totalReleaseCount,
       oldValue: APP_CONFIG.totalReleaseCount,
-      valueName: `total release count`
+      valueName: `total release count`,
     });
   }
 
@@ -161,7 +165,7 @@ export class AppConfigService extends AbstractConfigService<IAppConfig> {
       isValueDisplay: false,
       newValue: releaseNotes,
       oldValue: APP_CONFIG.releaseNotes,
-      valueName: `release notes`
+      valueName: `release notes`,
     });
   }
 
