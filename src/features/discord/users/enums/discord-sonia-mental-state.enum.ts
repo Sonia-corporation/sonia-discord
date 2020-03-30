@@ -36,6 +36,5 @@ export enum DiscordSoniaMentalStateEnum {
   TROUBLED = `troubled`,
   UNHAPPY = `unhappy`,
   UPSET = `upset`,
-  VENGEFUL = `vengeful`
+  VENGEFUL = `vengeful`,
 }
-

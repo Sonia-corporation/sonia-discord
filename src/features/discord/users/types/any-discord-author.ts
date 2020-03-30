@@ -1,3 +1,3 @@
-import { User } from 'discord.js';
+import { User } from "discord.js";
 
 export type AnyDiscordAuthor = User;

@@ -1,4 +1,4 @@
-import { IAppConfig } from '../interfaces/app-config';
+import { IAppConfig } from "../interfaces/app-config";
 
 export const APP_CONFIG: IAppConfig = {
   initializationDate: `unknown`,
@@ -6,5 +6,5 @@ export const APP_CONFIG: IAppConfig = {
   releaseDate: `unknown`,
   releaseNotes: ``,
   totalReleaseCount: 0,
-  version: `unknown`
+  version: `unknown`,
 };

@@ -1,2 +1,2 @@
 // eslint-disable-next-line quotes
-declare module '@scout_apm/scout-apm';
+declare module "@scout_apm/scout-apm";

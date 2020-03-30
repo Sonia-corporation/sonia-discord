@@ -1,11 +1,11 @@
-import _ from 'lodash';
-import { LoggerService } from '../../../logger/services/logger-service';
-import { DiscordAuthorService } from '../../users/services/discord-author-service';
-import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
-import { AnyDiscordMessage } from '../types/any-discord-message';
-import { DiscordMessageAuthorService } from './discord-message-author-service';
-import { DiscordMessageCommandService } from './discord-message-command-service';
-import { DiscordMessageContentService } from './discord-message-content-service';
+import _ from "lodash";
+import { LoggerService } from "../../../logger/services/logger-service";
+import { DiscordAuthorService } from "../../users/services/discord-author-service";
+import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
+import { AnyDiscordMessage } from "../types/any-discord-message";
+import { DiscordMessageAuthorService } from "./discord-message-author-service";
+import { DiscordMessageCommandService } from "./discord-message-command-service";
+import { DiscordMessageContentService } from "./discord-message-content-service";
 
 export class DiscordMessageDmService {
   private static _instance: DiscordMessageDmService;
@@ -25,7 +25,9 @@ export class DiscordMessageDmService {
   private readonly _loggerService = LoggerService.getInstance();
   private readonly _className = `DiscordMessageDmService`;
 
-  public getMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
+  public getMessage(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): IDiscordMessageResponse | null {
     if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
       return this._getMessageResponse(anyDiscordMessage);
     }
@@ -33,9 +35,15 @@ export class DiscordMessageDmService {
     return null;
   }
 
-  private _getMessageResponse(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
-    if (this._discordMessageContentService.hasContent(anyDiscordMessage.content)) {
-      if (this._discordMessageCommandService.hasCommand(anyDiscordMessage.content)) {
+  private _getMessageResponse(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): IDiscordMessageResponse | null {
+    if (
+      this._discordMessageContentService.hasContent(anyDiscordMessage.content)
+    ) {
+      if (
+        this._discordMessageCommandService.hasCommand(anyDiscordMessage.content)
+      ) {
         return this._getCommandMessageResponse(anyDiscordMessage);
       }
     }
@@ -43,11 +51,16 @@ export class DiscordMessageDmService {
     return this._discordMessageAuthorService.reply(anyDiscordMessage);
   }
 
-  private _getCommandMessageResponse(anyDiscordMessage: Readonly<AnyDiscordMessage>): IDiscordMessageResponse | null {
+  private _getCommandMessageResponse(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): IDiscordMessageResponse | null {
     this._loggerService.debug({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(anyDiscordMessage.id, `message with command`)
+      message: this._loggerService.getSnowflakeContext(
+        anyDiscordMessage.id,
+        `message with command`
+      ),
     });
 
     return this._discordMessageCommandService.handleCommands(anyDiscordMessage);

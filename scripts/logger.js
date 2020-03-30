@@ -4,7 +4,7 @@ const MOMENT = require(`moment`);
 const LOG_PREFIX = `● `;
 
 function _getLogTypePrefix(logType) {
-  return CHALK[ logType ](LOG_PREFIX);
+  return CHALK[logType](LOG_PREFIX);
 }
 
 function _getContext(scope) {

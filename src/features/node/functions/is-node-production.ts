@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import { getNodeArgument } from './get-node-argument';
+import _ from "lodash";
+import { getNodeArgument } from "./get-node-argument";
 
 export function isNodeProduction(): boolean {
   const prodArgument = getNodeArgument(`prod`);

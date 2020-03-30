@@ -1,10 +1,10 @@
-import { Message } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
-import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
-import { DiscordMessageCommandService } from './discord-message-command-service';
-import { DiscordMessageCommandVersionService } from './discord-message-command-version-service';
-import { DiscordMessageConfigService } from './discord-message-config-service';
-import { DiscordMessageContentService } from './discord-message-content-service';
+import { Message } from "discord.js";
+import { createMock } from "ts-auto-mock";
+import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
+import { DiscordMessageCommandService } from "./discord-message-command-service";
+import { DiscordMessageCommandVersionService } from "./discord-message-command-version-service";
+import { DiscordMessageConfigService } from "./discord-message-config-service";
+import { DiscordMessageContentService } from "./discord-message-content-service";
 
 describe(`DiscordMessageCommandService`, (): void => {
   let service: DiscordMessageCommandService;
@@ -25,7 +25,9 @@ describe(`DiscordMessageCommandService`, (): void => {
     beforeEach((): void => {
       message = `dummy-message`;
 
-      jest.spyOn(discordMessageConfigService, `getMessageCommandPrefix`).mockReturnValue(`--`);
+      jest
+        .spyOn(discordMessageConfigService, `getMessageCommandPrefix`)
+        .mockReturnValue(`--`);
     });
 
     describe(`when the given message does not contains the version command`, (): void => {
@@ -65,12 +67,16 @@ describe(`DiscordMessageCommandService`, (): void => {
     beforeEach((): void => {
       message = `dummy-message`;
 
-      discordMessageConfigServiceGetMessageCommandPrefixSpy = jest.spyOn(discordMessageConfigService, `getMessageCommandPrefix`).mockImplementation();
+      discordMessageConfigServiceGetMessageCommandPrefixSpy = jest
+        .spyOn(discordMessageConfigService, `getMessageCommandPrefix`)
+        .mockImplementation();
     });
 
     describe(`when the message command prefix is "@"`, (): void => {
       beforeEach((): void => {
-        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(`@`);
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
+          `@`
+        );
       });
 
       describe(`when the given message is an empty string`, (): void => {
@@ -400,7 +406,7 @@ describe(`DiscordMessageCommandService`, (): void => {
       beforeEach((): void => {
         discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
           `--`,
-          `!`
+          `!`,
         ]);
       });
 
@@ -739,7 +745,9 @@ describe(`DiscordMessageCommandService`, (): void => {
       anyDiscordMessage = {} as Message;
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
-      discordMessageCommandVersionServiceHandleSpy = jest.spyOn(discordMessageCommandVersionService, `handle`).mockReturnValue(discordMessageResponse);
+      discordMessageCommandVersionServiceHandleSpy = jest
+        .spyOn(discordMessageCommandVersionService, `handle`)
+        .mockReturnValue(discordMessageResponse);
     });
 
     it(`should handle the message command version`, (): void => {
@@ -747,8 +755,12 @@ describe(`DiscordMessageCommandService`, (): void => {
 
       service.handleVersionCommand(anyDiscordMessage);
 
-      expect(discordMessageCommandVersionServiceHandleSpy).toHaveBeenCalledTimes(1);
-      expect(discordMessageCommandVersionServiceHandleSpy).toHaveBeenCalledWith(anyDiscordMessage);
+      expect(
+        discordMessageCommandVersionServiceHandleSpy
+      ).toHaveBeenCalledTimes(1);
+      expect(discordMessageCommandVersionServiceHandleSpy).toHaveBeenCalledWith(
+        anyDiscordMessage
+      );
     });
 
     it(`should return a message response`, (): void => {
@@ -772,9 +784,15 @@ describe(`DiscordMessageCommandService`, (): void => {
       anyDiscordMessage = {} as Message;
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
-      discordMessageContentServiceHasContentSpy = jest.spyOn(discordMessageContentService, `hasContent`).mockImplementation();
-      discordMessageCommandVersionServiceHandleSpy = jest.spyOn(discordMessageCommandVersionService, `handle`).mockReturnValue(discordMessageResponse);
-      jest.spyOn(discordMessageConfigService, `getMessageCommandPrefix`).mockReturnValue(`--`);
+      discordMessageContentServiceHasContentSpy = jest
+        .spyOn(discordMessageContentService, `hasContent`)
+        .mockImplementation();
+      discordMessageCommandVersionServiceHandleSpy = jest
+        .spyOn(discordMessageCommandVersionService, `handle`)
+        .mockReturnValue(discordMessageResponse);
+      jest
+        .spyOn(discordMessageConfigService, `getMessageCommandPrefix`)
+        .mockReturnValue(`--`);
     });
 
     describe(`when the given discord message has no content`, (): void => {
@@ -787,7 +805,9 @@ describe(`DiscordMessageCommandService`, (): void => {
 
         service.handleCommands(anyDiscordMessage);
 
-        expect(discordMessageCommandVersionServiceHandleSpy).not.toHaveBeenCalled();
+        expect(
+          discordMessageCommandVersionServiceHandleSpy
+        ).not.toHaveBeenCalled();
       });
 
       it(`should return null`, (): void => {
@@ -814,7 +834,9 @@ describe(`DiscordMessageCommandService`, (): void => {
 
           service.handleCommands(anyDiscordMessage);
 
-          expect(discordMessageCommandVersionServiceHandleSpy).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandVersionServiceHandleSpy
+          ).not.toHaveBeenCalled();
         });
 
         it(`should return null`, (): void => {
@@ -836,8 +858,12 @@ describe(`DiscordMessageCommandService`, (): void => {
 
           service.handleCommands(anyDiscordMessage);
 
-          expect(discordMessageCommandVersionServiceHandleSpy).toHaveBeenCalledTimes(1);
-          expect(discordMessageCommandVersionServiceHandleSpy).toHaveBeenCalledWith(anyDiscordMessage);
+          expect(
+            discordMessageCommandVersionServiceHandleSpy
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            discordMessageCommandVersionServiceHandleSpy
+          ).toHaveBeenCalledWith(anyDiscordMessage);
         });
 
         it(`should return the Discord message response for the version command`, (): void => {

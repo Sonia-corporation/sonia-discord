@@ -1,7 +1,7 @@
-import { Client } from 'discord.js';
-import _ from 'lodash';
-import { ChalkService } from '../../logger/services/chalk-service';
-import { LoggerService } from '../../logger/services/logger-service';
+import { Client } from "discord.js";
+import _ from "lodash";
+import { ChalkService } from "../../logger/services/chalk-service";
+import { LoggerService } from "../../logger/services/logger-service";
 
 export class DiscordClientService {
   private static _instance: DiscordClientService;
@@ -22,7 +22,7 @@ export class DiscordClientService {
   public constructor() {
     this._loggerService.debug({
       context: this._className,
-      message: this._chalkService.text(`client created`)
+      message: this._chalkService.text(`client created`),
     });
   }
 
@@ -30,4 +30,3 @@ export class DiscordClientService {
     return this._client;
   }
 }
-

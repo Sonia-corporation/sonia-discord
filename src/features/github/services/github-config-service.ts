@@ -1,13 +1,15 @@
-import _ from 'lodash';
-import { AbstractConfigService } from '../../../classes/abstract-config-service';
-import { PartialNested } from '../../../types/partial-nested';
-import { GITHUB_CONFIG } from '../constants/github-config';
-import { IGithubConfig } from '../interfaces/github-config';
+import _ from "lodash";
+import { AbstractConfigService } from "../../../classes/abstract-config-service";
+import { PartialNested } from "../../../types/partial-nested";
+import { GITHUB_CONFIG } from "../constants/github-config";
+import { IGithubConfig } from "../interfaces/github-config";
 
 export class GithubConfigService extends AbstractConfigService<IGithubConfig> {
   private static _instance: GithubConfigService;
 
-  public static getInstance(config?: Readonly<PartialNested<IGithubConfig>>): GithubConfigService {
+  public static getInstance(
+    config?: Readonly<PartialNested<IGithubConfig>>
+  ): GithubConfigService {
     if (_.isNil(GithubConfigService._instance)) {
       GithubConfigService._instance = new GithubConfigService(config);
     }
@@ -29,7 +31,7 @@ export class GithubConfigService extends AbstractConfigService<IGithubConfig> {
 
       this._loggerService.debug({
         context: this._className,
-        message: this._chalkService.text(`configuration updated`)
+        message: this._chalkService.text(`configuration updated`),
       });
     }
   }
@@ -47,7 +49,7 @@ export class GithubConfigService extends AbstractConfigService<IGithubConfig> {
       context: this._className,
       newValue: bugReportUrl,
       oldValue: GITHUB_CONFIG.bugReportUrl,
-      valueName: `bug report url`
+      valueName: `bug report url`,
     });
   }
 
@@ -55,13 +57,15 @@ export class GithubConfigService extends AbstractConfigService<IGithubConfig> {
     return GITHUB_CONFIG.personalAccessToken;
   }
 
-  public updatePersonalAccessToken(personalAccessToken?: Readonly<string>): void {
+  public updatePersonalAccessToken(
+    personalAccessToken?: Readonly<string>
+  ): void {
     GITHUB_CONFIG.personalAccessToken = this._configService.getUpdatedString({
       context: this._className,
       isValueHidden: true,
       newValue: personalAccessToken,
       oldValue: GITHUB_CONFIG.personalAccessToken,
-      valueName: `personal access token`
+      valueName: `personal access token`,
     });
   }
 }

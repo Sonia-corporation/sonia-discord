@@ -3,19 +3,19 @@ import {
   MessageEmbedAuthor,
   MessageEmbedFooter,
   MessageEmbedOptions,
-  MessageEmbedThumbnail
-} from 'discord.js';
-import _ from 'lodash';
-import moment from 'moment';
-import { ellipsis } from '../../../../functions/formatters/ellipsis';
-import { GithubConfigService } from '../../../github/services/github-config-service';
-import { LoggerService } from '../../../logger/services/logger-service';
-import { DiscordChannelService } from '../../channels/services/discord-channel-service';
-import { DiscordGuildConfigService } from '../../guilds/services/discord-guild-config-service';
-import { DiscordSoniaService } from '../../users/services/discord-sonia-service';
-import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
-import { AnyDiscordMessage } from '../types/any-discord-message';
-import { DiscordMessageConfigService } from './discord-message-config-service';
+  MessageEmbedThumbnail,
+} from "discord.js";
+import _ from "lodash";
+import moment from "moment";
+import { ellipsis } from "../../../../functions/formatters/ellipsis";
+import { GithubConfigService } from "../../../github/services/github-config-service";
+import { LoggerService } from "../../../logger/services/logger-service";
+import { DiscordChannelService } from "../../channels/services/discord-channel-service";
+import { DiscordGuildConfigService } from "../../guilds/services/discord-guild-config-service";
+import { DiscordSoniaService } from "../../users/services/discord-sonia-service";
+import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
+import { AnyDiscordMessage } from "../types/any-discord-message";
+import { DiscordMessageConfigService } from "./discord-message-config-service";
 
 export class DiscordMessageErrorService {
   private static _instance: DiscordMessageErrorService;
@@ -50,17 +50,26 @@ export class DiscordMessageErrorService {
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): void {
     if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
-      const messageResponse: IDiscordMessageResponse = this._getMessageResponse(error, anyDiscordMessage);
+      const messageResponse: IDiscordMessageResponse = this._getMessageResponse(
+        error,
+        anyDiscordMessage
+      );
 
-      anyDiscordMessage.channel.send(messageResponse.response, messageResponse.options).then((): void => {
-        this._loggerService.log({
-          context: this._className,
-          extendedContext: true,
-          message: this._loggerService.getSnowflakeContext(anyDiscordMessage.id, `message sent`)
+      anyDiscordMessage.channel
+        .send(messageResponse.response, messageResponse.options)
+        .then((): void => {
+          this._loggerService.log({
+            context: this._className,
+            extendedContext: true,
+            message: this._loggerService.getSnowflakeContext(
+              anyDiscordMessage.id,
+              `message sent`
+            ),
+          });
+        })
+        .catch((error: unknown): void => {
+          this._logOnError(error, anyDiscordMessage);
         });
-      }).catch((error: unknown): void => {
-        this._logOnError(error, anyDiscordMessage);
-      });
     }
   }
 
@@ -71,12 +80,18 @@ export class DiscordMessageErrorService {
     this._loggerService.error({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(anyDiscordMessage.id, `message sending failed`)
+      message: this._loggerService.getSnowflakeContext(
+        anyDiscordMessage.id,
+        `message sending failed`
+      ),
     });
     this._loggerService.error({
       context: this._className,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(anyDiscordMessage.id, error)
+      message: this._loggerService.getSnowflakeContext(
+        anyDiscordMessage.id,
+        error
+      ),
     });
   }
 
@@ -94,9 +109,9 @@ export class DiscordMessageErrorService {
     return {
       options: {
         embed: this._getMessageEmbed(error, anyDiscordMessage),
-        split: true
+        split: true,
       },
-      response: ``
+      response: ``,
     };
   }
 
@@ -111,7 +126,7 @@ export class DiscordMessageErrorService {
       footer: this._getMessageEmbedFooter(),
       thumbnail: this._getMessageEmbedThumbnail(),
       timestamp: this._getMessageEmbedTimestamp(),
-      title: this._getMessageEmbedTitle()
+      title: this._getMessageEmbedTitle(),
     };
   }
 
@@ -121,16 +136,18 @@ export class DiscordMessageErrorService {
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
-      url: this._discordMessageConfigService.getMessageCommandErrorImageUrl()
+      url: this._discordMessageConfigService.getMessageCommandErrorImageUrl(),
     };
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
-    const soniaImageUrl: string | null = this._discordSoniaService.getImageUrl();
+    const soniaImageUrl:
+      | string
+      | null = this._discordSoniaService.getImageUrl();
 
     return {
       iconURL: soniaImageUrl || undefined,
-      text: `I am very sorry for that`
+      text: `I am very sorry for that`,
     };
   }
 
@@ -153,21 +170,23 @@ export class DiscordMessageErrorService {
     return [
       this._getMessageEmbedFieldMessageId(anyDiscordMessage),
       this._getMessageEmbedFieldError(error),
-      this._getMessageEmbedFieldHint()
+      this._getMessageEmbedFieldHint(),
     ];
   }
 
-  private _getMessageEmbedFieldMessageId(anyDiscordMessage: Readonly<AnyDiscordMessage>): EmbedFieldData {
+  private _getMessageEmbedFieldMessageId(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): EmbedFieldData {
     return {
       name: `The message's id that killed me`,
-      value: anyDiscordMessage.id
+      value: anyDiscordMessage.id,
     };
   }
 
   private _getMessageEmbedFieldError(error: unknown): EmbedFieldData {
     return {
       name: `My blood trace`,
-      value: ellipsis(_.toString(error))
+      value: ellipsis(_.toString(error)),
     };
   }
 
@@ -177,8 +196,7 @@ export class DiscordMessageErrorService {
 
     return {
       name: `Help me to help you`,
-      value: `You can create a [bug report](${githubBugReportUrl}) or reach my creators on [discord](${discordSoniaPermanentGuildInviteUrl}).`
+      value: `You can create a [bug report](${githubBugReportUrl}) or reach my creators on [discord](${discordSoniaPermanentGuildInviteUrl}).`,
     };
   }
 }
-

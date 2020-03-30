@@ -1,8 +1,8 @@
-import { IConfigUpdateNumber } from '../../config/interfaces/config-update-number';
-import { ConfigService } from '../../config/services/config-service';
-import { SERVER_CONFIG } from '../constants/server-config';
-import { IServerConfig } from '../interfaces/server-config';
-import { ServerConfigService } from './server-config-service';
+import { IConfigUpdateNumber } from "../../config/interfaces/config-update-number";
+import { ConfigService } from "../../config/services/config-service";
+import { SERVER_CONFIG } from "../constants/server-config";
+import { IServerConfig } from "../interfaces/server-config";
+import { ServerConfigService } from "./server-config-service";
 
 jest.mock(`../../config/services/config-service`);
 
@@ -26,7 +26,7 @@ describe(`ServerConfigService`, (): void => {
       const result = service.getConfig();
 
       expect(result).toStrictEqual({
-        port: 8888
+        port: 8888,
       } as IServerConfig);
     });
   });
@@ -54,7 +54,9 @@ describe(`ServerConfigService`, (): void => {
       port = 1234;
       SERVER_CONFIG.port = 8888;
 
-      configServiceGetUpdatedNumberSpy = jest.spyOn(configService, `getUpdatedNumber`).mockReturnValue(1234);
+      configServiceGetUpdatedNumberSpy = jest
+        .spyOn(configService, `getUpdatedNumber`)
+        .mockReturnValue(1234);
     });
 
     it(`should get the updated number`, (): void => {
@@ -67,7 +69,7 @@ describe(`ServerConfigService`, (): void => {
         context: `ServerConfigService`,
         newValue: 1234,
         oldValue: 8888,
-        valueName: `port`
+        valueName: `port`,
       } as IConfigUpdateNumber);
     });
 

@@ -1,13 +1,15 @@
-import _ from 'lodash';
-import { AbstractConfigService } from '../../../classes/abstract-config-service';
-import { LOGGER_CONFIG } from '../constants/logger-config';
-import { LoggerConfigLevelEnum } from '../enums/logger-config-level.enum';
-import { ILoggerConfig } from '../interfaces/logger-config';
+import _ from "lodash";
+import { AbstractConfigService } from "../../../classes/abstract-config-service";
+import { LOGGER_CONFIG } from "../constants/logger-config";
+import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
+import { ILoggerConfig } from "../interfaces/logger-config";
 
 export class LoggerConfigService extends AbstractConfigService<ILoggerConfig> {
   private static _instance: LoggerConfigService;
 
-  public static getInstance(config?: Readonly<Partial<ILoggerConfig>>): LoggerConfigService {
+  public static getInstance(
+    config?: Readonly<Partial<ILoggerConfig>>
+  ): LoggerConfigService {
     if (_.isNil(LoggerConfigService._instance)) {
       LoggerConfigService._instance = new LoggerConfigService(config);
     }
@@ -29,7 +31,7 @@ export class LoggerConfigService extends AbstractConfigService<ILoggerConfig> {
 
       this._loggerService.debug({
         context: this._className,
-        message: this._chalkService.text(`configuration updated`)
+        message: this._chalkService.text(`configuration updated`),
       });
     }
   }
@@ -47,7 +49,7 @@ export class LoggerConfigService extends AbstractConfigService<ILoggerConfig> {
       context: this._className,
       newValue: isEnabled,
       oldValue: LOGGER_CONFIG.isEnabled,
-      valueName: `enable state`
+      valueName: `enable state`,
     });
   }
 
@@ -60,7 +62,7 @@ export class LoggerConfigService extends AbstractConfigService<ILoggerConfig> {
       context: this._className,
       newValue: level,
       oldValue: LOGGER_CONFIG.level,
-      valueName: `level`
+      valueName: `level`,
     });
   }
 }

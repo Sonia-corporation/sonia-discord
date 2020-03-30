@@ -1,5 +1,5 @@
-import chalkI from 'chalk';
-import _ from 'lodash';
+import chalkI from "chalk";
+import _ from "lodash";
 
 const CHALK = new chalkI.Instance();
 const COLOR_AURORA_GREEN = `#78E08F`;

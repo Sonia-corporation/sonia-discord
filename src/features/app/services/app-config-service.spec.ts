@@ -1,11 +1,11 @@
-import moment from 'moment';
-import { IConfigUpdateBoolean } from '../../config/interfaces/config-update-boolean';
-import { IConfigUpdateNumber } from '../../config/interfaces/config-update-number';
-import { IConfigUpdateString } from '../../config/interfaces/config-update-string';
-import { ConfigService } from '../../config/services/config-service';
-import { APP_CONFIG } from '../constants/app-config';
-import { IAppConfig } from '../interfaces/app-config';
-import { AppConfigService } from './app-config-service';
+import moment from "moment";
+import { IConfigUpdateBoolean } from "../../config/interfaces/config-update-boolean";
+import { IConfigUpdateNumber } from "../../config/interfaces/config-update-number";
+import { IConfigUpdateString } from "../../config/interfaces/config-update-string";
+import { ConfigService } from "../../config/services/config-service";
+import { APP_CONFIG } from "../constants/app-config";
+import { IAppConfig } from "../interfaces/app-config";
+import { AppConfigService } from "./app-config-service";
 
 jest.mock(`../../config/services/config-service`);
 
@@ -39,7 +39,7 @@ describe(`AppConfigService`, (): void => {
         releaseDate: `dummy-release-date`,
         releaseNotes: `dummy-release-notes`,
         totalReleaseCount: 0,
-        version: `dummy-version`
+        version: `dummy-version`,
       } as IAppConfig);
     });
   });
@@ -67,7 +67,9 @@ describe(`AppConfigService`, (): void => {
       version = `dummy-version`;
       APP_CONFIG.version = `version`;
 
-      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(`dummy-version`);
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`dummy-version`);
     });
 
     it(`should get the updated string`, (): void => {
@@ -80,7 +82,7 @@ describe(`AppConfigService`, (): void => {
         context: `AppConfigService`,
         newValue: `dummy-version`,
         oldValue: `version`,
-        valueName: `version`
+        valueName: `version`,
       } as IConfigUpdateString);
     });
 
@@ -192,7 +194,9 @@ describe(`AppConfigService`, (): void => {
       releaseDate = `dummy-release-date`;
       APP_CONFIG.releaseDate = `release-date`;
 
-      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(`dummy-release-date`);
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`dummy-release-date`);
     });
 
     it(`should get the updated string`, (): void => {
@@ -205,7 +209,7 @@ describe(`AppConfigService`, (): void => {
         context: `AppConfigService`,
         newValue: `dummy-release-date`,
         oldValue: `release-date`,
-        valueName: `release date`
+        valueName: `release date`,
       } as IConfigUpdateString);
     });
 
@@ -317,7 +321,9 @@ describe(`AppConfigService`, (): void => {
       initializationDate = `dummy-initialization-date`;
       APP_CONFIG.initializationDate = `initialization-date`;
 
-      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(`dummy-initialization-date`);
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`dummy-initialization-date`);
     });
 
     it(`should get the updated string`, (): void => {
@@ -330,7 +336,7 @@ describe(`AppConfigService`, (): void => {
         context: `AppConfigService`,
         newValue: `dummy-initialization-date`,
         oldValue: `initialization-date`,
-        valueName: `initialization date`
+        valueName: `initialization date`,
       } as IConfigUpdateString);
     });
 
@@ -339,7 +345,9 @@ describe(`AppConfigService`, (): void => {
 
       service.updateInitializationDate(initializationDate);
 
-      expect(APP_CONFIG.initializationDate).toStrictEqual(`dummy-initialization-date`);
+      expect(APP_CONFIG.initializationDate).toStrictEqual(
+        `dummy-initialization-date`
+      );
     });
   });
 
@@ -420,7 +428,9 @@ describe(`AppConfigService`, (): void => {
       isProduction = false;
       APP_CONFIG.isProduction = true;
 
-      configServiceGetUpdatedBooleanSpy = jest.spyOn(configService, `getUpdatedBoolean`).mockReturnValue(false);
+      configServiceGetUpdatedBooleanSpy = jest
+        .spyOn(configService, `getUpdatedBoolean`)
+        .mockReturnValue(false);
     });
 
     it(`should get the updated boolean`, (): void => {
@@ -433,7 +443,7 @@ describe(`AppConfigService`, (): void => {
         context: `AppConfigService`,
         newValue: false,
         oldValue: true,
-        valueName: `production state`
+        valueName: `production state`,
       } as IConfigUpdateBoolean);
     });
 
@@ -531,7 +541,9 @@ describe(`AppConfigService`, (): void => {
       totalReleaseCount = 8;
       APP_CONFIG.totalReleaseCount = 5;
 
-      configServiceGetUpdatedNumberSpy = jest.spyOn(configService, `getUpdatedNumber`).mockReturnValue(8);
+      configServiceGetUpdatedNumberSpy = jest
+        .spyOn(configService, `getUpdatedNumber`)
+        .mockReturnValue(8);
     });
 
     it(`should get the updated number`, (): void => {
@@ -544,7 +556,7 @@ describe(`AppConfigService`, (): void => {
         context: `AppConfigService`,
         newValue: 8,
         oldValue: 5,
-        valueName: `total release count`
+        valueName: `total release count`,
       } as IConfigUpdateNumber);
     });
 
@@ -580,7 +592,9 @@ describe(`AppConfigService`, (): void => {
       releaseNotes = `dummy-release-notes`;
       APP_CONFIG.releaseNotes = `release-notes`;
 
-      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(`dummy-release-notes`);
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`dummy-release-notes`);
     });
 
     it(`should get the updated string`, (): void => {
@@ -594,7 +608,7 @@ describe(`AppConfigService`, (): void => {
         isValueDisplay: false,
         newValue: `dummy-release-notes`,
         oldValue: `release-notes`,
-        valueName: `release notes`
+        valueName: `release notes`,
       } as IConfigUpdateString);
     });
 
