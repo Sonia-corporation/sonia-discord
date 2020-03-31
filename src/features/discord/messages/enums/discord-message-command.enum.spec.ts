@@ -13,15 +13,15 @@ describe(`DiscordMessageCommandEnum`, (): void => {
     expect(DiscordMessageCommandEnum.V).toStrictEqual(`v`);
   });
 
-  it(`should have a member "BUG"`, (): void => {
-    expect.assertions(1);
-
-    expect(DiscordMessageCommandEnum.BUG).toStrictEqual(`bug`);
-  });
-
   it(`should have a member "ERROR"`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessageCommandEnum.ERROR).toStrictEqual(`error`);
+  });
+
+  it(`should have a member "BUG"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandEnum.BUG).toStrictEqual(`bug`);
   });
 });

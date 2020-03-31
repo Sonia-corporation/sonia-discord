@@ -2,6 +2,7 @@ import { IConfigUpdateNumber } from "../../../config/interfaces/config-update-nu
 import { IConfigUpdateString } from "../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../config/services/config-service";
 import { IDiscordMessageCommandConfig } from "../../interfaces/discord-message-command-config";
+import { IDiscordMessageCommandErrorConfig } from "../../interfaces/discord-message-command-error-config";
 import { IDiscordMessageCommandVersionConfig } from "../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../interfaces/discord-message-error-config";
@@ -22,6 +23,10 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessage()`, (): void => {
     beforeEach((): void => {
       DISCORD_MESSAGE_CONFIG.command = {
+        error: {
+          imageColor: 9,
+          imageUrl: `dummy-image-url-error`,
+        },
         prefix: `dummy-prefix`,
         version: {
           imageColor: 8,
@@ -41,6 +46,10 @@ describe(`DiscordMessageConfigService`, (): void => {
 
       expect(result).toStrictEqual({
         command: {
+          error: {
+            imageColor: 9,
+            imageUrl: `dummy-image-url-error`,
+          },
           prefix: `dummy-prefix`,
           version: {
             imageColor: 8,
@@ -58,6 +67,10 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommand()`, (): void => {
     beforeEach((): void => {
       DISCORD_MESSAGE_CONFIG.command = {
+        error: {
+          imageColor: 9,
+          imageUrl: `dummy-image-url-error`,
+        },
         prefix: `dummy-prefix`,
         version: {
           imageColor: 8,
@@ -72,12 +85,140 @@ describe(`DiscordMessageConfigService`, (): void => {
       const result = service.getMessageCommand();
 
       expect(result).toStrictEqual({
+        error: {
+          imageColor: 9,
+          imageUrl: `dummy-image-url-error`,
+        },
         prefix: `dummy-prefix`,
         version: {
           imageColor: 8,
           imageUrl: `dummy-image-url`,
         },
       } as IDiscordMessageCommandConfig);
+    });
+  });
+
+  describe(`getMessageCommandError()`, (): void => {
+    beforeEach((): void => {
+      DISCORD_MESSAGE_CONFIG.command.error = {
+        imageColor: 8,
+        imageUrl: `dummy-image-url`,
+      };
+    });
+
+    it(`should return the Discord message config command error`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandError();
+
+      expect(result).toStrictEqual({
+        imageColor: 8,
+        imageUrl: `dummy-image-url`,
+      } as IDiscordMessageCommandErrorConfig);
+    });
+  });
+
+  describe(`getMessageCommandErrorImageColor()`, (): void => {
+    beforeEach((): void => {
+      DISCORD_MESSAGE_CONFIG.command.error.imageColor = 8;
+    });
+
+    it(`should return the Discord message config command error image color`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandErrorImageColor();
+
+      expect(result).toStrictEqual(8);
+    });
+  });
+
+  describe(`updateMessageCommandErrorImageColor()`, (): void => {
+    let imageColor: number;
+
+    let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      imageColor = 8;
+      DISCORD_MESSAGE_CONFIG.command.error.imageColor = 10;
+
+      configServiceGetUpdatedNumberSpy = jest
+        .spyOn(configService, `getUpdatedNumber`)
+        .mockReturnValue(8);
+    });
+
+    it(`should get the updated number`, (): void => {
+      expect.assertions(2);
+
+      service.updateMessageCommandErrorImageColor(imageColor);
+
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageConfigService`,
+        newValue: 8,
+        oldValue: 10,
+        valueName: `message command error image color`,
+      } as IConfigUpdateNumber);
+    });
+
+    it(`should update the Discord message config command error image color with the updated number`, (): void => {
+      expect.assertions(1);
+
+      service.updateMessageCommandErrorImageColor(imageColor);
+
+      expect(DISCORD_MESSAGE_CONFIG.command.error.imageColor).toStrictEqual(8);
+    });
+  });
+
+  describe(`getMessageCommandErrorImageUrl()`, (): void => {
+    beforeEach((): void => {
+      DISCORD_MESSAGE_CONFIG.command.error.imageUrl = `dummy-image-url`;
+    });
+
+    it(`should return the Discord message config command error image url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandErrorImageUrl();
+
+      expect(result).toStrictEqual(`dummy-image-url`);
+    });
+  });
+
+  describe(`updateMessageCommandErrorImageUrl()`, (): void => {
+    let imageUrl: string;
+
+    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      imageUrl = `dummy-image-url`;
+      DISCORD_MESSAGE_CONFIG.command.error.imageUrl = `image-url`;
+
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`dummy-image-url`);
+    });
+
+    it(`should get the updated string`, (): void => {
+      expect.assertions(2);
+
+      service.updateMessageCommandErrorImageUrl(imageUrl);
+
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageConfigService`,
+        newValue: `dummy-image-url`,
+        oldValue: `image-url`,
+        valueName: `message command error image url`,
+      } as IConfigUpdateString);
+    });
+
+    it(`should update the Discord message config command error image url with the updated string`, (): void => {
+      expect.assertions(1);
+
+      service.updateMessageCommandErrorImageUrl(imageUrl);
+
+      expect(DISCORD_MESSAGE_CONFIG.command.error.imageUrl).toStrictEqual(
+        `dummy-image-url`
+      );
     });
   });
 
@@ -241,7 +382,7 @@ describe(`DiscordMessageConfigService`, (): void => {
     });
   });
 
-  describe(`getMessageCommandErrorImageColor()`, (): void => {
+  describe(`getMessageErrorImageColor()`, (): void => {
     beforeEach((): void => {
       DISCORD_MESSAGE_CONFIG.error.imageColor = 8;
     });
@@ -249,7 +390,7 @@ describe(`DiscordMessageConfigService`, (): void => {
     it(`should return the Discord message config error image color`, (): void => {
       expect.assertions(1);
 
-      const result = service.getMessageCommandErrorImageColor();
+      const result = service.getMessageErrorImageColor();
 
       expect(result).toStrictEqual(8);
     });
@@ -292,7 +433,7 @@ describe(`DiscordMessageConfigService`, (): void => {
     });
   });
 
-  describe(`getMessageCommandErrorImageUrl()`, (): void => {
+  describe(`getMessageErrorImageUrl()`, (): void => {
     beforeEach((): void => {
       DISCORD_MESSAGE_CONFIG.error.imageUrl = `dummy-image-url`;
     });
@@ -300,7 +441,7 @@ describe(`DiscordMessageConfigService`, (): void => {
     it(`should return the Discord message config error image url`, (): void => {
       expect.assertions(1);
 
-      const result = service.getMessageCommandErrorImageUrl();
+      const result = service.getMessageErrorImageUrl();
 
       expect(result).toStrictEqual(`dummy-image-url`);
     });
