@@ -11,6 +11,11 @@ This file should contains at least:
 - A discord Sonia secret token required by Discord API
 - A GitHub personal access token required by GitHub API
 
+__Shortcut:__
+
+You can use an npm script to create the file for you.  
+Run `npm run create-secret-environment`.
+
 __Example:__
 
 ```json
@@ -78,6 +83,7 @@ Run `npm run start` to start the local development server.
 - `npm run semver`: create a new version, a new tag and update the [CHANGELOG](CHANGELOG.md) file  
 - `npm run clean:dist`: remove the dist folder  
 - `npm run commit`: create a commit by using the cz
+- `npm run create-secret-environment`: create the secret-environment.json file
 
 ## Git
 
