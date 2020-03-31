@@ -31,9 +31,6 @@ describe(`LoggerConfigService`, (): void => {
       expect(result).toStrictEqual({
         isEnabled: true,
         level: LoggerConfigLevelEnum.DEBUG,
-        profile: {
-          name: ``,
-        },
       } as ILoggerConfig);
     });
   });

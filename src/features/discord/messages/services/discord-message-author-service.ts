@@ -4,12 +4,10 @@ import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
 import { DiscordAuthorService } from "../../users/services/discord-author-service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
-import { LoggerService } from "../../../logger/services/logger-service";
+import { ProfileService } from "../../../profile/services/profile-service";
 
 export class DiscordMessageAuthorService {
   private static _instance: DiscordMessageAuthorService;
-
-  private readonly _loggerService = LoggerService.getInstance();
 
   public static getInstance(): DiscordMessageAuthorService {
     if (_.isNil(DiscordMessageAuthorService._instance)) {
@@ -19,6 +17,7 @@ export class DiscordMessageAuthorService {
     return DiscordMessageAuthorService._instance;
   }
 
+  private readonly _profileService = ProfileService.getInstance();
   private readonly _discordAuthorService = DiscordAuthorService.getInstance();
   private readonly _appConfigService = AppConfigService.getInstance();
 
@@ -43,8 +42,8 @@ export class DiscordMessageAuthorService {
   private _getReplyWithEnvPrefix(response: Readonly<string>): string {
     if (!this._appConfigService.isProduction()) {
       return addDiscordDevPrefix(
-        this._loggerService.getProfileNameForDev(),
-        response
+        response,
+        this._profileService.getProfileNicknameDev()
       );
     }
 

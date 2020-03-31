@@ -20,6 +20,7 @@ import { LoggerConfigService } from "../../logger/services/logger-config-service
 import { LoggerService } from "../../logger/services/logger-service";
 import { ServerConfigService } from "../../server/services/server-config-service";
 import { ServerService } from "../../server/services/server-service";
+import { ProfileConfigService } from "../../profile/services/profile-config-service";
 
 export class InitService {
   private static _instance: InitService;
@@ -68,6 +69,7 @@ export class InitService {
     GithubConfigService.getInstance().updateConfig(environment.github);
     DiscordSoniaConfigService.getInstance().updateConfig(environment.discord);
     DiscordMessageConfigService.getInstance().updateConfig(environment.discord);
+    ProfileConfigService.getInstance().updateConfig(environment.profile);
     AppConfigService.getInstance().init().updateConfig(environment.app);
     ServerConfigService.getInstance().init();
   }

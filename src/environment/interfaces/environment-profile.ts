@@ -1,3 +1,3 @@
 export interface IEnvironmentProfile {
-  name?: string;
+  nickname?: string;
 }

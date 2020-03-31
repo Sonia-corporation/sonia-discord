@@ -1,6 +1,11 @@
+import _ from "lodash";
+
 export function addDiscordDevPrefix(
-  name: Readonly<string>,
-  message: Readonly<string>
+  message: Readonly<string>,
+  nickname: Readonly<string>
 ): string {
-  return `**[dev - ${name}]** ${message}`;
+  if (_.isNull(nickname) || _.isEmpty(nickname)) {
+    return `**[dev]** ${message}`;
+  }
+  return `**[dev - ${nickname}]** ${message}`;
 }

@@ -17,7 +17,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
     it(`should return a message with a dev prefix`, (): void => {
       expect.assertions(1);
 
-      const result = addDiscordDevPrefix(name, message);
+      const result = addDiscordDevPrefix(message, name);
 
       expect(result).toStrictEqual(`**[dev - ${name}]** `);
     });
@@ -31,9 +31,9 @@ describe(`addDiscordDevPrefix()`, (): void => {
     it(`should return a message with a dev prefix`, (): void => {
       expect.assertions(1);
 
-      const result = addDiscordDevPrefix(name, message);
+      const result = addDiscordDevPrefix(message, name);
 
-      expect(result).toStrictEqual(`**[dev - ]** dummy-message`);
+      expect(result).toStrictEqual(`**[dev]** dummy-message`);
     });
   });
 
@@ -45,7 +45,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
     it(`should return a message with a dev prefix`, (): void => {
       expect.assertions(1);
 
-      const result = addDiscordDevPrefix(name, message);
+      const result = addDiscordDevPrefix(message, name);
 
       expect(result).toStrictEqual(`**[dev - ${name}]** dummy`);
     });
@@ -59,7 +59,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
     it(`should return a message with a dev prefix`, (): void => {
       expect.assertions(1);
 
-      const result = addDiscordDevPrefix(name, message);
+      const result = addDiscordDevPrefix(message, name);
 
       expect(result).toStrictEqual(`**[dev - vilteros]** dummy-message`);
     });
@@ -73,7 +73,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
     it(`should return a message with a dev prefix`, (): void => {
       expect.assertions(1);
 
-      const result = addDiscordDevPrefix(name, message);
+      const result = addDiscordDevPrefix(message, name);
 
       expect(result).toStrictEqual(`**[dev - ${name}]** hello, world!`);
     });
@@ -88,7 +88,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
     it(`should return a message with a dev prefix`, (): void => {
       expect.assertions(1);
 
-      const result = addDiscordDevPrefix(name, message);
+      const result = addDiscordDevPrefix(message, name);
 
       expect(result).toStrictEqual(`**[dev - vilteros]** hello, world!`);
     });

@@ -109,10 +109,6 @@ export class LoggerService {
     )}${this._chalkService.text(message)}`;
   }
 
-  public getProfileNameForDev(): string {
-    return `${LOGGER_CONFIG.profile.name}`;
-  }
-
   private _log(loggerLogInternal: Readonly<ILoggerLogInternal>): void {
     if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
       const logTypePrefix: string = this._getLogTypePrefix(

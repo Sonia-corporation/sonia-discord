@@ -19,8 +19,8 @@ export const ENVIRONMENT: IEnvironment = {
   logger: {
     isEnabled: true,
     level: LoggerConfigLevelEnum.DEBUG,
-    profile: {
-      name: `TO_DEFINE_ON_THE_SERVER`,
-    },
+  },
+  profile: {
+    nickname: `TO_DEFINE_ON_THE_SERVER`,
   },
 };
