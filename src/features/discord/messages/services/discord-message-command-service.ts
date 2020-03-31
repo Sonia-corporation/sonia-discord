@@ -36,6 +36,13 @@ export class DiscordMessageCommandService {
     ]);
   }
 
+  public hasBugCommand(message: Readonly<string>): boolean {
+    return this._hasThisCommand(message, [
+      DiscordMessageCommandEnum.BUG,
+      DiscordMessageCommandEnum.ERROR,
+    ]);
+  }
+
   public handleVersionCommand(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
