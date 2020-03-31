@@ -10,11 +10,11 @@ export const ENVIRONMENT: IEnvironment = {
     },
     sonia: {
       id: `689829775317139460`,
-      secretToken: `TO_DEFINE_ON_THE_SERVER`,
+      secretToken: `TO_DEFINE_BY_ASKING_IT`,
     },
   },
   github: {
-    personalAccessToken: `TO_DEFINE_ON_THE_SERVER`,
+    personalAccessToken: `TO_DEFINE_BY_YOU`,
   },
   logger: {
     isEnabled: true,
