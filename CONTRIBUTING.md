@@ -27,11 +27,6 @@ __Example:__
   },
   "github": {
     "personalAccessToken": "TO_DEFINE_BY_YOU"
-  },
-  "logger": {
-    "profile": {
-      "nickname": "TO_DEFINE_BY_YOU"
-    }
   }
 }
 ```
