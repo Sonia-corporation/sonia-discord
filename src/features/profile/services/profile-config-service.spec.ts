@@ -59,4 +59,32 @@ describe(`ProfileConfigService`, (): void => {
       } as IConfigUpdateString);
     });
   });
+
+  describe(`getNickname()`, (): void => {
+    beforeEach((): void => {
+      PROFILE_CONFIG.nickname = `toto`;
+    });
+
+    it(`should get PROFILE_CONFIG nickname string`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getNickname();
+
+      expect(result).toStrictEqual(`toto`);
+    });
+  });
+
+  describe(`getNickname() default value`, (): void => {
+    beforeEach((): void => {
+      PROFILE_CONFIG.nickname = ``;
+    });
+
+    it(`should get PROFILE_CONFIG nickname default value`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getNickname();
+
+      expect(result).toStrictEqual(``);
+    });
+  });
 });

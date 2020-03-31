@@ -2,10 +2,10 @@ import { addDiscordDevPrefix } from "./add-discord-dev-prefix";
 
 describe(`addDiscordDevPrefix()`, (): void => {
   let message: string;
-  let name: string;
+  let nickname: string;
 
   beforeEach((): void => {
-    name = `vincent`;
+    nickname = `vincent`;
     message = `dummy-message`;
   });
 
@@ -17,21 +17,21 @@ describe(`addDiscordDevPrefix()`, (): void => {
     it(`should return a message with a dev prefix`, (): void => {
       expect.assertions(1);
 
-      const result = addDiscordDevPrefix(message, name);
+      const result = addDiscordDevPrefix(message, nickname);
 
-      expect(result).toStrictEqual(`**[dev - ${name}]** `);
+      expect(result).toStrictEqual(`**[dev - ${nickname}]** `);
     });
   });
 
   describe(`when the given name is an empty string`, (): void => {
     beforeEach((): void => {
-      name = ``;
+      nickname = ``;
     });
 
     it(`should return a message with a dev prefix`, (): void => {
       expect.assertions(1);
 
-      const result = addDiscordDevPrefix(message, name);
+      const result = addDiscordDevPrefix(message, nickname);
 
       expect(result).toStrictEqual(`**[dev]** dummy-message`);
     });
@@ -45,21 +45,21 @@ describe(`addDiscordDevPrefix()`, (): void => {
     it(`should return a message with a dev prefix`, (): void => {
       expect.assertions(1);
 
-      const result = addDiscordDevPrefix(message, name);
+      const result = addDiscordDevPrefix(message, nickname);
 
-      expect(result).toStrictEqual(`**[dev - ${name}]** dummy`);
+      expect(result).toStrictEqual(`**[dev - ${nickname}]** dummy`);
     });
   });
 
   describe(`when the given name is "vilteros"`, (): void => {
     beforeEach((): void => {
-      name = `vilteros`;
+      nickname = `vilteros`;
     });
 
     it(`should return a message with a dev prefix`, (): void => {
       expect.assertions(1);
 
-      const result = addDiscordDevPrefix(message, name);
+      const result = addDiscordDevPrefix(message, nickname);
 
       expect(result).toStrictEqual(`**[dev - vilteros]** dummy-message`);
     });
@@ -73,22 +73,22 @@ describe(`addDiscordDevPrefix()`, (): void => {
     it(`should return a message with a dev prefix`, (): void => {
       expect.assertions(1);
 
-      const result = addDiscordDevPrefix(message, name);
+      const result = addDiscordDevPrefix(message, nickname);
 
-      expect(result).toStrictEqual(`**[dev - ${name}]** hello, world!`);
+      expect(result).toStrictEqual(`**[dev - ${nickname}]** hello, world!`);
     });
   });
 
   describe(`when the given message is "hello, world!" and the name is "vilteros"`, (): void => {
     beforeEach((): void => {
       message = `hello, world!`;
-      name = `vilteros`;
+      nickname = `vilteros`;
     });
 
     it(`should return a message with a dev prefix`, (): void => {
       expect.assertions(1);
 
-      const result = addDiscordDevPrefix(message, name);
+      const result = addDiscordDevPrefix(message, nickname);
 
       expect(result).toStrictEqual(`**[dev - vilteros]** hello, world!`);
     });

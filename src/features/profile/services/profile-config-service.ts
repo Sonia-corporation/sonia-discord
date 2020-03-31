@@ -29,6 +29,10 @@ export class ProfileConfigService extends AbstractConfigService<
     return PROFILE_CONFIG;
   }
 
+  public getNickname(): string {
+    return PROFILE_CONFIG.nickname;
+  }
+
   public updateConfig(config?: Readonly<Partial<IEnvironmentProfile>>): void {
     if (!_.isNil(config) && _.isPlainObject(config)) {
       this.updateNickname(config.nickname);
