@@ -10,14 +10,16 @@ describe(`ProfileService`, (): void => {
     service = ProfileService.getInstance();
   });
 
-  describe(`getProfileNicknameDev()`, (): void => {
+  describe(`getNickname()`, (): void => {
     beforeEach((): void => {
       PROFILE_CONFIG.nickname = `toto`;
     });
 
     it(`should get PROFILE_CONFIG nickname string`, (): void => {
       expect.assertions(1);
-      const result = service.getProfileNicknameDev();
+
+      const result = service.getNickname();
+
       expect(result).toStrictEqual(`toto`);
     });
   });

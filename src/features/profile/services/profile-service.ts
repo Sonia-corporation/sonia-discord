@@ -12,7 +12,7 @@ export class ProfileService {
     return ProfileService._instance;
   }
 
-  public getProfileNicknameDev(): string {
+  public getNickname(): string {
     return PROFILE_CONFIG.nickname;
   }
 }

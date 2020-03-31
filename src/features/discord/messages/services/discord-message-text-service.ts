@@ -114,10 +114,7 @@ export class DiscordMessageTextService {
     response: Readonly<string>
   ): string {
     if (!this._appConfigService.isProduction()) {
-      return addDiscordDevPrefix(
-        response,
-        this._profileService.getProfileNicknameDev()
-      );
+      return addDiscordDevPrefix(response, this._profileService.getNickname());
     }
 
     return response;

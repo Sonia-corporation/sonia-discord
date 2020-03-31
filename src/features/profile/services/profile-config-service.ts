@@ -2,6 +2,7 @@ import _ from "lodash";
 import { AbstractConfigService } from "../../../classes/abstract-config-service";
 import { IEnvironmentProfile } from "../../../environment/interfaces/environment-profile";
 import { PROFILE_CONFIG } from "../constants/profile-config";
+import { IProfileConfig } from "../interfaces/profile-config";
 
 export class ProfileConfigService extends AbstractConfigService<
   IEnvironmentProfile
@@ -24,9 +25,13 @@ export class ProfileConfigService extends AbstractConfigService<
     super(config);
   }
 
+  public getConfig(): IProfileConfig {
+    return PROFILE_CONFIG;
+  }
+
   public updateConfig(config?: Readonly<Partial<IEnvironmentProfile>>): void {
     if (!_.isNil(config) && _.isPlainObject(config)) {
-      this.updateProfile(config.nickname);
+      this.updateNickname(config.nickname);
 
       this._loggerService.debug({
         context: this._className,
@@ -35,7 +40,7 @@ export class ProfileConfigService extends AbstractConfigService<
     }
   }
 
-  public updateProfile(nickname?: Readonly<string>): void {
+  public updateNickname(nickname?: Readonly<string>): void {
     PROFILE_CONFIG.nickname = this._configService.getUpdatedString({
       context: this._className,
       newValue: nickname,

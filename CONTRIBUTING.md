@@ -27,7 +27,7 @@ Run `npm run create-secret-environment`.
     "personalAccessToken": "REQUIRED_AND_TO_DEFINE_BY_YOU"
   },
   "profile": {
-    "nickname": "OPTIONNAL_AND_TO_DEFINE_BY_YOU"
+    "nickname": "OPTIONAL_AND_TO_DEFINE_BY_YOU"
   }
 }
 ```

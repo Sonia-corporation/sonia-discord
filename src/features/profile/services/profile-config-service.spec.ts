@@ -2,6 +2,7 @@ import { ProfileConfigService } from "./profile-config-service";
 import { ConfigService } from "../../config/services/config-service";
 import { PROFILE_CONFIG } from "../constants/profile-config";
 import { IConfigUpdateString } from "../../config/interfaces/config-update-string";
+import { IProfileConfig } from "../interfaces/profile-config";
 
 jest.mock(`../../config/services/config-service`);
 
@@ -12,6 +13,22 @@ describe(`ProfileConfigService`, (): void => {
   beforeEach((): void => {
     service = ProfileConfigService.getInstance();
     configService = ConfigService.getInstance();
+  });
+
+  describe(`getConfig()`, (): void => {
+    beforeEach((): void => {
+      PROFILE_CONFIG.nickname = `evil`;
+    });
+
+    it(`should return the profile config`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getConfig();
+
+      expect(result).toStrictEqual({
+        nickname: `evil`,
+      } as IProfileConfig);
+    });
   });
 
   describe(`updateProfile()`, (): void => {
@@ -31,7 +48,7 @@ describe(`ProfileConfigService`, (): void => {
     it(`should get the updated string`, (): void => {
       expect.assertions(2);
 
-      service.updateProfile(nickname);
+      service.updateNickname(nickname);
 
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
