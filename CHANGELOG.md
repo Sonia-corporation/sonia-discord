@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.26.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.25.0...1.26.0) (2020-03-31)
+
+
+### Features
+
+* **env:** add new script to create the env file automatically ([eb08005](https://github.com/Sonia-corporation/il-est-midi-discord/commit/eb08005c7e5819e91188085e2103edf34d95e055))
+
 # [1.25.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.24.0...1.25.0) (2020-03-31)
 
 
