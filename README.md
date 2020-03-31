@@ -34,12 +34,13 @@ __Statistics:__
 ### Sonia commands
 
 Sonia will treat one command at a time.  
-You can either use `--` or `!` as prefix for the commands.
+You can either use `--` or `!` as prefix for the commands.  
+The case is not restricted.
 
 __Example:__
 
 `@Sonia-il-est-midi !version`  
-`@Sonia-il-est-midi --version`  
+`@Sonia-il-est-midi --VERSION`  
 
 #### Version
 
@@ -62,6 +63,9 @@ Sonia will send you a message containing:
 __Example:__
 
 `@Sonia-il-est-midi !version`
+`@Sonia-il-est-midi !VERSION`
+`@Sonia-il-est-midi !v`
+`@Sonia-il-est-midi !V`
 
 ### Sonia behavior
 

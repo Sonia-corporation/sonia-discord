@@ -12,6 +12,11 @@ This file should contains at least:
 - A GitHub personal access token required by GitHub API
 - A personal name to know when you interact with sonia bot which bot you are
 
+__Shortcut:__
+
+You can use an npm script to create the file for you.  
+Run `npm run create-secret-environment`.
+
 __Example:__
 
 ```json
@@ -84,6 +89,7 @@ Run `npm run start` to start the local development server.
 - `npm run semver`: create a new version, a new tag and update the [CHANGELOG](CHANGELOG.md) file  
 - `npm run clean:dist`: remove the dist folder  
 - `npm run commit`: create a commit by using the cz
+- `npm run create-secret-environment`: create the secret-environment.json file
 
 ## Git
 

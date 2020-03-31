@@ -400,6 +400,174 @@ describe(`DiscordMessageCommandService`, (): void => {
           expect(result).toStrictEqual(false);
         });
       });
+
+      describe(`when the given message is a message with the shortcut version command uppercase starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@V`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut version command uppercase starting with --`, (): void => {
+        beforeEach((): void => {
+          message = `--V`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut version command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!V`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut version command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@V dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut version command uppercase starting with -- and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `--V dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut version command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!V dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the version command starting uppercase with @`, (): void => {
+        beforeEach((): void => {
+          message = `@VERSION`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the version command uppercase starting with --`, (): void => {
+        beforeEach((): void => {
+          message = `--VERSION`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the version command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!VERSION`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the version command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@VERSION dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the version command uppercase starting with -- and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `--VERSION dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the version command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!VERSION dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
     });
 
     describe(`when the message command prefix is "--" or "!"`, (): void => {
@@ -721,6 +889,174 @@ describe(`DiscordMessageCommandService`, (): void => {
       describe(`when the given message is a message with the version command starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
           message = `!version dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut version command uppercase starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@V`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut version command uppercase starting with --`, (): void => {
+        beforeEach((): void => {
+          message = `--V`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut version command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!V`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut version command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@V dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut version command uppercase starting with -- and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `--V dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut version command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!V dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the version command uppercase starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@VERSION`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the version command uppercase starting with --`, (): void => {
+        beforeEach((): void => {
+          message = `--VERSION`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the version command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!VERSION`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the version command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@VERSION dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the version command uppercase starting with -- and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `--VERSION dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasVersionCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the version command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!VERSION dummy`;
         });
 
         it(`should return true`, (): void => {
