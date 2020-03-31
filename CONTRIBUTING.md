@@ -16,36 +16,18 @@ __Shortcut:__
 You can use an npm script to create the file for you.  
 Run `npm run create-secret-environment`.
 
-__Example:__
-
 ```json
 {
   "discord": {
     "sonia": {
-      "secretToken": "TO_DEFINE_BY_ASKING_IT"
+      "secretToken": "REQUIRED_AND_TO_DEFINE_BY_ASKING_IT"
     } 
   },
   "github": {
-    "personalAccessToken": "TO_DEFINE_BY_YOU"
-  }
-}
-```
-
-This file can contain optional fields:
-- A personal name to know when you interact with sonia bot which bot you are
-
-```json
-{
-  "discord": {
-    "sonia": {
-      "secretToken": "TO_DEFINE_BY_ASKING_IT"
-    } 
-  },
-  "github": {
-    "personalAccessToken": "TO_DEFINE_BY_YOU"
+    "personalAccessToken": "REQUIRED_AND_TO_DEFINE_BY_YOU"
   },
   "profile": {
-    "nickname": "TO_DEFINE_BY_YOU"
+    "nickname": "OPTIONNAL_AND_TO_DEFINE_BY_YOU"
   }
 }
 ```
@@ -72,6 +54,10 @@ It should contains the following scopes:
 - read:org
 - read:public_key
 - read:gpg_key
+
+__Note for the Nickname:__
+This file can contain optionals fields:
+- nickname: can be display on each developer server messages
 
 ### Install the dependencies
 
