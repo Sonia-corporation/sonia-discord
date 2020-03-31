@@ -21,7 +21,7 @@ describe(`ENVIRONMENT`, (): void => {
     expect.assertions(1);
 
     expect(ENVIRONMENT.discord.sonia?.secretToken).toStrictEqual(
-      `TO_DEFINE_ON_THE_SERVER`
+      `TO_DEFINE_BY_ASKING_IT_AND_ADD_IT_IN_SECRET_ENVIRONMENT_JSON_FILE`
     );
   });
 
@@ -29,7 +29,7 @@ describe(`ENVIRONMENT`, (): void => {
     expect.assertions(1);
 
     expect(ENVIRONMENT.github?.personalAccessToken).toStrictEqual(
-      `TO_DEFINE_ON_THE_SERVER`
+      `TO_DEFINE_BY_YOU_AND_ADD_IT_IN_SECRET_ENVIRONMENT_JSON_FILE`
     );
   });
 
