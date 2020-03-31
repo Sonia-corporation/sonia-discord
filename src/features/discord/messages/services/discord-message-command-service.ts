@@ -102,8 +102,8 @@ export class DiscordMessageCommandService {
   ): boolean {
     // @todo could be better to use a RegExp instead of pure white space
     return (
-      _.includes(message, `${prefix}${command} `) ||
-      _.endsWith(message, `${prefix}${command}`)
+      _.includes(_.toLower(message), _.toLower(`${prefix}${command} `)) ||
+      _.endsWith(_.toLower(message), _.toLower(`${prefix}${command}`))
     );
   }
 
