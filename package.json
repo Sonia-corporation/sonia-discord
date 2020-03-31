@@ -82,7 +82,8 @@
     "cz": "git add . && git-cz && git push-upstream",
     "semver": "npx semantic-release",
     "clean:dist": "rimraf dist",
-    "commit": "npm run cz"
+    "commit": "npm run cz",
+    "create-secret-environment": "node ./scripts/create-secret-environment.js"
   },
   "dependencies": {
     "@scout_apm/scout-apm": "0.1.8",
