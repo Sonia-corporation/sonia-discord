@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.25.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.24.0...1.25.0) (2020-03-31)
+
+
+### Features
+
+* **discord-commands:** allow uppercase commands ([02ad11b](https://github.com/Sonia-corporation/il-est-midi-discord/commit/02ad11bd3712983b620beddd119b9c3b2ebcb61e))
+
 # [1.24.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.23.0...1.24.0) (2020-03-30)
 
 
