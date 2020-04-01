@@ -36,6 +36,7 @@ settings:
   import/cache:
     lifetime: 'Infinity'
 rules:
+  jest/no-disabled-tests: 'off'
   #  Temporarily disabled due to code climate error (37259)
   '@typescript-eslint/member-ordering':
     - 'off'
@@ -98,6 +99,9 @@ rules:
       minKeys: 2
   '@typescript-eslint/no-var-requires': 'off'
   '@typescript-eslint/explicit-function-return-type': 'off'
+  '@typescript-eslint/no-unused-vars':
+    - 'error'
+    - 'argsIgnorePattern': '^_'
   import/no-namespace: 'error'
   import/first: 'error'
   import/exports-last: 'error'
