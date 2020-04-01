@@ -3,6 +3,7 @@ import { AbstractConfigService } from "../../../../classes/abstract-config-servi
 import { PartialNested } from "../../../../types/partial-nested";
 import { isNodeProduction } from "../../../node/functions/is-node-production";
 import { TimeService } from "../../../time/services/time-service";
+import { AppConfigValueNameEnum } from "../../enums/app-config-value-name.enum";
 import { IAppConfig } from "../../interfaces/app-config";
 import { AppConfigCoreService } from "./app-config-core-service";
 import { AppConfigService } from "./app-config-service";
@@ -60,7 +61,7 @@ export class AppConfigMutationService extends AbstractConfigService<
       context: this._className,
       newValue: version,
       oldValue: this._appConfigService.getVersion(),
-      valueName: `version`,
+      valueName: AppConfigValueNameEnum.VERSION,
     });
   }
 
@@ -70,7 +71,7 @@ export class AppConfigMutationService extends AbstractConfigService<
         context: this._className,
         newValue: releaseDate,
         oldValue: this._appConfigService.getReleaseDate(),
-        valueName: `release date`,
+        valueName: AppConfigValueNameEnum.RELEASE_DATE,
       }
     );
   }
@@ -81,7 +82,7 @@ export class AppConfigMutationService extends AbstractConfigService<
         context: this._className,
         newValue: initializationDate,
         oldValue: this._appConfigService.getInitializationDate(),
-        valueName: `initialization date`,
+        valueName: AppConfigValueNameEnum.INITIALIZATION_DATE,
       }
     );
   }
@@ -92,7 +93,7 @@ export class AppConfigMutationService extends AbstractConfigService<
         context: this._className,
         newValue: isProduction,
         oldValue: this._appConfigService.isProduction(),
-        valueName: `production state`,
+        valueName: AppConfigValueNameEnum.IS_PRODUCTION,
       }
     );
   }
@@ -103,7 +104,7 @@ export class AppConfigMutationService extends AbstractConfigService<
         context: this._className,
         newValue: totalReleaseCount,
         oldValue: this._appConfigService.getTotalReleaseCount(),
-        valueName: `total release count`,
+        valueName: AppConfigValueNameEnum.TOTAL_RELEASE_COUNT,
       }
     );
   }
@@ -115,7 +116,7 @@ export class AppConfigMutationService extends AbstractConfigService<
         isValueDisplay: false,
         newValue: releaseNotes,
         oldValue: this._appConfigService.getReleaseNotes(),
-        valueName: `release notes`,
+        valueName: AppConfigValueNameEnum.RELEASE_NOTES,
       }
     );
   }
