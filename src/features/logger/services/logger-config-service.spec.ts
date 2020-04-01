@@ -69,6 +69,20 @@ describe(`LoggerConfigService`, (): void => {
     });
   });
 
+  describe(`getLevel()`, (): void => {
+    beforeEach((): void => {
+      LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+    });
+
+    it(`should return the logger config level`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getLevel();
+
+      expect(result).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
+    });
+  });
+
   describe(`updateEnabledState()`, (): void => {
     let isEnabled: boolean;
 
@@ -103,20 +117,6 @@ describe(`LoggerConfigService`, (): void => {
       service.updateEnabledState(isEnabled);
 
       expect(LOGGER_CONFIG.isEnabled).toStrictEqual(true);
-    });
-  });
-
-  describe(`getLevel()`, (): void => {
-    beforeEach((): void => {
-      LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
-    });
-
-    it(`should return the logger config level`, (): void => {
-      expect.assertions(1);
-
-      const result = service.getLevel();
-
-      expect(result).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
     });
   });
 

@@ -31,18 +31,32 @@ describe(`ProfileConfigService`, (): void => {
     });
   });
 
+  describe(`getNickname()`, (): void => {
+    beforeEach((): void => {
+      PROFILE_CONFIG.nickname = `dummy-profil-nickname`;
+    });
+
+    it(`should get the profile config nickname`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getNickname();
+
+      expect(result).toStrictEqual(`dummy-profil-nickname`);
+    });
+  });
+
   describe(`updateProfile()`, (): void => {
     let nickname: string;
 
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      nickname = `toto-nickname`;
-      PROFILE_CONFIG.nickname = `toto`;
+      nickname = `dummy-nickname`;
+      PROFILE_CONFIG.nickname = `dummy-profil-nickname`;
 
       configServiceGetUpdatedStringSpy = jest
         .spyOn(configService, `getUpdatedString`)
-        .mockReturnValue(`toto`);
+        .mockReturnValue(nickname);
     });
 
     it(`should get the updated string`, (): void => {
@@ -53,38 +67,18 @@ describe(`ProfileConfigService`, (): void => {
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `ProfileConfigService`,
-        newValue: `toto-nickname`,
-        oldValue: `toto`,
+        newValue: `dummy-nickname`,
+        oldValue: `dummy-profil-nickname`,
         valueName: `nickname`,
       } as IConfigUpdateString);
     });
-  });
 
-  describe(`getNickname()`, (): void => {
-    beforeEach((): void => {
-      PROFILE_CONFIG.nickname = `toto`;
-    });
-
-    it(`should get PROFILE_CONFIG nickname string`, (): void => {
+    it(`should update the profile config nickname with the updated nickname`, (): void => {
       expect.assertions(1);
 
-      const result = service.getNickname();
+      service.updateNickname(nickname);
 
-      expect(result).toStrictEqual(`toto`);
-    });
-  });
-
-  describe(`getNickname() default value`, (): void => {
-    beforeEach((): void => {
-      PROFILE_CONFIG.nickname = ``;
-    });
-
-    it(`should get PROFILE_CONFIG nickname default value`, (): void => {
-      expect.assertions(1);
-
-      const result = service.getNickname();
-
-      expect(result).toStrictEqual(``);
+      expect(PROFILE_CONFIG.nickname).toStrictEqual(`dummy-nickname`);
     });
   });
 });

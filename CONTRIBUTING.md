@@ -55,7 +55,8 @@ It should contains the following scopes:
 - read:public_key
 - read:gpg_key
 
-__Note for the Nickname:__
+__Note for the nickname:__
+
 This file can contain optionals fields:
 - nickname: can be display on each developer server messages
 
