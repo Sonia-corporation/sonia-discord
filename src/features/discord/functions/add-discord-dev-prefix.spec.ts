@@ -10,26 +10,39 @@ describe(`addDiscordDevPrefix()`, (): void => {
   });
 
   describe(`when the given message is an empty string`, (): void => {
-    beforeEach((): void => {
+    beforeAll((): void => {
       message = ``;
       nickname = ``;
     });
 
-    it(`should return a message with a nickname dev prefix`, (): void => {
-      expect.assertions(1);
-      nickname = `dummy-nickname`;
+    describe(`when the given nickanme is "dummy-nickname"`, (): void => {
+      beforeEach((): void => {
+        nickname = `dummy-nickname`;
+        message = ``;
+      });
 
-      const result = addDiscordDevPrefix(message, nickname);
+      it(`should return a message with a nickname dev prefix`, (): void => {
+        expect.assertions(1);
 
-      expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+        const result = addDiscordDevPrefix(message, nickname);
+
+        expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+      });
     });
 
-    it(`should return a message with an empty nickname dev prefix`, (): void => {
-      expect.assertions(1);
+    describe(`when the given nickanme is empty`, (): void => {
+      beforeEach((): void => {
+        nickname = ``;
+        message = ``;
+      });
 
-      const result = addDiscordDevPrefix(message, nickname);
+      it(`should return a message with an empty nickname dev prefix`, (): void => {
+        expect.assertions(1);
 
-      expect(result).toStrictEqual(`**[dev]** `);
+        const result = addDiscordDevPrefix(message, nickname);
+
+        expect(result).toStrictEqual(`**[dev]** `);
+      });
     });
   });
 
@@ -38,21 +51,30 @@ describe(`addDiscordDevPrefix()`, (): void => {
       message = `dummy-message`;
     });
 
-    it(`should return a message with a empty dev prefix`, (): void => {
-      expect.assertions(1);
+    describe(`when the given nickanme is "dummy-nickname"`, (): void => {
+      it(`should return a message with a empty dev prefix`, (): void => {
+        expect.assertions(1);
 
-      const result = addDiscordDevPrefix(message, nickname);
+        const result = addDiscordDevPrefix(message, nickname);
 
-      expect(result).toStrictEqual(`**[dev - dummy-nickname]** dummy-message`);
+        expect(result).toStrictEqual(
+          `**[dev - dummy-nickname]** dummy-message`
+        );
+      });
     });
 
-    it(`should return a message with an empty nickname dev prefix`, (): void => {
-      expect.assertions(1);
-      nickname = ``;
+    describe(`when the given nickanme is empty`, (): void => {
+      beforeEach((): void => {
+        nickname = ``;
+      });
 
-      const result = addDiscordDevPrefix(message, nickname);
+      it(`should return a message with an empty nickname dev prefix`, (): void => {
+        expect.assertions(1);
 
-      expect(result).toStrictEqual(`**[dev]** dummy-message`);
+        const result = addDiscordDevPrefix(message, nickname);
+
+        expect(result).toStrictEqual(`**[dev]** dummy-message`);
+      });
     });
   });
 
@@ -61,21 +83,28 @@ describe(`addDiscordDevPrefix()`, (): void => {
       nickname = `sonia`;
     });
 
-    it(`should return a dev prefix with empty message`, (): void => {
-      expect.assertions(1);
-      message = ``;
+    describe(`when the given message is empty`, (): void => {
+      beforeEach((): void => {
+        message = ``;
+      });
 
-      const result = addDiscordDevPrefix(message, nickname);
+      it(`should return a dev prefix with empty message`, (): void => {
+        expect.assertions(1);
 
-      expect(result).toStrictEqual(`**[dev - sonia]** `);
+        const result = addDiscordDevPrefix(message, nickname);
+
+        expect(result).toStrictEqual(`**[dev - sonia]** `);
+      });
     });
 
-    it(`should return a dev prefix with message`, (): void => {
-      expect.assertions(1);
+    describe(`when the given message is "dummy-message"`, (): void => {
+      it(`should return a dev prefix with message`, (): void => {
+        expect.assertions(1);
 
-      const result = addDiscordDevPrefix(message, nickname);
+        const result = addDiscordDevPrefix(message, nickname);
 
-      expect(result).toStrictEqual(`**[dev - sonia]** dummy-message`);
+        expect(result).toStrictEqual(`**[dev - sonia]** dummy-message`);
+      });
     });
   });
 
