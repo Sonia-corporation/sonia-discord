@@ -51,8 +51,8 @@ describe(`addDiscordDevPrefix()`, (): void => {
       message = `dummy-message`;
     });
 
-    describe(`when the given nickanme is "dummy-nickname"`, (): void => {
-      it(`should return a message with a empty dev prefix`, (): void => {
+    describe(`when the given nickname is "dummy-nickname"`, (): void => {
+      it(`should return a message with a dev prefix`, (): void => {
         expect.assertions(1);
 
         const result = addDiscordDevPrefix(message, nickname);
