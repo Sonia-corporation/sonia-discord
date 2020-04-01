@@ -16,7 +16,7 @@ import { getHumanizedReleaseNotes } from "../../github/functions/get-humanized-r
 import { IGithubReleasesLatest } from "../../github/interfaces/github-releases-latest";
 import { GithubConfigService } from "../../github/services/github-config-service";
 import { ChalkService } from "../../logger/services/chalk-service";
-import { LoggerConfigService } from "../../logger/services/logger-config-service";
+import { LoggerConfigMutatorService } from "../../logger/services/config/logger-config-mutator-service";
 import { LoggerService } from "../../logger/services/logger-service";
 import { ServerConfigService } from "../../server/services/server-config-service";
 import { ServerService } from "../../server/services/server-service";
@@ -64,7 +64,7 @@ export class InitService {
   private _configureAppFromEnvironment(
     environment: Readonly<IEnvironment>
   ): void {
-    LoggerConfigService.getInstance().updateConfig(environment.logger);
+    LoggerConfigMutatorService.getInstance().updateConfig(environment.logger);
     GithubConfigService.getInstance().updateConfig(environment.github);
     DiscordSoniaConfigService.getInstance().updateConfig(environment.discord);
     DiscordMessageConfigService.getInstance().updateConfig(environment.discord);
