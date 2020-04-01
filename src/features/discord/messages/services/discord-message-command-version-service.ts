@@ -9,7 +9,8 @@ import _ from "lodash";
 import moment from "moment";
 import { ellipsis } from "../../../../functions/formatters/ellipsis";
 import { AppProductionStateEnum } from "../../../app/enums/app-production-state.enum";
-import { AppConfigService } from "../../../app/services/app-config-service";
+import { AppConfigQueryService } from "../../../app/services/config/app-config-query-service";
+import { AppConfigService } from "../../../app/services/config/app-config-service";
 import { LoggerService } from "../../../logger/services/logger-service";
 import { IDiscordMessageCommandVersionConfig } from "../../interfaces/discord-message-command-version-config";
 import { DiscordSoniaMentalStateEnum } from "../../users/enums/discord-sonia-mental-state.enum";
@@ -30,6 +31,7 @@ export class DiscordMessageCommandVersionService {
   }
 
   private readonly _appConfigService = AppConfigService.getInstance();
+  private readonly _appConfigQueryService = AppConfigQueryService.getInstance();
   private readonly _discordSoniaService = DiscordSoniaService.getInstance();
   private readonly _discordMessageConfigService = DiscordMessageConfigService.getInstance();
   private readonly _loggerService = LoggerService.getInstance();
@@ -84,7 +86,7 @@ export class DiscordMessageCommandVersionService {
     const soniaImageUrl:
       | string
       | null = this._discordSoniaService.getImageUrl();
-    const totalReleaseCountHumanized: string = this._appConfigService.getTotalReleaseCountHumanized();
+    const totalReleaseCountHumanized: string = this._appConfigQueryService.getTotalReleaseCountHumanized();
 
     return {
       iconURL: soniaImageUrl || undefined,
@@ -133,7 +135,7 @@ export class DiscordMessageCommandVersionService {
     return {
       inline: true,
       name: `My last birthday`,
-      value: this._appConfigService.getReleaseDateHumanized(),
+      value: this._appConfigQueryService.getReleaseDateHumanized(),
     };
   }
 
@@ -141,7 +143,7 @@ export class DiscordMessageCommandVersionService {
     return {
       inline: true,
       name: `The last time I woken up`,
-      value: this._appConfigService.getInitializationDateHumanized(),
+      value: this._appConfigQueryService.getInitializationDateHumanized(),
     };
   }
 
@@ -158,7 +160,7 @@ export class DiscordMessageCommandVersionService {
   }
 
   private _getMessageEmbedFieldStatus(): EmbedFieldData {
-    const appProductionStateHumanized: AppProductionStateEnum = this._appConfigService.getProductionStateHumanized();
+    const appProductionStateHumanized: AppProductionStateEnum = this._appConfigQueryService.getProductionStateHumanized();
 
     return {
       inline: true,

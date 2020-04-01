@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { AppConfigService } from "../../../app/services/app-config-service";
+import { AppConfigService } from "../../../app/services/config/app-config-service";
 import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
 import { DiscordAuthorService } from "../../users/services/discord-author-service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
