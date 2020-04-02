@@ -110,7 +110,7 @@
     "@typescript-eslint/eslint-plugin": "2.26.0",
     "@typescript-eslint/parser": "2.26.0",
     "app-root-path": "3.0.0",
-    "chalk": "3.0.0",
+    "chalk": "4.0.0",
     "commitizen": "4.0.3",
     "concurrently": "5.1.0",
     "conventional-changelog-angular": "5.0.6",
