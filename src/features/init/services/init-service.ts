@@ -9,7 +9,7 @@ import { IPackage } from "../../../interfaces/package";
 import { AppConfigMutationService } from "../../app/services/config/app-config-mutation-service";
 import { DiscordMessageConfigMutatorService } from "../../discord/messages/services/config/discord-message-config-mutator-service";
 import { DiscordService } from "../../discord/services/discord-service";
-import { DiscordSoniaConfigService } from "../../discord/users/services/discord-sonia-config-service";
+import { DiscordSoniaConfigService } from "../../discord/users/services/config/discord-sonia-config-service";
 import { GITHUB_API_URL } from "../../github/constants/github-api-url";
 import { GITHUB_QUERY_RELEASES_LATEST_AND_TOTAL_COUNT } from "../../github/constants/queries/github-query-releases-latest-and-total-count";
 import { getHumanizedReleaseNotes } from "../../github/functions/get-humanized-release-notes";
