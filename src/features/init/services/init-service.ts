@@ -7,18 +7,18 @@ import { IEnvironment } from "../../../environment/interfaces/environment";
 import { getBearer } from "../../../functions/formatters/get-bearer";
 import { IPackage } from "../../../interfaces/package";
 import { AppConfigMutationService } from "../../app/services/config/app-config-mutation-service";
-import { DiscordMessageConfigService } from "../../discord/messages/services/discord-message-config-service";
+import { DiscordMessageConfigMutatorService } from "../../discord/messages/services/config/discord-message-config-mutator-service";
 import { DiscordService } from "../../discord/services/discord-service";
-import { DiscordSoniaConfigService } from "../../discord/users/services/discord-sonia-config-service";
+import { DiscordSoniaConfigService } from "../../discord/users/services/config/discord-sonia-config-service";
 import { GITHUB_API_URL } from "../../github/constants/github-api-url";
 import { GITHUB_QUERY_RELEASES_LATEST_AND_TOTAL_COUNT } from "../../github/constants/queries/github-query-releases-latest-and-total-count";
 import { getHumanizedReleaseNotes } from "../../github/functions/get-humanized-release-notes";
 import { IGithubReleasesLatest } from "../../github/interfaces/github-releases-latest";
-import { GithubConfigService } from "../../github/services/github-config-service";
+import { GithubConfigService } from "../../github/services/config/github-config-service";
 import { ChalkService } from "../../logger/services/chalk-service";
 import { LoggerConfigMutatorService } from "../../logger/services/config/logger-config-mutator-service";
 import { LoggerService } from "../../logger/services/logger-service";
-import { ServerConfigService } from "../../server/services/server-config-service";
+import { ServerConfigService } from "../../server/services/config/server-config-service";
 import { ServerService } from "../../server/services/server-service";
 
 export class InitService {
@@ -67,7 +67,9 @@ export class InitService {
     LoggerConfigMutatorService.getInstance().updateConfig(environment.logger);
     GithubConfigService.getInstance().updateConfig(environment.github);
     DiscordSoniaConfigService.getInstance().updateConfig(environment.discord);
-    DiscordMessageConfigService.getInstance().updateConfig(environment.discord);
+    DiscordMessageConfigMutatorService.getInstance().updateConfig(
+      environment.discord
+    );
     AppConfigMutationService.getInstance().init().updateConfig(environment.app);
     ServerConfigService.getInstance().init();
   }

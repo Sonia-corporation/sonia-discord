@@ -12,7 +12,7 @@ import { IDiscordMessageResponse } from "../../messages/interfaces/discord-messa
 import { DiscordClientService } from "../../services/discord-client-service";
 import { isDiscordGuild } from "../functions/is-discord-guild";
 import { AnyGuildMember } from "../types/any-guild-member";
-import { DiscordGuildConfigService } from "./discord-guild-config-service";
+import { DiscordGuildConfigService } from "./config/discord-guild-config-service";
 
 export class DiscordGuildMemberAddService {
   private static _instance: DiscordGuildMemberAddService;
