@@ -2,6 +2,7 @@ import _ from "lodash";
 import { DiscordMessageCommandEnum } from "../enums/discord-message-command.enum";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
+import { DiscordMessageCommandErrorService } from "./discord-message-command-error-service";
 import { DiscordMessageCommandVersionService } from "./discord-message-command-version-service";
 import { DiscordMessageConfigService } from "./discord-message-config-service";
 import { DiscordMessageContentService } from "./discord-message-content-service";
@@ -19,10 +20,13 @@ export class DiscordMessageCommandService {
 
   private readonly _discordMessageConfigService = DiscordMessageConfigService.getInstance();
   private readonly _discordMessageCommandVersionService = DiscordMessageCommandVersionService.getInstance();
+  private readonly _discordMessageCommandErrorService = DiscordMessageCommandErrorService.getInstance();
   private readonly _discordMessageContentService = DiscordMessageContentService.getInstance();
 
   public hasCommand(message: Readonly<string>): boolean {
     if (this.hasVersionCommand(message)) {
+      return true;
+    } else if (this.hasErrorCommand(message)) {
       return true;
     }
 
@@ -36,10 +40,23 @@ export class DiscordMessageCommandService {
     ]);
   }
 
+  public hasErrorCommand(message: Readonly<string>): boolean {
+    return this._hasThisCommand(message, [
+      DiscordMessageCommandEnum.ERROR,
+      DiscordMessageCommandEnum.BUG,
+    ]);
+  }
+
   public handleVersionCommand(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
     return this._discordMessageCommandVersionService.handle(anyDiscordMessage);
+  }
+
+  public handleErrorCommand(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): IDiscordMessageResponse {
+    return this._discordMessageCommandErrorService.handle(anyDiscordMessage);
   }
 
   public handleCommands(
@@ -50,6 +67,8 @@ export class DiscordMessageCommandService {
     ) {
       if (this.hasVersionCommand(anyDiscordMessage.content)) {
         return this.handleVersionCommand(anyDiscordMessage);
+      } else if (this.hasErrorCommand(anyDiscordMessage.content)) {
+        return this.handleErrorCommand(anyDiscordMessage);
       }
     }
 

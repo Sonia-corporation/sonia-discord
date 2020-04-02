@@ -5,6 +5,7 @@ import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { PartialNested } from "../../../../types/partial-nested";
 import { IDiscordConfig } from "../../interfaces/discord-config";
 import { IDiscordMessageCommandConfig } from "../../interfaces/discord-message-command-config";
+import { IDiscordMessageCommandErrorConfig } from "../../interfaces/discord-message-command-error-config";
 import { IDiscordMessageCommandVersionConfig } from "../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../interfaces/discord-message-error-config";
@@ -68,9 +69,56 @@ export class DiscordMessageConfigService extends AbstractConfigService<
     command?: Readonly<PartialNested<IDiscordMessageCommandConfig>>
   ): void {
     if (!_.isNil(command)) {
+      this.updateMessageCommandError(command.error);
       this.updateMessageCommandPrefix(command.prefix);
       this.updateMessageCommandVersion(command.version);
     }
+  }
+
+  public getMessageCommandError(): IDiscordMessageCommandErrorConfig {
+    return DISCORD_MESSAGE_CONFIG.command.error;
+  }
+
+  // @todo add coverage
+  public updateMessageCommandError(
+    error?: Readonly<PartialNested<IDiscordMessageCommandErrorConfig>>
+  ): void {
+    if (!_.isNil(error) && _.isPlainObject(error)) {
+      this.updateMessageCommandErrorImageColor(error.imageColor);
+      this.updateMessageCommandErrorImageUrl(error.imageUrl);
+    }
+  }
+
+  public getMessageCommandErrorImageColor(): number {
+    return DISCORD_MESSAGE_CONFIG.command.error.imageColor;
+  }
+
+  public updateMessageCommandErrorImageColor(
+    imageColor?: Readonly<number>
+  ): void {
+    DISCORD_MESSAGE_CONFIG.command.error.imageColor = this._configService.getUpdatedNumber(
+      {
+        context: this._className,
+        newValue: imageColor,
+        oldValue: DISCORD_MESSAGE_CONFIG.command.error.imageColor,
+        valueName: `message command error image color`,
+      }
+    );
+  }
+
+  public getMessageCommandErrorImageUrl(): string {
+    return DISCORD_MESSAGE_CONFIG.command.error.imageUrl;
+  }
+
+  public updateMessageCommandErrorImageUrl(imageUrl?: Readonly<string>): void {
+    DISCORD_MESSAGE_CONFIG.command.error.imageUrl = this._configService.getUpdatedString(
+      {
+        context: this._className,
+        newValue: imageUrl,
+        oldValue: DISCORD_MESSAGE_CONFIG.command.error.imageUrl,
+        valueName: `message command error image url`,
+      }
+    );
   }
 
   public getMessageCommandPrefix(): string | string[] {
@@ -171,7 +219,7 @@ export class DiscordMessageConfigService extends AbstractConfigService<
     }
   }
 
-  public getMessageCommandErrorImageColor(): number {
+  public getMessageErrorImageColor(): number {
     return DISCORD_MESSAGE_CONFIG.error.imageColor;
   }
 
@@ -186,7 +234,7 @@ export class DiscordMessageConfigService extends AbstractConfigService<
     );
   }
 
-  public getMessageCommandErrorImageUrl(): string {
+  public getMessageErrorImageUrl(): string {
     return DISCORD_MESSAGE_CONFIG.error.imageUrl;
   }
 

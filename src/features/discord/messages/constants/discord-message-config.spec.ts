@@ -1,6 +1,22 @@
 import { DISCORD_MESSAGE_CONFIG } from "./discord-message-config";
 
 describe(`DISCORD_MESSAGE_CONFIG`, (): void => {
+  it(`should have a specific color for the image of the error command`, (): void => {
+    expect.assertions(1);
+
+    expect(DISCORD_MESSAGE_CONFIG.command.error.imageColor).toStrictEqual(
+      15562905
+    );
+  });
+
+  it(`should have a specific url for the image of the error command`, (): void => {
+    expect.assertions(1);
+
+    expect(DISCORD_MESSAGE_CONFIG.command.error.imageUrl).toStrictEqual(
+      `https://i.ibb.co/5jZmzSB/icons8-error-512.png`
+    );
+  });
+
   it(`should have a "!" prefix for the commands`, (): void => {
     expect.assertions(1);
 
