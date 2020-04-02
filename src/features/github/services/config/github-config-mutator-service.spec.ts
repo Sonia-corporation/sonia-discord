@@ -1,50 +1,19 @@
-import { IConfigUpdateString } from "../../config/interfaces/config-update-string";
-import { ConfigService } from "../../config/services/config-service";
-import { GITHUB_CONFIG } from "../constants/github-config";
-import { IGithubConfig } from "../interfaces/github-config";
-import { GithubConfigService } from "./github-config-service";
+import { IConfigUpdateString } from "../../../config/interfaces/config-update-string";
+import { ConfigService } from "../../../config/services/config-service";
+import { GithubConfigCoreService } from "./github-config-core-service";
+import { GithubConfigMutatorService } from "./github-config-mutator-service";
 
-jest.mock(`../../config/services/config-service`);
+jest.mock(`../../../config/services/config-service`);
 
-describe(`GithubConfigService`, (): void => {
-  let service: GithubConfigService;
+describe(`GithubConfigMutatorService`, (): void => {
+  let service: GithubConfigMutatorService;
   let configService: ConfigService;
+  let githubConfigCoreService: GithubConfigCoreService;
 
   beforeEach((): void => {
-    service = GithubConfigService.getInstance();
+    service = GithubConfigMutatorService.getInstance();
     configService = ConfigService.getInstance();
-  });
-
-  describe(`getGithub()`, (): void => {
-    beforeEach((): void => {
-      GITHUB_CONFIG.bugReportUrl = `dummy-bug-report-url`;
-      GITHUB_CONFIG.personalAccessToken = `dummy-personal-access-token`;
-    });
-
-    it(`should return the Discord message config`, (): void => {
-      expect.assertions(1);
-
-      const result = service.getGithub();
-
-      expect(result).toStrictEqual({
-        bugReportUrl: `dummy-bug-report-url`,
-        personalAccessToken: `dummy-personal-access-token`,
-      } as IGithubConfig);
-    });
-  });
-
-  describe(`getBugReportUrl()`, (): void => {
-    beforeEach((): void => {
-      GITHUB_CONFIG.bugReportUrl = `dummy-bug-report-url`;
-    });
-
-    it(`should return the GitHub config bug report url`, (): void => {
-      expect.assertions(1);
-
-      const result = service.getBugReportUrl();
-
-      expect(result).toStrictEqual(`dummy-bug-report-url`);
-    });
+    githubConfigCoreService = GithubConfigCoreService.getInstance();
   });
 
   describe(`updateBugReportUrl()`, (): void => {
@@ -54,7 +23,7 @@ describe(`GithubConfigService`, (): void => {
 
     beforeEach((): void => {
       bugReportUrl = `bug-report-url`;
-      GITHUB_CONFIG.bugReportUrl = `dummy-bug-report-url`;
+      githubConfigCoreService.bugReportUrl = `dummy-bug-report-url`;
 
       configServiceGetUpdatedNumberSpy = jest
         .spyOn(configService, `getUpdatedString`)
@@ -68,7 +37,7 @@ describe(`GithubConfigService`, (): void => {
 
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
-        context: `GithubConfigService`,
+        context: `GithubConfigMutatorService`,
         newValue: `bug-report-url`,
         oldValue: `dummy-bug-report-url`,
         valueName: `bug report url`,
@@ -80,21 +49,9 @@ describe(`GithubConfigService`, (): void => {
 
       service.updateBugReportUrl(bugReportUrl);
 
-      expect(GITHUB_CONFIG.bugReportUrl).toStrictEqual(`bug-report-url`);
-    });
-  });
-
-  describe(`getPersonalAccessToken()`, (): void => {
-    beforeEach((): void => {
-      GITHUB_CONFIG.personalAccessToken = `dummy-personal-access-token`;
-    });
-
-    it(`should return the GitHub config personal access token`, (): void => {
-      expect.assertions(1);
-
-      const result = service.getPersonalAccessToken();
-
-      expect(result).toStrictEqual(`dummy-personal-access-token`);
+      expect(githubConfigCoreService.bugReportUrl).toStrictEqual(
+        `bug-report-url`
+      );
     });
   });
 
@@ -105,7 +62,7 @@ describe(`GithubConfigService`, (): void => {
 
     beforeEach((): void => {
       personalAccessToken = `personal-access-token`;
-      GITHUB_CONFIG.personalAccessToken = `dummy-personal-access-token`;
+      githubConfigCoreService.personalAccessToken = `dummy-personal-access-token`;
 
       configServiceGetUpdatedNumberSpy = jest
         .spyOn(configService, `getUpdatedString`)
@@ -119,7 +76,7 @@ describe(`GithubConfigService`, (): void => {
 
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
-        context: `GithubConfigService`,
+        context: `GithubConfigMutatorService`,
         isValueHidden: true,
         newValue: `personal-access-token`,
         oldValue: `dummy-personal-access-token`,
@@ -132,7 +89,7 @@ describe(`GithubConfigService`, (): void => {
 
       service.updatePersonalAccessToken(personalAccessToken);
 
-      expect(GITHUB_CONFIG.personalAccessToken).toStrictEqual(
+      expect(githubConfigCoreService.personalAccessToken).toStrictEqual(
         `personal-access-token`
       );
     });
