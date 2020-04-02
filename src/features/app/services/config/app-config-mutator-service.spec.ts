@@ -3,17 +3,17 @@ import { IConfigUpdateNumber } from "../../../config/interfaces/config-update-nu
 import { IConfigUpdateString } from "../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../config/services/config-service";
 import { AppConfigCoreService } from "./app-config-core-service";
-import { AppConfigMutationService } from "./app-config-mutation-service";
+import { AppConfigMutatorService } from "./app-config-mutator-service";
 
 jest.mock(`../../../config/services/config-service`);
 
 describe(`AppConfigMutationService`, (): void => {
-  let service: AppConfigMutationService;
+  let service: AppConfigMutatorService;
   let configService: ConfigService;
   let appConfigCoreService: AppConfigCoreService;
 
   beforeEach((): void => {
-    service = AppConfigMutationService.getInstance();
+    service = AppConfigMutatorService.getInstance();
     configService = ConfigService.getInstance();
     appConfigCoreService = AppConfigCoreService.getInstance();
   });
@@ -39,7 +39,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
-        context: `AppConfigMutationService`,
+        context: `AppConfigMutatorService`,
         newValue: `dummy-version`,
         oldValue: `version`,
         valueName: `version`,
@@ -76,7 +76,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
-        context: `AppConfigMutationService`,
+        context: `AppConfigMutatorService`,
         newValue: `dummy-release-date`,
         oldValue: `release-date`,
         valueName: `release date`,
@@ -115,7 +115,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
-        context: `AppConfigMutationService`,
+        context: `AppConfigMutatorService`,
         newValue: `dummy-initialization-date`,
         oldValue: `initialization-date`,
         valueName: `initialization date`,
@@ -154,7 +154,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledTimes(1);
       expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledWith({
-        context: `AppConfigMutationService`,
+        context: `AppConfigMutatorService`,
         newValue: false,
         oldValue: true,
         valueName: `production state`,
@@ -191,7 +191,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
-        context: `AppConfigMutationService`,
+        context: `AppConfigMutatorService`,
         newValue: 8,
         oldValue: 5,
         valueName: `total release count`,
@@ -228,7 +228,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
-        context: `AppConfigMutationService`,
+        context: `AppConfigMutatorService`,
         isValueDisplay: false,
         newValue: `dummy-release-notes`,
         oldValue: `release-notes`,

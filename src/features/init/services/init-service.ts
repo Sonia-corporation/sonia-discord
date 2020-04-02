@@ -6,7 +6,7 @@ import { ENVIRONMENT } from "../../../environment/constants/environment";
 import { IEnvironment } from "../../../environment/interfaces/environment";
 import { getBearer } from "../../../functions/formatters/get-bearer";
 import { IPackage } from "../../../interfaces/package";
-import { AppConfigMutationService } from "../../app/services/config/app-config-mutation-service";
+import { AppConfigMutatorService } from "../../app/services/config/app-config-mutator-service";
 import { DiscordMessageConfigMutatorService } from "../../discord/messages/services/config/discord-message-config-mutator-service";
 import { DiscordService } from "../../discord/services/discord-service";
 import { DiscordSoniaConfigService } from "../../discord/users/services/config/discord-sonia-config-service";
@@ -70,14 +70,14 @@ export class InitService {
     DiscordMessageConfigMutatorService.getInstance().updateConfig(
       environment.discord
     );
-    AppConfigMutationService.getInstance().init().updateConfig(environment.app);
+    AppConfigMutatorService.getInstance().init().updateConfig(environment.app);
     ServerConfigService.getInstance().init();
   }
 
   private _configureAppFromPackage(): void {
     fs.readJson(`${appRootPath}/package.json`)
       .then((data: Readonly<IPackage>): void => {
-        AppConfigMutationService.getInstance().updateVersion(data.version);
+        AppConfigMutatorService.getInstance().updateVersion(data.version);
       })
       .catch((error: unknown): void => {
         this._loggerService.error({
@@ -103,13 +103,13 @@ export class InitService {
       url: GITHUB_API_URL,
     })
       .then((axiosResponse: AxiosResponse<IGithubReleasesLatest>): void => {
-        AppConfigMutationService.getInstance().updateTotalReleaseCount(
+        AppConfigMutatorService.getInstance().updateTotalReleaseCount(
           axiosResponse.data.data.repository.releases.totalCount
         );
-        AppConfigMutationService.getInstance().updateReleaseDate(
+        AppConfigMutatorService.getInstance().updateReleaseDate(
           axiosResponse.data.data.repository.releases.edges[0].node.updatedAt
         );
-        AppConfigMutationService.getInstance().updateReleaseNotes(
+        AppConfigMutatorService.getInstance().updateReleaseNotes(
           getHumanizedReleaseNotes(
             axiosResponse.data.data.repository.releases.edges[0].node
               .description
