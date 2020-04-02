@@ -14,11 +14,11 @@ import { GITHUB_API_URL } from "../../github/constants/github-api-url";
 import { GITHUB_QUERY_RELEASES_LATEST_AND_TOTAL_COUNT } from "../../github/constants/queries/github-query-releases-latest-and-total-count";
 import { getHumanizedReleaseNotes } from "../../github/functions/get-humanized-release-notes";
 import { IGithubReleasesLatest } from "../../github/interfaces/github-releases-latest";
-import { GithubConfigService } from "../../github/services/github-config-service";
+import { GithubConfigService } from "../../github/services/config/github-config-service";
 import { ChalkService } from "../../logger/services/chalk-service";
 import { LoggerConfigMutatorService } from "../../logger/services/config/logger-config-mutator-service";
 import { LoggerService } from "../../logger/services/logger-service";
-import { ServerConfigService } from "../../server/services/server-config-service";
+import { ServerConfigService } from "../../server/services/config/server-config-service";
 import { ServerService } from "../../server/services/server-service";
 
 export class InitService {

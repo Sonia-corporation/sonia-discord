@@ -8,10 +8,10 @@ import {
 import _ from "lodash";
 import moment from "moment";
 import { ellipsis } from "../../../../functions/formatters/ellipsis";
-import { GithubConfigService } from "../../../github/services/github-config-service";
+import { GithubConfigService } from "../../../github/services/config/github-config-service";
 import { LoggerService } from "../../../logger/services/logger-service";
 import { DiscordChannelService } from "../../channels/services/discord-channel-service";
-import { DiscordGuildConfigService } from "../../guilds/services/discord-guild-config-service";
+import { DiscordGuildConfigService } from "../../guilds/services/config/discord-guild-config-service";
 import { DiscordSoniaService } from "../../users/services/discord-sonia-service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";

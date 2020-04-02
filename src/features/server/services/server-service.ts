@@ -4,7 +4,7 @@ import _ from "lodash";
 import { AppConfigService } from "../../app/services/config/app-config-service";
 import { ChalkService } from "../../logger/services/chalk-service";
 import { LoggerService } from "../../logger/services/logger-service";
-import { ServerConfigService } from "./server-config-service";
+import { ServerConfigService } from "./config/server-config-service";
 
 export class ServerService {
   private static _instance: ServerService;
