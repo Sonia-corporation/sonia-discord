@@ -1,12 +1,12 @@
 import _ from "lodash";
 import { wrapInQuotes } from "../../../functions/formatters/wrap-in-quotes";
 import { TimeService } from "../../time/services/time-service";
-import { LOGGER_CONFIG } from "../constants/logger-config";
 import { LoggerConfigLevelValueEnum } from "../enums/logger-config-level-value.enum";
 import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
 import { ILoggerLog } from "../interfaces/logger-log";
 import { ILoggerLogInternal } from "../interfaces/logger-log-internal";
 import { ChalkService } from "./chalk-service";
+import { LoggerConfigService } from "./config/logger-config-service";
 
 export class LoggerService {
   private static _instance: LoggerService;
@@ -21,6 +21,7 @@ export class LoggerService {
 
   private readonly _timeService = TimeService.getInstance();
   private readonly _chalkService = ChalkService.getInstance();
+  private readonly _loggerConfigService = LoggerConfigService.getInstance();
   private readonly _logPrefix = `● `;
 
   public error(loggerLog: Readonly<ILoggerLog>): void {
@@ -110,7 +111,7 @@ export class LoggerService {
   }
 
   private _log(loggerLogInternal: Readonly<ILoggerLogInternal>): void {
-    if (_.isEqual(LOGGER_CONFIG.isEnabled, true)) {
+    if (_.isEqual(this._loggerConfigService.isEnabled(), true)) {
       const logTypePrefix: string = this._getLogTypePrefix(
         loggerLogInternal.loggerLogType
       );
@@ -149,22 +150,37 @@ export class LoggerService {
   }
 
   private _isErrorEnabled(): boolean {
-    return _.gte(LoggerConfigLevelValueEnum[LOGGER_CONFIG.level], 0);
+    return _.gte(
+      LoggerConfigLevelValueEnum[this._loggerConfigService.getLevel()],
+      0
+    );
   }
 
   private _isWarningEnabled(): boolean {
-    return _.gte(LoggerConfigLevelValueEnum[LOGGER_CONFIG.level], 1);
+    return _.gte(
+      LoggerConfigLevelValueEnum[this._loggerConfigService.getLevel()],
+      1
+    );
   }
 
   private _isSuccessEnabled(): boolean {
-    return _.gte(LoggerConfigLevelValueEnum[LOGGER_CONFIG.level], 2);
+    return _.gte(
+      LoggerConfigLevelValueEnum[this._loggerConfigService.getLevel()],
+      2
+    );
   }
 
   private _isLogEnabled(): boolean {
-    return _.gte(LoggerConfigLevelValueEnum[LOGGER_CONFIG.level], 3);
+    return _.gte(
+      LoggerConfigLevelValueEnum[this._loggerConfigService.getLevel()],
+      3
+    );
   }
 
   private _isDebugEnabled(): boolean {
-    return _.gte(LoggerConfigLevelValueEnum[LOGGER_CONFIG.level], 4);
+    return _.gte(
+      LoggerConfigLevelValueEnum[this._loggerConfigService.getLevel()],
+      4
+    );
   }
 }
