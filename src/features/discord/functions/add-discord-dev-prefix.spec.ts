@@ -12,10 +12,9 @@ describe(`addDiscordDevPrefix()`, (): void => {
   describe(`when the given message is an empty string`, (): void => {
     beforeEach((): void => {
       message = ``;
-      nickname = ``;
     });
 
-    describe(`when the given nickname is empty`, (): void => {
+    describe(`when the given nickname is an empty string`, (): void => {
       beforeEach((): void => {
         nickname = ``;
       });
@@ -63,7 +62,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
       message = `dummy-message`;
     });
 
-    describe(`when the given nickname is empty`, (): void => {
+    describe(`when the given nickname is an empty string`, (): void => {
       beforeEach((): void => {
         nickname = ``;
       });
@@ -109,7 +108,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
       message = `hello-world`;
     });
 
-    describe(`when the given nickname is empty`, (): void => {
+    describe(`when the given nickname is an empty`, (): void => {
       beforeEach((): void => {
         nickname = ``;
       });
