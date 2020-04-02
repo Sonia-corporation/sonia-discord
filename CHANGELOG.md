@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+# [1.27.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.26.0...1.27.0) (2020-04-02)
+
+
+### Features
+
+* **command-bug:** add new command bug ([586b952](https://github.com/Sonia-corporation/il-est-midi-discord/commit/586b952c3a3fffaacc09fecc3ff3d0ea723992ab))
+* **discord:** add new command error ([a17219a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/a17219abb2fae4827e67cd6cc21cc0d44ca88ea0))
+
 # [1.26.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.25.0...1.26.0) (2020-03-31)
 
 
