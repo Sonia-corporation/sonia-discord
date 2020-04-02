@@ -67,6 +67,24 @@ __Example:__
 `@Sonia-il-est-midi !v`
 `@Sonia-il-est-midi !V`
 
+#### Error
+
+__Commands:__
+
+- error
+- bug
+
+Sonia will send you a message containing:
+
+- The description of the error
+- Some nasty bullshit text
+- This is an useless feature, please, continue
+- We are very sorry about that. I think
+
+__Example:__
+`@Sonia-il-est-midi !error`
+`@Sonia-il-est-midi !BUG`
+
 ### Sonia behavior
 
 Sonia will never responds to herself - no infinite loop :(  

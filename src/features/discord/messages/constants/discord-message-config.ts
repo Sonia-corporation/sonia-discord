@@ -2,6 +2,10 @@ import { IDiscordMessageConfig } from "../../interfaces/discord-message-config";
 
 export const DISCORD_MESSAGE_CONFIG: IDiscordMessageConfig = {
   command: {
+    error: {
+      imageColor: 15562905,
+      imageUrl: `https://i.ibb.co/5jZmzSB/icons8-error-512.png`,
+    },
     prefix: `!`,
     version: {
       imageColor: 11912416,
