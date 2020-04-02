@@ -7,7 +7,7 @@ import { IEnvironment } from "../../../environment/interfaces/environment";
 import { getBearer } from "../../../functions/formatters/get-bearer";
 import { IPackage } from "../../../interfaces/package";
 import { AppConfigMutationService } from "../../app/services/config/app-config-mutation-service";
-import { DiscordMessageConfigService } from "../../discord/messages/services/discord-message-config-service";
+import { DiscordMessageConfigMutatorService } from "../../discord/messages/services/config/discord-message-config-mutator-service";
 import { DiscordService } from "../../discord/services/discord-service";
 import { DiscordSoniaConfigService } from "../../discord/users/services/discord-sonia-config-service";
 import { GITHUB_API_URL } from "../../github/constants/github-api-url";
@@ -67,7 +67,9 @@ export class InitService {
     LoggerConfigMutatorService.getInstance().updateConfig(environment.logger);
     GithubConfigService.getInstance().updateConfig(environment.github);
     DiscordSoniaConfigService.getInstance().updateConfig(environment.discord);
-    DiscordMessageConfigService.getInstance().updateConfig(environment.discord);
+    DiscordMessageConfigMutatorService.getInstance().updateConfig(
+      environment.discord
+    );
     AppConfigMutationService.getInstance().init().updateConfig(environment.app);
     ServerConfigService.getInstance().init();
   }

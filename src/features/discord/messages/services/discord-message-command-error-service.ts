@@ -11,7 +11,7 @@ import { LoggerService } from "../../../logger/services/logger-service";
 import { DiscordSoniaService } from "../../users/services/discord-sonia-service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
-import { DiscordMessageConfigService } from "./discord-message-config-service";
+import { DiscordMessageConfigService } from "./config/discord-message-config-service";
 
 export class DiscordMessageCommandErrorService {
   private static _instance: DiscordMessageCommandErrorService;

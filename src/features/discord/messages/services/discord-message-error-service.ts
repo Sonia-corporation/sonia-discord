@@ -15,7 +15,7 @@ import { DiscordGuildConfigService } from "../../guilds/services/config/discord-
 import { DiscordSoniaService } from "../../users/services/discord-sonia-service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
-import { DiscordMessageConfigService } from "./discord-message-config-service";
+import { DiscordMessageConfigService } from "./config/discord-message-config-service";
 
 export class DiscordMessageErrorService {
   private static _instance: DiscordMessageErrorService;

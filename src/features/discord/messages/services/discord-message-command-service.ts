@@ -2,9 +2,9 @@ import _ from "lodash";
 import { DiscordMessageCommandEnum } from "../enums/discord-message-command.enum";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
+import { DiscordMessageConfigService } from "./config/discord-message-config-service";
 import { DiscordMessageCommandErrorService } from "./discord-message-command-error-service";
 import { DiscordMessageCommandVersionService } from "./discord-message-command-version-service";
-import { DiscordMessageConfigService } from "./discord-message-config-service";
 import { DiscordMessageContentService } from "./discord-message-content-service";
 
 export class DiscordMessageCommandService {
