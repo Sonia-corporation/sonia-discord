@@ -1,18 +1,24 @@
-import { DISCORD_MESSAGE_CONFIG } from "./discord-message-config";
+import { DiscordMessageConfigCoreService } from "./discord-message-config-core-service";
 
-describe(`DISCORD_MESSAGE_CONFIG`, (): void => {
+jest.mock(`../../../../config/services/config-service`);
+
+describe(`DiscordMessageConfigCoreService`, (): void => {
+  let service: DiscordMessageConfigCoreService;
+
+  beforeEach((): void => {
+    service = DiscordMessageConfigCoreService.getInstance();
+  });
+
   it(`should have a specific color for the image of the error command`, (): void => {
     expect.assertions(1);
 
-    expect(DISCORD_MESSAGE_CONFIG.command.error.imageColor).toStrictEqual(
-      15562905
-    );
+    expect(service.command.error.imageColor).toStrictEqual(15562905);
   });
 
   it(`should have a specific url for the image of the error command`, (): void => {
     expect.assertions(1);
 
-    expect(DISCORD_MESSAGE_CONFIG.command.error.imageUrl).toStrictEqual(
+    expect(service.command.error.imageUrl).toStrictEqual(
       `https://i.ibb.co/5jZmzSB/icons8-error-512.png`
     );
   });
@@ -20,21 +26,19 @@ describe(`DISCORD_MESSAGE_CONFIG`, (): void => {
   it(`should have a "!" prefix for the commands`, (): void => {
     expect.assertions(1);
 
-    expect(DISCORD_MESSAGE_CONFIG.command.prefix).toStrictEqual(`!`);
+    expect(service.command.prefix).toStrictEqual(`!`);
   });
 
   it(`should have a specific color for the image of the version command`, (): void => {
     expect.assertions(1);
 
-    expect(DISCORD_MESSAGE_CONFIG.command.version.imageColor).toStrictEqual(
-      11912416
-    );
+    expect(service.command.version.imageColor).toStrictEqual(11912416);
   });
 
   it(`should have a specific url for the image of the version command`, (): void => {
     expect.assertions(1);
 
-    expect(DISCORD_MESSAGE_CONFIG.command.version.imageUrl).toStrictEqual(
+    expect(service.command.version.imageUrl).toStrictEqual(
       `https://i.ibb.co/ph17BqP/icons8-artificial-intelligence-512.png`
     );
   });
@@ -42,13 +46,13 @@ describe(`DISCORD_MESSAGE_CONFIG`, (): void => {
   it(`should have a specific color for the image of the error`, (): void => {
     expect.assertions(1);
 
-    expect(DISCORD_MESSAGE_CONFIG.error.imageColor).toStrictEqual(15562905);
+    expect(service.error.imageColor).toStrictEqual(15562905);
   });
 
   it(`should have a specific url for the image of the error`, (): void => {
     expect.assertions(1);
 
-    expect(DISCORD_MESSAGE_CONFIG.error.imageUrl).toStrictEqual(
+    expect(service.error.imageUrl).toStrictEqual(
       `https://i.ibb.co/r7PHJS1/icons8-bug-512.png`
     );
   });
