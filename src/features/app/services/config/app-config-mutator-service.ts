@@ -30,7 +30,6 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     super(config);
   }
 
-  // @todo add coverage
   public init(): AppConfigMutatorService {
     this._setProductionState();
     this._setBuildDate();
@@ -38,7 +37,6 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     return this;
   }
 
-  // @todo add coverage
   public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
     if (!_.isNil(config)) {
       this.updateVersion(config.version);
@@ -46,6 +44,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
       this.updateInitializationDate(config.initializationDate);
       this.updateTotalReleaseCount(config.totalReleaseCount);
       this.updateReleaseNotes(config.releaseNotes);
+      this.updateProductionState(config.isProduction);
 
       this._loggerService.debug({
         context: this._className,
