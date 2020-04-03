@@ -8,6 +8,7 @@ import { LoggerConfigCoreService } from "./logger-config-core-service";
 import { LoggerConfigMutatorService } from "./logger-config-mutator-service";
 
 jest.mock(`../../../config/services/config-service`);
+jest.mock(`../logger-service`);
 
 describe(`LoggerConfigMutatorService`, (): void => {
   let service: LoggerConfigMutatorService;
