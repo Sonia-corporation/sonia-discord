@@ -32,7 +32,6 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
     super(config);
   }
 
-  // @todo add coverage
   public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
     if (!_.isNil(config)) {
       this.updateGuild(config.guild);
@@ -44,12 +43,14 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
     }
   }
 
-  // @todo add coverage
   public updateGuild(
     guild?: Readonly<PartialNested<IDiscordGuildConfig>>
   ): void {
     if (!_.isNil(guild)) {
       this.updateWelcomeNewMembersState(guild.shouldWelcomeNewMembers);
+      this.updateSoniaPermanentGuildInviteUrl(
+        guild.soniaPermanentGuildInviteUrl
+      );
     }
   }
 
