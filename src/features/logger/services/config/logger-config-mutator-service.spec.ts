@@ -1,7 +1,9 @@
+import { PartialNested } from "../../../../types/partial-nested";
 import { IConfigUpdateBoolean } from "../../../config/interfaces/config-update-boolean";
 import { IConfigUpdateString } from "../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../config/services/config-service";
 import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
+import { ILoggerConfig } from "../../interfaces/logger-config";
 import { LoggerConfigCoreService } from "./logger-config-core-service";
 import { LoggerConfigMutatorService } from "./logger-config-mutator-service";
 
@@ -16,6 +18,66 @@ describe(`LoggerConfigMutatorService`, (): void => {
     service = LoggerConfigMutatorService.getInstance();
     configService = ConfigService.getInstance();
     loggerConfigCoreService = LoggerConfigCoreService.getInstance();
+  });
+
+  describe(`updateConfig()`, (): void => {
+    let config: PartialNested<ILoggerConfig> | undefined;
+
+    beforeEach((): void => {
+      loggerConfigCoreService.isEnabled = true;
+      loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerConfigCoreService.isEnabled).toStrictEqual(true);
+        expect(loggerConfigCoreService.level).toStrictEqual(
+          LoggerConfigLevelEnum.DEBUG
+        );
+      });
+    });
+
+    describe(`when the given config contains an enable state`, (): void => {
+      beforeEach((): void => {
+        config = {
+          isEnabled: false,
+        };
+      });
+
+      it(`should update the config enable state`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(loggerConfigCoreService.isEnabled).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given config contains a level`, (): void => {
+      beforeEach((): void => {
+        config = {
+          level: LoggerConfigLevelEnum.SUCCESS,
+        };
+      });
+
+      it(`should update the config level`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(loggerConfigCoreService.level).toStrictEqual(
+          LoggerConfigLevelEnum.SUCCESS
+        );
+      });
+    });
   });
 
   describe(`updateEnabledState()`, (): void => {

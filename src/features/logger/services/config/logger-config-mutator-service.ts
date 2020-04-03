@@ -31,7 +31,6 @@ export class LoggerConfigMutatorService extends AbstractConfigService<
     super(config);
   }
 
-  // @todo add coverage
   public updateConfig(config?: Readonly<Partial<ILoggerConfig>>): void {
     if (!_.isNil(config) && _.isPlainObject(config)) {
       this.updateEnabledState(config.isEnabled);
