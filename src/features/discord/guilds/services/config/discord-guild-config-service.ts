@@ -15,7 +15,7 @@ export class DiscordGuildConfigService {
 
   private readonly _discordGuildConfigCoreService = DiscordGuildConfigCoreService.getInstance();
 
-  public getGuild(): IDiscordGuildConfig {
+  public getConfig(): IDiscordGuildConfig {
     return {
       shouldWelcomeNewMembers: this.shouldWelcomeNewMembers(),
       soniaPermanentGuildInviteUrl: this.getSoniaPermanentGuildInviteUrl(),

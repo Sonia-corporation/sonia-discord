@@ -13,7 +13,7 @@ describe(`GithubConfigService`, (): void => {
     githubConfigCoreService = GithubConfigCoreService.getInstance();
   });
 
-  describe(`getGithub()`, (): void => {
+  describe(`getConfig()`, (): void => {
     beforeEach((): void => {
       githubConfigCoreService.bugReportUrl = `dummy-bug-report-url`;
       githubConfigCoreService.personalAccessToken = `dummy-personal-access-token`;
@@ -22,7 +22,7 @@ describe(`GithubConfigService`, (): void => {
     it(`should return the Discord message config`, (): void => {
       expect.assertions(1);
 
-      const result = service.getGithub();
+      const result = service.getConfig();
 
       expect(result).toStrictEqual({
         bugReportUrl: `dummy-bug-report-url`,

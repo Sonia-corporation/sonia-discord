@@ -9,16 +9,17 @@ import { IPackage } from "../../../interfaces/package";
 import { AppConfigMutatorService } from "../../app/services/config/app-config-mutator-service";
 import { DiscordMessageConfigMutatorService } from "../../discord/messages/services/config/discord-message-config-mutator-service";
 import { DiscordService } from "../../discord/services/discord-service";
-import { DiscordSoniaConfigService } from "../../discord/users/services/config/discord-sonia-config-service";
+import { DiscordSoniaConfigMutatorService } from "../../discord/users/services/config/discord-sonia-config-mutator-service";
 import { GITHUB_API_URL } from "../../github/constants/github-api-url";
 import { GITHUB_QUERY_RELEASES_LATEST_AND_TOTAL_COUNT } from "../../github/constants/queries/github-query-releases-latest-and-total-count";
 import { getHumanizedReleaseNotes } from "../../github/functions/get-humanized-release-notes";
 import { IGithubReleasesLatest } from "../../github/interfaces/github-releases-latest";
+import { GithubConfigMutatorService } from "../../github/services/config/github-config-mutator-service";
 import { GithubConfigService } from "../../github/services/config/github-config-service";
 import { ChalkService } from "../../logger/services/chalk-service";
 import { LoggerConfigMutatorService } from "../../logger/services/config/logger-config-mutator-service";
 import { LoggerService } from "../../logger/services/logger-service";
-import { ServerConfigService } from "../../server/services/config/server-config-service";
+import { ServerConfigMutatorService } from "../../server/services/config/server-config-mutator-service";
 import { ServerService } from "../../server/services/server-service";
 
 export class InitService {
@@ -65,13 +66,15 @@ export class InitService {
     environment: Readonly<IEnvironment>
   ): void {
     LoggerConfigMutatorService.getInstance().updateConfig(environment.logger);
-    GithubConfigService.getInstance().updateConfig(environment.github);
-    DiscordSoniaConfigService.getInstance().updateConfig(environment.discord);
+    GithubConfigMutatorService.getInstance().updateConfig(environment.github);
+    DiscordSoniaConfigMutatorService.getInstance().updateConfig(
+      environment.discord
+    );
     DiscordMessageConfigMutatorService.getInstance().updateConfig(
       environment.discord
     );
     AppConfigMutatorService.getInstance().init().updateConfig(environment.app);
-    ServerConfigService.getInstance().init();
+    ServerConfigMutatorService.getInstance().init();
   }
 
   private _configureAppFromPackage(): void {

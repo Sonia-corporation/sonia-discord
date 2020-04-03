@@ -15,7 +15,7 @@ export class GithubConfigService {
 
   private readonly _githubConfigCoreService = GithubConfigCoreService.getInstance();
 
-  public getGithub(): IGithubConfig {
+  public getConfig(): IGithubConfig {
     return {
       bugReportUrl: this.getBugReportUrl(),
       personalAccessToken: this.getPersonalAccessToken(),
