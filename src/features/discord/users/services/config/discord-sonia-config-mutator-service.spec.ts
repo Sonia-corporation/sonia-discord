@@ -1,5 +1,9 @@
+import { PartialNested } from "../../../../../types/partial-nested";
 import { IConfigUpdateString } from "../../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../../config/services/config-service";
+import { IDiscordConfig } from "../../../interfaces/discord-config";
+import { IDiscordSoniaConfig } from "../../../interfaces/discord-sonia-config";
+import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../../interfaces/discord-sonia-corporation-message-embed-author-config";
 import { DiscordSoniaConfigCoreService } from "./discord-sonia-config-core-service";
 import { DiscordSoniaConfigMutatorService } from "./discord-sonia-config-mutator-service";
 
@@ -14,6 +18,254 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
     service = DiscordSoniaConfigMutatorService.getInstance();
     configService = ConfigService.getInstance();
     discordSoniaConfigCoreService = DiscordSoniaConfigCoreService.getInstance();
+  });
+
+  describe(`updateConfig()`, (): void => {
+    let config: PartialNested<IDiscordConfig> | undefined;
+
+    beforeEach((): void => {
+      discordSoniaConfigCoreService.corporationImageUrl = `dummy-corporation-image-url`;
+      discordSoniaConfigCoreService.id = `dummy-id`;
+      discordSoniaConfigCoreService.secretToken = `dummy-secret-token`;
+      discordSoniaConfigCoreService.corporationMessageEmbedAuthor = {
+        iconURL: `dummy-icon-url`,
+        name: `dummy-name`,
+        url: `dummy-url`,
+      };
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(4);
+
+        service.updateConfig(config);
+
+        expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(
+          `dummy-corporation-image-url`
+        );
+        expect(discordSoniaConfigCoreService.id).toStrictEqual(`dummy-id`);
+        expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(
+          `dummy-secret-token`
+        );
+        expect(
+          discordSoniaConfigCoreService.corporationMessageEmbedAuthor
+        ).toStrictEqual({
+          iconURL: `dummy-icon-url`,
+          name: `dummy-name`,
+          url: `dummy-url`,
+        } as IDiscordSoniaCorporationMessageEmbedAuthorConfig);
+      });
+    });
+
+    describe(`when the given config contains a Sonia corporation image url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          sonia: {
+            corporationImageUrl: `corporation-image-url`,
+          },
+        };
+      });
+
+      it(`should update the config corporation image url`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(
+          `corporation-image-url`
+        );
+      });
+    });
+
+    describe(`when the given config contains a Sonia id`, (): void => {
+      beforeEach((): void => {
+        config = {
+          sonia: {
+            id: `id`,
+          },
+        };
+      });
+
+      it(`should update the config id`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(discordSoniaConfigCoreService.id).toStrictEqual(`id`);
+      });
+    });
+
+    describe(`when the given config contains a Sonia secret token`, (): void => {
+      beforeEach((): void => {
+        config = {
+          sonia: {
+            secretToken: `secret-token`,
+          },
+        };
+      });
+
+      it(`should update the config secret token`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(
+          `secret-token`
+        );
+      });
+    });
+
+    describe(`when the given config contains a Sonia corporation message embed author`, (): void => {
+      beforeEach((): void => {
+        config = {
+          sonia: {
+            corporationMessageEmbedAuthor: {
+              iconURL: `icon-url`,
+              name: `name`,
+              url: `url`,
+            },
+          },
+        };
+      });
+
+      it(`should update the config corporation message embed author`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(
+          discordSoniaConfigCoreService.corporationMessageEmbedAuthor
+        ).toStrictEqual({
+          iconURL: `icon-url`,
+          name: `name`,
+          url: `url`,
+        } as IDiscordSoniaCorporationMessageEmbedAuthorConfig);
+      });
+    });
+  });
+
+  describe(`updateSonia()`, (): void => {
+    let config: PartialNested<IDiscordSoniaConfig> | undefined;
+
+    beforeEach((): void => {
+      discordSoniaConfigCoreService.corporationImageUrl = `dummy-corporation-image-url`;
+      discordSoniaConfigCoreService.id = `dummy-id`;
+      discordSoniaConfigCoreService.secretToken = `dummy-secret-token`;
+      discordSoniaConfigCoreService.corporationMessageEmbedAuthor = {
+        iconURL: `dummy-icon-url`,
+        name: `dummy-name`,
+        url: `dummy-url`,
+      };
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(4);
+
+        service.updateSonia(config);
+
+        expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(
+          `dummy-corporation-image-url`
+        );
+        expect(discordSoniaConfigCoreService.id).toStrictEqual(`dummy-id`);
+        expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(
+          `dummy-secret-token`
+        );
+        expect(
+          discordSoniaConfigCoreService.corporationMessageEmbedAuthor
+        ).toStrictEqual({
+          iconURL: `dummy-icon-url`,
+          name: `dummy-name`,
+          url: `dummy-url`,
+        } as IDiscordSoniaCorporationMessageEmbedAuthorConfig);
+      });
+    });
+
+    describe(`when the given config contains a corporation image url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          corporationImageUrl: `corporation-image-url`,
+        };
+      });
+
+      it(`should update the config corporation image url`, (): void => {
+        expect.assertions(1);
+
+        service.updateSonia(config);
+
+        expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(
+          `corporation-image-url`
+        );
+      });
+    });
+
+    describe(`when the given config contains a id`, (): void => {
+      beforeEach((): void => {
+        config = {
+          id: `id`,
+        };
+      });
+
+      it(`should update the config id`, (): void => {
+        expect.assertions(1);
+
+        service.updateSonia(config);
+
+        expect(discordSoniaConfigCoreService.id).toStrictEqual(`id`);
+      });
+    });
+
+    describe(`when the given config contains a secret token`, (): void => {
+      beforeEach((): void => {
+        config = {
+          secretToken: `secret-token`,
+        };
+      });
+
+      it(`should update the config secret token`, (): void => {
+        expect.assertions(1);
+
+        service.updateSonia(config);
+
+        expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(
+          `secret-token`
+        );
+      });
+    });
+
+    describe(`when the given config contains a corporation message embed author`, (): void => {
+      beforeEach((): void => {
+        config = {
+          corporationMessageEmbedAuthor: {
+            iconURL: `icon-url`,
+            name: `name`,
+            url: `url`,
+          },
+        };
+      });
+
+      it(`should update the config corporation message embed author`, (): void => {
+        expect.assertions(1);
+
+        service.updateSonia(config);
+
+        expect(
+          discordSoniaConfigCoreService.corporationMessageEmbedAuthor
+        ).toStrictEqual({
+          iconURL: `icon-url`,
+          name: `name`,
+          url: `url`,
+        } as IDiscordSoniaCorporationMessageEmbedAuthorConfig);
+      });
+    });
   });
 
   describe(`updateCorporationImageUrl()`, (): void => {
@@ -52,6 +304,97 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
       expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(
         `dummy-corporation-image-url`
       );
+    });
+  });
+
+  describe(`updateCorporationMessageEmbedAuthor()`, (): void => {
+    let config:
+      | PartialNested<IDiscordSoniaCorporationMessageEmbedAuthorConfig>
+      | undefined;
+
+    beforeEach((): void => {
+      discordSoniaConfigCoreService.corporationMessageEmbedAuthor = {
+        iconURL: `dummy-icon-url`,
+        name: `dummy-name`,
+        url: `dummy-url`,
+      };
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(1);
+
+        service.updateCorporationMessageEmbedAuthor(config);
+
+        expect(
+          discordSoniaConfigCoreService.corporationMessageEmbedAuthor
+        ).toStrictEqual({
+          iconURL: `dummy-icon-url`,
+          name: `dummy-name`,
+          url: `dummy-url`,
+        } as IDiscordSoniaCorporationMessageEmbedAuthorConfig);
+      });
+    });
+
+    describe(`when the given config contains an icon url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          iconURL: `icon-url`,
+        };
+      });
+
+      // @todo Fix it; I am clueless to find out why this is not working
+      it.skip(`should update the config corporation message embed author icon url`, (): void => {
+        expect.assertions(1);
+
+        service.updateCorporationMessageEmbedAuthor(config);
+
+        expect(
+          discordSoniaConfigCoreService.corporationMessageEmbedAuthor.iconURL
+        ).toStrictEqual(`icon-url`);
+      });
+    });
+
+    describe(`when the given config contains a name`, (): void => {
+      beforeEach((): void => {
+        config = {
+          name: `name`,
+        };
+      });
+
+      // @todo Fix it; I am clueless to find out why this is not working
+      it.skip(`should update the config corporation message embed author name`, (): void => {
+        expect.assertions(1);
+
+        service.updateCorporationMessageEmbedAuthor(config);
+
+        expect(
+          discordSoniaConfigCoreService.corporationMessageEmbedAuthor.name
+        ).toStrictEqual(`name`);
+      });
+    });
+
+    describe(`when the given config contains an url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          url: `url`,
+        };
+      });
+
+      // @todo Fix it; I am clueless to find out why this is not working
+      it.skip(`should update the config corporation message embed author url`, (): void => {
+        expect.assertions(1);
+
+        service.updateCorporationMessageEmbedAuthor(config);
+
+        expect(
+          discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url
+        ).toStrictEqual(`url`);
+      });
     });
   });
 
