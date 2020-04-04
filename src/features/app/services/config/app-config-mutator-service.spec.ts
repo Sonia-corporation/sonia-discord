@@ -67,7 +67,8 @@ describe(`AppConfigMutationService`, (): void => {
     describe(`when the app is running on production`, (): void => {
       beforeEach((): void => {
         appConfigCoreService.initializationDate = `today`;
-        appConfigCoreService.isProduction = true;
+
+        isNodeProductionSpy.mockReturnValue(true);
       });
 
       it(`should not update the config initialization date`, (): void => {
@@ -82,7 +83,8 @@ describe(`AppConfigMutationService`, (): void => {
     describe(`when the app is not running on production`, (): void => {
       beforeEach((): void => {
         appConfigCoreService.initializationDate = `today`;
-        appConfigCoreService.isProduction = false;
+
+        isNodeProductionSpy.mockReturnValue(false);
       });
 
       it(`should update the config initialization date to now`, (): void => {

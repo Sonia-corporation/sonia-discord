@@ -110,20 +110,20 @@ module.exports = {
   // A path to a custom resolver
   // resolver: undefined,
 
-  // Automatically restore mock state between every test
-  // restoreMocks: false,
+  // Automatically reset mock state between every test
+  resetMocks: true,
 
   // The root directory that Jest should scan for tests and modules within
   // rootDir: undefined,
 
-  // Automatically reset mock state between every test
-  resetMocks: true,
+  // Reset the module registry before running each individual test
+  resetModules: true,
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
 
-  // Reset the module registry before running each individual test
-  resetModules: true,
+  // Automatically restore mock state between every test
+  restoreMocks: true,
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
   // setupFilesAfterEnv: [],
