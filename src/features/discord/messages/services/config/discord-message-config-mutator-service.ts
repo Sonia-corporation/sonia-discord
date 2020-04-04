@@ -38,7 +38,6 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     super(config);
   }
 
-  // @todo add coverage
   public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
     if (!_.isNil(config)) {
       this.updateMessage(config.message);
@@ -50,7 +49,6 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     }
   }
 
-  // @todo add coverage
   public updateMessage(
     message?: Readonly<PartialNested<IDiscordMessageConfig>>
   ): void {
@@ -60,7 +58,6 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     }
   }
 
-  // @todo add coverage
   public updateMessageCommand(
     command?: Readonly<PartialNested<IDiscordMessageCommandConfig>>
   ): void {
@@ -71,11 +68,10 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     }
   }
 
-  // @todo add coverage
   public updateMessageCommandError(
     error?: Readonly<PartialNested<IDiscordMessageCommandErrorConfig>>
   ): void {
-    if (!_.isNil(error) && _.isPlainObject(error)) {
+    if (!_.isNil(error)) {
       this.updateMessageCommandErrorImageColor(error.imageColor);
       this.updateMessageCommandErrorImageUrl(error.imageUrl);
     }
@@ -139,11 +135,10 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     }
   }
 
-  // @todo add coverage
   public updateMessageCommandVersion(
     version?: Readonly<PartialNested<IDiscordMessageCommandVersionConfig>>
   ): void {
-    if (!_.isNil(version) && _.isPlainObject(version)) {
+    if (!_.isNil(version)) {
       this.updateMessageCommandVersionImageColor(version.imageColor);
       this.updateMessageCommandVersionImageUrl(version.imageUrl);
     }
@@ -176,11 +171,10 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     );
   }
 
-  // @todo add coverage
   public updateMessageError(
     error?: Readonly<PartialNested<IDiscordMessageErrorConfig>>
   ): void {
-    if (!_.isNil(error) && _.isPlainObject(error)) {
+    if (!_.isNil(error)) {
       this.updateMessageErrorImageColor(error.imageColor);
       this.updateMessageErrorImageUrl(error.imageUrl);
     }

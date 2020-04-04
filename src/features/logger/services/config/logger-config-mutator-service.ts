@@ -32,7 +32,7 @@ export class LoggerConfigMutatorService extends AbstractConfigService<
   }
 
   public updateConfig(config?: Readonly<Partial<ILoggerConfig>>): void {
-    if (!_.isNil(config) && _.isPlainObject(config)) {
+    if (!_.isNil(config)) {
       this.updateEnabledState(config.isEnabled);
       this.updateLevel(config.level);
 
