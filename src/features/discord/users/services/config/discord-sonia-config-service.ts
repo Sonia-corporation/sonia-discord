@@ -16,7 +16,7 @@ export class DiscordSoniaConfigService {
 
   private readonly _discordSoniaConfigCoreService = DiscordSoniaConfigCoreService.getInstance();
 
-  public getSonia(): IDiscordSoniaConfig {
+  public getConfig(): IDiscordSoniaConfig {
     return {
       corporationImageUrl: this.getCorporationImageUrl(),
       corporationMessageEmbedAuthor: this.getCorporationMessageEmbedAuthor(),

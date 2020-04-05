@@ -19,7 +19,7 @@ export class DiscordMessageConfigService {
 
   private readonly _discordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
 
-  public getMessage(): IDiscordMessageConfig {
+  public getConfig(): IDiscordMessageConfig {
     return {
       command: this.getMessageCommand(),
       error: this.getMessageError(),

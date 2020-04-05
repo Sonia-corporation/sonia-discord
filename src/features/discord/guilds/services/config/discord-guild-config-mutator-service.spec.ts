@@ -1,6 +1,9 @@
+import { PartialNested } from "../../../../../types/partial-nested";
 import { IConfigUpdateBoolean } from "../../../../config/interfaces/config-update-boolean";
 import { IConfigUpdateString } from "../../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../../config/services/config-service";
+import { IDiscordConfig } from "../../../interfaces/discord-config";
+import { IDiscordGuildConfig } from "../../../interfaces/discord-guild-config";
 import { DiscordGuildConfigCoreService } from "./discord-guild-config-core-service";
 import { DiscordGuildConfigMutatorService } from "./discord-guild-config-mutator-service";
 
@@ -15,6 +18,138 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
     service = DiscordGuildConfigMutatorService.getInstance();
     configService = ConfigService.getInstance();
     discordGuildConfigCoreService = DiscordGuildConfigCoreService.getInstance();
+  });
+
+  describe(`updateConfig()`, (): void => {
+    let config: PartialNested<IDiscordConfig> | undefined;
+
+    beforeEach((): void => {
+      discordGuildConfigCoreService.shouldWelcomeNewMembers = true;
+      discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = `dummy-sonia-permanent-guild-invite-url`;
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(
+          discordGuildConfigCoreService.shouldWelcomeNewMembers
+        ).toStrictEqual(true);
+        expect(
+          discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
+        ).toStrictEqual(`dummy-sonia-permanent-guild-invite-url`);
+      });
+    });
+
+    describe(`when the given config contains a guild welcome new members state`, (): void => {
+      beforeEach((): void => {
+        config = {
+          guild: {
+            shouldWelcomeNewMembers: false,
+          },
+        };
+      });
+
+      it(`should update the config welcome new members state`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(
+          discordGuildConfigCoreService.shouldWelcomeNewMembers
+        ).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given config contains a guild Sonia permanent guild invite url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          guild: {
+            soniaPermanentGuildInviteUrl: `sonia-permanent-guild-invite-url`,
+          },
+        };
+      });
+
+      it(`should update the config Sonia permanent guild invite url`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(
+          discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
+        ).toStrictEqual(`sonia-permanent-guild-invite-url`);
+      });
+    });
+  });
+
+  describe(`updateGuild()`, (): void => {
+    let config: PartialNested<IDiscordGuildConfig> | undefined;
+
+    beforeEach((): void => {
+      discordGuildConfigCoreService.shouldWelcomeNewMembers = true;
+      discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = `dummy-sonia-permanent-guild-invite-url`;
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(2);
+
+        service.updateGuild(config);
+
+        expect(
+          discordGuildConfigCoreService.shouldWelcomeNewMembers
+        ).toStrictEqual(true);
+        expect(
+          discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
+        ).toStrictEqual(`dummy-sonia-permanent-guild-invite-url`);
+      });
+    });
+
+    describe(`when the given config contains a welcome new members state`, (): void => {
+      beforeEach((): void => {
+        config = {
+          shouldWelcomeNewMembers: false,
+        };
+      });
+
+      it(`should update the config welcome new members state`, (): void => {
+        expect.assertions(1);
+
+        service.updateGuild(config);
+
+        expect(
+          discordGuildConfigCoreService.shouldWelcomeNewMembers
+        ).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given config contains a Sonia permanent guild invite url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          soniaPermanentGuildInviteUrl: `sonia-permanent-guild-invite-url`,
+        };
+      });
+
+      it(`should update the config Sonia permanent guild invite url`, (): void => {
+        expect.assertions(1);
+
+        service.updateGuild(config);
+
+        expect(
+          discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
+        ).toStrictEqual(`sonia-permanent-guild-invite-url`);
+      });
+    });
   });
 
   describe(`updateWelcomeNewMembersState()`, (): void => {

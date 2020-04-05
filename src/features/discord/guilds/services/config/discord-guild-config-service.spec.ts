@@ -13,7 +13,7 @@ describe(`DiscordGuildConfigService`, (): void => {
     discordGuildConfigCoreService = DiscordGuildConfigCoreService.getInstance();
   });
 
-  describe(`getGuild()`, (): void => {
+  describe(`getConfig()`, (): void => {
     beforeEach((): void => {
       discordGuildConfigCoreService.shouldWelcomeNewMembers = true;
       discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = `dummy-sonia-permanent-guild-invite-url`;
@@ -22,7 +22,7 @@ describe(`DiscordGuildConfigService`, (): void => {
     it(`should return the Discord guild config`, (): void => {
       expect.assertions(1);
 
-      const result = service.getGuild();
+      const result = service.getConfig();
 
       expect(result).toStrictEqual({
         shouldWelcomeNewMembers: true,

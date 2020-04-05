@@ -1,6 +1,13 @@
+import { PartialNested } from "../../../../../types/partial-nested";
 import { IConfigUpdateNumber } from "../../../../config/interfaces/config-update-number";
 import { IConfigUpdateString } from "../../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../../config/services/config-service";
+import { IDiscordConfig } from "../../../interfaces/discord-config";
+import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
+import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
+import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
+import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
+import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
 import { DiscordMessageConfigCoreService } from "./discord-message-config-core-service";
 import { DiscordMessageConfigMutatorService } from "./discord-message-config-mutator-service";
 
@@ -15,6 +22,394 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     service = DiscordMessageConfigMutatorService.getInstance();
     configService = ConfigService.getInstance();
     discordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
+  });
+
+  describe(`updateConfig()`, (): void => {
+    let config: PartialNested<IDiscordConfig> | undefined;
+
+    beforeEach((): void => {
+      discordMessageConfigCoreService.command = {
+        error: {
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        },
+        prefix: `dummy-prefix`,
+        version: {
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        },
+      };
+      discordMessageConfigCoreService.error = {
+        imageColor: 8,
+        imageUrl: `dummy-image-url`,
+      };
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(discordMessageConfigCoreService.command).toStrictEqual({
+          error: {
+            imageColor: 8,
+            imageUrl: `dummy-image-url`,
+          },
+          prefix: `dummy-prefix`,
+          version: {
+            imageColor: 8,
+            imageUrl: `dummy-image-url`,
+          },
+        } as IDiscordMessageCommandConfig);
+        expect(discordMessageConfigCoreService.error).toStrictEqual({
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        } as IDiscordMessageErrorConfig);
+      });
+    });
+
+    describe(`when the given config contains a message command`, (): void => {
+      beforeEach((): void => {
+        config = {
+          message: {
+            command: {
+              error: {
+                imageColor: 88,
+                imageUrl: `image-url`,
+              },
+              prefix: `prefix`,
+              version: {
+                imageColor: 88,
+                imageUrl: `image-url`,
+              },
+            },
+          },
+        };
+      });
+
+      it(`should update the config command`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(discordMessageConfigCoreService.command).toStrictEqual({
+          error: {
+            imageColor: 88,
+            imageUrl: `image-url`,
+          },
+          prefix: `prefix`,
+          version: {
+            imageColor: 88,
+            imageUrl: `image-url`,
+          },
+        } as IDiscordMessageCommandConfig);
+      });
+    });
+
+    describe(`when the given config contains a message error`, (): void => {
+      beforeEach((): void => {
+        config = {
+          message: {
+            error: {
+              imageColor: 88,
+              imageUrl: `image-url`,
+            },
+          },
+        };
+      });
+
+      it(`should update the config error`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(discordMessageConfigCoreService.error).toStrictEqual({
+          imageColor: 88,
+          imageUrl: `image-url`,
+        } as IDiscordMessageErrorConfig);
+      });
+    });
+  });
+
+  describe(`updateMessage()`, (): void => {
+    let config: PartialNested<IDiscordMessageConfig> | undefined;
+
+    beforeEach((): void => {
+      discordMessageConfigCoreService.command = {
+        error: {
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        },
+        prefix: `dummy-prefix`,
+        version: {
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        },
+      };
+      discordMessageConfigCoreService.error = {
+        imageColor: 8,
+        imageUrl: `dummy-image-url`,
+      };
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(2);
+
+        service.updateMessage(config);
+
+        expect(discordMessageConfigCoreService.command).toStrictEqual({
+          error: {
+            imageColor: 8,
+            imageUrl: `dummy-image-url`,
+          },
+          prefix: `dummy-prefix`,
+          version: {
+            imageColor: 8,
+            imageUrl: `dummy-image-url`,
+          },
+        } as IDiscordMessageCommandConfig);
+        expect(discordMessageConfigCoreService.error).toStrictEqual({
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        } as IDiscordMessageErrorConfig);
+      });
+    });
+
+    describe(`when the given config contains a command`, (): void => {
+      beforeEach((): void => {
+        config = {
+          command: {
+            error: {
+              imageColor: 88,
+              imageUrl: `image-url`,
+            },
+            prefix: `prefix`,
+            version: {
+              imageColor: 88,
+              imageUrl: `image-url`,
+            },
+          },
+        };
+      });
+
+      it(`should update the config command`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessage(config);
+
+        expect(discordMessageConfigCoreService.command).toStrictEqual({
+          error: {
+            imageColor: 88,
+            imageUrl: `image-url`,
+          },
+          prefix: `prefix`,
+          version: {
+            imageColor: 88,
+            imageUrl: `image-url`,
+          },
+        } as IDiscordMessageCommandConfig);
+      });
+    });
+
+    describe(`when the given config contains a error`, (): void => {
+      beforeEach((): void => {
+        config = {
+          error: {
+            imageColor: 88,
+            imageUrl: `image-url`,
+          },
+        };
+      });
+
+      it(`should update the config error`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessage(config);
+
+        expect(discordMessageConfigCoreService.error).toStrictEqual({
+          imageColor: 88,
+          imageUrl: `image-url`,
+        } as IDiscordMessageErrorConfig);
+      });
+    });
+  });
+
+  describe(`updateMessageCommand()`, (): void => {
+    let config: PartialNested<IDiscordMessageCommandConfig> | undefined;
+
+    beforeEach((): void => {
+      discordMessageConfigCoreService.command = {
+        error: {
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        },
+        prefix: `dummy-prefix`,
+        version: {
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        },
+      };
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommand(config);
+
+        expect(discordMessageConfigCoreService.command).toStrictEqual({
+          error: {
+            imageColor: 8,
+            imageUrl: `dummy-image-url`,
+          },
+          prefix: `dummy-prefix`,
+          version: {
+            imageColor: 8,
+            imageUrl: `dummy-image-url`,
+          },
+        } as IDiscordMessageCommandConfig);
+      });
+    });
+
+    describe(`when the given config contains an error`, (): void => {
+      beforeEach((): void => {
+        config = {
+          error: {
+            imageColor: 88,
+            imageUrl: `image-url`,
+          },
+        };
+      });
+
+      it(`should update the config command error`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommand(config);
+
+        expect(discordMessageConfigCoreService.command.error).toStrictEqual({
+          imageColor: 88,
+          imageUrl: `image-url`,
+        } as IDiscordMessageCommandErrorConfig);
+      });
+    });
+
+    describe(`when the given config contains a prefix`, (): void => {
+      beforeEach((): void => {
+        config = {
+          prefix: `prefix`,
+        };
+      });
+
+      it(`should update the config command prefix`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommand(config);
+
+        expect(discordMessageConfigCoreService.command.prefix).toStrictEqual(
+          `prefix`
+        );
+      });
+    });
+
+    describe(`when the given config contains a version`, (): void => {
+      beforeEach((): void => {
+        config = {
+          version: {
+            imageColor: 88,
+            imageUrl: `image-url`,
+          },
+        };
+      });
+
+      it(`should update the config command version`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommand(config);
+
+        expect(discordMessageConfigCoreService.command.version).toStrictEqual({
+          imageColor: 88,
+          imageUrl: `image-url`,
+        } as IDiscordMessageCommandVersionConfig);
+      });
+    });
+  });
+
+  describe(`updateMessageCommandError()`, (): void => {
+    let config: PartialNested<IDiscordMessageCommandErrorConfig> | undefined;
+
+    beforeEach((): void => {
+      discordMessageConfigCoreService.command.error = {
+        imageColor: 8,
+        imageUrl: `dummy-image-url`,
+      };
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandError(config);
+
+        expect(discordMessageConfigCoreService.command.error).toStrictEqual({
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        } as IDiscordMessageCommandErrorConfig);
+      });
+    });
+
+    describe(`when the given config contains an image color`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageColor: 88,
+        };
+      });
+
+      it(`should update the config command error image color`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandError(config);
+
+        expect(
+          discordMessageConfigCoreService.command.error.imageColor
+        ).toStrictEqual(88);
+      });
+    });
+
+    describe(`when the given config contains an image url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageUrl: `image-url`,
+        };
+      });
+
+      it(`should update the config command error image url`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandError(config);
+
+        expect(
+          discordMessageConfigCoreService.command.error.imageUrl
+        ).toStrictEqual(`image-url`);
+      });
+    });
   });
 
   describe(`updateMessageCommandErrorImageColor()`, (): void => {
@@ -95,6 +490,70 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     });
   });
 
+  describe(`updateMessageCommandVersion()`, (): void => {
+    let config: PartialNested<IDiscordMessageCommandErrorConfig> | undefined;
+
+    beforeEach((): void => {
+      discordMessageConfigCoreService.command.version = {
+        imageColor: 8,
+        imageUrl: `dummy-image-url`,
+      };
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandError(config);
+
+        expect(discordMessageConfigCoreService.command.version).toStrictEqual({
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        } as IDiscordMessageCommandVersionConfig);
+      });
+    });
+
+    describe(`when the given config contains an image color`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageColor: 88,
+        };
+      });
+
+      it(`should update the config command version image color`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandVersion(config);
+
+        expect(
+          discordMessageConfigCoreService.command.version.imageColor
+        ).toStrictEqual(88);
+      });
+    });
+
+    describe(`when the given config contains an image url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageUrl: `image-url`,
+        };
+      });
+
+      it(`should update the config command version image url`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandVersion(config);
+
+        expect(
+          discordMessageConfigCoreService.command.version.imageUrl
+        ).toStrictEqual(`image-url`);
+      });
+    });
+  });
+
   describe(`updateMessageCommandVersionImageColor()`, (): void => {
     let imageColor: number;
 
@@ -170,6 +629,70 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
       expect(
         discordMessageConfigCoreService.command.version.imageUrl
       ).toStrictEqual(`dummy-image-url`);
+    });
+  });
+
+  describe(`updateMessageError()`, (): void => {
+    let config: PartialNested<IDiscordMessageErrorConfig> | undefined;
+
+    beforeEach((): void => {
+      discordMessageConfigCoreService.error = {
+        imageColor: 8,
+        imageUrl: `dummy-image-url`,
+      };
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageError(config);
+
+        expect(discordMessageConfigCoreService.error).toStrictEqual({
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        } as IDiscordMessageErrorConfig);
+      });
+    });
+
+    describe(`when the given config contains an image color`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageColor: 88,
+        };
+      });
+
+      it(`should update the config error image color`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageError(config);
+
+        expect(discordMessageConfigCoreService.error.imageColor).toStrictEqual(
+          88
+        );
+      });
+    });
+
+    describe(`when the given config contains an image url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageUrl: `image-url`,
+        };
+      });
+
+      it(`should update the config error image url`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageError(config);
+
+        expect(discordMessageConfigCoreService.error.imageUrl).toStrictEqual(
+          `image-url`
+        );
+      });
     });
   });
 

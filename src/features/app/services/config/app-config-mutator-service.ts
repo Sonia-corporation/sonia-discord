@@ -8,22 +8,20 @@ import { IAppConfig } from "../../interfaces/app-config";
 import { AppConfigCoreService } from "./app-config-core-service";
 import { AppConfigService } from "./app-config-service";
 
-export class AppConfigMutationService extends AbstractConfigService<
-  IAppConfig
-> {
-  private static _instance: AppConfigMutationService;
+export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
+  private static _instance: AppConfigMutatorService;
 
   public static getInstance(
     config?: Readonly<PartialNested<IAppConfig>>
-  ): AppConfigMutationService {
-    if (_.isNil(AppConfigMutationService._instance)) {
-      AppConfigMutationService._instance = new AppConfigMutationService(config);
+  ): AppConfigMutatorService {
+    if (_.isNil(AppConfigMutatorService._instance)) {
+      AppConfigMutatorService._instance = new AppConfigMutatorService(config);
     }
 
-    return AppConfigMutationService._instance;
+    return AppConfigMutatorService._instance;
   }
 
-  protected readonly _className = `AppConfigMutationService`;
+  protected readonly _className = `AppConfigMutatorService`;
   private readonly _timeService = TimeService.getInstance();
   private readonly _appConfigCoreService = AppConfigCoreService.getInstance();
   private readonly _appConfigService = AppConfigService.getInstance();
@@ -32,15 +30,13 @@ export class AppConfigMutationService extends AbstractConfigService<
     super(config);
   }
 
-  // @todo add coverage
-  public init(): AppConfigMutationService {
+  public init(): AppConfigMutatorService {
     this._setProductionState();
     this._setBuildDate();
 
     return this;
   }
 
-  // @todo add coverage
   public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
     if (!_.isNil(config)) {
       this.updateVersion(config.version);
@@ -48,6 +44,7 @@ export class AppConfigMutationService extends AbstractConfigService<
       this.updateInitializationDate(config.initializationDate);
       this.updateTotalReleaseCount(config.totalReleaseCount);
       this.updateReleaseNotes(config.releaseNotes);
+      this.updateProductionState(config.isProduction);
 
       this._loggerService.debug({
         context: this._className,

@@ -33,7 +33,6 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<
     super(config);
   }
 
-  // @todo add coverage
   public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
     if (!_.isNil(config)) {
       this.updateSonia(config.sonia);
@@ -45,7 +44,6 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<
     }
   }
 
-  // @todo add coverage
   public updateSonia(
     sonia?: Readonly<PartialNested<IDiscordSoniaConfig>>
   ): void {
@@ -72,16 +70,12 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<
     );
   }
 
-  // @todo add coverage
   public updateCorporationMessageEmbedAuthor(
     corporationMessageEmbedAuthor?: Readonly<
       PartialNested<IDiscordSoniaCorporationMessageEmbedAuthorConfig>
     >
   ): void {
-    if (
-      !_.isNil(corporationMessageEmbedAuthor) &&
-      _.isPlainObject(corporationMessageEmbedAuthor)
-    ) {
+    if (!_.isNil(corporationMessageEmbedAuthor)) {
       this.updateCorporationMessageEmbedAuthorIconUrl(
         corporationMessageEmbedAuthor.iconURL
       );

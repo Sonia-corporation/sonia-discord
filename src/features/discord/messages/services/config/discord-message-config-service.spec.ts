@@ -17,7 +17,7 @@ describe(`DiscordMessageConfigService`, (): void => {
     discordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
   });
 
-  describe(`getMessage()`, (): void => {
+  describe(`getConfig()`, (): void => {
     beforeEach((): void => {
       discordMessageConfigCoreService.command = {
         error: {
@@ -39,7 +39,7 @@ describe(`DiscordMessageConfigService`, (): void => {
     it(`should return the Discord message config`, (): void => {
       expect.assertions(1);
 
-      const result = service.getMessage();
+      const result = service.getConfig();
 
       expect(result).toStrictEqual({
         command: {

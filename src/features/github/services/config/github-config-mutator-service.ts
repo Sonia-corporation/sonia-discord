@@ -31,7 +31,6 @@ export class GithubConfigMutatorService extends AbstractConfigService<
     super(config);
   }
 
-  // @todo add coverage
   public updateConfig(config?: Readonly<PartialNested<IGithubConfig>>): void {
     if (!_.isNil(config)) {
       this.updateBugReportUrl(config.bugReportUrl);
