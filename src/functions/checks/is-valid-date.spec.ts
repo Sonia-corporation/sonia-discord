@@ -1,5 +1,5 @@
+import moment from "moment";
 import { isValidDate } from "./is-valid-date";
-import moment = require(`moment`);
 
 describe(`isValidDate()`, (): void => {
   let date: string;
