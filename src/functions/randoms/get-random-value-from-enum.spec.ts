@@ -27,9 +27,7 @@ describe(`getRandomValueFromEnum()`, (): void => {
 
       const result = getRandomValueFromEnum(DummyStringsEnum);
 
-      expect(result === `not-marco` || result === `not-polo`).toStrictEqual(
-        true
-      );
+      expect(result == `not-marco` || result == `not-polo`).toStrictEqual(true);
     });
   });
 
@@ -39,7 +37,7 @@ describe(`getRandomValueFromEnum()`, (): void => {
 
       const result = getRandomValueFromEnum(DummyNumbersEnum);
 
-      expect(result === 0 || result === 1).toStrictEqual(true);
+      expect(result == 0 || result == 1).toStrictEqual(true);
     });
   });
 });
