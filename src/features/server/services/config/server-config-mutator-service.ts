@@ -32,14 +32,12 @@ export class ServerConfigMutatorService extends AbstractConfigService<
     super(config);
   }
 
-  // @todo add coverage
   public init(): ServerConfigMutatorService {
     this._setPort();
 
     return this;
   }
 
-  // @todo add coverage
   public updateConfig(config?: Readonly<PartialNested<IServerConfig>>): void {
     if (!_.isNil(config)) {
       this.updatePort(config.port);

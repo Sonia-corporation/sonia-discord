@@ -14,7 +14,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
     discordSoniaConfigCoreService = DiscordSoniaConfigCoreService.getInstance();
   });
 
-  describe(`getSonia()`, (): void => {
+  describe(`getConfig()`, (): void => {
     beforeEach((): void => {
       discordSoniaConfigCoreService.corporationImageUrl = `dummy-corporation-image-url`;
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor = {
@@ -29,7 +29,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
     it(`should return the Discord Sonia config`, (): void => {
       expect.assertions(1);
 
-      const result = service.getSonia();
+      const result = service.getConfig();
 
       expect(result).toStrictEqual({
         corporationImageUrl: `dummy-corporation-image-url`,

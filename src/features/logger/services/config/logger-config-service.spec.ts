@@ -14,7 +14,7 @@ describe(`LoggerConfigService`, (): void => {
     loggerConfigCoreService = LoggerConfigCoreService.getInstance();
   });
 
-  describe(`getLogger()`, (): void => {
+  describe(`getConfig()`, (): void => {
     beforeEach((): void => {
       loggerConfigCoreService.isEnabled = true;
       loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
@@ -23,7 +23,7 @@ describe(`LoggerConfigService`, (): void => {
     it(`should return the logger config`, (): void => {
       expect.assertions(1);
 
-      const result = service.getLogger();
+      const result = service.getConfig();
 
       expect(result).toStrictEqual({
         isEnabled: true,

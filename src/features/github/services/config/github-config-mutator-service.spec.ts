@@ -1,5 +1,7 @@
+import { PartialNested } from "../../../../types/partial-nested";
 import { IConfigUpdateString } from "../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../config/services/config-service";
+import { IGithubConfig } from "../../interfaces/github-config";
 import { GithubConfigCoreService } from "./github-config-core-service";
 import { GithubConfigMutatorService } from "./github-config-mutator-service";
 
@@ -14,6 +16,70 @@ describe(`GithubConfigMutatorService`, (): void => {
     service = GithubConfigMutatorService.getInstance();
     configService = ConfigService.getInstance();
     githubConfigCoreService = GithubConfigCoreService.getInstance();
+  });
+
+  describe(`updateConfig()`, (): void => {
+    let config: PartialNested<IGithubConfig> | undefined;
+
+    beforeEach((): void => {
+      githubConfigCoreService.bugReportUrl = `dummy-bug-report-url`;
+      githubConfigCoreService.personalAccessToken = `dummy-personal-access-token`;
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(githubConfigCoreService.bugReportUrl).toStrictEqual(
+          `dummy-bug-report-url`
+        );
+        expect(githubConfigCoreService.personalAccessToken).toStrictEqual(
+          `dummy-personal-access-token`
+        );
+      });
+    });
+
+    describe(`when the given config contains a bug report url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          bugReportUrl: `bug-report-url`,
+        };
+      });
+
+      it(`should update the config bug report url`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(githubConfigCoreService.bugReportUrl).toStrictEqual(
+          `bug-report-url`
+        );
+      });
+    });
+
+    describe(`when the given config contains a personal access token`, (): void => {
+      beforeEach((): void => {
+        config = {
+          personalAccessToken: `personal-access-token`,
+        };
+      });
+
+      it(`should update the config personal access token`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(githubConfigCoreService.personalAccessToken).toStrictEqual(
+          `personal-access-token`
+        );
+      });
+    });
   });
 
   describe(`updateBugReportUrl()`, (): void => {

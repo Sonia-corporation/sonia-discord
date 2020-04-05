@@ -102,7 +102,7 @@ rules:
   '@typescript-eslint/no-unused-vars':
     - 'error'
     - 'argsIgnorePattern': '^_'
-  import/no-namespace: 'error'
+  import/no-namespace: 'off'
   import/first: 'error'
   import/exports-last: 'error'
   import/no-duplicates: 'error'
