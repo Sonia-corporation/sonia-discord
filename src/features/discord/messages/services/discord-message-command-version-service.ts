@@ -170,7 +170,9 @@ export class DiscordMessageCommandVersionService {
   }
 
   private _getMessageEmbedFieldMentalState(): EmbedFieldData {
-    const soniaMentalState: DiscordSoniaMentalStateEnum = this._discordSoniaService.getMentalState();
+    const soniaMentalState:
+      | DiscordSoniaMentalStateEnum
+      | undefined = this._discordSoniaService.getMentalState();
 
     return {
       inline: true,
