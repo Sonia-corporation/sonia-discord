@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.27.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.27.0...1.27.1) (2020-04-06)
+
+
+### Bug Fixes
+
+* **sonia-mental-state:** add undefined to fix type error ([3b97b63](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3b97b63ae9caa9ac35a72806258d26a357896b4f))
+
 # [1.27.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.26.0...1.27.0) (2020-04-02)
 
 
