@@ -61,7 +61,7 @@ export class DiscordSoniaService {
     return null;
   }
 
-  public getMentalState(): DiscordSoniaMentalStateEnum {
+  public getMentalState(): DiscordSoniaMentalStateEnum | undefined {
     return getRandomValueFromEnum(DiscordSoniaMentalStateEnum);
   }
 }
