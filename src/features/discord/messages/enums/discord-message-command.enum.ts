@@ -9,4 +9,9 @@ export enum DiscordMessageCommandEnum {
    * Alias for {@link ERROR}
    */
   BUG = `bug`,
+  HELP = `help`,
+  /**
+   * Shortcut for {@link HELP}
+   */
+  H = `h`,
 }
