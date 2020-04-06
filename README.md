@@ -72,7 +72,7 @@ __Example:__
 __Commands:__
 
 - error
-- bug
+- bug *(alias)*
 
 Sonia will send you a message containing:
 
@@ -84,6 +84,21 @@ Sonia will send you a message containing:
 __Example:__
 `@Sonia-il-est-midi !error`
 `@Sonia-il-est-midi !BUG`
+
+#### Help
+
+__Commands:__
+
+- help
+- h *(shortcut)*
+
+Sonia will send you a message containing:
+
+- The list of all the commands available
+
+__Example:__
+`@Sonia-il-est-midi !help`
+`@Sonia-il-est-midi !H`
 
 ### Sonia behavior
 
