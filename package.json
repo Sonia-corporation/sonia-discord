@@ -132,7 +132,7 @@
     "lint-staged": "10.1.2",
     "majestic": "1.6.2",
     "parcel-bundler": "1.12.4",
-    "prettier": "2.0.3",
+    "prettier": "2.0.4",
     "pug": "2.0.4",
     "rimraf": "3.0.2",
     "semantic-release": "17.0.4",
