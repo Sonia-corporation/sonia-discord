@@ -117,7 +117,7 @@ module.exports = {
   // rootDir: undefined,
 
   // Reset the module registry before running each individual test
-  resetModules: true,
+  resetModules: false,
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
