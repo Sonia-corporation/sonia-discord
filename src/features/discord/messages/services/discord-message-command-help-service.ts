@@ -13,21 +13,21 @@ import { IDiscordMessageResponse } from "../interfaces/discord-message-response"
 import { AnyDiscordMessage } from "../types/any-discord-message";
 import { DiscordMessageConfigService } from "./config/discord-message-config-service";
 
-export class DiscordMessageCommandErrorService {
-  private static _instance: DiscordMessageCommandErrorService;
+export class DiscordMessageCommandHelpService {
+  private static _instance: DiscordMessageCommandHelpService;
 
-  public static getInstance(): DiscordMessageCommandErrorService {
-    if (_.isNil(DiscordMessageCommandErrorService._instance)) {
-      DiscordMessageCommandErrorService._instance = new DiscordMessageCommandErrorService();
+  public static getInstance(): DiscordMessageCommandHelpService {
+    if (_.isNil(DiscordMessageCommandHelpService._instance)) {
+      DiscordMessageCommandHelpService._instance = new DiscordMessageCommandHelpService();
     }
 
-    return DiscordMessageCommandErrorService._instance;
+    return DiscordMessageCommandHelpService._instance;
   }
 
   private readonly _discordSoniaService = DiscordSoniaService.getInstance();
   private readonly _discordMessageConfigService = DiscordMessageConfigService.getInstance();
   private readonly _loggerService = LoggerService.getInstance();
-  private readonly _className = `DiscordMessageCommandErrorService`;
+  private readonly _className = `DiscordMessageCommandHelpService`;
 
   public handle(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
@@ -37,7 +37,7 @@ export class DiscordMessageCommandErrorService {
       extendedContext: true,
       message: this._loggerService.getSnowflakeContext(
         anyDiscordMessage.id,
-        `error command detected`
+        `help command detected`
       ),
     });
 
