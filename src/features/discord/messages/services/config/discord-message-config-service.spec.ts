@@ -1,5 +1,6 @@
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
+import { IDiscordMessageCommandHelpConfig } from "../../../interfaces/discord-message-command-help-config";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
@@ -24,6 +25,10 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageColor: 9,
           imageUrl: `dummy-image-url-error`,
         },
+        help: {
+          imageColor: 10,
+          imageUrl: `dummy-image-url-help`,
+        },
         prefix: `dummy-prefix`,
         version: {
           imageColor: 8,
@@ -47,6 +52,10 @@ describe(`DiscordMessageConfigService`, (): void => {
             imageColor: 9,
             imageUrl: `dummy-image-url-error`,
           },
+          help: {
+            imageColor: 10,
+            imageUrl: `dummy-image-url-help`,
+          },
           prefix: `dummy-prefix`,
           version: {
             imageColor: 8,
@@ -68,6 +77,10 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageColor: 9,
           imageUrl: `dummy-image-url-error`,
         },
+        help: {
+          imageColor: 10,
+          imageUrl: `dummy-image-url-help`,
+        },
         prefix: `dummy-prefix`,
         version: {
           imageColor: 8,
@@ -85,6 +98,10 @@ describe(`DiscordMessageConfigService`, (): void => {
         error: {
           imageColor: 9,
           imageUrl: `dummy-image-url-error`,
+        },
+        help: {
+          imageColor: 10,
+          imageUrl: `dummy-image-url-help`,
         },
         prefix: `dummy-prefix`,
         version: {
@@ -138,6 +155,54 @@ describe(`DiscordMessageConfigService`, (): void => {
       expect.assertions(1);
 
       const result = service.getMessageCommandErrorImageUrl();
+
+      expect(result).toStrictEqual(`dummy-image-url`);
+    });
+  });
+
+  describe(`getMessageCommandHelp()`, (): void => {
+    beforeEach((): void => {
+      discordMessageConfigCoreService.command.help = {
+        imageColor: 8,
+        imageUrl: `dummy-image-url`,
+      };
+    });
+
+    it(`should return the Discord message config command help`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandHelp();
+
+      expect(result).toStrictEqual({
+        imageColor: 8,
+        imageUrl: `dummy-image-url`,
+      } as IDiscordMessageCommandHelpConfig);
+    });
+  });
+
+  describe(`getMessageCommandHelpImageColor()`, (): void => {
+    beforeEach((): void => {
+      discordMessageConfigCoreService.command.help.imageColor = 8;
+    });
+
+    it(`should return the Discord message config command help image color`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandHelpImageColor();
+
+      expect(result).toStrictEqual(8);
+    });
+  });
+
+  describe(`getMessageCommandHelpImageUrl()`, (): void => {
+    beforeEach((): void => {
+      discordMessageConfigCoreService.command.help.imageUrl = `dummy-image-url`;
+    });
+
+    it(`should return the Discord message config command help image url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandHelpImageUrl();
 
       expect(result).toStrictEqual(`dummy-image-url`);
     });

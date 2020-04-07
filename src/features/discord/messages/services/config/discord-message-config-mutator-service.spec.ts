@@ -5,6 +5,7 @@ import { ConfigService } from "../../../../config/services/config-service";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
+import { IDiscordMessageCommandHelpConfig } from "../../../interfaces/discord-message-command-help-config";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
@@ -30,8 +31,12 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     beforeEach((): void => {
       discordMessageConfigCoreService.command = {
         error: {
-          imageColor: 8,
-          imageUrl: `dummy-image-url`,
+          imageColor: 9,
+          imageUrl: `dummy-image-url-error`,
+        },
+        help: {
+          imageColor: 10,
+          imageUrl: `dummy-image-url-help`,
         },
         prefix: `dummy-prefix`,
         version: {
@@ -57,8 +62,12 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
         expect(discordMessageConfigCoreService.command).toStrictEqual({
           error: {
-            imageColor: 8,
-            imageUrl: `dummy-image-url`,
+            imageColor: 9,
+            imageUrl: `dummy-image-url-error`,
+          },
+          help: {
+            imageColor: 10,
+            imageUrl: `dummy-image-url-help`,
           },
           prefix: `dummy-prefix`,
           version: {
@@ -82,6 +91,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
                 imageColor: 88,
                 imageUrl: `image-url`,
               },
+              help: {
+                imageColor: 88,
+                imageUrl: `image-url`,
+              },
               prefix: `prefix`,
               version: {
                 imageColor: 88,
@@ -99,6 +112,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
         expect(discordMessageConfigCoreService.command).toStrictEqual({
           error: {
+            imageColor: 88,
+            imageUrl: `image-url`,
+          },
+          help: {
             imageColor: 88,
             imageUrl: `image-url`,
           },
@@ -145,6 +162,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageColor: 8,
           imageUrl: `dummy-image-url`,
         },
+        help: {
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        },
         prefix: `dummy-prefix`,
         version: {
           imageColor: 8,
@@ -172,6 +193,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageColor: 8,
             imageUrl: `dummy-image-url`,
           },
+          help: {
+            imageColor: 8,
+            imageUrl: `dummy-image-url`,
+          },
           prefix: `dummy-prefix`,
           version: {
             imageColor: 8,
@@ -193,6 +218,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
               imageColor: 88,
               imageUrl: `image-url`,
             },
+            help: {
+              imageColor: 88,
+              imageUrl: `image-url`,
+            },
             prefix: `prefix`,
             version: {
               imageColor: 88,
@@ -209,6 +238,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
         expect(discordMessageConfigCoreService.command).toStrictEqual({
           error: {
+            imageColor: 88,
+            imageUrl: `image-url`,
+          },
+          help: {
             imageColor: 88,
             imageUrl: `image-url`,
           },
@@ -253,6 +286,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageColor: 8,
           imageUrl: `dummy-image-url`,
         },
+        help: {
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        },
         prefix: `dummy-prefix`,
         version: {
           imageColor: 8,
@@ -273,6 +310,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
         expect(discordMessageConfigCoreService.command).toStrictEqual({
           error: {
+            imageColor: 8,
+            imageUrl: `dummy-image-url`,
+          },
+          help: {
             imageColor: 8,
             imageUrl: `dummy-image-url`,
           },
@@ -304,6 +345,28 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageColor: 88,
           imageUrl: `image-url`,
         } as IDiscordMessageCommandErrorConfig);
+      });
+    });
+
+    describe(`when the given config contains an help`, (): void => {
+      beforeEach((): void => {
+        config = {
+          help: {
+            imageColor: 88,
+            imageUrl: `image-url`,
+          },
+        };
+      });
+
+      it(`should update the config command help`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommand(config);
+
+        expect(discordMessageConfigCoreService.command.help).toStrictEqual({
+          imageColor: 88,
+          imageUrl: `image-url`,
+        } as IDiscordMessageCommandHelpConfig);
       });
     });
 
@@ -486,6 +549,148 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       expect(
         discordMessageConfigCoreService.command.error.imageUrl
+      ).toStrictEqual(`dummy-image-url`);
+    });
+  });
+
+  describe(`updateMessageCommandHelp()`, (): void => {
+    let config: PartialNested<IDiscordMessageCommandHelpConfig> | undefined;
+
+    beforeEach((): void => {
+      discordMessageConfigCoreService.command.help = {
+        imageColor: 8,
+        imageUrl: `dummy-image-url`,
+      };
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandHelp(config);
+
+        expect(discordMessageConfigCoreService.command.help).toStrictEqual({
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        } as IDiscordMessageCommandHelpConfig);
+      });
+    });
+
+    describe(`when the given config contains an image color`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageColor: 88,
+        };
+      });
+
+      it(`should update the config command help image color`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandHelp(config);
+
+        expect(
+          discordMessageConfigCoreService.command.help.imageColor
+        ).toStrictEqual(88);
+      });
+    });
+
+    describe(`when the given config contains an image url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageUrl: `image-url`,
+        };
+      });
+
+      it(`should update the config command help image url`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandHelp(config);
+
+        expect(
+          discordMessageConfigCoreService.command.help.imageUrl
+        ).toStrictEqual(`image-url`);
+      });
+    });
+  });
+
+  describe(`updateMessageCommandHelpImageColor()`, (): void => {
+    let imageColor: number;
+
+    let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      imageColor = 8;
+      discordMessageConfigCoreService.command.help.imageColor = 10;
+
+      configServiceGetUpdatedNumberSpy = jest
+        .spyOn(configService, `getUpdatedNumber`)
+        .mockReturnValue(8);
+    });
+
+    it(`should get the updated number`, (): void => {
+      expect.assertions(2);
+
+      service.updateMessageCommandHelpImageColor(imageColor);
+
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageConfigMutatorService`,
+        newValue: 8,
+        oldValue: 10,
+        valueName: `message command help image color`,
+      } as IConfigUpdateNumber);
+    });
+
+    it(`should update the Discord message config command help image color with the updated number`, (): void => {
+      expect.assertions(1);
+
+      service.updateMessageCommandHelpImageColor(imageColor);
+
+      expect(
+        discordMessageConfigCoreService.command.help.imageColor
+      ).toStrictEqual(8);
+    });
+  });
+
+  describe(`updateMessageCommandHelpImageUrl()`, (): void => {
+    let imageUrl: string;
+
+    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      imageUrl = `dummy-image-url`;
+      discordMessageConfigCoreService.command.help.imageUrl = `image-url`;
+
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`dummy-image-url`);
+    });
+
+    it(`should get the updated string`, (): void => {
+      expect.assertions(2);
+
+      service.updateMessageCommandHelpImageUrl(imageUrl);
+
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageConfigMutatorService`,
+        newValue: `dummy-image-url`,
+        oldValue: `image-url`,
+        valueName: `message command help image url`,
+      } as IConfigUpdateString);
+    });
+
+    it(`should update the Discord message config command help image url with the updated string`, (): void => {
+      expect.assertions(1);
+
+      service.updateMessageCommandHelpImageUrl(imageUrl);
+
+      expect(
+        discordMessageConfigCoreService.command.help.imageUrl
       ).toStrictEqual(`dummy-image-url`);
     });
   });

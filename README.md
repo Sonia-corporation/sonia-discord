@@ -39,8 +39,8 @@ The case is not restricted.
 
 __Example:__
 
-`@Sonia-il-est-midi !version`  
-`@Sonia-il-est-midi --VERSION`  
+- `@Sonia-il-est-midi !version`  
+- `@Sonia-il-est-midi --VERSION`  
 
 #### Version
 
@@ -62,10 +62,10 @@ Sonia will send you a message containing:
 
 __Example:__
 
-`@Sonia-il-est-midi !version`
-`@Sonia-il-est-midi !VERSION`
-`@Sonia-il-est-midi !v`
-`@Sonia-il-est-midi !V`
+- `@Sonia-il-est-midi !version`
+- `@Sonia-il-est-midi !VERSION`
+- `@Sonia-il-est-midi !v`
+- `@Sonia-il-est-midi !V`
 
 #### Error
 
@@ -82,8 +82,9 @@ Sonia will send you a message containing:
 - We are very sorry about that. I think
 
 __Example:__
-`@Sonia-il-est-midi !error`
-`@Sonia-il-est-midi !BUG`
+
+- `@Sonia-il-est-midi !error`
+- `@Sonia-il-est-midi !BUG`
 
 #### Help
 
@@ -95,10 +96,12 @@ __Commands:__
 Sonia will send you a message containing:
 
 - The list of all the commands available
+- The application [readme](README.md) link
 
 __Example:__
-`@Sonia-il-est-midi !help`
-`@Sonia-il-est-midi !H`
+
+- `@Sonia-il-est-midi !help`
+- `@Sonia-il-est-midi !H`
 
 ### Sonia behavior
 

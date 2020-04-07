@@ -54,6 +54,7 @@ export class DiscordMessageCommandHelpService {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
+      description: this._getMessageDescription(),
       fields: this._getMessageEmbedFields(),
       footer: this._getMessageEmbedFooter(),
       thumbnail: this._getMessageEmbedThumbnail(),
@@ -68,7 +69,7 @@ export class DiscordMessageCommandHelpService {
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
-      url: this._discordMessageConfigService.getMessageCommandErrorImageUrl(),
+      url: this._discordMessageConfigService.getMessageCommandHelpImageUrl(),
     };
   }
 
@@ -79,12 +80,12 @@ export class DiscordMessageCommandHelpService {
 
     return {
       iconURL: soniaImageUrl || undefined,
-      text: `Nice try little man`,
+      text: `At your service, brother`,
     };
   }
 
   private _getMessageEmbedColor(): number {
-    return this._discordMessageConfigService.getMessageCommandErrorImageColor();
+    return this._discordMessageConfigService.getMessageCommandHelpImageColor();
   }
 
   private _getMessageEmbedTimestamp(): Date {
@@ -92,24 +93,51 @@ export class DiscordMessageCommandHelpService {
   }
 
   private _getMessageEmbedTitle(): string {
-    return `Uh-oh. What just happened?`;
+    return `So, you need my help? Cool.`;
   }
 
   private _getMessageEmbedFields(): EmbedFieldData[] {
-    return [this._getMessageEmbedFieldBait(), this._getMessageEmbedFieldHint()];
+    return [
+      this._getMessageEmbedFieldVersion(),
+      this._getMessageEmbedFieldError(),
+      this._getMessageEmbedFieldHelp(),
+      this._getMessageEmbedFieldMoreHelp(),
+    ];
   }
 
-  private _getMessageEmbedFieldBait(): EmbedFieldData {
+  private _getMessageEmbedFieldVersion(): EmbedFieldData {
     return {
-      name: `It seems that something went wrong`,
-      value: `You may have found an issue with my internal core system.\nPlease, inform my creator as soon as possible!\nThis could lead to a very critical failure for myself and I do not wish to die!!`,
+      name: `Version (*!version* or *!v*)`,
+      value: `Display my current application version`,
     };
   }
 
-  private _getMessageEmbedFieldHint(): EmbedFieldData {
+  private _getMessageEmbedFieldError(): EmbedFieldData {
     return {
-      name: `Come again?`,
-      value: `What do you think you are doing here?\nThat is not the way it works!\nGet back to work you peasant.`,
+      name: `Error (*!error* or *!bug*)`,
+      value: `Create a bug in my core system\n
+      Do not do this one, of course!`,
     };
+  }
+
+  private _getMessageEmbedFieldHelp(): EmbedFieldData {
+    return {
+      name: `Help (*!help* or *!h*)`,
+      value: `Ask for my help, it is obvious!\n
+      And maybe I will, who knows?`,
+    };
+  }
+
+  private _getMessageEmbedFieldMoreHelp(): EmbedFieldData {
+    return {
+      name: `Further help`,
+      value: `You can also checkout the [readme](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/README.md).\n
+      It contains more information about how I work.`,
+    };
+  }
+
+  private _getMessageDescription(): string {
+    return `Below is the complete list of commands.\n
+    You can either use *--* or *!* as prefix to run a command.`;
   }
 }
