@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.28.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.27.1...1.28.0) (2020-04-07)
+
+
+### Features
+
+* **discord-help-command:** add new command "help" ([3667f06](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3667f06ceb0c6fb662ef334277f35dba9e1a9019))
+
 ## [1.27.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.27.0...1.27.1) (2020-04-06)
 
 
