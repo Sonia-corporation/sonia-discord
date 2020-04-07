@@ -108,14 +108,14 @@ export class DiscordMessageCommandHelpService {
   private _getMessageEmbedFieldVersion(): EmbedFieldData {
     return {
       name: `Version (*!version* or *!v*)`,
-      value: `Display my current application version`,
+      value: `Display my current application version.`,
     };
   }
 
   private _getMessageEmbedFieldError(): EmbedFieldData {
     return {
       name: `Error (*!error* or *!bug*)`,
-      value: `Create a bug in my core system
+      value: `Create a bug in my core system.
       Do not do this one, of course!`,
     };
   }
