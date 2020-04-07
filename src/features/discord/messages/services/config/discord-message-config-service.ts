@@ -42,6 +42,18 @@ export class DiscordMessageConfigService {
     return this._discordMessageConfigCoreService.command.error.imageUrl;
   }
 
+  public getMessageCommandHelp(): IDiscordMessageCommandErrorConfig {
+    return this._discordMessageConfigCoreService.command.help;
+  }
+
+  public getMessageCommandHelpImageColor(): number {
+    return this._discordMessageConfigCoreService.command.help.imageColor;
+  }
+
+  public getMessageCommandHelpImageUrl(): string {
+    return this._discordMessageConfigCoreService.command.help.imageUrl;
+  }
+
   public getMessageCommandPrefix(): string | string[] {
     return this._discordMessageConfigCoreService.command.prefix;
   }

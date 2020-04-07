@@ -63,6 +63,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   ): void {
     if (!_.isNil(command)) {
       this.updateMessageCommandError(command.error);
+      this.updateMessageCommandHelp(command.help);
       this.updateMessageCommandPrefix(command.prefix);
       this.updateMessageCommandVersion(command.version);
     }
@@ -97,6 +98,39 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
         newValue: imageUrl,
         oldValue: this._discordMessageConfigService.getMessageCommandErrorImageUrl(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_ERROR_IMAGE_URL,
+      }
+    );
+  }
+
+  public updateMessageCommandHelp(
+    error?: Readonly<PartialNested<IDiscordMessageCommandErrorConfig>>
+  ): void {
+    if (!_.isNil(error)) {
+      this.updateMessageCommandHelpImageColor(error.imageColor);
+      this.updateMessageCommandHelpImageUrl(error.imageUrl);
+    }
+  }
+
+  public updateMessageCommandHelpImageColor(
+    imageColor?: Readonly<number>
+  ): void {
+    this._discordMessageConfigCoreService.command.help.imageColor = this._configService.getUpdatedNumber(
+      {
+        context: this._className,
+        newValue: imageColor,
+        oldValue: this._discordMessageConfigService.getMessageCommandHelpImageColor(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_HELP_IMAGE_COLOR,
+      }
+    );
+  }
+
+  public updateMessageCommandHelpImageUrl(imageUrl?: Readonly<string>): void {
+    this._discordMessageConfigCoreService.command.help.imageUrl = this._configService.getUpdatedString(
+      {
+        context: this._className,
+        newValue: imageUrl,
+        oldValue: this._discordMessageConfigService.getMessageCommandHelpImageUrl(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_HELP_IMAGE_URL,
       }
     );
   }
