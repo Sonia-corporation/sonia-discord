@@ -23,6 +23,20 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
     );
   });
 
+  it(`should have a specific color for the image of the help command`, (): void => {
+    expect.assertions(1);
+
+    expect(service.command.help.imageColor).toStrictEqual(7522991);
+  });
+
+  it(`should have a specific url for the image of the help command`, (): void => {
+    expect.assertions(1);
+
+    expect(service.command.help.imageUrl).toStrictEqual(
+      `https://i.ibb.co/vLSnVk6/icons8-information-512.png`
+    );
+  });
+
   it(`should have a "!" prefix for the commands`, (): void => {
     expect.assertions(1);
 

@@ -19,6 +19,10 @@ export class DiscordMessageConfigCoreService implements IDiscordMessageConfig {
       imageColor: 15562905,
       imageUrl: `https://i.ibb.co/5jZmzSB/icons8-error-512.png`,
     },
+    help: {
+      imageColor: 7522991,
+      imageUrl: `https://i.ibb.co/vLSnVk6/icons8-information-512.png`,
+    },
     prefix: `!`,
     version: {
       imageColor: 11912416,

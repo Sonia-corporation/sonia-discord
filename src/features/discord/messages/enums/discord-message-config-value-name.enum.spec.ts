@@ -17,6 +17,22 @@ describe(`DiscordMessageConfigValueNameEnum`, (): void => {
     ).toStrictEqual(`message command error image url`);
   });
 
+  it(`should have a member "COMMAND_HELP_IMAGE_COLOR"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      DiscordMessageConfigValueNameEnum.COMMAND_HELP_IMAGE_COLOR
+    ).toStrictEqual(`message command help image color`);
+  });
+
+  it(`should have a member "COMMAND_HELP_IMAGE_URL"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      DiscordMessageConfigValueNameEnum.COMMAND_HELP_IMAGE_URL
+    ).toStrictEqual(`message command help image url`);
+  });
+
   it(`should have a member "COMMAND_VERSION_IMAGE_COLOR"`, (): void => {
     expect.assertions(1);
 

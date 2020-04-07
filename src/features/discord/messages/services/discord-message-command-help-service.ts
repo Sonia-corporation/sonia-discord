@@ -13,21 +13,21 @@ import { IDiscordMessageResponse } from "../interfaces/discord-message-response"
 import { AnyDiscordMessage } from "../types/any-discord-message";
 import { DiscordMessageConfigService } from "./config/discord-message-config-service";
 
-export class DiscordMessageCommandErrorService {
-  private static _instance: DiscordMessageCommandErrorService;
+export class DiscordMessageCommandHelpService {
+  private static _instance: DiscordMessageCommandHelpService;
 
-  public static getInstance(): DiscordMessageCommandErrorService {
-    if (_.isNil(DiscordMessageCommandErrorService._instance)) {
-      DiscordMessageCommandErrorService._instance = new DiscordMessageCommandErrorService();
+  public static getInstance(): DiscordMessageCommandHelpService {
+    if (_.isNil(DiscordMessageCommandHelpService._instance)) {
+      DiscordMessageCommandHelpService._instance = new DiscordMessageCommandHelpService();
     }
 
-    return DiscordMessageCommandErrorService._instance;
+    return DiscordMessageCommandHelpService._instance;
   }
 
   private readonly _discordSoniaService = DiscordSoniaService.getInstance();
   private readonly _discordMessageConfigService = DiscordMessageConfigService.getInstance();
   private readonly _loggerService = LoggerService.getInstance();
-  private readonly _className = `DiscordMessageCommandErrorService`;
+  private readonly _className = `DiscordMessageCommandHelpService`;
 
   public handle(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
@@ -37,7 +37,7 @@ export class DiscordMessageCommandErrorService {
       extendedContext: true,
       message: this._loggerService.getSnowflakeContext(
         anyDiscordMessage.id,
-        `error command detected`
+        `help command detected`
       ),
     });
 
@@ -54,6 +54,7 @@ export class DiscordMessageCommandErrorService {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
+      description: this._getMessageDescription(),
       fields: this._getMessageEmbedFields(),
       footer: this._getMessageEmbedFooter(),
       thumbnail: this._getMessageEmbedThumbnail(),
@@ -68,7 +69,7 @@ export class DiscordMessageCommandErrorService {
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
-      url: this._discordMessageConfigService.getMessageCommandErrorImageUrl(),
+      url: this._discordMessageConfigService.getMessageCommandHelpImageUrl(),
     };
   }
 
@@ -79,12 +80,12 @@ export class DiscordMessageCommandErrorService {
 
     return {
       iconURL: soniaImageUrl || undefined,
-      text: `Nice try little man`,
+      text: `At your service, brother`,
     };
   }
 
   private _getMessageEmbedColor(): number {
-    return this._discordMessageConfigService.getMessageCommandErrorImageColor();
+    return this._discordMessageConfigService.getMessageCommandHelpImageColor();
   }
 
   private _getMessageEmbedTimestamp(): Date {
@@ -92,27 +93,51 @@ export class DiscordMessageCommandErrorService {
   }
 
   private _getMessageEmbedTitle(): string {
-    return `Uh-oh. What just happened?`;
+    return `So, you need my help? Cool.`;
   }
 
   private _getMessageEmbedFields(): EmbedFieldData[] {
-    return [this._getMessageEmbedFieldBait(), this._getMessageEmbedFieldHint()];
+    return [
+      this._getMessageEmbedFieldVersion(),
+      this._getMessageEmbedFieldError(),
+      this._getMessageEmbedFieldHelp(),
+      this._getMessageEmbedFieldMoreHelp(),
+    ];
   }
 
-  private _getMessageEmbedFieldBait(): EmbedFieldData {
+  private _getMessageEmbedFieldVersion(): EmbedFieldData {
     return {
-      name: `It seems that something went wrong`,
-      value: `You may have found an issue with my internal core system.\n
-      Please, inform my creator as soon as possible!\nThis could lead to a very critical failure for myself and I do not wish to die!!`,
+      name: `Version (*!version* or *!v*)`,
+      value: `Display my current application version`,
     };
   }
 
-  private _getMessageEmbedFieldHint(): EmbedFieldData {
+  private _getMessageEmbedFieldError(): EmbedFieldData {
     return {
-      name: `Come again?`,
-      value: `What do you think you are doing here?\n
-      That is not the way it works!\n
-      Get back to work you peasant.`,
+      name: `Error (*!error* or *!bug*)`,
+      value: `Create a bug in my core system\n
+      Do not do this one, of course!`,
     };
+  }
+
+  private _getMessageEmbedFieldHelp(): EmbedFieldData {
+    return {
+      name: `Help (*!help* or *!h*)`,
+      value: `Ask for my help, it is obvious!\n
+      And maybe I will, who knows?`,
+    };
+  }
+
+  private _getMessageEmbedFieldMoreHelp(): EmbedFieldData {
+    return {
+      name: `Further help`,
+      value: `You can also checkout the [readme](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/README.md).\n
+      It contains more information about how I work.`,
+    };
+  }
+
+  private _getMessageDescription(): string {
+    return `Below is the complete list of commands.\n
+    You can either use *--* or *!* as prefix to run a command.`;
   }
 }
