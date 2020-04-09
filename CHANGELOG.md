@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.28.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.28.0...1.28.1) (2020-04-09)
+
+
+### Bug Fixes
+
+* **discord:** remove useless empty rows ([6a857b6](https://github.com/Sonia-corporation/il-est-midi-discord/commit/6a857b6dc5b10d59835fba8e71f47e9480bb0485))
+
 # [1.28.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.27.1...1.28.0) (2020-04-07)
 
 
