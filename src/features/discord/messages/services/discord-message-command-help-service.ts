@@ -108,14 +108,14 @@ export class DiscordMessageCommandHelpService {
   private _getMessageEmbedFieldVersion(): EmbedFieldData {
     return {
       name: `Version (*!version* or *!v*)`,
-      value: `Display my current application version`,
+      value: `Display my current application version.`,
     };
   }
 
   private _getMessageEmbedFieldError(): EmbedFieldData {
     return {
       name: `Error (*!error* or *!bug*)`,
-      value: `Create a bug in my core system\n
+      value: `Create a bug in my core system.
       Do not do this one, of course!`,
     };
   }
@@ -123,7 +123,7 @@ export class DiscordMessageCommandHelpService {
   private _getMessageEmbedFieldHelp(): EmbedFieldData {
     return {
       name: `Help (*!help* or *!h*)`,
-      value: `Ask for my help, it is obvious!\n
+      value: `Ask for my help, it is obvious!
       And maybe I will, who knows?`,
     };
   }
@@ -131,13 +131,13 @@ export class DiscordMessageCommandHelpService {
   private _getMessageEmbedFieldMoreHelp(): EmbedFieldData {
     return {
       name: `Further help`,
-      value: `You can also checkout the [readme](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/README.md).\n
+      value: `You can also checkout the [readme](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/README.md).
       It contains more information about how I work.`,
     };
   }
 
   private _getMessageDescription(): string {
-    return `Below is the complete list of commands.\n
+    return `Below is the complete list of commands.
     You can either use *--* or *!* as prefix to run a command.`;
   }
 }

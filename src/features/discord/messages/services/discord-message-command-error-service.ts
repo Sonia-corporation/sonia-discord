@@ -102,16 +102,17 @@ export class DiscordMessageCommandErrorService {
   private _getMessageEmbedFieldBait(): EmbedFieldData {
     return {
       name: `It seems that something went wrong`,
-      value: `You may have found an issue with my internal core system.\n
-      Please, inform my creator as soon as possible!\nThis could lead to a very critical failure for myself and I do not wish to die!!`,
+      value: `You may have found an issue with my internal core system.
+      Please, inform my creator as soon as possible!
+      This could lead to a very critical failure for myself and I do not wish to die!!`,
     };
   }
 
   private _getMessageEmbedFieldHint(): EmbedFieldData {
     return {
       name: `Come again?`,
-      value: `What do you think you are doing here?\n
-      That is not the way it works!\n
+      value: `What do you think you are doing here?
+      That is not the way it works!
       Get back to work you peasant.`,
     };
   }
