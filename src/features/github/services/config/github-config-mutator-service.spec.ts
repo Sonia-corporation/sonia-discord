@@ -85,13 +85,13 @@ describe(`GithubConfigMutatorService`, (): void => {
   describe(`updateBugReportUrl()`, (): void => {
     let bugReportUrl: string;
 
-    let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
+    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       bugReportUrl = `bug-report-url`;
       githubConfigCoreService.bugReportUrl = `dummy-bug-report-url`;
 
-      configServiceGetUpdatedNumberSpy = jest
+      configServiceGetUpdatedStringSpy = jest
         .spyOn(configService, `getUpdatedString`)
         .mockReturnValue(`bug-report-url`);
     });
@@ -101,8 +101,8 @@ describe(`GithubConfigMutatorService`, (): void => {
 
       service.updateBugReportUrl(bugReportUrl);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `GithubConfigMutatorService`,
         newValue: `bug-report-url`,
         oldValue: `dummy-bug-report-url`,
@@ -124,13 +124,13 @@ describe(`GithubConfigMutatorService`, (): void => {
   describe(`updatePersonalAccessToken()`, (): void => {
     let personalAccessToken: string;
 
-    let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
+    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       personalAccessToken = `personal-access-token`;
       githubConfigCoreService.personalAccessToken = `dummy-personal-access-token`;
 
-      configServiceGetUpdatedNumberSpy = jest
+      configServiceGetUpdatedStringSpy = jest
         .spyOn(configService, `getUpdatedString`)
         .mockReturnValue(`personal-access-token`);
     });
@@ -140,8 +140,8 @@ describe(`GithubConfigMutatorService`, (): void => {
 
       service.updatePersonalAccessToken(personalAccessToken);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `GithubConfigMutatorService`,
         isValueHidden: true,
         newValue: `personal-access-token`,
