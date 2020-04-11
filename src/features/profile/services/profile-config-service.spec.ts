@@ -1,8 +1,8 @@
-import { ProfileConfigService } from "./profile-config-service";
+import { IConfigUpdateString } from "../../config/interfaces/config-update-string";
 import { ConfigService } from "../../config/services/config-service";
 import { PROFILE_CONFIG } from "../constants/profile-config";
-import { IConfigUpdateString } from "../../config/interfaces/config-update-string";
 import { IProfileConfig } from "../interfaces/profile-config";
+import { ProfileConfigService } from "./profile-config-service";
 
 jest.mock(`../../config/services/config-service`);
 
