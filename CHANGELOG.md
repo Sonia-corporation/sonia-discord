@@ -1,5 +1,18 @@
 # Semantic Versioning Changelog
 
+# [1.29.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.28.1...1.29.0) (2020-04-11)
+
+
+### Bug Fixes
+
+* **logger-config-service:** correction test following the addition of the profile in ILoggerConfig ([54df527](https://github.com/Sonia-corporation/il-est-midi-discord/commit/54df527c84758cb33077bb251a77b60558dcf8eb))
+* **env:** remove the default value from the env file for the profile nickname ([9b27275](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9b2727558f27156fca5bffb68fbeccb6167fe64c))
+
+
+### Features
+
+* **config:** add config field to display config profile name when dev mode ([a045e9f](https://github.com/Sonia-corporation/il-est-midi-discord/commit/a045e9f25b0ed7e404266df0984e3041e178062e))
+
 ## [1.28.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.28.0...1.28.1) (2020-04-09)
 
 
