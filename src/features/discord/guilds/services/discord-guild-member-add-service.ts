@@ -13,6 +13,7 @@ import { DiscordClientService } from "../../services/discord-client-service";
 import { isDiscordGuild } from "../functions/is-discord-guild";
 import { AnyGuildMember } from "../types/any-guild-member";
 import { DiscordGuildConfigService } from "./config/discord-guild-config-service";
+import { ProfileConfigService } from "../../../profile/services/profile-config-service";
 
 export class DiscordGuildMemberAddService {
   private static _instance: DiscordGuildMemberAddService;
@@ -29,6 +30,7 @@ export class DiscordGuildMemberAddService {
   private readonly _discordChannelGuildService = DiscordChannelGuildService.getInstance();
   private readonly _discordGuildConfigService = DiscordGuildConfigService.getInstance();
   private readonly _loggerService = LoggerService.getInstance();
+  private readonly _profileConfigService = ProfileConfigService.getInstance();
   private readonly _chalkService = ChalkService.getInstance();
   private readonly _appConfigService = AppConfigService.getInstance();
   private readonly _className = `DiscordGuildMemberAddService`;
@@ -120,7 +122,10 @@ export class DiscordGuildMemberAddService {
 
   private _getMessageResponseWithEnvPrefix(response: Readonly<string>): string {
     if (!this._appConfigService.isProduction()) {
-      return addDiscordDevPrefix(response);
+      return addDiscordDevPrefix(
+        response,
+        this._profileConfigService.getNickname()
+      );
     }
 
     return response;

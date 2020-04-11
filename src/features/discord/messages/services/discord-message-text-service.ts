@@ -13,6 +13,7 @@ import { DiscordMessage } from "../types/discord-message";
 import { DiscordMessageAuthorService } from "./discord-message-author-service";
 import { DiscordMessageCommandService } from "./discord-message-command-service";
 import { DiscordMessageContentService } from "./discord-message-content-service";
+import { ProfileConfigService } from "../../../profile/services/profile-config-service";
 
 export class DiscordMessageTextService {
   private static _instance: DiscordMessageTextService;
@@ -29,6 +30,7 @@ export class DiscordMessageTextService {
   private readonly _discordAuthorService = DiscordAuthorService.getInstance();
   private readonly _discordMentionService = DiscordMentionService.getInstance();
   private readonly _loggerService = LoggerService.getInstance();
+  private readonly _profileConfigService = ProfileConfigService.getInstance();
   private readonly _discordMessageAuthorService = DiscordMessageAuthorService.getInstance();
   private readonly _discordMessageCommandService = DiscordMessageCommandService.getInstance();
   private readonly _discordMessageContentService = DiscordMessageContentService.getInstance();
@@ -112,7 +114,10 @@ export class DiscordMessageTextService {
     response: Readonly<string>
   ): string {
     if (!this._appConfigService.isProduction()) {
-      return addDiscordDevPrefix(response);
+      return addDiscordDevPrefix(
+        response,
+        this._profileConfigService.getNickname()
+      );
     }
 
     return response;
