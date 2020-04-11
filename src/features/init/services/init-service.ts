@@ -19,9 +19,9 @@ import { GithubConfigService } from "../../github/services/config/github-config-
 import { ChalkService } from "../../logger/services/chalk-service";
 import { LoggerConfigMutatorService } from "../../logger/services/config/logger-config-mutator-service";
 import { LoggerService } from "../../logger/services/logger-service";
+import { ProfileConfigService } from "../../profile/services/profile-config-service";
 import { ServerConfigMutatorService } from "../../server/services/config/server-config-mutator-service";
 import { ServerService } from "../../server/services/server-service";
-import { ProfileConfigService } from "../../profile/services/profile-config-service";
 
 export class InitService {
   private static _instance: InitService;

@@ -1,10 +1,5 @@
-import {
-  Client,
-  Guild,
-  Message,
-  MessageMentions,
-  TextChannel,
-} from "discord.js";
+import { MessageMentions } from "discord.js";
+import { createMock } from "ts-auto-mock";
 import { isDiscordMessageMentions } from "./is-discord-message-mentions";
 
 describe(`isDiscordMessageMentions()`, (): void => {
@@ -70,17 +65,7 @@ describe(`isDiscordMessageMentions()`, (): void => {
 
   describe(`when the given value is a "MessageMentions" instance`, (): void => {
     beforeEach((): void => {
-      // @todo replace with real mock
-      mention = new MessageMentions(
-        new Message(
-          new Client(),
-          {},
-          new TextChannel(new Guild(new Client(), {}))
-        ),
-        [],
-        [],
-        true
-      );
+      mention = createMock<MessageMentions>();
     });
 
     // @todo fix it omg this should works

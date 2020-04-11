@@ -1,4 +1,5 @@
-import { Client, Guild, GuildChannel } from "discord.js";
+import { GuildChannel } from "discord.js";
+import { createMock } from "ts-auto-mock";
 import { isDiscordGuildChannel } from "./is-discord-guild-channel";
 
 describe(`isDiscordGuildChannel()`, (): void => {
@@ -64,8 +65,7 @@ describe(`isDiscordGuildChannel()`, (): void => {
 
   describe(`when the given value is a "GuildChannel" instance`, (): void => {
     beforeEach((): void => {
-      // @todo replace with real mock
-      channel = new GuildChannel(new Guild(new Client(), {}));
+      channel = createMock<GuildChannel>();
     });
 
     // @todo fix it omg this should works
