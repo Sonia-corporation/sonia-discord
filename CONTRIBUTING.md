@@ -7,26 +7,27 @@
 This step is mandatory.  
 You must create the `secret-environment.json` file in the [environment folder](./src/environment/secret-environment.json).  
 
-This file should contains at least:
-- A discord Sonia secret token required by Discord API
-- A GitHub personal access token required by GitHub API
+This file should contain at least:
+- A discord Sonia secret token required by Discord API.
+- A GitHub personal access token required by GitHub API.
 
 __Shortcut:__
 
-You can use an npm script to create the file for you.  
+You can use a npm script to create the file for you.  
 Run `npm run create-secret-environment`.
-
-__Example:__
 
 ```json
 {
   "discord": {
     "sonia": {
-      "secretToken": "TO_DEFINE_BY_ASKING_IT"
+      "secretToken": "REQUIRED_AND_TO_DEFINE_BY_ASKING_IT"
     } 
   },
   "github": {
-    "personalAccessToken": "TO_DEFINE_BY_YOU"
+    "personalAccessToken": "REQUIRED_AND_TO_DEFINE_BY_YOU"
+  },
+  "profile": {
+    "nickname": "OPTIONAL_AND_TO_DEFINE_BY_YOU"
   }
 }
 ```
@@ -34,8 +35,8 @@ __Example:__
 __Note for the Discord Sonia secret token:__
 
 The Discord Sonia secret token is private and there two ways to have access to it:
-- Asks an admin (like [C0ZEN](https://github.com/C0ZEN))
-- Access to the [Discord bot page](https://discordapp.com/developers/applications/689829775317139460/bot) to reveal the token
+- Asks an admin (like [C0ZEN](https://github.com/C0ZEN)).
+- Access to the [Discord bot page](https://discordapp.com/developers/applications/689829775317139460/bot) to reveal the token.
 
 If somehow this token is made public, Discord will revoke it.
 
@@ -43,7 +44,7 @@ __Note for the GitHub personal access token:__
 
 The GitHub personal access token is strictly personal to each developer.  
 You have to create your own on your GitHub account.  
-It should contains the following scopes:
+It should contain the following scopes:
 - user
 - public_repo
 - repo
@@ -53,6 +54,11 @@ It should contains the following scopes:
 - read:org
 - read:public_key
 - read:gpg_key
+
+__Note for the nickname:__
+
+This file can contain optionals fields:
+- nickname: can be display on each developer server messages.
 
 ### Install the dependencies
 
@@ -89,7 +95,7 @@ Run `npm run start` to start the local development server.
 
 ### Alias
 
-This project use an alias to push automatically with the upstream option set.  
+This project uses an alias to push automatically with the upstream option set.  
 The configuration of the alias is a [local one](.gitconfig).  
 
 This alias is used by the `cz` script to automatically push on the remote with a dynamic branch name.  
@@ -118,16 +124,16 @@ format that includes a **type**, a **scope** and a **subject**:
 <footer>     
 ```
 
-The **type** and the **subject** is mandatory and the other stuff is optional.
+The **type** and the **subject** are mandatory.  
+All the other stuff is optional.
 
 Any line of the commit message cannot be longer 144 characters!  
 This allows the message to be easier to read on GitHub as well as in various git tools.
 
 ### Revert
 
-If the commit reverts a previous commit, it should begin with `revert: `, followed by the header of
-the reverted commit. In the body it should say: `This reverts commit <hash>.`, where the hash is
-the SHA of the commit being reverted.
+If the commit reverts a previous commit, it should begin with `revert: `, followed by the header of the reverted commit.  
+In the body it should say: `This reverts commit <hash>.`, where the hash is the SHA of the commit being reverted.
 
 ### Type
 
