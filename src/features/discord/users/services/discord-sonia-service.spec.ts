@@ -1,7 +1,8 @@
-import { ClientUser } from "discord.js";
+import { ClientUser, MessageEmbedAuthor } from "discord.js";
 import { createMock } from "ts-auto-mock";
 import * as GetRandomValueFromEnumModule from "../../../../functions/randoms/get-random-value-from-enum";
-import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../interfaces/discord-sonia-corporation-message-embed-author-config";
+import { AppConfigCoreService } from "../../../app/services/config/app-config-core-service";
+import { ProfileConfigCoreService } from "../../../profile/services/config/profile-config-core-service";
 import { DiscordSoniaMentalStateEnum } from "../enums/discord-sonia-mental-state.enum";
 import { DiscordSoniaConfigCoreService } from "./config/discord-sonia-config-core-service";
 import { DiscordSoniaService } from "./discord-sonia-service";
@@ -11,10 +12,14 @@ jest.mock(`../../services/discord-client-service`);
 describe(`DiscordSoniaService`, (): void => {
   let service: DiscordSoniaService;
   let discordSoniaConfigCoreService: DiscordSoniaConfigCoreService;
+  let profileConfigCoreService: ProfileConfigCoreService;
+  let appConfigCoreService: AppConfigCoreService;
 
   beforeEach((): void => {
     service = DiscordSoniaService.getInstance();
     discordSoniaConfigCoreService = DiscordSoniaConfigCoreService.getInstance();
+    profileConfigCoreService = ProfileConfigCoreService.getInstance();
+    appConfigCoreService = AppConfigCoreService.getInstance();
   });
 
   describe(`isSonia()`, (): void => {
@@ -256,16 +261,160 @@ describe(`DiscordSoniaService`, (): void => {
       };
     });
 
-    it(`should return the Sonia corporation message embed author`, (): void => {
-      expect.assertions(1);
+    describe(`when the app is in production`, (): void => {
+      beforeEach((): void => {
+        appConfigCoreService.isProduction = true;
+      });
 
-      const result = service.getCorporationMessageEmbedAuthor();
+      describe(`when the profile nickname is null`, (): void => {
+        beforeEach((): void => {
+          profileConfigCoreService.nickname = null;
+        });
 
-      expect(result).toStrictEqual({
-        iconURL: `dummy-icon-url`,
-        name: `dummy-name`,
-        url: `dummy-url`,
-      } as IDiscordSoniaCorporationMessageEmbedAuthorConfig);
+        it(`should return the Sonia corporation message embed author`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getCorporationMessageEmbedAuthor();
+
+          expect(result).toStrictEqual({
+            iconURL: `dummy-icon-url`,
+            name: `dummy-name`,
+            url: `dummy-url`,
+          } as MessageEmbedAuthor);
+        });
+      });
+
+      describe(`when the profile nickname is an empty string`, (): void => {
+        beforeEach((): void => {
+          profileConfigCoreService.nickname = ``;
+        });
+
+        it(`should return the Sonia corporation message embed author`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getCorporationMessageEmbedAuthor();
+
+          expect(result).toStrictEqual({
+            iconURL: `dummy-icon-url`,
+            name: `dummy-name`,
+            url: `dummy-url`,
+          } as MessageEmbedAuthor);
+        });
+      });
+
+      describe(`when the profile nickname is "dummy-nickname"`, (): void => {
+        beforeEach((): void => {
+          profileConfigCoreService.nickname = `dummy-nickname`;
+        });
+
+        it(`should return the Sonia corporation message embed author`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getCorporationMessageEmbedAuthor();
+
+          expect(result).toStrictEqual({
+            iconURL: `dummy-icon-url`,
+            name: `dummy-name`,
+            url: `dummy-url`,
+          } as MessageEmbedAuthor);
+        });
+      });
+
+      describe(`when the profile nickname is "nickname"`, (): void => {
+        beforeEach((): void => {
+          profileConfigCoreService.nickname = `nickname`;
+        });
+
+        it(`should return the Sonia corporation message embed author`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getCorporationMessageEmbedAuthor();
+
+          expect(result).toStrictEqual({
+            iconURL: `dummy-icon-url`,
+            name: `dummy-name`,
+            url: `dummy-url`,
+          } as MessageEmbedAuthor);
+        });
+      });
+    });
+
+    describe(`when the app is not in production`, (): void => {
+      beforeEach((): void => {
+        appConfigCoreService.isProduction = false;
+      });
+
+      describe(`when the profile nickname is null`, (): void => {
+        beforeEach((): void => {
+          profileConfigCoreService.nickname = null;
+        });
+
+        it(`should return the Sonia corporation message embed author with a dev prefix for the name`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getCorporationMessageEmbedAuthor();
+
+          expect(result).toStrictEqual({
+            iconURL: `dummy-icon-url`,
+            name: `[dev] dummy-name`,
+            url: `dummy-url`,
+          } as MessageEmbedAuthor);
+        });
+      });
+
+      describe(`when the profile nickname is an empty string`, (): void => {
+        beforeEach((): void => {
+          profileConfigCoreService.nickname = ``;
+        });
+
+        it(`should return the Sonia corporation message embed author with a dev prefix for the name`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getCorporationMessageEmbedAuthor();
+
+          expect(result).toStrictEqual({
+            iconURL: `dummy-icon-url`,
+            name: `[dev] dummy-name`,
+            url: `dummy-url`,
+          } as MessageEmbedAuthor);
+        });
+      });
+
+      describe(`when the profile nickname is "dummy-nickname"`, (): void => {
+        beforeEach((): void => {
+          profileConfigCoreService.nickname = `dummy-nickname`;
+        });
+
+        it(`should return the Sonia corporation message embed author with a dev and nickname prefix for the name`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getCorporationMessageEmbedAuthor();
+
+          expect(result).toStrictEqual({
+            iconURL: `dummy-icon-url`,
+            name: `[dev - dummy-nickname] dummy-name`,
+            url: `dummy-url`,
+          } as MessageEmbedAuthor);
+        });
+      });
+
+      describe(`when the profile nickname is "nickname"`, (): void => {
+        beforeEach((): void => {
+          profileConfigCoreService.nickname = `nickname`;
+        });
+
+        it(`should return the Sonia corporation message embed author with a dev and nickname prefix for the name`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getCorporationMessageEmbedAuthor();
+
+          expect(result).toStrictEqual({
+            iconURL: `dummy-icon-url`,
+            name: `[dev - nickname] dummy-name`,
+            url: `dummy-url`,
+          } as MessageEmbedAuthor);
+        });
+      });
     });
   });
 
