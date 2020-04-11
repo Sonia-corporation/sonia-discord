@@ -14,6 +14,10 @@ export class DiscordClientService {
   }
 
   public getClient(): Client {
-    return createMock<Client>();
+    return createMock<Client>({
+      user: {
+        username: `dummy-username`,
+      },
+    });
   }
 }

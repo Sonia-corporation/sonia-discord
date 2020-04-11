@@ -1,4 +1,4 @@
-import { Client, ClientUser } from "discord.js";
+import { ClientUser } from "discord.js";
 import { createMock } from "ts-auto-mock";
 import * as GetRandomValueFromEnumModule from "../../../../functions/randoms/get-random-value-from-enum";
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../interfaces/discord-sonia-corporation-message-embed-author-config";
@@ -123,7 +123,11 @@ describe(`DiscordSoniaService`, (): void => {
 
       const result = service.getSonia();
 
-      expect(result).toStrictEqual(createMock<Client>());
+      expect(result).toStrictEqual(
+        createMock<ClientUser>({
+          username: `dummy-username`,
+        })
+      );
     });
   });
 
