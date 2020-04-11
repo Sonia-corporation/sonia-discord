@@ -13,9 +13,7 @@ export class DiscordClientService {
     return DiscordClientService._instance;
   }
 
-  private readonly _client = createMock<Client>();
-
   public getClient(): Client {
-    return this._client;
+    return createMock<Client>();
   }
 }
