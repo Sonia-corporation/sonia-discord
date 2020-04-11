@@ -4,7 +4,7 @@ import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { AppConfigService } from "../../../app/services/config/app-config-service";
 import { ChalkService } from "../../../logger/services/chalk-service";
 import { LoggerService } from "../../../logger/services/logger-service";
-import { ProfileConfigService } from "../../../profile/services/profile-config-service";
+import { ProfileConfigService } from "../../../profile/services/config/profile-config-service";
 import { isDiscordGuildChannel } from "../../channels/functions/is-discord-guild-channel";
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild-service";
 import { AnyDiscordChannel } from "../../channels/types/any-discord-channel";
