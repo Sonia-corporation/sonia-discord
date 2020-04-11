@@ -3,7 +3,7 @@ import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../../logger/services/chalk-service";
 import { LoggerService } from "../../../logger/services/logger-service";
 import { DiscordClientService } from "../../services/discord-client-service";
-import { DiscordSoniaConfigService } from "../../users/services/discord-sonia-config-service";
+import { DiscordSoniaConfigService } from "../../users/services/config/discord-sonia-config-service";
 
 export class DiscordAuthenticationService {
   private static _instance: DiscordAuthenticationService;

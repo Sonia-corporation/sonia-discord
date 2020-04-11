@@ -11,7 +11,7 @@ import { LoggerService } from "../../../logger/services/logger-service";
 import { DiscordSoniaService } from "../../users/services/discord-sonia-service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
-import { DiscordMessageConfigService } from "./discord-message-config-service";
+import { DiscordMessageConfigService } from "./config/discord-message-config-service";
 
 export class DiscordMessageCommandErrorService {
   private static _instance: DiscordMessageCommandErrorService;
@@ -43,14 +43,14 @@ export class DiscordMessageCommandErrorService {
 
     return {
       options: {
-        embed: this.getMessageEmbed(),
+        embed: this._getMessageEmbed(),
         split: true,
       },
       response: ``,
     };
   }
 
-  public getMessageEmbed(): MessageEmbedOptions {
+  private _getMessageEmbed(): MessageEmbedOptions {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -102,14 +102,18 @@ export class DiscordMessageCommandErrorService {
   private _getMessageEmbedFieldBait(): EmbedFieldData {
     return {
       name: `It seems that something went wrong`,
-      value: `You may have found an issue with my internal core system.\nPlease, inform my creator as soon as possible!\nThis could lead to a very critical failure for myself and I do not wish to die!!`,
+      value: `You may have found an issue with my internal core system.
+      Please, inform my creator as soon as possible!
+      This could lead to a very critical failure for myself and I do not wish to die!!`,
     };
   }
 
   private _getMessageEmbedFieldHint(): EmbedFieldData {
     return {
       name: `Come again?`,
-      value: `What do you think you are doing here?\nThat is not the way it works!\nGet back to work you peasant.`,
+      value: `What do you think you are doing here?
+      That is not the way it works!
+      Get back to work you peasant.`,
     };
   }
 }

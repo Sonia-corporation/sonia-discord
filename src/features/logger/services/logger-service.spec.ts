@@ -1,6 +1,6 @@
-import { LOGGER_CONFIG } from "../constants/logger-config";
 import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
 import { ILoggerLog } from "../interfaces/logger-log";
+import { LoggerConfigCoreService } from "./config/logger-config-core-service";
 import { LoggerService } from "./logger-service";
 
 jest.mock(`./chalk-service`);
@@ -8,9 +8,11 @@ jest.mock(`../../time/services/time-service`);
 
 describe(`LoggerService`, (): void => {
   let service: LoggerService;
+  let loggerConfigCoreService: LoggerConfigCoreService;
 
   beforeEach((): void => {
     service = LoggerService.getInstance();
+    loggerConfigCoreService = LoggerConfigCoreService.getInstance();
   });
 
   describe(`error()`, (): void => {
@@ -31,12 +33,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix`, (): void => {
@@ -51,7 +53,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -66,12 +68,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix`, (): void => {
@@ -86,7 +88,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -101,12 +103,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix`, (): void => {
@@ -121,7 +123,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -136,12 +138,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix`, (): void => {
@@ -156,7 +158,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -171,12 +173,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix`, (): void => {
@@ -191,7 +193,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -215,12 +217,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -237,7 +239,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -252,12 +254,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -274,7 +276,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -289,12 +291,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -311,7 +313,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -326,12 +328,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -348,7 +350,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -363,12 +365,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -385,7 +387,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -410,12 +412,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -432,7 +434,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -447,12 +449,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -469,7 +471,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -484,12 +486,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -506,7 +508,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -521,12 +523,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -543,7 +545,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -558,12 +560,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -580,7 +582,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -605,12 +607,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix, a context and a custom context`, (): void => {
@@ -627,7 +629,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -642,12 +644,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix, a context and a custom context`, (): void => {
@@ -664,7 +666,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -679,12 +681,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix, a context and a custom context`, (): void => {
@@ -701,7 +703,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -716,12 +718,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix, a context and a custom context`, (): void => {
@@ -738,7 +740,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -753,12 +755,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix, a context and a custom context`, (): void => {
@@ -775,7 +777,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -808,12 +810,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -827,7 +829,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -842,12 +844,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix`, (): void => {
@@ -862,7 +864,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -877,12 +879,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix`, (): void => {
@@ -897,7 +899,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -912,12 +914,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix`, (): void => {
@@ -932,7 +934,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -947,12 +949,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix`, (): void => {
@@ -967,7 +969,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -991,12 +993,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -1010,7 +1012,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1025,12 +1027,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -1047,7 +1049,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1062,12 +1064,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -1084,7 +1086,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1099,12 +1101,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -1121,7 +1123,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1136,12 +1138,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -1158,7 +1160,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1183,12 +1185,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -1202,7 +1204,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1217,12 +1219,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -1239,7 +1241,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1254,12 +1256,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -1276,7 +1278,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1291,12 +1293,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -1313,7 +1315,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1328,12 +1330,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -1350,7 +1352,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1375,12 +1377,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -1394,7 +1396,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1409,12 +1411,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix, a context and a custom context`, (): void => {
@@ -1431,7 +1433,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1446,12 +1448,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix, a context and a custom context`, (): void => {
@@ -1468,7 +1470,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1483,12 +1485,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix, a context and a custom context`, (): void => {
@@ -1505,7 +1507,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1520,12 +1522,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix, a context and a custom context`, (): void => {
@@ -1542,7 +1544,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1575,12 +1577,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -1594,7 +1596,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1609,12 +1611,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -1628,7 +1630,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1643,12 +1645,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix`, (): void => {
@@ -1663,7 +1665,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1678,12 +1680,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix`, (): void => {
@@ -1698,7 +1700,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1713,12 +1715,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix`, (): void => {
@@ -1733,7 +1735,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1757,12 +1759,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -1776,7 +1778,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1791,12 +1793,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -1810,7 +1812,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1825,12 +1827,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -1847,7 +1849,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1862,12 +1864,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -1884,7 +1886,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1899,12 +1901,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -1921,7 +1923,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1946,12 +1948,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -1965,7 +1967,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -1980,12 +1982,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -1999,7 +2001,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2014,12 +2016,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -2036,7 +2038,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2051,12 +2053,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -2073,7 +2075,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2088,12 +2090,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -2110,7 +2112,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2135,12 +2137,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -2154,7 +2156,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2169,12 +2171,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -2188,7 +2190,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2203,12 +2205,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix, a context and a custom context`, (): void => {
@@ -2225,7 +2227,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2240,12 +2242,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix, a context and a custom context`, (): void => {
@@ -2262,7 +2264,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2277,12 +2279,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix, a context and a custom context`, (): void => {
@@ -2299,7 +2301,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2332,12 +2334,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -2351,7 +2353,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2366,12 +2368,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -2385,7 +2387,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2400,12 +2402,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -2419,7 +2421,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2434,12 +2436,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix`, (): void => {
@@ -2454,7 +2456,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2469,12 +2471,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix`, (): void => {
@@ -2489,7 +2491,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2513,12 +2515,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -2532,7 +2534,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2547,12 +2549,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -2566,7 +2568,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2581,12 +2583,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -2600,7 +2602,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2615,12 +2617,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -2637,7 +2639,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2652,12 +2654,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -2674,7 +2676,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2699,12 +2701,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -2718,7 +2720,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2733,12 +2735,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -2752,7 +2754,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2767,12 +2769,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -2786,7 +2788,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2801,12 +2803,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -2823,7 +2825,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2838,12 +2840,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -2860,7 +2862,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2885,12 +2887,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -2904,7 +2906,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2919,12 +2921,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -2938,7 +2940,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2953,12 +2955,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -2972,7 +2974,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -2987,12 +2989,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix, a context and a custom context`, (): void => {
@@ -3009,7 +3011,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3024,12 +3026,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix, a context and a custom context`, (): void => {
@@ -3046,7 +3048,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3079,12 +3081,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3098,7 +3100,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3113,12 +3115,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3132,7 +3134,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3147,12 +3149,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3166,7 +3168,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3181,12 +3183,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3200,7 +3202,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3215,12 +3217,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix`, (): void => {
@@ -3235,7 +3237,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3259,12 +3261,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3278,7 +3280,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3293,12 +3295,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3312,7 +3314,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3327,12 +3329,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3346,7 +3348,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3361,12 +3363,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3380,7 +3382,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3395,12 +3397,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -3417,7 +3419,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3442,12 +3444,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3461,7 +3463,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3476,12 +3478,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3495,7 +3497,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3510,12 +3512,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3529,7 +3531,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3544,12 +3546,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3563,7 +3565,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3578,12 +3580,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix and context`, (): void => {
@@ -3600,7 +3602,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3625,12 +3627,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is error`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.ERROR;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3644,7 +3646,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3659,12 +3661,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is warning`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.WARNING;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.WARNING;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3678,7 +3680,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3693,12 +3695,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is success`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.SUCCESS;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3712,7 +3714,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3727,12 +3729,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is log`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.LOG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.LOG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should not log`, (): void => {
@@ -3746,7 +3748,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {
@@ -3761,12 +3763,12 @@ describe(`LoggerService`, (): void => {
 
       describe(`when the logger level is debug`, (): void => {
         beforeEach((): void => {
-          LOGGER_CONFIG.level = LoggerConfigLevelEnum.DEBUG;
+          loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
         });
 
         describe(`when the logger is enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = true;
+            loggerConfigCoreService.isEnabled = true;
           });
 
           it(`should log the message with a prefix, a context and a custom context`, (): void => {
@@ -3783,7 +3785,7 @@ describe(`LoggerService`, (): void => {
 
         describe(`when the logger is not enabled`, (): void => {
           beforeEach((): void => {
-            LOGGER_CONFIG.isEnabled = false;
+            loggerConfigCoreService.isEnabled = false;
           });
 
           it(`should not log`, (): void => {

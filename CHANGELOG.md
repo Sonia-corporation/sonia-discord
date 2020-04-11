@@ -1,5 +1,34 @@
 # Semantic Versioning Changelog
 
+# [1.27.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.26.0...1.27.0) (2020-04-02)
+
+
+### Features
+
+* **command-bug:** add new command bug ([586b952](https://github.com/Sonia-corporation/il-est-midi-discord/commit/586b952c3a3fffaacc09fecc3ff3d0ea723992ab))
+* **discord:** add new command error ([a17219a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/a17219abb2fae4827e67cd6cc21cc0d44ca88ea0))
+
+# [1.26.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.25.0...1.26.0) (2020-03-31)
+
+
+### Features
+
+* **env:** add new script to create the env file automatically ([eb08005](https://github.com/Sonia-corporation/il-est-midi-discord/commit/eb08005c7e5819e91188085e2103edf34d95e055))
+
+# [1.25.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.24.0...1.25.0) (2020-03-31)
+
+
+### Features
+
+* **discord-commands:** allow uppercase commands ([02ad11b](https://github.com/Sonia-corporation/il-est-midi-discord/commit/02ad11bd3712983b620beddd119b9c3b2ebcb61e))
+
+# [1.24.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.23.0...1.24.0) (2020-03-30)
+
+
+### Features
+
+* **discord:** add dev prefix when sonia is sending simple messages in dev env ([62d5400](https://github.com/Sonia-corporation/il-est-midi-discord/commit/62d5400fc42b74370dc88d24ff373d72832c29a1))
+
 # [1.23.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.22.0...1.23.0) (2020-03-30)
 
 

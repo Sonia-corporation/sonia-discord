@@ -2,9 +2,10 @@ import _ from "lodash";
 import { DiscordMessageCommandEnum } from "../enums/discord-message-command.enum";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
+import { DiscordMessageConfigService } from "./config/discord-message-config-service";
 import { DiscordMessageCommandErrorService } from "./discord-message-command-error-service";
+import { DiscordMessageCommandHelpService } from "./discord-message-command-help-service";
 import { DiscordMessageCommandVersionService } from "./discord-message-command-version-service";
-import { DiscordMessageConfigService } from "./discord-message-config-service";
 import { DiscordMessageContentService } from "./discord-message-content-service";
 
 export class DiscordMessageCommandService {
@@ -21,12 +22,15 @@ export class DiscordMessageCommandService {
   private readonly _discordMessageConfigService = DiscordMessageConfigService.getInstance();
   private readonly _discordMessageCommandVersionService = DiscordMessageCommandVersionService.getInstance();
   private readonly _discordMessageCommandErrorService = DiscordMessageCommandErrorService.getInstance();
+  private readonly _discordMessageCommandHelpService = DiscordMessageCommandHelpService.getInstance();
   private readonly _discordMessageContentService = DiscordMessageContentService.getInstance();
 
   public hasCommand(message: Readonly<string>): boolean {
     if (this.hasVersionCommand(message)) {
       return true;
     } else if (this.hasErrorCommand(message)) {
+      return true;
+    } else if (this.hasHelpCommand(message)) {
       return true;
     }
 
@@ -47,6 +51,13 @@ export class DiscordMessageCommandService {
     ]);
   }
 
+  public hasHelpCommand(message: Readonly<string>): boolean {
+    return this._hasThisCommand(message, [
+      DiscordMessageCommandEnum.HELP,
+      DiscordMessageCommandEnum.H,
+    ]);
+  }
+
   public handleVersionCommand(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
@@ -59,6 +70,12 @@ export class DiscordMessageCommandService {
     return this._discordMessageCommandErrorService.handle(anyDiscordMessage);
   }
 
+  public handleHelpCommand(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): IDiscordMessageResponse {
+    return this._discordMessageCommandHelpService.handle(anyDiscordMessage);
+  }
+
   public handleCommands(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse | null {
@@ -69,6 +86,8 @@ export class DiscordMessageCommandService {
         return this.handleVersionCommand(anyDiscordMessage);
       } else if (this.hasErrorCommand(anyDiscordMessage.content)) {
         return this.handleErrorCommand(anyDiscordMessage);
+      } else if (this.hasHelpCommand(anyDiscordMessage.content)) {
+        return this.handleHelpCommand(anyDiscordMessage);
       }
     }
 

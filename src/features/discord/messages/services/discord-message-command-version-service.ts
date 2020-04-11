@@ -17,7 +17,7 @@ import { DiscordSoniaMentalStateEnum } from "../../users/enums/discord-sonia-men
 import { DiscordSoniaService } from "../../users/services/discord-sonia-service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
-import { DiscordMessageConfigService } from "./discord-message-config-service";
+import { DiscordMessageConfigService } from "./config/discord-message-config-service";
 
 export class DiscordMessageCommandVersionService {
   private static _instance: DiscordMessageCommandVersionService;
@@ -170,7 +170,9 @@ export class DiscordMessageCommandVersionService {
   }
 
   private _getMessageEmbedFieldMentalState(): EmbedFieldData {
-    const soniaMentalState: DiscordSoniaMentalStateEnum = this._discordSoniaService.getMentalState();
+    const soniaMentalState:
+      | DiscordSoniaMentalStateEnum
+      | undefined = this._discordSoniaService.getMentalState();
 
     return {
       inline: true,

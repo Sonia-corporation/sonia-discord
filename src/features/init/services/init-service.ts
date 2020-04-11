@@ -6,19 +6,20 @@ import { ENVIRONMENT } from "../../../environment/constants/environment";
 import { IEnvironment } from "../../../environment/interfaces/environment";
 import { getBearer } from "../../../functions/formatters/get-bearer";
 import { IPackage } from "../../../interfaces/package";
-import { AppConfigMutationService } from "../../app/services/config/app-config-mutation-service";
-import { DiscordMessageConfigService } from "../../discord/messages/services/discord-message-config-service";
+import { AppConfigMutatorService } from "../../app/services/config/app-config-mutator-service";
+import { DiscordMessageConfigMutatorService } from "../../discord/messages/services/config/discord-message-config-mutator-service";
 import { DiscordService } from "../../discord/services/discord-service";
-import { DiscordSoniaConfigService } from "../../discord/users/services/discord-sonia-config-service";
+import { DiscordSoniaConfigMutatorService } from "../../discord/users/services/config/discord-sonia-config-mutator-service";
 import { GITHUB_API_URL } from "../../github/constants/github-api-url";
 import { GITHUB_QUERY_RELEASES_LATEST_AND_TOTAL_COUNT } from "../../github/constants/queries/github-query-releases-latest-and-total-count";
 import { getHumanizedReleaseNotes } from "../../github/functions/get-humanized-release-notes";
 import { IGithubReleasesLatest } from "../../github/interfaces/github-releases-latest";
-import { GithubConfigService } from "../../github/services/github-config-service";
+import { GithubConfigMutatorService } from "../../github/services/config/github-config-mutator-service";
+import { GithubConfigService } from "../../github/services/config/github-config-service";
 import { ChalkService } from "../../logger/services/chalk-service";
-import { LoggerConfigService } from "../../logger/services/logger-config-service";
+import { LoggerConfigMutatorService } from "../../logger/services/config/logger-config-mutator-service";
 import { LoggerService } from "../../logger/services/logger-service";
-import { ServerConfigService } from "../../server/services/server-config-service";
+import { ServerConfigMutatorService } from "../../server/services/config/server-config-mutator-service";
 import { ServerService } from "../../server/services/server-service";
 import { ProfileConfigService } from "../../profile/services/profile-config-service";
 
@@ -65,19 +66,23 @@ export class InitService {
   private _configureAppFromEnvironment(
     environment: Readonly<IEnvironment>
   ): void {
-    LoggerConfigService.getInstance().updateConfig(environment.logger);
-    GithubConfigService.getInstance().updateConfig(environment.github);
-    DiscordSoniaConfigService.getInstance().updateConfig(environment.discord);
-    DiscordMessageConfigService.getInstance().updateConfig(environment.discord);
+    LoggerConfigMutatorService.getInstance().updateConfig(environment.logger);
+    GithubConfigMutatorService.getInstance().updateConfig(environment.github);
+    DiscordSoniaConfigMutatorService.getInstance().updateConfig(
+      environment.discord
+    );
+    DiscordMessageConfigMutatorService.getInstance().updateConfig(
+      environment.discord
+    );
     ProfileConfigService.getInstance().updateConfig(environment.profile);
-    AppConfigMutationService.getInstance().init().updateConfig(environment.app);
-    ServerConfigService.getInstance().init();
+    AppConfigMutatorService.getInstance().init().updateConfig(environment.app);
+    ServerConfigMutatorService.getInstance().init();
   }
 
   private _configureAppFromPackage(): void {
     fs.readJson(`${appRootPath}/package.json`)
       .then((data: Readonly<IPackage>): void => {
-        AppConfigMutationService.getInstance().updateVersion(data.version);
+        AppConfigMutatorService.getInstance().updateVersion(data.version);
       })
       .catch((error: unknown): void => {
         this._loggerService.error({
@@ -103,13 +108,13 @@ export class InitService {
       url: GITHUB_API_URL,
     })
       .then((axiosResponse: AxiosResponse<IGithubReleasesLatest>): void => {
-        AppConfigMutationService.getInstance().updateTotalReleaseCount(
+        AppConfigMutatorService.getInstance().updateTotalReleaseCount(
           axiosResponse.data.data.repository.releases.totalCount
         );
-        AppConfigMutationService.getInstance().updateReleaseDate(
+        AppConfigMutatorService.getInstance().updateReleaseDate(
           axiosResponse.data.data.repository.releases.edges[0].node.updatedAt
         );
-        AppConfigMutationService.getInstance().updateReleaseNotes(
+        AppConfigMutatorService.getInstance().updateReleaseNotes(
           getHumanizedReleaseNotes(
             axiosResponse.data.data.repository.releases.edges[0].node
               .description

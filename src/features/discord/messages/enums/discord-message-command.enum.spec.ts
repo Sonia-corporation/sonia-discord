@@ -24,4 +24,16 @@ describe(`DiscordMessageCommandEnum`, (): void => {
 
     expect(DiscordMessageCommandEnum.BUG).toStrictEqual(`bug`);
   });
+
+  it(`should have a member "HELP"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandEnum.HELP).toStrictEqual(`help`);
+  });
+
+  it(`should have a member "h"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandEnum.H).toStrictEqual(`h`);
+  });
 });
