@@ -1,4 +1,5 @@
-import { Client, Guild, Message, TextChannel } from "discord.js";
+import { Message } from "discord.js";
+import { createMock } from "ts-auto-mock";
 import { isDiscordMessage } from "./is-discord-message";
 
 describe(`isDiscordMessage()`, (): void => {
@@ -64,12 +65,7 @@ describe(`isDiscordMessage()`, (): void => {
 
   describe(`when the given value is a "Message" instance`, (): void => {
     beforeEach((): void => {
-      // @todo replace with real mock
-      message = new Message(
-        new Client(),
-        {},
-        new TextChannel(new Guild(new Client(), {}))
-      );
+      message = createMock<Message>();
     });
 
     // @todo fix it omg this should works

@@ -1,10 +1,12 @@
 import { getRandomValueFromEnum } from "./get-random-value-from-enum";
 
 enum DummyEmptyEnum {}
+
 enum DummyStringsEnum {
   MARCO = `not-marco`,
   POLO = `not-polo`,
 }
+
 enum DummyNumbersEnum {
   MARCO = 0,
   POLO = 1,
