@@ -20,7 +20,4 @@ export const ENVIRONMENT: IEnvironment = {
     isEnabled: true,
     level: LoggerConfigLevelEnum.DEBUG,
   },
-  profile: {
-    nickname: `TO_DEFINE_ON_THE_SERVER`,
-  },
 };

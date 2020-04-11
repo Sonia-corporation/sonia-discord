@@ -35,7 +35,7 @@ __Statistics:__
 
 Sonia will treat one command at a time.  
 You can either use `--` or `!` as prefix for the commands.  
-The case is not restricted.
+There is no case sensitivity.
 
 __Example:__
 
@@ -51,14 +51,14 @@ __Commands:__
 
 Sonia will send you a message containing:
 
-- The application version (as a link)
-- The application release date
-- The application initialization date
-- The application release notes (first 800 chars)
-- The application [changelog](CHANGELOG.md) link
-- The application status
-- Her mental state
-- The total release count
+- The application version (as a link).
+- The application release date.
+- The application initialization date.
+- The application release notes (first 800 chars).
+- The application [changelog](CHANGELOG.md) link.
+- The application status.
+- Her mental state.
+- The total release count.
 
 __Example:__
 
@@ -76,10 +76,10 @@ __Commands:__
 
 Sonia will send you a message containing:
 
-- The description of the error
-- Some nasty bullshit text
-- This is an useless feature, please, continue
-- We are very sorry about that. I think
+- The description of the error.
+- Some nasty bullshit text.
+- This is a useless feature, please, continue.
+- We are very sorry about that. I think.
 
 __Example:__
 
@@ -95,8 +95,8 @@ __Commands:__
 
 Sonia will send you a message containing:
 
-- The list of all the commands available
-- The application [readme](README.md) link
+- The list of all the commands available.
+- The application [readme](README.md) link.
 
 __Example:__
 
@@ -127,19 +127,19 @@ To avoid flood, Sonia will tell you that it is noon on some conditions.
 First of all, she will tell the channel that it is noon when it is noon.  
 That is the main goal after all...
 
-When a message on the channel is sent, Sonia will responds only if she is mentioned personally.  
+When a message on the channel is send, Sonia will respond only if she is mentioned personally.  
 This count as a DM response for Sonia, so prepare to have a friendly message dedicated to you.  
 Special commands will be handled on the first hand.  
 
 When a newcomer joins the channel, Sonia will send a friendly message to welcome him.  
 For now, the only channel receiving welcome messages will be the `general`.  
-It will also works if there is some accents like `général`.  
+It will also work if there are some accents like `général`.  
 
 __Example:__  
 
 `@Sonia-il-est-midi yo`
 
-On global mentions like `@here` and `@everyone`, Sonia will sends a message to tell everybody it is noon (even if it is a lie).
+On global mentions like `@here` and `@everyone`, Sonia will send a message to tell everybody it is noon (even if it is a lie).
 
 To use a command, you must ask her personally.
 
@@ -153,8 +153,8 @@ If Sonia receive a Discord error after sending a message,
 She will send a new message containing this error to help you to debug it.  
 
 Nevertheless, sometimes the error is purely on the development side and this is why Sonia will provide:
-- A link to create a new [GitHub issue](https://github.com/Sonia-corporation/il-est-midi-discord/issues/new?assignees=&labels=bug&template=bug_report.md&title=&projects=sonia-corporation/il-est-midi-discord/1)
-- A link to reach us in [Discord](https://discord.gg/PW4JSkv)
+- A link to create a new [GitHub issue](https://github.com/Sonia-corporation/il-est-midi-discord/issues/new?assignees=&labels=bug&template=bug_report.md&title=&projects=sonia-corporation/il-est-midi-discord/1).
+- A link to reach us in [Discord](https://discord.gg/PW4JSkv).
 
 ## Contributing
 
