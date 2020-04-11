@@ -1,6 +1,5 @@
 import { Client } from "discord.js";
 import _ from "lodash";
-import { createMock } from "ts-auto-mock";
 
 export class DiscordClientService {
   private static _instance: DiscordClientService;
@@ -14,10 +13,10 @@ export class DiscordClientService {
   }
 
   public getClient(): Client {
-    return createMock<Client>({
+    return {
       user: {
         username: `dummy-username`,
       },
-    });
+    } as Client;
   }
 }

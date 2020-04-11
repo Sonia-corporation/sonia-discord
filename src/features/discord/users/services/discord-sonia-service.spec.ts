@@ -123,11 +123,9 @@ describe(`DiscordSoniaService`, (): void => {
 
       const result = service.getSonia();
 
-      expect(result).toStrictEqual(
-        createMock<ClientUser>({
-          username: `dummy-username`,
-        })
-      );
+      expect(result).toStrictEqual({
+        username: `dummy-username`,
+      });
     });
   });
 
