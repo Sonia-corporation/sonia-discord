@@ -101,6 +101,7 @@ export class DiscordMessageCommandHelpService {
       this._getMessageEmbedFieldVersion(),
       this._getMessageEmbedFieldError(),
       this._getMessageEmbedFieldHelp(),
+      this._getMessageEmbedFieldCookie(),
       this._getMessageEmbedFieldMoreHelp(),
     ];
   }
@@ -125,6 +126,14 @@ export class DiscordMessageCommandHelpService {
       name: `Help (*!help* or *!h*)`,
       value: `Ask for my help, it is obvious!
       And maybe I will, who knows?`,
+    };
+  }
+
+  private _getMessageEmbedFieldCookie(): EmbedFieldData {
+    return {
+      name: `Cookie (*!cookie* or *!c*)`,
+      value: `Because I am good, life gave me cookies.
+      Now it is my turn to give you some.`,
     };
   }
 
