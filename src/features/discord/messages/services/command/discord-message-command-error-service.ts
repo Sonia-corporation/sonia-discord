@@ -7,11 +7,11 @@ import {
 } from "discord.js";
 import _ from "lodash";
 import moment from "moment";
-import { LoggerService } from "../../../logger/services/logger-service";
-import { DiscordSoniaService } from "../../users/services/discord-sonia-service";
-import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../types/any-discord-message";
-import { DiscordMessageConfigService } from "./config/discord-message-config-service";
+import { LoggerService } from "../../../../logger/services/logger-service";
+import { DiscordSoniaService } from "../../../users/services/discord-sonia-service";
+import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
+import { AnyDiscordMessage } from "../../types/any-discord-message";
+import { DiscordMessageConfigService } from "../config/discord-message-config-service";
 
 export class DiscordMessageCommandErrorService {
   private static _instance: DiscordMessageCommandErrorService;

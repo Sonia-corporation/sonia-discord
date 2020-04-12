@@ -1,7 +1,7 @@
 import { Message } from "discord.js";
 import { createMock } from "ts-auto-mock";
-import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
-import { DiscordMessageConfigService } from "./config/discord-message-config-service";
+import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
+import { DiscordMessageConfigService } from "../config/discord-message-config-service";
 import { DiscordMessageCommandCookieService } from "./discord-message-command-cookie-service";
 import { DiscordMessageCommandErrorService } from "./discord-message-command-error-service";
 import { DiscordMessageCommandHelpService } from "./discord-message-command-help-service";

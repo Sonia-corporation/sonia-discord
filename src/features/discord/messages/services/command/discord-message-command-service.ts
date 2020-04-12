@@ -1,13 +1,13 @@
 import _ from "lodash";
-import { DiscordMessageCommandEnum } from "../enums/discord-message-command.enum";
-import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../types/any-discord-message";
-import { DiscordMessageConfigService } from "./config/discord-message-config-service";
+import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
+import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
+import { AnyDiscordMessage } from "../../types/any-discord-message";
+import { DiscordMessageConfigService } from "../config/discord-message-config-service";
 import { DiscordMessageCommandCookieService } from "./discord-message-command-cookie-service";
 import { DiscordMessageCommandErrorService } from "./discord-message-command-error-service";
 import { DiscordMessageCommandHelpService } from "./discord-message-command-help-service";
 import { DiscordMessageCommandVersionService } from "./discord-message-command-version-service";
-import { DiscordMessageContentService } from "./discord-message-content-service";
+import { DiscordMessageContentService } from "../discord-message-content-service";
 
 export class DiscordMessageCommandService {
   private static _instance: DiscordMessageCommandService;

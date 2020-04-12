@@ -1,5 +1,4 @@
 import {
-  EmbedFieldData,
   MessageEmbedAuthor,
   MessageEmbedFooter,
   MessageEmbedOptions,
@@ -7,11 +6,14 @@ import {
 } from "discord.js";
 import _ from "lodash";
 import moment from "moment";
-import { LoggerService } from "../../../logger/services/logger-service";
-import { DiscordSoniaService } from "../../users/services/discord-sonia-service";
-import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../types/any-discord-message";
-import { DiscordMessageConfigService } from "./config/discord-message-config-service";
+import { getRandomValueFromEnum } from "../../../../../functions/randoms/get-random-value-from-enum";
+import { LoggerService } from "../../../../logger/services/logger-service";
+import { DiscordSoniaService } from "../../../users/services/discord-sonia-service";
+import { DiscordMessageCommandCookieDescriptionEnum } from "../../enums/command/cookie/discord-message-command-cookie-description.enum";
+import { DiscordMessageCommandCookieTitleEnum } from "../../enums/command/cookie/discord-message-command-cookie-title.enum";
+import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
+import { AnyDiscordMessage } from "../../types/any-discord-message";
+import { DiscordMessageConfigService } from "../config/discord-message-config-service";
 
 export class DiscordMessageCommandCookieService {
   private static _instance: DiscordMessageCommandCookieService;
@@ -55,7 +57,6 @@ export class DiscordMessageCommandCookieService {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
       description: this._getMessageDescription(),
-      fields: this._getMessageEmbedFields(),
       footer: this._getMessageEmbedFooter(),
       thumbnail: this._getMessageEmbedThumbnail(),
       timestamp: this._getMessageEmbedTimestamp(),
@@ -93,51 +94,15 @@ export class DiscordMessageCommandCookieService {
   }
 
   private _getMessageEmbedTitle(): string {
-    return `So, you need my help? Cool.`;
-  }
-
-  private _getMessageEmbedFields(): EmbedFieldData[] {
-    return [
-      this._getMessageEmbedFieldVersion(),
-      this._getMessageEmbedFieldError(),
-      this._getMessageEmbedFieldHelp(),
-      this._getMessageEmbedFieldMoreHelp(),
-    ];
-  }
-
-  private _getMessageEmbedFieldVersion(): EmbedFieldData {
-    return {
-      name: `Version (*!version* or *!v*)`,
-      value: `Display my current application version.`,
-    };
-  }
-
-  private _getMessageEmbedFieldError(): EmbedFieldData {
-    return {
-      name: `Error (*!error* or *!bug*)`,
-      value: `Create a bug in my core system.
-      Do not do this one, of course!`,
-    };
-  }
-
-  private _getMessageEmbedFieldHelp(): EmbedFieldData {
-    return {
-      name: `Help (*!help* or *!h*)`,
-      value: `Ask for my help, it is obvious!
-      And maybe I will, who knows?`,
-    };
-  }
-
-  private _getMessageEmbedFieldMoreHelp(): EmbedFieldData {
-    return {
-      name: `Further help`,
-      value: `You can also checkout the [readme](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/README.md).
-      It contains more information about how I work.`,
-    };
+    return (
+      getRandomValueFromEnum(DiscordMessageCommandCookieTitleEnum) || `Cookies!`
+    );
   }
 
   private _getMessageDescription(): string {
-    return `Below is the complete list of commands.
-    You can either use *--* or *!* as prefix to run a command.`;
+    return (
+      getRandomValueFromEnum(DiscordMessageCommandCookieDescriptionEnum) ||
+      `Yes.`
+    );
   }
 }

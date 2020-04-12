@@ -8,4 +8,10 @@ describe(`DiscordEmojiEnum`, (): void => {
       `:face_with_symbols_over_mouth:`
     );
   });
+
+  it(`should have a member "YUM"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordEmojiEnum.YUM).toStrictEqual(`:yum:`);
+  });
 });
