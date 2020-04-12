@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { DiscordAuthenticationService } from "../authentications/services/discord-authentication-service";
+import { DiscordGuildCreateService } from "../guilds/services/discord-guild-create-service";
 import { DiscordGuildMemberAddService } from "../guilds/services/discord-guild-member-add-service";
 import { DiscordGuildService } from "../guilds/services/discord-guild-service";
 import { DiscordLoggerService } from "../logger/services/discord-logger-service";
@@ -26,6 +27,7 @@ export class DiscordService {
     DiscordLoggerService.getInstance();
     DiscordGuildService.getInstance();
     DiscordGuildMemberAddService.getInstance();
+    DiscordGuildCreateService.getInstance();
     DiscordMessageService.getInstance();
     DiscordAuthenticationService.getInstance();
   }
