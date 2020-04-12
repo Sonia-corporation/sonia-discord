@@ -22,4 +22,6 @@ export enum DiscordMessageCommandCookieDescriptionEnum {
   YOU_WERE_SO_SKINNY_THOUGH = `You were so skinny though.`,
   GETTING_FAT_IS_AN_ILLUSION = `Getting fat is an illusion.`,
   EAT_YOU_MUST = `Eat you must.`,
+  I_GOT_ENOUGH_FOR_EVERYBODY_WINK = `I got enough for everybody :wink:`,
+  SUNGLASSES = `:sunglasses:`,
 }

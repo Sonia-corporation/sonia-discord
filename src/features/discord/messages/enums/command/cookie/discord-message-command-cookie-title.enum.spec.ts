@@ -72,4 +72,12 @@ describe(`DiscordMessageCommandCookieTitleEnum`, (): void => {
       DiscordMessageCommandCookieTitleEnum.YOU_WANT_SOME_COOKIES
     ).toStrictEqual(`You want some cookies?`);
   });
+
+  it(`should have a member "COOKIE_DELIVERY"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandCookieTitleEnum.COOKIE_DELIVERY).toStrictEqual(
+      `Cookie delivery!`
+    );
+  });
 });

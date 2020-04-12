@@ -186,4 +186,20 @@ describe(`DiscordMessageCommandCookieDescriptionEnum`, (): void => {
       DiscordMessageCommandCookieDescriptionEnum.EAT_YOU_MUST
     ).toStrictEqual(`Eat you must.`);
   });
+
+  it(`should have a member "I_GOT_ENOUGH_FOR_EVERYBODY_WINK"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      DiscordMessageCommandCookieDescriptionEnum.I_GOT_ENOUGH_FOR_EVERYBODY_WINK
+    ).toStrictEqual(`I got enough for everybody :wink:`);
+  });
+
+  it(`should have a member "SUNGLASSES"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandCookieDescriptionEnum.SUNGLASSES).toStrictEqual(
+      `:sunglasses:`
+    );
+  });
 });

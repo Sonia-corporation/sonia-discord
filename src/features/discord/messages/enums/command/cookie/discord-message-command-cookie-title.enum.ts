@@ -8,4 +8,5 @@ export enum DiscordMessageCommandCookieTitleEnum {
   HOTEL_TRIVAGO = `Hungry? Cookies. Hotel? Trivago.`,
   SOMEONE_ORDERED_SOME_COOKIES = `Someone ordered some cookies?`,
   YOU_WANT_SOME_COOKIES = `You want some cookies?`,
+  COOKIE_DELIVERY = `Cookie delivery!`,
 }
