@@ -131,10 +131,6 @@ When a message on the channel is sent, Sonia will only respond if she is mention
 This counts as a DM response for Sonia, so prepare to have a friendly message dedicated to you.  
 Special commands will be handled as a priority.  
 
-When a newcomer joins the channel, Sonia will send a friendly message to welcome them.  
-For now, the only channel receiving welcome messages will be the `general`.  
-It will also work if accents are used such as `général`.  
-
 __Example:__  
 
 `@Sonia-il-est-midi yo`
@@ -146,6 +142,16 @@ To use a command, you must ask her personally.
 __Example:__
 
 `@Sonia-il-est-midi !version`
+
+__Guild new member welcome message:__
+
+When a newcomer joins the channel, Sonia will send a friendly message to welcome them.  
+For now, the only channel receiving welcome messages will be the `general`.  
+It will also work if accents are used such as `général`.  
+
+__Sonia new guild message:__
+
+When Sonia joins a new guild, she will send a cookie to the `general` channel.
 
 ### Errors
 
