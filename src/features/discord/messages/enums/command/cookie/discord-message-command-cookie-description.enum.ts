@@ -20,6 +20,6 @@ export enum DiscordMessageCommandCookieDescriptionEnum {
   HEART = `:heart:`,
   HEARTS = `:hearts:`,
   YOU_WERE_SO_SKINNY_THOUGH = `You were so skinny though.`,
-  GETTING_FAT_IS_AN_ILLUSION = `Getting fat is an illusion`,
+  GETTING_FAT_IS_AN_ILLUSION = `Getting fat is an illusion.`,
   EAT_YOU_MUST = `Eat you must.`,
 }

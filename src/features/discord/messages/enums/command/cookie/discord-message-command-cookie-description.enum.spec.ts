@@ -176,7 +176,7 @@ describe(`DiscordMessageCommandCookieDescriptionEnum`, (): void => {
 
     expect(
       DiscordMessageCommandCookieDescriptionEnum.GETTING_FAT_IS_AN_ILLUSION
-    ).toStrictEqual(`Getting fat is an illusion`);
+    ).toStrictEqual(`Getting fat is an illusion.`);
   });
 
   it(`should have a member "EAT_YOU_MUST"`, (): void => {
