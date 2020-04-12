@@ -1,6 +1,6 @@
 import appRootPath from "app-root-path";
 import axios, { AxiosResponse } from "axios";
-import fs from "fs-extra";
+import { readJson } from "fs-extra";
 import _ from "lodash";
 import { ENVIRONMENT } from "../../../environment/constants/environment";
 import { IEnvironment } from "../../../environment/interfaces/environment";
@@ -80,7 +80,7 @@ export class InitService {
   }
 
   private _configureAppFromPackage(): void {
-    fs.readJson(`${appRootPath}/package.json`)
+    readJson(`${appRootPath}/package.json`)
       .then((data: Readonly<IPackage>): void => {
         AppConfigMutatorService.getInstance().updateVersion(data.version);
       })
@@ -131,7 +131,7 @@ export class InitService {
   }
 
   private _readEnvironment(): void {
-    fs.readJson(`${appRootPath}/src/environment/secret-environment.json`)
+    readJson(`${appRootPath}/src/environment/secret-environment.json`)
       .then((environment: Readonly<IEnvironment>): void => {
         this._startApp(this._mergeEnvironments(ENVIRONMENT, environment));
       })
