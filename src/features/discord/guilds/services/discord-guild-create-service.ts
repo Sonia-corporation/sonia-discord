@@ -21,7 +21,7 @@ export class DiscordGuildCreateService {
     return DiscordGuildCreateService._instance;
   }
 
-  private readonly _discordClientServiceClient = DiscordClientService.getInstance().getClient();
+  public readonly discordClientServiceClient = DiscordClientService.getInstance().getClient();
   private readonly _discordChannelGuildService = DiscordChannelGuildService.getInstance();
   private readonly _discordGuildConfigService = DiscordGuildConfigService.getInstance();
   private readonly _loggerService = LoggerService.getInstance();
@@ -29,15 +29,15 @@ export class DiscordGuildCreateService {
   private readonly _className = `DiscordGuildCreateService`;
 
   public constructor() {
-    this._init();
+    this.init();
   }
 
-  private _init(): void {
+  public init(): void {
     this._listen();
   }
 
   private _listen(): void {
-    this._discordClientServiceClient.on(
+    this.discordClientServiceClient.on(
       `guildCreate`,
       (guild: Readonly<Guild>): void => {
         this._handleGuildCreate(guild);

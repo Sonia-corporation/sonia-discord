@@ -36,10 +36,10 @@ export class DiscordGuildMemberAddService {
   private readonly _className = `DiscordGuildMemberAddService`;
 
   public constructor() {
-    this._init();
+    this.init();
   }
 
-  private _init(): void {
+  public init(): void {
     this._listen();
   }
 

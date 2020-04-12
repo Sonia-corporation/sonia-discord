@@ -38,7 +38,11 @@ export class InitService {
   private readonly _loggerService = LoggerService.getInstance();
 
   public constructor() {
-    this._init();
+    this.init();
+  }
+
+  public init(): void {
+    this._readEnvironment();
   }
 
   private _mergeEnvironments(
@@ -51,10 +55,6 @@ export class InitService {
   private _runApp(): void {
     DiscordService.getInstance();
     ServerService.getInstance();
-  }
-
-  private _init(): void {
-    this._readEnvironment();
   }
 
   private _configureApp(environment: Readonly<IEnvironment>): void {

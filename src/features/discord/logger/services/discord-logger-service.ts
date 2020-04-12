@@ -21,10 +21,10 @@ export class DiscordLoggerService {
   private readonly _className = `DiscordLoggerService`;
 
   public constructor() {
-    this._init();
+    this.init();
   }
 
-  private _init(): void {
+  public init(): void {
     this._listenForWarnings();
     this._listenForErrors();
   }

@@ -19,10 +19,10 @@ export class DiscordService {
   }
 
   public constructor() {
-    this._init();
+    this.init();
   }
 
-  private _init(): void {
+  public init(): void {
     DiscordSoniaService.getInstance();
     DiscordLoggerService.getInstance();
     DiscordGuildService.getInstance();
