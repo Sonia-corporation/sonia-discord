@@ -1,8 +1,8 @@
-import { IEnvironmentApp } from "./environment-app";
-import { IEnvironmentDiscord } from "./environment-discord";
-import { IEnvironmentGithub } from "./environment-github";
-import { IEnvironmentLogger } from "./environment-logger";
-import { IEnvironmentProfile } from "./environment-profile";
+import { IEnvironmentApp } from "~app/environment/interfaces/environment-app";
+import { IEnvironmentDiscord } from "~app/environment/interfaces/environment-discord";
+import { IEnvironmentGithub } from "~app/environment/interfaces/environment-github";
+import { IEnvironmentLogger } from "~app/environment/interfaces/environment-logger";
+import { IEnvironmentProfile } from "~app/environment/interfaces/environment-profile";
 
 export interface IEnvironment {
   app?: IEnvironmentApp;

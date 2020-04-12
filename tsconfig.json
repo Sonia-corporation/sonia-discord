@@ -44,31 +44,31 @@
       }
     ],
     "paths": {
-      "@app/classes/*": [
+      "~app/classes/*": [
         "src/classes/*"
       ],
-      "@app/environment/*": [
+      "~app/environment/*": [
         "src/environment/*"
       ],
-      "@app/features/*": [
+      "~app/features/*": [
         "src/features/*"
       ],
-      "@app/functions/*": [
+      "~app/functions/*": [
         "src/functions/*"
       ],
-      "@app/interfaces/*": [
+      "~app/interfaces/*": [
         "src/interfaces/*"
       ],
-      "@app/types/*": [
+      "~app/types/*": [
         "src/types/*"
       ],
-      "@app/views/*": [
+      "~app/views/*": [
         "src/views/*"
       ],
-      "@app/index": [
+      "~app/index": [
         "src/index.ts"
       ],
-      "@app/types": [
+      "~app/types": [
         "src/types.d.ts"
       ]
     }

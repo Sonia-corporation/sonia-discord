@@ -1,5 +1,5 @@
-import { LoggerConfigLevelEnum } from "../../features/logger/enums/logger-config-level.enum";
-import { IEnvironment } from "../interfaces/environment";
+import { IEnvironment } from "~app/environment/interfaces/environment";
+import { LoggerConfigLevelEnum } from "~app/features/logger/enums/logger-config-level.enum";
 
 export const ENVIRONMENT: IEnvironment = {
   discord: {
