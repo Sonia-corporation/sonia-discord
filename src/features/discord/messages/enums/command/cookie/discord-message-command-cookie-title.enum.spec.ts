@@ -80,4 +80,28 @@ describe(`DiscordMessageCommandCookieTitleEnum`, (): void => {
       `Cookie delivery!`
     );
   });
+
+  it(`should have a member "HOT_HOT"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandCookieTitleEnum.HOT_HOT).toStrictEqual(
+      `Hot! Hot!`
+    );
+  });
+
+  it(`should have a member "I_AM_HERE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandCookieTitleEnum.I_AM_HERE).toStrictEqual(
+      `I am here!`
+    );
+  });
+
+  it(`should have a member "YOU_GOTTA_LOVE_THEM_ALL"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      DiscordMessageCommandCookieTitleEnum.YOU_GOTTA_LOVE_THEM_ALL
+    ).toStrictEqual(`You gotta love them all!`);
+  });
 });
