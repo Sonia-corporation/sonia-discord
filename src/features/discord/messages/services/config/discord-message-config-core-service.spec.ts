@@ -9,6 +9,20 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
     service = DiscordMessageConfigCoreService.getInstance();
   });
 
+  it(`should have a specific color for the image of the cookie command`, (): void => {
+    expect.assertions(1);
+
+    expect(service.command.cookie.imageColor).toStrictEqual(16376750);
+  });
+
+  it(`should have a specific url for the image of the cookie command`, (): void => {
+    expect.assertions(1);
+
+    expect(service.command.cookie.imageUrl).toStrictEqual(
+      `https://i.ibb.co/RTp4YPx/icons8-cookies-512.png`
+    );
+  });
+
   it(`should have a specific color for the image of the error command`, (): void => {
     expect.assertions(1);
 

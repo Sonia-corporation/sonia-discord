@@ -4,6 +4,7 @@ import { IConfigUpdateString } from "../../../../config/interfaces/config-update
 import { ConfigService } from "../../../../config/services/config-service";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
+import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
 import { IDiscordMessageCommandHelpConfig } from "../../../interfaces/discord-message-command-help-config";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
@@ -30,6 +31,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
     beforeEach((): void => {
       discordMessageConfigCoreService.command = {
+        cookie: {
+          imageColor: 11,
+          imageUrl: `dummy-image-url-cookie`,
+        },
         error: {
           imageColor: 9,
           imageUrl: `dummy-image-url-error`,
@@ -61,6 +66,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(discordMessageConfigCoreService.command).toStrictEqual({
+          cookie: {
+            imageColor: 11,
+            imageUrl: `dummy-image-url-cookie`,
+          },
           error: {
             imageColor: 9,
             imageUrl: `dummy-image-url-error`,
@@ -87,6 +96,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         config = {
           message: {
             command: {
+              cookie: {
+                imageColor: 11,
+                imageUrl: `dummy-image-url-cookie`,
+              },
               error: {
                 imageColor: 88,
                 imageUrl: `image-url`,
@@ -111,6 +124,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(discordMessageConfigCoreService.command).toStrictEqual({
+          cookie: {
+            imageColor: 88,
+            imageUrl: `image-url`,
+          },
           error: {
             imageColor: 88,
             imageUrl: `image-url`,
@@ -158,6 +175,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
     beforeEach((): void => {
       discordMessageConfigCoreService.command = {
+        cookie: {
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        },
         error: {
           imageColor: 8,
           imageUrl: `dummy-image-url`,
@@ -189,6 +210,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         service.updateMessage(config);
 
         expect(discordMessageConfigCoreService.command).toStrictEqual({
+          cookie: {
+            imageColor: 8,
+            imageUrl: `dummy-image-url`,
+          },
           error: {
             imageColor: 8,
             imageUrl: `dummy-image-url`,
@@ -214,6 +239,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
       beforeEach((): void => {
         config = {
           command: {
+            cookie: {
+              imageColor: 88,
+              imageUrl: `image-url`,
+            },
             error: {
               imageColor: 88,
               imageUrl: `image-url`,
@@ -237,6 +266,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         service.updateMessage(config);
 
         expect(discordMessageConfigCoreService.command).toStrictEqual({
+          cookie: {
+            imageColor: 88,
+            imageUrl: `image-url`,
+          },
           error: {
             imageColor: 88,
             imageUrl: `image-url`,
@@ -282,6 +315,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
     beforeEach((): void => {
       discordMessageConfigCoreService.command = {
+        cookie: {
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        },
         error: {
           imageColor: 8,
           imageUrl: `dummy-image-url`,
@@ -309,6 +346,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         service.updateMessageCommand(config);
 
         expect(discordMessageConfigCoreService.command).toStrictEqual({
+          cookie: {
+            imageColor: 8,
+            imageUrl: `dummy-image-url`,
+          },
           error: {
             imageColor: 8,
             imageUrl: `dummy-image-url`,
@@ -323,6 +364,28 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageUrl: `dummy-image-url`,
           },
         } as IDiscordMessageCommandConfig);
+      });
+    });
+
+    describe(`when the given config contains an cookie`, (): void => {
+      beforeEach((): void => {
+        config = {
+          cookie: {
+            imageColor: 88,
+            imageUrl: `image-url`,
+          },
+        };
+      });
+
+      it(`should update the config command cookie`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommand(config);
+
+        expect(discordMessageConfigCoreService.command.cookie).toStrictEqual({
+          imageColor: 88,
+          imageUrl: `image-url`,
+        } as IDiscordMessageCommandCookieConfig);
       });
     });
 
@@ -408,6 +471,148 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageUrl: `image-url`,
         } as IDiscordMessageCommandVersionConfig);
       });
+    });
+  });
+
+  describe(`updateMessageCommandCookie()`, (): void => {
+    let config: PartialNested<IDiscordMessageCommandCookieConfig> | undefined;
+
+    beforeEach((): void => {
+      discordMessageConfigCoreService.command.cookie = {
+        imageColor: 8,
+        imageUrl: `dummy-image-url`,
+      };
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandCookie(config);
+
+        expect(discordMessageConfigCoreService.command.cookie).toStrictEqual({
+          imageColor: 8,
+          imageUrl: `dummy-image-url`,
+        } as IDiscordMessageCommandCookieConfig);
+      });
+    });
+
+    describe(`when the given config contains an image color`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageColor: 88,
+        };
+      });
+
+      it(`should update the config command cookie image color`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandCookie(config);
+
+        expect(
+          discordMessageConfigCoreService.command.cookie.imageColor
+        ).toStrictEqual(88);
+      });
+    });
+
+    describe(`when the given config contains an image url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageUrl: `image-url`,
+        };
+      });
+
+      it(`should update the config command cookie image url`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandCookie(config);
+
+        expect(
+          discordMessageConfigCoreService.command.cookie.imageUrl
+        ).toStrictEqual(`image-url`);
+      });
+    });
+  });
+
+  describe(`updateMessageCommandCookieImageColor()`, (): void => {
+    let imageColor: number;
+
+    let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      imageColor = 8;
+      discordMessageConfigCoreService.command.cookie.imageColor = 10;
+
+      configServiceGetUpdatedNumberSpy = jest
+        .spyOn(configService, `getUpdatedNumber`)
+        .mockReturnValue(8);
+    });
+
+    it(`should get the updated number`, (): void => {
+      expect.assertions(2);
+
+      service.updateMessageCommandCookieImageColor(imageColor);
+
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageConfigMutatorService`,
+        newValue: 8,
+        oldValue: 10,
+        valueName: `message command cookie image color`,
+      } as IConfigUpdateNumber);
+    });
+
+    it(`should update the Discord message config command cookie image color with the updated number`, (): void => {
+      expect.assertions(1);
+
+      service.updateMessageCommandCookieImageColor(imageColor);
+
+      expect(
+        discordMessageConfigCoreService.command.cookie.imageColor
+      ).toStrictEqual(8);
+    });
+  });
+
+  describe(`updateMessageCommandCookieImageUrl()`, (): void => {
+    let imageUrl: string;
+
+    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      imageUrl = `dummy-image-url`;
+      discordMessageConfigCoreService.command.cookie.imageUrl = `image-url`;
+
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`dummy-image-url`);
+    });
+
+    it(`should get the updated string`, (): void => {
+      expect.assertions(2);
+
+      service.updateMessageCommandCookieImageUrl(imageUrl);
+
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageConfigMutatorService`,
+        newValue: `dummy-image-url`,
+        oldValue: `image-url`,
+        valueName: `message command cookie image url`,
+      } as IConfigUpdateString);
+    });
+
+    it(`should update the Discord message config command cookie image url with the updated string`, (): void => {
+      expect.assertions(1);
+
+      service.updateMessageCommandCookieImageUrl(imageUrl);
+
+      expect(
+        discordMessageConfigCoreService.command.cookie.imageUrl
+      ).toStrictEqual(`dummy-image-url`);
     });
   });
 

@@ -3,6 +3,7 @@ import { DiscordMessageCommandEnum } from "../enums/discord-message-command.enum
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
 import { DiscordMessageConfigService } from "./config/discord-message-config-service";
+import { DiscordMessageCommandCookieService } from "./discord-message-command-cookie-service";
 import { DiscordMessageCommandErrorService } from "./discord-message-command-error-service";
 import { DiscordMessageCommandHelpService } from "./discord-message-command-help-service";
 import { DiscordMessageCommandVersionService } from "./discord-message-command-version-service";
@@ -23,6 +24,7 @@ export class DiscordMessageCommandService {
   private readonly _discordMessageCommandVersionService = DiscordMessageCommandVersionService.getInstance();
   private readonly _discordMessageCommandErrorService = DiscordMessageCommandErrorService.getInstance();
   private readonly _discordMessageCommandHelpService = DiscordMessageCommandHelpService.getInstance();
+  private readonly _discordMessageCommandCookieService = DiscordMessageCommandCookieService.getInstance();
   private readonly _discordMessageContentService = DiscordMessageContentService.getInstance();
 
   public hasCommand(message: Readonly<string>): boolean {
@@ -31,6 +33,8 @@ export class DiscordMessageCommandService {
     } else if (this.hasErrorCommand(message)) {
       return true;
     } else if (this.hasHelpCommand(message)) {
+      return true;
+    } else if (this.hasCookieCommand(message)) {
       return true;
     }
 
@@ -58,6 +62,13 @@ export class DiscordMessageCommandService {
     ]);
   }
 
+  public hasCookieCommand(message: Readonly<string>): boolean {
+    return this._hasThisCommand(message, [
+      DiscordMessageCommandEnum.COOKIE,
+      DiscordMessageCommandEnum.C,
+    ]);
+  }
+
   public handleVersionCommand(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
@@ -76,6 +87,12 @@ export class DiscordMessageCommandService {
     return this._discordMessageCommandHelpService.handle(anyDiscordMessage);
   }
 
+  public handleCookieCommand(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): IDiscordMessageResponse {
+    return this._discordMessageCommandCookieService.handle(anyDiscordMessage);
+  }
+
   public handleCommands(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse | null {
@@ -88,6 +105,8 @@ export class DiscordMessageCommandService {
         return this.handleErrorCommand(anyDiscordMessage);
       } else if (this.hasHelpCommand(anyDiscordMessage.content)) {
         return this.handleHelpCommand(anyDiscordMessage);
+      } else if (this.hasCookieCommand(anyDiscordMessage.content)) {
+        return this.handleCookieCommand(anyDiscordMessage);
       }
     }
 
