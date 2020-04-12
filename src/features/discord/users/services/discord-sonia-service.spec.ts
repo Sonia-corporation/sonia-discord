@@ -3,7 +3,7 @@ import { createMock } from "ts-auto-mock";
 import * as GetRandomValueFromEnumModule from "../../../../functions/randoms/get-random-value-from-enum";
 import { AppConfigCoreService } from "../../../app/services/config/app-config-core-service";
 import { ProfileConfigCoreService } from "../../../profile/services/config/profile-config-core-service";
-import { DiscordSoniaMentalStateEnum } from "../enums/discord-sonia-mental-state.enum";
+import { DiscordSoniaEmotionalStateEnum } from "../enums/discord-sonia-emotional-state.enum";
 import { DiscordSoniaConfigCoreService } from "./config/discord-sonia-config-core-service";
 import { DiscordSoniaService } from "./discord-sonia-service";
 
@@ -472,32 +472,32 @@ describe(`DiscordSoniaService`, (): void => {
     });
   });
 
-  describe(`getMentalState()`, (): void => {
+  describe(`getEmotionalState()`, (): void => {
     let getRandomValueFromEnumSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       getRandomValueFromEnumSpy = jest
         .spyOn(GetRandomValueFromEnumModule, `getRandomValueFromEnum`)
-        .mockReturnValue(`dummy-mental-state`);
+        .mockReturnValue(`dummy-emotional-state`);
     });
 
-    it(`should get a random mental state`, (): void => {
+    it(`should get a random emotional state`, (): void => {
       expect.assertions(2);
 
-      service.getMentalState();
+      service.getEmotionalState();
 
       expect(getRandomValueFromEnumSpy).toHaveBeenCalledTimes(1);
       expect(getRandomValueFromEnumSpy).toHaveBeenCalledWith(
-        DiscordSoniaMentalStateEnum
+        DiscordSoniaEmotionalStateEnum
       );
     });
 
-    it(`should return a random mental state`, (): void => {
+    it(`should return a random emotional state`, (): void => {
       expect.assertions(1);
 
-      const result = service.getMentalState();
+      const result = service.getEmotionalState();
 
-      expect(result).toStrictEqual(`dummy-mental-state`);
+      expect(result).toStrictEqual(`dummy-emotional-state`);
     });
   });
 });
