@@ -97,8 +97,8 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           message: {
             command: {
               cookie: {
-                imageColor: 11,
-                imageUrl: `dummy-image-url-cookie`,
+                imageColor: 88,
+                imageUrl: `image-url`,
               },
               error: {
                 imageColor: 88,
