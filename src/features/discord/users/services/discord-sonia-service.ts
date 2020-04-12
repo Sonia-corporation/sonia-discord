@@ -6,7 +6,7 @@ import { ProfileConfigService } from "../../../profile/services/config/profile-c
 import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../interfaces/discord-sonia-corporation-message-embed-author-config";
 import { DiscordClientService } from "../../services/discord-client-service";
-import { DiscordSoniaMentalStateEnum } from "../enums/discord-sonia-mental-state.enum";
+import { DiscordSoniaEmotionalStateEnum } from "../enums/discord-sonia-emotional-state.enum";
 import { isDiscordClientUser } from "../functions/is-discord-client-user";
 import { Sonia } from "../types/sonia";
 import { DiscordSoniaConfigService } from "./config/discord-sonia-config-service";
@@ -88,7 +88,7 @@ export class DiscordSoniaService {
     return null;
   }
 
-  public getMentalState(): DiscordSoniaMentalStateEnum | undefined {
-    return getRandomValueFromEnum(DiscordSoniaMentalStateEnum);
+  public getEmotionalState(): DiscordSoniaEmotionalStateEnum | undefined {
+    return getRandomValueFromEnum(DiscordSoniaEmotionalStateEnum);
   }
 }

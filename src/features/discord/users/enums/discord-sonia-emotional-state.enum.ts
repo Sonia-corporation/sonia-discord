@@ -2,7 +2,7 @@
  * @description
  * Most of them comes from https://web.sonoma.edu/users/s/swijtink/teaching/philosophy_101/paper1/listemotions.htm
  */
-export enum DiscordSoniaMentalStateEnum {
+export enum DiscordSoniaEmotionalStateEnum {
   AGITATED = `agitated`,
   ANGRY = `angry`,
   ANNOYED = `annoyed`,

@@ -13,7 +13,7 @@ import { AppConfigQueryService } from "../../../app/services/config/app-config-q
 import { AppConfigService } from "../../../app/services/config/app-config-service";
 import { LoggerService } from "../../../logger/services/logger-service";
 import { IDiscordMessageCommandVersionConfig } from "../../interfaces/discord-message-command-version-config";
-import { DiscordSoniaMentalStateEnum } from "../../users/enums/discord-sonia-mental-state.enum";
+import { DiscordSoniaEmotionalStateEnum } from "../../users/enums/discord-sonia-emotional-state.enum";
 import { DiscordSoniaService } from "../../users/services/discord-sonia-service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
@@ -118,7 +118,7 @@ export class DiscordMessageCommandVersionService {
       this._getMessageEmbedFieldInitializationDate(),
       this._getMessageEmbedFieldReleaseNotes(),
       this._getMessageEmbedFieldStatus(),
-      this._getMessageEmbedFieldMentalState(),
+      this._getMessageEmbedFieldEmotionalState(),
     ];
   }
 
@@ -169,15 +169,15 @@ export class DiscordMessageCommandVersionService {
     };
   }
 
-  private _getMessageEmbedFieldMentalState(): EmbedFieldData {
-    const soniaMentalState:
-      | DiscordSoniaMentalStateEnum
-      | undefined = this._discordSoniaService.getMentalState();
+  private _getMessageEmbedFieldEmotionalState(): EmbedFieldData {
+    const soniaEmotionalState:
+      | DiscordSoniaEmotionalStateEnum
+      | undefined = this._discordSoniaService.getEmotionalState();
 
     return {
       inline: true,
-      name: `My mental state`,
-      value: _.capitalize(soniaMentalState),
+      name: `My emotional state`,
+      value: _.capitalize(soniaEmotionalState),
     };
   }
 }
