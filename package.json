@@ -57,7 +57,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "\n# BUILD SCRIPTS:": "",
-    "start": "ts-node-dev --respawn --transpileOnly .",
+    "start": "ts-node-dev -r tsconfig-paths/register --respawn --transpileOnly .",
     "start:prod": "npm run build && npm run run:prod",
     "build": "npm run clean:dist && concurrently \"parcel build ./src/index.ts --target node\" \"npm run build:environment:create\" && concurrently \"npm run build:environment:copy\" \"npm run build:environment:rewrite-path\" \"npm run build:update-app-initialization-date\"",
     "build:environment:copy": "node scripts/build-environment-copy.js",
