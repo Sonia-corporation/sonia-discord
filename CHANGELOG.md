@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.30.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.29.0...1.30.0) (2020-04-12)
+
+
+### Features
+
+* **discord:** add a dev prefix when the response is an embed one ([308d4e7](https://github.com/Sonia-corporation/il-est-midi-discord/commit/308d4e782b6086bf7079b97deabdc626542ca804))
+
 # [1.29.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.28.1...1.29.0) (2020-04-11)
 
 
