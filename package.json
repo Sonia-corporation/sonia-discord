@@ -69,6 +69,7 @@
     "\n# TEST SCRIPTS:": "",
     "test": "jest",
     "test:watch": "jest --watchAll",
+    "test:watch:no-cache": "jest --watchAll --no-cache",
     "test:majestic": "majestic --port 3002 --noOpen",
     "test:ci": "jest --bail=1 --ci",
     "test:ci:coverage": "jest --collectCoverage --bail=1 --ci",
