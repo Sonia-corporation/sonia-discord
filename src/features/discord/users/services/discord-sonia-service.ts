@@ -1,6 +1,10 @@
 import { MessageEmbedAuthor } from "discord.js";
 import _ from "lodash";
 import { getRandomValueFromEnum } from "../../../../functions/randoms/get-random-value-from-enum";
+import { AppConfigService } from "../../../app/services/config/app-config-service";
+import { ProfileConfigService } from "../../../profile/services/config/profile-config-service";
+import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
+import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../interfaces/discord-sonia-corporation-message-embed-author-config";
 import { DiscordClientService } from "../../services/discord-client-service";
 import { DiscordSoniaMentalStateEnum } from "../enums/discord-sonia-mental-state.enum";
 import { isDiscordClientUser } from "../functions/is-discord-client-user";
@@ -20,6 +24,8 @@ export class DiscordSoniaService {
 
   private readonly _discordClientService = DiscordClientService.getInstance();
   private readonly _discordSoniaConfigService = DiscordSoniaConfigService.getInstance();
+  private readonly _profileConfigService = ProfileConfigService.getInstance();
+  private readonly _appConfigService = AppConfigService.getInstance();
 
   public isSonia(id: Readonly<string>): boolean {
     return _.isEqual(id, this._discordSoniaConfigService.getId());
@@ -44,7 +50,28 @@ export class DiscordSoniaService {
   }
 
   public getCorporationMessageEmbedAuthor(): MessageEmbedAuthor {
-    return this._discordSoniaConfigService.getCorporationMessageEmbedAuthor();
+    const discordSoniaCorporationMessageEmbedAuthorConfig: IDiscordSoniaCorporationMessageEmbedAuthorConfig = this._discordSoniaConfigService.getCorporationMessageEmbedAuthor();
+
+    return {
+      iconURL: discordSoniaCorporationMessageEmbedAuthorConfig.iconURL,
+      name: this.getCorporationMessageEmbedAuthorName(),
+      url: discordSoniaCorporationMessageEmbedAuthorConfig.url,
+    };
+  }
+
+  public getCorporationMessageEmbedAuthorName(): string {
+    const discordSoniaCorporationMessageEmbedAuthorConfigName: string = this._discordSoniaConfigService.getCorporationMessageEmbedAuthorName();
+    const nickname: string | null = this._profileConfigService.getNickname();
+
+    if (!this._appConfigService.isProduction()) {
+      return addDiscordDevPrefix(
+        discordSoniaCorporationMessageEmbedAuthorConfigName,
+        nickname,
+        false
+      );
+    }
+
+    return discordSoniaCorporationMessageEmbedAuthorConfigName;
   }
 
   public getCorporationImageUrl(): string {

@@ -78,11 +78,13 @@ Run `npm run start` to start the local development server.
 - `npm run tsc`: compile the TypeScript app to Node.js app  
 - `npm run test`: run the tests once  
 - `npm run test:watch`: run the tests and watch them  
+- `npm run test:watch:no-cache`: run the tests and watch them without cache 
 - `npm run test:majestic`: run the tests in the browser (beautiful UI)
 - `npm run test:ci`: run the tests once and stop asap on error 
 - `npm run test:ci:coverage`: run the tests once with code coverage and stop asap on error 
 - `npm run test:mutant`: run the mutation testing once
 - `npm run test:mutant:ci`: run the mutation testing once and update Stryker dashboard
+- `npm run test:clear-cache`: remove the Jest cache
 - `npm run lint`: run the linter and fix the errors  
 - `npm run lint:ci`: run the linter  
 - `npm run cz`: run a CLI to easily push and commit by following the commit convention of this project  
