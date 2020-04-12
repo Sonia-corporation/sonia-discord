@@ -83,6 +83,7 @@ Run `npm run start` to start the local development server.
 - `npm run test:ci:coverage`: run the tests once with code coverage and stop asap on error 
 - `npm run test:mutant`: run the mutation testing once
 - `npm run test:mutant:ci`: run the mutation testing once and update Stryker dashboard
+- `npm run test:clear-cache`: remove the Jest cache
 - `npm run lint`: run the linter and fix the errors  
 - `npm run lint:ci`: run the linter  
 - `npm run cz`: run a CLI to easily push and commit by following the commit convention of this project  
