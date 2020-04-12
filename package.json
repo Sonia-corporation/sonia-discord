@@ -3,14 +3,19 @@
   "version": "1.27.0",
   "author": {
     "email": "geoffrey.testelin@gmail.com",
-    "name": "Geoffrey 'C0ZEN' Testelin",
+    "name": "Geoffrey 'C0ZEN' TESTELIN",
     "url": "https://github.com/C0ZEN"
   },
   "contributors": [
     {
       "email": "geoffrey.testelin@gmail.com",
-      "name": "Geoffrey 'C0ZEN' Testelin",
+      "name": "Geoffrey 'C0ZEN' TESTELIN",
       "url": "https://github.com/C0ZEN"
+    },
+    {
+      "email": "vincent.valembois62@gmail.com",
+      "name": "Vilteros",
+      "url": "https://github.com/vvalembois"
     }
   ],
   "description": "The Sonia Discord bot for the famous quote: il est midi",
@@ -18,7 +23,7 @@
   "maintainers": [
     {
       "email": "geoffrey.testelin@gmail.com",
-      "name": "Geoffrey 'C0ZEN' Testelin",
+      "name": "Geoffrey 'C0ZEN' TESTELIN",
       "url": "https://github.com/C0ZEN"
     }
   ],
@@ -69,11 +74,13 @@
     "\n# TEST SCRIPTS:": "",
     "test": "jest",
     "test:watch": "jest --watchAll",
+    "test:watch:no-cache": "jest --watchAll --no-cache",
     "test:majestic": "majestic --port 3002 --noOpen",
     "test:ci": "jest --bail=1 --ci",
     "test:ci:coverage": "jest --collectCoverage --bail=1 --ci",
     "test:mutant": "stryker run",
     "test:mutant:ci": "stryker run --fileLogLevel fatal --logLevel fatal --reporters clear-text,progress,dashboard",
+    "test:clear-cache": "jest --clearCache",
     "\n# LINT SCRIPTS:": "",
     "lint": "eslint --fix --ext .js,.ts --cache scripts/ src/ jest.config.js config.ts",
     "lint:ci": "eslint --ext .js,.ts scripts/ src/ jest.config.js config.ts",
