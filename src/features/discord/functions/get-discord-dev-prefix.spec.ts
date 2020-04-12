@@ -2,6 +2,7 @@ import { getDiscordDevPrefix } from "./get-discord-dev-prefix";
 
 describe(`getDiscordDevPrefix()`, (): void => {
   let nickname: string | null;
+  let emphasis: boolean;
 
   beforeEach((): void => {
     nickname = `dummy-nickname`;
@@ -12,12 +13,32 @@ describe(`getDiscordDevPrefix()`, (): void => {
       nickname = null;
     });
 
-    it(`should return a dev prefix`, (): void => {
-      expect.assertions(1);
+    describe(`when the emphasis is enabled`, (): void => {
+      beforeEach((): void => {
+        emphasis = true;
+      });
 
-      const result = getDiscordDevPrefix(nickname);
+      it(`should return a dev prefix with an emphasis`, (): void => {
+        expect.assertions(1);
 
-      expect(result).toStrictEqual(`**[dev]**`);
+        const result = getDiscordDevPrefix(nickname, emphasis);
+
+        expect(result).toStrictEqual(`**[dev]**`);
+      });
+    });
+
+    describe(`when the emphasis is disabled`, (): void => {
+      beforeEach((): void => {
+        emphasis = false;
+      });
+
+      it(`should return a dev prefix`, (): void => {
+        expect.assertions(1);
+
+        const result = getDiscordDevPrefix(nickname, emphasis);
+
+        expect(result).toStrictEqual(`[dev]`);
+      });
     });
   });
 
@@ -26,12 +47,32 @@ describe(`getDiscordDevPrefix()`, (): void => {
       nickname = ``;
     });
 
-    it(`should return a dev prefix`, (): void => {
-      expect.assertions(1);
+    describe(`when the emphasis is enabled`, (): void => {
+      beforeEach((): void => {
+        emphasis = true;
+      });
 
-      const result = getDiscordDevPrefix(nickname);
+      it(`should return a dev prefix with an emphasis`, (): void => {
+        expect.assertions(1);
 
-      expect(result).toStrictEqual(`**[dev]**`);
+        const result = getDiscordDevPrefix(nickname, emphasis);
+
+        expect(result).toStrictEqual(`**[dev]**`);
+      });
+    });
+
+    describe(`when the emphasis is disabled`, (): void => {
+      beforeEach((): void => {
+        emphasis = false;
+      });
+
+      it(`should return a dev prefix`, (): void => {
+        expect.assertions(1);
+
+        const result = getDiscordDevPrefix(nickname, emphasis);
+
+        expect(result).toStrictEqual(`[dev]`);
+      });
     });
   });
 
@@ -40,12 +81,32 @@ describe(`getDiscordDevPrefix()`, (): void => {
       nickname = `dummy-nickname`;
     });
 
-    it(`should return a dev prefix and a nickname`, (): void => {
-      expect.assertions(1);
+    describe(`when the emphasis is enabled`, (): void => {
+      beforeEach((): void => {
+        emphasis = true;
+      });
 
-      const result = getDiscordDevPrefix(nickname);
+      it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+        expect.assertions(1);
 
-      expect(result).toStrictEqual(`**[dev - dummy-nickname]**`);
+        const result = getDiscordDevPrefix(nickname, emphasis);
+
+        expect(result).toStrictEqual(`**[dev - dummy-nickname]**`);
+      });
+    });
+
+    describe(`when the emphasis is disabled`, (): void => {
+      beforeEach((): void => {
+        emphasis = false;
+      });
+
+      it(`should return a dev prefix and a nickname`, (): void => {
+        expect.assertions(1);
+
+        const result = getDiscordDevPrefix(nickname, emphasis);
+
+        expect(result).toStrictEqual(`[dev - dummy-nickname]`);
+      });
     });
   });
 
@@ -54,12 +115,32 @@ describe(`getDiscordDevPrefix()`, (): void => {
       nickname = `sonia`;
     });
 
-    it(`should return a dev prefix and a nickname`, (): void => {
-      expect.assertions(1);
+    describe(`when the emphasis is enabled`, (): void => {
+      beforeEach((): void => {
+        emphasis = true;
+      });
 
-      const result = getDiscordDevPrefix(nickname);
+      it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+        expect.assertions(1);
 
-      expect(result).toStrictEqual(`**[dev - sonia]**`);
+        const result = getDiscordDevPrefix(nickname, emphasis);
+
+        expect(result).toStrictEqual(`**[dev - sonia]**`);
+      });
+    });
+
+    describe(`when the emphasis is disabled`, (): void => {
+      beforeEach((): void => {
+        emphasis = false;
+      });
+
+      it(`should return a dev prefix and a nickname`, (): void => {
+        expect.assertions(1);
+
+        const result = getDiscordDevPrefix(nickname, emphasis);
+
+        expect(result).toStrictEqual(`[dev - sonia]`);
+      });
     });
   });
 });
