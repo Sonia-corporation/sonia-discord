@@ -34,7 +34,7 @@ __Statistics:__
 ### Sonia commands
 
 Sonia will treat one command at a time.  
-You can either use `--` or `!` as prefix for the commands.  
+You can use either `--` or `!` as prefix for the commands.  
 There is no case sensitivity.
 
 __Example:__
@@ -57,7 +57,7 @@ Sonia will send you a message containing:
 - The application release notes (first 800 chars).
 - The application [changelog](CHANGELOG.md) link.
 - The application status.
-- Her mental state.
+- Her emotional state.
 - The total release count.
 
 __Example:__
@@ -76,10 +76,10 @@ __Commands:__
 
 Sonia will send you a message containing:
 
-- The description of the error.
+- A description of the error.
 - Some nasty bullshit text.
 - This is a useless feature, please, continue.
-- We are very sorry about that. I think.
+- We are very sorry about that. We think.
 
 __Example:__
 
@@ -95,7 +95,7 @@ __Commands:__
 
 Sonia will send you a message containing:
 
-- The list of all the commands available.
+- A list of all the commands available.
 - The application [readme](README.md) link.
 
 __Example:__
@@ -105,35 +105,35 @@ __Example:__
 
 ### Sonia behavior
 
-Sonia will never responds to herself - no infinite loop :(  
-Sonia will never responds to another bot - love between them will not be tolerated.
+Sonia will never respond to herself - no infinite loop :(  
+Sonia will never respond to another bot - love between them will not be tolerated.
 
 #### In a private channel (also known as DM)
 
 Sonia will respond to each of your messages.  
-Special commands will be handled on the first hand.  
+Special commands will be handled as a priority.  
 
 When your message is very simple, Sonia will tell you that it is noon, as usual (even if it is a lie).  
 The message could be variable though.
 
 #### In a public text channel (also known as text)
 
-For now, Sonia will not be configurable over which channel she responds to.  
-In the future, Sonia should be disabled by default on all channels.  
-A command will enable Sonia on the given channel (a command will be also available to disable her).  
+For now, Sonia cannot be configured over which channel she responds to.  
+In the future, Sonia will be disabled by default on all channels.  
+A command will enable Sonia on the given channel (a command will also be available to disable her).  
 This dev is a bit more complicated because Sonia will have to store in a database which channels are ready for her or not.
 
-To avoid flood, Sonia will tell you that it is noon on some conditions.  
+To avoid flooding, Sonia will tell you that it is noon in some conditions.  
 First of all, she will tell the channel that it is noon when it is noon.  
 That is the main goal after all...
 
-When a message on the channel is send, Sonia will respond only if she is mentioned personally.  
-This count as a DM response for Sonia, so prepare to have a friendly message dedicated to you.  
-Special commands will be handled on the first hand.  
+When a message on the channel is sent, Sonia will only respond if she is mentioned personally.  
+This counts as a DM response for Sonia, so prepare to have a friendly message dedicated to you.  
+Special commands will be handled as a priority.  
 
-When a newcomer joins the channel, Sonia will send a friendly message to welcome him.  
+When a newcomer joins the channel, Sonia will send a friendly message to welcome them.  
 For now, the only channel receiving welcome messages will be the `general`.  
-It will also work if there are some accents like `général`.  
+It will also work if accents are used such as `général`.  
 
 __Example:__  
 
@@ -149,20 +149,19 @@ __Example:__
 
 ### Errors
 
-If Sonia receive a Discord error after sending a message,  
-She will send a new message containing this error to help you to debug it.  
+If Sonia receives a Discord error after sending a message she will send a new message containing this error to help you to debug it.  
 
-Nevertheless, sometimes the error is purely on the development side and this is why Sonia will provide:
+Nevertheless, sometimes the error is purely developmental and this is why Sonia will provide:
 - A link to create a new [GitHub issue](https://github.com/Sonia-corporation/il-est-midi-discord/issues/new?assignees=&labels=bug&template=bug_report.md&title=&projects=sonia-corporation/il-est-midi-discord/1).
 - A link to reach us in [Discord](https://discord.gg/PW4JSkv).
 
 ## Contributing
 
-Check out the [Contributing](CONTRIBUTING.md) file before helping us.
+Check out the [contributing](CONTRIBUTING.md) file before helping us.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [license](LICENSE.md) for details.
 
 ## Contributors 
 
@@ -185,5 +184,6 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification.  
+Contributions of any kind are welcome!
 
