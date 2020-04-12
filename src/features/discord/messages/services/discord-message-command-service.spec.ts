@@ -3160,8 +3160,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let discordMessageCommandVersionServiceHandleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      // @todo replace with real mock
-      anyDiscordMessage = {} as Message;
+      anyDiscordMessage = createMock<Message>();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
       discordMessageCommandVersionServiceHandleSpy = jest
@@ -3198,8 +3197,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let discordMessageCommandErrorServiceHandleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      // @todo replace with real mock
-      anyDiscordMessage = {} as Message;
+      anyDiscordMessage = createMock<Message>();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
       discordMessageCommandErrorServiceHandleSpy = jest
@@ -3236,8 +3234,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let discordMessageCommandHelpServiceHandleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      // @todo replace with real mock
-      anyDiscordMessage = {} as Message;
+      anyDiscordMessage = createMock<Message>();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
       discordMessageCommandHelpServiceHandleSpy = jest
@@ -3276,8 +3273,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let discordMessageCommandHelpServiceHandleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      // @todo replace with real mock
-      anyDiscordMessage = {} as Message;
+      anyDiscordMessage = createMock<Message>();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
       discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(

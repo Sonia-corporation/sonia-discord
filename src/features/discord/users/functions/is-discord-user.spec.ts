@@ -1,4 +1,5 @@
-import { Client, User } from "discord.js";
+import { User } from "discord.js";
+import { createMock } from "ts-auto-mock";
 import { isDiscordUser } from "./is-discord-user";
 
 describe(`isDiscordUser()`, (): void => {
@@ -64,8 +65,7 @@ describe(`isDiscordUser()`, (): void => {
 
   describe(`when the given value is a "User" instance`, (): void => {
     beforeEach((): void => {
-      // @todo replace with real mock
-      user = new User(new Client(), {});
+      user = createMock<User>();
     });
 
     // @todo fix it omg this should works

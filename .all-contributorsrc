@@ -13,7 +13,7 @@
   "contributors": [
     {
       "login": "C0ZEN",
-      "name": "Testelin Geoffrey",
+      "name": "Geoffrey "C0ZEN" TESTELIN",
       "avatar_url": "https://avatars2.githubusercontent.com/u/10194542?s=460&v=4",
       "profile": "http://www.geoffreytestelin.com/",
       "contributions": [
@@ -40,18 +40,18 @@
         "doc",
         "tool"
       ]
-     },
-     {
+    },
+    {
       "login": "renovate-bot",
       "name": "WhiteSource Renovate",
       "avatar_url": "https://avatars0.githubusercontent.com/u/25180681?v=4",
       "profile": "https://renovate.whitesourcesoftware.com",
       "contributions": [
-       "tool",
-       "security"
+        "tool",
+        "security"
       ]
-     },
-     {
+    },
+    {
       "login": "semantic-release-bot",
       "name": "Semantic Release Bot",
       "avatar_url": "https://avatars1.githubusercontent.com/u/32174276?v=4",
@@ -61,8 +61,20 @@
         "tool",
         "security"
       ]
+    },
+    {
+      "login": "vvalembois",
+      "name": "Vilteros",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/34096840?v=4",
+      "profile": "https://github.com/vvalembois",
+      "contributions": [
+        "code",
+        "ideas",
+        "doc",
+        "review"
+      ]
     }
   ],
-  "skipCi": true,
+  "skipCi": false,
   "contributorsPerLine": 7
 }

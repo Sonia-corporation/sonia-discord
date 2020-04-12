@@ -1,4 +1,5 @@
-import { Client, DMChannel } from "discord.js";
+import { DMChannel } from "discord.js";
+import { createMock } from "ts-auto-mock";
 import { isDiscordDmChannel } from "./is-discord-dm-channel";
 
 describe(`isDiscordDmChannel()`, (): void => {
@@ -64,8 +65,7 @@ describe(`isDiscordDmChannel()`, (): void => {
 
   describe(`when the given value is a "DMChannel" instance`, (): void => {
     beforeEach((): void => {
-      // @todo replace with real mock
-      channel = new DMChannel(new Client());
+      channel = createMock<DMChannel>();
     });
 
     // @todo fix it omg this should works

@@ -1,12 +1,16 @@
 import _ from "lodash";
+import { getDiscordDevPrefix } from "./get-discord-dev-prefix";
 
 export function addDiscordDevPrefix(
   message: Readonly<string>,
-  nickname: Readonly<string>
+  nickname: Readonly<string | null>,
+  emphasis = true
 ): string {
-  if (!_.isString(nickname) || _.isEmpty(nickname)) {
-    return `**[dev]** ${message}`;
+  const discordDevPrefix: string = getDiscordDevPrefix(nickname, emphasis);
+
+  if (_.isString(nickname) && !_.isEmpty(nickname)) {
+    return `${discordDevPrefix} ${message}`;
   }
 
-  return `**[dev - ${nickname}]** ${message}`;
+  return `${discordDevPrefix} ${message}`;
 }

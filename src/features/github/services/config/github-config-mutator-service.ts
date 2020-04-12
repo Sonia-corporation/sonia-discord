@@ -23,9 +23,9 @@ export class GithubConfigMutatorService extends AbstractConfigService<
     return GithubConfigMutatorService._instance;
   }
 
+  protected readonly _className = `GithubConfigMutatorService`;
   private readonly _githubConfigCoreService = GithubConfigCoreService.getInstance();
   private readonly _githubConfigService = GithubConfigService.getInstance();
-  protected readonly _className = `GithubConfigMutatorService`;
 
   protected constructor(config?: Readonly<PartialNested<IGithubConfig>>) {
     super(config);

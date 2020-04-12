@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { AppConfigService } from "../../../app/services/config/app-config-service";
 import { LoggerService } from "../../../logger/services/logger-service";
+import { ProfileConfigService } from "../../../profile/services/config/profile-config-service";
 import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
 import { DiscordMentionService } from "../../mentions/services/discord-mention-service";
 import { DiscordAuthorService } from "../../users/services/discord-author-service";
@@ -13,7 +14,6 @@ import { DiscordMessage } from "../types/discord-message";
 import { DiscordMessageAuthorService } from "./discord-message-author-service";
 import { DiscordMessageCommandService } from "./discord-message-command-service";
 import { DiscordMessageContentService } from "./discord-message-content-service";
-import { ProfileConfigService } from "../../../profile/services/profile-config-service";
 
 export class DiscordMessageTextService {
   private static _instance: DiscordMessageTextService;

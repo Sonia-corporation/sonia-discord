@@ -1,10 +1,10 @@
 import _ from "lodash";
 import { AppConfigService } from "../../../app/services/config/app-config-service";
+import { ProfileConfigService } from "../../../profile/services/config/profile-config-service";
 import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
 import { DiscordAuthorService } from "../../users/services/discord-author-service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
-import { ProfileConfigService } from "../../../profile/services/profile-config-service";
 
 export class DiscordMessageAuthorService {
   private static _instance: DiscordMessageAuthorService;

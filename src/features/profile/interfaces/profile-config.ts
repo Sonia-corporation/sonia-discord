@@ -1,3 +1,3 @@
 export interface IProfileConfig {
-  nickname: string;
+  nickname: string | null;
 }
