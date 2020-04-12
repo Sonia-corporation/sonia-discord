@@ -103,6 +103,22 @@ __Example:__
 - `@Sonia-il-est-midi !help`
 - `@Sonia-il-est-midi !H`
 
+#### Cookie
+
+__Commands:__
+
+- cookie
+- c *(shortcut)*
+
+Sonia will send you a message containing:
+
+- A cookie.
+
+__Example:__
+
+- `@Sonia-il-est-midi !cookie`
+- `@Sonia-il-est-midi !C`
+
 ### Sonia behavior
 
 Sonia will never respond to herself - no infinite loop :(  
