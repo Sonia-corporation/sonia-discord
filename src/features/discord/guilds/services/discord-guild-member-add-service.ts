@@ -92,7 +92,7 @@ export class DiscordGuildMemberAddService {
         this._loggerService.log({
           context: this._className,
           message: this._chalkService.text(
-            `welcome message for the new guild message sent`
+            `welcome message for the new guild sent`
           ),
         });
       })
