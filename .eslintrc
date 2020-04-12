@@ -24,6 +24,7 @@ parser: '@typescript-eslint/parser'
 plugins:
   - '@typescript-eslint'
   - 'typescript-sort-keys'
+  - 'import'
   - 'jest'
   - 'prettier'
 settings:
@@ -35,7 +36,17 @@ settings:
       - .ts
   import/cache:
     lifetime: 'Infinity'
+  import/resolver:
+    - typescript:
+      - alwaysTryTypes: true
+  import/core-modules:
+    - lodash
+    - moment
+    - express
+    - app-root-path
 rules:
+  import/no-unresolved:
+    - 'error'
   jest/no-disabled-tests: 'off'
   #  Temporarily disabled due to code climate error (37259)
   '@typescript-eslint/member-ordering':
