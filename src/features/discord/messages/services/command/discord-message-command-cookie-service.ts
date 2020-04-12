@@ -43,6 +43,10 @@ export class DiscordMessageCommandCookieService {
       ),
     });
 
+    return this.getMessageResponse();
+  }
+
+  public getMessageResponse(): IDiscordMessageResponse {
     return {
       options: {
         embed: this._getMessageEmbed(),
