@@ -14,4 +14,9 @@ export enum DiscordMessageCommandEnum {
    * Shortcut for {@link HELP}
    */
   H = `h`,
+  COOKIE = `cookie`,
+  /**
+   * Shortcut for {@link COOKIE}
+   */
+  C = `c`,
 }

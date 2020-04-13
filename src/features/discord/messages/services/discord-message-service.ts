@@ -33,10 +33,10 @@ export class DiscordMessageService {
   private readonly _className = `DiscordMessageService`;
 
   public constructor() {
-    this._init();
+    this.init();
   }
 
-  private _init(): void {
+  public init(): void {
     this._listen();
   }
 

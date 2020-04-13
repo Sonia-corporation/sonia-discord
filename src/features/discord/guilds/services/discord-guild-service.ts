@@ -21,10 +21,10 @@ export class DiscordGuildService {
   private readonly _className = `DiscordGuildService`;
 
   public constructor() {
-    this._init();
+    this.init();
   }
 
-  private _init(): void {
+  public init(): void {
     this._listen();
   }
 

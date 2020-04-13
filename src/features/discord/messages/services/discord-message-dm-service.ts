@@ -4,7 +4,7 @@ import { DiscordAuthorService } from "../../users/services/discord-author-servic
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
 import { DiscordMessageAuthorService } from "./discord-message-author-service";
-import { DiscordMessageCommandService } from "./discord-message-command-service";
+import { DiscordMessageCommandService } from "./command/discord-message-command-service";
 import { DiscordMessageContentService } from "./discord-message-content-service";
 
 export class DiscordMessageDmService {

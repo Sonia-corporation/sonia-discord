@@ -15,6 +15,10 @@ export class DiscordMessageConfigCoreService implements IDiscordMessageConfig {
   }
 
   public command: IDiscordMessageCommandConfig = {
+    cookie: {
+      imageColor: 16376750,
+      imageUrl: `https://i.ibb.co/RTp4YPx/icons8-cookies-512.png`,
+    },
     error: {
       imageColor: 15562905,
       imageUrl: `https://i.ibb.co/5jZmzSB/icons8-error-512.png`,

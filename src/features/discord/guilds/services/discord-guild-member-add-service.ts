@@ -36,10 +36,10 @@ export class DiscordGuildMemberAddService {
   private readonly _className = `DiscordGuildMemberAddService`;
 
   public constructor() {
-    this._init();
+    this.init();
   }
 
-  private _init(): void {
+  public init(): void {
     this._listen();
   }
 
@@ -92,7 +92,7 @@ export class DiscordGuildMemberAddService {
         this._loggerService.log({
           context: this._className,
           message: this._chalkService.text(
-            `welcome message for the new guild message sent`
+            `welcome message for the new guild sent`
           ),
         });
       })

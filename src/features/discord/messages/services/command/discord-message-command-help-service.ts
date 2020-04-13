@@ -7,11 +7,11 @@ import {
 } from "discord.js";
 import _ from "lodash";
 import moment from "moment";
-import { LoggerService } from "../../../logger/services/logger-service";
-import { DiscordSoniaService } from "../../users/services/discord-sonia-service";
-import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../types/any-discord-message";
-import { DiscordMessageConfigService } from "./config/discord-message-config-service";
+import { LoggerService } from "../../../../logger/services/logger-service";
+import { DiscordSoniaService } from "../../../users/services/discord-sonia-service";
+import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
+import { AnyDiscordMessage } from "../../types/any-discord-message";
+import { DiscordMessageConfigService } from "../config/discord-message-config-service";
 
 export class DiscordMessageCommandHelpService {
   private static _instance: DiscordMessageCommandHelpService;
@@ -101,6 +101,7 @@ export class DiscordMessageCommandHelpService {
       this._getMessageEmbedFieldVersion(),
       this._getMessageEmbedFieldError(),
       this._getMessageEmbedFieldHelp(),
+      this._getMessageEmbedFieldCookie(),
       this._getMessageEmbedFieldMoreHelp(),
     ];
   }
@@ -125,6 +126,14 @@ export class DiscordMessageCommandHelpService {
       name: `Help (*!help* or *!h*)`,
       value: `Ask for my help, it is obvious!
       And maybe I will, who knows?`,
+    };
+  }
+
+  private _getMessageEmbedFieldCookie(): EmbedFieldData {
+    return {
+      name: `Cookie (*!cookie* or *!c*)`,
+      value: `Because I am good, life gave me cookies.
+      Now it is my turn to give you some.`,
     };
   }
 

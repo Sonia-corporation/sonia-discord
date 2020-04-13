@@ -17,9 +17,14 @@ export class DiscordGuildConfigService {
 
   public getConfig(): IDiscordGuildConfig {
     return {
+      shouldSendCookiesOnCreate: this.shouldSendCookiesOnCreate(),
       shouldWelcomeNewMembers: this.shouldWelcomeNewMembers(),
       soniaPermanentGuildInviteUrl: this.getSoniaPermanentGuildInviteUrl(),
     };
+  }
+
+  public shouldSendCookiesOnCreate(): boolean {
+    return this._discordGuildConfigCoreService.shouldSendCookiesOnCreate;
   }
 
   public shouldWelcomeNewMembers(): boolean {

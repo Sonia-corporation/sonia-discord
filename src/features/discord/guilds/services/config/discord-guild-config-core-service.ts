@@ -12,6 +12,7 @@ export class DiscordGuildConfigCoreService implements IDiscordGuildConfig {
     return DiscordGuildConfigCoreService._instance;
   }
 
+  public shouldSendCookiesOnCreate = true;
   public shouldWelcomeNewMembers = true;
   public soniaPermanentGuildInviteUrl = `https://discord.gg/PW4JSkv`;
 }

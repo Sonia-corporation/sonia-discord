@@ -24,6 +24,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
     let config: PartialNested<IDiscordConfig> | undefined;
 
     beforeEach((): void => {
+      discordGuildConfigCoreService.shouldSendCookiesOnCreate = true;
       discordGuildConfigCoreService.shouldWelcomeNewMembers = true;
       discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = `dummy-sonia-permanent-guild-invite-url`;
     });
@@ -34,16 +35,39 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
       });
 
       it(`should not update the config`, (): void => {
-        expect.assertions(2);
+        expect.assertions(3);
 
         service.updateConfig(config);
 
+        expect(
+          discordGuildConfigCoreService.shouldSendCookiesOnCreate
+        ).toStrictEqual(true);
         expect(
           discordGuildConfigCoreService.shouldWelcomeNewMembers
         ).toStrictEqual(true);
         expect(
           discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
         ).toStrictEqual(`dummy-sonia-permanent-guild-invite-url`);
+      });
+    });
+
+    describe(`when the given config contains a guild send cookies on create state`, (): void => {
+      beforeEach((): void => {
+        config = {
+          guild: {
+            shouldSendCookiesOnCreate: false,
+          },
+        };
+      });
+
+      it(`should update the config send cookie on create state`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(
+          discordGuildConfigCoreService.shouldSendCookiesOnCreate
+        ).toStrictEqual(false);
       });
     });
 
@@ -92,6 +116,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
     let config: PartialNested<IDiscordGuildConfig> | undefined;
 
     beforeEach((): void => {
+      discordGuildConfigCoreService.shouldSendCookiesOnCreate = true;
       discordGuildConfigCoreService.shouldWelcomeNewMembers = true;
       discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = `dummy-sonia-permanent-guild-invite-url`;
     });
@@ -102,16 +127,37 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
       });
 
       it(`should not update the config`, (): void => {
-        expect.assertions(2);
+        expect.assertions(3);
 
         service.updateGuild(config);
 
+        expect(
+          discordGuildConfigCoreService.shouldSendCookiesOnCreate
+        ).toStrictEqual(true);
         expect(
           discordGuildConfigCoreService.shouldWelcomeNewMembers
         ).toStrictEqual(true);
         expect(
           discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
         ).toStrictEqual(`dummy-sonia-permanent-guild-invite-url`);
+      });
+    });
+
+    describe(`when the given config contains a send cookies on create state`, (): void => {
+      beforeEach((): void => {
+        config = {
+          shouldSendCookiesOnCreate: false,
+        };
+      });
+
+      it(`should update the config send cookies on create state`, (): void => {
+        expect.assertions(1);
+
+        service.updateGuild(config);
+
+        expect(
+          discordGuildConfigCoreService.shouldSendCookiesOnCreate
+        ).toStrictEqual(false);
       });
     });
 
@@ -149,6 +195,45 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
           discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
         ).toStrictEqual(`sonia-permanent-guild-invite-url`);
       });
+    });
+  });
+
+  describe(`updateSendCookiesOnCreateState()`, (): void => {
+    let shouldSendCookiesOnCreate: boolean;
+
+    let configServiceGetUpdatedBooleanSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      shouldSendCookiesOnCreate = true;
+      discordGuildConfigCoreService.shouldSendCookiesOnCreate = false;
+
+      configServiceGetUpdatedBooleanSpy = jest
+        .spyOn(configService, `getUpdatedBoolean`)
+        .mockReturnValue(true);
+    });
+
+    it(`should get the updated boolean`, (): void => {
+      expect.assertions(2);
+
+      service.updateSendCookiesOnCreateState(shouldSendCookiesOnCreate);
+
+      expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledWith({
+        context: `DiscordGuildConfigMutatorService`,
+        newValue: true,
+        oldValue: false,
+        valueName: `send cookies on create state`,
+      } as IConfigUpdateBoolean);
+    });
+
+    it(`should update the Discord guild config send cookies on create state with the updated boolean`, (): void => {
+      expect.assertions(1);
+
+      service.updateSendCookiesOnCreateState(shouldSendCookiesOnCreate);
+
+      expect(
+        discordGuildConfigCoreService.shouldSendCookiesOnCreate
+      ).toStrictEqual(true);
     });
   });
 

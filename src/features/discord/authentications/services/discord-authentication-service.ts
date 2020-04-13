@@ -23,10 +23,10 @@ export class DiscordAuthenticationService {
   private readonly _className = `DiscordAuthenticationService`;
 
   public constructor() {
-    this._init();
+    this.init();
   }
 
-  private _init(): void {
+  public init(): void {
     this._listen();
     this._login();
   }

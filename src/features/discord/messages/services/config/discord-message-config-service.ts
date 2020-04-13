@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
+import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
@@ -28,6 +29,18 @@ export class DiscordMessageConfigService {
 
   public getMessageCommand(): IDiscordMessageCommandConfig {
     return this._discordMessageConfigCoreService.command;
+  }
+
+  public getMessageCommandCookie(): IDiscordMessageCommandCookieConfig {
+    return this._discordMessageConfigCoreService.command.cookie;
+  }
+
+  public getMessageCommandCookieImageColor(): number {
+    return this._discordMessageConfigCoreService.command.cookie.imageColor;
+  }
+
+  public getMessageCommandCookieImageUrl(): string {
+    return this._discordMessageConfigCoreService.command.cookie.imageUrl;
   }
 
   public getMessageCommandError(): IDiscordMessageCommandErrorConfig {

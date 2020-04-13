@@ -14,6 +14,7 @@ export class DiscordClientService {
 
   public getClient(): Client {
     return {
+      on: _.noop,
       user: {
         username: `dummy-username`,
       },

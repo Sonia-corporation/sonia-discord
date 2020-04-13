@@ -9,6 +9,12 @@ describe(`DiscordGuildConfigCoreService`, (): void => {
     service = DiscordGuildConfigCoreService.getInstance();
   });
 
+  it(`should send some cookies when Sonia joins a new guild`, (): void => {
+    expect.assertions(1);
+
+    expect(service.shouldSendCookiesOnCreate).toStrictEqual(true);
+  });
+
   it(`should send a message when new members joins the current guild`, (): void => {
     expect.assertions(1);
 
