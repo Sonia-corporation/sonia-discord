@@ -5,6 +5,7 @@ import { DiscordGuildMemberAddService } from "../guilds/services/discord-guild-m
 import { DiscordGuildService } from "../guilds/services/discord-guild-service";
 import { DiscordLoggerService } from "../logger/services/discord-logger-service";
 import { DiscordMessageService } from "../messages/services/discord-message-service";
+import { DiscordMessageScheduleIlEstMidiService } from "../messages/services/schedule/discord-message-schedule-il-est-midi-service";
 import { DiscordSoniaService } from "../users/services/discord-sonia-service";
 
 export class DiscordService {
@@ -30,5 +31,6 @@ export class DiscordService {
     DiscordGuildCreateService.getInstance();
     DiscordMessageService.getInstance();
     DiscordAuthenticationService.getInstance();
+    DiscordMessageScheduleIlEstMidiService.getInstance();
   }
 }

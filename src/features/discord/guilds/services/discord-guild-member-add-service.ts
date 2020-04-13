@@ -61,12 +61,12 @@ export class DiscordGuildMemberAddService {
 
   private _handleGuildMemberAdd(member: Readonly<AnyGuildMember>): void {
     if (this._discordGuildConfigService.shouldWelcomeNewMembers()) {
-      const memberChannel: GuildChannel | null = this._getPrimaryChannel(
+      const primaryChannel: GuildChannel | null = this._getPrimaryChannel(
         member
       );
 
-      if (isDiscordGuildChannel(memberChannel)) {
-        this._sendMessage(memberChannel, member);
+      if (isDiscordGuildChannel(primaryChannel)) {
+        this._sendMessage(primaryChannel, member);
       }
     }
   }

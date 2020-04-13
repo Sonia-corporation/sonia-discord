@@ -1,6 +1,6 @@
 import _ from "lodash";
-import moment from "moment";
 import { isValidDate } from "../../../../functions/checks/is-valid-date";
+import { TimeService } from "../../../time/services/time-service";
 import { AppProductionStateEnum } from "../../enums/app-production-state.enum";
 import { AppConfigService } from "./app-config-service";
 
@@ -16,12 +16,13 @@ export class AppConfigQueryService {
   }
 
   private readonly _appConfigService = AppConfigService.getInstance();
+  private readonly _timeService = TimeService.getInstance();
 
   public getReleaseDateHumanized(): string {
     const releaseDate: string = this._appConfigService.getReleaseDate();
 
     if (isValidDate(releaseDate)) {
-      return _.capitalize(moment(releaseDate).fromNow());
+      return this._timeService.fromNow(releaseDate);
     }
 
     return releaseDate;
@@ -31,7 +32,7 @@ export class AppConfigQueryService {
     const initializationDate: string = this._appConfigService.getInitializationDate();
 
     if (isValidDate(initializationDate)) {
-      return _.capitalize(moment(initializationDate).fromNow());
+      return this._timeService.fromNow(initializationDate);
     }
 
     return initializationDate;

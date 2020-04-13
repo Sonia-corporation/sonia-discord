@@ -20,4 +20,8 @@ export class TimeService {
 
     return value;
   }
+
+  public fromNow(): string {
+    return `from-now`;
+  }
 }
