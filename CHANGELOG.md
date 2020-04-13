@@ -1,5 +1,16 @@
 # Semantic Versioning Changelog
 
+# [1.31.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.30.0...1.31.0) (2020-04-13)
+
+
+### Features
+
+* **discord:** add cookie command ([0cd86c1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/0cd86c1720fb119ba18325ce3775957647f610d0))
+* **discord:** add information about cookie command when using help command ([96d86fa](https://github.com/Sonia-corporation/il-est-midi-discord/commit/96d86fae182c48b81884075e7f958ed55c015dee))
+* **discord:** add new option for the guild config to send a cookies on guil create ([2f10ba6](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2f10ba6f82d4db2a69fd04f2d13e12f82da76879))
+* **discord:** add new service to send an event on guild create ([b9e6093](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b9e60936691b6ebd78ec4cf409ebf093b307e8ac))
+* **discord:** add random message and title for the cookie command ([5d415ff](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5d415ff78eed46ca2e98fb135cc042b6963db1d6))
+
 # [1.30.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.29.0...1.30.0) (2020-04-12)
 
 
