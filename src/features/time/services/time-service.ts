@@ -18,11 +18,11 @@ export class TimeService {
 
   public fromNow(
     date: Readonly<string>,
-    capitalize: Readonly<boolean> = true
+    isCapitalized: Readonly<boolean> = true
   ): string {
-    const newDate: string = moment(date).fromNow();
+    const newDate: string = moment(date, moment.ISO_8601).fromNow();
 
-    if (_.isEqual(capitalize, true)) {
+    if (_.isEqual(isCapitalized, true)) {
       return _.capitalize(newDate);
     }
 
