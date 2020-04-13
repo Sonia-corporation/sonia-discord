@@ -15,6 +15,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
   describe(`getConfig()`, (): void => {
     beforeEach((): void => {
+      discordGuildConfigCoreService.shouldSendCookiesOnCreate = true;
       discordGuildConfigCoreService.shouldWelcomeNewMembers = true;
       discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = `dummy-sonia-permanent-guild-invite-url`;
     });
@@ -25,9 +26,24 @@ describe(`DiscordGuildConfigService`, (): void => {
       const result = service.getConfig();
 
       expect(result).toStrictEqual({
+        shouldSendCookiesOnCreate: true,
         shouldWelcomeNewMembers: true,
         soniaPermanentGuildInviteUrl: `dummy-sonia-permanent-guild-invite-url`,
       } as IDiscordGuildConfig);
+    });
+  });
+
+  describe(`shouldSendCookiesOnCreate()`, (): void => {
+    beforeEach((): void => {
+      discordGuildConfigCoreService.shouldSendCookiesOnCreate = true;
+    });
+
+    it(`should return the Discord guild config send cookies on create state`, (): void => {
+      expect.assertions(1);
+
+      const result = service.shouldSendCookiesOnCreate();
+
+      expect(result).toStrictEqual(true);
     });
   });
 

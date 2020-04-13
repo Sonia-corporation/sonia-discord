@@ -1,4 +1,5 @@
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
+import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
 import { IDiscordMessageCommandHelpConfig } from "../../../interfaces/discord-message-command-help-config";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
@@ -21,6 +22,10 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getConfig()`, (): void => {
     beforeEach((): void => {
       discordMessageConfigCoreService.command = {
+        cookie: {
+          imageColor: 11,
+          imageUrl: `dummy-image-url-cookie`,
+        },
         error: {
           imageColor: 9,
           imageUrl: `dummy-image-url-error`,
@@ -48,6 +53,10 @@ describe(`DiscordMessageConfigService`, (): void => {
 
       expect(result).toStrictEqual({
         command: {
+          cookie: {
+            imageColor: 11,
+            imageUrl: `dummy-image-url-cookie`,
+          },
           error: {
             imageColor: 9,
             imageUrl: `dummy-image-url-error`,
@@ -73,6 +82,10 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommand()`, (): void => {
     beforeEach((): void => {
       discordMessageConfigCoreService.command = {
+        cookie: {
+          imageColor: 11,
+          imageUrl: `dummy-image-url-cookie`,
+        },
         error: {
           imageColor: 9,
           imageUrl: `dummy-image-url-error`,
@@ -95,6 +108,10 @@ describe(`DiscordMessageConfigService`, (): void => {
       const result = service.getMessageCommand();
 
       expect(result).toStrictEqual({
+        cookie: {
+          imageColor: 11,
+          imageUrl: `dummy-image-url-cookie`,
+        },
         error: {
           imageColor: 9,
           imageUrl: `dummy-image-url-error`,
@@ -109,6 +126,54 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageUrl: `dummy-image-url`,
         },
       } as IDiscordMessageCommandConfig);
+    });
+  });
+
+  describe(`getMessageCommandCookie()`, (): void => {
+    beforeEach((): void => {
+      discordMessageConfigCoreService.command.cookie = {
+        imageColor: 8,
+        imageUrl: `dummy-image-url`,
+      };
+    });
+
+    it(`should return the Discord message config command cookie`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandCookie();
+
+      expect(result).toStrictEqual({
+        imageColor: 8,
+        imageUrl: `dummy-image-url`,
+      } as IDiscordMessageCommandCookieConfig);
+    });
+  });
+
+  describe(`getMessageCommandCookieImageColor()`, (): void => {
+    beforeEach((): void => {
+      discordMessageConfigCoreService.command.cookie.imageColor = 8;
+    });
+
+    it(`should return the Discord message config command cookie image color`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandCookieImageColor();
+
+      expect(result).toStrictEqual(8);
+    });
+  });
+
+  describe(`getMessageCommandCookieImageUrl()`, (): void => {
+    beforeEach((): void => {
+      discordMessageConfigCoreService.command.cookie.imageUrl = `dummy-image-url`;
+    });
+
+    it(`should return the Discord message config command cookie image url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandCookieImageUrl();
+
+      expect(result).toStrictEqual(`dummy-image-url`);
     });
   });
 

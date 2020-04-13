@@ -47,11 +47,26 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
     guild?: Readonly<PartialNested<IDiscordGuildConfig>>
   ): void {
     if (!_.isNil(guild)) {
+      this.updateSendCookiesOnCreateState(guild.shouldSendCookiesOnCreate);
       this.updateWelcomeNewMembersState(guild.shouldWelcomeNewMembers);
       this.updateSoniaPermanentGuildInviteUrl(
         guild.soniaPermanentGuildInviteUrl
       );
     }
+  }
+
+  public updateSendCookiesOnCreateState(
+    shouldSendCookiesOnCreate?: Readonly<boolean>
+  ): void {
+    this._discordGuildConfigCoreService.shouldSendCookiesOnCreate = this._configService.getUpdatedBoolean(
+      {
+        context: this._className,
+        newValue: shouldSendCookiesOnCreate,
+        oldValue: this._discordGuildConfigService.shouldSendCookiesOnCreate(),
+        valueName:
+          DiscordGuildConfigValueNameEnum.SHOULD_SEND_COOKIES_ON_CREATE,
+      }
+    );
   }
 
   public updateWelcomeNewMembersState(

@@ -5,6 +5,7 @@ import { wrapInQuotes } from "../../../../../functions/formatters/wrap-in-quotes
 import { PartialNested } from "../../../../../types/partial-nested";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
+import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
@@ -62,11 +63,45 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     command?: Readonly<PartialNested<IDiscordMessageCommandConfig>>
   ): void {
     if (!_.isNil(command)) {
+      this.updateMessageCommandCookie(command.cookie);
       this.updateMessageCommandError(command.error);
       this.updateMessageCommandHelp(command.help);
       this.updateMessageCommandPrefix(command.prefix);
       this.updateMessageCommandVersion(command.version);
     }
+  }
+
+  public updateMessageCommandCookie(
+    cookie?: Readonly<PartialNested<IDiscordMessageCommandCookieConfig>>
+  ): void {
+    if (!_.isNil(cookie)) {
+      this.updateMessageCommandCookieImageColor(cookie.imageColor);
+      this.updateMessageCommandCookieImageUrl(cookie.imageUrl);
+    }
+  }
+
+  public updateMessageCommandCookieImageColor(
+    imageColor?: Readonly<number>
+  ): void {
+    this._discordMessageConfigCoreService.command.cookie.imageColor = this._configService.getUpdatedNumber(
+      {
+        context: this._className,
+        newValue: imageColor,
+        oldValue: this._discordMessageConfigService.getMessageCommandCookieImageColor(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_COOKIE_IMAGE_COLOR,
+      }
+    );
+  }
+
+  public updateMessageCommandCookieImageUrl(imageUrl?: Readonly<string>): void {
+    this._discordMessageConfigCoreService.command.cookie.imageUrl = this._configService.getUpdatedString(
+      {
+        context: this._className,
+        newValue: imageUrl,
+        oldValue: this._discordMessageConfigService.getMessageCommandCookieImageUrl(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_COOKIE_IMAGE_URL,
+      }
+    );
   }
 
   public updateMessageCommandError(

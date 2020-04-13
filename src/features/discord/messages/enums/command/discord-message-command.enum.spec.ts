@@ -36,4 +36,16 @@ describe(`DiscordMessageCommandEnum`, (): void => {
 
     expect(DiscordMessageCommandEnum.H).toStrictEqual(`h`);
   });
+
+  it(`should have a member "COOKIE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandEnum.COOKIE).toStrictEqual(`cookie`);
+  });
+
+  it(`should have a member "c"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandEnum.C).toStrictEqual(`c`);
+  });
 });
