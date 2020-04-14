@@ -1,5 +1,20 @@
 # Semantic Versioning Changelog
 
+# [1.32.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.31.0...1.32.0) (2020-04-14)
+
+
+### Bug Fixes
+
+* **schedule:** wait one more second before starting the schedules ([e582d15](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e582d150d671919dbfa34fdeeca2da5cde5ce6bf))
+
+
+### Features
+
+* **discord:** add a new option in the config to disable or enable the il est midi message ([2e3f2c8](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2e3f2c82c5b23fdeb628d2031bd7f31940e62bcb))
+* **discord:** add an explicit date for the next job date for the noon message ([09dcfcb](https://github.com/Sonia-corporation/il-est-midi-discord/commit/09dcfcba3eac6dda2663231990a35c642a156b1b))
+* **discord:** only send the noon message at noon for now ([8f57da2](https://github.com/Sonia-corporation/il-est-midi-discord/commit/8f57da27e70c0a6bb3c5ceb95e70fac79e624e1f))
+* **discord:** send a message each our to each guild ([f21906d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f21906d253d34165d5da455737bbf22dad7adad7))
+
 # [1.31.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.30.0...1.31.0) (2020-04-13)
 
 
