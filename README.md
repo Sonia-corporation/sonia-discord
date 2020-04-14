@@ -140,8 +140,10 @@ A command will enable Sonia on the given channel (a command will also be availab
 This dev is a bit more complicated because Sonia will have to store in a database which channels are ready for her or not.
 
 To avoid flooding, Sonia will tell you that it is noon in some conditions.  
-First of all, she will tell the channel that it is noon when it is noon.  
-That is the main goal after all...
+First of all, she will tell the `general` channel that it is noon when it is noon.  
+That is the main goal after all...  
+The timezone used is the one of the server.  
+In the future, when enabling this feature on a given channel, you will be able to customize the default timezone used.
 
 When a message on the channel is sent, Sonia will only respond if she is mentioned personally.  
 This counts as a DM response for Sonia, so prepare to have a friendly message dedicated to you.  
