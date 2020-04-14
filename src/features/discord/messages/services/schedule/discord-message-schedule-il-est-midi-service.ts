@@ -111,20 +111,12 @@ export class DiscordMessageScheduleIlEstMidiService {
   }
 
   private _handleMessages(): void {
-    this.discordClientServiceClient.guilds.cache.forEach(
-      (guild: Readonly<Guild>): void => {
-        this._handleMessage(guild);
-      }
-    );
-  }
-
-  private _handleMessage(guild: Readonly<Guild>): void {
-    const primaryChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
-      guild
-    );
-
-    if (isDiscordGuildChannel(primaryChannel) && this._canSendMessage()) {
-      this._sendMessage(primaryChannel);
+    if (this._canSendMessage()) {
+      this.discordClientServiceClient.guilds.cache.forEach(
+        (guild: Readonly<Guild>): void => {
+          this._handleMessage(guild);
+        }
+      );
     }
   }
 
@@ -139,6 +131,16 @@ export class DiscordMessageScheduleIlEstMidiService {
     });
 
     return false;
+  }
+
+  private _handleMessage(guild: Readonly<Guild>): void {
+    const primaryChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
+      guild
+    );
+
+    if (isDiscordGuildChannel(primaryChannel)) {
+      this._sendMessage(primaryChannel);
+    }
   }
 
   private _sendMessage(channel: Readonly<GuildChannel>): void {

@@ -59,7 +59,7 @@ export class DiscordGuildMemberAddService {
   }
 
   private _handleGuildMemberAdd(member: Readonly<AnyGuildMember>): void {
-    if (this._discordGuildConfigService.shouldWelcomeNewMembers()) {
+    if (this._canSendMessage()) {
       const primaryChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
         member.guild
       );
@@ -68,6 +68,21 @@ export class DiscordGuildMemberAddService {
         this._sendMessage(primaryChannel, member);
       }
     }
+  }
+
+  private _canSendMessage(): boolean {
+    if (this._discordGuildConfigService.shouldWelcomeNewMembers()) {
+      return true;
+    }
+
+    this._loggerService.debug({
+      context: this._className,
+      message: this._chalkService.text(
+        `welcome new members message sending disabled`
+      ),
+    });
+
+    return false;
   }
 
   private _sendMessage(

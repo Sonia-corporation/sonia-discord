@@ -55,7 +55,7 @@ export class DiscordGuildCreateService {
   }
 
   private _handleGuildCreate(guild: Readonly<Guild>): void {
-    if (this._discordGuildConfigService.shouldSendCookiesOnCreate()) {
+    if (this._canSendMessage()) {
       const memberChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
         guild
       );
@@ -64,6 +64,21 @@ export class DiscordGuildCreateService {
         this._sendMessage(memberChannel);
       }
     }
+  }
+
+  private _canSendMessage(): boolean {
+    if (this._discordGuildConfigService.shouldSendCookiesOnCreate()) {
+      return true;
+    }
+
+    this._loggerService.debug({
+      context: this._className,
+      message: this._chalkService.text(
+        `guild create cookies message sending disabled`
+      ),
+    });
+
+    return false;
   }
 
   private _sendMessage(channel: Readonly<GuildChannel>): void {
