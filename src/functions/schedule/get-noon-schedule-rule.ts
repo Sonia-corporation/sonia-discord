@@ -1,3 +1,3 @@
 export function getNoonScheduleRule(): string {
-  return `0 12 * * *`;
+  return `1 12 * * *`;
 }
