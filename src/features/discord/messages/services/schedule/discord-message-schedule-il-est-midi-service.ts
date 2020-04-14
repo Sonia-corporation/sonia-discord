@@ -9,6 +9,7 @@ import { TimeService } from "../../../../time/services/time-service";
 import { isDiscordGuildChannel } from "../../../channels/functions/is-discord-guild-channel";
 import { DiscordChannelGuildService } from "../../../channels/services/discord-channel-guild-service";
 import { AnyDiscordChannel } from "../../../channels/types/any-discord-channel";
+import { DiscordGuildConfigService } from "../../../guilds/services/config/discord-guild-config-service";
 import { DiscordClientService } from "../../../services/discord-client-service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 
@@ -28,6 +29,7 @@ export class DiscordMessageScheduleIlEstMidiService {
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _timeService: TimeService = TimeService.getInstance();
   private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
+  private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
   private readonly _className = `DiscordMessageScheduleIlEstMidiService`;
   private readonly _rule: string = getNoonScheduleRule();
   private _job: Job | undefined = undefined;
@@ -121,9 +123,22 @@ export class DiscordMessageScheduleIlEstMidiService {
       guild
     );
 
-    if (isDiscordGuildChannel(primaryChannel)) {
+    if (isDiscordGuildChannel(primaryChannel) && this._canSendMessage()) {
       this._sendMessage(primaryChannel);
     }
+  }
+
+  private _canSendMessage(): boolean {
+    if (this._discordGuildConfigService.shouldSendIlEstMidiMessage()) {
+      return true;
+    }
+
+    this._loggerService.debug({
+      context: this._className,
+      message: this._chalkService.text(`il est midi message sending disabled`),
+    });
+
+    return false;
   }
 
   private _sendMessage(channel: Readonly<GuildChannel>): void {
