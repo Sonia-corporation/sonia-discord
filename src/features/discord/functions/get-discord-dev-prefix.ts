@@ -2,7 +2,7 @@ import _ from "lodash";
 
 export function getDiscordDevPrefix(
   nickname: Readonly<string | null>,
-  emphasis = true
+  hasEmphasis: Readonly<boolean> = true
 ): string {
   let discordDevPrefix = `[dev]`;
 
@@ -10,7 +10,7 @@ export function getDiscordDevPrefix(
     discordDevPrefix = `[dev - ${nickname}]`;
   }
 
-  if (_.isEqual(emphasis, true)) {
+  if (_.isEqual(hasEmphasis, true)) {
     return `**${discordDevPrefix}**`;
   }
 

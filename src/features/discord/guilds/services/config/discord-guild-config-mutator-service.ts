@@ -48,6 +48,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
   ): void {
     if (!_.isNil(guild)) {
       this.updateSendCookiesOnCreateState(guild.shouldSendCookiesOnCreate);
+      this.updateSendIlEstMidiMessageState(guild.shouldSendIlEstMidiMessage);
       this.updateWelcomeNewMembersState(guild.shouldWelcomeNewMembers);
       this.updateSoniaPermanentGuildInviteUrl(
         guild.soniaPermanentGuildInviteUrl
@@ -65,6 +66,20 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
         oldValue: this._discordGuildConfigService.shouldSendCookiesOnCreate(),
         valueName:
           DiscordGuildConfigValueNameEnum.SHOULD_SEND_COOKIES_ON_CREATE,
+      }
+    );
+  }
+
+  public updateSendIlEstMidiMessageState(
+    shouldSendIlEstMidiMessage?: Readonly<boolean>
+  ): void {
+    this._discordGuildConfigCoreService.shouldSendIlEstMidiMessage = this._configService.getUpdatedBoolean(
+      {
+        context: this._className,
+        newValue: shouldSendIlEstMidiMessage,
+        oldValue: this._discordGuildConfigService.shouldSendIlEstMidiMessage(),
+        valueName:
+          DiscordGuildConfigValueNameEnum.SHOULD_SEND_IL_EST_MIDI_MESSAGE,
       }
     );
   }

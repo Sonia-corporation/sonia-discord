@@ -13,6 +13,7 @@ export class DiscordGuildConfigCoreService implements IDiscordGuildConfig {
   }
 
   public shouldSendCookiesOnCreate = true;
+  public shouldSendIlEstMidiMessage = true;
   public shouldWelcomeNewMembers = true;
   public soniaPermanentGuildInviteUrl = `https://discord.gg/PW4JSkv`;
 }
