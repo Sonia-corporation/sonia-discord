@@ -11,7 +11,6 @@ import { AnyDiscordChannel } from "../../channels/types/any-discord-channel";
 import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
 import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
 import { DiscordClientService } from "../../services/discord-client-service";
-import { isDiscordGuild } from "../functions/is-discord-guild";
 import { AnyGuildMember } from "../types/any-guild-member";
 import { DiscordGuildConfigService } from "./config/discord-guild-config-service";
 
@@ -61,8 +60,8 @@ export class DiscordGuildMemberAddService {
 
   private _handleGuildMemberAdd(member: Readonly<AnyGuildMember>): void {
     if (this._discordGuildConfigService.shouldWelcomeNewMembers()) {
-      const primaryChannel: GuildChannel | null = this._getPrimaryChannel(
-        member
+      const primaryChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
+        member.guild
       );
 
       if (isDiscordGuildChannel(primaryChannel)) {
@@ -129,25 +128,5 @@ export class DiscordGuildMemberAddService {
     }
 
     return response;
-  }
-
-  private _getPrimaryChannel(
-    member: Readonly<AnyGuildMember>
-  ): GuildChannel | null {
-    if (isDiscordGuild(member.guild)) {
-      const primaryChannel:
-        | GuildChannel
-        | undefined = member.guild.channels.cache.find(
-        (channel: Readonly<GuildChannel>): boolean => {
-          return this._discordChannelGuildService.isGeneral(channel);
-        }
-      );
-
-      if (isDiscordGuildChannel(primaryChannel)) {
-        return primaryChannel;
-      }
-    }
-
-    return null;
   }
 }

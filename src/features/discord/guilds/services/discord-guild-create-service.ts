@@ -56,7 +56,9 @@ export class DiscordGuildCreateService {
 
   private _handleGuildCreate(guild: Readonly<Guild>): void {
     if (this._discordGuildConfigService.shouldSendCookiesOnCreate()) {
-      const memberChannel: GuildChannel | null = this._getPrimaryChannel(guild);
+      const memberChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
+        guild
+      );
 
       if (isDiscordGuildChannel(memberChannel)) {
         this._sendMessage(memberChannel);
@@ -100,19 +102,5 @@ export class DiscordGuildCreateService {
 
   private _getMessageResponse(): IDiscordMessageResponse {
     return this._discordMessageCommandCookieService.getMessageResponse();
-  }
-
-  private _getPrimaryChannel(guild: Readonly<Guild>): GuildChannel | null {
-    const primaryChannel: GuildChannel | undefined = guild.channels.cache.find(
-      (channel: Readonly<GuildChannel>): boolean => {
-        return this._discordChannelGuildService.isGeneral(channel);
-      }
-    );
-
-    if (isDiscordGuildChannel(primaryChannel)) {
-      return primaryChannel;
-    }
-
-    return null;
   }
 }

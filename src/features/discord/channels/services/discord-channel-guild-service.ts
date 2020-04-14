@@ -1,5 +1,7 @@
-import { GuildChannel } from "discord.js";
+import { Guild, GuildChannel } from "discord.js";
 import _ from "lodash";
+import { isDiscordGuild } from "../../guilds/functions/is-discord-guild";
+import { isDiscordGuildChannel } from "../functions/is-discord-guild-channel";
 
 export class DiscordChannelGuildService {
   private static _instance: DiscordChannelGuildService;
@@ -14,5 +16,23 @@ export class DiscordChannelGuildService {
 
   public isGeneral(channel: Readonly<GuildChannel>): boolean {
     return _.isEqual(_.deburr(channel.name), `general`);
+  }
+
+  public getPrimary(guild: Readonly<Guild>): GuildChannel | null {
+    if (isDiscordGuild(guild)) {
+      const primaryChannel:
+        | GuildChannel
+        | undefined = guild.channels.cache.find(
+        (channel: Readonly<GuildChannel>): boolean => {
+          return this.isGeneral(channel);
+        }
+      );
+
+      if (isDiscordGuildChannel(primaryChannel)) {
+        return primaryChannel;
+      }
+    }
+
+    return null;
   }
 }
