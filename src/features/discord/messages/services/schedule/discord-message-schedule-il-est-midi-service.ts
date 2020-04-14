@@ -2,14 +2,13 @@ import { Guild, GuildChannel } from "discord.js";
 import _ from "lodash";
 import moment from "moment";
 import { Job, scheduleJob } from "node-schedule";
-import { getEveryHourScheduleRule } from "../../../../../functions/schedule/get-every-hour-schedule-rule";
+import { getNoonScheduleRule } from "../../../../../functions/schedule/get-noon-schedule-rule";
 import { ChalkService } from "../../../../logger/services/chalk-service";
 import { LoggerService } from "../../../../logger/services/logger-service";
 import { TimeService } from "../../../../time/services/time-service";
 import { isDiscordGuildChannel } from "../../../channels/functions/is-discord-guild-channel";
 import { DiscordChannelGuildService } from "../../../channels/services/discord-channel-guild-service";
 import { AnyDiscordChannel } from "../../../channels/types/any-discord-channel";
-import { isDiscordGuild } from "../../../guilds/functions/is-discord-guild";
 import { DiscordClientService } from "../../../services/discord-client-service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 
@@ -30,7 +29,7 @@ export class DiscordMessageScheduleIlEstMidiService {
   private readonly _timeService: TimeService = TimeService.getInstance();
   private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
   private readonly _className = `DiscordMessageScheduleIlEstMidiService`;
-  private readonly _rule: string = getEveryHourScheduleRule();
+  private readonly _rule: string = getNoonScheduleRule();
   private _job: Job | undefined = undefined;
 
   public constructor() {
@@ -54,6 +53,8 @@ export class DiscordMessageScheduleIlEstMidiService {
     this._job = scheduleJob(this._rule, (): void => {
       this._executeJob();
     });
+
+    this._logNextJob();
   }
 
   private _executeJob(): void {
@@ -103,7 +104,9 @@ export class DiscordMessageScheduleIlEstMidiService {
   }
 
   private _handleMessage(guild: Readonly<Guild>): void {
-    const primaryChannel: GuildChannel | null = this._getPrimaryChannel(guild);
+    const primaryChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
+      guild
+    );
 
     if (isDiscordGuildChannel(primaryChannel)) {
       this._sendMessage(primaryChannel);
@@ -138,23 +141,5 @@ export class DiscordMessageScheduleIlEstMidiService {
           message: this._chalkService.error(error),
         });
       });
-  }
-
-  private _getPrimaryChannel(guild: Readonly<Guild>): GuildChannel | null {
-    if (isDiscordGuild(guild)) {
-      const primaryChannel:
-        | GuildChannel
-        | undefined = guild.channels.cache.find(
-        (channel: Readonly<GuildChannel>): boolean => {
-          return this._discordChannelGuildService.isGeneral(channel);
-        }
-      );
-
-      if (isDiscordGuildChannel(primaryChannel)) {
-        return primaryChannel;
-      }
-    }
-
-    return null;
   }
 }
