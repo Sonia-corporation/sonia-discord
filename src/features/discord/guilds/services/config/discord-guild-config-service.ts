@@ -18,6 +18,7 @@ export class DiscordGuildConfigService {
   public getConfig(): IDiscordGuildConfig {
     return {
       shouldSendCookiesOnCreate: this.shouldSendCookiesOnCreate(),
+      shouldSendIlEstMidiMessage: this.shouldSendIlEstMidiMessage(),
       shouldWelcomeNewMembers: this.shouldWelcomeNewMembers(),
       soniaPermanentGuildInviteUrl: this.getSoniaPermanentGuildInviteUrl(),
     };
@@ -25,6 +26,10 @@ export class DiscordGuildConfigService {
 
   public shouldSendCookiesOnCreate(): boolean {
     return this._discordGuildConfigCoreService.shouldSendCookiesOnCreate;
+  }
+
+  public shouldSendIlEstMidiMessage(): boolean {
+    return this._discordGuildConfigCoreService.shouldSendIlEstMidiMessage;
   }
 
   public shouldWelcomeNewMembers(): boolean {
