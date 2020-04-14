@@ -1,5 +1,72 @@
 # Semantic Versioning Changelog
 
+# [1.32.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.31.0...1.32.0) (2020-04-14)
+
+
+### Bug Fixes
+
+* **schedule:** wait one more second before starting the schedules ([e582d15](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e582d150d671919dbfa34fdeeca2da5cde5ce6bf))
+
+
+### Features
+
+* **discord:** add a new option in the config to disable or enable the il est midi message ([2e3f2c8](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2e3f2c82c5b23fdeb628d2031bd7f31940e62bcb))
+* **discord:** add an explicit date for the next job date for the noon message ([09dcfcb](https://github.com/Sonia-corporation/il-est-midi-discord/commit/09dcfcba3eac6dda2663231990a35c642a156b1b))
+* **discord:** only send the noon message at noon for now ([8f57da2](https://github.com/Sonia-corporation/il-est-midi-discord/commit/8f57da27e70c0a6bb3c5ceb95e70fac79e624e1f))
+* **discord:** send a message each our to each guild ([f21906d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f21906d253d34165d5da455737bbf22dad7adad7))
+
+# [1.31.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.30.0...1.31.0) (2020-04-13)
+
+
+### Features
+
+* **discord:** add cookie command ([0cd86c1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/0cd86c1720fb119ba18325ce3775957647f610d0))
+* **discord:** add information about cookie command when using help command ([96d86fa](https://github.com/Sonia-corporation/il-est-midi-discord/commit/96d86fae182c48b81884075e7f958ed55c015dee))
+* **discord:** add new option for the guild config to send a cookies on guil create ([2f10ba6](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2f10ba6f82d4db2a69fd04f2d13e12f82da76879))
+* **discord:** add new service to send an event on guild create ([b9e6093](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b9e60936691b6ebd78ec4cf409ebf093b307e8ac))
+* **discord:** add random message and title for the cookie command ([5d415ff](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5d415ff78eed46ca2e98fb135cc042b6963db1d6))
+
+# [1.30.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.29.0...1.30.0) (2020-04-12)
+
+
+### Features
+
+* **discord:** add a dev prefix when the response is an embed one ([308d4e7](https://github.com/Sonia-corporation/il-est-midi-discord/commit/308d4e782b6086bf7079b97deabdc626542ca804))
+
+# [1.29.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.28.1...1.29.0) (2020-04-11)
+
+
+### Bug Fixes
+
+* **logger-config-service:** correction test following the addition of the profile in ILoggerConfig ([54df527](https://github.com/Sonia-corporation/il-est-midi-discord/commit/54df527c84758cb33077bb251a77b60558dcf8eb))
+* **env:** remove the default value from the env file for the profile nickname ([9b27275](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9b2727558f27156fca5bffb68fbeccb6167fe64c))
+
+
+### Features
+
+* **config:** add config field to display config profile name when dev mode ([a045e9f](https://github.com/Sonia-corporation/il-est-midi-discord/commit/a045e9f25b0ed7e404266df0984e3041e178062e))
+
+## [1.28.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.28.0...1.28.1) (2020-04-09)
+
+
+### Bug Fixes
+
+* **discord:** remove useless empty rows ([6a857b6](https://github.com/Sonia-corporation/il-est-midi-discord/commit/6a857b6dc5b10d59835fba8e71f47e9480bb0485))
+
+# [1.28.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.27.1...1.28.0) (2020-04-07)
+
+
+### Features
+
+* **discord-help-command:** add new command "help" ([3667f06](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3667f06ceb0c6fb662ef334277f35dba9e1a9019))
+
+## [1.27.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.27.0...1.27.1) (2020-04-06)
+
+
+### Bug Fixes
+
+* **sonia-mental-state:** add undefined to fix type error ([3b97b63](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3b97b63ae9caa9ac35a72806258d26a357896b4f))
+
 # [1.27.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.26.0...1.27.0) (2020-04-02)
 
 
