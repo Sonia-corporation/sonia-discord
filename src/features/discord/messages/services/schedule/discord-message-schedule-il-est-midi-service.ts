@@ -54,7 +54,7 @@ export class DiscordMessageScheduleIlEstMidiService {
       this._executeJob();
     });
 
-    this._logNextJob();
+    this._logNextJobDate();
   }
 
   private _executeJob(): void {
@@ -64,25 +64,38 @@ export class DiscordMessageScheduleIlEstMidiService {
     });
 
     this._handleMessages();
-    this._logNextJob();
+    this._logNextJobDate();
   }
 
-  private _logNextJob(): void {
+  private _logNextJobDate(): void {
+    const nextJobDateHumanized: string | null = this._getNextJobDateHumanized();
     const nextJobDate: string | null = this._getNextJobDate();
 
-    if (!_.isNil(nextJobDate)) {
+    if (!_.isNil(nextJobDateHumanized) && !_.isNil(nextJobDate)) {
       this._loggerService.debug({
         context: this._className,
-        message: `next job: ${nextJobDate}`,
+        message: `next job: ${this._chalkService.value(
+          nextJobDateHumanized
+        )} ${this._chalkService.hint(`(${nextJobDate})`)}`,
       });
     }
   }
 
-  private _getNextJobDate(): string | null {
+  private _getNextJobDateHumanized(): string | null {
     if (!_.isNil(this._job)) {
       return this._timeService.fromNow(
         moment(this._job.nextInvocation().toISOString()).toISOString(),
         false
+      );
+    }
+
+    return null;
+  }
+
+  private _getNextJobDate(): string | null {
+    if (!_.isNil(this._job)) {
+      return moment(this._job.nextInvocation().toISOString()).format(
+        `HH:mm:ss`
       );
     }
 
