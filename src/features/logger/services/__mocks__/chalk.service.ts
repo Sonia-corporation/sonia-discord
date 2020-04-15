@@ -12,38 +12,38 @@ export class ChalkService {
   }
 
   public success(message: Readonly<string> | unknown): string {
-    return _.toString(message);
+    return `success-${_.toString(message)}`;
   }
 
   public context(message: Readonly<string> | unknown): string {
-    return _.toString(message);
+    return `context-${_.toString(message)}`;
   }
 
   public value(message: Readonly<string> | unknown): string {
-    return _.toString(message);
+    return `value-${_.toString(message)}`;
   }
 
   public hint(message: Readonly<string> | unknown): string {
-    return _.toString(message);
+    return `hint-${_.toString(message)}`;
   }
 
   public error(message: Readonly<string> | unknown): string {
-    return _.toString(message);
+    return `error-${_.toString(message)}`;
   }
 
   public warning(message: Readonly<string> | unknown): string {
-    return _.toString(message);
+    return `warning-${_.toString(message)}`;
   }
 
   public text(message: Readonly<string> | unknown): string {
-    return _.toString(message);
+    return `text-${_.toString(message)}`;
   }
 
   public log(message: Readonly<string> | unknown): string {
-    return _.toString(message);
+    return `log-${_.toString(message)}`;
   }
 
   public debug(message: Readonly<string> | unknown): string {
-    return _.toString(message);
+    return `debug-${_.toString(message)}`;
   }
 }

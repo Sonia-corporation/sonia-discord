@@ -1,5 +1,6 @@
 import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
 import { ILoggerLog } from "../interfaces/logger-log";
+import { ILoggerServiceCreated } from "../interfaces/logger-service-created";
 import { LoggerConfigCoreService } from "./config/logger-config-core.service";
 import { LoggerService } from "./logger.service";
 
@@ -3796,6 +3797,56 @@ describe(`LoggerService`, (): void => {
             expect(consoleLogSpy).not.toHaveBeenCalled();
           });
         });
+      });
+    });
+  });
+
+  describe(`serviceCreated()`, (): void => {
+    let loggerServiceCreated: ILoggerServiceCreated;
+
+    let debugSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      debugSpy = jest.spyOn(service, `debug`).mockImplementation();
+    });
+
+    describe(`when the given logger service created contains a service "dummy-service"`, (): void => {
+      beforeEach((): void => {
+        loggerServiceCreated = {
+          service: `dummy-service`,
+        };
+      });
+
+      it(`should log a debug log`, (): void => {
+        expect.assertions(2);
+
+        service.serviceCreated(loggerServiceCreated);
+
+        expect(debugSpy).toHaveBeenCalledTimes(1);
+        expect(debugSpy).toHaveBeenCalledWith({
+          context: `dummy-service`,
+          message: `created`,
+        } as ILoggerLog);
+      });
+    });
+
+    describe(`when the given logger service created contains a service "service"`, (): void => {
+      beforeEach((): void => {
+        loggerServiceCreated = {
+          service: `service`,
+        };
+      });
+
+      it(`should log a debug log`, (): void => {
+        expect.assertions(2);
+
+        service.serviceCreated(loggerServiceCreated);
+
+        expect(debugSpy).toHaveBeenCalledTimes(1);
+        expect(debugSpy).toHaveBeenCalledWith({
+          context: `service`,
+          message: `created`,
+        } as ILoggerLog);
       });
     });
   });

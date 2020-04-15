@@ -5,6 +5,7 @@ import { LoggerConfigLevelValueEnum } from "../enums/logger-config-level-value.e
 import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
 import { ILoggerLog } from "../interfaces/logger-log";
 import { ILoggerLogInternal } from "../interfaces/logger-log-internal";
+import { ILoggerServiceCreated } from "../interfaces/logger-service-created";
 import { ChalkService } from "./chalk.service";
 import { LoggerConfigService } from "./config/logger-config.service";
 
@@ -67,6 +68,15 @@ export class LoggerService {
         loggerLogType: LoggerConfigLevelEnum.DEBUG,
       });
     }
+  }
+
+  public serviceCreated(
+    loggerServiceCreated: Readonly<ILoggerServiceCreated>
+  ): void {
+    this.debug({
+      context: loggerServiceCreated.service,
+      message: this._chalkService.text(`created`),
+    });
   }
 
   public getStringArray(array: Readonly<string>[]): string {

@@ -35,9 +35,8 @@ export class DiscordMessageScheduleIlEstMidiService {
   private _job: Job | undefined = undefined;
 
   public constructor() {
-    this._loggerService.debug({
-      context: this._className,
-      message: this._chalkService.text(`created`),
+    this._loggerService.serviceCreated({
+      service: this._className,
     });
 
     this.init();
