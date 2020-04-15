@@ -48,7 +48,7 @@ describe(`LoggerService`, (): void => {
             service.error(loggerLog);
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-            expect(consoleLogSpy).toHaveBeenCalledWith(`● dummy-message`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(`error-● dummy-message`);
           });
         });
 
@@ -83,7 +83,7 @@ describe(`LoggerService`, (): void => {
             service.error(loggerLog);
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-            expect(consoleLogSpy).toHaveBeenCalledWith(`● dummy-message`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(`error-● dummy-message`);
           });
         });
 
@@ -118,7 +118,7 @@ describe(`LoggerService`, (): void => {
             service.error(loggerLog);
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-            expect(consoleLogSpy).toHaveBeenCalledWith(`● dummy-message`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(`error-● dummy-message`);
           });
         });
 
@@ -153,7 +153,7 @@ describe(`LoggerService`, (): void => {
             service.error(loggerLog);
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-            expect(consoleLogSpy).toHaveBeenCalledWith(`● dummy-message`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(`error-● dummy-message`);
           });
         });
 
@@ -188,7 +188,7 @@ describe(`LoggerService`, (): void => {
             service.error(loggerLog);
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-            expect(consoleLogSpy).toHaveBeenCalledWith(`● dummy-message`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(`error-● dummy-message`);
           });
         });
 
@@ -233,7 +233,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `error-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -270,7 +270,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `error-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -307,7 +307,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `error-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -344,7 +344,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `error-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -381,7 +381,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `error-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -428,7 +428,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `error-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -465,7 +465,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `error-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -502,7 +502,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `error-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -539,7 +539,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `error-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -576,7 +576,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `error-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -623,7 +623,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format][custom-context] dummy-message`
+              `error-● context-[dummy-context][now-format][custom-context] dummy-message`
             );
           });
         });
@@ -660,7 +660,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format][custom-context] dummy-message`
+              `error-● context-[dummy-context][now-format][custom-context] dummy-message`
             );
           });
         });
@@ -697,7 +697,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format][custom-context] dummy-message`
+              `error-● context-[dummy-context][now-format][custom-context] dummy-message`
             );
           });
         });
@@ -734,7 +734,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format][custom-context] dummy-message`
+              `error-● context-[dummy-context][now-format][custom-context] dummy-message`
             );
           });
         });
@@ -771,7 +771,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format][custom-context] dummy-message`
+              `error-● context-[dummy-context][now-format][custom-context] dummy-message`
             );
           });
         });
@@ -859,7 +859,9 @@ describe(`LoggerService`, (): void => {
             service.warning(loggerLog);
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-            expect(consoleLogSpy).toHaveBeenCalledWith(`● dummy-message`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(
+              `warning-● dummy-message`
+            );
           });
         });
 
@@ -894,7 +896,9 @@ describe(`LoggerService`, (): void => {
             service.warning(loggerLog);
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-            expect(consoleLogSpy).toHaveBeenCalledWith(`● dummy-message`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(
+              `warning-● dummy-message`
+            );
           });
         });
 
@@ -929,7 +933,9 @@ describe(`LoggerService`, (): void => {
             service.warning(loggerLog);
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-            expect(consoleLogSpy).toHaveBeenCalledWith(`● dummy-message`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(
+              `warning-● dummy-message`
+            );
           });
         });
 
@@ -964,7 +970,9 @@ describe(`LoggerService`, (): void => {
             service.warning(loggerLog);
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-            expect(consoleLogSpy).toHaveBeenCalledWith(`● dummy-message`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(
+              `warning-● dummy-message`
+            );
           });
         });
 
@@ -1043,7 +1051,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `warning-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -1080,7 +1088,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `warning-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -1117,7 +1125,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `warning-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -1154,7 +1162,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `warning-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -1235,7 +1243,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `warning-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -1272,7 +1280,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `warning-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -1309,7 +1317,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `warning-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -1346,7 +1354,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `warning-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -1427,7 +1435,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format][custom-context] dummy-message`
+              `warning-● context-[dummy-context][now-format][custom-context] dummy-message`
             );
           });
         });
@@ -1464,7 +1472,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format][custom-context] dummy-message`
+              `warning-● context-[dummy-context][now-format][custom-context] dummy-message`
             );
           });
         });
@@ -1501,7 +1509,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format][custom-context] dummy-message`
+              `warning-● context-[dummy-context][now-format][custom-context] dummy-message`
             );
           });
         });
@@ -1538,7 +1546,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format][custom-context] dummy-message`
+              `warning-● context-[dummy-context][now-format][custom-context] dummy-message`
             );
           });
         });
@@ -1660,7 +1668,9 @@ describe(`LoggerService`, (): void => {
             service.success(loggerLog);
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-            expect(consoleLogSpy).toHaveBeenCalledWith(`● dummy-message`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(
+              `success-● dummy-message`
+            );
           });
         });
 
@@ -1695,7 +1705,9 @@ describe(`LoggerService`, (): void => {
             service.success(loggerLog);
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-            expect(consoleLogSpy).toHaveBeenCalledWith(`● dummy-message`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(
+              `success-● dummy-message`
+            );
           });
         });
 
@@ -1730,7 +1742,9 @@ describe(`LoggerService`, (): void => {
             service.success(loggerLog);
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-            expect(consoleLogSpy).toHaveBeenCalledWith(`● dummy-message`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(
+              `success-● dummy-message`
+            );
           });
         });
 
@@ -1843,7 +1857,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `success-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -1880,7 +1894,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `success-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -1917,7 +1931,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `success-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -2032,7 +2046,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `success-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -2069,7 +2083,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `success-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -2106,7 +2120,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `success-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -2221,7 +2235,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format][custom-context] dummy-message`
+              `success-● context-[dummy-context][now-format][custom-context] dummy-message`
             );
           });
         });
@@ -2258,7 +2272,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format][custom-context] dummy-message`
+              `success-● context-[dummy-context][now-format][custom-context] dummy-message`
             );
           });
         });
@@ -2295,7 +2309,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format][custom-context] dummy-message`
+              `success-● context-[dummy-context][now-format][custom-context] dummy-message`
             );
           });
         });
@@ -2451,7 +2465,7 @@ describe(`LoggerService`, (): void => {
             service.log(loggerLog);
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-            expect(consoleLogSpy).toHaveBeenCalledWith(`● dummy-message`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(`log-● dummy-message`);
           });
         });
 
@@ -2486,7 +2500,7 @@ describe(`LoggerService`, (): void => {
             service.log(loggerLog);
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-            expect(consoleLogSpy).toHaveBeenCalledWith(`● dummy-message`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(`log-● dummy-message`);
           });
         });
 
@@ -2633,7 +2647,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `log-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -2670,7 +2684,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `log-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -2819,7 +2833,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `log-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -2856,7 +2870,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `log-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -3005,7 +3019,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format][custom-context] dummy-message`
+              `log-● context-[dummy-context][now-format][custom-context] dummy-message`
             );
           });
         });
@@ -3042,7 +3056,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format][custom-context] dummy-message`
+              `log-● context-[dummy-context][now-format][custom-context] dummy-message`
             );
           });
         });
@@ -3232,7 +3246,7 @@ describe(`LoggerService`, (): void => {
             service.debug(loggerLog);
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
-            expect(consoleLogSpy).toHaveBeenCalledWith(`● dummy-message`);
+            expect(consoleLogSpy).toHaveBeenCalledWith(`debug-● dummy-message`);
           });
         });
 
@@ -3413,7 +3427,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `debug-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -3596,7 +3610,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format] dummy-message`
+              `debug-● context-[dummy-context][now-format] dummy-message`
             );
           });
         });
@@ -3779,7 +3793,7 @@ describe(`LoggerService`, (): void => {
 
             expect(consoleLogSpy).toHaveBeenCalledTimes(1);
             expect(consoleLogSpy).toHaveBeenCalledWith(
-              `● [dummy-context][now-format][custom-context] dummy-message`
+              `debug-● context-[dummy-context][now-format][custom-context] dummy-message`
             );
           });
         });
@@ -3825,7 +3839,7 @@ describe(`LoggerService`, (): void => {
         expect(debugSpy).toHaveBeenCalledTimes(1);
         expect(debugSpy).toHaveBeenCalledWith({
           context: `dummy-service`,
-          message: `created`,
+          message: `text-created`,
         } as ILoggerLog);
       });
     });
@@ -3845,7 +3859,7 @@ describe(`LoggerService`, (): void => {
         expect(debugSpy).toHaveBeenCalledTimes(1);
         expect(debugSpy).toHaveBeenCalledWith({
           context: `service`,
-          message: `created`,
+          message: `text-created`,
         } as ILoggerLog);
       });
     });

@@ -70,7 +70,7 @@ describe(`ConfigService`, (): void => {
         expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
-          message: `dummy-value-name updated to: 5`,
+          message: `text-dummy-value-name updated to: value-5`,
         } as ILoggerLog);
       });
 
@@ -96,7 +96,7 @@ describe(`ConfigService`, (): void => {
         expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
-          message: `dummy-value-name updated to: 6`,
+          message: `text-dummy-value-name updated to: value-6`,
         } as ILoggerLog);
       });
 
@@ -173,7 +173,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "new-value"`,
+              message: `text-dummy-value-name updated to: value-"new-value"`,
             } as ILoggerLog);
           });
         });
@@ -191,7 +191,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated`,
+              message: `text-dummy-value-name updated`,
             } as ILoggerLog);
           });
         });
@@ -209,7 +209,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "new-value"`,
+              message: `text-dummy-value-name updated to: value-"new-value"`,
             } as ILoggerLog);
           });
         });
@@ -241,7 +241,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "new-value"`,
+              message: `text-dummy-value-name updated to: value-"new-value"`,
             } as ILoggerLog);
           });
         });
@@ -259,7 +259,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated`,
+              message: `text-dummy-value-name updated`,
             } as ILoggerLog);
           });
         });
@@ -277,7 +277,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "new-value"`,
+              message: `text-dummy-value-name updated to: value-"new-value"`,
             } as ILoggerLog);
           });
         });
@@ -383,7 +383,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "marco-polo"`,
+              message: `text-dummy-value-name updated to: value-"marco-polo"`,
             } as ILoggerLog);
           });
         });
@@ -401,7 +401,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated`,
+              message: `text-dummy-value-name updated`,
             } as ILoggerLog);
           });
         });
@@ -419,7 +419,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "marco-polo"`,
+              message: `text-dummy-value-name updated to: value-"marco-polo"`,
             } as ILoggerLog);
           });
         });
@@ -451,7 +451,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "marco-polo"`,
+              message: `text-dummy-value-name updated to: value-"marco-polo"`,
             } as ILoggerLog);
           });
         });
@@ -469,7 +469,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated`,
+              message: `text-dummy-value-name updated`,
             } as ILoggerLog);
           });
         });
@@ -487,7 +487,7 @@ describe(`ConfigService`, (): void => {
             expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
-              message: `dummy-value-name updated to: "marco-polo"`,
+              message: `text-dummy-value-name updated to: value-"marco-polo"`,
             } as ILoggerLog);
           });
         });
@@ -624,7 +624,7 @@ describe(`ConfigService`, (): void => {
         expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
-          message: `dummy-value-name updated to: false`,
+          message: `text-dummy-value-name updated to: value-false`,
         } as ILoggerLog);
       });
 
@@ -650,7 +650,7 @@ describe(`ConfigService`, (): void => {
         expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
-          message: `dummy-value-name updated to: true`,
+          message: `text-dummy-value-name updated to: value-true`,
         } as ILoggerLog);
       });
 
