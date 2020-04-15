@@ -1,3 +1,3 @@
-import { InitService } from "./features/init/services/init-service";
+import { InitService } from "./features/init/services/init.service";
 
 InitService.getInstance();
