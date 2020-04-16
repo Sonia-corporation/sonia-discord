@@ -3,6 +3,7 @@ import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
 import { ILoggerLog } from "../../interfaces/logger-log";
 import { ILoggerLogInternal } from "../../interfaces/logger-log-internal";
+import { ILoggerServiceCreated } from "../../interfaces/logger-service-created";
 
 export class LoggerService {
   private static _instance: LoggerService;
@@ -49,6 +50,15 @@ export class LoggerService {
     this._log({
       ...loggerLog,
       loggerLogType: LoggerConfigLevelEnum.DEBUG,
+    });
+  }
+
+  public serviceCreated(
+    loggerServiceCreated: Readonly<ILoggerServiceCreated>
+  ): void {
+    this.debug({
+      context: loggerServiceCreated.service,
+      message: `created`,
     });
   }
 

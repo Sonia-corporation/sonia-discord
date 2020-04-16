@@ -23,12 +23,11 @@ export class GithubConfigMutatorService extends AbstractConfigService<
     return GithubConfigMutatorService._instance;
   }
 
-  protected readonly _className = `GithubConfigMutatorService`;
-  private readonly _githubConfigCoreService = GithubConfigCoreService.getInstance();
-  private readonly _githubConfigService = GithubConfigService.getInstance();
+  private readonly _githubConfigCoreService: GithubConfigCoreService = GithubConfigCoreService.getInstance();
+  private readonly _githubConfigService: GithubConfigService = GithubConfigService.getInstance();
 
   protected constructor(config?: Readonly<PartialNested<IGithubConfig>>) {
-    super(config);
+    super(`GithubConfigMutatorService`, config);
   }
 
   public updateConfig(config?: Readonly<PartialNested<IGithubConfig>>): void {
@@ -37,7 +36,7 @@ export class GithubConfigMutatorService extends AbstractConfigService<
       this.updatePersonalAccessToken(config.personalAccessToken);
 
       this._loggerService.debug({
-        context: this._className,
+        context: this._serviceName,
         message: this._chalkService.text(`configuration updated`),
       });
     }
@@ -46,7 +45,7 @@ export class GithubConfigMutatorService extends AbstractConfigService<
   public updateBugReportUrl(bugReportUrl?: Readonly<string>): void {
     this._githubConfigCoreService.bugReportUrl = this._configService.getUpdatedString(
       {
-        context: this._className,
+        context: this._serviceName,
         newValue: bugReportUrl,
         oldValue: this._githubConfigService.getBugReportUrl(),
         valueName: GithubConfigValueNameEnum.BUG_REPORT_URL,
@@ -59,7 +58,7 @@ export class GithubConfigMutatorService extends AbstractConfigService<
   ): void {
     this._githubConfigCoreService.personalAccessToken = this._configService.getUpdatedString(
       {
-        context: this._className,
+        context: this._serviceName,
         isValueHidden: true,
         newValue: personalAccessToken,
         oldValue: this._githubConfigService.getPersonalAccessToken(),

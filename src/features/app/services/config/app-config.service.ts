@@ -1,8 +1,9 @@
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
 import { IAppConfig } from "../../interfaces/app-config";
 import { AppConfigCoreService } from "./app-config-core.service";
 
-export class AppConfigService {
+export class AppConfigService extends AbstractService {
   private static _instance: AppConfigService;
 
   public static getInstance(): AppConfigService {
@@ -14,6 +15,10 @@ export class AppConfigService {
   }
 
   private readonly _appConfigCoreService = AppConfigCoreService.getInstance();
+
+  protected constructor() {
+    super(`AppConfigService`);
+  }
 
   public getConfig(): IAppConfig {
     return {

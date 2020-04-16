@@ -21,12 +21,11 @@ export class ProfileConfigMutatorService extends AbstractConfigService<
     return ProfileConfigMutatorService._instance;
   }
 
-  protected readonly _className = `ProfileConfigMutatorService`;
-  private readonly _profileConfigCoreService = ProfileConfigCoreService.getInstance();
-  private readonly _profileConfigService = ProfileConfigService.getInstance();
+  private readonly _profileConfigCoreService: ProfileConfigCoreService = ProfileConfigCoreService.getInstance();
+  private readonly _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();
 
   protected constructor(config?: Readonly<Partial<IProfileConfig>>) {
-    super(config);
+    super(`ProfileConfigMutatorService`, config);
   }
 
   public updateConfig(config?: Readonly<Partial<IProfileConfig>>): void {
@@ -34,7 +33,7 @@ export class ProfileConfigMutatorService extends AbstractConfigService<
       this.updateNickname(config.nickname);
 
       this._loggerService.debug({
-        context: this._className,
+        context: this._serviceName,
         message: this._chalkService.text(`configuration updated`),
       });
     }
@@ -43,7 +42,7 @@ export class ProfileConfigMutatorService extends AbstractConfigService<
   public updateNickname(nickname?: Readonly<string | null>): void {
     this._profileConfigCoreService.nickname = this._configService.getUpdatedString(
       {
-        context: this._className,
+        context: this._serviceName,
         newValue: nickname,
         oldValue: this._profileConfigService.getNickname(),
         valueName: `nickname`,

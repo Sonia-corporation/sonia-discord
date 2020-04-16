@@ -23,12 +23,11 @@ export class LoggerConfigMutatorService extends AbstractConfigService<
     return LoggerConfigMutatorService._instance;
   }
 
-  protected readonly _loggerConfigCoreService = LoggerConfigCoreService.getInstance();
-  protected readonly _loggerConfigService = LoggerConfigService.getInstance();
-  protected readonly _className = `LoggerConfigMutatorService`;
+  protected readonly _loggerConfigCoreService: LoggerConfigCoreService = LoggerConfigCoreService.getInstance();
+  protected readonly _loggerConfigService: LoggerConfigService = LoggerConfigService.getInstance();
 
   protected constructor(config?: Readonly<Partial<ILoggerConfig>>) {
-    super(config);
+    super(`LoggerConfigMutatorService`, config);
   }
 
   public updateConfig(config?: Readonly<Partial<ILoggerConfig>>): void {
@@ -37,7 +36,7 @@ export class LoggerConfigMutatorService extends AbstractConfigService<
       this.updateLevel(config.level);
 
       this._loggerService.debug({
-        context: this._className,
+        context: this._serviceName,
         message: this._chalkService.text(`configuration updated`),
       });
     }
@@ -46,7 +45,7 @@ export class LoggerConfigMutatorService extends AbstractConfigService<
   public updateEnabledState(isEnabled?: Readonly<boolean>): void {
     this._loggerConfigCoreService.isEnabled = this._configService.getUpdatedBoolean(
       {
-        context: this._className,
+        context: this._serviceName,
         newValue: isEnabled,
         oldValue: this._loggerConfigService.isEnabled(),
         valueName: LoggerConfigValueNameEnum.IS_ENABLED,
@@ -56,7 +55,7 @@ export class LoggerConfigMutatorService extends AbstractConfigService<
 
   public updateLevel(level?: Readonly<LoggerConfigLevelEnum>): void {
     this._loggerConfigCoreService.level = this._configService.getUpdatedString({
-      context: this._className,
+      context: this._serviceName,
       newValue: level,
       oldValue: this._loggerConfigService.getLevel(),
       valueName: LoggerConfigValueNameEnum.LEVEL,

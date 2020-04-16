@@ -1,4 +1,5 @@
-import _ from "lodash";
+import { ILoggerServiceCreated } from "../features/logger/interfaces/logger-service-created";
+import { LoggerService } from "../features/logger/services/logger.service";
 import { PartialNested } from "../types/partial-nested";
 import { AbstractConfigService } from "./abstract-config.service";
 
@@ -7,22 +8,11 @@ interface IDummy {
 }
 
 class DummyService extends AbstractConfigService<IDummy> {
-  private static _instance: DummyService;
-
-  public static getInstance(
+  public constructor(
+    serviceName: Readonly<string>,
     config?: Readonly<PartialNested<IDummy>>
-  ): DummyService {
-    if (_.isNil(DummyService._instance)) {
-      DummyService._instance = new DummyService(config);
-    }
-
-    return DummyService._instance;
-  }
-
-  protected readonly _className = `DummyService`;
-
-  protected constructor(config?: Readonly<PartialNested<IDummy>>) {
-    super(config);
+  ) {
+    super(serviceName, config);
   }
 
   public updateConfig(_config?: Readonly<PartialNested<IDummy>>): void {
@@ -32,12 +22,59 @@ class DummyService extends AbstractConfigService<IDummy> {
 
 describe(`AbstractConfigService`, (): void => {
   let service: DummyService;
+  let loggerService: LoggerService;
+
+  let serviceName: string;
+
+  let loggerServiceServiceCreatedSpy: jest.SpyInstance;
 
   beforeEach((): void => {
-    service = DummyService.getInstance();
+    loggerService = LoggerService.getInstance();
+
+    loggerServiceServiceCreatedSpy = jest
+      .spyOn(loggerService, `serviceCreated`)
+      .mockImplementation();
+  });
+
+  describe(`when the service is created with the name "DummyService"`, (): void => {
+    beforeEach((): void => {
+      serviceName = `DummyService`;
+    });
+
+    it(`should log about the creation of the service`, (): void => {
+      expect.assertions(2);
+
+      service = new DummyService(serviceName);
+
+      expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledWith({
+        service: `DummyService`,
+      } as ILoggerServiceCreated);
+    });
+  });
+
+  describe(`when the service is created with the name "Service"`, (): void => {
+    beforeEach((): void => {
+      serviceName = `Service`;
+    });
+
+    it(`should log about the creation of the service`, (): void => {
+      expect.assertions(2);
+
+      service = new DummyService(serviceName);
+
+      expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledWith({
+        service: `Service`,
+      } as ILoggerServiceCreated);
+    });
   });
 
   describe(`preUpdateConfig()`, (): void => {
+    beforeEach((): void => {
+      service = new DummyService(serviceName);
+    });
+
     it(`should return undefined`, (): void => {
       expect.assertions(1);
 
@@ -48,6 +85,10 @@ describe(`AbstractConfigService`, (): void => {
   });
 
   describe(`updateConfig()`, (): void => {
+    beforeEach((): void => {
+      service = new DummyService(serviceName);
+    });
+
     it(`should return undefined`, (): void => {
       expect.assertions(1);
 
@@ -58,6 +99,10 @@ describe(`AbstractConfigService`, (): void => {
   });
 
   describe(`postUpdateConfig()`, (): void => {
+    beforeEach((): void => {
+      service = new DummyService(serviceName);
+    });
+
     it(`should return undefined`, (): void => {
       expect.assertions(1);
 

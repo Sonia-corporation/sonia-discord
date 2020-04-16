@@ -17,7 +17,9 @@ describe(`TimeService`, (): void => {
 
         const result = service.now();
 
-        expect(result).toStrictEqual(moment().format());
+        // Use from now to avoid a small difference of ms
+        // When humanized, it will not make a difference
+        expect(moment(result).fromNow()).toStrictEqual(moment().fromNow());
       });
     });
 

@@ -24,12 +24,11 @@ export class ServerConfigMutatorService extends AbstractConfigService<
     return ServerConfigMutatorService._instance;
   }
 
-  protected readonly _className = `ServerConfigMutatorService`;
-  private readonly _serverConfigCoreService = ServerConfigCoreService.getInstance();
-  private readonly _serverConfigService = ServerConfigService.getInstance();
+  private readonly _serverConfigCoreService: ServerConfigCoreService = ServerConfigCoreService.getInstance();
+  private readonly _serverConfigService: ServerConfigService = ServerConfigService.getInstance();
 
   protected constructor(config?: Readonly<PartialNested<IServerConfig>>) {
-    super(config);
+    super(`ServerConfigMutatorService`, config);
   }
 
   public init(): ServerConfigMutatorService {
@@ -43,7 +42,7 @@ export class ServerConfigMutatorService extends AbstractConfigService<
       this.updatePort(config.port);
 
       this._loggerService.debug({
-        context: this._className,
+        context: this._serviceName,
         message: this._chalkService.text(`configuration updated`),
       });
     }
@@ -51,7 +50,7 @@ export class ServerConfigMutatorService extends AbstractConfigService<
 
   public updatePort(port?: Readonly<number>): void {
     this._serverConfigCoreService.port = this._configService.getUpdatedNumber({
-      context: this._className,
+      context: this._serviceName,
       newValue: port,
       oldValue: this._serverConfigService.getPort(),
       valueName: ServerConfigValueNameEnum.PORT,

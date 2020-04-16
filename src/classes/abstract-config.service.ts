@@ -1,15 +1,17 @@
 import { ConfigService } from "../features/config/services/config.service";
 import { ChalkService } from "../features/logger/services/chalk.service";
-import { LoggerService } from "../features/logger/services/logger.service";
 import { PartialNested } from "../types/partial-nested";
+import { AbstractService } from "./abstract.service";
 
-export abstract class AbstractConfigService<C> {
-  protected abstract readonly _className: string;
-  protected readonly _loggerService = LoggerService.getInstance();
-  protected readonly _chalkService = ChalkService.getInstance();
-  protected readonly _configService = ConfigService.getInstance();
+export abstract class AbstractConfigService<C> extends AbstractService {
+  protected readonly _chalkService: ChalkService = ChalkService.getInstance();
+  protected readonly _configService: ConfigService = ConfigService.getInstance();
 
-  protected constructor(config?: Readonly<PartialNested<C>>) {
+  protected constructor(
+    serviceName: Readonly<string>,
+    config?: Readonly<PartialNested<C>>
+  ) {
+    super(serviceName);
     this.preUpdateConfig();
     this.updateConfig(config);
     this.postUpdateConfig();
