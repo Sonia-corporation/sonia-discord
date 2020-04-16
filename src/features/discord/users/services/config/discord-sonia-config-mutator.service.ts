@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../../classes/abstract-config.service";
+import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
 import { PartialNested } from "../../../../../types/partial-nested";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordSoniaConfig } from "../../../interfaces/discord-sonia-config";
@@ -29,7 +30,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<
   protected readonly _discordSoniaConfigService: DiscordSoniaConfigService = DiscordSoniaConfigService.getInstance();
 
   protected constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
-    super(`DiscordSoniaConfigMutatorService`, config);
+    super(ServiceNameEnum.DISCORD_SONIA_CONFIG_MUTATOR_SERVICE, config);
   }
 
   public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {

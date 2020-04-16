@@ -1,10 +1,12 @@
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { isValidDate } from "../../../../functions/checks/is-valid-date";
 import { TimeService } from "../../../time/services/time.service";
 import { AppProductionStateEnum } from "../../enums/app-production-state.enum";
 import { AppConfigService } from "./app-config.service";
 
-export class AppConfigQueryService {
+export class AppConfigQueryService extends AbstractService {
   private static _instance: AppConfigQueryService;
 
   public static getInstance(): AppConfigQueryService {
@@ -15,8 +17,12 @@ export class AppConfigQueryService {
     return AppConfigQueryService._instance;
   }
 
-  private readonly _appConfigService = AppConfigService.getInstance();
-  private readonly _timeService = TimeService.getInstance();
+  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
+  private readonly _timeService: TimeService = TimeService.getInstance();
+
+  protected constructor() {
+    super(ServiceNameEnum.APP_CONFIG_QUERY_SERVICE);
+  }
 
   public getReleaseDateHumanized(): string {
     const releaseDate: string = this._appConfigService.getReleaseDate();

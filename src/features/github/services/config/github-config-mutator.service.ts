@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { PartialNested } from "../../../../types/partial-nested";
 import { GithubConfigValueNameEnum } from "../../enums/github-config-value-name.enum";
 import { IGithubConfig } from "../../interfaces/github-config";
@@ -27,7 +28,7 @@ export class GithubConfigMutatorService extends AbstractConfigService<
   private readonly _githubConfigService: GithubConfigService = GithubConfigService.getInstance();
 
   protected constructor(config?: Readonly<PartialNested<IGithubConfig>>) {
-    super(`GithubConfigMutatorService`, config);
+    super(ServiceNameEnum.GITHUB_CONFIG_MUTATOR_SERVICE, config);
   }
 
   public updateConfig(config?: Readonly<PartialNested<IGithubConfig>>): void {

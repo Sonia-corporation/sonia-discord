@@ -2,13 +2,14 @@ import { ConfigService } from "../features/config/services/config.service";
 import { ChalkService } from "../features/logger/services/chalk.service";
 import { PartialNested } from "../types/partial-nested";
 import { AbstractService } from "./abstract.service";
+import { ServiceNameEnum } from "./enums/service-name.enum";
 
 export abstract class AbstractConfigService<C> extends AbstractService {
   protected readonly _chalkService: ChalkService = ChalkService.getInstance();
   protected readonly _configService: ConfigService = ConfigService.getInstance();
 
   protected constructor(
-    serviceName: Readonly<string>,
+    serviceName: Readonly<ServiceNameEnum>,
     config?: Readonly<PartialNested<C>>
   ) {
     super(serviceName);

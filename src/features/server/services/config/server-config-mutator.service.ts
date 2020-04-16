@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { PartialNested } from "../../../../types/partial-nested";
 import { getEnvironmentPort } from "../../../node/functions/get-environment-port";
 import { ServerConfigValueNameEnum } from "../../enums/server-config-value-name.enum";
@@ -28,7 +29,7 @@ export class ServerConfigMutatorService extends AbstractConfigService<
   private readonly _serverConfigService: ServerConfigService = ServerConfigService.getInstance();
 
   protected constructor(config?: Readonly<PartialNested<IServerConfig>>) {
-    super(`ServerConfigMutatorService`, config);
+    super(ServiceNameEnum.SERVER_CONFIG_MUTATOR_SERVICE, config);
   }
 
   public init(): ServerConfigMutatorService {

@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../../classes/abstract-config.service";
+import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
 import { PartialNested } from "../../../../../types/partial-nested";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordGuildConfig } from "../../../interfaces/discord-guild-config";
@@ -28,7 +29,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
   private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
 
   protected constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
-    super(`DiscordGuildConfigMutatorService`, config);
+    super(ServiceNameEnum.DISCORD_GUILD_CONFIG_MUTATOR_SERVICE, config);
   }
 
   public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {

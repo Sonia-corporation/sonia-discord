@@ -1,4 +1,6 @@
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { AppConfigService } from "../../../app/services/config/app-config.service";
 import { ProfileConfigService } from "../../../profile/services/config/profile-config.service";
 import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
@@ -6,7 +8,7 @@ import { DiscordAuthorService } from "../../users/services/discord-author.servic
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
 
-export class DiscordMessageAuthorService {
+export class DiscordMessageAuthorService extends AbstractService {
   private static _instance: DiscordMessageAuthorService;
 
   public static getInstance(): DiscordMessageAuthorService {
@@ -17,9 +19,13 @@ export class DiscordMessageAuthorService {
     return DiscordMessageAuthorService._instance;
   }
 
-  private readonly _profileConfigService = ProfileConfigService.getInstance();
-  private readonly _discordAuthorService = DiscordAuthorService.getInstance();
-  private readonly _appConfigService = AppConfigService.getInstance();
+  private readonly _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();
+  private readonly _discordAuthorService: DiscordAuthorService = DiscordAuthorService.getInstance();
+  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_MESSAGE_AUTHOR_SERVICE);
+  }
 
   public reply(
     anyDiscordMessage: Readonly<AnyDiscordMessage>

@@ -1,9 +1,10 @@
 import { ILoggerServiceCreated } from "../features/logger/interfaces/logger-service-created";
 import { LoggerService } from "../features/logger/services/logger.service";
 import { AbstractService } from "./abstract.service";
+import { ServiceNameEnum } from "./enums/service-name.enum";
 
 class DummyService extends AbstractService {
-  public constructor(serviceName: Readonly<string>) {
+  public constructor(serviceName: Readonly<ServiceNameEnum>) {
     super(serviceName);
   }
 }
@@ -11,7 +12,7 @@ class DummyService extends AbstractService {
 describe(`AbstractService`, (): void => {
   let loggerService: LoggerService;
 
-  let serviceName: string;
+  let serviceName: ServiceNameEnum;
 
   let loggerServiceServiceCreatedSpy: jest.SpyInstance;
 
@@ -23,9 +24,9 @@ describe(`AbstractService`, (): void => {
       .mockImplementation();
   });
 
-  describe(`when the service is created with the name "DummyService"`, (): void => {
+  describe(`when the service is created with the name ServiceNameEnum.APP_CONFIG_SERVICE`, (): void => {
     beforeEach((): void => {
-      serviceName = `DummyService`;
+      serviceName = ServiceNameEnum.APP_CONFIG_SERVICE;
     });
 
     it(`should log about the creation of the service`, (): void => {
@@ -35,14 +36,14 @@ describe(`AbstractService`, (): void => {
 
       expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledWith({
-        service: `DummyService`,
+        service: ServiceNameEnum.APP_CONFIG_SERVICE,
       } as ILoggerServiceCreated);
     });
   });
 
-  describe(`when the service is created with the name "Service"`, (): void => {
+  describe(`when the service is created with the name ServiceNameEnum.APP_CONFIG_CORE_SERVICE`, (): void => {
     beforeEach((): void => {
-      serviceName = `Service`;
+      serviceName = ServiceNameEnum.APP_CONFIG_CORE_SERVICE;
     });
 
     it(`should log about the creation of the service`, (): void => {
@@ -52,7 +53,7 @@ describe(`AbstractService`, (): void => {
 
       expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledWith({
-        service: `Service`,
+        service: ServiceNameEnum.APP_CONFIG_CORE_SERVICE,
       } as ILoggerServiceCreated);
     });
   });

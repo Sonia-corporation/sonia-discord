@@ -2,6 +2,7 @@ import { ILoggerServiceCreated } from "../features/logger/interfaces/logger-serv
 import { LoggerService } from "../features/logger/services/logger.service";
 import { PartialNested } from "../types/partial-nested";
 import { AbstractConfigService } from "./abstract-config.service";
+import { ServiceNameEnum } from "./enums/service-name.enum";
 
 interface IDummy {
   key1: string;
@@ -9,7 +10,7 @@ interface IDummy {
 
 class DummyService extends AbstractConfigService<IDummy> {
   public constructor(
-    serviceName: Readonly<string>,
+    serviceName: Readonly<ServiceNameEnum>,
     config?: Readonly<PartialNested<IDummy>>
   ) {
     super(serviceName, config);
@@ -24,7 +25,7 @@ describe(`AbstractConfigService`, (): void => {
   let service: DummyService;
   let loggerService: LoggerService;
 
-  let serviceName: string;
+  let serviceName: ServiceNameEnum;
 
   let loggerServiceServiceCreatedSpy: jest.SpyInstance;
 
@@ -36,9 +37,9 @@ describe(`AbstractConfigService`, (): void => {
       .mockImplementation();
   });
 
-  describe(`when the service is created with the name "DummyService"`, (): void => {
+  describe(`when the service is created with the name ServiceNameEnum.APP_CONFIG_SERVICE`, (): void => {
     beforeEach((): void => {
-      serviceName = `DummyService`;
+      serviceName = ServiceNameEnum.APP_CONFIG_SERVICE;
     });
 
     it(`should log about the creation of the service`, (): void => {
@@ -48,14 +49,14 @@ describe(`AbstractConfigService`, (): void => {
 
       expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledWith({
-        service: `DummyService`,
+        service: ServiceNameEnum.APP_CONFIG_SERVICE,
       } as ILoggerServiceCreated);
     });
   });
 
-  describe(`when the service is created with the name "Service"`, (): void => {
+  describe(`when the service is created with the name ServiceNameEnum.APP_CONFIG_CORE_SERVICE`, (): void => {
     beforeEach((): void => {
-      serviceName = `Service`;
+      serviceName = ServiceNameEnum.APP_CONFIG_CORE_SERVICE;
     });
 
     it(`should log about the creation of the service`, (): void => {
@@ -65,7 +66,7 @@ describe(`AbstractConfigService`, (): void => {
 
       expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledWith({
-        service: `Service`,
+        service: ServiceNameEnum.APP_CONFIG_CORE_SERVICE,
       } as ILoggerServiceCreated);
     });
   });

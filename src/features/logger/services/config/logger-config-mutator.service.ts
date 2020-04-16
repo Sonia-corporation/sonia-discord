@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
 import { LoggerConfigValueNameEnum } from "../../enums/logger-config-value-name.enum";
 import { ILoggerConfig } from "../../interfaces/logger-config";
@@ -27,7 +28,7 @@ export class LoggerConfigMutatorService extends AbstractConfigService<
   protected readonly _loggerConfigService: LoggerConfigService = LoggerConfigService.getInstance();
 
   protected constructor(config?: Readonly<Partial<ILoggerConfig>>) {
-    super(`LoggerConfigMutatorService`, config);
+    super(ServiceNameEnum.LOGGER_CONFIG_MUTATOR_SERVICE, config);
   }
 
   public updateConfig(config?: Readonly<Partial<ILoggerConfig>>): void {

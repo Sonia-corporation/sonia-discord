@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { PartialNested } from "../../../../types/partial-nested";
 import { isNodeProduction } from "../../../node/functions/is-node-production";
 import { TimeService } from "../../../time/services/time.service";
@@ -26,7 +27,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
 
   protected constructor(config?: Readonly<PartialNested<IAppConfig>>) {
-    super(`AppConfigMutatorService`, config);
+    super(ServiceNameEnum.APP_CONFIG_MUTATOR_SERVICE, config);
   }
 
   public init(): AppConfigMutatorService {

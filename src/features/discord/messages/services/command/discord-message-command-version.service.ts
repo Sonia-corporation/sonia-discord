@@ -7,11 +7,12 @@ import {
 } from "discord.js";
 import _ from "lodash";
 import moment from "moment";
+import { AbstractService } from "../../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
 import { ellipsis } from "../../../../../functions/formatters/ellipsis";
 import { AppProductionStateEnum } from "../../../../app/enums/app-production-state.enum";
 import { AppConfigQueryService } from "../../../../app/services/config/app-config-query.service";
 import { AppConfigService } from "../../../../app/services/config/app-config.service";
-import { LoggerService } from "../../../../logger/services/logger.service";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { DiscordSoniaEmotionalStateEnum } from "../../../users/enums/discord-sonia-emotional-state.enum";
 import { DiscordSoniaService } from "../../../users/services/discord-sonia.service";
@@ -19,7 +20,7 @@ import { IDiscordMessageResponse } from "../../interfaces/discord-message-respon
 import { AnyDiscordMessage } from "../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../config/discord-message-config.service";
 
-export class DiscordMessageCommandVersionService {
+export class DiscordMessageCommandVersionService extends AbstractService {
   private static _instance: DiscordMessageCommandVersionService;
 
   public static getInstance(): DiscordMessageCommandVersionService {
@@ -30,18 +31,20 @@ export class DiscordMessageCommandVersionService {
     return DiscordMessageCommandVersionService._instance;
   }
 
-  private readonly _appConfigService = AppConfigService.getInstance();
-  private readonly _appConfigQueryService = AppConfigQueryService.getInstance();
-  private readonly _discordSoniaService = DiscordSoniaService.getInstance();
-  private readonly _discordMessageConfigService = DiscordMessageConfigService.getInstance();
-  private readonly _loggerService = LoggerService.getInstance();
-  private readonly _className = `DiscordMessageCommandVersionService`;
+  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
+  private readonly _appConfigQueryService: AppConfigQueryService = AppConfigQueryService.getInstance();
+  private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
+  private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERSION_SERVICE);
+  }
 
   public handle(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       extendedContext: true,
       message: this._loggerService.getSnowflakeContext(
         anyDiscordMessage.id,

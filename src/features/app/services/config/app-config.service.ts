@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { IAppConfig } from "../../interfaces/app-config";
 import { AppConfigCoreService } from "./app-config-core.service";
 
@@ -17,7 +18,7 @@ export class AppConfigService extends AbstractService {
   private readonly _appConfigCoreService = AppConfigCoreService.getInstance();
 
   protected constructor() {
-    super(`AppConfigService`);
+    super(ServiceNameEnum.APP_CONFIG_SERVICE);
   }
 
   public getConfig(): IAppConfig {

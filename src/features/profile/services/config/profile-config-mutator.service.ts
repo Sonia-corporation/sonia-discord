@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { IProfileConfig } from "../../interfaces/profile-config";
 import { ProfileConfigCoreService } from "./profile-config-core.service";
 import { ProfileConfigService } from "./profile-config.service";
@@ -25,7 +26,7 @@ export class ProfileConfigMutatorService extends AbstractConfigService<
   private readonly _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();
 
   protected constructor(config?: Readonly<Partial<IProfileConfig>>) {
-    super(`ProfileConfigMutatorService`, config);
+    super(ServiceNameEnum.PROFILE_CONFIG_MUTATOR_SERVICE, config);
   }
 
   public updateConfig(config?: Readonly<Partial<IProfileConfig>>): void {

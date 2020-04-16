@@ -1,9 +1,12 @@
 import _ from "lodash";
+import { AbstractService } from "../../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
 
-export class DiscordMessageConfigCoreService implements IDiscordMessageConfig {
+export class DiscordMessageConfigCoreService extends AbstractService
+  implements IDiscordMessageConfig {
   private static _instance: DiscordMessageConfigCoreService;
 
   public static getInstance(): DiscordMessageConfigCoreService {
@@ -37,4 +40,8 @@ export class DiscordMessageConfigCoreService implements IDiscordMessageConfig {
     imageColor: 15562905,
     imageUrl: `https://i.ibb.co/r7PHJS1/icons8-bug-512.png`,
   };
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_CORE_SERVICE);
+  }
 }

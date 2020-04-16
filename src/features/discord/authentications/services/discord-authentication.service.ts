@@ -1,11 +1,13 @@
+import { Client } from "discord.js";
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../../logger/services/chalk.service";
-import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordSoniaConfigService } from "../../users/services/config/discord-sonia-config.service";
 
-export class DiscordAuthenticationService {
+export class DiscordAuthenticationService extends AbstractService {
   private static _instance: DiscordAuthenticationService;
 
   public static getInstance(): DiscordAuthenticationService {
@@ -16,13 +18,12 @@ export class DiscordAuthenticationService {
     return DiscordAuthenticationService._instance;
   }
 
-  private readonly _loggerService = LoggerService.getInstance();
-  private readonly _discordClientServiceClient = DiscordClientService.getInstance().getClient();
-  private readonly _discordSoniaConfigService = DiscordSoniaConfigService.getInstance();
-  private readonly _chalkService = ChalkService.getInstance();
-  private readonly _className = `DiscordAuthenticationService`;
+  private readonly _discordClientServiceClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly _discordSoniaConfigService: DiscordSoniaConfigService = DiscordSoniaConfigService.getInstance();
+  private readonly _chalkService: ChalkService = ChalkService.getInstance();
 
-  public constructor() {
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_AUTHENTICATION_SERVICE);
     this.init();
   }
 
@@ -37,7 +38,7 @@ export class DiscordAuthenticationService {
     });
 
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       message: this._chalkService.text(`listen ${wrapInQuotes(`ready`)} event`),
     });
   }
@@ -45,7 +46,7 @@ export class DiscordAuthenticationService {
   private _handleReady(): void {
     if (!_.isNil(this._discordClientServiceClient.user)) {
       this._loggerService.log({
-        context: this._className,
+        context: this._serviceName,
         message: this._chalkService.text(
           `authenticated as: ${this._chalkService.value(
             wrapInQuotes(this._discordClientServiceClient.user.tag)
@@ -54,7 +55,7 @@ export class DiscordAuthenticationService {
       });
     } else {
       this._loggerService.log({
-        context: this._className,
+        context: this._serviceName,
         message: this._chalkService.text(
           `authenticated as: ${this._chalkService.value(`unknown user`)}`
         ),
@@ -67,23 +68,23 @@ export class DiscordAuthenticationService {
       .login(this._discordSoniaConfigService.getSecretToken())
       .then((): void => {
         this._loggerService.success({
-          context: this._className,
+          context: this._serviceName,
           message: this._chalkService.text(`authentication successful`),
         });
       })
       .catch((error: unknown): void => {
         this._loggerService.error({
-          context: this._className,
+          context: this._serviceName,
           message: this._chalkService.text(`authentication failed`),
         });
         this._loggerService.error({
-          context: this._className,
+          context: this._serviceName,
           message: this._chalkService.error(error),
         });
       });
 
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       message: this._chalkService.text(`authenticating...`),
     });
   }
