@@ -7,6 +7,7 @@ import { LoggerService } from "./logger.service";
 
 jest.mock(`./chalk.service`);
 jest.mock(`../../time/services/time.service`);
+jest.mock(`../../core/services/core-event.service`);
 
 describe(`LoggerService`, (): void => {
   let service: LoggerService;

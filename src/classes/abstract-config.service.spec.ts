@@ -1,9 +1,11 @@
-import { ConfigService } from "../features/config/services/config.service";
-import { ILoggerServiceCreated } from "../features/logger/interfaces/logger-service-created";
-import { LoggerService } from "../features/logger/services/logger.service";
+import { ServiceNameEnum } from "../enums/service-name.enum";
+import { CoreEventService } from "../features/core/services/core-event.service";
 import { PartialNested } from "../types/partial-nested";
 import { AbstractConfigService } from "./abstract-config.service";
-import { ServiceNameEnum } from "../enums/service-name.enum";
+
+jest.mock(`../features/logger/services/logger.service`);
+jest.mock(`../features/logger/services/chalk.service`);
+jest.mock(`../features/config/services/config.service`);
 
 interface IDummy {
   key1: string;
@@ -24,20 +26,17 @@ class DummyService extends AbstractConfigService<IDummy> {
 
 describe(`AbstractConfigService`, (): void => {
   let service: DummyService;
-  let loggerService: LoggerService;
+  let coreEventService: CoreEventService;
 
   let serviceName: ServiceNameEnum;
 
-  let loggerServiceServiceCreatedSpy: jest.SpyInstance;
+  let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
 
   beforeEach((): void => {
-    loggerService = LoggerService.getInstance();
+    coreEventService = CoreEventService.getInstance();
 
-    // Avoid calling loggerServiceServiceCreatedSpy multiple times
-    ConfigService.getInstance();
-
-    loggerServiceServiceCreatedSpy = jest
-      .spyOn(loggerService, `serviceCreated`)
+    coreEventServiceNotifyServiceCreatedSpy = jest
+      .spyOn(coreEventService, `notifyServiceCreated`)
       .mockImplementation();
   });
 
@@ -46,15 +45,15 @@ describe(`AbstractConfigService`, (): void => {
       serviceName = ServiceNameEnum.APP_CONFIG_SERVICE;
     });
 
-    it(`should log about the creation of the AppConfig service`, (): void => {
+    it(`should notify about the creation of the AppConfig service`, (): void => {
       expect.assertions(2);
 
       service = new DummyService(serviceName);
 
-      expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledWith({
-        service: ServiceNameEnum.APP_CONFIG_SERVICE,
-      } as ILoggerServiceCreated);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
+        ServiceNameEnum.APP_CONFIG_SERVICE
+      );
     });
   });
 
@@ -63,15 +62,15 @@ describe(`AbstractConfigService`, (): void => {
       serviceName = ServiceNameEnum.APP_CONFIG_CORE_SERVICE;
     });
 
-    it(`should log about the creation of the AppConfigCore service`, (): void => {
+    it(`should notify about the creation of the AppConfigCore service`, (): void => {
       expect.assertions(2);
 
       service = new DummyService(serviceName);
 
-      expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(loggerServiceServiceCreatedSpy).toHaveBeenCalledWith({
-        service: ServiceNameEnum.APP_CONFIG_CORE_SERVICE,
-      } as ILoggerServiceCreated);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
+        ServiceNameEnum.APP_CONFIG_CORE_SERVICE
+      );
     });
   });
 
