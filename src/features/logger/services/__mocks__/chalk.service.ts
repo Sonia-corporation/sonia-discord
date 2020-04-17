@@ -1,8 +1,6 @@
 import _ from "lodash";
-import { AbstractService } from "../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 
-export class ChalkService extends AbstractService {
+export class ChalkService {
   private static _instance: ChalkService;
 
   public static getInstance(): ChalkService {
@@ -11,10 +9,6 @@ export class ChalkService extends AbstractService {
     }
 
     return ChalkService._instance;
-  }
-
-  protected constructor() {
-    super(ServiceNameEnum.CHALK_SERVICE);
   }
 
   public success(message: Readonly<string> | unknown): string {

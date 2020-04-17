@@ -1,9 +1,7 @@
 import _ from "lodash";
 import moment from "moment";
-import { AbstractService } from "../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
 
-export class TimeService extends AbstractService {
+export class TimeService {
   private static _instance: TimeService;
 
   public static getInstance(): TimeService {
@@ -12,10 +10,6 @@ export class TimeService extends AbstractService {
     }
 
     return TimeService._instance;
-  }
-
-  protected constructor() {
-    super(ServiceNameEnum.TIME_SERVICE);
   }
 
   public now(format?: Readonly<string>): string {
