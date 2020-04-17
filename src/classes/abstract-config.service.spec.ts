@@ -3,7 +3,7 @@ import { ILoggerServiceCreated } from "../features/logger/interfaces/logger-serv
 import { LoggerService } from "../features/logger/services/logger.service";
 import { PartialNested } from "../types/partial-nested";
 import { AbstractConfigService } from "./abstract-config.service";
-import { ServiceNameEnum } from "./enums/service-name.enum";
+import { ServiceNameEnum } from "../enums/service-name.enum";
 
 interface IDummy {
   key1: string;

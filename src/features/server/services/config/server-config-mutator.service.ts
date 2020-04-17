@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { PartialNested } from "../../../../types/partial-nested";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { getEnvironmentPort } from "../../../node/functions/get-environment-port";

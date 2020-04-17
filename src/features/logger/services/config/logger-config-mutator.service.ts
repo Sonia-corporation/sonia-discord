@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
 import { LoggerConfigValueNameEnum } from "../../enums/logger-config-value-name.enum";
 import { ILoggerConfig } from "../../interfaces/logger-config";

@@ -8,7 +8,7 @@ import {
 import _ from "lodash";
 import moment from "moment";
 import { AbstractService } from "../../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { ellipsis } from "../../../../../functions/formatters/ellipsis";
 import { AppProductionStateEnum } from "../../../../app/enums/app-production-state.enum";
 import { AppConfigQueryService } from "../../../../app/services/config/app-config-query.service";

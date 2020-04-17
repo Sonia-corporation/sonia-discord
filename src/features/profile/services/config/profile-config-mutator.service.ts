@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { IProfileConfig } from "../../interfaces/profile-config";
 import { ProfileConfigCoreService } from "./profile-config-core.service";

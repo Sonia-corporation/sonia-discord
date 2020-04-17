@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import fs from "fs-extra";
 import _ from "lodash";
 import { AbstractService } from "../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { ENVIRONMENT } from "../../../environment/constants/environment";
 import { IEnvironment } from "../../../environment/interfaces/environment";
 import { getBearer } from "../../../functions/formatters/get-bearer";

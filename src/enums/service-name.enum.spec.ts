@@ -45,6 +45,20 @@ describe(`ServiceNameEnum`, (): void => {
     expect(ServiceNameEnum.CONFIG_SERVICE).toStrictEqual(`ConfigService`);
   });
 
+  it(`should have a member "CORE_EVENT_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.CORE_EVENT_SERVICE).toStrictEqual(
+      `CoreEventService`
+    );
+  });
+
+  it(`should have a member "CORE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.CORE_SERVICE).toStrictEqual(`CoreService`);
+  });
+
   it(`should have a member "DISCORD_AUTHENTICATION_SERVICE"`, (): void => {
     expect.assertions(1);
 

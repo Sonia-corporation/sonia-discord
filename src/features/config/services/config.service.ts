@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { AbstractService } from "../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../logger/services/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";

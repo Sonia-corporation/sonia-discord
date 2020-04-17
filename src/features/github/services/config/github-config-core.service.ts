@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { IGithubConfig } from "../../interfaces/github-config";
 
 export class GithubConfigCoreService extends AbstractService

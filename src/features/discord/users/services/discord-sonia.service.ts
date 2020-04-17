@@ -1,7 +1,7 @@
 import { MessageEmbedAuthor } from "discord.js";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { getRandomValueFromEnum } from "../../../../functions/randoms/get-random-value-from-enum";
 import { AppConfigService } from "../../../app/services/config/app-config.service";
 import { ProfileConfigService } from "../../../profile/services/config/profile-config.service";

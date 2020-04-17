@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 
 export class DiscordClientService extends AbstractService {
   private static _instance: DiscordClientService;

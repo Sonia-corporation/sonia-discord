@@ -8,7 +8,7 @@ import {
 import _ from "lodash";
 import moment from "moment";
 import { AbstractService } from "../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { ellipsis } from "../../../../functions/formatters/ellipsis";
 import { GithubConfigService } from "../../../github/services/config/github-config.service";
 import { LoggerService } from "../../../logger/services/logger.service";

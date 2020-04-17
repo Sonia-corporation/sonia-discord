@@ -1,7 +1,7 @@
 import chalkI from "chalk";
 import _ from "lodash";
 import { AbstractService } from "../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../enums/service-name.enum";
 
 const CHALK = new chalkI.Instance();
 const COLOR_AURORA_GREEN = `#78E08F`;

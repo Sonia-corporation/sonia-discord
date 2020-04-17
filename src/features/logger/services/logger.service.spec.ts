@@ -1,4 +1,4 @@
-import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
 import { ILoggerLog } from "../interfaces/logger-log";
 import { ILoggerServiceCreated } from "../interfaces/logger-service-created";

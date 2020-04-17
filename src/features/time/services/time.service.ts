@@ -1,7 +1,7 @@
 import _ from "lodash";
 import moment from "moment";
 import { AbstractService } from "../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../enums/service-name.enum";
 
 export class TimeService extends AbstractService {
   private static _instance: TimeService;

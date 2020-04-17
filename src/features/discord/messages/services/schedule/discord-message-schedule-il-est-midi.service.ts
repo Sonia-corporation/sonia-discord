@@ -3,7 +3,7 @@ import _ from "lodash";
 import moment from "moment";
 import { Job, scheduleJob } from "node-schedule";
 import { AbstractService } from "../../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { getNoonScheduleRule } from "../../../../../functions/schedule/get-noon-schedule-rule";
 import { ChalkService } from "../../../../logger/services/chalk.service";
 import { LoggerService } from "../../../../logger/services/logger.service";

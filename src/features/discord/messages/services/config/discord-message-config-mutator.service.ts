@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../../classes/abstract-config.service";
-import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { removeUndefined } from "../../../../../functions/formatters/remove-undefined";
 import { wrapInQuotes } from "../../../../../functions/formatters/wrap-in-quotes";
 import { PartialNested } from "../../../../../types/partial-nested";

@@ -8,7 +8,7 @@ import {
 import _ from "lodash";
 import moment from "moment";
 import { AbstractService } from "../../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { LoggerService } from "../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../users/services/discord-sonia.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";

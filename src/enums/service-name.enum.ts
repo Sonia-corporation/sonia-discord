@@ -5,6 +5,8 @@ export enum ServiceNameEnum {
   APP_CONFIG_SERVICE = `AppConfigService`,
   CHALK_SERVICE = `ChalkService`,
   CONFIG_SERVICE = `ConfigService`,
+  CORE_EVENT_SERVICE = `CoreEventService`,
+  CORE_SERVICE = `CoreService`,
   DISCORD_AUTHENTICATION_SERVICE = `DiscordAuthenticationService`,
   DISCORD_AUTHOR_SERVICE = `DiscordAuthorService`,
   DISCORD_CHANNEL_GUILD_SERVICE = `DiscordChannelGuildService`,

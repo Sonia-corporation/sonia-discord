@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { isValidDate } from "../../../../functions/checks/is-valid-date";
 import { TimeService } from "../../../time/services/time.service";
 import { AppProductionStateEnum } from "../../enums/app-production-state.enum";

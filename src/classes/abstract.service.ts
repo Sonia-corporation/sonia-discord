@@ -1,5 +1,5 @@
-import { SERVICE_CREATED_EVENT$ } from "../features/logger/constants/service-created-event";
-import { ServiceNameEnum } from "./enums/service-name.enum";
+import { ServiceNameEnum } from "../enums/service-name.enum";
+import { CoreEventService } from "../features/core/services/core-event.service";
 
 /**
  * @description
@@ -7,6 +7,7 @@ import { ServiceNameEnum } from "./enums/service-name.enum";
  */
 export abstract class AbstractService {
   protected readonly _serviceName: ServiceNameEnum;
+  private readonly _coreEventService: CoreEventService = CoreEventService.getInstance();
 
   protected constructor(serviceName: Readonly<ServiceNameEnum>) {
     this._serviceName = serviceName;
@@ -15,6 +16,6 @@ export abstract class AbstractService {
   }
 
   private notifyServiceCreated(): void {
-    SERVICE_CREATED_EVENT$.next(this._serviceName);
+    this._coreEventService.notifyServiceCreated(this._serviceName);
   }
 }
