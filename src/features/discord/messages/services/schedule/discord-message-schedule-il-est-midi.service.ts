@@ -25,7 +25,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
     return DiscordMessageScheduleIlEstMidiService._instance;
   }
 
-  public readonly _discordClientServiceClient: Client = DiscordClientService.getInstance().getClient();
+  public readonly discordClient: Client = DiscordClientService.getInstance().getClient();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _timeService: TimeService = TimeService.getInstance();
   private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
@@ -107,7 +107,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
 
   private _handleMessages(): void {
     if (this._canSendMessage()) {
-      this._discordClientServiceClient.guilds.cache.forEach(
+      this.discordClient.guilds.cache.forEach(
         (guild: Readonly<Guild>): void => {
           this._handleMessage(guild);
         }

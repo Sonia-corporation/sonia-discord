@@ -26,7 +26,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
     return DiscordGuildMemberAddService._instance;
   }
 
-  private readonly _discordClientServiceClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly discordClient: Client = DiscordClientService.getInstance().getClient();
   private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
   private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
   private readonly _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();
@@ -43,7 +43,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
   }
 
   private _listen(): void {
-    this._discordClientServiceClient.on(
+    this.discordClient.on(
       `guildMemberAdd`,
       (member: Readonly<AnyGuildMember>): void => {
         this._handleGuildMemberAdd(member);
@@ -51,7 +51,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
     );
 
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       message: this._chalkService.text(
         `listen ${wrapInQuotes(`guildMemberAdd`)} event`
       ),
@@ -76,7 +76,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
     }
 
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       message: this._chalkService.text(
         `welcome new members message sending disabled`
       ),
@@ -94,7 +94,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
     );
 
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       message: this._chalkService.text(
         `sending message for the new guild member...`
       ),
@@ -104,7 +104,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
       .send(messageResponse.response, messageResponse.options)
       .then((): void => {
         this._loggerService.log({
-          context: this._className,
+          context: this._serviceName,
           message: this._chalkService.text(
             `welcome message for the new guild sent`
           ),
@@ -112,13 +112,13 @@ export class DiscordGuildMemberAddService extends AbstractService {
       })
       .catch((error: unknown): void => {
         this._loggerService.error({
-          context: this._className,
+          context: this._serviceName,
           message: this._chalkService.text(
             `message sending for the new guild member failed`
           ),
         });
         this._loggerService.error({
-          context: this._className,
+          context: this._serviceName,
           message: this._chalkService.error(error),
         });
       });

@@ -2,6 +2,8 @@ import appRootPath from "app-root-path";
 import axios, { AxiosResponse } from "axios";
 import fs from "fs-extra";
 import _ from "lodash";
+import { AbstractService } from "../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
 import { ENVIRONMENT } from "../../../environment/constants/environment";
 import { IEnvironment } from "../../../environment/interfaces/environment";
 import { getBearer } from "../../../functions/formatters/get-bearer";
@@ -18,12 +20,11 @@ import { GithubConfigMutatorService } from "../../github/services/config/github-
 import { GithubConfigService } from "../../github/services/config/github-config.service";
 import { ChalkService } from "../../logger/services/chalk.service";
 import { LoggerConfigMutatorService } from "../../logger/services/config/logger-config-mutator.service";
-import { LoggerService } from "../../logger/services/logger.service";
 import { ProfileConfigMutatorService } from "../../profile/services/config/profile-config-mutator.service";
 import { ServerConfigMutatorService } from "../../server/services/config/server-config-mutator.service";
 import { ServerService } from "../../server/services/server.service";
 
-export class InitService {
+export class InitService extends AbstractService {
   private static _instance: InitService;
 
   public static getInstance(): InitService {
@@ -34,10 +35,10 @@ export class InitService {
     return InitService._instance;
   }
 
-  private readonly _chalkService = ChalkService.getInstance();
-  private readonly _loggerService = LoggerService.getInstance();
+  private readonly _chalkService: ChalkService = ChalkService.getInstance();
 
-  public constructor() {
+  protected constructor() {
+    super(ServiceNameEnum.INIT_SERVICE);
     this.init();
   }
 

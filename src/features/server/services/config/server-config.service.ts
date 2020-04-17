@@ -1,8 +1,10 @@
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { IServerConfig } from "../../interfaces/server-config";
 import { ServerConfigCoreService } from "./server-config-core.service";
 
-export class ServerConfigService {
+export class ServerConfigService extends AbstractService {
   private static _instance: ServerConfigService;
 
   public static getInstance(): ServerConfigService {
@@ -14,6 +16,10 @@ export class ServerConfigService {
   }
 
   private readonly _serverConfigCoreService = ServerConfigCoreService.getInstance();
+
+  protected constructor() {
+    super(ServiceNameEnum.SERVER_CONFIG_SERVICE);
+  }
 
   public getConfig(): IServerConfig {
     return {

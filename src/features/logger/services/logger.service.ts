@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
 import { wrapInQuotes } from "../../../functions/formatters/wrap-in-quotes";
 import { TimeService } from "../../time/services/time.service";
 import { LoggerConfigLevelValueEnum } from "../enums/logger-config-level-value.enum";
@@ -20,10 +21,18 @@ export class LoggerService {
     return LoggerService._instance;
   }
 
-  private readonly _timeService = TimeService.getInstance();
-  private readonly _chalkService = ChalkService.getInstance();
-  private readonly _loggerConfigService = LoggerConfigService.getInstance();
+  private readonly _timeService: TimeService = TimeService.getInstance();
+  private readonly _chalkService: ChalkService = ChalkService.getInstance();
+  private readonly _loggerConfigService: LoggerConfigService = LoggerConfigService.getInstance();
   private readonly _logPrefix = `● `;
+  private readonly _serviceName: ServiceNameEnum =
+    ServiceNameEnum.LOGGER_SERVICE;
+
+  protected constructor() {
+    this.serviceCreated({
+      service: this._serviceName,
+    });
+  }
 
   public error(loggerLog: Readonly<ILoggerLog>): void {
     if (this._isErrorEnabled()) {

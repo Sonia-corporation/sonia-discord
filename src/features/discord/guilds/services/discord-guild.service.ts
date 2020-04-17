@@ -17,7 +17,7 @@ export class DiscordGuildService extends AbstractService {
     return DiscordGuildService._instance;
   }
 
-  private readonly _discordClientServiceClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly discordClient: Client = DiscordClientService.getInstance().getClient();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
 
   protected constructor() {
@@ -31,10 +31,10 @@ export class DiscordGuildService extends AbstractService {
 
   private _listen(): void {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
-    this._discordClientServiceClient.on(`ready`, (): void => {});
+    this.discordClient.on(`ready`, (): void => {});
 
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       message: this._chalkService.text(`listen ${wrapInQuotes(`ready`)} event`),
     });
   }

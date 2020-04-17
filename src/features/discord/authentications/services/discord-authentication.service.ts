@@ -18,7 +18,7 @@ export class DiscordAuthenticationService extends AbstractService {
     return DiscordAuthenticationService._instance;
   }
 
-  private readonly _discordClientServiceClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly discordClient: Client = DiscordClientService.getInstance().getClient();
   private readonly _discordSoniaConfigService: DiscordSoniaConfigService = DiscordSoniaConfigService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
 
@@ -33,7 +33,7 @@ export class DiscordAuthenticationService extends AbstractService {
   }
 
   private _listen(): void {
-    this._discordClientServiceClient.on(`ready`, (): void => {
+    this.discordClient.on(`ready`, (): void => {
       this._handleReady();
     });
 
@@ -44,12 +44,12 @@ export class DiscordAuthenticationService extends AbstractService {
   }
 
   private _handleReady(): void {
-    if (!_.isNil(this._discordClientServiceClient.user)) {
+    if (!_.isNil(this.discordClient.user)) {
       this._loggerService.log({
         context: this._serviceName,
         message: this._chalkService.text(
           `authenticated as: ${this._chalkService.value(
-            wrapInQuotes(this._discordClientServiceClient.user.tag)
+            wrapInQuotes(this.discordClient.user.tag)
           )}`
         ),
       });
@@ -64,7 +64,7 @@ export class DiscordAuthenticationService extends AbstractService {
   }
 
   private _login(): void {
-    this._discordClientServiceClient
+    this.discordClient
       .login(this._discordSoniaConfigService.getSecretToken())
       .then((): void => {
         this._loggerService.success({

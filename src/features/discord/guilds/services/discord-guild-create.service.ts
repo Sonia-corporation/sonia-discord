@@ -23,7 +23,7 @@ export class DiscordGuildCreateService extends AbstractService {
     return DiscordGuildCreateService._instance;
   }
 
-  public readonly _discordClientServiceClient: Client = DiscordClientService.getInstance().getClient();
+  public readonly discordClient: Client = DiscordClientService.getInstance().getClient();
   private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
   private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
   private readonly _discordMessageCommandCookieService: DiscordMessageCommandCookieService = DiscordMessageCommandCookieService.getInstance();
@@ -39,12 +39,9 @@ export class DiscordGuildCreateService extends AbstractService {
   }
 
   private _listen(): void {
-    this._discordClientServiceClient.on(
-      `guildCreate`,
-      (guild: Readonly<Guild>): void => {
-        this._handleGuildCreate(guild);
-      }
-    );
+    this.discordClient.on(`guildCreate`, (guild: Readonly<Guild>): void => {
+      this._handleGuildCreate(guild);
+    });
 
     this._loggerService.debug({
       context: this._serviceName,

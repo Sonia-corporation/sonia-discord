@@ -1,5 +1,7 @@
 import { MessageEmbedAuthor } from "discord.js";
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { getRandomValueFromEnum } from "../../../../functions/randoms/get-random-value-from-enum";
 import { AppConfigService } from "../../../app/services/config/app-config.service";
 import { ProfileConfigService } from "../../../profile/services/config/profile-config.service";
@@ -11,7 +13,7 @@ import { isDiscordClientUser } from "../functions/is-discord-client-user";
 import { Sonia } from "../types/sonia";
 import { DiscordSoniaConfigService } from "./config/discord-sonia-config.service";
 
-export class DiscordSoniaService {
+export class DiscordSoniaService extends AbstractService {
   private static _instance: DiscordSoniaService;
 
   public static getInstance(): DiscordSoniaService {
@@ -22,10 +24,14 @@ export class DiscordSoniaService {
     return DiscordSoniaService._instance;
   }
 
-  private readonly _discordClientService = DiscordClientService.getInstance();
-  private readonly _discordSoniaConfigService = DiscordSoniaConfigService.getInstance();
-  private readonly _profileConfigService = ProfileConfigService.getInstance();
-  private readonly _appConfigService = AppConfigService.getInstance();
+  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
+  private readonly _discordSoniaConfigService: DiscordSoniaConfigService = DiscordSoniaConfigService.getInstance();
+  private readonly _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();
+  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_SONIA_SERVICE);
+  }
 
   public isSonia(id: Readonly<string>): boolean {
     return _.isEqual(id, this._discordSoniaConfigService.getId());

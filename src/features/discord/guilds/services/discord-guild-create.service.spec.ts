@@ -17,13 +17,13 @@ describe(`DiscordGuildCreateService`, (): void => {
   describe(`init()`, (): void => {
     let guild: Guild;
 
-    let discordClientServiceClientOnSpy: jest.SpyInstance;
+    let discordClientOnSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       guild = createMock<Guild>();
 
-      discordClientServiceClientOnSpy = jest
-        .spyOn(service.discordClientServiceClient, `on`)
+      discordClientOnSpy = jest
+        .spyOn(service.discordClient, `on`)
         .mockImplementation();
     });
 
@@ -32,8 +32,8 @@ describe(`DiscordGuildCreateService`, (): void => {
 
       service.init();
 
-      expect(discordClientServiceClientOnSpy).toHaveBeenCalledTimes(1);
-      expect(discordClientServiceClientOnSpy).toHaveBeenCalledWith(
+      expect(discordClientOnSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientOnSpy).toHaveBeenCalledWith(
         `guildCreate`,
         expect.any(Function)
       );
@@ -41,7 +41,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
     describe(`when the "guildCreate" event is received`, (): void => {
       beforeEach((): void => {
-        discordClientServiceClientOnSpy.mockImplementation(
+        discordClientOnSpy.mockImplementation(
           (_event: string, listener: (guild: Guild) => void): void => {
             listener(guild);
           }

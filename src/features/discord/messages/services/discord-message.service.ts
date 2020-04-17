@@ -24,7 +24,7 @@ export class DiscordMessageService extends AbstractService {
     return DiscordMessageService._instance;
   }
 
-  private readonly _discordClientServiceClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly discordClient: Client = DiscordClientService.getInstance().getClient();
   private readonly _discordChannelService: DiscordChannelService = DiscordChannelService.getInstance();
   private readonly _discordMessageDmService: DiscordMessageDmService = DiscordMessageDmService.getInstance();
   private readonly _discordMessageTextService: DiscordMessageTextService = DiscordMessageTextService.getInstance();
@@ -42,7 +42,7 @@ export class DiscordMessageService extends AbstractService {
   }
 
   private _listen(): void {
-    this._discordClientServiceClient.on(
+    this.discordClient.on(
       `message`,
       (anyDiscordMessage: Readonly<AnyDiscordMessage>): void => {
         this._handleMessage(anyDiscordMessage);

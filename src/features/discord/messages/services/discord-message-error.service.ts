@@ -7,9 +7,10 @@ import {
 } from "discord.js";
 import _ from "lodash";
 import moment from "moment";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { ellipsis } from "../../../../functions/formatters/ellipsis";
 import { GithubConfigService } from "../../../github/services/config/github-config.service";
-import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordChannelService } from "../../channels/services/discord-channel.service";
 import { DiscordGuildConfigService } from "../../guilds/services/config/discord-guild-config.service";
 import { DiscordSoniaService } from "../../users/services/discord-sonia.service";
@@ -17,7 +18,7 @@ import { IDiscordMessageResponse } from "../interfaces/discord-message-response"
 import { AnyDiscordMessage } from "../types/any-discord-message";
 import { DiscordMessageConfigService } from "./config/discord-message-config.service";
 
-export class DiscordMessageErrorService {
+export class DiscordMessageErrorService extends AbstractService {
   private static _instance: DiscordMessageErrorService;
 
   public static getInstance(): DiscordMessageErrorService {
@@ -28,13 +29,15 @@ export class DiscordMessageErrorService {
     return DiscordMessageErrorService._instance;
   }
 
-  private readonly _loggerService = LoggerService.getInstance();
-  private readonly _discordChannelService = DiscordChannelService.getInstance();
-  private readonly _discordSoniaService = DiscordSoniaService.getInstance();
-  private readonly _discordMessageConfigService = DiscordMessageConfigService.getInstance();
-  private readonly _githubConfigService = GithubConfigService.getInstance();
-  private readonly _discordGuildConfigService = DiscordGuildConfigService.getInstance();
-  private readonly _className = `DiscordMessageErrorService`;
+  private readonly _discordChannelService: DiscordChannelService = DiscordChannelService.getInstance();
+  private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
+  private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
+  private readonly _githubConfigService: GithubConfigService = GithubConfigService.getInstance();
+  private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_MESSAGE_ERROR_SERVICE);
+  }
 
   public handleError(
     error: unknown,
@@ -59,7 +62,7 @@ export class DiscordMessageErrorService {
         .send(messageResponse.response, messageResponse.options)
         .then((): void => {
           this._loggerService.log({
-            context: this._className,
+            context: this._serviceName,
             extendedContext: true,
             message: this._loggerService.getSnowflakeContext(
               anyDiscordMessage.id,
@@ -78,7 +81,7 @@ export class DiscordMessageErrorService {
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): void {
     this._loggerService.error({
-      context: this._className,
+      context: this._serviceName,
       extendedContext: true,
       message: this._loggerService.getSnowflakeContext(
         anyDiscordMessage.id,
@@ -86,7 +89,7 @@ export class DiscordMessageErrorService {
       ),
     });
     this._loggerService.error({
-      context: this._className,
+      context: this._serviceName,
       extendedContext: true,
       message: this._loggerService.getSnowflakeContext(
         anyDiscordMessage.id,

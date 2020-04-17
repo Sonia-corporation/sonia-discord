@@ -1,8 +1,10 @@
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { IGithubConfig } from "../../interfaces/github-config";
 import { GithubConfigCoreService } from "./github-config-core.service";
 
-export class GithubConfigService {
+export class GithubConfigService extends AbstractService {
   private static _instance: GithubConfigService;
 
   public static getInstance(): GithubConfigService {
@@ -13,7 +15,11 @@ export class GithubConfigService {
     return GithubConfigService._instance;
   }
 
-  private readonly _githubConfigCoreService = GithubConfigCoreService.getInstance();
+  private readonly _githubConfigCoreService: GithubConfigCoreService = GithubConfigCoreService.getInstance();
+
+  protected constructor() {
+    super(ServiceNameEnum.GITHUB_CONFIG_SERVICE);
+  }
 
   public getConfig(): IGithubConfig {
     return {

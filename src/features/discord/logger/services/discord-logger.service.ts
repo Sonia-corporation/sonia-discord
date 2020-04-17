@@ -17,7 +17,7 @@ export class DiscordLoggerService extends AbstractService {
     return DiscordLoggerService._instance;
   }
 
-  private readonly _discordClientServiceClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly discordClient: Client = DiscordClientService.getInstance().getClient();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
 
   protected constructor() {
@@ -31,12 +31,9 @@ export class DiscordLoggerService extends AbstractService {
   }
 
   private _listenForWarnings(): void {
-    this._discordClientServiceClient.on(
-      `warn`,
-      (message: Readonly<string>): void => {
-        this._handleWarn(message);
-      }
-    );
+    this.discordClient.on(`warn`, (message: Readonly<string>): void => {
+      this._handleWarn(message);
+    });
 
     this._loggerService.debug({
       context: this._serviceName,
@@ -52,12 +49,9 @@ export class DiscordLoggerService extends AbstractService {
   }
 
   private _listenForErrors(): void {
-    this._discordClientServiceClient.on(
-      `error`,
-      (error: Readonly<Error>): void => {
-        this._handleError(error);
-      }
-    );
+    this.discordClient.on(`error`, (error: Readonly<Error>): void => {
+      this._handleError(error);
+    });
 
     this._loggerService.debug({
       context: this._serviceName,

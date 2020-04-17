@@ -1,7 +1,10 @@
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { IServerConfig } from "../../interfaces/server-config";
 
-export class ServerConfigCoreService implements IServerConfig {
+export class ServerConfigCoreService extends AbstractService
+  implements IServerConfig {
   private static _instance: ServerConfigCoreService;
 
   public static getInstance(): ServerConfigCoreService {
@@ -13,4 +16,8 @@ export class ServerConfigCoreService implements IServerConfig {
   }
 
   public port = 3001;
+
+  protected constructor() {
+    super(ServiceNameEnum.SERVER_CONFIG_CORE_SERVICE);
+  }
 }

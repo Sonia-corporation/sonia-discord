@@ -1,9 +1,11 @@
 import _ from "lodash";
+import { AbstractService } from "../../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
 import { IDiscordSoniaConfig } from "../../../interfaces/discord-sonia-config";
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../../interfaces/discord-sonia-corporation-message-embed-author-config";
 import { DiscordSoniaConfigCoreService } from "./discord-sonia-config-core.service";
 
-export class DiscordSoniaConfigService {
+export class DiscordSoniaConfigService extends AbstractService {
   private static _instance: DiscordSoniaConfigService;
 
   public static getInstance(): DiscordSoniaConfigService {
@@ -14,7 +16,11 @@ export class DiscordSoniaConfigService {
     return DiscordSoniaConfigService._instance;
   }
 
-  private readonly _discordSoniaConfigCoreService = DiscordSoniaConfigCoreService.getInstance();
+  private readonly _discordSoniaConfigCoreService: DiscordSoniaConfigCoreService = DiscordSoniaConfigCoreService.getInstance();
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_SONIA_CONFIG_SERVICE);
+  }
 
   public getConfig(): IDiscordSoniaConfig {
     return {
