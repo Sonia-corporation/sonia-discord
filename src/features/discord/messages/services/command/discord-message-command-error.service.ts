@@ -9,6 +9,7 @@ import _ from "lodash";
 import moment from "moment";
 import { AbstractService } from "../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
+import { LoggerService } from "../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../users/services/discord-sonia.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../../types/any-discord-message";
@@ -25,6 +26,7 @@ export class DiscordMessageCommandErrorService extends AbstractService {
     return DiscordMessageCommandErrorService._instance;
   }
 
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
   private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
 

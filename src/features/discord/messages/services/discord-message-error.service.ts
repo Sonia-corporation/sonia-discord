@@ -11,6 +11,7 @@ import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { ellipsis } from "../../../../functions/formatters/ellipsis";
 import { GithubConfigService } from "../../../github/services/config/github-config.service";
+import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordChannelService } from "../../channels/services/discord-channel.service";
 import { DiscordGuildConfigService } from "../../guilds/services/config/discord-guild-config.service";
 import { DiscordSoniaService } from "../../users/services/discord-sonia.service";
@@ -29,6 +30,7 @@ export class DiscordMessageErrorService extends AbstractService {
     return DiscordMessageErrorService._instance;
   }
 
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _discordChannelService: DiscordChannelService = DiscordChannelService.getInstance();
   private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
   private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();

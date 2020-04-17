@@ -4,6 +4,7 @@ import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum"
 import { removeUndefined } from "../../../../../functions/formatters/remove-undefined";
 import { wrapInQuotes } from "../../../../../functions/formatters/wrap-in-quotes";
 import { PartialNested } from "../../../../../types/partial-nested";
+import { LoggerService } from "../../../../logger/services/logger.service";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
 import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
@@ -32,8 +33,9 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     return DiscordMessageConfigMutatorService._instance;
   }
 
-  protected readonly _discordMessageConfigCoreService: DiscordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
-  protected readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
+  private readonly _discordMessageConfigCoreService: DiscordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
+  private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
 
   protected constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
     super(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_MUTATOR_SERVICE, config);

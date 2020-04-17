@@ -5,6 +5,7 @@ import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
 import { AppConfigService } from "../../app/services/config/app-config.service";
 import { ChalkService } from "../../logger/services/chalk.service";
+import { LoggerService } from "../../logger/services/logger.service";
 import { ServerConfigService } from "./config/server-config.service";
 
 export class ServerService extends AbstractService {
@@ -18,6 +19,7 @@ export class ServerService extends AbstractService {
     return ServerService._instance;
   }
 
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
   private readonly _serverConfigService: ServerConfigService = ServerConfigService.getInstance();

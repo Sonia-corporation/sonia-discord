@@ -5,6 +5,7 @@ import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { AppConfigService } from "../../../app/services/config/app-config.service";
 import { ChalkService } from "../../../logger/services/chalk.service";
+import { LoggerService } from "../../../logger/services/logger.service";
 import { ProfileConfigService } from "../../../profile/services/config/profile-config.service";
 import { isDiscordGuildChannel } from "../../channels/functions/is-discord-guild-channel";
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
@@ -26,7 +27,8 @@ export class DiscordGuildMemberAddService extends AbstractService {
     return DiscordGuildMemberAddService._instance;
   }
 
-  private readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  public readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
   private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
   private readonly _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();

@@ -2,6 +2,7 @@ import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
 import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { PartialNested } from "../../../../types/partial-nested";
+import { LoggerService } from "../../../logger/services/logger.service";
 import { getEnvironmentPort } from "../../../node/functions/get-environment-port";
 import { ServerConfigValueNameEnum } from "../../enums/server-config-value-name.enum";
 import { IServerConfig } from "../../interfaces/server-config";
@@ -25,6 +26,7 @@ export class ServerConfigMutatorService extends AbstractConfigService<
     return ServerConfigMutatorService._instance;
   }
 
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _serverConfigCoreService: ServerConfigCoreService = ServerConfigCoreService.getInstance();
   private readonly _serverConfigService: ServerConfigService = ServerConfigService.getInstance();
 

@@ -13,6 +13,7 @@ import { ellipsis } from "../../../../../functions/formatters/ellipsis";
 import { AppProductionStateEnum } from "../../../../app/enums/app-production-state.enum";
 import { AppConfigQueryService } from "../../../../app/services/config/app-config-query.service";
 import { AppConfigService } from "../../../../app/services/config/app-config.service";
+import { LoggerService } from "../../../../logger/services/logger.service";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { DiscordSoniaEmotionalStateEnum } from "../../../users/enums/discord-sonia-emotional-state.enum";
 import { DiscordSoniaService } from "../../../users/services/discord-sonia.service";
@@ -31,6 +32,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
     return DiscordMessageCommandVersionService._instance;
   }
 
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
   private readonly _appConfigQueryService: AppConfigQueryService = AppConfigQueryService.getInstance();
   private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();

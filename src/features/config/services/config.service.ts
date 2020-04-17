@@ -3,6 +3,7 @@ import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
 import { wrapInQuotes } from "../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../logger/services/chalk.service";
+import { LoggerService } from "../../logger/services/logger.service";
 import { IConfigUpdateBoolean } from "../interfaces/config-update-boolean";
 import { IConfigUpdateNumber } from "../interfaces/config-update-number";
 import { IConfigUpdateString } from "../interfaces/config-update-string";
@@ -19,6 +20,7 @@ export class ConfigService extends AbstractService {
     return ConfigService._instance;
   }
 
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
 
   protected constructor() {

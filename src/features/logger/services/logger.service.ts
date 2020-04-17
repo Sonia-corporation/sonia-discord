@@ -2,6 +2,7 @@ import _ from "lodash";
 import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
 import { wrapInQuotes } from "../../../functions/formatters/wrap-in-quotes";
 import { TimeService } from "../../time/services/time.service";
+import { SERVICE_CREATED_EVENT$ } from "../constants/service-created-event";
 import { LoggerConfigLevelValueEnum } from "../enums/logger-config-level-value.enum";
 import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
 import { ILoggerLog } from "../interfaces/logger-log";
@@ -32,6 +33,7 @@ export class LoggerService {
     this.serviceCreated({
       service: this._serviceName,
     });
+    this._listenServiceCreatedEvent();
   }
 
   public error(loggerLog: Readonly<ILoggerLog>): void {
@@ -201,5 +203,15 @@ export class LoggerService {
       LoggerConfigLevelValueEnum[this._loggerConfigService.getLevel()],
       4
     );
+  }
+
+  private _listenServiceCreatedEvent(): void {
+    SERVICE_CREATED_EVENT$.subscribe({
+      next: (serviceCreated: Readonly<ServiceNameEnum>): void => {
+        this.serviceCreated({
+          service: serviceCreated,
+        });
+      },
+    });
   }
 }
