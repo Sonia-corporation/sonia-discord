@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
+import { SERVICE_CREATED_EVENT$ } from "../../constants/service-created-event";
 import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
 import { ILoggerLog } from "../../interfaces/logger-log";
 import { ILoggerLogInternal } from "../../interfaces/logger-log-internal";
@@ -25,6 +26,7 @@ export class LoggerService {
     this.serviceCreated({
       service: this._serviceName,
     });
+    this._listenServiceCreatedEvent();
   }
 
   public error(loggerLog: Readonly<ILoggerLog>): void {
@@ -141,5 +143,15 @@ export class LoggerService {
 
   private _getLogTypePrefix(): string {
     return this._logPrefix;
+  }
+
+  private _listenServiceCreatedEvent(): void {
+    SERVICE_CREATED_EVENT$.subscribe({
+      next: (serviceCreated: Readonly<ServiceNameEnum>): void => {
+        this.serviceCreated({
+          service: serviceCreated,
+        });
+      },
+    });
   }
 }

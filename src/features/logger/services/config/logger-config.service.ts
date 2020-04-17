@@ -1,9 +1,11 @@
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
 import { ILoggerConfig } from "../../interfaces/logger-config";
 import { LoggerConfigCoreService } from "./logger-config-core.service";
 
-export class LoggerConfigService {
+export class LoggerConfigService extends AbstractService {
   private static _instance: LoggerConfigService;
 
   public static getInstance(): LoggerConfigService {
@@ -15,6 +17,10 @@ export class LoggerConfigService {
   }
 
   protected readonly _loggerConfigCoreService: LoggerConfigCoreService = LoggerConfigCoreService.getInstance();
+
+  protected constructor() {
+    super(ServiceNameEnum.LOGGER_CONFIG_SERVICE);
+  }
 
   public getConfig(): ILoggerConfig {
     return {
