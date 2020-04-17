@@ -1,3 +1,4 @@
+import { ConfigService } from "../features/config/services/config.service";
 import { ILoggerServiceCreated } from "../features/logger/interfaces/logger-service-created";
 import { LoggerService } from "../features/logger/services/logger.service";
 import { PartialNested } from "../types/partial-nested";
@@ -31,6 +32,7 @@ describe(`AbstractConfigService`, (): void => {
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
+    ConfigService.getInstance();
 
     loggerServiceServiceCreatedSpy = jest
       .spyOn(loggerService, `serviceCreated`)
@@ -42,7 +44,7 @@ describe(`AbstractConfigService`, (): void => {
       serviceName = ServiceNameEnum.APP_CONFIG_SERVICE;
     });
 
-    it(`should log about the creation of the service`, (): void => {
+    it(`should log about the creation of the AppConfig service`, (): void => {
       expect.assertions(2);
 
       service = new DummyService(serviceName);
@@ -59,7 +61,7 @@ describe(`AbstractConfigService`, (): void => {
       serviceName = ServiceNameEnum.APP_CONFIG_CORE_SERVICE;
     });
 
-    it(`should log about the creation of the service`, (): void => {
+    it(`should log about the creation of the AppConfigCore service`, (): void => {
       expect.assertions(2);
 
       service = new DummyService(serviceName);

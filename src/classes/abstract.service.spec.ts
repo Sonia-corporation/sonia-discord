@@ -29,7 +29,7 @@ describe(`AbstractService`, (): void => {
       serviceName = ServiceNameEnum.APP_CONFIG_SERVICE;
     });
 
-    it(`should log about the creation of the service`, (): void => {
+    it(`should log about the creation of the AppConfig service`, (): void => {
       expect.assertions(2);
 
       new DummyService(serviceName);
@@ -46,7 +46,7 @@ describe(`AbstractService`, (): void => {
       serviceName = ServiceNameEnum.APP_CONFIG_CORE_SERVICE;
     });
 
-    it(`should log about the creation of the service`, (): void => {
+    it(`should log about the creation of the AppConfigCore service`, (): void => {
       expect.assertions(2);
 
       new DummyService(serviceName);
