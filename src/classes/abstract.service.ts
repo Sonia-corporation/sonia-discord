@@ -1,6 +1,10 @@
-import { LoggerService } from "../features/logger/services/logger.service";
 import { ServiceNameEnum } from "./enums/service-name.enum";
+import { LoggerService } from "../features/logger/services/logger.service";
 
+/**
+ * @description
+ * Log the creation of the service
+ */
 export abstract class AbstractService {
   protected readonly _loggerService: LoggerService = LoggerService.getInstance();
   protected readonly _serviceName: ServiceNameEnum;
