@@ -32,6 +32,8 @@ describe(`AbstractConfigService`, (): void => {
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
+
+    // Avoid calling loggerServiceServiceCreatedSpy multiple times
     ConfigService.getInstance();
 
     loggerServiceServiceCreatedSpy = jest
