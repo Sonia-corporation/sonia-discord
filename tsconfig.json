@@ -42,7 +42,36 @@
         "transform": "ts-auto-mock/transformer",
         "cacheBetweenTests": false
       }
-    ]
+    ],
+    "paths": {
+      "@app/classes/*": [
+        "src/classes/*"
+      ],
+      "@app/environment/*": [
+        "src/environment/*"
+      ],
+      "@app/features/*": [
+        "src/features/*"
+      ],
+      "@app/functions/*": [
+        "src/functions/*"
+      ],
+      "@app/interfaces/*": [
+        "src/interfaces/*"
+      ],
+      "@app/types/*": [
+        "src/types/*"
+      ],
+      "@app/views/*": [
+        "src/views/*"
+      ],
+      "@app/index": [
+        "src/index.ts"
+      ],
+      "@app/types": [
+        "src/types.d.ts"
+      ]
+    }
   },
   "include": [
     "./src/types.d.ts",

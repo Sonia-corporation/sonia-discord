@@ -62,7 +62,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "\n# BUILD SCRIPTS:": "",
-    "start": "ts-node-dev --respawn --transpileOnly .",
+    "start": "ts-node-dev -r tsconfig-paths/register --respawn --transpileOnly .",
     "start:prod": "npm run build && npm run run:prod",
     "build": "npm run clean:dist && concurrently \"parcel build ./src/index.ts --target node\" \"npm run build:environment:create\" && concurrently \"npm run build:environment:copy\" \"npm run build:environment:rewrite-path\" \"npm run build:update-app-initialization-date\"",
     "build:environment:copy": "node scripts/build-environment-copy.js",
@@ -129,6 +129,7 @@
     "eslint-config-google": "0.14.0",
     "eslint-config-prettier": "6.10.1",
     "eslint-config-recommended": "4.0.0",
+    "eslint-import-resolver-typescript": "2.0.0",
     "eslint-plugin-import": "2.20.2",
     "eslint-plugin-jest": "23.8.2",
     "eslint-plugin-prettier": "3.1.3",

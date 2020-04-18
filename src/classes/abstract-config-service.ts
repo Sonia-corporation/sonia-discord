@@ -1,7 +1,7 @@
-import { ConfigService } from "../features/config/services/config-service";
-import { ChalkService } from "../features/logger/services/chalk-service";
-import { LoggerService } from "../features/logger/services/logger-service";
-import { PartialNested } from "../types/partial-nested";
+import { ConfigService } from "@app/features/config/services/config-service";
+import { ChalkService } from "@app/features/logger/services/chalk-service";
+import { LoggerService } from "@app/features/logger/services/logger-service";
+import { PartialNested } from "@app/types/partial-nested";
 
 export abstract class AbstractConfigService<C> {
   protected abstract readonly _className: string;
