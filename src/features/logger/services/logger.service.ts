@@ -212,7 +212,7 @@ export class LoggerService {
   }
 
   private _logAlreadyCreatedServices(): void {
-    const createdServices: ServiceNameEnum[] = this._coreEventService.getServicesCreated();
+    const createdServices: ServiceNameEnum[] = this._coreEventService.getCreatedServices();
 
     _.forEach(
       createdServices,

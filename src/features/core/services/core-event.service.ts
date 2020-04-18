@@ -16,7 +16,7 @@ export class CoreEventService {
   private readonly _serviceCreated$: Subject<ServiceNameEnum> = new Subject<
     ServiceNameEnum
   >();
-  private readonly _servicesCreated: ServiceNameEnum[] = [
+  private readonly _createdServices: ServiceNameEnum[] = [
     ServiceNameEnum.CORE_SERVICE,
     ServiceNameEnum.CORE_EVENT_SERVICE,
   ];
@@ -33,14 +33,14 @@ export class CoreEventService {
     return this._serviceCreated$.asObservable();
   }
 
-  public getServicesCreated(): ServiceNameEnum[] {
-    return this._servicesCreated;
+  public getCreatedServices(): ServiceNameEnum[] {
+    return this._createdServices;
   }
 
   private _listenServiceCreated(): void {
     this._serviceCreated$.subscribe({
       next: (serviceName: Readonly<ServiceNameEnum>): void => {
-        this._servicesCreated.push(serviceName);
+        this._createdServices.push(serviceName);
       },
     });
   }

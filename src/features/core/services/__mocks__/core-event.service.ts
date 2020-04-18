@@ -20,7 +20,7 @@ export class CoreEventService {
     return EMPTY;
   }
 
-  public getServicesCreated(): ServiceNameEnum[] {
+  public getCreatedServices(): ServiceNameEnum[] {
     return [];
   }
 }
