@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.32.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.32.0...1.32.1) (2020-04-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency discord.js to v12.2.0 ([ca0e9bb](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ca0e9bb00cec9c4be35d797eeb9d828533da275c))
+
 # [1.32.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.31.0...1.32.0) (2020-04-14)
 
 
