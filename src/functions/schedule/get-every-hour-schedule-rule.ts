@@ -1,3 +1,3 @@
 export function getEveryHourScheduleRule(): string {
-  return `1 * * * *`;
+  return `0 * * * *`;
 }
