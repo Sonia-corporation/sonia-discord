@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 import { isValidDate } from "./is-valid-date";
 
 describe(`isValidDate()`, (): void => {

@@ -1,6 +1,6 @@
 const FS = require(`fs-extra`);
 const _ = require(`lodash`);
-const MOMENT = require(`moment`);
+const MOMENT = require(`moment-timezone`);
 const CHALK = require(`./chalk`);
 const LOGGER = require(`./logger`);
 const APP_ROOT_PATH = require(`app-root-path`);

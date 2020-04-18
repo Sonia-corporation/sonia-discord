@@ -1,6 +1,6 @@
 import { Client, Guild, GuildChannel } from "discord.js";
 import _ from "lodash";
-import moment from "moment";
+import moment from "moment-timezone";
 import { Job, scheduleJob } from "node-schedule";
 import { AbstractService } from "../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
