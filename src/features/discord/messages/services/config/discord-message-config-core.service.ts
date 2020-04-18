@@ -1,5 +1,7 @@
 import _ from "lodash";
 import { AbstractService } from "../../../../../classes/abstract.service";
+import { ColorEnum } from "../../../../../enums/color.enum";
+import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
@@ -19,26 +21,26 @@ export class DiscordMessageConfigCoreService extends AbstractService
 
   public command: IDiscordMessageCommandConfig = {
     cookie: {
-      imageColor: 16376750,
-      imageUrl: `https://i.ibb.co/RTp4YPx/icons8-cookies-512.png`,
+      imageColor: ColorEnum.SUN,
+      imageUrl: IconEnum.COOKIES,
     },
     error: {
-      imageColor: 15562905,
-      imageUrl: `https://i.ibb.co/5jZmzSB/icons8-error-512.png`,
+      imageColor: ColorEnum.CANDY,
+      imageUrl: IconEnum.ERROR,
     },
     help: {
-      imageColor: 7522991,
-      imageUrl: `https://i.ibb.co/vLSnVk6/icons8-information-512.png`,
+      imageColor: ColorEnum.MINT,
+      imageUrl: IconEnum.INFORMATION,
     },
     prefix: `!`,
     version: {
-      imageColor: 11912416,
-      imageUrl: `https://i.ibb.co/ph17BqP/icons8-artificial-intelligence-512.png`,
+      imageColor: ColorEnum.SKY,
+      imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
     },
   };
   public error: IDiscordMessageErrorConfig = {
-    imageColor: 15562905,
-    imageUrl: `https://i.ibb.co/r7PHJS1/icons8-bug-512.png`,
+    imageColor: ColorEnum.CANDY,
+    imageUrl: IconEnum.BUG,
   };
 
   protected constructor() {
