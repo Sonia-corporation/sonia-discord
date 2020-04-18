@@ -32,6 +32,7 @@ export class DiscordMessageConfigService extends AbstractService {
     return {
       command: this.getMessageCommand(),
       error: this.getMessageError(),
+      warning: this.getMessageWarning(),
     };
   }
 
@@ -101,5 +102,17 @@ export class DiscordMessageConfigService extends AbstractService {
 
   public getMessageErrorImageUrl(): IconEnum {
     return this._discordMessageConfigCoreService.error.imageUrl;
+  }
+
+  public getMessageWarning(): IDiscordMessageErrorConfig {
+    return this._discordMessageConfigCoreService.warning;
+  }
+
+  public getMessageWarningImageColor(): ColorEnum {
+    return this._discordMessageConfigCoreService.warning.imageColor;
+  }
+
+  public getMessageWarningImageUrl(): IconEnum {
+    return this._discordMessageConfigCoreService.warning.imageUrl;
   }
 }

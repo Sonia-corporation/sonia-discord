@@ -12,6 +12,7 @@ import { IDiscordMessageCommandHelpConfig } from "../../../interfaces/discord-me
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
+import { IDiscordMessageWarningConfig } from "../../../interfaces/discord-message-warning-config";
 import { DiscordMessageConfigCoreService } from "./discord-message-config-core.service";
 import { DiscordMessageConfigMutatorService } from "./discord-message-config-mutator.service";
 
@@ -55,6 +56,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         imageColor: ColorEnum.SKY,
         imageUrl: IconEnum.COOKIES,
       };
+      discordMessageConfigCoreService.warning = {
+        imageColor: ColorEnum.SKY,
+        imageUrl: IconEnum.COOKIES,
+      };
     });
 
     describe(`when the given config is undefined`, (): void => {
@@ -63,7 +68,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
       });
 
       it(`should not update the config`, (): void => {
-        expect.assertions(2);
+        expect.assertions(3);
 
         service.updateConfig(config);
 
@@ -90,6 +95,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageColor: ColorEnum.SKY,
           imageUrl: IconEnum.COOKIES,
         } as IDiscordMessageErrorConfig);
+        expect(discordMessageConfigCoreService.warning).toStrictEqual({
+          imageColor: ColorEnum.SKY,
+          imageUrl: IconEnum.COOKIES,
+        } as IDiscordMessageWarningConfig);
       });
     });
 
@@ -199,6 +208,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         imageColor: ColorEnum.SUN,
         imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
       };
+      discordMessageConfigCoreService.warning = {
+        imageColor: ColorEnum.SUN,
+        imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
+      };
     });
 
     describe(`when the given config is undefined`, (): void => {
@@ -207,7 +220,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
       });
 
       it(`should not update the config`, (): void => {
-        expect.assertions(2);
+        expect.assertions(3);
 
         service.updateMessage(config);
 
@@ -234,6 +247,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageColor: ColorEnum.SUN,
           imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
         } as IDiscordMessageErrorConfig);
+        expect(discordMessageConfigCoreService.warning).toStrictEqual({
+          imageColor: ColorEnum.SUN,
+          imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
+        } as IDiscordMessageWarningConfig);
       });
     });
 
@@ -308,6 +325,28 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageColor: ColorEnum.MINT,
           imageUrl: IconEnum.GIRL,
         } as IDiscordMessageErrorConfig);
+      });
+    });
+
+    describe(`when the given config contains a warning`, (): void => {
+      beforeEach((): void => {
+        config = {
+          warning: {
+            imageColor: ColorEnum.MINT,
+            imageUrl: IconEnum.GIRL,
+          },
+        };
+      });
+
+      it(`should update the config warning`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessage(config);
+
+        expect(discordMessageConfigCoreService.warning).toStrictEqual({
+          imageColor: ColorEnum.MINT,
+          imageUrl: IconEnum.GIRL,
+        } as IDiscordMessageWarningConfig);
       });
     });
   });
@@ -1188,6 +1227,148 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
       service.updateMessageErrorImageUrl(imageUrl);
 
       expect(discordMessageConfigCoreService.error.imageUrl).toStrictEqual(
+        IconEnum.GIRL
+      );
+    });
+  });
+
+  describe(`updateMessageWarning()`, (): void => {
+    let config: PartialNested<IDiscordMessageWarningConfig> | undefined;
+
+    beforeEach((): void => {
+      discordMessageConfigCoreService.warning = {
+        imageColor: ColorEnum.SUN,
+        imageUrl: IconEnum.GIRL,
+      };
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageWarning(config);
+
+        expect(discordMessageConfigCoreService.warning).toStrictEqual({
+          imageColor: ColorEnum.SUN,
+          imageUrl: IconEnum.GIRL,
+        } as IDiscordMessageWarningConfig);
+      });
+    });
+
+    describe(`when the given config contains an image color`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageColor: ColorEnum.MINT,
+        };
+      });
+
+      it(`should update the config warning image color`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageWarning(config);
+
+        expect(
+          discordMessageConfigCoreService.warning.imageColor
+        ).toStrictEqual(ColorEnum.MINT);
+      });
+    });
+
+    describe(`when the given config contains an image url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageUrl: IconEnum.INFORMATION,
+        };
+      });
+
+      it(`should update the config warning image url`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageWarning(config);
+
+        expect(discordMessageConfigCoreService.warning.imageUrl).toStrictEqual(
+          IconEnum.INFORMATION
+        );
+      });
+    });
+  });
+
+  describe(`updateMessageWarningImageColor()`, (): void => {
+    let imageColor: ColorEnum;
+
+    let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      imageColor = ColorEnum.SUN;
+      discordMessageConfigCoreService.warning.imageColor = ColorEnum.CANDY;
+
+      configServiceGetUpdatedNumberSpy = jest
+        .spyOn(configService, `getUpdatedNumber`)
+        .mockReturnValue(ColorEnum.SUN);
+    });
+
+    it(`should get the updated number`, (): void => {
+      expect.assertions(2);
+
+      service.updateMessageWarningImageColor(imageColor);
+
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageConfigMutatorService`,
+        newValue: ColorEnum.SUN,
+        oldValue: ColorEnum.CANDY,
+        valueName: `message warning image color`,
+      } as IConfigUpdateNumber);
+    });
+
+    it(`should update the Discord message config warning image color with the updated number`, (): void => {
+      expect.assertions(1);
+
+      service.updateMessageWarningImageColor(imageColor);
+
+      expect(discordMessageConfigCoreService.warning.imageColor).toStrictEqual(
+        ColorEnum.SUN
+      );
+    });
+  });
+
+  describe(`updateMessageWarningImageUrl()`, (): void => {
+    let imageUrl: IconEnum;
+
+    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      imageUrl = IconEnum.GIRL;
+      discordMessageConfigCoreService.warning.imageUrl = IconEnum.INFORMATION;
+
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(IconEnum.GIRL);
+    });
+
+    it(`should get the updated string`, (): void => {
+      expect.assertions(2);
+
+      service.updateMessageWarningImageUrl(imageUrl);
+
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageConfigMutatorService`,
+        newValue: IconEnum.GIRL,
+        oldValue: IconEnum.INFORMATION,
+        valueName: `message warning image url`,
+      } as IConfigUpdateString);
+    });
+
+    it(`should update the Discord message config warning image url with the updated string`, (): void => {
+      expect.assertions(1);
+
+      service.updateMessageWarningImageUrl(imageUrl);
+
+      expect(discordMessageConfigCoreService.warning.imageUrl).toStrictEqual(
         IconEnum.GIRL
       );
     });

@@ -14,6 +14,7 @@ import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-m
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
+import { IDiscordMessageWarningConfig } from "../../../interfaces/discord-message-warning-config";
 import { DiscordMessageConfigValueNameEnum } from "../../enums/discord-message-config-value-name.enum";
 import { DiscordMessageConfigCoreService } from "./discord-message-config-core.service";
 import { DiscordMessageConfigService } from "./discord-message-config.service";
@@ -60,6 +61,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     if (!_.isNil(message)) {
       this.updateMessageCommand(message.command);
       this.updateMessageError(message.error);
+      this.updateMessageWarning(message.warning);
     }
   }
 
@@ -275,6 +277,39 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
         newValue: imageUrl,
         oldValue: this._discordMessageConfigService.getMessageErrorImageUrl(),
         valueName: DiscordMessageConfigValueNameEnum.ERROR_IMAGE_URL,
+      }
+    );
+  }
+
+  public updateMessageWarning(
+    warning?: Readonly<PartialNested<IDiscordMessageWarningConfig>>
+  ): void {
+    if (!_.isNil(warning)) {
+      this.updateMessageWarningImageColor(warning.imageColor);
+      this.updateMessageWarningImageUrl(warning.imageUrl);
+    }
+  }
+
+  public updateMessageWarningImageColor(
+    imageColor?: Readonly<ColorEnum>
+  ): void {
+    this._discordMessageConfigCoreService.warning.imageColor = this._configService.getUpdatedNumber(
+      {
+        context: this._serviceName,
+        newValue: imageColor,
+        oldValue: this._discordMessageConfigService.getMessageWarningImageColor(),
+        valueName: DiscordMessageConfigValueNameEnum.WARNING_IMAGE_COLOR,
+      }
+    );
+  }
+
+  public updateMessageWarningImageUrl(imageUrl?: Readonly<IconEnum>): void {
+    this._discordMessageConfigCoreService.warning.imageUrl = this._configService.getUpdatedString(
+      {
+        context: this._serviceName,
+        newValue: imageUrl,
+        oldValue: this._discordMessageConfigService.getMessageWarningImageUrl(),
+        valueName: DiscordMessageConfigValueNameEnum.WARNING_IMAGE_URL,
       }
     );
   }

@@ -6,6 +6,7 @@ import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
+import { IDiscordMessageWarningConfig } from "../../../interfaces/discord-message-warning-config";
 
 export class DiscordMessageConfigCoreService extends AbstractService
   implements IDiscordMessageConfig {
@@ -41,6 +42,10 @@ export class DiscordMessageConfigCoreService extends AbstractService
   public error: IDiscordMessageErrorConfig = {
     imageColor: ColorEnum.CANDY,
     imageUrl: IconEnum.BUG,
+  };
+  public warning: IDiscordMessageWarningConfig = {
+    imageColor: ColorEnum.CANDY,
+    imageUrl: IconEnum.WARNING_SHIELD,
   };
 
   protected constructor() {

@@ -85,7 +85,7 @@ export class DiscordLoggerWarningService extends AbstractService {
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
-      url: this._discordMessageConfigService.getMessageCommandErrorImageUrl(),
+      url: this._discordMessageConfigService.getMessageWarningImageUrl(),
     };
   }
 
@@ -101,7 +101,7 @@ export class DiscordLoggerWarningService extends AbstractService {
   }
 
   private _getMessageEmbedColor(): number {
-    return this._discordMessageConfigService.getMessageCommandErrorImageColor();
+    return this._discordMessageConfigService.getMessageWarningImageColor();
   }
 
   private _getMessageEmbedTimestamp(): Date {

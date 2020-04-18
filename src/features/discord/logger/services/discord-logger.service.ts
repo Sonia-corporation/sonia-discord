@@ -41,10 +41,6 @@ export class DiscordLoggerService extends AbstractService {
       this._discordLoggerWarningService.handleWarning(warning);
     });
 
-    setTimeout((): void => {
-      this._discordLoggerWarningService.handleWarning(`adazd`);
-    }, 6000);
-
     this._loggerService.debug({
       context: this._serviceName,
       message: this._chalkService.text(`listen ${wrapInQuotes(`warn`)} event`),
