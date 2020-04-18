@@ -171,6 +171,14 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "DISCORD_LOGGER_WARNING_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_LOGGER_WARNING_SERVICE).toStrictEqual(
+      `DiscordLoggerWarningService`
+    );
+  });
+
   it(`should have a member "DISCORD_MENTION_SERVICE"`, (): void => {
     expect.assertions(1);
 

@@ -7,6 +7,7 @@ import { ChalkService } from "../../../logger/services/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordLoggerErrorService } from "./discord-logger-error.service";
+import { DiscordLoggerWarningService } from "./discord-logger-warning.service";
 
 export class DiscordLoggerService extends AbstractService {
   private static _instance: DiscordLoggerService;
@@ -23,6 +24,7 @@ export class DiscordLoggerService extends AbstractService {
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _discordLoggerErrorService: DiscordLoggerErrorService = DiscordLoggerErrorService.getInstance();
+  private readonly _discordLoggerWarningService: DiscordLoggerWarningService = DiscordLoggerWarningService.getInstance();
 
   protected constructor() {
     super(ServiceNameEnum.DISCORD_LOGGER_SERVICE);
@@ -35,20 +37,17 @@ export class DiscordLoggerService extends AbstractService {
   }
 
   private _listenForWarnings(): void {
-    this.discordClient.on(`warn`, (message: Readonly<string>): void => {
-      this._handleWarn(message);
+    this.discordClient.on(`warn`, (warning: Readonly<string>): void => {
+      this._discordLoggerWarningService.handleWarning(warning);
     });
+
+    setTimeout((): void => {
+      this._discordLoggerWarningService.handleWarning(`adazd`);
+    }, 6000);
 
     this._loggerService.debug({
       context: this._serviceName,
       message: this._chalkService.text(`listen ${wrapInQuotes(`warn`)} event`),
-    });
-  }
-
-  private _handleWarn(message: Readonly<string>): void {
-    this._loggerService.warning({
-      context: this._serviceName,
-      message: this._chalkService.text(message),
     });
   }
 
