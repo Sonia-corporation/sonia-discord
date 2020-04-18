@@ -179,6 +179,12 @@ Nevertheless, sometimes the error is purely developmental and this is why Sonia 
 - A link to create a new [GitHub issue](https://github.com/Sonia-corporation/il-est-midi-discord/issues/new?assignees=&labels=bug&template=bug_report.md&title=&projects=sonia-corporation/il-est-midi-discord/1).
 - A link to reach us in [Discord](https://discord.gg/PW4JSkv).
 
+Sonia sends the generic Discord errors to the [Sonia Discord errors channel](http://discordapp.com/channels/689833865279307782/700770389655158924).
+
+### Warnings
+
+Sonia sends the generic Discord warnings to the [Sonia Discord warnings channel](http://discordapp.com/channels/689833865279307782/701041732086792202).
+
 ## Contributing
 
 Check out the [contributing](CONTRIBUTING.md) file before helping us.
