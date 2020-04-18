@@ -1,3 +1,4 @@
+import { IconEnum } from "../../../../../enums/icon.enum";
 import { PartialNested } from "../../../../../types/partial-nested";
 import { IConfigUpdateString } from "../../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../../config/services/config.service";
@@ -24,7 +25,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
     let config: PartialNested<IDiscordConfig> | undefined;
 
     beforeEach((): void => {
-      discordSoniaConfigCoreService.corporationImageUrl = `dummy-corporation-image-url`;
+      discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
       discordSoniaConfigCoreService.id = `dummy-id`;
       discordSoniaConfigCoreService.secretToken = `dummy-secret-token`;
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor = {
@@ -45,7 +46,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(
-          `dummy-corporation-image-url`
+          IconEnum.GIRL
         );
         expect(discordSoniaConfigCoreService.id).toStrictEqual(`dummy-id`);
         expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(
@@ -65,7 +66,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
       beforeEach((): void => {
         config = {
           sonia: {
-            corporationImageUrl: `corporation-image-url`,
+            corporationImageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
           },
         };
       });
@@ -76,7 +77,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(
-          `corporation-image-url`
+          IconEnum.ARTIFICIAL_INTELLIGENCE
         );
       });
     });
@@ -152,7 +153,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
     let config: PartialNested<IDiscordSoniaConfig> | undefined;
 
     beforeEach((): void => {
-      discordSoniaConfigCoreService.corporationImageUrl = `dummy-corporation-image-url`;
+      discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
       discordSoniaConfigCoreService.id = `dummy-id`;
       discordSoniaConfigCoreService.secretToken = `dummy-secret-token`;
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor = {
@@ -173,7 +174,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
         service.updateSonia(config);
 
         expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(
-          `dummy-corporation-image-url`
+          IconEnum.GIRL
         );
         expect(discordSoniaConfigCoreService.id).toStrictEqual(`dummy-id`);
         expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(
@@ -192,7 +193,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
     describe(`when the given config contains a corporation image url`, (): void => {
       beforeEach((): void => {
         config = {
-          corporationImageUrl: `corporation-image-url`,
+          corporationImageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
         };
       });
 
@@ -202,7 +203,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
         service.updateSonia(config);
 
         expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(
-          `corporation-image-url`
+          IconEnum.ARTIFICIAL_INTELLIGENCE
         );
       });
     });
@@ -269,17 +270,17 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
   });
 
   describe(`updateCorporationImageUrl()`, (): void => {
-    let corporationImageUrl: string;
+    let corporationImageUrl: IconEnum;
 
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      corporationImageUrl = `dummy-corporation-image-url`;
-      discordSoniaConfigCoreService.corporationImageUrl = `corporation-image-url`;
+      corporationImageUrl = IconEnum.BUG;
+      discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
 
       configServiceGetUpdatedStringSpy = jest
         .spyOn(configService, `getUpdatedString`)
-        .mockReturnValue(`dummy-corporation-image-url`);
+        .mockReturnValue(IconEnum.BUG);
     });
 
     it(`should get the updated string`, (): void => {
@@ -290,8 +291,8 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordSoniaConfigMutatorService`,
-        newValue: `dummy-corporation-image-url`,
-        oldValue: `corporation-image-url`,
+        newValue: IconEnum.BUG,
+        oldValue: IconEnum.GIRL,
         valueName: `corporation image url`,
       } as IConfigUpdateString);
     });
@@ -302,7 +303,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
       service.updateCorporationImageUrl(corporationImageUrl);
 
       expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(
-        `dummy-corporation-image-url`
+        IconEnum.BUG
       );
     });
   });

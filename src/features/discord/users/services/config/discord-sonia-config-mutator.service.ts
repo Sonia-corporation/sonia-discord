@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../../classes/abstract-config.service";
+import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { PartialNested } from "../../../../../types/partial-nested";
 import { LoggerService } from "../../../../logger/services/logger.service";
@@ -60,7 +61,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<
   }
 
   public updateCorporationImageUrl(
-    corporationImageUrl?: Readonly<string>
+    corporationImageUrl?: Readonly<IconEnum>
   ): void {
     this._discordSoniaConfigCoreService.corporationImageUrl = this._configService.getUpdatedString(
       {

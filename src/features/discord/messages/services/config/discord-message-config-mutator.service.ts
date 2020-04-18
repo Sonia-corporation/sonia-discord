@@ -1,5 +1,7 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../../classes/abstract-config.service";
+import { ColorEnum } from "../../../../../enums/color.enum";
+import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { removeUndefined } from "../../../../../functions/formatters/remove-undefined";
 import { wrapInQuotes } from "../../../../../functions/formatters/wrap-in-quotes";
@@ -83,7 +85,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommandCookieImageColor(
-    imageColor?: Readonly<number>
+    imageColor?: Readonly<ColorEnum>
   ): void {
     this._discordMessageConfigCoreService.command.cookie.imageColor = this._configService.getUpdatedNumber(
       {
@@ -95,7 +97,9 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     );
   }
 
-  public updateMessageCommandCookieImageUrl(imageUrl?: Readonly<string>): void {
+  public updateMessageCommandCookieImageUrl(
+    imageUrl?: Readonly<IconEnum>
+  ): void {
     this._discordMessageConfigCoreService.command.cookie.imageUrl = this._configService.getUpdatedString(
       {
         context: this._serviceName,
@@ -116,7 +120,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommandErrorImageColor(
-    imageColor?: Readonly<number>
+    imageColor?: Readonly<ColorEnum>
   ): void {
     this._discordMessageConfigCoreService.command.error.imageColor = this._configService.getUpdatedNumber(
       {
@@ -128,7 +132,9 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     );
   }
 
-  public updateMessageCommandErrorImageUrl(imageUrl?: Readonly<string>): void {
+  public updateMessageCommandErrorImageUrl(
+    imageUrl?: Readonly<IconEnum>
+  ): void {
     this._discordMessageConfigCoreService.command.error.imageUrl = this._configService.getUpdatedString(
       {
         context: this._serviceName,
@@ -149,7 +155,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommandHelpImageColor(
-    imageColor?: Readonly<number>
+    imageColor?: Readonly<ColorEnum>
   ): void {
     this._discordMessageConfigCoreService.command.help.imageColor = this._configService.getUpdatedNumber(
       {
@@ -161,7 +167,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     );
   }
 
-  public updateMessageCommandHelpImageUrl(imageUrl?: Readonly<string>): void {
+  public updateMessageCommandHelpImageUrl(imageUrl?: Readonly<IconEnum>): void {
     this._discordMessageConfigCoreService.command.help.imageUrl = this._configService.getUpdatedString(
       {
         context: this._serviceName,
@@ -216,7 +222,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommandVersionImageColor(
-    imageColor?: Readonly<number>
+    imageColor?: Readonly<ColorEnum>
   ): void {
     this._discordMessageConfigCoreService.command.version.imageColor = this._configService.getUpdatedNumber(
       {
@@ -230,7 +236,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommandVersionImageUrl(
-    imageUrl?: Readonly<string>
+    imageUrl?: Readonly<IconEnum>
   ): void {
     this._discordMessageConfigCoreService.command.version.imageUrl = this._configService.getUpdatedString(
       {
@@ -251,7 +257,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     }
   }
 
-  public updateMessageErrorImageColor(imageColor?: Readonly<number>): void {
+  public updateMessageErrorImageColor(imageColor?: Readonly<ColorEnum>): void {
     this._discordMessageConfigCoreService.error.imageColor = this._configService.getUpdatedNumber(
       {
         context: this._serviceName,
@@ -262,7 +268,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     );
   }
 
-  public updateMessageErrorImageUrl(imageUrl?: Readonly<string>): void {
+  public updateMessageErrorImageUrl(imageUrl?: Readonly<IconEnum>): void {
     this._discordMessageConfigCoreService.error.imageUrl = this._configService.getUpdatedString(
       {
         context: this._serviceName,

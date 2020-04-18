@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { AbstractService } from "../../../../../classes/abstract.service";
+import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { IDiscordSoniaConfig } from "../../../interfaces/discord-sonia-config";
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../../interfaces/discord-sonia-corporation-message-embed-author-config";
@@ -31,7 +32,7 @@ export class DiscordSoniaConfigService extends AbstractService {
     };
   }
 
-  public getCorporationImageUrl(): string {
+  public getCorporationImageUrl(): IconEnum {
     return this._discordSoniaConfigCoreService.corporationImageUrl;
   }
 
