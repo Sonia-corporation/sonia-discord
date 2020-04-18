@@ -48,4 +48,12 @@ describe(`IconEnum`, (): void => {
       `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`
     );
   });
+
+  it(`should have a member "WARNING_SHIELD"`, (): void => {
+    expect.assertions(1);
+
+    expect(IconEnum.WARNING_SHIELD).toStrictEqual(
+      `https://i.ibb.co/41ccwXn/icons8-warning-shield-512.png`
+    );
+  });
 });

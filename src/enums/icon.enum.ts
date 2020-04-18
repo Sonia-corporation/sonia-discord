@@ -5,4 +5,5 @@ export enum IconEnum {
   INFORMATION = `https://i.ibb.co/vLSnVk6/icons8-information-512.png`,
   BUG = `https://i.ibb.co/r7PHJS1/icons8-bug-512.png`,
   GIRL = `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
+  WARNING_SHIELD = `https://i.ibb.co/41ccwXn/icons8-warning-shield-512.png`,
 }
