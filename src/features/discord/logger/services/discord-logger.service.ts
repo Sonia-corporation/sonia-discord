@@ -5,6 +5,8 @@ import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../../logger/services/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
+import { DiscordGuildSoniaChannelNameEnum } from "../../guilds/enums/discord-guild-sonia-channel-name.enum";
+import { DiscordGuildSoniaService } from "../../guilds/services/discord-guild-sonia.service";
 import { DiscordClientService } from "../../services/discord-client.service";
 
 export class DiscordLoggerService extends AbstractService {
@@ -21,6 +23,7 @@ export class DiscordLoggerService extends AbstractService {
   public readonly discordClient: Client = DiscordClientService.getInstance().getClient();
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
+  private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
 
   protected constructor() {
     super(ServiceNameEnum.DISCORD_LOGGER_SERVICE);
@@ -55,6 +58,10 @@ export class DiscordLoggerService extends AbstractService {
       this._handleError(error);
     });
 
+    setTimeout((): void => {
+      this._handleError(`dza`);
+    }, 5000);
+
     this._loggerService.debug({
       context: this._serviceName,
       message: this._chalkService.text(`listen ${wrapInQuotes(`error`)} event`),
@@ -65,6 +72,19 @@ export class DiscordLoggerService extends AbstractService {
     this._loggerService.error({
       context: this._serviceName,
       message: this._chalkService.text(error),
+    });
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(
+        `send message to Sonia Discord errors channel`
+      ),
+    });
+
+    this._discordGuildSoniaService.sendMessageToChannel({
+      channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
+      messageResponse: {
+        response: `error`,
+      },
     });
   }
 }

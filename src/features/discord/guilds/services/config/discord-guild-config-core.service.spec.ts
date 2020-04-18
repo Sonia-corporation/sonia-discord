@@ -27,7 +27,13 @@ describe(`DiscordGuildConfigCoreService`, (): void => {
     expect(service.shouldWelcomeNewMembers).toStrictEqual(true);
   });
 
-  it(`should have a permanent invitation url to joins`, (): void => {
+  it(`should have a Sonia guild id`, (): void => {
+    expect.assertions(1);
+
+    expect(service.soniaGuildId).toStrictEqual(`689833865279307782`);
+  });
+
+  it(`should have a Sonia permanent invitation url to joins`, (): void => {
     expect.assertions(1);
 
     expect(service.soniaPermanentGuildInviteUrl).toStrictEqual(

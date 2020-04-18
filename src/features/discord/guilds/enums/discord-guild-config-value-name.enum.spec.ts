@@ -25,6 +25,14 @@ describe(`DiscordGuildConfigValueNameEnum`, (): void => {
     ).toStrictEqual(`welcome new members state`);
   });
 
+  it(`should have a member "SONIA_GUILD_ID"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordGuildConfigValueNameEnum.SONIA_GUILD_ID).toStrictEqual(
+      `Sonia guild id`
+    );
+  });
+
   it(`should have a member "SONIA_PERMANENT_GUILD_INVITE_URL"`, (): void => {
     expect.assertions(1);
 
