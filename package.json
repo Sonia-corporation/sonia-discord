@@ -138,7 +138,7 @@
     "jest": "25.3.0",
     "jest-silent-reporter": "0.2.1",
     "jest-ts-auto-mock": "1.0.11",
-    "lint-staged": "10.1.5",
+    "lint-staged": "10.1.6",
     "majestic": "1.6.2",
     "parcel-bundler": "1.12.4",
     "prettier": "2.0.4",
