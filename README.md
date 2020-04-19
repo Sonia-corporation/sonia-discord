@@ -129,21 +129,20 @@ Sonia will never respond to another bot - love between them will not be tolerate
 Sonia will respond to each of your messages.  
 Special commands will be handled as a priority.  
 
-When your message is very simple, Sonia will tell you that it is noon, as usual (even if it is a lie).  
-The message could be variable though.
+When your message is very basic, Sonia will tell you that it is noon, as usual (even if it is untrue).  
 
 #### In a public text channel (also known as text)
 
 For now, Sonia cannot be configured over which channel she responds to.  
 In the future, Sonia will be disabled by default on all channels.  
 A command will enable Sonia on the given channel (a command will also be available to disable her).  
-This dev is a bit more complicated because Sonia will have to store in a database which channels are ready for her or not.
+This dev is a bit more complicated because Sonia will have to store which channels are ready for her or not in a database.
 
 To avoid flooding, Sonia will tell you that it is noon in some conditions.  
 First of all, she will tell the `general` channel that it is noon when it is noon.  
 That is the main goal after all...  
-The timezone used is the one of the server.  
-In the future, when enabling this feature on a given channel, you will be able to customize the default timezone used.
+The default timezone is Europe/Paris.  
+In the future, when enabling this feature on a given channel, you will be able to customize the timezone used.
 
 When a message on the channel is sent, Sonia will only respond if she is mentioned personally.  
 This counts as a DM response for Sonia, so prepare to have a friendly message dedicated to you.  
