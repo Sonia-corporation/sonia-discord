@@ -1,4 +1,6 @@
 import _ from "lodash";
+import { AbstractService } from "../../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
 import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
@@ -7,7 +9,7 @@ import { IDiscordMessageConfig } from "../../../interfaces/discord-message-confi
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
 import { DiscordMessageConfigCoreService } from "./discord-message-config-core.service";
 
-export class DiscordMessageConfigService {
+export class DiscordMessageConfigService extends AbstractService {
   private static _instance: DiscordMessageConfigService;
 
   public static getInstance(): DiscordMessageConfigService {
@@ -18,7 +20,11 @@ export class DiscordMessageConfigService {
     return DiscordMessageConfigService._instance;
   }
 
-  private readonly _discordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
+  private readonly _discordMessageConfigCoreService: DiscordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_SERVICE);
+  }
 
   public getConfig(): IDiscordMessageConfig {
     return {

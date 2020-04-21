@@ -1,7 +1,9 @@
 import { Client } from "discord.js";
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 
-export class DiscordClientService {
+export class DiscordClientService extends AbstractService {
   private static _instance: DiscordClientService;
 
   public static getInstance(): DiscordClientService {
@@ -10,6 +12,10 @@ export class DiscordClientService {
     }
 
     return DiscordClientService._instance;
+  }
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_CLIENT_SERVICE);
   }
 
   public getClient(): Client {

@@ -1,4 +1,6 @@
 import _ from "lodash";
+import { AbstractService } from "../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
 import { DiscordAuthenticationService } from "../authentications/services/discord-authentication.service";
 import { DiscordGuildCreateService } from "../guilds/services/discord-guild-create.service";
 import { DiscordGuildMemberAddService } from "../guilds/services/discord-guild-member-add.service";
@@ -8,7 +10,7 @@ import { DiscordMessageService } from "../messages/services/discord-message.serv
 import { DiscordMessageScheduleIlEstMidiService } from "../messages/services/schedule/discord-message-schedule-il-est-midi.service";
 import { DiscordSoniaService } from "../users/services/discord-sonia.service";
 
-export class DiscordService {
+export class DiscordService extends AbstractService {
   private static _instance: DiscordService;
 
   public static getInstance(): DiscordService {
@@ -19,7 +21,8 @@ export class DiscordService {
     return DiscordService._instance;
   }
 
-  public constructor() {
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_SERVICE);
     this.init();
   }
 

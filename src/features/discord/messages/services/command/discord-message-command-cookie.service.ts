@@ -6,8 +6,9 @@ import {
 } from "discord.js";
 import _ from "lodash";
 import moment from "moment";
+import { AbstractService } from "../../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
 import { getRandomValueFromEnum } from "../../../../../functions/randoms/get-random-value-from-enum";
-import { LoggerService } from "../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../users/services/discord-sonia.service";
 import { DiscordMessageCommandCookieDescriptionEnum } from "../../enums/command/cookie/discord-message-command-cookie-description.enum";
 import { DiscordMessageCommandCookieTitleEnum } from "../../enums/command/cookie/discord-message-command-cookie-title.enum";
@@ -15,7 +16,7 @@ import { IDiscordMessageResponse } from "../../interfaces/discord-message-respon
 import { AnyDiscordMessage } from "../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../config/discord-message-config.service";
 
-export class DiscordMessageCommandCookieService {
+export class DiscordMessageCommandCookieService extends AbstractService {
   private static _instance: DiscordMessageCommandCookieService;
 
   public static getInstance(): DiscordMessageCommandCookieService {
@@ -26,16 +27,18 @@ export class DiscordMessageCommandCookieService {
     return DiscordMessageCommandCookieService._instance;
   }
 
-  private readonly _discordSoniaService = DiscordSoniaService.getInstance();
-  private readonly _discordMessageConfigService = DiscordMessageConfigService.getInstance();
-  private readonly _loggerService = LoggerService.getInstance();
-  private readonly _className = `DiscordMessageCommandCookieService`;
+  private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
+  private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_COOKIE_SERVICE);
+  }
 
   public handle(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       extendedContext: true,
       message: this._loggerService.getSnowflakeContext(
         anyDiscordMessage.id,

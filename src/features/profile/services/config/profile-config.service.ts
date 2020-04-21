@@ -1,8 +1,10 @@
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { IProfileConfig } from "../../interfaces/profile-config";
 import { ProfileConfigCoreService } from "./profile-config-core.service";
 
-export class ProfileConfigService {
+export class ProfileConfigService extends AbstractService {
   private static _instance: ProfileConfigService;
 
   public static getInstance(): ProfileConfigService {
@@ -13,7 +15,11 @@ export class ProfileConfigService {
     return ProfileConfigService._instance;
   }
 
-  private readonly _profileConfigCoreService = ProfileConfigCoreService.getInstance();
+  private readonly _profileConfigCoreService: ProfileConfigCoreService = ProfileConfigCoreService.getInstance();
+
+  protected constructor() {
+    super(ServiceNameEnum.PROFILE_CONFIG_SERVICE);
+  }
 
   public getConfig(): IProfileConfig {
     return {

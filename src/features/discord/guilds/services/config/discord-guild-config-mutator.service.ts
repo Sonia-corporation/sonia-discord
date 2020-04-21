@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../../classes/abstract-config.service";
+import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
 import { PartialNested } from "../../../../../types/partial-nested";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordGuildConfig } from "../../../interfaces/discord-guild-config";
@@ -24,12 +25,11 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
     return DiscordGuildConfigMutatorService._instance;
   }
 
-  protected readonly _className = `DiscordGuildConfigMutatorService`;
-  private readonly _discordGuildConfigCoreService = DiscordGuildConfigCoreService.getInstance();
-  private readonly _discordGuildConfigService = DiscordGuildConfigService.getInstance();
+  private readonly _discordGuildConfigCoreService: DiscordGuildConfigCoreService = DiscordGuildConfigCoreService.getInstance();
+  private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
 
   protected constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
-    super(config);
+    super(ServiceNameEnum.DISCORD_GUILD_CONFIG_MUTATOR_SERVICE, config);
   }
 
   public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
@@ -37,7 +37,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
       this.updateGuild(config.guild);
 
       this._loggerService.debug({
-        context: this._className,
+        context: this._serviceName,
         message: this._chalkService.text(`configuration updated`),
       });
     }
@@ -61,7 +61,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
   ): void {
     this._discordGuildConfigCoreService.shouldSendCookiesOnCreate = this._configService.getUpdatedBoolean(
       {
-        context: this._className,
+        context: this._serviceName,
         newValue: shouldSendCookiesOnCreate,
         oldValue: this._discordGuildConfigService.shouldSendCookiesOnCreate(),
         valueName:
@@ -75,7 +75,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
   ): void {
     this._discordGuildConfigCoreService.shouldSendIlEstMidiMessage = this._configService.getUpdatedBoolean(
       {
-        context: this._className,
+        context: this._serviceName,
         newValue: shouldSendIlEstMidiMessage,
         oldValue: this._discordGuildConfigService.shouldSendIlEstMidiMessage(),
         valueName:
@@ -89,7 +89,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
   ): void {
     this._discordGuildConfigCoreService.shouldWelcomeNewMembers = this._configService.getUpdatedBoolean(
       {
-        context: this._className,
+        context: this._serviceName,
         newValue: shouldWelcomeNewMembers,
         oldValue: this._discordGuildConfigService.shouldWelcomeNewMembers(),
         valueName: DiscordGuildConfigValueNameEnum.SHOULD_WELCOME_NEW_MEMBERS,
@@ -102,7 +102,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
   ): void {
     this._discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = this._configService.getUpdatedString(
       {
-        context: this._className,
+        context: this._serviceName,
         newValue: soniaPermanentGuildInviteUrl,
         oldValue: this._discordGuildConfigService.getSoniaPermanentGuildInviteUrl(),
         valueName:

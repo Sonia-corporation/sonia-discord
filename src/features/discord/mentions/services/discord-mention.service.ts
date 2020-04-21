@@ -1,9 +1,11 @@
 import { GuildChannel, GuildMember, Role, User } from "discord.js";
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { isDiscordMessageMentions } from "../functions/is-discord-message-mentions";
 import { AnyDiscordMessageMentions } from "../types/any-discord-message-mentions";
 
-export class DiscordMentionService {
+export class DiscordMentionService extends AbstractService {
   private static _instance: DiscordMentionService;
 
   public static getInstance(): DiscordMentionService {
@@ -12,6 +14,10 @@ export class DiscordMentionService {
     }
 
     return DiscordMentionService._instance;
+  }
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_MENTION_SERVICE);
   }
 
   public isValid(mention: unknown): mention is AnyDiscordMessageMentions {

@@ -1,13 +1,14 @@
 import _ from "lodash";
-import { LoggerService } from "../../../logger/services/logger.service";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { DiscordAuthorService } from "../../users/services/discord-author.service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
-import { DiscordMessageAuthorService } from "./discord-message-author.service";
 import { DiscordMessageCommandService } from "./command/discord-message-command.service";
+import { DiscordMessageAuthorService } from "./discord-message-author.service";
 import { DiscordMessageContentService } from "./discord-message-content.service";
 
-export class DiscordMessageDmService {
+export class DiscordMessageDmService extends AbstractService {
   private static _instance: DiscordMessageDmService;
 
   public static getInstance(): DiscordMessageDmService {
@@ -18,12 +19,14 @@ export class DiscordMessageDmService {
     return DiscordMessageDmService._instance;
   }
 
-  private readonly _discordAuthorService = DiscordAuthorService.getInstance();
-  private readonly _discordMessageAuthorService = DiscordMessageAuthorService.getInstance();
-  private readonly _discordMessageContentService = DiscordMessageContentService.getInstance();
-  private readonly _discordMessageCommandService = DiscordMessageCommandService.getInstance();
-  private readonly _loggerService = LoggerService.getInstance();
-  private readonly _className = `DiscordMessageDmService`;
+  private readonly _discordAuthorService: DiscordAuthorService = DiscordAuthorService.getInstance();
+  private readonly _discordMessageAuthorService: DiscordMessageAuthorService = DiscordMessageAuthorService.getInstance();
+  private readonly _discordMessageContentService: DiscordMessageContentService = DiscordMessageContentService.getInstance();
+  private readonly _discordMessageCommandService: DiscordMessageCommandService = DiscordMessageCommandService.getInstance();
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_MESSAGE_DM_SERVICE);
+  }
 
   public getMessage(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
@@ -55,7 +58,7 @@ export class DiscordMessageDmService {
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse | null {
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       extendedContext: true,
       message: this._loggerService.getSnowflakeContext(
         anyDiscordMessage.id,

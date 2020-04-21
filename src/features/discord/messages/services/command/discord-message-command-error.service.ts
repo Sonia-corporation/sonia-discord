@@ -7,13 +7,14 @@ import {
 } from "discord.js";
 import _ from "lodash";
 import moment from "moment";
-import { LoggerService } from "../../../../logger/services/logger.service";
+import { AbstractService } from "../../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
 import { DiscordSoniaService } from "../../../users/services/discord-sonia.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../config/discord-message-config.service";
 
-export class DiscordMessageCommandErrorService {
+export class DiscordMessageCommandErrorService extends AbstractService {
   private static _instance: DiscordMessageCommandErrorService;
 
   public static getInstance(): DiscordMessageCommandErrorService {
@@ -24,16 +25,18 @@ export class DiscordMessageCommandErrorService {
     return DiscordMessageCommandErrorService._instance;
   }
 
-  private readonly _discordSoniaService = DiscordSoniaService.getInstance();
-  private readonly _discordMessageConfigService = DiscordMessageConfigService.getInstance();
-  private readonly _loggerService = LoggerService.getInstance();
-  private readonly _className = `DiscordMessageCommandErrorService`;
+  private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
+  private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_ERROR_SERVICE);
+  }
 
   public handle(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       extendedContext: true,
       message: this._loggerService.getSnowflakeContext(
         anyDiscordMessage.id,
