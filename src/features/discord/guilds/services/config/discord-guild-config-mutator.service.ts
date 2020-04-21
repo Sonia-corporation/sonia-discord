@@ -1,7 +1,8 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../../classes/abstract-config.service";
-import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { PartialNested } from "../../../../../types/partial-nested";
+import { LoggerService } from "../../../../logger/services/logger.service";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordGuildConfig } from "../../../interfaces/discord-guild-config";
 import { DiscordGuildConfigValueNameEnum } from "../../enums/discord-guild-config-value-name.enum";
@@ -25,6 +26,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
     return DiscordGuildConfigMutatorService._instance;
   }
 
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _discordGuildConfigCoreService: DiscordGuildConfigCoreService = DiscordGuildConfigCoreService.getInstance();
   private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
 

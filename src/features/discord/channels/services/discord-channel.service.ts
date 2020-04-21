@@ -1,7 +1,7 @@
 import { DMChannel, TextChannel } from "discord.js";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { isDiscordDmChannel } from "../functions/is-discord-dm-channel";
 import { isDiscordTextChannel } from "../functions/is-discord-text-channel";
 import { AnyDiscordChannel } from "../types/any-discord-channel";

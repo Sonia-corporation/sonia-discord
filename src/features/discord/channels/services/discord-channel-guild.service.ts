@@ -1,7 +1,7 @@
 import { Guild, GuildChannel } from "discord.js";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { isDiscordGuild } from "../../guilds/functions/is-discord-guild";
 import { isDiscordGuildChannel } from "../functions/is-discord-guild-channel";
 

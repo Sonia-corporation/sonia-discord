@@ -3,9 +3,10 @@ import _ from "lodash";
 import moment from "moment";
 import { Job, scheduleJob } from "node-schedule";
 import { AbstractService } from "../../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { getNoonScheduleRule } from "../../../../../functions/schedule/get-noon-schedule-rule";
 import { ChalkService } from "../../../../logger/services/chalk.service";
+import { LoggerService } from "../../../../logger/services/logger.service";
 import { TimeService } from "../../../../time/services/time.service";
 import { isDiscordGuildChannel } from "../../../channels/functions/is-discord-guild-channel";
 import { DiscordChannelGuildService } from "../../../channels/services/discord-channel-guild.service";
@@ -26,6 +27,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   }
 
   public readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _timeService: TimeService = TimeService.getInstance();
   private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();

@@ -109,35 +109,38 @@ module.exports = {
     ],
   ],
 
-  // A path to a custom resolver
-  // resolver: undefined,
-
   // Automatically reset mock state between every test
   resetMocks: true,
 
-  // The root directory that Jest should scan for tests and modules within
-  // rootDir: undefined,
+  // A path to a custom resolver
+  // resolver: undefined,
 
   // Reset the module registry before running each individual test
   resetModules: false,
 
-  // Allows you to use a custom runner instead of Jest's default test runner
-  // runner: "jest-runner",
+  // The root directory that Jest should scan for tests and modules within
+  // rootDir: undefined,
 
   // Automatically restore mock state between every test
   restoreMocks: true,
 
-  // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [],
-
-  // A list of paths to snapshot serializer modules Jest should use for snapshot testing
-  // snapshotSerializers: [],
+  // Allows you to use a custom runner instead of Jest's default test runner
+  // runner: "jest-runner",
 
   // A list of paths to directories that Jest should use to search for files in
   roots: [`./src`, `./scripts`],
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
   setupFiles: [`./config.ts`],
+
+  // A list of paths to snapshot serializer modules Jest should use for snapshot testing
+  // snapshotSerializers: [],
+
+  // Prevent tests from printing messages through the console
+  silent: true,
+
+  // A list of paths to modules that run some code to configure or set up the testing framework before each test
+  // setupFilesAfterEnv: [`./__tests__/setup.js`],
 
   // The test environment that will be used for testing
   testEnvironment: `node`,

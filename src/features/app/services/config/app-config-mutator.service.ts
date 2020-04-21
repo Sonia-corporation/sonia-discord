@@ -1,7 +1,8 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { PartialNested } from "../../../../types/partial-nested";
+import { LoggerService } from "../../../logger/services/logger.service";
 import { isNodeProduction } from "../../../node/functions/is-node-production";
 import { TimeService } from "../../../time/services/time.service";
 import { AppConfigValueNameEnum } from "../../enums/app-config-value-name.enum";
@@ -22,6 +23,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     return AppConfigMutatorService._instance;
   }
 
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _timeService: TimeService = TimeService.getInstance();
   private readonly _appConfigCoreService: AppConfigCoreService = AppConfigCoreService.getInstance();
   private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();

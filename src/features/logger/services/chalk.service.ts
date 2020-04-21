@@ -1,5 +1,7 @@
 import chalkI from "chalk";
 import _ from "lodash";
+import { AbstractService } from "../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../enums/service-name.enum";
 
 const CHALK = new chalkI.Instance();
 const COLOR_AURORA_GREEN = `#78E08F`;
@@ -12,7 +14,7 @@ const COLOR_PURPLE_MOUNTAIN_MAJESTY = `#786FA6`;
 const COLOR_SAWTOOTH_AAK = `#F19066`;
 const COLOR_OLD_GERANIUM = `#CF6A87`;
 
-export class ChalkService {
+export class ChalkService extends AbstractService {
   private static _instance: ChalkService;
 
   public static getInstance(): ChalkService {
@@ -21,6 +23,10 @@ export class ChalkService {
     }
 
     return ChalkService._instance;
+  }
+
+  protected constructor() {
+    super(ServiceNameEnum.CHALK_SERVICE);
   }
 
   public success(message: Readonly<string> | unknown): string {

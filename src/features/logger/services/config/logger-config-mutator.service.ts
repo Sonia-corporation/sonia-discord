@@ -1,9 +1,10 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
 import { LoggerConfigValueNameEnum } from "../../enums/logger-config-value-name.enum";
 import { ILoggerConfig } from "../../interfaces/logger-config";
+import { LoggerService } from "../logger.service";
 import { LoggerConfigCoreService } from "./logger-config-core.service";
 import { LoggerConfigService } from "./logger-config.service";
 
@@ -24,8 +25,9 @@ export class LoggerConfigMutatorService extends AbstractConfigService<
     return LoggerConfigMutatorService._instance;
   }
 
-  protected readonly _loggerConfigCoreService: LoggerConfigCoreService = LoggerConfigCoreService.getInstance();
-  protected readonly _loggerConfigService: LoggerConfigService = LoggerConfigService.getInstance();
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
+  private readonly _loggerConfigCoreService: LoggerConfigCoreService = LoggerConfigCoreService.getInstance();
+  private readonly _loggerConfigService: LoggerConfigService = LoggerConfigService.getInstance();
 
   protected constructor(config?: Readonly<Partial<ILoggerConfig>>) {
     super(ServiceNameEnum.LOGGER_CONFIG_MUTATOR_SERVICE, config);

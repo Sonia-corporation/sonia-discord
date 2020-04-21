@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
 import { ILoggerLog } from "../../interfaces/logger-log";
@@ -18,14 +17,6 @@ export class LoggerService {
   }
 
   private readonly _logPrefix = `● `;
-  private readonly _serviceName: ServiceNameEnum =
-    ServiceNameEnum.LOGGER_SERVICE;
-
-  protected constructor() {
-    this.serviceCreated({
-      service: this._serviceName,
-    });
-  }
 
   public error(loggerLog: Readonly<ILoggerLog>): void {
     this._log({

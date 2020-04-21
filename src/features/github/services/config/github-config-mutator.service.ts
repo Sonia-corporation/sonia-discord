@@ -1,7 +1,8 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { PartialNested } from "../../../../types/partial-nested";
+import { LoggerService } from "../../../logger/services/logger.service";
 import { GithubConfigValueNameEnum } from "../../enums/github-config-value-name.enum";
 import { IGithubConfig } from "../../interfaces/github-config";
 import { GithubConfigCoreService } from "./github-config-core.service";
@@ -24,6 +25,7 @@ export class GithubConfigMutatorService extends AbstractConfigService<
     return GithubConfigMutatorService._instance;
   }
 
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _githubConfigCoreService: GithubConfigCoreService = GithubConfigCoreService.getInstance();
   private readonly _githubConfigService: GithubConfigService = GithubConfigService.getInstance();
 
