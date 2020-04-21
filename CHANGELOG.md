@@ -1,5 +1,14 @@
 # Semantic Versioning Changelog
 
+# [1.34.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.33.0...1.34.0) (2020-04-21)
+
+
+### Features
+
+* **services:** add core services to handle events ([37a3a48](https://github.com/Sonia-corporation/il-est-midi-discord/commit/37a3a48c255f17771e7330d4ce9e2e954dd80a7f))
+* **dependencies:** add rxjs and rxjs linter ([c782c3d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c782c3d8eebebf8007af66960d46d64fa0fb3882))
+* **services:** extend the abstract service for all services ([ae4db3a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ae4db3a895be041dc5d8e5c4df37617374931dfa))
+
 # [1.33.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.32.1...1.33.0) (2020-04-21)
 
 
