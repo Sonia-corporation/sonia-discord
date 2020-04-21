@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.33.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.32.1...1.33.0) (2020-04-21)
+
+
+### Features
+
+* **service:** add new abstract service ([1f415b6](https://github.com/Sonia-corporation/il-est-midi-discord/commit/1f415b691649dbbcadf626aadaef9b003ee6346d))
+
 ## [1.32.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.32.0...1.32.1) (2020-04-18)
 
 
