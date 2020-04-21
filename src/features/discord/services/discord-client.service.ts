@@ -1,9 +1,9 @@
 import { Client } from "discord.js";
 import _ from "lodash";
-import { ChalkService } from "../../logger/services/chalk.service";
-import { LoggerService } from "../../logger/services/logger.service";
+import { AbstractService } from "../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
 
-export class DiscordClientService {
+export class DiscordClientService extends AbstractService {
   private static _instance: DiscordClientService;
 
   public static getInstance(): DiscordClientService {
@@ -14,16 +14,10 @@ export class DiscordClientService {
     return DiscordClientService._instance;
   }
 
-  private readonly _loggerService = LoggerService.getInstance();
-  private readonly _chalkService = ChalkService.getInstance();
-  private readonly _client = new Client();
-  private readonly _className = `DiscordClientService`;
+  private readonly _client: Client = new Client();
 
-  public constructor() {
-    this._loggerService.debug({
-      context: this._className,
-      message: this._chalkService.text(`client created`),
-    });
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_CLIENT_SERVICE);
   }
 
   public getClient(): Client {

@@ -1,3 +1,4 @@
+import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
 import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
 import { ILoggerLog } from "../interfaces/logger-log";
 import { ILoggerServiceCreated } from "../interfaces/logger-service-created";
@@ -3824,10 +3825,10 @@ describe(`LoggerService`, (): void => {
       debugSpy = jest.spyOn(service, `debug`).mockImplementation();
     });
 
-    describe(`when the given logger service created contains a service "dummy-service"`, (): void => {
+    describe(`when the given logger service created contains a service ServiceNameEnum.APP_CONFIG_QUERY_SERVICE`, (): void => {
       beforeEach((): void => {
         loggerServiceCreated = {
-          service: `dummy-service`,
+          service: ServiceNameEnum.APP_CONFIG_QUERY_SERVICE,
         };
       });
 
@@ -3838,16 +3839,16 @@ describe(`LoggerService`, (): void => {
 
         expect(debugSpy).toHaveBeenCalledTimes(1);
         expect(debugSpy).toHaveBeenCalledWith({
-          context: `dummy-service`,
+          context: ServiceNameEnum.APP_CONFIG_QUERY_SERVICE,
           message: `text-created`,
         } as ILoggerLog);
       });
     });
 
-    describe(`when the given logger service created contains a service "service"`, (): void => {
+    describe(`when the given logger service created contains a service ServiceNameEnum.CONFIG_SERVICE`, (): void => {
       beforeEach((): void => {
         loggerServiceCreated = {
-          service: `service`,
+          service: ServiceNameEnum.CONFIG_SERVICE,
         };
       });
 
@@ -3858,7 +3859,7 @@ describe(`LoggerService`, (): void => {
 
         expect(debugSpy).toHaveBeenCalledTimes(1);
         expect(debugSpy).toHaveBeenCalledWith({
-          context: `service`,
+          context: ServiceNameEnum.CONFIG_SERVICE,
           message: `text-created`,
         } as ILoggerLog);
       });

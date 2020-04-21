@@ -1,8 +1,10 @@
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { isDiscordUser } from "../functions/is-discord-user";
 import { AnyDiscordAuthor } from "../types/any-discord-author";
 
-export class DiscordAuthorService {
+export class DiscordAuthorService extends AbstractService {
   private static _instance: DiscordAuthorService;
 
   public static getInstance(): DiscordAuthorService {
@@ -11,6 +13,10 @@ export class DiscordAuthorService {
     }
 
     return DiscordAuthorService._instance;
+  }
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_AUTHOR_SERVICE);
   }
 
   public isValid(author: unknown): author is AnyDiscordAuthor {

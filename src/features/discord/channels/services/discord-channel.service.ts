@@ -1,10 +1,12 @@
 import { DMChannel, TextChannel } from "discord.js";
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { isDiscordDmChannel } from "../functions/is-discord-dm-channel";
 import { isDiscordTextChannel } from "../functions/is-discord-text-channel";
 import { AnyDiscordChannel } from "../types/any-discord-channel";
 
-export class DiscordChannelService {
+export class DiscordChannelService extends AbstractService {
   private static _instance: DiscordChannelService;
 
   public static getInstance(): DiscordChannelService {
@@ -13,6 +15,10 @@ export class DiscordChannelService {
     }
 
     return DiscordChannelService._instance;
+  }
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_CHANNEL_SERVICE);
   }
 
   public isValid(channel: unknown): channel is AnyDiscordChannel {

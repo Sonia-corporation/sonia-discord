@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { PartialNested } from "../../../../types/partial-nested";
 import { isNodeProduction } from "../../../node/functions/is-node-production";
 import { TimeService } from "../../../time/services/time.service";
@@ -21,13 +22,12 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     return AppConfigMutatorService._instance;
   }
 
-  protected readonly _className = `AppConfigMutatorService`;
-  private readonly _timeService = TimeService.getInstance();
-  private readonly _appConfigCoreService = AppConfigCoreService.getInstance();
-  private readonly _appConfigService = AppConfigService.getInstance();
+  private readonly _timeService: TimeService = TimeService.getInstance();
+  private readonly _appConfigCoreService: AppConfigCoreService = AppConfigCoreService.getInstance();
+  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
 
   protected constructor(config?: Readonly<PartialNested<IAppConfig>>) {
-    super(config);
+    super(ServiceNameEnum.APP_CONFIG_MUTATOR_SERVICE, config);
   }
 
   public init(): AppConfigMutatorService {
@@ -47,7 +47,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
       this.updateProductionState(config.isProduction);
 
       this._loggerService.debug({
-        context: this._className,
+        context: this._serviceName,
         message: this._chalkService.text(`configuration updated`),
       });
     }
@@ -55,7 +55,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
 
   public updateVersion(version?: Readonly<string>): void {
     this._appConfigCoreService.version = this._configService.getUpdatedString({
-      context: this._className,
+      context: this._serviceName,
       newValue: version,
       oldValue: this._appConfigService.getVersion(),
       valueName: AppConfigValueNameEnum.VERSION,
@@ -65,7 +65,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   public updateReleaseDate(releaseDate?: Readonly<string>): void {
     this._appConfigCoreService.releaseDate = this._configService.getUpdatedString(
       {
-        context: this._className,
+        context: this._serviceName,
         newValue: releaseDate,
         oldValue: this._appConfigService.getReleaseDate(),
         valueName: AppConfigValueNameEnum.RELEASE_DATE,
@@ -76,7 +76,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   public updateInitializationDate(initializationDate?: Readonly<string>): void {
     this._appConfigCoreService.initializationDate = this._configService.getUpdatedString(
       {
-        context: this._className,
+        context: this._serviceName,
         newValue: initializationDate,
         oldValue: this._appConfigService.getInitializationDate(),
         valueName: AppConfigValueNameEnum.INITIALIZATION_DATE,
@@ -87,7 +87,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   public updateProductionState(isProduction?: Readonly<boolean>): void {
     this._appConfigCoreService.isProduction = this._configService.getUpdatedBoolean(
       {
-        context: this._className,
+        context: this._serviceName,
         newValue: isProduction,
         oldValue: this._appConfigService.isProduction(),
         valueName: AppConfigValueNameEnum.IS_PRODUCTION,
@@ -98,7 +98,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   public updateTotalReleaseCount(totalReleaseCount?: Readonly<number>): void {
     this._appConfigCoreService.totalReleaseCount = this._configService.getUpdatedNumber(
       {
-        context: this._className,
+        context: this._serviceName,
         newValue: totalReleaseCount,
         oldValue: this._appConfigService.getTotalReleaseCount(),
         valueName: AppConfigValueNameEnum.TOTAL_RELEASE_COUNT,
@@ -109,7 +109,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   public updateReleaseNotes(releaseNotes?: Readonly<string>): void {
     this._appConfigCoreService.releaseNotes = this._configService.getUpdatedString(
       {
-        context: this._className,
+        context: this._serviceName,
         isValueDisplay: false,
         newValue: releaseNotes,
         oldValue: this._appConfigService.getReleaseNotes(),

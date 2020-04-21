@@ -1,6 +1,8 @@
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 
-export class DiscordMessageContentService {
+export class DiscordMessageContentService extends AbstractService {
   private static _instance: DiscordMessageContentService;
 
   public static getInstance(): DiscordMessageContentService {
@@ -9,6 +11,10 @@ export class DiscordMessageContentService {
     }
 
     return DiscordMessageContentService._instance;
+  }
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_MESSAGE_CONTENT_SERVICE);
   }
 
   public hasContent(message: unknown): message is string {

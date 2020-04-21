@@ -1,4 +1,6 @@
 import _ from "lodash";
+import { AbstractService } from "../../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
 import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../../types/any-discord-message";
@@ -9,7 +11,7 @@ import { DiscordMessageCommandHelpService } from "./discord-message-command-help
 import { DiscordMessageCommandVersionService } from "./discord-message-command-version.service";
 import { DiscordMessageContentService } from "../discord-message-content.service";
 
-export class DiscordMessageCommandService {
+export class DiscordMessageCommandService extends AbstractService {
   private static _instance: DiscordMessageCommandService;
 
   public static getInstance(): DiscordMessageCommandService {
@@ -20,12 +22,16 @@ export class DiscordMessageCommandService {
     return DiscordMessageCommandService._instance;
   }
 
-  private readonly _discordMessageConfigService = DiscordMessageConfigService.getInstance();
-  private readonly _discordMessageCommandVersionService = DiscordMessageCommandVersionService.getInstance();
-  private readonly _discordMessageCommandErrorService = DiscordMessageCommandErrorService.getInstance();
-  private readonly _discordMessageCommandHelpService = DiscordMessageCommandHelpService.getInstance();
-  private readonly _discordMessageCommandCookieService = DiscordMessageCommandCookieService.getInstance();
-  private readonly _discordMessageContentService = DiscordMessageContentService.getInstance();
+  private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
+  private readonly _discordMessageCommandVersionService: DiscordMessageCommandVersionService = DiscordMessageCommandVersionService.getInstance();
+  private readonly _discordMessageCommandErrorService: DiscordMessageCommandErrorService = DiscordMessageCommandErrorService.getInstance();
+  private readonly _discordMessageCommandHelpService: DiscordMessageCommandHelpService = DiscordMessageCommandHelpService.getInstance();
+  private readonly _discordMessageCommandCookieService: DiscordMessageCommandCookieService = DiscordMessageCommandCookieService.getInstance();
+  private readonly _discordMessageContentService: DiscordMessageContentService = DiscordMessageContentService.getInstance();
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_SERVICE);
+  }
 
   public hasCommand(message: Readonly<string>): boolean {
     if (this.hasVersionCommand(message)) {

@@ -1,9 +1,10 @@
-import { GuildChannel } from "discord.js";
+import { Client, GuildChannel } from "discord.js";
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { AppConfigService } from "../../../app/services/config/app-config.service";
 import { ChalkService } from "../../../logger/services/chalk.service";
-import { LoggerService } from "../../../logger/services/logger.service";
 import { ProfileConfigService } from "../../../profile/services/config/profile-config.service";
 import { isDiscordGuildChannel } from "../../channels/functions/is-discord-guild-channel";
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
@@ -14,7 +15,7 @@ import { DiscordClientService } from "../../services/discord-client.service";
 import { AnyGuildMember } from "../types/any-guild-member";
 import { DiscordGuildConfigService } from "./config/discord-guild-config.service";
 
-export class DiscordGuildMemberAddService {
+export class DiscordGuildMemberAddService extends AbstractService {
   private static _instance: DiscordGuildMemberAddService;
 
   public static getInstance(): DiscordGuildMemberAddService {
@@ -25,16 +26,15 @@ export class DiscordGuildMemberAddService {
     return DiscordGuildMemberAddService._instance;
   }
 
-  private readonly _discordClientServiceClient = DiscordClientService.getInstance().getClient();
-  private readonly _discordChannelGuildService = DiscordChannelGuildService.getInstance();
-  private readonly _discordGuildConfigService = DiscordGuildConfigService.getInstance();
-  private readonly _loggerService = LoggerService.getInstance();
-  private readonly _profileConfigService = ProfileConfigService.getInstance();
-  private readonly _chalkService = ChalkService.getInstance();
-  private readonly _appConfigService = AppConfigService.getInstance();
-  private readonly _className = `DiscordGuildMemberAddService`;
+  private readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
+  private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
+  private readonly _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();
+  private readonly _chalkService: ChalkService = ChalkService.getInstance();
+  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
 
-  public constructor() {
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_GUILD_MEMBER_ADD_SERVICE);
     this.init();
   }
 
@@ -43,7 +43,7 @@ export class DiscordGuildMemberAddService {
   }
 
   private _listen(): void {
-    this._discordClientServiceClient.on(
+    this.discordClient.on(
       `guildMemberAdd`,
       (member: Readonly<AnyGuildMember>): void => {
         this._handleGuildMemberAdd(member);
@@ -51,7 +51,7 @@ export class DiscordGuildMemberAddService {
     );
 
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       message: this._chalkService.text(
         `listen ${wrapInQuotes(`guildMemberAdd`)} event`
       ),
@@ -76,7 +76,7 @@ export class DiscordGuildMemberAddService {
     }
 
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       message: this._chalkService.text(
         `welcome new members message sending disabled`
       ),
@@ -94,7 +94,7 @@ export class DiscordGuildMemberAddService {
     );
 
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       message: this._chalkService.text(
         `sending message for the new guild member...`
       ),
@@ -104,7 +104,7 @@ export class DiscordGuildMemberAddService {
       .send(messageResponse.response, messageResponse.options)
       .then((): void => {
         this._loggerService.log({
-          context: this._className,
+          context: this._serviceName,
           message: this._chalkService.text(
             `welcome message for the new guild sent`
           ),
@@ -112,13 +112,13 @@ export class DiscordGuildMemberAddService {
       })
       .catch((error: unknown): void => {
         this._loggerService.error({
-          context: this._className,
+          context: this._serviceName,
           message: this._chalkService.text(
             `message sending for the new guild member failed`
           ),
         });
         this._loggerService.error({
-          context: this._className,
+          context: this._serviceName,
           message: this._chalkService.error(error),
         });
       });

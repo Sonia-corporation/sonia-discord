@@ -14,8 +14,7 @@ export class LoggerConfigService {
     return LoggerConfigService._instance;
   }
 
-  protected readonly _loggerConfigCoreService = LoggerConfigCoreService.getInstance();
-  protected readonly _className = `LoggerConfigService`;
+  protected readonly _loggerConfigCoreService: LoggerConfigCoreService = LoggerConfigCoreService.getInstance();
 
   public getConfig(): ILoggerConfig {
     return {

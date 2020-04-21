@@ -1,12 +1,13 @@
 import { path } from "app-root-path";
-import express from "express";
+import express, { Express } from "express";
 import _ from "lodash";
+import { AbstractService } from "../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
 import { AppConfigService } from "../../app/services/config/app-config.service";
 import { ChalkService } from "../../logger/services/chalk.service";
-import { LoggerService } from "../../logger/services/logger.service";
 import { ServerConfigService } from "./config/server-config.service";
 
-export class ServerService {
+export class ServerService extends AbstractService {
   private static _instance: ServerService;
 
   public static getInstance(): ServerService {
@@ -17,18 +18,17 @@ export class ServerService {
     return ServerService._instance;
   }
 
-  private readonly _loggerService = LoggerService.getInstance();
-  private readonly _chalkService = ChalkService.getInstance();
-  private readonly _appConfigService = AppConfigService.getInstance();
-  private readonly _serverConfigService = ServerConfigService.getInstance();
-  private readonly _app = express();
-  private readonly _className = `ServerService`;
+  private readonly _chalkService: ChalkService = ChalkService.getInstance();
+  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
+  private readonly _serverConfigService: ServerConfigService = ServerConfigService.getInstance();
+  private readonly _app: Express = express();
 
-  public constructor() {
-    this._initializeApp();
+  protected constructor() {
+    super(ServiceNameEnum.SERVER_SERVICE);
+    this.initializeApp();
   }
 
-  private _initializeApp(): void {
+  public initializeApp(): void {
     this._setScoutMiddleware();
     this._setViews();
     this._setViewEngine();
@@ -41,7 +41,7 @@ export class ServerService {
 
     this._app.listen(port, (): void => {
       this._loggerService.log({
-        context: this._className,
+        context: this._serviceName,
         message: this._chalkService.text(
           `listening on port: ${this._chalkService.value(port)}`
         ),

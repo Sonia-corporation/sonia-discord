@@ -1,7 +1,9 @@
+import { Client } from "discord.js";
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../../logger/services/chalk.service";
-import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordChannelService } from "../../channels/services/discord-channel.service";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordAuthorService } from "../../users/services/discord-author.service";
@@ -11,7 +13,7 @@ import { DiscordMessageDmService } from "./discord-message-dm.service";
 import { DiscordMessageErrorService } from "./discord-message-error.service";
 import { DiscordMessageTextService } from "./discord-message-text.service";
 
-export class DiscordMessageService {
+export class DiscordMessageService extends AbstractService {
   private static _instance: DiscordMessageService;
 
   public static getInstance(): DiscordMessageService {
@@ -22,17 +24,16 @@ export class DiscordMessageService {
     return DiscordMessageService._instance;
   }
 
-  private readonly _loggerService = LoggerService.getInstance();
-  private readonly _discordClientServiceClient = DiscordClientService.getInstance().getClient();
-  private readonly _discordChannelService = DiscordChannelService.getInstance();
-  private readonly _discordMessageDmService = DiscordMessageDmService.getInstance();
-  private readonly _discordMessageTextService = DiscordMessageTextService.getInstance();
-  private readonly _discordMessageErrorService = DiscordMessageErrorService.getInstance();
-  private readonly _discordAuthorService = DiscordAuthorService.getInstance();
-  private readonly _chalkService = ChalkService.getInstance();
-  private readonly _className = `DiscordMessageService`;
+  private readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly _discordChannelService: DiscordChannelService = DiscordChannelService.getInstance();
+  private readonly _discordMessageDmService: DiscordMessageDmService = DiscordMessageDmService.getInstance();
+  private readonly _discordMessageTextService: DiscordMessageTextService = DiscordMessageTextService.getInstance();
+  private readonly _discordMessageErrorService: DiscordMessageErrorService = DiscordMessageErrorService.getInstance();
+  private readonly _discordAuthorService: DiscordAuthorService = DiscordAuthorService.getInstance();
+  private readonly _chalkService: ChalkService = ChalkService.getInstance();
 
-  public constructor() {
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_MESSAGE_SERVICE);
     this.init();
   }
 
@@ -41,7 +42,7 @@ export class DiscordMessageService {
   }
 
   private _listen(): void {
-    this._discordClientServiceClient.on(
+    this.discordClient.on(
       `message`,
       (anyDiscordMessage: Readonly<AnyDiscordMessage>): void => {
         this._handleMessage(anyDiscordMessage);
@@ -49,7 +50,7 @@ export class DiscordMessageService {
     );
 
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       message: this._chalkService.text(
         `listen ${wrapInQuotes(`message`)} event`
       ),
@@ -58,7 +59,7 @@ export class DiscordMessageService {
 
   private _handleMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): void {
     this._loggerService.log({
-      context: this._className,
+      context: this._serviceName,
       extendedContext: true,
       message: this._loggerService.getSnowflakeContext(
         anyDiscordMessage.id,
@@ -89,7 +90,7 @@ export class DiscordMessageService {
 
   private _dmMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): void {
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       extendedContext: true,
       message: this._loggerService.getSnowflakeContext(
         anyDiscordMessage.id,
@@ -108,7 +109,7 @@ export class DiscordMessageService {
 
   private _textMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): void {
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       extendedContext: true,
       message: this._loggerService.getSnowflakeContext(
         anyDiscordMessage.id,
@@ -130,7 +131,7 @@ export class DiscordMessageService {
     discordMessageResponse: Readonly<IDiscordMessageResponse>
   ): void {
     this._loggerService.debug({
-      context: this._className,
+      context: this._serviceName,
       extendedContext: true,
       message: this._loggerService.getSnowflakeContext(
         anyDiscordMessage.id,
@@ -143,7 +144,7 @@ export class DiscordMessageService {
         .send(discordMessageResponse.response, discordMessageResponse.options)
         .then((): void => {
           this._loggerService.log({
-            context: this._className,
+            context: this._serviceName,
             extendedContext: true,
             message: this._loggerService.getSnowflakeContext(
               anyDiscordMessage.id,

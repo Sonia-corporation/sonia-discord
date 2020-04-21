@@ -1,9 +1,11 @@
 import { Guild, GuildChannel } from "discord.js";
 import _ from "lodash";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { isDiscordGuild } from "../../guilds/functions/is-discord-guild";
 import { isDiscordGuildChannel } from "../functions/is-discord-guild-channel";
 
-export class DiscordChannelGuildService {
+export class DiscordChannelGuildService extends AbstractService {
   private static _instance: DiscordChannelGuildService;
 
   public static getInstance(): DiscordChannelGuildService {
@@ -12,6 +14,10 @@ export class DiscordChannelGuildService {
     }
 
     return DiscordChannelGuildService._instance;
+  }
+
+  protected constructor() {
+    super(ServiceNameEnum.DISCORD_CHANNEL_GUILD_SERVICE);
   }
 
   public isGeneral(channel: Readonly<GuildChannel>): boolean {
