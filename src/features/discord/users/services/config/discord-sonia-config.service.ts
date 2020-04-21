@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { AbstractService } from "../../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { IDiscordSoniaConfig } from "../../../interfaces/discord-sonia-config";
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../../interfaces/discord-sonia-corporation-message-embed-author-config";
 import { DiscordSoniaConfigCoreService } from "./discord-sonia-config-core.service";

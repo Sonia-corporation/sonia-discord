@@ -1,4 +1,4 @@
-import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
 import { ILoggerLog } from "../interfaces/logger-log";
 import { ILoggerServiceCreated } from "../interfaces/logger-service-created";
@@ -7,6 +7,7 @@ import { LoggerService } from "./logger.service";
 
 jest.mock(`./chalk.service`);
 jest.mock(`../../time/services/time.service`);
+jest.mock(`../../core/services/core-event.service`);
 
 describe(`LoggerService`, (): void => {
   let service: LoggerService;

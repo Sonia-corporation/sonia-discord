@@ -1,12 +1,11 @@
 import _ from "lodash";
-import { AbstractService } from "../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
+import { LoggerService } from "../../../logger/services/logger.service";
 import { IConfigUpdateBoolean } from "../../interfaces/config-update-boolean";
 import { IConfigUpdateNumber } from "../../interfaces/config-update-number";
 import { IConfigUpdateString } from "../../interfaces/config-update-string";
 
-export class ConfigService extends AbstractService {
+export class ConfigService {
   private static _instance: ConfigService;
 
   public static getInstance(): ConfigService {
@@ -17,9 +16,7 @@ export class ConfigService extends AbstractService {
     return ConfigService._instance;
   }
 
-  protected constructor() {
-    super(ServiceNameEnum.CONFIG_SERVICE);
-  }
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
 
   public getUpdatedNumber(
     configUpdateNumber: Readonly<IConfigUpdateNumber>

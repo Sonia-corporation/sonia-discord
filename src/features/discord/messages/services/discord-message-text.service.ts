@@ -1,7 +1,8 @@
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { AppConfigService } from "../../../app/services/config/app-config.service";
+import { LoggerService } from "../../../logger/services/logger.service";
 import { ProfileConfigService } from "../../../profile/services/config/profile-config.service";
 import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
 import { DiscordMentionService } from "../../mentions/services/discord-mention.service";
@@ -27,6 +28,7 @@ export class DiscordMessageTextService extends AbstractService {
     return DiscordMessageTextService._instance;
   }
 
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
   private readonly _discordAuthorService: DiscordAuthorService = DiscordAuthorService.getInstance();
   private readonly _discordMentionService: DiscordMentionService = DiscordMentionService.getInstance();

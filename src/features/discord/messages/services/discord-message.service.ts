@@ -1,9 +1,10 @@
 import { Client } from "discord.js";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../../logger/services/chalk.service";
+import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordChannelService } from "../../channels/services/discord-channel.service";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordAuthorService } from "../../users/services/discord-author.service";
@@ -24,7 +25,8 @@ export class DiscordMessageService extends AbstractService {
     return DiscordMessageService._instance;
   }
 
-  private readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  public readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _discordChannelService: DiscordChannelService = DiscordChannelService.getInstance();
   private readonly _discordMessageDmService: DiscordMessageDmService = DiscordMessageDmService.getInstance();
   private readonly _discordMessageTextService: DiscordMessageTextService = DiscordMessageTextService.getInstance();

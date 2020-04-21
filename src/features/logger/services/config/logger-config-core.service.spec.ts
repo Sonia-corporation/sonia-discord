@@ -10,10 +10,10 @@ describe(`LoggerConfigCoreService`, (): void => {
     service = LoggerConfigCoreService.getInstance();
   });
 
-  it(`should be disabled`, (): void => {
+  it(`should be enabled`, (): void => {
     expect.assertions(1);
 
-    expect(service.isEnabled).toStrictEqual(false);
+    expect(service.isEnabled).toStrictEqual(true);
   });
 
   it(`should have a debug level`, (): void => {

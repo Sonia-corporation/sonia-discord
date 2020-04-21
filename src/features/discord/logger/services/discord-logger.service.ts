@@ -1,9 +1,10 @@
 import { Client } from "discord.js";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../../logger/services/chalk.service";
+import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordClientService } from "../../services/discord-client.service";
 
 export class DiscordLoggerService extends AbstractService {
@@ -17,7 +18,8 @@ export class DiscordLoggerService extends AbstractService {
     return DiscordLoggerService._instance;
   }
 
-  private readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  public readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
 
   protected constructor() {

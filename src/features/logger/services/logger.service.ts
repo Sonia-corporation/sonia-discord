@@ -1,6 +1,7 @@
 import _ from "lodash";
-import { ServiceNameEnum } from "../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../functions/formatters/wrap-in-quotes";
+import { CoreEventService } from "../../core/services/core-event.service";
 import { TimeService } from "../../time/services/time.service";
 import { LoggerConfigLevelValueEnum } from "../enums/logger-config-level-value.enum";
 import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
@@ -21,6 +22,7 @@ export class LoggerService {
     return LoggerService._instance;
   }
 
+  private readonly _coreEventService: CoreEventService = CoreEventService.getInstance();
   private readonly _timeService: TimeService = TimeService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _loggerConfigService: LoggerConfigService = LoggerConfigService.getInstance();
@@ -29,6 +31,7 @@ export class LoggerService {
     ServiceNameEnum.LOGGER_SERVICE;
 
   protected constructor() {
+    this._handleServiceCreatedEvent();
     this.serviceCreated({
       service: this._serviceName,
     });
@@ -201,5 +204,33 @@ export class LoggerService {
       LoggerConfigLevelValueEnum[this._loggerConfigService.getLevel()],
       4
     );
+  }
+
+  private _handleServiceCreatedEvent(): void {
+    this._logAlreadyCreatedServices();
+    this._listenServiceCreatedEvent();
+  }
+
+  private _logAlreadyCreatedServices(): void {
+    const createdServices: ServiceNameEnum[] = this._coreEventService.getCreatedServices();
+
+    _.forEach(
+      createdServices,
+      (createdService: Readonly<ServiceNameEnum>): void => {
+        this.serviceCreated({
+          service: createdService,
+        });
+      }
+    );
+  }
+
+  private _listenServiceCreatedEvent(): void {
+    this._coreEventService.serviceCreated$().subscribe({
+      next: (createdService: Readonly<ServiceNameEnum>): void => {
+        this.serviceCreated({
+          service: createdService,
+        });
+      },
+    });
   }
 }

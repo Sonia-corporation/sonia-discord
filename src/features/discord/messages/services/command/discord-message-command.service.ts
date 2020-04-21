@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { AbstractService } from "../../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../../types/any-discord-message";

@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../classes/enums/service-name.enum";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
+import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordAuthorService } from "../../users/services/discord-author.service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
@@ -19,6 +20,7 @@ export class DiscordMessageDmService extends AbstractService {
     return DiscordMessageDmService._instance;
   }
 
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _discordAuthorService: DiscordAuthorService = DiscordAuthorService.getInstance();
   private readonly _discordMessageAuthorService: DiscordMessageAuthorService = DiscordMessageAuthorService.getInstance();
   private readonly _discordMessageContentService: DiscordMessageContentService = DiscordMessageContentService.getInstance();
