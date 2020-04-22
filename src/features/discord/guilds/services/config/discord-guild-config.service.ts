@@ -26,6 +26,7 @@ export class DiscordGuildConfigService extends AbstractService {
       shouldSendCookiesOnCreate: this.shouldSendCookiesOnCreate(),
       shouldSendIlEstMidiMessage: this.shouldSendIlEstMidiMessage(),
       shouldWelcomeNewMembers: this.shouldWelcomeNewMembers(),
+      soniaGuildId: this.getSoniaGuildId(),
       soniaPermanentGuildInviteUrl: this.getSoniaPermanentGuildInviteUrl(),
     };
   }
@@ -40,6 +41,10 @@ export class DiscordGuildConfigService extends AbstractService {
 
   public shouldWelcomeNewMembers(): boolean {
     return this._discordGuildConfigCoreService.shouldWelcomeNewMembers;
+  }
+
+  public getSoniaGuildId(): string {
+    return this._discordGuildConfigCoreService.soniaGuildId;
   }
 
   public getSoniaPermanentGuildInviteUrl(): string {
