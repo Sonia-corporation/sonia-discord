@@ -59,7 +59,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   private _executeJob(): void {
     this._loggerService.debug({
       context: this._serviceName,
-      message: `job triggered`,
+      message: this._chalkService.text(`job triggered`),
     });
 
     this._handleMessages();
@@ -73,9 +73,11 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
     if (!_.isNil(nextJobDateHumanized) && !_.isNil(nextJobDate)) {
       this._loggerService.debug({
         context: this._serviceName,
-        message: `next job: ${this._chalkService.value(
-          nextJobDateHumanized
-        )} ${this._chalkService.hint(`(${nextJobDate})`)}`,
+        message: this._chalkService.text(
+          `next job: ${this._chalkService.value(
+            nextJobDateHumanized
+          )} ${this._chalkService.hint(`(${nextJobDate})`)}`
+        ),
       });
     }
   }

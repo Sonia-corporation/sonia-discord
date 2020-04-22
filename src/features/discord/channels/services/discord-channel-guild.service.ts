@@ -21,7 +21,7 @@ export class DiscordChannelGuildService extends AbstractService {
   }
 
   public isGeneral(channel: Readonly<GuildChannel>): boolean {
-    return _.isEqual(_.deburr(channel.name), `general`);
+    return _.isEqual(_.toLower(_.deburr(channel.name)), `general`);
   }
 
   public getPrimary(guild: Readonly<Guild>): GuildChannel | null {

@@ -18,6 +18,7 @@ describe(`DiscordGuildConfigService`, (): void => {
       discordGuildConfigCoreService.shouldSendCookiesOnCreate = true;
       discordGuildConfigCoreService.shouldSendIlEstMidiMessage = true;
       discordGuildConfigCoreService.shouldWelcomeNewMembers = true;
+      discordGuildConfigCoreService.soniaGuildId = `dummy-sonia-guild-id`;
       discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = `dummy-sonia-permanent-guild-invite-url`;
     });
 
@@ -30,6 +31,7 @@ describe(`DiscordGuildConfigService`, (): void => {
         shouldSendCookiesOnCreate: true,
         shouldSendIlEstMidiMessage: true,
         shouldWelcomeNewMembers: true,
+        soniaGuildId: `dummy-sonia-guild-id`,
         soniaPermanentGuildInviteUrl: `dummy-sonia-permanent-guild-invite-url`,
       } as IDiscordGuildConfig);
     });
@@ -77,12 +79,26 @@ describe(`DiscordGuildConfigService`, (): void => {
     });
   });
 
+  describe(`getSoniaGuildId()`, (): void => {
+    beforeEach((): void => {
+      discordGuildConfigCoreService.soniaGuildId = `dummy-sonia-guild-id`;
+    });
+
+    it(`should return the Discord guild config Sonia guild id`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getSoniaGuildId();
+
+      expect(result).toStrictEqual(`dummy-sonia-guild-id`);
+    });
+  });
+
   describe(`getSoniaPermanentGuildInviteUrl()`, (): void => {
     beforeEach((): void => {
       discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = `dummy-sonia-permanent-guild-invite-url`;
     });
 
-    it(`should return the Discord guild config sonia permanent guild invite url`, (): void => {
+    it(`should return the Discord guild config Sonia permanent guild invite url`, (): void => {
       expect.assertions(1);
 
       const result = service.getSoniaPermanentGuildInviteUrl();
