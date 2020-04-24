@@ -17,8 +17,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
   describe(`getConfig()`, (): void => {
     beforeEach((): void => {
-      discordSoniaConfigCoreService.corporationImageUrl =
-        IconEnum.WARNING_SHIELD;
+      discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor = {
         iconURL: `dummy-icon-url`,
         name: `dummy-name`,
@@ -34,7 +33,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
       const result = service.getConfig();
 
       expect(result).toStrictEqual({
-        corporationImageUrl: IconEnum.WARNING_SHIELD,
+        corporationImageUrl: IconEnum.GIRL,
         corporationMessageEmbedAuthor: {
           iconURL: `dummy-icon-url`,
           name: `dummy-name`,
@@ -48,8 +47,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
   describe(`getCorporationImageUrl()`, (): void => {
     beforeEach((): void => {
-      discordSoniaConfigCoreService.corporationImageUrl =
-        IconEnum.WARNING_SHIELD;
+      discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
     });
 
     it(`should return the Discord Sonia config corporation image url`, (): void => {
@@ -57,7 +55,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
       const result = service.getCorporationImageUrl();
 
-      expect(result).toStrictEqual(IconEnum.WARNING_SHIELD);
+      expect(result).toStrictEqual(IconEnum.GIRL);
     });
   });
 

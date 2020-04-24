@@ -421,8 +421,7 @@ describe(`DiscordSoniaService`, (): void => {
 
   describe(`getCorporationImageUrl()`, (): void => {
     beforeEach((): void => {
-      discordSoniaConfigCoreService.corporationImageUrl =
-        IconEnum.WARNING_SHIELD;
+      discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
     });
 
     it(`should return the Sonia corporation image url`, (): void => {
@@ -430,7 +429,7 @@ describe(`DiscordSoniaService`, (): void => {
 
       const result = service.getCorporationImageUrl();
 
-      expect(result).toStrictEqual(IconEnum.WARNING_SHIELD);
+      expect(result).toStrictEqual(IconEnum.GIRL);
     });
   });
 
