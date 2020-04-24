@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 import { AppConfigCoreService } from "./app-config-core.service";
 import { AppConfigQueryService } from "./app-config-query.service";
 

@@ -1,10 +1,10 @@
 import { Client, Guild, GuildChannel } from "discord.js";
 import _ from "lodash";
-import moment from "moment";
+import moment from "moment-timezone";
 import { Job, scheduleJob } from "node-schedule";
 import { AbstractService } from "../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { getNoonScheduleRule } from "../../../../../functions/schedule/get-noon-schedule-rule";
+import { getEveryHourScheduleRule } from "../../../../../functions/schedule/get-every-hour-schedule-rule";
 import { ChalkService } from "../../../../logger/services/chalk.service";
 import { LoggerService } from "../../../../logger/services/logger.service";
 import { TimeService } from "../../../../time/services/time.service";
@@ -32,7 +32,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   private readonly _timeService: TimeService = TimeService.getInstance();
   private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
   private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
-  private readonly _rule: string = getNoonScheduleRule();
+  private readonly _rule: string = getEveryHourScheduleRule();
   private _job: Job | undefined = undefined;
 
   protected constructor() {
@@ -121,15 +121,28 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
 
   private _canSendMessage(): boolean {
     if (this._discordGuildConfigService.shouldSendIlEstMidiMessage()) {
-      return true;
+      if (this._isNoonInParis()) {
+        return true;
+      }
+
+      this._loggerService.debug({
+        context: this._serviceName,
+        message: this._chalkService.text(`not noon in Paris`),
+      });
+    } else {
+      this._loggerService.debug({
+        context: this._serviceName,
+        message: this._chalkService.text(
+          `il est midi message sending disabled`
+        ),
+      });
     }
 
-    this._loggerService.debug({
-      context: this._serviceName,
-      message: this._chalkService.text(`il est midi message sending disabled`),
-    });
-
     return false;
+  }
+
+  private _isNoonInParis(): boolean {
+    return _.isEqual(moment().tz(`Europe/Paris`).get(`hour`), 12);
   }
 
   private _handleMessage(guild: Readonly<Guild>): void {

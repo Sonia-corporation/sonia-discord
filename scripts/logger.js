@@ -1,5 +1,5 @@
 const CHALK = require(`./chalk`);
-const MOMENT = require(`moment`);
+const MOMENT = require(`moment-timezone`);
 
 const LOG_PREFIX = `● `;
 
