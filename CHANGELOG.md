@@ -1,5 +1,15 @@
 # Semantic Versioning Changelog
 
+# [1.36.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.35.0...1.36.0) (2020-04-24)
+
+
+### Features
+
+* **discord:** add discord logger error service ([c082aa8](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c082aa8fbe7e32be21ec2447936fd96a13601c8e))
+* **enums:** add icon and color enums ([158ee21](https://github.com/Sonia-corporation/il-est-midi-discord/commit/158ee2124f7b955528be0526f60a19fd4caa8a11))
+* **icons:** add new icon warning shield ([b3e9cf2](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b3e9cf2046632a6d93f2194e6b3268c31394cc77))
+* **discord:** add new service to send warnings to sonia discord ([33e07de](https://github.com/Sonia-corporation/il-est-midi-discord/commit/33e07de094e523e7c9569bc87ab5c0fd073d700e))
+
 # [1.35.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.34.0...1.35.0) (2020-04-22)
 
 
