@@ -80,4 +80,20 @@ describe(`DiscordMessageConfigValueNameEnum`, (): void => {
       `message error image url`
     );
   });
+
+  it(`should have a member "WARNING_IMAGE_COLOR"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageConfigValueNameEnum.WARNING_IMAGE_COLOR).toStrictEqual(
+      `message warning image color`
+    );
+  });
+
+  it(`should have a member "WARNING_IMAGE_URL"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageConfigValueNameEnum.WARNING_IMAGE_URL).toStrictEqual(
+      `message warning image url`
+    );
+  });
 });

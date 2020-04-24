@@ -1,5 +1,6 @@
 import { ClientUser, MessageEmbedAuthor } from "discord.js";
 import { createMock } from "ts-auto-mock";
+import { IconEnum } from "../../../../enums/icon.enum";
 import * as GetRandomValueFromEnumModule from "../../../../functions/randoms/get-random-value-from-enum";
 import { AppConfigCoreService } from "../../../app/services/config/app-config-core.service";
 import { ProfileConfigCoreService } from "../../../profile/services/config/profile-config-core.service";
@@ -420,7 +421,7 @@ describe(`DiscordSoniaService`, (): void => {
 
   describe(`getCorporationImageUrl()`, (): void => {
     beforeEach((): void => {
-      discordSoniaConfigCoreService.corporationImageUrl = `dummy-corporation-image-url`;
+      discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
     });
 
     it(`should return the Sonia corporation image url`, (): void => {
@@ -428,7 +429,7 @@ describe(`DiscordSoniaService`, (): void => {
 
       const result = service.getCorporationImageUrl();
 
-      expect(result).toStrictEqual(`dummy-corporation-image-url`);
+      expect(result).toStrictEqual(IconEnum.GIRL);
     });
   });
 

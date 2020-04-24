@@ -84,4 +84,18 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
       `https://i.ibb.co/r7PHJS1/icons8-bug-512.png`
     );
   });
+
+  it(`should have a specific color for the image of the warning`, (): void => {
+    expect.assertions(1);
+
+    expect(service.warning.imageColor).toStrictEqual(15562905);
+  });
+
+  it(`should have a specific url for the image of the warning`, (): void => {
+    expect.assertions(1);
+
+    expect(service.warning.imageUrl).toStrictEqual(
+      `https://i.ibb.co/41ccwXn/icons8-warning-shield-512.png`
+    );
+  });
 });

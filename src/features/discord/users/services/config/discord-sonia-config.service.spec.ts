@@ -1,3 +1,4 @@
+import { IconEnum } from "../../../../../enums/icon.enum";
 import { IDiscordSoniaConfig } from "../../../interfaces/discord-sonia-config";
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../../interfaces/discord-sonia-corporation-message-embed-author-config";
 import { DiscordSoniaConfigCoreService } from "./discord-sonia-config-core.service";
@@ -16,7 +17,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
   describe(`getConfig()`, (): void => {
     beforeEach((): void => {
-      discordSoniaConfigCoreService.corporationImageUrl = `dummy-corporation-image-url`;
+      discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor = {
         iconURL: `dummy-icon-url`,
         name: `dummy-name`,
@@ -32,7 +33,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
       const result = service.getConfig();
 
       expect(result).toStrictEqual({
-        corporationImageUrl: `dummy-corporation-image-url`,
+        corporationImageUrl: IconEnum.GIRL,
         corporationMessageEmbedAuthor: {
           iconURL: `dummy-icon-url`,
           name: `dummy-name`,
@@ -46,7 +47,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
   describe(`getCorporationImageUrl()`, (): void => {
     beforeEach((): void => {
-      discordSoniaConfigCoreService.corporationImageUrl = `dummy-corporation-image-url`;
+      discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
     });
 
     it(`should return the Discord Sonia config corporation image url`, (): void => {
@@ -54,7 +55,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
       const result = service.getCorporationImageUrl();
 
-      expect(result).toStrictEqual(`dummy-corporation-image-url`);
+      expect(result).toStrictEqual(IconEnum.GIRL);
     });
   });
 

@@ -9,4 +9,6 @@ export enum DiscordMessageConfigValueNameEnum {
   COMMAND_VERSION_IMAGE_URL = `message command version image url`,
   ERROR_IMAGE_COLOR = `message error image color`,
   ERROR_IMAGE_URL = `message error image url`,
+  WARNING_IMAGE_COLOR = `message warning image color`,
+  WARNING_IMAGE_URL = `message warning image url`,
 }

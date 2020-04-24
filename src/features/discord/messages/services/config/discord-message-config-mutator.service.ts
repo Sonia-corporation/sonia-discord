@@ -1,5 +1,7 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../../classes/abstract-config.service";
+import { ColorEnum } from "../../../../../enums/color.enum";
+import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { removeUndefined } from "../../../../../functions/formatters/remove-undefined";
 import { wrapInQuotes } from "../../../../../functions/formatters/wrap-in-quotes";
@@ -12,6 +14,7 @@ import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-m
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
+import { IDiscordMessageWarningConfig } from "../../../interfaces/discord-message-warning-config";
 import { DiscordMessageConfigValueNameEnum } from "../../enums/discord-message-config-value-name.enum";
 import { DiscordMessageConfigCoreService } from "./discord-message-config-core.service";
 import { DiscordMessageConfigService } from "./discord-message-config.service";
@@ -58,6 +61,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     if (!_.isNil(message)) {
       this.updateMessageCommand(message.command);
       this.updateMessageError(message.error);
+      this.updateMessageWarning(message.warning);
     }
   }
 
@@ -83,7 +87,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommandCookieImageColor(
-    imageColor?: Readonly<number>
+    imageColor?: Readonly<ColorEnum>
   ): void {
     this._discordMessageConfigCoreService.command.cookie.imageColor = this._configService.getUpdatedNumber(
       {
@@ -95,7 +99,9 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     );
   }
 
-  public updateMessageCommandCookieImageUrl(imageUrl?: Readonly<string>): void {
+  public updateMessageCommandCookieImageUrl(
+    imageUrl?: Readonly<IconEnum>
+  ): void {
     this._discordMessageConfigCoreService.command.cookie.imageUrl = this._configService.getUpdatedString(
       {
         context: this._serviceName,
@@ -116,7 +122,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommandErrorImageColor(
-    imageColor?: Readonly<number>
+    imageColor?: Readonly<ColorEnum>
   ): void {
     this._discordMessageConfigCoreService.command.error.imageColor = this._configService.getUpdatedNumber(
       {
@@ -128,7 +134,9 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     );
   }
 
-  public updateMessageCommandErrorImageUrl(imageUrl?: Readonly<string>): void {
+  public updateMessageCommandErrorImageUrl(
+    imageUrl?: Readonly<IconEnum>
+  ): void {
     this._discordMessageConfigCoreService.command.error.imageUrl = this._configService.getUpdatedString(
       {
         context: this._serviceName,
@@ -149,7 +157,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommandHelpImageColor(
-    imageColor?: Readonly<number>
+    imageColor?: Readonly<ColorEnum>
   ): void {
     this._discordMessageConfigCoreService.command.help.imageColor = this._configService.getUpdatedNumber(
       {
@@ -161,7 +169,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     );
   }
 
-  public updateMessageCommandHelpImageUrl(imageUrl?: Readonly<string>): void {
+  public updateMessageCommandHelpImageUrl(imageUrl?: Readonly<IconEnum>): void {
     this._discordMessageConfigCoreService.command.help.imageUrl = this._configService.getUpdatedString(
       {
         context: this._serviceName,
@@ -216,7 +224,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommandVersionImageColor(
-    imageColor?: Readonly<number>
+    imageColor?: Readonly<ColorEnum>
   ): void {
     this._discordMessageConfigCoreService.command.version.imageColor = this._configService.getUpdatedNumber(
       {
@@ -230,7 +238,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommandVersionImageUrl(
-    imageUrl?: Readonly<string>
+    imageUrl?: Readonly<IconEnum>
   ): void {
     this._discordMessageConfigCoreService.command.version.imageUrl = this._configService.getUpdatedString(
       {
@@ -251,7 +259,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     }
   }
 
-  public updateMessageErrorImageColor(imageColor?: Readonly<number>): void {
+  public updateMessageErrorImageColor(imageColor?: Readonly<ColorEnum>): void {
     this._discordMessageConfigCoreService.error.imageColor = this._configService.getUpdatedNumber(
       {
         context: this._serviceName,
@@ -262,13 +270,46 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     );
   }
 
-  public updateMessageErrorImageUrl(imageUrl?: Readonly<string>): void {
+  public updateMessageErrorImageUrl(imageUrl?: Readonly<IconEnum>): void {
     this._discordMessageConfigCoreService.error.imageUrl = this._configService.getUpdatedString(
       {
         context: this._serviceName,
         newValue: imageUrl,
         oldValue: this._discordMessageConfigService.getMessageErrorImageUrl(),
         valueName: DiscordMessageConfigValueNameEnum.ERROR_IMAGE_URL,
+      }
+    );
+  }
+
+  public updateMessageWarning(
+    warning?: Readonly<PartialNested<IDiscordMessageWarningConfig>>
+  ): void {
+    if (!_.isNil(warning)) {
+      this.updateMessageWarningImageColor(warning.imageColor);
+      this.updateMessageWarningImageUrl(warning.imageUrl);
+    }
+  }
+
+  public updateMessageWarningImageColor(
+    imageColor?: Readonly<ColorEnum>
+  ): void {
+    this._discordMessageConfigCoreService.warning.imageColor = this._configService.getUpdatedNumber(
+      {
+        context: this._serviceName,
+        newValue: imageColor,
+        oldValue: this._discordMessageConfigService.getMessageWarningImageColor(),
+        valueName: DiscordMessageConfigValueNameEnum.WARNING_IMAGE_COLOR,
+      }
+    );
+  }
+
+  public updateMessageWarningImageUrl(imageUrl?: Readonly<IconEnum>): void {
+    this._discordMessageConfigCoreService.warning.imageUrl = this._configService.getUpdatedString(
+      {
+        context: this._serviceName,
+        newValue: imageUrl,
+        oldValue: this._discordMessageConfigService.getMessageWarningImageUrl(),
+        valueName: DiscordMessageConfigValueNameEnum.WARNING_IMAGE_URL,
       }
     );
   }
