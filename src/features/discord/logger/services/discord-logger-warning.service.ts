@@ -5,7 +5,7 @@ import {
   MessageEmbedThumbnail,
 } from "discord.js";
 import _ from "lodash";
-import moment from "moment";
+import moment from "moment-timezone";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { ChalkService } from "../../../logger/services/chalk.service";
