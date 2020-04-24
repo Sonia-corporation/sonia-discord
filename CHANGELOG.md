@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.37.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.36.0...1.37.0) (2020-04-24)
+
+
+### Features
+
+* **discord:** send noon message based on the paris timezone ([013dcba](https://github.com/Sonia-corporation/il-est-midi-discord/commit/013dcba4c10065fa3572624b4d7d1ef8c6655c91))
+
 # [1.36.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.35.0...1.36.0) (2020-04-24)
 
 
