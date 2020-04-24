@@ -6,4 +6,10 @@ describe(`DiscordGuildSoniaChannelNameEnum`, (): void => {
 
     expect(DiscordGuildSoniaChannelNameEnum.ERRORS).toStrictEqual(`errors`);
   });
+
+  it(`should have a member "WARNINGS"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordGuildSoniaChannelNameEnum.WARNINGS).toStrictEqual(`warnings`);
+  });
 });

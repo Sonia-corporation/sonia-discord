@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { AbstractService } from "../../../../../classes/abstract.service";
+import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { IDiscordSoniaConfig } from "../../../interfaces/discord-sonia-config";
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../../interfaces/discord-sonia-corporation-message-embed-author-config";
@@ -16,9 +17,9 @@ export class DiscordSoniaConfigCoreService extends AbstractService
     return DiscordSoniaConfigCoreService._instance;
   }
 
-  public corporationImageUrl = `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`;
+  public corporationImageUrl = IconEnum.GIRL;
   public corporationMessageEmbedAuthor: IDiscordSoniaCorporationMessageEmbedAuthorConfig = {
-    iconURL: `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
+    iconURL: IconEnum.GIRL,
     name: `Sonia`,
     url: `https://github.com/Sonia-corporation?type=source`,
   };
