@@ -1,5 +1,53 @@
 # Semantic Versioning Changelog
 
+# [1.37.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.36.0...1.37.0) (2020-04-24)
+
+
+### Features
+
+* **discord:** send noon message based on the paris timezone ([013dcba](https://github.com/Sonia-corporation/il-est-midi-discord/commit/013dcba4c10065fa3572624b4d7d1ef8c6655c91))
+
+# [1.36.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.35.0...1.36.0) (2020-04-24)
+
+
+### Features
+
+* **discord:** add discord logger error service ([c082aa8](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c082aa8fbe7e32be21ec2447936fd96a13601c8e))
+* **enums:** add icon and color enums ([158ee21](https://github.com/Sonia-corporation/il-est-midi-discord/commit/158ee2124f7b955528be0526f60a19fd4caa8a11))
+* **icons:** add new icon warning shield ([b3e9cf2](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b3e9cf2046632a6d93f2194e6b3268c31394cc77))
+* **discord:** add new service to send warnings to sonia discord ([33e07de](https://github.com/Sonia-corporation/il-est-midi-discord/commit/33e07de094e523e7c9569bc87ab5c0fd073d700e))
+
+# [1.35.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.34.0...1.35.0) (2020-04-22)
+
+
+### Features
+
+* **discord:** better error message sent to sonia discord ([0e2f37a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/0e2f37a2319238b50347b0bd60e6122399ca0d71))
+* **discord:** send errors to sonia discord errors channel ([41f92ad](https://github.com/Sonia-corporation/il-est-midi-discord/commit/41f92ad121c154dd94a68b9d50b8a9f7c64e5886))
+
+# [1.34.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.33.0...1.34.0) (2020-04-21)
+
+
+### Features
+
+* **services:** add core services to handle events ([37a3a48](https://github.com/Sonia-corporation/il-est-midi-discord/commit/37a3a48c255f17771e7330d4ce9e2e954dd80a7f))
+* **dependencies:** add rxjs and rxjs linter ([c782c3d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c782c3d8eebebf8007af66960d46d64fa0fb3882))
+* **services:** extend the abstract service for all services ([ae4db3a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ae4db3a895be041dc5d8e5c4df37617374931dfa))
+
+# [1.33.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.32.1...1.33.0) (2020-04-21)
+
+
+### Features
+
+* **service:** add new abstract service ([1f415b6](https://github.com/Sonia-corporation/il-est-midi-discord/commit/1f415b691649dbbcadf626aadaef9b003ee6346d))
+
+## [1.32.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.32.0...1.32.1) (2020-04-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency discord.js to v12.2.0 ([ca0e9bb](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ca0e9bb00cec9c4be35d797eeb9d828533da275c))
+
 # [1.32.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.31.0...1.32.0) (2020-04-14)
 
 
