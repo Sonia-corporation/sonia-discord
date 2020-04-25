@@ -23,10 +23,10 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     return AppConfigMutatorService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _timeService: TimeService = TimeService.getInstance();
-  private readonly _appConfigCoreService: AppConfigCoreService = AppConfigCoreService.getInstance();
-  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
+  private _loggerService: LoggerService = LoggerService.getInstance();
+  private _timeService: TimeService = TimeService.getInstance();
+  private _appConfigCoreService: AppConfigCoreService = AppConfigCoreService.getInstance();
+  private _appConfigService: AppConfigService = AppConfigService.getInstance();
 
   public constructor(config?: Readonly<PartialNested<IAppConfig>>) {
     super(ServiceNameEnum.APP_CONFIG_MUTATOR_SERVICE, config);
@@ -37,6 +37,13 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     this._setBuildDate();
 
     return this;
+  }
+
+  public preUpdateConfig(): void {
+    this._loggerService = LoggerService.getInstance();
+    this._timeService = TimeService.getInstance();
+    this._appConfigCoreService = AppConfigCoreService.getInstance();
+    this._appConfigService = AppConfigService.getInstance();
   }
 
   public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {

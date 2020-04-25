@@ -45,7 +45,7 @@ describe(`AppConfigService`, (): void => {
       service = new AppConfigService();
     });
 
-    it(`should listen to server created event and push every created service in the created services list`, (): void => {
+    it(`should notify the AppConfig service creation`, (): void => {
       expect.assertions(2);
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
@@ -63,7 +63,6 @@ describe(`AppConfigService`, (): void => {
       appConfigCoreService.releaseNotes = `dummy-release-notes`;
       appConfigCoreService.totalReleaseCount = 0;
       appConfigCoreService.version = `dummy-version`;
-
       service = AppConfigService.getInstance();
     });
 
@@ -86,7 +85,6 @@ describe(`AppConfigService`, (): void => {
   describe(`getVersion()`, (): void => {
     beforeEach((): void => {
       appConfigCoreService.version = `dummy-version`;
-
       service = AppConfigService.getInstance();
     });
 
@@ -102,7 +100,6 @@ describe(`AppConfigService`, (): void => {
   describe(`getReleaseDate()`, (): void => {
     beforeEach((): void => {
       appConfigCoreService.releaseDate = `dummy-release-date`;
-
       service = AppConfigService.getInstance();
     });
 
@@ -118,7 +115,6 @@ describe(`AppConfigService`, (): void => {
   describe(`getInitializationDate()`, (): void => {
     beforeEach((): void => {
       appConfigCoreService.initializationDate = `dummy-initialization-date`;
-
       service = AppConfigService.getInstance();
     });
 
@@ -134,7 +130,6 @@ describe(`AppConfigService`, (): void => {
   describe(`isProduction()`, (): void => {
     beforeEach((): void => {
       appConfigCoreService.isProduction = false;
-
       service = AppConfigService.getInstance();
     });
 
@@ -170,7 +165,6 @@ describe(`AppConfigService`, (): void => {
   describe(`getTotalReleaseCount()`, (): void => {
     beforeEach((): void => {
       appConfigCoreService.totalReleaseCount = 8;
-
       service = AppConfigService.getInstance();
     });
 
@@ -186,7 +180,6 @@ describe(`AppConfigService`, (): void => {
   describe(`getReleaseNotes()`, (): void => {
     beforeEach((): void => {
       appConfigCoreService.releaseNotes = `dummy-release-notes`;
-
       service = AppConfigService.getInstance();
     });
 
