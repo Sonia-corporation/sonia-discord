@@ -1,11 +1,15 @@
+import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { PartialNested } from "../../../../../types/partial-nested";
 import { IConfigUpdateBoolean } from "../../../../config/interfaces/config-update-boolean";
 import { IConfigUpdateString } from "../../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../../config/services/config.service";
+import { CoreEventService } from "../../../../core/services/core-event.service";
+import { LoggerService } from "../../../../logger/services/logger.service";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordGuildConfig } from "../../../interfaces/discord-guild-config";
 import { DiscordGuildConfigCoreService } from "./discord-guild-config-core.service";
 import { DiscordGuildConfigMutatorService } from "./discord-guild-config-mutator.service";
+import { DiscordGuildConfigService } from "./discord-guild-config.service";
 
 jest.mock(`../../../../config/services/config.service`);
 
@@ -13,17 +17,257 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
   let service: DiscordGuildConfigMutatorService;
   let configService: ConfigService;
   let discordGuildConfigCoreService: DiscordGuildConfigCoreService;
+  let coreEventService: CoreEventService;
 
   beforeEach((): void => {
-    service = DiscordGuildConfigMutatorService.getInstance();
     configService = ConfigService.getInstance();
     discordGuildConfigCoreService = DiscordGuildConfigCoreService.getInstance();
+    coreEventService = CoreEventService.getInstance();
+  });
+
+  describe(`getInstance()`, (): void => {
+    let config: PartialNested<IDiscordConfig> | undefined;
+
+    beforeEach((): void => {
+      config = {
+        guild: {
+          shouldSendCookiesOnCreate: true,
+          shouldSendIlEstMidiMessage: true,
+          shouldWelcomeNewMembers: true,
+          soniaGuildId: `dummy-sonia-guild-id`,
+          soniaPermanentGuildInviteUrl: `dummy-sonia-permanent-guild-invite-url`,
+        },
+      };
+    });
+
+    it(`should create a DiscordGuildConfigMutator service`, (): void => {
+      expect.assertions(1);
+
+      service = DiscordGuildConfigMutatorService.getInstance(config);
+
+      expect(service).toStrictEqual(
+        expect.any(DiscordGuildConfigMutatorService)
+      );
+    });
+
+    it(`should return the created DiscordGuildConfigMutator service`, (): void => {
+      expect.assertions(1);
+
+      const result = DiscordGuildConfigMutatorService.getInstance();
+
+      expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`constructor()`, (): void => {
+    let config: PartialNested<IDiscordConfig> | undefined;
+
+    let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      coreEventServiceNotifyServiceCreatedSpy = jest
+        .spyOn(coreEventService, `notifyServiceCreated`)
+        .mockImplementation();
+    });
+
+    it(`should notify the AppConfigMutator service creation`, (): void => {
+      expect.assertions(2);
+
+      service = new DiscordGuildConfigMutatorService();
+
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
+        ServiceNameEnum.DISCORD_GUILD_CONFIG_MUTATOR_SERVICE
+      );
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the current send cookies on create state`, (): void => {
+        expect.assertions(1);
+        discordGuildConfigCoreService.shouldSendCookiesOnCreate = true;
+
+        service = new DiscordGuildConfigMutatorService(config);
+
+        expect(
+          discordGuildConfigCoreService.shouldSendCookiesOnCreate
+        ).toStrictEqual(true);
+      });
+
+      it(`should not update the current send il est midi message state`, (): void => {
+        expect.assertions(1);
+        discordGuildConfigCoreService.shouldSendIlEstMidiMessage = true;
+
+        service = new DiscordGuildConfigMutatorService(config);
+
+        expect(
+          discordGuildConfigCoreService.shouldSendIlEstMidiMessage
+        ).toStrictEqual(true);
+      });
+
+      it(`should not update the current welcome new members state`, (): void => {
+        expect.assertions(1);
+        discordGuildConfigCoreService.shouldWelcomeNewMembers = true;
+
+        service = new DiscordGuildConfigMutatorService(config);
+
+        expect(
+          discordGuildConfigCoreService.shouldWelcomeNewMembers
+        ).toStrictEqual(true);
+      });
+
+      it(`should not update the current sonia guild id`, (): void => {
+        expect.assertions(1);
+        discordGuildConfigCoreService.soniaGuildId = `soniaGuildId`;
+
+        service = new DiscordGuildConfigMutatorService(config);
+
+        expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(
+          `soniaGuildId`
+        );
+      });
+
+      it(`should not update the current sonia permanent guild invite url`, (): void => {
+        expect.assertions(1);
+        discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = `soniaPermanentGuildInviteUrl`;
+
+        service = new DiscordGuildConfigMutatorService(config);
+
+        expect(
+          discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
+        ).toStrictEqual(`soniaPermanentGuildInviteUrl`);
+      });
+    });
+
+    describe(`when the given config is a complete object`, (): void => {
+      beforeEach((): void => {
+        config = {
+          guild: {
+            shouldSendCookiesOnCreate: true,
+            shouldSendIlEstMidiMessage: true,
+            shouldWelcomeNewMembers: true,
+            soniaGuildId: `dummy-sonia-guild-id`,
+            soniaPermanentGuildInviteUrl: `dummy-sonia-permanent-guild-invite-url`,
+          },
+        };
+      });
+
+      it(`should override the send cookies on create state`, (): void => {
+        expect.assertions(1);
+        discordGuildConfigCoreService.shouldSendCookiesOnCreate = false;
+
+        service = new DiscordGuildConfigMutatorService(config);
+
+        expect(
+          discordGuildConfigCoreService.shouldSendCookiesOnCreate
+        ).toStrictEqual(true);
+      });
+
+      it(`should override the send il est midi message state`, (): void => {
+        expect.assertions(1);
+        discordGuildConfigCoreService.shouldSendIlEstMidiMessage = false;
+
+        service = new DiscordGuildConfigMutatorService(config);
+
+        expect(
+          discordGuildConfigCoreService.shouldSendIlEstMidiMessage
+        ).toStrictEqual(true);
+      });
+
+      it(`should override the welcome new members state`, (): void => {
+        expect.assertions(1);
+        discordGuildConfigCoreService.shouldWelcomeNewMembers = false;
+
+        service = new DiscordGuildConfigMutatorService(config);
+
+        expect(
+          discordGuildConfigCoreService.shouldWelcomeNewMembers
+        ).toStrictEqual(true);
+      });
+
+      it(`should override the send sonia guild id`, (): void => {
+        expect.assertions(1);
+        discordGuildConfigCoreService.soniaGuildId = `soniaGuildId`;
+
+        service = new DiscordGuildConfigMutatorService(config);
+
+        expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(
+          `dummy-sonia-guild-id`
+        );
+      });
+
+      it(`should override the sonia permanent guild invite url`, (): void => {
+        expect.assertions(1);
+        discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = `soniaPermanentGuildInviteUrl`;
+
+        service = new DiscordGuildConfigMutatorService(config);
+
+        expect(
+          discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
+        ).toStrictEqual(`dummy-sonia-permanent-guild-invite-url`);
+      });
+    });
+  });
+
+  describe(`preUpdateConfig()`, (): void => {
+    let loggerServiceGetInstanceSpy: jest.SpyInstance;
+    let discordGuildConfigCoreServiceGetInstanceSpy: jest.SpyInstance;
+    let discordGuildConfigServiceGetInstanceSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = DiscordGuildConfigMutatorService.getInstance();
+
+      loggerServiceGetInstanceSpy = jest.spyOn(LoggerService, `getInstance`);
+      discordGuildConfigCoreServiceGetInstanceSpy = jest.spyOn(
+        DiscordGuildConfigCoreService,
+        `getInstance`
+      );
+      discordGuildConfigServiceGetInstanceSpy = jest.spyOn(
+        DiscordGuildConfigService,
+        `getInstance`
+      );
+    });
+
+    it(`should create the Logger service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should create the DiscordGuildConfigCore service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(discordGuildConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(
+        1
+      );
+      expect(
+        discordGuildConfigCoreServiceGetInstanceSpy
+      ).toHaveBeenCalledWith();
+    });
+
+    it(`should create the DiscordGuildConfig service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(discordGuildConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(discordGuildConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
   });
 
   describe(`updateConfig()`, (): void => {
     let config: PartialNested<IDiscordConfig> | undefined;
 
     beforeEach((): void => {
+      service = DiscordGuildConfigMutatorService.getInstance();
       discordGuildConfigCoreService.shouldSendCookiesOnCreate = true;
       discordGuildConfigCoreService.shouldSendIlEstMidiMessage = true;
       discordGuildConfigCoreService.shouldWelcomeNewMembers = true;
@@ -164,6 +408,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
     let config: PartialNested<IDiscordGuildConfig> | undefined;
 
     beforeEach((): void => {
+      service = DiscordGuildConfigMutatorService.getInstance();
       discordGuildConfigCoreService.shouldSendCookiesOnCreate = true;
       discordGuildConfigCoreService.shouldSendIlEstMidiMessage = true;
       discordGuildConfigCoreService.shouldWelcomeNewMembers = true;
@@ -296,6 +541,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
     let configServiceGetUpdatedBooleanSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordGuildConfigMutatorService.getInstance();
       shouldSendCookiesOnCreate = true;
       discordGuildConfigCoreService.shouldSendCookiesOnCreate = false;
 
@@ -335,6 +581,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
     let configServiceGetUpdatedBooleanSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordGuildConfigMutatorService.getInstance();
       shouldSendIlEstMidiMessage = true;
       discordGuildConfigCoreService.shouldSendIlEstMidiMessage = false;
 
@@ -374,6 +621,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
     let configServiceGetUpdatedBooleanSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordGuildConfigMutatorService.getInstance();
       shouldWelcomeNewMembers = true;
       discordGuildConfigCoreService.shouldWelcomeNewMembers = false;
 
@@ -413,6 +661,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordGuildConfigMutatorService.getInstance();
       soniaGuildId = `dummy-sonia-guild-id`;
       discordGuildConfigCoreService.soniaGuildId = `sonia-guild-id`;
 
@@ -452,6 +701,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordGuildConfigMutatorService.getInstance();
       soniaPermanentGuildInviteUrl = `dummy-sonia-permanent-guild-invite-url`;
       discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = `sonia-permanent-guild-invite-url`;
 
