@@ -138,7 +138,7 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
-          flags: integrationtests
+          flags: integration
           name: Sonia-il-est-midi-discord
   Build:
     runs-on: ubuntu-latest
