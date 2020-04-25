@@ -26,10 +26,23 @@ describe(`AppConfigMutationService`, (): void => {
   });
 
   describe(`getInstance()`, (): void => {
+    let config: PartialNested<IAppConfig> | undefined;
+
+    beforeEach((): void => {
+      config = {
+        initializationDate: `dummy-initialization-date`,
+        isProduction: true,
+        releaseDate: `dummy-release-date`,
+        releaseNotes: `dummy-release-notes`,
+        totalReleaseCount: 88,
+        version: `dummy-version`,
+      };
+    });
+
     it(`should create a AppConfigMutator service`, (): void => {
       expect.assertions(1);
 
-      service = AppConfigMutatorService.getInstance();
+      service = AppConfigMutatorService.getInstance(config);
 
       expect(service).toStrictEqual(expect.any(AppConfigMutatorService));
     });
@@ -44,23 +57,154 @@ describe(`AppConfigMutationService`, (): void => {
   });
 
   describe(`constructor()`, (): void => {
+    let config: PartialNested<IAppConfig> | undefined;
+
     let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       coreEventServiceNotifyServiceCreatedSpy = jest
         .spyOn(coreEventService, `notifyServiceCreated`)
         .mockImplementation();
-
-      service = new AppConfigMutatorService();
     });
 
     it(`should notify the AppConfigMutator service creation`, (): void => {
       expect.assertions(2);
 
+      service = new AppConfigMutatorService();
+
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.APP_CONFIG_MUTATOR_SERVICE
       );
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should have a unknown initialization date`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.initializationDate = `initializationDate`;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.initializationDate).toStrictEqual(
+          `initializationDate`
+        );
+      });
+
+      it(`should not be in a production state`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.isProduction = false;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.isProduction).toStrictEqual(false);
+      });
+
+      it(`should have a unknown release date`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.releaseDate = `releaseDate`;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.releaseDate).toStrictEqual(`releaseDate`);
+      });
+
+      it(`should not have some release notes`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.releaseNotes = `releaseNotes`;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.releaseNotes).toStrictEqual(`releaseNotes`);
+      });
+
+      it(`should have a total of release count to 0`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.totalReleaseCount = 8;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.totalReleaseCount).toStrictEqual(8);
+      });
+
+      it(`should have an unknown version`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.version = `version`;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.version).toStrictEqual(`version`);
+      });
+    });
+
+    describe(`when the given config is a complete object`, (): void => {
+      beforeEach((): void => {
+        config = {
+          initializationDate: `dummy-initialization-date`,
+          isProduction: true,
+          releaseDate: `dummy-release-date`,
+          releaseNotes: `dummy-release-notes`,
+          totalReleaseCount: 88,
+          version: `dummy-version`,
+        };
+      });
+
+      it(`should override the initialization date`, (): void => {
+        expect.assertions(1);
+
+        service = new AppConfigMutatorService(config);
+
+        expect(`dummy-initialization-date`).toStrictEqual(
+          `dummy-initialization-date`
+        );
+      });
+
+      it(`should override the production state`, (): void => {
+        expect.assertions(1);
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.isProduction).toStrictEqual(true);
+      });
+
+      it(`should override the release date`, (): void => {
+        expect.assertions(1);
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.releaseDate).toStrictEqual(
+          `dummy-release-date`
+        );
+      });
+
+      it(`should override the release notes`, (): void => {
+        expect.assertions(1);
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.releaseNotes).toStrictEqual(
+          `dummy-release-notes`
+        );
+      });
+
+      it(`should override the total release count`, (): void => {
+        expect.assertions(1);
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.totalReleaseCount).toStrictEqual(88);
+      });
+
+      it(`should override the version`, (): void => {
+        expect.assertions(1);
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.version).toStrictEqual(`dummy-version`);
+      });
     });
   });
 

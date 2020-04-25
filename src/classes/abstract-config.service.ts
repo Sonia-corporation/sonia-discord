@@ -8,7 +8,7 @@ export abstract class AbstractConfigService<C> extends AbstractService {
   protected readonly _chalkService: ChalkService = ChalkService.getInstance();
   protected readonly _configService: ConfigService = ConfigService.getInstance();
 
-  public constructor(
+  protected constructor(
     serviceName: Readonly<ServiceNameEnum>,
     config?: Readonly<PartialNested<C>>
   ) {
