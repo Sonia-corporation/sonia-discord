@@ -37,12 +37,12 @@ describe(`AppConfigCoreService`, (): void => {
       coreEventServiceNotifyServiceCreatedSpy = jest
         .spyOn(coreEventService, `notifyServiceCreated`)
         .mockImplementation();
-
-      service = new AppConfigCoreService();
     });
 
     it(`should notify the AppConfigCore service creation`, (): void => {
       expect.assertions(2);
+
+      service = new AppConfigCoreService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(

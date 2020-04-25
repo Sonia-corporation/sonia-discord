@@ -358,13 +358,13 @@ describe(`AppConfigMutationService`, (): void => {
     let config: PartialNested<IAppConfig> | undefined;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
       appConfigCoreService.initializationDate = `dummy-initialization-date`;
       appConfigCoreService.isProduction = true;
       appConfigCoreService.releaseDate = `dummy-release-date`;
       appConfigCoreService.releaseNotes = `dummy-release-notes`;
       appConfigCoreService.totalReleaseCount = 8;
       appConfigCoreService.version = `dummy-version`;
-      service = AppConfigMutatorService.getInstance();
     });
 
     describe(`when the given config is undefined`, (): void => {
@@ -499,9 +499,9 @@ describe(`AppConfigMutationService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
       version = `dummy-version`;
       appConfigCoreService.version = `version`;
-      service = AppConfigMutatorService.getInstance();
 
       configServiceGetUpdatedStringSpy = jest
         .spyOn(configService, `getUpdatedString`)
@@ -537,9 +537,9 @@ describe(`AppConfigMutationService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
       releaseDate = `dummy-release-date`;
       appConfigCoreService.releaseDate = `release-date`;
-      service = AppConfigMutatorService.getInstance();
 
       configServiceGetUpdatedStringSpy = jest
         .spyOn(configService, `getUpdatedString`)
@@ -577,9 +577,9 @@ describe(`AppConfigMutationService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
       initializationDate = `dummy-initialization-date`;
       appConfigCoreService.initializationDate = `initialization-date`;
-      service = AppConfigMutatorService.getInstance();
 
       configServiceGetUpdatedStringSpy = jest
         .spyOn(configService, `getUpdatedString`)
@@ -617,9 +617,9 @@ describe(`AppConfigMutationService`, (): void => {
     let configServiceGetUpdatedBooleanSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
       isProduction = false;
       appConfigCoreService.isProduction = true;
-      service = AppConfigMutatorService.getInstance();
 
       configServiceGetUpdatedBooleanSpy = jest
         .spyOn(configService, `getUpdatedBoolean`)
@@ -655,9 +655,9 @@ describe(`AppConfigMutationService`, (): void => {
     let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
       totalReleaseCount = 8;
       appConfigCoreService.totalReleaseCount = 5;
-      service = AppConfigMutatorService.getInstance();
 
       configServiceGetUpdatedNumberSpy = jest
         .spyOn(configService, `getUpdatedNumber`)
@@ -693,9 +693,9 @@ describe(`AppConfigMutationService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
       releaseNotes = `dummy-release-notes`;
       appConfigCoreService.releaseNotes = `release-notes`;
-      service = AppConfigMutatorService.getInstance();
 
       configServiceGetUpdatedStringSpy = jest
         .spyOn(configService, `getUpdatedString`)

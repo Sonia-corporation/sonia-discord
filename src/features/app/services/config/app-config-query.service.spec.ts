@@ -41,12 +41,12 @@ describe(`AppConfigQueryService`, (): void => {
       coreEventServiceNotifyServiceCreatedSpy = jest
         .spyOn(coreEventService, `notifyServiceCreated`)
         .mockImplementation();
-
-      service = new AppConfigQueryService();
     });
 
     it(`should notify the AppConfigQuery service creation`, (): void => {
       expect.assertions(2);
+
+      service = new AppConfigQueryService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
@@ -57,8 +57,8 @@ describe(`AppConfigQueryService`, (): void => {
 
   describe(`getReleaseDateHumanized()`, (): void => {
     beforeEach((): void => {
-      appConfigCoreService.releaseDate = `dummy-release-date`;
       service = AppConfigQueryService.getInstance();
+      appConfigCoreService.releaseDate = `dummy-release-date`;
     });
 
     describe(`when the app config release date is an empty string`, (): void => {
@@ -138,8 +138,8 @@ describe(`AppConfigQueryService`, (): void => {
 
   describe(`getInitializationDateHumanized()`, (): void => {
     beforeEach((): void => {
-      appConfigCoreService.initializationDate = `dummy-initialization-date`;
       service = AppConfigQueryService.getInstance();
+      appConfigCoreService.initializationDate = `dummy-initialization-date`;
     });
 
     describe(`when the app config initialization date is an empty string`, (): void => {
@@ -219,8 +219,8 @@ describe(`AppConfigQueryService`, (): void => {
 
   describe(`getProductionStateHumanized()`, (): void => {
     beforeEach((): void => {
-      appConfigCoreService.isProduction = false;
       service = AppConfigQueryService.getInstance();
+      appConfigCoreService.isProduction = false;
     });
 
     describe(`when the app is not in production`, (): void => {
@@ -254,8 +254,8 @@ describe(`AppConfigQueryService`, (): void => {
 
   describe(`getTotalReleaseCountHumanized()`, (): void => {
     beforeEach((): void => {
-      appConfigCoreService.totalReleaseCount = 8;
       service = AppConfigQueryService.getInstance();
+      appConfigCoreService.totalReleaseCount = 8;
     });
 
     describe(`when the app config total release count is 0`, (): void => {
