@@ -26,9 +26,9 @@ export class ServerConfigMutatorService extends AbstractConfigService<
     return ServerConfigMutatorService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _serverConfigCoreService: ServerConfigCoreService = ServerConfigCoreService.getInstance();
-  private readonly _serverConfigService: ServerConfigService = ServerConfigService.getInstance();
+  private _loggerService: LoggerService = LoggerService.getInstance();
+  private _serverConfigCoreService: ServerConfigCoreService = ServerConfigCoreService.getInstance();
+  private _serverConfigService: ServerConfigService = ServerConfigService.getInstance();
 
   public constructor(config?: Readonly<PartialNested<IServerConfig>>) {
     super(ServiceNameEnum.SERVER_CONFIG_MUTATOR_SERVICE, config);
@@ -38,6 +38,12 @@ export class ServerConfigMutatorService extends AbstractConfigService<
     this._setPort();
 
     return this;
+  }
+
+  public preUpdateConfig(): void {
+    this._loggerService = LoggerService.getInstance();
+    this._serverConfigCoreService = ServerConfigCoreService.getInstance();
+    this._serverConfigService = ServerConfigService.getInstance();
   }
 
   public updateConfig(config?: Readonly<PartialNested<IServerConfig>>): void {
