@@ -5,10 +5,13 @@ import { IConfigUpdateNumber } from "../../../config/interfaces/config-update-nu
 import { IConfigUpdateString } from "../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../config/services/config.service";
 import { CoreEventService } from "../../../core/services/core-event.service";
+import { LoggerService } from "../../../logger/services/logger.service";
 import * as IsNodeProductionModule from "../../../node/functions/is-node-production";
+import { TimeService } from "../../../time/services/time.service";
 import { IAppConfig } from "../../interfaces/app-config";
 import { AppConfigCoreService } from "./app-config-core.service";
 import { AppConfigMutatorService } from "./app-config-mutator.service";
+import { AppConfigService } from "./app-config.service";
 
 jest.mock(`../../../config/services/config.service`);
 jest.mock(`../../../time/services/time.service`);
@@ -290,6 +293,64 @@ describe(`AppConfigMutationService`, (): void => {
       const result = service.init();
 
       expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`preUpdateConfig()`, (): void => {
+    let loggerServiceGetInstanceSpy: jest.SpyInstance;
+    let timeServiceGetInstanceSpy: jest.SpyInstance;
+    let appConfigCoreServiceGetInstanceSpy: jest.SpyInstance;
+    let appConfigServiceGetInstanceSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
+
+      loggerServiceGetInstanceSpy = jest.spyOn(LoggerService, `getInstance`);
+      timeServiceGetInstanceSpy = jest.spyOn(TimeService, `getInstance`);
+      appConfigCoreServiceGetInstanceSpy = jest.spyOn(
+        AppConfigCoreService,
+        `getInstance`
+      );
+      appConfigServiceGetInstanceSpy = jest.spyOn(
+        AppConfigService,
+        `getInstance`
+      );
+    });
+
+    it(`should create the logger service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should create the time service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(timeServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(timeServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should create the app config core service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(appConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(appConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should create the app config service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(appConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(appConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
   });
 
