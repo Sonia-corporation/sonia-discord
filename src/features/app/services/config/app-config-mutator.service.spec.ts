@@ -1,8 +1,10 @@
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { PartialNested } from "../../../../types/partial-nested";
 import { IConfigUpdateBoolean } from "../../../config/interfaces/config-update-boolean";
 import { IConfigUpdateNumber } from "../../../config/interfaces/config-update-number";
 import { IConfigUpdateString } from "../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../config/services/config.service";
+import { CoreEventService } from "../../../core/services/core-event.service";
 import * as IsNodeProductionModule from "../../../node/functions/is-node-production";
 import { IAppConfig } from "../../interfaces/app-config";
 import { AppConfigCoreService } from "./app-config-core.service";
@@ -15,17 +17,59 @@ describe(`AppConfigMutationService`, (): void => {
   let service: AppConfigMutatorService;
   let configService: ConfigService;
   let appConfigCoreService: AppConfigCoreService;
+  let coreEventService: CoreEventService;
 
   beforeEach((): void => {
-    service = AppConfigMutatorService.getInstance();
     configService = ConfigService.getInstance();
     appConfigCoreService = AppConfigCoreService.getInstance();
+    coreEventService = CoreEventService.getInstance();
+  });
+
+  describe(`getInstance()`, (): void => {
+    it(`should create a AppConfigMutator service`, (): void => {
+      expect.assertions(1);
+
+      service = AppConfigMutatorService.getInstance();
+
+      expect(service).toStrictEqual(expect.any(AppConfigMutatorService));
+    });
+
+    it(`should return the created AppConfigMutator service`, (): void => {
+      expect.assertions(1);
+
+      const result = AppConfigMutatorService.getInstance();
+
+      expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`constructor()`, (): void => {
+    let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      coreEventServiceNotifyServiceCreatedSpy = jest
+        .spyOn(coreEventService, `notifyServiceCreated`)
+        .mockImplementation();
+
+      service = new AppConfigMutatorService();
+    });
+
+    it(`should notify the AppConfigMutator service creation`, (): void => {
+      expect.assertions(2);
+
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
+        ServiceNameEnum.APP_CONFIG_MUTATOR_SERVICE
+      );
+    });
   });
 
   describe(`init()`, (): void => {
     let isNodeProductionSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
+
       isNodeProductionSpy = jest.spyOn(
         IsNodeProductionModule,
         `isNodeProduction`
@@ -115,6 +159,7 @@ describe(`AppConfigMutationService`, (): void => {
       appConfigCoreService.releaseNotes = `dummy-release-notes`;
       appConfigCoreService.totalReleaseCount = 8;
       appConfigCoreService.version = `dummy-version`;
+      service = AppConfigMutatorService.getInstance();
     });
 
     describe(`when the given config is undefined`, (): void => {
@@ -251,6 +296,7 @@ describe(`AppConfigMutationService`, (): void => {
     beforeEach((): void => {
       version = `dummy-version`;
       appConfigCoreService.version = `version`;
+      service = AppConfigMutatorService.getInstance();
 
       configServiceGetUpdatedStringSpy = jest
         .spyOn(configService, `getUpdatedString`)
@@ -288,6 +334,7 @@ describe(`AppConfigMutationService`, (): void => {
     beforeEach((): void => {
       releaseDate = `dummy-release-date`;
       appConfigCoreService.releaseDate = `release-date`;
+      service = AppConfigMutatorService.getInstance();
 
       configServiceGetUpdatedStringSpy = jest
         .spyOn(configService, `getUpdatedString`)
@@ -327,6 +374,7 @@ describe(`AppConfigMutationService`, (): void => {
     beforeEach((): void => {
       initializationDate = `dummy-initialization-date`;
       appConfigCoreService.initializationDate = `initialization-date`;
+      service = AppConfigMutatorService.getInstance();
 
       configServiceGetUpdatedStringSpy = jest
         .spyOn(configService, `getUpdatedString`)
@@ -366,6 +414,7 @@ describe(`AppConfigMutationService`, (): void => {
     beforeEach((): void => {
       isProduction = false;
       appConfigCoreService.isProduction = true;
+      service = AppConfigMutatorService.getInstance();
 
       configServiceGetUpdatedBooleanSpy = jest
         .spyOn(configService, `getUpdatedBoolean`)
@@ -403,6 +452,7 @@ describe(`AppConfigMutationService`, (): void => {
     beforeEach((): void => {
       totalReleaseCount = 8;
       appConfigCoreService.totalReleaseCount = 5;
+      service = AppConfigMutatorService.getInstance();
 
       configServiceGetUpdatedNumberSpy = jest
         .spyOn(configService, `getUpdatedNumber`)
@@ -440,6 +490,7 @@ describe(`AppConfigMutationService`, (): void => {
     beforeEach((): void => {
       releaseNotes = `dummy-release-notes`;
       appConfigCoreService.releaseNotes = `release-notes`;
+      service = AppConfigMutatorService.getInstance();
 
       configServiceGetUpdatedStringSpy = jest
         .spyOn(configService, `getUpdatedString`)

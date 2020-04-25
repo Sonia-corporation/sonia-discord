@@ -58,7 +58,6 @@ describe(`AppConfigQueryService`, (): void => {
   describe(`getReleaseDateHumanized()`, (): void => {
     beforeEach((): void => {
       appConfigCoreService.releaseDate = `dummy-release-date`;
-
       service = AppConfigQueryService.getInstance();
     });
 
@@ -140,7 +139,6 @@ describe(`AppConfigQueryService`, (): void => {
   describe(`getInitializationDateHumanized()`, (): void => {
     beforeEach((): void => {
       appConfigCoreService.initializationDate = `dummy-initialization-date`;
-
       service = AppConfigQueryService.getInstance();
     });
 
@@ -222,7 +220,6 @@ describe(`AppConfigQueryService`, (): void => {
   describe(`getProductionStateHumanized()`, (): void => {
     beforeEach((): void => {
       appConfigCoreService.isProduction = false;
-
       service = AppConfigQueryService.getInstance();
     });
 
@@ -258,7 +255,6 @@ describe(`AppConfigQueryService`, (): void => {
   describe(`getTotalReleaseCountHumanized()`, (): void => {
     beforeEach((): void => {
       appConfigCoreService.totalReleaseCount = 8;
-
       service = AppConfigQueryService.getInstance();
     });
 

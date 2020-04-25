@@ -53,6 +53,7 @@ describe(`AppConfigCoreService`, (): void => {
 
   it(`should have a unknown initialization date`, (): void => {
     expect.assertions(1);
+
     service = AppConfigCoreService.getInstance();
 
     expect(service.initializationDate).toStrictEqual(`unknown`);
@@ -60,6 +61,7 @@ describe(`AppConfigCoreService`, (): void => {
 
   it(`should not be in a production state`, (): void => {
     expect.assertions(1);
+
     service = AppConfigCoreService.getInstance();
 
     expect(service.isProduction).toStrictEqual(false);
@@ -67,6 +69,7 @@ describe(`AppConfigCoreService`, (): void => {
 
   it(`should have a unknown release date`, (): void => {
     expect.assertions(1);
+
     service = AppConfigCoreService.getInstance();
 
     expect(service.releaseDate).toStrictEqual(`unknown`);
@@ -74,6 +77,7 @@ describe(`AppConfigCoreService`, (): void => {
 
   it(`should not have some release notes`, (): void => {
     expect.assertions(1);
+
     service = AppConfigCoreService.getInstance();
 
     expect(service.releaseNotes).toStrictEqual(``);
@@ -81,6 +85,7 @@ describe(`AppConfigCoreService`, (): void => {
 
   it(`should have a total of release count to 0`, (): void => {
     expect.assertions(1);
+
     service = AppConfigCoreService.getInstance();
 
     expect(service.totalReleaseCount).toStrictEqual(0);
@@ -88,6 +93,7 @@ describe(`AppConfigCoreService`, (): void => {
 
   it(`should have an unknown version`, (): void => {
     expect.assertions(1);
+
     service = AppConfigCoreService.getInstance();
 
     expect(service.version).toStrictEqual(`unknown`);
