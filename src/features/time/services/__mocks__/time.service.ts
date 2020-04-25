@@ -13,7 +13,7 @@ export class TimeService extends AbstractService {
     return TimeService._instance;
   }
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.TIME_SERVICE);
   }
 

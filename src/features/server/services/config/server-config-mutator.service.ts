@@ -30,7 +30,7 @@ export class ServerConfigMutatorService extends AbstractConfigService<
   private readonly _serverConfigCoreService: ServerConfigCoreService = ServerConfigCoreService.getInstance();
   private readonly _serverConfigService: ServerConfigService = ServerConfigService.getInstance();
 
-  protected constructor(config?: Readonly<PartialNested<IServerConfig>>) {
+  public constructor(config?: Readonly<PartialNested<IServerConfig>>) {
     super(ServiceNameEnum.SERVER_CONFIG_MUTATOR_SERVICE, config);
   }
 

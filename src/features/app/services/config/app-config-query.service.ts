@@ -20,7 +20,7 @@ export class AppConfigQueryService extends AbstractService {
   private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
   private readonly _timeService: TimeService = TimeService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.APP_CONFIG_QUERY_SERVICE);
   }
 

@@ -34,7 +34,7 @@ export class DiscordMessageService extends AbstractService {
   private readonly _discordAuthorService: DiscordAuthorService = DiscordAuthorService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_SERVICE);
     this.init();
   }

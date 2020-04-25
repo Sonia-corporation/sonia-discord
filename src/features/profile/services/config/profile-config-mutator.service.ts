@@ -27,7 +27,7 @@ export class ProfileConfigMutatorService extends AbstractConfigService<
   private readonly _profileConfigCoreService: ProfileConfigCoreService = ProfileConfigCoreService.getInstance();
   private readonly _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();
 
-  protected constructor(config?: Readonly<Partial<IProfileConfig>>) {
+  public constructor(config?: Readonly<Partial<IProfileConfig>>) {
     super(ServiceNameEnum.PROFILE_CONFIG_MUTATOR_SERVICE, config);
   }
 

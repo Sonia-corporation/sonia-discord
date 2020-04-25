@@ -16,7 +16,7 @@ export class DiscordChannelGuildService extends AbstractService {
     return DiscordChannelGuildService._instance;
   }
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_CHANNEL_GUILD_SERVICE);
   }
 

@@ -26,7 +26,7 @@ export class DiscordMessageDmService extends AbstractService {
   private readonly _discordMessageContentService: DiscordMessageContentService = DiscordMessageContentService.getInstance();
   private readonly _discordMessageCommandService: DiscordMessageCommandService = DiscordMessageCommandService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_DM_SERVICE);
   }
 

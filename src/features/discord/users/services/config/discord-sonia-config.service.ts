@@ -19,7 +19,7 @@ export class DiscordSoniaConfigService extends AbstractService {
 
   private readonly _discordSoniaConfigCoreService: DiscordSoniaConfigCoreService = DiscordSoniaConfigCoreService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_SONIA_CONFIG_SERVICE);
   }
 

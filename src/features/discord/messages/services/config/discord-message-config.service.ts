@@ -24,7 +24,7 @@ export class DiscordMessageConfigService extends AbstractService {
 
   private readonly _discordMessageConfigCoreService: DiscordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_SERVICE);
   }
 

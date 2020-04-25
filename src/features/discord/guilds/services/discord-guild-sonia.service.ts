@@ -27,7 +27,7 @@ export class DiscordGuildSoniaService extends AbstractService {
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private _soniaGuild: Guild | undefined = undefined;
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_GUILD_SONIA_SERVICE);
 
     this._listen();

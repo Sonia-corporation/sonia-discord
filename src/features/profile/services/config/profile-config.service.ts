@@ -17,7 +17,7 @@ export class ProfileConfigService extends AbstractService {
 
   private readonly _profileConfigCoreService: ProfileConfigCoreService = ProfileConfigCoreService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.PROFILE_CONFIG_SERVICE);
   }
 

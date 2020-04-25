@@ -21,7 +21,7 @@ export class DiscordService extends AbstractService {
     return DiscordService._instance;
   }
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_SERVICE);
     this.init();
   }

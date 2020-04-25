@@ -37,7 +37,7 @@ export class DiscordMessageErrorService extends AbstractService {
   private readonly _githubConfigService: GithubConfigService = GithubConfigService.getInstance();
   private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_ERROR_SERVICE);
   }
 

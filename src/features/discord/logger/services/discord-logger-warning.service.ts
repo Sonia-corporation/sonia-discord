@@ -33,7 +33,7 @@ export class DiscordLoggerWarningService extends AbstractService {
   private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
   private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_LOGGER_WARNING_SERVICE);
   }
 

@@ -35,7 +35,7 @@ export class DiscordLoggerErrorService extends AbstractService {
   private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
   private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_LOGGER_ERROR_SERVICE);
   }
 

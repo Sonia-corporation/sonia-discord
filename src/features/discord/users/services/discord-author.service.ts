@@ -15,7 +15,7 @@ export class DiscordAuthorService extends AbstractService {
     return DiscordAuthorService._instance;
   }
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_AUTHOR_SERVICE);
   }
 

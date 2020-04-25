@@ -17,7 +17,7 @@ export class ServerConfigCoreService extends AbstractService
 
   public port = 3001;
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.SERVER_CONFIG_CORE_SERVICE);
   }
 }

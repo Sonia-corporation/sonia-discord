@@ -24,7 +24,7 @@ export class DiscordAuthenticationService extends AbstractService {
   private readonly _discordSoniaConfigService: DiscordSoniaConfigService = DiscordSoniaConfigService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_AUTHENTICATION_SERVICE);
     this.init();
   }

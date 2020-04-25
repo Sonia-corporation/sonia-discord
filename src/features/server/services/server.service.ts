@@ -25,7 +25,7 @@ export class ServerService extends AbstractService {
   private readonly _serverConfigService: ServerConfigService = ServerConfigService.getInstance();
   private readonly _app: Express = express();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.SERVER_SERVICE);
     this.initializeApp();
   }

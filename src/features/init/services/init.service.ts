@@ -39,7 +39,7 @@ export class InitService extends AbstractService {
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.INIT_SERVICE);
     this.init();
   }

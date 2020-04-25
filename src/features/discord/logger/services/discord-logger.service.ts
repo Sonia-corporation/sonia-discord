@@ -26,7 +26,7 @@ export class DiscordLoggerService extends AbstractService {
   private readonly _discordLoggerErrorService: DiscordLoggerErrorService = DiscordLoggerErrorService.getInstance();
   private readonly _discordLoggerWarningService: DiscordLoggerWarningService = DiscordLoggerWarningService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_LOGGER_SERVICE);
     this.init();
   }

@@ -29,7 +29,7 @@ export class LoggerConfigMutatorService extends AbstractConfigService<
   private readonly _loggerConfigCoreService: LoggerConfigCoreService = LoggerConfigCoreService.getInstance();
   private readonly _loggerConfigService: LoggerConfigService = LoggerConfigService.getInstance();
 
-  protected constructor(config?: Readonly<Partial<ILoggerConfig>>) {
+  public constructor(config?: Readonly<Partial<ILoggerConfig>>) {
     super(ServiceNameEnum.LOGGER_CONFIG_MUTATOR_SERVICE, config);
   }
 
