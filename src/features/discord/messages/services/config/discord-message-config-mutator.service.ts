@@ -36,12 +36,18 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     return DiscordMessageConfigMutatorService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _discordMessageConfigCoreService: DiscordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
-  private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
+  private _loggerService: LoggerService = LoggerService.getInstance();
+  private _discordMessageConfigCoreService: DiscordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
+  private _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
 
   public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
     super(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_MUTATOR_SERVICE, config);
+  }
+
+  public preUpdateConfig(): void {
+    this._loggerService = LoggerService.getInstance();
+    this._discordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
+    this._discordMessageConfigService = DiscordMessageConfigService.getInstance();
   }
 
   public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {

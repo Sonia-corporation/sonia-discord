@@ -1,12 +1,16 @@
 import { IconEnum } from "../../../../../enums/icon.enum";
+import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { PartialNested } from "../../../../../types/partial-nested";
 import { IConfigUpdateString } from "../../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../../config/services/config.service";
+import { CoreEventService } from "../../../../core/services/core-event.service";
+import { LoggerService } from "../../../../logger/services/logger.service";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordSoniaConfig } from "../../../interfaces/discord-sonia-config";
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../../interfaces/discord-sonia-corporation-message-embed-author-config";
 import { DiscordSoniaConfigCoreService } from "./discord-sonia-config-core.service";
 import { DiscordSoniaConfigMutatorService } from "./discord-sonia-config-mutator.service";
+import { DiscordSoniaConfigService } from "./discord-sonia-config.service";
 
 jest.mock(`../../../../config/services/config.service`);
 
@@ -14,17 +18,282 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
   let service: DiscordSoniaConfigMutatorService;
   let configService: ConfigService;
   let discordSoniaConfigCoreService: DiscordSoniaConfigCoreService;
+  let coreEventService: CoreEventService;
 
   beforeEach((): void => {
-    service = DiscordSoniaConfigMutatorService.getInstance();
     configService = ConfigService.getInstance();
     discordSoniaConfigCoreService = DiscordSoniaConfigCoreService.getInstance();
+    coreEventService = CoreEventService.getInstance();
+  });
+
+  describe(`getInstance()`, (): void => {
+    let config: PartialNested<IDiscordConfig> | undefined;
+
+    beforeEach((): void => {
+      config = {
+        sonia: {
+          corporationImageUrl: IconEnum.GIRL,
+          corporationMessageEmbedAuthor: {
+            iconURL: `dummy-icon-url`,
+            name: `dummy-name`,
+            url: `dummy-url`,
+          },
+          id: `dummy-id`,
+          secretToken: `dummy-secret-token`,
+        },
+      };
+    });
+
+    it(`should create a DiscordSoniaConfigMutator service`, (): void => {
+      expect.assertions(1);
+
+      service = DiscordSoniaConfigMutatorService.getInstance(config);
+
+      expect(service).toStrictEqual(
+        expect.any(DiscordSoniaConfigMutatorService)
+      );
+    });
+
+    it(`should return the created DiscordSoniaConfigMutator service`, (): void => {
+      expect.assertions(1);
+
+      const result = DiscordSoniaConfigMutatorService.getInstance();
+
+      expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`constructor()`, (): void => {
+    let config: PartialNested<IDiscordConfig> | undefined;
+
+    let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      coreEventServiceNotifyServiceCreatedSpy = jest
+        .spyOn(coreEventService, `notifyServiceCreated`)
+        .mockImplementation();
+    });
+
+    it(`should notify the DiscordSoniaConfigMutator service creation`, (): void => {
+      expect.assertions(2);
+
+      service = new DiscordSoniaConfigMutatorService();
+
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
+        ServiceNameEnum.DISCORD_SONIA_CONFIG_MUTATOR_SERVICE
+      );
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the current corporation image url`, (): void => {
+        expect.assertions(1);
+        discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
+
+        service = new DiscordSoniaConfigMutatorService(config);
+
+        expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(
+          IconEnum.GIRL
+        );
+      });
+
+      it(`should not update the current corporation message embed author icon url`, (): void => {
+        expect.assertions(1);
+        discordSoniaConfigCoreService.corporationMessageEmbedAuthor.iconURL = `iconURL`;
+
+        service = new DiscordSoniaConfigMutatorService(config);
+
+        expect(
+          discordSoniaConfigCoreService.corporationMessageEmbedAuthor.iconURL
+        ).toStrictEqual(`iconURL`);
+      });
+
+      it(`should not update the current corporation message embed author name`, (): void => {
+        expect.assertions(1);
+        discordSoniaConfigCoreService.corporationMessageEmbedAuthor.name = `name`;
+
+        service = new DiscordSoniaConfigMutatorService(config);
+
+        expect(
+          discordSoniaConfigCoreService.corporationMessageEmbedAuthor.name
+        ).toStrictEqual(`name`);
+      });
+
+      it(`should not update the current corporation message embed author url`, (): void => {
+        expect.assertions(1);
+        discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url = `url`;
+
+        service = new DiscordSoniaConfigMutatorService(config);
+
+        expect(
+          discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url
+        ).toStrictEqual(`url`);
+      });
+
+      it(`should not update the current id`, (): void => {
+        expect.assertions(1);
+        discordSoniaConfigCoreService.id = `id`;
+
+        service = new DiscordSoniaConfigMutatorService(config);
+
+        expect(discordSoniaConfigCoreService.id).toStrictEqual(`id`);
+      });
+
+      it(`should not update the current secret token`, (): void => {
+        expect.assertions(1);
+        discordSoniaConfigCoreService.secretToken = `secretToken`;
+
+        service = new DiscordSoniaConfigMutatorService(config);
+
+        expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(
+          `secretToken`
+        );
+      });
+    });
+
+    describe(`when the given config is a complete object`, (): void => {
+      beforeEach((): void => {
+        config = {
+          sonia: {
+            corporationImageUrl: IconEnum.GIRL,
+            corporationMessageEmbedAuthor: {
+              iconURL: `dummy-icon-url`,
+              name: `dummy-name`,
+              url: `dummy-url`,
+            },
+            id: `dummy-id`,
+            secretToken: `dummy-secret-token`,
+          },
+        };
+      });
+
+      it(`should override the corporation image url`, (): void => {
+        expect.assertions(1);
+        discordSoniaConfigCoreService.corporationImageUrl =
+          IconEnum.WARNING_SHIELD;
+
+        service = new DiscordSoniaConfigMutatorService(config);
+
+        expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(
+          IconEnum.GIRL
+        );
+      });
+
+      it(`should override the corporation message embed author icon url`, (): void => {
+        expect.assertions(1);
+        discordSoniaConfigCoreService.corporationMessageEmbedAuthor.iconURL = `iconURL`;
+
+        service = new DiscordSoniaConfigMutatorService(config);
+
+        expect(
+          discordSoniaConfigCoreService.corporationMessageEmbedAuthor.iconURL
+        ).toStrictEqual(`dummy-icon-url`);
+      });
+
+      it(`should override the corporation message embed author name`, (): void => {
+        expect.assertions(1);
+        discordSoniaConfigCoreService.corporationMessageEmbedAuthor.name = `name`;
+
+        service = new DiscordSoniaConfigMutatorService(config);
+
+        expect(
+          discordSoniaConfigCoreService.corporationMessageEmbedAuthor.name
+        ).toStrictEqual(`dummy-name`);
+      });
+
+      it(`should override the corporation message embed author url`, (): void => {
+        expect.assertions(1);
+        discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url = `url`;
+
+        service = new DiscordSoniaConfigMutatorService(config);
+
+        expect(
+          discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url
+        ).toStrictEqual(`dummy-url`);
+      });
+
+      it(`should override the id`, (): void => {
+        expect.assertions(1);
+        discordSoniaConfigCoreService.id = `id`;
+
+        service = new DiscordSoniaConfigMutatorService(config);
+
+        expect(discordSoniaConfigCoreService.id).toStrictEqual(`dummy-id`);
+      });
+
+      it(`should override the secret token`, (): void => {
+        expect.assertions(1);
+        discordSoniaConfigCoreService.secretToken = `secretToken`;
+
+        service = new DiscordSoniaConfigMutatorService(config);
+
+        expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(
+          `dummy-secret-token`
+        );
+      });
+    });
+  });
+
+  describe(`preUpdateConfig()`, (): void => {
+    let loggerServiceGetInstanceSpy: jest.SpyInstance;
+    let discordSoniaConfigCoreServiceGetInstanceSpy: jest.SpyInstance;
+    let discordSoniaConfigServiceGetInstanceSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = DiscordSoniaConfigMutatorService.getInstance();
+
+      loggerServiceGetInstanceSpy = jest.spyOn(LoggerService, `getInstance`);
+      discordSoniaConfigCoreServiceGetInstanceSpy = jest.spyOn(
+        DiscordSoniaConfigCoreService,
+        `getInstance`
+      );
+      discordSoniaConfigServiceGetInstanceSpy = jest.spyOn(
+        DiscordSoniaConfigService,
+        `getInstance`
+      );
+    });
+
+    it(`should create the Logger service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should create the DiscordSoniaConfigCore service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(discordSoniaConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(
+        1
+      );
+      expect(
+        discordSoniaConfigCoreServiceGetInstanceSpy
+      ).toHaveBeenCalledWith();
+    });
+
+    it(`should create the DiscordSoniaConfig service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(discordSoniaConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(discordSoniaConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
   });
 
   describe(`updateConfig()`, (): void => {
     let config: PartialNested<IDiscordConfig> | undefined;
 
     beforeEach((): void => {
+      service = DiscordSoniaConfigMutatorService.getInstance();
       discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
       discordSoniaConfigCoreService.id = `dummy-id`;
       discordSoniaConfigCoreService.secretToken = `dummy-secret-token`;
@@ -153,6 +422,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
     let config: PartialNested<IDiscordSoniaConfig> | undefined;
 
     beforeEach((): void => {
+      service = DiscordSoniaConfigMutatorService.getInstance();
       discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
       discordSoniaConfigCoreService.id = `dummy-id`;
       discordSoniaConfigCoreService.secretToken = `dummy-secret-token`;
@@ -275,6 +545,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordSoniaConfigMutatorService.getInstance();
       corporationImageUrl = IconEnum.BUG;
       discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
 
@@ -314,6 +585,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
       | undefined;
 
     beforeEach((): void => {
+      service = DiscordSoniaConfigMutatorService.getInstance();
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor = {
         iconURL: `dummy-icon-url`,
         name: `dummy-name`,
@@ -405,6 +677,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordSoniaConfigMutatorService.getInstance();
       iconUrl = `dummy-icon-url`;
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor.iconURL = `icon-url`;
 
@@ -444,6 +717,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordSoniaConfigMutatorService.getInstance();
       name = `dummy-name`;
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor.name = `name`;
 
@@ -483,6 +757,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordSoniaConfigMutatorService.getInstance();
       url = `dummy-url`;
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url = `url`;
 
@@ -522,6 +797,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordSoniaConfigMutatorService.getInstance();
       id = `dummy-id`;
       discordSoniaConfigCoreService.id = `id`;
 
@@ -560,6 +836,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordSoniaConfigMutatorService.getInstance();
       secretToken = `dummy-secret-token`;
       discordSoniaConfigCoreService.secretToken = `secret-token`;
 
