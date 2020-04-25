@@ -25,12 +25,18 @@ export class LoggerConfigMutatorService extends AbstractConfigService<
     return LoggerConfigMutatorService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _loggerConfigCoreService: LoggerConfigCoreService = LoggerConfigCoreService.getInstance();
-  private readonly _loggerConfigService: LoggerConfigService = LoggerConfigService.getInstance();
+  private _loggerService: LoggerService = LoggerService.getInstance();
+  private _loggerConfigCoreService: LoggerConfigCoreService = LoggerConfigCoreService.getInstance();
+  private _loggerConfigService: LoggerConfigService = LoggerConfigService.getInstance();
 
   public constructor(config?: Readonly<Partial<ILoggerConfig>>) {
     super(ServiceNameEnum.LOGGER_CONFIG_MUTATOR_SERVICE, config);
+  }
+
+  public preUpdateConfig(): void {
+    this._loggerService = LoggerService.getInstance();
+    this._loggerConfigCoreService = LoggerConfigCoreService.getInstance();
+    this._loggerConfigService = LoggerConfigService.getInstance();
   }
 
   public updateConfig(config?: Readonly<Partial<ILoggerConfig>>): void {
