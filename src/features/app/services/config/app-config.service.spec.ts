@@ -45,7 +45,7 @@ describe(`AppConfigService`, (): void => {
       service = new AppConfigService();
     });
 
-    it(`should listen to server created event and push every created service in the created services list`, (): void => {
+    it(`should notify the AppConfig service creation`, (): void => {
       expect.assertions(2);
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);

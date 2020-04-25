@@ -1,4 +1,6 @@
 import moment from "moment-timezone";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
+import { CoreEventService } from "../../../core/services/core-event.service";
 import { AppConfigCoreService } from "./app-config-core.service";
 import { AppConfigQueryService } from "./app-config-query.service";
 
@@ -7,15 +9,57 @@ jest.mock(`../../../config/services/config.service`);
 describe(`AppConfigQueryService`, (): void => {
   let service: AppConfigQueryService;
   let appConfigCoreService: AppConfigCoreService;
+  let coreEventService: CoreEventService;
 
   beforeEach((): void => {
-    service = AppConfigQueryService.getInstance();
     appConfigCoreService = AppConfigCoreService.getInstance();
+    coreEventService = CoreEventService.getInstance();
+  });
+
+  describe(`getInstance()`, (): void => {
+    it(`should create a AppConfigQuery service`, (): void => {
+      expect.assertions(1);
+
+      service = AppConfigQueryService.getInstance();
+
+      expect(service).toStrictEqual(expect.any(AppConfigQueryService));
+    });
+
+    it(`should return the created AppConfigQuery service`, (): void => {
+      expect.assertions(1);
+
+      const result = AppConfigQueryService.getInstance();
+
+      expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`constructor()`, (): void => {
+    let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      coreEventServiceNotifyServiceCreatedSpy = jest
+        .spyOn(coreEventService, `notifyServiceCreated`)
+        .mockImplementation();
+
+      service = new AppConfigQueryService();
+    });
+
+    it(`should notify the AppConfigQuery service creation`, (): void => {
+      expect.assertions(2);
+
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
+        ServiceNameEnum.APP_CONFIG_QUERY_SERVICE
+      );
+    });
   });
 
   describe(`getReleaseDateHumanized()`, (): void => {
     beforeEach((): void => {
       appConfigCoreService.releaseDate = `dummy-release-date`;
+
+      service = AppConfigQueryService.getInstance();
     });
 
     describe(`when the app config release date is an empty string`, (): void => {
@@ -96,6 +140,8 @@ describe(`AppConfigQueryService`, (): void => {
   describe(`getInitializationDateHumanized()`, (): void => {
     beforeEach((): void => {
       appConfigCoreService.initializationDate = `dummy-initialization-date`;
+
+      service = AppConfigQueryService.getInstance();
     });
 
     describe(`when the app config initialization date is an empty string`, (): void => {
@@ -176,6 +222,8 @@ describe(`AppConfigQueryService`, (): void => {
   describe(`getProductionStateHumanized()`, (): void => {
     beforeEach((): void => {
       appConfigCoreService.isProduction = false;
+
+      service = AppConfigQueryService.getInstance();
     });
 
     describe(`when the app is not in production`, (): void => {
@@ -210,6 +258,8 @@ describe(`AppConfigQueryService`, (): void => {
   describe(`getTotalReleaseCountHumanized()`, (): void => {
     beforeEach((): void => {
       appConfigCoreService.totalReleaseCount = 8;
+
+      service = AppConfigQueryService.getInstance();
     });
 
     describe(`when the app config total release count is 0`, (): void => {
