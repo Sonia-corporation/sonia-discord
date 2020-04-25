@@ -70,7 +70,7 @@ jobs:
         run: npm ci
       - name: Test
         run: npm run test:ci
-  Coverage:
+  CoverageCodeClimate:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -104,6 +104,42 @@ jobs:
           debug: true
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+  CoverageCodecov:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version:
+          - 12.x
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache node_modules
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        run: npm ci
+      - name: Test
+        run: npm run test:ci:coverage
+      - name: Coverage
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          flags: integrationtests
+          name: Sonia-il-est-midi-discord
   Build:
     runs-on: ubuntu-latest
     strategy:
