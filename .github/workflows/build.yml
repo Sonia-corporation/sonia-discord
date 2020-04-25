@@ -139,7 +139,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: true
           flags: integrationtests
-          name: SoniaIlEstMidiDiscord
+          name: Sonia-il-est-midi-discord
   Build:
     runs-on: ubuntu-latest
     strategy:
