@@ -1,4 +1,4 @@
-import { Client, Guild, GuildChannel } from "discord.js";
+import { Guild, GuildChannel } from "discord.js";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
@@ -24,7 +24,7 @@ export class DiscordGuildCreateService extends AbstractService {
     return DiscordGuildCreateService._instance;
   }
 
-  public readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
   private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
@@ -33,7 +33,6 @@ export class DiscordGuildCreateService extends AbstractService {
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE);
-    this.init();
   }
 
   public init(): void {
@@ -41,9 +40,11 @@ export class DiscordGuildCreateService extends AbstractService {
   }
 
   private _listen(): void {
-    this.discordClient.on(`guildCreate`, (guild: Readonly<Guild>): void => {
-      this._handleGuildCreate(guild);
-    });
+    this._discordClientService
+      .getClient()
+      .on(`guildCreate`, (guild: Readonly<Guild>): void => {
+        this._handleGuildCreate(guild);
+      });
 
     this._loggerService.debug({
       context: this._serviceName,

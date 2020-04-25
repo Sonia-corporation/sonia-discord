@@ -1,7 +1,8 @@
-import { Guild } from "discord.js";
+import { Guild, Client } from "discord.js";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
+import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordGuildConfigCoreService } from "./config/discord-guild-config-core.service";
 import { DiscordGuildCreateService } from "./discord-guild-create.service";
 
@@ -11,10 +12,12 @@ describe(`DiscordGuildCreateService`, (): void => {
   let service: DiscordGuildCreateService;
   let discordGuildConfigCoreService: DiscordGuildConfigCoreService;
   let coreEventService: CoreEventService;
+  let discordClientService: DiscordClientService;
 
   beforeEach((): void => {
     discordGuildConfigCoreService = DiscordGuildConfigCoreService.getInstance();
     coreEventService = CoreEventService.getInstance();
+    discordClientService = DiscordClientService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -58,16 +61,17 @@ describe(`DiscordGuildCreateService`, (): void => {
 
   describe(`init()`, (): void => {
     let guild: Guild;
+    let client: Client;
 
     let discordClientOnSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = DiscordGuildCreateService.getInstance();
       guild = createMock<Guild>();
+      client = createMock<Client>();
 
-      discordClientOnSpy = jest
-        .spyOn(service.discordClient, `on`)
-        .mockImplementation();
+      jest.spyOn(discordClientService, `getClient`).mockReturnValue(client);
+      discordClientOnSpy = jest.spyOn(client, `on`).mockImplementation();
     });
 
     it(`should listen the "guildCreate" event on the client`, (): void => {

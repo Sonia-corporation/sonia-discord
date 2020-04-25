@@ -4,6 +4,7 @@ import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { DiscordAuthenticationService } from "../authentications/services/discord-authentication.service";
 import { DiscordGuildCreateService } from "../guilds/services/discord-guild-create.service";
 import { DiscordGuildMemberAddService } from "../guilds/services/discord-guild-member-add.service";
+import { DiscordGuildSoniaService } from "../guilds/services/discord-guild-sonia.service";
 import { DiscordGuildService } from "../guilds/services/discord-guild.service";
 import { DiscordLoggerService } from "../logger/services/discord-logger.service";
 import { DiscordMessageService } from "../messages/services/discord-message.service";
@@ -23,17 +24,17 @@ export class DiscordService extends AbstractService {
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_SERVICE);
-    this.init();
   }
 
   public init(): void {
     DiscordSoniaService.getInstance();
-    DiscordLoggerService.getInstance();
-    DiscordGuildService.getInstance();
-    DiscordGuildMemberAddService.getInstance();
-    DiscordGuildCreateService.getInstance();
-    DiscordMessageService.getInstance();
-    DiscordAuthenticationService.getInstance();
-    DiscordMessageScheduleIlEstMidiService.getInstance();
+    DiscordLoggerService.getInstance().init();
+    DiscordGuildService.getInstance().init();
+    DiscordGuildMemberAddService.getInstance().init();
+    DiscordGuildCreateService.getInstance().init();
+    DiscordMessageService.getInstance().init();
+    DiscordAuthenticationService.getInstance().init();
+    DiscordMessageScheduleIlEstMidiService.getInstance().init();
+    DiscordGuildSoniaService.getInstance().init();
   }
 }

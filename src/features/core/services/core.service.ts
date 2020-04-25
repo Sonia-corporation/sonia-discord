@@ -12,7 +12,7 @@ export class CoreService {
     return CoreService._instance;
   }
 
-  public constructor() {
-    CoreEventService.getInstance();
+  public init(): void {
+    CoreEventService.getInstance().init();
   }
 }
