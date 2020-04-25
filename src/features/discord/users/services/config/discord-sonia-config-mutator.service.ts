@@ -28,12 +28,18 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<
     return DiscordSoniaConfigMutatorService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _discordSoniaConfigCoreService: DiscordSoniaConfigCoreService = DiscordSoniaConfigCoreService.getInstance();
-  private readonly _discordSoniaConfigService: DiscordSoniaConfigService = DiscordSoniaConfigService.getInstance();
+  private _loggerService: LoggerService = LoggerService.getInstance();
+  private _discordSoniaConfigCoreService: DiscordSoniaConfigCoreService = DiscordSoniaConfigCoreService.getInstance();
+  private _discordSoniaConfigService: DiscordSoniaConfigService = DiscordSoniaConfigService.getInstance();
 
   public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
     super(ServiceNameEnum.DISCORD_SONIA_CONFIG_MUTATOR_SERVICE, config);
+  }
+
+  public preUpdateConfig(): void {
+    this._loggerService = LoggerService.getInstance();
+    this._discordSoniaConfigCoreService = DiscordSoniaConfigCoreService.getInstance();
+    this._discordSoniaConfigService = DiscordSoniaConfigService.getInstance();
   }
 
   public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
