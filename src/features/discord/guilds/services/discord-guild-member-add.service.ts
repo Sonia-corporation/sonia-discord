@@ -35,7 +35,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_GUILD_MEMBER_ADD_SERVICE);
     this.init();
   }

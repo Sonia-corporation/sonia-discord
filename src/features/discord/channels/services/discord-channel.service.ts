@@ -17,7 +17,7 @@ export class DiscordChannelService extends AbstractService {
     return DiscordChannelService._instance;
   }
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_CHANNEL_SERVICE);
   }
 

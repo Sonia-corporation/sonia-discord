@@ -26,7 +26,7 @@ export class DiscordSoniaConfigCoreService extends AbstractService
   public id = `unknown`;
   public secretToken = `unknown`;
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_SONIA_CONFIG_CORE_SERVICE);
   }
 }

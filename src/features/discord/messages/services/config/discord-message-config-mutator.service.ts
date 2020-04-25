@@ -40,7 +40,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   private readonly _discordMessageConfigCoreService: DiscordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
   private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
 
-  protected constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
+  public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
     super(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_MUTATOR_SERVICE, config);
   }
 

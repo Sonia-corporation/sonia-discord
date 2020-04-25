@@ -1,3 +1,4 @@
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { IAppConfig } from "../../interfaces/app-config";
 import { AppConfigCoreService } from "./app-config-core.service";
 import { AppConfigService } from "./app-config.service";
@@ -7,6 +8,47 @@ jest.mock(`../../../config/services/config.service`);
 describe(`AppConfigService`, (): void => {
   let service: AppConfigService;
   let appConfigCoreService: AppConfigCoreService;
+
+  describe(`getInstance()`, (): void => {
+    it(`should create a AppConfig service`, (): void => {
+      expect.assertions(1);
+
+      service = AppConfigService.getInstance();
+
+      expect(service).toStrictEqual(expect.any(AppConfigService));
+    });
+
+    it(`should return the created AppConfig service`, (): void => {
+      expect.assertions(1);
+
+      const result = AppConfigService.getInstance();
+
+      expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`constructor()`, (): void => {
+    beforeEach((): void => {
+      service = new AppConfigService();
+    });
+
+    it(`should listen to server created event and push every created service in the created services list`, (): void => {
+      expect.assertions(1);
+      service.notifyServiceCreated(
+        ServiceNameEnum.DISCORD_MESSAGE_CONFIG_SERVICE
+      );
+      service.notifyServiceCreated(ServiceNameEnum.SERVER_SERVICE);
+
+      const result = service.getCreatedServices();
+
+      expect(result).toStrictEqual([
+        ServiceNameEnum.CORE_SERVICE,
+        ServiceNameEnum.CORE_EVENT_SERVICE,
+        ServiceNameEnum.DISCORD_MESSAGE_CONFIG_SERVICE,
+        ServiceNameEnum.SERVER_SERVICE,
+      ]);
+    });
+  });
 
   beforeEach((): void => {
     service = AppConfigService.getInstance();

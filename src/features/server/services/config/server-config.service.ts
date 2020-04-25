@@ -17,7 +17,7 @@ export class ServerConfigService extends AbstractService {
 
   private readonly _serverConfigCoreService = ServerConfigCoreService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.SERVER_CONFIG_SERVICE);
   }
 

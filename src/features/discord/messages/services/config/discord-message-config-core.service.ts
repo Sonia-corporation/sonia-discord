@@ -48,7 +48,7 @@ export class DiscordMessageConfigCoreService extends AbstractService
     imageUrl: IconEnum.WARNING_SHIELD,
   };
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_CORE_SERVICE);
   }
 }

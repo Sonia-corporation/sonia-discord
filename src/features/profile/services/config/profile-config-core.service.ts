@@ -17,7 +17,7 @@ export class ProfileConfigCoreService extends AbstractService
 
   public nickname: string | null = null;
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.PROFILE_CONFIG_CORE_SERVICE);
   }
 }

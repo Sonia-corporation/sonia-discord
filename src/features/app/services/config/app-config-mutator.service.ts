@@ -28,7 +28,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   private readonly _appConfigCoreService: AppConfigCoreService = AppConfigCoreService.getInstance();
   private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
 
-  protected constructor(config?: Readonly<PartialNested<IAppConfig>>) {
+  public constructor(config?: Readonly<PartialNested<IAppConfig>>) {
     super(ServiceNameEnum.APP_CONFIG_MUTATOR_SERVICE, config);
   }
 

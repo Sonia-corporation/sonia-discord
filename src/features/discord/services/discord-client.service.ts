@@ -16,7 +16,7 @@ export class DiscordClientService extends AbstractService {
 
   private readonly _client: Client = new Client();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_CLIENT_SERVICE);
   }
 

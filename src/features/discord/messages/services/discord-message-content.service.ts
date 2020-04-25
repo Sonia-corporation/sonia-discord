@@ -13,7 +13,7 @@ export class DiscordMessageContentService extends AbstractService {
     return DiscordMessageContentService._instance;
   }
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_CONTENT_SERVICE);
   }
 

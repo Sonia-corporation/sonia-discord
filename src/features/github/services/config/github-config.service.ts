@@ -17,7 +17,7 @@ export class GithubConfigService extends AbstractService {
 
   private readonly _githubConfigCoreService: GithubConfigCoreService = GithubConfigCoreService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.GITHUB_CONFIG_SERVICE);
   }
 

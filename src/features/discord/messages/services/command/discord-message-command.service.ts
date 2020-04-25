@@ -29,7 +29,7 @@ export class DiscordMessageCommandService extends AbstractService {
   private readonly _discordMessageCommandCookieService: DiscordMessageCommandCookieService = DiscordMessageCommandCookieService.getInstance();
   private readonly _discordMessageContentService: DiscordMessageContentService = DiscordMessageContentService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_SERVICE);
   }
 

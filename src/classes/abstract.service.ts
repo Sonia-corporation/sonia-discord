@@ -9,7 +9,7 @@ export abstract class AbstractService {
   protected readonly _serviceName: ServiceNameEnum;
   private readonly _coreEventService: CoreEventService = CoreEventService.getInstance();
 
-  protected constructor(serviceName: Readonly<ServiceNameEnum>) {
+  public constructor(serviceName: Readonly<ServiceNameEnum>) {
     this._serviceName = serviceName;
 
     this.notifyServiceCreated();

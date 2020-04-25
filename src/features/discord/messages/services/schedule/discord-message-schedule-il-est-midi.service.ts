@@ -35,7 +35,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   private readonly _rule: string = getEveryHourScheduleRule();
   private _job: Job | undefined = undefined;
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_IL_EST_MIDI_SERVICE);
     this.init();
   }

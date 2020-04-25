@@ -38,7 +38,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
   private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERSION_SERVICE);
   }
 

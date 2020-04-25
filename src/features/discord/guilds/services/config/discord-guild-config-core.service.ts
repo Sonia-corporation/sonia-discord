@@ -21,7 +21,7 @@ export class DiscordGuildConfigCoreService extends AbstractService
   public soniaGuildId = `689833865279307782`;
   public soniaPermanentGuildInviteUrl = `https://discord.gg/PW4JSkv`;
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_GUILD_CONFIG_CORE_SERVICE);
   }
 }

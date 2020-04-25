@@ -31,7 +31,7 @@ export class DiscordGuildCreateService extends AbstractService {
   private readonly _discordMessageCommandCookieService: DiscordMessageCommandCookieService = DiscordMessageCommandCookieService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE);
     this.init();
   }

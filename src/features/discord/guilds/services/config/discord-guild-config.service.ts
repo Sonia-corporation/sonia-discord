@@ -17,7 +17,7 @@ export class DiscordGuildConfigService extends AbstractService {
 
   private readonly _discordGuildConfigCoreService: DiscordGuildConfigCoreService = DiscordGuildConfigCoreService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_GUILD_CONFIG_SERVICE);
   }
 
