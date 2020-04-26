@@ -9,6 +9,7 @@ import { IConfigUpdateNumber } from "../interfaces/config-update-number";
 import { IConfigUpdateString } from "../interfaces/config-update-string";
 import { IConfigUpdateStringInternal } from "../interfaces/config-update-string-internal";
 import { IConfigUpdateStringOrArray } from "../interfaces/config-update-string-or-array";
+import { IConfigUpdateStringOrArrayInternal } from "../interfaces/config-update-string-or-array-internal";
 
 export class ConfigService extends AbstractService {
   private static _instance: ConfigService;
@@ -77,14 +78,8 @@ export class ConfigService extends AbstractService {
     } else if (_.isArray(configUpdateStringOrArray.newValue)) {
       this._loggerService.log({
         context: configUpdateStringOrArray.context,
-        message: this._chalkService.text(
-          `${
-            configUpdateStringOrArray.valueName
-          } updated to: ${this._chalkService.value(
-            this._loggerService.getStringArray(
-              configUpdateStringOrArray.newValue
-            )
-          )}`
+        message: this._getUpdatedStringOrArrayMessage(
+          configUpdateStringOrArray
         ),
       });
 
@@ -130,6 +125,36 @@ export class ConfigService extends AbstractService {
         message = this._chalkService.text(
           `${message} to: ${this._chalkService.value(
             wrapInQuotes<T>(configUpdateStringInternal.newValue)
+          )}`
+        );
+      } else {
+        message = this._chalkService.text(message);
+      }
+    }
+
+    return message;
+  }
+
+  private _getUpdatedStringOrArrayMessage<T>(
+    configUpdateStringInternal: Readonly<IConfigUpdateStringOrArrayInternal<T>>
+  ): string {
+    let message = `${configUpdateStringInternal.valueName} updated`;
+
+    if (_.isEqual(configUpdateStringInternal.isValueHidden, true)) {
+      message = this._loggerService.getHiddenValueArrayUpdate(
+        `${message} to: `,
+        true
+      );
+    } else {
+      if (
+        !_.isEqual(configUpdateStringInternal.isValueDisplay, false) &&
+        _.isArray(configUpdateStringInternal.newValue)
+      ) {
+        message = this._chalkService.text(
+          `${message} to: ${this._chalkService.value(
+            this._loggerService.getStringArray<T>(
+              configUpdateStringInternal.newValue
+            )
           )}`
         );
       } else {
