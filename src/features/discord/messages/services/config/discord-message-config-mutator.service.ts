@@ -4,7 +4,6 @@ import { ColorEnum } from "../../../../../enums/color.enum";
 import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { removeUndefined } from "../../../../../functions/formatters/remove-undefined";
-import { wrapInQuotes } from "../../../../../functions/formatters/wrap-in-quotes";
 import { PartialNested } from "../../../../../types/partial-nested";
 import { LoggerService } from "../../../../logger/services/logger.service";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
@@ -186,38 +185,25 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     );
   }
 
-  // @todo add coverage
-  // @todo refactor to use the config service
   public updateMessageCommandPrefix(
-    prefix?: string | (string | undefined)[]
+    prefix?: Readonly<string | (string | undefined)[]>
   ): void {
-    if (_.isString(prefix)) {
-      this._discordMessageConfigCoreService.command.prefix = prefix;
+    let updatedPrefix: string | string[] | undefined;
 
-      this._loggerService.log({
-        context: this._serviceName,
-        message: this._chalkService.text(
-          `message command prefix updated to: ${this._chalkService.value(
-            wrapInQuotes(this._discordMessageConfigCoreService.command.prefix)
-          )}`
-        ),
-      });
-    } else if (_.isArray(prefix)) {
-      this._discordMessageConfigCoreService.command.prefix = removeUndefined(
-        prefix
-      );
-
-      this._loggerService.log({
-        context: this._serviceName,
-        message: this._chalkService.text(
-          `message command prefix updated to: ${this._chalkService.value(
-            this._loggerService.getStringArray(
-              this._discordMessageConfigCoreService.command.prefix
-            )
-          )}`
-        ),
-      });
+    if (_.isArray(prefix)) {
+      updatedPrefix = removeUndefined(prefix);
+    } else if (_.isString(prefix)) {
+      updatedPrefix = prefix;
     }
+
+    this._discordMessageConfigCoreService.command.prefix = this._configService.getUpdatedStringOrArray(
+      {
+        context: this._serviceName,
+        newValue: updatedPrefix,
+        oldValue: this._discordMessageConfigService.getMessageCommandPrefix(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_PREFIX,
+      }
+    );
   }
 
   public updateMessageCommandVersion(

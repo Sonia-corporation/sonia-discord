@@ -2,8 +2,6 @@ import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../core/services/core-event.service";
 import { DiscordMessageConfigCoreService } from "./discord-message-config-core.service";
 
-jest.mock(`../../../../config/services/config.service`);
-
 describe(`DiscordMessageConfigCoreService`, (): void => {
   let service: DiscordMessageConfigCoreService;
   let coreEventService: CoreEventService;

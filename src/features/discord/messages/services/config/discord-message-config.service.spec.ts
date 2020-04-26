@@ -13,8 +13,6 @@ import { IDiscordMessageWarningConfig } from "../../../interfaces/discord-messag
 import { DiscordMessageConfigCoreService } from "./discord-message-config-core.service";
 import { DiscordMessageConfigService } from "./discord-message-config.service";
 
-jest.mock(`../../../../config/services/config.service`);
-
 describe(`DiscordMessageConfigService`, (): void => {
   let service: DiscordMessageConfigService;
   let discordMessageConfigCoreService: DiscordMessageConfigCoreService;

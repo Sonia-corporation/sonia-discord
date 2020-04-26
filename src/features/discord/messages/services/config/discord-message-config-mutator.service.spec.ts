@@ -4,6 +4,7 @@ import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { PartialNested } from "../../../../../types/partial-nested";
 import { IConfigUpdateNumber } from "../../../../config/interfaces/config-update-number";
 import { IConfigUpdateString } from "../../../../config/interfaces/config-update-string";
+import { IConfigUpdateStringOrArray } from "../../../../config/interfaces/config-update-string-or-array";
 import { ConfigService } from "../../../../config/services/config.service";
 import { CoreEventService } from "../../../../core/services/core-event.service";
 import { LoggerService } from "../../../../logger/services/logger.service";
@@ -19,8 +20,6 @@ import { IDiscordMessageWarningConfig } from "../../../interfaces/discord-messag
 import { DiscordMessageConfigCoreService } from "./discord-message-config-core.service";
 import { DiscordMessageConfigMutatorService } from "./discord-message-config-mutator.service";
 import { DiscordMessageConfigService } from "./discord-message-config.service";
-
-jest.mock(`../../../../config/services/config.service`);
 
 describe(`DiscordMessageConfigMutatorService`, (): void => {
   let service: DiscordMessageConfigMutatorService;
@@ -1435,6 +1434,46 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
       expect(
         discordMessageConfigCoreService.command.help.imageUrl
       ).toStrictEqual(IconEnum.GIRL);
+    });
+  });
+
+  describe(`updateMessageCommandPrefix()`, (): void => {
+    let prefix: string | (string | undefined)[];
+
+    let configServiceGetUpdatedStringOrArraySpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
+      prefix = `dummy-prefix`;
+      discordMessageConfigCoreService.command.prefix = `prefix`;
+
+      configServiceGetUpdatedStringOrArraySpy = jest
+        .spyOn(configService, `getUpdatedStringOrArray`)
+        .mockReturnValue(`dummy-prefix`);
+    });
+
+    it(`should get the updated string`, (): void => {
+      expect.assertions(2);
+
+      service.updateMessageCommandPrefix(prefix);
+
+      expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledWith({
+        context: `DiscordMessageConfigMutatorService`,
+        newValue: `dummy-prefix`,
+        oldValue: `prefix`,
+        valueName: `message command prefix`,
+      } as IConfigUpdateStringOrArray);
+    });
+
+    it(`should update the Discord message config command prefix with the updated string`, (): void => {
+      expect.assertions(1);
+
+      service.updateMessageCommandPrefix(prefix);
+
+      expect(discordMessageConfigCoreService.command.prefix).toStrictEqual(
+        `dummy-prefix`
+      );
     });
   });
 

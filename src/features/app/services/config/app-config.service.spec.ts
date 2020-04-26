@@ -4,8 +4,6 @@ import { IAppConfig } from "../../interfaces/app-config";
 import { AppConfigCoreService } from "./app-config-core.service";
 import { AppConfigService } from "./app-config.service";
 
-jest.mock(`../../../config/services/config.service`);
-
 describe(`AppConfigService`, (): void => {
   let service: AppConfigService;
   let appConfigCoreService: AppConfigCoreService;
