@@ -1444,36 +1444,84 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
     beforeEach((): void => {
       service = DiscordMessageConfigMutatorService.getInstance();
-      prefix = `dummy-prefix`;
-      discordMessageConfigCoreService.command.prefix = `prefix`;
 
       configServiceGetUpdatedStringOrArraySpy = jest
         .spyOn(configService, `getUpdatedStringOrArray`)
-        .mockReturnValue(`dummy-prefix`);
+        .mockImplementation();
     });
 
-    it(`should get the updated string`, (): void => {
-      expect.assertions(2);
+    describe(`when the given value is a string`, (): void => {
+      beforeEach((): void => {
+        prefix = `dummy-prefix`;
+        discordMessageConfigCoreService.command.prefix = `prefix`;
 
-      service.updateMessageCommandPrefix(prefix);
+        configServiceGetUpdatedStringOrArraySpy.mockReturnValue(`dummy-prefix`);
+      });
 
-      expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledTimes(1);
-      expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledWith({
-        context: `DiscordMessageConfigMutatorService`,
-        newValue: `dummy-prefix`,
-        oldValue: `prefix`,
-        valueName: `message command prefix`,
-      } as IConfigUpdateStringOrArray);
+      it(`should get the updated string`, (): void => {
+        expect.assertions(2);
+
+        service.updateMessageCommandPrefix(prefix);
+
+        expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledTimes(
+          1
+        );
+        expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledWith({
+          context: `DiscordMessageConfigMutatorService`,
+          newValue: `dummy-prefix`,
+          oldValue: `prefix`,
+          valueName: `message command prefix`,
+        } as IConfigUpdateStringOrArray);
+      });
+
+      it(`should update the Discord message config command prefix with the updated string`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandPrefix(prefix);
+
+        expect(discordMessageConfigCoreService.command.prefix).toStrictEqual(
+          `dummy-prefix`
+        );
+      });
     });
 
-    it(`should update the Discord message config command prefix with the updated string`, (): void => {
-      expect.assertions(1);
+    describe(`when the given value is an array`, (): void => {
+      beforeEach((): void => {
+        prefix = [`dummy-dummy`, `prefix-dummy`];
+        discordMessageConfigCoreService.command.prefix = [`dummy`, `prefix`];
 
-      service.updateMessageCommandPrefix(prefix);
+        configServiceGetUpdatedStringOrArraySpy.mockReturnValue([
+          `dummy-dummy`,
+          `prefix-dummy`,
+        ]);
+      });
 
-      expect(discordMessageConfigCoreService.command.prefix).toStrictEqual(
-        `dummy-prefix`
-      );
+      it(`should get the updated string array`, (): void => {
+        expect.assertions(2);
+
+        service.updateMessageCommandPrefix(prefix);
+
+        expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledTimes(
+          1
+        );
+        expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledWith({
+          context: `DiscordMessageConfigMutatorService`,
+          newValue: [`dummy-dummy`, `prefix-dummy`],
+          oldValue: [`dummy`, `prefix`],
+          valueName: `message command prefix`,
+        } as IConfigUpdateStringOrArray);
+      });
+
+      it(`should update the Discord message config command prefix with the updated string array`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandPrefix(prefix);
+
+        expect(discordMessageConfigCoreService.command.prefix).toStrictEqual([
+          `dummy-dummy`,
+          `prefix-dummy`,
+        ]);
+      });
     });
   });
 
