@@ -4,7 +4,10 @@ import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../logger/services/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
+import { TimeService } from "../../time/services/time.service";
 import { IConfigUpdateBoolean } from "../interfaces/config-update-boolean";
+import { IConfigUpdateDate } from "../interfaces/config-update-date";
+import { IConfigUpdateDateInternal } from "../interfaces/config-update-date-internal";
 import { IConfigUpdateNumber } from "../interfaces/config-update-number";
 import { IConfigUpdateString } from "../interfaces/config-update-string";
 import { IConfigUpdateStringInternal } from "../interfaces/config-update-string-internal";
@@ -22,6 +25,7 @@ export class ConfigService extends AbstractService {
 
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
+  private readonly _timeService: TimeService = TimeService.getInstance();
 
   public constructor() {
     super(ServiceNameEnum.CONFIG_SERVICE);
@@ -63,6 +67,21 @@ export class ConfigService extends AbstractService {
     return configUpdateString.oldValue;
   }
 
+  public getUpdatedDate<T>(
+    configUpdateDate: Readonly<IConfigUpdateDate<T>>
+  ): T {
+    if (_.isString(configUpdateDate.newValue)) {
+      this._loggerService.log({
+        context: configUpdateDate.context,
+        message: this._getUpdatedDateMessage(configUpdateDate),
+      });
+
+      return configUpdateDate.newValue;
+    }
+
+    return configUpdateDate.oldValue;
+  }
+
   public getUpdatedBoolean(
     configUpdateString: Readonly<IConfigUpdateBoolean>
   ): boolean {
@@ -99,6 +118,36 @@ export class ConfigService extends AbstractService {
         message = this._chalkService.text(
           `${message} to: ${this._chalkService.value(
             wrapInQuotes<T>(configUpdateString.newValue)
+          )}`
+        );
+      } else {
+        message = this._chalkService.text(message);
+      }
+    }
+
+    return message;
+  }
+
+  private _getUpdatedDateMessage<T>(
+    configUpdateDate: Readonly<IConfigUpdateDateInternal<T>>
+  ): string {
+    let message = `${configUpdateDate.valueName} updated`;
+
+    if (_.isEqual(configUpdateDate.isValueHidden, true)) {
+      message = this._loggerService.getHiddenValueUpdate(
+        `${message} to: `,
+        true
+      );
+    } else {
+      if (!_.isEqual(configUpdateDate.isValueDisplay, false)) {
+        message = this._chalkService.text(
+          `${message} to: ${this._chalkService.value(
+            wrapInQuotes<T>(configUpdateDate.newValue)
+          )} ${this._chalkService.hint(
+            `(${this._timeService.fromNow<T>(
+              configUpdateDate.newValue,
+              false
+            )})`
           )}`
         );
       } else {
