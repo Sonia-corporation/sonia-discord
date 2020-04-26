@@ -72,7 +72,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   }
 
   public updateReleaseDate(releaseDate?: Readonly<string>): void {
-    this._appConfigCoreService.releaseDate = this._configService.getUpdatedString(
+    this._appConfigCoreService.releaseDate = this._configService.getUpdatedDate(
       {
         context: this._serviceName,
         newValue: releaseDate,
@@ -83,7 +83,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   }
 
   public updateInitializationDate(initializationDate?: Readonly<string>): void {
-    this._appConfigCoreService.initializationDate = this._configService.getUpdatedString(
+    this._appConfigCoreService.initializationDate = this._configService.getUpdatedDate(
       {
         context: this._serviceName,
         newValue: initializationDate,

@@ -13,7 +13,6 @@ import { AppConfigCoreService } from "./app-config-core.service";
 import { AppConfigMutatorService } from "./app-config-mutator.service";
 import { AppConfigService } from "./app-config.service";
 
-jest.mock(`../../../config/services/config.service`);
 jest.mock(`../../../time/services/time.service`);
 
 describe(`AppConfigMutationService`, (): void => {
@@ -540,15 +539,15 @@ describe(`AppConfigMutationService`, (): void => {
   describe(`updateReleaseDate()`, (): void => {
     let releaseDate: string;
 
-    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+    let configServiceGetUpdatedDateSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = AppConfigMutatorService.getInstance();
       releaseDate = `dummy-release-date`;
       appConfigCoreService.releaseDate = `release-date`;
 
-      configServiceGetUpdatedStringSpy = jest
-        .spyOn(configService, `getUpdatedString`)
+      configServiceGetUpdatedDateSpy = jest
+        .spyOn(configService, `getUpdatedDate`)
         .mockReturnValue(`dummy-release-date`);
     });
 
@@ -557,8 +556,8 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.updateReleaseDate(releaseDate);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledWith({
         context: `AppConfigMutatorService`,
         newValue: `dummy-release-date`,
         oldValue: `release-date`,
@@ -580,15 +579,15 @@ describe(`AppConfigMutationService`, (): void => {
   describe(`updateInitializationDate()`, (): void => {
     let initializationDate: string;
 
-    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+    let configServiceGetUpdatedDateSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = AppConfigMutatorService.getInstance();
       initializationDate = `dummy-initialization-date`;
       appConfigCoreService.initializationDate = `initialization-date`;
 
-      configServiceGetUpdatedStringSpy = jest
-        .spyOn(configService, `getUpdatedString`)
+      configServiceGetUpdatedDateSpy = jest
+        .spyOn(configService, `getUpdatedDate`)
         .mockReturnValue(`dummy-initialization-date`);
     });
 
@@ -597,8 +596,8 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.updateInitializationDate(initializationDate);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledWith({
         context: `AppConfigMutatorService`,
         newValue: `dummy-initialization-date`,
         oldValue: `initialization-date`,
