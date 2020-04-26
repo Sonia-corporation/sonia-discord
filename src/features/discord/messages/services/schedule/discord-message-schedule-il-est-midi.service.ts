@@ -1,4 +1,4 @@
-import { Client, Guild, GuildChannel } from "discord.js";
+import { Guild, GuildChannel } from "discord.js";
 import _ from "lodash";
 import moment from "moment-timezone";
 import { Job, scheduleJob } from "node-schedule";
@@ -26,7 +26,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
     return DiscordMessageScheduleIlEstMidiService._instance;
   }
 
-  public readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _timeService: TimeService = TimeService.getInstance();
@@ -37,7 +37,6 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_IL_EST_MIDI_SERVICE);
-    this.init();
   }
 
   public init(): void {
@@ -111,11 +110,11 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
 
   private _handleMessages(): void {
     if (this._canSendMessage()) {
-      this.discordClient.guilds.cache.forEach(
-        (guild: Readonly<Guild>): void => {
+      this._discordClientService
+        .getClient()
+        .guilds.cache.forEach((guild: Readonly<Guild>): void => {
           this._handleMessage(guild);
-        }
-      );
+        });
     }
   }
 

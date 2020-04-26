@@ -1,9 +1,9 @@
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { DiscordSoniaService } from "./discord-sonia.service";
+import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { CoreEventService } from "../../core/services/core-event.service";
+import { DiscordClientService } from "./discord-client.service";
 
-describe(`DiscordSoniaService`, (): void => {
-  let service: DiscordSoniaService;
+describe(`DiscordClientService`, (): void => {
+  let service: DiscordClientService;
   let coreEventService: CoreEventService;
 
   beforeEach((): void => {
@@ -11,18 +11,18 @@ describe(`DiscordSoniaService`, (): void => {
   });
 
   describe(`getInstance()`, (): void => {
-    it(`should create a DiscordSonia service`, (): void => {
+    it(`should create a DiscordClient service`, (): void => {
       expect.assertions(1);
 
-      service = DiscordSoniaService.getInstance();
+      service = DiscordClientService.getInstance();
 
-      expect(service).toStrictEqual(expect.any(DiscordSoniaService));
+      expect(service).toStrictEqual(expect.any(DiscordClientService));
     });
 
-    it(`should return the created DiscordSonia service`, (): void => {
+    it(`should return the created DiscordClient service`, (): void => {
       expect.assertions(1);
 
-      const result = DiscordSoniaService.getInstance();
+      const result = DiscordClientService.getInstance();
 
       expect(result).toStrictEqual(service);
     });
@@ -37,14 +37,14 @@ describe(`DiscordSoniaService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should notify the DiscordSonia service creation`, (): void => {
+    it(`should notify the DiscordClient service creation`, (): void => {
       expect.assertions(2);
 
-      service = new DiscordSoniaService();
+      service = new DiscordClientService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_SONIA_SERVICE
+        ServiceNameEnum.DISCORD_CLIENT_SERVICE
       );
     });
   });

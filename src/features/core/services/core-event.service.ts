@@ -21,7 +21,7 @@ export class CoreEventService {
     ServiceNameEnum.CORE_EVENT_SERVICE,
   ];
 
-  public constructor() {
+  public init(): void {
     this._listenServiceCreated();
   }
 
