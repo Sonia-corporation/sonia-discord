@@ -179,13 +179,13 @@ The rest of the commit message is then used for this.
 
 ### Discord issues
 
-Generic Discord error messages are sent to [Sonia Discord errors channel].  
+Generic Discord error messages are sent to [Sonia Discord errors channel](http://discordapp.com/channels/689833865279307782/700770389655158924).  
 These errors are coming from the Discord `error` event.
 
-Generic Discord warning messages are sent to [Sonia Discord warnings channel].  
+Generic Discord warning messages are sent to [Sonia Discord warnings channel](http://discordapp.com/channels/689833865279307782/701041732086792202).  
 These warnings are coming from the Discord `warn` event.  
 
-Errors caught during Sonia's message processing are also sent to [Sonia Discord errors channel].  
+Errors caught during Sonia's message processing are also sent to [Sonia Discord errors channel](http://discordapp.com/channels/689833865279307782/700770389655158924).  
 These errors are also sent as a fallback message instead.
 
 ### Code issues
