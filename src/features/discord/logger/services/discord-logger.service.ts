@@ -48,7 +48,7 @@ export class DiscordLoggerService extends AbstractService {
   }
 
   private _listenForErrors(): void {
-    this.discordClient.on(`error`, (error: Readonly<Error>): void => {
+    this.discordClient.on(`error`, (error: Readonly<Error | string>): void => {
       this._discordLoggerErrorService.handleError(error);
     });
 
