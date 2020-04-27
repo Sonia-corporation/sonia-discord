@@ -30,7 +30,7 @@ export class LoggerService {
   private readonly _serviceName: ServiceNameEnum =
     ServiceNameEnum.LOGGER_SERVICE;
 
-  public constructor() {
+  public init(): void {
     this._handleServiceCreatedEvent();
     this.serviceCreated({
       service: this._serviceName,

@@ -14,8 +14,25 @@ describe(`LoggerService`, (): void => {
   let loggerConfigCoreService: LoggerConfigCoreService;
 
   beforeEach((): void => {
-    service = LoggerService.getInstance();
     loggerConfigCoreService = LoggerConfigCoreService.getInstance();
+  });
+
+  describe(`getInstance()`, (): void => {
+    it(`should create a Logger service`, (): void => {
+      expect.assertions(1);
+
+      service = LoggerService.getInstance();
+
+      expect(service).toStrictEqual(expect.any(LoggerService));
+    });
+
+    it(`should return the created Logger service`, (): void => {
+      expect.assertions(1);
+
+      const result = LoggerService.getInstance();
+
+      expect(result).toStrictEqual(service);
+    });
   });
 
   describe(`error()`, (): void => {
@@ -24,6 +41,8 @@ describe(`LoggerService`, (): void => {
     let consoleLogSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = LoggerService.getInstance();
+
       consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
     });
 
@@ -801,6 +820,8 @@ describe(`LoggerService`, (): void => {
     let consoleLogSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = LoggerService.getInstance();
+
       consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
     });
 
@@ -1576,6 +1597,8 @@ describe(`LoggerService`, (): void => {
     let consoleLogSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = LoggerService.getInstance();
+
       consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
     });
 
@@ -2339,6 +2362,8 @@ describe(`LoggerService`, (): void => {
     let consoleLogSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = LoggerService.getInstance();
+
       consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
     });
 
@@ -3086,6 +3111,8 @@ describe(`LoggerService`, (): void => {
     let consoleLogSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = LoggerService.getInstance();
+
       consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
     });
 
@@ -3823,6 +3850,8 @@ describe(`LoggerService`, (): void => {
     let debugSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = LoggerService.getInstance();
+
       debugSpy = jest.spyOn(service, `debug`).mockImplementation();
     });
 

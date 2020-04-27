@@ -14,13 +14,23 @@ export class DiscordClientService extends AbstractService {
     return DiscordClientService._instance;
   }
 
-  private readonly _client: Client = new Client();
+  private _client: Client | undefined = undefined;
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_CLIENT_SERVICE);
   }
 
+  public createClient(): Client {
+    this._client = new Client();
+
+    return this._client;
+  }
+
   public getClient(): Client {
+    if (_.isNil(this._client)) {
+      return this.createClient();
+    }
+
     return this._client;
   }
 }
