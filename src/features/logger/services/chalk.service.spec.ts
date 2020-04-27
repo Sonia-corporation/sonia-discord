@@ -1,9 +1,9 @@
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { DiscordSoniaService } from "./discord-sonia.service";
+import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { CoreEventService } from "../../core/services/core-event.service";
+import { ChalkService } from "./chalk.service";
 
-describe(`DiscordSoniaService`, (): void => {
-  let service: DiscordSoniaService;
+describe(`ChalkService`, (): void => {
+  let service: ChalkService;
   let coreEventService: CoreEventService;
 
   beforeEach((): void => {
@@ -11,18 +11,18 @@ describe(`DiscordSoniaService`, (): void => {
   });
 
   describe(`getInstance()`, (): void => {
-    it(`should create a DiscordSonia service`, (): void => {
+    it(`should create a Chalk service`, (): void => {
       expect.assertions(1);
 
-      service = DiscordSoniaService.getInstance();
+      service = ChalkService.getInstance();
 
-      expect(service).toStrictEqual(expect.any(DiscordSoniaService));
+      expect(service).toStrictEqual(expect.any(ChalkService));
     });
 
-    it(`should return the created DiscordSonia service`, (): void => {
+    it(`should return the created Chalk service`, (): void => {
       expect.assertions(1);
 
-      const result = DiscordSoniaService.getInstance();
+      const result = ChalkService.getInstance();
 
       expect(result).toStrictEqual(service);
     });
@@ -37,14 +37,14 @@ describe(`DiscordSoniaService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should notify the DiscordSonia service creation`, (): void => {
+    it(`should notify the Chalk service creation`, (): void => {
       expect.assertions(2);
 
-      service = new DiscordSoniaService();
+      service = new ChalkService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_SONIA_SERVICE
+        ServiceNameEnum.CHALK_SERVICE
       );
     });
   });

@@ -41,10 +41,10 @@ export class InitService extends AbstractService {
 
   public constructor() {
     super(ServiceNameEnum.INIT_SERVICE);
-    this.init();
   }
 
   public init(): void {
+    this._loggerService.init();
     this._readEnvironment();
   }
 
@@ -56,8 +56,8 @@ export class InitService extends AbstractService {
   }
 
   private _runApp(): void {
-    DiscordService.getInstance();
-    ServerService.getInstance();
+    DiscordService.getInstance().init();
+    ServerService.getInstance().initializeApp();
   }
 
   private _configureApp(environment: Readonly<IEnvironment>): void {
