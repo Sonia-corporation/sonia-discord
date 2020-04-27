@@ -1,4 +1,4 @@
-import { Client, Guild, GuildChannel } from "discord.js";
+import { Guild, GuildChannel } from "discord.js";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
@@ -21,7 +21,7 @@ export class DiscordGuildSoniaService extends AbstractService {
     return DiscordGuildSoniaService._instance;
   }
 
-  public readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
   private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
@@ -29,7 +29,9 @@ export class DiscordGuildSoniaService extends AbstractService {
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_GUILD_SONIA_SERVICE);
+  }
 
+  public init(): void {
     this._listen();
   }
 
@@ -133,18 +135,18 @@ export class DiscordGuildSoniaService extends AbstractService {
   }
 
   private _getSoniaGuild(): Guild | undefined {
-    return this.discordClient.guilds.cache.find(
-      (guild: Readonly<Guild>): boolean => {
+    return this._discordClientService
+      .getClient()
+      .guilds.cache.find((guild: Readonly<Guild>): boolean => {
         return _.isEqual(
           guild.id,
           this._discordGuildConfigService.getSoniaGuildId()
         );
-      }
-    );
+      });
   }
 
   private _listen(): void {
-    this.discordClient.on(`ready`, (): void => {
+    this._discordClientService.getClient().on(`ready`, (): void => {
       this._setSoniaGuild();
     });
   }

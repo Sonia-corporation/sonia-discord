@@ -1,9 +1,9 @@
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
-import { DiscordSoniaService } from "./discord-sonia.service";
+import { DiscordChannelService } from "./discord-channel.service";
 
-describe(`DiscordSoniaService`, (): void => {
-  let service: DiscordSoniaService;
+describe(`DiscordChannelService`, (): void => {
+  let service: DiscordChannelService;
   let coreEventService: CoreEventService;
 
   beforeEach((): void => {
@@ -11,18 +11,18 @@ describe(`DiscordSoniaService`, (): void => {
   });
 
   describe(`getInstance()`, (): void => {
-    it(`should create a DiscordSonia service`, (): void => {
+    it(`should create a DiscordChannel service`, (): void => {
       expect.assertions(1);
 
-      service = DiscordSoniaService.getInstance();
+      service = DiscordChannelService.getInstance();
 
-      expect(service).toStrictEqual(expect.any(DiscordSoniaService));
+      expect(service).toStrictEqual(expect.any(DiscordChannelService));
     });
 
-    it(`should return the created DiscordSonia service`, (): void => {
+    it(`should return the created DiscordChannel service`, (): void => {
       expect.assertions(1);
 
-      const result = DiscordSoniaService.getInstance();
+      const result = DiscordChannelService.getInstance();
 
       expect(result).toStrictEqual(service);
     });
@@ -37,14 +37,14 @@ describe(`DiscordSoniaService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should notify the DiscordSonia service creation`, (): void => {
+    it(`should notify the DiscordChannel service creation`, (): void => {
       expect.assertions(2);
 
-      service = new DiscordSoniaService();
+      service = new DiscordChannelService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_SONIA_SERVICE
+        ServiceNameEnum.DISCORD_CHANNEL_SERVICE
       );
     });
   });

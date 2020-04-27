@@ -1,9 +1,9 @@
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
-import { DiscordSoniaService } from "./discord-sonia.service";
+import { DiscordLoggerService } from "./discord-logger.service";
 
-describe(`DiscordSoniaService`, (): void => {
-  let service: DiscordSoniaService;
+describe(`DiscordLoggerService`, (): void => {
+  let service: DiscordLoggerService;
   let coreEventService: CoreEventService;
 
   beforeEach((): void => {
@@ -11,18 +11,18 @@ describe(`DiscordSoniaService`, (): void => {
   });
 
   describe(`getInstance()`, (): void => {
-    it(`should create a DiscordSonia service`, (): void => {
+    it(`should create a DiscordLogger service`, (): void => {
       expect.assertions(1);
 
-      service = DiscordSoniaService.getInstance();
+      service = DiscordLoggerService.getInstance();
 
-      expect(service).toStrictEqual(expect.any(DiscordSoniaService));
+      expect(service).toStrictEqual(expect.any(DiscordLoggerService));
     });
 
-    it(`should return the created DiscordSonia service`, (): void => {
+    it(`should return the created DiscordLogger service`, (): void => {
       expect.assertions(1);
 
-      const result = DiscordSoniaService.getInstance();
+      const result = DiscordLoggerService.getInstance();
 
       expect(result).toStrictEqual(service);
     });
@@ -37,14 +37,14 @@ describe(`DiscordSoniaService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should notify the DiscordSonia service creation`, (): void => {
+    it(`should notify the DiscordLogger service creation`, (): void => {
       expect.assertions(2);
 
-      service = new DiscordSoniaService();
+      service = new DiscordLoggerService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_SONIA_SERVICE
+        ServiceNameEnum.DISCORD_LOGGER_SERVICE
       );
     });
   });

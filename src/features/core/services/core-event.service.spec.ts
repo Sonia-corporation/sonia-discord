@@ -27,13 +27,14 @@ describe(`CoreEventService`, (): void => {
     });
   });
 
-  describe(`constructor()`, (): void => {
+  describe(`init()`, (): void => {
     beforeEach((): void => {
       service = new CoreEventService();
     });
 
     it(`should listen to server created event and push every created service in the created services list`, (): void => {
       expect.assertions(1);
+      service.init();
       service.notifyServiceCreated(
         ServiceNameEnum.DISCORD_MESSAGE_CONFIG_SERVICE
       );

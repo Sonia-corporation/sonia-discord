@@ -1,15 +1,61 @@
 import moment from "moment-timezone";
+import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { CoreEventService } from "../../core/services/core-event.service";
 import { TimeService } from "./time.service";
 
 describe(`TimeService`, (): void => {
   let service: TimeService;
+  let coreEventService: CoreEventService;
 
   beforeEach((): void => {
-    service = TimeService.getInstance();
+    coreEventService = CoreEventService.getInstance();
+  });
+
+  describe(`getInstance()`, (): void => {
+    it(`should create a Time service`, (): void => {
+      expect.assertions(1);
+
+      service = TimeService.getInstance();
+
+      expect(service).toStrictEqual(expect.any(TimeService));
+    });
+
+    it(`should return the created Time service`, (): void => {
+      expect.assertions(1);
+
+      const result = TimeService.getInstance();
+
+      expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`constructor()`, (): void => {
+    let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      coreEventServiceNotifyServiceCreatedSpy = jest
+        .spyOn(coreEventService, `notifyServiceCreated`)
+        .mockImplementation();
+    });
+
+    it(`should notify the Time service creation`, (): void => {
+      expect.assertions(2);
+
+      service = new TimeService();
+
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
+        ServiceNameEnum.TIME_SERVICE
+      );
+    });
   });
 
   describe(`now()`, (): void => {
     let format: string;
+
+    beforeEach((): void => {
+      service = TimeService.getInstance();
+    });
 
     describe(`when there is no given format`, (): void => {
       it(`should return now with the default moment format`, (): void => {
@@ -55,6 +101,10 @@ describe(`TimeService`, (): void => {
   describe(`fromNow()`, (): void => {
     let date: string;
     let isCapitalized: boolean;
+
+    beforeEach((): void => {
+      service = TimeService.getInstance();
+    });
 
     describe(`when the given date is an empty string`, (): void => {
       beforeEach((): void => {
