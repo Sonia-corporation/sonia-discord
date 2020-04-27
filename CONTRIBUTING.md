@@ -174,3 +174,22 @@ The footer should contain any information about **Breaking Changes**.
 
 **Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines.  
 The rest of the commit message is then used for this.
+
+## Monitoring
+
+### Discord issues
+
+Generic Discord error messages are sent to [Sonia Discord errors channel].  
+These errors are coming from the Discord `error` event.
+
+Generic Discord warning messages are sent to [Sonia Discord warnings channel].  
+These warnings are coming from the Discord `warn` event.  
+
+Errors caught during Sonia's message processing are also sent to [Sonia Discord errors channel].  
+These errors are also sent as a fallback message instead.
+
+### Code issues
+
+For code errors you can check the logs on [Papertrail](https://my.papertrailapp.com/systems/sonia-il-est-midi-discord/events).  
+Papertrail contains the full stack trace of the running server logs for seven days. 
+This is a good place to catch the errors thrown.
