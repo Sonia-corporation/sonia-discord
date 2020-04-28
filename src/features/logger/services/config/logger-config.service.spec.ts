@@ -5,8 +5,6 @@ import { ILoggerConfig } from "../../interfaces/logger-config";
 import { LoggerConfigCoreService } from "./logger-config-core.service";
 import { LoggerConfigService } from "./logger-config.service";
 
-jest.mock(`../../../config/services/config.service`);
-
 describe(`LoggerConfigService`, (): void => {
   let service: LoggerConfigService;
   let loggerConfigCoreService: LoggerConfigCoreService;
