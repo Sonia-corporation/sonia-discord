@@ -39,7 +39,7 @@ export class DiscordLoggerErrorService extends AbstractService {
     super(ServiceNameEnum.DISCORD_LOGGER_ERROR_SERVICE);
   }
 
-  public handleError(error: Readonly<Error>): void {
+  public handleError(error: Readonly<Error | string>): void {
     this._loggerService.error({
       context: this._serviceName,
       message: this._chalkService.text(error),
@@ -58,7 +58,7 @@ export class DiscordLoggerErrorService extends AbstractService {
   }
 
   private _getErrorMessageResponse(
-    error: Readonly<Error>
+    error: Readonly<Error | string>
   ): IDiscordMessageResponse {
     return {
       options: {
@@ -69,17 +69,24 @@ export class DiscordLoggerErrorService extends AbstractService {
     };
   }
 
-  private _getMessageEmbed(error: Readonly<Error>): MessageEmbedOptions {
-    return {
+  private _getMessageEmbed(
+    error: Readonly<Error | string>
+  ): MessageEmbedOptions {
+    const messageEmbedOptions: MessageEmbedOptions = {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
-      description: this._getMessageEmbedDescription(error),
-      fields: this._getMessageEmbedFields(error),
       footer: this._getMessageEmbedFooter(),
       thumbnail: this._getMessageEmbedThumbnail(),
       timestamp: this._getMessageEmbedTimestamp(),
       title: this._getMessageEmbedTitle(error),
     };
+
+    if (!_.isString(error)) {
+      messageEmbedOptions.description = this._getMessageEmbedDescription(error);
+      messageEmbedOptions.fields = this._getMessageEmbedFields(error);
+    }
+
+    return messageEmbedOptions;
   }
 
   private _getMessageEmbedAuthor(): MessageEmbedAuthor {
@@ -111,7 +118,11 @@ export class DiscordLoggerErrorService extends AbstractService {
     return moment().toDate();
   }
 
-  private _getMessageEmbedTitle(error: Readonly<Error>): string {
+  private _getMessageEmbedTitle(error: Readonly<Error | string>): string {
+    if (_.isString(error)) {
+      return error;
+    }
+
     return error.name;
   }
 
