@@ -1,31 +1,227 @@
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { PartialNested } from "../../../../types/partial-nested";
 import { IConfigUpdateBoolean } from "../../../config/interfaces/config-update-boolean";
 import { IConfigUpdateNumber } from "../../../config/interfaces/config-update-number";
 import { IConfigUpdateString } from "../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../config/services/config.service";
+import { CoreEventService } from "../../../core/services/core-event.service";
+import { LoggerService } from "../../../logger/services/logger.service";
 import * as IsNodeProductionModule from "../../../node/functions/is-node-production";
+import { TimeService } from "../../../time/services/time.service";
 import { IAppConfig } from "../../interfaces/app-config";
 import { AppConfigCoreService } from "./app-config-core.service";
 import { AppConfigMutatorService } from "./app-config-mutator.service";
+import { AppConfigService } from "./app-config.service";
 
-jest.mock(`../../../config/services/config.service`);
 jest.mock(`../../../time/services/time.service`);
 
 describe(`AppConfigMutationService`, (): void => {
   let service: AppConfigMutatorService;
   let configService: ConfigService;
   let appConfigCoreService: AppConfigCoreService;
+  let coreEventService: CoreEventService;
 
   beforeEach((): void => {
-    service = AppConfigMutatorService.getInstance();
     configService = ConfigService.getInstance();
     appConfigCoreService = AppConfigCoreService.getInstance();
+    coreEventService = CoreEventService.getInstance();
+  });
+
+  describe(`getInstance()`, (): void => {
+    let config: PartialNested<IAppConfig> | undefined;
+
+    beforeEach((): void => {
+      config = {
+        initializationDate: `dummy-initialization-date`,
+        isProduction: true,
+        releaseDate: `dummy-release-date`,
+        releaseNotes: `dummy-release-notes`,
+        totalReleaseCount: 88,
+        version: `dummy-version`,
+      };
+    });
+
+    it(`should create a AppConfigMutator service`, (): void => {
+      expect.assertions(1);
+
+      service = AppConfigMutatorService.getInstance(config);
+
+      expect(service).toStrictEqual(expect.any(AppConfigMutatorService));
+    });
+
+    it(`should return the created AppConfigMutator service`, (): void => {
+      expect.assertions(1);
+
+      const result = AppConfigMutatorService.getInstance();
+
+      expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`constructor()`, (): void => {
+    let config: PartialNested<IAppConfig> | undefined;
+
+    let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      coreEventServiceNotifyServiceCreatedSpy = jest
+        .spyOn(coreEventService, `notifyServiceCreated`)
+        .mockImplementation();
+    });
+
+    it(`should notify the AppConfigMutator service creation`, (): void => {
+      expect.assertions(2);
+
+      service = new AppConfigMutatorService();
+
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
+        ServiceNameEnum.APP_CONFIG_MUTATOR_SERVICE
+      );
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the current initialization date`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.initializationDate = `initializationDate`;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.initializationDate).toStrictEqual(
+          `initializationDate`
+        );
+      });
+
+      it(`should not update the current production state`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.isProduction = false;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.isProduction).toStrictEqual(false);
+      });
+
+      it(`should not update the current release date`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.releaseDate = `releaseDate`;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.releaseDate).toStrictEqual(`releaseDate`);
+      });
+
+      it(`should not update the current release notes`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.releaseNotes = `releaseNotes`;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.releaseNotes).toStrictEqual(`releaseNotes`);
+      });
+
+      it(`should not update the current total release count`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.totalReleaseCount = 8;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.totalReleaseCount).toStrictEqual(8);
+      });
+
+      it(`should not update the current version`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.version = `version`;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.version).toStrictEqual(`version`);
+      });
+    });
+
+    describe(`when the given config is a complete object`, (): void => {
+      beforeEach((): void => {
+        config = {
+          initializationDate: `dummy-initialization-date`,
+          isProduction: true,
+          releaseDate: `dummy-release-date`,
+          releaseNotes: `dummy-release-notes`,
+          totalReleaseCount: 88,
+          version: `dummy-version`,
+        };
+      });
+
+      it(`should override the initialization date`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.initializationDate = `initializationDate`;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.initializationDate).toStrictEqual(
+          `dummy-initialization-date`
+        );
+      });
+
+      it(`should override the production state`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.isProduction = false;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.isProduction).toStrictEqual(true);
+      });
+
+      it(`should override the release date`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.releaseDate = `releaseDate`;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.releaseDate).toStrictEqual(
+          `dummy-release-date`
+        );
+      });
+
+      it(`should override the release notes`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.releaseNotes = `releaseNotes`;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.releaseNotes).toStrictEqual(
+          `dummy-release-notes`
+        );
+      });
+
+      it(`should override the total release count`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.totalReleaseCount = 0;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.totalReleaseCount).toStrictEqual(88);
+      });
+
+      it(`should override the version`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.version = `version`;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.version).toStrictEqual(`dummy-version`);
+      });
+    });
   });
 
   describe(`init()`, (): void => {
     let isNodeProductionSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
+
       isNodeProductionSpy = jest.spyOn(
         IsNodeProductionModule,
         `isNodeProduction`
@@ -105,10 +301,69 @@ describe(`AppConfigMutationService`, (): void => {
     });
   });
 
+  describe(`preUpdateConfig()`, (): void => {
+    let loggerServiceGetInstanceSpy: jest.SpyInstance;
+    let timeServiceGetInstanceSpy: jest.SpyInstance;
+    let appConfigCoreServiceGetInstanceSpy: jest.SpyInstance;
+    let appConfigServiceGetInstanceSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
+
+      loggerServiceGetInstanceSpy = jest.spyOn(LoggerService, `getInstance`);
+      timeServiceGetInstanceSpy = jest.spyOn(TimeService, `getInstance`);
+      appConfigCoreServiceGetInstanceSpy = jest.spyOn(
+        AppConfigCoreService,
+        `getInstance`
+      );
+      appConfigServiceGetInstanceSpy = jest.spyOn(
+        AppConfigService,
+        `getInstance`
+      );
+    });
+
+    it(`should create the Logger service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should create the Time service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(timeServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(timeServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should create the AppConfigCore service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(appConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(appConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should create the AppConfig service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(appConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(appConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
+  });
+
   describe(`updateConfig()`, (): void => {
     let config: PartialNested<IAppConfig> | undefined;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
       appConfigCoreService.initializationDate = `dummy-initialization-date`;
       appConfigCoreService.isProduction = true;
       appConfigCoreService.releaseDate = `dummy-release-date`;
@@ -249,6 +504,7 @@ describe(`AppConfigMutationService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
       version = `dummy-version`;
       appConfigCoreService.version = `version`;
 
@@ -283,14 +539,15 @@ describe(`AppConfigMutationService`, (): void => {
   describe(`updateReleaseDate()`, (): void => {
     let releaseDate: string;
 
-    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+    let configServiceGetUpdatedDateSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
       releaseDate = `dummy-release-date`;
       appConfigCoreService.releaseDate = `release-date`;
 
-      configServiceGetUpdatedStringSpy = jest
-        .spyOn(configService, `getUpdatedString`)
+      configServiceGetUpdatedDateSpy = jest
+        .spyOn(configService, `getUpdatedDate`)
         .mockReturnValue(`dummy-release-date`);
     });
 
@@ -299,8 +556,8 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.updateReleaseDate(releaseDate);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledWith({
         context: `AppConfigMutatorService`,
         newValue: `dummy-release-date`,
         oldValue: `release-date`,
@@ -322,14 +579,15 @@ describe(`AppConfigMutationService`, (): void => {
   describe(`updateInitializationDate()`, (): void => {
     let initializationDate: string;
 
-    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+    let configServiceGetUpdatedDateSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
       initializationDate = `dummy-initialization-date`;
       appConfigCoreService.initializationDate = `initialization-date`;
 
-      configServiceGetUpdatedStringSpy = jest
-        .spyOn(configService, `getUpdatedString`)
+      configServiceGetUpdatedDateSpy = jest
+        .spyOn(configService, `getUpdatedDate`)
         .mockReturnValue(`dummy-initialization-date`);
     });
 
@@ -338,8 +596,8 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.updateInitializationDate(initializationDate);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledWith({
         context: `AppConfigMutatorService`,
         newValue: `dummy-initialization-date`,
         oldValue: `initialization-date`,
@@ -364,6 +622,7 @@ describe(`AppConfigMutationService`, (): void => {
     let configServiceGetUpdatedBooleanSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
       isProduction = false;
       appConfigCoreService.isProduction = true;
 
@@ -401,6 +660,7 @@ describe(`AppConfigMutationService`, (): void => {
     let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
       totalReleaseCount = 8;
       appConfigCoreService.totalReleaseCount = 5;
 
@@ -438,6 +698,7 @@ describe(`AppConfigMutationService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
       releaseNotes = `dummy-release-notes`;
       appConfigCoreService.releaseNotes = `release-notes`;
 

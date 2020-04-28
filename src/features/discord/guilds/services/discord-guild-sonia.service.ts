@@ -1,7 +1,9 @@
-import { Client, Guild, GuildChannel } from "discord.js";
+import { Guild, GuildChannel } from "discord.js";
 import _ from "lodash";
+import { filter, take } from "rxjs/operators";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
+import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../../logger/services/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { AnyDiscordChannel } from "../../channels/types/any-discord-channel";
@@ -21,15 +23,17 @@ export class DiscordGuildSoniaService extends AbstractService {
     return DiscordGuildSoniaService._instance;
   }
 
-  public readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
   private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private _soniaGuild: Guild | undefined = undefined;
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_GUILD_SONIA_SERVICE);
+  }
 
+  public init(): void {
     this._listen();
   }
 
@@ -133,19 +137,36 @@ export class DiscordGuildSoniaService extends AbstractService {
   }
 
   private _getSoniaGuild(): Guild | undefined {
-    return this.discordClient.guilds.cache.find(
-      (guild: Readonly<Guild>): boolean => {
+    return this._discordClientService
+      .getClient()
+      .guilds.cache.find((guild: Readonly<Guild>): boolean => {
         return _.isEqual(
           guild.id,
           this._discordGuildConfigService.getSoniaGuildId()
         );
-      }
-    );
+      });
   }
 
   private _listen(): void {
-    this.discordClient.on(`ready`, (): void => {
-      this._setSoniaGuild();
+    this._discordClientService
+      .isReady$()
+      .pipe(
+        filter((isReady: Readonly<boolean>): boolean => {
+          return _.isEqual(isReady, true);
+        }),
+        take(1)
+      )
+      .subscribe({
+        next: (): void => {
+          this._setSoniaGuild();
+        },
+      });
+
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(
+        `listen ${wrapInQuotes(`ready`)} Discord client state`
+      ),
     });
   }
 }

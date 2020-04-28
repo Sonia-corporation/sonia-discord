@@ -23,7 +23,7 @@ export class DiscordMessageAuthorService extends AbstractService {
   private readonly _discordAuthorService: DiscordAuthorService = DiscordAuthorService.getInstance();
   private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_AUTHOR_SERVICE);
   }
 

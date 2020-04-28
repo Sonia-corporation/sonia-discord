@@ -4,10 +4,15 @@ import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../logger/services/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
+import { TimeService } from "../../time/services/time.service";
 import { IConfigUpdateBoolean } from "../interfaces/config-update-boolean";
+import { IConfigUpdateDate } from "../interfaces/config-update-date";
+import { IConfigUpdateDateInternal } from "../interfaces/config-update-date-internal";
 import { IConfigUpdateNumber } from "../interfaces/config-update-number";
 import { IConfigUpdateString } from "../interfaces/config-update-string";
 import { IConfigUpdateStringInternal } from "../interfaces/config-update-string-internal";
+import { IConfigUpdateStringOrArray } from "../interfaces/config-update-string-or-array";
+import { IConfigUpdateStringOrArrayInternal } from "../interfaces/config-update-string-or-array-internal";
 
 export class ConfigService extends AbstractService {
   private static _instance: ConfigService;
@@ -22,8 +27,9 @@ export class ConfigService extends AbstractService {
 
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
+  private readonly _timeService: TimeService = TimeService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.CONFIG_SERVICE);
   }
 
@@ -63,42 +69,141 @@ export class ConfigService extends AbstractService {
     return configUpdateString.oldValue;
   }
 
-  public getUpdatedBoolean(
-    configUpdateString: Readonly<IConfigUpdateBoolean>
-  ): boolean {
-    if (_.isBoolean(configUpdateString.newValue)) {
+  public getUpdatedDate<T>(
+    configUpdateDate: Readonly<IConfigUpdateDate<T>>
+  ): T {
+    if (_.isString(configUpdateDate.newValue)) {
       this._loggerService.log({
-        context: configUpdateString.context,
+        context: configUpdateDate.context,
+        message: this._getUpdatedDateMessage(configUpdateDate),
+      });
+
+      return configUpdateDate.newValue;
+    }
+
+    return configUpdateDate.oldValue;
+  }
+
+  public getUpdatedStringOrArray<T>(
+    configUpdateStringOrArray: Readonly<IConfigUpdateStringOrArray<T>>
+  ): T {
+    if (_.isString(configUpdateStringOrArray.newValue)) {
+      this._loggerService.log({
+        context: configUpdateStringOrArray.context,
+        message: this._getUpdatedStringMessage(configUpdateStringOrArray),
+      });
+
+      return configUpdateStringOrArray.newValue;
+    } else if (_.isArray(configUpdateStringOrArray.newValue)) {
+      this._loggerService.log({
+        context: configUpdateStringOrArray.context,
+        message: this._getUpdatedStringOrArrayMessage(
+          configUpdateStringOrArray
+        ),
+      });
+
+      return configUpdateStringOrArray.newValue;
+    }
+
+    return configUpdateStringOrArray.oldValue;
+  }
+
+  public getUpdatedBoolean(
+    configUpdateBoolean: Readonly<IConfigUpdateBoolean>
+  ): boolean {
+    if (_.isBoolean(configUpdateBoolean.newValue)) {
+      this._loggerService.log({
+        context: configUpdateBoolean.context,
         message: this._chalkService.text(
           `${
-            configUpdateString.valueName
+            configUpdateBoolean.valueName
           } updated to: ${this._chalkService.value(
-            configUpdateString.newValue
+            configUpdateBoolean.newValue
           )}`
         ),
       });
 
-      return configUpdateString.newValue;
+      return configUpdateBoolean.newValue;
     }
 
-    return configUpdateString.oldValue;
+    return configUpdateBoolean.oldValue;
   }
 
   private _getUpdatedStringMessage<T>(
-    configUpdateString: Readonly<IConfigUpdateStringInternal<T>>
+    configUpdateStringInternal: Readonly<IConfigUpdateStringInternal<T>>
   ): string {
-    let message = `${configUpdateString.valueName} updated`;
+    let message = `${configUpdateStringInternal.valueName} updated`;
 
-    if (_.isEqual(configUpdateString.isValueHidden, true)) {
+    if (_.isEqual(configUpdateStringInternal.isValueHidden, true)) {
       message = this._loggerService.getHiddenValueUpdate(
         `${message} to: `,
         true
       );
     } else {
-      if (!_.isEqual(configUpdateString.isValueDisplay, false)) {
+      if (!_.isEqual(configUpdateStringInternal.isValueDisplay, false)) {
         message = this._chalkService.text(
           `${message} to: ${this._chalkService.value(
-            wrapInQuotes<T>(configUpdateString.newValue)
+            wrapInQuotes<T>(configUpdateStringInternal.newValue)
+          )}`
+        );
+      } else {
+        message = this._chalkService.text(message);
+      }
+    }
+
+    return message;
+  }
+
+  private _getUpdatedStringOrArrayMessage<T>(
+    configUpdateStringInternal: Readonly<IConfigUpdateStringOrArrayInternal<T>>
+  ): string {
+    let message = `${configUpdateStringInternal.valueName} updated`;
+
+    if (_.isEqual(configUpdateStringInternal.isValueHidden, true)) {
+      message = this._loggerService.getHiddenValueArrayUpdate(
+        `${message} to: `,
+        true
+      );
+    } else {
+      if (
+        !_.isEqual(configUpdateStringInternal.isValueDisplay, false) &&
+        _.isArray(configUpdateStringInternal.newValue)
+      ) {
+        message = this._chalkService.text(
+          `${message} to: ${this._chalkService.value(
+            this._loggerService.getStringArray<T>(
+              configUpdateStringInternal.newValue
+            )
+          )}`
+        );
+      } else {
+        message = this._chalkService.text(message);
+      }
+    }
+
+    return message;
+  }
+
+  private _getUpdatedDateMessage<T>(
+    configUpdateDate: Readonly<IConfigUpdateDateInternal<T>>
+  ): string {
+    let message = `${configUpdateDate.valueName} updated`;
+
+    if (_.isEqual(configUpdateDate.isValueHidden, true)) {
+      message = this._loggerService.getHiddenValueUpdate(
+        `${message} to: `,
+        true
+      );
+    } else {
+      if (!_.isEqual(configUpdateDate.isValueDisplay, false)) {
+        message = this._chalkService.text(
+          `${message} to: ${this._chalkService.value(
+            wrapInQuotes<T>(configUpdateDate.newValue)
+          )} ${this._chalkService.hint(
+            `(${this._timeService.fromNow<T>(
+              configUpdateDate.newValue,
+              false
+            )})`
           )}`
         );
       } else {

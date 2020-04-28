@@ -1,12 +1,14 @@
 import { Message } from "discord.js";
 import { createMock } from "ts-auto-mock";
+import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
+import { CoreEventService } from "../../../../core/services/core-event.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 import { DiscordMessageConfigService } from "../config/discord-message-config.service";
 import { DiscordMessageCommandCookieService } from "./discord-message-command-cookie.service";
 import { DiscordMessageCommandErrorService } from "./discord-message-command-error.service";
 import { DiscordMessageCommandHelpService } from "./discord-message-command-help.service";
-import { DiscordMessageCommandService } from "./discord-message-command.service";
 import { DiscordMessageCommandVersionService } from "./discord-message-command-version.service";
+import { DiscordMessageCommandService } from "./discord-message-command.service";
 
 describe(`DiscordMessageCommandService`, (): void => {
   let service: DiscordMessageCommandService;
@@ -15,26 +17,67 @@ describe(`DiscordMessageCommandService`, (): void => {
   let discordMessageCommandHelpService: DiscordMessageCommandHelpService;
   let discordMessageCommandCookieService: DiscordMessageCommandCookieService;
   let discordMessageConfigService: DiscordMessageConfigService;
+  let coreEventService: CoreEventService;
 
   let discordMessageConfigServiceGetMessageCommandPrefixSpy: jest.SpyInstance;
 
   beforeEach((): void => {
-    service = DiscordMessageCommandService.getInstance();
     discordMessageCommandVersionService = DiscordMessageCommandVersionService.getInstance();
     discordMessageCommandErrorService = DiscordMessageCommandErrorService.getInstance();
     discordMessageCommandHelpService = DiscordMessageCommandHelpService.getInstance();
     discordMessageCommandCookieService = DiscordMessageCommandCookieService.getInstance();
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
+    coreEventService = CoreEventService.getInstance();
 
     discordMessageConfigServiceGetMessageCommandPrefixSpy = jest
       .spyOn(discordMessageConfigService, `getMessageCommandPrefix`)
       .mockImplementation();
   });
 
+  describe(`getInstance()`, (): void => {
+    it(`should create a DiscordMessageCommand service`, (): void => {
+      expect.assertions(1);
+
+      service = DiscordMessageCommandService.getInstance();
+
+      expect(service).toStrictEqual(expect.any(DiscordMessageCommandService));
+    });
+
+    it(`should return the created DiscordMessageCommand service`, (): void => {
+      expect.assertions(1);
+
+      const result = DiscordMessageCommandService.getInstance();
+
+      expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`constructor()`, (): void => {
+    let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      coreEventServiceNotifyServiceCreatedSpy = jest
+        .spyOn(coreEventService, `notifyServiceCreated`)
+        .mockImplementation();
+    });
+
+    it(`should notify the DiscordMessageCommand service creation`, (): void => {
+      expect.assertions(2);
+
+      service = new DiscordMessageCommandService();
+
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
+        ServiceNameEnum.DISCORD_MESSAGE_COMMAND_SERVICE
+      );
+    });
+  });
+
   describe(`hasCommand()`, (): void => {
     let message: string;
 
     beforeEach((): void => {
+      service = DiscordMessageCommandService.getInstance();
       message = `dummy-message`;
 
       discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
@@ -173,6 +216,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let message: string;
 
     beforeEach((): void => {
+      service = DiscordMessageCommandService.getInstance();
       message = `dummy-message`;
     });
 
@@ -1178,6 +1222,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let message: string;
 
     beforeEach((): void => {
+      service = DiscordMessageCommandService.getInstance();
       message = `dummy-message`;
     });
 
@@ -2183,6 +2228,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let message: string;
 
     beforeEach((): void => {
+      service = DiscordMessageCommandService.getInstance();
       message = `dummy-message`;
     });
 
@@ -3188,6 +3234,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let message: string;
 
     beforeEach((): void => {
+      service = DiscordMessageCommandService.getInstance();
       message = `dummy-message`;
     });
 
@@ -4196,6 +4243,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let discordMessageCommandVersionServiceHandleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageCommandService.getInstance();
       anyDiscordMessage = createMock<Message>();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
@@ -4233,6 +4281,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let discordMessageCommandErrorServiceHandleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageCommandService.getInstance();
       anyDiscordMessage = createMock<Message>();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
@@ -4270,6 +4319,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let discordMessageCommandHelpServiceHandleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageCommandService.getInstance();
       anyDiscordMessage = createMock<Message>();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
@@ -4307,6 +4357,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let discordMessageCommandCookieServiceHandleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageCommandService.getInstance();
       anyDiscordMessage = createMock<Message>();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
@@ -4347,6 +4398,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let discordMessageCommandCookieServiceHandleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageCommandService.getInstance();
       anyDiscordMessage = createMock<Message>();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 

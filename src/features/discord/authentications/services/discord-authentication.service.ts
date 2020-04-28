@@ -19,14 +19,13 @@ export class DiscordAuthenticationService extends AbstractService {
     return DiscordAuthenticationService._instance;
   }
 
-  public readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _discordSoniaConfigService: DiscordSoniaConfigService = DiscordSoniaConfigService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_AUTHENTICATION_SERVICE);
-    this.init();
   }
 
   public init(): void {
@@ -35,7 +34,7 @@ export class DiscordAuthenticationService extends AbstractService {
   }
 
   private _listen(): void {
-    this.discordClient.on(`ready`, (): void => {
+    this._discordClientService.getClient().on(`ready`, (): void => {
       this._handleReady();
     });
 
@@ -46,12 +45,19 @@ export class DiscordAuthenticationService extends AbstractService {
   }
 
   private _handleReady(): void {
-    if (!_.isNil(this.discordClient.user)) {
+    this._logWhenReady();
+    this._updateReadyState();
+  }
+
+  private _logWhenReady(): void {
+    const client: Client = this._discordClientService.getClient();
+
+    if (!_.isNil(client.user)) {
       this._loggerService.log({
         context: this._serviceName,
         message: this._chalkService.text(
           `authenticated as: ${this._chalkService.value(
-            wrapInQuotes(this.discordClient.user.tag)
+            wrapInQuotes(client.user.tag)
           )}`
         ),
       });
@@ -65,8 +71,13 @@ export class DiscordAuthenticationService extends AbstractService {
     }
   }
 
+  private _updateReadyState(): void {
+    this._discordClientService.notifyIsReady();
+  }
+
   private _login(): void {
-    this.discordClient
+    this._discordClientService
+      .getClient()
       .login(this._discordSoniaConfigService.getSecretToken())
       .then((): void => {
         this._loggerService.success({

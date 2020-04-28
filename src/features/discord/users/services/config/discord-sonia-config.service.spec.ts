@@ -1,22 +1,63 @@
 import { IconEnum } from "../../../../../enums/icon.enum";
+import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
+import { CoreEventService } from "../../../../core/services/core-event.service";
 import { IDiscordSoniaConfig } from "../../../interfaces/discord-sonia-config";
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../../interfaces/discord-sonia-corporation-message-embed-author-config";
 import { DiscordSoniaConfigCoreService } from "./discord-sonia-config-core.service";
 import { DiscordSoniaConfigService } from "./discord-sonia-config.service";
 
-jest.mock(`../../../../config/services/config.service`);
-
 describe(`DiscordSoniaConfigService`, (): void => {
   let service: DiscordSoniaConfigService;
   let discordSoniaConfigCoreService: DiscordSoniaConfigCoreService;
+  let coreEventService: CoreEventService;
 
   beforeEach((): void => {
-    service = DiscordSoniaConfigService.getInstance();
     discordSoniaConfigCoreService = DiscordSoniaConfigCoreService.getInstance();
+    coreEventService = CoreEventService.getInstance();
+  });
+
+  describe(`getInstance()`, (): void => {
+    it(`should create a DiscordSoniaConfig service`, (): void => {
+      expect.assertions(1);
+
+      service = DiscordSoniaConfigService.getInstance();
+
+      expect(service).toStrictEqual(expect.any(DiscordSoniaConfigService));
+    });
+
+    it(`should return the created DiscordSoniaConfig service`, (): void => {
+      expect.assertions(1);
+
+      const result = DiscordSoniaConfigService.getInstance();
+
+      expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`constructor()`, (): void => {
+    let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      coreEventServiceNotifyServiceCreatedSpy = jest
+        .spyOn(coreEventService, `notifyServiceCreated`)
+        .mockImplementation();
+    });
+
+    it(`should notify the DiscordSoniaConfig service creation`, (): void => {
+      expect.assertions(2);
+
+      service = new DiscordSoniaConfigService();
+
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
+        ServiceNameEnum.DISCORD_SONIA_CONFIG_SERVICE
+      );
+    });
   });
 
   describe(`getConfig()`, (): void => {
     beforeEach((): void => {
+      service = DiscordSoniaConfigService.getInstance();
       discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor = {
         iconURL: `dummy-icon-url`,
@@ -47,6 +88,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
   describe(`getCorporationImageUrl()`, (): void => {
     beforeEach((): void => {
+      service = DiscordSoniaConfigService.getInstance();
       discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
     });
 
@@ -61,6 +103,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
   describe(`getCorporationMessageEmbedAuthor()`, (): void => {
     beforeEach((): void => {
+      service = DiscordSoniaConfigService.getInstance();
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor = {
         iconURL: `dummy-icon-url`,
         name: `dummy-name`,
@@ -83,6 +126,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
   describe(`getCorporationMessageEmbedAuthorIconUrl()`, (): void => {
     beforeEach((): void => {
+      service = DiscordSoniaConfigService.getInstance();
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor.iconURL = `dummy-icon-url`;
     });
 
@@ -97,6 +141,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
   describe(`getCorporationMessageEmbedAuthorName()`, (): void => {
     beforeEach((): void => {
+      service = DiscordSoniaConfigService.getInstance();
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor.name = `dummy-name`;
     });
 
@@ -111,6 +156,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
   describe(`getCorporationMessageEmbedAuthorUrl()`, (): void => {
     beforeEach((): void => {
+      service = DiscordSoniaConfigService.getInstance();
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url = `dummy-url`;
     });
 
@@ -125,6 +171,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
   describe(`getId()`, (): void => {
     beforeEach((): void => {
+      service = DiscordSoniaConfigService.getInstance();
       discordSoniaConfigCoreService.id = `dummy-id`;
     });
 
@@ -139,6 +186,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
   describe(`getSecretToken()`, (): void => {
     beforeEach((): void => {
+      service = DiscordSoniaConfigService.getInstance();
       discordSoniaConfigCoreService.secretToken = `dummy-secret-token`;
     });
 

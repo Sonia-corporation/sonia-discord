@@ -49,6 +49,14 @@ describe(`DiscordMessageConfigValueNameEnum`, (): void => {
     ).toStrictEqual(`message command help image url`);
   });
 
+  it(`should have a member "COMMAND_PREFIX"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageConfigValueNameEnum.COMMAND_PREFIX).toStrictEqual(
+      `message command prefix`
+    );
+  });
+
   it(`should have a member "COMMAND_VERSION_IMAGE_COLOR"`, (): void => {
     expect.assertions(1);
 

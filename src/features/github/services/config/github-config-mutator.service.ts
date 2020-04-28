@@ -25,12 +25,18 @@ export class GithubConfigMutatorService extends AbstractConfigService<
     return GithubConfigMutatorService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _githubConfigCoreService: GithubConfigCoreService = GithubConfigCoreService.getInstance();
-  private readonly _githubConfigService: GithubConfigService = GithubConfigService.getInstance();
+  private _loggerService: LoggerService = LoggerService.getInstance();
+  private _githubConfigCoreService: GithubConfigCoreService = GithubConfigCoreService.getInstance();
+  private _githubConfigService: GithubConfigService = GithubConfigService.getInstance();
 
-  protected constructor(config?: Readonly<PartialNested<IGithubConfig>>) {
+  public constructor(config?: Readonly<PartialNested<IGithubConfig>>) {
     super(ServiceNameEnum.GITHUB_CONFIG_MUTATOR_SERVICE, config);
+  }
+
+  public preUpdateConfig(): void {
+    this._loggerService = LoggerService.getInstance();
+    this._githubConfigCoreService = GithubConfigCoreService.getInstance();
+    this._githubConfigService = GithubConfigService.getInstance();
   }
 
   public updateConfig(config?: Readonly<PartialNested<IGithubConfig>>): void {

@@ -1,30 +1,187 @@
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { PartialNested } from "../../../../types/partial-nested";
 import { IConfigUpdateBoolean } from "../../../config/interfaces/config-update-boolean";
 import { IConfigUpdateString } from "../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../config/services/config.service";
+import { CoreEventService } from "../../../core/services/core-event.service";
 import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
 import { ILoggerConfig } from "../../interfaces/logger-config";
+import { LoggerService } from "../logger.service";
 import { LoggerConfigCoreService } from "./logger-config-core.service";
 import { LoggerConfigMutatorService } from "./logger-config-mutator.service";
+import { LoggerConfigService } from "./logger-config.service";
 
-jest.mock(`../../../config/services/config.service`);
 jest.mock(`../logger.service`);
 
 describe(`LoggerConfigMutatorService`, (): void => {
   let service: LoggerConfigMutatorService;
   let configService: ConfigService;
   let loggerConfigCoreService: LoggerConfigCoreService;
+  let coreEventService: CoreEventService;
 
   beforeEach((): void => {
-    service = LoggerConfigMutatorService.getInstance();
     configService = ConfigService.getInstance();
     loggerConfigCoreService = LoggerConfigCoreService.getInstance();
+    coreEventService = CoreEventService.getInstance();
+  });
+
+  describe(`getInstance()`, (): void => {
+    let config: PartialNested<ILoggerConfig> | undefined;
+
+    beforeEach((): void => {
+      config = {
+        isEnabled: true,
+        level: LoggerConfigLevelEnum.DEBUG,
+      };
+    });
+
+    it(`should create a LoggerConfigMutator service`, (): void => {
+      expect.assertions(1);
+
+      service = LoggerConfigMutatorService.getInstance(config);
+
+      expect(service).toStrictEqual(expect.any(LoggerConfigMutatorService));
+    });
+
+    it(`should return the created LoggerConfigMutator service`, (): void => {
+      expect.assertions(1);
+
+      const result = LoggerConfigMutatorService.getInstance();
+
+      expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`constructor()`, (): void => {
+    let config: PartialNested<ILoggerConfig> | undefined;
+
+    let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      coreEventServiceNotifyServiceCreatedSpy = jest
+        .spyOn(coreEventService, `notifyServiceCreated`)
+        .mockImplementation();
+    });
+
+    it(`should notify the LoggerConfigMutator service creation`, (): void => {
+      expect.assertions(2);
+
+      service = new LoggerConfigMutatorService();
+
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
+        ServiceNameEnum.LOGGER_CONFIG_MUTATOR_SERVICE
+      );
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the current enabled state`, (): void => {
+        expect.assertions(1);
+        loggerConfigCoreService.isEnabled = true;
+
+        service = new LoggerConfigMutatorService(config);
+
+        expect(loggerConfigCoreService.isEnabled).toStrictEqual(true);
+      });
+
+      it(`should not update the current level`, (): void => {
+        expect.assertions(1);
+        loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
+
+        service = new LoggerConfigMutatorService(config);
+
+        expect(loggerConfigCoreService.level).toStrictEqual(
+          LoggerConfigLevelEnum.DEBUG
+        );
+      });
+    });
+
+    describe(`when the given config is a complete object`, (): void => {
+      beforeEach((): void => {
+        config = {
+          isEnabled: true,
+          level: LoggerConfigLevelEnum.DEBUG,
+        };
+      });
+
+      it(`should override the enabled state`, (): void => {
+        expect.assertions(1);
+        loggerConfigCoreService.isEnabled = false;
+
+        service = new LoggerConfigMutatorService(config);
+
+        expect(loggerConfigCoreService.isEnabled).toStrictEqual(true);
+      });
+
+      it(`should override the level`, (): void => {
+        expect.assertions(1);
+        loggerConfigCoreService.level = LoggerConfigLevelEnum.ERROR;
+
+        service = new LoggerConfigMutatorService(config);
+
+        expect(loggerConfigCoreService.level).toStrictEqual(
+          LoggerConfigLevelEnum.DEBUG
+        );
+      });
+    });
+  });
+
+  describe(`preUpdateConfig()`, (): void => {
+    let loggerServiceGetInstanceSpy: jest.SpyInstance;
+    let loggerConfigCoreServiceGetInstanceSpy: jest.SpyInstance;
+    let loggerConfigServiceGetInstanceSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = LoggerConfigMutatorService.getInstance();
+
+      loggerServiceGetInstanceSpy = jest.spyOn(LoggerService, `getInstance`);
+      loggerConfigCoreServiceGetInstanceSpy = jest.spyOn(
+        LoggerConfigCoreService,
+        `getInstance`
+      );
+      loggerConfigServiceGetInstanceSpy = jest.spyOn(
+        LoggerConfigService,
+        `getInstance`
+      );
+    });
+
+    it(`should create the Logger service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should create the LoggerConfigCore service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(loggerConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should create the LoggerConfig service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(loggerConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
   });
 
   describe(`updateConfig()`, (): void => {
     let config: PartialNested<ILoggerConfig> | undefined;
 
     beforeEach((): void => {
+      service = LoggerConfigMutatorService.getInstance();
       loggerConfigCoreService.isEnabled = true;
       loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
     });
@@ -87,6 +244,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = LoggerConfigMutatorService.getInstance();
       isEnabled = true;
       loggerConfigCoreService.isEnabled = false;
 
@@ -124,6 +282,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = LoggerConfigMutatorService.getInstance();
       level = LoggerConfigLevelEnum.DEBUG;
       loggerConfigCoreService.level = LoggerConfigLevelEnum.SUCCESS;
 

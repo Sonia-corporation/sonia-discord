@@ -22,7 +22,7 @@ export class AppConfigCoreService extends AbstractService
   public totalReleaseCount = 0;
   public version = `unknown`;
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.APP_CONFIG_CORE_SERVICE);
   }
 }

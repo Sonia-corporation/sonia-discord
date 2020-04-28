@@ -19,7 +19,7 @@ export class LoggerConfigCoreService extends AbstractService
   public isEnabled = true;
   public level = LoggerConfigLevelEnum.DEBUG;
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.LOGGER_CONFIG_CORE_SERVICE);
   }
 }

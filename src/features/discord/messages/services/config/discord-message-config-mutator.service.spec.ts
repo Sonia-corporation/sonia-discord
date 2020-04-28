@@ -1,9 +1,13 @@
 import { ColorEnum } from "../../../../../enums/color.enum";
 import { IconEnum } from "../../../../../enums/icon.enum";
+import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { PartialNested } from "../../../../../types/partial-nested";
 import { IConfigUpdateNumber } from "../../../../config/interfaces/config-update-number";
 import { IConfigUpdateString } from "../../../../config/interfaces/config-update-string";
+import { IConfigUpdateStringOrArray } from "../../../../config/interfaces/config-update-string-or-array";
 import { ConfigService } from "../../../../config/services/config.service";
+import { CoreEventService } from "../../../../core/services/core-event.service";
+import { LoggerService } from "../../../../logger/services/logger.service";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
 import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
@@ -15,24 +19,500 @@ import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-
 import { IDiscordMessageWarningConfig } from "../../../interfaces/discord-message-warning-config";
 import { DiscordMessageConfigCoreService } from "./discord-message-config-core.service";
 import { DiscordMessageConfigMutatorService } from "./discord-message-config-mutator.service";
-
-jest.mock(`../../../../config/services/config.service`);
+import { DiscordMessageConfigService } from "./discord-message-config.service";
 
 describe(`DiscordMessageConfigMutatorService`, (): void => {
   let service: DiscordMessageConfigMutatorService;
   let configService: ConfigService;
   let discordMessageConfigCoreService: DiscordMessageConfigCoreService;
+  let coreEventService: CoreEventService;
 
   beforeEach((): void => {
-    service = DiscordMessageConfigMutatorService.getInstance();
     configService = ConfigService.getInstance();
     discordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
+    coreEventService = CoreEventService.getInstance();
+  });
+
+  describe(`getInstance()`, (): void => {
+    let config: PartialNested<IDiscordConfig> | undefined;
+
+    beforeEach((): void => {
+      config = {
+        message: {
+          command: {
+            cookie: {
+              imageColor: ColorEnum.CANDY,
+              imageUrl: IconEnum.GIRL,
+            },
+            error: {
+              imageColor: ColorEnum.CANDY,
+              imageUrl: IconEnum.GIRL,
+            },
+            help: {
+              imageColor: ColorEnum.CANDY,
+              imageUrl: IconEnum.GIRL,
+            },
+            prefix: `dummy-prefix`,
+            version: {
+              imageColor: ColorEnum.CANDY,
+              imageUrl: IconEnum.GIRL,
+            },
+          },
+          error: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.GIRL,
+          },
+          warning: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.GIRL,
+          },
+        },
+      };
+    });
+
+    it(`should create a DiscordMessageConfigMutator service`, (): void => {
+      expect.assertions(1);
+
+      service = DiscordMessageConfigMutatorService.getInstance(config);
+
+      expect(service).toStrictEqual(
+        expect.any(DiscordMessageConfigMutatorService)
+      );
+    });
+
+    it(`should return the created DiscordMessageConfigMutator service`, (): void => {
+      expect.assertions(1);
+
+      const result = DiscordMessageConfigMutatorService.getInstance();
+
+      expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`constructor()`, (): void => {
+    let config: PartialNested<IDiscordConfig> | undefined;
+
+    let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      coreEventServiceNotifyServiceCreatedSpy = jest
+        .spyOn(coreEventService, `notifyServiceCreated`)
+        .mockImplementation();
+    });
+
+    it(`should notify the DiscordMessageConfigMutator service creation`, (): void => {
+      expect.assertions(2);
+
+      service = new DiscordMessageConfigMutatorService();
+
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
+        ServiceNameEnum.DISCORD_MESSAGE_CONFIG_MUTATOR_SERVICE
+      );
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the current command cookie image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.cookie.imageColor =
+          ColorEnum.CANDY;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.cookie.imageColor
+        ).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should not update the current command cookie image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.cookie.imageUrl = IconEnum.GIRL;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.cookie.imageUrl
+        ).toStrictEqual(IconEnum.GIRL);
+      });
+
+      it(`should not update the current command error image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.error.imageColor =
+          ColorEnum.CANDY;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.error.imageColor
+        ).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should not update the current command error image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.error.imageUrl = IconEnum.GIRL;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.error.imageUrl
+        ).toStrictEqual(IconEnum.GIRL);
+      });
+
+      it(`should not update the current command help image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.help.imageColor =
+          ColorEnum.CANDY;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.help.imageColor
+        ).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should not update the current command help image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.help.imageUrl = IconEnum.GIRL;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.help.imageUrl
+        ).toStrictEqual(IconEnum.GIRL);
+      });
+
+      it(`should not update the current command prefix`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.prefix = `prefix`;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(discordMessageConfigCoreService.command.prefix).toStrictEqual(
+          `prefix`
+        );
+      });
+
+      it(`should not update the current command version image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.version.imageColor =
+          ColorEnum.CANDY;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.version.imageColor
+        ).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should not update the current command version image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.version.imageUrl =
+          IconEnum.GIRL;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.version.imageUrl
+        ).toStrictEqual(IconEnum.GIRL);
+      });
+
+      it(`should not update the current error image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.error.imageColor = ColorEnum.CANDY;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(discordMessageConfigCoreService.error.imageColor).toStrictEqual(
+          ColorEnum.CANDY
+        );
+      });
+
+      it(`should not update the current error image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.error.imageUrl = IconEnum.GIRL;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(discordMessageConfigCoreService.error.imageUrl).toStrictEqual(
+          IconEnum.GIRL
+        );
+      });
+
+      it(`should not update the current warning image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.warning.imageColor = ColorEnum.CANDY;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.warning.imageColor
+        ).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should not update the current warning image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.warning.imageUrl = IconEnum.GIRL;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(discordMessageConfigCoreService.warning.imageUrl).toStrictEqual(
+          IconEnum.GIRL
+        );
+      });
+    });
+
+    describe(`when the given config is a complete object`, (): void => {
+      beforeEach((): void => {
+        config = {
+          message: {
+            command: {
+              cookie: {
+                imageColor: ColorEnum.CANDY,
+                imageUrl: IconEnum.GIRL,
+              },
+              error: {
+                imageColor: ColorEnum.CANDY,
+                imageUrl: IconEnum.GIRL,
+              },
+              help: {
+                imageColor: ColorEnum.CANDY,
+                imageUrl: IconEnum.GIRL,
+              },
+              prefix: `dummy-prefix`,
+              version: {
+                imageColor: ColorEnum.CANDY,
+                imageUrl: IconEnum.GIRL,
+              },
+            },
+            error: {
+              imageColor: ColorEnum.CANDY,
+              imageUrl: IconEnum.GIRL,
+            },
+            warning: {
+              imageColor: ColorEnum.CANDY,
+              imageUrl: IconEnum.GIRL,
+            },
+          },
+        };
+      });
+
+      it(`should override the command cookie image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.cookie.imageColor =
+          ColorEnum.MINT;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.cookie.imageColor
+        ).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should override the command cookie image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.cookie.imageUrl =
+          IconEnum.WARNING_SHIELD;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.cookie.imageUrl
+        ).toStrictEqual(IconEnum.GIRL);
+      });
+
+      it(`should override the command error image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.error.imageColor =
+          ColorEnum.MINT;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.error.imageColor
+        ).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should override the command error image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.error.imageUrl =
+          IconEnum.WARNING_SHIELD;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.error.imageUrl
+        ).toStrictEqual(IconEnum.GIRL);
+      });
+
+      it(`should override the command help image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.help.imageColor =
+          ColorEnum.MINT;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.help.imageColor
+        ).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should override the command help image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.help.imageUrl =
+          IconEnum.WARNING_SHIELD;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.help.imageUrl
+        ).toStrictEqual(IconEnum.GIRL);
+      });
+
+      it(`should override the command prefix`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.prefix = `prefix`;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(discordMessageConfigCoreService.command.prefix).toStrictEqual(
+          `dummy-prefix`
+        );
+      });
+
+      it(`should override the command version image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.version.imageColor =
+          ColorEnum.MINT;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.version.imageColor
+        ).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should override the command version image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.version.imageUrl =
+          IconEnum.WARNING_SHIELD;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.version.imageUrl
+        ).toStrictEqual(IconEnum.GIRL);
+      });
+
+      it(`should override the error image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.error.imageColor = ColorEnum.MINT;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(discordMessageConfigCoreService.error.imageColor).toStrictEqual(
+          ColorEnum.CANDY
+        );
+      });
+
+      it(`should override the error image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.error.imageUrl =
+          IconEnum.WARNING_SHIELD;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(discordMessageConfigCoreService.error.imageUrl).toStrictEqual(
+          IconEnum.GIRL
+        );
+      });
+
+      it(`should override the warning image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.warning.imageColor = ColorEnum.MINT;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.warning.imageColor
+        ).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should override the warning image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.warning.imageUrl =
+          IconEnum.WARNING_SHIELD;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(discordMessageConfigCoreService.warning.imageUrl).toStrictEqual(
+          IconEnum.GIRL
+        );
+      });
+    });
+  });
+
+  describe(`preUpdateConfig()`, (): void => {
+    let loggerServiceGetInstanceSpy: jest.SpyInstance;
+    let discordMessageConfigCoreServiceGetInstanceSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetInstanceSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
+
+      loggerServiceGetInstanceSpy = jest.spyOn(LoggerService, `getInstance`);
+      discordMessageConfigCoreServiceGetInstanceSpy = jest.spyOn(
+        DiscordMessageConfigCoreService,
+        `getInstance`
+      );
+      discordMessageConfigServiceGetInstanceSpy = jest.spyOn(
+        DiscordMessageConfigService,
+        `getInstance`
+      );
+    });
+
+    it(`should create the Logger service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should create the DiscordMessageConfigCore service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(
+        discordMessageConfigCoreServiceGetInstanceSpy
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        discordMessageConfigCoreServiceGetInstanceSpy
+      ).toHaveBeenCalledWith();
+    });
+
+    it(`should create the DiscordMessageConfig service instance`, (): void => {
+      expect.assertions(2);
+
+      service.preUpdateConfig();
+
+      expect(discordMessageConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(
+        1
+      );
+      expect(discordMessageConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
   });
 
   describe(`updateConfig()`, (): void => {
     let config: PartialNested<IDiscordConfig> | undefined;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       discordMessageConfigCoreService.command = {
         cookie: {
           imageColor: ColorEnum.SKY,
@@ -185,6 +665,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let config: PartialNested<IDiscordMessageConfig> | undefined;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       discordMessageConfigCoreService.command = {
         cookie: {
           imageColor: ColorEnum.SUN,
@@ -355,6 +836,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let config: PartialNested<IDiscordMessageCommandConfig> | undefined;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       discordMessageConfigCoreService.command = {
         cookie: {
           imageColor: ColorEnum.SUN,
@@ -519,6 +1001,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let config: PartialNested<IDiscordMessageCommandCookieConfig> | undefined;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       discordMessageConfigCoreService.command.cookie = {
         imageColor: ColorEnum.SUN,
         imageUrl: IconEnum.INFORMATION,
@@ -585,6 +1068,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       imageColor = ColorEnum.SUN;
       discordMessageConfigCoreService.command.cookie.imageColor =
         ColorEnum.CANDY;
@@ -625,6 +1109,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       imageUrl = IconEnum.GIRL;
       discordMessageConfigCoreService.command.cookie.imageUrl =
         IconEnum.INFORMATION;
@@ -663,6 +1148,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let config: PartialNested<IDiscordMessageCommandErrorConfig> | undefined;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       discordMessageConfigCoreService.command.error = {
         imageColor: ColorEnum.SUN,
         imageUrl: IconEnum.GIRL,
@@ -729,6 +1215,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       imageColor = ColorEnum.SUN;
       discordMessageConfigCoreService.command.error.imageColor =
         ColorEnum.CANDY;
@@ -769,6 +1256,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       imageUrl = IconEnum.GIRL;
       discordMessageConfigCoreService.command.error.imageUrl =
         IconEnum.INFORMATION;
@@ -807,6 +1295,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let config: PartialNested<IDiscordMessageCommandHelpConfig> | undefined;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       discordMessageConfigCoreService.command.help = {
         imageColor: ColorEnum.SUN,
         imageUrl: IconEnum.GIRL,
@@ -873,6 +1362,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       imageColor = ColorEnum.SUN;
       discordMessageConfigCoreService.command.help.imageColor = ColorEnum.CANDY;
 
@@ -912,6 +1402,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       imageUrl = IconEnum.GIRL;
       discordMessageConfigCoreService.command.help.imageUrl =
         IconEnum.INFORMATION;
@@ -946,10 +1437,99 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     });
   });
 
+  describe(`updateMessageCommandPrefix()`, (): void => {
+    let prefix: string | (string | undefined)[];
+
+    let configServiceGetUpdatedStringOrArraySpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
+
+      configServiceGetUpdatedStringOrArraySpy = jest
+        .spyOn(configService, `getUpdatedStringOrArray`)
+        .mockImplementation();
+    });
+
+    describe(`when the given value is a string`, (): void => {
+      beforeEach((): void => {
+        prefix = `dummy-prefix`;
+        discordMessageConfigCoreService.command.prefix = `prefix`;
+
+        configServiceGetUpdatedStringOrArraySpy.mockReturnValue(`dummy-prefix`);
+      });
+
+      it(`should get the updated string`, (): void => {
+        expect.assertions(2);
+
+        service.updateMessageCommandPrefix(prefix);
+
+        expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledTimes(
+          1
+        );
+        expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledWith({
+          context: `DiscordMessageConfigMutatorService`,
+          newValue: `dummy-prefix`,
+          oldValue: `prefix`,
+          valueName: `message command prefix`,
+        } as IConfigUpdateStringOrArray);
+      });
+
+      it(`should update the Discord message config command prefix with the updated string`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandPrefix(prefix);
+
+        expect(discordMessageConfigCoreService.command.prefix).toStrictEqual(
+          `dummy-prefix`
+        );
+      });
+    });
+
+    describe(`when the given value is an array`, (): void => {
+      beforeEach((): void => {
+        prefix = [`dummy-dummy`, `prefix-dummy`];
+        discordMessageConfigCoreService.command.prefix = [`dummy`, `prefix`];
+
+        configServiceGetUpdatedStringOrArraySpy.mockReturnValue([
+          `dummy-dummy`,
+          `prefix-dummy`,
+        ]);
+      });
+
+      it(`should get the updated string array`, (): void => {
+        expect.assertions(2);
+
+        service.updateMessageCommandPrefix(prefix);
+
+        expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledTimes(
+          1
+        );
+        expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledWith({
+          context: `DiscordMessageConfigMutatorService`,
+          newValue: [`dummy-dummy`, `prefix-dummy`],
+          oldValue: [`dummy`, `prefix`],
+          valueName: `message command prefix`,
+        } as IConfigUpdateStringOrArray);
+      });
+
+      it(`should update the Discord message config command prefix with the updated string array`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandPrefix(prefix);
+
+        expect(discordMessageConfigCoreService.command.prefix).toStrictEqual([
+          `dummy-dummy`,
+          `prefix-dummy`,
+        ]);
+      });
+    });
+  });
+
   describe(`updateMessageCommandVersion()`, (): void => {
     let config: PartialNested<IDiscordMessageCommandErrorConfig> | undefined;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       discordMessageConfigCoreService.command.version = {
         imageColor: ColorEnum.SUN,
         imageUrl: IconEnum.GIRL,
@@ -1016,6 +1596,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       imageColor = ColorEnum.SUN;
       discordMessageConfigCoreService.command.version.imageColor =
         ColorEnum.CANDY;
@@ -1056,6 +1637,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       imageUrl = IconEnum.GIRL;
       discordMessageConfigCoreService.command.version.imageUrl =
         IconEnum.INFORMATION;
@@ -1094,6 +1676,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let config: PartialNested<IDiscordMessageErrorConfig> | undefined;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       discordMessageConfigCoreService.error = {
         imageColor: ColorEnum.SUN,
         imageUrl: IconEnum.GIRL,
@@ -1160,6 +1743,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       imageColor = ColorEnum.SUN;
       discordMessageConfigCoreService.error.imageColor = ColorEnum.CANDY;
 
@@ -1199,6 +1783,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       imageUrl = IconEnum.GIRL;
       discordMessageConfigCoreService.error.imageUrl = IconEnum.INFORMATION;
 
@@ -1236,6 +1821,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let config: PartialNested<IDiscordMessageWarningConfig> | undefined;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       discordMessageConfigCoreService.warning = {
         imageColor: ColorEnum.SUN,
         imageUrl: IconEnum.GIRL,
@@ -1302,6 +1888,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       imageColor = ColorEnum.SUN;
       discordMessageConfigCoreService.warning.imageColor = ColorEnum.CANDY;
 
@@ -1341,6 +1928,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
       imageUrl = IconEnum.GIRL;
       discordMessageConfigCoreService.warning.imageUrl = IconEnum.INFORMATION;
 

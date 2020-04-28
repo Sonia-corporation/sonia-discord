@@ -1,4 +1,3 @@
-import { Client } from "discord.js";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
@@ -20,15 +19,14 @@ export class DiscordLoggerService extends AbstractService {
     return DiscordLoggerService._instance;
   }
 
-  public readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _discordLoggerErrorService: DiscordLoggerErrorService = DiscordLoggerErrorService.getInstance();
   private readonly _discordLoggerWarningService: DiscordLoggerWarningService = DiscordLoggerWarningService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_LOGGER_SERVICE);
-    this.init();
   }
 
   public init(): void {
@@ -37,9 +35,11 @@ export class DiscordLoggerService extends AbstractService {
   }
 
   private _listenForWarnings(): void {
-    this.discordClient.on(`warn`, (warning: Readonly<string>): void => {
-      this._discordLoggerWarningService.handleWarning(warning);
-    });
+    this._discordClientService
+      .getClient()
+      .on(`warn`, (warning: Readonly<string>): void => {
+        this._discordLoggerWarningService.handleWarning(warning);
+      });
 
     this._loggerService.debug({
       context: this._serviceName,
@@ -48,9 +48,11 @@ export class DiscordLoggerService extends AbstractService {
   }
 
   private _listenForErrors(): void {
-    this.discordClient.on(`error`, (error: Readonly<Error>): void => {
-      this._discordLoggerErrorService.handleError(error);
-    });
+    this._discordClientService
+      .getClient()
+      .on(`error`, (error: Readonly<Error | string>): void => {
+        this._discordLoggerErrorService.handleError(error);
+      });
 
     this._loggerService.debug({
       context: this._serviceName,

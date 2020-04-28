@@ -1,20 +1,61 @@
+import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
+import { CoreEventService } from "../../../../core/services/core-event.service";
 import { IDiscordGuildConfig } from "../../../interfaces/discord-guild-config";
 import { DiscordGuildConfigCoreService } from "./discord-guild-config-core.service";
 import { DiscordGuildConfigService } from "./discord-guild-config.service";
 
-jest.mock(`../../../../config/services/config.service`);
-
 describe(`DiscordGuildConfigService`, (): void => {
   let service: DiscordGuildConfigService;
   let discordGuildConfigCoreService: DiscordGuildConfigCoreService;
+  let coreEventService: CoreEventService;
 
   beforeEach((): void => {
-    service = DiscordGuildConfigService.getInstance();
     discordGuildConfigCoreService = DiscordGuildConfigCoreService.getInstance();
+    coreEventService = CoreEventService.getInstance();
+  });
+
+  describe(`getInstance()`, (): void => {
+    it(`should create a DiscordGuildConfig service`, (): void => {
+      expect.assertions(1);
+
+      service = DiscordGuildConfigService.getInstance();
+
+      expect(service).toStrictEqual(expect.any(DiscordGuildConfigService));
+    });
+
+    it(`should return the created DiscordGuildConfig service`, (): void => {
+      expect.assertions(1);
+
+      const result = DiscordGuildConfigService.getInstance();
+
+      expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`constructor()`, (): void => {
+    let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      coreEventServiceNotifyServiceCreatedSpy = jest
+        .spyOn(coreEventService, `notifyServiceCreated`)
+        .mockImplementation();
+    });
+
+    it(`should notify the DiscordGuildConfig service creation`, (): void => {
+      expect.assertions(2);
+
+      service = new DiscordGuildConfigService();
+
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
+        ServiceNameEnum.DISCORD_GUILD_CONFIG_SERVICE
+      );
+    });
   });
 
   describe(`getConfig()`, (): void => {
     beforeEach((): void => {
+      service = DiscordGuildConfigService.getInstance();
       discordGuildConfigCoreService.shouldSendCookiesOnCreate = true;
       discordGuildConfigCoreService.shouldSendIlEstMidiMessage = true;
       discordGuildConfigCoreService.shouldWelcomeNewMembers = true;
@@ -39,6 +80,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
   describe(`shouldSendCookiesOnCreate()`, (): void => {
     beforeEach((): void => {
+      service = DiscordGuildConfigService.getInstance();
       discordGuildConfigCoreService.shouldSendCookiesOnCreate = true;
     });
 
@@ -53,6 +95,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
   describe(`shouldSendIlEstMidiMessage()`, (): void => {
     beforeEach((): void => {
+      service = DiscordGuildConfigService.getInstance();
       discordGuildConfigCoreService.shouldSendIlEstMidiMessage = true;
     });
 
@@ -67,6 +110,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
   describe(`shouldWelcomeNewMembers()`, (): void => {
     beforeEach((): void => {
+      service = DiscordGuildConfigService.getInstance();
       discordGuildConfigCoreService.shouldWelcomeNewMembers = true;
     });
 
@@ -81,6 +125,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
   describe(`getSoniaGuildId()`, (): void => {
     beforeEach((): void => {
+      service = DiscordGuildConfigService.getInstance();
       discordGuildConfigCoreService.soniaGuildId = `dummy-sonia-guild-id`;
     });
 
@@ -95,6 +140,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
   describe(`getSoniaPermanentGuildInviteUrl()`, (): void => {
     beforeEach((): void => {
+      service = DiscordGuildConfigService.getInstance();
       discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = `dummy-sonia-permanent-guild-invite-url`;
     });
 

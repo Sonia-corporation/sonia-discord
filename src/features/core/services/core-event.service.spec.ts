@@ -1,7 +1,6 @@
 import { Observable } from "rxjs";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "./core-event.service";
-import DoneCallback = jest.DoneCallback;
 
 describe(`CoreEventService`, (): void => {
   let service: CoreEventService;
@@ -27,13 +26,14 @@ describe(`CoreEventService`, (): void => {
     });
   });
 
-  describe(`constructor()`, (): void => {
+  describe(`init()`, (): void => {
     beforeEach((): void => {
       service = new CoreEventService();
     });
 
     it(`should listen to server created event and push every created service in the created services list`, (): void => {
       expect.assertions(1);
+      service.init();
       service.notifyServiceCreated(
         ServiceNameEnum.DISCORD_MESSAGE_CONFIG_SERVICE
       );
@@ -62,8 +62,9 @@ describe(`CoreEventService`, (): void => {
         serviceName = ServiceNameEnum.CHALK_SERVICE;
       });
 
-      it(`should notify that a service was created by using the given service name`, (doneCallback: DoneCallback): void => {
+      it(`should notify that a service was created by using the given service name`, (doneCallback: jest.DoneCallback): void => {
         expect.assertions(1);
+
         service.serviceCreated$().subscribe({
           error: (error): void => {
             expect(true).toStrictEqual(false);
@@ -74,7 +75,6 @@ describe(`CoreEventService`, (): void => {
             doneCallback();
           },
         });
-
         service.notifyServiceCreated(serviceName);
       });
     });
@@ -84,8 +84,9 @@ describe(`CoreEventService`, (): void => {
         serviceName = ServiceNameEnum.APP_CONFIG_QUERY_SERVICE;
       });
 
-      it(`should notify that a service was created by using the given service name`, (doneCallback: DoneCallback): void => {
+      it(`should notify that a service was created by using the given service name`, (doneCallback: jest.DoneCallback): void => {
         expect.assertions(1);
+
         service.serviceCreated$().subscribe({
           error: (error): void => {
             expect(true).toStrictEqual(false);
@@ -98,7 +99,6 @@ describe(`CoreEventService`, (): void => {
             doneCallback();
           },
         });
-
         service.notifyServiceCreated(serviceName);
       });
     });
@@ -121,8 +121,9 @@ describe(`CoreEventService`, (): void => {
     });
 
     describe(`when the service created event is notified`, (): void => {
-      it(`should emit a new value into the stream`, (doneCallback: DoneCallback): void => {
+      it(`should emit a new value into the stream`, (doneCallback: jest.DoneCallback): void => {
         expect.assertions(1);
+
         service.serviceCreated$().subscribe({
           error: (error): void => {
             expect(true).toStrictEqual(false);
@@ -135,7 +136,6 @@ describe(`CoreEventService`, (): void => {
             doneCallback();
           },
         });
-
         service.notifyServiceCreated(serviceName);
       });
     });

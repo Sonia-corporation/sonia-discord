@@ -23,12 +23,18 @@ export class ProfileConfigMutatorService extends AbstractConfigService<
     return ProfileConfigMutatorService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _profileConfigCoreService: ProfileConfigCoreService = ProfileConfigCoreService.getInstance();
-  private readonly _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();
+  private _loggerService: LoggerService = LoggerService.getInstance();
+  private _profileConfigCoreService: ProfileConfigCoreService = ProfileConfigCoreService.getInstance();
+  private _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();
 
-  protected constructor(config?: Readonly<Partial<IProfileConfig>>) {
+  public constructor(config?: Readonly<Partial<IProfileConfig>>) {
     super(ServiceNameEnum.PROFILE_CONFIG_MUTATOR_SERVICE, config);
+  }
+
+  public preUpdateConfig(): void {
+    this._loggerService = LoggerService.getInstance();
+    this._profileConfigCoreService = ProfileConfigCoreService.getInstance();
+    this._profileConfigService = ProfileConfigService.getInstance();
   }
 
   public updateConfig(config?: Readonly<Partial<IProfileConfig>>): void {

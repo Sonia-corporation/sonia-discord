@@ -1,4 +1,3 @@
-import { Client } from "discord.js";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
@@ -25,7 +24,7 @@ export class DiscordMessageService extends AbstractService {
     return DiscordMessageService._instance;
   }
 
-  public readonly discordClient: Client = DiscordClientService.getInstance().getClient();
+  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _discordChannelService: DiscordChannelService = DiscordChannelService.getInstance();
   private readonly _discordMessageDmService: DiscordMessageDmService = DiscordMessageDmService.getInstance();
@@ -34,9 +33,8 @@ export class DiscordMessageService extends AbstractService {
   private readonly _discordAuthorService: DiscordAuthorService = DiscordAuthorService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_SERVICE);
-    this.init();
   }
 
   public init(): void {
@@ -44,12 +42,11 @@ export class DiscordMessageService extends AbstractService {
   }
 
   private _listen(): void {
-    this.discordClient.on(
-      `message`,
-      (anyDiscordMessage: Readonly<AnyDiscordMessage>): void => {
+    this._discordClientService
+      .getClient()
+      .on(`message`, (anyDiscordMessage: Readonly<AnyDiscordMessage>): void => {
         this._handleMessage(anyDiscordMessage);
-      }
-    );
+      });
 
     this._loggerService.debug({
       context: this._serviceName,

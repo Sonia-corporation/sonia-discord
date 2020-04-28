@@ -1,20 +1,61 @@
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
+import { CoreEventService } from "../../../core/services/core-event.service";
 import { IAppConfig } from "../../interfaces/app-config";
 import { AppConfigCoreService } from "./app-config-core.service";
 import { AppConfigService } from "./app-config.service";
 
-jest.mock(`../../../config/services/config.service`);
-
 describe(`AppConfigService`, (): void => {
   let service: AppConfigService;
   let appConfigCoreService: AppConfigCoreService;
+  let coreEventService: CoreEventService;
 
   beforeEach((): void => {
-    service = AppConfigService.getInstance();
     appConfigCoreService = AppConfigCoreService.getInstance();
+    coreEventService = CoreEventService.getInstance();
+  });
+
+  describe(`getInstance()`, (): void => {
+    it(`should create a AppConfig service`, (): void => {
+      expect.assertions(1);
+
+      service = AppConfigService.getInstance();
+
+      expect(service).toStrictEqual(expect.any(AppConfigService));
+    });
+
+    it(`should return the created AppConfig service`, (): void => {
+      expect.assertions(1);
+
+      const result = AppConfigService.getInstance();
+
+      expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`constructor()`, (): void => {
+    let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      coreEventServiceNotifyServiceCreatedSpy = jest
+        .spyOn(coreEventService, `notifyServiceCreated`)
+        .mockImplementation();
+    });
+
+    it(`should notify the AppConfig service creation`, (): void => {
+      expect.assertions(2);
+
+      service = new AppConfigService();
+
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
+        ServiceNameEnum.APP_CONFIG_SERVICE
+      );
+    });
   });
 
   describe(`getConfig()`, (): void => {
     beforeEach((): void => {
+      service = AppConfigService.getInstance();
       appConfigCoreService.initializationDate = `dummy-initialization-date`;
       appConfigCoreService.isProduction = false;
       appConfigCoreService.releaseDate = `dummy-release-date`;
@@ -41,6 +82,7 @@ describe(`AppConfigService`, (): void => {
 
   describe(`getVersion()`, (): void => {
     beforeEach((): void => {
+      service = AppConfigService.getInstance();
       appConfigCoreService.version = `dummy-version`;
     });
 
@@ -55,6 +97,7 @@ describe(`AppConfigService`, (): void => {
 
   describe(`getReleaseDate()`, (): void => {
     beforeEach((): void => {
+      service = AppConfigService.getInstance();
       appConfigCoreService.releaseDate = `dummy-release-date`;
     });
 
@@ -69,6 +112,7 @@ describe(`AppConfigService`, (): void => {
 
   describe(`getInitializationDate()`, (): void => {
     beforeEach((): void => {
+      service = AppConfigService.getInstance();
       appConfigCoreService.initializationDate = `dummy-initialization-date`;
     });
 
@@ -83,6 +127,7 @@ describe(`AppConfigService`, (): void => {
 
   describe(`isProduction()`, (): void => {
     beforeEach((): void => {
+      service = AppConfigService.getInstance();
       appConfigCoreService.isProduction = false;
     });
 
@@ -117,6 +162,7 @@ describe(`AppConfigService`, (): void => {
 
   describe(`getTotalReleaseCount()`, (): void => {
     beforeEach((): void => {
+      service = AppConfigService.getInstance();
       appConfigCoreService.totalReleaseCount = 8;
     });
 
@@ -131,6 +177,7 @@ describe(`AppConfigService`, (): void => {
 
   describe(`getReleaseNotes()`, (): void => {
     beforeEach((): void => {
+      service = AppConfigService.getInstance();
       appConfigCoreService.releaseNotes = `dummy-release-notes`;
     });
 

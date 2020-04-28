@@ -1,5 +1,7 @@
 import { ColorEnum } from "../../../../../enums/color.enum";
 import { IconEnum } from "../../../../../enums/icon.enum";
+import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
+import { CoreEventService } from "../../../../core/services/core-event.service";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
 import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
@@ -11,19 +13,58 @@ import { IDiscordMessageWarningConfig } from "../../../interfaces/discord-messag
 import { DiscordMessageConfigCoreService } from "./discord-message-config-core.service";
 import { DiscordMessageConfigService } from "./discord-message-config.service";
 
-jest.mock(`../../../../config/services/config.service`);
-
 describe(`DiscordMessageConfigService`, (): void => {
   let service: DiscordMessageConfigService;
   let discordMessageConfigCoreService: DiscordMessageConfigCoreService;
+  let coreEventService: CoreEventService;
 
   beforeEach((): void => {
-    service = DiscordMessageConfigService.getInstance();
     discordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
+    coreEventService = CoreEventService.getInstance();
+  });
+
+  describe(`getInstance()`, (): void => {
+    it(`should create a DiscordMessageConfig service`, (): void => {
+      expect.assertions(1);
+
+      service = DiscordMessageConfigService.getInstance();
+
+      expect(service).toStrictEqual(expect.any(DiscordMessageConfigService));
+    });
+
+    it(`should return the created DiscordMessageConfig service`, (): void => {
+      expect.assertions(1);
+
+      const result = DiscordMessageConfigService.getInstance();
+
+      expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`constructor()`, (): void => {
+    let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      coreEventServiceNotifyServiceCreatedSpy = jest
+        .spyOn(coreEventService, `notifyServiceCreated`)
+        .mockImplementation();
+    });
+
+    it(`should notify the DiscordMessageConfig service creation`, (): void => {
+      expect.assertions(2);
+
+      service = new DiscordMessageConfigService();
+
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
+        ServiceNameEnum.DISCORD_MESSAGE_CONFIG_SERVICE
+      );
+    });
   });
 
   describe(`getConfig()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command = {
         cookie: {
           imageColor: ColorEnum.CANDY,
@@ -92,6 +133,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageCommand()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command = {
         cookie: {
           imageColor: ColorEnum.CANDY,
@@ -142,6 +184,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageCommandCookie()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command.cookie = {
         imageColor: ColorEnum.CANDY,
         imageUrl: IconEnum.WARNING_SHIELD,
@@ -162,6 +205,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageCommandCookieImageColor()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command.cookie.imageColor =
         ColorEnum.CANDY;
     });
@@ -177,6 +221,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageCommandCookieImageUrl()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command.cookie.imageUrl =
         IconEnum.WARNING_SHIELD;
     });
@@ -192,6 +237,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageCommandError()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command.error = {
         imageColor: ColorEnum.CANDY,
         imageUrl: IconEnum.WARNING_SHIELD,
@@ -212,6 +258,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageCommandErrorImageColor()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command.error.imageColor =
         ColorEnum.CANDY;
     });
@@ -227,6 +274,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageCommandErrorImageUrl()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command.error.imageUrl =
         IconEnum.WARNING_SHIELD;
     });
@@ -242,6 +290,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageCommandHelp()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command.help = {
         imageColor: ColorEnum.CANDY,
         imageUrl: IconEnum.WARNING_SHIELD,
@@ -262,6 +311,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageCommandHelpImageColor()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command.help.imageColor = ColorEnum.CANDY;
     });
 
@@ -276,6 +326,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageCommandHelpImageUrl()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command.help.imageUrl =
         IconEnum.WARNING_SHIELD;
     });
@@ -291,6 +342,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageCommandPrefix()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command.prefix = `dummy-prefix`;
     });
 
@@ -305,6 +357,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageCommandVersion()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command.version = {
         imageColor: ColorEnum.CANDY,
         imageUrl: IconEnum.WARNING_SHIELD,
@@ -325,6 +378,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageCommandVersionImageColor()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command.version.imageColor =
         ColorEnum.CANDY;
     });
@@ -340,6 +394,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageCommandVersionImageUrl()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command.version.imageUrl =
         IconEnum.WARNING_SHIELD;
     });
@@ -355,6 +410,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageError()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.error = {
         imageColor: ColorEnum.CANDY,
         imageUrl: IconEnum.WARNING_SHIELD,
@@ -375,6 +431,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageErrorImageColor()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.error.imageColor = ColorEnum.CANDY;
     });
 
@@ -389,6 +446,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageErrorImageUrl()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.error.imageUrl = IconEnum.WARNING_SHIELD;
     });
 
@@ -403,6 +461,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageWarning()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.warning = {
         imageColor: ColorEnum.CANDY,
         imageUrl: IconEnum.WARNING_SHIELD,
@@ -423,6 +482,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageWarningImageColor()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.warning.imageColor = ColorEnum.CANDY;
     });
 
@@ -437,6 +497,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getMessageWarningImageUrl()`, (): void => {
     beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.warning.imageUrl =
         IconEnum.WARNING_SHIELD;
     });

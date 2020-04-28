@@ -22,19 +22,22 @@ describe(`CoreService`, (): void => {
     });
   });
 
-  describe(`constructor()`, (): void => {
+  describe(`init()`, (): void => {
     let coreEventServiceGetInstanceSy: jest.SpyInstance;
 
     beforeEach((): void => {
-      coreEventServiceGetInstanceSy = jest
-        .spyOn(CoreEventService, `getInstance`)
-        .mockImplementation();
+      service = CoreService.getInstance();
 
-      service = new CoreService();
+      coreEventServiceGetInstanceSy = jest.spyOn(
+        CoreEventService,
+        `getInstance`
+      );
     });
 
     it(`should create the CoreEvent service`, (): void => {
       expect.assertions(2);
+
+      service.init();
 
       expect(coreEventServiceGetInstanceSy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceGetInstanceSy).toHaveBeenCalledWith();

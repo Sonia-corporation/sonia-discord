@@ -16,7 +16,7 @@ export class DiscordMentionService extends AbstractService {
     return DiscordMentionService._instance;
   }
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_MENTION_SERVICE);
   }
 

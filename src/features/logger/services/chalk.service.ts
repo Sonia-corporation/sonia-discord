@@ -25,7 +25,7 @@ export class ChalkService extends AbstractService {
     return ChalkService._instance;
   }
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.CHALK_SERVICE);
   }
 

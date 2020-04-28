@@ -38,7 +38,7 @@ export class DiscordMessageTextService extends AbstractService {
   private readonly _discordMessageContentService: DiscordMessageContentService = DiscordMessageContentService.getInstance();
   private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
 
-  protected constructor() {
+  public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_TEXT_SERVICE);
   }
 

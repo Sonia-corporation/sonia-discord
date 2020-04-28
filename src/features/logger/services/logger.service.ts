@@ -30,7 +30,7 @@ export class LoggerService {
   private readonly _serviceName: ServiceNameEnum =
     ServiceNameEnum.LOGGER_SERVICE;
 
-  protected constructor() {
+  public init(): void {
     this._handleServiceCreatedEvent();
     this.serviceCreated({
       service: this._serviceName,
@@ -91,10 +91,10 @@ export class LoggerService {
     });
   }
 
-  public getStringArray(array: Readonly<string>[]): string {
+  public getStringArray<T = string>(array: Readonly<T[]>): string {
     return `[ ${_.join(
-      _.map(array, (value: Readonly<string>): string => {
-        return wrapInQuotes(value);
+      _.map(array, (value: Readonly<T>): string => {
+        return wrapInQuotes<T>(value);
       }),
       `, `
     )} ]`;
@@ -119,6 +119,21 @@ export class LoggerService {
     if (_.isEqual(isStringValue, true)) {
       value = wrapInQuotes(value);
     }
+
+    return this.getValueUpdateWithHint(text, value, ` (hidden)`);
+  }
+
+  public getHiddenValueArrayUpdate(
+    text: Readonly<string>,
+    isStringValue = false
+  ): string {
+    let value = `********`;
+
+    if (_.isEqual(isStringValue, true)) {
+      value = wrapInQuotes(value);
+    }
+
+    value = `[ ${value} ]`;
 
     return this.getValueUpdateWithHint(text, value, ` (hidden)`);
   }
