@@ -4,8 +4,6 @@ import { IDiscordGuildConfig } from "../../../interfaces/discord-guild-config";
 import { DiscordGuildConfigCoreService } from "./discord-guild-config-core.service";
 import { DiscordGuildConfigService } from "./discord-guild-config.service";
 
-jest.mock(`../../../../config/services/config.service`);
-
 describe(`DiscordGuildConfigService`, (): void => {
   let service: DiscordGuildConfigService;
   let discordGuildConfigCoreService: DiscordGuildConfigCoreService;

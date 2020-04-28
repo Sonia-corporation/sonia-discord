@@ -10,8 +10,6 @@ import { ServerConfigCoreService } from "./server-config-core.service";
 import { ServerConfigMutatorService } from "./server-config-mutator.service";
 import { ServerConfigService } from "./server-config.service";
 
-jest.mock(`../../../config/services/config.service`);
-
 describe(`ServerConfigMutatorService`, (): void => {
   let service: ServerConfigMutatorService;
   let configService: ConfigService;

@@ -45,6 +45,11 @@ export class DiscordAuthenticationService extends AbstractService {
   }
 
   private _handleReady(): void {
+    this._logWhenReady();
+    this._updateReadyState();
+  }
+
+  private _logWhenReady(): void {
     const client: Client = this._discordClientService.getClient();
 
     if (!_.isNil(client.user)) {
@@ -64,6 +69,10 @@ export class DiscordAuthenticationService extends AbstractService {
         ),
       });
     }
+  }
+
+  private _updateReadyState(): void {
+    this._discordClientService.notifyIsReady();
   }
 
   private _login(): void {
