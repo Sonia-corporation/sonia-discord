@@ -22,8 +22,8 @@ export class TimeService extends AbstractService {
     return moment().format(format);
   }
 
-  public fromNow(
-    date: Readonly<string>,
+  public fromNow<T = string>(
+    date: Readonly<T>,
     isCapitalized: Readonly<boolean> = true
   ): string {
     const newDate: string = moment(date, moment.ISO_8601).fromNow();
