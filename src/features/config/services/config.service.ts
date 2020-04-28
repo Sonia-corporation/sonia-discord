@@ -8,6 +8,8 @@ import { IConfigUpdateBoolean } from "../interfaces/config-update-boolean";
 import { IConfigUpdateNumber } from "../interfaces/config-update-number";
 import { IConfigUpdateString } from "../interfaces/config-update-string";
 import { IConfigUpdateStringInternal } from "../interfaces/config-update-string-internal";
+import { IConfigUpdateStringOrArray } from "../interfaces/config-update-string-or-array";
+import { IConfigUpdateStringOrArrayInternal } from "../interfaces/config-update-string-or-array-internal";
 
 export class ConfigService extends AbstractService {
   private static _instance: ConfigService;
@@ -63,42 +65,96 @@ export class ConfigService extends AbstractService {
     return configUpdateString.oldValue;
   }
 
-  public getUpdatedBoolean(
-    configUpdateString: Readonly<IConfigUpdateBoolean>
-  ): boolean {
-    if (_.isBoolean(configUpdateString.newValue)) {
+  public getUpdatedStringOrArray<T>(
+    configUpdateStringOrArray: Readonly<IConfigUpdateStringOrArray<T>>
+  ): T {
+    if (_.isString(configUpdateStringOrArray.newValue)) {
       this._loggerService.log({
-        context: configUpdateString.context,
+        context: configUpdateStringOrArray.context,
+        message: this._getUpdatedStringMessage(configUpdateStringOrArray),
+      });
+
+      return configUpdateStringOrArray.newValue;
+    } else if (_.isArray(configUpdateStringOrArray.newValue)) {
+      this._loggerService.log({
+        context: configUpdateStringOrArray.context,
+        message: this._getUpdatedStringOrArrayMessage(
+          configUpdateStringOrArray
+        ),
+      });
+
+      return configUpdateStringOrArray.newValue;
+    }
+
+    return configUpdateStringOrArray.oldValue;
+  }
+
+  public getUpdatedBoolean(
+    configUpdateBoolean: Readonly<IConfigUpdateBoolean>
+  ): boolean {
+    if (_.isBoolean(configUpdateBoolean.newValue)) {
+      this._loggerService.log({
+        context: configUpdateBoolean.context,
         message: this._chalkService.text(
           `${
-            configUpdateString.valueName
+            configUpdateBoolean.valueName
           } updated to: ${this._chalkService.value(
-            configUpdateString.newValue
+            configUpdateBoolean.newValue
           )}`
         ),
       });
 
-      return configUpdateString.newValue;
+      return configUpdateBoolean.newValue;
     }
 
-    return configUpdateString.oldValue;
+    return configUpdateBoolean.oldValue;
   }
 
   private _getUpdatedStringMessage<T>(
-    configUpdateString: Readonly<IConfigUpdateStringInternal<T>>
+    configUpdateStringInternal: Readonly<IConfigUpdateStringInternal<T>>
   ): string {
-    let message = `${configUpdateString.valueName} updated`;
+    let message = `${configUpdateStringInternal.valueName} updated`;
 
-    if (_.isEqual(configUpdateString.isValueHidden, true)) {
+    if (_.isEqual(configUpdateStringInternal.isValueHidden, true)) {
       message = this._loggerService.getHiddenValueUpdate(
         `${message} to: `,
         true
       );
     } else {
-      if (!_.isEqual(configUpdateString.isValueDisplay, false)) {
+      if (!_.isEqual(configUpdateStringInternal.isValueDisplay, false)) {
         message = this._chalkService.text(
           `${message} to: ${this._chalkService.value(
-            wrapInQuotes<T>(configUpdateString.newValue)
+            wrapInQuotes<T>(configUpdateStringInternal.newValue)
+          )}`
+        );
+      } else {
+        message = this._chalkService.text(message);
+      }
+    }
+
+    return message;
+  }
+
+  private _getUpdatedStringOrArrayMessage<T>(
+    configUpdateStringInternal: Readonly<IConfigUpdateStringOrArrayInternal<T>>
+  ): string {
+    let message = `${configUpdateStringInternal.valueName} updated`;
+
+    if (_.isEqual(configUpdateStringInternal.isValueHidden, true)) {
+      message = this._loggerService.getHiddenValueArrayUpdate(
+        `${message} to: `,
+        true
+      );
+    } else {
+      if (
+        !_.isEqual(configUpdateStringInternal.isValueDisplay, false) &&
+        _.isArray(configUpdateStringInternal.newValue)
+      ) {
+        message = this._chalkService.text(
+          `${message} to: ${this._chalkService.value(
+            this._loggerService.getStringArray<T>(
+              configUpdateStringInternal.newValue
+            )
           )}`
         );
       } else {

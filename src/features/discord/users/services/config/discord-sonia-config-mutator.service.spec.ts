@@ -12,8 +12,6 @@ import { DiscordSoniaConfigCoreService } from "./discord-sonia-config-core.servi
 import { DiscordSoniaConfigMutatorService } from "./discord-sonia-config-mutator.service";
 import { DiscordSoniaConfigService } from "./discord-sonia-config.service";
 
-jest.mock(`../../../../config/services/config.service`);
-
 describe(`DiscordSoniaConfigMutatorService`, (): void => {
   let service: DiscordSoniaConfigMutatorService;
   let configService: ConfigService;

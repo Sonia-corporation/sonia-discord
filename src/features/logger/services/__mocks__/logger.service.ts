@@ -92,6 +92,21 @@ export class LoggerService {
     return this.getValueUpdateWithHint(text, value, ` (hidden)`);
   }
 
+  public getHiddenValueArrayUpdate(
+    text: Readonly<string>,
+    isStringValue = false
+  ): string {
+    let value = `********`;
+
+    if (_.isEqual(isStringValue, true)) {
+      value = wrapInQuotes(value);
+    }
+
+    value = `[ ${value} ]`;
+
+    return this.getValueUpdateWithHint(text, value, ` (hidden)`);
+  }
+
   public getSnowflakeContext(
     context: Readonly<string>,
     message: Readonly<string | null | undefined> | unknown

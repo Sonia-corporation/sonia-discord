@@ -13,7 +13,6 @@ import { AppConfigCoreService } from "./app-config-core.service";
 import { AppConfigMutatorService } from "./app-config-mutator.service";
 import { AppConfigService } from "./app-config.service";
 
-jest.mock(`../../../config/services/config.service`);
 jest.mock(`../../../time/services/time.service`);
 
 describe(`AppConfigMutationService`, (): void => {
