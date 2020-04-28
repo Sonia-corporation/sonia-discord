@@ -4,8 +4,6 @@ import { CoreEventService } from "../../../core/services/core-event.service";
 import { AppConfigCoreService } from "./app-config-core.service";
 import { AppConfigQueryService } from "./app-config-query.service";
 
-jest.mock(`../../../config/services/config.service`);
-
 describe(`AppConfigQueryService`, (): void => {
   let service: AppConfigQueryService;
   let appConfigCoreService: AppConfigCoreService;

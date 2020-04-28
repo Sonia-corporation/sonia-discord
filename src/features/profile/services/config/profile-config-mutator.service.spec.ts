@@ -9,8 +9,6 @@ import { ProfileConfigCoreService } from "./profile-config-core.service";
 import { ProfileConfigMutatorService } from "./profile-config-mutator.service";
 import { ProfileConfigService } from "./profile-config.service";
 
-jest.mock(`../../../config/services/config.service`);
-
 describe(`ProfileConfigMutatorService`, (): void => {
   let service: ProfileConfigMutatorService;
   let configService: ConfigService;
