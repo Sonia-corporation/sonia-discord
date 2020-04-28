@@ -50,7 +50,7 @@ export class DiscordLoggerService extends AbstractService {
   private _listenForErrors(): void {
     this._discordClientService
       .getClient()
-      .on(`error`, (error: Readonly<Error>): void => {
+      .on(`error`, (error: Readonly<Error | string>): void => {
         this._discordLoggerErrorService.handleError(error);
       });
 
