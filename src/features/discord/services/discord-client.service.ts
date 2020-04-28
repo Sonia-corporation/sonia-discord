@@ -1,5 +1,6 @@
 import { Client } from "discord.js";
 import _ from "lodash";
+import { BehaviorSubject, Observable } from "rxjs";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 
@@ -15,6 +16,9 @@ export class DiscordClientService extends AbstractService {
   }
 
   private _client: Client | undefined = undefined;
+  private readonly _isReady$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_CLIENT_SERVICE);
@@ -32,5 +36,13 @@ export class DiscordClientService extends AbstractService {
     }
 
     return this._client;
+  }
+
+  public isReady$(): Observable<boolean> {
+    return this._isReady$.asObservable();
+  }
+
+  public notifyIsReady(): void {
+    this._isReady$.next(true);
   }
 }

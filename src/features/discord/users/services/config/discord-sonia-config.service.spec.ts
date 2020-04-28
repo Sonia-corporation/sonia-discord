@@ -6,8 +6,6 @@ import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../../inter
 import { DiscordSoniaConfigCoreService } from "./discord-sonia-config-core.service";
 import { DiscordSoniaConfigService } from "./discord-sonia-config.service";
 
-jest.mock(`../../../../config/services/config.service`);
-
 describe(`DiscordSoniaConfigService`, (): void => {
   let service: DiscordSoniaConfigService;
   let discordSoniaConfigCoreService: DiscordSoniaConfigCoreService;

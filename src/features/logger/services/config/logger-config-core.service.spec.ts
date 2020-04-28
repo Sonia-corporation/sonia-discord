@@ -3,8 +3,6 @@ import { CoreEventService } from "../../../core/services/core-event.service";
 import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
 import { LoggerConfigCoreService } from "./logger-config-core.service";
 
-jest.mock(`../../../config/services/config.service`);
-
 describe(`LoggerConfigCoreService`, (): void => {
   let service: LoggerConfigCoreService;
   let coreEventService: CoreEventService;
