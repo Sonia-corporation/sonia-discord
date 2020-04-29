@@ -542,6 +542,40 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
       };
     });
 
+    it(`should not update the config`, (): void => {
+      expect.assertions(3);
+
+      service.updateConfig();
+
+      expect(discordMessageConfigCoreService.command).toStrictEqual({
+        cookie: {
+          imageColor: ColorEnum.SKY,
+          imageUrl: IconEnum.COOKIES,
+        },
+        error: {
+          imageColor: ColorEnum.SKY,
+          imageUrl: IconEnum.COOKIES,
+        },
+        help: {
+          imageColor: ColorEnum.SKY,
+          imageUrl: IconEnum.COOKIES,
+        },
+        prefix: `dummy-prefix`,
+        version: {
+          imageColor: ColorEnum.SKY,
+          imageUrl: IconEnum.COOKIES,
+        },
+      } as IDiscordMessageCommandConfig);
+      expect(discordMessageConfigCoreService.error).toStrictEqual({
+        imageColor: ColorEnum.SKY,
+        imageUrl: IconEnum.COOKIES,
+      } as IDiscordMessageErrorConfig);
+      expect(discordMessageConfigCoreService.warning).toStrictEqual({
+        imageColor: ColorEnum.SKY,
+        imageUrl: IconEnum.COOKIES,
+      } as IDiscordMessageWarningConfig);
+    });
+
     describe(`when the given config is undefined`, (): void => {
       beforeEach((): void => {
         config = undefined;

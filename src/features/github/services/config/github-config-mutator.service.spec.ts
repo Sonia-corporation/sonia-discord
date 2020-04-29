@@ -186,6 +186,19 @@ describe(`GithubConfigMutatorService`, (): void => {
       githubConfigCoreService.personalAccessToken = `dummy-personal-access-token`;
     });
 
+    it(`should not update the config`, (): void => {
+      expect.assertions(2);
+
+      service.updateConfig();
+
+      expect(githubConfigCoreService.bugReportUrl).toStrictEqual(
+        `dummy-bug-report-url`
+      );
+      expect(githubConfigCoreService.personalAccessToken).toStrictEqual(
+        `dummy-personal-access-token`
+      );
+    });
+
     describe(`when the given config is undefined`, (): void => {
       beforeEach((): void => {
         config = undefined;

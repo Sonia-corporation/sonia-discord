@@ -211,6 +211,14 @@ describe(`ServerConfigMutatorService`, (): void => {
       serverConfigCoreService.port = 8;
     });
 
+    it(`should not update the config`, (): void => {
+      expect.assertions(1);
+
+      service.updateConfig();
+
+      expect(serverConfigCoreService.port).toStrictEqual(8);
+    });
+
     describe(`when the given config is undefined`, (): void => {
       beforeEach((): void => {
         config = undefined;

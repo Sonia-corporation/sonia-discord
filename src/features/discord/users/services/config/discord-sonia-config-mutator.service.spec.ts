@@ -302,6 +302,27 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
       };
     });
 
+    it(`should not update the config`, (): void => {
+      expect.assertions(4);
+
+      service.updateConfig();
+
+      expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(
+        IconEnum.GIRL
+      );
+      expect(discordSoniaConfigCoreService.id).toStrictEqual(`dummy-id`);
+      expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(
+        `dummy-secret-token`
+      );
+      expect(
+        discordSoniaConfigCoreService.corporationMessageEmbedAuthor
+      ).toStrictEqual({
+        iconURL: `dummy-icon-url`,
+        name: `dummy-name`,
+        url: `dummy-url`,
+      } as IDiscordSoniaCorporationMessageEmbedAuthorConfig);
+    });
+
     describe(`when the given config is undefined`, (): void => {
       beforeEach((): void => {
         config = undefined;

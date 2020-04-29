@@ -372,6 +372,25 @@ describe(`AppConfigMutationService`, (): void => {
       appConfigCoreService.version = `dummy-version`;
     });
 
+    it(`should not update the config`, (): void => {
+      expect.assertions(6);
+
+      service.updateConfig();
+
+      expect(appConfigCoreService.initializationDate).toStrictEqual(
+        `dummy-initialization-date`
+      );
+      expect(appConfigCoreService.isProduction).toStrictEqual(true);
+      expect(appConfigCoreService.releaseDate).toStrictEqual(
+        `dummy-release-date`
+      );
+      expect(appConfigCoreService.releaseNotes).toStrictEqual(
+        `dummy-release-notes`
+      );
+      expect(appConfigCoreService.totalReleaseCount).toStrictEqual(8);
+      expect(appConfigCoreService.version).toStrictEqual(`dummy-version`);
+    });
+
     describe(`when the given config is undefined`, (): void => {
       beforeEach((): void => {
         config = undefined;

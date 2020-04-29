@@ -186,6 +186,17 @@ describe(`LoggerConfigMutatorService`, (): void => {
       loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
     });
 
+    it(`should not update the config`, (): void => {
+      expect.assertions(2);
+
+      service.updateConfig();
+
+      expect(loggerConfigCoreService.isEnabled).toStrictEqual(true);
+      expect(loggerConfigCoreService.level).toStrictEqual(
+        LoggerConfigLevelEnum.DEBUG
+      );
+    });
+
     describe(`when the given config is undefined`, (): void => {
       beforeEach((): void => {
         config = undefined;

@@ -273,6 +273,28 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
       discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = `dummy-sonia-permanent-guild-invite-url`;
     });
 
+    it(`should not update the config`, (): void => {
+      expect.assertions(5);
+
+      service.updateConfig();
+
+      expect(
+        discordGuildConfigCoreService.shouldSendCookiesOnCreate
+      ).toStrictEqual(true);
+      expect(
+        discordGuildConfigCoreService.shouldSendIlEstMidiMessage
+      ).toStrictEqual(true);
+      expect(
+        discordGuildConfigCoreService.shouldWelcomeNewMembers
+      ).toStrictEqual(true);
+      expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(
+        `dummy-sonia-guild-id`
+      );
+      expect(
+        discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
+      ).toStrictEqual(`dummy-sonia-permanent-guild-invite-url`);
+    });
+
     describe(`when the given config is undefined`, (): void => {
       beforeEach((): void => {
         config = undefined;
