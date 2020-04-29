@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.39.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.38.0...1.39.0) (2020-04-29)
+
+
+### Features
+
+* **discord:** send message error to Sonia discord errors channel ([01da4af](https://github.com/Sonia-corporation/il-est-midi-discord/commit/01da4afaf825a215c79714edd07b05bfef46accc))
+
 # [1.38.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.37.0...1.38.0) (2020-04-28)
 
 
