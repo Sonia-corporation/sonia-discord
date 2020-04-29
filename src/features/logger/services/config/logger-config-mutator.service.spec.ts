@@ -11,7 +11,8 @@ import { LoggerConfigCoreService } from "./logger-config-core.service";
 import { LoggerConfigMutatorService } from "./logger-config-mutator.service";
 import { LoggerConfigService } from "./logger-config.service";
 
-jest.mock(`../logger.service`);
+jest.mock(`../../../time/services/time.service`);
+jest.mock(`../chalk.service`);
 
 describe(`LoggerConfigMutatorService`, (): void => {
   let service: LoggerConfigMutatorService;
@@ -180,10 +181,14 @@ describe(`LoggerConfigMutatorService`, (): void => {
   describe(`updateConfig()`, (): void => {
     let config: PartialNested<ILoggerConfig> | undefined;
 
+    let loggerLogSpy: jest.SpyInstance;
+
     beforeEach((): void => {
       service = LoggerConfigMutatorService.getInstance();
       loggerConfigCoreService.isEnabled = true;
       loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
+
+      loggerLogSpy = jest.spyOn(console, `log`).mockImplementation();
     });
 
     it(`should not update the config`, (): void => {
@@ -195,6 +200,14 @@ describe(`LoggerConfigMutatorService`, (): void => {
       expect(loggerConfigCoreService.level).toStrictEqual(
         LoggerConfigLevelEnum.DEBUG
       );
+    });
+
+    it(`should not log about the config update`, (): void => {
+      expect.assertions(1);
+
+      service.updateConfig();
+
+      expect(loggerLogSpy).not.toHaveBeenCalled();
     });
 
     describe(`when the given config is undefined`, (): void => {
@@ -212,6 +225,14 @@ describe(`LoggerConfigMutatorService`, (): void => {
           LoggerConfigLevelEnum.DEBUG
         );
       });
+
+      it(`should not log about the config update`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).not.toHaveBeenCalled();
+      });
     });
 
     describe(`when the given config contains an enable state`, (): void => {
@@ -227,6 +248,17 @@ describe(`LoggerConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(loggerConfigCoreService.isEnabled).toStrictEqual(false);
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[LoggerConfigMutatorService][now-format] text-configuration updated`
+        );
       });
     });
 
@@ -244,6 +276,17 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         expect(loggerConfigCoreService.level).toStrictEqual(
           LoggerConfigLevelEnum.SUCCESS
+        );
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[LoggerConfigMutatorService][now-format] text-configuration updated`
         );
       });
     });

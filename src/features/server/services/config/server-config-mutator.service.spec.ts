@@ -10,6 +10,9 @@ import { ServerConfigCoreService } from "./server-config-core.service";
 import { ServerConfigMutatorService } from "./server-config-mutator.service";
 import { ServerConfigService } from "./server-config.service";
 
+jest.mock(`../../../time/services/time.service`);
+jest.mock(`../../../logger/services/chalk.service`);
+
 describe(`ServerConfigMutatorService`, (): void => {
   let service: ServerConfigMutatorService;
   let configService: ConfigService;
@@ -206,9 +209,13 @@ describe(`ServerConfigMutatorService`, (): void => {
   describe(`updateConfig()`, (): void => {
     let config: PartialNested<IServerConfig> | undefined;
 
+    let loggerLogSpy: jest.SpyInstance;
+
     beforeEach((): void => {
       service = ServerConfigMutatorService.getInstance();
       serverConfigCoreService.port = 8;
+
+      loggerLogSpy = jest.spyOn(console, `log`).mockImplementation();
     });
 
     it(`should not update the config`, (): void => {
@@ -217,6 +224,14 @@ describe(`ServerConfigMutatorService`, (): void => {
       service.updateConfig();
 
       expect(serverConfigCoreService.port).toStrictEqual(8);
+    });
+
+    it(`should not log about the config update`, (): void => {
+      expect.assertions(1);
+
+      service.updateConfig();
+
+      expect(loggerLogSpy).not.toHaveBeenCalled();
     });
 
     describe(`when the given config is undefined`, (): void => {
@@ -230,6 +245,14 @@ describe(`ServerConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(serverConfigCoreService.port).toStrictEqual(8);
+      });
+
+      it(`should not log about the config update`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).not.toHaveBeenCalled();
       });
     });
 
@@ -246,6 +269,17 @@ describe(`ServerConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(serverConfigCoreService.port).toStrictEqual(88);
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[ServerConfigMutatorService][now-format] text-configuration updated`
+        );
       });
     });
   });

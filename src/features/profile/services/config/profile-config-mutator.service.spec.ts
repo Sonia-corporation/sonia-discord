@@ -9,7 +9,8 @@ import { ProfileConfigCoreService } from "./profile-config-core.service";
 import { ProfileConfigMutatorService } from "./profile-config-mutator.service";
 import { ProfileConfigService } from "./profile-config.service";
 
-jest.mock(`../../../logger/services/logger.service`);
+jest.mock(`../../../time/services/time.service`);
+jest.mock(`../../../logger/services/chalk.service`);
 
 describe(`ProfileConfigMutatorService`, (): void => {
   let service: ProfileConfigMutatorService;
@@ -174,12 +175,11 @@ describe(`ProfileConfigMutatorService`, (): void => {
     });
 
     it(`should not log about the config update`, (): void => {
-      expect.assertions(2);
+      expect.assertions(1);
 
       service.updateConfig();
 
-      expect(loggerLogSpy).toHaveBeenCalledTimes(1);
-      expect(loggerLogSpy).toHaveBeenCalledWith();
+      expect(loggerLogSpy).not.toHaveBeenCalled();
     });
 
     describe(`when the given config is undefined`, (): void => {
@@ -196,6 +196,14 @@ describe(`ProfileConfigMutatorService`, (): void => {
           `dummy-nickname`
         );
       });
+
+      it(`should not log about the config update`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).not.toHaveBeenCalled();
+      });
     });
 
     describe(`when the given config contains a nickname`, (): void => {
@@ -211,6 +219,17 @@ describe(`ProfileConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(profileConfigCoreService.nickname).toStrictEqual(`nickname`);
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[ProfileConfigMutatorService][now-format] text-configuration updated`
+        );
       });
     });
   });

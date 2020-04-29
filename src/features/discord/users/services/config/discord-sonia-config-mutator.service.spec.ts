@@ -12,6 +12,9 @@ import { DiscordSoniaConfigCoreService } from "./discord-sonia-config-core.servi
 import { DiscordSoniaConfigMutatorService } from "./discord-sonia-config-mutator.service";
 import { DiscordSoniaConfigService } from "./discord-sonia-config.service";
 
+jest.mock(`../../../../time/services/time.service`);
+jest.mock(`../../../../logger/services/chalk.service`);
+
 describe(`DiscordSoniaConfigMutatorService`, (): void => {
   let service: DiscordSoniaConfigMutatorService;
   let configService: ConfigService;
@@ -290,6 +293,8 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
   describe(`updateConfig()`, (): void => {
     let config: PartialNested<IDiscordConfig> | undefined;
 
+    let loggerLogSpy: jest.SpyInstance;
+
     beforeEach((): void => {
       service = DiscordSoniaConfigMutatorService.getInstance();
       discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
@@ -300,6 +305,8 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
         name: `dummy-name`,
         url: `dummy-url`,
       };
+
+      loggerLogSpy = jest.spyOn(console, `log`).mockImplementation();
     });
 
     it(`should not update the config`, (): void => {
@@ -321,6 +328,14 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
         name: `dummy-name`,
         url: `dummy-url`,
       } as IDiscordSoniaCorporationMessageEmbedAuthorConfig);
+    });
+
+    it(`should not log about the config update`, (): void => {
+      expect.assertions(1);
+
+      service.updateConfig();
+
+      expect(loggerLogSpy).not.toHaveBeenCalled();
     });
 
     describe(`when the given config is undefined`, (): void => {
@@ -348,6 +363,14 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
           url: `dummy-url`,
         } as IDiscordSoniaCorporationMessageEmbedAuthorConfig);
       });
+
+      it(`should not log about the config update`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).not.toHaveBeenCalled();
+      });
     });
 
     describe(`when the given config contains a Sonia corporation image url`, (): void => {
@@ -368,6 +391,17 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
           IconEnum.ARTIFICIAL_INTELLIGENCE
         );
       });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[DiscordSoniaConfigMutatorService][now-format] text-configuration updated`
+        );
+      });
     });
 
     describe(`when the given config contains a Sonia id`, (): void => {
@@ -385,6 +419,17 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(discordSoniaConfigCoreService.id).toStrictEqual(`id`);
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[DiscordSoniaConfigMutatorService][now-format] text-configuration updated`
+        );
       });
     });
 
@@ -404,6 +449,17 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(
           `secret-token`
+        );
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[DiscordSoniaConfigMutatorService][now-format] text-configuration updated`
         );
       });
     });
@@ -433,6 +489,17 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
           name: `name`,
           url: `url`,
         } as IDiscordSoniaCorporationMessageEmbedAuthorConfig);
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(4);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[DiscordSoniaConfigMutatorService][now-format] text-configuration updated`
+        );
       });
     });
   });

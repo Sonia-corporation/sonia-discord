@@ -21,6 +21,9 @@ import { DiscordMessageConfigCoreService } from "./discord-message-config-core.s
 import { DiscordMessageConfigMutatorService } from "./discord-message-config-mutator.service";
 import { DiscordMessageConfigService } from "./discord-message-config.service";
 
+jest.mock(`../../../../time/services/time.service`);
+jest.mock(`../../../../logger/services/chalk.service`);
+
 describe(`DiscordMessageConfigMutatorService`, (): void => {
   let service: DiscordMessageConfigMutatorService;
   let configService: ConfigService;
@@ -511,6 +514,8 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
   describe(`updateConfig()`, (): void => {
     let config: PartialNested<IDiscordConfig> | undefined;
 
+    let loggerLogSpy: jest.SpyInstance;
+
     beforeEach((): void => {
       service = DiscordMessageConfigMutatorService.getInstance();
       discordMessageConfigCoreService.command = {
@@ -540,6 +545,8 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         imageColor: ColorEnum.SKY,
         imageUrl: IconEnum.COOKIES,
       };
+
+      loggerLogSpy = jest.spyOn(console, `log`).mockImplementation();
     });
 
     it(`should not update the config`, (): void => {
@@ -574,6 +581,14 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         imageColor: ColorEnum.SKY,
         imageUrl: IconEnum.COOKIES,
       } as IDiscordMessageWarningConfig);
+    });
+
+    it(`should not log about the config update`, (): void => {
+      expect.assertions(1);
+
+      service.updateConfig();
+
+      expect(loggerLogSpy).not.toHaveBeenCalled();
     });
 
     describe(`when the given config is undefined`, (): void => {
@@ -613,6 +628,14 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageColor: ColorEnum.SKY,
           imageUrl: IconEnum.COOKIES,
         } as IDiscordMessageWarningConfig);
+      });
+
+      it(`should not log about the config update`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).not.toHaveBeenCalled();
       });
     });
 
@@ -668,6 +691,17 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           },
         } as IDiscordMessageCommandConfig);
       });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(10);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[DiscordMessageConfigMutatorService][now-format] text-configuration updated`
+        );
+      });
     });
 
     describe(`when the given config contains a message error`, (): void => {
@@ -691,6 +725,17 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageColor: ColorEnum.MINT,
           imageUrl: IconEnum.ERROR,
         } as IDiscordMessageErrorConfig);
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(3);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[DiscordMessageConfigMutatorService][now-format] text-configuration updated`
+        );
       });
     });
   });

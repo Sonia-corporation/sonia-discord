@@ -9,6 +9,9 @@ import { GithubConfigCoreService } from "./github-config-core.service";
 import { GithubConfigMutatorService } from "./github-config-mutator.service";
 import { GithubConfigService } from "./github-config.service";
 
+jest.mock(`../../../time/services/time.service`);
+jest.mock(`../../../logger/services/chalk.service`);
+
 describe(`GithubConfigMutatorService`, (): void => {
   let service: GithubConfigMutatorService;
   let configService: ConfigService;
@@ -180,10 +183,14 @@ describe(`GithubConfigMutatorService`, (): void => {
   describe(`updateConfig()`, (): void => {
     let config: PartialNested<IGithubConfig> | undefined;
 
+    let loggerLogSpy: jest.SpyInstance;
+
     beforeEach((): void => {
       service = GithubConfigMutatorService.getInstance();
       githubConfigCoreService.bugReportUrl = `dummy-bug-report-url`;
       githubConfigCoreService.personalAccessToken = `dummy-personal-access-token`;
+
+      loggerLogSpy = jest.spyOn(console, `log`).mockImplementation();
     });
 
     it(`should not update the config`, (): void => {
@@ -197,6 +204,14 @@ describe(`GithubConfigMutatorService`, (): void => {
       expect(githubConfigCoreService.personalAccessToken).toStrictEqual(
         `dummy-personal-access-token`
       );
+    });
+
+    it(`should not log about the config update`, (): void => {
+      expect.assertions(1);
+
+      service.updateConfig();
+
+      expect(loggerLogSpy).not.toHaveBeenCalled();
     });
 
     describe(`when the given config is undefined`, (): void => {
@@ -216,6 +231,14 @@ describe(`GithubConfigMutatorService`, (): void => {
           `dummy-personal-access-token`
         );
       });
+
+      it(`should not log about the config update`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).not.toHaveBeenCalled();
+      });
     });
 
     describe(`when the given config contains a bug report url`, (): void => {
@@ -234,6 +257,17 @@ describe(`GithubConfigMutatorService`, (): void => {
           `bug-report-url`
         );
       });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[GithubConfigMutatorService][now-format] text-configuration updated`
+        );
+      });
     });
 
     describe(`when the given config contains a personal access token`, (): void => {
@@ -250,6 +284,17 @@ describe(`GithubConfigMutatorService`, (): void => {
 
         expect(githubConfigCoreService.personalAccessToken).toStrictEqual(
           `personal-access-token`
+        );
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[GithubConfigMutatorService][now-format] text-configuration updated`
         );
       });
     });
