@@ -13,7 +13,9 @@ import { ellipsis } from "../../../../functions/formatters/ellipsis";
 import { GithubConfigService } from "../../../github/services/config/github-config.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordChannelService } from "../../channels/services/discord-channel.service";
+import { DiscordGuildSoniaChannelNameEnum } from "../../guilds/enums/discord-guild-sonia-channel-name.enum";
 import { DiscordGuildConfigService } from "../../guilds/services/config/discord-guild-config.service";
+import { DiscordGuildSoniaService } from "../../guilds/services/discord-guild-sonia.service";
 import { DiscordSoniaService } from "../../users/services/discord-sonia.service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
@@ -36,6 +38,7 @@ export class DiscordMessageErrorService extends AbstractService {
   private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
   private readonly _githubConfigService: GithubConfigService = GithubConfigService.getInstance();
   private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
+  private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_ERROR_SERVICE);
@@ -46,7 +49,6 @@ export class DiscordMessageErrorService extends AbstractService {
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): void {
     this._logOnError(error, anyDiscordMessage);
-
     this._sendMessage(error, anyDiscordMessage);
   }
 
@@ -54,12 +56,20 @@ export class DiscordMessageErrorService extends AbstractService {
     error: unknown,
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): void {
-    if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
-      const messageResponse: IDiscordMessageResponse = this._getMessageResponse(
-        error,
-        anyDiscordMessage
-      );
+    const messageResponse: IDiscordMessageResponse = this._getMessageResponse(
+      error,
+      anyDiscordMessage
+    );
 
+    this._sendMessageToOriginalChannel(anyDiscordMessage, messageResponse);
+    this._sendMessageToSoniaDiscord(messageResponse);
+  }
+
+  private _sendMessageToOriginalChannel(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>,
+    messageResponse: Readonly<IDiscordMessageResponse>
+  ): void {
+    if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
       anyDiscordMessage.channel
         .send(messageResponse.response, messageResponse.options)
         .then((): void => {
@@ -76,6 +86,15 @@ export class DiscordMessageErrorService extends AbstractService {
           this._logOnError(error, anyDiscordMessage);
         });
     }
+  }
+
+  private _sendMessageToSoniaDiscord(
+    messageResponse: Readonly<IDiscordMessageResponse>
+  ): void {
+    this._discordGuildSoniaService.sendMessageToChannel({
+      channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
+      messageResponse: messageResponse,
+    });
   }
 
   private _logOnError(
