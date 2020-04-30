@@ -6,6 +6,7 @@ import { ConfigService } from "../../../config/services/config.service";
 import { CoreEventService } from "../../../core/services/core-event.service";
 import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
 import { ILoggerConfig } from "../../interfaces/logger-config";
+import { ILoggerLog } from "../../interfaces/logger-log";
 import { LoggerService } from "../logger.service";
 import { LoggerConfigCoreService } from "./logger-config-core.service";
 import { LoggerConfigMutatorService } from "./logger-config-mutator.service";
@@ -19,11 +20,13 @@ describe(`LoggerConfigMutatorService`, (): void => {
   let configService: ConfigService;
   let loggerConfigCoreService: LoggerConfigCoreService;
   let coreEventService: CoreEventService;
+  let loggerService: LoggerService;
 
   beforeEach((): void => {
     configService = ConfigService.getInstance();
     loggerConfigCoreService = LoggerConfigCoreService.getInstance();
     coreEventService = CoreEventService.getInstance();
+    loggerService = LoggerService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -181,14 +184,16 @@ describe(`LoggerConfigMutatorService`, (): void => {
   describe(`updateConfig()`, (): void => {
     let config: PartialNested<ILoggerConfig> | undefined;
 
-    let loggerLogSpy: jest.SpyInstance;
+    let loggerServiceDebugSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = LoggerConfigMutatorService.getInstance();
       loggerConfigCoreService.isEnabled = true;
       loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
 
-      loggerLogSpy = jest.spyOn(console, `log`).mockImplementation();
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
     });
 
     it(`should not update the config`, (): void => {
@@ -207,7 +212,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
       service.updateConfig();
 
-      expect(loggerLogSpy).not.toHaveBeenCalled();
+      expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
     });
 
     describe(`when the given config is undefined`, (): void => {
@@ -231,7 +236,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerLogSpy).not.toHaveBeenCalled();
+        expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
       });
     });
 
@@ -255,10 +260,11 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
-        expect(loggerLogSpy).toHaveBeenLastCalledWith(
-          `debug-● context-[LoggerConfigMutatorService][now-format] text-configuration updated`
-        );
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenLastCalledWith({
+          context: `LoggerConfigMutatorService`,
+          message: `text-configuration updated`,
+        } as ILoggerLog);
       });
     });
 
@@ -284,10 +290,11 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
-        expect(loggerLogSpy).toHaveBeenLastCalledWith(
-          `debug-● context-[LoggerConfigMutatorService][now-format] text-configuration updated`
-        );
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenLastCalledWith({
+          context: `LoggerConfigMutatorService`,
+          message: `text-configuration updated`,
+        } as ILoggerLog);
       });
     });
   });
