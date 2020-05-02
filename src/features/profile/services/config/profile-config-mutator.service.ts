@@ -38,7 +38,7 @@ export class ProfileConfigMutatorService extends AbstractConfigService<
   }
 
   public updateConfig(config?: Readonly<Partial<IProfileConfig>>): void {
-    if (!_.isNil(config) && _.isPlainObject(config)) {
+    if (!_.isNil(config)) {
       this.updateNickname(config.nickname);
 
       this._loggerService.debug({

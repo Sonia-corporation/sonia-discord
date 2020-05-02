@@ -11,7 +11,10 @@ import { TimeService } from "../../../../time/services/time.service";
 import { isDiscordGuildChannel } from "../../../channels/functions/is-discord-guild-channel";
 import { DiscordChannelGuildService } from "../../../channels/services/discord-channel-guild.service";
 import { AnyDiscordChannel } from "../../../channels/types/any-discord-channel";
+import { DiscordGuildSoniaChannelNameEnum } from "../../../guilds/enums/discord-guild-sonia-channel-name.enum";
 import { DiscordGuildConfigService } from "../../../guilds/services/config/discord-guild-config.service";
+import { DiscordGuildSoniaService } from "../../../guilds/services/discord-guild-sonia.service";
+import { DiscordLoggerErrorService } from "../../../logger/services/discord-logger-error.service";
 import { DiscordClientService } from "../../../services/discord-client.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 
@@ -32,6 +35,8 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   private readonly _timeService: TimeService = TimeService.getInstance();
   private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
   private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
+  private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
+  private readonly _discordLoggerErrorService: DiscordLoggerErrorService = DiscordLoggerErrorService.getInstance();
   private readonly _rule: string = getEveryHourScheduleRule();
   private _job: Job | undefined = undefined;
 
@@ -170,17 +175,33 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
           message: this._chalkService.text(`il est midi message sent`),
         });
       })
-      .catch((error: unknown): void => {
-        this._loggerService.error({
-          context: this._serviceName,
-          message: this._chalkService.text(
-            `il est midi message sending failed`
-          ),
-        });
-        this._loggerService.error({
-          context: this._serviceName,
-          message: this._chalkService.error(error),
-        });
+      .catch((error: string): void => {
+        this._onMessageError(error);
       });
+  }
+
+  private _onMessageError(error: string): void {
+    this._messageErrorLog(error);
+    this._sendMessageToSoniaDiscord(error);
+  }
+
+  private _messageErrorLog(error: string): void {
+    this._loggerService.error({
+      context: this._serviceName,
+      message: this._chalkService.text(`il est midi message sending failed`),
+    });
+    this._loggerService.error({
+      context: this._serviceName,
+      message: this._chalkService.error(error),
+    });
+  }
+
+  private _sendMessageToSoniaDiscord(error: string): void {
+    this._discordGuildSoniaService.sendMessageToChannel({
+      channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
+      messageResponse: this._discordLoggerErrorService.getErrorMessageResponse(
+        error
+      ),
+    });
   }
 }
