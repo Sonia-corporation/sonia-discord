@@ -53,11 +53,11 @@ export class DiscordLoggerErrorService extends AbstractService {
 
     this._discordGuildSoniaService.sendMessageToChannel({
       channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-      messageResponse: this._getErrorMessageResponse(error),
+      messageResponse: this.getErrorMessageResponse(error),
     });
   }
 
-  private _getErrorMessageResponse(
+  public getErrorMessageResponse(
     error: Readonly<Error | string>
   ): IDiscordMessageResponse {
     return {
