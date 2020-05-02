@@ -48,4 +48,472 @@ describe(`ChalkService`, (): void => {
       );
     });
   });
+
+  describe(`success()`, (): void => {
+    let message: string | unknown;
+
+    beforeEach((): void => {
+      service = new ChalkService();
+    });
+
+    describe(`when the given message is "dummy-success"`, (): void => {
+      beforeEach((): void => {
+        message = `dummy-success`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.success(message);
+
+        expect(result).toMatch(`dummy-success`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.success;
+
+        expect(result).not.toThrow();
+      });
+    });
+
+    describe(`when the given message is "success"`, (): void => {
+      beforeEach((): void => {
+        message = `success`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.success(message);
+
+        expect(result).toMatch(`success`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.success;
+
+        expect(result).not.toThrow();
+      });
+    });
+  });
+
+  describe(`context()`, (): void => {
+    let message: string | unknown;
+
+    beforeEach((): void => {
+      service = new ChalkService();
+    });
+
+    describe(`when the given message is "dummy-context"`, (): void => {
+      beforeEach((): void => {
+        message = `dummy-context`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.context(message);
+
+        expect(result).toMatch(`dummy-context`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.context;
+
+        expect(result).not.toThrow();
+      });
+    });
+
+    describe(`when the given message is "context"`, (): void => {
+      beforeEach((): void => {
+        message = `context`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.context(message);
+
+        expect(result).toMatch(`context`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.context;
+
+        expect(result).not.toThrow();
+      });
+    });
+  });
+
+  describe(`value()`, (): void => {
+    let message: string | unknown;
+
+    beforeEach((): void => {
+      service = new ChalkService();
+    });
+
+    describe(`when the given message is "dummy-value"`, (): void => {
+      beforeEach((): void => {
+        message = `dummy-value`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.value(message);
+
+        expect(result).toMatch(`dummy-value`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.value;
+
+        expect(result).not.toThrow();
+      });
+    });
+
+    describe(`when the given message is "value"`, (): void => {
+      beforeEach((): void => {
+        message = `value`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.value(message);
+
+        expect(result).toMatch(`value`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.value;
+
+        expect(result).not.toThrow();
+      });
+    });
+  });
+
+  describe(`hint()`, (): void => {
+    let message: string | unknown;
+
+    beforeEach((): void => {
+      service = new ChalkService();
+    });
+
+    describe(`when the given message is "dummy-hint"`, (): void => {
+      beforeEach((): void => {
+        message = `dummy-hint`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.hint(message);
+
+        expect(result).toMatch(`dummy-hint`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.hint;
+
+        expect(result).not.toThrow();
+      });
+    });
+
+    describe(`when the given message is "hint"`, (): void => {
+      beforeEach((): void => {
+        message = `hint`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.hint(message);
+
+        expect(result).toMatch(`hint`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.hint;
+
+        expect(result).not.toThrow();
+      });
+    });
+  });
+
+  describe(`error()`, (): void => {
+    let message: string | unknown;
+
+    beforeEach((): void => {
+      service = new ChalkService();
+    });
+
+    describe(`when the given message is "dummy-error"`, (): void => {
+      beforeEach((): void => {
+        message = `dummy-error`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.error(message);
+
+        expect(result).toMatch(`dummy-error`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.error;
+
+        expect(result).not.toThrow();
+      });
+    });
+
+    describe(`when the given message is "error"`, (): void => {
+      beforeEach((): void => {
+        message = `error`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.error(message);
+
+        expect(result).toMatch(`error`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.error;
+
+        expect(result).not.toThrow();
+      });
+    });
+  });
+
+  describe(`warning()`, (): void => {
+    let message: string | unknown;
+
+    beforeEach((): void => {
+      service = new ChalkService();
+    });
+
+    describe(`when the given message is "dummy-warning"`, (): void => {
+      beforeEach((): void => {
+        message = `dummy-warning`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.warning(message);
+
+        expect(result).toMatch(`dummy-warning`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.warning;
+
+        expect(result).not.toThrow();
+      });
+    });
+
+    describe(`when the given message is "warning"`, (): void => {
+      beforeEach((): void => {
+        message = `warning`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.warning(message);
+
+        expect(result).toMatch(`warning`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.warning;
+
+        expect(result).not.toThrow();
+      });
+    });
+  });
+
+  describe(`text()`, (): void => {
+    let message: string | unknown;
+
+    beforeEach((): void => {
+      service = new ChalkService();
+    });
+
+    describe(`when the given message is "dummy-text"`, (): void => {
+      beforeEach((): void => {
+        message = `dummy-text`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.text(message);
+
+        expect(result).toMatch(`dummy-text`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.text;
+
+        expect(result).not.toThrow();
+      });
+    });
+
+    describe(`when the given message is "text"`, (): void => {
+      beforeEach((): void => {
+        message = `text`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.text(message);
+
+        expect(result).toMatch(`text`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.text;
+
+        expect(result).not.toThrow();
+      });
+    });
+  });
+
+  describe(`log()`, (): void => {
+    let message: string | unknown;
+
+    beforeEach((): void => {
+      service = new ChalkService();
+    });
+
+    describe(`when the given message is "dummy-log"`, (): void => {
+      beforeEach((): void => {
+        message = `dummy-log`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.log(message);
+
+        expect(result).toMatch(`dummy-log`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.log;
+
+        expect(result).not.toThrow();
+      });
+    });
+
+    describe(`when the given message is "log"`, (): void => {
+      beforeEach((): void => {
+        message = `log`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.log(message);
+
+        expect(result).toMatch(`log`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.log;
+
+        expect(result).not.toThrow();
+      });
+    });
+  });
+
+  describe(`debug()`, (): void => {
+    let message: string | unknown;
+
+    beforeEach((): void => {
+      service = new ChalkService();
+    });
+
+    describe(`when the given message is "dummy-debug"`, (): void => {
+      beforeEach((): void => {
+        message = `dummy-debug`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.debug(message);
+
+        expect(result).toMatch(`dummy-debug`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.debug;
+
+        expect(result).not.toThrow();
+      });
+    });
+
+    describe(`when the given message is "debug"`, (): void => {
+      beforeEach((): void => {
+        message = `debug`;
+      });
+
+      it(`should return the given message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.debug(message);
+
+        expect(result).toMatch(`debug`);
+      });
+
+      it(`should not throw error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.debug;
+
+        expect(result).not.toThrow();
+      });
+    });
+  });
 });
