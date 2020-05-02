@@ -14,6 +14,7 @@ import { AppConfigMutatorService } from "./app-config-mutator.service";
 import { AppConfigService } from "./app-config.service";
 
 jest.mock(`../../../time/services/time.service`);
+jest.mock(`../../../logger/services/chalk.service`);
 
 describe(`AppConfigMutationService`, (): void => {
   let service: AppConfigMutatorService;
@@ -362,6 +363,8 @@ describe(`AppConfigMutationService`, (): void => {
   describe(`updateConfig()`, (): void => {
     let config: PartialNested<IAppConfig> | undefined;
 
+    let loggerLogSpy: jest.SpyInstance;
+
     beforeEach((): void => {
       service = AppConfigMutatorService.getInstance();
       appConfigCoreService.initializationDate = `dummy-initialization-date`;
@@ -370,6 +373,35 @@ describe(`AppConfigMutationService`, (): void => {
       appConfigCoreService.releaseNotes = `dummy-release-notes`;
       appConfigCoreService.totalReleaseCount = 8;
       appConfigCoreService.version = `dummy-version`;
+
+      loggerLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    });
+
+    it(`should not update the config`, (): void => {
+      expect.assertions(6);
+
+      service.updateConfig();
+
+      expect(appConfigCoreService.initializationDate).toStrictEqual(
+        `dummy-initialization-date`
+      );
+      expect(appConfigCoreService.isProduction).toStrictEqual(true);
+      expect(appConfigCoreService.releaseDate).toStrictEqual(
+        `dummy-release-date`
+      );
+      expect(appConfigCoreService.releaseNotes).toStrictEqual(
+        `dummy-release-notes`
+      );
+      expect(appConfigCoreService.totalReleaseCount).toStrictEqual(8);
+      expect(appConfigCoreService.version).toStrictEqual(`dummy-version`);
+    });
+
+    it(`should not log about the config update`, (): void => {
+      expect.assertions(1);
+
+      service.updateConfig();
+
+      expect(loggerLogSpy).not.toHaveBeenCalled();
     });
 
     describe(`when the given config is undefined`, (): void => {
@@ -395,6 +427,14 @@ describe(`AppConfigMutationService`, (): void => {
         expect(appConfigCoreService.totalReleaseCount).toStrictEqual(8);
         expect(appConfigCoreService.version).toStrictEqual(`dummy-version`);
       });
+
+      it(`should not log about the config update`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).not.toHaveBeenCalled();
+      });
     });
 
     describe(`when the given config contains an initialization date`, (): void => {
@@ -413,6 +453,17 @@ describe(`AppConfigMutationService`, (): void => {
           `initialization-date`
         );
       });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[AppConfigMutatorService][now-format] text-configuration updated`
+        );
+      });
     });
 
     describe(`when the given config contains a production state`, (): void => {
@@ -429,6 +480,17 @@ describe(`AppConfigMutationService`, (): void => {
 
         expect(appConfigCoreService.isProduction).toStrictEqual(false);
       });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[AppConfigMutatorService][now-format] text-configuration updated`
+        );
+      });
     });
 
     describe(`when the given config contains a release date`, (): void => {
@@ -444,6 +506,17 @@ describe(`AppConfigMutationService`, (): void => {
         service.updateConfig(config);
 
         expect(appConfigCoreService.releaseDate).toStrictEqual(`release-date`);
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[AppConfigMutatorService][now-format] text-configuration updated`
+        );
       });
     });
 
@@ -463,6 +536,17 @@ describe(`AppConfigMutationService`, (): void => {
           `release-notes`
         );
       });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[AppConfigMutatorService][now-format] text-configuration updated`
+        );
+      });
     });
 
     describe(`when the given config contains a total release count`, (): void => {
@@ -479,6 +563,17 @@ describe(`AppConfigMutationService`, (): void => {
 
         expect(appConfigCoreService.totalReleaseCount).toStrictEqual(9);
       });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[AppConfigMutatorService][now-format] text-configuration updated`
+        );
+      });
     });
 
     describe(`when the given config contains a version`, (): void => {
@@ -494,6 +589,17 @@ describe(`AppConfigMutationService`, (): void => {
         service.updateConfig(config);
 
         expect(appConfigCoreService.version).toStrictEqual(`version`);
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[AppConfigMutatorService][now-format] text-configuration updated`
+        );
       });
     });
   });

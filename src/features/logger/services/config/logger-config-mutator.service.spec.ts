@@ -6,23 +6,27 @@ import { ConfigService } from "../../../config/services/config.service";
 import { CoreEventService } from "../../../core/services/core-event.service";
 import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
 import { ILoggerConfig } from "../../interfaces/logger-config";
+import { ILoggerLog } from "../../interfaces/logger-log";
 import { LoggerService } from "../logger.service";
 import { LoggerConfigCoreService } from "./logger-config-core.service";
 import { LoggerConfigMutatorService } from "./logger-config-mutator.service";
 import { LoggerConfigService } from "./logger-config.service";
 
-jest.mock(`../logger.service`);
+jest.mock(`../../../time/services/time.service`);
+jest.mock(`../chalk.service`);
 
 describe(`LoggerConfigMutatorService`, (): void => {
   let service: LoggerConfigMutatorService;
   let configService: ConfigService;
   let loggerConfigCoreService: LoggerConfigCoreService;
   let coreEventService: CoreEventService;
+  let loggerService: LoggerService;
 
   beforeEach((): void => {
     configService = ConfigService.getInstance();
     loggerConfigCoreService = LoggerConfigCoreService.getInstance();
     coreEventService = CoreEventService.getInstance();
+    loggerService = LoggerService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -180,10 +184,35 @@ describe(`LoggerConfigMutatorService`, (): void => {
   describe(`updateConfig()`, (): void => {
     let config: PartialNested<ILoggerConfig> | undefined;
 
+    let loggerServiceDebugSpy: jest.SpyInstance;
+
     beforeEach((): void => {
       service = LoggerConfigMutatorService.getInstance();
       loggerConfigCoreService.isEnabled = true;
       loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
+
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
+    });
+
+    it(`should not update the config`, (): void => {
+      expect.assertions(2);
+
+      service.updateConfig();
+
+      expect(loggerConfigCoreService.isEnabled).toStrictEqual(true);
+      expect(loggerConfigCoreService.level).toStrictEqual(
+        LoggerConfigLevelEnum.DEBUG
+      );
+    });
+
+    it(`should not log about the config update`, (): void => {
+      expect.assertions(1);
+
+      service.updateConfig();
+
+      expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
     });
 
     describe(`when the given config is undefined`, (): void => {
@@ -201,6 +230,14 @@ describe(`LoggerConfigMutatorService`, (): void => {
           LoggerConfigLevelEnum.DEBUG
         );
       });
+
+      it(`should not log about the config update`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
+      });
     });
 
     describe(`when the given config contains an enable state`, (): void => {
@@ -216,6 +253,18 @@ describe(`LoggerConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(loggerConfigCoreService.isEnabled).toStrictEqual(false);
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenLastCalledWith({
+          context: `LoggerConfigMutatorService`,
+          message: `text-configuration updated`,
+        } as ILoggerLog);
       });
     });
 
@@ -234,6 +283,18 @@ describe(`LoggerConfigMutatorService`, (): void => {
         expect(loggerConfigCoreService.level).toStrictEqual(
           LoggerConfigLevelEnum.SUCCESS
         );
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenLastCalledWith({
+          context: `LoggerConfigMutatorService`,
+          message: `text-configuration updated`,
+        } as ILoggerLog);
       });
     });
   });

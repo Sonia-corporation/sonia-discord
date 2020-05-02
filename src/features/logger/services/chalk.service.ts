@@ -1,18 +1,8 @@
-import chalkI from "chalk";
 import _ from "lodash";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
-
-const CHALK = new chalkI.Instance();
-const COLOR_AURORA_GREEN = `#78E08F`;
-const COLOR_BLUE_CARACAO = `#3DC1D3`;
-const COLOR_DEEP_ROSE = `#C44569`;
-const COLOR_ROSY_HIGHLIGHT = `#F7D794`;
-const COLOR_WHITE = `#FFFFFF`;
-const COLOR_SOFT_BLUE = `#778BEB`;
-const COLOR_PURPLE_MOUNTAIN_MAJESTY = `#786FA6`;
-const COLOR_SAWTOOTH_AAK = `#F19066`;
-const COLOR_OLD_GERANIUM = `#CF6A87`;
+import { CHALK } from "../constants/chalk";
+import { ChalkColorEnum } from "../enums/chalk-color.enum";
 
 export class ChalkService extends AbstractService {
   private static _instance: ChalkService;
@@ -30,38 +20,38 @@ export class ChalkService extends AbstractService {
   }
 
   public success(message: Readonly<string> | unknown): string {
-    return CHALK.hex(COLOR_AURORA_GREEN)(message);
+    return CHALK.hex(ChalkColorEnum.AURORA_GREEN)(message);
   }
 
   public context(message: Readonly<string> | unknown): string {
-    return CHALK.hex(COLOR_ROSY_HIGHLIGHT)(message);
+    return CHALK.hex(ChalkColorEnum.ROSY_HIGHLIGHT)(message);
   }
 
   public value(message: Readonly<string> | unknown): string {
-    return CHALK.hex(COLOR_BLUE_CARACAO)(message);
+    return CHALK.hex(ChalkColorEnum.BLUE_CARACAO)(message);
   }
 
   public hint(message: Readonly<string> | unknown): string {
-    return CHALK.hex(COLOR_OLD_GERANIUM)(message);
+    return CHALK.hex(ChalkColorEnum.OLD_GERANIUM)(message);
   }
 
   public error(message: Readonly<string> | unknown): string {
-    return CHALK.hex(COLOR_DEEP_ROSE)(message);
+    return CHALK.hex(ChalkColorEnum.DEEP_ROSE)(message);
   }
 
   public warning(message: Readonly<string> | unknown): string {
-    return CHALK.hex(COLOR_SAWTOOTH_AAK)(message);
+    return CHALK.hex(ChalkColorEnum.SAWTOOTH_AAK)(message);
   }
 
   public text(message: Readonly<string> | unknown): string {
-    return CHALK.hex(COLOR_WHITE)(message);
+    return CHALK.hex(ChalkColorEnum.WHITE)(message);
   }
 
   public log(message: Readonly<string> | unknown): string {
-    return CHALK.hex(COLOR_SOFT_BLUE)(message);
+    return CHALK.hex(ChalkColorEnum.SOFT_BLUE)(message);
   }
 
   public debug(message: Readonly<string> | unknown): string {
-    return CHALK.hex(COLOR_PURPLE_MOUNTAIN_MAJESTY)(message);
+    return CHALK.hex(ChalkColorEnum.PURPLE_MOUNTAIN_MAJESTY)(message);
   }
 }
