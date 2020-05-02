@@ -1,7 +1,8 @@
 import appRootPath from "app-root-path";
 import fs from "fs-extra";
-import mockFs from "mock-fs";
+import { Subject } from "rxjs";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { IEnvironment } from "../../../environment/interfaces/environment";
 import { CoreEventService } from "../../core/services/core-event.service";
 import { LoggerService } from "../../logger/services/logger.service";
 import { InitService } from "./init.service";
@@ -56,18 +57,21 @@ describe(`InitService`, (): void => {
   });
 
   describe(`init()`, (): void => {
+    let readJson$: Subject<IEnvironment>;
+
     let loggerServiceInitSpy: jest.SpyInstance;
     let fsReadJsonSpy: jest.SpyInstance;
-    let consoleErrorSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new InitService();
+      readJson$ = new Subject<IEnvironment>();
 
-      loggerServiceInitSpy = jest
-        .spyOn(loggerService, `init`)
-        .mockImplementation();
-      fsReadJsonSpy = jest.spyOn(fs, `readJson`);
-      consoleErrorSpy = jest.spyOn(console, `error`).mockImplementation();
+      loggerServiceInitSpy = jest.spyOn(loggerService, `init`);
+      fsReadJsonSpy = jest
+        .spyOn(fs, `readJson`)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // @ts-ignore
+        .mockReturnValue(readJson$.toPromise());
     });
 
     it(`should initialize the logger service`, (): void => {
@@ -88,43 +92,6 @@ describe(`InitService`, (): void => {
       expect(fsReadJsonSpy).toHaveBeenLastCalledWith(
         `${appRootPath}/src/environment/secret-environment.json`
       );
-    });
-
-    describe(`when the secret environment file does not exist`, (): void => {
-      beforeEach((): void => {
-        mockFs({});
-      });
-
-      it(`should log about the error`, (): void => {
-        expect.assertions(3);
-
-        const result = service.init;
-
-        expect(result).toThrow(`error`);
-        expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
-        expect(consoleErrorSpy).toHaveBeenNthCalledWith(
-          1,
-          `Failed to read the environment file`
-        );
-      });
-
-      it(`should log the error`, (): void => {
-        expect.assertions(3);
-
-        const result = service.init;
-
-        expect(result).toThrow(`error`);
-        expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
-        expect(consoleErrorSpy).toHaveBeenNthCalledWith(2, `error`);
-      });
-
-      it(`should throw an error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.init;
-
-        expect(result).toThrow(`error`);
-      });
     });
   });
 });
