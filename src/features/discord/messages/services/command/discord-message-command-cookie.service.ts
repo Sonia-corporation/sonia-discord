@@ -36,7 +36,7 @@ export class DiscordMessageCommandCookieService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_COOKIE_SERVICE);
   }
 
-  public handle(
+  public handleResponse(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
     this._loggerService.debug({

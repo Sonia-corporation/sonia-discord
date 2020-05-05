@@ -41,7 +41,7 @@ export class DiscordMessageService extends AbstractService {
     this._listen();
   }
 
-  public handleMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): void {
+  public sendMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): void {
     this._loggerService.log({
       context: this._serviceName,
       extendedContext: true,
@@ -66,7 +66,7 @@ export class DiscordMessageService extends AbstractService {
     this._discordClientService
       .getClient()
       .on(`message`, (anyDiscordMessage: Readonly<AnyDiscordMessage>): void => {
-        this.handleMessage(anyDiscordMessage);
+        this.sendMessage(anyDiscordMessage);
       });
 
     this._loggerService.debug({

@@ -4240,15 +4240,15 @@ describe(`DiscordMessageCommandService`, (): void => {
     let anyDiscordMessage: Message;
     let discordMessageResponse: IDiscordMessageResponse;
 
-    let discordMessageCommandVersionServiceHandleSpy: jest.SpyInstance;
+    let discordMessageCommandVersionServiceHandleResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
       anyDiscordMessage = createMock<Message>();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
-      discordMessageCommandVersionServiceHandleSpy = jest
-        .spyOn(discordMessageCommandVersionService, `handle`)
+      discordMessageCommandVersionServiceHandleResponseSpy = jest
+        .spyOn(discordMessageCommandVersionService, `handleResponse`)
         .mockReturnValue(discordMessageResponse);
     });
 
@@ -4258,11 +4258,11 @@ describe(`DiscordMessageCommandService`, (): void => {
       service.handleVersionCommand(anyDiscordMessage);
 
       expect(
-        discordMessageCommandVersionServiceHandleSpy
+        discordMessageCommandVersionServiceHandleResponseSpy
       ).toHaveBeenCalledTimes(1);
-      expect(discordMessageCommandVersionServiceHandleSpy).toHaveBeenCalledWith(
-        anyDiscordMessage
-      );
+      expect(
+        discordMessageCommandVersionServiceHandleResponseSpy
+      ).toHaveBeenCalledWith(anyDiscordMessage);
     });
 
     it(`should return a message response`, (): void => {
@@ -4278,15 +4278,15 @@ describe(`DiscordMessageCommandService`, (): void => {
     let anyDiscordMessage: Message;
     let discordMessageResponse: IDiscordMessageResponse;
 
-    let discordMessageCommandErrorServiceHandleSpy: jest.SpyInstance;
+    let discordMessageCommandErrorServiceHandleResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
       anyDiscordMessage = createMock<Message>();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
-      discordMessageCommandErrorServiceHandleSpy = jest
-        .spyOn(discordMessageCommandErrorService, `handle`)
+      discordMessageCommandErrorServiceHandleResponseSpy = jest
+        .spyOn(discordMessageCommandErrorService, `handleResponse`)
         .mockReturnValue(discordMessageResponse);
     });
 
@@ -4295,12 +4295,12 @@ describe(`DiscordMessageCommandService`, (): void => {
 
       service.handleErrorCommand(anyDiscordMessage);
 
-      expect(discordMessageCommandErrorServiceHandleSpy).toHaveBeenCalledTimes(
-        1
-      );
-      expect(discordMessageCommandErrorServiceHandleSpy).toHaveBeenCalledWith(
-        anyDiscordMessage
-      );
+      expect(
+        discordMessageCommandErrorServiceHandleResponseSpy
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        discordMessageCommandErrorServiceHandleResponseSpy
+      ).toHaveBeenCalledWith(anyDiscordMessage);
     });
 
     it(`should return a message response`, (): void => {
@@ -4316,15 +4316,15 @@ describe(`DiscordMessageCommandService`, (): void => {
     let anyDiscordMessage: Message;
     let discordMessageResponse: IDiscordMessageResponse;
 
-    let discordMessageCommandHelpServiceHandleSpy: jest.SpyInstance;
+    let discordMessageCommandHelpServiceHandleResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
       anyDiscordMessage = createMock<Message>();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
-      discordMessageCommandHelpServiceHandleSpy = jest
-        .spyOn(discordMessageCommandHelpService, `handle`)
+      discordMessageCommandHelpServiceHandleResponseSpy = jest
+        .spyOn(discordMessageCommandHelpService, `handleResponse`)
         .mockReturnValue(discordMessageResponse);
     });
 
@@ -4333,12 +4333,12 @@ describe(`DiscordMessageCommandService`, (): void => {
 
       service.handleHelpCommand(anyDiscordMessage);
 
-      expect(discordMessageCommandHelpServiceHandleSpy).toHaveBeenCalledTimes(
-        1
-      );
-      expect(discordMessageCommandHelpServiceHandleSpy).toHaveBeenCalledWith(
-        anyDiscordMessage
-      );
+      expect(
+        discordMessageCommandHelpServiceHandleResponseSpy
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        discordMessageCommandHelpServiceHandleResponseSpy
+      ).toHaveBeenCalledWith(anyDiscordMessage);
     });
 
     it(`should return a message response`, (): void => {
@@ -4354,15 +4354,15 @@ describe(`DiscordMessageCommandService`, (): void => {
     let anyDiscordMessage: Message;
     let discordMessageResponse: IDiscordMessageResponse;
 
-    let discordMessageCommandCookieServiceHandleSpy: jest.SpyInstance;
+    let discordMessageCommandCookieServiceResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
       anyDiscordMessage = createMock<Message>();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
-      discordMessageCommandCookieServiceHandleSpy = jest
-        .spyOn(discordMessageCommandCookieService, `handle`)
+      discordMessageCommandCookieServiceResponseSpy = jest
+        .spyOn(discordMessageCommandCookieService, `handleResponse`)
         .mockReturnValue(discordMessageResponse);
     });
 
@@ -4371,12 +4371,12 @@ describe(`DiscordMessageCommandService`, (): void => {
 
       service.handleCookieCommand(anyDiscordMessage);
 
-      expect(discordMessageCommandCookieServiceHandleSpy).toHaveBeenCalledTimes(
-        1
-      );
-      expect(discordMessageCommandCookieServiceHandleSpy).toHaveBeenCalledWith(
-        anyDiscordMessage
-      );
+      expect(
+        discordMessageCommandCookieServiceResponseSpy
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        discordMessageCommandCookieServiceResponseSpy
+      ).toHaveBeenCalledWith(anyDiscordMessage);
     });
 
     it(`should return a message response`, (): void => {
@@ -4392,10 +4392,10 @@ describe(`DiscordMessageCommandService`, (): void => {
     let anyDiscordMessage: Message;
     let discordMessageResponse: IDiscordMessageResponse;
 
-    let discordMessageCommandVersionServiceHandleSpy: jest.SpyInstance;
-    let discordMessageCommandErrorServiceHandleSpy: jest.SpyInstance;
-    let discordMessageCommandHelpServiceHandleSpy: jest.SpyInstance;
-    let discordMessageCommandCookieServiceHandleSpy: jest.SpyInstance;
+    let discordMessageCommandVersionServiceHandleResponseSpy: jest.SpyInstance;
+    let discordMessageCommandErrorServiceHandleResponseSpy: jest.SpyInstance;
+    let discordMessageCommandHelpServiceHandleResponseSpy: jest.SpyInstance;
+    let discordMessageCommandCookieServiceHandleResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
@@ -4405,17 +4405,17 @@ describe(`DiscordMessageCommandService`, (): void => {
       discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
         `--`
       );
-      discordMessageCommandVersionServiceHandleSpy = jest
-        .spyOn(discordMessageCommandVersionService, `handle`)
+      discordMessageCommandVersionServiceHandleResponseSpy = jest
+        .spyOn(discordMessageCommandVersionService, `handleResponse`)
         .mockReturnValue(discordMessageResponse);
-      discordMessageCommandErrorServiceHandleSpy = jest
-        .spyOn(discordMessageCommandErrorService, `handle`)
+      discordMessageCommandErrorServiceHandleResponseSpy = jest
+        .spyOn(discordMessageCommandErrorService, `handleResponse`)
         .mockReturnValue(discordMessageResponse);
-      discordMessageCommandHelpServiceHandleSpy = jest
-        .spyOn(discordMessageCommandHelpService, `handle`)
+      discordMessageCommandHelpServiceHandleResponseSpy = jest
+        .spyOn(discordMessageCommandHelpService, `handleResponse`)
         .mockReturnValue(discordMessageResponse);
-      discordMessageCommandCookieServiceHandleSpy = jest
-        .spyOn(discordMessageCommandCookieService, `handle`)
+      discordMessageCommandCookieServiceHandleResponseSpy = jest
+        .spyOn(discordMessageCommandCookieService, `handleResponse`)
         .mockReturnValue(discordMessageResponse);
     });
 
@@ -4430,7 +4430,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         service.handleCommands(anyDiscordMessage);
 
         expect(
-          discordMessageCommandVersionServiceHandleSpy
+          discordMessageCommandVersionServiceHandleResponseSpy
         ).not.toHaveBeenCalled();
       });
 
@@ -4440,7 +4440,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         service.handleCommands(anyDiscordMessage);
 
         expect(
-          discordMessageCommandErrorServiceHandleSpy
+          discordMessageCommandErrorServiceHandleResponseSpy
         ).not.toHaveBeenCalled();
       });
 
@@ -4450,7 +4450,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         service.handleCommands(anyDiscordMessage);
 
         expect(
-          discordMessageCommandHelpServiceHandleSpy
+          discordMessageCommandHelpServiceHandleResponseSpy
         ).not.toHaveBeenCalled();
       });
 
@@ -4460,7 +4460,7 @@ describe(`DiscordMessageCommandService`, (): void => {
         service.handleCommands(anyDiscordMessage);
 
         expect(
-          discordMessageCommandCookieServiceHandleSpy
+          discordMessageCommandCookieServiceHandleResponseSpy
         ).not.toHaveBeenCalled();
       });
 
@@ -4489,7 +4489,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandVersionServiceHandleSpy
+            discordMessageCommandVersionServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4499,7 +4499,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandErrorServiceHandleSpy
+            discordMessageCommandErrorServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4509,7 +4509,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandHelpServiceHandleSpy
+            discordMessageCommandHelpServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4519,7 +4519,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandCookieServiceHandleSpy
+            discordMessageCommandCookieServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4543,10 +4543,10 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandVersionServiceHandleSpy
+            discordMessageCommandVersionServiceHandleResponseSpy
           ).toHaveBeenCalledTimes(1);
           expect(
-            discordMessageCommandVersionServiceHandleSpy
+            discordMessageCommandVersionServiceHandleResponseSpy
           ).toHaveBeenCalledWith(anyDiscordMessage);
         });
 
@@ -4556,7 +4556,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandErrorServiceHandleSpy
+            discordMessageCommandErrorServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4566,7 +4566,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandHelpServiceHandleSpy
+            discordMessageCommandHelpServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4576,7 +4576,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandCookieServiceHandleSpy
+            discordMessageCommandCookieServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4600,7 +4600,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandVersionServiceHandleSpy
+            discordMessageCommandVersionServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4610,10 +4610,10 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandErrorServiceHandleSpy
+            discordMessageCommandErrorServiceHandleResponseSpy
           ).toHaveBeenCalledTimes(1);
           expect(
-            discordMessageCommandErrorServiceHandleSpy
+            discordMessageCommandErrorServiceHandleResponseSpy
           ).toHaveBeenCalledWith(anyDiscordMessage);
         });
 
@@ -4623,7 +4623,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandHelpServiceHandleSpy
+            discordMessageCommandHelpServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4633,7 +4633,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandCookieServiceHandleSpy
+            discordMessageCommandCookieServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4657,7 +4657,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandVersionServiceHandleSpy
+            discordMessageCommandVersionServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4667,7 +4667,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandErrorServiceHandleSpy
+            discordMessageCommandErrorServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4677,10 +4677,10 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandHelpServiceHandleSpy
+            discordMessageCommandHelpServiceHandleResponseSpy
           ).toHaveBeenCalledTimes(1);
           expect(
-            discordMessageCommandHelpServiceHandleSpy
+            discordMessageCommandHelpServiceHandleResponseSpy
           ).toHaveBeenCalledWith(anyDiscordMessage);
         });
 
@@ -4690,7 +4690,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandCookieServiceHandleSpy
+            discordMessageCommandCookieServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4714,7 +4714,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandVersionServiceHandleSpy
+            discordMessageCommandVersionServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4724,7 +4724,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandErrorServiceHandleSpy
+            discordMessageCommandErrorServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4734,7 +4734,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandHelpServiceHandleSpy
+            discordMessageCommandHelpServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -4744,10 +4744,10 @@ describe(`DiscordMessageCommandService`, (): void => {
           service.handleCommands(anyDiscordMessage);
 
           expect(
-            discordMessageCommandCookieServiceHandleSpy
+            discordMessageCommandCookieServiceHandleResponseSpy
           ).toHaveBeenCalledTimes(1);
           expect(
-            discordMessageCommandCookieServiceHandleSpy
+            discordMessageCommandCookieServiceHandleResponseSpy
           ).toHaveBeenCalledWith(anyDiscordMessage);
         });
 

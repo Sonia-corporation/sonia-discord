@@ -64,7 +64,7 @@ describe(`DiscordMessageService`, (): void => {
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let discordClientServiceGetClientSpy: jest.SpyInstance;
-    let handleMessageSpy: jest.SpyInstance;
+    let sendMessageSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageService();
@@ -78,9 +78,7 @@ describe(`DiscordMessageService`, (): void => {
         .mockReturnValue({
           on: discordClientServiceGetClientOnMock as unknown,
         } as Client);
-      handleMessageSpy = jest
-        .spyOn(service, `handleMessage`)
-        .mockImplementation();
+      sendMessageSpy = jest.spyOn(service, `sendMessage`).mockImplementation();
     });
 
     it(`should get the Discord client`, (): void => {
@@ -117,13 +115,13 @@ describe(`DiscordMessageService`, (): void => {
         } as Client);
       });
 
-      it(`should handle the message`, (): void => {
+      it(`should send a message`, (): void => {
         expect.assertions(2);
 
         service.init();
 
-        expect(handleMessageSpy).toHaveBeenCalledTimes(1);
-        expect(handleMessageSpy).toHaveBeenCalledWith(undefined);
+        expect(sendMessageSpy).toHaveBeenCalledTimes(1);
+        expect(sendMessageSpy).toHaveBeenCalledWith(undefined);
       });
     });
 
