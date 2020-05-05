@@ -94,12 +94,13 @@ describe(`DiscordLoggerService`, (): void => {
     });
 
     it(`should get the Discord client`, (): void => {
-      expect.assertions(2);
+      expect.assertions(3);
 
       service.init();
 
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(2);
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
+      expect(discordClientServiceGetClientSpy).toHaveBeenNthCalledWith(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenNthCalledWith(2);
     });
 
     it(`should listen for the Discord client warn event`, (): void => {
