@@ -74,7 +74,7 @@ describe(`DiscordGuildService`, (): void => {
         .mockImplementation();
       discordClientServiceGetClientSpy = jest
         .spyOn(discordClientService, `isReady$`)
-        .mockReturnValue(isReady$);
+        .mockReturnValue(isReady$.asObservable());
     });
 
     it(`should check if the Discord client is ready`, (): void => {
@@ -103,6 +103,17 @@ describe(`DiscordGuildService`, (): void => {
 
         service.init();
         isReady$.next(false);
+
+        expect(true).toBe(true);
+      });
+    });
+
+    describe(`when the Discord client ready state throw error`, (): void => {
+      it(`should do something at some point`, (): void => {
+        expect.assertions(1);
+
+        service.init();
+        isReady$.error(new Error(`error`));
 
         expect(true).toBe(true);
       });

@@ -93,6 +93,22 @@ export class DiscordGuildSoniaService extends AbstractService {
     return null;
   }
 
+  public setSoniaGuild(): void {
+    this._soniaGuild = this._getSoniaGuild();
+
+    if (_.isNil(this._soniaGuild)) {
+      this._loggerService.error({
+        context: this._serviceName,
+        message: this._chalkService.text(`Sonia guild not found`),
+      });
+    } else {
+      this._loggerService.debug({
+        context: this._serviceName,
+        message: this._chalkService.text(`Sonia guild found`),
+      });
+    }
+  }
+
   private _sendMessageToChannel(
     sendMessageToChannel: Readonly<IDiscordGuildSoniaSendMessageToChannel>,
     guildChannel: Readonly<AnyDiscordChannel>
@@ -120,22 +136,6 @@ export class DiscordGuildSoniaService extends AbstractService {
       });
   }
 
-  private _setSoniaGuild(): void {
-    this._soniaGuild = this._getSoniaGuild();
-
-    if (_.isNil(this._soniaGuild)) {
-      this._loggerService.error({
-        context: this._serviceName,
-        message: this._chalkService.text(`Sonia guild not found`),
-      });
-    } else {
-      this._loggerService.debug({
-        context: this._serviceName,
-        message: this._chalkService.text(`Sonia guild found`),
-      });
-    }
-  }
-
   private _getSoniaGuild(): Guild | undefined {
     return this._discordClientService
       .getClient()
@@ -158,7 +158,7 @@ export class DiscordGuildSoniaService extends AbstractService {
       )
       .subscribe({
         next: (): void => {
-          this._setSoniaGuild();
+          this.setSoniaGuild();
         },
       });
 
