@@ -1,13 +1,23 @@
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
+import { ILoggerLog } from "../../../logger/interfaces/logger-log";
+import { LoggerService } from "../../../logger/services/logger.service";
+import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordMessageService } from "./discord-message.service";
+import { Client } from "discord.js";
+
+jest.mock(`../../../logger/services/chalk.service`);
 
 describe(`DiscordMessageService`, (): void => {
   let service: DiscordMessageService;
   let coreEventService: CoreEventService;
+  let discordClientService: DiscordClientService;
+  let loggerService: LoggerService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
+    discordClientService = DiscordClientService.getInstance();
+    loggerService = LoggerService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -46,6 +56,87 @@ describe(`DiscordMessageService`, (): void => {
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_SERVICE
       );
+    });
+  });
+
+  describe(`init()`, (): void => {
+    let discordClientServiceGetClientOnMock: jest.Mock;
+
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let discordClientServiceGetClientSpy: jest.SpyInstance;
+    let handleMessageSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageService();
+      discordClientServiceGetClientOnMock = jest.fn();
+
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
+      discordClientServiceGetClientSpy = jest
+        .spyOn(discordClientService, `getClient`)
+        .mockReturnValue({
+          on: discordClientServiceGetClientOnMock as unknown,
+        } as Client);
+      handleMessageSpy = jest
+        .spyOn(service, `handleMessage`)
+        .mockImplementation();
+    });
+
+    it(`should get the Discord client`, (): void => {
+      expect.assertions(2);
+
+      service.init();
+
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should listen for the Discord client message event`, (): void => {
+      expect.assertions(2);
+
+      service.init();
+
+      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(
+        `message`,
+        expect.any(Function)
+      );
+    });
+
+    describe(`when the Discord client message event is triggered`, (): void => {
+      beforeEach((): void => {
+        discordClientServiceGetClientOnMock = jest.fn(
+          (_event: string, listener: Function): void => {
+            listener();
+          }
+        );
+
+        discordClientServiceGetClientSpy.mockReturnValue({
+          on: discordClientServiceGetClientOnMock as unknown,
+        } as Client);
+      });
+
+      it(`should handle the message`, (): void => {
+        expect.assertions(2);
+
+        service.init();
+
+        expect(handleMessageSpy).toHaveBeenCalledTimes(1);
+        expect(handleMessageSpy).toHaveBeenCalledWith(undefined);
+      });
+    });
+
+    it(`should log about listening Discord message event`, (): void => {
+      expect.assertions(2);
+
+      service.init();
+
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageService`,
+        message: `text-listen "message" event`,
+      } as ILoggerLog);
     });
   });
 });
