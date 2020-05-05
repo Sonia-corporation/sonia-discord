@@ -45,10 +45,10 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   }
 
   public init(): void {
-    this._startSchedule();
+    this.startSchedule();
   }
 
-  private _startSchedule(): void {
+  public startSchedule(): void {
     this._createSchedule();
   }
 
