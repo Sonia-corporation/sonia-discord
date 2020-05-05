@@ -34,7 +34,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_HELP_SERVICE);
   }
 
-  public handle(
+  public handleResponse(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
     this._loggerService.debug({

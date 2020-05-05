@@ -45,11 +45,21 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   }
 
   public init(): void {
-    this._startSchedule();
+    this.startSchedule();
   }
 
-  private _startSchedule(): void {
+  public startSchedule(): void {
     this._createSchedule();
+  }
+
+  public sendMessage(guild: Readonly<Guild>): void {
+    const primaryChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
+      guild
+    );
+
+    if (isDiscordGuildChannel(primaryChannel)) {
+      this._sendMessage(primaryChannel);
+    }
   }
 
   private _createSchedule(): void {
@@ -118,7 +128,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
       this._discordClientService
         .getClient()
         .guilds.cache.forEach((guild: Readonly<Guild>): void => {
-          this._handleMessage(guild);
+          this.sendMessage(guild);
         });
     }
   }
@@ -147,16 +157,6 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
 
   private _isNoonInParis(): boolean {
     return _.isEqual(moment().tz(`Europe/Paris`).get(`hour`), 12);
-  }
-
-  private _handleMessage(guild: Readonly<Guild>): void {
-    const primaryChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
-      guild
-    );
-
-    if (isDiscordGuildChannel(primaryChannel)) {
-      this._sendMessage(primaryChannel);
-    }
   }
 
   private _sendMessage(channel: Readonly<GuildChannel>): void {

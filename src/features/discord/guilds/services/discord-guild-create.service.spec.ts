@@ -1,23 +1,23 @@
-import { Guild, Client } from "discord.js";
-import { createMock } from "ts-auto-mock";
+import { Client } from "discord.js";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
+import { ILoggerLog } from "../../../logger/interfaces/logger-log";
+import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordClientService } from "../../services/discord-client.service";
-import { DiscordGuildConfigCoreService } from "./config/discord-guild-config-core.service";
 import { DiscordGuildCreateService } from "./discord-guild-create.service";
 
-jest.mock(`../../services/discord-client.service`);
+jest.mock(`../../../logger/services/chalk.service`);
 
 describe(`DiscordGuildCreateService`, (): void => {
   let service: DiscordGuildCreateService;
-  let discordGuildConfigCoreService: DiscordGuildConfigCoreService;
   let coreEventService: CoreEventService;
   let discordClientService: DiscordClientService;
+  let loggerService: LoggerService;
 
   beforeEach((): void => {
-    discordGuildConfigCoreService = DiscordGuildConfigCoreService.getInstance();
     coreEventService = CoreEventService.getInstance();
     discordClientService = DiscordClientService.getInstance();
+    loggerService = LoggerService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -60,57 +60,81 @@ describe(`DiscordGuildCreateService`, (): void => {
   });
 
   describe(`init()`, (): void => {
-    let guild: Guild;
-    let client: Client;
+    let discordClientServiceGetClientOnMock: jest.Mock;
 
-    let discordClientOnSpy: jest.SpyInstance;
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let discordClientServiceGetClientSpy: jest.SpyInstance;
+    let sendMessageSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      service = DiscordGuildCreateService.getInstance();
-      guild = createMock<Guild>();
-      client = createMock<Client>();
+      service = new DiscordGuildCreateService();
+      discordClientServiceGetClientOnMock = jest.fn();
 
-      jest.spyOn(discordClientService, `getClient`).mockReturnValue(client);
-      discordClientOnSpy = jest.spyOn(client, `on`).mockImplementation();
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
+      discordClientServiceGetClientSpy = jest
+        .spyOn(discordClientService, `getClient`)
+        .mockReturnValue({
+          on: discordClientServiceGetClientOnMock as unknown,
+        } as Client);
+      sendMessageSpy = jest.spyOn(service, `sendMessage`).mockImplementation();
     });
 
-    it(`should listen the "guildCreate" event on the client`, (): void => {
+    it(`should get the Discord client`, (): void => {
       expect.assertions(2);
 
       service.init();
 
-      expect(discordClientOnSpy).toHaveBeenCalledTimes(1);
-      expect(discordClientOnSpy).toHaveBeenCalledWith(
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should listen for the Discord client guildCreate event`, (): void => {
+      expect.assertions(2);
+
+      service.init();
+
+      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(
         `guildCreate`,
         expect.any(Function)
       );
     });
 
-    describe(`when the "guildCreate" event is received`, (): void => {
+    describe(`when the Discord client guildCreate event is triggered`, (): void => {
       beforeEach((): void => {
-        discordClientOnSpy.mockImplementation(
-          (_event: string, listener: (guild: Guild) => void): void => {
-            listener(guild);
+        discordClientServiceGetClientOnMock = jest.fn(
+          (_event: string, listener: Function): void => {
+            listener();
           }
         );
+
+        discordClientServiceGetClientSpy.mockReturnValue({
+          on: discordClientServiceGetClientOnMock as unknown,
+        } as Client);
       });
 
-      describe(`when the Discord guild config send cookies on create state is false`, (): void => {
-        beforeEach((): void => {
-          discordGuildConfigCoreService.shouldSendCookiesOnCreate = false;
-        });
+      it(`should send a message`, (): void => {
+        expect.assertions(2);
 
-        // @todo continue the coverage
-        // @todo this is a bit complex because we have to go deep down on Discord objects
-        // @todo to create the mock required for this whole service
-        it.skip(`should listen the "guildCreate" event on the client`, (): void => {
-          expect.assertions(1);
+        service.init();
 
-          service.init();
-
-          expect(true).toStrictEqual(true);
-        });
+        expect(sendMessageSpy).toHaveBeenCalledTimes(1);
+        expect(sendMessageSpy).toHaveBeenCalledWith(undefined);
       });
+    });
+
+    it(`should log about listening Discord guildCreate event`, (): void => {
+      expect.assertions(2);
+
+      service.init();
+
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+        context: `DiscordGuildCreateService`,
+        message: `text-listen "guildCreate" event`,
+      } as ILoggerLog);
     });
   });
 });

@@ -1,4 +1,6 @@
+import { Subject } from "rxjs";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { CoreEventService } from "../../core/services/core-event.service";
 import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
 import { ILoggerLog } from "../interfaces/logger-log";
 import { ILoggerServiceCreated } from "../interfaces/logger-service-created";
@@ -12,9 +14,11 @@ jest.mock(`../../core/services/core-event.service`);
 describe(`LoggerService`, (): void => {
   let service: LoggerService;
   let loggerConfigCoreService: LoggerConfigCoreService;
+  let coreEventService: CoreEventService;
 
   beforeEach((): void => {
     loggerConfigCoreService = LoggerConfigCoreService.getInstance();
+    coreEventService = CoreEventService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -32,6 +36,156 @@ describe(`LoggerService`, (): void => {
       const result = LoggerService.getInstance();
 
       expect(result).toStrictEqual(service);
+    });
+  });
+
+  describe(`init()`, (): void => {
+    let createdServices: ServiceNameEnum[];
+    let serviceCreated$: Subject<ServiceNameEnum>;
+
+    let coreEventServiceGetCreatedServicesSpy: jest.SpyInstance;
+    let serviceCreatedSpy: jest.SpyInstance;
+    let coreEventServiceServiceCreated$Spy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = LoggerService.getInstance();
+      createdServices = [];
+      serviceCreated$ = new Subject<ServiceNameEnum>();
+
+      coreEventServiceGetCreatedServicesSpy = jest
+        .spyOn(coreEventService, `getCreatedServices`)
+        .mockReturnValue(createdServices);
+      serviceCreatedSpy = jest
+        .spyOn(service, `serviceCreated`)
+        .mockImplementation();
+      coreEventServiceServiceCreated$Spy = jest
+        .spyOn(coreEventService, `serviceCreated$`)
+        .mockReturnValue(serviceCreated$);
+    });
+
+    it(`should get the list of created services`, (): void => {
+      expect.assertions(2);
+
+      service.init();
+
+      expect(coreEventServiceGetCreatedServicesSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceGetCreatedServicesSpy).toHaveBeenCalledWith();
+    });
+
+    describe(`when there is no created service`, (): void => {
+      beforeEach((): void => {
+        createdServices = [];
+
+        coreEventServiceGetCreatedServicesSpy.mockReturnValue(createdServices);
+      });
+
+      it(`should not log about a created service`, (): void => {
+        expect.assertions(1);
+
+        service.init();
+
+        expect(serviceCreatedSpy).toHaveBeenCalledTimes(1);
+      });
+
+      it(`should log about the Logger service creation`, (): void => {
+        expect.assertions(2);
+
+        service.init();
+
+        expect(serviceCreatedSpy).toHaveBeenCalledTimes(1);
+        expect(serviceCreatedSpy).toHaveBeenCalledWith({
+          service: ServiceNameEnum.LOGGER_SERVICE,
+        } as ILoggerServiceCreated);
+      });
+    });
+
+    describe(`when there is one created service`, (): void => {
+      beforeEach((): void => {
+        createdServices = [ServiceNameEnum.SERVER_SERVICE];
+
+        coreEventServiceGetCreatedServicesSpy.mockReturnValue(createdServices);
+      });
+
+      it(`should log about a created service one time`, (): void => {
+        expect.assertions(2);
+
+        service.init();
+
+        expect(serviceCreatedSpy).toHaveBeenCalledTimes(2);
+        expect(serviceCreatedSpy).toHaveBeenNthCalledWith(1, {
+          service: ServiceNameEnum.SERVER_SERVICE,
+        } as ILoggerServiceCreated);
+      });
+
+      it(`should log about the Logger service creation`, (): void => {
+        expect.assertions(2);
+
+        service.init();
+
+        expect(serviceCreatedSpy).toHaveBeenCalledTimes(2);
+        expect(serviceCreatedSpy).toHaveBeenNthCalledWith(2, {
+          service: ServiceNameEnum.LOGGER_SERVICE,
+        } as ILoggerServiceCreated);
+      });
+    });
+
+    describe(`when there are two created services`, (): void => {
+      beforeEach((): void => {
+        createdServices = [
+          ServiceNameEnum.SERVER_SERVICE,
+          ServiceNameEnum.DISCORD_LOGGER_ERROR_SERVICE,
+        ];
+
+        coreEventServiceGetCreatedServicesSpy.mockReturnValue(createdServices);
+      });
+
+      it(`should log about a created service two times`, (): void => {
+        expect.assertions(3);
+
+        service.init();
+
+        expect(serviceCreatedSpy).toHaveBeenCalledTimes(3);
+        expect(serviceCreatedSpy).toHaveBeenNthCalledWith(1, {
+          service: ServiceNameEnum.SERVER_SERVICE,
+        } as ILoggerServiceCreated);
+        expect(serviceCreatedSpy).toHaveBeenNthCalledWith(2, {
+          service: ServiceNameEnum.DISCORD_LOGGER_ERROR_SERVICE,
+        } as ILoggerServiceCreated);
+      });
+
+      it(`should log about the Logger service creation`, (): void => {
+        expect.assertions(2);
+
+        service.init();
+
+        expect(serviceCreatedSpy).toHaveBeenCalledTimes(3);
+        expect(serviceCreatedSpy).toHaveBeenNthCalledWith(3, {
+          service: ServiceNameEnum.LOGGER_SERVICE,
+        } as ILoggerServiceCreated);
+      });
+    });
+
+    it(`should listen for new asynchronous service creation`, (): void => {
+      expect.assertions(2);
+
+      service.init();
+
+      expect(coreEventServiceServiceCreated$Spy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceServiceCreated$Spy).toHaveBeenCalledWith();
+    });
+
+    describe(`when a new service was created asynchronously`, (): void => {
+      it(`should log about the new service creation`, (): void => {
+        expect.assertions(2);
+
+        service.init();
+        serviceCreated$.next(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_SERVICE);
+
+        expect(serviceCreatedSpy).toHaveBeenCalledTimes(2);
+        expect(serviceCreatedSpy).toHaveBeenNthCalledWith(2, {
+          service: ServiceNameEnum.DISCORD_MESSAGE_CONFIG_SERVICE,
+        } as ILoggerServiceCreated);
+      });
     });
   });
 

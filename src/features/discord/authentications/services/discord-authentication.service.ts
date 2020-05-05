@@ -30,7 +30,34 @@ export class DiscordAuthenticationService extends AbstractService {
 
   public init(): void {
     this._listen();
-    this._login();
+    this.login();
+  }
+
+  public login(): void {
+    this._discordClientService
+      .getClient()
+      .login(this._discordSoniaConfigService.getSecretToken())
+      .then((): void => {
+        this._loggerService.success({
+          context: this._serviceName,
+          message: this._chalkService.text(`authentication successful`),
+        });
+      })
+      .catch((error: unknown): void => {
+        this._loggerService.error({
+          context: this._serviceName,
+          message: this._chalkService.text(`authentication failed`),
+        });
+        this._loggerService.error({
+          context: this._serviceName,
+          message: this._chalkService.error(error),
+        });
+      });
+
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(`authenticating...`),
+    });
   }
 
   private _listen(): void {
@@ -73,32 +100,5 @@ export class DiscordAuthenticationService extends AbstractService {
 
   private _updateReadyState(): void {
     this._discordClientService.notifyIsReady();
-  }
-
-  private _login(): void {
-    this._discordClientService
-      .getClient()
-      .login(this._discordSoniaConfigService.getSecretToken())
-      .then((): void => {
-        this._loggerService.success({
-          context: this._serviceName,
-          message: this._chalkService.text(`authentication successful`),
-        });
-      })
-      .catch((error: unknown): void => {
-        this._loggerService.error({
-          context: this._serviceName,
-          message: this._chalkService.text(`authentication failed`),
-        });
-        this._loggerService.error({
-          context: this._serviceName,
-          message: this._chalkService.error(error),
-        });
-      });
-
-    this._loggerService.debug({
-      context: this._serviceName,
-      message: this._chalkService.text(`authenticating...`),
-    });
   }
 }

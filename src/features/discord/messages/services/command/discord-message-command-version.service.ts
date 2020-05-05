@@ -42,7 +42,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERSION_SERVICE);
   }
 
-  public handle(
+  public handleResponse(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
     this._loggerService.debug({
