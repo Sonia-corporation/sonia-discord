@@ -50,4 +50,25 @@ describe(`DiscordMessageScheduleIlEstMidiService`, (): void => {
       );
     });
   });
+
+  describe(`init()`, (): void => {
+    let startScheduleSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageScheduleIlEstMidiService();
+
+      startScheduleSpy = jest
+        .spyOn(service, `startSchedule`)
+        .mockImplementation();
+    });
+
+    it(`should start the schedule`, (): void => {
+      expect.assertions(2);
+
+      service.init();
+
+      expect(startScheduleSpy).toHaveBeenCalledTimes(1);
+      expect(startScheduleSpy).toHaveBeenCalledWith();
+    });
+  });
 });

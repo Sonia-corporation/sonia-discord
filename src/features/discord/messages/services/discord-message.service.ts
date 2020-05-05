@@ -41,22 +41,7 @@ export class DiscordMessageService extends AbstractService {
     this._listen();
   }
 
-  private _listen(): void {
-    this._discordClientService
-      .getClient()
-      .on(`message`, (anyDiscordMessage: Readonly<AnyDiscordMessage>): void => {
-        this._handleMessage(anyDiscordMessage);
-      });
-
-    this._loggerService.debug({
-      context: this._serviceName,
-      message: this._chalkService.text(
-        `listen ${wrapInQuotes(`message`)} event`
-      ),
-    });
-  }
-
-  private _handleMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): void {
+  public sendMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): void {
     this._loggerService.log({
       context: this._serviceName,
       extendedContext: true,
@@ -75,6 +60,21 @@ export class DiscordMessageService extends AbstractService {
     if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
       this._handleChannelMessage(anyDiscordMessage);
     }
+  }
+
+  private _listen(): void {
+    this._discordClientService
+      .getClient()
+      .on(`message`, (anyDiscordMessage: Readonly<AnyDiscordMessage>): void => {
+        this.sendMessage(anyDiscordMessage);
+      });
+
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(
+        `listen ${wrapInQuotes(`message`)} event`
+      ),
+    });
   }
 
   private _handleChannelMessage(

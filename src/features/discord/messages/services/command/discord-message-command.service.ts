@@ -78,25 +78,33 @@ export class DiscordMessageCommandService extends AbstractService {
   public handleVersionCommand(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
-    return this._discordMessageCommandVersionService.handle(anyDiscordMessage);
+    return this._discordMessageCommandVersionService.handleResponse(
+      anyDiscordMessage
+    );
   }
 
   public handleErrorCommand(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
-    return this._discordMessageCommandErrorService.handle(anyDiscordMessage);
+    return this._discordMessageCommandErrorService.handleResponse(
+      anyDiscordMessage
+    );
   }
 
   public handleHelpCommand(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
-    return this._discordMessageCommandHelpService.handle(anyDiscordMessage);
+    return this._discordMessageCommandHelpService.handleResponse(
+      anyDiscordMessage
+    );
   }
 
   public handleCookieCommand(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
-    return this._discordMessageCommandCookieService.handle(anyDiscordMessage);
+    return this._discordMessageCommandCookieService.handleResponse(
+      anyDiscordMessage
+    );
   }
 
   public handleCommands(
