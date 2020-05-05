@@ -43,22 +43,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
     this._listen();
   }
 
-  private _listen(): void {
-    this._discordClientService
-      .getClient()
-      .on(`guildMemberAdd`, (member: Readonly<AnyGuildMember>): void => {
-        this._handleGuildMemberAdd(member);
-      });
-
-    this._loggerService.debug({
-      context: this._serviceName,
-      message: this._chalkService.text(
-        `listen ${wrapInQuotes(`guildMemberAdd`)} event`
-      ),
-    });
-  }
-
-  private _handleGuildMemberAdd(member: Readonly<AnyGuildMember>): void {
+  public sendMessage(member: Readonly<AnyGuildMember>): void {
     if (this._canSendMessage()) {
       const primaryChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
         member.guild
@@ -68,6 +53,21 @@ export class DiscordGuildMemberAddService extends AbstractService {
         this._sendMessage(primaryChannel, member);
       }
     }
+  }
+
+  private _listen(): void {
+    this._discordClientService
+      .getClient()
+      .on(`guildMemberAdd`, (member: Readonly<AnyGuildMember>): void => {
+        this.sendMessage(member);
+      });
+
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(
+        `listen ${wrapInQuotes(`guildMemberAdd`)} event`
+      ),
+    });
   }
 
   private _canSendMessage(): boolean {
