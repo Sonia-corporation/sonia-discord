@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.40.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.40.0...1.40.1) (2020-05-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency moment to v2.25.3 ([4f166f9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4f166f9aa34a1f51d715bb50172641db2664b804))
+
 # [1.40.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.39.0...1.40.0) (2020-05-02)
 
 
