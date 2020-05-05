@@ -1,5 +1,42 @@
 # Semantic Versioning Changelog
 
+## [1.40.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.40.0...1.40.1) (2020-05-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency moment to v2.25.3 ([4f166f9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4f166f9aa34a1f51d715bb50172641db2664b804))
+
+# [1.40.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.39.0...1.40.0) (2020-05-02)
+
+
+### Bug Fixes
+
+* **deps:** update dependency moment to v2.25.0 ([c149328](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c149328b47756c52c4f61d54234991529cb111d8))
+* **deps:** update dependency moment to v2.25.1 ([47cb4c8](https://github.com/Sonia-corporation/il-est-midi-discord/commit/47cb4c8576401623d1d107ffd016300830df714e))
+
+
+### Features
+
+* **error:** send noon errors to Sonia discord errors channel ([ccfad24](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ccfad24749b141bbda43123349632aa86dbecc2b))
+
+# [1.39.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.38.0...1.39.0) (2020-04-29)
+
+
+### Features
+
+* **discord:** send message error to Sonia discord errors channel ([01da4af](https://github.com/Sonia-corporation/il-est-midi-discord/commit/01da4afaf825a215c79714edd07b05bfef46accc))
+
+# [1.38.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.37.0...1.38.0) (2020-04-28)
+
+
+### Features
+
+* **discord-client:** add behavior subject for is ready ([26019e8](https://github.com/Sonia-corporation/il-est-midi-discord/commit/26019e8b97ad7289b224048fa66950432958a05d))
+* **config-service:** add getUpdatedDate method ([6c701a2](https://github.com/Sonia-corporation/il-est-midi-discord/commit/6c701a23fbd7daad8f8dd2f4eb694d02489b380a))
+* **discord:** handle the case where discord send string error ([4380fda](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4380fda43c52afa8a9eea3d2c418195a30e2774d))
+* **app-config:** use config new date method to log the date ([721ccec](https://github.com/Sonia-corporation/il-est-midi-discord/commit/721ccec4eb7ea70bb832ac3d6e823b808ac43a2e))
+
 # [1.37.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.36.0...1.37.0) (2020-04-24)
 
 
