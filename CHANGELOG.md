@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.41.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.40.1...1.41.0) (2020-05-10)
+
+
+### Features
+
+* **github:** configure the weekly digest bot ([3dabe65](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3dabe654b3d4f167a5638e8fa5d0a48d92d75602))
+
 ## [1.40.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.40.0...1.40.1) (2020-05-05)
 
 
