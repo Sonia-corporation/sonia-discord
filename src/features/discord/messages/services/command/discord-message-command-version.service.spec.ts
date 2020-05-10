@@ -2,17 +2,21 @@ import {
   MessageEmbedAuthor,
   MessageEmbedFooter,
   MessageEmbedThumbnail,
+  EmbedFieldData,
 } from "discord.js";
 import moment from "moment-timezone";
 import { createMock } from "ts-auto-mock";
 import { ColorEnum } from "../../../../../enums/color.enum";
 import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
+import { AppProductionStateEnum } from "../../../../app/enums/app-production-state.enum";
 import { AppConfigQueryService } from "../../../../app/services/config/app-config-query.service";
+import { AppConfigService } from "../../../../app/services/config/app-config.service";
 import { CoreEventService } from "../../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../logger/services/logger.service";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
+import { DiscordSoniaEmotionalStateEnum } from "../../../users/enums/discord-sonia-emotional-state.enum";
 import { DiscordSoniaService } from "../../../users/services/discord-sonia.service";
 import { AnyDiscordMessage } from "../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../config/discord-message-config.service";
@@ -27,6 +31,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
   let discordSoniaService: DiscordSoniaService;
   let discordMessageConfigService: DiscordMessageConfigService;
   let appConfigQueryService: AppConfigQueryService;
+  let appConfigService: AppConfigService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -34,6 +39,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     discordSoniaService = DiscordSoniaService.getInstance();
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
     appConfigQueryService = AppConfigQueryService.getInstance();
+    appConfigService = AppConfigService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -122,6 +128,22 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       jest
         .spyOn(discordSoniaService, `getFullName`)
         .mockReturnValue(`dummy-full-name`);
+      jest.spyOn(appConfigService, `getVersion`).mockReturnValue(`8`);
+      jest
+        .spyOn(appConfigQueryService, `getReleaseDateHumanized`)
+        .mockReturnValue(`dummy-release-date-humanized`);
+      jest
+        .spyOn(appConfigQueryService, `getInitializationDateHumanized`)
+        .mockReturnValue(`dummy-initialization-date-humanized`);
+      jest
+        .spyOn(appConfigService, `getReleaseNotes`)
+        .mockReturnValue(`dummy-release-notes`);
+      jest
+        .spyOn(appConfigQueryService, `getProductionStateHumanized`)
+        .mockReturnValue(AppProductionStateEnum.DEVELOPMENT);
+      jest
+        .spyOn(discordSoniaService, `getEmotionalState`)
+        .mockReturnValue(DiscordSoniaEmotionalStateEnum.AGITATED);
     });
 
     it(`should log about the command`, (): void => {
@@ -155,6 +177,98 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
+    });
+
+    it(`should return a Discord message response embed with 6 fields`, (): void => {
+      expect.assertions(1);
+
+      const result: unknown = service.handleResponse(anyDiscordMessage);
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      expect(result.options.embed.fields).toHaveLength(6);
+    });
+
+    it(`should return a Discord message response embed with an application version field`, (): void => {
+      expect.assertions(1);
+
+      const result: unknown = service.handleResponse(anyDiscordMessage);
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      expect(result.options.embed.fields[0]).toStrictEqual({
+        name: `My age`,
+        value: `[8](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/8)`,
+      } as EmbedFieldData);
+    });
+
+    it(`should return a Discord message response embed with a release date field`, (): void => {
+      expect.assertions(1);
+
+      const result: unknown = service.handleResponse(anyDiscordMessage);
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      expect(result.options.embed.fields[1]).toStrictEqual({
+        inline: true,
+        name: `My last birthday`,
+        value: `dummy-release-date-humanized`,
+      } as EmbedFieldData);
+    });
+
+    it(`should return a Discord message response embed with a initialization date field`, (): void => {
+      expect.assertions(1);
+
+      const result: unknown = service.handleResponse(anyDiscordMessage);
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      expect(result.options.embed.fields[2]).toStrictEqual({
+        inline: true,
+        name: `The last time I woken up`,
+        value: `dummy-initialization-date-humanized`,
+      } as EmbedFieldData);
+    });
+
+    it(`should return a Discord message response embed with a release notes field`, (): void => {
+      expect.assertions(1);
+
+      const result: unknown = service.handleResponse(anyDiscordMessage);
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      expect(result.options.embed.fields[3]).toStrictEqual({
+        name: `My birthday card`,
+        value: `dummy-release-notes\n\nCheckout all my [birthday cards](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md).`,
+      } as EmbedFieldData);
+    });
+
+    it(`should return a Discord message response embed with a status field`, (): void => {
+      expect.assertions(1);
+
+      const result: unknown = service.handleResponse(anyDiscordMessage);
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      expect(result.options.embed.fields[4]).toStrictEqual({
+        inline: true,
+        name: `My location`,
+        value: `Running in development`,
+      } as EmbedFieldData);
+    });
+
+    it(`should return a Discord message response embed with an emotional state field`, (): void => {
+      expect.assertions(1);
+
+      const result: unknown = service.handleResponse(anyDiscordMessage);
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      expect(result.options.embed.fields[5]).toStrictEqual({
+        inline: true,
+        name: `My emotional state`,
+        value: `Agitated`,
+      } as EmbedFieldData);
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, (): void => {
@@ -248,7 +362,9 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
-      expect(result.options.embed.title).toStrictEqual(`dummy-full-name version`);
+      expect(result.options.embed.title).toStrictEqual(
+        `dummy-full-name version`
+      );
     });
 
     it(`should return a Discord message response splitted`, (): void => {
