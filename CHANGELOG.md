@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+# [1.42.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.41.0...1.42.0) (2020-05-10)
+
+
+### Features
+
+* **github:** configure the helpr bot ([3b7e98d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3b7e98da3ea0f8f3e93171589777c699609b183c))
+* **github:** configure the helPR bot ([7f22e14](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7f22e14cf84ca7dbbac1d146ecf9205939fe0630))
+
 # [1.41.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.40.1...1.41.0) (2020-05-10)
 
 
