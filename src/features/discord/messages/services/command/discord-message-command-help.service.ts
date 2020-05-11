@@ -72,33 +72,13 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     return this._discordSoniaService.getCorporationMessageEmbedAuthor();
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
-    return {
-      url: this._discordMessageConfigService.getMessageCommandHelpImageUrl(),
-    };
-  }
-
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
-    const soniaImageUrl:
-      | string
-      | null = this._discordSoniaService.getImageUrl();
-
-    return {
-      iconURL: soniaImageUrl || undefined,
-      text: `At your service, brother`,
-    };
-  }
-
   private _getMessageEmbedColor(): number {
     return this._discordMessageConfigService.getMessageCommandHelpImageColor();
   }
 
-  private _getMessageEmbedTimestamp(): Date {
-    return moment().toDate();
-  }
-
-  private _getMessageEmbedTitle(): string {
-    return `So, you need my help? Cool.`;
+  private _getMessageDescription(): string {
+    return `Below is the complete list of commands.
+    You can either use *--* or *!* as prefix to run a command.`;
   }
 
   private _getMessageEmbedFields(): EmbedFieldData[] {
@@ -150,8 +130,28 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     };
   }
 
-  private _getMessageDescription(): string {
-    return `Below is the complete list of commands.
-    You can either use *--* or *!* as prefix to run a command.`;
+  private _getMessageEmbedFooter(): MessageEmbedFooter {
+    const soniaImageUrl:
+      | string
+      | null = this._discordSoniaService.getImageUrl();
+
+    return {
+      iconURL: soniaImageUrl || undefined,
+      text: `At your service brother`,
+    };
+  }
+
+  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+    return {
+      url: this._discordMessageConfigService.getMessageCommandHelpImageUrl(),
+    };
+  }
+
+  private _getMessageEmbedTimestamp(): Date {
+    return moment().toDate();
+  }
+
+  private _getMessageEmbedTitle(): string {
+    return `So, you need my help? Cool.`;
   }
 }
