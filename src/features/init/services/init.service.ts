@@ -141,10 +141,10 @@ export class InitService extends AbstractService {
       .catch((error: unknown): void => {
         console.error(`Failed to read the secret environment file`);
         console.error(error);
-        console.info(
+        console.debug(
           `Follow the instructions about the secret environment to fix this:`
         );
-        console.info(
+        console.debug(
           `https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
         );
         throw new Error(
