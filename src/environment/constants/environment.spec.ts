@@ -8,6 +8,7 @@ describe(`ENVIRONMENT`, (): void => {
     expect(ENVIRONMENT.discord.message.command?.prefix).toStrictEqual([
       `--`,
       `!`,
+      `$`,
     ]);
   });
 

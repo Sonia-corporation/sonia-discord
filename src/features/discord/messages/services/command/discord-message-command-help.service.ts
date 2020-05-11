@@ -152,6 +152,6 @@ export class DiscordMessageCommandHelpService extends AbstractService {
 
   private _getMessageDescription(): string {
     return `Below is the complete list of commands.
-    You can either use *--* or *!* as prefix to run a command.`;
+    You can either use *--*, *!* or *$* as prefix to run a command.`;
   }
 }
