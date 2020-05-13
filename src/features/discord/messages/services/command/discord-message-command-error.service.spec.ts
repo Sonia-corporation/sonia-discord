@@ -10,7 +10,12 @@ import { DiscordSoniaService } from "../../../users/services/discord-sonia.servi
 import { AnyDiscordMessage } from "../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../config/discord-message-config.service";
 import { DiscordMessageCommandErrorService } from "./discord-message-command-error.service";
-import { MessageEmbedAuthor, EmbedFieldData, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import {
+  MessageEmbedAuthor,
+  EmbedFieldData,
+  MessageEmbedFooter,
+  MessageEmbedThumbnail,
+} from "discord.js";
 
 jest.mock(`../../../../logger/services/chalk.service`);
 
@@ -119,7 +124,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
       expect.assertions(1);
       const messageEmbedAuthor: MessageEmbedAuthor = createMock<
         MessageEmbedAuthor
-        >();
+      >();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(
         messageEmbedAuthor
       );

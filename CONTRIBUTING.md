@@ -2,6 +2,13 @@
 
 ## First step
 
+### Install the dependencies
+
+Run `npm i` to install the dependencies.  
+It will also create the Git hooks with Husky if you Git version is recent enough.
+
+Run `npm run start` to start the local development server.
+
 ### Create the secret environment file
 
 This step is mandatory.  
@@ -59,11 +66,6 @@ __Note for the nickname:__
 
 This file can contain optionals fields:
 - nickname: can be display on each developer server messages.
-
-### Install the dependencies
-
-Run `npm i` to install the dependencies.  
-Run `npm run start` to start the local development server.
 
 ## Package scripts
 
