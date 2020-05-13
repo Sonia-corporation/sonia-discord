@@ -250,7 +250,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
-        text: `At your service brother`,
+        text: `At your service`,
       } as MessageEmbedFooter);
     });
 
@@ -268,7 +268,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: undefined,
-          text: `At your service brother`,
+          text: `At your service`,
         } as MessageEmbedFooter);
       });
     });
@@ -287,7 +287,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: `image-url`,
-          text: `At your service brother`,
+          text: `At your service`,
         } as MessageEmbedFooter);
       });
     });
