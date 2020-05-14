@@ -100,8 +100,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   }
 
   private _getMessageEmbedColor(): number {
-    return this._discordMessageConfigService.getMessageCommandVersion()
-      .imageColor;
+    return this._discordMessageConfigService.getMessageCommandVersionImageColor();
   }
 
   private _getMessageEmbedTimestamp(): Date {
