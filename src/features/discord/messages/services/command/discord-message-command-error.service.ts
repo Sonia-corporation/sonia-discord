@@ -108,7 +108,7 @@ export class DiscordMessageCommandErrorService extends AbstractService {
 
     return {
       iconURL: soniaImageUrl || undefined,
-      text: `Nice try though `,
+      text: `Nice try though`,
     };
   }
 
