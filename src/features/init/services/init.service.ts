@@ -139,10 +139,16 @@ export class InitService extends AbstractService {
         this._startApp(this._mergeEnvironments(ENVIRONMENT, environment));
       })
       .catch((error: unknown): void => {
-        console.error(`Failed to read the environment file`);
+        console.error(`Failed to read the secret environment file`);
         console.error(error);
+        console.debug(
+          `Follow the instructions about the secret environment to fix this:`
+        );
+        console.debug(
+          `https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
+        );
         throw new Error(
-          `The app must have an environment file with at least a "discord.sonia.secretToken" inside it`
+          `The app must have a secret environment file with at least a "discord.sonia.secretToken" inside it`
         );
       });
   }

@@ -51,6 +51,18 @@ FS.access(`${APP_ROOT_PATH.path}/src/environment/secret-environment.json`)
                 `Secret environment file content successfully rewritten`
               )
             );
+            LOGGER.debug(
+              CONTEXT,
+              CHALK.text(
+                `Follow the instructions about the secret environment to update it with the right information and tokens:`
+              )
+            );
+            LOGGER.debug(
+              CONTEXT,
+              CHALK.text(
+                `https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
+              )
+            );
           })
           .catch((error) => {
             LOGGER.error(
