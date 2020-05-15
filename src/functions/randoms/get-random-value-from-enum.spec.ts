@@ -33,13 +33,23 @@ describe(`getRandomValueFromEnum()`, (): void => {
         true
       );
     });
+
+    it(`should return either "not-marco" or "not-polo" when casted as string`, (): void => {
+      expect.assertions(1);
+
+      const result = getRandomValueFromEnum<string>(DummyStringsEnum);
+
+      expect(result === `not-marco` || result === `not-polo`).toStrictEqual(
+        true
+      );
+    });
   });
 
   describe(`when the given enum is an enum of numbers`, (): void => {
     it(`should return either 0 or 1 or "MARCO" or "POLO"`, (): void => {
       expect.assertions(1);
 
-      const result = getRandomValueFromEnum(DummyNumbersEnum);
+      const result = getRandomValueFromEnum<string | number>(DummyNumbersEnum);
 
       expect(
         result === 0 || result === 1 || result === `MARCO` || result === `POLO`

@@ -1,31 +1,24 @@
 {
   "extends": [
-    ":separateMajorReleases",
-    ":combinePatchMinorReleases",
+    ":enableRenovate",
+    ":semanticCommits",
+    ":prHourlyLimitNone",
+    ":prConcurrentLimitNone",
+    ":separateMultipleMajorReleases",
+    ":separatePatchReleases",
     ":ignoreUnstable",
     ":prImmediately",
     ":semanticPrefixFixDepsChoreOthers",
     ":updateNotScheduled",
     ":automergeDisabled",
+    ":enableVulnerabilityAlerts",
+    ":assignAndReview(C0ZEN)",
     ":ignoreModulesAndTests",
     ":maintainLockFilesDisabled",
     ":autodetectPinVersions",
-    ":prHourlyLimit2",
-    ":prConcurrentLimit20",
     "group:monorepos",
     "group:recommended",
     "helpers:disableTypesNodeMajor"
   ],
-  "packageRules": [
-    {
-      "updateTypes": [
-        "patch"
-      ],
-      "depTypeList": [
-        "devDependencies"
-      ],
-      "automerge": true
-    }
-  ],
-  "semanticCommits": true
+  "assignAutomerge": true
 }
