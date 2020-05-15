@@ -14,7 +14,6 @@ import { AppProductionStateEnum } from "../../../../app/enums/app-production-sta
 import { AppConfigQueryService } from "../../../../app/services/config/app-config-query.service";
 import { AppConfigService } from "../../../../app/services/config/app-config.service";
 import { LoggerService } from "../../../../logger/services/logger.service";
-import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { DiscordSoniaEmotionalStateEnum } from "../../../users/enums/discord-sonia-emotional-state.enum";
 import { DiscordSoniaService } from "../../../users/services/discord-sonia.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
@@ -80,10 +79,8 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   }
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
-    const discordMessageCommandVersionConfig: IDiscordMessageCommandVersionConfig = this._discordMessageConfigService.getMessageCommandVersion();
-
     return {
-      url: discordMessageCommandVersionConfig.imageUrl,
+      url: this._discordMessageConfigService.getMessageCommandVersionImageUrl(),
     };
   }
 
