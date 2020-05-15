@@ -86,11 +86,12 @@
     "lint:ci": "eslint --ext .js,.ts scripts/ src/ jest.config.js config.ts",
     "\n# UTILS SCRIPTS:": "",
     "commitmsg": "cz-customizable-ghooks",
-    "cz": "git add . && git-cz && git push-upstream",
+    "cz": "git add . && git-cz && npm run git:push",
     "semver": "npx semantic-release",
     "clean:dist": "rimraf dist",
     "commit": "npm run cz",
-    "create-secret-environment": "node ./scripts/create-secret-environment.js"
+    "create-secret-environment": "node ./scripts/create-secret-environment.js",
+    "git:push": "git push-upstream"
   },
   "dependencies": {
     "@scout_apm/scout-apm": "0.1.8",

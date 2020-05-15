@@ -137,7 +137,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
 
     return {
       iconURL: soniaImageUrl || undefined,
-      text: `At your service brother`,
+      text: `At your service`,
     };
   }
 
