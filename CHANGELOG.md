@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.43.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.42.0...1.43.0) (2020-05-16)
+
+
+### Features
+
+* **discord:** allow $ as prefix ([ce61db2](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ce61db2609ae5de269b7af9e12ced6ec1817b422))
+
 # [1.42.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.41.0...1.42.0) (2020-05-10)
 
 
