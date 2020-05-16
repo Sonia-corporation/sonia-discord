@@ -78,7 +78,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
 
   private _getMessageDescription(): string {
     return `Below is the complete list of commands.
-    You can either use *--* or *!* as prefix to run a command.`;
+    You can either use *--*, *!* or *$* as prefix to run a command.`;
   }
 
   private _getMessageEmbedFields(): EmbedFieldData[] {
@@ -137,7 +137,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
 
     return {
       iconURL: soniaImageUrl || undefined,
-      text: `At your service brother`,
+      text: `At your service`,
     };
   }
 
