@@ -83,10 +83,11 @@ export class DiscordMessageCommandHelpService extends AbstractService {
 
   private _getMessageEmbedFields(): EmbedFieldData[] {
     return [
-      this._getMessageEmbedFieldVersion(),
+      this._getMessageEmbedFieldCookie(),
       this._getMessageEmbedFieldError(),
       this._getMessageEmbedFieldHelp(),
-      this._getMessageEmbedFieldCookie(),
+      this._getMessageEmbedFieldLunch(),
+      this._getMessageEmbedFieldVersion(),
       this._getMessageEmbedFieldMoreHelp(),
     ];
   }
@@ -119,6 +120,13 @@ export class DiscordMessageCommandHelpService extends AbstractService {
       name: `Cookie (*cookie*, *cookies* or *c*)`,
       value: `Because I am good, life gave me cookies.
       Now it is my turn to give you some.`,
+    };
+  }
+
+  private _getMessageEmbedFieldLunch(): EmbedFieldData {
+    return {
+      name: `Lunch (*lunch* or *l*)`,
+      value: `There is a time to eat.`,
     };
   }
 

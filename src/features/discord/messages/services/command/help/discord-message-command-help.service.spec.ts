@@ -161,17 +161,17 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     You can either use *--*, *!* or *$* as prefix to run a command.`);
     });
 
-    it(`should return a Discord message response embed with 5 fields`, (): void => {
+    it(`should return a Discord message response embed with 6 fields`, (): void => {
       expect.assertions(1);
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
-      expect(result.options.embed.fields).toHaveLength(5);
+      expect(result.options.embed.fields).toHaveLength(6);
     });
 
-    it(`should return a Discord message response embed with a version field`, (): void => {
+    it(`should return a Discord message response embed with a cookie field`, (): void => {
       expect.assertions(1);
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
@@ -179,8 +179,9 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       expect(result.options.embed.fields[0]).toStrictEqual({
-        name: `Version (*version* or *v*)`,
-        value: `Display my current application version.`,
+        name: `Cookie (*cookie*, *cookies* or *c*)`,
+        value: `Because I am good, life gave me cookies.
+      Now it is my turn to give you some.`,
       } as EmbedFieldData);
     });
 
@@ -212,7 +213,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a cookie field`, (): void => {
+    it(`should return a Discord message response embed with a lunch field`, (): void => {
       expect.assertions(1);
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
@@ -220,9 +221,21 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       expect(result.options.embed.fields[3]).toStrictEqual({
-        name: `Cookie (*cookie*, *cookies* or *c*)`,
-        value: `Because I am good, life gave me cookies.
-      Now it is my turn to give you some.`,
+        name: `Lunch (*lunch* or *l*)`,
+        value: `There is a time to eat.`,
+      } as EmbedFieldData);
+    });
+
+    it(`should return a Discord message response embed with a version field`, (): void => {
+      expect.assertions(1);
+
+      const result: unknown = service.handleResponse(anyDiscordMessage);
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      expect(result.options.embed.fields[4]).toStrictEqual({
+        name: `Version (*version* or *v*)`,
+        value: `Display my current application version.`,
       } as EmbedFieldData);
     });
 
@@ -233,7 +246,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
-      expect(result.options.embed.fields[4]).toStrictEqual({
+      expect(result.options.embed.fields[5]).toStrictEqual({
         name: `Further help`,
         value: `You can also checkout the [readme](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/README.md).
       It contains more information about how I work.`,
