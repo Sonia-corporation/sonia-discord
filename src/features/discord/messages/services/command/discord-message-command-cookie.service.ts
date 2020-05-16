@@ -77,10 +77,15 @@ export class DiscordMessageCommandCookieService extends AbstractService {
     return this._discordSoniaService.getCorporationMessageEmbedAuthor();
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
-    return {
-      url: this._discordMessageConfigService.getMessageCommandCookieImageUrl(),
-    };
+  private _getMessageEmbedColor(): number {
+    return this._discordMessageConfigService.getMessageCommandCookieImageColor();
+  }
+
+  private _getMessageDescription(): string {
+    return (
+      getRandomValueFromEnum(DiscordMessageCommandCookieDescriptionEnum) ||
+      `Yes.`
+    );
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
@@ -94,8 +99,10 @@ export class DiscordMessageCommandCookieService extends AbstractService {
     };
   }
 
-  private _getMessageEmbedColor(): number {
-    return this._discordMessageConfigService.getMessageCommandCookieImageColor();
+  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+    return {
+      url: this._discordMessageConfigService.getMessageCommandCookieImageUrl(),
+    };
   }
 
   private _getMessageEmbedTimestamp(): Date {
@@ -105,13 +112,6 @@ export class DiscordMessageCommandCookieService extends AbstractService {
   private _getMessageEmbedTitle(): string {
     return (
       getRandomValueFromEnum(DiscordMessageCommandCookieTitleEnum) || `Cookies!`
-    );
-  }
-
-  private _getMessageDescription(): string {
-    return (
-      getRandomValueFromEnum(DiscordMessageCommandCookieDescriptionEnum) ||
-      `Yes.`
     );
   }
 }
