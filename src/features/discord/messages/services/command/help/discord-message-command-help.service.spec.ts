@@ -179,7 +179,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       expect(result.options.embed.fields[0]).toStrictEqual({
-        name: `Version (*!version* or *!v*)`,
+        name: `Version (*version* or *v*)`,
         value: `Display my current application version.`,
       } as EmbedFieldData);
     });
@@ -192,7 +192,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       expect(result.options.embed.fields[1]).toStrictEqual({
-        name: `Error (*!error* or *!bug*)`,
+        name: `Error (*error* or *bug*)`,
         value: `Create a bug in my core system.
       Do not do this one, of course!`,
       } as EmbedFieldData);
@@ -206,7 +206,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       expect(result.options.embed.fields[2]).toStrictEqual({
-        name: `Help (*!help* or *!h*)`,
+        name: `Help (*help* or *h*)`,
         value: `Ask for my help, it is obvious!
       And maybe I will, who knows?`,
       } as EmbedFieldData);
@@ -220,7 +220,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
       expect(result.options.embed.fields[3]).toStrictEqual({
-        name: `Cookie (*!cookie* or *!c*)`,
+        name: `Cookie (*cookie*, *cookies* or *c*)`,
         value: `Because I am good, life gave me cookies.
       Now it is my turn to give you some.`,
       } as EmbedFieldData);
