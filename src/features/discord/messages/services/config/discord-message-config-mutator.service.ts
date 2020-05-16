@@ -204,8 +204,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
         context: this._serviceName,
         newValue: imageColor,
         oldValue: this._discordMessageConfigService.getMessageCommandLunchImageColor(),
-        valueName:
-        DiscordMessageConfigValueNameEnum.COMMAND_LUNCH_IMAGE_COLOR,
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_LUNCH_IMAGE_COLOR,
       }
     );
   }

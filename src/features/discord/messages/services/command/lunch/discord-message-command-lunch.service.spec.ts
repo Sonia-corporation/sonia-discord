@@ -13,6 +13,8 @@ import { CoreEventService } from "../../../../../core/services/core-event.servic
 import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
+import { DiscordMessageCommandLunchDescriptionEnum } from "../../../enums/command/lunch/discord-message-command-lunch-description.enum";
+import { DiscordMessageCommandLunchTitleEnum } from "../../../enums/command/lunch/discord-message-command-lunch-title.enum";
 import { AnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandLunchService } from "./discord-message-command-lunch.service";
@@ -127,7 +129,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, (): void => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: MessageEmbedAuthor = createMock<
+        MessageEmbedAuthor
+      >();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(
         messageEmbedAuthor
       );
@@ -155,16 +159,14 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
     it(`should return a Discord message response embed with a description`, (): void => {
       expect.assertions(1);
       getRandomValueFromEnumSpy.mockReturnValue(
-        DiscordMessageCommandLunchDescriptionEnum.CHUCK_NORRIS_CAN_NOT_BEAT_ME
+        DiscordMessageCommandLunchDescriptionEnum.I_WAS_STARVING
       );
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
-      expect(result.options.embed.description).toStrictEqual(
-        `Chuck Norris can't beat me.`
-      );
+      expect(result.options.embed.description).toStrictEqual(`I was starving.`);
     });
 
     describe(`when the description can not be found inside the random lunch descriptions`, (): void => {
@@ -179,7 +181,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
         // @ts-ignore
-        expect(result.options.embed.description).toStrictEqual(`Eat.`);
+        expect(result.options.embed.description).toStrictEqual(`Cool.`);
       });
     });
 
@@ -270,14 +272,14 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
     it(`should return a Discord message response embed with a title`, (): void => {
       expect.assertions(1);
       getRandomValueFromEnumSpy.mockReturnValue(
-        DiscordMessageCommandLunchTitleEnum.COOKIE_DELIVERY
+        DiscordMessageCommandLunchTitleEnum.TIME_TO_EAT
       );
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
-      expect(result.options.embed.title).toStrictEqual(`Cookie delivery!`);
+      expect(result.options.embed.title).toStrictEqual(`Time to eat!`);
     });
 
     describe(`when the title can not be found inside the random lunch titles`, (): void => {

@@ -11,8 +11,8 @@ import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
 import { getRandomValueFromEnum } from "../../../../../../functions/randoms/get-random-value-from-enum";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
-import { DiscordMessageCommandCookieDescriptionEnum } from "../../../enums/command/cookie/discord-message-command-cookie-description.enum";
-import { DiscordMessageCommandCookieTitleEnum } from "../../../enums/command/cookie/discord-message-command-cookie-title.enum";
+import { DiscordMessageCommandLunchDescriptionEnum } from "../../../enums/command/lunch/discord-message-command-lunch-description.enum";
+import { DiscordMessageCommandLunchTitleEnum } from "../../../enums/command/lunch/discord-message-command-lunch-title.enum";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
@@ -83,8 +83,8 @@ export class DiscordMessageCommandLunchService extends AbstractService {
 
   private _getMessageDescription(): string {
     return (
-      getRandomValueFromEnum(DiscordMessageCommandCookieDescriptionEnum) ||
-      `Eat.`
+      getRandomValueFromEnum(DiscordMessageCommandLunchDescriptionEnum) ||
+      `Cool.`
     );
   }
 
@@ -111,7 +111,8 @@ export class DiscordMessageCommandLunchService extends AbstractService {
 
   private _getMessageEmbedTitle(): string {
     return (
-      getRandomValueFromEnum(DiscordMessageCommandCookieTitleEnum) || `Lunch time!`
+      getRandomValueFromEnum(DiscordMessageCommandLunchTitleEnum) ||
+      `Lunch time!`
     );
   }
 }

@@ -381,7 +381,8 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommandLunchImageColor()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.lunch.imageColor = ColorEnum.CANDY;
+      discordMessageConfigCoreService.command.lunch.imageColor =
+        ColorEnum.CANDY;
     });
 
     it(`should return the Discord message config command lunch image color`, (): void => {

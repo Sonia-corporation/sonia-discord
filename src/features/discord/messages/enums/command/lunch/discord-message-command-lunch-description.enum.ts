@@ -1,0 +1,16 @@
+export enum DiscordMessageCommandLunchDescriptionEnum {
+  AWESOME = `Awesome!`,
+  FOOD_IS_HEART = `Food is :heart:`,
+  FOOD_IS_HEARTS = `Food is :hearts:`,
+  FOOD_IS_YUM = `Food is :yum:`,
+  HEART = `:heart:`,
+  HEARTS = `:hearts:`,
+  I_WAS_STARVING = `I was starving.`,
+  I_WAS_STARVING_TOO = `I was starving too.`,
+  I_WILL_EAT_FOR_THREE = `I will eat for three.`,
+  I_WILL_EAT_FOR_TWO = `I will eat for two.`,
+  LETS_GO = `Let's go!`,
+  LIFE_IS_GOOD = `Life is good!`,
+  SHALL_WE = `Shall we?`,
+  YUM = `:yum:`,
+}

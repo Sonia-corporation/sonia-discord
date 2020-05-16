@@ -773,7 +773,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerLogSpy).toHaveBeenCalledTimes(10);
+        expect(loggerLogSpy).toHaveBeenCalledTimes(12);
         expect(loggerLogSpy).toHaveBeenLastCalledWith(
           `debug-● context-[DiscordMessageConfigMutatorService][now-format] text-configuration updated`
         );
@@ -1711,7 +1711,8 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigMutatorService.getInstance();
       imageColor = ColorEnum.SUN;
-      discordMessageConfigCoreService.command.lunch.imageColor = ColorEnum.CANDY;
+      discordMessageConfigCoreService.command.lunch.imageColor =
+        ColorEnum.CANDY;
 
       configServiceGetUpdatedNumberSpy = jest
         .spyOn(configService, `getUpdatedNumber`)
