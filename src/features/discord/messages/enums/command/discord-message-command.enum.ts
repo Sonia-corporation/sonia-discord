@@ -16,11 +16,16 @@ export enum DiscordMessageCommandEnum {
   H = `h`,
   COOKIE = `cookie`,
   /**
-   * Shortcut for {@link COOKIE}
+   * Alias for {@link COOKIE}
    */
   COOKIES = `cookies`,
   /**
    * Shortcut for {@link COOKIE}
    */
   C = `c`,
+  LUNCH = `lunch`,
+  /**
+   * Shortcut for {@link LUNCH}
+   */
+  L = `l`,
 }
