@@ -75,33 +75,8 @@ export class DiscordMessageCommandErrorService extends AbstractService {
     return this._discordSoniaService.getCorporationMessageEmbedAuthor();
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
-    return {
-      url: this._discordMessageConfigService.getMessageCommandErrorImageUrl(),
-    };
-  }
-
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
-    const soniaImageUrl:
-      | string
-      | null = this._discordSoniaService.getImageUrl();
-
-    return {
-      iconURL: soniaImageUrl || undefined,
-      text: `Nice try little man`,
-    };
-  }
-
   private _getMessageEmbedColor(): number {
     return this._discordMessageConfigService.getMessageCommandErrorImageColor();
-  }
-
-  private _getMessageEmbedTimestamp(): Date {
-    return moment().toDate();
-  }
-
-  private _getMessageEmbedTitle(): string {
-    return `Uh-oh. What just happened?`;
   }
 
   private _getMessageEmbedFields(): EmbedFieldData[] {
@@ -124,5 +99,30 @@ export class DiscordMessageCommandErrorService extends AbstractService {
       That is not the way it works!
       Get back to work you peasant.`,
     };
+  }
+
+  private _getMessageEmbedFooter(): MessageEmbedFooter {
+    const soniaImageUrl:
+      | string
+      | null = this._discordSoniaService.getImageUrl();
+
+    return {
+      iconURL: soniaImageUrl || undefined,
+      text: `Nice try though`,
+    };
+  }
+
+  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+    return {
+      url: this._discordMessageConfigService.getMessageCommandErrorImageUrl(),
+    };
+  }
+
+  private _getMessageEmbedTimestamp(): Date {
+    return moment().toDate();
+  }
+
+  private _getMessageEmbedTitle(): string {
+    return `Uh-oh. What just happened?`;
   }
 }
