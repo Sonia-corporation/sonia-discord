@@ -110,11 +110,12 @@ __Example:__
 __Commands:__
 
 - cookie
+- cookies *(alias)*
 - c *(shortcut)*
 
 Sonia will send you a message containing:
 
-- A cookie.
+- A cookie (a tasty one).
 
 __Example:__
 
