@@ -1,28 +1,26 @@
 import moment from "moment-timezone";
 import { createMock } from "ts-auto-mock";
-import { ColorEnum } from "../../../../../enums/color.enum";
-import { IconEnum } from "../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../../logger/services/logger.service";
-import { DiscordSoniaService } from "../../../users/services/discord-sonia.service";
-import { DiscordMessageCommandCookieDescriptionEnum } from "../../enums/command/cookie/discord-message-command-cookie-description.enum";
-import { DiscordMessageCommandCookieTitleEnum } from "../../enums/command/cookie/discord-message-command-cookie-title.enum";
-import { AnyDiscordMessage } from "../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../config/discord-message-config.service";
-import { DiscordMessageCommandCookieService } from "./discord-message-command-cookie.service";
+import { ColorEnum } from "../../../../../../enums/color.enum";
+import { IconEnum } from "../../../../../../enums/icon.enum";
+import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
+import { CoreEventService } from "../../../../../core/services/core-event.service";
+import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
+import { LoggerService } from "../../../../../logger/services/logger.service";
+import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
+import { AnyDiscordMessage } from "../../../types/any-discord-message";
+import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
+import { DiscordMessageCommandErrorService } from "./discord-message-command-error.service";
 import {
   MessageEmbedAuthor,
+  EmbedFieldData,
   MessageEmbedFooter,
   MessageEmbedThumbnail,
 } from "discord.js";
-import * as GetRandomValueFromEnumModule from "../../../../../functions/randoms/get-random-value-from-enum";
 
-jest.mock(`../../../../logger/services/chalk.service`);
+jest.mock(`../../../../../logger/services/chalk.service`);
 
-describe(`DiscordMessageCommandCookieService`, (): void => {
-  let service: DiscordMessageCommandCookieService;
+describe(`DiscordMessageCommandErrorService`, (): void => {
+  let service: DiscordMessageCommandErrorService;
   let coreEventService: CoreEventService;
   let loggerService: LoggerService;
   let discordSoniaService: DiscordSoniaService;
@@ -36,20 +34,20 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
   });
 
   describe(`getInstance()`, (): void => {
-    it(`should create a DiscordMessageCommandCookie service`, (): void => {
+    it(`should create a DiscordMessageCommandError service`, (): void => {
       expect.assertions(1);
 
-      service = DiscordMessageCommandCookieService.getInstance();
+      service = DiscordMessageCommandErrorService.getInstance();
 
       expect(service).toStrictEqual(
-        expect.any(DiscordMessageCommandCookieService)
+        expect.any(DiscordMessageCommandErrorService)
       );
     });
 
-    it(`should return the created DiscordMessageCommandCookie service`, (): void => {
+    it(`should return the created DiscordMessageCommandError service`, (): void => {
       expect.assertions(1);
 
-      const result = DiscordMessageCommandCookieService.getInstance();
+      const result = DiscordMessageCommandErrorService.getInstance();
 
       expect(result).toStrictEqual(service);
     });
@@ -64,14 +62,14 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should notify the DiscordMessageCommandCookie service creation`, (): void => {
+    it(`should notify the DiscordMessageCommandError service creation`, (): void => {
       expect.assertions(2);
 
-      service = new DiscordMessageCommandCookieService();
+      service = new DiscordMessageCommandErrorService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_MESSAGE_COMMAND_COOKIE_SERVICE
+        ServiceNameEnum.DISCORD_MESSAGE_COMMAND_ERROR_SERVICE
       );
     });
   });
@@ -81,10 +79,9 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
-    let discordMessageConfigServiceGetMessageCommandCookieImageColorSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandErrorImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
-    let discordMessageConfigServiceGetMessageCommandCookieImageUrlSpy: jest.SpyInstance;
-    let getRandomValueFromEnumSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandErrorImageUrlSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       anyDiscordMessage = createMock<AnyDiscordMessage>({
@@ -96,21 +93,17 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         discordSoniaService,
         `getCorporationMessageEmbedAuthor`
       );
-      discordMessageConfigServiceGetMessageCommandCookieImageColorSpy = jest.spyOn(
+      discordMessageConfigServiceGetMessageCommandErrorImageColorSpy = jest.spyOn(
         discordMessageConfigService,
-        `getMessageCommandCookieImageColor`
+        `getMessageCommandErrorImageColor`
       );
       discordSoniaServiceGetImageUrlSpy = jest.spyOn(
         discordSoniaService,
         `getImageUrl`
       );
-      discordMessageConfigServiceGetMessageCommandCookieImageUrlSpy = jest.spyOn(
+      discordMessageConfigServiceGetMessageCommandErrorImageUrlSpy = jest.spyOn(
         discordMessageConfigService,
-        `getMessageCommandCookieImageUrl`
-      );
-      getRandomValueFromEnumSpy = jest.spyOn(
-        GetRandomValueFromEnumModule,
-        `getRandomValueFromEnum`
+        `getMessageCommandErrorImageUrl`
       );
     });
 
@@ -121,9 +114,9 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-        context: `DiscordMessageCommandCookieService`,
+        context: `DiscordMessageCommandErrorService`,
         extendedContext: true,
-        message: `context-[dummy-id] text-cookie command detected`,
+        message: `context-[dummy-id] text-error command detected`,
       } as ILoggerLog);
     });
 
@@ -145,7 +138,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
     it(`should return a Discord message response embed with a color`, (): void => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandCookieImageColorSpy.mockReturnValue(
+      discordMessageConfigServiceGetMessageCommandErrorImageColorSpy.mockReturnValue(
         ColorEnum.CANDY
       );
 
@@ -156,35 +149,44 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
     });
 
-    it(`should return a Discord message response embed with a description`, (): void => {
+    it(`should return a Discord message response embed with 2 fields`, (): void => {
       expect.assertions(1);
-      getRandomValueFromEnumSpy.mockReturnValue(
-        DiscordMessageCommandCookieDescriptionEnum.CHUCK_NORRIS_CAN_NOT_BEAT_ME
-      );
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
-      expect(result.options.embed.description).toStrictEqual(
-        `Chuck Norris can't beat me.`
-      );
+      expect(result.options.embed.fields).toHaveLength(2);
     });
 
-    describe(`when the description can not be found inside the random cookie descriptions`, (): void => {
-      beforeEach((): void => {
-        getRandomValueFromEnumSpy.mockReturnValue(undefined);
-      });
+    it(`should return a Discord message response embed with a bait field`, (): void => {
+      expect.assertions(1);
 
-      it(`should return a Discord message response embed with a description`, (): void => {
-        expect.assertions(1);
+      const result: unknown = service.handleResponse(anyDiscordMessage);
 
-        const result: unknown = service.handleResponse(anyDiscordMessage);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      expect(result.options.embed.fields[0]).toStrictEqual({
+        name: `It seems that something went wrong`,
+        value: `You may have found an issue with my internal core system.
+      Please, inform my creator as soon as possible!
+      This could lead to a very critical failure for myself and I do not wish to die!!`,
+      } as EmbedFieldData);
+    });
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        expect(result.options.embed.description).toStrictEqual(`Yes.`);
-      });
+    it(`should return a Discord message response embed with a hint field`, (): void => {
+      expect.assertions(1);
+
+      const result: unknown = service.handleResponse(anyDiscordMessage);
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
+      expect(result.options.embed.fields[1]).toStrictEqual({
+        name: `Come again?`,
+        value: `What do you think you are doing here?
+      That is not the way it works!
+      Get back to work you peasant.`,
+      } as EmbedFieldData);
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, (): void => {
@@ -197,7 +199,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
-        text: `Bon appétit`,
+        text: `Nice try though`,
       } as MessageEmbedFooter);
     });
 
@@ -215,7 +217,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: undefined,
-          text: `Bon appétit`,
+          text: `Nice try though`,
         } as MessageEmbedFooter);
       });
     });
@@ -234,14 +236,14 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: `image-url`,
-          text: `Bon appétit`,
+          text: `Nice try though`,
         } as MessageEmbedFooter);
       });
     });
 
     it(`should return a Discord message response embed with a thumbnail`, (): void => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandCookieImageUrlSpy.mockReturnValue(
+      discordMessageConfigServiceGetMessageCommandErrorImageUrlSpy.mockReturnValue(
         IconEnum.ARTIFICIAL_INTELLIGENCE
       );
 
@@ -273,31 +275,14 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
     it(`should return a Discord message response embed with a title`, (): void => {
       expect.assertions(1);
-      getRandomValueFromEnumSpy.mockReturnValue(
-        DiscordMessageCommandCookieTitleEnum.COOKIE_DELIVERY
-      );
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
-      expect(result.options.embed.title).toStrictEqual(`Cookie delivery!`);
-    });
-
-    describe(`when the title can not be found inside the random cookie titles`, (): void => {
-      beforeEach((): void => {
-        getRandomValueFromEnumSpy.mockReturnValue(undefined);
-      });
-
-      it(`should return a Discord message response embed with a title`, (): void => {
-        expect.assertions(1);
-
-        const result: unknown = service.handleResponse(anyDiscordMessage);
-
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        expect(result.options.embed.title).toStrictEqual(`Cookies!`);
-      });
+      expect(result.options.embed.title).toStrictEqual(
+        `Uh-oh. What just happened?`
+      );
     });
 
     it(`should return a Discord message response splitted`, (): void => {

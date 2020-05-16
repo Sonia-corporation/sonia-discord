@@ -6,16 +6,16 @@ import {
 } from "discord.js";
 import _ from "lodash";
 import moment from "moment-timezone";
-import { AbstractService } from "../../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { getRandomValueFromEnum } from "../../../../../functions/randoms/get-random-value-from-enum";
-import { LoggerService } from "../../../../logger/services/logger.service";
-import { DiscordSoniaService } from "../../../users/services/discord-sonia.service";
-import { DiscordMessageCommandCookieDescriptionEnum } from "../../enums/command/cookie/discord-message-command-cookie-description.enum";
-import { DiscordMessageCommandCookieTitleEnum } from "../../enums/command/cookie/discord-message-command-cookie-title.enum";
-import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../config/discord-message-config.service";
+import { AbstractService } from "../../../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
+import { getRandomValueFromEnum } from "../../../../../../functions/randoms/get-random-value-from-enum";
+import { LoggerService } from "../../../../../logger/services/logger.service";
+import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
+import { DiscordMessageCommandCookieDescriptionEnum } from "../../../enums/command/cookie/discord-message-command-cookie-description.enum";
+import { DiscordMessageCommandCookieTitleEnum } from "../../../enums/command/cookie/discord-message-command-cookie-title.enum";
+import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
+import { AnyDiscordMessage } from "../../../types/any-discord-message";
+import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 
 export class DiscordMessageCommandCookieService extends AbstractService {
   private static _instance: DiscordMessageCommandCookieService;

@@ -4,10 +4,10 @@ import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../core/services/core-event.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 import { DiscordMessageConfigService } from "../config/discord-message-config.service";
-import { DiscordMessageCommandCookieService } from "./discord-message-command-cookie.service";
-import { DiscordMessageCommandErrorService } from "./discord-message-command-error.service";
-import { DiscordMessageCommandHelpService } from "./discord-message-command-help.service";
-import { DiscordMessageCommandVersionService } from "./discord-message-command-version.service";
+import { DiscordMessageCommandCookieService } from "./cookie/discord-message-command-cookie.service";
+import { DiscordMessageCommandErrorService } from "./error/discord-message-command-error.service";
+import { DiscordMessageCommandHelpService } from "./help/discord-message-command-help.service";
+import { DiscordMessageCommandVersionService } from "./version/discord-message-command-version.service";
 import { DiscordMessageCommandService } from "./discord-message-command.service";
 
 describe(`DiscordMessageCommandService`, (): void => {
