@@ -13,6 +13,7 @@ import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-messag
 import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
 import { IDiscordMessageCommandHelpConfig } from "../../../interfaces/discord-message-command-help-config";
+import { IDiscordMessageCommandLunchConfig } from "../../../interfaces/discord-message-command-lunch-config";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
@@ -52,6 +53,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
               imageUrl: IconEnum.GIRL,
             },
             help: {
+              imageColor: ColorEnum.CANDY,
+              imageUrl: IconEnum.GIRL,
+            },
+            lunch: {
               imageColor: ColorEnum.CANDY,
               imageUrl: IconEnum.GIRL,
             },
@@ -188,6 +193,29 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         ).toStrictEqual(IconEnum.GIRL);
       });
 
+      it(`should not update the current command lunch image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.lunch.imageColor =
+          ColorEnum.CANDY;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.lunch.imageColor
+        ).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should not update the current command lunch image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.lunch.imageUrl = IconEnum.GIRL;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.lunch.imageUrl
+        ).toStrictEqual(IconEnum.GIRL);
+      });
+
       it(`should not update the current command prefix`, (): void => {
         expect.assertions(1);
         discordMessageConfigCoreService.command.prefix = `prefix`;
@@ -285,6 +313,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
                 imageColor: ColorEnum.CANDY,
                 imageUrl: IconEnum.GIRL,
               },
+              lunch: {
+                imageColor: ColorEnum.CANDY,
+                imageUrl: IconEnum.GIRL,
+              },
               prefix: `dummy-prefix`,
               version: {
                 imageColor: ColorEnum.CANDY,
@@ -372,6 +404,30 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
         expect(
           discordMessageConfigCoreService.command.help.imageUrl
+        ).toStrictEqual(IconEnum.GIRL);
+      });
+
+      it(`should override the command lunch image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.lunch.imageColor =
+          ColorEnum.MINT;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.lunch.imageColor
+        ).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should override the command lunch image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.lunch.imageUrl =
+          IconEnum.WARNING_SHIELD;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.lunch.imageUrl
         ).toStrictEqual(IconEnum.GIRL);
       });
 
@@ -531,6 +587,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageColor: ColorEnum.SKY,
           imageUrl: IconEnum.COOKIES,
         },
+        lunch: {
+          imageColor: ColorEnum.SKY,
+          imageUrl: IconEnum.COOKIES,
+        },
         prefix: `dummy-prefix`,
         version: {
           imageColor: ColorEnum.SKY,
@@ -564,6 +624,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageUrl: IconEnum.COOKIES,
         },
         help: {
+          imageColor: ColorEnum.SKY,
+          imageUrl: IconEnum.COOKIES,
+        },
+        lunch: {
           imageColor: ColorEnum.SKY,
           imageUrl: IconEnum.COOKIES,
         },
@@ -614,6 +678,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageColor: ColorEnum.SKY,
             imageUrl: IconEnum.COOKIES,
           },
+          lunch: {
+            imageColor: ColorEnum.SKY,
+            imageUrl: IconEnum.COOKIES,
+          },
           prefix: `dummy-prefix`,
           version: {
             imageColor: ColorEnum.SKY,
@@ -656,6 +724,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
                 imageColor: ColorEnum.MINT,
                 imageUrl: IconEnum.ERROR,
               },
+              lunch: {
+                imageColor: ColorEnum.MINT,
+                imageUrl: IconEnum.ERROR,
+              },
               prefix: `prefix`,
               version: {
                 imageColor: ColorEnum.MINT,
@@ -681,6 +753,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageUrl: IconEnum.ERROR,
           },
           help: {
+            imageColor: ColorEnum.MINT,
+            imageUrl: IconEnum.ERROR,
+          },
+          lunch: {
             imageColor: ColorEnum.MINT,
             imageUrl: IconEnum.ERROR,
           },
@@ -758,6 +834,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageColor: ColorEnum.SUN,
           imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
         },
+        lunch: {
+          imageColor: ColorEnum.SUN,
+          imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
+        },
         prefix: `dummy-prefix`,
         version: {
           imageColor: ColorEnum.SUN,
@@ -797,6 +877,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageColor: ColorEnum.SUN,
             imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
           },
+          lunch: {
+            imageColor: ColorEnum.SUN,
+            imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
+          },
           prefix: `dummy-prefix`,
           version: {
             imageColor: ColorEnum.SUN,
@@ -830,6 +914,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
               imageColor: ColorEnum.MINT,
               imageUrl: IconEnum.GIRL,
             },
+            lunch: {
+              imageColor: ColorEnum.MINT,
+              imageUrl: IconEnum.GIRL,
+            },
             prefix: `prefix`,
             version: {
               imageColor: ColorEnum.MINT,
@@ -854,6 +942,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageUrl: IconEnum.GIRL,
           },
           help: {
+            imageColor: ColorEnum.MINT,
+            imageUrl: IconEnum.GIRL,
+          },
+          lunch: {
             imageColor: ColorEnum.MINT,
             imageUrl: IconEnum.GIRL,
           },
@@ -929,6 +1021,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageColor: ColorEnum.SUN,
           imageUrl: IconEnum.INFORMATION,
         },
+        lunch: {
+          imageColor: ColorEnum.SUN,
+          imageUrl: IconEnum.INFORMATION,
+        },
         prefix: `dummy-prefix`,
         version: {
           imageColor: ColorEnum.SUN,
@@ -957,6 +1053,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageUrl: IconEnum.INFORMATION,
           },
           help: {
+            imageColor: ColorEnum.SUN,
+            imageUrl: IconEnum.INFORMATION,
+          },
+          lunch: {
             imageColor: ColorEnum.SUN,
             imageUrl: IconEnum.INFORMATION,
           },
@@ -1032,6 +1132,28 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageColor: ColorEnum.MINT,
           imageUrl: IconEnum.INFORMATION,
         } as IDiscordMessageCommandHelpConfig);
+      });
+    });
+
+    describe(`when the given config contains an lunch`, (): void => {
+      beforeEach((): void => {
+        config = {
+          lunch: {
+            imageColor: ColorEnum.MINT,
+            imageUrl: IconEnum.INFORMATION,
+          },
+        };
+      });
+
+      it(`should update the config command lunch`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommand(config);
+
+        expect(discordMessageConfigCoreService.command.lunch).toStrictEqual({
+          imageColor: ColorEnum.MINT,
+          imageUrl: IconEnum.INFORMATION,
+        } as IDiscordMessageCommandLunchConfig);
       });
     });
 
@@ -1512,6 +1634,152 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       expect(
         discordMessageConfigCoreService.command.help.imageUrl
+      ).toStrictEqual(IconEnum.GIRL);
+    });
+  });
+
+  describe(`updateMessageCommandLunch()`, (): void => {
+    let config: PartialNested<IDiscordMessageCommandLunchConfig> | undefined;
+
+    beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
+      discordMessageConfigCoreService.command.lunch = {
+        imageColor: ColorEnum.SUN,
+        imageUrl: IconEnum.GIRL,
+      };
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandLunch(config);
+
+        expect(discordMessageConfigCoreService.command.lunch).toStrictEqual({
+          imageColor: ColorEnum.SUN,
+          imageUrl: IconEnum.GIRL,
+        } as IDiscordMessageCommandLunchConfig);
+      });
+    });
+
+    describe(`when the given config contains an image color`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageColor: ColorEnum.MINT,
+        };
+      });
+
+      it(`should update the config command lunch image color`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandLunch(config);
+
+        expect(
+          discordMessageConfigCoreService.command.lunch.imageColor
+        ).toStrictEqual(ColorEnum.MINT);
+      });
+    });
+
+    describe(`when the given config contains an image url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageUrl: IconEnum.INFORMATION,
+        };
+      });
+
+      it(`should update the config command lunch image url`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandLunch(config);
+
+        expect(
+          discordMessageConfigCoreService.command.lunch.imageUrl
+        ).toStrictEqual(IconEnum.INFORMATION);
+      });
+    });
+  });
+
+  describe(`updateMessageCommandLunchImageColor()`, (): void => {
+    let imageColor: ColorEnum;
+
+    let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
+      imageColor = ColorEnum.SUN;
+      discordMessageConfigCoreService.command.lunch.imageColor = ColorEnum.CANDY;
+
+      configServiceGetUpdatedNumberSpy = jest
+        .spyOn(configService, `getUpdatedNumber`)
+        .mockReturnValue(ColorEnum.SUN);
+    });
+
+    it(`should get the updated number`, (): void => {
+      expect.assertions(2);
+
+      service.updateMessageCommandLunchImageColor(imageColor);
+
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageConfigMutatorService`,
+        newValue: ColorEnum.SUN,
+        oldValue: ColorEnum.CANDY,
+        valueName: `message command lunch image color`,
+      } as IConfigUpdateNumber);
+    });
+
+    it(`should update the Discord message config command lunch image color with the updated number`, (): void => {
+      expect.assertions(1);
+
+      service.updateMessageCommandLunchImageColor(imageColor);
+
+      expect(
+        discordMessageConfigCoreService.command.lunch.imageColor
+      ).toStrictEqual(ColorEnum.SUN);
+    });
+  });
+
+  describe(`updateMessageCommandLunchImageUrl()`, (): void => {
+    let imageUrl: IconEnum;
+
+    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
+      imageUrl = IconEnum.GIRL;
+      discordMessageConfigCoreService.command.lunch.imageUrl =
+        IconEnum.INFORMATION;
+
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(IconEnum.GIRL);
+    });
+
+    it(`should get the updated string`, (): void => {
+      expect.assertions(2);
+
+      service.updateMessageCommandLunchImageUrl(imageUrl);
+
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageConfigMutatorService`,
+        newValue: IconEnum.GIRL,
+        oldValue: IconEnum.INFORMATION,
+        valueName: `message command lunch image url`,
+      } as IConfigUpdateString);
+    });
+
+    it(`should update the Discord message config command lunch image url with the updated string`, (): void => {
+      expect.assertions(1);
+
+      service.updateMessageCommandLunchImageUrl(imageUrl);
+
+      expect(
+        discordMessageConfigCoreService.command.lunch.imageUrl
       ).toStrictEqual(IconEnum.GIRL);
     });
   });
