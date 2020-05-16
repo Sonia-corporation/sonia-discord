@@ -33,7 +33,7 @@ export class DiscordMessageCommandLunchService extends AbstractService {
   private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
 
   public constructor() {
-    super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_COOKIE_SERVICE);
+    super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_LUNCH_SERVICE);
   }
 
   public handleResponse(
@@ -44,7 +44,7 @@ export class DiscordMessageCommandLunchService extends AbstractService {
       extendedContext: true,
       message: this._loggerService.getSnowflakeContext(
         anyDiscordMessage.id,
-        `cookie command detected`
+        `lunch command detected`
       ),
     });
 
@@ -78,13 +78,13 @@ export class DiscordMessageCommandLunchService extends AbstractService {
   }
 
   private _getMessageEmbedColor(): number {
-    return this._discordMessageConfigService.getMessageCommandCookieImageColor();
+    return this._discordMessageConfigService.getMessageCommandLunchImageColor();
   }
 
   private _getMessageDescription(): string {
     return (
       getRandomValueFromEnum(DiscordMessageCommandCookieDescriptionEnum) ||
-      `Yes.`
+      `Eat.`
     );
   }
 
@@ -101,7 +101,7 @@ export class DiscordMessageCommandLunchService extends AbstractService {
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
-      url: this._discordMessageConfigService.getMessageCommandCookieImageUrl(),
+      url: this._discordMessageConfigService.getMessageCommandLunchImageUrl(),
     };
   }
 
@@ -111,7 +111,7 @@ export class DiscordMessageCommandLunchService extends AbstractService {
 
   private _getMessageEmbedTitle(): string {
     return (
-      getRandomValueFromEnum(DiscordMessageCommandCookieTitleEnum) || `Cookies!`
+      getRandomValueFromEnum(DiscordMessageCommandCookieTitleEnum) || `Lunch time!`
     );
   }
 }
