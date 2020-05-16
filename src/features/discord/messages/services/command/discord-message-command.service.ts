@@ -71,6 +71,7 @@ export class DiscordMessageCommandService extends AbstractService {
   public hasCookieCommand(message: Readonly<string>): boolean {
     return this._hasThisCommand(message, [
       DiscordMessageCommandEnum.COOKIE,
+      DiscordMessageCommandEnum.COOKIES,
       DiscordMessageCommandEnum.C,
     ]);
   }
