@@ -8,6 +8,7 @@ import { DiscordMessageConfigService } from "../config/discord-message-config.se
 import { DiscordMessageCommandCookieService } from "./cookie/discord-message-command-cookie.service";
 import { DiscordMessageCommandErrorService } from "./error/discord-message-command-error.service";
 import { DiscordMessageCommandHelpService } from "./help/discord-message-command-help.service";
+import { DiscordMessageCommandLunchService } from "./lunch/discord-message-command-lunch.service";
 import { DiscordMessageCommandVersionService } from "./version/discord-message-command-version.service";
 import { DiscordMessageContentService } from "../discord-message-content.service";
 
@@ -27,6 +28,7 @@ export class DiscordMessageCommandService extends AbstractService {
   private readonly _discordMessageCommandErrorService: DiscordMessageCommandErrorService = DiscordMessageCommandErrorService.getInstance();
   private readonly _discordMessageCommandHelpService: DiscordMessageCommandHelpService = DiscordMessageCommandHelpService.getInstance();
   private readonly _discordMessageCommandCookieService: DiscordMessageCommandCookieService = DiscordMessageCommandCookieService.getInstance();
+  private readonly _discordMessageCommandLunchService: DiscordMessageCommandLunchService = DiscordMessageCommandLunchService.getInstance();
   private readonly _discordMessageContentService: DiscordMessageContentService = DiscordMessageContentService.getInstance();
 
   public constructor() {
@@ -41,6 +43,8 @@ export class DiscordMessageCommandService extends AbstractService {
     } else if (this.hasHelpCommand(message)) {
       return true;
     } else if (this.hasCookieCommand(message)) {
+      return true;
+    } else if (this.hasLunchCommand(message)) {
       return true;
     }
 
@@ -76,6 +80,13 @@ export class DiscordMessageCommandService extends AbstractService {
     ]);
   }
 
+  public hasLunchCommand(message: Readonly<string>): boolean {
+    return this._hasThisCommand(message, [
+      DiscordMessageCommandEnum.LUNCH,
+      DiscordMessageCommandEnum.L,
+    ]);
+  }
+
   public handleVersionCommand(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
@@ -108,6 +119,14 @@ export class DiscordMessageCommandService extends AbstractService {
     );
   }
 
+  public handleLunchCommand(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): IDiscordMessageResponse {
+    return this._discordMessageCommandLunchService.handleResponse(
+      anyDiscordMessage
+    );
+  }
+
   public handleCommands(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse | null {
@@ -122,6 +141,8 @@ export class DiscordMessageCommandService extends AbstractService {
         return this.handleHelpCommand(anyDiscordMessage);
       } else if (this.hasCookieCommand(anyDiscordMessage.content)) {
         return this.handleCookieCommand(anyDiscordMessage);
+      } else if (this.hasLunchCommand(anyDiscordMessage.content)) {
+        return this.handleLunchCommand(anyDiscordMessage);
       }
     }
 

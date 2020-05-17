@@ -10,6 +10,7 @@ import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
 import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
+import { IDiscordMessageCommandLunchConfig } from "../../../interfaces/discord-message-command-lunch-config";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
@@ -79,6 +80,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
       this.updateMessageCommandHelp(command.help);
       this.updateMessageCommandPrefix(command.prefix);
       this.updateMessageCommandVersion(command.version);
+      this.updateMessageCommandLunch(command.lunch);
     }
   }
 
@@ -181,6 +183,41 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
         newValue: imageUrl,
         oldValue: this._discordMessageConfigService.getMessageCommandHelpImageUrl(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_HELP_IMAGE_URL,
+      }
+    );
+  }
+
+  public updateMessageCommandLunch(
+    lunch?: Readonly<PartialNested<IDiscordMessageCommandLunchConfig>>
+  ): void {
+    if (!_.isNil(lunch)) {
+      this.updateMessageCommandLunchImageColor(lunch.imageColor);
+      this.updateMessageCommandLunchImageUrl(lunch.imageUrl);
+    }
+  }
+
+  public updateMessageCommandLunchImageColor(
+    imageColor?: Readonly<ColorEnum>
+  ): void {
+    this._discordMessageConfigCoreService.command.lunch.imageColor = this._configService.getUpdatedNumber(
+      {
+        context: this._serviceName,
+        newValue: imageColor,
+        oldValue: this._discordMessageConfigService.getMessageCommandLunchImageColor(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_LUNCH_IMAGE_COLOR,
+      }
+    );
+  }
+
+  public updateMessageCommandLunchImageUrl(
+    imageUrl?: Readonly<IconEnum>
+  ): void {
+    this._discordMessageConfigCoreService.command.lunch.imageUrl = this._configService.getUpdatedString(
+      {
+        context: this._serviceName,
+        newValue: imageUrl,
+        oldValue: this._discordMessageConfigService.getMessageCommandLunchImageUrl(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_LUNCH_IMAGE_URL,
       }
     );
   }
