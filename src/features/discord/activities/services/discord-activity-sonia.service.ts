@@ -2,12 +2,12 @@ import { ClientUser } from "discord.js";
 import _ from "lodash";
 import { filter, take } from "rxjs/operators";
 import { AbstractService } from "../../../../classes/abstract.service";
-import { IconEnum } from "../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../../logger/services/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordClientService } from "../../services/discord-client.service";
+import { DISCORD_PRESENCE_ACTIVITY } from "../constants/discord-presence-activity";
 import { IDiscordPresenceActivity } from "../interfaces/discord-presence-activity";
 
 export class DiscordActivitySoniaService extends AbstractService {
@@ -54,11 +54,13 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   public setRandomPresence(): void {
-    this.setPresence({
-      name: `Spotify`,
-      type: `LISTENING`,
-      url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-    });
+    const presenceActivity: IDiscordPresenceActivity | undefined = _.sample(
+      DISCORD_PRESENCE_ACTIVITY
+    );
+
+    if (!_.isNil(presenceActivity)) {
+      this.setPresence(presenceActivity);
+    }
   }
 
   private _listen(): void {

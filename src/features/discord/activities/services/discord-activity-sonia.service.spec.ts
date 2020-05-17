@@ -1,3 +1,5 @@
+import { Client, PresenceData } from "discord.js";
+import _ from "lodash";
 import { Subject } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
@@ -5,9 +7,9 @@ import { CoreEventService } from "../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordClientService } from "../../services/discord-client.service";
+import { DISCORD_PRESENCE_ACTIVITY } from "../constants/discord-presence-activity";
 import { IDiscordPresenceActivity } from "../interfaces/discord-presence-activity";
 import { DiscordActivitySoniaService } from "./discord-activity-sonia.service";
-import { Client, PresenceData } from "discord.js";
 
 jest.mock(`../../../logger/services/chalk.service`);
 
@@ -228,6 +230,56 @@ describe(`DiscordActivitySoniaService`, (): void => {
           context: `DiscordActivitySoniaService`,
           message: `text-Sonia presence updated`,
         } as ILoggerLog);
+      });
+    });
+  });
+
+  describe(`setRandomPresence()`, (): void => {
+    let sampleSpy: jest.SpyInstance;
+    let setPresenceSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      sampleSpy = jest.spyOn(_, `sample`);
+      setPresenceSpy = jest.spyOn(service, `setPresence`);
+    });
+
+    it(`should get a random Discord presence activity`, (): void => {
+      expect.assertions(2);
+
+      service.setRandomPresence();
+
+      expect(sampleSpy).toHaveBeenCalledTimes(1);
+      expect(sampleSpy).toHaveBeenCalledWith(DISCORD_PRESENCE_ACTIVITY);
+    });
+
+    describe(`when no Discord presence activity was found`, (): void => {
+      beforeEach((): void => {
+        sampleSpy.mockReturnValue(undefined);
+      });
+
+      it(`should not set the Discord presence activity`, (): void => {
+        expect.assertions(1);
+
+        service.setRandomPresence();
+
+        expect(setPresenceSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when a Discord presence activity was found`, (): void => {
+      beforeEach((): void => {
+        sampleSpy.mockReturnValue(DISCORD_PRESENCE_ACTIVITY[0]);
+      });
+
+      it(`should set the Discord presence activity`, (): void => {
+        expect.assertions(2);
+
+        service.setRandomPresence();
+
+        expect(setPresenceSpy).toHaveBeenCalledTimes(1);
+        expect(setPresenceSpy).toHaveBeenCalledWith(
+          DISCORD_PRESENCE_ACTIVITY[0]
+        );
       });
     });
   });
