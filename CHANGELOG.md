@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.45.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.44.0...1.45.0) (2020-05-17)
+
+
+### Features
+
+* **discord:** use a mention instead of text when welcoming user ([f9be5ec](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f9be5ecdf5d8a4ca5e2f8af07f5a7596c5505275))
+
 # [1.44.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.43.0...1.44.0) (2020-05-17)
 
 
