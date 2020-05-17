@@ -129,7 +129,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
   ): IDiscordMessageResponse {
     return {
       response: this._getMessageResponseWithEnvPrefix(
-        `Welcome **${member.displayName}**! il est midi!`
+        `Welcome <@!${member.id}>! il est midi!`
       ),
     };
   }
