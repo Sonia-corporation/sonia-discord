@@ -40,48 +40,58 @@ export class DiscordActivitySoniaService extends AbstractService {
 
   public setPresence(
     presenceActivity: Readonly<IDiscordPresenceActivity>
-  ): void {
+  ): Promise<Presence | void> {
     const clientUser: ClientUser | null = this._discordClientService.getClient()
       .user;
 
     if (!_.isNil(clientUser)) {
-      clientUser
+      return clientUser
         .setPresence({
           activity: presenceActivity,
           afk: false,
           status: `online`,
         })
-        .then((presence: Readonly<Presence>): void => {
-          this._loggerService.debug({
-            context: this._serviceName,
-            message: this._chalkService.text(
-              `Sonia presence updated to: ${this._chalkService.value(
-                presence.activities[0].type
-              )} ${this._chalkService.text(`x`)} ${this._chalkService.value(
-                presence.activities[0].name
-              )}`
-            ),
-          });
-        })
-        .catch((error: Readonly<Error | string>): void => {
-          this._loggerService.error({
-            context: this._serviceName,
-            message: this._chalkService.text(
-              `could not set the Sonia presence`
-            ),
-          });
-          this._loggerService.error({
-            context: this._serviceName,
-            message: this._chalkService.error(error),
-          });
-          this._discordGuildSoniaService.sendMessageToChannel({
-            channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-            messageResponse: this._discordLoggerErrorService.getErrorMessageResponse(
-              error
-            ),
-          });
-        });
+        .then(
+          (presence: Readonly<Presence>): Promise<Presence> => {
+            this._loggerService.debug({
+              context: this._serviceName,
+              message: this._chalkService.text(
+                `Sonia presence updated to: ${this._chalkService.value(
+                  presence.activities[0].type
+                )} ${this._chalkService.text(`x`)} ${this._chalkService.value(
+                  presence.activities[0].name
+                )}`
+              ),
+            });
+
+            return Promise.resolve(presence);
+          }
+        )
+        .catch(
+          (error: Readonly<Error | string>): Promise<void> => {
+            this._loggerService.error({
+              context: this._serviceName,
+              message: this._chalkService.text(
+                `could not set the Sonia presence`
+              ),
+            });
+            this._loggerService.error({
+              context: this._serviceName,
+              message: this._chalkService.error(error),
+            });
+            this._discordGuildSoniaService.sendMessageToChannel({
+              channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
+              messageResponse: this._discordLoggerErrorService.getErrorMessageResponse(
+                error
+              ),
+            });
+
+            return Promise.reject(error);
+          }
+        );
     }
+
+    return Promise.reject(new Error(`Client user is not valid`));
   }
 
   public setRandomPresence(): void {
