@@ -9,7 +9,7 @@ import { isDiscordGuildChannel } from "../../channels/functions/is-discord-guild
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
 import { AnyDiscordChannel } from "../../channels/types/any-discord-channel";
 import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
-import { DiscordMessageCommandCookieService } from "../../messages/services/command/discord-message-command-cookie.service";
+import { DiscordMessageCommandCookieService } from "../../messages/services/command/cookie/discord-message-command-cookie.service";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordGuildConfigService } from "./config/discord-guild-config.service";
 

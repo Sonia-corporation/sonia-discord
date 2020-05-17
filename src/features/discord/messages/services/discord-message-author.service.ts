@@ -30,13 +30,13 @@ export class DiscordMessageAuthorService extends AbstractService {
   public reply(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse {
-    let response = `Il est midi !`;
+    let response = `Il est midi!`;
 
     if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
       if (
         this._discordAuthorService.hasValidUsername(anyDiscordMessage.author)
       ) {
-        response = `Il est midi ${anyDiscordMessage.author.username} !`;
+        response = `Il est midi <@!${anyDiscordMessage.author.id}>!`;
       }
     }
 
