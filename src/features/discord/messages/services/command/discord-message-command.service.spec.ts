@@ -4,10 +4,10 @@ import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../core/services/core-event.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 import { DiscordMessageConfigService } from "../config/discord-message-config.service";
-import { DiscordMessageCommandCookieService } from "./discord-message-command-cookie.service";
-import { DiscordMessageCommandErrorService } from "./discord-message-command-error.service";
-import { DiscordMessageCommandHelpService } from "./discord-message-command-help.service";
-import { DiscordMessageCommandVersionService } from "./discord-message-command-version.service";
+import { DiscordMessageCommandCookieService } from "./cookie/discord-message-command-cookie.service";
+import { DiscordMessageCommandErrorService } from "./error/discord-message-command-error.service";
+import { DiscordMessageCommandHelpService } from "./help/discord-message-command-help.service";
+import { DiscordMessageCommandVersionService } from "./version/discord-message-command-version.service";
 import { DiscordMessageCommandService } from "./discord-message-command.service";
 
 describe(`DiscordMessageCommandService`, (): void => {
@@ -3483,6 +3483,90 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@cookies`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with --`, (): void => {
+        beforeEach((): void => {
+          message = `--cookies`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!cookies`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@cookies dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with -- and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `--cookies dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!cookies dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
       describe(`when the given message is a message with the shortcut cookie command starting with @`, (): void => {
         beforeEach((): void => {
           message = `@c`;
@@ -3640,6 +3724,90 @@ describe(`DiscordMessageCommandService`, (): void => {
       describe(`when the given message is a message with the cookie command uppercase starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
           message = `!COOKIE dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command starting uppercase with @`, (): void => {
+        beforeEach((): void => {
+          message = `@COOKIES`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcualias "cookies" uppercase starting with --`, (): void => {
+        beforeEach((): void => {
+          message = `--COOKIES`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!COOKIES`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@COOKIES dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with -- and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `--COOKIES dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!COOKIES dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -4055,6 +4223,174 @@ describe(`DiscordMessageCommandService`, (): void => {
       describe(`when the given message is a message with the cookie command uppercase starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
           message = `!COOKIE dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@cookies`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with --`, (): void => {
+        beforeEach((): void => {
+          message = `--cookies`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!cookies`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@cookies dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with -- and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `--cookies dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!cookies dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@COOKIES`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with --`, (): void => {
+        beforeEach((): void => {
+          message = `--COOKIES`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!COOKIES`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@COOKIES dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with -- and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `--COOKIES dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.hasCookieCommand(message);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!COOKIES dummy`;
         });
 
         it(`should return true`, (): void => {
