@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.46.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.45.0...1.46.0) (2020-05-17)
+
+
+### Features
+
+* **discord:** when replying use a mention to display the username ([4442b2a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4442b2a52f73473c75dafb89bf084aed11184736))
+
 # [1.45.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.44.0...1.45.0) (2020-05-17)
 
 
