@@ -108,6 +108,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
     (channel as AnyDiscordChannel)
       .send(messageResponse.response, messageResponse.options)
       .then((): void => {
+        // @todo add coverage
         this._loggerService.log({
           context: this._serviceName,
           message: this._chalkService.text(
@@ -116,6 +117,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
         });
       })
       .catch((error: Readonly<Error | string>): void => {
+        // @todo add coverage
         this._loggerService.error({
           context: this._serviceName,
           message: this._chalkService.text(
