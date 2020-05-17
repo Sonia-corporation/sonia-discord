@@ -70,6 +70,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
     let loggerServiceDebugSpy: jest.SpyInstance;
     let discordClientServiceGetClientSpy: jest.SpyInstance;
     let setRandomPresenceSpy: jest.SpyInstance;
+    let startScheduleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordActivitySoniaService();
@@ -84,6 +85,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
       setRandomPresenceSpy = jest
         .spyOn(service, `setRandomPresence`)
         .mockImplementation();
+      startScheduleSpy = jest.spyOn(service, 'startSchedule').mockImplementation();
     });
 
     it(`should check if the Discord client is ready`, (): void => {
@@ -105,6 +107,16 @@ describe(`DiscordActivitySoniaService`, (): void => {
         expect(setRandomPresenceSpy).toHaveBeenCalledTimes(1);
         expect(setRandomPresenceSpy).toHaveBeenCalledWith();
       });
+
+      it(`should start the schedule`, (): void => {
+        expect.assertions(2);
+
+        service.init();
+        isReady$.next(true);
+
+        expect(startScheduleSpy).toHaveBeenCalledTimes(1);
+        expect(startScheduleSpy).toHaveBeenCalledWith();
+      });
     });
 
     describe(`when the Discord client is not ready`, (): void => {
@@ -116,6 +128,15 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         expect(setRandomPresenceSpy).not.toHaveBeenCalled();
       });
+
+      it(`should not start the schedule`, (): void => {
+        expect.assertions(1);
+
+        service.init();
+        isReady$.next(false);
+
+        expect(startScheduleSpy).not.toHaveBeenCalled();
+      });
     });
 
     describe(`when the Discord client ready state throw error`, (): void => {
@@ -126,6 +147,15 @@ describe(`DiscordActivitySoniaService`, (): void => {
         isReady$.error(new Error(`error`));
 
         expect(setRandomPresenceSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not start the schedule`, (): void => {
+        expect.assertions(1);
+
+        service.init();
+        isReady$.error(new Error(`error`));
+
+        expect(startScheduleSpy).not.toHaveBeenCalled();
       });
     });
 
@@ -164,7 +194,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
       });
       setPresenceMock = jest
         .fn()
-        .mockReturnValue(Promise.reject(new Error(`error`)));
+        .mockReturnValue(Promise.reject(new Error(`setPresence: error`)));
       presenceActivity = {
         name: `dummy-name`,
         type: `PLAYING`,
@@ -188,7 +218,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
       expect.assertions(3);
 
       await expect(service.setPresence(presenceActivity)).rejects.toThrow(
-        new Error(`error`)
+        new Error(`setPresence: error`)
       );
 
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(2);
@@ -228,7 +258,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
         expect.assertions(3);
 
         await expect(service.setPresence(presenceActivity)).rejects.toThrow(
-          new Error(`error`)
+          new Error(`setPresence: error`)
         );
 
         expect(setPresenceMock).toHaveBeenCalledTimes(1);
@@ -250,7 +280,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
           expect.assertions(2);
 
           await expect(service.setPresence(presenceActivity)).rejects.toThrow(
-            new Error(`error`)
+            new Error(`setPresence: error`)
           );
 
           expect(loggerServiceDebugSpy).not.toHaveBeenCalled();

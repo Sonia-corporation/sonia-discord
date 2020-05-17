@@ -1,11 +1,24 @@
-import { ClientUser, Presence } from "discord.js";
+import {
+  ClientUser,
+  Presence
+} from "discord.js";
 import _ from "lodash";
-import { filter, take } from "rxjs/operators";
+import {
+  Job,
+  scheduleJob
+} from "node-schedule";
+import {
+  filter,
+  take
+} from "rxjs/operators";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
+import { getEveryHourScheduleRule } from "../../../../functions/schedule/get-every-hour-schedule-rule";
 import { ChalkService } from "../../../logger/services/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
+import { getNextJobDate } from "../../../schedules/functions/get-next-job-date";
+import { getNextJobDateHumanized } from "../../../schedules/functions/get-next-job-date-humanized";
 import { DiscordGuildSoniaChannelNameEnum } from "../../guilds/enums/discord-guild-sonia-channel-name.enum";
 import { DiscordGuildSoniaService } from "../../guilds/services/discord-guild-sonia.service";
 import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-error.service";
@@ -29,6 +42,8 @@ export class DiscordActivitySoniaService extends AbstractService {
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
   private readonly _discordLoggerErrorService: DiscordLoggerErrorService = DiscordLoggerErrorService.getInstance();
+  private readonly _rule: string = getEveryHourScheduleRule();
+  private _job: Job | undefined = undefined;
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_ACTIVITY_SONIA_SERVICE);
@@ -36,6 +51,11 @@ export class DiscordActivitySoniaService extends AbstractService {
 
   public init(): void {
     this._listen();
+  }
+
+  // @todo add coverage
+  public startSchedule(): void {
+    this._createSchedule();
   }
 
   public setPresence(
@@ -57,9 +77,9 @@ export class DiscordActivitySoniaService extends AbstractService {
               context: this._serviceName,
               message: this._chalkService.text(
                 `Sonia presence updated to: ${this._chalkService.value(
-                  presence.activities[0].type
+                  presence.activities[ 0 ].type
                 )} ${this._chalkService.text(`x`)} ${this._chalkService.value(
-                  presence.activities[0].name
+                  presence.activities[ 0 ].name
                 )}`
               ),
             });
@@ -104,6 +124,42 @@ export class DiscordActivitySoniaService extends AbstractService {
     }
   }
 
+  private _createSchedule(): void {
+    this._job = scheduleJob(this._rule, (): void => {
+      this._executeJob();
+    });
+
+    this._logNextJobDate();
+  }
+
+  private _executeJob(): void {
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(`job triggered`),
+    });
+
+    this.setRandomPresence();
+    this._logNextJobDate();
+  }
+
+  private _logNextJobDate(): void {
+    if (!_.isNil(this._job)) {
+      const nextJobDateHumanized: string | null = getNextJobDateHumanized(
+        this._job
+      );
+      const nextJobDate: string | null = getNextJobDate(this._job);
+
+      this._loggerService.debug({
+        context: this._serviceName,
+        message: this._chalkService.text(
+          `next job: ${this._chalkService.value(
+            nextJobDateHumanized
+          )} ${this._chalkService.hint(`(${nextJobDate})`)}`
+        ),
+      });
+    }
+  }
+
   private _listen(): void {
     this._discordClientService
       .isReady$()
@@ -116,6 +172,7 @@ export class DiscordActivitySoniaService extends AbstractService {
       .subscribe({
         next: (): void => {
           this.setRandomPresence();
+          this.startSchedule();
         },
       });
 
