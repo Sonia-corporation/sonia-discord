@@ -44,30 +44,22 @@ __Example:__
 - `@Sonia-il-est-midi --VERSION`  
 - `@Sonia-il-est-midi $v`  
 
-#### Version
+#### Cookie
 
 __Commands:__
 
-- version
-- v *(shortcut)*
+- cookie
+- cookies *(alias)*
+- c *(shortcut)*
 
 Sonia will send you a message containing:
 
-- The application version (as a link).
-- The application release date.
-- The application initialization date.
-- The application release notes (first 800 chars).
-- The application [changelog](CHANGELOG.md) link.
-- The application status.
-- Her emotional state.
-- The total release count.
+- A cookie (a tasty one).
 
 __Example:__
 
-- `@Sonia-il-est-midi !version`
-- `@Sonia-il-est-midi !VERSION`
-- `@Sonia-il-est-midi !v`
-- `@Sonia-il-est-midi !V`
+- `@Sonia-il-est-midi !cookie`
+- `@Sonia-il-est-midi !C`
 
 #### Error
 
@@ -105,22 +97,46 @@ __Example:__
 - `@Sonia-il-est-midi !help`
 - `@Sonia-il-est-midi !H`
 
-#### Cookie
+#### Lunch
 
 __Commands:__
 
-- cookie
-- cookies *(alias)*
-- c *(shortcut)*
+- lunch
+- l *(shortcut)*
 
 Sonia will send you a message containing:
 
-- A cookie (a tasty one).
+- A reminder that this is lunch-time for you.
 
 __Example:__
 
-- `@Sonia-il-est-midi !cookie`
-- `@Sonia-il-est-midi !C`
+- `@Sonia-il-est-midi !lunch`
+- `@Sonia-il-est-midi !L`
+
+#### Version
+
+__Commands:__
+
+- version
+- v *(shortcut)*
+
+Sonia will send you a message containing:
+
+- The application version (as a link).
+- The application release date.
+- The application initialization date.
+- The application release notes (first 800 chars).
+- The application [changelog](CHANGELOG.md) link.
+- The application status.
+- Her emotional state.
+- The total release count.
+
+__Example:__
+
+- `@Sonia-il-est-midi !version`
+- `@Sonia-il-est-midi !VERSION`
+- `@Sonia-il-est-midi !v`
+- `@Sonia-il-est-midi !V`
 
 ### Sonia behavior
 

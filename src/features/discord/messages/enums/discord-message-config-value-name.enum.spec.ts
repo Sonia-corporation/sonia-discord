@@ -49,6 +49,22 @@ describe(`DiscordMessageConfigValueNameEnum`, (): void => {
     ).toStrictEqual(`message command help image url`);
   });
 
+  it(`should have a member "COMMAND_LUNCH_IMAGE_COLOR"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      DiscordMessageConfigValueNameEnum.COMMAND_LUNCH_IMAGE_COLOR
+    ).toStrictEqual(`message command lunch image color`);
+  });
+
+  it(`should have a member "COMMAND_LUNCH_IMAGE_URL"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      DiscordMessageConfigValueNameEnum.COMMAND_LUNCH_IMAGE_URL
+    ).toStrictEqual(`message command lunch image url`);
+  });
+
   it(`should have a member "COMMAND_PREFIX"`, (): void => {
     expect.assertions(1);
 

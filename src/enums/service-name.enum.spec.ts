@@ -227,6 +227,14 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_LUNCH_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_LUNCH_SERVICE).toStrictEqual(
+      `DiscordMessageCommandLunchService`
+    );
+  });
+
   it(`should have a member "DISCORD_MESSAGE_COMMAND_SERVICE"`, (): void => {
     expect.assertions(1);
 

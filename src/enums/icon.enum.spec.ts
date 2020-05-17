@@ -9,6 +9,14 @@ describe(`IconEnum`, (): void => {
     );
   });
 
+  it(`should have a member "BUG"`, (): void => {
+    expect.assertions(1);
+
+    expect(IconEnum.BUG).toStrictEqual(
+      `https://i.ibb.co/r7PHJS1/icons8-bug-512.png`
+    );
+  });
+
   it(`should have a member "COOKIES"`, (): void => {
     expect.assertions(1);
 
@@ -25,6 +33,14 @@ describe(`IconEnum`, (): void => {
     );
   });
 
+  it(`should have a member "GIRL"`, (): void => {
+    expect.assertions(1);
+
+    expect(IconEnum.GIRL).toStrictEqual(
+      `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`
+    );
+  });
+
   it(`should have a member "INFORMATION"`, (): void => {
     expect.assertions(1);
 
@@ -33,19 +49,11 @@ describe(`IconEnum`, (): void => {
     );
   });
 
-  it(`should have a member "BUG"`, (): void => {
+  it(`should have a member "RESTAURANT"`, (): void => {
     expect.assertions(1);
 
-    expect(IconEnum.BUG).toStrictEqual(
-      `https://i.ibb.co/r7PHJS1/icons8-bug-512.png`
-    );
-  });
-
-  it(`should have a member "GIRL"`, (): void => {
-    expect.assertions(1);
-
-    expect(IconEnum.GIRL).toStrictEqual(
-      `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`
+    expect(IconEnum.RESTAURANT).toStrictEqual(
+      `https://i.ibb.co/vXwNzWD/icons8-restaurant-512.png`
     );
   });
 

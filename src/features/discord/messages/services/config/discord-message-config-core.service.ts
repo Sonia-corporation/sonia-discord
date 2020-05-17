@@ -33,6 +33,10 @@ export class DiscordMessageConfigCoreService extends AbstractService
       imageColor: ColorEnum.MINT,
       imageUrl: IconEnum.INFORMATION,
     },
+    lunch: {
+      imageColor: ColorEnum.SILK,
+      imageUrl: IconEnum.RESTAURANT,
+    },
     prefix: `!`,
     version: {
       imageColor: ColorEnum.SKY,

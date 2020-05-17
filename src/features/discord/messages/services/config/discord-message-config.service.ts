@@ -5,10 +5,12 @@ import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
 import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
-import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
+import { IDiscordMessageCommandHelpConfig } from "../../../interfaces/discord-message-command-help-config";
+import { IDiscordMessageCommandLunchConfig } from "../../../interfaces/discord-message-command-lunch-config";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
+import { IDiscordMessageWarningConfig } from "../../../interfaces/discord-message-warning-config";
 import { DiscordMessageConfigCoreService } from "./discord-message-config-core.service";
 
 export class DiscordMessageConfigService extends AbstractService {
@@ -52,7 +54,7 @@ export class DiscordMessageConfigService extends AbstractService {
     return this._discordMessageConfigCoreService.command.cookie.imageUrl;
   }
 
-  public getMessageCommandError(): IDiscordMessageCommandErrorConfig {
+  public getMessageCommandError(): IDiscordMessageCommandCookieConfig {
     return this._discordMessageConfigCoreService.command.error;
   }
 
@@ -64,7 +66,7 @@ export class DiscordMessageConfigService extends AbstractService {
     return this._discordMessageConfigCoreService.command.error.imageUrl;
   }
 
-  public getMessageCommandHelp(): IDiscordMessageCommandErrorConfig {
+  public getMessageCommandHelp(): IDiscordMessageCommandHelpConfig {
     return this._discordMessageConfigCoreService.command.help;
   }
 
@@ -74,6 +76,18 @@ export class DiscordMessageConfigService extends AbstractService {
 
   public getMessageCommandHelpImageUrl(): IconEnum {
     return this._discordMessageConfigCoreService.command.help.imageUrl;
+  }
+
+  public getMessageCommandLunch(): IDiscordMessageCommandLunchConfig {
+    return this._discordMessageConfigCoreService.command.lunch;
+  }
+
+  public getMessageCommandLunchImageColor(): ColorEnum {
+    return this._discordMessageConfigCoreService.command.lunch.imageColor;
+  }
+
+  public getMessageCommandLunchImageUrl(): IconEnum {
+    return this._discordMessageConfigCoreService.command.lunch.imageUrl;
   }
 
   public getMessageCommandPrefix(): string | string[] {
@@ -104,7 +118,7 @@ export class DiscordMessageConfigService extends AbstractService {
     return this._discordMessageConfigCoreService.error.imageUrl;
   }
 
-  public getMessageWarning(): IDiscordMessageErrorConfig {
+  public getMessageWarning(): IDiscordMessageWarningConfig {
     return this._discordMessageConfigCoreService.warning;
   }
 
