@@ -1,5 +1,19 @@
 # Semantic Versioning Changelog
 
+# [1.47.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.46.0...1.47.0) (2020-05-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency moment-timezone to v0.5.30 ([febbe27](https://github.com/Sonia-corporation/il-est-midi-discord/commit/febbe2710a0ceceeddff74b2d017af88509efc71))
+
+
+### Features
+
+* **discord:** add lunch command ([db1ea0d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/db1ea0dbf4ee9ac23ee5915e769858875a5b5ca9))
+* **discord:** add lunch command information in the help command ([7a856aa](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7a856aa4c07ebe15b9adc752981eeac0df8ed3fb))
+* **config:** add options to customise the lunch command ([67d3912](https://github.com/Sonia-corporation/il-est-midi-discord/commit/67d3912f6911a46780dd5aa1530c9624829868a2))
+
 # [1.46.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.45.0...1.46.0) (2020-05-17)
 
 
