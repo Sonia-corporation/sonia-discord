@@ -65,4 +65,16 @@ export const DISCORD_PRESENCE_ACTIVITY_WATCHING: IDiscordPresenceActivity[] = [
     name: `the FBI`,
     type: `WATCHING`,
   },
+  {
+    name: `the !help command`,
+    type: `WATCHING`,
+  },
+  {
+    name: `the $help command`,
+    type: `WATCHING`,
+  },
+  {
+    name: `the -help command`,
+    type: `WATCHING`,
+  },
 ];
