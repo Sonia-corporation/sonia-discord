@@ -48,7 +48,13 @@ export class DiscordActivitySoniaService extends AbstractService {
 
       this._loggerService.debug({
         context: this._serviceName,
-        message: this._chalkService.text(`Sonia presence updated`),
+        message: this._chalkService.text(
+          `Sonia presence updated to: ${this._chalkService.value(
+            presenceActivity.type
+          )} ${this._chalkService.text(`x`)} ${this._chalkService.value(
+            presenceActivity.name
+          )}`
+        ),
       });
     }
   }

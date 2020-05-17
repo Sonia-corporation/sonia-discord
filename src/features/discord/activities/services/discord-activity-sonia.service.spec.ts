@@ -228,7 +228,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordActivitySoniaService`,
-          message: `text-Sonia presence updated`,
+          message: `text-Sonia presence updated to: value-8 text-x value-dummy-name`,
         } as ILoggerLog);
       });
     });
