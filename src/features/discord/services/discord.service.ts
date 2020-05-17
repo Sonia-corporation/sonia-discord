@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { DiscordActivitySoniaService } from "../activities/services/discord-activity-sonia.service";
 import { DiscordAuthenticationService } from "../authentications/services/discord-authentication.service";
 import { DiscordGuildCreateService } from "../guilds/services/discord-guild-create.service";
 import { DiscordGuildMemberAddService } from "../guilds/services/discord-guild-member-add.service";
@@ -36,5 +37,6 @@ export class DiscordService extends AbstractService {
     DiscordAuthenticationService.getInstance().init();
     DiscordMessageScheduleIlEstMidiService.getInstance().init();
     DiscordGuildSoniaService.getInstance().init();
+    DiscordActivitySoniaService.getInstance().init();
   }
 }

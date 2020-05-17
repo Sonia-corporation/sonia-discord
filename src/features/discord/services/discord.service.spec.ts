@@ -1,6 +1,7 @@
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
+import { DiscordActivitySoniaService } from "../activities/services/discord-activity-sonia.service";
 import { DiscordAuthenticationService } from "../authentications/services/discord-authentication.service";
 import { DiscordGuildCreateService } from "../guilds/services/discord-guild-create.service";
 import { DiscordGuildMemberAddService } from "../guilds/services/discord-guild-member-add.service";
@@ -68,6 +69,7 @@ describe(`DiscordService`, (): void => {
     let discordAuthenticationService: DiscordAuthenticationService;
     let discordMessageScheduleIlEstMidiService: DiscordMessageScheduleIlEstMidiService;
     let discordGuildSoniaService: DiscordGuildSoniaService;
+    let discordActivitySoniaService: DiscordActivitySoniaService;
 
     let discordSoniaServiceGetInstanceSpy: jest.SpyInstance;
     let discordLoggerServiceGetInstanceSpy: jest.SpyInstance;
@@ -86,6 +88,8 @@ describe(`DiscordService`, (): void => {
     let discordMessageScheduleIlEstMidiServiceGetInstanceInitSpy: jest.SpyInstance;
     let discordGuildSoniaServiceGetInstanceSpy: jest.SpyInstance;
     let discordGuildSoniaServiceGetInstanceInitSpy: jest.SpyInstance;
+    let discordActivitySoniaServiceGetInstanceSpy: jest.SpyInstance;
+    let discordActivitySoniaServiceInitSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordService();
@@ -99,6 +103,7 @@ describe(`DiscordService`, (): void => {
         DiscordMessageScheduleIlEstMidiService
       >();
       discordGuildSoniaService = createMock<DiscordGuildSoniaService>();
+      discordActivitySoniaService = createMock<DiscordActivitySoniaService>();
 
       discordSoniaServiceGetInstanceSpy = jest.spyOn(
         DiscordSoniaService,
@@ -158,6 +163,13 @@ describe(`DiscordService`, (): void => {
         .mockReturnValue(discordGuildSoniaService);
       discordGuildSoniaServiceGetInstanceInitSpy = jest.spyOn(
         discordGuildSoniaService,
+        `init`
+      );
+      discordActivitySoniaServiceGetInstanceSpy = jest
+        .spyOn(DiscordActivitySoniaService, `getInstance`)
+        .mockReturnValue(discordActivitySoniaService);
+      discordActivitySoniaServiceInitSpy = jest.spyOn(
+        discordActivitySoniaService,
         `init`
       );
     });
@@ -268,6 +280,16 @@ describe(`DiscordService`, (): void => {
         1
       );
       expect(discordGuildSoniaServiceGetInstanceInitSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should create and initialize the DiscordActivitySonia service`, (): void => {
+      expect.assertions(3);
+
+      service.init();
+
+      expect(discordActivitySoniaServiceGetInstanceSpy).toHaveBeenCalledWith();
+      expect(discordActivitySoniaServiceInitSpy).toHaveBeenCalledTimes(1);
+      expect(discordActivitySoniaServiceInitSpy).toHaveBeenCalledWith();
     });
   });
 });

@@ -110,7 +110,7 @@ export class DiscordMessageTextService extends AbstractService {
 
     return {
       response: this._getEveryoneMentionMessageResponseWithEnvPrefix(
-        `Il est midi tout le monde !`
+        `Il est midi everyone!`
       ),
     };
   }
