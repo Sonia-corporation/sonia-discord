@@ -6,6 +6,7 @@ import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-messag
 import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
 import { IDiscordMessageCommandHelpConfig } from "../../../interfaces/discord-message-command-help-config";
+import { IDiscordMessageCommandLunchConfig } from "../../../interfaces/discord-message-command-lunch-config";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
@@ -78,6 +79,10 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageColor: ColorEnum.CANDY,
           imageUrl: IconEnum.WARNING_SHIELD,
         },
+        lunch: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
         prefix: `dummy-prefix`,
         version: {
           imageColor: ColorEnum.CANDY,
@@ -110,6 +115,10 @@ describe(`DiscordMessageConfigService`, (): void => {
             imageUrl: IconEnum.WARNING_SHIELD,
           },
           help: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
+          lunch: {
             imageColor: ColorEnum.CANDY,
             imageUrl: IconEnum.WARNING_SHIELD,
           },
@@ -147,6 +156,10 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageColor: ColorEnum.CANDY,
           imageUrl: IconEnum.WARNING_SHIELD,
         },
+        lunch: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
         prefix: `dummy-prefix`,
         version: {
           imageColor: ColorEnum.CANDY,
@@ -170,6 +183,10 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageUrl: IconEnum.WARNING_SHIELD,
         },
         help: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
+        lunch: {
           imageColor: ColorEnum.CANDY,
           imageUrl: IconEnum.WARNING_SHIELD,
         },
@@ -335,6 +352,59 @@ describe(`DiscordMessageConfigService`, (): void => {
       expect.assertions(1);
 
       const result = service.getMessageCommandHelpImageUrl();
+
+      expect(result).toStrictEqual(IconEnum.WARNING_SHIELD);
+    });
+  });
+
+  describe(`getMessageCommandLunch()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.lunch = {
+        imageColor: ColorEnum.CANDY,
+        imageUrl: IconEnum.WARNING_SHIELD,
+      };
+    });
+
+    it(`should return the Discord message config command lunch`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandLunch();
+
+      expect(result).toStrictEqual({
+        imageColor: ColorEnum.CANDY,
+        imageUrl: IconEnum.WARNING_SHIELD,
+      } as IDiscordMessageCommandLunchConfig);
+    });
+  });
+
+  describe(`getMessageCommandLunchImageColor()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.lunch.imageColor =
+        ColorEnum.CANDY;
+    });
+
+    it(`should return the Discord message config command lunch image color`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandLunchImageColor();
+
+      expect(result).toStrictEqual(ColorEnum.CANDY);
+    });
+  });
+
+  describe(`getMessageCommandLunchImageUrl()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.lunch.imageUrl =
+        IconEnum.WARNING_SHIELD;
+    });
+
+    it(`should return the Discord message config command lunch image url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandLunchImageUrl();
 
       expect(result).toStrictEqual(IconEnum.WARNING_SHIELD);
     });

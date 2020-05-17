@@ -105,6 +105,24 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
     );
   });
 
+  it(`should have a specific color for the image of the lunch command`, (): void => {
+    expect.assertions(1);
+
+    service = DiscordMessageConfigCoreService.getInstance();
+
+    expect(service.command.lunch.imageColor).toStrictEqual(14082034);
+  });
+
+  it(`should have a specific url for the image of the lunch command`, (): void => {
+    expect.assertions(1);
+
+    service = DiscordMessageConfigCoreService.getInstance();
+
+    expect(service.command.lunch.imageUrl).toStrictEqual(
+      `https://i.ibb.co/vXwNzWD/icons8-restaurant-512.png`
+    );
+  });
+
   it(`should have a "!" prefix for the commands`, (): void => {
     expect.assertions(1);
 
