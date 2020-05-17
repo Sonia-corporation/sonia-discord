@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+# [1.44.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.43.0...1.44.0) (2020-05-17)
+
+
+### Features
+
+* **discord:** allow to use cookies as an alias for the cookie command ([ef39bd3](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ef39bd38b7f0d27c31d07ed80f54b227393c2209))
+* **discord:** update the help command to include the cookies shortcut ([8d20c44](https://github.com/Sonia-corporation/il-est-midi-discord/commit/8d20c4442689a996e7a82087fd9014b4a6c1ffda))
+
 # [1.43.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.42.0...1.43.0) (2020-05-16)
 
 
