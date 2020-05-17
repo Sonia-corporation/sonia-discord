@@ -40,8 +40,8 @@ There is no case sensitivity.
 
 __Example:__
 
-- `@Sonia-il-est-midi !version`  
-- `@Sonia-il-est-midi -VERSION`  
+- `@Sonia-il-est-midi -version`  
+- `@Sonia-il-est-midi !VERSION`  
 - `@Sonia-il-est-midi $v`  
 
 #### Cookie
