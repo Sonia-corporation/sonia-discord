@@ -1,16 +1,7 @@
-import {
-  ClientUser,
-  Presence
-} from "discord.js";
+import { ClientUser, Presence } from "discord.js";
 import _ from "lodash";
-import {
-  Job,
-  scheduleJob
-} from "node-schedule";
-import {
-  filter,
-  take
-} from "rxjs/operators";
+import { Job, scheduleJob } from "node-schedule";
+import { filter, take } from "rxjs/operators";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
@@ -77,9 +68,9 @@ export class DiscordActivitySoniaService extends AbstractService {
               context: this._serviceName,
               message: this._chalkService.text(
                 `Sonia presence updated to: ${this._chalkService.value(
-                  presence.activities[ 0 ].type
+                  presence.activities[0].type
                 )} ${this._chalkService.text(`x`)} ${this._chalkService.value(
-                  presence.activities[ 0 ].name
+                  presence.activities[0].name
                 )}`
               ),
             });

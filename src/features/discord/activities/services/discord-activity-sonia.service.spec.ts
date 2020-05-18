@@ -85,7 +85,9 @@ describe(`DiscordActivitySoniaService`, (): void => {
       setRandomPresenceSpy = jest
         .spyOn(service, `setRandomPresence`)
         .mockImplementation();
-      startScheduleSpy = jest.spyOn(service, 'startSchedule').mockImplementation();
+      startScheduleSpy = jest
+        .spyOn(service, `startSchedule`)
+        .mockImplementation();
     });
 
     it(`should check if the Discord client is ready`, (): void => {
