@@ -44,7 +44,6 @@ export class DiscordActivitySoniaService extends AbstractService {
     this._listen();
   }
 
-  // @todo add coverage
   public startSchedule(): void {
     this._createSchedule();
   }

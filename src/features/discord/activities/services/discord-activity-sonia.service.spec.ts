@@ -1,11 +1,16 @@
 import { Client, Presence, PresenceData } from "discord.js";
 import _ from "lodash";
+import { Job } from "node-schedule";
+import * as NodeScheduleModule from "node-schedule";
 import { Subject } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
+import * as GetEveryHourScheduleRuleModule from "../../../../functions/schedule/get-every-hour-schedule-rule";
 import { CoreEventService } from "../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../logger/services/logger.service";
+import * as GetNextJobDateModule from "../../../schedules/functions/get-next-job-date";
+import * as GetNextJobDateHumanizedModule from "../../../schedules/functions/get-next-job-date-humanized";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DISCORD_PRESENCE_ACTIVITY } from "../constants/discord-presence-activity";
 import { IDiscordPresenceActivity } from "../interfaces/discord-presence-activity";
@@ -171,6 +176,88 @@ describe(`DiscordActivitySoniaService`, (): void => {
         context: `DiscordActivitySoniaService`,
         message: `text-listen "ready" Discord client state`,
       } as ILoggerLog);
+    });
+  });
+
+  describe(`startSchedule()`, (): void => {
+    let job: Job;
+
+    let scheduleJobSpy: jest.SpyInstance;
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let getEveryHourScheduleRuleSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      getEveryHourScheduleRuleSpy = jest
+        .spyOn(GetEveryHourScheduleRuleModule, `getEveryHourScheduleRule`)
+        .mockReturnValue(`dummy-schedule`);
+      service = new DiscordActivitySoniaService();
+      job = createMock<Job>();
+
+      scheduleJobSpy = jest
+        .spyOn(NodeScheduleModule, `scheduleJob`)
+        .mockReturnValue(job);
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
+      jest
+        .spyOn(GetNextJobDateHumanizedModule, `getNextJobDateHumanized`)
+        .mockReturnValue(`dummy-next-job-date-humanized`);
+      jest
+        .spyOn(GetNextJobDateModule, `getNextJobDate`)
+        .mockReturnValue(`dummy-next-job-date`);
+    });
+
+    it(`should create a schedule`, (): void => {
+      expect.assertions(2);
+
+      service.startSchedule();
+
+      expect(getEveryHourScheduleRuleSpy).toHaveBeenCalledTimes(1);
+      expect(getEveryHourScheduleRuleSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should schedule and create a job`, (): void => {
+      expect.assertions(2);
+
+      service.startSchedule();
+
+      expect(scheduleJobSpy).toHaveBeenCalledTimes(1);
+      expect(scheduleJobSpy).toHaveBeenCalledWith(
+        `dummy-schedule`,
+        expect.any(Function)
+      );
+    });
+
+    describe(`when the job is undefined`, (): void => {
+      beforeEach((): void => {
+        scheduleJobSpy.mockImplementation();
+      });
+
+      it(`should not log the next job date`, (): void => {
+        expect.assertions(1);
+
+        service.startSchedule();
+
+        expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the job is valid`, (): void => {
+      beforeEach((): void => {
+        scheduleJobSpy.mockReturnValue(job);
+      });
+
+      it(`should log the next job date`, (): void => {
+        expect.assertions(2);
+
+        service.startSchedule();
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+          context: `DiscordActivitySoniaService`,
+          message: `text-next job: value-dummy-next-job-date-humanized hint-(dummy-next-job-date)`,
+        } as ILoggerLog);
+      });
     });
   });
 
