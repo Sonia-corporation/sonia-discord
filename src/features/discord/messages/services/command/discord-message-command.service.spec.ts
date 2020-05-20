@@ -84,7 +84,7 @@ describe(`DiscordMessageCommandService`, (): void => {
       message = `dummy-message`;
 
       discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
-        `--`
+        `-`
       );
     });
 
@@ -104,7 +104,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     describe(`when the given message contains the version command`, (): void => {
       beforeEach((): void => {
-        message = `--version`;
+        message = `-version`;
       });
 
       it(`should return true`, (): void => {
@@ -118,7 +118,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     describe(`when the given message contains the shortcut version command`, (): void => {
       beforeEach((): void => {
-        message = `--v`;
+        message = `-v`;
       });
 
       it(`should return true`, (): void => {
@@ -132,7 +132,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     describe(`when the given message contains the error command`, (): void => {
       beforeEach((): void => {
-        message = `--error`;
+        message = `-error`;
       });
 
       it(`should return true`, (): void => {
@@ -146,7 +146,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     describe(`when the given message contains the bug command`, (): void => {
       beforeEach((): void => {
-        message = `--bug`;
+        message = `-bug`;
       });
 
       it(`should return true`, (): void => {
@@ -160,7 +160,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     describe(`when the given message contains the help command`, (): void => {
       beforeEach((): void => {
-        message = `--help`;
+        message = `-help`;
       });
 
       it(`should return true`, (): void => {
@@ -174,7 +174,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     describe(`when the given message contains the shortcut help command`, (): void => {
       beforeEach((): void => {
-        message = `--h`;
+        message = `-h`;
       });
 
       it(`should return true`, (): void => {
@@ -188,7 +188,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     describe(`when the given message contains the cookie command`, (): void => {
       beforeEach((): void => {
-        message = `--cookie`;
+        message = `-cookie`;
       });
 
       it(`should return true`, (): void => {
@@ -202,7 +202,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     describe(`when the given message contains the alias "cookies" cookie command`, (): void => {
       beforeEach((): void => {
-        message = `--cookies`;
+        message = `-cookies`;
       });
 
       it(`should return true`, (): void => {
@@ -216,7 +216,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     describe(`when the given message contains the shortcut cookie command`, (): void => {
       beforeEach((): void => {
-        message = `--c`;
+        message = `-c`;
       });
 
       it(`should return true`, (): void => {
@@ -230,7 +230,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     describe(`when the given message contains the lunch command`, (): void => {
       beforeEach((): void => {
-        message = `--lunch`;
+        message = `-lunch`;
       });
 
       it(`should return true`, (): void => {
@@ -244,7 +244,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     describe(`when the given message contains the shortcut lunch command`, (): void => {
       beforeEach((): void => {
-        message = `--l`;
+        message = `-l`;
       });
 
       it(`should return true`, (): void => {
@@ -314,9 +314,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with another command starting with --`, (): void => {
+      describe(`when the given message is a message with another command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--help`;
+          message = `-help`;
         });
 
         it(`should return false`, (): void => {
@@ -356,9 +356,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost version command starting with --`, (): void => {
+      describe(`when the given message is a message with an almost version command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--ver`;
+          message = `-ver`;
         });
 
         it(`should return false`, (): void => {
@@ -398,9 +398,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost version command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost version command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--ver dummy`;
+          message = `-ver dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -440,9 +440,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut version command starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut version command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--v`;
+          message = `-v`;
         });
 
         it(`should return false`, (): void => {
@@ -482,9 +482,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut version command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut version command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--v dummy`;
+          message = `-v dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -524,9 +524,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the version command starting with --`, (): void => {
+      describe(`when the given message is a message with the version command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--version`;
+          message = `-version`;
         });
 
         it(`should return false`, (): void => {
@@ -566,9 +566,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the version command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the version command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--version dummy`;
+          message = `-version dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -608,9 +608,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut version command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut version command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--V`;
+          message = `-V`;
         });
 
         it(`should return false`, (): void => {
@@ -650,9 +650,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut version command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut version command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--V dummy`;
+          message = `-V dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -692,9 +692,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the version command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the version command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--VERSION`;
+          message = `-VERSION`;
         });
 
         it(`should return false`, (): void => {
@@ -734,9 +734,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the version command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the version command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--VERSION dummy`;
+          message = `-VERSION dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -763,10 +763,10 @@ describe(`DiscordMessageCommandService`, (): void => {
       });
     });
 
-    describe(`when the message command prefix is "--" or "!"`, (): void => {
+    describe(`when the message command prefix is "-" or "!"`, (): void => {
       beforeEach((): void => {
         discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
-          `--`,
+          `-`,
           `!`,
         ]);
       });
@@ -813,9 +813,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with another command starting with --`, (): void => {
+      describe(`when the given message is a message with another command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--help`;
+          message = `-help`;
         });
 
         it(`should return false`, (): void => {
@@ -855,9 +855,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost version command starting with --`, (): void => {
+      describe(`when the given message is a message with an almost version command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--ver`;
+          message = `-ver`;
         });
 
         it(`should return false`, (): void => {
@@ -897,9 +897,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost version command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost version command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--ver dummy`;
+          message = `-ver dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -939,9 +939,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut version command starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut version command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--v`;
+          message = `-v`;
         });
 
         it(`should return true`, (): void => {
@@ -981,9 +981,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut version command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut version command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--v dummy`;
+          message = `-v dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -1023,9 +1023,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the version command starting with --`, (): void => {
+      describe(`when the given message is a message with the version command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--version`;
+          message = `-version`;
         });
 
         it(`should return true`, (): void => {
@@ -1065,9 +1065,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the version command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the version command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--version dummy`;
+          message = `-version dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -1107,9 +1107,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut version command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut version command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--V`;
+          message = `-V`;
         });
 
         it(`should return true`, (): void => {
@@ -1149,9 +1149,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut version command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut version command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--V dummy`;
+          message = `-V dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -1191,9 +1191,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the version command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the version command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--VERSION`;
+          message = `-VERSION`;
         });
 
         it(`should return true`, (): void => {
@@ -1233,9 +1233,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the version command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the version command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--VERSION dummy`;
+          message = `-VERSION dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -1320,9 +1320,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with another command starting with --`, (): void => {
+      describe(`when the given message is a message with another command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--help`;
+          message = `-help`;
         });
 
         it(`should return false`, (): void => {
@@ -1362,9 +1362,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost error command starting with --`, (): void => {
+      describe(`when the given message is a message with an almost error command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--err`;
+          message = `-err`;
         });
 
         it(`should return false`, (): void => {
@@ -1404,9 +1404,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost error command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost error command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--err dummy`;
+          message = `-err dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -1446,9 +1446,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the error command starting with --`, (): void => {
+      describe(`when the given message is a message with the error command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--error`;
+          message = `-error`;
         });
 
         it(`should return false`, (): void => {
@@ -1488,9 +1488,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the error command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the error command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--error dummy`;
+          message = `-error dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -1530,9 +1530,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the bug command starting with --`, (): void => {
+      describe(`when the given message is a message with the bug command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--bug`;
+          message = `-bug`;
         });
 
         it(`should return false`, (): void => {
@@ -1572,9 +1572,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the bug command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the bug command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--bug dummy`;
+          message = `-bug dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -1614,9 +1614,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the error command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the error command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--ERROR`;
+          message = `-ERROR`;
         });
 
         it(`should return false`, (): void => {
@@ -1656,9 +1656,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the error command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the error command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--ERROR dummy`;
+          message = `-ERROR dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -1698,9 +1698,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the bug command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the bug command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--BUG`;
+          message = `-BUG`;
         });
 
         it(`should return false`, (): void => {
@@ -1740,9 +1740,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the bug command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the bug command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--BUG dummy`;
+          message = `-BUG dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -1769,10 +1769,10 @@ describe(`DiscordMessageCommandService`, (): void => {
       });
     });
 
-    describe(`when the message command prefix is "--" or "!"`, (): void => {
+    describe(`when the message command prefix is "-" or "!"`, (): void => {
       beforeEach((): void => {
         discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
-          `--`,
+          `-`,
           `!`,
         ]);
       });
@@ -1819,9 +1819,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with another command starting with --`, (): void => {
+      describe(`when the given message is a message with another command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--help`;
+          message = `-help`;
         });
 
         it(`should return false`, (): void => {
@@ -1861,9 +1861,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost error command starting with --`, (): void => {
+      describe(`when the given message is a message with an almost error command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--err`;
+          message = `-err`;
         });
 
         it(`should return false`, (): void => {
@@ -1903,9 +1903,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost error command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost error command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--err dummy`;
+          message = `-err dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -1945,9 +1945,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the error command starting with --`, (): void => {
+      describe(`when the given message is a message with the error command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--error`;
+          message = `-error`;
         });
 
         it(`should return true`, (): void => {
@@ -1987,9 +1987,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the error command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the error command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--error dummy`;
+          message = `-error dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -2029,9 +2029,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the error command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the error command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--ERROR`;
+          message = `-ERROR`;
         });
 
         it(`should return true`, (): void => {
@@ -2071,9 +2071,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the error command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the error command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--ERROR dummy`;
+          message = `-ERROR dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -2113,9 +2113,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the bug command starting with --`, (): void => {
+      describe(`when the given message is a message with the bug command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--bug`;
+          message = `-bug`;
         });
 
         it(`should return true`, (): void => {
@@ -2155,9 +2155,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the bug command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the bug command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--bug dummy`;
+          message = `-bug dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -2197,9 +2197,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the bug command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the bug command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--BUG`;
+          message = `-BUG`;
         });
 
         it(`should return true`, (): void => {
@@ -2239,9 +2239,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the bug command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the bug command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--BUG dummy`;
+          message = `-BUG dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -2326,9 +2326,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with another command starting with --`, (): void => {
+      describe(`when the given message is a message with another command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--version`;
+          message = `-version`;
         });
 
         it(`should return false`, (): void => {
@@ -2368,9 +2368,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost help command starting with --`, (): void => {
+      describe(`when the given message is a message with an almost help command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--hel`;
+          message = `-hel`;
         });
 
         it(`should return false`, (): void => {
@@ -2410,9 +2410,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost help command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost help command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--hel dummy`;
+          message = `-hel dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -2452,9 +2452,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the help command starting with --`, (): void => {
+      describe(`when the given message is a message with the help command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--help`;
+          message = `-help`;
         });
 
         it(`should return false`, (): void => {
@@ -2494,9 +2494,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the help command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the help command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--help dummy`;
+          message = `-help dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -2536,9 +2536,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut help command starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut help command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--h`;
+          message = `-h`;
         });
 
         it(`should return false`, (): void => {
@@ -2578,9 +2578,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut help command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut help command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--h dummy`;
+          message = `-h dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -2620,9 +2620,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the help command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the help command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--HELP`;
+          message = `-HELP`;
         });
 
         it(`should return false`, (): void => {
@@ -2662,9 +2662,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the help command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the help command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--HELP dummy`;
+          message = `-HELP dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -2704,9 +2704,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut help command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut help command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--H`;
+          message = `-H`;
         });
 
         it(`should return false`, (): void => {
@@ -2746,9 +2746,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut help command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut help command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--H dummy`;
+          message = `-H dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -2775,10 +2775,10 @@ describe(`DiscordMessageCommandService`, (): void => {
       });
     });
 
-    describe(`when the message command prefix is "--" or "!"`, (): void => {
+    describe(`when the message command prefix is "-" or "!"`, (): void => {
       beforeEach((): void => {
         discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
-          `--`,
+          `-`,
           `!`,
         ]);
       });
@@ -2825,9 +2825,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with another command starting with --`, (): void => {
+      describe(`when the given message is a message with another command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--version`;
+          message = `-version`;
         });
 
         it(`should return false`, (): void => {
@@ -2867,9 +2867,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost help command starting with --`, (): void => {
+      describe(`when the given message is a message with an almost help command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--hel`;
+          message = `-hel`;
         });
 
         it(`should return false`, (): void => {
@@ -2909,9 +2909,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost help command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost help command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--hel dummy`;
+          message = `-hel dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -2951,9 +2951,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the help command starting with --`, (): void => {
+      describe(`when the given message is a message with the help command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--help`;
+          message = `-help`;
         });
 
         it(`should return true`, (): void => {
@@ -2993,9 +2993,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the help command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the help command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--help dummy`;
+          message = `-help dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -3035,9 +3035,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the help command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the help command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--HELP`;
+          message = `-HELP`;
         });
 
         it(`should return true`, (): void => {
@@ -3077,9 +3077,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the help command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the help command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--HELP dummy`;
+          message = `-HELP dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -3119,9 +3119,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut help command starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut help command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--h`;
+          message = `-h`;
         });
 
         it(`should return true`, (): void => {
@@ -3161,9 +3161,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut help command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut help command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--h dummy`;
+          message = `-h dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -3203,9 +3203,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut help command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut help command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--H`;
+          message = `-H`;
         });
 
         it(`should return true`, (): void => {
@@ -3245,9 +3245,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut help command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut help command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--H dummy`;
+          message = `-H dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -3332,9 +3332,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with another command starting with --`, (): void => {
+      describe(`when the given message is a message with another command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--version`;
+          message = `-version`;
         });
 
         it(`should return false`, (): void => {
@@ -3374,9 +3374,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost cookie command starting with --`, (): void => {
+      describe(`when the given message is a message with an almost cookie command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--coo`;
+          message = `-coo`;
         });
 
         it(`should return false`, (): void => {
@@ -3416,9 +3416,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost cookie command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost cookie command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--coo dummy`;
+          message = `-coo dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -3458,9 +3458,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the cookie command starting with --`, (): void => {
+      describe(`when the given message is a message with the cookie command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--cookie`;
+          message = `-cookie`;
         });
 
         it(`should return false`, (): void => {
@@ -3500,9 +3500,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the cookie command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the cookie command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--cookie dummy`;
+          message = `-cookie dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -3542,9 +3542,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the alias "cookies" cookie command starting with --`, (): void => {
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--cookies`;
+          message = `-cookies`;
         });
 
         it(`should return false`, (): void => {
@@ -3584,9 +3584,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the alias "cookies" cookie command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--cookies dummy`;
+          message = `-cookies dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -3626,9 +3626,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut cookie command starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut cookie command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--c`;
+          message = `-c`;
         });
 
         it(`should return false`, (): void => {
@@ -3668,9 +3668,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut cookie command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut cookie command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--c dummy`;
+          message = `-c dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -3710,9 +3710,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the cookie command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the cookie command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--COOKIE`;
+          message = `-COOKIE`;
         });
 
         it(`should return false`, (): void => {
@@ -3752,9 +3752,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the cookie command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the cookie command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--COOKIE dummy`;
+          message = `-COOKIE dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -3794,9 +3794,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcualias "cookies" uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcualias "cookies" uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--COOKIES`;
+          message = `-COOKIES`;
         });
 
         it(`should return false`, (): void => {
@@ -3836,9 +3836,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--COOKIES dummy`;
+          message = `-COOKIES dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -3878,9 +3878,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut cookie command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut cookie command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--C`;
+          message = `-C`;
         });
 
         it(`should return false`, (): void => {
@@ -3920,9 +3920,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut cookie command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut cookie command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--C dummy`;
+          message = `-C dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -3949,10 +3949,10 @@ describe(`DiscordMessageCommandService`, (): void => {
       });
     });
 
-    describe(`when the message command prefix is "--" or "!"`, (): void => {
+    describe(`when the message command prefix is "-" or "!"`, (): void => {
       beforeEach((): void => {
         discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
-          `--`,
+          `-`,
           `!`,
         ]);
       });
@@ -3999,9 +3999,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with another command starting with --`, (): void => {
+      describe(`when the given message is a message with another command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--version`;
+          message = `-version`;
         });
 
         it(`should return false`, (): void => {
@@ -4041,9 +4041,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost cookie command starting with --`, (): void => {
+      describe(`when the given message is a message with an almost cookie command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--coo`;
+          message = `-coo`;
         });
 
         it(`should return false`, (): void => {
@@ -4083,9 +4083,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost cookie command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost cookie command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--coo dummy`;
+          message = `-coo dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -4125,9 +4125,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the cookie command starting with --`, (): void => {
+      describe(`when the given message is a message with the cookie command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--cookie`;
+          message = `-cookie`;
         });
 
         it(`should return true`, (): void => {
@@ -4167,9 +4167,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the cookie command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the cookie command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--cookie dummy`;
+          message = `-cookie dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -4209,9 +4209,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the cookie command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the cookie command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--COOKIE`;
+          message = `-COOKIE`;
         });
 
         it(`should return true`, (): void => {
@@ -4251,9 +4251,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the cookie command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the cookie command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--COOKIE dummy`;
+          message = `-COOKIE dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -4293,9 +4293,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the alias "cookies" cookie command starting with --`, (): void => {
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--cookies`;
+          message = `-cookies`;
         });
 
         it(`should return true`, (): void => {
@@ -4335,9 +4335,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the alias "cookies" cookie command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the alias "cookies" cookie command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--cookies dummy`;
+          message = `-cookies dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -4377,9 +4377,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--COOKIES`;
+          message = `-COOKIES`;
         });
 
         it(`should return true`, (): void => {
@@ -4419,9 +4419,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the alias "cookies" cookie command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--COOKIES dummy`;
+          message = `-COOKIES dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -4461,9 +4461,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut cookie command starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut cookie command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--c`;
+          message = `-c`;
         });
 
         it(`should return true`, (): void => {
@@ -4503,9 +4503,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut cookie command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut cookie command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--c dummy`;
+          message = `-c dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -4545,9 +4545,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut cookie command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut cookie command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--C`;
+          message = `-C`;
         });
 
         it(`should return true`, (): void => {
@@ -4587,9 +4587,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut cookie command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut cookie command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--C dummy`;
+          message = `-C dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -4674,9 +4674,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with another command starting with --`, (): void => {
+      describe(`when the given message is a message with another command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--version`;
+          message = `-version`;
         });
 
         it(`should return false`, (): void => {
@@ -4716,9 +4716,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with --`, (): void => {
+      describe(`when the given message is a message with an almost lunch command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--lun`;
+          message = `-lun`;
         });
 
         it(`should return false`, (): void => {
@@ -4758,9 +4758,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost lunch command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--lun dummy`;
+          message = `-lun dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -4800,9 +4800,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with --`, (): void => {
+      describe(`when the given message is a message with the lunch command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--lunch`;
+          message = `-lunch`;
         });
 
         it(`should return false`, (): void => {
@@ -4842,9 +4842,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the lunch command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--lunch dummy`;
+          message = `-lunch dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -4884,9 +4884,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut lunch command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--l`;
+          message = `-l`;
         });
 
         it(`should return false`, (): void => {
@@ -4926,9 +4926,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut lunch command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--l dummy`;
+          message = `-l dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -4968,9 +4968,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the lunch command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--LUNCH`;
+          message = `-LUNCH`;
         });
 
         it(`should return false`, (): void => {
@@ -5010,9 +5010,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the lunch command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--LUNCH dummy`;
+          message = `-LUNCH dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -5052,9 +5052,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut lunch command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--L`;
+          message = `-L`;
         });
 
         it(`should return false`, (): void => {
@@ -5094,9 +5094,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut lunch command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--L dummy`;
+          message = `-L dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -5123,10 +5123,10 @@ describe(`DiscordMessageCommandService`, (): void => {
       });
     });
 
-    describe(`when the message command prefix is "--" or "!"`, (): void => {
+    describe(`when the message command prefix is "-" or "!"`, (): void => {
       beforeEach((): void => {
         discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
-          `--`,
+          `-`,
           `!`,
         ]);
       });
@@ -5173,9 +5173,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with another command starting with --`, (): void => {
+      describe(`when the given message is a message with another command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--version`;
+          message = `-version`;
         });
 
         it(`should return false`, (): void => {
@@ -5215,9 +5215,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with --`, (): void => {
+      describe(`when the given message is a message with an almost lunch command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--lun`;
+          message = `-lun`;
         });
 
         it(`should return false`, (): void => {
@@ -5257,9 +5257,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost lunch command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--lun dummy`;
+          message = `-lun dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -5299,9 +5299,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with --`, (): void => {
+      describe(`when the given message is a message with the lunch command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--lunch`;
+          message = `-lunch`;
         });
 
         it(`should return true`, (): void => {
@@ -5341,9 +5341,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the lunch command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--lunch dummy`;
+          message = `-lunch dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -5383,9 +5383,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the lunch command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--LUNCH`;
+          message = `-LUNCH`;
         });
 
         it(`should return true`, (): void => {
@@ -5425,9 +5425,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the lunch command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--LUNCH dummy`;
+          message = `-LUNCH dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -5467,9 +5467,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut lunch command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--l`;
+          message = `-l`;
         });
 
         it(`should return true`, (): void => {
@@ -5509,9 +5509,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut lunch command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--l dummy`;
+          message = `-l dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -5551,9 +5551,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command uppercase starting with --`, (): void => {
+      describe(`when the given message is a message with the shortcut lunch command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `--L`;
+          message = `-L`;
         });
 
         it(`should return true`, (): void => {
@@ -5593,9 +5593,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command uppercase starting with -- and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut lunch command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `--L dummy`;
+          message = `-L dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -5829,7 +5829,7 @@ describe(`DiscordMessageCommandService`, (): void => {
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
       discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
-        `--`
+        `-`
       );
       discordMessageCommandVersionServiceHandleResponseSpy = jest
         .spyOn(discordMessageCommandVersionService, `handleResponse`)
@@ -5983,7 +5983,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
       describe(`when the message contains the version command`, (): void => {
         beforeEach((): void => {
-          anyDiscordMessage.content = `--version`;
+          anyDiscordMessage.content = `-version`;
         });
 
         it(`should handle the version command`, (): void => {
@@ -6050,7 +6050,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
       describe(`when the message contains the error command`, (): void => {
         beforeEach((): void => {
-          anyDiscordMessage.content = `--error`;
+          anyDiscordMessage.content = `-error`;
         });
 
         it(`should not handle the version command`, (): void => {
@@ -6117,7 +6117,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
       describe(`when the message contains the help command`, (): void => {
         beforeEach((): void => {
-          anyDiscordMessage.content = `--help`;
+          anyDiscordMessage.content = `-help`;
         });
 
         it(`should not handle the version command`, (): void => {
@@ -6184,7 +6184,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
       describe(`when the message contains the cookie command`, (): void => {
         beforeEach((): void => {
-          anyDiscordMessage.content = `--cookie`;
+          anyDiscordMessage.content = `-cookie`;
         });
 
         it(`should not handle the version command`, (): void => {
@@ -6251,7 +6251,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
       describe(`when the message contains the lunch command`, (): void => {
         beforeEach((): void => {
-          anyDiscordMessage.content = `--lunch`;
+          anyDiscordMessage.content = `-lunch`;
         });
 
         it(`should not handle the version command`, (): void => {
