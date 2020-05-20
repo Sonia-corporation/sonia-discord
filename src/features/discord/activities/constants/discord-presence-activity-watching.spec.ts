@@ -87,10 +87,6 @@ describe(`DISCORD_PRESENCE_ACTIVITY_WATCHING`, (): void => {
         type: `WATCHING`,
       },
       {
-        name: `2 girls 1 cup`,
-        type: `WATCHING`,
-      },
-      {
         name: `a live of Rammstein`,
         type: `WATCHING`,
       }
