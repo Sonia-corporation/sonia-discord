@@ -122,7 +122,7 @@ export class DiscordMessageTextService extends AbstractService {
       return addDiscordDevPrefix({
         discordId: this._profileConfigService.getDiscordId(),
         message: response,
-        nickname: this._profileConfigService.getNickname()
+        nickname: this._profileConfigService.getNickname(),
       });
     }
 
