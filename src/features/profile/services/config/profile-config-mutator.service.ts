@@ -39,6 +39,7 @@ export class ProfileConfigMutatorService extends AbstractConfigService<
 
   public updateConfig(config?: Readonly<Partial<IProfileConfig>>): void {
     if (!_.isNil(config)) {
+      this.updateDiscordId(config.discordId);
       this.updateNickname(config.nickname);
 
       this._loggerService.debug({
@@ -46,6 +47,17 @@ export class ProfileConfigMutatorService extends AbstractConfigService<
         message: this._chalkService.text(`configuration updated`),
       });
     }
+  }
+
+  public updateDiscordId(discordId?: Readonly<string | null>): void {
+    this._profileConfigCoreService.nickname = this._configService.getUpdatedString(
+      {
+        context: this._serviceName,
+        newValue: discordId,
+        oldValue: this._profileConfigService.getDiscordId(),
+        valueName: `discord id`,
+      }
+    );
   }
 
   public updateNickname(nickname?: Readonly<string | null>): void {
