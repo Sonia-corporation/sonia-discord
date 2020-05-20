@@ -141,7 +141,8 @@ __Example:__
 ### Sonia behavior
 
 Sonia will never respond to herself - no infinite loop :(  
-Sonia will never respond to another bot - love between them will not be tolerated.
+Sonia will never respond to another bot - love between them will not be tolerated.  
+Sonia has nothing to hide and thus she displays her current activity.
 
 #### In a private channel (also known as DM)
 

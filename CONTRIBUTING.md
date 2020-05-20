@@ -64,8 +64,9 @@ It should contain the following scopes:
 
 __Note for the nickname:__
 
-This file can contain optionals fields:
-- nickname: can be display on each developer server messages.
+It is useful to distinguish developers running a local version of Sonia.  
+On each message (plain text or embed) the nickname will appear.  
+It can be anything you want however we recommend that you use your Discord id (a.k: <@!260525899991089165>)
 
 ## Package scripts
 
