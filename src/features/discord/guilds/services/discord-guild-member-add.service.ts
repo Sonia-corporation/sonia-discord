@@ -10,7 +10,7 @@ import { ProfileConfigService } from "../../../profile/services/config/profile-c
 import { isDiscordGuildChannel } from "../../channels/functions/is-discord-guild-channel";
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
 import { AnyDiscordChannel } from "../../channels/types/any-discord-channel";
-import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
+import { addDiscordDevPrefix } from "../../functions/dev-prefix/add-discord-dev-prefix";
 import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-error.service";
 import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
 import { DiscordClientService } from "../../services/discord-client.service";
@@ -149,10 +149,11 @@ export class DiscordGuildMemberAddService extends AbstractService {
 
   private _getMessageResponseWithEnvPrefix(response: Readonly<string>): string {
     if (!this._appConfigService.isProduction()) {
-      return addDiscordDevPrefix(
-        response,
-        this._profileConfigService.getNickname()
-      );
+      return addDiscordDevPrefix({
+        discordId: this._profileConfigService.getDiscordId(),
+        message: response,
+        nickname: this._profileConfigService.getNickname(),
+      });
     }
 
     return response;
