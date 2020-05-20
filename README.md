@@ -35,13 +35,13 @@ __Statistics:__
 ### Sonia commands
 
 Sonia will treat one command at a time.  
-You can use either `--`, `!` or `$` as prefix for the commands.  
+You can use either `-`, `!` or `$` as prefix for the commands.  
 There is no case sensitivity.
 
 __Example:__
 
-- `@Sonia-il-est-midi !version`  
-- `@Sonia-il-est-midi --VERSION`  
+- `@Sonia-il-est-midi -version`  
+- `@Sonia-il-est-midi !VERSION`  
 - `@Sonia-il-est-midi $v`  
 
 #### Cookie

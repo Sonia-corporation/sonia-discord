@@ -5,7 +5,7 @@ export const ENVIRONMENT: IEnvironment = {
   discord: {
     message: {
       command: {
-        prefix: [`--`, `!`, `$`],
+        prefix: [`-`, `!`, `$`],
       },
     },
     sonia: {
