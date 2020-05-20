@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.49.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.48.0...1.49.0) (2020-05-20)
+
+
+### Features
+
+* **discord:** add new sonia activities ([9a44a2d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9a44a2da92ba513604ea02a61f0568dbcb90160c))
+
 # [1.48.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.47.0...1.48.0) (2020-05-20)
 
 
