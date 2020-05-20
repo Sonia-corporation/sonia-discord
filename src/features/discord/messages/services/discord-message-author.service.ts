@@ -48,6 +48,7 @@ export class DiscordMessageAuthorService extends AbstractService {
   private _getReplyWithEnvPrefix(response: Readonly<string>): string {
     if (!this._appConfigService.isProduction()) {
       return addDiscordDevPrefix({
+        asMention: true,
         discordId: this._profileConfigService.getDiscordId(),
         message: response,
         nickname: this._profileConfigService.getNickname(),
