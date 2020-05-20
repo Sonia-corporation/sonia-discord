@@ -77,4 +77,12 @@ export const DISCORD_PRESENCE_ACTIVITY_WATCHING: IDiscordPresenceActivity[] = [
     name: `the -help command`,
     type: `WATCHING`,
   },
+  {
+    name: `SQUEEZIE GAMING`,
+    type: `WATCHING`,
+  },
+  {
+    name: `a live of Rammstein`,
+    type: `WATCHING`,
+  },
 ];

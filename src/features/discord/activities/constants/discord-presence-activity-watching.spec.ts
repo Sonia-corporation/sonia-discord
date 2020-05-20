@@ -82,6 +82,14 @@ describe(`DISCORD_PRESENCE_ACTIVITY_WATCHING`, (): void => {
         name: `the -help command`,
         type: `WATCHING`,
       },
+      {
+        name: `SQUEEZIE GAMING`,
+        type: `WATCHING`,
+      },
+      {
+        name: `a live of Rammstein`,
+        type: `WATCHING`,
+      },
     ] as IDiscordPresenceActivity[]);
   });
 });
