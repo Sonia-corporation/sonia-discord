@@ -89,7 +89,7 @@ describe(`DISCORD_PRESENCE_ACTIVITY_WATCHING`, (): void => {
       {
         name: `a live of Rammstein`,
         type: `WATCHING`,
-      }
+      },
     ] as IDiscordPresenceActivity[]);
   });
 });
