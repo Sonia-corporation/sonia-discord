@@ -99,7 +99,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
     describe(`when the given config is a complete object`, (): void => {
       beforeEach((): void => {
         config = {
-          discordId: "dummy-discord-id",
+          discordId: `dummy-discord-id`,
           nickname: `dummy-nickname`,
         };
       });
@@ -193,7 +193,9 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
       service.updateConfig();
 
-      expect(profileConfigCoreService.discordId).toStrictEqual(`dummy-discord-id`);
+      expect(profileConfigCoreService.discordId).toStrictEqual(
+        `dummy-discord-id`
+      );
       expect(profileConfigCoreService.nickname).toStrictEqual(`dummy-nickname`);
     });
 

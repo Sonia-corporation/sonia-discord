@@ -50,7 +50,7 @@ export class ProfileConfigMutatorService extends AbstractConfigService<
   }
 
   public updateDiscordId(discordId?: Readonly<string | null>): void {
-    this._profileConfigCoreService.nickname = this._configService.getUpdatedString(
+    this._profileConfigCoreService.discordId = this._configService.getUpdatedString(
       {
         context: this._serviceName,
         newValue: discordId,

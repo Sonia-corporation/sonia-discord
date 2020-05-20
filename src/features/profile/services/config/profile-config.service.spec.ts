@@ -66,7 +66,7 @@ describe(`ProfileConfigService`, (): void => {
       const result = service.getConfig();
 
       expect(result).toStrictEqual({
-        discordId: 'dummy-discord-id',
+        discordId: `dummy-discord-id`,
         nickname: `dummy-nickname`,
       } as IProfileConfig);
     });
