@@ -7,7 +7,8 @@ import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { getEveryHourScheduleRule } from "../../../../../functions/schedule/get-every-hour-schedule-rule";
 import { ChalkService } from "../../../../logger/services/chalk.service";
 import { LoggerService } from "../../../../logger/services/logger.service";
-import { TimeService } from "../../../../time/services/time.service";
+import { getNextJobDate } from "../../../../schedules/functions/get-next-job-date";
+import { getNextJobDateHumanized } from "../../../../schedules/functions/get-next-job-date-humanized";
 import { isDiscordGuildChannel } from "../../../channels/functions/is-discord-guild-channel";
 import { DiscordChannelGuildService } from "../../../channels/services/discord-channel-guild.service";
 import { AnyDiscordChannel } from "../../../channels/types/any-discord-channel";
@@ -32,7 +33,6 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
-  private readonly _timeService: TimeService = TimeService.getInstance();
   private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
   private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
   private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
@@ -81,10 +81,10 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   }
 
   private _logNextJobDate(): void {
-    const nextJobDateHumanized: string | null = this._getNextJobDateHumanized();
-    const nextJobDate: string | null = this._getNextJobDate();
+    if (!_.isNil(this._job)) {
+      const nextJobDateHumanized: string = getNextJobDateHumanized(this._job);
+      const nextJobDate: string = getNextJobDate(this._job);
 
-    if (!_.isNil(nextJobDateHumanized) && !_.isNil(nextJobDate)) {
       this._loggerService.debug({
         context: this._serviceName,
         message: this._chalkService.text(
@@ -94,27 +94,6 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
         ),
       });
     }
-  }
-
-  private _getNextJobDateHumanized(): string | null {
-    if (!_.isNil(this._job)) {
-      return this._timeService.fromNow(
-        moment(this._job.nextInvocation().toISOString()).toISOString(),
-        false
-      );
-    }
-
-    return null;
-  }
-
-  private _getNextJobDate(): string | null {
-    if (!_.isNil(this._job)) {
-      return moment(this._job.nextInvocation().toISOString()).format(
-        `HH:mm:ss`
-      );
-    }
-
-    return null;
   }
 
   private _getMessageResponse(): IDiscordMessageResponse {

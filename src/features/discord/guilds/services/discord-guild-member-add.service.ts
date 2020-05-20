@@ -11,10 +11,13 @@ import { isDiscordGuildChannel } from "../../channels/functions/is-discord-guild
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
 import { AnyDiscordChannel } from "../../channels/types/any-discord-channel";
 import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
+import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-error.service";
 import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
 import { DiscordClientService } from "../../services/discord-client.service";
+import { DiscordGuildSoniaChannelNameEnum } from "../enums/discord-guild-sonia-channel-name.enum";
 import { AnyGuildMember } from "../types/any-guild-member";
 import { DiscordGuildConfigService } from "./config/discord-guild-config.service";
+import { DiscordGuildSoniaService } from "./discord-guild-sonia.service";
 
 export class DiscordGuildMemberAddService extends AbstractService {
   private static _instance: DiscordGuildMemberAddService;
@@ -34,6 +37,8 @@ export class DiscordGuildMemberAddService extends AbstractService {
   private readonly _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
+  private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
+  private readonly _discordLoggerErrorService: DiscordLoggerErrorService = DiscordLoggerErrorService.getInstance();
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_GUILD_MEMBER_ADD_SERVICE);
@@ -103,6 +108,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
     (channel as AnyDiscordChannel)
       .send(messageResponse.response, messageResponse.options)
       .then((): void => {
+        // @todo add coverage
         this._loggerService.log({
           context: this._serviceName,
           message: this._chalkService.text(
@@ -110,7 +116,8 @@ export class DiscordGuildMemberAddService extends AbstractService {
           ),
         });
       })
-      .catch((error: unknown): void => {
+      .catch((error: Readonly<Error | string>): void => {
+        // @todo add coverage
         this._loggerService.error({
           context: this._serviceName,
           message: this._chalkService.text(
@@ -120,6 +127,12 @@ export class DiscordGuildMemberAddService extends AbstractService {
         this._loggerService.error({
           context: this._serviceName,
           message: this._chalkService.error(error),
+        });
+        this._discordGuildSoniaService.sendMessageToChannel({
+          channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
+          messageResponse: this._discordLoggerErrorService.getErrorMessageResponse(
+            error
+          ),
         });
       });
   }

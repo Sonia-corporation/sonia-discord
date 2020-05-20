@@ -2,6 +2,7 @@ import _ from "lodash";
 import moment from "moment-timezone";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { fromNow } from "../functions/from-now";
 
 export class TimeService extends AbstractService {
   private static _instance: TimeService;
@@ -26,12 +27,6 @@ export class TimeService extends AbstractService {
     date: Readonly<T>,
     isCapitalized: Readonly<boolean> = true
   ): string {
-    const newDate: string = moment(date, moment.ISO_8601).fromNow();
-
-    if (_.isEqual(isCapitalized, true)) {
-      return _.capitalize(newDate);
-    }
-
-    return newDate;
+    return fromNow<T>(date, isCapitalized);
   }
 }

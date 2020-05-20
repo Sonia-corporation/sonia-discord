@@ -59,6 +59,14 @@ describe(`ServiceNameEnum`, (): void => {
     expect(ServiceNameEnum.CORE_SERVICE).toStrictEqual(`CoreService`);
   });
 
+  it(`should have a member "DISCORD_ACTIVITY_SONIA_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_ACTIVITY_SONIA_SERVICE).toStrictEqual(
+      `DiscordActivitySoniaService`
+    );
+  });
+
   it(`should have a member "DISCORD_AUTHENTICATION_SERVICE"`, (): void => {
     expect.assertions(1);
 
@@ -88,14 +96,6 @@ describe(`ServiceNameEnum`, (): void => {
 
     expect(ServiceNameEnum.DISCORD_CHANNEL_SERVICE).toStrictEqual(
       `DiscordChannelService`
-    );
-  });
-
-  it(`should have a member "DISCORD_GUILD_SONIA_SERVICE"`, (): void => {
-    expect.assertions(1);
-
-    expect(ServiceNameEnum.DISCORD_GUILD_SONIA_SERVICE).toStrictEqual(
-      `DiscordGuildSoniaService`
     );
   });
 
@@ -155,11 +155,11 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
-  it(`should have a member "DISCORD_LOGGER_SERVICE"`, (): void => {
+  it(`should have a member "DISCORD_GUILD_SONIA_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_LOGGER_SERVICE).toStrictEqual(
-      `DiscordLoggerService`
+    expect(ServiceNameEnum.DISCORD_GUILD_SONIA_SERVICE).toStrictEqual(
+      `DiscordGuildSoniaService`
     );
   });
 
@@ -168,6 +168,14 @@ describe(`ServiceNameEnum`, (): void => {
 
     expect(ServiceNameEnum.DISCORD_LOGGER_ERROR_SERVICE).toStrictEqual(
       `DiscordLoggerErrorService`
+    );
+  });
+
+  it(`should have a member "DISCORD_LOGGER_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_LOGGER_SERVICE).toStrictEqual(
+      `DiscordLoggerService`
     );
   });
 

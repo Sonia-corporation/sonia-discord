@@ -73,7 +73,7 @@
     "tsc": "tsc",
     "\n# TEST SCRIPTS:": "",
     "test": "jest",
-    "test:watch": "jest --watchAll",
+    "test:watch": "jest --watchAll --unhandled-rejections=strict",
     "test:watch:no-cache": "jest --watchAll --no-cache",
     "test:majestic": "majestic --port 3002 --noOpen",
     "test:ci": "jest --bail=1 --ci",
