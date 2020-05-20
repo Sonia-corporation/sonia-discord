@@ -1,5 +1,15 @@
 # Semantic Versioning Changelog
 
+# [1.48.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.47.0...1.48.0) (2020-05-20)
+
+
+### Features
+
+* **discord:** add error messages to Sonia channel for guildCreate ([32179c9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/32179c9d67fa196552272f126ce19dc7d894ad82))
+* **discord:** add error messages to Sonia channel for guildMemberAdd ([7a39cdd](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7a39cddb74cb95bd175f1059e21e053b8525a185))
+* **discord:** each hour the Sonia activity will change randomly ([95bd00d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/95bd00d4f0415f35badb8afb1d0d26f443b27192))
+* **discord:** Sonia will have now a random presence ([b68fa8f](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b68fa8f8648f3da9b3387f01d58cabbd0d068194))
+
 # [1.47.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.46.0...1.47.0) (2020-05-17)
 
 
