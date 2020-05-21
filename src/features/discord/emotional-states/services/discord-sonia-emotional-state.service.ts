@@ -82,7 +82,6 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
       this._executeJob();
     });
 
-    this.setRandomEmotionalState();
     this._logNextJobDate();
   }
 
@@ -125,6 +124,7 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
       )
       .subscribe({
         next: (): void => {
+          this.setRandomEmotionalState();
           this.startSchedule();
         },
       });

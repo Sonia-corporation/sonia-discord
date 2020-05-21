@@ -108,6 +108,9 @@ describe(`DiscordService`, (): void => {
       >();
       discordGuildSoniaService = createMock<DiscordGuildSoniaService>();
       discordActivitySoniaService = createMock<DiscordActivitySoniaService>();
+      discordSoniaEmotionalStateService = createMock<
+        DiscordSoniaEmotionalStateService
+      >();
 
       discordSoniaServiceGetInstanceSpy = jest.spyOn(
         DiscordSoniaService,

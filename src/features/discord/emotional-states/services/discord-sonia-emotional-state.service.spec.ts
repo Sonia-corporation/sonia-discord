@@ -1,10 +1,9 @@
-import { Client, Presence, PresenceData } from "discord.js";
-import _ from "lodash";
 import * as NodeScheduleModule from "node-schedule";
 import { Job } from "node-schedule";
 import { Subject } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
+import * as GetRandomValueFromEnumModule from "../../../../functions/randoms/get-random-value-from-enum";
 import * as GetEveryHourScheduleRuleModule from "../../../../functions/schedule/get-every-hour-schedule-rule";
 import { CoreEventService } from "../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../logger/interfaces/logger-log";
@@ -12,15 +11,14 @@ import { LoggerService } from "../../../logger/services/logger.service";
 import * as GetNextJobDateModule from "../../../schedules/functions/get-next-job-date";
 import * as GetNextJobDateHumanizedModule from "../../../schedules/functions/get-next-job-date-humanized";
 import { DiscordClientService } from "../../services/discord-client.service";
-import { DISCORD_PRESENCE_ACTIVITY } from "../constants/discord-presence-activity";
-import { IDiscordPresenceActivity } from "../interfaces/discord-presence-activity";
-import { DiscordActivitySoniaService } from "./discord-activity-sonia.service";
+import { DiscordSoniaEmotionalStateEnum } from "../enums/discord-sonia-emotional-state.enum";
+import { DiscordSoniaEmotionalStateService } from "./discord-sonia-emotional-state.service";
 
 jest.mock(`../../../logger/services/chalk.service`);
 jest.mock(`node-schedule`);
 
-describe(`DiscordActivitySoniaService`, (): void => {
-  let service: DiscordActivitySoniaService;
+describe(`DiscordSoniaEmotionalStateService`, (): void => {
+  let service: DiscordSoniaEmotionalStateService;
   let coreEventService: CoreEventService;
   let loggerService: LoggerService;
   let discordClientService: DiscordClientService;
@@ -32,18 +30,20 @@ describe(`DiscordActivitySoniaService`, (): void => {
   });
 
   describe(`getInstance()`, (): void => {
-    it(`should create a DiscordActivitySonia service`, (): void => {
+    it(`should create a DiscordSoniaEmotionalState service`, (): void => {
       expect.assertions(1);
 
-      service = DiscordActivitySoniaService.getInstance();
+      service = DiscordSoniaEmotionalStateService.getInstance();
 
-      expect(service).toStrictEqual(expect.any(DiscordActivitySoniaService));
+      expect(service).toStrictEqual(
+        expect.any(DiscordSoniaEmotionalStateService)
+      );
     });
 
-    it(`should return the created DiscordActivitySonia service`, (): void => {
+    it(`should return the created DiscordSoniaEmotionalState service`, (): void => {
       expect.assertions(1);
 
-      const result = DiscordActivitySoniaService.getInstance();
+      const result = DiscordSoniaEmotionalStateService.getInstance();
 
       expect(result).toStrictEqual(service);
     });
@@ -58,14 +58,14 @@ describe(`DiscordActivitySoniaService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should notify the DiscordActivitySonia service creation`, (): void => {
+    it(`should notify the DiscordSoniaEmotionalState service creation`, (): void => {
       expect.assertions(2);
 
-      service = new DiscordActivitySoniaService();
+      service = new DiscordSoniaEmotionalStateService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_ACTIVITY_SONIA_SERVICE
+        ServiceNameEnum.DISCORD_SONIA_EMOTIONAL_STATE_SERVICE
       );
     });
   });
@@ -75,11 +75,11 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let discordClientServiceGetClientSpy: jest.SpyInstance;
-    let setRandomPresenceSpy: jest.SpyInstance;
+    let setRandomEmotionalStateSpy: jest.SpyInstance;
     let startScheduleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      service = new DiscordActivitySoniaService();
+      service = new DiscordSoniaEmotionalStateService();
       isReady$ = new Subject<boolean>();
 
       loggerServiceDebugSpy = jest
@@ -88,8 +88,8 @@ describe(`DiscordActivitySoniaService`, (): void => {
       discordClientServiceGetClientSpy = jest
         .spyOn(discordClientService, `isReady$`)
         .mockReturnValue(isReady$.asObservable());
-      setRandomPresenceSpy = jest
-        .spyOn(service, `setRandomPresence`)
+      setRandomEmotionalStateSpy = jest
+        .spyOn(service, `setRandomEmotionalState`)
         .mockImplementation();
       startScheduleSpy = jest
         .spyOn(service, `startSchedule`)
@@ -106,14 +106,14 @@ describe(`DiscordActivitySoniaService`, (): void => {
     });
 
     describe(`when the Discord client is ready`, (): void => {
-      it(`should set a random presence for Sonia`, (): void => {
+      it(`should set a random emotional state for Sonia`, (): void => {
         expect.assertions(2);
 
         service.init();
         isReady$.next(true);
 
-        expect(setRandomPresenceSpy).toHaveBeenCalledTimes(1);
-        expect(setRandomPresenceSpy).toHaveBeenCalledWith();
+        expect(setRandomEmotionalStateSpy).toHaveBeenCalledTimes(1);
+        expect(setRandomEmotionalStateSpy).toHaveBeenCalledWith();
       });
 
       it(`should start the schedule`, (): void => {
@@ -128,13 +128,13 @@ describe(`DiscordActivitySoniaService`, (): void => {
     });
 
     describe(`when the Discord client is not ready`, (): void => {
-      it(`should not set a random presence for Sonia`, (): void => {
+      it(`should not set a random emotional state for Sonia`, (): void => {
         expect.assertions(1);
 
         service.init();
         isReady$.next(false);
 
-        expect(setRandomPresenceSpy).not.toHaveBeenCalled();
+        expect(setRandomEmotionalStateSpy).not.toHaveBeenCalled();
       });
 
       it(`should not start the schedule`, (): void => {
@@ -148,13 +148,13 @@ describe(`DiscordActivitySoniaService`, (): void => {
     });
 
     describe(`when the Discord client ready state throw error`, (): void => {
-      it(`should not set a random presence for Sonia`, (): void => {
+      it(`should not set a random emotional state for Sonia`, (): void => {
         expect.assertions(1);
 
         service.init();
         isReady$.error(new Error(`error`));
 
-        expect(setRandomPresenceSpy).not.toHaveBeenCalled();
+        expect(setRandomEmotionalStateSpy).not.toHaveBeenCalled();
       });
 
       it(`should not start the schedule`, (): void => {
@@ -174,7 +174,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-        context: `DiscordActivitySoniaService`,
+        context: `DiscordSoniaEmotionalStateService`,
         message: `text-listen "ready" Discord client state`,
       } as ILoggerLog);
     });
@@ -186,13 +186,13 @@ describe(`DiscordActivitySoniaService`, (): void => {
     let scheduleJobSpy: jest.SpyInstance;
     let loggerServiceDebugSpy: jest.SpyInstance;
     let getEveryHourScheduleRuleSpy: jest.SpyInstance;
-    let setRandomPresenceSpy: jest.SpyInstance;
+    let setRandomEmotionalStateSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       getEveryHourScheduleRuleSpy = jest
         .spyOn(GetEveryHourScheduleRuleModule, `getEveryHourScheduleRule`)
         .mockReturnValue(`dummy-schedule`);
-      service = new DiscordActivitySoniaService();
+      service = new DiscordSoniaEmotionalStateService();
       job = createMock<Job>();
 
       scheduleJobSpy = jest
@@ -207,8 +207,8 @@ describe(`DiscordActivitySoniaService`, (): void => {
       jest
         .spyOn(GetNextJobDateModule, `getNextJobDate`)
         .mockReturnValue(`dummy-next-job-date`);
-      setRandomPresenceSpy = jest
-        .spyOn(service, `setRandomPresence`)
+      setRandomEmotionalStateSpy = jest
+        .spyOn(service, `setRandomEmotionalState`)
         .mockImplementation();
     });
 
@@ -259,7 +259,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-          context: `DiscordActivitySoniaService`,
+          context: `DiscordSoniaEmotionalStateService`,
           message: `text-next job: value-dummy-next-job-date-humanized hint-(dummy-next-job-date)`,
         } as ILoggerLog);
       });
@@ -283,18 +283,18 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
-          context: `DiscordActivitySoniaService`,
+          context: `DiscordSoniaEmotionalStateService`,
           message: `text-job triggered`,
         } as ILoggerLog);
       });
 
-      it(`should set a new random presence for Sonia`, (): void => {
+      it(`should set a new random emotional state for Sonia`, (): void => {
         expect.assertions(2);
 
         service.startSchedule();
 
-        expect(setRandomPresenceSpy).toHaveBeenCalledTimes(1);
-        expect(setRandomPresenceSpy).toHaveBeenCalledWith();
+        expect(setRandomEmotionalStateSpy).toHaveBeenCalledTimes(1);
+        expect(setRandomEmotionalStateSpy).toHaveBeenCalledWith();
       });
 
       it(`should log the next job date`, (): void => {
@@ -304,200 +304,155 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
-          context: `DiscordActivitySoniaService`,
+          context: `DiscordSoniaEmotionalStateService`,
           message: `text-next job: value-dummy-next-job-date-humanized hint-(dummy-next-job-date)`,
         } as ILoggerLog);
       });
     });
   });
 
-  describe(`setPresence()`, (): void => {
-    let presence: Presence;
-    let setPresenceMock: jest.Mock;
-    let presenceActivity: IDiscordPresenceActivity;
-    let client: Client;
+  describe(`setEmotionalState()`, (): void => {
+    let emotionalState: DiscordSoniaEmotionalStateEnum;
 
-    let discordClientServiceGetClientSpy: jest.SpyInstance;
     let loggerServiceDebugSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      service = new DiscordActivitySoniaService();
-      presence = createMock<Presence>({
-        activities: [
-          {
-            name: `dummy-name`,
-            type: `PLAYING`,
-            url: `dummy-url`,
-          },
-        ],
-      });
-      setPresenceMock = jest
-        .fn()
-        .mockReturnValue(Promise.reject(new Error(`setPresence: error`)));
-      presenceActivity = {
-        name: `dummy-name`,
-        type: `PLAYING`,
-        url: `dummy-url`,
-      };
-      client = createMock<Client>({
-        user: {
-          setPresence: setPresenceMock,
-        },
-      });
+      service = new DiscordSoniaEmotionalStateService();
+      emotionalState = DiscordSoniaEmotionalStateEnum.ANNOYED;
 
-      discordClientServiceGetClientSpy = jest
-        .spyOn(discordClientService, `getClient`)
-        .mockReturnValue(client);
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
         .mockImplementation();
     });
 
-    it(`should get the Discord client`, async (): Promise<void> => {
-      expect.assertions(3);
+    it(`should update the emotional state with the given one`, (): void => {
+      expect.assertions(1);
 
-      await expect(service.setPresence(presenceActivity)).rejects.toThrow(
-        new Error(`setPresence: error`)
-      );
+      service.setEmotionalState(emotionalState);
 
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(2);
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
+      expect(service.getEmotionalState()).toStrictEqual(`annoyed`);
     });
 
-    describe(`when the Discord client user is null`, (): void => {
-      beforeEach((): void => {
-        client.user = null;
-      });
+    it(`should log about the update of the emotional state`, (): void => {
+      expect.assertions(2);
 
-      it(`should not set the presence`, async (): Promise<void> => {
-        expect.assertions(2);
+      service.setEmotionalState(emotionalState);
 
-        await expect(service.setPresence(presenceActivity)).rejects.toThrow(
-          new Error(`Client user is not valid`)
-        );
-
-        expect(setPresenceMock).not.toHaveBeenCalled();
-      });
-
-      it(`should not log about the update of the presence`, async (): Promise<
-        void
-      > => {
-        expect.assertions(2);
-
-        await expect(service.setPresence(presenceActivity)).rejects.toThrow(
-          new Error(`Client user is not valid`)
-        );
-
-        expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
-      });
-    });
-
-    describe(`when the Discord client user is valid`, (): void => {
-      it(`should set the presence`, async (): Promise<void> => {
-        expect.assertions(3);
-
-        await expect(service.setPresence(presenceActivity)).rejects.toThrow(
-          new Error(`setPresence: error`)
-        );
-
-        expect(setPresenceMock).toHaveBeenCalledTimes(1);
-        expect(setPresenceMock).toHaveBeenCalledWith({
-          activity: {
-            name: `dummy-name`,
-            type: `PLAYING`,
-            url: `dummy-url`,
-          },
-          afk: false,
-          status: `online`,
-        } as PresenceData);
-      });
-
-      describe(`when the presence was not successfully set`, (): void => {
-        it(`should not log about the update of the presence`, async (): Promise<
-          void
-        > => {
-          expect.assertions(2);
-
-          await expect(service.setPresence(presenceActivity)).rejects.toThrow(
-            new Error(`setPresence: error`)
-          );
-
-          expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
-        });
-      });
-
-      describe(`when the presence was successfully set`, (): void => {
-        beforeEach((): void => {
-          setPresenceMock.mockReturnValue(Promise.resolve(presence));
-        });
-
-        it(`should log about the update of the presence`, async (): Promise<
-          void
-        > => {
-          expect.assertions(3);
-
-          const result = await service.setPresence(presenceActivity);
-
-          expect(result).toStrictEqual(presence);
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-          expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-            context: `DiscordActivitySoniaService`,
-            message: `text-Sonia presence updated to: value-PLAYING text-x value-dummy-name`,
-          } as ILoggerLog);
-        });
-      });
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+        context: `DiscordSoniaEmotionalStateService`,
+        message: `text-Sonia emotional state updated to: value-annoyed`,
+      } as ILoggerLog);
     });
   });
 
-  describe(`setRandomPresence()`, (): void => {
-    let sampleSpy: jest.SpyInstance;
-    let setPresenceSpy: jest.SpyInstance;
+  describe(`setRandomEmotionalState()`, (): void => {
+    let getRandomEmotionalStateSpy: jest.SpyInstance;
+    let setEmotionalStateSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      service = new DiscordActivitySoniaService();
+      service = new DiscordSoniaEmotionalStateService();
 
-      sampleSpy = jest.spyOn(_, `sample`);
-      setPresenceSpy = jest.spyOn(service, `setPresence`);
+      getRandomEmotionalStateSpy = jest.spyOn(
+        service,
+        `getRandomEmotionalState`
+      );
+      setEmotionalStateSpy = jest.spyOn(service, `setEmotionalState`);
     });
 
-    it(`should get a random Discord presence activity`, (): void => {
+    it(`should get a random emotional state`, (): void => {
       expect.assertions(2);
 
-      service.setRandomPresence();
+      service.setRandomEmotionalState();
 
-      expect(sampleSpy).toHaveBeenCalledTimes(1);
-      expect(sampleSpy).toHaveBeenCalledWith(DISCORD_PRESENCE_ACTIVITY);
+      expect(getRandomEmotionalStateSpy).toHaveBeenCalledTimes(1);
+      expect(getRandomEmotionalStateSpy).toHaveBeenCalledWith();
     });
 
-    describe(`when no Discord presence activity was found`, (): void => {
+    describe(`when a random emotional state was not found`, (): void => {
       beforeEach((): void => {
-        sampleSpy.mockReturnValue(undefined);
+        getRandomEmotionalStateSpy.mockReturnValue(undefined);
       });
 
       it(`should not set the Discord presence activity`, (): void => {
         expect.assertions(1);
 
-        service.setRandomPresence();
+        service.setRandomEmotionalState();
 
-        expect(setPresenceSpy).not.toHaveBeenCalled();
+        expect(setEmotionalStateSpy).not.toHaveBeenCalled();
       });
     });
 
-    describe(`when a Discord presence activity was found`, (): void => {
+    describe(`when a random emotional state was found`, (): void => {
       beforeEach((): void => {
-        sampleSpy.mockReturnValue(DISCORD_PRESENCE_ACTIVITY[0]);
-      });
-
-      it(`should set the Discord presence activity`, (): void => {
-        expect.assertions(2);
-
-        service.setRandomPresence();
-
-        expect(setPresenceSpy).toHaveBeenCalledTimes(1);
-        expect(setPresenceSpy).toHaveBeenCalledWith(
-          DISCORD_PRESENCE_ACTIVITY[0]
+        getRandomEmotionalStateSpy.mockReturnValue(
+          DiscordSoniaEmotionalStateEnum.COMFORTABLE
         );
       });
+
+      it(`should update the emotional state with the random one`, (): void => {
+        expect.assertions(1);
+
+        service.setRandomEmotionalState();
+
+        expect(service.getEmotionalState()).toStrictEqual(`comfortable`);
+      });
+    });
+  });
+
+  describe(`getEmotionalState()`, (): void => {
+    beforeEach((): void => {
+      service = new DiscordSoniaEmotionalStateService();
+    });
+
+    it(`should return the default emotional state`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getEmotionalState();
+
+      expect(result).toStrictEqual(`annoyed`);
+    });
+
+    describe(`when the emotional state was updated`, (): void => {
+      beforeEach((): void => {
+        service.setEmotionalState(DiscordSoniaEmotionalStateEnum.ANGRY);
+      });
+
+      it(`should return the updated emotional state`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getEmotionalState();
+
+        expect(result).toStrictEqual(`angry`);
+      });
+    });
+  });
+
+  describe(`getRandomEmotionalState()`, (): void => {
+    let getRandomValueFromEnumSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordSoniaEmotionalStateService();
+
+      getRandomValueFromEnumSpy = jest
+        .spyOn(GetRandomValueFromEnumModule, `getRandomValueFromEnum`)
+        .mockReturnValue(DiscordSoniaEmotionalStateEnum.COMFORTABLE);
+    });
+
+    it(`should get a random Sonia emotional state`, (): void => {
+      expect.assertions(1);
+
+      service.getRandomEmotionalState();
+
+      expect(getRandomValueFromEnumSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it(`should return the random Sonia emotional state`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getRandomEmotionalState();
+
+      expect(result).toStrictEqual(`comfortable`);
     });
   });
 });
