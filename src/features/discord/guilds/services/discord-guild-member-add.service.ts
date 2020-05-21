@@ -64,6 +64,13 @@ export class DiscordGuildMemberAddService extends AbstractService {
     this._discordClientService
       .getClient()
       .on(`guildMemberAdd`, (member: Readonly<AnyGuildMember>): void => {
+        this._loggerService.debug({
+          context: this._serviceName,
+          message: this._chalkService.text(
+            `${wrapInQuotes(`guildMemberAdd`)} event triggered`
+          ),
+        });
+
         this.sendMessage(member);
       });
 

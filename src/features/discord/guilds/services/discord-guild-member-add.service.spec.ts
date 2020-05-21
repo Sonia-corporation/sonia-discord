@@ -115,6 +115,18 @@ describe(`DiscordGuildMemberAddService`, (): void => {
         } as Client);
       });
 
+      it(`should log about the received Discord client guildMemberAdd event`, (): void => {
+        expect.assertions(2);
+
+        service.init();
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+          context: `DiscordGuildMemberAddService`,
+          message: `text-"guildMemberAdd" event triggered`,
+        } as ILoggerLog);
+      });
+
       it(`should send a message`, (): void => {
         expect.assertions(2);
 
