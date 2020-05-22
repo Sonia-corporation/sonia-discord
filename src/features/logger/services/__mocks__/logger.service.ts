@@ -134,11 +134,14 @@ export class LoggerService {
 
   private _context(
     name: Readonly<string>,
-    extendedContext: Readonly<boolean> = false
+    hasExtendedContext: Readonly<boolean> = false
   ): string {
     let message = `[${name}][now-format]`;
 
-    if (_.isEqual(extendedContext, false) || !_.isBoolean(extendedContext)) {
+    if (
+      _.isEqual(hasExtendedContext, false) ||
+      !_.isBoolean(hasExtendedContext)
+    ) {
       message = `${message} `;
     }
 

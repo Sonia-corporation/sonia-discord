@@ -45,7 +45,10 @@
     ]
   },
   "include": [
-    "./src/**/*.ts"
+    "./src/**/*.ts",
+    "./scripts/**/*.js",
+    "./config.ts",
+    "./jest.config.js"
   ],
   "exclude": [
     "./src/**.*.spec.ts"

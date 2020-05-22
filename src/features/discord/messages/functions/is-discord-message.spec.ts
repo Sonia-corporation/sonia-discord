@@ -13,9 +13,9 @@ describe(`isDiscordMessage()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordMessage(message);
+      const isDiscordMessageResult = isDiscordMessage(message);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordMessageResult).toStrictEqual(false);
     });
   });
 
@@ -27,9 +27,9 @@ describe(`isDiscordMessage()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordMessage(message);
+      const isDiscordMessageResult = isDiscordMessage(message);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordMessageResult).toStrictEqual(false);
     });
   });
 
@@ -41,9 +41,9 @@ describe(`isDiscordMessage()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordMessage(message);
+      const isDiscordMessageResult = isDiscordMessage(message);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordMessageResult).toStrictEqual(false);
     });
   });
 
@@ -57,9 +57,9 @@ describe(`isDiscordMessage()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordMessage(message);
+      const isDiscordMessageResult = isDiscordMessage(message);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordMessageResult).toStrictEqual(false);
     });
   });
 
@@ -72,9 +72,9 @@ describe(`isDiscordMessage()`, (): void => {
     it.skip(`should return true`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordMessage(message);
+      const isDiscordMessageResult = isDiscordMessage(message);
 
-      expect(result).toStrictEqual(true);
+      expect(isDiscordMessageResult).toStrictEqual(true);
     });
   });
 });

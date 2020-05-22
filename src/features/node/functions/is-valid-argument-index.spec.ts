@@ -11,9 +11,9 @@ describe(`isValidArgumentIndex()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isValidArgumentIndex(argumentIndex);
+      const isValidArgumentIndexResult = isValidArgumentIndex(argumentIndex);
 
-      expect(result).toStrictEqual(false);
+      expect(isValidArgumentIndexResult).toStrictEqual(false);
     });
   });
 
@@ -26,9 +26,9 @@ describe(`isValidArgumentIndex()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const result = isValidArgumentIndex(argumentIndex);
+        const isValidArgumentIndexResult = isValidArgumentIndex(argumentIndex);
 
-        expect(result).toStrictEqual(false);
+        expect(isValidArgumentIndexResult).toStrictEqual(false);
       });
     });
 
@@ -40,9 +40,9 @@ describe(`isValidArgumentIndex()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const result = isValidArgumentIndex(argumentIndex);
+        const isValidArgumentIndexResult = isValidArgumentIndex(argumentIndex);
 
-        expect(result).toStrictEqual(false);
+        expect(isValidArgumentIndexResult).toStrictEqual(false);
       });
     });
   });
@@ -56,9 +56,9 @@ describe(`isValidArgumentIndex()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const result = isValidArgumentIndex(argumentIndex);
+        const isValidArgumentIndexResult = isValidArgumentIndex(argumentIndex);
 
-        expect(result).toStrictEqual(true);
+        expect(isValidArgumentIndexResult).toStrictEqual(true);
       });
     });
 
@@ -70,9 +70,9 @@ describe(`isValidArgumentIndex()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const result = isValidArgumentIndex(argumentIndex);
+        const isValidArgumentIndexResult = isValidArgumentIndex(argumentIndex);
 
-        expect(result).toStrictEqual(true);
+        expect(isValidArgumentIndexResult).toStrictEqual(true);
       });
     });
 
@@ -84,9 +84,9 @@ describe(`isValidArgumentIndex()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const result = isValidArgumentIndex(argumentIndex);
+        const isValidArgumentIndexResult = isValidArgumentIndex(argumentIndex);
 
-        expect(result).toStrictEqual(true);
+        expect(isValidArgumentIndexResult).toStrictEqual(true);
       });
     });
   });

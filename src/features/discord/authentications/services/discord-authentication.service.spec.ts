@@ -114,7 +114,7 @@ describe(`DiscordAuthenticationService`, (): void => {
     describe(`when the Discord client ready event is triggered`, (): void => {
       beforeEach((): void => {
         discordClientServiceGetClientOnMock = jest.fn(
-          (_event: string, listener: Function): void => {
+          (_event: string, listener: () => void): void => {
             listener();
           }
         );

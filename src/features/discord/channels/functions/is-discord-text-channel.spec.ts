@@ -13,9 +13,9 @@ describe(`isDiscordTextChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordTextChannel(channel);
+      const isDiscordTextChannelResult = isDiscordTextChannel(channel);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordTextChannelResult).toStrictEqual(false);
     });
   });
 
@@ -27,9 +27,9 @@ describe(`isDiscordTextChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordTextChannel(channel);
+      const isDiscordTextChannelResult = isDiscordTextChannel(channel);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordTextChannelResult).toStrictEqual(false);
     });
   });
 
@@ -41,9 +41,9 @@ describe(`isDiscordTextChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordTextChannel(channel);
+      const isDiscordTextChannelResult = isDiscordTextChannel(channel);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordTextChannelResult).toStrictEqual(false);
     });
   });
 
@@ -57,9 +57,9 @@ describe(`isDiscordTextChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordTextChannel(channel);
+      const isDiscordTextChannelResult = isDiscordTextChannel(channel);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordTextChannelResult).toStrictEqual(false);
     });
   });
 
@@ -72,9 +72,9 @@ describe(`isDiscordTextChannel()`, (): void => {
     it.skip(`should return true`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordTextChannel(channel);
+      const isDiscordTextChannelResult = isDiscordTextChannel(channel);
 
-      expect(result).toStrictEqual(true);
+      expect(isDiscordTextChannelResult).toStrictEqual(true);
     });
   });
 });

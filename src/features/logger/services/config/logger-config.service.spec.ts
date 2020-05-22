@@ -87,9 +87,9 @@ describe(`LoggerConfigService`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const result = service.isEnabled();
+        const isEnabledResult = service.isEnabled();
 
-        expect(result).toStrictEqual(true);
+        expect(isEnabledResult).toStrictEqual(true);
       });
     });
 
@@ -101,9 +101,9 @@ describe(`LoggerConfigService`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const result = service.isEnabled();
+        const isEnabledResult = service.isEnabled();
 
-        expect(result).toStrictEqual(false);
+        expect(isEnabledResult).toStrictEqual(false);
       });
     });
   });

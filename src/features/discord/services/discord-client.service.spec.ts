@@ -147,8 +147,8 @@ describe(`DiscordClientService`, (): void => {
           expect(true).toStrictEqual(false);
           doneCallback(error);
         },
-        next: (result: boolean): void => {
-          expect(result).toStrictEqual(false);
+        next: (isTrue: boolean): void => {
+          expect(isTrue).toStrictEqual(false);
           doneCallback();
         },
       });
@@ -164,8 +164,8 @@ describe(`DiscordClientService`, (): void => {
             expect(true).toStrictEqual(false);
             doneCallback(error);
           },
-          next: (result: boolean): void => {
-            expect(result).toStrictEqual(true);
+          next: (isTrue: boolean): void => {
+            expect(isTrue).toStrictEqual(true);
             doneCallback();
           },
         });
@@ -187,8 +187,8 @@ describe(`DiscordClientService`, (): void => {
           expect(true).toStrictEqual(false);
           doneCallback(error);
         },
-        next: (result: boolean): void => {
-          expect(result).toStrictEqual(true);
+        next: (isTrue: boolean): void => {
+          expect(isTrue).toStrictEqual(true);
           doneCallback();
         },
       });
