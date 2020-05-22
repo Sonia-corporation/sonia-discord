@@ -105,7 +105,7 @@ describe(`DiscordGuildMemberAddService`, (): void => {
     describe(`when the Discord client guildMemberAdd event is triggered`, (): void => {
       beforeEach((): void => {
         discordClientServiceGetClientOnMock = jest.fn(
-          (_event: string, listener: Function): void => {
+          (_event: string, listener: () => void): void => {
             listener();
           }
         );
@@ -113,6 +113,18 @@ describe(`DiscordGuildMemberAddService`, (): void => {
         discordClientServiceGetClientSpy.mockReturnValue({
           on: discordClientServiceGetClientOnMock as unknown,
         } as Client);
+      });
+
+      it(`should log about the received Discord client guildMemberAdd event`, (): void => {
+        expect.assertions(2);
+
+        service.init();
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+          context: `DiscordGuildMemberAddService`,
+          message: `text-"guildMemberAdd" event triggered`,
+        } as ILoggerLog);
       });
 
       it(`should send a message`, (): void => {

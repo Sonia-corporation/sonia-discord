@@ -10,8 +10,8 @@ import { LoggerService } from "../../../../logger/services/logger.service";
 import { getNextJobDate } from "../../../../schedules/functions/get-next-job-date";
 import { getNextJobDateHumanized } from "../../../../schedules/functions/get-next-job-date-humanized";
 import { isDiscordGuildChannel } from "../../../channels/functions/is-discord-guild-channel";
+import { isDiscordGuildChannelWritable } from "../../../channels/functions/types/is-discord-guild-channel-writable";
 import { DiscordChannelGuildService } from "../../../channels/services/discord-channel-guild.service";
-import { AnyDiscordChannel } from "../../../channels/types/any-discord-channel";
 import { DiscordGuildSoniaChannelNameEnum } from "../../../guilds/enums/discord-guild-sonia-channel-name.enum";
 import { DiscordGuildConfigService } from "../../../guilds/services/config/discord-guild-config.service";
 import { DiscordGuildSoniaService } from "../../../guilds/services/discord-guild-sonia.service";
@@ -98,7 +98,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
 
   private _getMessageResponse(): IDiscordMessageResponse {
     return {
-      response: `Il est midi !`,
+      response: `Il est midi!`,
     };
   }
 
@@ -138,25 +138,32 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
     return _.isEqual(moment().tz(`Europe/Paris`).get(`hour`), 12);
   }
 
-  private _sendMessage(channel: Readonly<GuildChannel>): void {
+  private _sendMessage(guildChannel: Readonly<GuildChannel>): void {
     const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
 
-    this._loggerService.debug({
-      context: this._serviceName,
-      message: this._chalkService.text(`sending message for il est midi...`),
-    });
-
-    (channel as AnyDiscordChannel)
-      .send(messageResponse.response, messageResponse.options)
-      .then((): void => {
-        this._loggerService.log({
-          context: this._serviceName,
-          message: this._chalkService.text(`il est midi message sent`),
-        });
-      })
-      .catch((error: string): void => {
-        this._onMessageError(error);
+    if (isDiscordGuildChannelWritable(guildChannel)) {
+      this._loggerService.debug({
+        context: this._serviceName,
+        message: this._chalkService.text(`sending message for il est midi...`),
       });
+
+      guildChannel
+        .send(messageResponse.response, messageResponse.options)
+        .then((): void => {
+          this._loggerService.log({
+            context: this._serviceName,
+            message: this._chalkService.text(`il est midi message sent`),
+          });
+        })
+        .catch((error: string): void => {
+          this._onMessageError(error);
+        });
+    } else {
+      this._loggerService.debug({
+        context: this._serviceName,
+        message: this._chalkService.text(`the guild channel is not writable`),
+      });
+    }
   }
 
   private _onMessageError(error: string): void {
