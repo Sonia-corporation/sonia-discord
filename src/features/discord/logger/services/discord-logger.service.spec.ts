@@ -119,7 +119,7 @@ describe(`DiscordLoggerService`, (): void => {
     describe(`when the Discord client warn event is triggered`, (): void => {
       beforeEach((): void => {
         discordClientServiceGetClientOnMock = jest.fn(
-          (_event: string, listener: Function): void => {
+          (_event: string, listener: () => void): void => {
             listener();
           }
         );
@@ -171,7 +171,7 @@ describe(`DiscordLoggerService`, (): void => {
     describe(`when the Discord client error event is triggered`, (): void => {
       beforeEach((): void => {
         discordClientServiceGetClientOnMock = jest.fn(
-          (_event: string, listener: Function): void => {
+          (_event: string, listener: () => void): void => {
             listener();
           }
         );

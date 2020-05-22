@@ -12,10 +12,10 @@ export abstract class AbstractService {
   protected constructor(serviceName: Readonly<ServiceNameEnum>) {
     this._serviceName = serviceName;
 
-    this.notifyServiceCreated();
+    this._notifyServiceCreated();
   }
 
-  private notifyServiceCreated(): void {
+  private _notifyServiceCreated(): void {
     this._coreEventService.notifyServiceCreated(this._serviceName);
   }
 }

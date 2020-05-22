@@ -1,17 +1,17 @@
 import { booleanToString } from "./boolean-to-string";
 
 describe(`booleanToString()`, (): void => {
-  let value: boolean;
+  let isDummy: boolean;
 
   describe(`when the given value is false`, (): void => {
     beforeEach((): void => {
-      value = false;
+      isDummy = false;
     });
 
     it(`should return "false"`, (): void => {
       expect.assertions(1);
 
-      const result = booleanToString(value);
+      const result = booleanToString(isDummy);
 
       expect(result).toStrictEqual(`false`);
     });
@@ -19,13 +19,13 @@ describe(`booleanToString()`, (): void => {
 
   describe(`when the given value is true`, (): void => {
     beforeEach((): void => {
-      value = true;
+      isDummy = true;
     });
 
     it(`should return "true"`, (): void => {
       expect.assertions(1);
 
-      const result = booleanToString(value);
+      const result = booleanToString(isDummy);
 
       expect(result).toStrictEqual(`true`);
     });
