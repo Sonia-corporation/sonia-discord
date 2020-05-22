@@ -1,4 +1,5 @@
 const FS = require(`fs-extra`);
+// eslint-disable-next-line @typescript-eslint/naming-convention
 const _ = require(`lodash`);
 const MOMENT = require(`moment-timezone`);
 const CHALK = require(`./chalk`);
@@ -7,7 +8,7 @@ const APP_ROOT_PATH = require(`app-root-path`);
 
 const CONTEXT = `build-update-app-initialization-date`;
 
-function _updateEnvironmentAppInitializationDate(environment) {
+function updateEnvironmentAppInitializationDate(environment) {
   if (!_.has(environment, `app`)) {
     environment.app = {};
   }
@@ -22,7 +23,7 @@ LOGGER.debug(CONTEXT, CHALK.text(`Read environment file from dist folder...`));
 
 FS.readJson(`${APP_ROOT_PATH.path}/dist/environment.json`)
   .then((environment) => {
-    const updatedEnvironment = _updateEnvironmentAppInitializationDate(
+    const updatedEnvironment = updateEnvironmentAppInitializationDate(
       environment
     );
 

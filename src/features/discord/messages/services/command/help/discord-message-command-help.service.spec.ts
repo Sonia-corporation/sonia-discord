@@ -131,7 +131,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.author).toStrictEqual(messageEmbedAuthor);
     });
@@ -144,7 +144,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
     });
@@ -154,7 +154,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.description)
         .toStrictEqual(`Below is the complete list of commands.
@@ -166,7 +166,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.fields).toHaveLength(6);
     });
@@ -176,7 +176,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.fields[0]).toStrictEqual({
         name: `Cookie (*cookie*, *cookies* or *c*)`,
@@ -190,7 +190,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.fields[1]).toStrictEqual({
         name: `Error (*error* or *bug*)`,
@@ -204,7 +204,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.fields[2]).toStrictEqual({
         name: `Help (*help* or *h*)`,
@@ -218,7 +218,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.fields[3]).toStrictEqual({
         name: `Lunch (*lunch* or *l*)`,
@@ -231,7 +231,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.fields[4]).toStrictEqual({
         name: `Version (*version* or *v*)`,
@@ -244,7 +244,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.fields[5]).toStrictEqual({
         name: `Further help`,
@@ -259,7 +259,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
@@ -277,7 +277,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result: unknown = service.handleResponse(anyDiscordMessage);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: undefined,
@@ -296,7 +296,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result: unknown = service.handleResponse(anyDiscordMessage);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: `image-url`,
@@ -313,7 +313,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
@@ -325,12 +325,12 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(moment(result.options.embed.timestamp).isValid()).toStrictEqual(
         true
       );
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(moment(result.options.embed.timestamp).fromNow()).toStrictEqual(
         `a few seconds ago`
@@ -342,7 +342,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.title).toStrictEqual(
         `So, you need my help? Cool.`
@@ -354,7 +354,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.split).toStrictEqual(true);
     });
