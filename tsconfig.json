@@ -45,7 +45,9 @@
     ]
   },
   "include": [
-    "./src/types.d.ts",
-    "./src/index.ts"
+    "./src/**/*.ts"
+  ],
+  "exclude": [
+    "./src/**.*.spec.ts"
   ]
 }
