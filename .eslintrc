@@ -20,6 +20,7 @@ globals:
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
+  project: './tsconfig.json'
 parser: '@typescript-eslint/parser'
 plugins:
   - '@typescript-eslint'
@@ -108,10 +109,76 @@ rules:
   import/exports-last: 'error'
   import/no-duplicates: 'error'
   indent: 'off'
-  #  Temporarily disabled due to code climate error (37259)
-  '@typescript-eslint/interface-name-prefix':
-    - 'off'
-  #  - prefixWithI: 'always'
+  '@typescript-eslint/naming-convention':
+    - 'error'
+    - selector: 'default'
+      format:
+        - 'camelCase'
+    - selector: 'variable'
+      format:
+        - 'camelCase'
+        - 'UPPER_CASE'
+    - selector: 'variable'
+      types:
+        - 'boolean'
+      format:
+        - 'PascalCase'
+      prefix:
+        - 'is'
+        - 'has'
+        - 'should'
+        - 'contains'
+    - selector: 'parameter'
+      format:
+        - 'camelCase'
+      leadingUnderscore: 'allow'
+    - selector: 'parameter'
+      types:
+        - 'boolean'
+      format:
+        - 'PascalCase'
+      leadingUnderscore: 'allow'
+      prefix:
+        - 'is'
+        - 'has'
+        - 'should'
+        - 'contains'
+    - selector: 'function'
+      format:
+        - 'camelCase'
+    - selector: 'memberLike'
+      modifiers:
+        - 'private'
+      format:
+        - 'camelCase'
+      leadingUnderscore: 'require'
+    - selector: 'memberLike'
+      modifiers:
+        - 'protected'
+      format:
+        - 'camelCase'
+      leadingUnderscore: 'require'
+    - selector: 'typeLike'
+      format:
+        - 'PascalCase'
+    - selector: 'typeParameter'
+      format:
+        - 'PascalCase'
+      prefix:
+        - 'T'
+    - selector: 'interface'
+      format:
+        - 'PascalCase'
+      prefix:
+        - 'I'
+    - selector: 'enumMember'
+      format:
+        - 'UPPER_CASE'
+    - selector: 'enum'
+      format:
+        - 'PascalCase'
+      suffix:
+        - 'Enum'
   '@typescript-eslint/no-explicit-any':
     - 'error'
     - fixToUnknown: false

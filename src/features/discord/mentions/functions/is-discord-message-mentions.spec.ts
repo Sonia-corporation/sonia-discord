@@ -13,9 +13,9 @@ describe(`isDiscordMessageMentions()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordMessageMentions(mention);
+      const isDiscordMessageMentionsResult = isDiscordMessageMentions(mention);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordMessageMentionsResult).toStrictEqual(false);
     });
   });
 
@@ -27,9 +27,9 @@ describe(`isDiscordMessageMentions()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordMessageMentions(mention);
+      const isDiscordMessageMentionsResult = isDiscordMessageMentions(mention);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordMessageMentionsResult).toStrictEqual(false);
     });
   });
 
@@ -41,9 +41,9 @@ describe(`isDiscordMessageMentions()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordMessageMentions(mention);
+      const isDiscordMessageMentionsResult = isDiscordMessageMentions(mention);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordMessageMentionsResult).toStrictEqual(false);
     });
   });
 
@@ -57,9 +57,9 @@ describe(`isDiscordMessageMentions()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordMessageMentions(mention);
+      const isDiscordMessageMentionsResult = isDiscordMessageMentions(mention);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordMessageMentionsResult).toStrictEqual(false);
     });
   });
 
@@ -72,9 +72,9 @@ describe(`isDiscordMessageMentions()`, (): void => {
     it.skip(`should return true`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordMessageMentions(mention);
+      const isDiscordMessageMentionsResult = isDiscordMessageMentions(mention);
 
-      expect(result).toStrictEqual(true);
+      expect(isDiscordMessageMentionsResult).toStrictEqual(true);
     });
   });
 });

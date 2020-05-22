@@ -13,9 +13,9 @@ describe(`isDiscordClientUser()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordClientUser(user);
+      const isDiscordClientUserResult = isDiscordClientUser(user);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordClientUserResult).toStrictEqual(false);
     });
   });
 
@@ -27,9 +27,9 @@ describe(`isDiscordClientUser()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordClientUser(user);
+      const isDiscordClientUserResult = isDiscordClientUser(user);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordClientUserResult).toStrictEqual(false);
     });
   });
 
@@ -41,9 +41,9 @@ describe(`isDiscordClientUser()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordClientUser(user);
+      const isDiscordClientUserResult = isDiscordClientUser(user);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordClientUserResult).toStrictEqual(false);
     });
   });
 
@@ -57,9 +57,9 @@ describe(`isDiscordClientUser()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordClientUser(user);
+      const isDiscordClientUserResult = isDiscordClientUser(user);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordClientUserResult).toStrictEqual(false);
     });
   });
 
@@ -72,9 +72,9 @@ describe(`isDiscordClientUser()`, (): void => {
     it.skip(`should return true`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordClientUser(user);
+      const isDiscordClientUserResult = isDiscordClientUser(user);
 
-      expect(result).toStrictEqual(true);
+      expect(isDiscordClientUserResult).toStrictEqual(true);
     });
   });
 });

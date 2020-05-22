@@ -138,7 +138,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.author).toStrictEqual(messageEmbedAuthor);
     });
@@ -151,7 +151,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
     });
@@ -164,7 +164,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.description).toStrictEqual(
         `Chuck Norris can't beat me.`
@@ -181,7 +181,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
         const result: unknown = service.handleResponse(anyDiscordMessage);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(result.options.embed.description).toStrictEqual(`Yes.`);
       });
@@ -193,7 +193,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
@@ -211,7 +211,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
         const result: unknown = service.handleResponse(anyDiscordMessage);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: undefined,
@@ -230,7 +230,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
         const result: unknown = service.handleResponse(anyDiscordMessage);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: `image-url`,
@@ -247,7 +247,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
@@ -259,12 +259,12 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(moment(result.options.embed.timestamp).isValid()).toStrictEqual(
         true
       );
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(moment(result.options.embed.timestamp).fromNow()).toStrictEqual(
         `a few seconds ago`
@@ -279,7 +279,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.title).toStrictEqual(`Cookie delivery!`);
     });
@@ -294,7 +294,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
         const result: unknown = service.handleResponse(anyDiscordMessage);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(result.options.embed.title).toStrictEqual(`Cookies!`);
       });
@@ -305,7 +305,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.split).toStrictEqual(true);
     });

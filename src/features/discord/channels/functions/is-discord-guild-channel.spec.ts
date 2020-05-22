@@ -13,9 +13,9 @@ describe(`isDiscordGuildChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordGuildChannel(channel);
+      const isDiscordGuildChannelResult = isDiscordGuildChannel(channel);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordGuildChannelResult).toStrictEqual(false);
     });
   });
 
@@ -27,9 +27,9 @@ describe(`isDiscordGuildChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordGuildChannel(channel);
+      const isDiscordGuildChannelResult = isDiscordGuildChannel(channel);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordGuildChannelResult).toStrictEqual(false);
     });
   });
 
@@ -41,9 +41,9 @@ describe(`isDiscordGuildChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordGuildChannel(channel);
+      const isDiscordGuildChannelResult = isDiscordGuildChannel(channel);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordGuildChannelResult).toStrictEqual(false);
     });
   });
 
@@ -57,9 +57,9 @@ describe(`isDiscordGuildChannel()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordGuildChannel(channel);
+      const isDiscordGuildChannelResult = isDiscordGuildChannel(channel);
 
-      expect(result).toStrictEqual(false);
+      expect(isDiscordGuildChannelResult).toStrictEqual(false);
     });
   });
 
@@ -72,9 +72,9 @@ describe(`isDiscordGuildChannel()`, (): void => {
     it.skip(`should return true`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordGuildChannel(channel);
+      const isDiscordGuildChannelResult = isDiscordGuildChannel(channel);
 
-      expect(result).toStrictEqual(true);
+      expect(isDiscordGuildChannelResult).toStrictEqual(true);
     });
   });
 });

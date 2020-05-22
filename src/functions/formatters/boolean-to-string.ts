@@ -1,3 +1,3 @@
-export function booleanToString(value: Readonly<boolean>): `true` | `false` {
-  return value === true ? `true` : `false`;
+export function booleanToString(isTrue: Readonly<boolean>): `true` | `false` {
+  return isTrue === true ? `true` : `false`;
 }

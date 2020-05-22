@@ -87,9 +87,9 @@ describe(`DiscordGuildConfigService`, (): void => {
     it(`should return the Discord guild config send cookies on create state`, (): void => {
       expect.assertions(1);
 
-      const result = service.shouldSendCookiesOnCreate();
+      const shouldSendCookiesOnCreateResult = service.shouldSendCookiesOnCreate();
 
-      expect(result).toStrictEqual(true);
+      expect(shouldSendCookiesOnCreateResult).toStrictEqual(true);
     });
   });
 
@@ -102,9 +102,9 @@ describe(`DiscordGuildConfigService`, (): void => {
     it(`should return the Discord guild config send il est midi message state`, (): void => {
       expect.assertions(1);
 
-      const result = service.shouldSendIlEstMidiMessage();
+      const shouldSendCookiesOnCreateResult = service.shouldSendIlEstMidiMessage();
 
-      expect(result).toStrictEqual(true);
+      expect(shouldSendCookiesOnCreateResult).toStrictEqual(true);
     });
   });
 
@@ -117,9 +117,9 @@ describe(`DiscordGuildConfigService`, (): void => {
     it(`should return the Discord guild config welcome new members state`, (): void => {
       expect.assertions(1);
 
-      const result = service.shouldWelcomeNewMembers();
+      const shouldSendCookiesOnCreateResult = service.shouldWelcomeNewMembers();
 
-      expect(result).toStrictEqual(true);
+      expect(shouldSendCookiesOnCreateResult).toStrictEqual(true);
     });
   });
 
