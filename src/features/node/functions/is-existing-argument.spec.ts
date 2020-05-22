@@ -16,9 +16,9 @@ describe(`isExistingArgument()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const result = isExistingArgument(argumentIndex);
+        const isExistingArgumentResult = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(false);
+        expect(isExistingArgumentResult).toStrictEqual(false);
       });
     });
 
@@ -30,9 +30,9 @@ describe(`isExistingArgument()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const result = isExistingArgument(argumentIndex);
+        const isExistingArgumentResult = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(true);
+        expect(isExistingArgumentResult).toStrictEqual(true);
       });
     });
 
@@ -44,9 +44,9 @@ describe(`isExistingArgument()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const result = isExistingArgument(argumentIndex);
+        const isExistingArgumentResult = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(true);
+        expect(isExistingArgumentResult).toStrictEqual(true);
       });
     });
   });
@@ -64,9 +64,9 @@ describe(`isExistingArgument()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const result = isExistingArgument(argumentIndex);
+        const isExistingArgumentResult = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(false);
+        expect(isExistingArgumentResult).toStrictEqual(false);
       });
     });
 
@@ -78,9 +78,9 @@ describe(`isExistingArgument()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const result = isExistingArgument(argumentIndex);
+        const isExistingArgumentResult = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(false);
+        expect(isExistingArgumentResult).toStrictEqual(false);
       });
     });
 
@@ -92,9 +92,9 @@ describe(`isExistingArgument()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const result = isExistingArgument(argumentIndex);
+        const isExistingArgumentResult = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(true);
+        expect(isExistingArgumentResult).toStrictEqual(true);
       });
     });
   });
@@ -112,9 +112,9 @@ describe(`isExistingArgument()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const result = isExistingArgument(argumentIndex);
+        const isExistingArgumentResult = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(false);
+        expect(isExistingArgumentResult).toStrictEqual(false);
       });
     });
 
@@ -126,9 +126,9 @@ describe(`isExistingArgument()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const result = isExistingArgument(argumentIndex);
+        const isExistingArgumentResult = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(false);
+        expect(isExistingArgumentResult).toStrictEqual(false);
       });
     });
 
@@ -140,9 +140,9 @@ describe(`isExistingArgument()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const result = isExistingArgument(argumentIndex);
+        const isExistingArgumentResult = isExistingArgument(argumentIndex);
 
-        expect(result).toStrictEqual(false);
+        expect(isExistingArgumentResult).toStrictEqual(false);
       });
     });
   });

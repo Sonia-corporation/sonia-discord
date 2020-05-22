@@ -11,9 +11,9 @@ describe(`isValidPort()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isValidPort(port);
+      const isValidPortResult = isValidPort(port);
 
-      expect(result).toStrictEqual(false);
+      expect(isValidPortResult).toStrictEqual(false);
     });
   });
 
@@ -25,9 +25,9 @@ describe(`isValidPort()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isValidPort(port);
+      const isValidPortResult = isValidPort(port);
 
-      expect(result).toStrictEqual(false);
+      expect(isValidPortResult).toStrictEqual(false);
     });
   });
 
@@ -39,9 +39,9 @@ describe(`isValidPort()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isValidPort(port);
+      const isValidPortResult = isValidPort(port);
 
-      expect(result).toStrictEqual(false);
+      expect(isValidPortResult).toStrictEqual(false);
     });
   });
 
@@ -53,9 +53,9 @@ describe(`isValidPort()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isValidPort(port);
+      const isValidPortResult = isValidPort(port);
 
-      expect(result).toStrictEqual(false);
+      expect(isValidPortResult).toStrictEqual(false);
     });
   });
 
@@ -67,9 +67,9 @@ describe(`isValidPort()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const result = isValidPort(port);
+      const isValidPortResult = isValidPort(port);
 
-      expect(result).toStrictEqual(true);
+      expect(isValidPortResult).toStrictEqual(true);
     });
   });
 
@@ -81,9 +81,9 @@ describe(`isValidPort()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const result = isValidPort(port);
+      const isValidPortResult = isValidPort(port);
 
-      expect(result).toStrictEqual(true);
+      expect(isValidPortResult).toStrictEqual(true);
     });
   });
 });

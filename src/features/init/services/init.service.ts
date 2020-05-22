@@ -103,7 +103,7 @@ export class InitService extends AbstractService {
         query: GITHUB_QUERY_RELEASES_LATEST_AND_TOTAL_COUNT,
       },
       headers: {
-        Authorization: getBearer(
+        authorization: getBearer(
           GithubConfigService.getInstance().getPersonalAccessToken()
         ),
       },
