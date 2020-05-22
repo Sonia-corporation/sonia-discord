@@ -50,7 +50,7 @@ export class DiscordActivitySoniaService extends AbstractService {
 
   public setPresence(
     presenceActivity: Readonly<IDiscordPresenceActivity>
-  ): Promise<Presence | void> {
+  ): Promise<Presence> {
     const clientUser: ClientUser | null = this._discordClientService.getClient()
       .user;
 
@@ -78,7 +78,7 @@ export class DiscordActivitySoniaService extends AbstractService {
           }
         )
         .catch(
-          (error: Readonly<Error | string>): Promise<void> => {
+          (error: Readonly<Error | string>): Promise<never> => {
             this._loggerService.error({
               context: this._serviceName,
               message: this._chalkService.text(
