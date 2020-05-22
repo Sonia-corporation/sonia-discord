@@ -143,7 +143,7 @@
     "jest": "26.0.1",
     "jest-silent-reporter": "0.2.1",
     "jest-ts-auto-mock": "1.0.11",
-    "lint-staged": "10.2.5",
+    "lint-staged": "10.2.6",
     "majestic": "1.7.0",
     "parcel-bundler": "1.12.4",
     "prettier": "2.0.5",
