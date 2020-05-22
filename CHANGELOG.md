@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.49.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.49.0...1.49.1) (2020-05-22)
+
+
+### Bug Fixes
+
+* **discord:** do not send guild member add message for none text channel ([1d9f7f8](https://github.com/Sonia-corporation/il-est-midi-discord/commit/1d9f7f816de29ac6d13dac8ef8fbe0780f60df0d))
+
 # [1.49.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.48.0...1.49.0) (2020-05-20)
 
 
