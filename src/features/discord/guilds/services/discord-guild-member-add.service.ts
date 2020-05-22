@@ -105,14 +105,14 @@ export class DiscordGuildMemberAddService extends AbstractService {
       member
     );
 
-    this._loggerService.debug({
-      context: this._serviceName,
-      message: this._chalkService.text(
-        `sending message for the new guild member...`
-      ),
-    });
-
     if (isDiscordGuildChannelWritable(guildChannel)) {
+      this._loggerService.debug({
+        context: this._serviceName,
+        message: this._chalkService.text(
+          `sending message for the new guild member...`
+        ),
+      });
+
       guildChannel
         .send(messageResponse.response, messageResponse.options)
         .then((): void => {
@@ -143,6 +143,11 @@ export class DiscordGuildMemberAddService extends AbstractService {
             ),
           });
         });
+    } else {
+      this._loggerService.debug({
+        context: this._serviceName,
+        message: this._chalkService.text(`the guild channel is not writable`),
+      });
     }
   }
 
