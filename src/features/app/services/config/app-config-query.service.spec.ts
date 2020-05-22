@@ -53,87 +53,6 @@ describe(`AppConfigQueryService`, (): void => {
     });
   });
 
-  describe(`getReleaseDateHumanized()`, (): void => {
-    beforeEach((): void => {
-      service = AppConfigQueryService.getInstance();
-      appConfigCoreService.releaseDate = `dummy-release-date`;
-    });
-
-    describe(`when the app config release date is an empty string`, (): void => {
-      beforeEach((): void => {
-        appConfigCoreService.releaseDate = ``;
-      });
-
-      it(`should return an empty string`, (): void => {
-        expect.assertions(1);
-
-        const result = service.getReleaseDateHumanized();
-
-        expect(result).toStrictEqual(``);
-      });
-    });
-
-    describe(`when the app config release date is "unknown"`, (): void => {
-      beforeEach((): void => {
-        appConfigCoreService.releaseDate = `unknown`;
-      });
-
-      it(`should return "unknown"`, (): void => {
-        expect.assertions(1);
-
-        const result = service.getReleaseDateHumanized();
-
-        expect(result).toStrictEqual(`unknown`);
-      });
-    });
-
-    describe(`when the app config release date is a date as now`, (): void => {
-      beforeEach((): void => {
-        appConfigCoreService.releaseDate = moment().format();
-      });
-
-      it(`should return the app config release date capitalized and humanized to a few seconds`, (): void => {
-        expect.assertions(1);
-
-        const result = service.getReleaseDateHumanized();
-
-        expect(result).toStrictEqual(`A few seconds ago`);
-      });
-    });
-
-    describe(`when the app config release date is a date as one hour`, (): void => {
-      beforeEach((): void => {
-        appConfigCoreService.releaseDate = moment()
-          .subtract(1, `hour`)
-          .format();
-      });
-
-      it(`should return the app config release date capitalized and humanized to an hour`, (): void => {
-        expect.assertions(1);
-
-        const result = service.getReleaseDateHumanized();
-
-        expect(result).toStrictEqual(`An hour ago`);
-      });
-    });
-
-    describe(`when the app config release date is a date as two hours`, (): void => {
-      beforeEach((): void => {
-        appConfigCoreService.releaseDate = moment()
-          .subtract(2, `hour`)
-          .format();
-      });
-
-      it(`should return the app config release date capitalized and humanized to two hours`, (): void => {
-        expect.assertions(1);
-
-        const result = service.getReleaseDateHumanized();
-
-        expect(result).toStrictEqual(`2 hours ago`);
-      });
-    });
-  });
-
   describe(`getInitializationDateHumanized()`, (): void => {
     beforeEach((): void => {
       service = AppConfigQueryService.getInstance();
@@ -246,6 +165,87 @@ describe(`AppConfigQueryService`, (): void => {
         const result = service.getProductionStateHumanized();
 
         expect(result).toStrictEqual(`production`);
+      });
+    });
+  });
+
+  describe(`getReleaseDateHumanized()`, (): void => {
+    beforeEach((): void => {
+      service = AppConfigQueryService.getInstance();
+      appConfigCoreService.releaseDate = `dummy-release-date`;
+    });
+
+    describe(`when the app config release date is an empty string`, (): void => {
+      beforeEach((): void => {
+        appConfigCoreService.releaseDate = ``;
+      });
+
+      it(`should return an empty string`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getReleaseDateHumanized();
+
+        expect(result).toStrictEqual(``);
+      });
+    });
+
+    describe(`when the app config release date is "unknown"`, (): void => {
+      beforeEach((): void => {
+        appConfigCoreService.releaseDate = `unknown`;
+      });
+
+      it(`should return "unknown"`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getReleaseDateHumanized();
+
+        expect(result).toStrictEqual(`unknown`);
+      });
+    });
+
+    describe(`when the app config release date is a date as now`, (): void => {
+      beforeEach((): void => {
+        appConfigCoreService.releaseDate = moment().format();
+      });
+
+      it(`should return the app config release date capitalized and humanized to a few seconds`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getReleaseDateHumanized();
+
+        expect(result).toStrictEqual(`A few seconds ago`);
+      });
+    });
+
+    describe(`when the app config release date is a date as one hour`, (): void => {
+      beforeEach((): void => {
+        appConfigCoreService.releaseDate = moment()
+          .subtract(1, `hour`)
+          .format();
+      });
+
+      it(`should return the app config release date capitalized and humanized to an hour`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getReleaseDateHumanized();
+
+        expect(result).toStrictEqual(`An hour ago`);
+      });
+    });
+
+    describe(`when the app config release date is a date as two hours`, (): void => {
+      beforeEach((): void => {
+        appConfigCoreService.releaseDate = moment()
+          .subtract(2, `hour`)
+          .format();
+      });
+
+      it(`should return the app config release date capitalized and humanized to two hours`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getReleaseDateHumanized();
+
+        expect(result).toStrictEqual(`2 hours ago`);
       });
     });
   });

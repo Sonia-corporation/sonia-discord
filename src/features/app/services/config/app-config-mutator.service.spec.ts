@@ -604,84 +604,6 @@ describe(`AppConfigMutationService`, (): void => {
     });
   });
 
-  describe(`updateVersion()`, (): void => {
-    let version: string;
-
-    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
-
-    beforeEach((): void => {
-      service = AppConfigMutatorService.getInstance();
-      version = `dummy-version`;
-      appConfigCoreService.version = `version`;
-
-      configServiceGetUpdatedStringSpy = jest
-        .spyOn(configService, `getUpdatedString`)
-        .mockReturnValue(`dummy-version`);
-    });
-
-    it(`should get the updated string`, (): void => {
-      expect.assertions(2);
-
-      service.updateVersion(version);
-
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
-        context: `AppConfigMutatorService`,
-        newValue: `dummy-version`,
-        oldValue: `version`,
-        valueName: `version`,
-      } as IConfigUpdateString);
-    });
-
-    it(`should update the app config version with the updated string`, (): void => {
-      expect.assertions(1);
-
-      service.updateVersion(version);
-
-      expect(appConfigCoreService.version).toStrictEqual(`dummy-version`);
-    });
-  });
-
-  describe(`updateReleaseDate()`, (): void => {
-    let releaseDate: string;
-
-    let configServiceGetUpdatedDateSpy: jest.SpyInstance;
-
-    beforeEach((): void => {
-      service = AppConfigMutatorService.getInstance();
-      releaseDate = `dummy-release-date`;
-      appConfigCoreService.releaseDate = `release-date`;
-
-      configServiceGetUpdatedDateSpy = jest
-        .spyOn(configService, `getUpdatedDate`)
-        .mockReturnValue(`dummy-release-date`);
-    });
-
-    it(`should get the updated string`, (): void => {
-      expect.assertions(2);
-
-      service.updateReleaseDate(releaseDate);
-
-      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledTimes(1);
-      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledWith({
-        context: `AppConfigMutatorService`,
-        newValue: `dummy-release-date`,
-        oldValue: `release-date`,
-        valueName: `release date`,
-      } as IConfigUpdateString);
-    });
-
-    it(`should update the app config release date with the updated string`, (): void => {
-      expect.assertions(1);
-
-      service.updateReleaseDate(releaseDate);
-
-      expect(appConfigCoreService.releaseDate).toStrictEqual(
-        `dummy-release-date`
-      );
-    });
-  });
-
   describe(`updateInitializationDate()`, (): void => {
     let initializationDate: string;
 
@@ -760,41 +682,43 @@ describe(`AppConfigMutationService`, (): void => {
     });
   });
 
-  describe(`updateTotalReleaseCount()`, (): void => {
-    let totalReleaseCount: number;
+  describe(`updateReleaseDate()`, (): void => {
+    let releaseDate: string;
 
-    let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
+    let configServiceGetUpdatedDateSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = AppConfigMutatorService.getInstance();
-      totalReleaseCount = 8;
-      appConfigCoreService.totalReleaseCount = 5;
+      releaseDate = `dummy-release-date`;
+      appConfigCoreService.releaseDate = `release-date`;
 
-      configServiceGetUpdatedNumberSpy = jest
-        .spyOn(configService, `getUpdatedNumber`)
-        .mockReturnValue(8);
+      configServiceGetUpdatedDateSpy = jest
+        .spyOn(configService, `getUpdatedDate`)
+        .mockReturnValue(`dummy-release-date`);
     });
 
-    it(`should get the updated number`, (): void => {
+    it(`should get the updated string`, (): void => {
       expect.assertions(2);
 
-      service.updateTotalReleaseCount(totalReleaseCount);
+      service.updateReleaseDate(releaseDate);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledWith({
         context: `AppConfigMutatorService`,
-        newValue: 8,
-        oldValue: 5,
-        valueName: `total release count`,
-      } as IConfigUpdateNumber);
+        newValue: `dummy-release-date`,
+        oldValue: `release-date`,
+        valueName: `release date`,
+      } as IConfigUpdateString);
     });
 
-    it(`should update the app config total release count with the updated number`, (): void => {
+    it(`should update the app config release date with the updated string`, (): void => {
       expect.assertions(1);
 
-      service.updateTotalReleaseCount(totalReleaseCount);
+      service.updateReleaseDate(releaseDate);
 
-      expect(appConfigCoreService.totalReleaseCount).toStrictEqual(8);
+      expect(appConfigCoreService.releaseDate).toStrictEqual(
+        `dummy-release-date`
+      );
     });
   });
 
@@ -836,6 +760,82 @@ describe(`AppConfigMutationService`, (): void => {
       expect(appConfigCoreService.releaseNotes).toStrictEqual(
         `dummy-release-notes`
       );
+    });
+  });
+
+  describe(`updateTotalReleaseCount()`, (): void => {
+    let totalReleaseCount: number;
+
+    let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
+      totalReleaseCount = 8;
+      appConfigCoreService.totalReleaseCount = 5;
+
+      configServiceGetUpdatedNumberSpy = jest
+        .spyOn(configService, `getUpdatedNumber`)
+        .mockReturnValue(8);
+    });
+
+    it(`should get the updated number`, (): void => {
+      expect.assertions(2);
+
+      service.updateTotalReleaseCount(totalReleaseCount);
+
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
+        context: `AppConfigMutatorService`,
+        newValue: 8,
+        oldValue: 5,
+        valueName: `total release count`,
+      } as IConfigUpdateNumber);
+    });
+
+    it(`should update the app config total release count with the updated number`, (): void => {
+      expect.assertions(1);
+
+      service.updateTotalReleaseCount(totalReleaseCount);
+
+      expect(appConfigCoreService.totalReleaseCount).toStrictEqual(8);
+    });
+  });
+
+  describe(`updateVersion()`, (): void => {
+    let version: string;
+
+    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
+      version = `dummy-version`;
+      appConfigCoreService.version = `version`;
+
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`dummy-version`);
+    });
+
+    it(`should get the updated string`, (): void => {
+      expect.assertions(2);
+
+      service.updateVersion(version);
+
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+        context: `AppConfigMutatorService`,
+        newValue: `dummy-version`,
+        oldValue: `version`,
+        valueName: `version`,
+      } as IConfigUpdateString);
+    });
+
+    it(`should update the app config version with the updated string`, (): void => {
+      expect.assertions(1);
+
+      service.updateVersion(version);
+
+      expect(appConfigCoreService.version).toStrictEqual(`dummy-version`);
     });
   });
 });
