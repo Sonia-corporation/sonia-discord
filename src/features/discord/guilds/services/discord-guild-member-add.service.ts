@@ -8,8 +8,8 @@ import { ChalkService } from "../../../logger/services/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { ProfileConfigService } from "../../../profile/services/config/profile-config.service";
 import { isDiscordGuildChannel } from "../../channels/functions/is-discord-guild-channel";
+import { isDiscordGuildChannelWritable } from "../../channels/functions/types/is-discord-guild-channel-writable";
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
-import { AnyDiscordChannel } from "../../channels/types/any-discord-channel";
 import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
 import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-error.service";
 import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
@@ -98,7 +98,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
   }
 
   private _sendMessage(
-    channel: Readonly<GuildChannel>,
+    guildChannel: Readonly<GuildChannel>,
     member: Readonly<AnyGuildMember>
   ): void {
     const messageResponse: IDiscordMessageResponse = this._getMessageResponse(
@@ -112,36 +112,38 @@ export class DiscordGuildMemberAddService extends AbstractService {
       ),
     });
 
-    (channel as AnyDiscordChannel)
-      .send(messageResponse.response, messageResponse.options)
-      .then((): void => {
-        // @todo add coverage
-        this._loggerService.log({
-          context: this._serviceName,
-          message: this._chalkService.text(
-            `welcome message for the new guild sent`
-          ),
+    if (isDiscordGuildChannelWritable(guildChannel)) {
+      guildChannel
+        .send(messageResponse.response, messageResponse.options)
+        .then((): void => {
+          // @todo add coverage
+          this._loggerService.log({
+            context: this._serviceName,
+            message: this._chalkService.text(
+              `welcome message for the new guild sent`
+            ),
+          });
+        })
+        .catch((error: Readonly<Error | string>): void => {
+          // @todo add coverage
+          this._loggerService.error({
+            context: this._serviceName,
+            message: this._chalkService.text(
+              `message sending for the new guild member failed`
+            ),
+          });
+          this._loggerService.error({
+            context: this._serviceName,
+            message: this._chalkService.error(error),
+          });
+          this._discordGuildSoniaService.sendMessageToChannel({
+            channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
+            messageResponse: this._discordLoggerErrorService.getErrorMessageResponse(
+              error
+            ),
+          });
         });
-      })
-      .catch((error: Readonly<Error | string>): void => {
-        // @todo add coverage
-        this._loggerService.error({
-          context: this._serviceName,
-          message: this._chalkService.text(
-            `message sending for the new guild member failed`
-          ),
-        });
-        this._loggerService.error({
-          context: this._serviceName,
-          message: this._chalkService.error(error),
-        });
-        this._discordGuildSoniaService.sendMessageToChannel({
-          channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-          messageResponse: this._discordLoggerErrorService.getErrorMessageResponse(
-            error
-          ),
-        });
-      });
+    }
   }
 
   private _getMessageResponse(
