@@ -11,9 +11,9 @@ describe(`isUnknown()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isUnknown(value);
+      const isUnknownResult = isUnknown(value);
 
-      expect(result).toStrictEqual(false);
+      expect(isUnknownResult).toStrictEqual(false);
     });
   });
 
@@ -25,9 +25,9 @@ describe(`isUnknown()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isUnknown(value);
+      const isUnknownResult = isUnknown(value);
 
-      expect(result).toStrictEqual(false);
+      expect(isUnknownResult).toStrictEqual(false);
     });
   });
 
@@ -39,9 +39,9 @@ describe(`isUnknown()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const result = isUnknown(value);
+      const isUnknownResult = isUnknown(value);
 
-      expect(result).toStrictEqual(true);
+      expect(isUnknownResult).toStrictEqual(true);
     });
   });
 
@@ -53,9 +53,9 @@ describe(`isUnknown()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const result = isUnknown(value);
+      const isUnknownResult = isUnknown(value);
 
-      expect(result).toStrictEqual(true);
+      expect(isUnknownResult).toStrictEqual(true);
     });
   });
 });

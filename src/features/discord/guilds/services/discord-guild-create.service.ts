@@ -6,8 +6,8 @@ import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../../logger/services/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { isDiscordGuildChannel } from "../../channels/functions/is-discord-guild-channel";
+import { isDiscordGuildChannelWritable } from "../../channels/functions/types/is-discord-guild-channel-writable";
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
-import { AnyDiscordChannel } from "../../channels/types/any-discord-channel";
 import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-error.service";
 import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
 import { DiscordMessageCommandCookieService } from "../../messages/services/command/cookie/discord-message-command-cookie.service";
@@ -60,6 +60,13 @@ export class DiscordGuildCreateService extends AbstractService {
     this._discordClientService
       .getClient()
       .on(`guildCreate`, (guild: Readonly<Guild>): void => {
+        this._loggerService.debug({
+          context: this._serviceName,
+          message: this._chalkService.text(
+            `${wrapInQuotes(`guildCreate`)} event triggered`
+          ),
+        });
+
         this.sendMessage(guild);
       });
 
@@ -86,46 +93,53 @@ export class DiscordGuildCreateService extends AbstractService {
     return false;
   }
 
-  private _sendMessage(channel: Readonly<GuildChannel>): void {
+  private _sendMessage(guildChannel: Readonly<GuildChannel>): void {
     const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
 
-    this._loggerService.debug({
-      context: this._serviceName,
-      message: this._chalkService.text(
-        `sending message for the guild create...`
-      ),
-    });
-
-    (channel as AnyDiscordChannel)
-      .send(messageResponse.response, messageResponse.options)
-      .then((): void => {
-        // @todo add coverage
-        this._loggerService.log({
-          context: this._serviceName,
-          message: this._chalkService.text(
-            `cookies message for the create guild sent`
-          ),
-        });
-      })
-      .catch((error: Readonly<Error | string>): void => {
-        // @todo add coverage
-        this._loggerService.error({
-          context: this._serviceName,
-          message: this._chalkService.text(
-            `cookies message sending for the create guild failed`
-          ),
-        });
-        this._loggerService.error({
-          context: this._serviceName,
-          message: this._chalkService.error(error),
-        });
-        this._discordGuildSoniaService.sendMessageToChannel({
-          channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-          messageResponse: this._discordLoggerErrorService.getErrorMessageResponse(
-            error
-          ),
-        });
+    if (isDiscordGuildChannelWritable(guildChannel)) {
+      this._loggerService.debug({
+        context: this._serviceName,
+        message: this._chalkService.text(
+          `sending message for the guild create...`
+        ),
       });
+
+      guildChannel
+        .send(messageResponse.response, messageResponse.options)
+        .then((): void => {
+          // @todo add coverage
+          this._loggerService.log({
+            context: this._serviceName,
+            message: this._chalkService.text(
+              `cookies message for the create guild sent`
+            ),
+          });
+        })
+        .catch((error: Readonly<Error | string>): void => {
+          // @todo add coverage
+          this._loggerService.error({
+            context: this._serviceName,
+            message: this._chalkService.text(
+              `cookies message sending for the create guild failed`
+            ),
+          });
+          this._loggerService.error({
+            context: this._serviceName,
+            message: this._chalkService.error(error),
+          });
+          this._discordGuildSoniaService.sendMessageToChannel({
+            channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
+            messageResponse: this._discordLoggerErrorService.getErrorMessageResponse(
+              error
+            ),
+          });
+        });
+    } else {
+      this._loggerService.debug({
+        context: this._serviceName,
+        message: this._chalkService.text(`the guild channel is not writable`),
+      });
+    }
   }
 
   private _getMessageResponse(): IDiscordMessageResponse {

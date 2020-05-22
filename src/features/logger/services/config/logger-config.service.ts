@@ -16,7 +16,7 @@ export class LoggerConfigService extends AbstractService {
     return LoggerConfigService._instance;
   }
 
-  protected readonly _loggerConfigCoreService: LoggerConfigCoreService = LoggerConfigCoreService.getInstance();
+  private readonly _loggerConfigCoreService: LoggerConfigCoreService = LoggerConfigCoreService.getInstance();
 
   public constructor() {
     super(ServiceNameEnum.LOGGER_CONFIG_SERVICE);
