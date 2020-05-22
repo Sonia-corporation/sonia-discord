@@ -1,5 +1,87 @@
 # Semantic Versioning Changelog
 
+## [1.49.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.49.0...1.49.1) (2020-05-22)
+
+
+### Bug Fixes
+
+* **discord:** do not send guild member add message for none text channel ([1d9f7f8](https://github.com/Sonia-corporation/il-est-midi-discord/commit/1d9f7f816de29ac6d13dac8ef8fbe0780f60df0d))
+
+# [1.49.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.48.0...1.49.0) (2020-05-20)
+
+
+### Features
+
+* **discord:** add new sonia activities ([9a44a2d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9a44a2da92ba513604ea02a61f0568dbcb90160c))
+
+# [1.48.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.47.0...1.48.0) (2020-05-20)
+
+
+### Features
+
+* **discord:** add error messages to Sonia channel for guildCreate ([32179c9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/32179c9d67fa196552272f126ce19dc7d894ad82))
+* **discord:** add error messages to Sonia channel for guildMemberAdd ([7a39cdd](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7a39cddb74cb95bd175f1059e21e053b8525a185))
+* **discord:** each hour the Sonia activity will change randomly ([95bd00d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/95bd00d4f0415f35badb8afb1d0d26f443b27192))
+* **discord:** Sonia will have now a random presence ([b68fa8f](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b68fa8f8648f3da9b3387f01d58cabbd0d068194))
+
+# [1.47.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.46.0...1.47.0) (2020-05-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency moment-timezone to v0.5.30 ([febbe27](https://github.com/Sonia-corporation/il-est-midi-discord/commit/febbe2710a0ceceeddff74b2d017af88509efc71))
+
+
+### Features
+
+* **discord:** add lunch command ([db1ea0d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/db1ea0dbf4ee9ac23ee5915e769858875a5b5ca9))
+* **discord:** add lunch command information in the help command ([7a856aa](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7a856aa4c07ebe15b9adc752981eeac0df8ed3fb))
+* **config:** add options to customise the lunch command ([67d3912](https://github.com/Sonia-corporation/il-est-midi-discord/commit/67d3912f6911a46780dd5aa1530c9624829868a2))
+
+# [1.46.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.45.0...1.46.0) (2020-05-17)
+
+
+### Features
+
+* **discord:** when replying use a mention to display the username ([4442b2a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4442b2a52f73473c75dafb89bf084aed11184736))
+
+# [1.45.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.44.0...1.45.0) (2020-05-17)
+
+
+### Features
+
+* **discord:** use a mention instead of text when welcoming user ([f9be5ec](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f9be5ecdf5d8a4ca5e2f8af07f5a7596c5505275))
+
+# [1.44.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.43.0...1.44.0) (2020-05-17)
+
+
+### Features
+
+* **discord:** allow to use cookies as an alias for the cookie command ([ef39bd3](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ef39bd38b7f0d27c31d07ed80f54b227393c2209))
+* **discord:** update the help command to include the cookies shortcut ([8d20c44](https://github.com/Sonia-corporation/il-est-midi-discord/commit/8d20c4442689a996e7a82087fd9014b4a6c1ffda))
+
+# [1.43.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.42.0...1.43.0) (2020-05-16)
+
+
+### Features
+
+* **discord:** allow $ as prefix ([ce61db2](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ce61db2609ae5de269b7af9e12ced6ec1817b422))
+
+# [1.42.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.41.0...1.42.0) (2020-05-10)
+
+
+### Features
+
+* **github:** configure the helpr bot ([3b7e98d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3b7e98da3ea0f8f3e93171589777c699609b183c))
+* **github:** configure the helPR bot ([7f22e14](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7f22e14cf84ca7dbbac1d146ecf9205939fe0630))
+
+# [1.41.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.40.1...1.41.0) (2020-05-10)
+
+
+### Features
+
+* **github:** configure the weekly digest bot ([3dabe65](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3dabe654b3d4f167a5638e8fa5d0a48d92d75602))
+
 ## [1.40.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.40.0...1.40.1) (2020-05-05)
 
 
