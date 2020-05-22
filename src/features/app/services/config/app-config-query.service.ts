@@ -24,16 +24,6 @@ export class AppConfigQueryService extends AbstractService {
     super(ServiceNameEnum.APP_CONFIG_QUERY_SERVICE);
   }
 
-  public getReleaseDateHumanized(): string {
-    const releaseDate: string = this._appConfigService.getReleaseDate();
-
-    if (isValidDate(releaseDate)) {
-      return this._timeService.fromNow(releaseDate);
-    }
-
-    return releaseDate;
-  }
-
   public getInitializationDateHumanized(): string {
     const initializationDate: string = this._appConfigService.getInitializationDate();
 
@@ -48,6 +38,16 @@ export class AppConfigQueryService extends AbstractService {
     return this._appConfigService.isProduction()
       ? AppProductionStateEnum.PRODUCTION
       : AppProductionStateEnum.DEVELOPMENT;
+  }
+
+  public getReleaseDateHumanized(): string {
+    const releaseDate: string = this._appConfigService.getReleaseDate();
+
+    if (isValidDate(releaseDate)) {
+      return this._timeService.fromNow(releaseDate);
+    }
+
+    return releaseDate;
   }
 
   public getTotalReleaseCountHumanized(): string {

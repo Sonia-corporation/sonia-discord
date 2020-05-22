@@ -48,38 +48,18 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
 
   public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
     if (!_.isNil(config)) {
-      this.updateVersion(config.version);
-      this.updateReleaseDate(config.releaseDate);
       this.updateInitializationDate(config.initializationDate);
-      this.updateTotalReleaseCount(config.totalReleaseCount);
-      this.updateReleaseNotes(config.releaseNotes);
       this.updateProductionState(config.isProduction);
+      this.updateReleaseDate(config.releaseDate);
+      this.updateReleaseNotes(config.releaseNotes);
+      this.updateTotalReleaseCount(config.totalReleaseCount);
+      this.updateVersion(config.version);
 
       this._loggerService.debug({
         context: this._serviceName,
         message: this._chalkService.text(`configuration updated`),
       });
     }
-  }
-
-  public updateVersion(version?: Readonly<string>): void {
-    this._appConfigCoreService.version = this._configService.getUpdatedString({
-      context: this._serviceName,
-      newValue: version,
-      oldValue: this._appConfigService.getVersion(),
-      valueName: AppConfigValueNameEnum.VERSION,
-    });
-  }
-
-  public updateReleaseDate(releaseDate?: Readonly<string>): void {
-    this._appConfigCoreService.releaseDate = this._configService.getUpdatedDate(
-      {
-        context: this._serviceName,
-        newValue: releaseDate,
-        oldValue: this._appConfigService.getReleaseDate(),
-        valueName: AppConfigValueNameEnum.RELEASE_DATE,
-      }
-    );
   }
 
   public updateInitializationDate(initializationDate?: Readonly<string>): void {
@@ -104,13 +84,13 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     );
   }
 
-  public updateTotalReleaseCount(totalReleaseCount?: Readonly<number>): void {
-    this._appConfigCoreService.totalReleaseCount = this._configService.getUpdatedNumber(
+  public updateReleaseDate(releaseDate?: Readonly<string>): void {
+    this._appConfigCoreService.releaseDate = this._configService.getUpdatedDate(
       {
         context: this._serviceName,
-        newValue: totalReleaseCount,
-        oldValue: this._appConfigService.getTotalReleaseCount(),
-        valueName: AppConfigValueNameEnum.TOTAL_RELEASE_COUNT,
+        newValue: releaseDate,
+        oldValue: this._appConfigService.getReleaseDate(),
+        valueName: AppConfigValueNameEnum.RELEASE_DATE,
       }
     );
   }
@@ -125,6 +105,26 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
         valueName: AppConfigValueNameEnum.RELEASE_NOTES,
       }
     );
+  }
+
+  public updateTotalReleaseCount(totalReleaseCount?: Readonly<number>): void {
+    this._appConfigCoreService.totalReleaseCount = this._configService.getUpdatedNumber(
+      {
+        context: this._serviceName,
+        newValue: totalReleaseCount,
+        oldValue: this._appConfigService.getTotalReleaseCount(),
+        valueName: AppConfigValueNameEnum.TOTAL_RELEASE_COUNT,
+      }
+    );
+  }
+
+  public updateVersion(version?: Readonly<string>): void {
+    this._appConfigCoreService.version = this._configService.getUpdatedString({
+      context: this._serviceName,
+      newValue: version,
+      oldValue: this._appConfigService.getVersion(),
+      valueName: AppConfigValueNameEnum.VERSION,
+    });
   }
 
   private _setProductionState(): void {

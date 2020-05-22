@@ -1,4 +1,4 @@
-export interface IGithubReleasesLatest {
+export interface IGithubReleasesLatestAndTotalCount {
   data: {
     repository: {
       releases: {
