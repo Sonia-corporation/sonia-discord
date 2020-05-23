@@ -95,24 +95,21 @@ export class DiscordMessageCommandHelpService extends AbstractService {
   private _getMessageEmbedFieldCookie(): EmbedFieldData {
     return {
       name: `Cookie (*cookie*, *cookies* or *c*)`,
-      value: `Because I am good, life gave me cookies.
-      Now it is my turn to give you some.`,
+      value: `Because I am good, life gave me cookies. Now it is my turn to give you some.`,
     };
   }
 
   private _getMessageEmbedFieldError(): EmbedFieldData {
     return {
       name: `Error (*error* or *bug*)`,
-      value: `Create a bug in my core system.
-      Do not do this one, of course!`,
+      value: `Create a bug in my core system. Do not do this one, of course!`,
     };
   }
 
   private _getMessageEmbedFieldHelp(): EmbedFieldData {
     return {
       name: `Help (*help* or *h*)`,
-      value: `Ask for my help, it is obvious!
-      And maybe I will, who knows?`,
+      value: `Ask for my help, it is obvious! And maybe I will, who knows?`,
     };
   }
 
