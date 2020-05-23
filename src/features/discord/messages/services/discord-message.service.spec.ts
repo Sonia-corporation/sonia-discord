@@ -3,7 +3,9 @@ import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../logger/services/logger.service";
+import { DiscordChannelService } from "../../channels/services/discord-channel.service";
 import { DiscordClientService } from "../../services/discord-client.service";
+import { DiscordAuthorService } from "../../users/services/discord-author.service";
 import { AnyDiscordMessage } from "../types/any-discord-message";
 import { DiscordMessageService } from "./discord-message.service";
 import { Client } from "discord.js";
@@ -15,11 +17,15 @@ describe(`DiscordMessageService`, (): void => {
   let coreEventService: CoreEventService;
   let discordClientService: DiscordClientService;
   let loggerService: LoggerService;
+  let discordAuthorService: DiscordAuthorService;
+  let discordChannelService: DiscordChannelService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     discordClientService = DiscordClientService.getInstance();
     loggerService = LoggerService.getInstance();
+    discordAuthorService = DiscordAuthorService.getInstance();
+    discordChannelService = DiscordChannelService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -145,6 +151,195 @@ describe(`DiscordMessageService`, (): void => {
         context: `DiscordMessageService`,
         message: `text-listen "message" event`,
       } as ILoggerLog);
+    });
+  });
+
+  describe(`sendMessage()`, (): void => {
+    let anyDiscordMessage: AnyDiscordMessage;
+
+    let loggerServiceLogSpy: jest.SpyInstance;
+    let handleChannelMessageSpy: jest.SpyInstance;
+    let discordAuthorServiceIsValidSpy: jest.SpyInstance;
+    let discordAuthorServiceIsBotSpy: jest.SpyInstance;
+    let discordChannelServiceIsValidSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      anyDiscordMessage = createMock<AnyDiscordMessage>({
+        id: `dummy-id`,
+      });
+
+      loggerServiceLogSpy = jest
+        .spyOn(loggerService, `log`)
+        .mockImplementation();
+      handleChannelMessageSpy = jest
+        .spyOn(service, `handleChannelMessage`)
+        .mockImplementation();
+      discordAuthorServiceIsValidSpy = jest.spyOn(
+        discordAuthorService,
+        `isValid`
+      );
+      discordAuthorServiceIsBotSpy = jest.spyOn(discordAuthorService, `isBot`);
+      discordChannelServiceIsValidSpy = jest.spyOn(
+        discordChannelService,
+        `isValid`
+      );
+    });
+
+    describe(`when the given Discord message content is null`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage.content = null;
+      });
+
+      it(`should not log about the received message`, (): void => {
+        expect.assertions(1);
+
+        service.sendMessage(anyDiscordMessage);
+
+        expect(loggerServiceLogSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not handle the channel message`, (): void => {
+        expect.assertions(1);
+
+        service.sendMessage(anyDiscordMessage);
+
+        expect(handleChannelMessageSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the given Discord message content is an empty string`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage.content = ``;
+      });
+
+      it(`should not log about the received message`, (): void => {
+        expect.assertions(1);
+
+        service.sendMessage(anyDiscordMessage);
+
+        expect(loggerServiceLogSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not handle the channel message`, (): void => {
+        expect.assertions(1);
+
+        service.sendMessage(anyDiscordMessage);
+
+        expect(handleChannelMessageSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the given Discord message content is a valid string`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage.content = `dummy-content`;
+      });
+
+      it(`should log about the received message`, (): void => {
+        expect.assertions(2);
+
+        service.sendMessage(anyDiscordMessage);
+
+        expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+          context: `DiscordMessageService`,
+          extendedContext: true,
+          message: `context-[dummy-id] text-dummy-content`,
+        } as ILoggerLog);
+      });
+
+      describe(`when the message author is valid`, (): void => {
+        beforeEach((): void => {
+          discordAuthorServiceIsValidSpy.mockReturnValue(true);
+        });
+
+        describe(`when the message author is a bot`, (): void => {
+          beforeEach((): void => {
+            discordAuthorServiceIsBotSpy.mockReturnValue(true);
+          });
+
+          it(`should not handle the channel message`, (): void => {
+            expect.assertions(1);
+
+            service.sendMessage(anyDiscordMessage);
+
+            expect(handleChannelMessageSpy).not.toHaveBeenCalled();
+          });
+        });
+
+        describe(`when the message author is not a bot`, (): void => {
+          beforeEach((): void => {
+            discordAuthorServiceIsBotSpy.mockReturnValue(false);
+          });
+
+          describe(`when the message channel is not valid`, (): void => {
+            beforeEach((): void => {
+              discordChannelServiceIsValidSpy.mockReturnValue(false);
+            });
+
+            it(`should not handle the channel message`, (): void => {
+              expect.assertions(1);
+
+              service.sendMessage(anyDiscordMessage);
+
+              expect(handleChannelMessageSpy).not.toHaveBeenCalled();
+            });
+          });
+
+          describe(`when the message channel is valid`, (): void => {
+            beforeEach((): void => {
+              discordChannelServiceIsValidSpy.mockReturnValue(true);
+            });
+
+            it(`should handle the channel message`, (): void => {
+              expect.assertions(2);
+
+              service.sendMessage(anyDiscordMessage);
+
+              expect(handleChannelMessageSpy).toHaveBeenCalledTimes(1);
+              expect(handleChannelMessageSpy).toHaveBeenCalledWith(
+                anyDiscordMessage
+              );
+            });
+          });
+        });
+      });
+
+      describe(`when the message author is not valid`, (): void => {
+        beforeEach((): void => {
+          discordAuthorServiceIsValidSpy.mockReturnValue(false);
+        });
+
+        describe(`when the message channel is not valid`, (): void => {
+          beforeEach((): void => {
+            discordChannelServiceIsValidSpy.mockReturnValue(false);
+          });
+
+          it(`should not handle the channel message`, (): void => {
+            expect.assertions(1);
+
+            service.sendMessage(anyDiscordMessage);
+
+            expect(handleChannelMessageSpy).not.toHaveBeenCalled();
+          });
+        });
+
+        describe(`when the message channel is valid`, (): void => {
+          beforeEach((): void => {
+            discordChannelServiceIsValidSpy.mockReturnValue(true);
+          });
+
+          it(`should handle the channel message`, (): void => {
+            expect.assertions(2);
+
+            service.sendMessage(anyDiscordMessage);
+
+            expect(handleChannelMessageSpy).toHaveBeenCalledTimes(1);
+            expect(handleChannelMessageSpy).toHaveBeenCalledWith(
+              anyDiscordMessage
+            );
+          });
+        });
+      });
     });
   });
 });

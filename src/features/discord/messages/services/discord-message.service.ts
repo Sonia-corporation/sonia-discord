@@ -62,8 +62,18 @@ export class DiscordMessageService extends AbstractService {
       }
 
       if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
-        this._handleChannelMessage(anyDiscordMessage);
+        this.handleChannelMessage(anyDiscordMessage);
       }
+    }
+  }
+
+  public handleChannelMessage(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): void {
+    if (this._discordChannelService.isDm(anyDiscordMessage.channel)) {
+      this._dmMessage(anyDiscordMessage);
+    } else if (this._discordChannelService.isText(anyDiscordMessage.channel)) {
+      this._textMessage(anyDiscordMessage);
     }
   }
 
@@ -80,16 +90,6 @@ export class DiscordMessageService extends AbstractService {
         `listen ${wrapInQuotes(`message`)} event`
       ),
     });
-  }
-
-  private _handleChannelMessage(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
-  ): void {
-    if (this._discordChannelService.isDm(anyDiscordMessage.channel)) {
-      this._dmMessage(anyDiscordMessage);
-    } else if (this._discordChannelService.isText(anyDiscordMessage.channel)) {
-      this._textMessage(anyDiscordMessage);
-    }
   }
 
   private _dmMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): void {
