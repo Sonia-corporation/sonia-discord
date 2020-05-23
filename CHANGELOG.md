@@ -1,5 +1,16 @@
 # Semantic Versioning Changelog
 
+# [1.51.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.50.0...1.51.0) (2020-05-23)
+
+
+### Features
+
+* **profile:** add a discord id ([20f909d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/20f909da75c275c4e84814fc0f6a5066beba463b))
+* **scripts:** add the profile when using the create secret env script ([d886599](https://github.com/Sonia-corporation/il-est-midi-discord/commit/d8865999019b1dee7301702d3204aa7640e9b9a7))
+* **dev-prefix:** allow to add a mention with the profile discord id ([ab91546](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ab915463bb7040f1bbe8c90f986402ce48601908))
+* **environment:** allow to override the profile Discord id ([adb03cf](https://github.com/Sonia-corporation/il-est-midi-discord/commit/adb03cf9c650b31fc65ba8d684f16ebdf6388716))
+* **discord:** use the mention for the dev prefix for simple messages ([1ee6c66](https://github.com/Sonia-corporation/il-est-midi-discord/commit/1ee6c663ecd082fac18948bda7e6ace501b0ef57))
+
 # [1.50.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.49.2...1.50.0) (2020-05-23)
 
 
