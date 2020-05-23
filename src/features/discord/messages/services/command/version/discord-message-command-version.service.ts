@@ -88,7 +88,9 @@ export class DiscordMessageCommandVersionService extends AbstractService {
     const soniaImageUrl:
       | string
       | null = this._discordSoniaService.getImageUrl();
-    const totalReleaseCountHumanized: string = this._appConfigQueryService.getTotalReleaseCountHumanized();
+    const totalReleaseCountHumanized: string = this._appConfigQueryService.getTotalReleaseCountHumanized(
+      `birthday`
+    );
 
     return {
       iconURL: soniaImageUrl || undefined,

@@ -251,6 +251,8 @@ describe(`AppConfigQueryService`, (): void => {
   });
 
   describe(`getTotalReleaseCountHumanized()`, (): void => {
+    let releaseWord: string;
+
     beforeEach((): void => {
       service = AppConfigQueryService.getInstance();
       appConfigCoreService.totalReleaseCount = 8;
@@ -284,20 +286,6 @@ describe(`AppConfigQueryService`, (): void => {
       });
     });
 
-    describe(`when the app config total release count is 2`, (): void => {
-      beforeEach((): void => {
-        appConfigCoreService.totalReleaseCount = 2;
-      });
-
-      it(`should return "2 versions"`, (): void => {
-        expect.assertions(1);
-
-        const result = service.getTotalReleaseCountHumanized();
-
-        expect(result).toStrictEqual(`2 versions`);
-      });
-    });
-
     describe(`when the app config total release count is 8`, (): void => {
       beforeEach((): void => {
         appConfigCoreService.totalReleaseCount = 8;
@@ -309,6 +297,54 @@ describe(`AppConfigQueryService`, (): void => {
         const result = service.getTotalReleaseCountHumanized();
 
         expect(result).toStrictEqual(`8 versions`);
+      });
+    });
+
+    describe(`when the given release word is "birthday"`, (): void => {
+      beforeEach((): void => {
+        releaseWord = `birthday`;
+      });
+
+      describe(`when the app config total release count is 0`, (): void => {
+        beforeEach((): void => {
+          appConfigCoreService.totalReleaseCount = 0;
+        });
+
+        it(`should return "0 birthday"`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getTotalReleaseCountHumanized(releaseWord);
+
+          expect(result).toStrictEqual(`0 birthday`);
+        });
+      });
+
+      describe(`when the app config total release count is 1`, (): void => {
+        beforeEach((): void => {
+          appConfigCoreService.totalReleaseCount = 1;
+        });
+
+        it(`should return "1 birthday"`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getTotalReleaseCountHumanized(releaseWord);
+
+          expect(result).toStrictEqual(`1 birthday`);
+        });
+      });
+
+      describe(`when the app config total release count is 8`, (): void => {
+        beforeEach((): void => {
+          appConfigCoreService.totalReleaseCount = 8;
+        });
+
+        it(`should return "8 birthdays"`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getTotalReleaseCountHumanized(releaseWord);
+
+          expect(result).toStrictEqual(`8 birthdays`);
+        });
       });
     });
   });

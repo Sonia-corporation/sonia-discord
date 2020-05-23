@@ -50,9 +50,11 @@ export class AppConfigQueryService extends AbstractService {
     return releaseDate;
   }
 
-  public getTotalReleaseCountHumanized(): string {
+  public getTotalReleaseCountHumanized(
+    releaseWord: Readonly<string> = `version`
+  ): string {
     const totalReleaseCount: number = this._appConfigService.getTotalReleaseCount();
-    let sentence = `${totalReleaseCount} version`;
+    let sentence = `${totalReleaseCount} ${releaseWord}`;
 
     if (_.gt(totalReleaseCount, 1)) {
       sentence = `${sentence}s`;

@@ -307,7 +307,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
       appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
-        `8 versions`
+        `8 birthdays`
       );
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
@@ -316,7 +316,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
-        text: `8 versions`,
+        text: `8 birthdays`,
       } as MessageEmbedFooter);
     });
 
@@ -324,7 +324,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       beforeEach((): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
         appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
-          `8 versions`
+          `8 birthdays`
         );
       });
 
@@ -337,7 +337,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: undefined,
-          text: `8 versions`,
+          text: `8 birthdays`,
         } as MessageEmbedFooter);
       });
     });
@@ -346,7 +346,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       beforeEach((): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
         appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
-          `8 versions`
+          `8 birthdays`
         );
       });
 
@@ -359,7 +359,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: `image-url`,
-          text: `8 versions`,
+          text: `8 birthdays`,
         } as MessageEmbedFooter);
       });
     });
