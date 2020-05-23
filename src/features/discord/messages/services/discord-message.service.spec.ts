@@ -4,6 +4,7 @@ import { CoreEventService } from "../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordClientService } from "../../services/discord-client.service";
+import { AnyDiscordMessage } from "../types/any-discord-message";
 import { DiscordMessageService } from "./discord-message.service";
 import { Client } from "discord.js";
 
@@ -62,6 +63,7 @@ describe(`DiscordMessageService`, (): void => {
 
   describe(`init()`, (): void => {
     let client: Client;
+    let anyDiscordMessage: AnyDiscordMessage;
     let discordClientServiceGetClientOnMock: jest.Mock;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
@@ -74,6 +76,7 @@ describe(`DiscordMessageService`, (): void => {
       client = createMock<Client>({
         on: discordClientServiceGetClientOnMock,
       });
+      anyDiscordMessage = createMock<AnyDiscordMessage>();
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
@@ -108,8 +111,11 @@ describe(`DiscordMessageService`, (): void => {
     describe(`when the Discord client message event is triggered`, (): void => {
       beforeEach((): void => {
         discordClientServiceGetClientOnMock = jest.fn(
-          (_event: string, listener: () => void): void => {
-            listener();
+          (
+            _event: string,
+            listener: (anyDiscordMessage: Readonly<AnyDiscordMessage>) => void
+          ): void => {
+            listener(anyDiscordMessage);
           }
         );
         client = createMock<Client>({
@@ -125,7 +131,7 @@ describe(`DiscordMessageService`, (): void => {
         service.init();
 
         expect(sendMessageSpy).toHaveBeenCalledTimes(1);
-        expect(sendMessageSpy).toHaveBeenCalledWith(undefined);
+        expect(sendMessageSpy).toHaveBeenCalledWith(anyDiscordMessage);
       });
     });
 
