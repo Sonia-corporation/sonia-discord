@@ -15,7 +15,8 @@ import { AppConfigService } from "../../../../../app/services/config/app-config.
 import { CoreEventService } from "../../../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../logger/services/logger.service";
-import { DiscordSoniaEmotionalStateEnum } from "../../../../users/enums/discord-sonia-emotional-state.enum";
+import { DiscordSoniaEmotionalStateEnum } from "../../../../emotional-states/enums/discord-sonia-emotional-state.enum";
+import { DiscordSoniaEmotionalStateService } from "../../../../emotional-states/services/discord-sonia-emotional-state.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
 import { AnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
@@ -28,6 +29,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
   let coreEventService: CoreEventService;
   let loggerService: LoggerService;
   let discordSoniaService: DiscordSoniaService;
+  let discordSoniaEmotionalStateService: DiscordSoniaEmotionalStateService;
   let discordMessageConfigService: DiscordMessageConfigService;
   let appConfigQueryService: AppConfigQueryService;
   let appConfigService: AppConfigService;
@@ -36,6 +38,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     coreEventService = CoreEventService.getInstance();
     loggerService = LoggerService.getInstance();
     discordSoniaService = DiscordSoniaService.getInstance();
+    discordSoniaEmotionalStateService = DiscordSoniaEmotionalStateService.getInstance();
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
     appConfigQueryService = AppConfigQueryService.getInstance();
     appConfigService = AppConfigService.getInstance();
@@ -98,7 +101,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     let appConfigQueryServiceGetInitializationDateHumanizedSpy: jest.SpyInstance;
     let appConfigServiceGetReleaseNotesSpy: jest.SpyInstance;
     let appConfigQueryServiceGetProductionStateHumanizedSpy: jest.SpyInstance;
-    let discordSoniaServiceGetEmotionalStateSpy: jest.SpyInstance;
+    let discordSoniaEmotionalStateServiceGetEmotionalStateSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       anyDiscordMessage = createMock<AnyDiscordMessage>({
@@ -154,8 +157,8 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         appConfigQueryService,
         `getProductionStateHumanized`
       );
-      discordSoniaServiceGetEmotionalStateSpy = jest.spyOn(
-        discordSoniaService,
+      discordSoniaEmotionalStateServiceGetEmotionalStateSpy = jest.spyOn(
+        discordSoniaEmotionalStateService,
         `getEmotionalState`
       );
     });
@@ -293,7 +296,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
     it(`should return a Discord message response embed with an emotional state field`, (): void => {
       expect.assertions(1);
-      discordSoniaServiceGetEmotionalStateSpy.mockReturnValue(
+      discordSoniaEmotionalStateServiceGetEmotionalStateSpy.mockReturnValue(
         DiscordSoniaEmotionalStateEnum.AGITATED
       );
 

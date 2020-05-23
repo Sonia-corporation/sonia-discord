@@ -353,6 +353,14 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "DISCORD_SONIA_EMOTIONAL_STATE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_SONIA_EMOTIONAL_STATE_SERVICE).toStrictEqual(
+      `DiscordSoniaEmotionalStateService`
+    );
+  });
+
   it(`should have a member "DISCORD_SONIA_SERVICE"`, (): void => {
     expect.assertions(1);
 
