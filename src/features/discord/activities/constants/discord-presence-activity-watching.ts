@@ -1,88 +1,89 @@
+import { DiscordActivityTypeEnum } from "../enums/discord-activity-type.enum";
 import { IDiscordPresenceActivity } from "../interfaces/discord-presence-activity";
 
 export const DISCORD_PRESENCE_ACTIVITY_WATCHING: IDiscordPresenceActivity[] = [
   {
     name: `YouTube`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `Amazon Prime Video`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `OCS`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `CANAL+ Series`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `Apple TV+`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `Disney+`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `YouTube Premium`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `Facebook Watch`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `Salto`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `Peacock`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `HBO Max`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `Twitch`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `you`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `like Big Brother`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `some memes`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `the FBI`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `the !help command`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `the $help command`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `the -help command`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `SQUEEZIE GAMING`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
   {
     name: `a live of Rammstein`,
-    type: `WATCHING`,
+    type: DiscordActivityTypeEnum.WATCHING,
   },
 ];

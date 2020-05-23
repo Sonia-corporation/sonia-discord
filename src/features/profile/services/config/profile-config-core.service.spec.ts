@@ -49,6 +49,14 @@ describe(`ProfileConfigCoreService`, (): void => {
     });
   });
 
+  it(`should not have a Discord id`, (): void => {
+    expect.assertions(1);
+
+    service = ProfileConfigCoreService.getInstance();
+
+    expect(service.discordId).toBeNull();
+  });
+
   it(`should not have a nickname`, (): void => {
     expect.assertions(1);
 
