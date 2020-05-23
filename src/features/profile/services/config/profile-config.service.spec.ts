@@ -56,6 +56,7 @@ describe(`ProfileConfigService`, (): void => {
   describe(`getConfig()`, (): void => {
     beforeEach((): void => {
       service = ProfileConfigService.getInstance();
+      profileConfigCoreService.discordId = `dummy-discord-id`;
       profileConfigCoreService.nickname = `dummy-nickname`;
     });
 
@@ -65,8 +66,24 @@ describe(`ProfileConfigService`, (): void => {
       const result = service.getConfig();
 
       expect(result).toStrictEqual({
+        discordId: `dummy-discord-id`,
         nickname: `dummy-nickname`,
       } as IProfileConfig);
+    });
+  });
+
+  describe(`getDiscordId()`, (): void => {
+    beforeEach((): void => {
+      service = ProfileConfigService.getInstance();
+      profileConfigCoreService.discordId = `dummy-discord-id`;
+    });
+
+    it(`should return the Discord id`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getDiscordId();
+
+      expect(result).toStrictEqual(`dummy-discord-id`);
     });
   });
 

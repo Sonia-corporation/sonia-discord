@@ -15,6 +15,7 @@ export class ProfileConfigCoreService extends AbstractService
     return ProfileConfigCoreService._instance;
   }
 
+  public discordId: string | null = null;
   public nickname: string | null = null;
 
   public constructor() {
