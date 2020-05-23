@@ -1,3 +1,4 @@
+import { DiscordActivityTypeEnum } from "../enums/discord-activity-type.enum";
 import { IDiscordPresenceActivity } from "../interfaces/discord-presence-activity";
 import { DISCORD_PRESENCE_ACTIVITY_LISTENING } from "./discord-presence-activity-listening";
 
@@ -8,23 +9,23 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
     expect(DISCORD_PRESENCE_ACTIVITY_LISTENING).toStrictEqual([
       {
         name: `Spotify`,
-        type: `LISTENING`,
+        type: DiscordActivityTypeEnum.LISTENING,
       },
       {
         name: `mom`,
-        type: `LISTENING`,
+        type: DiscordActivityTypeEnum.LISTENING,
       },
       {
         name: `dad`,
-        type: `LISTENING`,
+        type: DiscordActivityTypeEnum.LISTENING,
       },
       {
         name: `Deezer`,
-        type: `LISTENING`,
+        type: DiscordActivityTypeEnum.LISTENING,
       },
       {
         name: `Apple Music`,
-        type: `LISTENING`,
+        type: DiscordActivityTypeEnum.LISTENING,
       },
     ] as IDiscordPresenceActivity[]);
   });
