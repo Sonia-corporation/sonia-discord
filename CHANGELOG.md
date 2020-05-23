@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.50.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.49.2...1.50.0) (2020-05-23)
+
+
+### Features
+
+* **discord:** store the emotional state for 30 minutes ([bb6453d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/bb6453da2ab68f6732eba811a847e661240b0d23))
+
 ## [1.49.2](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.49.1...1.49.2) (2020-05-23)
 
 
