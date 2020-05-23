@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.49.2](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.49.1...1.49.2) (2020-05-23)
+
+
+### Bug Fixes
+
+* **discord:** always fetch the release notes for the current app version ([e120151](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e120151290d033a50da84e0482f4868ee4eeb300))
+
 ## [1.49.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.49.0...1.49.1) (2020-05-22)
 
 
