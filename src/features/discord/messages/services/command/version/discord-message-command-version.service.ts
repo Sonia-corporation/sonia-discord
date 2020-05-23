@@ -14,7 +14,8 @@ import { AppProductionStateEnum } from "../../../../../app/enums/app-production-
 import { AppConfigQueryService } from "../../../../../app/services/config/app-config-query.service";
 import { AppConfigService } from "../../../../../app/services/config/app-config.service";
 import { LoggerService } from "../../../../../logger/services/logger.service";
-import { DiscordSoniaEmotionalStateEnum } from "../../../../users/enums/discord-sonia-emotional-state.enum";
+import { DiscordSoniaEmotionalStateEnum } from "../../../../emotional-states/enums/discord-sonia-emotional-state.enum";
+import { DiscordSoniaEmotionalStateService } from "../../../../emotional-states/services/discord-sonia-emotional-state.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../../../types/any-discord-message";
@@ -35,6 +36,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
   private readonly _appConfigQueryService: AppConfigQueryService = AppConfigQueryService.getInstance();
   private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
+  private readonly _discordSoniaEmotionalStateService: DiscordSoniaEmotionalStateService = DiscordSoniaEmotionalStateService.getInstance();
   private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
 
   public constructor() {
@@ -173,7 +175,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   private _getMessageEmbedFieldEmotionalState(): EmbedFieldData {
     const soniaEmotionalState:
       | DiscordSoniaEmotionalStateEnum
-      | undefined = this._discordSoniaService.getEmotionalState();
+      | undefined = this._discordSoniaEmotionalStateService.getEmotionalState();
 
     return {
       inline: true,
