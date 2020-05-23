@@ -129,7 +129,7 @@
     "conventional-changelog-angular": "5.0.10",
     "cz-customizable": "6.2.0",
     "cz-customizable-ghooks": "1.5.0",
-    "eslint": "7.0.0",
+    "eslint": "7.1.0",
     "eslint-config-google": "0.14.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-config-recommended": "4.0.0",
