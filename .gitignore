@@ -48,6 +48,7 @@ testem.log
 /typings
 credentials.json
 token.json
+stryker.log
 
 # System Files
 .DS_Store
