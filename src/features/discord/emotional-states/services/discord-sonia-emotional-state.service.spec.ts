@@ -268,7 +268,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
     describe(`once the scheduled job is triggered`, (): void => {
       beforeEach((): void => {
         scheduleJobSpy.mockImplementation(
-          (_rule: string, callback: Function): Job => {
+          (_rule: string, callback: () => void): Job => {
             callback();
 
             return job;
