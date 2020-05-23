@@ -5,7 +5,7 @@ env:
   jest/globals: true
 extends:
   - 'eslint:recommended'
-  - 'google'
+  - google
   - 'plugin:@typescript-eslint/eslint-recommended'
   - 'plugin:@typescript-eslint/recommended'
   - 'plugin:import/errors'
@@ -20,13 +20,13 @@ globals:
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
-  project: './tsconfig.json'
+  project: ./tsconfig.json
 parser: '@typescript-eslint/parser'
 plugins:
   - '@typescript-eslint'
-  - 'typescript-sort-keys'
-  - 'jest'
-  - 'prettier'
+  - typescript-sort-keys
+  - jest
+  - prettier
 settings:
   import/extensions:
     - .js
@@ -35,161 +35,162 @@ settings:
     '@typescript-eslint/parser':
       - .ts
   import/cache:
-    lifetime: 'Infinity'
+    lifetime: Infinity
 rules:
   jest/no-test-callback: 'off'
   jest/no-disabled-tests: 'off'
-  #  Temporarily disabled due to code climate error (37259)
   '@typescript-eslint/member-ordering':
-    - 'off'
-  #  - 'default':
-  #      - 'signature'
-  #      - 'public-static-field'
-  #      - 'protected-static-field'
-  #      - 'private-static-field'
-  #      - 'public-static-method'
-  #      - 'protected-static-method'
-  #      - 'private-static-method'
-  #      - 'public-abstract-field'
-  #      - 'protected-abstract-field'
-  #      - 'private-abstract-field'
-  #      - 'public-instance-field'
-  #      - 'protected-instance-field'
-  #      - 'private-instance-field'
-  #      - 'public-constructor'
-  #      - 'protected-constructor'
-  #      - 'private-constructor'
-  #      - 'public-instance-method'
-  #      - 'protected-instance-method'
-  #      - 'private-instance-method'
-  #      - 'public-abstract-method'
-  #      - 'protected-abstract-method'
-  #      - 'private-abstract-method'
-  prettier/prettier: 'error'
+    - error
+    - default:
+        - signature
+        - public-static-field
+        - protected-static-field
+        - private-static-field
+        - public-static-method
+        - protected-static-method
+        - private-static-method
+        - public-abstract-field
+        - protected-abstract-field
+        - private-abstract-field
+        - public-instance-field
+        - protected-instance-field
+        - private-instance-field
+        - public-constructor
+        - protected-constructor
+        - private-constructor
+        - public-instance-method
+        - protected-instance-method
+        - private-instance-method
+        - public-abstract-method
+        - protected-abstract-method
+        - private-abstract-method
+  prettier/prettier: error
   jest/lowercase-name:
-    - 'error'
-    - 'ignore':
-        - 'describe'
+    - error
+    - ignore:
+        - describe
   jest/no-hooks:
-    - 'error'
+    - error
     - allow:
-        - 'beforeAll'
-        - 'beforeEach'
-        - 'afterAll'
-        - 'afterEach'
+        - beforeAll
+        - beforeEach
+        - afterAll
+        - afterEach
   typescript-sort-keys/interface:
-    - 'error'
-    - 'asc'
+    - error
+    - asc
     - caseSensitive: true
       natural: true
   typescript-sort-keys/string-enum:
-    - 'error'
-    - 'asc'
+    - error
+    - asc
     - caseSensitive: true
       natural: true
   quotes:
-    - 'error'
-    - 'backtick'
+    - error
+    - backtick
   no-else-return:
-    - 'error'
+    - error
     - allowElseIf: true
   sort-keys:
-    - 'error'
-    - 'asc'
+    - error
+    - asc
     - caseSensitive: true
       natural: true
       minKeys: 2
   '@typescript-eslint/no-var-requires': 'off'
   '@typescript-eslint/explicit-function-return-type': 'off'
   '@typescript-eslint/no-unused-vars':
-    - 'error'
-    - 'argsIgnorePattern': '^_'
+    - error
+    - argsIgnorePattern: ^_
   import/no-namespace: 'off'
-  import/first: 'error'
-  import/exports-last: 'error'
-  import/no-duplicates: 'error'
+  import/first: error
+  import/exports-last: error
+  import/no-duplicates: error
   indent: 'off'
   '@typescript-eslint/naming-convention':
-    - 'error'
-    - selector: 'default'
+    - error
+    - selector: default
       format:
-        - 'camelCase'
-    - selector: 'variable'
+        - camelCase
+    - selector: variable
       format:
-        - 'camelCase'
-        - 'UPPER_CASE'
-    - selector: 'variable'
+        - camelCase
+        - UPPER_CASE
+    - selector: variable
       types:
-        - 'boolean'
+        - boolean
       format:
-        - 'PascalCase'
+        - PascalCase
       prefix:
-        - 'is'
-        - 'has'
-        - 'should'
-        - 'contains'
-    - selector: 'parameter'
+        - is
+        - has
+        - should
+        - contains
+        - as
+    - selector: parameter
       format:
-        - 'camelCase'
-      leadingUnderscore: 'allow'
-    - selector: 'parameter'
+        - camelCase
+      leadingUnderscore: allow
+    - selector: parameter
       types:
-        - 'boolean'
+        - boolean
       format:
-        - 'PascalCase'
-      leadingUnderscore: 'allow'
+        - PascalCase
+      leadingUnderscore: allow
       prefix:
-        - 'is'
-        - 'has'
-        - 'should'
-        - 'contains'
-    - selector: 'function'
+        - is
+        - has
+        - should
+        - contains
+        - as
+    - selector: function
       format:
-        - 'camelCase'
-    - selector: 'memberLike'
+        - camelCase
+    - selector: memberLike
       modifiers:
-        - 'private'
+        - private
       format:
-        - 'camelCase'
-      leadingUnderscore: 'require'
-    - selector: 'memberLike'
+        - camelCase
+      leadingUnderscore: require
+    - selector: memberLike
       modifiers:
-        - 'protected'
+        - protected
       format:
-        - 'camelCase'
-      leadingUnderscore: 'require'
-    - selector: 'typeLike'
+        - camelCase
+      leadingUnderscore: require
+    - selector: typeLike
       format:
-        - 'PascalCase'
-    - selector: 'typeParameter'
+        - PascalCase
+    - selector: typeParameter
       format:
-        - 'PascalCase'
+        - PascalCase
       prefix:
-        - 'T'
-    - selector: 'interface'
+        - T
+    - selector: interface
       format:
-        - 'PascalCase'
+        - PascalCase
       prefix:
-        - 'I'
-    - selector: 'enumMember'
+        - I
+    - selector: enumMember
       format:
-        - 'UPPER_CASE'
-    - selector: 'enum'
+        - UPPER_CASE
+    - selector: enum
       format:
-        - 'PascalCase'
+        - PascalCase
       suffix:
-        - 'Enum'
+        - Enum
   '@typescript-eslint/no-explicit-any':
-    - 'error'
+    - error
     - fixToUnknown: false
       ignoreRestArgs: false
   object-curly-spacing:
-    - 'error'
-    - 'always'
+    - error
+    - always
   linebreak-style: 'off'
   computed-property-spacing:
-    - 'error'
-    - 'never'
+    - error
+    - never
   array-bracket-spacing: 'off'
   prefer-rest-params: 'off'
   require-jsdoc: 'off'
@@ -200,9 +201,9 @@ overrides:
       - '*.ts'
     rules:
       '@typescript-eslint/explicit-function-return-type':
-        - 'error'
+        - error
         - allowExpressions: false
           allowTypedFunctionExpressions: false
           allowHigherOrderFunctions: false
       '@typescript-eslint/no-var-requires':
-        - 'error'
+        - error
