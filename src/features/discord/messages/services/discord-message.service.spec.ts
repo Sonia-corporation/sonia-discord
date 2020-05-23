@@ -1,3 +1,4 @@
+import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../logger/interfaces/logger-log";
@@ -60,6 +61,7 @@ describe(`DiscordMessageService`, (): void => {
   });
 
   describe(`init()`, (): void => {
+    let client: Client;
     let discordClientServiceGetClientOnMock: jest.Mock;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
@@ -69,15 +71,16 @@ describe(`DiscordMessageService`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageService();
       discordClientServiceGetClientOnMock = jest.fn();
+      client = createMock<Client>({
+        on: discordClientServiceGetClientOnMock,
+      });
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
         .mockImplementation();
       discordClientServiceGetClientSpy = jest
         .spyOn(discordClientService, `getClient`)
-        .mockReturnValue({
-          on: discordClientServiceGetClientOnMock as unknown,
-        } as Client);
+        .mockReturnValue(client);
       sendMessageSpy = jest.spyOn(service, `sendMessage`).mockImplementation();
     });
 
@@ -109,10 +112,11 @@ describe(`DiscordMessageService`, (): void => {
             listener();
           }
         );
+        client = createMock<Client>({
+          on: discordClientServiceGetClientOnMock,
+        });
 
-        discordClientServiceGetClientSpy.mockReturnValue({
-          on: discordClientServiceGetClientOnMock as unknown,
-        } as Client);
+        discordClientServiceGetClientSpy.mockReturnValue(client);
       });
 
       it(`should send a message`, (): void => {

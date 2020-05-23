@@ -1,4 +1,4 @@
-import { Client, ClientUser } from "discord.js";
+import { Client } from "discord.js";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
@@ -61,6 +61,7 @@ describe(`DiscordAuthenticationService`, (): void => {
   });
 
   describe(`init()`, (): void => {
+    let client: Client;
     let discordClientServiceGetClientOnMock: jest.Mock;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
@@ -72,6 +73,9 @@ describe(`DiscordAuthenticationService`, (): void => {
     beforeEach((): void => {
       service = new DiscordAuthenticationService();
       discordClientServiceGetClientOnMock = jest.fn();
+      client = createMock<Client>({
+        on: discordClientServiceGetClientOnMock,
+      });
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
@@ -81,9 +85,7 @@ describe(`DiscordAuthenticationService`, (): void => {
         .mockImplementation();
       discordClientServiceGetClientSpy = jest
         .spyOn(discordClientService, `getClient`)
-        .mockReturnValue({
-          on: discordClientServiceGetClientOnMock as unknown,
-        } as Client);
+        .mockReturnValue(client);
       loginSpy = jest.spyOn(service, `login`).mockImplementation();
       discordClientServiceNotifyIsReadySpy = jest
         .spyOn(discordClientService, `notifyIsReady`)
@@ -118,10 +120,11 @@ describe(`DiscordAuthenticationService`, (): void => {
             listener();
           }
         );
+        client = createMock<Client>({
+          on: discordClientServiceGetClientOnMock,
+        });
 
-        discordClientServiceGetClientSpy.mockReturnValue({
-          on: discordClientServiceGetClientOnMock as unknown,
-        } as Client);
+        discordClientServiceGetClientSpy.mockReturnValue(client);
       });
 
       it(`should get the Discord client`, (): void => {
@@ -135,10 +138,12 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       describe(`when the Discord client user is null`, (): void => {
         beforeEach((): void => {
-          discordClientServiceGetClientSpy.mockReturnValue({
-            on: discordClientServiceGetClientOnMock as unknown,
+          client = createMock<Client>({
+            on: discordClientServiceGetClientOnMock,
             user: null,
-          } as Client);
+          });
+
+          discordClientServiceGetClientSpy.mockReturnValue(client);
         });
 
         it(`should log about the unknown user authentication`, (): void => {
@@ -159,13 +164,14 @@ describe(`DiscordAuthenticationService`, (): void => {
 
         beforeEach((): void => {
           tag = `dummy-tag`;
-
-          discordClientServiceGetClientSpy.mockReturnValue({
-            on: discordClientServiceGetClientOnMock as unknown,
-            user: createMock<ClientUser>({
+          client = createMock<Client>({
+            on: discordClientServiceGetClientOnMock,
+            user: {
               tag,
-            }),
-          } as Client);
+            },
+          });
+
+          discordClientServiceGetClientSpy.mockReturnValue(client);
         });
 
         it(`should log about the unknown user authentication`, (): void => {
