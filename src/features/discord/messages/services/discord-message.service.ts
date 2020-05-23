@@ -42,23 +42,28 @@ export class DiscordMessageService extends AbstractService {
   }
 
   public sendMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): void {
-    this._loggerService.log({
-      context: this._serviceName,
-      extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(
-        anyDiscordMessage.id,
-        anyDiscordMessage.content
-      ),
-    });
+    if (
+      _.isString(anyDiscordMessage.content) &&
+      !_.isEmpty(anyDiscordMessage.content)
+    ) {
+      this._loggerService.log({
+        context: this._serviceName,
+        extendedContext: true,
+        message: this._loggerService.getSnowflakeContext(
+          anyDiscordMessage.id,
+          anyDiscordMessage.content
+        ),
+      });
 
-    if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
-      if (this._discordAuthorService.isBot(anyDiscordMessage.author)) {
-        return;
+      if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
+        if (this._discordAuthorService.isBot(anyDiscordMessage.author)) {
+          return;
+        }
       }
-    }
 
-    if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
-      this._handleChannelMessage(anyDiscordMessage);
+      if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
+        this._handleChannelMessage(anyDiscordMessage);
+      }
     }
   }
 
