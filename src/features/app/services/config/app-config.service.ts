@@ -23,6 +23,7 @@ export class AppConfigService extends AbstractService {
 
   public getConfig(): IAppConfig {
     return {
+      firstReleaseDate: this.getFirstReleaseDate(),
       initializationDate: this.getInitializationDate(),
       isProduction: this.isProduction(),
       releaseDate: this.getReleaseDate(),
@@ -30,6 +31,10 @@ export class AppConfigService extends AbstractService {
       totalReleaseCount: this.getTotalReleaseCount(),
       version: this.getVersion(),
     };
+  }
+
+  public getFirstReleaseDate(): string {
+    return this._appConfigCoreService.firstReleaseDate;
   }
 
   public getVersion(): string {

@@ -90,6 +90,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     let discordMessageConfigServiceGetMessageCommandVersionImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
     let appConfigQueryServiceGetTotalReleaseCountHumanizedSpy: jest.SpyInstance;
+    let appConfigQueryServiceGetFirstReleaseDateFormattedSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandVersionImageUrlSpy: jest.SpyInstance;
     let discordSoniaServiceGetFullNameSpy: jest.SpyInstance;
     let appConfigServiceGetVersionSpy: jest.SpyInstance;
@@ -120,6 +121,10 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       appConfigQueryServiceGetTotalReleaseCountHumanizedSpy = jest.spyOn(
         appConfigQueryService,
         `getTotalReleaseCountHumanized`
+      );
+      appConfigQueryServiceGetFirstReleaseDateFormattedSpy = jest.spyOn(
+        appConfigQueryService,
+        `getFirstReleaseDateFormatted`
       );
       discordMessageConfigServiceGetMessageCommandVersionImageUrlSpy = jest.spyOn(
         discordMessageConfigService,
@@ -309,6 +314,9 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
         `8 birthdays`
       );
+      appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(
+        `the 24th March 2020`
+      );
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
@@ -316,7 +324,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
-        text: `8 birthdays`,
+        text: `8 birthdays since the 24th March 2020`,
       } as MessageEmbedFooter);
     });
 
@@ -325,6 +333,9 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
         appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
           `8 birthdays`
+        );
+        appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(
+          `the 24th March 2020`
         );
       });
 
@@ -337,7 +348,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: undefined,
-          text: `8 birthdays`,
+          text: `8 birthdays since the 24th March 2020`,
         } as MessageEmbedFooter);
       });
     });
@@ -347,6 +358,9 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
         appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
           `8 birthdays`
+        );
+        appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(
+          `the 24th March 2020`
         );
       });
 
@@ -359,7 +373,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: `image-url`,
-          text: `8 birthdays`,
+          text: `8 birthdays since the 24th March 2020`,
         } as MessageEmbedFooter);
       });
     });

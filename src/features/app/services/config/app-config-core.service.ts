@@ -1,4 +1,5 @@
 import _ from "lodash";
+import moment from "moment-timezone";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { IAppConfig } from "../../interfaces/app-config";
@@ -15,6 +16,14 @@ export class AppConfigCoreService extends AbstractService
     return AppConfigCoreService._instance;
   }
 
+  public firstReleaseDate = moment({
+    day: 24,
+    hour: 0,
+    minute: 0,
+    month: 2,
+    second: 0,
+    year: 2020,
+  }).toISOString();
   public initializationDate = `unknown`;
   public isProduction = false;
   public releaseDate = `unknown`;

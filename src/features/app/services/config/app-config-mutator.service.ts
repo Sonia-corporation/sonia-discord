@@ -48,6 +48,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
 
   public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
     if (!_.isNil(config)) {
+      this.updateFirstReleaseDate(config.firstReleaseDate);
       this.updateInitializationDate(config.initializationDate);
       this.updateProductionState(config.isProduction);
       this.updateReleaseDate(config.releaseDate);
@@ -60,6 +61,17 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
         message: this._chalkService.text(`configuration updated`),
       });
     }
+  }
+
+  public updateFirstReleaseDate(firstReleaseDate?: Readonly<string>): void {
+    this._appConfigCoreService.firstReleaseDate = this._configService.getUpdatedDate(
+      {
+        context: this._serviceName,
+        newValue: firstReleaseDate,
+        oldValue: this._appConfigService.getFirstReleaseDate(),
+        valueName: AppConfigValueNameEnum.FIRST_RELEASE_DATE,
+      }
+    );
   }
 
   public updateInitializationDate(initializationDate?: Readonly<string>): void {

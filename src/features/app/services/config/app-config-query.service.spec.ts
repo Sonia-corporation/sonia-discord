@@ -53,6 +53,90 @@ describe(`AppConfigQueryService`, (): void => {
     });
   });
 
+  describe(`getFirstReleaseDateFormatted()`, (): void => {
+    let format: string;
+
+    beforeEach((): void => {
+      service = AppConfigQueryService.getInstance();
+    });
+
+    describe(`when the app config first release date is an empty string`, (): void => {
+      beforeEach((): void => {
+        appConfigCoreService.firstReleaseDate = ``;
+      });
+
+      it(`should return an empty string`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getFirstReleaseDateFormatted();
+
+        expect(result).toStrictEqual(``);
+      });
+    });
+
+    describe(`when the app config first release date is a date from the 24th March 2020`, (): void => {
+      beforeEach((): void => {
+        appConfigCoreService.firstReleaseDate = moment({
+          day: 24,
+          hour: 0,
+          minute: 0,
+          month: 2,
+          second: 0,
+          year: 2020,
+        }).toISOString();
+      });
+
+      it(`should return the app config first release date formatted as an ISO string`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getFirstReleaseDateFormatted();
+
+        expect(result).toStrictEqual(`2020-03-24T00:00:00+01:00`);
+      });
+    });
+
+    describe(`when the given format is "[the ]Do MMMM YYYY"`, (): void => {
+      beforeEach((): void => {
+        format = `[the ]Do MMMM YYYY`;
+      });
+
+      describe(`when the app config first release date is an empty string`, (): void => {
+        beforeEach((): void => {
+          appConfigCoreService.firstReleaseDate = ``;
+        });
+
+        it(`should return an empty string`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getFirstReleaseDateFormatted(format);
+
+          expect(result).toStrictEqual(``);
+        });
+      });
+
+      describe(`when the app config first release date is a date from the 24th March 2020`, (): void => {
+        beforeEach((): void => {
+          appConfigCoreService.firstReleaseDate = moment({
+            day: 24,
+            hour: 0,
+            minute: 0,
+            month: 2,
+            second: 0,
+            year: 2020,
+          }).toISOString();
+        });
+
+        it(`should return the app config first release date formatted with the given format`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getFirstReleaseDateFormatted(format);
+
+          expect(result).toStrictEqual(`the 24th March 2020`);
+        });
+      });
+    });
+  });
+
   describe(`getInitializationDateHumanized()`, (): void => {
     beforeEach((): void => {
       service = AppConfigQueryService.getInstance();
