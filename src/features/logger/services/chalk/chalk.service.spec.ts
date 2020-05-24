@@ -73,9 +73,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.success;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.success(message);
+        }).not.toThrow();
       });
     });
 
@@ -95,9 +95,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.success;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.success(message);
+        }).not.toThrow();
       });
     });
   });
@@ -125,9 +125,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.context;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.context(message);
+        }).not.toThrow();
       });
     });
 
@@ -147,9 +147,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.context;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.context(message);
+        }).not.toThrow();
       });
     });
   });
@@ -177,9 +177,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.value;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.value(message);
+        }).not.toThrow();
       });
     });
 
@@ -199,9 +199,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.value;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.value(message);
+        }).not.toThrow();
       });
     });
   });
@@ -229,9 +229,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.hint;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.hint(message);
+        }).not.toThrow();
       });
     });
 
@@ -251,9 +251,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.hint;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.hint(message);
+        }).not.toThrow();
       });
     });
   });
@@ -281,9 +281,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.error;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.error(message);
+        }).not.toThrow();
       });
     });
 
@@ -303,9 +303,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.error;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.error(message);
+        }).not.toThrow();
       });
     });
   });
@@ -333,9 +333,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.warning;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.warning(message);
+        }).not.toThrow();
       });
     });
 
@@ -355,9 +355,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.warning;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.warning(message);
+        }).not.toThrow();
       });
     });
   });
@@ -385,9 +385,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.text;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.text(message);
+        }).not.toThrow();
       });
     });
 
@@ -407,9 +407,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.text;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.text(message);
+        }).not.toThrow();
       });
     });
   });
@@ -437,9 +437,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.log;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.log(message);
+        }).not.toThrow();
       });
     });
 
@@ -459,9 +459,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.log;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.log(message);
+        }).not.toThrow();
       });
     });
   });
@@ -489,9 +489,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.debug;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.debug(message);
+        }).not.toThrow();
       });
     });
 
@@ -511,9 +511,9 @@ describe(`ChalkService`, (): void => {
       it(`should not throw error`, (): void => {
         expect.assertions(1);
 
-        const result = service.debug;
-
-        expect(result).not.toThrow();
+        expect((): void => {
+          service.debug(message);
+        }).not.toThrow();
       });
     });
   });
