@@ -1,5 +1,6 @@
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
+import { CHALK_INSTANCE } from "../constants/chalk-instance";
 import { ChalkService } from "./chalk.service";
 
 describe(`ChalkService`, (): void => {
@@ -513,6 +514,68 @@ describe(`ChalkService`, (): void => {
         const result = service.debug;
 
         expect(result).not.toThrow();
+      });
+    });
+  });
+
+  describe(`getLevel()`, (): void => {
+    beforeEach((): void => {
+      service = new ChalkService();
+    });
+
+    describe(`when the chalk level is 0`, (): void => {
+      beforeEach((): void => {
+        CHALK_INSTANCE.level = 0;
+      });
+
+      it(`should return 0`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getLevel();
+
+        expect(result).toStrictEqual(0);
+      });
+    });
+
+    describe(`when the chalk level is 1`, (): void => {
+      beforeEach((): void => {
+        CHALK_INSTANCE.level = 1;
+      });
+
+      it(`should return 1`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getLevel();
+
+        expect(result).toStrictEqual(1);
+      });
+    });
+
+    describe(`when the chalk level is 2`, (): void => {
+      beforeEach((): void => {
+        CHALK_INSTANCE.level = 2;
+      });
+
+      it(`should return 2`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getLevel();
+
+        expect(result).toStrictEqual(2);
+      });
+    });
+
+    describe(`when the chalk level is 3`, (): void => {
+      beforeEach((): void => {
+        CHALK_INSTANCE.level = 3;
+      });
+
+      it(`should return 3`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getLevel();
+
+        expect(result).toStrictEqual(3);
       });
     });
   });
