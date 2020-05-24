@@ -13,7 +13,7 @@ import { DiscordSoniaConfigMutatorService } from "./discord-sonia-config-mutator
 import { DiscordSoniaConfigService } from "./discord-sonia-config.service";
 
 jest.mock(`../../../../time/services/time.service`);
-jest.mock(`../../../../logger/services/chalk.service`);
+jest.mock(`../../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordSoniaConfigMutatorService`, (): void => {
   let service: DiscordSoniaConfigMutatorService;

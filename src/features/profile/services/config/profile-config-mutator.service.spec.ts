@@ -10,7 +10,7 @@ import { ProfileConfigMutatorService } from "./profile-config-mutator.service";
 import { ProfileConfigService } from "./profile-config.service";
 
 jest.mock(`../../../time/services/time.service`);
-jest.mock(`../../../logger/services/chalk.service`);
+jest.mock(`../../../logger/services/chalk/chalk.service`);
 
 describe(`ProfileConfigMutatorService`, (): void => {
   let service: ProfileConfigMutatorService;

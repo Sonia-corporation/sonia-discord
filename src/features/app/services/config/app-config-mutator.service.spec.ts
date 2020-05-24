@@ -14,7 +14,7 @@ import { AppConfigMutatorService } from "./app-config-mutator.service";
 import { AppConfigService } from "./app-config.service";
 
 jest.mock(`../../../time/services/time.service`);
-jest.mock(`../../../logger/services/chalk.service`);
+jest.mock(`../../../logger/services/chalk/chalk.service`);
 
 describe(`AppConfigMutationService`, (): void => {
   let service: AppConfigMutatorService;

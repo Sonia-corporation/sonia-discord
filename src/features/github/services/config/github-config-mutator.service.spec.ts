@@ -10,7 +10,7 @@ import { GithubConfigMutatorService } from "./github-config-mutator.service";
 import { GithubConfigService } from "./github-config.service";
 
 jest.mock(`../../../time/services/time.service`);
-jest.mock(`../../../logger/services/chalk.service`);
+jest.mock(`../../../logger/services/chalk/chalk.service`);
 
 describe(`GithubConfigMutatorService`, (): void => {
   let service: GithubConfigMutatorService;

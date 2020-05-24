@@ -22,7 +22,7 @@ import { AnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandVersionService } from "./discord-message-command-version.service";
 
-jest.mock(`../../../../../logger/services/chalk.service`);
+jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordMessageCommandVersionService`, (): void => {
   let service: DiscordMessageCommandVersionService;

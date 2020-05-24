@@ -4,7 +4,7 @@ import _ from "lodash";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { AppConfigService } from "../../app/services/config/app-config.service";
-import { ChalkService } from "../../logger/services/chalk.service";
+import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
 import { ServerConfigService } from "./config/server-config.service";
 
