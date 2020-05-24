@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.53.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.52.0...1.53.0) (2020-05-24)
+
+
+### Features
+
+* **discord:** only handle the discord message if the content is valid ([0f44dad](https://github.com/Sonia-corporation/il-est-midi-discord/commit/0f44dadc9ecbb05abd5db08073de358ffc4f6120))
+
 # [1.52.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.51.0...1.52.0) (2020-05-24)
 
 
