@@ -171,6 +171,7 @@ describe(`DiscordMessageService`, (): void => {
     let discordChannelServiceIsValidSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = new DiscordMessageService();
       anyDiscordMessage = createMock<AnyDiscordMessage>({
         id: `dummy-id`,
       });
@@ -197,19 +198,23 @@ describe(`DiscordMessageService`, (): void => {
         anyDiscordMessage.content = null;
       });
 
-      it(`should not log about the received message`, (): void => {
-        expect.assertions(1);
+      it(`should not log about the received message`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
 
-        service.sendMessage(anyDiscordMessage);
-
+        await expect(service.sendMessage(anyDiscordMessage)).rejects.toThrow(
+          new Error(`Discord message content is invalid or empty`)
+        );
         expect(loggerServiceLogSpy).not.toHaveBeenCalled();
       });
 
-      it(`should not handle the channel message`, (): void => {
-        expect.assertions(1);
+      it(`should not handle the channel message`, async (): Promise<void> => {
+        expect.assertions(2);
 
-        service.sendMessage(anyDiscordMessage);
-
+        await expect(service.sendMessage(anyDiscordMessage)).rejects.toThrow(
+          new Error(`Discord message content is invalid or empty`)
+        );
         expect(handleChannelMessageSpy).not.toHaveBeenCalled();
       });
     });
@@ -219,19 +224,23 @@ describe(`DiscordMessageService`, (): void => {
         anyDiscordMessage.content = ``;
       });
 
-      it(`should not log about the received message`, (): void => {
-        expect.assertions(1);
+      it(`should not log about the received message`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
 
-        service.sendMessage(anyDiscordMessage);
-
+        await expect(service.sendMessage(anyDiscordMessage)).rejects.toThrow(
+          new Error(`Discord message content is invalid or empty`)
+        );
         expect(loggerServiceLogSpy).not.toHaveBeenCalled();
       });
 
-      it(`should not handle the channel message`, (): void => {
-        expect.assertions(1);
+      it(`should not handle the channel message`, async (): Promise<void> => {
+        expect.assertions(2);
 
-        service.sendMessage(anyDiscordMessage);
-
+        await expect(service.sendMessage(anyDiscordMessage)).rejects.toThrow(
+          new Error(`Discord message content is invalid or empty`)
+        );
         expect(handleChannelMessageSpy).not.toHaveBeenCalled();
       });
     });
@@ -241,11 +250,12 @@ describe(`DiscordMessageService`, (): void => {
         anyDiscordMessage.content = `dummy-content`;
       });
 
-      it(`should log about the received message`, (): void => {
-        expect.assertions(2);
+      it(`should log about the received message`, async (): Promise<void> => {
+        expect.assertions(3);
 
-        service.sendMessage(anyDiscordMessage);
-
+        await expect(service.sendMessage(anyDiscordMessage)).rejects.toThrow(
+          new Error(`Discord message channel is not valid`)
+        );
         expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `DiscordMessageService`,
@@ -264,11 +274,14 @@ describe(`DiscordMessageService`, (): void => {
             discordAuthorServiceIsBotSpy.mockReturnValue(true);
           });
 
-          it(`should not handle the channel message`, (): void => {
-            expect.assertions(1);
+          it(`should not handle the channel message`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
 
-            service.sendMessage(anyDiscordMessage);
-
+            await expect(
+              service.sendMessage(anyDiscordMessage)
+            ).rejects.toThrow(new Error(`Discord message author is a Bot`));
             expect(handleChannelMessageSpy).not.toHaveBeenCalled();
           });
         });
@@ -283,11 +296,16 @@ describe(`DiscordMessageService`, (): void => {
               discordChannelServiceIsValidSpy.mockReturnValue(false);
             });
 
-            it(`should not handle the channel message`, (): void => {
-              expect.assertions(1);
+            it(`should not handle the channel message`, async (): Promise<
+              void
+            > => {
+              expect.assertions(2);
 
-              service.sendMessage(anyDiscordMessage);
-
+              await expect(
+                service.sendMessage(anyDiscordMessage)
+              ).rejects.toThrow(
+                new Error(`Discord message channel is not valid`)
+              );
               expect(handleChannelMessageSpy).not.toHaveBeenCalled();
             });
           });
@@ -297,10 +315,10 @@ describe(`DiscordMessageService`, (): void => {
               discordChannelServiceIsValidSpy.mockReturnValue(true);
             });
 
-            it(`should handle the channel message`, (): void => {
+            it(`should handle the channel message`, async (): Promise<void> => {
               expect.assertions(2);
 
-              service.sendMessage(anyDiscordMessage);
+              await service.sendMessage(anyDiscordMessage);
 
               expect(handleChannelMessageSpy).toHaveBeenCalledTimes(1);
               expect(handleChannelMessageSpy).toHaveBeenCalledWith(
@@ -321,11 +339,16 @@ describe(`DiscordMessageService`, (): void => {
             discordChannelServiceIsValidSpy.mockReturnValue(false);
           });
 
-          it(`should not handle the channel message`, (): void => {
-            expect.assertions(1);
+          it(`should not handle the channel message`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
 
-            service.sendMessage(anyDiscordMessage);
-
+            await expect(
+              service.sendMessage(anyDiscordMessage)
+            ).rejects.toThrow(
+              new Error(`Discord message channel is not valid`)
+            );
             expect(handleChannelMessageSpy).not.toHaveBeenCalled();
           });
         });
@@ -335,10 +358,10 @@ describe(`DiscordMessageService`, (): void => {
             discordChannelServiceIsValidSpy.mockReturnValue(true);
           });
 
-          it(`should handle the channel message`, (): void => {
+          it(`should handle the channel message`, async (): Promise<void> => {
             expect.assertions(2);
 
-            service.sendMessage(anyDiscordMessage);
+            await service.sendMessage(anyDiscordMessage);
 
             expect(handleChannelMessageSpy).toHaveBeenCalledTimes(1);
             expect(handleChannelMessageSpy).toHaveBeenCalledWith(
@@ -364,9 +387,10 @@ describe(`DiscordMessageService`, (): void => {
     let discordChannelServiceIsValidSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = new DiscordMessageService();
       anyDiscordMessageChannelSendMock = jest
         .fn()
-        .mockReturnValue(Promise.resolve());
+        .mockReturnValue(Promise.reject(new Error(`Fake test error`)));
       anyDiscordMessage = createMock<AnyDiscordMessage>({
         channel: {
           send: anyDiscordMessageChannelSendMock,
@@ -428,11 +452,14 @@ describe(`DiscordMessageService`, (): void => {
         discordChannelServiceIsDmSpy.mockReturnValue(true);
       });
 
-      it(`should log about the DM message`, (): void => {
-        expect.assertions(2);
+      it(`should log about the DM message`, async (): Promise<void> => {
+        expect.assertions(3);
 
-        service.handleChannelMessage(anyDiscordMessage);
-
+        await expect(
+          service.handleChannelMessage(anyDiscordMessage)
+        ).rejects.toThrow(
+          new Error(`Discord message response null or undefined`)
+        );
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageService`,
@@ -441,11 +468,16 @@ describe(`DiscordMessageService`, (): void => {
         } as ILoggerLog);
       });
 
-      it(`should get a message response for the DM message`, (): void => {
-        expect.assertions(2);
+      it(`should get a message response for the DM message`, async (): Promise<
+        void
+      > => {
+        expect.assertions(3);
 
-        service.handleChannelMessage(anyDiscordMessage);
-
+        await expect(
+          service.handleChannelMessage(anyDiscordMessage)
+        ).rejects.toThrow(
+          new Error(`Discord message response null or undefined`)
+        );
         expect(discordMessageDmServiceGetMessageSpy).toHaveBeenCalledTimes(1);
         expect(discordMessageDmServiceGetMessageSpy).toHaveBeenCalledWith(
           anyDiscordMessage
@@ -457,11 +489,14 @@ describe(`DiscordMessageService`, (): void => {
           discordMessageDmServiceGetMessageSpy.mockReturnValue(null);
         });
 
-        it(`should do nothing`, (): void => {
-          expect.assertions(4);
+        it(`should do nothing`, async (): Promise<void> => {
+          expect.assertions(5);
 
-          service.handleChannelMessage(anyDiscordMessage);
-
+          await expect(
+            service.handleChannelMessage(anyDiscordMessage)
+          ).rejects.toThrow(
+            new Error(`Discord message response null or undefined`)
+          );
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
           expect(discordChannelServiceIsValidSpy).not.toHaveBeenCalled();
           expect(loggerServiceLogSpy).not.toHaveBeenCalled();
@@ -483,11 +518,12 @@ describe(`DiscordMessageService`, (): void => {
             discordChannelServiceIsValidSpy.mockReturnValue(false);
           });
 
-          it(`should do nothing`, (): void => {
-            expect.assertions(3);
+          it(`should do nothing`, async (): Promise<void> => {
+            expect.assertions(4);
 
-            service.handleChannelMessage(anyDiscordMessage);
-
+            await expect(
+              service.handleChannelMessage(anyDiscordMessage)
+            ).rejects.toThrow(new Error(`Discord message channel not valid`));
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceLogSpy).not.toHaveBeenCalled();
             expect(
@@ -501,11 +537,12 @@ describe(`DiscordMessageService`, (): void => {
             discordChannelServiceIsValidSpy.mockReturnValue(true);
           });
 
-          it(`should log about sending a message`, (): void => {
-            expect.assertions(2);
+          it(`should log about sending a message`, async (): Promise<void> => {
+            expect.assertions(3);
 
-            service.handleChannelMessage(anyDiscordMessage);
-
+            await expect(
+              service.handleChannelMessage(anyDiscordMessage)
+            ).rejects.toThrow(new Error(`Fake test error`));
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
             expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
               context: `DiscordMessageService`,
@@ -514,12 +551,15 @@ describe(`DiscordMessageService`, (): void => {
             } as ILoggerLog);
           });
 
-          it(`should send the message response to the given Discord message channel`, (): void => {
-            expect.assertions(2);
+          it(`should send the message response to the given Discord message channel`, async (): Promise<
+            void
+          > => {
+            expect.assertions(3);
 
-            service.handleChannelMessage(anyDiscordMessage);
-
-            expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(1);
+            await expect(
+              service.handleChannelMessage(anyDiscordMessage)
+            ).rejects.toThrow(new Error(`Fake test error`));
+            expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(2);
             expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(
               `dummy-response`,
               {
