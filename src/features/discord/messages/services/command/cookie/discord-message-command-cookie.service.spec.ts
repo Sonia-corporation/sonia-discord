@@ -19,7 +19,7 @@ import {
 } from "discord.js";
 import * as GetRandomValueFromEnumModule from "../../../../../../functions/randoms/get-random-value-from-enum";
 
-jest.mock(`../../../../../logger/services/chalk.service`);
+jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordMessageCommandCookieService`, (): void => {
   let service: DiscordMessageCommandCookieService;

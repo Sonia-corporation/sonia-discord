@@ -19,7 +19,8 @@ import { getGithubQueryReleaseByTagAndTotalCount } from "../../github/functions/
 import { IGithubReleaseAndTotalCount } from "../../github/interfaces/github-release-and-total-count";
 import { GithubConfigMutatorService } from "../../github/services/config/github-config-mutator.service";
 import { GithubConfigService } from "../../github/services/config/github-config.service";
-import { ChalkService } from "../../logger/services/chalk.service";
+import { ChalkColorService } from "../../logger/services/chalk/chalk-color.service";
+import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerConfigMutatorService } from "../../logger/services/config/logger-config-mutator.service";
 import { LoggerService } from "../../logger/services/logger.service";
 import { ProfileConfigMutatorService } from "../../profile/services/config/profile-config-mutator.service";
@@ -46,6 +47,7 @@ export class InitService extends AbstractService {
 
   public init(): void {
     this._loggerService.init();
+    ChalkColorService.getInstance().init();
     this._readEnvironment();
   }
 

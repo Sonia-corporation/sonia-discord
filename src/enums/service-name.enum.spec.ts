@@ -33,6 +33,14 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "CHALK_COLOR_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.CHALK_COLOR_SERVICE).toStrictEqual(
+      `ChalkColorService`
+    );
+  });
+
   it(`should have a member "CHALK_SERVICE"`, (): void => {
     expect.assertions(1);
 

@@ -8,7 +8,7 @@ import { IConfigUpdateString } from "../interfaces/config-update-string";
 import { IConfigUpdateStringOrArray } from "../interfaces/config-update-string-or-array";
 import { ConfigService } from "./config.service";
 
-jest.mock(`../../logger/services/chalk.service`);
+jest.mock(`../../logger/services/chalk/chalk.service`);
 jest.mock(`../../logger/services/logger.service`);
 
 describe(`ConfigService`, (): void => {
