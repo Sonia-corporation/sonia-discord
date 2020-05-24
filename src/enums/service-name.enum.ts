@@ -3,6 +3,7 @@ export enum ServiceNameEnum {
   APP_CONFIG_MUTATOR_SERVICE = `AppConfigMutatorService`,
   APP_CONFIG_QUERY_SERVICE = `AppConfigQueryService`,
   APP_CONFIG_SERVICE = `AppConfigService`,
+  CHALK_COLOR_SERVICE = `ChalkColorService`,
   CHALK_SERVICE = `ChalkService`,
   CONFIG_SERVICE = `ConfigService`,
   CORE_EVENT_SERVICE = `CoreEventService`,

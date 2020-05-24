@@ -16,7 +16,7 @@ import { DISCORD_PRESENCE_ACTIVITY } from "../constants/discord-presence-activit
 import { IDiscordPresenceActivity } from "../interfaces/discord-presence-activity";
 import { DiscordActivitySoniaService } from "./discord-activity-sonia.service";
 
-jest.mock(`../../../logger/services/chalk.service`);
+jest.mock(`../../../logger/services/chalk/chalk.service`);
 jest.mock(`node-schedule`);
 
 describe(`DiscordActivitySoniaService`, (): void => {

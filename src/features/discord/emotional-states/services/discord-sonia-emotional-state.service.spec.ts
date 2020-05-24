@@ -14,7 +14,7 @@ import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordSoniaEmotionalStateEnum } from "../enums/discord-sonia-emotional-state.enum";
 import { DiscordSoniaEmotionalStateService } from "./discord-sonia-emotional-state.service";
 
-jest.mock(`../../../logger/services/chalk.service`);
+jest.mock(`../../../logger/services/chalk/chalk.service`);
 jest.mock(`node-schedule`);
 
 describe(`DiscordSoniaEmotionalStateService`, (): void => {

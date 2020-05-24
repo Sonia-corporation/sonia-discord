@@ -9,7 +9,7 @@ import { DiscordLoggerErrorService } from "./discord-logger-error.service";
 import { DiscordLoggerWarningService } from "./discord-logger-warning.service";
 import { DiscordLoggerService } from "./discord-logger.service";
 
-jest.mock(`../../../logger/services/chalk.service`);
+jest.mock(`../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordLoggerService`, (): void => {
   let service: DiscordLoggerService;

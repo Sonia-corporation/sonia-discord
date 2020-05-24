@@ -7,7 +7,7 @@ import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordGuildCreateService } from "./discord-guild-create.service";
 
-jest.mock(`../../../logger/services/chalk.service`);
+jest.mock(`../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordGuildCreateService`, (): void => {
   let service: DiscordGuildCreateService;

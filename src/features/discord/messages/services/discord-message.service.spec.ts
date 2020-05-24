@@ -14,7 +14,7 @@ import { DiscordMessageErrorService } from "./discord-message-error.service";
 import { DiscordMessageTextService } from "./discord-message-text.service";
 import { DiscordMessageService } from "./discord-message.service";
 
-jest.mock(`../../../logger/services/chalk.service`);
+jest.mock(`../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordMessageService`, (): void => {
   let service: DiscordMessageService;
