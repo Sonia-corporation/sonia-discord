@@ -102,12 +102,12 @@ export class DiscordMessageService extends AbstractService {
       ),
     });
 
-    const response: IDiscordMessageResponse | null = this._discordMessageDmService.getMessage(
+    const discordMessageResponse: IDiscordMessageResponse | null = this._discordMessageDmService.getMessage(
       anyDiscordMessage
     );
 
-    if (!_.isNil(response)) {
-      this._sendMessage(anyDiscordMessage, response);
+    if (!_.isNil(discordMessageResponse)) {
+      this._sendMessage(anyDiscordMessage, discordMessageResponse);
     }
   }
 
@@ -121,12 +121,12 @@ export class DiscordMessageService extends AbstractService {
       ),
     });
 
-    const response: IDiscordMessageResponse | null = this._discordMessageTextService.getMessage(
+    const discordMessageResponse: IDiscordMessageResponse | null = this._discordMessageTextService.getMessage(
       anyDiscordMessage
     );
 
-    if (!_.isNil(response)) {
-      this._sendMessage(anyDiscordMessage, response);
+    if (!_.isNil(discordMessageResponse)) {
+      this._sendMessage(anyDiscordMessage, discordMessageResponse);
     }
   }
 
@@ -134,16 +134,16 @@ export class DiscordMessageService extends AbstractService {
     anyDiscordMessage: Readonly<AnyDiscordMessage>,
     discordMessageResponse: Readonly<IDiscordMessageResponse>
   ): void {
-    this._loggerService.debug({
-      context: this._serviceName,
-      extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(
-        anyDiscordMessage.id,
-        `sending message...`
-      ),
-    });
-
     if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
+      this._loggerService.debug({
+        context: this._serviceName,
+        extendedContext: true,
+        message: this._loggerService.getSnowflakeContext(
+          anyDiscordMessage.id,
+          `sending message...`
+        ),
+      });
+
       anyDiscordMessage.channel
         .send(discordMessageResponse.response, discordMessageResponse.options)
         .then((): void => {
