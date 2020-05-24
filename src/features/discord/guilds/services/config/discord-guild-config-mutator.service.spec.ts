@@ -12,7 +12,7 @@ import { DiscordGuildConfigMutatorService } from "./discord-guild-config-mutator
 import { DiscordGuildConfigService } from "./discord-guild-config.service";
 
 jest.mock(`../../../../time/services/time.service`);
-jest.mock(`../../../../logger/services/chalk.service`);
+jest.mock(`../../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordGuildConfigMutatorService`, (): void => {
   let service: DiscordGuildConfigMutatorService;

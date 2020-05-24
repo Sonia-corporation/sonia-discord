@@ -6,7 +6,7 @@ import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordMessageService } from "./discord-message.service";
 import { Client } from "discord.js";
 
-jest.mock(`../../../logger/services/chalk.service`);
+jest.mock(`../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordMessageService`, (): void => {
   let service: DiscordMessageService;

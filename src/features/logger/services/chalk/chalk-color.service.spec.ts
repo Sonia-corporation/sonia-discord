@@ -1,6 +1,6 @@
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { CoreEventService } from "../../core/services/core-event.service";
-import { CHALK_INSTANCE } from "../constants/chalk-instance";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
+import { CoreEventService } from "../../../core/services/core-event.service";
+import { CHALK_INSTANCE } from "../../constants/chalk-instance";
 import { ChalkService } from "./chalk.service";
 
 describe(`ChalkService`, (): void => {

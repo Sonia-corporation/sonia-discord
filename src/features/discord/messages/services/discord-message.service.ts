@@ -2,7 +2,7 @@ import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
-import { ChalkService } from "../../../logger/services/chalk.service";
+import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordChannelService } from "../../channels/services/discord-channel.service";
 import { DiscordClientService } from "../../services/discord-client.service";

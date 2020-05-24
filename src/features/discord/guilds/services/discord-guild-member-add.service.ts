@@ -4,7 +4,7 @@ import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { AppConfigService } from "../../../app/services/config/app-config.service";
-import { ChalkService } from "../../../logger/services/chalk.service";
+import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { ProfileConfigService } from "../../../profile/services/config/profile-config.service";
 import { isDiscordGuildChannel } from "../../channels/functions/is-discord-guild-channel";

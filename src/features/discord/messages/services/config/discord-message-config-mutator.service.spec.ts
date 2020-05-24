@@ -23,7 +23,7 @@ import { DiscordMessageConfigMutatorService } from "./discord-message-config-mut
 import { DiscordMessageConfigService } from "./discord-message-config.service";
 
 jest.mock(`../../../../time/services/time.service`);
-jest.mock(`../../../../logger/services/chalk.service`);
+jest.mock(`../../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordMessageConfigMutatorService`, (): void => {
   let service: DiscordMessageConfigMutatorService;

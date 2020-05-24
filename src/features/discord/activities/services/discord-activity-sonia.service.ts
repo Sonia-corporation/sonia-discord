@@ -6,7 +6,7 @@ import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { getEveryHourScheduleRule } from "../../../../functions/schedule/get-every-hour-schedule-rule";
-import { ChalkService } from "../../../logger/services/chalk.service";
+import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { getNextJobDate } from "../../../schedules/functions/get-next-job-date";
 import { getNextJobDateHumanized } from "../../../schedules/functions/get-next-job-date-humanized";

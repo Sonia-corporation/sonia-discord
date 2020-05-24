@@ -8,7 +8,7 @@ import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
 import { ILoggerLog } from "../interfaces/logger-log";
 import { ILoggerLogInternal } from "../interfaces/logger-log-internal";
 import { ILoggerServiceCreated } from "../interfaces/logger-service-created";
-import { ChalkService } from "./chalk.service";
+import { ChalkService } from "./chalk/chalk.service";
 import { LoggerConfigService } from "./config/logger-config.service";
 
 export class LoggerService {

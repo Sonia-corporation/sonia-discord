@@ -1,9 +1,9 @@
 import chalk from "chalk";
 import _ from "lodash";
-import { AbstractService } from "../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { CHALK_INSTANCE } from "../constants/chalk-instance";
-import { ChalkColorEnum } from "../enums/chalk-color.enum";
+import { AbstractService } from "../../../../classes/abstract.service";
+import { ServiceNameEnum } from "../../../../enums/service-name.enum";
+import { CHALK_INSTANCE } from "../../constants/chalk-instance";
+import { ChalkColorEnum } from "../../enums/chalk-color.enum";
 
 export class ChalkService extends AbstractService {
   private static _instance: ChalkService;
