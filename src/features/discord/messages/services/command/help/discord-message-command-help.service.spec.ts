@@ -180,8 +180,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.fields[0]).toStrictEqual({
         name: `Cookie (*cookie*, *cookies* or *c*)`,
-        value: `Because I am good, life gave me cookies.
-      Now it is my turn to give you some.`,
+        value: `Because I am good, life gave me cookies. Now it is my turn to give you some.`,
       } as EmbedFieldData);
     });
 
@@ -194,8 +193,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.fields[1]).toStrictEqual({
         name: `Error (*error* or *bug*)`,
-        value: `Create a bug in my core system.
-      Do not do this one, of course!`,
+        value: `Create a bug in my core system. Do not do this one, of course!`,
       } as EmbedFieldData);
     });
 
@@ -208,8 +206,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.fields[2]).toStrictEqual({
         name: `Help (*help* or *h*)`,
-        value: `Ask for my help, it is obvious!
-      And maybe I will, who knows?`,
+        value: `Ask for my help, it is obvious! And maybe I will, who knows?`,
       } as EmbedFieldData);
     });
 
