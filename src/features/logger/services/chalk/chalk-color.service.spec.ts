@@ -162,5 +162,30 @@ describe(`ChalkColorService`, (): void => {
         } as ILoggerLog);
       });
     });
+
+    describe(`when the chalk level is 8 (wrong value)`, (): void => {
+      beforeEach((): void => {
+        (chalkLevel as number) = 8;
+
+        chalkServiceGetLevelSpy.mockReturnValue(chalkLevel);
+      });
+
+      it(`should not log`, (): void => {
+        expect.assertions(2);
+
+        expect((): void => {
+          service.init();
+        }).toThrow(Error(`The given chalk level should be between 0 and 3`));
+        expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should throw an error`, (): void => {
+        expect.assertions(1);
+
+        expect((): void => {
+          service.init();
+        }).toThrow(Error(`The given chalk level should be between 0 and 3`));
+      });
+    });
   });
 });
