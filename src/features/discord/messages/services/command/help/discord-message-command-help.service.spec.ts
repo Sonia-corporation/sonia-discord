@@ -17,7 +17,7 @@ import { AnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandHelpService } from "./discord-message-command-help.service";
 
-jest.mock(`../../../../../logger/services/chalk.service`);
+jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordMessageCommandHelpService`, (): void => {
   let service: DiscordMessageCommandHelpService;

@@ -154,7 +154,7 @@
     "prettier": "2.0.5",
     "pug": "2.0.4",
     "rimraf": "3.0.2",
-    "semantic-release": "17.0.7",
+    "semantic-release": "17.0.8",
     "stryker-cli": "1.0.0",
     "ts-auto-mock": "2.1.0",
     "ts-jest": "26.0.0",

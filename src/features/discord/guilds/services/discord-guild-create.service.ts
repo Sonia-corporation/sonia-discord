@@ -3,7 +3,7 @@ import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
-import { ChalkService } from "../../../logger/services/chalk.service";
+import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { isDiscordGuildChannel } from "../../channels/functions/is-discord-guild-channel";
 import { isDiscordGuildChannelWritable } from "../../channels/functions/types/is-discord-guild-channel-writable";
