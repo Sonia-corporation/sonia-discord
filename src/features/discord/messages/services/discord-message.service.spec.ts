@@ -100,7 +100,11 @@ describe(`DiscordMessageService`, (): void => {
       discordClientServiceGetClientSpy = jest
         .spyOn(discordClientService, `getClient`)
         .mockReturnValue(client);
-      sendMessageSpy = jest.spyOn(service, `sendMessage`).mockImplementation();
+      sendMessageSpy = jest
+        .spyOn(service, `sendMessage`)
+        .mockReturnValue(
+          Promise.reject(new Error(`Fake test error: sendMessage`))
+        );
     });
 
     it(`should get the Discord client`, (): void => {
@@ -394,7 +398,7 @@ describe(`DiscordMessageService`, (): void => {
       service = new DiscordMessageService();
       anyDiscordMessageChannelSendMock = jest
         .fn()
-        .mockReturnValue(Promise.reject(new Error(`Fake test error`)));
+        .mockReturnValue(Promise.reject(new Error(`Fake test error: send`)));
       anyDiscordMessage = createMock<AnyDiscordMessage>({
         channel: {
           send: anyDiscordMessageChannelSendMock,
@@ -564,7 +568,7 @@ describe(`DiscordMessageService`, (): void => {
 
               await expect(
                 service.handleChannelMessage(anyDiscordMessage)
-              ).rejects.toThrow(new Error(`Fake test error`));
+              ).rejects.toThrow(new Error(`Fake test error: send`));
               expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
               expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
                 context: `DiscordMessageService`,
@@ -580,7 +584,7 @@ describe(`DiscordMessageService`, (): void => {
 
               await expect(
                 service.handleChannelMessage(anyDiscordMessage)
-              ).rejects.toThrow(new Error(`Fake test error`));
+              ).rejects.toThrow(new Error(`Fake test error: send`));
               expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(2);
               expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(
                 `dummy-response`,
@@ -772,7 +776,7 @@ describe(`DiscordMessageService`, (): void => {
 
             await expect(
               service.handleChannelMessage(anyDiscordMessage)
-            ).rejects.toThrow(new Error(`Fake test error`));
+            ).rejects.toThrow(new Error(`Fake test error: send`));
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
             expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
               context: `DiscordMessageService`,
@@ -788,7 +792,7 @@ describe(`DiscordMessageService`, (): void => {
 
             await expect(
               service.handleChannelMessage(anyDiscordMessage)
-            ).rejects.toThrow(new Error(`Fake test error`));
+            ).rejects.toThrow(new Error(`Fake test error: send`));
             expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(2);
             expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(
               `dummy-response`,

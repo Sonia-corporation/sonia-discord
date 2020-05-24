@@ -93,7 +93,27 @@ export class DiscordMessageService extends AbstractService {
     this._discordClientService
       .getClient()
       .on(`message`, (anyDiscordMessage: Readonly<AnyDiscordMessage>): void => {
-        this.sendMessage(anyDiscordMessage);
+        this.sendMessage(anyDiscordMessage).catch(
+          (error: Readonly<Error>): void => {
+            // @todo add coverage
+            this._loggerService.debug({
+              context: this._serviceName,
+              extendedContext: true,
+              message: this._loggerService.getSnowflakeContext(
+                anyDiscordMessage.id,
+                `message ignored`
+              ),
+            });
+            this._loggerService.warning({
+              context: this._serviceName,
+              extendedContext: true,
+              message: this._loggerService.getSnowflakeContext(
+                anyDiscordMessage.id,
+                error
+              ),
+            });
+          }
+        );
       });
 
     this._loggerService.debug({
