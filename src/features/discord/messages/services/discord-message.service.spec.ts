@@ -11,7 +11,7 @@ import { AnyDiscordMessage } from "../types/any-discord-message";
 import { DiscordMessageDmService } from "./discord-message-dm.service";
 import { DiscordMessageErrorService } from "./discord-message-error.service";
 import { DiscordMessageService } from "./discord-message.service";
-import { Client } from "discord.js";
+import { Client, MessageOptions } from "discord.js";
 
 jest.mock(`../../../logger/services/chalk.service`);
 
@@ -364,14 +364,21 @@ describe(`DiscordMessageService`, (): void => {
     let discordChannelServiceIsValidSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      anyDiscordMessageChannelSendMock = jest.fn().mockReturnValue(Promise.resolve());
+      anyDiscordMessageChannelSendMock = jest
+        .fn()
+        .mockReturnValue(Promise.resolve());
       anyDiscordMessage = createMock<AnyDiscordMessage>({
         channel: {
           send: anyDiscordMessageChannelSendMock,
         },
         id: `dummy-id`,
       });
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      discordMessageResponse = createMock<IDiscordMessageResponse>({
+        options: {
+          split: true,
+        },
+        response: `dummy-response`,
+      });
 
       discordChannelServiceIsDmSpy = jest.spyOn(discordChannelService, `isDm`);
       discordChannelServiceIsTextSpy = jest.spyOn(
@@ -471,7 +478,7 @@ describe(`DiscordMessageService`, (): void => {
           );
         });
 
-        describe(`when the given discord message channel is not valid`, (): void => {
+        describe(`when the given Discord message channel is not valid`, (): void => {
           beforeEach((): void => {
             discordChannelServiceIsValidSpy.mockReturnValue(false);
           });
@@ -489,7 +496,7 @@ describe(`DiscordMessageService`, (): void => {
           });
         });
 
-        describe(`when the given discord message channel is valid`, (): void => {
+        describe(`when the given Discord message channel is valid`, (): void => {
           beforeEach((): void => {
             discordChannelServiceIsValidSpy.mockReturnValue(true);
           });
@@ -505,6 +512,50 @@ describe(`DiscordMessageService`, (): void => {
               extendedContext: true,
               message: `context-[dummy-id] text-sending message...`,
             } as ILoggerLog);
+          });
+
+          it(`should send the message response to the given Discord message channel`, (): void => {
+            expect.assertions(2);
+
+            service.handleChannelMessage(anyDiscordMessage);
+
+            expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(1);
+            expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(
+              `dummy-response`,
+              {
+                split: true,
+              } as MessageOptions
+            );
+          });
+
+          describe(`when the message was successfully sent`, (): void => {
+            beforeEach((): void => {
+              anyDiscordMessageChannelSendMock.mockReturnValue(
+                Promise.resolve()
+              );
+
+              anyDiscordMessage = createMock<AnyDiscordMessage>({
+                channel: {
+                  send: anyDiscordMessageChannelSendMock,
+                },
+                id: `dummy-id`,
+              });
+            });
+
+            it(`should log about the success of the message sending`, async (): Promise<
+              void
+            > => {
+              expect.assertions(2);
+
+              await service.handleChannelMessage(anyDiscordMessage);
+
+              expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+                context: `DiscordMessageService`,
+                extendedContext: true,
+                message: `context-[dummy-id] text-message sent`,
+              } as ILoggerLog);
+            });
           });
         });
       });

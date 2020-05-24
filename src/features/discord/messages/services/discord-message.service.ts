@@ -41,7 +41,9 @@ export class DiscordMessageService extends AbstractService {
     this._listen();
   }
 
-  public sendMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): void {
+  public sendMessage(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): Promise<void> {
     if (
       _.isString(anyDiscordMessage.content) &&
       !_.isEmpty(anyDiscordMessage.content)
@@ -57,24 +59,34 @@ export class DiscordMessageService extends AbstractService {
 
       if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
         if (this._discordAuthorService.isBot(anyDiscordMessage.author)) {
-          return;
+          return Promise.reject(new Error(`Discord message author is a Bot`));
         }
       }
 
       if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
-        this.handleChannelMessage(anyDiscordMessage);
+        return this.handleChannelMessage(anyDiscordMessage);
       }
+
+      return Promise.reject(new Error(`Discord message channel is not valid`));
     }
+
+    return Promise.reject(
+      new Error(`Discord message content is invalid or empty`)
+    );
   }
 
   public handleChannelMessage(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
-  ): void {
+  ): Promise<void> {
     if (this._discordChannelService.isDm(anyDiscordMessage.channel)) {
-      this._dmMessage(anyDiscordMessage);
+      return this._dmMessage(anyDiscordMessage);
     } else if (this._discordChannelService.isText(anyDiscordMessage.channel)) {
-      this._textMessage(anyDiscordMessage);
+      return this._textMessage(anyDiscordMessage);
     }
+
+    return Promise.reject(
+      new Error(`Discord message is not a DM channel nor a text channel`)
+    );
   }
 
   private _listen(): void {
@@ -92,7 +104,9 @@ export class DiscordMessageService extends AbstractService {
     });
   }
 
-  private _dmMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): void {
+  private _dmMessage(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): Promise<void> {
     this._loggerService.debug({
       context: this._serviceName,
       extendedContext: true,
@@ -107,11 +121,17 @@ export class DiscordMessageService extends AbstractService {
     );
 
     if (!_.isNil(discordMessageResponse)) {
-      this._sendMessage(anyDiscordMessage, discordMessageResponse);
+      return this._sendMessage(anyDiscordMessage, discordMessageResponse);
     }
+
+    return Promise.reject(
+      new Error(`Discord message response null or undefined`)
+    );
   }
 
-  private _textMessage(anyDiscordMessage: Readonly<AnyDiscordMessage>): void {
+  private _textMessage(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): Promise<void> {
     this._loggerService.debug({
       context: this._serviceName,
       extendedContext: true,
@@ -126,14 +146,18 @@ export class DiscordMessageService extends AbstractService {
     );
 
     if (!_.isNil(discordMessageResponse)) {
-      this._sendMessage(anyDiscordMessage, discordMessageResponse);
+      return this._sendMessage(anyDiscordMessage, discordMessageResponse);
     }
+
+    return Promise.reject(
+      new Error(`Discord message response null or undefined`)
+    );
   }
 
   private _sendMessage(
     anyDiscordMessage: Readonly<AnyDiscordMessage>,
     discordMessageResponse: Readonly<IDiscordMessageResponse>
-  ): void {
+  ): Promise<void> {
     if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
       this._loggerService.debug({
         context: this._serviceName,
@@ -144,24 +168,34 @@ export class DiscordMessageService extends AbstractService {
         ),
       });
 
-      anyDiscordMessage.channel
+      return anyDiscordMessage.channel
         .send(discordMessageResponse.response, discordMessageResponse.options)
-        .then((): void => {
-          this._loggerService.log({
-            context: this._serviceName,
-            extendedContext: true,
-            message: this._loggerService.getSnowflakeContext(
-              anyDiscordMessage.id,
-              `message sent`
-            ),
-          });
-        })
-        .catch((error: unknown): void => {
-          this._discordMessageErrorService.handleError(
-            error,
-            anyDiscordMessage
-          );
-        });
+        .then(
+          (): Promise<void> => {
+            this._loggerService.log({
+              context: this._serviceName,
+              extendedContext: true,
+              message: this._loggerService.getSnowflakeContext(
+                anyDiscordMessage.id,
+                `message sent`
+              ),
+            });
+
+            return Promise.resolve();
+          }
+        )
+        .catch(
+          (error: unknown): Promise<never> => {
+            this._discordMessageErrorService.handleError(
+              error,
+              anyDiscordMessage
+            );
+
+            return Promise.reject(error);
+          }
+        );
     }
+
+    return Promise.reject(new Error(`Discord message channel not valid`));
   }
 }
