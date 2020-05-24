@@ -1,5 +1,5 @@
 import { ConfigService } from "../features/config/services/config.service";
-import { ChalkService } from "../features/logger/services/chalk.service";
+import { ChalkService } from "../features/logger/services/chalk/chalk.service";
 import { PartialNested } from "../types/partial-nested";
 import { AbstractService } from "./abstract.service";
 import { ServiceNameEnum } from "../enums/service-name.enum";
