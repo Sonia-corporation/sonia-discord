@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.54.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.53.0...1.54.0) (2020-05-24)
+
+
+### Features
+
+* **discord:** reduce the end of lines for the help command ([4211fc9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4211fc93da37c2afa014606178063f04300ce434))
+
 # [1.53.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.52.0...1.53.0) (2020-05-24)
 
 
