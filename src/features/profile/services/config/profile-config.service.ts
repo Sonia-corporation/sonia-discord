@@ -23,8 +23,13 @@ export class ProfileConfigService extends AbstractService {
 
   public getConfig(): IProfileConfig {
     return {
+      discordId: this.getDiscordId(),
       nickname: this.getNickname(),
     };
+  }
+
+  public getDiscordId(): string | null {
+    return this._profileConfigCoreService.discordId;
   }
 
   public getNickname(): string | null {
