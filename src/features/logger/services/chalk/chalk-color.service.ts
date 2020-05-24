@@ -2,6 +2,7 @@ import chalk from "chalk";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
+import { CHALK_LEVELS_HUMANIZED } from "../../constants/chalk/chalk-levels-humanized";
 import { LoggerService } from "../logger.service";
 import { ChalkService } from "./chalk.service";
 
@@ -43,14 +44,8 @@ export class ChalkColorService extends AbstractService {
   private _getHumanizedColorLevel(
     chalkLevel: Readonly<chalk.Level>
   ): string | never {
-    if (_.isEqual(chalkLevel, 0)) {
-      return `All colors disabled`;
-    } else if (_.isEqual(chalkLevel, 1)) {
-      return `Basic 16 colors support`;
-    } else if (_.isEqual(chalkLevel, 2)) {
-      return `ANSI 256 colors support`;
-    } else if (_.isEqual(chalkLevel, 3)) {
-      return `Truecolor 16 million colors support`;
+    if (_.gte(chalkLevel, 0) && _.lte(chalkLevel, 3)) {
+      return CHALK_LEVELS_HUMANIZED[chalkLevel];
     }
 
     throw new Error(`The given chalk level should be between 0 and 3`);

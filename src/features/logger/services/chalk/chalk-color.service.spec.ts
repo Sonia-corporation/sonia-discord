@@ -1,29 +1,38 @@
+import * as chalk from "chalk";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
-import { CHALK_INSTANCE } from "../../constants/chalk-instance";
+import { ILoggerLog } from "../../interfaces/logger-log";
+import { LoggerService } from "../logger.service";
+import { ChalkColorService } from "./chalk-color.service";
 import { ChalkService } from "./chalk.service";
 
-describe(`ChalkService`, (): void => {
-  let service: ChalkService;
+jest.mock(`./chalk.service`);
+
+describe(`ChalkColorService`, (): void => {
+  let service: ChalkColorService;
   let coreEventService: CoreEventService;
+  let chalkService: ChalkService;
+  let loggerService: LoggerService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
+    chalkService = ChalkService.getInstance();
+    loggerService = LoggerService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
-    it(`should create a Chalk service`, (): void => {
+    it(`should create a ChalkColor service`, (): void => {
       expect.assertions(1);
 
-      service = ChalkService.getInstance();
+      service = ChalkColorService.getInstance();
 
-      expect(service).toStrictEqual(expect.any(ChalkService));
+      expect(service).toStrictEqual(expect.any(ChalkColorService));
     });
 
-    it(`should return the created Chalk service`, (): void => {
+    it(`should return the created ChalkColor service`, (): void => {
       expect.assertions(1);
 
-      const result = ChalkService.getInstance();
+      const result = ChalkColorService.getInstance();
 
       expect(result).toStrictEqual(service);
     });
@@ -38,544 +47,119 @@ describe(`ChalkService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should notify the Chalk service creation`, (): void => {
+    it(`should notify the ChalkColor service creation`, (): void => {
       expect.assertions(2);
 
-      service = new ChalkService();
+      service = new ChalkColorService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.CHALK_SERVICE
+        ServiceNameEnum.CHALK_COLOR_SERVICE
       );
     });
   });
 
-  describe(`success()`, (): void => {
-    let message: string | unknown;
+  describe(`init()`, (): void => {
+    let chalkLevel: chalk.Level;
+
+    let chalkServiceGetLevelSpy: jest.SpyInstance;
+    let loggerServiceDebugSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      service = new ChalkService();
+      service = new ChalkColorService();
+
+      chalkServiceGetLevelSpy = jest.spyOn(chalkService, `getLevel`);
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
     });
 
-    describe(`when the given message is "dummy-success"`, (): void => {
-      beforeEach((): void => {
-        message = `dummy-success`;
-      });
+    it(`should get the chalk level`, (): void => {
+      expect.assertions(2);
 
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
+      service.init();
 
-        const result = service.success(message);
-
-        expect(result).toMatch(`dummy-success`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.success;
-
-        expect(result).not.toThrow();
-      });
-    });
-
-    describe(`when the given message is "success"`, (): void => {
-      beforeEach((): void => {
-        message = `success`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.success(message);
-
-        expect(result).toMatch(`success`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.success;
-
-        expect(result).not.toThrow();
-      });
-    });
-  });
-
-  describe(`context()`, (): void => {
-    let message: string | unknown;
-
-    beforeEach((): void => {
-      service = new ChalkService();
-    });
-
-    describe(`when the given message is "dummy-context"`, (): void => {
-      beforeEach((): void => {
-        message = `dummy-context`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.context(message);
-
-        expect(result).toMatch(`dummy-context`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.context;
-
-        expect(result).not.toThrow();
-      });
-    });
-
-    describe(`when the given message is "context"`, (): void => {
-      beforeEach((): void => {
-        message = `context`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.context(message);
-
-        expect(result).toMatch(`context`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.context;
-
-        expect(result).not.toThrow();
-      });
-    });
-  });
-
-  describe(`value()`, (): void => {
-    let message: string | unknown;
-
-    beforeEach((): void => {
-      service = new ChalkService();
-    });
-
-    describe(`when the given message is "dummy-value"`, (): void => {
-      beforeEach((): void => {
-        message = `dummy-value`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.value(message);
-
-        expect(result).toMatch(`dummy-value`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.value;
-
-        expect(result).not.toThrow();
-      });
-    });
-
-    describe(`when the given message is "value"`, (): void => {
-      beforeEach((): void => {
-        message = `value`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.value(message);
-
-        expect(result).toMatch(`value`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.value;
-
-        expect(result).not.toThrow();
-      });
-    });
-  });
-
-  describe(`hint()`, (): void => {
-    let message: string | unknown;
-
-    beforeEach((): void => {
-      service = new ChalkService();
-    });
-
-    describe(`when the given message is "dummy-hint"`, (): void => {
-      beforeEach((): void => {
-        message = `dummy-hint`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.hint(message);
-
-        expect(result).toMatch(`dummy-hint`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.hint;
-
-        expect(result).not.toThrow();
-      });
-    });
-
-    describe(`when the given message is "hint"`, (): void => {
-      beforeEach((): void => {
-        message = `hint`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.hint(message);
-
-        expect(result).toMatch(`hint`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.hint;
-
-        expect(result).not.toThrow();
-      });
-    });
-  });
-
-  describe(`error()`, (): void => {
-    let message: string | unknown;
-
-    beforeEach((): void => {
-      service = new ChalkService();
-    });
-
-    describe(`when the given message is "dummy-error"`, (): void => {
-      beforeEach((): void => {
-        message = `dummy-error`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.error(message);
-
-        expect(result).toMatch(`dummy-error`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.error;
-
-        expect(result).not.toThrow();
-      });
-    });
-
-    describe(`when the given message is "error"`, (): void => {
-      beforeEach((): void => {
-        message = `error`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.error(message);
-
-        expect(result).toMatch(`error`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.error;
-
-        expect(result).not.toThrow();
-      });
-    });
-  });
-
-  describe(`warning()`, (): void => {
-    let message: string | unknown;
-
-    beforeEach((): void => {
-      service = new ChalkService();
-    });
-
-    describe(`when the given message is "dummy-warning"`, (): void => {
-      beforeEach((): void => {
-        message = `dummy-warning`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.warning(message);
-
-        expect(result).toMatch(`dummy-warning`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.warning;
-
-        expect(result).not.toThrow();
-      });
-    });
-
-    describe(`when the given message is "warning"`, (): void => {
-      beforeEach((): void => {
-        message = `warning`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.warning(message);
-
-        expect(result).toMatch(`warning`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.warning;
-
-        expect(result).not.toThrow();
-      });
-    });
-  });
-
-  describe(`text()`, (): void => {
-    let message: string | unknown;
-
-    beforeEach((): void => {
-      service = new ChalkService();
-    });
-
-    describe(`when the given message is "dummy-text"`, (): void => {
-      beforeEach((): void => {
-        message = `dummy-text`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.text(message);
-
-        expect(result).toMatch(`dummy-text`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.text;
-
-        expect(result).not.toThrow();
-      });
-    });
-
-    describe(`when the given message is "text"`, (): void => {
-      beforeEach((): void => {
-        message = `text`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.text(message);
-
-        expect(result).toMatch(`text`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.text;
-
-        expect(result).not.toThrow();
-      });
-    });
-  });
-
-  describe(`log()`, (): void => {
-    let message: string | unknown;
-
-    beforeEach((): void => {
-      service = new ChalkService();
-    });
-
-    describe(`when the given message is "dummy-log"`, (): void => {
-      beforeEach((): void => {
-        message = `dummy-log`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.log(message);
-
-        expect(result).toMatch(`dummy-log`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.log;
-
-        expect(result).not.toThrow();
-      });
-    });
-
-    describe(`when the given message is "log"`, (): void => {
-      beforeEach((): void => {
-        message = `log`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.log(message);
-
-        expect(result).toMatch(`log`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.log;
-
-        expect(result).not.toThrow();
-      });
-    });
-  });
-
-  describe(`debug()`, (): void => {
-    let message: string | unknown;
-
-    beforeEach((): void => {
-      service = new ChalkService();
-    });
-
-    describe(`when the given message is "dummy-debug"`, (): void => {
-      beforeEach((): void => {
-        message = `dummy-debug`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.debug(message);
-
-        expect(result).toMatch(`dummy-debug`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.debug;
-
-        expect(result).not.toThrow();
-      });
-    });
-
-    describe(`when the given message is "debug"`, (): void => {
-      beforeEach((): void => {
-        message = `debug`;
-      });
-
-      it(`should return the given message`, (): void => {
-        expect.assertions(1);
-
-        const result = service.debug(message);
-
-        expect(result).toMatch(`debug`);
-      });
-
-      it(`should not throw error`, (): void => {
-        expect.assertions(1);
-
-        const result = service.debug;
-
-        expect(result).not.toThrow();
-      });
-    });
-  });
-
-  describe(`getLevel()`, (): void => {
-    beforeEach((): void => {
-      service = new ChalkService();
+      expect(chalkServiceGetLevelSpy).toHaveBeenCalledTimes(1);
+      expect(chalkServiceGetLevelSpy).toHaveBeenCalledWith();
     });
 
     describe(`when the chalk level is 0`, (): void => {
       beforeEach((): void => {
-        CHALK_INSTANCE.level = 0;
+        chalkLevel = 0;
+
+        chalkServiceGetLevelSpy.mockReturnValue(chalkLevel);
       });
 
-      it(`should return 0`, (): void => {
-        expect.assertions(1);
+      it(`should log about no colors`, (): void => {
+        expect.assertions(2);
 
-        const result = service.getLevel();
+        service.init();
 
-        expect(result).toStrictEqual(0);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+          context: `ChalkColorService`,
+          message: `text-chalk color level: value-0hint- (All colors disabled)`,
+        } as ILoggerLog);
       });
     });
 
     describe(`when the chalk level is 1`, (): void => {
       beforeEach((): void => {
-        CHALK_INSTANCE.level = 1;
+        chalkLevel = 1;
+
+        chalkServiceGetLevelSpy.mockReturnValue(chalkLevel);
       });
 
-      it(`should return 1`, (): void => {
-        expect.assertions(1);
+      it(`should log about 16 colors`, (): void => {
+        expect.assertions(2);
 
-        const result = service.getLevel();
+        service.init();
 
-        expect(result).toStrictEqual(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+          context: `ChalkColorService`,
+          message: `text-chalk color level: value-1hint- (Basic 16 colors support)`,
+        } as ILoggerLog);
       });
     });
 
     describe(`when the chalk level is 2`, (): void => {
       beforeEach((): void => {
-        CHALK_INSTANCE.level = 2;
+        chalkLevel = 2;
+
+        chalkServiceGetLevelSpy.mockReturnValue(chalkLevel);
       });
 
-      it(`should return 2`, (): void => {
-        expect.assertions(1);
+      it(`should log about 256 colors`, (): void => {
+        expect.assertions(2);
 
-        const result = service.getLevel();
+        service.init();
 
-        expect(result).toStrictEqual(2);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+          context: `ChalkColorService`,
+          message: `text-chalk color level: value-2hint- (ANSI 256 colors support)`,
+        } as ILoggerLog);
       });
     });
 
     describe(`when the chalk level is 3`, (): void => {
       beforeEach((): void => {
-        CHALK_INSTANCE.level = 3;
+        chalkLevel = 3;
+
+        chalkServiceGetLevelSpy.mockReturnValue(chalkLevel);
       });
 
-      it(`should return 3`, (): void => {
-        expect.assertions(1);
+      it(`should log about 16 millions colors`, (): void => {
+        expect.assertions(2);
 
-        const result = service.getLevel();
+        service.init();
 
-        expect(result).toStrictEqual(3);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+          context: `ChalkColorService`,
+          message: `text-chalk color level: value-3hint- (Truecolor 16 million colors support)`,
+        } as ILoggerLog);
       });
     });
   });

@@ -1,6 +1,6 @@
 import { CHALK_INSTANCE } from "./chalk-instance";
 
-describe(`CHALK`, (): void => {
+describe(`CHALK_INSTANCE`, (): void => {
   it(`should be a "Chalk" object`, (): void => {
     expect.assertions(1);
 
