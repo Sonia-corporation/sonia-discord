@@ -1,5 +1,17 @@
 # Semantic Versioning Changelog
 
+# [1.52.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.51.0...1.52.0) (2020-05-24)
+
+
+### Features
+
+* **chalk:** use basic colors when truecolor is not available ([7af6be2](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7af6be21021964549af559245ae6315836f4abbc))
+
+
+### Performance Improvements
+
+* **chalk-color-service:** change the way to get the humanised levels ([dac1940](https://github.com/Sonia-corporation/il-est-midi-discord/commit/dac1940f2349382c05f03862ca1db26216e58e04))
+
 # [1.51.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.50.0...1.51.0) (2020-05-23)
 
 
