@@ -9,6 +9,7 @@ import { ChalkService } from "../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../logger/services/logger.service";
 import { getNextJobDate } from "../../../../schedules/functions/get-next-job-date";
 import { getNextJobDateHumanized } from "../../../../schedules/functions/get-next-job-date-humanized";
+import { TimezoneEnum } from "../../../../time/enums/timezone.enum";
 import { isDiscordGuildChannel } from "../../../channels/functions/is-discord-guild-channel";
 import { isDiscordGuildChannelWritable } from "../../../channels/functions/types/is-discord-guild-channel-writable";
 import { DiscordChannelGuildService } from "../../../channels/services/discord-channel-guild.service";
@@ -135,7 +136,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   }
 
   private _isNoonInParis(): boolean {
-    return _.isEqual(moment().tz(`Europe/Paris`).get(`hour`), 12);
+    return _.isEqual(moment().tz(TimezoneEnum.PARIS).get(`hour`), 12);
   }
 
   private _sendMessage(guildChannel: Readonly<GuildChannel>): void {

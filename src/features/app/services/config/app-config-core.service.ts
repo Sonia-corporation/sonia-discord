@@ -2,6 +2,7 @@ import _ from "lodash";
 import moment from "moment-timezone";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
+import { TimezoneEnum } from "../../../time/enums/timezone.enum";
 import { IAppConfig } from "../../interfaces/app-config";
 
 export class AppConfigCoreService extends AbstractService
@@ -18,12 +19,14 @@ export class AppConfigCoreService extends AbstractService
 
   public firstReleaseDate = moment({
     day: 24,
-    hour: 0,
+    hour: 1,
     minute: 0,
     month: 2,
     second: 0,
     year: 2020,
-  }).toISOString();
+  })
+    .tz(TimezoneEnum.PARIS)
+    .toISOString();
   public initializationDate = `unknown`;
   public isProduction = false;
   public releaseDate = `unknown`;
