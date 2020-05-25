@@ -59,9 +59,7 @@
         "assets": [
           "package.json",
           "package-lock.json",
-          "CHANGELOG.md",
-          "README.md",
-          "npm-shrinkwrap.json"
+          "CHANGELOG.md"
         ],
         "message": "build(release): new version ${nextRelease.version}"
       }
@@ -80,7 +78,7 @@
     ]
   ],
   "dryRun": false,
-  "ci": false,
+  "ci": true,
   "debug": false,
   "preset": "angular",
   "tagFormat": "${version}"
