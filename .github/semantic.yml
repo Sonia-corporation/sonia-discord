@@ -1,4 +1,5 @@
 allowMergeCommits: true
+allowRevertCommits: true
 titleAndCommits: true
 
 # Any changes should also me made on the [commitizen script](#/scripts/commitizen.js)

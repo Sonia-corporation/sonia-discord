@@ -53,6 +53,85 @@ describe(`AppConfigQueryService`, (): void => {
     });
   });
 
+  describe(`getFirstReleaseDateFormatted()`, (): void => {
+    let format: string;
+
+    beforeEach((): void => {
+      service = AppConfigQueryService.getInstance();
+    });
+
+    describe(`when the app config first release date is an empty string`, (): void => {
+      beforeEach((): void => {
+        appConfigCoreService.firstReleaseDate = ``;
+      });
+
+      it(`should return an empty string`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getFirstReleaseDateFormatted();
+
+        expect(result).toStrictEqual(``);
+      });
+    });
+
+    describe(`when the app config first release date is a date from the 24th March 2020`, (): void => {
+      beforeEach((): void => {
+        appConfigCoreService.firstReleaseDate = `2020-03-24T00:00:00.000Z`;
+      });
+
+      it(`should return the app config first release date formatted as an ISO string`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getFirstReleaseDateFormatted();
+
+        expect(result).toStrictEqual(
+          moment(`2020-03-24T00:00:00.000Z`).format(format)
+        );
+      });
+    });
+
+    describe(`when the given format is "[the ]Do MMMM YYYY"`, (): void => {
+      beforeEach((): void => {
+        format = `[the ]Do MMMM YYYY`;
+      });
+
+      describe(`when the app config first release date is an empty string`, (): void => {
+        beforeEach((): void => {
+          appConfigCoreService.firstReleaseDate = ``;
+        });
+
+        it(`should return an empty string`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getFirstReleaseDateFormatted(format);
+
+          expect(result).toStrictEqual(``);
+        });
+      });
+
+      describe(`when the app config first release date is a date from the 24th March 2020`, (): void => {
+        beforeEach((): void => {
+          appConfigCoreService.firstReleaseDate = moment({
+            day: 24,
+            hour: 0,
+            minute: 0,
+            month: 2,
+            second: 0,
+            year: 2020,
+          }).toISOString();
+        });
+
+        it(`should return the app config first release date formatted with the given format`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getFirstReleaseDateFormatted(format);
+
+          expect(result).toStrictEqual(`the 24th March 2020`);
+        });
+      });
+    });
+  });
+
   describe(`getInitializationDateHumanized()`, (): void => {
     beforeEach((): void => {
       service = AppConfigQueryService.getInstance();
@@ -251,6 +330,8 @@ describe(`AppConfigQueryService`, (): void => {
   });
 
   describe(`getTotalReleaseCountHumanized()`, (): void => {
+    let releaseWord: string;
+
     beforeEach((): void => {
       service = AppConfigQueryService.getInstance();
       appConfigCoreService.totalReleaseCount = 8;
@@ -284,20 +365,6 @@ describe(`AppConfigQueryService`, (): void => {
       });
     });
 
-    describe(`when the app config total release count is 2`, (): void => {
-      beforeEach((): void => {
-        appConfigCoreService.totalReleaseCount = 2;
-      });
-
-      it(`should return "2 versions"`, (): void => {
-        expect.assertions(1);
-
-        const result = service.getTotalReleaseCountHumanized();
-
-        expect(result).toStrictEqual(`2 versions`);
-      });
-    });
-
     describe(`when the app config total release count is 8`, (): void => {
       beforeEach((): void => {
         appConfigCoreService.totalReleaseCount = 8;
@@ -309,6 +376,54 @@ describe(`AppConfigQueryService`, (): void => {
         const result = service.getTotalReleaseCountHumanized();
 
         expect(result).toStrictEqual(`8 versions`);
+      });
+    });
+
+    describe(`when the given release word is "birthday"`, (): void => {
+      beforeEach((): void => {
+        releaseWord = `birthday`;
+      });
+
+      describe(`when the app config total release count is 0`, (): void => {
+        beforeEach((): void => {
+          appConfigCoreService.totalReleaseCount = 0;
+        });
+
+        it(`should return "0 birthday"`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getTotalReleaseCountHumanized(releaseWord);
+
+          expect(result).toStrictEqual(`0 birthday`);
+        });
+      });
+
+      describe(`when the app config total release count is 1`, (): void => {
+        beforeEach((): void => {
+          appConfigCoreService.totalReleaseCount = 1;
+        });
+
+        it(`should return "1 birthday"`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getTotalReleaseCountHumanized(releaseWord);
+
+          expect(result).toStrictEqual(`1 birthday`);
+        });
+      });
+
+      describe(`when the app config total release count is 8`, (): void => {
+        beforeEach((): void => {
+          appConfigCoreService.totalReleaseCount = 8;
+        });
+
+        it(`should return "8 birthdays"`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getTotalReleaseCountHumanized(releaseWord);
+
+          expect(result).toStrictEqual(`8 birthdays`);
+        });
       });
     });
   });
