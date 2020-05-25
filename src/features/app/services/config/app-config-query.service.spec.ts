@@ -76,14 +76,7 @@ describe(`AppConfigQueryService`, (): void => {
 
     describe(`when the app config first release date is a date from the 24th March 2020`, (): void => {
       beforeEach((): void => {
-        appConfigCoreService.firstReleaseDate = moment({
-          day: 24,
-          hour: 0,
-          minute: 0,
-          month: 2,
-          second: 0,
-          year: 2020,
-        }).toISOString();
+        appConfigCoreService.firstReleaseDate = `2020-03-24T00:00:00.000Z`;
       });
 
       it(`should return the app config first release date formatted as an ISO string`, (): void => {
@@ -91,7 +84,9 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getFirstReleaseDateFormatted();
 
-        expect(result).toStrictEqual(`2020-03-24T00:00:00+01:00`);
+        expect(result).toStrictEqual(
+          moment(`2020-03-24T00:00:00.000Z`).format(format)
+        );
       });
     });
 
