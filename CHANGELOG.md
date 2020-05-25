@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+# [1.55.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.54.0...1.55.0) (2020-05-25)
+
+
+### Features
+
+* **discord:** add the first release date in the footer of the version ([2ca56fd](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2ca56fdea2557a1fdc841f8c1e40f3c5d068d258)), closes [#457](https://github.com/Sonia-corporation/il-est-midi-discord/issues/457)
+* **discord:** use birthday instead of version in the version footer cmd ([9ee4ea2](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9ee4ea25c941f07ba9ddae1398081dad6ab5e329)), closes [#448](https://github.com/Sonia-corporation/il-est-midi-discord/issues/448)
+
 # [1.54.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.53.0...1.54.0) (2020-05-24)
 
 
