@@ -1,4 +1,5 @@
 import _ from "lodash";
+import moment from "moment-timezone";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { isValidDate } from "../../../../functions/checks/is-valid-date";
@@ -22,6 +23,16 @@ export class AppConfigQueryService extends AbstractService {
 
   public constructor() {
     super(ServiceNameEnum.APP_CONFIG_QUERY_SERVICE);
+  }
+
+  public getFirstReleaseDateFormatted(format?: Readonly<string>): string {
+    const firstReleaseDate: string = this._appConfigService.getFirstReleaseDate();
+
+    if (isValidDate(firstReleaseDate)) {
+      return moment(firstReleaseDate).format(format);
+    }
+
+    return firstReleaseDate;
   }
 
   public getInitializationDateHumanized(): string {
@@ -50,9 +61,11 @@ export class AppConfigQueryService extends AbstractService {
     return releaseDate;
   }
 
-  public getTotalReleaseCountHumanized(): string {
+  public getTotalReleaseCountHumanized(
+    releaseWord: Readonly<string> = `version`
+  ): string {
     const totalReleaseCount: number = this._appConfigService.getTotalReleaseCount();
-    let sentence = `${totalReleaseCount} version`;
+    let sentence = `${totalReleaseCount} ${releaseWord}`;
 
     if (_.gt(totalReleaseCount, 1)) {
       sentence = `${sentence}s`;

@@ -90,11 +90,16 @@ export class DiscordMessageCommandVersionService extends AbstractService {
     const soniaImageUrl:
       | string
       | null = this._discordSoniaService.getImageUrl();
-    const totalReleaseCountHumanized: string = this._appConfigQueryService.getTotalReleaseCountHumanized();
+    const totalReleaseCountHumanized: string = this._appConfigQueryService.getTotalReleaseCountHumanized(
+      `birthday`
+    );
+    const firstReleaseDate: string = this._appConfigQueryService.getFirstReleaseDateFormatted(
+      `[the ]Do MMMM YYYY`
+    );
 
     return {
       iconURL: soniaImageUrl || undefined,
-      text: totalReleaseCountHumanized,
+      text: `${totalReleaseCountHumanized} since ${firstReleaseDate}`,
     };
   }
 

@@ -15,6 +15,7 @@ export class AppConfigCoreService extends AbstractService
     return AppConfigCoreService._instance;
   }
 
+  public firstReleaseDate = `2020-03-24T00:00:00.000Z`;
   public initializationDate = `unknown`;
   public isProduction = false;
   public releaseDate = `unknown`;

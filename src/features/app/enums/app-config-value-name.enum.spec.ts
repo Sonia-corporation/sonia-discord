@@ -1,6 +1,14 @@
 import { AppConfigValueNameEnum } from "./app-config-value-name.enum";
 
 describe(`AppConfigValueNameEnum`, (): void => {
+  it(`should have a member "FIRST_RELEASE_DATE"`, (): void => {
+    expect.assertions(1);
+
+    expect(AppConfigValueNameEnum.FIRST_RELEASE_DATE).toStrictEqual(
+      `first release date`
+    );
+  });
+
   it(`should have a member "INITIALIZATION_DATE"`, (): void => {
     expect.assertions(1);
 

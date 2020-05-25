@@ -49,6 +49,14 @@ describe(`AppConfigCoreService`, (): void => {
     });
   });
 
+  it(`should have a first release date`, (): void => {
+    expect.assertions(1);
+
+    service = AppConfigCoreService.getInstance();
+
+    expect(service.firstReleaseDate).toStrictEqual(`2020-03-24T00:00:00.000Z`);
+  });
+
   it(`should have a unknown initialization date`, (): void => {
     expect.assertions(1);
 
