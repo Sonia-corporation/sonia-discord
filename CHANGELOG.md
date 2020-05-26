@@ -1,5 +1,19 @@
 # Semantic Versioning Changelog
 
+## <small>1.55.1 (2020-05-26)</small>
+
+* Merge pull request #492 from Sonia-corporation/develop ([2ed112b](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2ed112b)), closes [#492](https://github.com/Sonia-corporation/il-est-midi-discord/issues/492)
+* Merge pull request #491 from Sonia-corporation/feature/semantic-release ([ba3ba9c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ba3ba9c)), closes [#491](https://github.com/Sonia-corporation/il-est-midi-discord/issues/491)
+* Merge branch 'develop' into feature/semantic-release ([e064e86](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e064e86))
+* Merge pull request #490 from Sonia-corporation/develop ([5a6bef1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5a6bef1)), closes [#490](https://github.com/Sonia-corporation/il-est-midi-discord/issues/490)
+* Merge pull request #489 from Sonia-corporation/feature/semantic-release ([cd6eb2f](https://github.com/Sonia-corporation/il-est-midi-discord/commit/cd6eb2f)), closes [#489](https://github.com/Sonia-corporation/il-est-midi-discord/issues/489)
+* Merge pull request #487 from Sonia-corporation/renovate/eslint-plugin-rxjs-0.0.x ([9060b94](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9060b94)), closes [#487](https://github.com/Sonia-corporation/il-est-midi-discord/issues/487)
+* fix(dummy): fake fix to test the release ([b43aab3](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b43aab3))
+* build(release): use commitizen and define the release rules ([3971eeb](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3971eeb))
+* chore(dependencies): remove conventional-changelog-angular ([ad2bf81](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ad2bf81))
+* chore(readme): remove useless dot between badges ([fb8b8fa](https://github.com/Sonia-corporation/il-est-midi-discord/commit/fb8b8fa))
+* chore(deps): update dependency eslint-plugin-rxjs to v0.0.2-beta.23 ([2347563](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2347563))
+
 # [1.55.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.54.0...1.55.0) (2020-05-25)
 
 
