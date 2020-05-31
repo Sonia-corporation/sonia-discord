@@ -100,7 +100,7 @@
     "git:push": "git push-upstream"
   },
   "dependencies": {
-    "@scout_apm/scout-apm": "0.1.8",
+    "@scout_apm/scout-apm": "0.1.9",
     "axios": "0.19.2",
     "discord.js": "12.2.0",
     "express": "4.17.1",
