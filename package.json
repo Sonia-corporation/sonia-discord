@@ -156,7 +156,7 @@
     "rimraf": "3.0.2",
     "semantic-release": "17.0.8",
     "stryker-cli": "1.0.0",
-    "ts-auto-mock": "2.1.22",
+    "ts-auto-mock": "2.2.2",
     "ts-jest": "26.1.0",
     "ts-node-dev": "1.0.0-pre.44",
     "tsconfig-paths": "3.9.0",
