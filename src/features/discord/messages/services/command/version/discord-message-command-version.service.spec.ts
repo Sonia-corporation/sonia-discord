@@ -15,19 +15,21 @@ import { AppConfigService } from "../../../../../app/services/config/app-config.
 import { CoreEventService } from "../../../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../logger/services/logger.service";
-import { DiscordSoniaEmotionalStateEnum } from "../../../../users/enums/discord-sonia-emotional-state.enum";
+import { DiscordSoniaEmotionalStateEnum } from "../../../../emotional-states/enums/discord-sonia-emotional-state.enum";
+import { DiscordSoniaEmotionalStateService } from "../../../../emotional-states/services/discord-sonia-emotional-state.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
 import { AnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandVersionService } from "./discord-message-command-version.service";
 
-jest.mock(`../../../../../logger/services/chalk.service`);
+jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordMessageCommandVersionService`, (): void => {
   let service: DiscordMessageCommandVersionService;
   let coreEventService: CoreEventService;
   let loggerService: LoggerService;
   let discordSoniaService: DiscordSoniaService;
+  let discordSoniaEmotionalStateService: DiscordSoniaEmotionalStateService;
   let discordMessageConfigService: DiscordMessageConfigService;
   let appConfigQueryService: AppConfigQueryService;
   let appConfigService: AppConfigService;
@@ -36,6 +38,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     coreEventService = CoreEventService.getInstance();
     loggerService = LoggerService.getInstance();
     discordSoniaService = DiscordSoniaService.getInstance();
+    discordSoniaEmotionalStateService = DiscordSoniaEmotionalStateService.getInstance();
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
     appConfigQueryService = AppConfigQueryService.getInstance();
     appConfigService = AppConfigService.getInstance();
@@ -90,6 +93,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     let discordMessageConfigServiceGetMessageCommandVersionImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
     let appConfigQueryServiceGetTotalReleaseCountHumanizedSpy: jest.SpyInstance;
+    let appConfigQueryServiceGetFirstReleaseDateFormattedSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandVersionImageUrlSpy: jest.SpyInstance;
     let discordSoniaServiceGetFullNameSpy: jest.SpyInstance;
     let appConfigServiceGetVersionSpy: jest.SpyInstance;
@@ -97,7 +101,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     let appConfigQueryServiceGetInitializationDateHumanizedSpy: jest.SpyInstance;
     let appConfigServiceGetReleaseNotesSpy: jest.SpyInstance;
     let appConfigQueryServiceGetProductionStateHumanizedSpy: jest.SpyInstance;
-    let discordSoniaServiceGetEmotionalStateSpy: jest.SpyInstance;
+    let discordSoniaEmotionalStateServiceGetEmotionalStateSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       anyDiscordMessage = createMock<AnyDiscordMessage>({
@@ -120,6 +124,10 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       appConfigQueryServiceGetTotalReleaseCountHumanizedSpy = jest.spyOn(
         appConfigQueryService,
         `getTotalReleaseCountHumanized`
+      );
+      appConfigQueryServiceGetFirstReleaseDateFormattedSpy = jest.spyOn(
+        appConfigQueryService,
+        `getFirstReleaseDateFormatted`
       );
       discordMessageConfigServiceGetMessageCommandVersionImageUrlSpy = jest.spyOn(
         discordMessageConfigService,
@@ -149,8 +157,8 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         appConfigQueryService,
         `getProductionStateHumanized`
       );
-      discordSoniaServiceGetEmotionalStateSpy = jest.spyOn(
-        discordSoniaService,
+      discordSoniaEmotionalStateServiceGetEmotionalStateSpy = jest.spyOn(
+        discordSoniaEmotionalStateService,
         `getEmotionalState`
       );
     });
@@ -288,7 +296,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
     it(`should return a Discord message response embed with an emotional state field`, (): void => {
       expect.assertions(1);
-      discordSoniaServiceGetEmotionalStateSpy.mockReturnValue(
+      discordSoniaEmotionalStateServiceGetEmotionalStateSpy.mockReturnValue(
         DiscordSoniaEmotionalStateEnum.AGITATED
       );
 
@@ -307,7 +315,10 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
       appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
-        `8 versions`
+        `8 birthdays`
+      );
+      appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(
+        `the 24th March 2020`
       );
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
@@ -316,7 +327,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
-        text: `8 versions`,
+        text: `8 birthdays since the 24th March 2020`,
       } as MessageEmbedFooter);
     });
 
@@ -324,7 +335,10 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       beforeEach((): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
         appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
-          `8 versions`
+          `8 birthdays`
+        );
+        appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(
+          `the 24th March 2020`
         );
       });
 
@@ -337,7 +351,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: undefined,
-          text: `8 versions`,
+          text: `8 birthdays since the 24th March 2020`,
         } as MessageEmbedFooter);
       });
     });
@@ -346,7 +360,10 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       beforeEach((): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
         appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
-          `8 versions`
+          `8 birthdays`
+        );
+        appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(
+          `the 24th March 2020`
         );
       });
 
@@ -359,7 +376,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: `image-url`,
-          text: `8 versions`,
+          text: `8 birthdays since the 24th March 2020`,
         } as MessageEmbedFooter);
       });
     });

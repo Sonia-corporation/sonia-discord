@@ -34,6 +34,7 @@ Run `npm run create-secret-environment`.
     "personalAccessToken": "REQUIRED_AND_TO_DEFINE_BY_YOU"
   },
   "profile": {
+    "discordId": "OPTIONAL_AND_TO_DEFINE_BY_YOU",
     "nickname": "OPTIONAL_AND_TO_DEFINE_BY_YOU"
   }
 }
@@ -62,11 +63,14 @@ It should contain the following scopes:
 - read:public_key
 - read:gpg_key
 
-__Note for the nickname:__
+__Note for the profile:__
 
 It is useful to distinguish developers running a local version of Sonia.  
 On each message (plain text or embed) the nickname will appear.  
-It can be anything you want however we recommend that you use your Discord id (a.k: <@!260525899991089165>)
+It can be anything you want however we recommend that you use your Discord name.  
+
+The Discord id will be used on simple text messages to use your name as a mention instead of pure text.  
+If the Discord id is not set the username will be used instead as fallback.
 
 ## Package scripts
 

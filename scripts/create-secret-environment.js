@@ -42,6 +42,10 @@ FS.access(`${APP_ROOT_PATH.path}/src/environment/secret-environment.json`)
             github: {
               personalAccessToken: `TO_DEFINE_BY_YOU`,
             },
+            profile: {
+              discordId: undefined,
+              nickname: undefined,
+            },
           }
         )
           .then(() => {

@@ -1,4 +1,5 @@
 import { Client } from "discord.js";
+import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../logger/interfaces/logger-log";
@@ -8,7 +9,7 @@ import { DiscordLoggerErrorService } from "./discord-logger-error.service";
 import { DiscordLoggerWarningService } from "./discord-logger-warning.service";
 import { DiscordLoggerService } from "./discord-logger.service";
 
-jest.mock(`../../../logger/services/chalk.service`);
+jest.mock(`../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordLoggerService`, (): void => {
   let service: DiscordLoggerService;
@@ -66,6 +67,7 @@ describe(`DiscordLoggerService`, (): void => {
   });
 
   describe(`init()`, (): void => {
+    let client: Client;
     let discordClientServiceGetClientOnMock: jest.Mock;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
@@ -76,15 +78,16 @@ describe(`DiscordLoggerService`, (): void => {
     beforeEach((): void => {
       service = new DiscordLoggerService();
       discordClientServiceGetClientOnMock = jest.fn();
+      client = createMock<Client>({
+        on: discordClientServiceGetClientOnMock,
+      });
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
         .mockImplementation();
       discordClientServiceGetClientSpy = jest
         .spyOn(discordClientService, `getClient`)
-        .mockReturnValue({
-          on: discordClientServiceGetClientOnMock as unknown,
-        } as Client);
+        .mockReturnValue(client);
       discordLoggerWarningServiceHandleWarningSpy = jest
         .spyOn(discordLoggerWarningService, `handleWarning`)
         .mockImplementation();
@@ -123,10 +126,11 @@ describe(`DiscordLoggerService`, (): void => {
             listener();
           }
         );
+        client = createMock<Client>({
+          on: discordClientServiceGetClientOnMock,
+        });
 
-        discordClientServiceGetClientSpy.mockReturnValue({
-          on: discordClientServiceGetClientOnMock as unknown,
-        } as Client);
+        discordClientServiceGetClientSpy.mockReturnValue(client);
       });
 
       it(`should handle the warning`, (): void => {
@@ -175,10 +179,11 @@ describe(`DiscordLoggerService`, (): void => {
             listener();
           }
         );
+        client = createMock<Client>({
+          on: discordClientServiceGetClientOnMock,
+        });
 
-        discordClientServiceGetClientSpy.mockReturnValue({
-          on: discordClientServiceGetClientOnMock as unknown,
-        } as Client);
+        discordClientServiceGetClientSpy.mockReturnValue(client);
       });
 
       it(`should handle the error`, (): void => {

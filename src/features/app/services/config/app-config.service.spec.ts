@@ -56,6 +56,7 @@ describe(`AppConfigService`, (): void => {
   describe(`getConfig()`, (): void => {
     beforeEach((): void => {
       service = AppConfigService.getInstance();
+      appConfigCoreService.firstReleaseDate = `dummy-first-release-date`;
       appConfigCoreService.initializationDate = `dummy-initialization-date`;
       appConfigCoreService.isProduction = false;
       appConfigCoreService.releaseDate = `dummy-release-date`;
@@ -70,6 +71,7 @@ describe(`AppConfigService`, (): void => {
       const result = service.getConfig();
 
       expect(result).toStrictEqual({
+        firstReleaseDate: `dummy-first-release-date`,
         initializationDate: `dummy-initialization-date`,
         isProduction: false,
         releaseDate: `dummy-release-date`,
@@ -77,6 +79,21 @@ describe(`AppConfigService`, (): void => {
         totalReleaseCount: 0,
         version: `dummy-version`,
       } as IAppConfig);
+    });
+  });
+
+  describe(`getFirstReleaseDate()`, (): void => {
+    beforeEach((): void => {
+      service = AppConfigService.getInstance();
+      appConfigCoreService.firstReleaseDate = `dummy-first-release-date`;
+    });
+
+    it(`should return the app config first release date`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getFirstReleaseDate();
+
+      expect(result).toStrictEqual(`dummy-first-release-date`);
     });
   });
 

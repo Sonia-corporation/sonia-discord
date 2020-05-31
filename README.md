@@ -10,15 +10,15 @@ __Quality:__
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FSonia-corporation%2Fil-est-midi-discord%2Fdevelop)](https://dashboard.stryker-mutator.io/reports/github.com/Sonia-corporation/il-est-midi-discord/develop)
 ![GitHub issues](https://img.shields.io/github/issues-raw/sonia-corporation/il-est-midi-discord?style=flat-square)
 ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/sonia-corporation/il-est-midi-discord?style=flat-square)
-![Build](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Build/badge.svg?branch=master&style=flat-square)
-![Release](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Release/badge.svg?branch=master&style=flat-square)
+![Build](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Build/badge.svg?style=flat-square)
+![Release](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Release/badge.svg?style=flat-square)
 ![Dependencies](https://img.shields.io/david/sonia-corporation/il-est-midi-discord?style=flat-square)
 ![Dev Dependencies](https://img.shields.io/david/dev/sonia-corporation/il-est-midi-discord?style=flat-square)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
 __Community:__  
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors)
 [![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]()
 ![Discord](https://img.shields.io/discord/689833865279307782?style=flat-square)

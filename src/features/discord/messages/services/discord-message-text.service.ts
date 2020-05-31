@@ -4,7 +4,7 @@ import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { AppConfigService } from "../../../app/services/config/app-config.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { ProfileConfigService } from "../../../profile/services/config/profile-config.service";
-import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
+import { addDiscordDevPrefix } from "../../functions/dev-prefix/add-discord-dev-prefix";
 import { DiscordMentionService } from "../../mentions/services/discord-mention.service";
 import { DiscordAuthorService } from "../../users/services/discord-author.service";
 import { DiscordSoniaService } from "../../users/services/discord-sonia.service";
@@ -119,10 +119,12 @@ export class DiscordMessageTextService extends AbstractService {
     response: Readonly<string>
   ): string {
     if (!this._appConfigService.isProduction()) {
-      return addDiscordDevPrefix(
-        response,
-        this._profileConfigService.getNickname()
-      );
+      return addDiscordDevPrefix({
+        asMention: true,
+        discordId: this._profileConfigService.getDiscordId(),
+        message: response,
+        nickname: this._profileConfigService.getNickname(),
+      });
     }
 
     return response;

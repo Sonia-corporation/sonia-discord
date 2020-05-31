@@ -10,7 +10,7 @@ import { ProfileConfigMutatorService } from "./profile-config-mutator.service";
 import { ProfileConfigService } from "./profile-config.service";
 
 jest.mock(`../../../time/services/time.service`);
-jest.mock(`../../../logger/services/chalk.service`);
+jest.mock(`../../../logger/services/chalk/chalk.service`);
 
 describe(`ProfileConfigMutatorService`, (): void => {
   let service: ProfileConfigMutatorService;
@@ -77,6 +77,15 @@ describe(`ProfileConfigMutatorService`, (): void => {
         config = undefined;
       });
 
+      it(`should not update the current Discord id`, (): void => {
+        expect.assertions(1);
+        profileConfigCoreService.discordId = `discordId`;
+
+        service = new ProfileConfigMutatorService(config);
+
+        expect(profileConfigCoreService.discordId).toStrictEqual(`discordId`);
+      });
+
       it(`should not update the current nickname`, (): void => {
         expect.assertions(1);
         profileConfigCoreService.nickname = `nickname`;
@@ -90,8 +99,20 @@ describe(`ProfileConfigMutatorService`, (): void => {
     describe(`when the given config is a complete object`, (): void => {
       beforeEach((): void => {
         config = {
+          discordId: `dummy-discord-id`,
           nickname: `dummy-nickname`,
         };
+      });
+
+      it(`should override the Discord id`, (): void => {
+        expect.assertions(1);
+        profileConfigCoreService.discordId = `discordId`;
+
+        service = new ProfileConfigMutatorService(config);
+
+        expect(profileConfigCoreService.discordId).toStrictEqual(
+          `dummy-discord-id`
+        );
       });
 
       it(`should override the nickname`, (): void => {
@@ -161,16 +182,20 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
     beforeEach((): void => {
       service = ProfileConfigMutatorService.getInstance();
+      profileConfigCoreService.discordId = `dummy-discord-id`;
       profileConfigCoreService.nickname = `dummy-nickname`;
 
       loggerLogSpy = jest.spyOn(console, `log`).mockImplementation();
     });
 
     it(`should not update the config`, (): void => {
-      expect.assertions(1);
+      expect.assertions(2);
 
       service.updateConfig();
 
+      expect(profileConfigCoreService.discordId).toStrictEqual(
+        `dummy-discord-id`
+      );
       expect(profileConfigCoreService.nickname).toStrictEqual(`dummy-nickname`);
     });
 
@@ -188,10 +213,13 @@ describe(`ProfileConfigMutatorService`, (): void => {
       });
 
       it(`should not update the config`, (): void => {
-        expect.assertions(1);
+        expect.assertions(2);
 
         service.updateConfig(config);
 
+        expect(profileConfigCoreService.discordId).toStrictEqual(
+          `dummy-discord-id`
+        );
         expect(profileConfigCoreService.nickname).toStrictEqual(
           `dummy-nickname`
         );
@@ -203,6 +231,33 @@ describe(`ProfileConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(loggerLogSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the given config contains a Discord id`, (): void => {
+      beforeEach((): void => {
+        config = {
+          discordId: `discord-id`,
+        };
+      });
+
+      it(`should update the config Discord id`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(profileConfigCoreService.discordId).toStrictEqual(`discord-id`);
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[ProfileConfigMutatorService][now-format] text-configuration updated`
+        );
       });
     });
 
@@ -231,6 +286,44 @@ describe(`ProfileConfigMutatorService`, (): void => {
           `debug-● context-[ProfileConfigMutatorService][now-format] text-configuration updated`
         );
       });
+    });
+  });
+
+  describe(`updateDiscordId()`, (): void => {
+    let discordId: string;
+
+    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = ProfileConfigMutatorService.getInstance();
+      discordId = `discord-id`;
+      profileConfigCoreService.discordId = `dummy-discord-id`;
+
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(`discord-id`);
+    });
+
+    it(`should get the updated string`, (): void => {
+      expect.assertions(2);
+
+      service.updateDiscordId(discordId);
+
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+        context: `ProfileConfigMutatorService`,
+        newValue: `discord-id`,
+        oldValue: `dummy-discord-id`,
+        valueName: `discord id`,
+      } as IConfigUpdateString);
+    });
+
+    it(`should update the Discord id with the updated string`, (): void => {
+      expect.assertions(1);
+
+      service.updateDiscordId(discordId);
+
+      expect(profileConfigCoreService.discordId).toStrictEqual(`discord-id`);
     });
   });
 

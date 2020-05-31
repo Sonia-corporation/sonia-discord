@@ -2,13 +2,11 @@ import { MessageEmbedAuthor } from "discord.js";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { getRandomValueFromEnum } from "../../../../functions/randoms/get-random-value-from-enum";
 import { AppConfigService } from "../../../app/services/config/app-config.service";
 import { ProfileConfigService } from "../../../profile/services/config/profile-config.service";
-import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
+import { addDiscordDevPrefix } from "../../functions/dev-prefix/add-discord-dev-prefix";
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../interfaces/discord-sonia-corporation-message-embed-author-config";
 import { DiscordClientService } from "../../services/discord-client.service";
-import { DiscordSoniaEmotionalStateEnum } from "../enums/discord-sonia-emotional-state.enum";
 import { isDiscordClientUser } from "../functions/is-discord-client-user";
 import { Sonia } from "../types/sonia";
 import { DiscordSoniaConfigService } from "./config/discord-sonia-config.service";
@@ -67,14 +65,14 @@ export class DiscordSoniaService extends AbstractService {
 
   public getCorporationMessageEmbedAuthorName(): string {
     const discordSoniaCorporationMessageEmbedAuthorConfigName: string = this._discordSoniaConfigService.getCorporationMessageEmbedAuthorName();
-    const nickname: string | null = this._profileConfigService.getNickname();
 
     if (!this._appConfigService.isProduction()) {
-      return addDiscordDevPrefix(
-        discordSoniaCorporationMessageEmbedAuthorConfigName,
-        nickname,
-        false
-      );
+      return addDiscordDevPrefix({
+        discordId: this._profileConfigService.getDiscordId(),
+        hasEmphasis: false,
+        message: discordSoniaCorporationMessageEmbedAuthorConfigName,
+        nickname: this._profileConfigService.getNickname(),
+      });
     }
 
     return discordSoniaCorporationMessageEmbedAuthorConfigName;
@@ -92,9 +90,5 @@ export class DiscordSoniaService extends AbstractService {
     }
 
     return null;
-  }
-
-  public getEmotionalState(): DiscordSoniaEmotionalStateEnum | undefined {
-    return getRandomValueFromEnum(DiscordSoniaEmotionalStateEnum);
   }
 }

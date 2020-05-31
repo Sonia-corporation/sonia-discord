@@ -13,7 +13,7 @@ import { LoggerConfigMutatorService } from "./logger-config-mutator.service";
 import { LoggerConfigService } from "./logger-config.service";
 
 jest.mock(`../../../time/services/time.service`);
-jest.mock(`../chalk.service`);
+jest.mock(`../chalk/chalk.service`);
 
 describe(`LoggerConfigMutatorService`, (): void => {
   let service: LoggerConfigMutatorService;

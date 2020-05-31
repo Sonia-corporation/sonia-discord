@@ -3,7 +3,7 @@ import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { AppConfigService } from "../../../app/services/config/app-config.service";
 import { ProfileConfigService } from "../../../profile/services/config/profile-config.service";
-import { addDiscordDevPrefix } from "../../functions/add-discord-dev-prefix";
+import { addDiscordDevPrefix } from "../../functions/dev-prefix/add-discord-dev-prefix";
 import { DiscordAuthorService } from "../../users/services/discord-author.service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { AnyDiscordMessage } from "../types/any-discord-message";
@@ -47,10 +47,12 @@ export class DiscordMessageAuthorService extends AbstractService {
 
   private _getReplyWithEnvPrefix(response: Readonly<string>): string {
     if (!this._appConfigService.isProduction()) {
-      return addDiscordDevPrefix(
-        response,
-        this._profileConfigService.getNickname()
-      );
+      return addDiscordDevPrefix({
+        asMention: true,
+        discordId: this._profileConfigService.getDiscordId(),
+        message: response,
+        nickname: this._profileConfigService.getNickname(),
+      });
     }
 
     return response;

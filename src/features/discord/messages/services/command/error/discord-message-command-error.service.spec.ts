@@ -17,7 +17,7 @@ import {
   MessageEmbedThumbnail,
 } from "discord.js";
 
-jest.mock(`../../../../../logger/services/chalk.service`);
+jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordMessageCommandErrorService`, (): void => {
   let service: DiscordMessageCommandErrorService;

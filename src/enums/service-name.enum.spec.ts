@@ -33,6 +33,14 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "CHALK_COLOR_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.CHALK_COLOR_SERVICE).toStrictEqual(
+      `ChalkColorService`
+    );
+  });
+
   it(`should have a member "CHALK_SERVICE"`, (): void => {
     expect.assertions(1);
 
@@ -350,6 +358,14 @@ describe(`ServiceNameEnum`, (): void => {
 
     expect(ServiceNameEnum.DISCORD_SONIA_CONFIG_SERVICE).toStrictEqual(
       `DiscordSoniaConfigService`
+    );
+  });
+
+  it(`should have a member "DISCORD_SONIA_EMOTIONAL_STATE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_SONIA_EMOTIONAL_STATE_SERVICE).toStrictEqual(
+      `DiscordSoniaEmotionalStateService`
     );
   });
 
