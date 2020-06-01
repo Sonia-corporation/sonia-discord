@@ -52,4 +52,4 @@ jobs:
           git config --global user.email "release@sonia-corporation.com"
           git config --global user.name "Sonia Release Bot"
           git merge origin/master --no-ff
-          git push --no-verify
+          git push --no-verify --force
