@@ -52,4 +52,9 @@ jobs:
           git config --global user.email "release@sonia-corporation.com"
           git config --global user.name "Sonia Release Bot"
           git merge origin/master --no-ff
-          git push --no-verify --force
+      - name: Push develop
+        uses: ad-m/github-push-action@master
+        with:
+          force: true
+          branch: develop
+          github_token: ${{ secrets.GITHUB_TOKEN }}
