@@ -43,7 +43,7 @@ jobs:
       - name: Checkout develop
         uses: actions/checkout@v2
         with:
-          ref: 'origin/develop'
+          ref: develop
       - name: Create PR from master to develop
         uses: peter-evans/create-pull-request@v2
         with:
