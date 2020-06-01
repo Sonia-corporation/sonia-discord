@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.58.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.57.0...1.58.0) (2020-06-01)
+
+
+### Features
+
+* **release:** create a PR instead of merging directly ([450ae4c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/450ae4cf139aaf5191e32952d24e2ffc1509ff0c))
+
 # [1.57.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.56.0...1.57.0) (2020-06-01)
 
 
