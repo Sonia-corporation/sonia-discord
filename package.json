@@ -97,7 +97,8 @@
     "clean:dist": "rimraf dist",
     "commit": "npm run cz",
     "create-secret-environment": "node ./scripts/create-secret-environment.js",
-    "git:push": "git push-upstream"
+    "git:push": "git push-upstream",
+    "postversion": "cp -r package.json dist && cp -r package-lock.json dist && cp -r CHANGELOG.md dist && cp -r README.md dist && cp -r LICENSE dist && cp -r CONTRIBUTING.md dist"
   },
   "dependencies": {
     "@scout_apm/scout-apm": "0.1.9",
@@ -132,6 +133,7 @@
     "chalk": "4.0.0",
     "commitizen": "4.1.2",
     "concurrently": "5.2.0",
+    "conventional-changelog-angular": "5.0.10",
     "cz-customizable": "6.2.0",
     "cz-customizable-ghooks": "1.5.0",
     "eslint": "7.1.0",
