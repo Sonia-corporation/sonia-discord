@@ -96,7 +96,7 @@
     "\n# UTILS SCRIPTS:": "",
     "commitmsg": "cz-customizable-ghooks",
     "cz": "git add . && git-cz && npm run git:push",
-    "semver": "npx semantic-release",
+    "semver": "semantic-release",
     "clean:dist": "rimraf dist",
     "commit": "npm run cz",
     "create-secret-environment": "node ./scripts/create-secret-environment.js",
