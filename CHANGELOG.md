@@ -1,5 +1,38 @@
 # Semantic Versioning Changelog
 
+## 1.56.0 (2020-06-01)
+
+* Merge pull request #515 from Sonia-corporation/develop ([c0d4266](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c0d4266)), closes [#515](https://github.com/Sonia-corporation/il-est-midi-discord/issues/515)
+* Merge pull request #512 from Sonia-corporation/feature/release ([e0e08b0](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e0e08b0)), closes [#512](https://github.com/Sonia-corporation/il-est-midi-discord/issues/512)
+* Merge branch 'develop' into feature/release ([2a45ce1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2a45ce1))
+* Merge pull request #514 from Sonia-corporation/feature/errors-channel ([c0f3c56](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c0f3c56)), closes [#514](https://github.com/Sonia-corporation/il-est-midi-discord/issues/514)
+* Merge pull request #510 from Sonia-corporation/renovate/ts-auto-mock-2.2.x ([055d04c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/055d04c)), closes [#510](https://github.com/Sonia-corporation/il-est-midi-discord/issues/510)
+* Merge pull request #508 from Sonia-corporation/renovate/ts-auto-mock-2.x ([f627d85](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f627d85)), closes [#508](https://github.com/Sonia-corporation/il-est-midi-discord/issues/508)
+* Merge pull request #509 from Sonia-corporation/renovate/scout_apm-scout-apm-0.1.x ([5c1ede8](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5c1ede8)), closes [#509](https://github.com/Sonia-corporation/il-est-midi-discord/issues/509)
+* Merge pull request #505 from Sonia-corporation/renovate/lodash-4.14.x ([870cd43](https://github.com/Sonia-corporation/il-est-midi-discord/commit/870cd43)), closes [#505](https://github.com/Sonia-corporation/il-est-midi-discord/issues/505)
+* Merge pull request #506 from Sonia-corporation/renovate/ts-jest-26.x ([6335c45](https://github.com/Sonia-corporation/il-est-midi-discord/commit/6335c45)), closes [#506](https://github.com/Sonia-corporation/il-est-midi-discord/issues/506)
+* Merge pull request #504 from Sonia-corporation/renovate/eslint-plugin-rxjs-0.0.x ([6e01264](https://github.com/Sonia-corporation/il-est-midi-discord/commit/6e01264)), closes [#504](https://github.com/Sonia-corporation/il-est-midi-discord/issues/504)
+* Merge pull request #503 from Sonia-corporation/renovate/eslint-config-recommended-4.x ([442f752](https://github.com/Sonia-corporation/il-est-midi-discord/commit/442f752)), closes [#503](https://github.com/Sonia-corporation/il-est-midi-discord/issues/503)
+* Merge pull request #502 from Sonia-corporation/renovate/lint-staged-10.2.x ([2494c32](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2494c32)), closes [#502](https://github.com/Sonia-corporation/il-est-midi-discord/issues/502)
+* Merge pull request #501 from Sonia-corporation/renovate/patch-typescript-eslint-monorepo ([376f369](https://github.com/Sonia-corporation/il-est-midi-discord/commit/376f369)), closes [#501](https://github.com/Sonia-corporation/il-est-midi-discord/issues/501)
+* Merge pull request #498 from Sonia-corporation/master ([b5f9ef1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b5f9ef1)), closes [#498](https://github.com/Sonia-corporation/il-est-midi-discord/issues/498)
+* Merge pull request #495 from Sonia-corporation/renovate/eslint-plugin-jest-23.13.x ([fbdbf55](https://github.com/Sonia-corporation/il-est-midi-discord/commit/fbdbf55)), closes [#495](https://github.com/Sonia-corporation/il-est-midi-discord/issues/495)
+* Merge pull request #496 from Sonia-corporation/renovate/lodash-4.14.x ([04cb711](https://github.com/Sonia-corporation/il-est-midi-discord/commit/04cb711)), closes [#496](https://github.com/Sonia-corporation/il-est-midi-discord/issues/496)
+* test(github-config-core): fix test on error ([b78dfce](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b78dfce))
+* feat(discord): add a default title when linking to the issue opening ([471077b](https://github.com/Sonia-corporation/il-est-midi-discord/commit/471077b))
+* build(release): add new step to merge master into develop on release ([5af1b39](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5af1b39))
+* chore(deps): update dependency @scout_apm/scout-apm to v0.1.9 ([e3476fe](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e3476fe))
+* chore(deps): update dependency @types/lodash to v4.14.153 ([474465a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/474465a))
+* chore(deps): update dependency @types/lodash to v4.14.154 ([06a45d9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/06a45d9))
+* chore(deps): update dependency eslint-config-recommended to v4.1.0 ([91fc259](https://github.com/Sonia-corporation/il-est-midi-discord/commit/91fc259))
+* chore(deps): update dependency eslint-plugin-jest to v23.13.2 ([86df49c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/86df49c))
+* chore(deps): update dependency eslint-plugin-rxjs to v0.0.2-beta.24 ([4353452](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4353452))
+* chore(deps): update dependency lint-staged to v10.2.7 ([f423c92](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f423c92))
+* chore(deps): update dependency ts-auto-mock to v2.2.2 ([268b031](https://github.com/Sonia-corporation/il-est-midi-discord/commit/268b031))
+* chore(deps): update dependency ts-auto-mock to v2.2.5 ([62e4678](https://github.com/Sonia-corporation/il-est-midi-discord/commit/62e4678))
+* chore(deps): update dependency ts-jest to v26.1.0 ([0660019](https://github.com/Sonia-corporation/il-est-midi-discord/commit/0660019))
+* chore(deps): update typescript-eslint monorepo to v3.0.2 ([5b94799](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5b94799))
+
 ## <small>1.55.1 (2020-05-26)</small>
 
 * Merge pull request #492 from Sonia-corporation/develop ([2ed112b](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2ed112b)), closes [#492](https://github.com/Sonia-corporation/il-est-midi-discord/issues/492)
