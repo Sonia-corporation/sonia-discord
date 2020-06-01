@@ -64,17 +64,7 @@
     [
       "@semantic-release/npm",
       {
-        "npmPublish": false,
-        "pkgRoot": "./dist"
-      }
-    ],
-    [
-      "semantic-release-plugin-update-version-in-files",
-      {
-        "files": [
-          "dist/package.json",
-          "dist/package-lock.json"
-        ]
+        "npmPublish": true
       }
     ],
     [
