@@ -1,5 +1,17 @@
 # Semantic Versioning Changelog
 
+# [1.57.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.56.0...1.57.0) (2020-06-01)
+
+
+### Bug Fixes
+
+* **release:** use the old format for the release notes ([76fe391](https://github.com/Sonia-corporation/il-est-midi-discord/commit/76fe391619dee0a4b347ae6961996ed8d6ba5644))
+
+
+### Features
+
+* **release:** use the files to whitelist the npm release content ([ef366f1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ef366f1145b10c836941e5dd20eb55f6fd52b6d3))
+
 ## 1.56.0 (2020-06-01)
 
 * Merge pull request #515 from Sonia-corporation/develop ([c0d4266](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c0d4266)), closes [#515](https://github.com/Sonia-corporation/il-est-midi-discord/issues/515)
