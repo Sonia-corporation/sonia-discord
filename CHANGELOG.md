@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.58.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.58.0...1.58.1) (2020-06-01)
+
+
+### Bug Fixes
+
+* **release:** checkout the develop when creating a PR ([65a453e](https://github.com/Sonia-corporation/il-est-midi-discord/commit/65a453e3b21a9deb2ab3308eee1d5a3366360313))
+
 # [1.58.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.57.0...1.58.0) (2020-06-01)
 
 
