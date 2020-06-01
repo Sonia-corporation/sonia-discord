@@ -42,19 +42,9 @@ jobs:
         run: npm run semver
       - name: Checkout develop
         uses: actions/checkout@v2
+      - name: Create PR from master to develop
+        uses: peter-evans/create-pull-request@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          ref: develop
-      - name: Merge master into develop
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config --global user.email "release@sonia-corporation.com"
-          git config --global user.name "Sonia Release Bot"
-          git merge origin/master --no-ff
-      - name: Push develop
-        uses: ad-m/github-push-action@master
-        with:
-          force: true
-          branch: develop
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          title: 'chore(develop): merge master into develop'
+          branch: master
