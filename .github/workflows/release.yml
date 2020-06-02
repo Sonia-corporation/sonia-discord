@@ -51,7 +51,7 @@ jobs:
       - name: Get latest version
         id: latest-version
         run: |
-          echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+          echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
       - name: Create PR from master to develop
         uses: peter-evans/create-pull-request@v2
         with:
