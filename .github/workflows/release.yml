@@ -44,6 +44,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: develop
+      - name: Reset branch
+        run: |
+          git fetch origin master:master
+          git reset --hard master
       - name: Create PR from master to develop
         uses: peter-evans/create-pull-request@v2
         with:
