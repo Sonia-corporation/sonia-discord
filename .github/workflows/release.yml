@@ -58,7 +58,7 @@ jobs:
           labels: auto-merge
           commit-message: 'chore(develop): merge master into develop'
           body: |
-            :tada: This PR was generated with the version ${{ nextRelease.version }} :tada:
+            :tada: This PR was generated with the version ${{ echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//} }} :tada:
 
             The release is available on:
             - [npm package (@latest dist-tag)](https://www.npmjs.com/package/@sonia-corporation/il-est-midi-discord/v/${{ nextRelease.version }})
