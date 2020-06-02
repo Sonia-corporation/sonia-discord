@@ -32,10 +32,10 @@ jobs:
         env:
           CI: true
       - name: Release
+        run: npm run semver
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npm run semver
   PR:
     runs-on: ubuntu-latest
     needs: [ Release ]
@@ -48,6 +48,10 @@ jobs:
         run: |
           git fetch origin master:master
           git reset --hard master
+      - name: Get latest version
+        id: latest-version
+        run: |
+          echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
       - name: Create PR from master to develop
         uses: peter-evans/create-pull-request@v2
         with:
@@ -55,7 +59,13 @@ jobs:
           title: 'chore(develop): merge master into develop'
           branch: feature/merge-master-into-develop
           assignees: C0ZEN
-          labels: merge
+          labels: auto-merge
           commit-message: 'chore(develop): merge master into develop'
           body: |
-            Automated Pull Request created after a release
+            :tada: This PR was generated with the version ${{ steps.latest-version.outputs.VERSION }} :tada:
+
+            The release is available on:
+            - [npm package (@latest dist-tag)](https://www.npmjs.com/package/@sonia-corporation/il-est-midi-discord/v/${{ steps.latest-version.outputs.VERSION }})
+            - [GitHub release](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${{ steps.latest-version.outputs.VERSION }})
+
+            Your **github-actions** bot :rocket:
