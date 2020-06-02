@@ -28,3 +28,5 @@ jobs:
           MERGE_LABELS: "auto-merge,!waiting"
           MERGE_DELETE_BRANCH: true
           UPDATE_LABELS: "auto-merge"
+          MERGE_RETRIES: 12
+          MERGE_RETRY_SLEEP: 600000
