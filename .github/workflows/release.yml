@@ -6,10 +6,6 @@ on:
 jobs:
   Release:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version:
-          - 12.x
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -40,14 +36,26 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm run semver
+  PR:
+    runs-on: ubuntu-latest
+    needs: [ Release ]
+    steps:
       - name: Checkout develop
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           ref: develop
-      - name: Merge master into develop
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Reset branch
         run: |
-          git merge origin/master --no-ff
-          git push
+          git fetch origin master:master
+          git reset --hard master
+      - name: Create PR from master to develop
+        uses: peter-evans/create-pull-request@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: 'chore(develop): merge master into develop'
+          branch: feature/merge-master-into-develop
+          assignees: C0ZEN
+          labels: merge
+          commit-message: 'chore(develop): merge master into develop'
+          body: |
+            Automated Pull Request created after a release

@@ -1,6 +1,6 @@
 {
   "name": "@sonia-corporation/il-est-midi-discord",
-  "version": "1.55.1",
+  "version": "1.58.2",
   "author": {
     "email": "geoffrey.testelin@gmail.com",
     "name": "Geoffrey 'C0ZEN' Testelin",
@@ -47,6 +47,9 @@
     "type": "git",
     "url": "https://github.com/Sonia-corporation/il-est-midi-discord.git"
   },
+  "bugs": {
+    "url": "https://github.com/Sonia-corporation/il-est-midi-discord/issues"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-customizable"
@@ -64,6 +67,16 @@
     "node": "12.x"
   },
   "private": false,
+  "files": [
+    "dist/*",
+    "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "package.json",
+    "package-lock.json",
+    "README.md"
+  ],
   "main": "./src/index.ts",
   "scripts": {
     "\n# RUN SCRIPTS:": "",
@@ -93,7 +106,7 @@
     "\n# UTILS SCRIPTS:": "",
     "commitmsg": "cz-customizable-ghooks",
     "cz": "git add . && git-cz && npm run git:push",
-    "semver": "npx semantic-release",
+    "semver": "semantic-release",
     "clean:dist": "rimraf dist",
     "commit": "npm run cz",
     "create-secret-environment": "node ./scripts/create-secret-environment.js",
@@ -132,6 +145,7 @@
     "chalk": "4.0.0",
     "commitizen": "4.1.2",
     "concurrently": "5.2.0",
+    "conventional-changelog-angular": "5.0.10",
     "cz-customizable": "6.2.0",
     "cz-customizable-ghooks": "1.5.0",
     "eslint": "7.1.0",
