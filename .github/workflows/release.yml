@@ -48,6 +48,9 @@ jobs:
         run: |
           git fetch origin master:master
           git reset --hard master
+      - name: Get latest version
+        id: latest-version
+        run: |
           echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Create PR from master to develop
         uses: peter-evans/create-pull-request@v2
@@ -59,10 +62,10 @@ jobs:
           labels: auto-merge
           commit-message: 'chore(develop): merge master into develop'
           body: |
-            :tada: This PR was generated with the version ${{ VERSION }} :tada:
+            :tada: This PR was generated with the version ${{ steps.latest-version.outputs.VERSION }} :tada:
 
             The release is available on:
-            - [npm package (@latest dist-tag)](https://www.npmjs.com/package/@sonia-corporation/il-est-midi-discord/v/${{ VERSION }})
-            - [GitHub release](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${{ VERSION }})
+            - [npm package (@latest dist-tag)](https://www.npmjs.com/package/@sonia-corporation/il-est-midi-discord/v/${{ steps.latest-version.outputs.VERSION }})
+            - [GitHub release](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${{ steps.latest-version.outputs.VERSION }})
 
             Your **github-actions** bot :rocket:
