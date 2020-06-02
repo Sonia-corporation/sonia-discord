@@ -48,10 +48,11 @@ jobs:
         run: |
           git fetch origin master:master
           git reset --hard master
-      - name: Get latest version
-        id: latest-version
-        run: |
-          echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+      - name: Get latest tag
+        id: latest-tag
+        uses: WyriHaximus/github-action-get-previous-tag@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create PR from master to develop
         uses: peter-evans/create-pull-request@v2
         with:
@@ -62,10 +63,10 @@ jobs:
           labels: auto-merge
           commit-message: 'chore(develop): merge master into develop'
           body: |
-            :tada: This PR was generated after the creation of the version ${{ steps.latest-version.outputs.VERSION }} :tada:
+            :tada: This PR was generated after the creation of the version ${{ steps.latest-tag.outputs.tag }} :tada:
 
             The release is available on:
-            - [npm package (@latest dist-tag)](https://www.npmjs.com/package/@sonia-corporation/il-est-midi-discord/v/${{ steps.latest-version.outputs.VERSION }})
-            - [GitHub release](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${{ steps.latest-version.outputs.VERSION }})
+            - [npm package (@latest dist-tag)](https://www.npmjs.com/package/@sonia-corporation/il-est-midi-discord/v/${{ steps.latest-tag.outputs.tag }})
+            - [GitHub release](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${{ steps.latest-tag.outputs.tag }})
 
             Your **github-actions** bot :rocket:
