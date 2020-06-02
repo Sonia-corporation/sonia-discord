@@ -62,7 +62,7 @@ jobs:
           labels: auto-merge
           commit-message: 'chore(develop): merge master into develop'
           body: |
-            :tada: This PR was generated with the version ${{ steps.latest-version.outputs.VERSION }} :tada:
+            :tada: This PR was generated after the creation of the version ${{ steps.latest-version.outputs.VERSION }} :tada:
 
             The release is available on:
             - [npm package (@latest dist-tag)](https://www.npmjs.com/package/@sonia-corporation/il-est-midi-discord/v/${{ steps.latest-version.outputs.VERSION }})
