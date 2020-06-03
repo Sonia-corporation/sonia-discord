@@ -6,7 +6,7 @@
     [
       "@semantic-release/commit-analyzer",
       {
-        "config": "commitizen",
+        "config": "@sonia-corporation/conventional-changelog",
         "releaseRules": [
           {
             "type": "feat",
@@ -33,7 +33,7 @@
     [
       "@semantic-release/release-notes-generator",
       {
-        "config": "commitizen",
+        "config": "@sonia-corporation/conventional-changelog",
         "parserOpts": {
           "noteKeywords": [
             "BREAKING CHANGE",
