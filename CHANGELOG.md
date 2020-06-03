@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+# [1.59.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.58.2...1.59.0) (2020-06-03)
+
+
+### :rocket: Features
+
+* **changelog:** change the format ([b6c4c6e](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b6c4c6e3b5b919772c6d3faaefa0412176a864de))
+* **scout:** configure the express middleware for scout apm ([9b2ec29](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9b2ec29396fecae99ee51b3179c14bcfd13c4663))
+
 ## [1.58.2](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.58.1...1.58.2) (2020-06-01)
 
 
