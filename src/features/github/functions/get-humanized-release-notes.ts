@@ -17,6 +17,9 @@ export function getHumanizedReleaseNotes(
     (h3: Readonly<string>): string => {
       let updatedH3: string = _.clone(h3);
 
+      // Replace the "### :???: " by "### "
+      updatedH3 = _.replace(updatedH3, /(###\s:{1}.+:{1}\s)/i, `### `);
+
       // Replace the "### " by "**__"
       updatedH3 = _.replace(updatedH3, /(###\s)/i, `**__`);
 
