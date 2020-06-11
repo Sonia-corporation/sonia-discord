@@ -50,7 +50,7 @@ export function getHumanizedReleaseNotes(
   );
 
   // Remove the special fixes annotation
-  updatedReleaseNotes = _.replace(updatedReleaseNotes, /\s#fixes\s\d+/gim, ``);
+  updatedReleaseNotes = _.replace(updatedReleaseNotes, /\sfixes\s#\d+/gim, ``);
 
   // Remove the trailing carets
   updatedReleaseNotes = _.replace(updatedReleaseNotes, /(\n|\s)+$/gim, ``);
