@@ -377,6 +377,14 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "FIREBASE_AUTHENTICATION_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_AUTHENTICATION_SERVICE).toStrictEqual(
+      `FirebaseAuthenticationService`
+    );
+  });
+
   it(`should have a member "GITHUB_CONFIG_CORE_SERVICE"`, (): void => {
     expect.assertions(1);
 

@@ -47,6 +47,7 @@ export enum ServiceNameEnum {
   DISCORD_SONIA_CONFIG_SERVICE = `DiscordSoniaConfigService`,
   DISCORD_SONIA_EMOTIONAL_STATE_SERVICE = `DiscordSoniaEmotionalStateService`,
   DISCORD_SONIA_SERVICE = `DiscordSoniaService`,
+  FIREBASE_AUTHENTICATION_SERVICE = `FirebaseAuthenticationService`,
   GITHUB_CONFIG_CORE_SERVICE = `GithubConfigCoreService`,
   GITHUB_CONFIG_MUTATOR_SERVICE = `GithubConfigMutatorService`,
   GITHUB_CONFIG_SERVICE = `GithubConfigService`,
