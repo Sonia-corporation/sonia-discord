@@ -1,14 +1,14 @@
-import dotenv, { DotenvConfigOutput } from "dotenv";
+import dotenv from "dotenv";
 import _ from "lodash";
 import { CoreService } from "./features/core/services/core.service";
 import { InitService } from "./features/init/services/init.service";
 
 console.debug(`Node env: ${process.env.NODE_ENV}`);
 
-if (_.isEqual(process.env.NODE_ENV, `production`)) {
+if (_.isEqual(process.env.NODE_ENV, `development`)) {
   console.debug(`Loading the node environment...`);
 
-  const dotenvConfigOutput: DotenvConfigOutput = dotenv.config();
+  const dotenvConfigOutput: dotenv.DotenvConfigOutput = dotenv.config();
 
   if (!_.isNil(dotenvConfigOutput.error)) {
     console.error(`Failed to load the node environment`);

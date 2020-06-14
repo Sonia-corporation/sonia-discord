@@ -72,16 +72,23 @@ It can be anything you want however we recommend that you use your Discord name.
 The Discord id will be used on simple text messages to use your name as a mention instead of pure text.  
 If the Discord id is not set the username will be used instead as fallback.
 
+## Environment
+
+This project use `dotenv` to load some environment variables locally only.  
+On production the CI will provide his own environment variables.
+
 ## Package scripts
 
 - `npm run start`: run the Node.js app for the local development  
-- `npm run start:prod`: build and run the Node.js app like it will be once deployed in the server for local development or server debugging  
+- `npm run start:prod`: build and run the Node.js app like it will be once deployed in the server  
+- `npm run start:local-prod`: build and run the Node.js app like it will be once deployed in the server for local development or server debugging  
 - `npm run build`: create a Node.js app in the dist folder  
 - `npm run build:environment:copy`: copy the secret environment file inside the dist folder  
 - `npm run build:environment:create`: create the environment file inside the dist folder with some default values used for the CI 
 - `npm run build:environment:rewrite-path`: rename the environment file path of the Node.js app inside the dist folder  
 - `npm run build:update-app-initialization-date`: update the app initialization date inside the environment file from the dist folder  
-- `npm run run:prod`: run the Node.js app like it will be once deployed in the server for local development or server debugging  
+- `npm run run:prod`: run the Node.js app like it will be once deployed in the server  
+- `npm run run:local-prod`: run the Node.js app like it will be once deployed in the server for local development or server debugging  
 - `npm run tsc`: compile the TypeScript app to Node.js app  
 - `npm run test`: run the tests once  
 - `npm run test:watch`: run the tests and watch them  
