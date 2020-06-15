@@ -1,4 +1,4 @@
-import firebaseAdmin from "firebase-admin";
+import admin from "firebase-admin";
 import _ from "lodash";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
@@ -19,7 +19,7 @@ export class FirebaseAppService extends AbstractService {
 
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private _app: firebaseAdmin.app.App | undefined = undefined;
+  private _app: admin.app.App | undefined = undefined;
 
   public constructor() {
     super(ServiceNameEnum.FIREBASE_APP_SERVICE);
@@ -30,7 +30,7 @@ export class FirebaseAppService extends AbstractService {
     this._initializeFirebaseApp();
   }
 
-  public getApp(): firebaseAdmin.app.App | undefined {
+  public getApp(): admin.app.App | undefined {
     return this._app;
   }
 
@@ -51,9 +51,9 @@ export class FirebaseAppService extends AbstractService {
       message: this._chalkService.text(`creating app...`),
     });
 
-    this._app = firebaseAdmin.initializeApp(
+    this._app = admin.initializeApp(
       {
-        credential: firebaseAdmin.credential.applicationDefault(),
+        credential: admin.credential.applicationDefault(),
         databaseURL: `https://sonia-il-est-midi-discord-api.firebaseio.com`,
       },
       FirebaseAppEnum.SONIA_IL_EST_MIDI_DISCORD
