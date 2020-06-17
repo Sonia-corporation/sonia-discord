@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.61.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.60.0...1.61.0) (2020-06-16)
+
+
+### :rocket: Features
+
+* **release-notes:** remove the emoji from the headers ([209a799](https://github.com/Sonia-corporation/il-est-midi-discord/commit/209a7998417c2e14e92d97123ce3dbad70cacd35))
+
 # [1.60.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.59.0...1.60.0) (2020-06-16)
 
 
