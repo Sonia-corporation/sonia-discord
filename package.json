@@ -175,6 +175,6 @@
     "ts-node-dev": "1.0.0-pre.50",
     "tsconfig-paths": "3.9.0",
     "ttypescript": "1.5.10",
-    "typescript": "3.9.5"
+    "typescript": "3.9.6"
   }
 }
