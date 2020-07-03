@@ -124,7 +124,7 @@ export class InitService extends AbstractService {
     this._loggerService.debug({
       context: this._serviceName,
       message: this._chalkService.text(
-        `App version: ${this._chalkService.value(appVersion)}`
+        `app version: ${this._chalkService.value(appVersion)}`
       ),
     });
 

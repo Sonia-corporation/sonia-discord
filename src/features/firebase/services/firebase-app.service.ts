@@ -61,7 +61,7 @@ export class FirebaseAppService extends AbstractService {
 
     this._loggerService.debug({
       context: this._serviceName,
-      message: this._chalkService.text(`app`),
+      message: this._chalkService.text(`app created`),
     });
   }
 }

@@ -14,5 +14,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="firebase-admin" level="project" />
     <orderEntry type="library" name="lodash" level="project" />
+    <orderEntry type="library" name="types" level="project" />
+    <orderEntry type="library" name="google-cloud" level="project" />
   </component>
 </module>
