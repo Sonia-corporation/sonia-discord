@@ -15,15 +15,12 @@ export class FirebaseService extends AbstractService {
     return FirebaseService._instance;
   }
 
-  private readonly _firebaseAppService: FirebaseAppService = FirebaseAppService.getInstance();
-  private readonly _firebaseGuildsService: FirebaseGuildsService = FirebaseGuildsService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.FIREBASE_SERVICE);
   }
 
   public init(): void {
-    this._firebaseAppService.init();
-    this._firebaseGuildsService.init();
+    FirebaseAppService.getInstance().init();
+    FirebaseGuildsService.getInstance().init();
   }
 }
