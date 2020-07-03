@@ -12,7 +12,7 @@ Run `npm run start` to start the local development server.
 ### Create the secret environment file
 
 This step is mandatory.  
-You must create the `secret-environment.json` file in the [environment folder](./src/environment/secret-environment.json).  
+You must create the `secret-environment.json` file in the [environment folder](./src/environment/).  
 
 This file should contain at least:
 - A discord Sonia secret token required by Discord API.
@@ -42,9 +42,11 @@ Run `npm run create-secret-environment`.
 
 __Note for the Discord Sonia secret token:__
 
-The Discord Sonia secret token is private and there two ways to have access to it:
+The Discord Sonia secret token is private and there are two ways to have access to it:
 - Asks an admin (like [C0ZEN](https://github.com/C0ZEN)).
 - Access to the [Discord bot page](https://discordapp.com/developers/applications/689829775317139460/bot) to reveal the token.
+
+__Note:__
 
 If somehow this token is made public, Discord will revoke it.
 
@@ -71,6 +73,18 @@ It can be anything you want however we recommend that you use your Discord name.
 
 The Discord id will be used on simple text messages to use your name as a mention instead of pure text.  
 If the Discord id is not set the username will be used instead as fallback.
+
+### Create the Firebase service account file
+
+This step is mandatory.  
+You must create the `firebase-service-account-file.json` file in the [environment folder](./src/environment/).  
+
+This file should contain the fields to configure the project.  
+Refer to this [article](https://firebase.google.com/docs/admin/setup#initialize-sdk) to learn how and why.  
+Basically this is the private key of Sonia API.
+
+There is one way to have access to it:
+- Asks an admin (like [C0ZEN](https://github.com/C0ZEN)).
 
 ## Environment
 

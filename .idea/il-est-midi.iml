@@ -16,5 +16,6 @@
     <orderEntry type="library" name="lodash" level="project" />
     <orderEntry type="library" name="types" level="project" />
     <orderEntry type="library" name="google-cloud" level="project" />
+    <orderEntry type="library" name="firebase" level="project" />
   </component>
 </module>

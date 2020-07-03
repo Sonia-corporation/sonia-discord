@@ -1,4 +1,4 @@
-import admin from "firebase-admin";
+import admin, { firestore } from "firebase-admin";
 import _ from "lodash";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
@@ -6,6 +6,10 @@ import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
 import { FirebaseCollectionEnum } from "../enums/firebase-collection.enum";
 import { FirebaseAppService } from "./firebase-app.service";
+import CollectionReference = admin.firestore.CollectionReference;
+import DocumentData = admin.firestore.DocumentData;
+import Firestore = admin.firestore.Firestore;
+import QuerySnapshot = admin.firestore.QuerySnapshot;
 
 export class FirebaseGuildsService extends AbstractService {
   private static _instance: FirebaseGuildsService;
@@ -21,7 +25,7 @@ export class FirebaseGuildsService extends AbstractService {
   private readonly _firebaseAppService: FirebaseAppService = FirebaseAppService.getInstance();
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
-  private _store: admin.firestore.Firestore | undefined = undefined;
+  private _store: Firestore | undefined = undefined;
 
   public constructor() {
     super(ServiceNameEnum.FIREBASE_GUILDS_SERVICE);
@@ -33,11 +37,12 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   public getCollectionReference():
-    | admin.firestore.CollectionReference<admin.firestore.DocumentData>
+    | CollectionReference<DocumentData>
     | undefined {
     if (!_.isNil(this._store)) {
       return this._store.collection(`/${FirebaseCollectionEnum.GUILDS}`);
     }
+
     this._loggerService.warning({
       context: this._serviceName,
       message: this._chalkService.text(`store not set`),
@@ -47,31 +52,29 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   private _setStore(): void {
-    this._store = admin.firestore(this._firebaseAppService.getApp());
+    this._store = firestore(this._firebaseAppService.getApp());
   }
 
-  private _logGuildCount(): Promise<void> {
+  private _logGuildCount(): Promise<QuerySnapshot<DocumentData>> {
     const collectionReference:
-      | admin.firestore.CollectionReference<admin.firestore.DocumentData>
+      | CollectionReference<DocumentData>
       | undefined = this.getCollectionReference();
 
     if (!_.isNil(collectionReference)) {
-      return collectionReference
-        .get()
-        .then(
-          (
-            querySnapshot: admin.firestore.QuerySnapshot<
-              admin.firestore.DocumentData
-            >
-          ): void => {
-            this._loggerService.debug({
-              context: this._serviceName,
-              message: this._chalkService.text(
-                `${querySnapshot.size} guilds found`
-              ),
-            });
-          }
-        );
+      return collectionReference.get().then(
+        (
+          querySnapshot: QuerySnapshot<DocumentData>
+        ): QuerySnapshot<DocumentData> => {
+          this._loggerService.debug({
+            context: this._serviceName,
+            message: this._chalkService.text(
+              `${querySnapshot.size} guilds found`
+            ),
+          });
+
+          return querySnapshot;
+        }
+      );
     }
 
     return Promise.reject(new Error(`Collection not available`));
