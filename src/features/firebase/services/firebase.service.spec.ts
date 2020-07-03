@@ -66,22 +66,18 @@ describe(`FirebaseService`, (): void => {
       firebaseAppService = createMock<FirebaseAppService>();
       firebaseGuildsService = createMock<FirebaseGuildsService>();
 
-      firebaseAppServiceGetInstanceSpy = jest.spyOn(
-        FirebaseAppService,
-        `getInstance`
-      );
-      firebaseAppServiceGetInstanceInitSpy = jest.spyOn(
-        firebaseAppService,
-        `init`
-      );
-      firebaseGuildsServiceGetInstanceSpy = jest.spyOn(
-        FirebaseGuildsService,
-        `getInstance`
-      );
-      firebaseGuildsServiceGetInstanceInitSpy = jest.spyOn(
-        firebaseGuildsService,
-        `init`
-      );
+      firebaseAppServiceGetInstanceSpy = jest
+        .spyOn(FirebaseAppService, `getInstance`)
+        .mockReturnValue(firebaseAppService);
+      firebaseAppServiceGetInstanceInitSpy = jest
+        .spyOn(firebaseAppService, `init`)
+        .mockImplementation();
+      firebaseGuildsServiceGetInstanceSpy = jest
+        .spyOn(FirebaseGuildsService, `getInstance`)
+        .mockReturnValue(firebaseGuildsService);
+      firebaseGuildsServiceGetInstanceInitSpy = jest
+        .spyOn(firebaseGuildsService, `init`)
+        .mockImplementation();
     });
 
     it(`should create the FirebaseApp service`, (): void => {
@@ -92,7 +88,7 @@ describe(`FirebaseService`, (): void => {
       expect(firebaseAppServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the Firebase service`, (): void => {
+    it(`should create and initialize the FirebaseApp service`, (): void => {
       expect.assertions(3);
 
       service.init();
