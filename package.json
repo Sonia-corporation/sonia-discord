@@ -172,7 +172,7 @@
     "stryker-cli": "1.0.0",
     "ts-auto-mock": "2.3.2",
     "ts-jest": "26.1.1",
-    "ts-node-dev": "1.0.0-pre.50",
+    "ts-node-dev": "1.0.0-pre.51",
     "tsconfig-paths": "3.9.0",
     "ttypescript": "1.5.10",
     "typescript": "3.9.6"
