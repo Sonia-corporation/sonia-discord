@@ -155,7 +155,7 @@
     "eslint-plugin-import": "2.22.0",
     "eslint-plugin-jest": "23.18.0",
     "eslint-plugin-prettier": "3.1.4",
-    "eslint-plugin-rxjs": "0.0.2-beta.27",
+    "eslint-plugin-rxjs": "0.0.2-beta.28",
     "eslint-plugin-typescript-sort-keys": "1.2.0",
     "fs-extra": "9.0.1",
     "husky": "4.2.5",
