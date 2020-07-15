@@ -6,10 +6,14 @@ jobs:
   Stale:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v1
+      - uses: actions/stale@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          stale-issue-message: 'Stale issue message'
-          stale-pr-message: 'Stale pull request message'
+          stale-issue-message: 'Warning! This issue was marked as stale due to a lack of activity for three months. In one month this issue will be closed if there is no more activity during this period. If you want to avoid this stale state add one of these labels: "waiting", "wontfix" or "dependency-fix".'
+          stale-pr-message: 'Warning! This pull request was marked as stale due to a lack of activity for three months. In one month this pull request will be closed if there is no more activity during this period. If you want to avoid this stale state add one of these labels: "waiting", "wontfix" or "dependency-fix".'
           stale-issue-label: 'no-issue-activity'
-          stale-pr-label: 'no-pr-activity'
+          exempt-issue-labels: 'waiting,wontfix,dependency-fix'
+          stale-pr-label: 'no-pull-request-activity'
+          exempt-pr-labels: 'waiting,wontfix,dependency-fix'
+          days-before-stale: 90
+          days-before-close: 30
