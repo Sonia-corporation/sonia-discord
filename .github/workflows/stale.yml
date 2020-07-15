@@ -9,11 +9,11 @@ jobs:
       - uses: actions/stale@v3
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          stale-issue-message: 'Warning! This issue was marked as stale due to a lack of activity for two months. In one month this issue will be closed if there is no more activity during this period. If you want to avoid this stale state add one of these labels: "waiting", "wontfix" or "dependency-fix".'
-          stale-pr-message: 'Warning! This pull request was marked as stale due to a lack of activity for two months. In one month this pull request will be closed if there is no more activity during this period. If you want to avoid this stale state add one of these labels: "waiting", "wontfix" or "dependency-fix".'
+          stale-issue-message: 'Warning! This issue was marked as stale due to a lack of activity for two months. In one month this issue will be closed if there is no more activity during this period. If you want to avoid this stale state add one of these labels: "waiting", "wontfix", "dependency-fix" or "opened-pull-request".'
+          stale-pr-message: 'Warning! This pull request was marked as stale due to a lack of activity for two months. In one month this pull request will be closed if there is no more activity during this period. If you want to avoid this stale state add one of these labels: "waiting", "wontfix", "dependency-fix" or "opened-pull-request".'
           stale-issue-label: 'no-issue-activity'
-          exempt-issue-labels: 'waiting,wontfix,dependency-fix'
+          exempt-issue-labels: 'waiting,wontfix,dependency-fix,opened-pull-request'
           stale-pr-label: 'no-pull-request-activity'
-          exempt-pr-labels: 'waiting,wontfix,dependency-fix'
+          exempt-pr-labels: 'waiting,wontfix,dependency-fix,opened-pull-request'
           days-before-stale: 60
           days-before-close: 30
