@@ -13,6 +13,7 @@ import * as GetNextJobDateModule from "../../../schedules/functions/get-next-job
 import * as GetNextJobDateHumanizedModule from "../../../schedules/functions/get-next-job-date-humanized";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DISCORD_PRESENCE_ACTIVITY } from "../constants/discord-presence-activity";
+import { DiscordActivityNameEnum } from "../enums/discord-activity-name.enum";
 import { IDiscordPresenceActivity } from "../interfaces/discord-presence-activity";
 import { DiscordActivitySoniaService } from "./discord-activity-sonia.service";
 
@@ -325,7 +326,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
       presence = createMock<Presence>({
         activities: [
           {
-            name: `dummy-name`,
+            name: DiscordActivityNameEnum.APOLLO,
             type: `PLAYING`,
             url: `dummy-url`,
           },
@@ -335,7 +336,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
         .fn()
         .mockReturnValue(Promise.reject(new Error(`setPresence: error`)));
       presenceActivity = {
-        name: `dummy-name`,
+        name: DiscordActivityNameEnum.APOLLO,
         type: `PLAYING`,
         url: `dummy-url`,
       };
@@ -403,7 +404,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
         expect(setPresenceMock).toHaveBeenCalledTimes(1);
         expect(setPresenceMock).toHaveBeenCalledWith({
           activity: {
-            name: `dummy-name`,
+            name: DiscordActivityNameEnum.APOLLO,
             type: `PLAYING`,
             url: `dummy-url`,
           },
@@ -442,7 +443,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
             context: `DiscordActivitySoniaService`,
-            message: `text-Sonia presence updated to: value-PLAYING text-x value-dummy-name`,
+            message: `text-Sonia presence updated to: value-PLAYING text-x value-Apollo`,
           } as ILoggerLog);
         });
       });
