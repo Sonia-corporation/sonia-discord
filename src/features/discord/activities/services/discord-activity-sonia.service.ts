@@ -197,16 +197,11 @@ export class DiscordActivitySoniaService extends AbstractService {
     jobName: Readonly<string>
   ): void {
     if (!_.isNil(job)) {
-      const nextJobDateHumanized: string | null = getNextJobDateHumanized(job);
-      const nextJobDate: string | null = getNextJobDate(job);
-
-      this._loggerService.debug({
+      this._loggerService.logJobDate({
         context: this._serviceName,
-        message: this._chalkService.text(
-          `${jobName} job: ${this._chalkService.value(
-            nextJobDateHumanized
-          )} ${this._chalkService.hint(`(${nextJobDate})`)}`
-        ),
+        jobDate: getNextJobDate(job),
+        jobDateHumanized: getNextJobDateHumanized(job),
+        jobName,
       });
     }
   }
