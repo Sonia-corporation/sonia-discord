@@ -1,5 +1,61 @@
 import _ from "lodash";
 
+function isCurrentMinuteExceeded(currentMinute: Readonly<number>): boolean {
+  return _.gt(currentMinute, 59);
+}
+
+function getRandomMinute(
+  minimumInterval: Readonly<number>,
+  maximumInterval: Readonly<number>,
+  currentMinute: Readonly<number>
+): number {
+  const randomMinute: number =
+    _.random(minimumInterval, maximumInterval, false) + currentMinute;
+
+  /**
+   * Avoid consecutive values like 1,1,1,1 due to the inclusive random from Lodash
+   */
+  if (_.isEqual(randomMinute, currentMinute)) {
+    return randomMinute + 1;
+  }
+
+  return randomMinute;
+}
+
+function getSafeMinutesRange(minutesRange: Readonly<string>): string {
+  return minutesRange.slice(0, -1);
+}
+
+function canIncreaseRange(currentMinute: Readonly<number>): boolean {
+  return !_.isEqual(currentMinute, -1);
+}
+
+function addMinuteInRange(
+  currentMinute: Readonly<number>,
+  minutesRange: Readonly<string>
+): string {
+  return `${minutesRange}${currentMinute},`;
+}
+
+function getError(
+  minimumInterval: Readonly<number>,
+  maximumInterval: Readonly<number>
+): string | null {
+  if (_.lt(minimumInterval, 0)) {
+    return `Minimum interval should be greater or equal to 0`;
+  } else if (_.gt(minimumInterval, 59)) {
+    return `Minimum interval should be lower than 60`;
+  } else if (_.lt(maximumInterval, 0)) {
+    return `Maximum interval should be greater or equal to 0`;
+  } else if (_.gt(maximumInterval, 59)) {
+    return `Maximum interval should be lower than 60`;
+  } else if (_.isEqual(minimumInterval, maximumInterval)) {
+    return `Maximum interval should be greater than minimum interval`;
+  }
+
+  return null;
+}
+
 // @todo fix valid-jsdoc error (dunno what is wrong)
 // eslint-disable-next-line valid-jsdoc
 /**
@@ -9,11 +65,6 @@ import _ from "lodash";
  * @param {Readonly<number>>} minimumInterval Minimum interval range
  * @param {Readonly<number>>} maximumInterval Maximal interval range
  *
- * @todo enhance with safe fallback with extreme values like:
- * - minimumInterval being lower than 1
- * - maximumInterval being greater than 59
- * - minimumInterval being greater than maximumInterval
- *
  * @example
  * 8,16,24,32,58 * * * *
  *
@@ -22,19 +73,28 @@ import _ from "lodash";
 export function getRandomRangeMinuteScheduleRule(
   minimumInterval: Readonly<number> = 5,
   maximumInterval: Readonly<number> = 30
-): string {
+): string | never {
+  const error: string | null = getError(minimumInterval, maximumInterval);
+
+  if (!_.isNil(error)) {
+    throw new Error(error);
+  }
+
   let minutesRange = ``;
   let currentMinute = 0;
 
-  while (!_.isEqual(currentMinute, -1)) {
-    currentMinute =
-      _.random(minimumInterval, maximumInterval, false) + currentMinute;
+  while (canIncreaseRange(currentMinute)) {
+    currentMinute = getRandomMinute(
+      minimumInterval,
+      maximumInterval,
+      currentMinute
+    );
 
-    if (_.gt(currentMinute, 59)) {
+    if (isCurrentMinuteExceeded(currentMinute)) {
       currentMinute = -1;
-      minutesRange = minutesRange.slice(0, -1);
+      minutesRange = getSafeMinutesRange(minutesRange);
     } else {
-      minutesRange = `${minutesRange}${currentMinute},`;
+      minutesRange = addMinuteInRange(currentMinute, minutesRange);
     }
   }
 
