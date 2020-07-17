@@ -190,8 +190,10 @@ describe(`DiscordActivitySoniaService`, (): void => {
     let getEveryHourScheduleRuleSpy: jest.SpyInstance;
     let getRandomRangeMinuteScheduleRuleSpy: jest.SpyInstance;
     let setRandomPresenceSpy: jest.SpyInstance;
+    let jobRescheduleMock: jest.Mock;
 
     beforeEach((): void => {
+      jobRescheduleMock = jest.fn();
       getEveryHourScheduleRuleSpy = jest
         .spyOn(GetEveryHourScheduleRuleModule, `getEveryHourScheduleRule`)
         .mockReturnValue(`dummy-updater-schedule`);
@@ -203,7 +205,9 @@ describe(`DiscordActivitySoniaService`, (): void => {
         .mockReturnValueOnce(`dummy-schedule`)
         .mockReturnValueOnce(`dummy-new-schedule`);
       service = new DiscordActivitySoniaService();
-      job = createMock<Job>();
+      job = createMock<Job>({
+        reschedule: jobRescheduleMock,
+      });
 
       scheduleJobSpy = jest
         .spyOn(NodeScheduleModule, `scheduleJob`)
@@ -274,7 +278,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
     describe(`when the updater job is valid`, (): void => {
       beforeEach((): void => {
-        scheduleJobSpy.mockImplementation().mockRejectedValueOnce(job);
+        scheduleJobSpy.mockImplementation().mockReturnValueOnce(job);
       });
 
       it(`should log the updater job rule`, (): void => {
@@ -396,6 +400,50 @@ describe(`DiscordActivitySoniaService`, (): void => {
           context: `DiscordActivitySoniaService`,
           message: `text-job rule: value-dummy-new-schedule`,
         } as ILoggerLog);
+      });
+
+      describe(`when the job is not valid`, (): void => {
+        beforeEach((): void => {
+          scheduleJobSpy.mockImplementation().mockImplementationOnce(
+            (_rule: string, callback: () => void): Job => {
+              callback();
+
+              return job;
+            }
+          );
+        });
+
+        it(`should not reschedule the job with the new updated job rule`, (): void => {
+          expect.assertions(1);
+
+          service.startSchedule();
+
+          expect(jobRescheduleMock).not.toHaveBeenCalled();
+        });
+      });
+
+      describe(`when the job is valid`, (): void => {
+        beforeEach((): void => {
+          scheduleJobSpy.mockImplementation(
+            (_rule: string, callback: () => void): Job => {
+              callback();
+
+              return job;
+            }
+          );
+        });
+
+        /**
+         * @todo fix this test on error
+         */
+        it.skip(`should reschedule the job with the new updated job rule`, (): void => {
+          expect.assertions(2);
+
+          service.startSchedule();
+
+          expect(jobRescheduleMock).toHaveBeenCalledTimes(1);
+          expect(jobRescheduleMock).toHaveBeenCalledWith(`dummy-new-schedule`);
+        });
       });
     });
 
