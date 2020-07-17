@@ -40,16 +40,45 @@ function addMinuteInRange(
 function getError(
   minimumInterval: Readonly<number>,
   maximumInterval: Readonly<number>
+): string | undefined {
+  const errors: (string | null)[] = [
+    getMinimumInternalError(minimumInterval),
+    getMaximumInternalError(maximumInterval),
+    getIntervalError(minimumInterval, maximumInterval),
+  ];
+
+  return _.head(_.compact(errors));
+}
+
+function getMinimumInternalError(
+  minimumInterval: Readonly<number>
 ): string | null {
   if (_.lt(minimumInterval, 0)) {
     return `Minimum interval should be greater or equal to 0`;
   } else if (_.gt(minimumInterval, 59)) {
     return `Minimum interval should be lower than 60`;
-  } else if (_.lt(maximumInterval, 0)) {
+  }
+
+  return null;
+}
+
+function getMaximumInternalError(
+  maximumInterval: Readonly<number>
+): string | null {
+  if (_.lt(maximumInterval, 0)) {
     return `Maximum interval should be greater or equal to 0`;
   } else if (_.gt(maximumInterval, 59)) {
     return `Maximum interval should be lower than 60`;
-  } else if (_.isEqual(minimumInterval, maximumInterval)) {
+  }
+
+  return null;
+}
+
+function getIntervalError(
+  minimumInterval: Readonly<number>,
+  maximumInterval: Readonly<number>
+): string | null {
+  if (_.isEqual(minimumInterval, maximumInterval)) {
     return `Maximum interval should be greater than minimum interval`;
   }
 
@@ -74,7 +103,7 @@ export function getRandomRangeMinuteScheduleRule(
   minimumInterval: Readonly<number> = 5,
   maximumInterval: Readonly<number> = 30
 ): string | never {
-  const error: string | null = getError(minimumInterval, maximumInterval);
+  const error: string | undefined = getError(minimumInterval, maximumInterval);
 
   if (!_.isNil(error)) {
     throw new Error(error);
