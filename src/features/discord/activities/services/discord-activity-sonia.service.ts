@@ -186,36 +186,25 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   private _logNextUpdaterJobDate(): void {
-    if (!_.isNil(this._updaterJob)) {
-      const nextUpdaterJobDateHumanized:
-        | string
-        | null = getNextJobDateHumanized(this._updaterJob);
-      const nextUpdaterJobDate: string | null = getNextJobDate(
-        this._updaterJob
-      );
-
-      this._loggerService.debug({
-        context: this._serviceName,
-        message: this._chalkService.text(
-          `next updater job: ${this._chalkService.value(
-            nextUpdaterJobDateHumanized
-          )} ${this._chalkService.hint(`(${nextUpdaterJobDate})`)}`
-        ),
-      });
-    }
+    this._logJobDate(this._updaterJob, `next updater job`);
   }
 
   private _logNextJobDate(): void {
-    if (!_.isNil(this._job)) {
-      const nextJobDateHumanized: string | null = getNextJobDateHumanized(
-        this._job
-      );
-      const nextJobDate: string | null = getNextJobDate(this._job);
+    this._logJobDate(this._job, `next job`);
+  }
+
+  private _logJobDate(
+    job: Readonly<Job | undefined>,
+    jobName: Readonly<string>
+  ): void {
+    if (!_.isNil(job)) {
+      const nextJobDateHumanized: string | null = getNextJobDateHumanized(job);
+      const nextJobDate: string | null = getNextJobDate(job);
 
       this._loggerService.debug({
         context: this._serviceName,
         message: this._chalkService.text(
-          `next job: ${this._chalkService.value(
+          `${jobName}: ${this._chalkService.value(
             nextJobDateHumanized
           )} ${this._chalkService.hint(`(${nextJobDate})`)}`
         ),
