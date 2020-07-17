@@ -289,7 +289,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
           context: `DiscordActivitySoniaService`,
-          message: `text-updater job rule: value-dummy-schedule`,
+          message: `text-updater job rule: value-dummy-updater-schedule`,
         } as ILoggerLog);
       });
 
@@ -337,7 +337,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(5);
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
           context: `DiscordActivitySoniaService`,
-          message: `text-updater job rule: value-dummy-schedule`,
+          message: `text-updater job rule: value-dummy-updater-schedule`,
         } as ILoggerLog);
       });
 
@@ -474,7 +474,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
           context: `DiscordActivitySoniaService`,
-          message: `text-updater job rule: value-dummy-schedule`,
+          message: `text-updater job rule: value-dummy-updater-schedule`,
         } as ILoggerLog);
       });
 
@@ -524,7 +524,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(4);
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
           context: `DiscordActivitySoniaService`,
-          message: `text-updater job rule: value-dummy-schedule`,
+          message: `text-updater job rule: value-dummy-updater-schedule`,
         } as ILoggerLog);
       });
 

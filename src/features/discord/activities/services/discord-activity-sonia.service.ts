@@ -119,12 +119,7 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   private _createUpdaterSchedule(): void {
-    this._loggerService.debug({
-      context: this._serviceName,
-      message: this._chalkService.text(
-        `updater job rule: ${this._chalkService.value(this._rule)}`
-      ),
-    });
+    this._logJobRule(this._updaterRule, `updater job`);
 
     this._updaterJob = scheduleJob(this._updaterRule, (): void => {
       this._executeUpdaterJob();
@@ -134,18 +129,22 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   private _createSchedule(): void {
-    this._loggerService.debug({
-      context: this._serviceName,
-      message: this._chalkService.text(
-        `job rule: ${this._chalkService.value(this._rule)}`
-      ),
-    });
+    this._logJobRule(this._rule, `job`);
 
     this._job = scheduleJob(this._rule, (): void => {
       this._executeJob();
     });
 
     this._logNextJobDate();
+  }
+
+  private _logJobRule(rule: Readonly<string>, jobName: Readonly<string>): void {
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(
+        `${jobName} rule: ${this._chalkService.value(rule)}`
+      ),
+    });
   }
 
   private _executeUpdaterJob(): void {
@@ -186,11 +185,11 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   private _logNextUpdaterJobDate(): void {
-    this._logJobDate(this._updaterJob, `next updater job`);
+    this._logJobDate(this._updaterJob, `next updater`);
   }
 
   private _logNextJobDate(): void {
-    this._logJobDate(this._job, `next job`);
+    this._logJobDate(this._job, `next`);
   }
 
   private _logJobDate(
@@ -204,7 +203,7 @@ export class DiscordActivitySoniaService extends AbstractService {
       this._loggerService.debug({
         context: this._serviceName,
         message: this._chalkService.text(
-          `${jobName}: ${this._chalkService.value(
+          `${jobName} job: ${this._chalkService.value(
             nextJobDateHumanized
           )} ${this._chalkService.hint(`(${nextJobDate})`)}`
         ),
