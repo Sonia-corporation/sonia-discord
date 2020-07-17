@@ -6,6 +6,7 @@ import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { getEveryHourScheduleRule } from "../../../../functions/schedule/get-every-hour-schedule-rule";
+import { getRandomRangeMinuteScheduleRule } from "../../../../functions/schedule/get-random-range-minute-schedule-rule";
 import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { getNextJobDate } from "../../../schedules/functions/get-next-job-date";
@@ -33,7 +34,9 @@ export class DiscordActivitySoniaService extends AbstractService {
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
   private readonly _discordLoggerErrorService: DiscordLoggerErrorService = DiscordLoggerErrorService.getInstance();
-  private readonly _rule: string = getEveryHourScheduleRule();
+  private readonly _updaterRule: string = getEveryHourScheduleRule();
+  private _rule: string = getRandomRangeMinuteScheduleRule(5, 15);
+  private _updaterJob: Job | undefined = undefined;
   private _job: Job | undefined = undefined;
 
   public constructor() {
@@ -45,6 +48,7 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   public startSchedule(): void {
+    this._createUpdaterSchedule();
     this._createSchedule();
   }
 
@@ -114,12 +118,54 @@ export class DiscordActivitySoniaService extends AbstractService {
     }
   }
 
+  private _createUpdaterSchedule(): void {
+    this._updaterJob = scheduleJob(this._updaterRule, (): void => {
+      this._executeUpdaterJob();
+    });
+
+    this._logNextUpdaterJobDate();
+  }
+
   private _createSchedule(): void {
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(
+        `job rule: ${this._chalkService.value(this._rule)}`
+      ),
+    });
+
     this._job = scheduleJob(this._rule, (): void => {
       this._executeJob();
     });
 
     this._logNextJobDate();
+  }
+
+  private _executeUpdaterJob(): void {
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(`updater job triggered`),
+    });
+
+    this._rule = getRandomRangeMinuteScheduleRule(5, 15);
+
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(
+        `job rule updated to: ${this._chalkService.value(this._rule)}`
+      ),
+    });
+
+    if (!_.isNil(this._job)) {
+      this._job.reschedule(this._rule);
+
+      this._loggerService.debug({
+        context: this._serviceName,
+        message: this._chalkService.text(`job reschedule successfully`),
+      });
+    }
+
+    this._logNextUpdaterJobDate();
   }
 
   private _executeJob(): void {
@@ -130,6 +176,26 @@ export class DiscordActivitySoniaService extends AbstractService {
 
     this.setRandomPresence();
     this._logNextJobDate();
+  }
+
+  private _logNextUpdaterJobDate(): void {
+    if (!_.isNil(this._updaterJob)) {
+      const nextUpdaterJobDateHumanized:
+        | string
+        | null = getNextJobDateHumanized(this._updaterJob);
+      const nextUpdaterJobDate: string | null = getNextJobDate(
+        this._updaterJob
+      );
+
+      this._loggerService.debug({
+        context: this._serviceName,
+        message: this._chalkService.text(
+          `next updater job: ${this._chalkService.value(
+            nextUpdaterJobDateHumanized
+          )} ${this._chalkService.hint(`(${nextUpdaterJobDate})`)}`
+        ),
+      });
+    }
   }
 
   private _logNextJobDate(): void {
