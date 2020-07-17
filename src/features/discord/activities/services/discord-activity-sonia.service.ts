@@ -119,6 +119,13 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   private _createUpdaterSchedule(): void {
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(
+        `updater job rule: ${this._chalkService.value(this._rule)}`
+      ),
+    });
+
     this._updaterJob = scheduleJob(this._updaterRule, (): void => {
       this._executeUpdaterJob();
     });

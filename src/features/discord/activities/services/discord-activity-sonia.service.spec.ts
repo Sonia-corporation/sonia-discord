@@ -267,7 +267,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         service.startSchedule();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
       });
     });
 
@@ -281,8 +281,8 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         service.startSchedule();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
-        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
           context: `DiscordActivitySoniaService`,
           message: `text-next updater job: value-dummy-next-job-date-humanized hint-(dummy-next-job-date)`,
         } as ILoggerLog);
@@ -305,8 +305,8 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         service.startSchedule();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(4);
-        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(5);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
           context: `DiscordActivitySoniaService`,
           message: `text-updater job triggered`,
         } as ILoggerLog);
@@ -317,8 +317,8 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         service.startSchedule();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(4);
-        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(5);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(4, {
           context: `DiscordActivitySoniaService`,
           message: `text-next updater job: value-dummy-next-job-date-humanized hint-(dummy-next-job-date)`,
         } as ILoggerLog);
@@ -335,7 +335,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         service.startSchedule();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
       });
     });
 
@@ -349,8 +349,8 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         service.startSchedule();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
-        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
           context: `DiscordActivitySoniaService`,
           message: `text-next job: value-dummy-next-job-date-humanized hint-(dummy-next-job-date)`,
         } as ILoggerLog);
@@ -375,8 +375,8 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         service.startSchedule();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
-        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(4);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
           context: `DiscordActivitySoniaService`,
           message: `text-job triggered`,
         } as ILoggerLog);
@@ -396,8 +396,8 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         service.startSchedule();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
-        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(4);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(4, {
           context: `DiscordActivitySoniaService`,
           message: `text-next job: value-dummy-next-job-date-humanized hint-(dummy-next-job-date)`,
         } as ILoggerLog);
