@@ -200,7 +200,8 @@ describe(`DiscordActivitySoniaService`, (): void => {
           GetRandomRangeMinuteScheduleRuleModule,
           `getRandomRangeMinuteScheduleRule`
         )
-        .mockReturnValue(`dummy-schedule`);
+        .mockReturnValueOnce(`dummy-schedule`)
+        .mockReturnValueOnce(`dummy-new-schedule`);
       service = new DiscordActivitySoniaService();
       job = createMock<Job>();
 
@@ -276,6 +277,18 @@ describe(`DiscordActivitySoniaService`, (): void => {
         scheduleJobSpy.mockImplementation().mockRejectedValueOnce(job);
       });
 
+      it(`should log the updater job rule`, (): void => {
+        expect.assertions(2);
+
+        service.startSchedule();
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+          context: `DiscordActivitySoniaService`,
+          message: `text-updater job rule: value-dummy-schedule`,
+        } as ILoggerLog);
+      });
+
       it(`should log the next updater job date`, (): void => {
         expect.assertions(2);
 
@@ -285,6 +298,18 @@ describe(`DiscordActivitySoniaService`, (): void => {
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
           context: `DiscordActivitySoniaService`,
           message: `text-next updater job: value-dummy-next-job-date-humanized hint-(dummy-next-job-date)`,
+        } as ILoggerLog);
+      });
+
+      it(`should log the job rule`, (): void => {
+        expect.assertions(2);
+
+        service.startSchedule();
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+          context: `DiscordActivitySoniaService`,
+          message: `text-job rule: value-dummy-schedule`,
         } as ILoggerLog);
       });
     });
@@ -300,6 +325,18 @@ describe(`DiscordActivitySoniaService`, (): void => {
         );
       });
 
+      it(`should log the updater job rule`, (): void => {
+        expect.assertions(2);
+
+        service.startSchedule();
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(5);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+          context: `DiscordActivitySoniaService`,
+          message: `text-updater job rule: value-dummy-schedule`,
+        } as ILoggerLog);
+      });
+
       it(`should log about the triggered updater job`, (): void => {
         expect.assertions(2);
 
@@ -312,6 +349,31 @@ describe(`DiscordActivitySoniaService`, (): void => {
         } as ILoggerLog);
       });
 
+      it(`should update the job rule to use a new random schedule`, (): void => {
+        expect.assertions(2);
+
+        service.startSchedule();
+
+        expect(getRandomRangeMinuteScheduleRuleSpy).toHaveBeenCalledTimes(2);
+        expect(getRandomRangeMinuteScheduleRuleSpy).toHaveBeenNthCalledWith(
+          2,
+          5,
+          15
+        );
+      });
+
+      it(`should log about the new updated job rule`, (): void => {
+        expect.assertions(2);
+
+        service.startSchedule();
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(5);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+          context: `DiscordActivitySoniaService`,
+          message: `text-job rule updated to: value-dummy-new-schedule`,
+        } as ILoggerLog);
+      });
+
       it(`should log the next updater job date`, (): void => {
         expect.assertions(2);
 
@@ -321,6 +383,18 @@ describe(`DiscordActivitySoniaService`, (): void => {
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(4, {
           context: `DiscordActivitySoniaService`,
           message: `text-next updater job: value-dummy-next-job-date-humanized hint-(dummy-next-job-date)`,
+        } as ILoggerLog);
+      });
+
+      it(`should log the new job rule`, (): void => {
+        expect.assertions(2);
+
+        service.startSchedule();
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(5);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(5, {
+          context: `DiscordActivitySoniaService`,
+          message: `text-job rule: value-dummy-new-schedule`,
         } as ILoggerLog);
       });
     });
@@ -342,6 +416,30 @@ describe(`DiscordActivitySoniaService`, (): void => {
     describe(`when the job is valid`, (): void => {
       beforeEach((): void => {
         scheduleJobSpy.mockReturnValue(job).mockImplementationOnce(_.noop);
+      });
+
+      it(`should log the updater job rule`, (): void => {
+        expect.assertions(2);
+
+        service.startSchedule();
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+          context: `DiscordActivitySoniaService`,
+          message: `text-updater job rule: value-dummy-schedule`,
+        } as ILoggerLog);
+      });
+
+      it(`should log the job rule`, (): void => {
+        expect.assertions(2);
+
+        service.startSchedule();
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+          context: `DiscordActivitySoniaService`,
+          message: `text-job rule: value-dummy-schedule`,
+        } as ILoggerLog);
       });
 
       it(`should log the next job date`, (): void => {
@@ -368,6 +466,30 @@ describe(`DiscordActivitySoniaService`, (): void => {
             }
           )
           .mockImplementationOnce(_.noop);
+      });
+
+      it(`should log the updater job rule`, (): void => {
+        expect.assertions(2);
+
+        service.startSchedule();
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(4);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+          context: `DiscordActivitySoniaService`,
+          message: `text-updater job rule: value-dummy-schedule`,
+        } as ILoggerLog);
+      });
+
+      it(`should log the job rule`, (): void => {
+        expect.assertions(2);
+
+        service.startSchedule();
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(4);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+          context: `DiscordActivitySoniaService`,
+          message: `text-job rule: value-dummy-schedule`,
+        } as ILoggerLog);
       });
 
       it(`should log about the triggered job`, (): void => {
