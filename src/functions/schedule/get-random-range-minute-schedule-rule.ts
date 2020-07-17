@@ -42,33 +42,34 @@ function getError(
   maximumInterval: Readonly<number>
 ): string | undefined {
   const errors: (string | null)[] = [
-    getMinimumInternalError(minimumInterval),
-    getMaximumInternalError(maximumInterval),
+    getMinimumIntervalError(minimumInterval),
+    getMaximumIntervalError(maximumInterval),
     getIntervalError(minimumInterval, maximumInterval),
   ];
 
   return _.head(_.compact(errors));
 }
 
-function getMinimumInternalError(
+function getMinimumIntervalError(
   minimumInterval: Readonly<number>
 ): string | null {
-  if (_.lt(minimumInterval, 0)) {
-    return `Minimum interval should be greater or equal to 0`;
-  } else if (_.gt(minimumInterval, 59)) {
-    return `Minimum interval should be lower than 60`;
-  }
-
-  return null;
+  return getOutOfBoundIntervalError(minimumInterval, `Minimum`);
 }
 
-function getMaximumInternalError(
+function getMaximumIntervalError(
   maximumInterval: Readonly<number>
 ): string | null {
-  if (_.lt(maximumInterval, 0)) {
-    return `Maximum interval should be greater or equal to 0`;
-  } else if (_.gt(maximumInterval, 59)) {
-    return `Maximum interval should be lower than 60`;
+  return getOutOfBoundIntervalError(maximumInterval, `Maximum`);
+}
+
+function getOutOfBoundIntervalError(
+  value: Readonly<number>,
+  valueName: Readonly<string>
+): string | null {
+  if (_.lt(value, 0)) {
+    return `${valueName} interval should be greater or equal to 0`;
+  } else if (_.gt(value, 59)) {
+    return `${valueName} interval should be lower than 60`;
   }
 
   return null;
