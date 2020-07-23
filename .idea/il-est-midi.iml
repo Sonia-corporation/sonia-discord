@@ -5,6 +5,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.cache" />
       <excludeFolder url="file://$MODULE_DIR$/.cache-jest" />
       <excludeFolder url="file://$MODULE_DIR$/coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/node_modules" />
       <excludeFolder url="file://$MODULE_DIR$/reports" />
       <excludeFolder url="file://$MODULE_DIR$/stryker-tmp" />
     </content>
@@ -18,5 +19,7 @@
     <orderEntry type="library" name="lodash" level="project" />
     <orderEntry type="library" name="ts-auto-mock" level="project" />
     <orderEntry type="library" name="types" level="project" />
+    <orderEntry type="library" name="discord.js" level="project" />
+    <orderEntry type="library" name="rxjs" level="project" />
   </component>
 </module>
