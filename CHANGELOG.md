@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.63.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.62.0...1.63.0) (2020-07-23)
+
+
+### :rocket: Features
+
+* **discord:** change activity every 5 to 15 minutes instead of 1 hour ([4e0dcca](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4e0dcca56b546a09697afd167e68df3aad47a049))
+
 # [1.62.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.61.0...1.62.0) (2020-07-23)
 
 
