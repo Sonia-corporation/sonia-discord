@@ -70,7 +70,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Has new tag
-        if: $CURRENT_TAG != $steps.latest-tag.outputs.tag
+        if: CURRENT_TAG != $steps.latest-tag.outputs.tag
         run: echo 'The current tag is not the same after the release. A new tag has been created'
       - name: Has same tag
         if: CURRENT_TAG == steps.latest-tag.outputs.tag
