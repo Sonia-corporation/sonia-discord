@@ -83,16 +83,11 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
 
   private _logNextJobDate(): void {
     if (!_.isNil(this._job)) {
-      const nextJobDateHumanized: string = getNextJobDateHumanized(this._job);
-      const nextJobDate: string = getNextJobDate(this._job);
-
-      this._loggerService.debug({
+      this._loggerService.logJobDate({
         context: this._serviceName,
-        message: this._chalkService.text(
-          `next job: ${this._chalkService.value(
-            nextJobDateHumanized
-          )} ${this._chalkService.hint(`(${nextJobDate})`)}`
-        ),
+        jobDate: getNextJobDate(this._job),
+        jobDateHumanized: getNextJobDateHumanized(this._job),
+        jobName: `next`,
       });
     }
   }
