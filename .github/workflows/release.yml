@@ -7,7 +7,7 @@ jobs:
   CurrentTag:
     runs-on: ubuntu-latest
     outputs:
-      CURRENT_TAG: ${{ steps.current-tag.outputs.CURRENT_TAG }}
+      CURRENT_TAG: ${{ steps.save-current-tag.outputs.CURRENT_TAG }}
     steps:
       - name: Checkout develop
         uses: actions/checkout@v2
@@ -23,7 +23,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Save current tag
-        id: current-tag
+        id: save-current-tag
         run: echo '::set-output name=CURRENT_TAG::${{ steps.latest-tag.outputs.tag }}'
   Release:
     runs-on: ubuntu-latest
