@@ -19,7 +19,7 @@ jobs:
       - name: Save current tag
         run: echo '::set-env name=CURRENT_TAG::${{ steps.latest-tag.outputs.tag }}'
       - name: Show current tag
-        run: echo 'The current tag is ${{ CURRENT_TAG }}'
+        run: echo 'The current tag is $CURRENT_TAG'
   Release:
     runs-on: ubuntu-latest
     steps:
