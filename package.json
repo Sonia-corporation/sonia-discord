@@ -80,7 +80,7 @@
   "main": "./src/index.ts",
   "scripts": {
     "\n# RUN SCRIPTS:": "",
-    "start": "ts-node-dev --respawn --transpileOnly .",
+    "start": "ts-node-dev --respawn --transpile-only .",
     "start:prod": "npm run build && npm run run:prod",
     "\n# BUILD SCRIPTS:": "",
     "build": "npm run clean:dist && concurrently \"parcel build ./src/index.ts --target node\" \"npm run build:environment:create\" && concurrently \"npm run build:environment:copy\" \"npm run build:environment:rewrite-path\" \"npm run build:update-app-initialization-date\"",
@@ -160,6 +160,7 @@
     "fs-extra": "9.0.1",
     "husky": "4.2.5",
     "jest": "26.1.0",
+    "jest-extended": "0.11.5",
     "jest-silent-reporter": "0.2.1",
     "jest-ts-auto-mock": "1.0.11",
     "lint-staged": "10.2.11",
