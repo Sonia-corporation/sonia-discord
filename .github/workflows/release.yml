@@ -24,7 +24,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Save current tag
         id: save-current-tag
-        run: echo '::set-output name=CURRENT_TAG::${{ steps.latest-tag.outputs.tag }}'
+        run: echo '::set-output name=CURRENT_TAG::${{ steps.current-tag.outputs.tag }}'
   Release:
     runs-on: ubuntu-latest
     needs: [ CurrentTag ]
