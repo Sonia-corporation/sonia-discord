@@ -57,7 +57,8 @@ jobs:
         uses: peter-evans/create-pull-request@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: 'chore(develop): merge master into develop'
+          title: |
+            chore(develop): merge master into develop due to new version ${{ steps.latest-tag.outputs.tag }}
           branch: feature/merge-master-into-develop
           assignees: C0ZEN
           labels: auto-merge
