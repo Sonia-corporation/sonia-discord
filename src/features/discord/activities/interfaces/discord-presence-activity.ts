@@ -1,7 +1,8 @@
 import { ActivityType } from "discord.js";
+import { DiscordActivityNameEnum } from "../enums/discord-activity-name.enum";
 
 export interface IDiscordPresenceActivity {
-  name?: string;
+  name?: DiscordActivityNameEnum;
   type?: ActivityType | number;
   url?: string;
 }
