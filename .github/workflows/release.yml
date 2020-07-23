@@ -6,6 +6,8 @@ on:
 jobs:
   CurrentTag:
     runs-on: ubuntu-latest
+    outputs:
+      CURRENT_TAG: ${{ steps.current-tag.outputs.CURRENT_TAG }}
     steps:
       - name: Checkout develop
         uses: actions/checkout@v2
@@ -21,9 +23,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Save current tag
+        id: current-tag
         run: echo '::set-output name=CURRENT_TAG::${{ steps.latest-tag.outputs.tag }}'
-      - name: Show current tag
-        run: echo 'The current tag is ${{ needs.CurrentTag.outputs.CURRENT_TAG }}'
   Release:
     runs-on: ubuntu-latest
     steps:
@@ -73,6 +74,8 @@ jobs:
         uses: WyriHaximus/github-action-get-previous-tag@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Show current tag
+        run: echo 'The current tag is ${{ needs.CurrentTag.outputs.CURRENT_TAG }}'
       - name: Has new tag
         if: needs.CurrentTag.outputs.CURRENT_TAG != steps.latest-tag.outputs.tag
         run: echo 'The current tag is not the same after the release. A new tag has been created'
