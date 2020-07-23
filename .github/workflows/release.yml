@@ -54,7 +54,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   PR:
     runs-on: ubuntu-latest
-    needs: [ Release ]
+    needs: [ CurrentTag, Release ]
     steps:
       - name: Checkout develop
         uses: actions/checkout@v2
