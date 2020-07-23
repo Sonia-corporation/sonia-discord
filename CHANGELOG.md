@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.62.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.61.0...1.62.0) (2020-07-23)
+
+
+### :rocket: Features
+
+* **discord:** add new activities ([edf34ff](https://github.com/Sonia-corporation/il-est-midi-discord/commit/edf34ff09dbc1e643a24f23cfbfc398134283864))
+
 # [1.61.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.60.0...1.61.0) (2020-06-16)
 
 
