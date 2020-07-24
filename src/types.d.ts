@@ -1,2 +1,4 @@
-// eslint-disable-next-line quotes
-declare module "@scout_apm/scout-apm";
+/**
+ * Allow TypeScript to provide auto-completion for Jest extended dependency
+ */
+import "jest-extended";

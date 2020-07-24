@@ -32,12 +32,11 @@ describe(`getNextJobDate()`, (): void => {
 
     it(`should return an humanized date set to one minute later from now`, (): void => {
       expect.assertions(1);
+      const inOneMinute: moment.Moment = moment().add(1, `minute`);
 
       const result = getNextJobDate(job);
 
-      expect(result).toStrictEqual(
-        `${moment().format(`HH`)}:${moment().add(1, `minute`).format(`mm`)}:00`
-      );
+      expect(result).toStrictEqual(`${inOneMinute.format(`HH:mm`)}:00`);
     });
   });
 

@@ -1,89 +1,90 @@
+import { DiscordActivityNameEnum } from "../enums/discord-activity-name.enum";
 import { DiscordActivityTypeEnum } from "../enums/discord-activity-type.enum";
 import { IDiscordPresenceActivity } from "../interfaces/discord-presence-activity";
 
 export const DISCORD_PRESENCE_ACTIVITY_WATCHING: IDiscordPresenceActivity[] = [
   {
-    name: `YouTube`,
+    name: DiscordActivityNameEnum.YOU_TUBE,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `Amazon Prime Video`,
+    name: DiscordActivityNameEnum.AMAZON_PRIME_VIDEO,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `OCS`,
+    name: DiscordActivityNameEnum.OCS,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `CANAL+ Series`,
+    name: DiscordActivityNameEnum.CANAL_PLUS_SERIES,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `Apple TV+`,
+    name: DiscordActivityNameEnum.APPLE_TV_PLUS,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `Disney+`,
+    name: DiscordActivityNameEnum.DISNEY_PLUS,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `YouTube Premium`,
+    name: DiscordActivityNameEnum.YOU_TUBE_PREMIUM,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `Facebook Watch`,
+    name: DiscordActivityNameEnum.FACEBOOK_WATCH,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `Salto`,
+    name: DiscordActivityNameEnum.SALTO,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `Peacock`,
+    name: DiscordActivityNameEnum.PEACOCK,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `HBO Max`,
+    name: DiscordActivityNameEnum.HBO_MAX,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `Twitch`,
+    name: DiscordActivityNameEnum.TWITCH,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `you`,
+    name: DiscordActivityNameEnum.YOU,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `like Big Brother`,
+    name: DiscordActivityNameEnum.LIKE_BIG_BROTHER,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `some memes`,
+    name: DiscordActivityNameEnum.SOME_MEMES,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `the FBI`,
+    name: DiscordActivityNameEnum.THE_FBI,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `the !help command`,
+    name: DiscordActivityNameEnum.THE_EXCLAMATION_POINT_HELP_COMMAND,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `the $help command`,
+    name: DiscordActivityNameEnum.THE_DOLLAR_HELP_COMMAND,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `the -help command`,
+    name: DiscordActivityNameEnum.THE_DASH_HELP_COMMAND,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `SQUEEZIE GAMING`,
+    name: DiscordActivityNameEnum.SQUEEZIE_GAMING,
     type: DiscordActivityTypeEnum.WATCHING,
   },
   {
-    name: `a live of Rammstein`,
+    name: DiscordActivityNameEnum.A_LIVE_OF_RAMMSTEIN,
     type: DiscordActivityTypeEnum.WATCHING,
   },
 ];

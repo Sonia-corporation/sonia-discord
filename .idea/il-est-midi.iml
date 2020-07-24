@@ -12,12 +12,16 @@
     <content url="file://$MODULE_DIR$/node_modules" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="firebase-admin" level="project" />
-    <orderEntry type="library" name="lodash" level="project" />
-    <orderEntry type="library" name="types" level="project" />
-    <orderEntry type="library" name="google-cloud" level="project" />
-    <orderEntry type="library" name="firebase" level="project" />
-    <orderEntry type="library" name="ts-auto-mock" level="project" />
     <orderEntry type="library" name="dotenv" level="project" />
+    <orderEntry type="library" name="firebase" level="project" />
+    <orderEntry type="library" name="firebase-admin" level="project" />
+    <orderEntry type="library" name="google-cloud" level="project" />
+    <orderEntry type="library" name="lodash" level="project" />
+    <orderEntry type="library" name="ts-auto-mock" level="project" />
+    <orderEntry type="library" name="types" level="project" />
+    <orderEntry type="library" name="discord.js" level="project" />
+    <orderEntry type="library" name="rxjs" level="project" />
+    <orderEntry type="library" name="jest-extended" level="project" />
+    <orderEntry type="library" name="scout_apm" level="project" />
   </component>
 </module>

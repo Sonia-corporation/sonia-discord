@@ -4,8 +4,30 @@ on:
     branches:
       - master
 jobs:
+  CurrentTag:
+    runs-on: ubuntu-latest
+    outputs:
+      CURRENT_TAG: ${{ steps.save-current-tag.outputs.CURRENT_TAG }}
+    steps:
+      - name: Checkout develop
+        uses: actions/checkout@v2
+        with:
+          ref: develop
+      - name: Reset branch
+        run: |
+          git fetch origin master:master
+          git reset --hard master
+      - name: Get current tag
+        id: current-tag
+        uses: WyriHaximus/github-action-get-previous-tag@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Save current tag
+        id: save-current-tag
+        run: echo '::set-output name=CURRENT_TAG::${{ steps.current-tag.outputs.tag }}'
   Release:
     runs-on: ubuntu-latest
+    needs: [ CurrentTag ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -38,7 +60,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   PR:
     runs-on: ubuntu-latest
-    needs: [ Release ]
+    needs: [ CurrentTag, Release ]
     steps:
       - name: Checkout develop
         uses: actions/checkout@v2
@@ -53,11 +75,20 @@ jobs:
         uses: WyriHaximus/github-action-get-previous-tag@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Show current tag
+        run: echo 'The current tag is ${{ needs.CurrentTag.outputs.CURRENT_TAG }}'
+      - name: Has new tag
+        if: needs.CurrentTag.outputs.CURRENT_TAG != steps.latest-tag.outputs.tag
+        run: echo 'The current tag is not the same after the release. A new tag has been created'
+      - name: Has same tag
+        if: needs.CurrentTag.outputs.CURRENT_TAG == steps.latest-tag.outputs.tag
+        run: echo 'The current tag did not change'
       - name: Create PR from master to develop
+        if: needs.CurrentTag.outputs.CURRENT_TAG != steps.latest-tag.outputs.tag
         uses: peter-evans/create-pull-request@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: 'chore(develop): merge master into develop'
+          title: 'chore(develop): merge master into develop due to new version ${{ steps.latest-tag.outputs.tag }}'
           branch: feature/merge-master-into-develop
           assignees: C0ZEN
           labels: auto-merge
