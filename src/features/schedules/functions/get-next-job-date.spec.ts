@@ -36,9 +36,7 @@ describe(`getNextJobDate()`, (): void => {
 
       const result = getNextJobDate(job);
 
-      expect(result).toStrictEqual(
-        `${inOneMinute.format(`HH`)}:${inOneMinute.format(`mm`)}:00`
-      );
+      expect(result).toStrictEqual(`${inOneMinute.format(`HH:mm`)}:00`);
     });
   });
 
