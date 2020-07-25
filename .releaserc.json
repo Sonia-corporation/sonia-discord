@@ -6,7 +6,21 @@
     [
       "@semantic-release/commit-analyzer",
       {
-        "preset": "angular",
+        "config": "@sonia-corporation/conventional-changelog",
+        "releaseRules": [
+          {
+            "type": "feat",
+            "release": "minor"
+          },
+          {
+            "type": "fix",
+            "release": "patch"
+          },
+          {
+            "type": "perf",
+            "release": "patch"
+          }
+        ],
         "parserOpts": {
           "noteKeywords": [
             "BREAKING CHANGE",
@@ -19,7 +33,7 @@
     [
       "@semantic-release/release-notes-generator",
       {
-        "preset": "angular",
+        "config": "@sonia-corporation/conventional-changelog",
         "parserOpts": {
           "noteKeywords": [
             "BREAKING CHANGE",
@@ -59,9 +73,7 @@
         "assets": [
           "package.json",
           "package-lock.json",
-          "CHANGELOG.md",
-          "README.md",
-          "npm-shrinkwrap.json"
+          "CHANGELOG.md"
         ],
         "message": "build(release): new version ${nextRelease.version}"
       }
@@ -80,8 +92,7 @@
     ]
   ],
   "dryRun": false,
-  "ci": false,
+  "ci": true,
   "debug": false,
-  "preset": "angular",
   "tagFormat": "${version}"
 }

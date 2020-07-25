@@ -6,7 +6,7 @@ import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { getRandomValueFromEnum } from "../../../../functions/randoms/get-random-value-from-enum";
 import { getEveryHourScheduleRule } from "../../../../functions/schedule/get-every-hour-schedule-rule";
-import { ChalkService } from "../../../logger/services/chalk.service";
+import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { getNextJobDate } from "../../../schedules/functions/get-next-job-date";
 import { getNextJobDateHumanized } from "../../../schedules/functions/get-next-job-date-humanized";
@@ -97,18 +97,11 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
 
   private _logNextJobDate(): void {
     if (!_.isNil(this._job)) {
-      const nextJobDateHumanized: string | null = getNextJobDateHumanized(
-        this._job
-      );
-      const nextJobDate: string | null = getNextJobDate(this._job);
-
-      this._loggerService.debug({
+      this._loggerService.logJobDate({
         context: this._serviceName,
-        message: this._chalkService.text(
-          `next job: ${this._chalkService.value(
-            nextJobDateHumanized
-          )} ${this._chalkService.hint(`(${nextJobDate})`)}`
-        ),
+        jobDate: getNextJobDate(this._job),
+        jobDateHumanized: getNextJobDateHumanized(this._job),
+        jobName: `next`,
       });
     }
   }

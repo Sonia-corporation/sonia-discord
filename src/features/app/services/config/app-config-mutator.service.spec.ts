@@ -14,7 +14,7 @@ import { AppConfigMutatorService } from "./app-config-mutator.service";
 import { AppConfigService } from "./app-config.service";
 
 jest.mock(`../../../time/services/time.service`);
-jest.mock(`../../../logger/services/chalk.service`);
+jest.mock(`../../../logger/services/chalk/chalk.service`);
 
 describe(`AppConfigMutationService`, (): void => {
   let service: AppConfigMutatorService;
@@ -33,6 +33,7 @@ describe(`AppConfigMutationService`, (): void => {
 
     beforeEach((): void => {
       config = {
+        firstReleaseDate: `dummy-first-release-date`,
         initializationDate: `dummy-initialization-date`,
         isProduction: true,
         releaseDate: `dummy-release-date`,
@@ -84,6 +85,17 @@ describe(`AppConfigMutationService`, (): void => {
     describe(`when the given config is undefined`, (): void => {
       beforeEach((): void => {
         config = undefined;
+      });
+
+      it(`should not update the current first release date`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.firstReleaseDate = `firstReleaseDate`;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.firstReleaseDate).toStrictEqual(
+          `firstReleaseDate`
+        );
       });
 
       it(`should not update the current initialization date`, (): void => {
@@ -146,6 +158,7 @@ describe(`AppConfigMutationService`, (): void => {
     describe(`when the given config is a complete object`, (): void => {
       beforeEach((): void => {
         config = {
+          firstReleaseDate: `dummy-first-release-date`,
           initializationDate: `dummy-initialization-date`,
           isProduction: true,
           releaseDate: `dummy-release-date`,
@@ -153,6 +166,17 @@ describe(`AppConfigMutationService`, (): void => {
           totalReleaseCount: 88,
           version: `dummy-version`,
         };
+      });
+
+      it(`should override the first release date`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.firstReleaseDate = `firstReleaseDate`;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.firstReleaseDate).toStrictEqual(
+          `dummy-first-release-date`
+        );
       });
 
       it(`should override the initialization date`, (): void => {
@@ -367,6 +391,7 @@ describe(`AppConfigMutationService`, (): void => {
 
     beforeEach((): void => {
       service = AppConfigMutatorService.getInstance();
+      appConfigCoreService.firstReleaseDate = `dummy-first-release-date`;
       appConfigCoreService.initializationDate = `dummy-initialization-date`;
       appConfigCoreService.isProduction = true;
       appConfigCoreService.releaseDate = `dummy-release-date`;
@@ -378,10 +403,13 @@ describe(`AppConfigMutationService`, (): void => {
     });
 
     it(`should not update the config`, (): void => {
-      expect.assertions(6);
+      expect.assertions(7);
 
       service.updateConfig();
 
+      expect(appConfigCoreService.firstReleaseDate).toStrictEqual(
+        `dummy-first-release-date`
+      );
       expect(appConfigCoreService.initializationDate).toStrictEqual(
         `dummy-initialization-date`
       );
@@ -410,10 +438,13 @@ describe(`AppConfigMutationService`, (): void => {
       });
 
       it(`should not update the config`, (): void => {
-        expect.assertions(6);
+        expect.assertions(7);
 
         service.updateConfig(config);
 
+        expect(appConfigCoreService.firstReleaseDate).toStrictEqual(
+          `dummy-first-release-date`
+        );
         expect(appConfigCoreService.initializationDate).toStrictEqual(
           `dummy-initialization-date`
         );
@@ -434,6 +465,35 @@ describe(`AppConfigMutationService`, (): void => {
         service.updateConfig(config);
 
         expect(loggerLogSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the given config contains a first release date`, (): void => {
+      beforeEach((): void => {
+        config = {
+          firstReleaseDate: `first-release-date`,
+        };
+      });
+
+      it(`should update the config first release date`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(appConfigCoreService.firstReleaseDate).toStrictEqual(
+          `first-release-date`
+        );
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[AppConfigMutatorService][now-format] text-configuration updated`
+        );
       });
     });
 
@@ -601,6 +661,46 @@ describe(`AppConfigMutationService`, (): void => {
           `debug-● context-[AppConfigMutatorService][now-format] text-configuration updated`
         );
       });
+    });
+  });
+
+  describe(`updateFirstReleaseDate()`, (): void => {
+    let firstReleaseDate: string;
+
+    let configServiceGetUpdatedDateSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = AppConfigMutatorService.getInstance();
+      firstReleaseDate = `dummy-first-release-date`;
+      appConfigCoreService.firstReleaseDate = `first-release-date`;
+
+      configServiceGetUpdatedDateSpy = jest
+        .spyOn(configService, `getUpdatedDate`)
+        .mockReturnValue(`dummy-first-release-date`);
+    });
+
+    it(`should get the updated string`, (): void => {
+      expect.assertions(2);
+
+      service.updateFirstReleaseDate(firstReleaseDate);
+
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledWith({
+        context: `AppConfigMutatorService`,
+        newValue: `dummy-first-release-date`,
+        oldValue: `first-release-date`,
+        valueName: `first release date`,
+      } as IConfigUpdateString);
+    });
+
+    it(`should update the app config first release date with the updated string`, (): void => {
+      expect.assertions(1);
+
+      service.updateFirstReleaseDate(firstReleaseDate);
+
+      expect(appConfigCoreService.firstReleaseDate).toStrictEqual(
+        `dummy-first-release-date`
+      );
     });
   });
 

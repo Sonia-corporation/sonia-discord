@@ -1,10 +1,11 @@
+import scout from "@scout_apm/scout-apm";
 import { path } from "app-root-path";
 import express, { Express } from "express";
 import _ from "lodash";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { AppConfigService } from "../../app/services/config/app-config.service";
-import { ChalkService } from "../../logger/services/chalk.service";
+import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
 import { ServerConfigService } from "./config/server-config.service";
 
@@ -58,15 +59,10 @@ export class ServerService extends AbstractService {
   }
 
   private _setScoutMiddleware(): void {
-    if (this._appConfigService.isProduction()) {
-      /**
-       * @description
-       * Not compatible with Windows for now
-       * Could not find a way to properly handle errors to run it on production only
-       * Issue: https://github.com/scoutapp/scout_apm_node/issues/187
-       *
-       * this._app.use(scout.expressMiddleware());
-       */
+    if (!_.isNil(this._app)) {
+      if (this._appConfigService.isProduction()) {
+        this._app.use(scout.expressMiddleware());
+      }
     }
   }
 

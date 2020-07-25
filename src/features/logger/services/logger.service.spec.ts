@@ -2,12 +2,13 @@ import { Subject } from "rxjs";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
 import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
+import { IJobDateLog } from "../interfaces/job-date-log";
 import { ILoggerLog } from "../interfaces/logger-log";
 import { ILoggerServiceCreated } from "../interfaces/logger-service-created";
 import { LoggerConfigCoreService } from "./config/logger-config-core.service";
 import { LoggerService } from "./logger.service";
 
-jest.mock(`./chalk.service`);
+jest.mock(`./chalk/chalk.service`);
 jest.mock(`../../time/services/time.service`);
 jest.mock(`../../core/services/core-event.service`);
 
@@ -4047,6 +4048,37 @@ describe(`LoggerService`, (): void => {
           message: `text-created`,
         } as ILoggerLog);
       });
+    });
+  });
+
+  describe(`logJobDate()`, (): void => {
+    let jobDateLog: IJobDateLog;
+
+    let consoleLogSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = LoggerService.getInstance();
+      jobDateLog = {
+        context: `dummy-context`,
+        jobDate: `dummy-job-date`,
+        jobDateHumanized: `dummy-job-date-humanized`,
+        jobName: `dummy-job-name`,
+      };
+      loggerConfigCoreService.isEnabled = true;
+      loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
+
+      consoleLogSpy = jest.spyOn(console, `log`).mockImplementation();
+    });
+
+    it(`should log the job date`, (): void => {
+      expect.assertions(2);
+
+      service.logJobDate(jobDateLog);
+
+      expect(consoleLogSpy).toHaveBeenCalledTimes(1);
+      expect(consoleLogSpy).toHaveBeenCalledWith(
+        `debug-● context-[dummy-context][now-format] text-dummy-job-name job: value-dummy-job-date-humanized hint-(dummy-job-date)`
+      );
     });
   });
 });

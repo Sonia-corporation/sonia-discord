@@ -1,4 +1,6 @@
+import chalk from "chalk";
 import _ from "lodash";
+import { CHALK_INSTANCE } from "../../../constants/chalk/chalk-instance";
 
 export class ChalkService {
   private static _instance: ChalkService;
@@ -45,5 +47,9 @@ export class ChalkService {
 
   public debug(message: Readonly<string> | unknown): string {
     return `debug-${_.toString(message)}`;
+  }
+
+  public getLevel(): chalk.Level {
+    return CHALK_INSTANCE.level;
   }
 }

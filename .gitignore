@@ -57,3 +57,6 @@ Thumbs.db
 
 # stryker temp files
 stryker-tmp
+
+# Firebase
+src/environment/firebase-service-account-file.json

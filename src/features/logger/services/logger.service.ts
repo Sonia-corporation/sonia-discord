@@ -5,10 +5,11 @@ import { CoreEventService } from "../../core/services/core-event.service";
 import { TimeService } from "../../time/services/time.service";
 import { LoggerConfigLevelValueEnum } from "../enums/logger-config-level-value.enum";
 import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
+import { IJobDateLog } from "../interfaces/job-date-log";
 import { ILoggerLog } from "../interfaces/logger-log";
 import { ILoggerLogInternal } from "../interfaces/logger-log-internal";
 import { ILoggerServiceCreated } from "../interfaces/logger-service-created";
-import { ChalkService } from "./chalk.service";
+import { ChalkService } from "./chalk/chalk.service";
 import { LoggerConfigService } from "./config/logger-config.service";
 
 export class LoggerService {
@@ -145,6 +146,17 @@ export class LoggerService {
     return `${this._chalkService.context(
       `[${context}] `
     )}${this._chalkService.text(message)}`;
+  }
+
+  public logJobDate(jobDateLog: Readonly<IJobDateLog>): void {
+    this.debug({
+      context: jobDateLog.context,
+      message: this._chalkService.text(
+        `${jobDateLog.jobName} job: ${this._chalkService.value(
+          jobDateLog.jobDateHumanized
+        )} ${this._chalkService.hint(`(${jobDateLog.jobDate})`)}`
+      ),
+    });
   }
 
   private _log(loggerLogInternal: Readonly<ILoggerLogInternal>): void {

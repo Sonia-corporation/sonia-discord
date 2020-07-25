@@ -136,11 +136,11 @@ module.exports = {
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],
 
+  // A list of paths to modules that run some code to configure or set up the testing framework before each test
+  setupFilesAfterEnv: [`jest-extended`],
+
   // Prevent tests from printing messages through the console
   silent: true,
-
-  // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [`./__tests__/setup.js`],
 
   // The test environment that will be used for testing
   testEnvironment: `node`,

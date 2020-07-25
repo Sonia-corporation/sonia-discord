@@ -1,5 +1,180 @@
 # Semantic Versioning Changelog
 
+# [1.63.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.62.0...1.63.0) (2020-07-23)
+
+
+### :rocket: Features
+
+* **discord:** change activity every 5 to 15 minutes instead of 1 hour ([4e0dcca](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4e0dcca56b546a09697afd167e68df3aad47a049))
+
+# [1.62.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.61.0...1.62.0) (2020-07-23)
+
+
+### :rocket: Features
+
+* **discord:** add new activities ([edf34ff](https://github.com/Sonia-corporation/il-est-midi-discord/commit/edf34ff09dbc1e643a24f23cfbfc398134283864))
+
+# [1.61.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.60.0...1.61.0) (2020-06-16)
+
+
+### :rocket: Features
+
+* **release-notes:** remove the emoji from the headers ([209a799](https://github.com/Sonia-corporation/il-est-midi-discord/commit/209a7998417c2e14e92d97123ce3dbad70cacd35))
+
+# [1.60.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.59.0...1.60.0) (2020-06-16)
+
+
+### :rocket: Features
+
+* **release-notes:** remove the special fixes annotation ([3cc0c2b](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3cc0c2bc7d3297b0c138139d52bfd36cb7ffcdb1))
+
+# [1.59.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.58.2...1.59.0) (2020-06-03)
+
+
+### :rocket: Features
+
+* **changelog:** change the format ([b6c4c6e](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b6c4c6e3b5b919772c6d3faaefa0412176a864de))
+* **scout:** configure the express middleware for scout apm ([9b2ec29](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9b2ec29396fecae99ee51b3179c14bcfd13c4663))
+
+## [1.58.2](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.58.1...1.58.2) (2020-06-01)
+
+
+### Bug Fixes
+
+* **release:** fix the checkout of the develop when creating a PR ([4cfec02](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4cfec02544851568ae87e8cf33b2b6bd039573c3))
+
+## [1.58.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.58.0...1.58.1) (2020-06-01)
+
+
+### Bug Fixes
+
+* **release:** checkout the develop when creating a PR ([65a453e](https://github.com/Sonia-corporation/il-est-midi-discord/commit/65a453e3b21a9deb2ab3308eee1d5a3366360313))
+
+# [1.58.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.57.0...1.58.0) (2020-06-01)
+
+
+### Features
+
+* **release:** create a PR instead of merging directly ([450ae4c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/450ae4cf139aaf5191e32952d24e2ffc1509ff0c))
+
+# [1.57.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.56.0...1.57.0) (2020-06-01)
+
+
+### Bug Fixes
+
+* **release:** use the old format for the release notes ([76fe391](https://github.com/Sonia-corporation/il-est-midi-discord/commit/76fe391619dee0a4b347ae6961996ed8d6ba5644))
+
+
+### Features
+
+* **release:** use the files to whitelist the npm release content ([ef366f1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ef366f1145b10c836941e5dd20eb55f6fd52b6d3))
+
+## 1.56.0 (2020-06-01)
+
+* Merge pull request #515 from Sonia-corporation/develop ([c0d4266](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c0d4266)), closes [#515](https://github.com/Sonia-corporation/il-est-midi-discord/issues/515)
+* Merge pull request #512 from Sonia-corporation/feature/release ([e0e08b0](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e0e08b0)), closes [#512](https://github.com/Sonia-corporation/il-est-midi-discord/issues/512)
+* Merge branch 'develop' into feature/release ([2a45ce1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2a45ce1))
+* Merge pull request #514 from Sonia-corporation/feature/errors-channel ([c0f3c56](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c0f3c56)), closes [#514](https://github.com/Sonia-corporation/il-est-midi-discord/issues/514)
+* Merge pull request #510 from Sonia-corporation/renovate/ts-auto-mock-2.2.x ([055d04c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/055d04c)), closes [#510](https://github.com/Sonia-corporation/il-est-midi-discord/issues/510)
+* Merge pull request #508 from Sonia-corporation/renovate/ts-auto-mock-2.x ([f627d85](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f627d85)), closes [#508](https://github.com/Sonia-corporation/il-est-midi-discord/issues/508)
+* Merge pull request #509 from Sonia-corporation/renovate/scout_apm-scout-apm-0.1.x ([5c1ede8](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5c1ede8)), closes [#509](https://github.com/Sonia-corporation/il-est-midi-discord/issues/509)
+* Merge pull request #505 from Sonia-corporation/renovate/lodash-4.14.x ([870cd43](https://github.com/Sonia-corporation/il-est-midi-discord/commit/870cd43)), closes [#505](https://github.com/Sonia-corporation/il-est-midi-discord/issues/505)
+* Merge pull request #506 from Sonia-corporation/renovate/ts-jest-26.x ([6335c45](https://github.com/Sonia-corporation/il-est-midi-discord/commit/6335c45)), closes [#506](https://github.com/Sonia-corporation/il-est-midi-discord/issues/506)
+* Merge pull request #504 from Sonia-corporation/renovate/eslint-plugin-rxjs-0.0.x ([6e01264](https://github.com/Sonia-corporation/il-est-midi-discord/commit/6e01264)), closes [#504](https://github.com/Sonia-corporation/il-est-midi-discord/issues/504)
+* Merge pull request #503 from Sonia-corporation/renovate/eslint-config-recommended-4.x ([442f752](https://github.com/Sonia-corporation/il-est-midi-discord/commit/442f752)), closes [#503](https://github.com/Sonia-corporation/il-est-midi-discord/issues/503)
+* Merge pull request #502 from Sonia-corporation/renovate/lint-staged-10.2.x ([2494c32](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2494c32)), closes [#502](https://github.com/Sonia-corporation/il-est-midi-discord/issues/502)
+* Merge pull request #501 from Sonia-corporation/renovate/patch-typescript-eslint-monorepo ([376f369](https://github.com/Sonia-corporation/il-est-midi-discord/commit/376f369)), closes [#501](https://github.com/Sonia-corporation/il-est-midi-discord/issues/501)
+* Merge pull request #498 from Sonia-corporation/master ([b5f9ef1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b5f9ef1)), closes [#498](https://github.com/Sonia-corporation/il-est-midi-discord/issues/498)
+* Merge pull request #495 from Sonia-corporation/renovate/eslint-plugin-jest-23.13.x ([fbdbf55](https://github.com/Sonia-corporation/il-est-midi-discord/commit/fbdbf55)), closes [#495](https://github.com/Sonia-corporation/il-est-midi-discord/issues/495)
+* Merge pull request #496 from Sonia-corporation/renovate/lodash-4.14.x ([04cb711](https://github.com/Sonia-corporation/il-est-midi-discord/commit/04cb711)), closes [#496](https://github.com/Sonia-corporation/il-est-midi-discord/issues/496)
+* test(github-config-core): fix test on error ([b78dfce](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b78dfce))
+* feat(discord): add a default title when linking to the issue opening ([471077b](https://github.com/Sonia-corporation/il-est-midi-discord/commit/471077b))
+* build(release): add new step to merge master into develop on release ([5af1b39](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5af1b39))
+* chore(deps): update dependency @scout_apm/scout-apm to v0.1.9 ([e3476fe](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e3476fe))
+* chore(deps): update dependency @types/lodash to v4.14.153 ([474465a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/474465a))
+* chore(deps): update dependency @types/lodash to v4.14.154 ([06a45d9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/06a45d9))
+* chore(deps): update dependency eslint-config-recommended to v4.1.0 ([91fc259](https://github.com/Sonia-corporation/il-est-midi-discord/commit/91fc259))
+* chore(deps): update dependency eslint-plugin-jest to v23.13.2 ([86df49c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/86df49c))
+* chore(deps): update dependency eslint-plugin-rxjs to v0.0.2-beta.24 ([4353452](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4353452))
+* chore(deps): update dependency lint-staged to v10.2.7 ([f423c92](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f423c92))
+* chore(deps): update dependency ts-auto-mock to v2.2.2 ([268b031](https://github.com/Sonia-corporation/il-est-midi-discord/commit/268b031))
+* chore(deps): update dependency ts-auto-mock to v2.2.5 ([62e4678](https://github.com/Sonia-corporation/il-est-midi-discord/commit/62e4678))
+* chore(deps): update dependency ts-jest to v26.1.0 ([0660019](https://github.com/Sonia-corporation/il-est-midi-discord/commit/0660019))
+* chore(deps): update typescript-eslint monorepo to v3.0.2 ([5b94799](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5b94799))
+
+## <small>1.55.1 (2020-05-26)</small>
+
+* Merge pull request #492 from Sonia-corporation/develop ([2ed112b](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2ed112b)), closes [#492](https://github.com/Sonia-corporation/il-est-midi-discord/issues/492)
+* Merge pull request #491 from Sonia-corporation/feature/semantic-release ([ba3ba9c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ba3ba9c)), closes [#491](https://github.com/Sonia-corporation/il-est-midi-discord/issues/491)
+* Merge branch 'develop' into feature/semantic-release ([e064e86](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e064e86))
+* Merge pull request #490 from Sonia-corporation/develop ([5a6bef1](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5a6bef1)), closes [#490](https://github.com/Sonia-corporation/il-est-midi-discord/issues/490)
+* Merge pull request #489 from Sonia-corporation/feature/semantic-release ([cd6eb2f](https://github.com/Sonia-corporation/il-est-midi-discord/commit/cd6eb2f)), closes [#489](https://github.com/Sonia-corporation/il-est-midi-discord/issues/489)
+* Merge pull request #487 from Sonia-corporation/renovate/eslint-plugin-rxjs-0.0.x ([9060b94](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9060b94)), closes [#487](https://github.com/Sonia-corporation/il-est-midi-discord/issues/487)
+* fix(dummy): fake fix to test the release ([b43aab3](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b43aab3))
+* build(release): use commitizen and define the release rules ([3971eeb](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3971eeb))
+* chore(dependencies): remove conventional-changelog-angular ([ad2bf81](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ad2bf81))
+* chore(readme): remove useless dot between badges ([fb8b8fa](https://github.com/Sonia-corporation/il-est-midi-discord/commit/fb8b8fa))
+* chore(deps): update dependency eslint-plugin-rxjs to v0.0.2-beta.23 ([2347563](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2347563))
+
+# [1.55.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.54.0...1.55.0) (2020-05-25)
+
+
+### Features
+
+* **discord:** add the first release date in the footer of the version ([2ca56fd](https://github.com/Sonia-corporation/il-est-midi-discord/commit/2ca56fdea2557a1fdc841f8c1e40f3c5d068d258)), closes [#457](https://github.com/Sonia-corporation/il-est-midi-discord/issues/457)
+* **discord:** use birthday instead of version in the version footer cmd ([9ee4ea2](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9ee4ea25c941f07ba9ddae1398081dad6ab5e329)), closes [#448](https://github.com/Sonia-corporation/il-est-midi-discord/issues/448)
+
+# [1.54.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.53.0...1.54.0) (2020-05-24)
+
+
+### Features
+
+* **discord:** reduce the end of lines for the help command ([4211fc9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/4211fc93da37c2afa014606178063f04300ce434))
+
+# [1.53.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.52.0...1.53.0) (2020-05-24)
+
+
+### Features
+
+* **discord:** only handle the discord message if the content is valid ([0f44dad](https://github.com/Sonia-corporation/il-est-midi-discord/commit/0f44dadc9ecbb05abd5db08073de358ffc4f6120))
+
+# [1.52.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.51.0...1.52.0) (2020-05-24)
+
+
+### Features
+
+* **chalk:** use basic colors when truecolor is not available ([7af6be2](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7af6be21021964549af559245ae6315836f4abbc))
+
+
+### Performance Improvements
+
+* **chalk-color-service:** change the way to get the humanised levels ([dac1940](https://github.com/Sonia-corporation/il-est-midi-discord/commit/dac1940f2349382c05f03862ca1db26216e58e04))
+
+# [1.51.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.50.0...1.51.0) (2020-05-23)
+
+
+### Features
+
+* **profile:** add a discord id ([20f909d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/20f909da75c275c4e84814fc0f6a5066beba463b))
+* **scripts:** add the profile when using the create secret env script ([d886599](https://github.com/Sonia-corporation/il-est-midi-discord/commit/d8865999019b1dee7301702d3204aa7640e9b9a7))
+* **dev-prefix:** allow to add a mention with the profile discord id ([ab91546](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ab915463bb7040f1bbe8c90f986402ce48601908))
+* **environment:** allow to override the profile Discord id ([adb03cf](https://github.com/Sonia-corporation/il-est-midi-discord/commit/adb03cf9c650b31fc65ba8d684f16ebdf6388716))
+* **discord:** use the mention for the dev prefix for simple messages ([1ee6c66](https://github.com/Sonia-corporation/il-est-midi-discord/commit/1ee6c663ecd082fac18948bda7e6ace501b0ef57))
+
+# [1.50.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.49.2...1.50.0) (2020-05-23)
+
+
+### Features
+
+* **discord:** store the emotional state for 30 minutes ([bb6453d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/bb6453da2ab68f6732eba811a847e661240b0d23))
+
+## [1.49.2](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.49.1...1.49.2) (2020-05-23)
+
+
+### Bug Fixes
+
+* **discord:** always fetch the release notes for the current app version ([e120151](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e120151290d033a50da84e0482f4868ee4eeb300))
+
 ## [1.49.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.49.0...1.49.1) (2020-05-22)
 
 

@@ -5,10 +5,11 @@ import { Job, scheduleJob } from "node-schedule";
 import { AbstractService } from "../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { getEveryHourScheduleRule } from "../../../../../functions/schedule/get-every-hour-schedule-rule";
-import { ChalkService } from "../../../../logger/services/chalk.service";
+import { ChalkService } from "../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../logger/services/logger.service";
 import { getNextJobDate } from "../../../../schedules/functions/get-next-job-date";
 import { getNextJobDateHumanized } from "../../../../schedules/functions/get-next-job-date-humanized";
+import { TimezoneEnum } from "../../../../time/enums/timezone.enum";
 import { isDiscordGuildChannel } from "../../../channels/functions/is-discord-guild-channel";
 import { isDiscordGuildChannelWritable } from "../../../channels/functions/types/is-discord-guild-channel-writable";
 import { DiscordChannelGuildService } from "../../../channels/services/discord-channel-guild.service";
@@ -82,16 +83,11 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
 
   private _logNextJobDate(): void {
     if (!_.isNil(this._job)) {
-      const nextJobDateHumanized: string = getNextJobDateHumanized(this._job);
-      const nextJobDate: string = getNextJobDate(this._job);
-
-      this._loggerService.debug({
+      this._loggerService.logJobDate({
         context: this._serviceName,
-        message: this._chalkService.text(
-          `next job: ${this._chalkService.value(
-            nextJobDateHumanized
-          )} ${this._chalkService.hint(`(${nextJobDate})`)}`
-        ),
+        jobDate: getNextJobDate(this._job),
+        jobDateHumanized: getNextJobDateHumanized(this._job),
+        jobName: `next`,
       });
     }
   }
@@ -135,7 +131,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   }
 
   private _isNoonInParis(): boolean {
-    return _.isEqual(moment().tz(`Europe/Paris`).get(`hour`), 12);
+    return _.isEqual(moment().tz(TimezoneEnum.PARIS).get(`hour`), 12);
   }
 
   private _sendMessage(guildChannel: Readonly<GuildChannel>): void {
