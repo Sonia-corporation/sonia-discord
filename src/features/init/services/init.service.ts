@@ -13,6 +13,7 @@ import { AppConfigService } from "../../app/services/config/app-config.service";
 import { DiscordMessageConfigMutatorService } from "../../discord/messages/services/config/discord-message-config-mutator.service";
 import { DiscordService } from "../../discord/services/discord.service";
 import { DiscordSoniaConfigMutatorService } from "../../discord/users/services/config/discord-sonia-config-mutator.service";
+import { FirebaseService } from "../../firebase/services/firebase.service";
 import { GITHUB_API_URL } from "../../github/constants/github-api-url";
 import { getHumanizedReleaseNotes } from "../../github/functions/get-humanized-release-notes";
 import { getGithubQueryReleaseByTagAndTotalCount } from "../../github/functions/queries/get-github-query-release-by-tag-and-total-count";
@@ -61,13 +62,16 @@ export class InitService extends AbstractService {
   private _runApp(): void {
     DiscordService.getInstance().init();
     ServerService.getInstance().initializeApp();
+    FirebaseService.getInstance().init();
   }
 
   private _configureApp(environment: Readonly<IEnvironment>): void {
     this._configureAppFromEnvironment(environment);
-    this._configureAppFromPackage().then((): void => {
-      this._configureAppFromGitHubReleases();
-    });
+    this._configureAppFromPackage().then(
+      (): Promise<IGithubReleaseAndTotalCount> => {
+        return this._configureAppFromGitHubReleases();
+      }
+    );
   }
 
   private _configureAppFromEnvironment(
@@ -120,7 +124,7 @@ export class InitService extends AbstractService {
     this._loggerService.debug({
       context: this._serviceName,
       message: this._chalkService.text(
-        `App version: ${this._chalkService.value(appVersion)}`
+        `app version: ${this._chalkService.value(appVersion)}`
       ),
     });
 
