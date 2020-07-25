@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.64.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.63.0...1.64.0) (2020-07-25)
+
+
+### :rocket: Features
+
+* **command:** add new command "release-notes" ([e11e48a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/e11e48af9a4f31c5cf4f2c64ded74170b1c05afc))
+
 # [1.63.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.62.0...1.63.0) (2020-07-23)
 
 
