@@ -49,6 +49,14 @@ describe(`IconEnum`, (): void => {
     );
   });
 
+  it(`should have a member "NEW_PRODUCT"`, (): void => {
+    expect.assertions(1);
+
+    expect(IconEnum.NEW_PRODUCT).toStrictEqual(
+      `https://i.ibb.co/9p3Q17S/icons8-new-product-512.png`
+    );
+  });
+
   it(`should have a member "RESTAURANT"`, (): void => {
     expect.assertions(1);
 

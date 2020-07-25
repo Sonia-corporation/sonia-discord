@@ -30,6 +30,7 @@ export enum ServiceNameEnum {
   DISCORD_MESSAGE_COMMAND_ERROR_SERVICE = `DiscordMessageCommandErrorService`,
   DISCORD_MESSAGE_COMMAND_HELP_SERVICE = `DiscordMessageCommandHelpService`,
   DISCORD_MESSAGE_COMMAND_LUNCH_SERVICE = `DiscordMessageCommandLunchService`,
+  DISCORD_MESSAGE_COMMAND_RELEASE_NOTES_SERVICE = `DiscordMessageCommandReleaseNotesService`,
   DISCORD_MESSAGE_COMMAND_SERVICE = `DiscordMessageCommandService`,
   DISCORD_MESSAGE_COMMAND_VERSION_SERVICE = `DiscordMessageCommandVersionService`,
   DISCORD_MESSAGE_CONFIG_CORE_SERVICE = `DiscordMessageConfigCoreService`,

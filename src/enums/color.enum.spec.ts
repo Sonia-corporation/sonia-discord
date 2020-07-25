@@ -7,6 +7,12 @@ describe(`ColorEnum`, (): void => {
     expect(ColorEnum.CANDY).toStrictEqual(15562905);
   });
 
+  it(`should have a member "DESERT"`, (): void => {
+    expect.assertions(1);
+
+    expect(ColorEnum.DESERT).toStrictEqual(15718590);
+  });
+
   it(`should have a member "MINT"`, (): void => {
     expect.assertions(1);
 

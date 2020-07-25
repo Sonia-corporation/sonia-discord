@@ -113,6 +113,26 @@ __Example:__
 - `@Sonia-il-est-midi !lunch`
 - `@Sonia-il-est-midi !L`
 
+#### Release notes
+
+__Commands:__
+
+- release-notes
+- r *(shortcut)*
+
+Sonia will send you a message containing:
+
+- The application version (as a link).
+- The application release date.
+- The application release notes.
+- The application [changelog](CHANGELOG.md) link.
+- The total release count.
+
+__Example:__
+
+- `@Sonia-il-est-midi !release-notes`
+- `@Sonia-il-est-midi !r`
+
 #### Version
 
 __Commands:__
