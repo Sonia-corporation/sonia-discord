@@ -84,7 +84,7 @@
     "start:prod": "npm run build && npm run run:prod",
     "start:local-prod": "npm run build && npm run run:local-prod",
     "\n# BUILD SCRIPTS:": "",
-    "build": "npm run clean:dist && concurrently \"parcel build ./src/index.ts --target node\" \"npm run build:environment\" \"npm run build:firebase-service-account\"",
+    "build": "npm run clean:dist && parcel build ./src/index.ts --target node && concurrently \"npm run build:environment\" \"npm run build:firebase-service-account\"",
     "build:environment": "npm run build:environment:create && concurrently \"npm run build:environment:copy\" \"npm run build:environment:rewrite-path\" \"npm run build:update-app-initialization-date\"",
     "build:environment:copy": "node scripts/build-environment-copy.js",
     "build:environment:create": "node scripts/build-environment-create.js",
