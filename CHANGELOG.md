@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.64.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.64.0...1.64.1) (2020-07-25)
+
+
+### :bug: Bug Fixes
+
+* **sonia:** fix an error with the production environment cancelling the production ([dbbad7b](https://github.com/Sonia-corporation/il-est-midi-discord/commit/dbbad7bbc7c85fa99d43c3bc9cf43f102501c71f))
+
 # [1.64.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.63.0...1.64.0) (2020-07-25)
 
 
