@@ -9,6 +9,7 @@ import { DiscordMessageCommandCookieService } from "./cookie/discord-message-com
 import { DiscordMessageCommandErrorService } from "./error/discord-message-command-error.service";
 import { DiscordMessageCommandHelpService } from "./help/discord-message-command-help.service";
 import { DiscordMessageCommandLunchService } from "./lunch/discord-message-command-lunch.service";
+import { DiscordMessageCommandReleaseNotesService } from "./release-notes/discord-message-command-release-notes.service";
 import { DiscordMessageCommandVersionService } from "./version/discord-message-command-version.service";
 import { DiscordMessageContentService } from "../discord-message-content.service";
 
@@ -30,6 +31,7 @@ export class DiscordMessageCommandService extends AbstractService {
   private readonly _discordMessageCommandCookieService: DiscordMessageCommandCookieService = DiscordMessageCommandCookieService.getInstance();
   private readonly _discordMessageCommandLunchService: DiscordMessageCommandLunchService = DiscordMessageCommandLunchService.getInstance();
   private readonly _discordMessageContentService: DiscordMessageContentService = DiscordMessageContentService.getInstance();
+  private readonly _discordMessageCommandReleaseNotesService: DiscordMessageCommandReleaseNotesService = DiscordMessageCommandReleaseNotesService.getInstance();
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_SERVICE);
@@ -45,6 +47,8 @@ export class DiscordMessageCommandService extends AbstractService {
     } else if (this.hasCookieCommand(message)) {
       return true;
     } else if (this.hasLunchCommand(message)) {
+      return true;
+    } else if (this.hasReleaseNotesCommand(message)) {
       return true;
     }
 
@@ -84,6 +88,13 @@ export class DiscordMessageCommandService extends AbstractService {
     return this._hasThisCommand(message, [
       DiscordMessageCommandEnum.LUNCH,
       DiscordMessageCommandEnum.L,
+    ]);
+  }
+
+  public hasReleaseNotesCommand(message: Readonly<string>): boolean {
+    return this._hasThisCommand(message, [
+      DiscordMessageCommandEnum.RELEASE_NOTES,
+      DiscordMessageCommandEnum.R,
     ]);
   }
 
@@ -127,6 +138,14 @@ export class DiscordMessageCommandService extends AbstractService {
     );
   }
 
+  public handleReleaseNotesCommand(
+    anyDiscordMessage: Readonly<AnyDiscordMessage>
+  ): IDiscordMessageResponse {
+    return this._discordMessageCommandReleaseNotesService.handleResponse(
+      anyDiscordMessage
+    );
+  }
+
   public handleCommands(
     anyDiscordMessage: Readonly<AnyDiscordMessage>
   ): IDiscordMessageResponse | null {
@@ -143,6 +162,8 @@ export class DiscordMessageCommandService extends AbstractService {
         return this.handleCookieCommand(anyDiscordMessage);
       } else if (this.hasLunchCommand(anyDiscordMessage.content)) {
         return this.handleLunchCommand(anyDiscordMessage);
+      } else if (this.hasReleaseNotesCommand(anyDiscordMessage.content)) {
+        return this.handleReleaseNotesCommand(anyDiscordMessage);
       }
     }
 

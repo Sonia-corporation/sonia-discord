@@ -243,6 +243,14 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_RELEASE_NOTES_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_RELEASE_NOTES_SERVICE
+    ).toStrictEqual(`DiscordMessageCommandReleaseNotesService`);
+  });
+
   it(`should have a member "DISCORD_MESSAGE_COMMAND_SERVICE"`, (): void => {
     expect.assertions(1);
 

@@ -5,6 +5,7 @@ export enum IconEnum {
   ERROR = `https://i.ibb.co/5jZmzSB/icons8-error-512.png`,
   GIRL = `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
   INFORMATION = `https://i.ibb.co/vLSnVk6/icons8-information-512.png`,
+  NEW_PRODUCT = `https://i.ibb.co/9p3Q17S/icons8-new-product-512.png`,
   RESTAURANT = `https://i.ibb.co/vXwNzWD/icons8-restaurant-512.png`,
   WARNING_SHIELD = `https://i.ibb.co/41ccwXn/icons8-warning-shield-512.png`,
 }

@@ -14,6 +14,7 @@ import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
 import { IDiscordMessageCommandHelpConfig } from "../../../interfaces/discord-message-command-help-config";
 import { IDiscordMessageCommandLunchConfig } from "../../../interfaces/discord-message-command-lunch-config";
+import { IDiscordMessageCommandReleaseNotesConfig } from "../../../interfaces/discord-message-command-release-notes-config";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
@@ -61,6 +62,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
               imageUrl: IconEnum.GIRL,
             },
             prefix: `dummy-prefix`,
+            releaseNotes: {
+              imageColor: ColorEnum.CANDY,
+              imageUrl: IconEnum.GIRL,
+            },
             version: {
               imageColor: ColorEnum.CANDY,
               imageUrl: IconEnum.GIRL,
@@ -227,6 +232,30 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         );
       });
 
+      it(`should not update the current command release notes image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.releaseNotes.imageColor =
+          ColorEnum.CANDY;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.releaseNotes.imageColor
+        ).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should not update the current command release notes image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.releaseNotes.imageUrl =
+          IconEnum.GIRL;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.releaseNotes.imageUrl
+        ).toStrictEqual(IconEnum.GIRL);
+      });
+
       it(`should not update the current command version image color`, (): void => {
         expect.assertions(1);
         discordMessageConfigCoreService.command.version.imageColor =
@@ -318,6 +347,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
                 imageUrl: IconEnum.GIRL,
               },
               prefix: `dummy-prefix`,
+              releaseNotes: {
+                imageColor: ColorEnum.CANDY,
+                imageUrl: IconEnum.GIRL,
+              },
               version: {
                 imageColor: ColorEnum.CANDY,
                 imageUrl: IconEnum.GIRL,
@@ -440,6 +473,30 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         expect(discordMessageConfigCoreService.command.prefix).toStrictEqual(
           `dummy-prefix`
         );
+      });
+
+      it(`should override the command release notes image color`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.releaseNotes.imageColor =
+          ColorEnum.MINT;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.releaseNotes.imageColor
+        ).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should override the command release notes image url`, (): void => {
+        expect.assertions(1);
+        discordMessageConfigCoreService.command.releaseNotes.imageUrl =
+          IconEnum.WARNING_SHIELD;
+
+        service = new DiscordMessageConfigMutatorService(config);
+
+        expect(
+          discordMessageConfigCoreService.command.releaseNotes.imageUrl
+        ).toStrictEqual(IconEnum.GIRL);
       });
 
       it(`should override the command version image color`, (): void => {
@@ -592,6 +649,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageUrl: IconEnum.COOKIES,
         },
         prefix: `dummy-prefix`,
+        releaseNotes: {
+          imageColor: ColorEnum.SKY,
+          imageUrl: IconEnum.COOKIES,
+        },
         version: {
           imageColor: ColorEnum.SKY,
           imageUrl: IconEnum.COOKIES,
@@ -632,6 +693,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageUrl: IconEnum.COOKIES,
         },
         prefix: `dummy-prefix`,
+        releaseNotes: {
+          imageColor: ColorEnum.SKY,
+          imageUrl: IconEnum.COOKIES,
+        },
         version: {
           imageColor: ColorEnum.SKY,
           imageUrl: IconEnum.COOKIES,
@@ -683,6 +748,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageUrl: IconEnum.COOKIES,
           },
           prefix: `dummy-prefix`,
+          releaseNotes: {
+            imageColor: ColorEnum.SKY,
+            imageUrl: IconEnum.COOKIES,
+          },
           version: {
             imageColor: ColorEnum.SKY,
             imageUrl: IconEnum.COOKIES,
@@ -729,6 +798,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
                 imageUrl: IconEnum.ERROR,
               },
               prefix: `prefix`,
+              releaseNotes: {
+                imageColor: ColorEnum.MINT,
+                imageUrl: IconEnum.ERROR,
+              },
               version: {
                 imageColor: ColorEnum.MINT,
                 imageUrl: IconEnum.ERROR,
@@ -761,6 +834,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageUrl: IconEnum.ERROR,
           },
           prefix: `prefix`,
+          releaseNotes: {
+            imageColor: ColorEnum.MINT,
+            imageUrl: IconEnum.ERROR,
+          },
           version: {
             imageColor: ColorEnum.MINT,
             imageUrl: IconEnum.ERROR,
@@ -773,7 +850,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerLogSpy).toHaveBeenCalledTimes(12);
+        expect(loggerLogSpy).toHaveBeenCalledTimes(14);
         expect(loggerLogSpy).toHaveBeenLastCalledWith(
           `debug-● context-[DiscordMessageConfigMutatorService][now-format] text-configuration updated`
         );
@@ -839,6 +916,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
         },
         prefix: `dummy-prefix`,
+        releaseNotes: {
+          imageColor: ColorEnum.SUN,
+          imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
+        },
         version: {
           imageColor: ColorEnum.SUN,
           imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
@@ -882,6 +963,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
           },
           prefix: `dummy-prefix`,
+          releaseNotes: {
+            imageColor: ColorEnum.SUN,
+            imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
+          },
           version: {
             imageColor: ColorEnum.SUN,
             imageUrl: IconEnum.ARTIFICIAL_INTELLIGENCE,
@@ -919,6 +1004,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
               imageUrl: IconEnum.GIRL,
             },
             prefix: `prefix`,
+            releaseNotes: {
+              imageColor: ColorEnum.MINT,
+              imageUrl: IconEnum.GIRL,
+            },
             version: {
               imageColor: ColorEnum.MINT,
               imageUrl: IconEnum.GIRL,
@@ -950,6 +1039,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageUrl: IconEnum.GIRL,
           },
           prefix: `prefix`,
+          releaseNotes: {
+            imageColor: ColorEnum.MINT,
+            imageUrl: IconEnum.GIRL,
+          },
           version: {
             imageColor: ColorEnum.MINT,
             imageUrl: IconEnum.GIRL,
@@ -1026,6 +1119,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
           imageUrl: IconEnum.INFORMATION,
         },
         prefix: `dummy-prefix`,
+        releaseNotes: {
+          imageColor: ColorEnum.SUN,
+          imageUrl: IconEnum.INFORMATION,
+        },
         version: {
           imageColor: ColorEnum.SUN,
           imageUrl: IconEnum.INFORMATION,
@@ -1061,6 +1158,10 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
             imageUrl: IconEnum.INFORMATION,
           },
           prefix: `dummy-prefix`,
+          releaseNotes: {
+            imageColor: ColorEnum.SUN,
+            imageUrl: IconEnum.INFORMATION,
+          },
           version: {
             imageColor: ColorEnum.SUN,
             imageUrl: IconEnum.INFORMATION,
@@ -1172,6 +1273,30 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
         expect(discordMessageConfigCoreService.command.prefix).toStrictEqual(
           `prefix`
         );
+      });
+    });
+
+    describe(`when the given config contains a release notes`, (): void => {
+      beforeEach((): void => {
+        config = {
+          releaseNotes: {
+            imageColor: ColorEnum.MINT,
+            imageUrl: IconEnum.INFORMATION,
+          },
+        };
+      });
+
+      it(`should update the config command release notes`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommand(config);
+
+        expect(
+          discordMessageConfigCoreService.command.releaseNotes
+        ).toStrictEqual({
+          imageColor: ColorEnum.MINT,
+          imageUrl: IconEnum.INFORMATION,
+        } as IDiscordMessageCommandReleaseNotesConfig);
       });
     });
 
@@ -1873,8 +1998,159 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
     });
   });
 
+  describe(`updateMessageCommandReleaseNotes()`, (): void => {
+    let config:
+      | PartialNested<IDiscordMessageCommandReleaseNotesConfig>
+      | undefined;
+
+    beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
+      discordMessageConfigCoreService.command.releaseNotes = {
+        imageColor: ColorEnum.SUN,
+        imageUrl: IconEnum.GIRL,
+      };
+    });
+
+    describe(`when the given config is undefined`, (): void => {
+      beforeEach((): void => {
+        config = undefined;
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandReleaseNotes(config);
+
+        expect(
+          discordMessageConfigCoreService.command.releaseNotes
+        ).toStrictEqual({
+          imageColor: ColorEnum.SUN,
+          imageUrl: IconEnum.GIRL,
+        } as IDiscordMessageCommandReleaseNotesConfig);
+      });
+    });
+
+    describe(`when the given config contains an image color`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageColor: ColorEnum.MINT,
+        };
+      });
+
+      it(`should update the config command release notes image color`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandReleaseNotes(config);
+
+        expect(
+          discordMessageConfigCoreService.command.releaseNotes.imageColor
+        ).toStrictEqual(ColorEnum.MINT);
+      });
+    });
+
+    describe(`when the given config contains an image url`, (): void => {
+      beforeEach((): void => {
+        config = {
+          imageUrl: IconEnum.INFORMATION,
+        };
+      });
+
+      it(`should update the config command release notes image url`, (): void => {
+        expect.assertions(1);
+
+        service.updateMessageCommandReleaseNotes(config);
+
+        expect(
+          discordMessageConfigCoreService.command.releaseNotes.imageUrl
+        ).toStrictEqual(IconEnum.INFORMATION);
+      });
+    });
+  });
+
+  describe(`updateMessageCommandReleaseNotesImageColor()`, (): void => {
+    let imageColor: ColorEnum;
+
+    let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
+      imageColor = ColorEnum.SUN;
+      discordMessageConfigCoreService.command.releaseNotes.imageColor =
+        ColorEnum.CANDY;
+
+      configServiceGetUpdatedNumberSpy = jest
+        .spyOn(configService, `getUpdatedNumber`)
+        .mockReturnValue(ColorEnum.SUN);
+    });
+
+    it(`should get the updated number`, (): void => {
+      expect.assertions(2);
+
+      service.updateMessageCommandReleaseNotesImageColor(imageColor);
+
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageConfigMutatorService`,
+        newValue: ColorEnum.SUN,
+        oldValue: ColorEnum.CANDY,
+        valueName: `message command release notes image color`,
+      } as IConfigUpdateNumber);
+    });
+
+    it(`should update the Discord message config command release notes image color with the updated number`, (): void => {
+      expect.assertions(1);
+
+      service.updateMessageCommandReleaseNotesImageColor(imageColor);
+
+      expect(
+        discordMessageConfigCoreService.command.releaseNotes.imageColor
+      ).toStrictEqual(ColorEnum.SUN);
+    });
+  });
+
+  describe(`updateMessageCommandReleaseNotesImageUrl()`, (): void => {
+    let imageUrl: IconEnum;
+
+    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = DiscordMessageConfigMutatorService.getInstance();
+      imageUrl = IconEnum.GIRL;
+      discordMessageConfigCoreService.command.releaseNotes.imageUrl =
+        IconEnum.INFORMATION;
+
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(IconEnum.GIRL);
+    });
+
+    it(`should get the updated string`, (): void => {
+      expect.assertions(2);
+
+      service.updateMessageCommandReleaseNotesImageUrl(imageUrl);
+
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageConfigMutatorService`,
+        newValue: IconEnum.GIRL,
+        oldValue: IconEnum.INFORMATION,
+        valueName: `message command release notes image url`,
+      } as IConfigUpdateString);
+    });
+
+    it(`should update the Discord message config command release notes image url with the updated string`, (): void => {
+      expect.assertions(1);
+
+      service.updateMessageCommandReleaseNotesImageUrl(imageUrl);
+
+      expect(
+        discordMessageConfigCoreService.command.releaseNotes.imageUrl
+      ).toStrictEqual(IconEnum.GIRL);
+    });
+  });
+
   describe(`updateMessageCommandVersion()`, (): void => {
-    let config: PartialNested<IDiscordMessageCommandErrorConfig> | undefined;
+    let config: PartialNested<IDiscordMessageCommandVersionConfig> | undefined;
 
     beforeEach((): void => {
       service = DiscordMessageConfigMutatorService.getInstance();
@@ -1892,7 +2168,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
       it(`should not update the config`, (): void => {
         expect.assertions(1);
 
-        service.updateMessageCommandError(config);
+        service.updateMessageCommandVersion(config);
 
         expect(discordMessageConfigCoreService.command.version).toStrictEqual({
           imageColor: ColorEnum.SUN,

@@ -8,6 +8,7 @@ import { DiscordMessageCommandCookieService } from "./cookie/discord-message-com
 import { DiscordMessageCommandErrorService } from "./error/discord-message-command-error.service";
 import { DiscordMessageCommandHelpService } from "./help/discord-message-command-help.service";
 import { DiscordMessageCommandLunchService } from "./lunch/discord-message-command-lunch.service";
+import { DiscordMessageCommandReleaseNotesService } from "./release-notes/discord-message-command-release-notes.service";
 import { DiscordMessageCommandVersionService } from "./version/discord-message-command-version.service";
 import { DiscordMessageCommandService } from "./discord-message-command.service";
 
@@ -18,6 +19,7 @@ describe(`DiscordMessageCommandService`, (): void => {
   let discordMessageCommandHelpService: DiscordMessageCommandHelpService;
   let discordMessageCommandCookieService: DiscordMessageCommandCookieService;
   let discordMessageCommandLunchService: DiscordMessageCommandLunchService;
+  let discordMessageCommandReleaseNotesService: DiscordMessageCommandReleaseNotesService;
   let discordMessageConfigService: DiscordMessageConfigService;
   let coreEventService: CoreEventService;
 
@@ -29,6 +31,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     discordMessageCommandHelpService = DiscordMessageCommandHelpService.getInstance();
     discordMessageCommandCookieService = DiscordMessageCommandCookieService.getInstance();
     discordMessageCommandLunchService = DiscordMessageCommandLunchService.getInstance();
+    discordMessageCommandReleaseNotesService = DiscordMessageCommandReleaseNotesService.getInstance();
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
     coreEventService = CoreEventService.getInstance();
 
@@ -245,6 +248,34 @@ describe(`DiscordMessageCommandService`, (): void => {
     describe(`when the given message contains the shortcut lunch command`, (): void => {
       beforeEach((): void => {
         message = `-l`;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const hasCommandResult = service.hasCommand(message);
+
+        expect(hasCommandResult).toStrictEqual(true);
+      });
+    });
+
+    describe(`when the given message contains the release notes command`, (): void => {
+      beforeEach((): void => {
+        message = `-release-notes`;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const hasCommandResult = service.hasCommand(message);
+
+        expect(hasCommandResult).toStrictEqual(true);
+      });
+    });
+
+    describe(`when the given message contains the shortcut release notes command`, (): void => {
+      beforeEach((): void => {
+        message = `-r`;
       });
 
       it(`should return true`, (): void => {
@@ -5623,6 +5654,1168 @@ describe(`DiscordMessageCommandService`, (): void => {
     });
   });
 
+  describe(`hasReleaseNotesCommand()`, (): void => {
+    let message: string;
+
+    beforeEach((): void => {
+      service = DiscordMessageCommandService.getInstance();
+      message = `dummy-message`;
+    });
+
+    describe(`when the message command prefix is "@"`, (): void => {
+      beforeEach((): void => {
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
+          `@`
+        );
+      });
+
+      describe(`when the given message is an empty string`, (): void => {
+        beforeEach((): void => {
+          message = ``;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message without a command`, (): void => {
+        beforeEach((): void => {
+          message = `hello world`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost release notes command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@rel`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost release notes command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-rel`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost release notes command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!rel`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost release notes command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@rel dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost release notes command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-rel dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost release notes command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!rel dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@release-notes`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command starting with @ without the dashed separator`, (): void => {
+        beforeEach((): void => {
+          message = `@releasenotes`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-release-notes`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!release-notes`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@release-notes dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-release-notes dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!release-notes dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@r`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-r`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!r`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@r dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-r dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!r dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command starting uppercase with @`, (): void => {
+        beforeEach((): void => {
+          message = `@RELEASE-NOTES`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command uppercase starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-RELEASE-NOTES`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!RELEASE-NOTES`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@RELEASE-NOTES dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command uppercase starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-RELEASE-NOTES dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!RELEASE-NOTES dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command starting uppercase with @`, (): void => {
+        beforeEach((): void => {
+          message = `@R`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command uppercase starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-R`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!R`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@R dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command uppercase starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-R dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!R dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+    });
+
+    describe(`when the message command prefix is "-" or "!"`, (): void => {
+      beforeEach((): void => {
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
+          `-`,
+          `!`,
+        ]);
+      });
+
+      describe(`when the given message is an empty string`, (): void => {
+        beforeEach((): void => {
+          message = ``;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message without a command`, (): void => {
+        beforeEach((): void => {
+          message = `hello world`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost release notes command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@rel`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost release notes command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-rel`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost release notes command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!rel`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost release notes command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@rel dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost release notes command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-rel dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost release notes command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!rel dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@release-notes`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-release-notes`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!release-notes`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@release-notes dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-release-notes dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!release-notes dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command uppercase starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@RELEASE-NOTES`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command uppercase starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-RELEASE-NOTES`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!RELEASE-NOTES`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@RELEASE-NOTES dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command uppercase starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-RELEASE-NOTES dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the release notes command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!RELEASE-NOTES dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@r`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-r`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!r`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@r dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-r dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!r dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command uppercase starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@R`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command uppercase starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-R`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!R`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@R dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command uppercase starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-R dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut release notes command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!R dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasReleaseNotesCommandResult = service.hasReleaseNotesCommand(
+            message
+          );
+
+          expect(hasReleaseNotesCommandResult).toStrictEqual(true);
+        });
+      });
+    });
+  });
+
   describe(`handleVersionCommand()`, (): void => {
     let anyDiscordMessage: Message;
     let discordMessageResponse: IDiscordMessageResponse;
@@ -5813,6 +7006,44 @@ describe(`DiscordMessageCommandService`, (): void => {
     });
   });
 
+  describe(`handleReleaseNotesCommand()`, (): void => {
+    let anyDiscordMessage: Message;
+    let discordMessageResponse: IDiscordMessageResponse;
+
+    let discordMessageCommandReleaseNotesServiceResponseSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = DiscordMessageCommandService.getInstance();
+      anyDiscordMessage = createMock<Message>();
+      discordMessageResponse = createMock<IDiscordMessageResponse>();
+
+      discordMessageCommandReleaseNotesServiceResponseSpy = jest
+        .spyOn(discordMessageCommandReleaseNotesService, `handleResponse`)
+        .mockReturnValue(discordMessageResponse);
+    });
+
+    it(`should handle the message command release notes`, (): void => {
+      expect.assertions(2);
+
+      service.handleReleaseNotesCommand(anyDiscordMessage);
+
+      expect(
+        discordMessageCommandReleaseNotesServiceResponseSpy
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        discordMessageCommandReleaseNotesServiceResponseSpy
+      ).toHaveBeenCalledWith(anyDiscordMessage);
+    });
+
+    it(`should return a message response`, (): void => {
+      expect.assertions(1);
+
+      const result = service.handleReleaseNotesCommand(anyDiscordMessage);
+
+      expect(result).toStrictEqual(discordMessageResponse);
+    });
+  });
+
   describe(`handleCommands()`, (): void => {
     let anyDiscordMessage: Message;
     let discordMessageResponse: IDiscordMessageResponse;
@@ -5822,6 +7053,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let discordMessageCommandHelpServiceHandleResponseSpy: jest.SpyInstance;
     let discordMessageCommandCookieServiceHandleResponseSpy: jest.SpyInstance;
     let discordMessageCommandLunchServiceHandleResponseSpy: jest.SpyInstance;
+    let discordMessageCommandReleaseNotesServiceHandleResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
@@ -5845,6 +7077,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         .mockReturnValue(discordMessageResponse);
       discordMessageCommandLunchServiceHandleResponseSpy = jest
         .spyOn(discordMessageCommandLunchService, `handleResponse`)
+        .mockReturnValue(discordMessageResponse);
+      discordMessageCommandReleaseNotesServiceHandleResponseSpy = jest
+        .spyOn(discordMessageCommandReleaseNotesService, `handleResponse`)
         .mockReturnValue(discordMessageResponse);
     });
 
@@ -5900,6 +7135,16 @@ describe(`DiscordMessageCommandService`, (): void => {
 
         expect(
           discordMessageCommandLunchServiceHandleResponseSpy
+        ).not.toHaveBeenCalled();
+      });
+
+      it(`should not handle the release notes command`, (): void => {
+        expect.assertions(1);
+
+        service.handleCommands(anyDiscordMessage);
+
+        expect(
+          discordMessageCommandReleaseNotesServiceHandleResponseSpy
         ).not.toHaveBeenCalled();
       });
 
@@ -5972,6 +7217,16 @@ describe(`DiscordMessageCommandService`, (): void => {
           ).not.toHaveBeenCalled();
         });
 
+        it(`should not handle the release notes command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandReleaseNotesServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
         it(`should return null`, (): void => {
           expect.assertions(1);
 
@@ -6036,6 +7291,16 @@ describe(`DiscordMessageCommandService`, (): void => {
 
           expect(
             discordMessageCommandLunchServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should not handle the release notes command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandReleaseNotesServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -6106,6 +7371,16 @@ describe(`DiscordMessageCommandService`, (): void => {
           ).not.toHaveBeenCalled();
         });
 
+        it(`should not handle the release notes command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandReleaseNotesServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
         it(`should return the Discord message response for the error command`, (): void => {
           expect.assertions(1);
 
@@ -6170,6 +7445,16 @@ describe(`DiscordMessageCommandService`, (): void => {
 
           expect(
             discordMessageCommandLunchServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should not handle the release notes command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandReleaseNotesServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -6240,6 +7525,16 @@ describe(`DiscordMessageCommandService`, (): void => {
           ).not.toHaveBeenCalled();
         });
 
+        it(`should not handle the release notes command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandReleaseNotesServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
         it(`should return the Discord message response for the cookie command`, (): void => {
           expect.assertions(1);
 
@@ -6307,7 +7602,94 @@ describe(`DiscordMessageCommandService`, (): void => {
           ).toHaveBeenCalledWith(anyDiscordMessage);
         });
 
+        it(`should not handle the release notes command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandReleaseNotesServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
         it(`should return the Discord message response for the lunch command`, (): void => {
+          expect.assertions(1);
+
+          const result = service.handleCommands(anyDiscordMessage);
+
+          expect(result).toStrictEqual(discordMessageResponse);
+        });
+      });
+
+      describe(`when the message contains the release notes command`, (): void => {
+        beforeEach((): void => {
+          anyDiscordMessage.content = `-release-notes`;
+        });
+
+        it(`should not handle the version command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandVersionServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should not handle the error command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandErrorServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should not handle the help command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandHelpServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should not handle the cookie command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandCookieServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should not handle the lunch command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandLunchServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should handle the release notes command`, (): void => {
+          expect.assertions(2);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandReleaseNotesServiceHandleResponseSpy
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            discordMessageCommandReleaseNotesServiceHandleResponseSpy
+          ).toHaveBeenCalledWith(anyDiscordMessage);
+        });
+
+        it(`should return the Discord message response for the release notes command`, (): void => {
           expect.assertions(1);
 
           const result = service.handleCommands(anyDiscordMessage);

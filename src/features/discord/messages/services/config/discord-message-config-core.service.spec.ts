@@ -131,6 +131,24 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
     expect(service.command.prefix).toStrictEqual(`!`);
   });
 
+  it(`should have a specific color for the image of the release notes command`, (): void => {
+    expect.assertions(1);
+
+    service = DiscordMessageConfigCoreService.getInstance();
+
+    expect(service.command.releaseNotes.imageColor).toStrictEqual(15718590);
+  });
+
+  it(`should have a specific url for the image of the release notes command`, (): void => {
+    expect.assertions(1);
+
+    service = DiscordMessageConfigCoreService.getInstance();
+
+    expect(service.command.releaseNotes.imageUrl).toStrictEqual(
+      `https://i.ibb.co/9p3Q17S/icons8-new-product-512.png`
+    );
+  });
+
   it(`should have a specific color for the image of the version command`, (): void => {
     expect.assertions(1);
 

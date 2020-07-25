@@ -2,6 +2,7 @@ import { IDiscordMessageCommandCookieConfig } from "./discord-message-command-co
 import { IDiscordMessageCommandErrorConfig } from "./discord-message-command-error-config";
 import { IDiscordMessageCommandHelpConfig } from "./discord-message-command-help-config";
 import { IDiscordMessageCommandLunchConfig } from "./discord-message-command-lunch-config";
+import { IDiscordMessageCommandReleaseNotesConfig } from "./discord-message-command-release-notes-config";
 import { IDiscordMessageCommandVersionConfig } from "./discord-message-command-version-config";
 
 export interface IDiscordMessageCommandConfig {
@@ -10,5 +11,6 @@ export interface IDiscordMessageCommandConfig {
   help: IDiscordMessageCommandHelpConfig;
   lunch: IDiscordMessageCommandLunchConfig;
   prefix: string | string[];
+  releaseNotes: IDiscordMessageCommandReleaseNotesConfig;
   version: IDiscordMessageCommandVersionConfig;
 }
