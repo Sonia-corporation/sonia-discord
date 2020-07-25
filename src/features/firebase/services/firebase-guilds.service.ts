@@ -71,14 +71,16 @@ export class FirebaseGuildsService extends AbstractService {
     this._store = firestore(this._firebaseAppService.getApp());
   }
 
-  private _logGuildCount(): void {
-    this.getGuildCount().then((count: Readonly<number>): void => {
+  private _logGuildCount(): Promise<number> {
+    return this.getGuildCount().then((count: Readonly<number>): number => {
       this._loggerService.debug({
         context: this._serviceName,
         message: this._chalkService.text(
           `${count} guild${_.gt(count, 1) ? `s` : ``} found`
         ),
       });
+
+      return count;
     });
   }
 }

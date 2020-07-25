@@ -1,4 +1,4 @@
-import * as FirebaseAdminModule from "firebase-admin";
+import * as admin from "firebase-admin";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
@@ -60,7 +60,7 @@ describe(`FirebaseAppService`, (): void => {
   });
 
   describe(`init()`, (): void => {
-    let credential: FirebaseAdminModule.credential.Credential;
+    let credential: admin.credential.Credential;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let initializeAppSpy: jest.SpyInstance;
@@ -68,16 +68,16 @@ describe(`FirebaseAppService`, (): void => {
     beforeEach((): void => {
       service = new FirebaseAppService();
       process.env.GOOGLE_APPLICATION_CREDENTIALS = `dummy-google-application-credentials`;
-      credential = createMock<FirebaseAdminModule.credential.Credential>();
+      credential = createMock<admin.credential.Credential>();
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
         .mockImplementation();
       initializeAppSpy = jest
-        .spyOn(FirebaseAdminModule, `initializeApp`)
+        .spyOn(admin, `initializeApp`)
         .mockImplementation();
       jest
-        .spyOn(FirebaseAdminModule.credential, `applicationDefault`)
+        .spyOn(admin.credential, `applicationDefault`)
         .mockReturnValue(credential);
     });
 
