@@ -6,6 +6,7 @@ import { ILoggerLog } from "../../logger/interfaces/logger-log";
 import { LoggerService } from "../../logger/services/logger.service";
 import { FirebaseAppEnum } from "../enums/firebase-app.enum";
 import { FirebaseAppService } from "./firebase-app.service";
+import App = admin.app.App;
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 jest.mock(`firebase-admin`);
@@ -130,6 +131,43 @@ describe(`FirebaseAppService`, (): void => {
         context: `FirebaseAppService`,
         message: `text-app created`,
       } as ILoggerLog);
+    });
+  });
+
+  describe(`getApp()`, (): void => {
+    let app: App;
+
+    beforeEach((): void => {
+      service = new FirebaseAppService();
+      app = createMock<App>();
+
+      jest.spyOn(admin, `initializeApp`).mockReturnValue(app);
+    });
+
+    describe(`when the app is undefined`, (): void => {
+      it(`should return undefined`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getApp();
+
+        expect(result).toBeUndefined();
+      });
+    });
+
+    describe(`when the app is valid`, (): void => {
+      beforeEach((): void => {
+        service = new FirebaseAppService();
+
+        service.init();
+      });
+
+      it(`should return the app`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getApp();
+
+        expect(result).toStrictEqual(app);
+      });
     });
   });
 });
