@@ -51,32 +51,34 @@ export class FirebaseGuildsService extends AbstractService {
     return undefined;
   }
 
-  private _setStore(): void {
-    this._store = firestore(this._firebaseAppService.getApp());
-  }
-
-  private _logGuildCount(): Promise<QuerySnapshot<DocumentData>> {
+  public getGuildCount(): Promise<number> {
     const collectionReference:
       | CollectionReference<DocumentData>
       | undefined = this.getCollectionReference();
 
     if (!_.isNil(collectionReference)) {
-      return collectionReference.get().then(
-        (
-          querySnapshot: QuerySnapshot<DocumentData>
-        ): QuerySnapshot<DocumentData> => {
-          this._loggerService.debug({
-            context: this._serviceName,
-            message: this._chalkService.text(
-              `${querySnapshot.size} guilds found`
-            ),
-          });
-
-          return querySnapshot;
-        }
-      );
+      return collectionReference
+        .get()
+        .then((querySnapshot: QuerySnapshot<DocumentData>): number => {
+          return querySnapshot.size;
+        });
     }
 
     return Promise.reject(new Error(`Collection not available`));
+  }
+
+  private _setStore(): void {
+    this._store = firestore(this._firebaseAppService.getApp());
+  }
+
+  private _logGuildCount(): void {
+    this.getGuildCount().then((count: Readonly<number>): void => {
+      this._loggerService.debug({
+        context: this._serviceName,
+        message: this._chalkService.text(
+          `${count} guild${_.gt(count, 1) ? `s` : ``} found`
+        ),
+      });
+    });
   }
 }
