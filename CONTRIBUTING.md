@@ -12,7 +12,7 @@ Run `npm run start` to start the local development server.
 ### Create the secret environment file
 
 This step is mandatory.  
-You must create the `secret-environment.json` file in the [environment folder](./src/environment/secret-environment.json).  
+You must create the `secret-environment.json` file in the [environment folder](./src/environment/).  
 
 This file should contain at least:
 - A discord Sonia secret token required by Discord API.
@@ -42,9 +42,11 @@ Run `npm run create-secret-environment`.
 
 __Note for the Discord Sonia secret token:__
 
-The Discord Sonia secret token is private and there two ways to have access to it:
+The Discord Sonia secret token is private and there are two ways to have access to it:
 - Asks an admin (like [C0ZEN](https://github.com/C0ZEN)).
 - Access to the [Discord bot page](https://discordapp.com/developers/applications/689829775317139460/bot) to reveal the token.
+
+__Note:__
 
 If somehow this token is made public, Discord will revoke it.
 
@@ -72,16 +74,53 @@ It can be anything you want however we recommend that you use your Discord name.
 The Discord id will be used on simple text messages to use your name as a mention instead of pure text.  
 If the Discord id is not set the username will be used instead as fallback.
 
+### Create the Firebase service account file
+
+This step is mandatory.  
+You must create the `firebase-service-account-file.json` file in the [environment folder](./src/environment/).  
+
+This file should contain the fields to configure the project.  
+Refer to this [article](https://firebase.google.com/docs/admin/setup#initialize-sdk) to learn how and why.  
+Basically this is the private key of Sonia API.
+
+There is one way to have access to it:
+- Asks an admin (like [C0ZEN](https://github.com/C0ZEN)).
+
+#### How does this works?
+
+On local development - based on the environment variable `NODE_ENV` -, `dotenv` will read the [environment file](.env) to override the environment variables.  
+To configure Firebase the environment variable `GOOGLE_APPLICATION_CREDENTIALS` will be used to define the path of the Firebase service account file.
+
+On local production, `dotenv` is not used.  
+Instead, the environment variable `GOOGLE_APPLICATION_CREDENTIALS` is configured on the fly to point to the [dist](dist) folder.  
+
+The path of the Firebase service account file being different and "production" friendly we needed to come up with this configuration file.  
+Since the solution must be production-first, some node scripts are creating a default Firebase service account file based partially on dedicated environment variables.  
+GitHub will handle the replacement with the configured secrets.
+
+Now to avoid creating manually this file when using the local production the solution was to override this generated file with the one existing locally for the local development. 
+
+## Environment
+
+This project use `dotenv` to load some environment variables locally only.  
+On production the CI will provide his own environment variables.
+
 ## Package scripts
 
 - `npm run start`: run the Node.js app for the local development  
-- `npm run start:prod`: build and run the Node.js app like it will be once deployed in the server for local development or server debugging  
+- `npm run start:prod`: build and run the Node.js app like it will be once deployed in the server  
+- `npm run start:local-prod`: build and run the Node.js app like it will be once deployed in the server for local development or server debugging  
 - `npm run build`: create a Node.js app in the dist folder  
+- `npm run build:environment`: execute all scripts to create the environment for the prod
 - `npm run build:environment:copy`: copy the secret environment file inside the dist folder  
 - `npm run build:environment:create`: create the environment file inside the dist folder with some default values used for the CI 
 - `npm run build:environment:rewrite-path`: rename the environment file path of the Node.js app inside the dist folder  
 - `npm run build:update-app-initialization-date`: update the app initialization date inside the environment file from the dist folder  
-- `npm run run:prod`: run the Node.js app like it will be once deployed in the server for local development or server debugging  
+- `npm run build:firebase-service-account`: execute all scripts to create the Firebase service account file for the prod
+- `npm run build:firebase-service-account:copy`: copy the Firebase service account file inside the dist folder  
+- `npm run build:firebase-service-account:create`: create the Firebase service account file inside the dist folder with some default values used for the CI 
+- `npm run run:prod`: run the Node.js app like it will be once deployed in the server  
+- `npm run run:local-prod`: run the Node.js app like it will be once deployed in the server for local development or server debugging  
 - `npm run tsc`: compile the TypeScript app to Node.js app  
 - `npm run test`: run the tests once  
 - `npm run test:watch`: run the tests and watch them  
