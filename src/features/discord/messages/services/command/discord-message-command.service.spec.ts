@@ -5,12 +5,12 @@ import { CoreEventService } from "../../../../core/services/core-event.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 import { DiscordMessageConfigService } from "../config/discord-message-config.service";
 import { DiscordMessageCommandCookieService } from "./cookie/discord-message-command-cookie.service";
+import { DiscordMessageCommandService } from "./discord-message-command.service";
 import { DiscordMessageCommandErrorService } from "./error/discord-message-command-error.service";
 import { DiscordMessageCommandHelpService } from "./help/discord-message-command-help.service";
 import { DiscordMessageCommandLunchService } from "./lunch/discord-message-command-lunch.service";
 import { DiscordMessageCommandReleaseNotesService } from "./release-notes/discord-message-command-release-notes.service";
 import { DiscordMessageCommandVersionService } from "./version/discord-message-command-version.service";
-import { DiscordMessageCommandService } from "./discord-message-command.service";
 
 describe(`DiscordMessageCommandService`, (): void => {
   let service: DiscordMessageCommandService;
@@ -93,6 +93,25 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     describe(`when the given message does not contains a command`, (): void => {
       beforeEach((): void => {
+        message = `dummy-message`;
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const hasCommandResult = service.hasCommand(message);
+
+        expect(hasCommandResult).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given message does not contains a command and has multiple prefixes`, (): void => {
+      beforeEach((): void => {
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
+          `-`,
+          `!`,
+        ]);
+
         message = `dummy-message`;
       });
 
