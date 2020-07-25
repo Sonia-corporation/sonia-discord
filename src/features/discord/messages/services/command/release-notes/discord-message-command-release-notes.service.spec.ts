@@ -1,5 +1,4 @@
 import {
-  EmbedFieldData,
   MessageEmbedAuthor,
   MessageEmbedFooter,
   MessageEmbedThumbnail,
@@ -9,45 +8,51 @@ import { createMock } from "ts-auto-mock";
 import { ColorEnum } from "../../../../../../enums/color.enum";
 import { IconEnum } from "../../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
+import { AppConfigQueryService } from "../../../../../app/services/config/app-config-query.service";
+import { AppConfigService } from "../../../../../app/services/config/app-config.service";
 import { CoreEventService } from "../../../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
 import { AnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
-import { DiscordMessageCommandHelpService } from "./discord-message-command-help.service";
+import { DiscordMessageCommandReleaseNotesService } from "./discord-message-command-release-notes.service";
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
-describe(`DiscordMessageCommandHelpService`, (): void => {
-  let service: DiscordMessageCommandHelpService;
+describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
+  let service: DiscordMessageCommandReleaseNotesService;
   let coreEventService: CoreEventService;
   let loggerService: LoggerService;
   let discordSoniaService: DiscordSoniaService;
   let discordMessageConfigService: DiscordMessageConfigService;
+  let appConfigQueryService: AppConfigQueryService;
+  let appConfigService: AppConfigService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     loggerService = LoggerService.getInstance();
     discordSoniaService = DiscordSoniaService.getInstance();
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
+    appConfigQueryService = AppConfigQueryService.getInstance();
+    appConfigService = AppConfigService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
-    it(`should create a DiscordMessageCommandHelp service`, (): void => {
+    it(`should create a DiscordMessageCommandReleaseNotes service`, (): void => {
       expect.assertions(1);
 
-      service = DiscordMessageCommandHelpService.getInstance();
+      service = DiscordMessageCommandReleaseNotesService.getInstance();
 
       expect(service).toStrictEqual(
-        expect.any(DiscordMessageCommandHelpService)
+        expect.any(DiscordMessageCommandReleaseNotesService)
       );
     });
 
-    it(`should return the created DiscordMessageCommandHelp service`, (): void => {
+    it(`should return the created DiscordMessageCommandReleaseNotes service`, (): void => {
       expect.assertions(1);
 
-      const result = DiscordMessageCommandHelpService.getInstance();
+      const result = DiscordMessageCommandReleaseNotesService.getInstance();
 
       expect(result).toStrictEqual(service);
     });
@@ -62,14 +67,14 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should notify the DiscordMessageCommandHelp service creation`, (): void => {
+    it(`should notify the DiscordMessageCommandReleaseNotes service creation`, (): void => {
       expect.assertions(2);
 
-      service = new DiscordMessageCommandHelpService();
+      service = new DiscordMessageCommandReleaseNotesService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_MESSAGE_COMMAND_HELP_SERVICE
+        ServiceNameEnum.DISCORD_MESSAGE_COMMAND_RELEASE_NOTES_SERVICE
       );
     });
   });
@@ -79,9 +84,14 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
-    let discordMessageConfigServiceGetMessageCommandHelpImageColorSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandReleaseNotesImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
-    let discordMessageConfigServiceGetMessageCommandHelpImageUrlSpy: jest.SpyInstance;
+    let appConfigQueryServiceGetTotalReleaseCountHumanizedSpy: jest.SpyInstance;
+    let appConfigQueryServiceGetFirstReleaseDateFormattedSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandReleaseNotesImageUrlSpy: jest.SpyInstance;
+    let appConfigServiceGetVersionSpy: jest.SpyInstance;
+    let appConfigQueryServiceGetReleaseDateHumanizedSpy: jest.SpyInstance;
+    let appConfigServiceGetReleaseNotesSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       anyDiscordMessage = createMock<AnyDiscordMessage>({
@@ -93,17 +103,37 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         discordSoniaService,
         `getCorporationMessageEmbedAuthor`
       );
-      discordMessageConfigServiceGetMessageCommandHelpImageColorSpy = jest.spyOn(
+      discordMessageConfigServiceGetMessageCommandReleaseNotesImageColorSpy = jest.spyOn(
         discordMessageConfigService,
-        `getMessageCommandHelpImageColor`
+        `getMessageCommandReleaseNotesImageColor`
       );
       discordSoniaServiceGetImageUrlSpy = jest.spyOn(
         discordSoniaService,
         `getImageUrl`
       );
-      discordMessageConfigServiceGetMessageCommandHelpImageUrlSpy = jest.spyOn(
+      appConfigQueryServiceGetTotalReleaseCountHumanizedSpy = jest.spyOn(
+        appConfigQueryService,
+        `getTotalReleaseCountHumanized`
+      );
+      appConfigQueryServiceGetFirstReleaseDateFormattedSpy = jest.spyOn(
+        appConfigQueryService,
+        `getFirstReleaseDateFormatted`
+      );
+      discordMessageConfigServiceGetMessageCommandReleaseNotesImageUrlSpy = jest.spyOn(
         discordMessageConfigService,
-        `getMessageCommandHelpImageUrl`
+        `getMessageCommandReleaseNotesImageUrl`
+      );
+      appConfigServiceGetVersionSpy = jest.spyOn(
+        appConfigService,
+        `getVersion`
+      );
+      appConfigQueryServiceGetReleaseDateHumanizedSpy = jest.spyOn(
+        appConfigQueryService,
+        `getReleaseDateHumanized`
+      );
+      appConfigServiceGetReleaseNotesSpy = jest.spyOn(
+        appConfigService,
+        `getReleaseNotes`
       );
     });
 
@@ -114,9 +144,9 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-        context: `DiscordMessageCommandHelpService`,
+        context: `DiscordMessageCommandReleaseNotesService`,
         extendedContext: true,
-        message: `context-[dummy-id] text-help command detected`,
+        message: `context-[dummy-id] text-release notes command detected`,
       } as ILoggerLog);
     });
 
@@ -138,7 +168,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
     it(`should return a Discord message response embed with a color`, (): void => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandHelpImageColorSpy.mockReturnValue(
+      discordMessageConfigServiceGetMessageCommandReleaseNotesImageColorSpy.mockReturnValue(
         ColorEnum.CANDY
       );
 
@@ -151,121 +181,26 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
     it(`should return a Discord message response embed with a description`, (): void => {
       expect.assertions(1);
+      appConfigServiceGetReleaseNotesSpy.mockReturnValue(`dummy-release-notes`);
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      expect(result.options.embed.description)
-        .toStrictEqual(`Below is the complete list of commands.
-    You can either use *-*, *!* or *$* as prefix to run a command.`);
-    });
-
-    it(`should return a Discord message response embed with 7 fields`, (): void => {
-      expect.assertions(1);
-
-      const result: unknown = service.handleResponse(anyDiscordMessage);
-
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields).toHaveLength(7);
-    });
-
-    it(`should return a Discord message response embed with a cookie field`, (): void => {
-      expect.assertions(1);
-
-      const result: unknown = service.handleResponse(anyDiscordMessage);
-
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[0]).toStrictEqual({
-        name: `Cookie (*cookie*, *cookies* or *c*)`,
-        value: `Because I am good, life gave me cookies. Now it is my turn to give you some.`,
-      } as EmbedFieldData);
-    });
-
-    it(`should return a Discord message response embed with an error field`, (): void => {
-      expect.assertions(1);
-
-      const result: unknown = service.handleResponse(anyDiscordMessage);
-
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[1]).toStrictEqual({
-        name: `Error (*error* or *bug*)`,
-        value: `Create a bug in my core system. Do not do this one, of course!`,
-      } as EmbedFieldData);
-    });
-
-    it(`should return a Discord message response embed with a help field`, (): void => {
-      expect.assertions(1);
-
-      const result: unknown = service.handleResponse(anyDiscordMessage);
-
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[2]).toStrictEqual({
-        name: `Help (*help* or *h*)`,
-        value: `Ask for my help, it is obvious! And maybe I will, who knows?`,
-      } as EmbedFieldData);
-    });
-
-    it(`should return a Discord message response embed with a lunch field`, (): void => {
-      expect.assertions(1);
-
-      const result: unknown = service.handleResponse(anyDiscordMessage);
-
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[3]).toStrictEqual({
-        name: `Lunch (*lunch* or *l*)`,
-        value: `There is a time to eat.`,
-      } as EmbedFieldData);
-    });
-
-    it(`should return a Discord message response embed with a release notes field`, (): void => {
-      expect.assertions(1);
-
-      const result: unknown = service.handleResponse(anyDiscordMessage);
-
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[4]).toStrictEqual({
-        name: `Release notes (*release-notes* or *r*)`,
-        value: `Display the last version release notes.`,
-      } as EmbedFieldData);
-    });
-
-    it(`should return a Discord message response embed with a version field`, (): void => {
-      expect.assertions(1);
-
-      const result: unknown = service.handleResponse(anyDiscordMessage);
-
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[5]).toStrictEqual({
-        name: `Version (*version* or *v*)`,
-        value: `Display my current application version.`,
-      } as EmbedFieldData);
-    });
-
-    it(`should return a Discord message response embed with a more help field`, (): void => {
-      expect.assertions(1);
-
-      const result: unknown = service.handleResponse(anyDiscordMessage);
-
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[6]).toStrictEqual({
-        name: `Further help`,
-        value: `You can also checkout the [readme](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/README.md).
-      It contains more information about how I work.`,
-      } as EmbedFieldData);
+      expect(result.options.embed.description).toStrictEqual(
+        `dummy-release-notes\n\nCheckout all the [release notes](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md).`
+      );
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, (): void => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
+      appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
+        `8 versions`
+      );
+      appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(
+        `the 24th March 2020`
+      );
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
@@ -273,13 +208,19 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
-        text: `At your service`,
+        text: `8 versions since the 24th March 2020`,
       } as MessageEmbedFooter);
     });
 
     describe(`when the Sonia image url is null`, (): void => {
       beforeEach((): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
+        appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
+          `8 versions`
+        );
+        appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(
+          `the 24th March 2020`
+        );
       });
 
       it(`should return a Discord message response embed with a footer but without an icon`, (): void => {
@@ -291,7 +232,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: undefined,
-          text: `At your service`,
+          text: `8 versions since the 24th March 2020`,
         } as MessageEmbedFooter);
       });
     });
@@ -299,6 +240,12 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     describe(`when the Sonia image url is "image-url"`, (): void => {
       beforeEach((): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
+        appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
+          `8 versions`
+        );
+        appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(
+          `the 24th March 2020`
+        );
       });
 
       it(`should return a Discord message response embed with a footer containing an icon and a text`, (): void => {
@@ -310,15 +257,15 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.footer).toStrictEqual({
           iconURL: `image-url`,
-          text: `At your service`,
+          text: `8 versions since the 24th March 2020`,
         } as MessageEmbedFooter);
       });
     });
 
     it(`should return a Discord message response embed with a thumbnail`, (): void => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandHelpImageUrlSpy.mockReturnValue(
-        IconEnum.ARTIFICIAL_INTELLIGENCE
+      discordMessageConfigServiceGetMessageCommandReleaseNotesImageUrlSpy.mockReturnValue(
+        IconEnum.NEW_PRODUCT
       );
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
@@ -326,7 +273,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.thumbnail).toStrictEqual({
-        url: IconEnum.ARTIFICIAL_INTELLIGENCE,
+        url: IconEnum.NEW_PRODUCT,
       } as MessageEmbedThumbnail);
     });
 
@@ -349,13 +296,17 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
     it(`should return a Discord message response embed with a title`, (): void => {
       expect.assertions(1);
+      appConfigServiceGetVersionSpy.mockReturnValue(`8`);
+      appConfigQueryServiceGetReleaseDateHumanizedSpy.mockReturnValue(
+        `dummy-release-date-humanized`
+      );
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.title).toStrictEqual(
-        `So, you need my help? Cool.`
+        `**8** release notes - dummy-release-date-humanized`
       );
     });
 

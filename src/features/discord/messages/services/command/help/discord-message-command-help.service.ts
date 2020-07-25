@@ -87,6 +87,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
       this._getMessageEmbedFieldError(),
       this._getMessageEmbedFieldHelp(),
       this._getMessageEmbedFieldLunch(),
+      this._getMessageEmbedFieldReleaseNotes(),
       this._getMessageEmbedFieldVersion(),
       this._getMessageEmbedFieldMoreHelp(),
     ];
@@ -117,6 +118,13 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     return {
       name: `Lunch (*lunch* or *l*)`,
       value: `There is a time to eat.`,
+    };
+  }
+
+  private _getMessageEmbedFieldReleaseNotes(): EmbedFieldData {
+    return {
+      name: `Release notes (*release-notes* or *r*)`,
+      value: `Display the last version release notes.`,
     };
   }
 

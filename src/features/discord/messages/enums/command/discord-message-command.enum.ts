@@ -28,4 +28,9 @@ export enum DiscordMessageCommandEnum {
    * Shortcut for {@link LUNCH}
    */
   L = `l`,
+  RELEASE_NOTES = `release-notes`,
+  /**
+   * Shortcut for {@link RELEASE_NOTES}
+   */
+  R = `r`,
 }

@@ -11,6 +11,7 @@ import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-messag
 import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
 import { IDiscordMessageCommandLunchConfig } from "../../../interfaces/discord-message-command-lunch-config";
+import { IDiscordMessageCommandReleaseNotesConfig } from "../../../interfaces/discord-message-command-release-notes-config";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
@@ -79,6 +80,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
       this.updateMessageCommandError(command.error);
       this.updateMessageCommandHelp(command.help);
       this.updateMessageCommandPrefix(command.prefix);
+      this.updateMessageCommandReleaseNotes(command.releaseNotes);
       this.updateMessageCommandVersion(command.version);
       this.updateMessageCommandLunch(command.lunch);
     }
@@ -239,6 +241,45 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
         newValue: updatedPrefix,
         oldValue: this._discordMessageConfigService.getMessageCommandPrefix(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_PREFIX,
+      }
+    );
+  }
+
+  public updateMessageCommandReleaseNotes(
+    releaseNotes?: Readonly<
+      PartialNested<IDiscordMessageCommandReleaseNotesConfig>
+    >
+  ): void {
+    if (!_.isNil(releaseNotes)) {
+      this.updateMessageCommandReleaseNotesImageColor(releaseNotes.imageColor);
+      this.updateMessageCommandReleaseNotesImageUrl(releaseNotes.imageUrl);
+    }
+  }
+
+  public updateMessageCommandReleaseNotesImageColor(
+    imageColor?: Readonly<ColorEnum>
+  ): void {
+    this._discordMessageConfigCoreService.command.releaseNotes.imageColor = this._configService.getUpdatedNumber(
+      {
+        context: this._serviceName,
+        newValue: imageColor,
+        oldValue: this._discordMessageConfigService.getMessageCommandReleaseNotesImageColor(),
+        valueName:
+          DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_IMAGE_COLOR,
+      }
+    );
+  }
+
+  public updateMessageCommandReleaseNotesImageUrl(
+    imageUrl?: Readonly<IconEnum>
+  ): void {
+    this._discordMessageConfigCoreService.command.releaseNotes.imageUrl = this._configService.getUpdatedString(
+      {
+        context: this._serviceName,
+        newValue: imageUrl,
+        oldValue: this._discordMessageConfigService.getMessageCommandReleaseNotesImageUrl(),
+        valueName:
+          DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_IMAGE_URL,
       }
     );
   }

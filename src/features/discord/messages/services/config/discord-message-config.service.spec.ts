@@ -7,6 +7,7 @@ import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
 import { IDiscordMessageCommandHelpConfig } from "../../../interfaces/discord-message-command-help-config";
 import { IDiscordMessageCommandLunchConfig } from "../../../interfaces/discord-message-command-lunch-config";
+import { IDiscordMessageCommandReleaseNotesConfig } from "../../../interfaces/discord-message-command-release-notes-config";
 import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
 import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
@@ -84,6 +85,10 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageUrl: IconEnum.WARNING_SHIELD,
         },
         prefix: `dummy-prefix`,
+        releaseNotes: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
         version: {
           imageColor: ColorEnum.CANDY,
           imageUrl: IconEnum.WARNING_SHIELD,
@@ -123,6 +128,10 @@ describe(`DiscordMessageConfigService`, (): void => {
             imageUrl: IconEnum.WARNING_SHIELD,
           },
           prefix: `dummy-prefix`,
+          releaseNotes: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
           version: {
             imageColor: ColorEnum.CANDY,
             imageUrl: IconEnum.WARNING_SHIELD,
@@ -161,6 +170,10 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageUrl: IconEnum.WARNING_SHIELD,
         },
         prefix: `dummy-prefix`,
+        releaseNotes: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
         version: {
           imageColor: ColorEnum.CANDY,
           imageUrl: IconEnum.WARNING_SHIELD,
@@ -191,6 +204,10 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageUrl: IconEnum.WARNING_SHIELD,
         },
         prefix: `dummy-prefix`,
+        releaseNotes: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
         version: {
           imageColor: ColorEnum.CANDY,
           imageUrl: IconEnum.WARNING_SHIELD,
@@ -422,6 +439,59 @@ describe(`DiscordMessageConfigService`, (): void => {
       const result = service.getMessageCommandPrefix();
 
       expect(result).toStrictEqual(`dummy-prefix`);
+    });
+  });
+
+  describe(`getMessageCommandReleaseNotes()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.releaseNotes = {
+        imageColor: ColorEnum.CANDY,
+        imageUrl: IconEnum.WARNING_SHIELD,
+      };
+    });
+
+    it(`should return the Discord message config command release notes`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandReleaseNotes();
+
+      expect(result).toStrictEqual({
+        imageColor: ColorEnum.CANDY,
+        imageUrl: IconEnum.WARNING_SHIELD,
+      } as IDiscordMessageCommandReleaseNotesConfig);
+    });
+  });
+
+  describe(`getMessageCommandReleaseNotesImageColor()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.releaseNotes.imageColor =
+        ColorEnum.CANDY;
+    });
+
+    it(`should return the Discord message config command release notes image color`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandReleaseNotesImageColor();
+
+      expect(result).toStrictEqual(ColorEnum.CANDY);
+    });
+  });
+
+  describe(`getMessageCommandReleaseNotesImageUrl()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.releaseNotes.imageUrl =
+        IconEnum.WARNING_SHIELD;
+    });
+
+    it(`should return the Discord message config command release notes image url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandReleaseNotesImageUrl();
+
+      expect(result).toStrictEqual(IconEnum.WARNING_SHIELD);
     });
   });
 

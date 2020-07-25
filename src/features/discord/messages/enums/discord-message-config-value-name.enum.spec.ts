@@ -73,6 +73,22 @@ describe(`DiscordMessageConfigValueNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "COMMAND_RELEASE_NOTES_IMAGE_COLOR"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_IMAGE_COLOR
+    ).toStrictEqual(`message command release notes image color`);
+  });
+
+  it(`should have a member "COMMAND_RELEASE_NOTES_IMAGE_URL"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_IMAGE_URL
+    ).toStrictEqual(`message command release notes image url`);
+  });
+
   it(`should have a member "COMMAND_VERSION_IMAGE_COLOR"`, (): void => {
     expect.assertions(1);
 
