@@ -124,6 +124,24 @@ describe(`DiscordMessageCommandService`, (): void => {
       });
     });
 
+    describe(`when the given message does not contains a command and has an invalid prefix`, (): void => {
+      beforeEach((): void => {
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
+          undefined
+        );
+
+        message = `dummy-message`;
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const hasCommandResult = service.hasCommand(message);
+
+        expect(hasCommandResult).toStrictEqual(false);
+      });
+    });
+
     describe(`when the given message contains the version command`, (): void => {
       beforeEach((): void => {
         message = `-version`;
