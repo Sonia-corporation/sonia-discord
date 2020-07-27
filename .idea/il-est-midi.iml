@@ -23,5 +23,9 @@
     <orderEntry type="library" name="rxjs" level="project" />
     <orderEntry type="library" name="jest-extended" level="project" />
     <orderEntry type="library" name="scout_apm" level="project" />
+    <orderEntry type="library" name="discordjs" level="project" />
+    <orderEntry type="library" name="jest" level="project" />
+    <orderEntry type="library" name="discord.js" level="project" />
+    <orderEntry type="library" name="lodash" level="project" />
   </component>
 </module>

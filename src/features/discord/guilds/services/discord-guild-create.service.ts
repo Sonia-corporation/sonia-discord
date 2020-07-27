@@ -46,14 +46,18 @@ export class DiscordGuildCreateService extends AbstractService {
 
   public sendMessage(guild: Readonly<Guild>): void {
     if (this._canSendMessage()) {
-      const memberChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
+      const primaryGuildChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
         guild
       );
 
-      if (isDiscordGuildChannel(memberChannel)) {
-        this._sendMessage(memberChannel);
+      if (isDiscordGuildChannel(primaryGuildChannel)) {
+        return this._sendMessage(primaryGuildChannel);
       }
     }
+  }
+
+  public addFirebaseGuild(guild: Readonly<Guild>): void {
+    console.log(guild);
   }
 
   private _listen(): void {
@@ -68,6 +72,7 @@ export class DiscordGuildCreateService extends AbstractService {
         });
 
         this.sendMessage(guild);
+        this.addFirebaseGuild(guild);
       });
 
     this._loggerService.debug({
@@ -93,10 +98,10 @@ export class DiscordGuildCreateService extends AbstractService {
     return false;
   }
 
-  private _sendMessage(guildChannel: Readonly<GuildChannel>): void {
-    const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
-
+  private _sendMessage(guildChannel: Readonly<GuildChannel>): Promise<void> {
     if (isDiscordGuildChannelWritable(guildChannel)) {
+      const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
+
       this._loggerService.debug({
         context: this._serviceName,
         message: this._chalkService.text(
@@ -104,10 +109,9 @@ export class DiscordGuildCreateService extends AbstractService {
         ),
       });
 
-      guildChannel
+      return guildChannel
         .send(messageResponse.response, messageResponse.options)
         .then((): void => {
-          // @todo add coverage
           this._loggerService.log({
             context: this._serviceName,
             message: this._chalkService.text(
@@ -116,7 +120,6 @@ export class DiscordGuildCreateService extends AbstractService {
           });
         })
         .catch((error: Readonly<Error | string>): void => {
-          // @todo add coverage
           this._loggerService.error({
             context: this._serviceName,
             message: this._chalkService.text(
@@ -134,12 +137,14 @@ export class DiscordGuildCreateService extends AbstractService {
             ),
           });
         });
-    } else {
-      this._loggerService.debug({
-        context: this._serviceName,
-        message: this._chalkService.text(`the guild channel is not writable`),
-      });
     }
+
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(`the guild channel is not writable`),
+    });
+
+    return Promise.reject(new Error(`Guild channel is not writable`));
   }
 
   private _getMessageResponse(): IDiscordMessageResponse {
