@@ -161,7 +161,7 @@
     "eslint-config-prettier": "6.11.0",
     "eslint-config-recommended": "4.1.0",
     "eslint-plugin-import": "2.22.0",
-    "eslint-plugin-jest": "23.18.2",
+    "eslint-plugin-jest": "23.19.0",
     "eslint-plugin-prettier": "3.1.4",
     "eslint-plugin-rxjs": "0.0.2-beta.28",
     "eslint-plugin-typescript-sort-keys": "1.3.0",
