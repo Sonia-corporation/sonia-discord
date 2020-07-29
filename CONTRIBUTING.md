@@ -96,7 +96,7 @@ Instead, the environment variable `GOOGLE_APPLICATION_CREDENTIALS` is configured
 
 The path of the Firebase service account file being different and "production" friendly we needed to come up with this configuration file.  
 Since the solution must be production-first, some node scripts are creating a default Firebase service account file based partially on dedicated environment variables.  
-GitHub will handle the replacement with the configured secrets.
+GitHub and Heroku will handle the replacement with the configured secrets.
 
 Now to avoid creating manually this file when using the local production the solution was to override this generated file with the one existing locally for the local development. 
 
