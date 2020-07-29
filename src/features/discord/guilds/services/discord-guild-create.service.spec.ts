@@ -4,6 +4,7 @@ import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../logger/services/logger.service";
+import * as isDiscordGuildChannelModule from "../../channels/functions/is-discord-guild-channel";
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
 import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-error.service";
 import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
@@ -199,9 +200,11 @@ describe(`DiscordGuildCreateService`, (): void => {
     let discordMessageCommandCookieServiceGetMessageResponseSpy: jest.SpyInstance;
     let discordGuildSoniaServiceSendMessageToChannelSpy: jest.SpyInstance;
     let discordLoggerErrorServiceGetErrorMessageResponseSpy: jest.SpyInstance;
+    let isDiscordGuildChannelSpy: jest.SpyInstance;
     let guildChannelSendMock: jest.Mock;
 
     beforeEach((): void => {
+      service = new DiscordGuildCreateService();
       guild = createMock<Guild>();
       primaryGuildChannel = createMock<GuildChannel>();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
@@ -231,7 +234,10 @@ describe(`DiscordGuildCreateService`, (): void => {
       discordLoggerErrorServiceGetErrorMessageResponseSpy = jest
         .spyOn(discordLoggerErrorService, `getErrorMessageResponse`)
         .mockReturnValue(discordMessageErrorResponse);
-      guildChannelSendMock = jest.fn().mockResolvedValue(undefined);
+      isDiscordGuildChannelSpy = jest
+        .spyOn(isDiscordGuildChannelModule, `isDiscordGuildChannel`)
+        .mockImplementation();
+      guildChannelSendMock = jest.fn().mockRejectedValue(new Error(`error`));
     });
 
     describe(`when Sonia is not allowed to send cookies message as welcome message`, (): void => {
@@ -241,10 +247,14 @@ describe(`DiscordGuildCreateService`, (): void => {
         );
       });
 
-      it(`should log about Sonia not being allowed to send cookies message`, (): void => {
-        expect.assertions(2);
+      it(`should log about Sonia not being allowed to send cookies message`, async (): Promise<
+        void
+      > => {
+        expect.assertions(3);
 
-        service.sendMessage(guild);
+        await expect(service.sendMessage(guild)).rejects.toThrow(
+          new Error(`Can not send cookies message`)
+        );
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -261,10 +271,14 @@ describe(`DiscordGuildCreateService`, (): void => {
         );
       });
 
-      it(`should get the primary guild channel from the given guild`, (): void => {
-        expect.assertions(2);
+      it(`should get the primary guild channel from the given guild`, async (): Promise<
+        void
+      > => {
+        expect.assertions(3);
 
-        service.sendMessage(guild);
+        await expect(service.sendMessage(guild)).rejects.toThrow(
+          new Error(`No primary guild channel found`)
+        );
 
         expect(discordChannelGuildServiceGetPrimarySpy).toHaveBeenCalledTimes(
           1
@@ -281,6 +295,7 @@ describe(`DiscordGuildCreateService`, (): void => {
           discordChannelGuildServiceGetPrimarySpy.mockReturnValue(
             primaryGuildChannel
           );
+          isDiscordGuildChannelSpy.mockReturnValue(false);
         });
       });
 
@@ -291,6 +306,7 @@ describe(`DiscordGuildCreateService`, (): void => {
           discordChannelGuildServiceGetPrimarySpy.mockReturnValue(
             primaryGuildChannel
           );
+          isDiscordGuildChannelSpy.mockReturnValue(true);
         });
 
         describe(`when the primary guild channel is not writable`, (): void => {
@@ -317,23 +333,31 @@ describe(`DiscordGuildCreateService`, (): void => {
             );
           });
 
-          it(`should get the cookie message response`, (): void => {
-            expect.assertions(2);
+          it(`should get the cookie message response`, async (): Promise<
+            void
+          > => {
+            expect.assertions(3);
 
-            service.sendMessage(guild);
+            await expect(service.sendMessage(guild)).rejects.toThrow(
+              new Error(`No primary guild channel found`)
+            );
 
             expect(
               discordMessageCommandCookieServiceGetMessageResponseSpy
             ).toHaveBeenCalledTimes(1);
             expect(
               discordMessageCommandCookieServiceGetMessageResponseSpy
-            ).toHaveBeenCalledWith();
+            ).toHaveBeenCalledWith(guild);
           });
 
-          it(`should log about Sonia sending a message about the guild creation`, (): void => {
-            expect.assertions(2);
+          it(`should log about Sonia sending a message about the guild creation`, async (): Promise<
+            void
+          > => {
+            expect.assertions(3);
 
-            service.sendMessage(guild);
+            await expect(service.sendMessage(guild)).rejects.toThrow(
+              new Error(`No primary guild channel found`)
+            );
 
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -342,10 +366,14 @@ describe(`DiscordGuildCreateService`, (): void => {
             } as ILoggerLog);
           });
 
-          it(`should send the cookies message on the primary guild channel`, (): void => {
-            expect.assertions(2);
+          it(`should send the cookies message on the primary guild channel`, async (): Promise<
+            void
+          > => {
+            expect.assertions(3);
 
-            service.sendMessage(guild);
+            await expect(service.sendMessage(guild)).rejects.toThrow(
+              new Error(`No primary guild channel found`)
+            );
 
             expect(guildChannelSendMock).toHaveBeenCalledTimes(1);
             expect(guildChannelSendMock).toHaveBeenCalledWith(
@@ -359,10 +387,14 @@ describe(`DiscordGuildCreateService`, (): void => {
               guildChannelSendMock.mockRejectedValue(new Error(`error`));
             });
 
-            it(`should log about failing to send the cookies message to the primary guild channel`, (): void => {
-              expect.assertions(2);
+            it(`should log about failing to send the cookies message to the primary guild channel`, async (): Promise<
+              void
+            > => {
+              expect.assertions(3);
 
-              service.sendMessage(guild);
+              await expect(service.sendMessage(guild)).rejects.toThrow(
+                new Error(`No primary guild channel found`)
+              );
 
               expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
               expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(1, {
@@ -371,10 +403,12 @@ describe(`DiscordGuildCreateService`, (): void => {
               } as ILoggerLog);
             });
 
-            it(`should log the error`, (): void => {
-              expect.assertions(2);
+            it(`should log the error`, async (): Promise<void> => {
+              expect.assertions(3);
 
-              service.sendMessage(guild);
+              await expect(service.sendMessage(guild)).rejects.toThrow(
+                new Error(`No primary guild channel found`)
+              );
 
               expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
               expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(2, {
@@ -383,10 +417,14 @@ describe(`DiscordGuildCreateService`, (): void => {
               } as ILoggerLog);
             });
 
-            it(`should get the formatted error response`, (): void => {
-              expect.assertions(2);
+            it(`should get the formatted error response`, async (): Promise<
+              void
+            > => {
+              expect.assertions(3);
 
-              service.sendMessage(guild);
+              await expect(service.sendMessage(guild)).rejects.toThrow(
+                new Error(`No primary guild channel found`)
+              );
 
               expect(
                 discordLoggerErrorServiceGetErrorMessageResponseSpy
@@ -396,10 +434,14 @@ describe(`DiscordGuildCreateService`, (): void => {
               ).toHaveBeenCalledWith(new Error(`error`));
             });
 
-            it(`should send the error message response to the Sonia errors channel`, (): void => {
-              expect.assertions(2);
+            it(`should send the error message response to the Sonia errors channel`, async (): Promise<
+              void
+            > => {
+              expect.assertions(3);
 
-              service.sendMessage(guild);
+              await expect(service.sendMessage(guild)).rejects.toThrow(
+                new Error(`No primary guild channel found`)
+              );
 
               expect(
                 discordGuildSoniaServiceSendMessageToChannelSpy
@@ -418,10 +460,14 @@ describe(`DiscordGuildCreateService`, (): void => {
               guildChannelSendMock.mockResolvedValue(undefined);
             });
 
-            it(`should log about the success of the cookies message sending on the primary guild channel`, (): void => {
-              expect.assertions(2);
+            it(`should log about the success of the cookies message sending on the primary guild channel`, async (): Promise<
+              void
+            > => {
+              expect.assertions(3);
 
-              service.sendMessage(guild);
+              await expect(service.sendMessage(guild)).rejects.toThrow(
+                new Error(`No primary guild channel found`)
+              );
 
               expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
@@ -433,10 +479,14 @@ describe(`DiscordGuildCreateService`, (): void => {
         });
       });
 
-      it(`should not log about Sonia not being allowed to send cookies message`, (): void => {
-        expect.assertions(1);
+      it(`should not log about Sonia not being allowed to send cookies message`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
 
-        service.sendMessage(guild);
+        await expect(service.sendMessage(guild)).rejects.toThrow(
+          new Error(`No primary guild channel found`)
+        );
 
         expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
       });

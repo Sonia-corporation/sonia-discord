@@ -44,20 +44,30 @@ export class DiscordGuildCreateService extends AbstractService {
     this._listen();
   }
 
-  public sendMessage(guild: Readonly<Guild>): void {
-    if (this._canSendMessage()) {
+  public sendMessage(guild: Readonly<Guild>): Promise<void> {
+    return this._sendCookieMessage(guild);
+  }
+
+  public addFirebaseGuild(guild: Readonly<Guild>): Promise<void> {
+    console.log(guild);
+
+    return Promise.resolve();
+  }
+
+  private _sendCookieMessage(guild: Readonly<Guild>): Promise<void> {
+    if (this._canSendCookiesMessage()) {
       const primaryGuildChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
         guild
       );
 
       if (isDiscordGuildChannel(primaryGuildChannel)) {
-        return this._sendMessage(primaryGuildChannel);
+        return this._sendCookieMessageToChannel(primaryGuildChannel);
       }
-    }
-  }
 
-  public addFirebaseGuild(guild: Readonly<Guild>): void {
-    console.log(guild);
+      return Promise.reject(new Error(`No primary guild channel found`));
+    }
+
+    return Promise.reject(new Error(`Can not send cookies message`));
   }
 
   private _listen(): void {
@@ -83,7 +93,7 @@ export class DiscordGuildCreateService extends AbstractService {
     });
   }
 
-  private _canSendMessage(): boolean {
+  private _canSendCookiesMessage(): boolean {
     if (this._discordGuildConfigService.shouldSendCookiesOnCreate()) {
       return true;
     }
@@ -98,7 +108,9 @@ export class DiscordGuildCreateService extends AbstractService {
     return false;
   }
 
-  private _sendMessage(guildChannel: Readonly<GuildChannel>): Promise<void> {
+  private _sendCookieMessageToChannel(
+    guildChannel: Readonly<GuildChannel>
+  ): Promise<void> {
     if (isDiscordGuildChannelWritable(guildChannel)) {
       const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
 
