@@ -264,6 +264,32 @@ describe(`DiscordGuildCreateService`, (): void => {
           message: `text-guild create cookies message sending disabled`,
         } as ILoggerLog);
       });
+
+      it(`should not get the primary guild channel from the given guild`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await expect(service.sendMessage(guild)).rejects.toThrow(
+          new Error(`Can not send cookies message`)
+        );
+
+        expect(discordChannelGuildServiceGetPrimarySpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not get the cookie message response`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await expect(service.sendMessage(guild)).rejects.toThrow(
+          new Error(`Can not send cookies message`)
+        );
+
+        expect(
+          discordMessageCommandCookieServiceGetMessageResponseSpy
+        ).not.toHaveBeenCalled();
+      });
     });
 
     describe(`when Sonia is allowed to send cookies message as welcome message`, (): void => {
@@ -308,6 +334,20 @@ describe(`DiscordGuildCreateService`, (): void => {
             new Error(`No primary guild channel found`)
           );
         });
+
+        it(`should not get the cookie message response`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await expect(service.sendMessage(guild)).rejects.toThrow(
+            new Error(`No primary guild channel found`)
+          );
+
+          expect(
+            discordMessageCommandCookieServiceGetMessageResponseSpy
+          ).not.toHaveBeenCalled();
+        });
       });
 
       describe(`when the primary guild channel was found`, (): void => {
@@ -344,6 +384,20 @@ describe(`DiscordGuildCreateService`, (): void => {
               context: `DiscordGuildCreateService`,
               message: `text-primary guild channel not writable`,
             } as ILoggerLog);
+          });
+
+          it(`should not get the cookie message response`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
+
+            await expect(service.sendMessage(guild)).rejects.toThrow(
+              new Error(`Primary guild channel not writable`)
+            );
+
+            expect(
+              discordMessageCommandCookieServiceGetMessageResponseSpy
+            ).not.toHaveBeenCalled();
           });
         });
 
