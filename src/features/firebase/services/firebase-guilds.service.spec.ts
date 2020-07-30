@@ -1,3 +1,4 @@
+import { Snowflake } from "discord.js";
 import * as admin from "firebase-admin";
 import { Observable, of } from "rxjs";
 import { createMock } from "ts-auto-mock";
@@ -10,6 +11,8 @@ import { FirebaseAppService } from "./firebase-app.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
 import App = admin.app.App;
 import CollectionReference = admin.firestore.CollectionReference;
+import DocumentReference = admin.firestore.DocumentReference;
+import DocumentSnapshot = admin.firestore.DocumentSnapshot;
 import Firestore = admin.firestore.Firestore;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
 
@@ -393,6 +396,206 @@ describe(`FirebaseGuildsService`, (): void => {
         const result = await service.getGuildsCount();
 
         expect(result).toStrictEqual(8);
+      });
+    });
+  });
+
+  describe(`hasGuild()`, (): void => {
+    let guildId: Snowflake;
+    let documentReference: DocumentReference<IFirebaseGuild>;
+    let collectionReference: CollectionReference<IFirebaseGuild>;
+    let documentSnapshot: DocumentSnapshot<IFirebaseGuild>;
+
+    let getCollectionReferenceSpy: jest.SpyInstance;
+    let loggerServiceErrorSpy: jest.SpyInstance;
+    let docMock: jest.Mock;
+    let getMock: jest.Mock;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsService();
+      guildId = `dummy-guild-id`;
+      documentSnapshot = createMock<DocumentSnapshot<IFirebaseGuild>>();
+      getMock = jest.fn().mockResolvedValue(documentSnapshot);
+      documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+        get: getMock,
+      });
+      docMock = jest.fn().mockReturnValue(documentReference);
+      collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
+        doc: docMock,
+      });
+
+      getCollectionReferenceSpy = jest
+        .spyOn(service, `getCollectionReference`)
+        .mockImplementation();
+      loggerServiceErrorSpy = jest
+        .spyOn(loggerService, `error`)
+        .mockImplementation();
+    });
+
+    it(`should get the guilds collection`, async (): Promise<void> => {
+      expect.assertions(3);
+
+      await expect(service.hasGuild(guildId)).rejects.toThrow(
+        new Error(`Collection not available`)
+      );
+
+      expect(getCollectionReferenceSpy).toHaveBeenCalledTimes(1);
+      expect(getCollectionReferenceSpy).toHaveBeenCalledWith();
+    });
+
+    describe(`when the guilds collection is undefined`, (): void => {
+      beforeEach((): void => {
+        getCollectionReferenceSpy.mockReturnValue(undefined);
+      });
+
+      it(`should throw an error`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        await expect(service.hasGuild(guildId)).rejects.toThrow(
+          new Error(`Collection not available`)
+        );
+      });
+
+      it(`should not get the guild`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.hasGuild(guildId)).rejects.toThrow(
+          new Error(`Collection not available`)
+        );
+
+        expect(docMock).not.toHaveBeenCalled();
+        expect(getMock).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the guilds collection is valid`, (): void => {
+      beforeEach((): void => {
+        getCollectionReferenceSpy.mockReturnValue(collectionReference);
+      });
+
+      it(`should get the guild with the given guild id`, async (): Promise<
+        void
+      > => {
+        expect.assertions(5);
+
+        const hasGuild = await service.hasGuild(guildId);
+
+        expect(hasGuild).toStrictEqual(false);
+        expect(docMock).toHaveBeenCalledTimes(1);
+        expect(docMock).toHaveBeenCalledWith(guildId);
+        expect(getMock).toHaveBeenCalledTimes(1);
+        expect(getMock).toHaveBeenCalledWith();
+      });
+
+      describe(`when the fetch of the guild failed`, (): void => {
+        beforeEach((): void => {
+          getMock = jest.fn().mockRejectedValue(new Error(`error`));
+          documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+            get: getMock,
+          });
+          docMock = jest.fn().mockReturnValue(documentReference);
+          collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
+            {
+              doc: docMock,
+            }
+          );
+
+          getCollectionReferenceSpy.mockReturnValue(collectionReference);
+        });
+
+        it(`should log about the error`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await service.hasGuild(guildId);
+
+          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
+            context: `FirebaseGuildsService`,
+            message: `text-failed to check if Firebase has value-dummy-guild-id guild`,
+          } as ILoggerLog);
+        });
+
+        it(`should return false`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const hasGuild = await service.hasGuild(guildId);
+
+          expect(hasGuild).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the fetch of the guild was successful`, (): void => {
+        beforeEach((): void => {
+          documentSnapshot = createMock<DocumentSnapshot<IFirebaseGuild>>();
+          getMock = jest.fn().mockResolvedValue(documentSnapshot);
+          documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+            get: getMock,
+          });
+          docMock = jest.fn().mockReturnValue(documentReference);
+          collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
+            {
+              doc: docMock,
+            }
+          );
+
+          getCollectionReferenceSpy.mockReturnValue(collectionReference);
+        });
+
+        describe(`when the guild does not exists`, (): void => {
+          beforeEach((): void => {
+            documentSnapshot = createMock<DocumentSnapshot<IFirebaseGuild>>({
+              exists: false,
+            });
+            getMock = jest.fn().mockResolvedValue(documentSnapshot);
+            documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+              get: getMock,
+            });
+            docMock = jest.fn().mockReturnValue(documentReference);
+            collectionReference = createMock<
+              CollectionReference<IFirebaseGuild>
+            >({
+              doc: docMock,
+            });
+
+            getCollectionReferenceSpy.mockReturnValue(collectionReference);
+          });
+
+          it(`should return false`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            const hasGuild = await service.hasGuild(guildId);
+
+            expect(hasGuild).toStrictEqual(false);
+          });
+        });
+
+        describe(`when the guild exists`, (): void => {
+          beforeEach((): void => {
+            documentSnapshot = createMock<DocumentSnapshot<IFirebaseGuild>>({
+              exists: true,
+            });
+            getMock = jest.fn().mockResolvedValue(documentSnapshot);
+            documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+              get: getMock,
+            });
+            docMock = jest.fn().mockReturnValue(documentReference);
+            collectionReference = createMock<
+              CollectionReference<IFirebaseGuild>
+            >({
+              doc: docMock,
+            });
+
+            getCollectionReferenceSpy.mockReturnValue(collectionReference);
+          });
+
+          it(`should return true`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            const hasGuild = await service.hasGuild(guildId);
+
+            expect(hasGuild).toStrictEqual(true);
+          });
+        });
       });
     });
   });

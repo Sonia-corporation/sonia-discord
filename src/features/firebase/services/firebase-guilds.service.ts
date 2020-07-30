@@ -97,7 +97,7 @@ export class FirebaseGuildsService extends AbstractService {
         )
         .catch(
           (): Promise<boolean> => {
-            this._loggerService.debug({
+            this._loggerService.error({
               context: this._serviceName,
               message: this._chalkService.text(
                 `failed to check if Firebase has ${this._chalkService.value(
