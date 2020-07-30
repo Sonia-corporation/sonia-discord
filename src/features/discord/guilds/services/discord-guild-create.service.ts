@@ -1,8 +1,10 @@
 import { Guild, GuildChannel, Message } from "discord.js";
+import admin from "firebase-admin";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
+import { FirebaseGuildsService } from "../../../firebase/services/firebase-guilds.service";
 import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { isDiscordGuildChannelWritable } from "../../channels/functions/types/is-discord-guild-channel-writable";
@@ -14,6 +16,7 @@ import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordGuildSoniaChannelNameEnum } from "../enums/discord-guild-sonia-channel-name.enum";
 import { DiscordGuildConfigService } from "./config/discord-guild-config.service";
 import { DiscordGuildSoniaService } from "./discord-guild-sonia.service";
+import WriteResult = admin.firestore.WriteResult;
 
 export class DiscordGuildCreateService extends AbstractService {
   private static _instance: DiscordGuildCreateService;
@@ -34,6 +37,7 @@ export class DiscordGuildCreateService extends AbstractService {
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
   private readonly _discordLoggerErrorService: DiscordLoggerErrorService = DiscordLoggerErrorService.getInstance();
+  private readonly _firebaseGuildsService: FirebaseGuildsService = FirebaseGuildsService.getInstance();
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE);
@@ -47,10 +51,51 @@ export class DiscordGuildCreateService extends AbstractService {
     return this._sendCookieMessage(guild);
   }
 
-  public addFirebaseGuild(guild: Readonly<Guild>): Promise<void> {
-    console.log(guild);
+  public addFirebaseGuild(guild: Readonly<Guild>): Promise<WriteResult | void> {
+    return this._firebaseGuildsService
+      .hasGuild(guild.id)
+      .then(
+        (hasGuild: Readonly<boolean>): Promise<WriteResult | void> => {
+          if (_.isEqual(hasGuild, true)) {
+            return this._addFirebaseGuild(guild)
+              .then(
+                (writeResult: WriteResult): Promise<WriteResult> => {
+                  return Promise.resolve(writeResult);
+                }
+              )
+              .catch(
+                (): Promise<void> => {
+                  return Promise.reject(
+                    new Error(`Could not add the guild into Firestore`)
+                  );
+                }
+              );
+          }
 
-    return Promise.resolve();
+          this._loggerService.debug({
+            context: this._serviceName,
+            message: this._chalkService.text(`Firebase guild already created`),
+          });
+
+          return Promise.reject(new Error(`Firebase guild already created`));
+        }
+      )
+      .catch(
+        (): Promise<void> => {
+          return Promise.reject(
+            new Error(`Could not check if the guild exists in Firestore`)
+          );
+        }
+      );
+  }
+
+  private _addFirebaseGuild(guild: Readonly<Guild>): Promise<WriteResult> {
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(`guild not yet created on Firebase`),
+    });
+
+    return this._firebaseGuildsService.addGuild(guild);
   }
 
   private _sendCookieMessage(guild: Readonly<Guild>): Promise<Message | void> {

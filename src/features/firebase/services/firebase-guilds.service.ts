@@ -1,3 +1,4 @@
+import { Guild, Snowflake } from "discord.js";
 import admin, { firestore } from "firebase-admin";
 import _ from "lodash";
 import { AbstractService } from "../../../classes/abstract.service";
@@ -5,11 +6,14 @@ import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
 import { FirebaseCollectionEnum } from "../enums/firebase-collection.enum";
+import { createFirebaseGuild } from "../functions/create-firebase-guild";
+import { IFirebaseGuild } from "../interfaces/firebase-guild";
 import { FirebaseAppService } from "./firebase-app.service";
 import CollectionReference = admin.firestore.CollectionReference;
-import DocumentData = admin.firestore.DocumentData;
+import DocumentSnapshot = admin.firestore.DocumentSnapshot;
 import Firestore = admin.firestore.Firestore;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
+import WriteResult = admin.firestore.WriteResult;
 
 export class FirebaseGuildsService extends AbstractService {
   private static _instance: FirebaseGuildsService;
@@ -37,7 +41,7 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   public getCollectionReference():
-    | CollectionReference<DocumentData>
+    | CollectionReference<IFirebaseGuild>
     | undefined {
     if (!_.isNil(this._store)) {
       return this._store.collection(`/${FirebaseCollectionEnum.GUILDS}`);
@@ -51,17 +55,57 @@ export class FirebaseGuildsService extends AbstractService {
     return undefined;
   }
 
-  public getGuildCount(): Promise<number> {
+  public getGuilds(): Promise<QuerySnapshot<IFirebaseGuild>> {
     const collectionReference:
-      | CollectionReference<DocumentData>
+      | CollectionReference<IFirebaseGuild>
+      | undefined = this.getCollectionReference();
+
+    if (!_.isNil(collectionReference)) {
+      return collectionReference.get();
+    }
+
+    return Promise.reject(new Error(`Collection not available`));
+  }
+
+  public getGuildsCount(): Promise<number> {
+    return this.getGuilds().then(
+      (querySnapshot: QuerySnapshot<IFirebaseGuild>): number => {
+        return querySnapshot.size;
+      }
+    );
+  }
+
+  public hasGuild(guildId: Readonly<Snowflake>): Promise<boolean> {
+    const collectionReference:
+      | CollectionReference<IFirebaseGuild>
       | undefined = this.getCollectionReference();
 
     if (!_.isNil(collectionReference)) {
       return collectionReference
+        .doc(guildId)
         .get()
-        .then((querySnapshot: QuerySnapshot<DocumentData>): number => {
-          return querySnapshot.size;
+        .then((documentSnapshot: DocumentSnapshot<IFirebaseGuild>): boolean => {
+          return documentSnapshot.exists;
+        })
+        .catch((): boolean => {
+          return false;
         });
+    }
+
+    return Promise.reject(new Error(`Collection not available`));
+  }
+
+  public addGuild(guild: Readonly<Guild>): Promise<WriteResult> {
+    const collectionReference:
+      | CollectionReference<IFirebaseGuild>
+      | undefined = this.getCollectionReference();
+
+    if (!_.isNil(collectionReference)) {
+      return collectionReference.doc(guild.id).set(
+        createFirebaseGuild({
+          id: guild.id,
+        })
+      );
     }
 
     return Promise.reject(new Error(`Collection not available`));
@@ -72,11 +116,13 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   private _logGuildCount(): Promise<number> {
-    return this.getGuildCount().then((count: Readonly<number>): number => {
+    return this.getGuildsCount().then((count: Readonly<number>): number => {
       this._loggerService.debug({
         context: this._serviceName,
         message: this._chalkService.text(
-          `${count} guild${_.gt(count, 1) ? `s` : ``} found`
+          `${this._chalkService.value(count)} guild${
+            _.gt(count, 1) ? `s` : ``
+          } found`
         ),
       });
 
