@@ -679,10 +679,6 @@ describe(`DiscordGuildCreateService`, (): void => {
       });
 
       describe(`when the check for the Firebase guild was successful`, (): void => {
-        beforeEach((): void => {
-          firebaseGuildsServiceHasGuildSpy.mockResolvedValue(true);
-        });
-
         describe(`when the guild is already in Firebase`, (): void => {
           beforeEach((): void => {
             firebaseGuildsServiceHasGuildSpy.mockResolvedValue(true);
@@ -725,12 +721,11 @@ describe(`DiscordGuildCreateService`, (): void => {
           > => {
             expect.assertions(3);
 
-            await expect(service.addFirebaseGuild(guild)).rejects.toThrow(
-              new Error(`error`)
-            );
+            const result = await service.addFirebaseGuild(guild);
 
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-            expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+            expect(result).toBeUndefined();
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+            expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
               context: `DiscordGuildCreateService`,
               message: `text-guild not yet created on Firebase`,
             } as ILoggerLog);
@@ -739,10 +734,9 @@ describe(`DiscordGuildCreateService`, (): void => {
           it(`should add the guild into Firebase`, async (): Promise<void> => {
             expect.assertions(3);
 
-            await expect(service.addFirebaseGuild(guild)).rejects.toThrow(
-              new Error(`error`)
-            );
+            const result = await service.addFirebaseGuild(guild);
 
+            expect(result).toBeUndefined();
             expect(firebaseGuildsServiceAddGuildSpy).toHaveBeenCalledTimes(1);
             expect(firebaseGuildsServiceAddGuildSpy).toHaveBeenCalledWith(
               guild
@@ -761,12 +755,11 @@ describe(`DiscordGuildCreateService`, (): void => {
             > => {
               expect.assertions(3);
 
-              await expect(service.addFirebaseGuild(guild)).rejects.toThrow(
-                new Error(`error`)
-              );
+              const result = await service.addFirebaseGuild(guild);
 
-              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-              expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+              expect(result).toBeUndefined();
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
                 context: `DiscordGuildCreateService`,
                 message: `text-could not add the guild into Firestore`,
               } as ILoggerLog);
