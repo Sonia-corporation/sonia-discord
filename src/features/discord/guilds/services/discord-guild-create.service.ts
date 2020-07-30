@@ -160,10 +160,10 @@ export class DiscordGuildCreateService extends AbstractService {
 
     this._loggerService.debug({
       context: this._serviceName,
-      message: this._chalkService.text(`the guild channel is not writable`),
+      message: this._chalkService.text(`primary guild channel not writable`),
     });
 
-    return Promise.reject(new Error(`Guild channel is not writable`));
+    return Promise.reject(new Error(`Primary guild channel not writable`));
   }
 
   private _getMessageResponse(): IDiscordMessageResponse {
