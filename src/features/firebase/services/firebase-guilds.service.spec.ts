@@ -5,11 +5,11 @@ import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
 import { ILoggerLog } from "../../logger/interfaces/logger-log";
 import { LoggerService } from "../../logger/services/logger.service";
+import { IFirebaseGuild } from "../interfaces/firebase-guild";
 import { FirebaseAppService } from "./firebase-app.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
 import App = admin.app.App;
 import CollectionReference = admin.firestore.CollectionReference;
-import DocumentData = admin.firestore.DocumentData;
 import Firestore = admin.firestore.Firestore;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
 
@@ -185,14 +185,14 @@ describe(`FirebaseGuildsService`, (): void => {
 
   describe(`getCollectionReference()`, (): void => {
     let firestore: Firestore;
-    let collectionReference: CollectionReference<DocumentData>;
+    let collectionReference: CollectionReference<IFirebaseGuild>;
 
     let loggerServiceWarningSpy: jest.SpyInstance;
     let collectionMock: jest.Mock;
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
-      collectionReference = createMock<CollectionReference<DocumentData>>();
+      collectionReference = createMock<CollectionReference<IFirebaseGuild>>();
       collectionMock = jest.fn().mockReturnValue(collectionReference);
       firestore = createMock<Firestore>({
         collection: collectionMock,
@@ -274,16 +274,16 @@ describe(`FirebaseGuildsService`, (): void => {
   });
 
   describe(`getGuilds()`, (): void => {
-    let collectionReference: CollectionReference<DocumentData>;
-    let querySnapshot: QuerySnapshot<DocumentData>;
+    let collectionReference: CollectionReference<IFirebaseGuild>;
+    let querySnapshot: QuerySnapshot<IFirebaseGuild>;
 
     let getCollectionReferenceSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
-      querySnapshot = createMock<QuerySnapshot<DocumentData>>();
-      collectionReference = createMock<CollectionReference<DocumentData>>({
-        get: (): Promise<QuerySnapshot<DocumentData>> => {
+      querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>();
+      collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
+        get: (): Promise<QuerySnapshot<IFirebaseGuild>> => {
           return Promise.resolve(querySnapshot);
         },
       });
@@ -328,24 +328,24 @@ describe(`FirebaseGuildsService`, (): void => {
 
         const result = await service.getGuilds();
 
-        expect(result).toStrictEqual(collectionReference);
+        expect(result).toStrictEqual(querySnapshot);
       });
     });
   });
 
   describe(`getGuildsCount()`, (): void => {
-    let collectionReference: CollectionReference<DocumentData>;
-    let querySnapshot: QuerySnapshot<DocumentData>;
+    let collectionReference: CollectionReference<IFirebaseGuild>;
+    let querySnapshot: QuerySnapshot<IFirebaseGuild>;
 
     let getCollectionReferenceSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
-      querySnapshot = createMock<QuerySnapshot<DocumentData>>({
+      querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>({
         size: 8,
       });
-      collectionReference = createMock<CollectionReference<DocumentData>>({
-        get: (): Promise<QuerySnapshot<DocumentData>> => {
+      collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
+        get: (): Promise<QuerySnapshot<IFirebaseGuild>> => {
           return Promise.resolve(querySnapshot);
         },
       });
