@@ -1,6 +1,7 @@
 import { Guild, GuildChannel, Message } from "discord.js";
 import admin from "firebase-admin";
 import _ from "lodash";
+import { filter, take } from "rxjs/operators";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
@@ -45,6 +46,21 @@ export class DiscordGuildCreateService extends AbstractService {
 
   public init(): void {
     this._listen();
+    this._firebaseGuildsService
+      .isReady$()
+      .pipe(
+        filter((isReady: Readonly<boolean>): boolean => {
+          return _.isEqual(isReady, true);
+        }),
+        take(1)
+      )
+      .subscribe({
+        next: (): void => {
+          this.addFirebaseGuild({
+            id: `test`,
+          } as Guild);
+        },
+      });
   }
 
   public sendMessage(guild: Readonly<Guild>): Promise<Message | void> {
@@ -52,41 +68,27 @@ export class DiscordGuildCreateService extends AbstractService {
   }
 
   public addFirebaseGuild(guild: Readonly<Guild>): Promise<WriteResult | void> {
-    return this._firebaseGuildsService
-      .hasGuild(guild.id)
-      .then(
-        (hasGuild: Readonly<boolean>): Promise<WriteResult | void> => {
-          if (_.isEqual(hasGuild, true)) {
-            return this._addFirebaseGuild(guild)
-              .then(
-                (writeResult: WriteResult): Promise<WriteResult> => {
-                  return Promise.resolve(writeResult);
-                }
-              )
-              .catch(
-                (): Promise<void> => {
-                  return Promise.reject(
-                    new Error(`Could not add the guild into Firestore`)
-                  );
-                }
-              );
-          }
-
-          this._loggerService.debug({
-            context: this._serviceName,
-            message: this._chalkService.text(`Firebase guild already created`),
+    return this._firebaseGuildsService.hasGuild(guild.id).then(
+      (hasGuild: Readonly<boolean>): Promise<WriteResult | void> => {
+        if (_.isEqual(hasGuild, false)) {
+          return this._addFirebaseGuild(guild).catch((): void => {
+            this._loggerService.debug({
+              context: this._serviceName,
+              message: this._chalkService.text(
+                `Could not add the guild into Firestore`
+              ),
+            });
           });
+        }
 
-          return Promise.reject(new Error(`Firebase guild already created`));
-        }
-      )
-      .catch(
-        (): Promise<void> => {
-          return Promise.reject(
-            new Error(`Could not check if the guild exists in Firestore`)
-          );
-        }
-      );
+        this._loggerService.debug({
+          context: this._serviceName,
+          message: this._chalkService.text(`Firebase guild already created`),
+        });
+
+        return Promise.resolve();
+      }
+    );
   }
 
   private _addFirebaseGuild(guild: Readonly<Guild>): Promise<WriteResult> {

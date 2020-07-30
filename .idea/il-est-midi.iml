@@ -30,5 +30,6 @@
     <orderEntry type="library" name="moment-timezone" level="project" />
     <orderEntry type="library" name="firebase" level="project" />
     <orderEntry type="library" name="firebase-admin" level="project" />
+    <orderEntry type="library" name="rxjs" level="project" />
   </component>
 </module>
