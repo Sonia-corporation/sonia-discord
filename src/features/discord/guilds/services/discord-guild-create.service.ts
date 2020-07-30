@@ -69,7 +69,7 @@ export class DiscordGuildCreateService extends AbstractService {
                     this._loggerService.debug({
                       context: this._serviceName,
                       message: this._chalkService.text(
-                        `Could not add the guild into Firestore`
+                        `could not add the guild into Firestore`
                       ),
                     });
                   });
@@ -97,7 +97,16 @@ export class DiscordGuildCreateService extends AbstractService {
       message: this._chalkService.text(`guild not yet created on Firebase`),
     });
 
-    return this._firebaseGuildsService.addGuild(guild);
+    return this._firebaseGuildsService.addGuild(guild).then(
+      (writeResult: WriteResult): Promise<WriteResult> => {
+        this._loggerService.success({
+          context: this._serviceName,
+          message: this._chalkService.text(`guild added into Firebase`),
+        });
+
+        return Promise.resolve(writeResult);
+      }
+    );
   }
 
   private _sendCookieMessage(guild: Readonly<Guild>): Promise<Message | void> {

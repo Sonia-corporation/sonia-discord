@@ -2,8 +2,8 @@ import admin from "firebase-admin";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
+import { IFirebaseGuild } from "../../interfaces/firebase-guild";
 import CollectionReference = admin.firestore.CollectionReference;
-import DocumentData = admin.firestore.DocumentData;
 
 export class FirebaseGuildsService extends AbstractService {
   private static _instance: FirebaseGuildsService;
@@ -24,7 +24,7 @@ export class FirebaseGuildsService extends AbstractService {
   public init(): void {}
 
   public getCollectionReference():
-    | CollectionReference<DocumentData>
+    | CollectionReference<IFirebaseGuild>
     | undefined {
     return undefined;
   }
