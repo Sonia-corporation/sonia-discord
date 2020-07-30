@@ -4,7 +4,6 @@ import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../logger/services/logger.service";
-import * as isDiscordGuildChannelModule from "../../channels/functions/is-discord-guild-channel";
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
 import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-error.service";
 import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
@@ -16,7 +15,12 @@ import { DiscordGuildConfigService } from "./config/discord-guild-config.service
 import { DiscordGuildCreateService } from "./discord-guild-create.service";
 import { DiscordGuildSoniaService } from "./discord-guild-sonia.service";
 
+jest.mock(`./discord-guild-sonia.service`);
 jest.mock(`../../../logger/services/chalk/chalk.service`);
+jest.mock(`../../logger/services/discord-logger-error.service`);
+jest.mock(
+  `../../messages/services/command/cookie/discord-message-command-cookie.service`
+);
 
 describe(`DiscordGuildCreateService`, (): void => {
   let service: DiscordGuildCreateService;
@@ -200,7 +204,6 @@ describe(`DiscordGuildCreateService`, (): void => {
     let discordMessageCommandCookieServiceGetMessageResponseSpy: jest.SpyInstance;
     let discordGuildSoniaServiceSendMessageToChannelSpy: jest.SpyInstance;
     let discordLoggerErrorServiceGetErrorMessageResponseSpy: jest.SpyInstance;
-    let isDiscordGuildChannelSpy: jest.SpyInstance;
     let guildChannelSendMock: jest.Mock;
 
     beforeEach((): void => {
@@ -234,9 +237,6 @@ describe(`DiscordGuildCreateService`, (): void => {
       discordLoggerErrorServiceGetErrorMessageResponseSpy = jest
         .spyOn(discordLoggerErrorService, `getErrorMessageResponse`)
         .mockReturnValue(discordMessageErrorResponse);
-      isDiscordGuildChannelSpy = jest
-        .spyOn(isDiscordGuildChannelModule, `isDiscordGuildChannel`)
-        .mockImplementation();
       guildChannelSendMock = jest.fn().mockRejectedValue(new Error(`error`));
     });
 
@@ -295,7 +295,6 @@ describe(`DiscordGuildCreateService`, (): void => {
           discordChannelGuildServiceGetPrimarySpy.mockReturnValue(
             primaryGuildChannel
           );
-          isDiscordGuildChannelSpy.mockReturnValue(false);
         });
       });
 
@@ -306,7 +305,6 @@ describe(`DiscordGuildCreateService`, (): void => {
           discordChannelGuildServiceGetPrimarySpy.mockReturnValue(
             primaryGuildChannel
           );
-          isDiscordGuildChannelSpy.mockReturnValue(true);
         });
 
         describe(`when the primary guild channel is not writable`, (): void => {
@@ -339,7 +337,7 @@ describe(`DiscordGuildCreateService`, (): void => {
             expect.assertions(3);
 
             await expect(service.sendMessage(guild)).rejects.toThrow(
-              new Error(`No primary guild channel found`)
+              new Error(`error`)
             );
 
             expect(
@@ -347,7 +345,7 @@ describe(`DiscordGuildCreateService`, (): void => {
             ).toHaveBeenCalledTimes(1);
             expect(
               discordMessageCommandCookieServiceGetMessageResponseSpy
-            ).toHaveBeenCalledWith(guild);
+            ).toHaveBeenCalledWith();
           });
 
           it(`should log about Sonia sending a message about the guild creation`, async (): Promise<

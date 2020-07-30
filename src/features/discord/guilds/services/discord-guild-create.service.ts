@@ -1,11 +1,10 @@
-import { Guild, GuildChannel } from "discord.js";
+import { Guild, GuildChannel, Message } from "discord.js";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
-import { isDiscordGuildChannel } from "../../channels/functions/is-discord-guild-channel";
 import { isDiscordGuildChannelWritable } from "../../channels/functions/types/is-discord-guild-channel-writable";
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
 import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-error.service";
@@ -44,7 +43,7 @@ export class DiscordGuildCreateService extends AbstractService {
     this._listen();
   }
 
-  public sendMessage(guild: Readonly<Guild>): Promise<void> {
+  public sendMessage(guild: Readonly<Guild>): Promise<Message | void> {
     return this._sendCookieMessage(guild);
   }
 
@@ -54,13 +53,13 @@ export class DiscordGuildCreateService extends AbstractService {
     return Promise.resolve();
   }
 
-  private _sendCookieMessage(guild: Readonly<Guild>): Promise<void> {
+  private _sendCookieMessage(guild: Readonly<Guild>): Promise<Message | void> {
     if (this._canSendCookiesMessage()) {
       const primaryGuildChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
         guild
       );
 
-      if (isDiscordGuildChannel(primaryGuildChannel)) {
+      if (!_.isNil(primaryGuildChannel)) {
         return this._sendCookieMessageToChannel(primaryGuildChannel);
       }
 
@@ -110,7 +109,7 @@ export class DiscordGuildCreateService extends AbstractService {
 
   private _sendCookieMessageToChannel(
     guildChannel: Readonly<GuildChannel>
-  ): Promise<void> {
+  ): Promise<Message | void> {
     if (isDiscordGuildChannelWritable(guildChannel)) {
       const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
 
@@ -123,32 +122,40 @@ export class DiscordGuildCreateService extends AbstractService {
 
       return guildChannel
         .send(messageResponse.response, messageResponse.options)
-        .then((): void => {
-          this._loggerService.log({
-            context: this._serviceName,
-            message: this._chalkService.text(
-              `cookies message for the create guild sent`
-            ),
-          });
-        })
-        .catch((error: Readonly<Error | string>): void => {
-          this._loggerService.error({
-            context: this._serviceName,
-            message: this._chalkService.text(
-              `cookies message sending for the create guild failed`
-            ),
-          });
-          this._loggerService.error({
-            context: this._serviceName,
-            message: this._chalkService.error(error),
-          });
-          this._discordGuildSoniaService.sendMessageToChannel({
-            channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-            messageResponse: this._discordLoggerErrorService.getErrorMessageResponse(
-              error
-            ),
-          });
-        });
+        .then(
+          (message: Message): Promise<Message> => {
+            this._loggerService.log({
+              context: this._serviceName,
+              message: this._chalkService.text(
+                `cookies message for the create guild sent`
+              ),
+            });
+
+            return Promise.resolve(message);
+          }
+        )
+        .catch(
+          (error: Readonly<Error | string>): Promise<void> => {
+            this._loggerService.error({
+              context: this._serviceName,
+              message: this._chalkService.text(
+                `cookies message sending for the create guild failed`
+              ),
+            });
+            this._loggerService.error({
+              context: this._serviceName,
+              message: this._chalkService.error(error),
+            });
+            this._discordGuildSoniaService.sendMessageToChannel({
+              channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
+              messageResponse: this._discordLoggerErrorService.getErrorMessageResponse(
+                error
+              ),
+            });
+
+            return Promise.reject(error);
+          }
+        );
     }
 
     this._loggerService.debug({
