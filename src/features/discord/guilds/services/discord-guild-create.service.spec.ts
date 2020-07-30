@@ -85,6 +85,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
   describe(`init()`, (): void => {
     let client: Client;
+    let guild: Guild;
     let discordClientServiceGetClientOnMock: jest.Mock;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
@@ -98,6 +99,7 @@ describe(`DiscordGuildCreateService`, (): void => {
       client = createMock<Client>({
         on: discordClientServiceGetClientOnMock,
       });
+      guild = createMock<Guild>();
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
@@ -135,8 +137,11 @@ describe(`DiscordGuildCreateService`, (): void => {
     describe(`when the Discord client guildCreate event is triggered`, (): void => {
       beforeEach((): void => {
         discordClientServiceGetClientOnMock = jest.fn(
-          (_event: string, listener: () => void): void => {
-            listener();
+          (
+            _event: string,
+            listener: (guild: Readonly<Guild>) => void
+          ): void => {
+            listener(guild);
           }
         );
         client = createMock<Client>({
@@ -164,7 +169,7 @@ describe(`DiscordGuildCreateService`, (): void => {
         service.init();
 
         expect(sendMessageSpy).toHaveBeenCalledTimes(1);
-        expect(sendMessageSpy).toHaveBeenCalledWith(undefined);
+        expect(sendMessageSpy).toHaveBeenCalledWith(guild);
       });
 
       it(`should add the guild into Firebase`, (): void => {
@@ -173,7 +178,7 @@ describe(`DiscordGuildCreateService`, (): void => {
         service.init();
 
         expect(addFirebaseGuildSpy).toHaveBeenCalledTimes(1);
-        expect(addFirebaseGuildSpy).toHaveBeenCalledWith(undefined);
+        expect(addFirebaseGuildSpy).toHaveBeenCalledWith(guild);
       });
     });
 

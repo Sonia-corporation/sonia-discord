@@ -79,6 +79,7 @@ describe(`FirebaseGuildsService`, (): void => {
     let getGuildsCountSpy: jest.SpyInstance;
     let loggerServiceDebugSpy: jest.SpyInstance;
     let firestoreSpy: jest.SpyInstance;
+    let notifyIsReadySpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
@@ -96,6 +97,9 @@ describe(`FirebaseGuildsService`, (): void => {
       firestoreSpy = jest
         .spyOn(admin, `firestore`)
         .mockReturnValue(createMock<Firestore>());
+      notifyIsReadySpy = jest
+        .spyOn(service, `notifyIsReady`)
+        .mockImplementation();
     });
 
     it(`should get the Firebase app`, async (): Promise<void> => {
@@ -114,6 +118,17 @@ describe(`FirebaseGuildsService`, (): void => {
 
       expect(firestoreSpy).toHaveBeenCalledTimes(1);
       expect(firestoreSpy).toHaveBeenCalledWith(app);
+    });
+
+    it(`should notify that the Firebase app is ready`, async (): Promise<
+      void
+    > => {
+      expect.assertions(2);
+
+      await service.init();
+
+      expect(notifyIsReadySpy).toHaveBeenCalledTimes(1);
+      expect(notifyIsReadySpy).toHaveBeenCalledWith();
     });
 
     it(`should count the guilds in the store`, async (): Promise<void> => {
