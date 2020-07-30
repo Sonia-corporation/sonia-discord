@@ -1,5 +1,5 @@
 import * as admin from "firebase-admin";
-import { of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
@@ -378,6 +378,75 @@ describe(`FirebaseGuildsService`, (): void => {
         const result = await service.getGuildsCount();
 
         expect(result).toStrictEqual(8);
+      });
+    });
+  });
+
+  describe(`isReady$()`, (): void => {
+    beforeEach((): void => {
+      service = new FirebaseGuildsService();
+    });
+
+    it(`should return an observable`, (): void => {
+      expect.assertions(1);
+
+      const result = service.isReady$();
+
+      expect(result).toStrictEqual(expect.any(Observable));
+    });
+
+    it(`should be false by default`, (doneCallback: jest.DoneCallback): void => {
+      expect.assertions(1);
+
+      service.isReady$().subscribe({
+        error: (error): void => {
+          expect(true).toStrictEqual(false);
+          doneCallback(error);
+        },
+        next: (isTrue: boolean): void => {
+          expect(isTrue).toStrictEqual(false);
+          doneCallback();
+        },
+      });
+    });
+
+    describe(`when the is ready event is notified`, (): void => {
+      it(`should emit a new value into the stream`, (doneCallback: jest.DoneCallback): void => {
+        expect.assertions(1);
+
+        service.notifyIsReady();
+        service.isReady$().subscribe({
+          error: (error): void => {
+            expect(true).toStrictEqual(false);
+            doneCallback(error);
+          },
+          next: (isTrue: boolean): void => {
+            expect(isTrue).toStrictEqual(true);
+            doneCallback();
+          },
+        });
+      });
+    });
+  });
+
+  describe(`notifyIsReady()`, (): void => {
+    beforeEach((): void => {
+      service = new FirebaseGuildsService();
+    });
+
+    it(`should notify that the Firebase app is ready`, (doneCallback: jest.DoneCallback): void => {
+      expect.assertions(1);
+
+      service.notifyIsReady();
+      service.isReady$().subscribe({
+        error: (error): void => {
+          expect(true).toStrictEqual(false);
+          doneCallback(error);
+        },
+        next: (isTrue: boolean): void => {
+          expect(isTrue).toStrictEqual(true);
+          doneCallback();
+        },
       });
     });
   });
