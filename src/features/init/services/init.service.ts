@@ -2,6 +2,7 @@ import appRootPath from "app-root-path";
 import axios, { AxiosResponse } from "axios";
 import fs from "fs-extra";
 import _ from "lodash";
+import { BehaviorSubject, Observable } from "rxjs";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { ENVIRONMENT } from "../../../environment/constants/environment";
@@ -41,6 +42,9 @@ export class InitService extends AbstractService {
 
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
+  private readonly _isAppConfigured$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
 
   public constructor() {
     super(ServiceNameEnum.INIT_SERVICE);
@@ -50,6 +54,14 @@ export class InitService extends AbstractService {
     this._loggerService.init();
     ChalkColorService.getInstance().init();
     this._readEnvironment();
+  }
+
+  public isAppConfigured$(): Observable<boolean> {
+    return this._isAppConfigured$.asObservable();
+  }
+
+  public notifyIsAppConfigured(): void {
+    this._isAppConfigured$.next(true);
   }
 
   private _mergeEnvironments(

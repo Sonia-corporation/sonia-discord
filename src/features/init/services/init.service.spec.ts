@@ -1,6 +1,6 @@
 import appRootPath from "app-root-path";
 import fs from "fs-extra";
-import { Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { IEnvironment } from "../../../environment/interfaces/environment";
 import { CoreEventService } from "../../core/services/core-event.service";
@@ -92,6 +92,75 @@ describe(`InitService`, (): void => {
       expect(fsReadJsonSpy).toHaveBeenLastCalledWith(
         `${appRootPath}/src/environment/secret-environment.json`
       );
+    });
+  });
+
+  describe(`isAppConfigured$()`, (): void => {
+    beforeEach((): void => {
+      service = new InitService();
+    });
+
+    it(`should return an observable`, (): void => {
+      expect.assertions(1);
+
+      const result = service.isAppConfigured$();
+
+      expect(result).toStrictEqual(expect.any(Observable));
+    });
+
+    it(`should be false by default`, (doneCallback: jest.DoneCallback): void => {
+      expect.assertions(1);
+
+      service.isAppConfigured$().subscribe({
+        error: (error): void => {
+          expect(true).toStrictEqual(false);
+          doneCallback(error);
+        },
+        next: (isTrue: boolean): void => {
+          expect(isTrue).toStrictEqual(false);
+          doneCallback();
+        },
+      });
+    });
+
+    describe(`when the is app configured event is notified`, (): void => {
+      it(`should emit a new value into the stream`, (doneCallback: jest.DoneCallback): void => {
+        expect.assertions(1);
+
+        service.notifyIsAppConfigured();
+        service.isAppConfigured$().subscribe({
+          error: (error): void => {
+            expect(true).toStrictEqual(false);
+            doneCallback(error);
+          },
+          next: (isTrue: boolean): void => {
+            expect(isTrue).toStrictEqual(true);
+            doneCallback();
+          },
+        });
+      });
+    });
+  });
+
+  describe(`notifyIsAppConfigured()`, (): void => {
+    beforeEach((): void => {
+      service = new InitService();
+    });
+
+    it(`should notify that the app is configured`, (doneCallback: jest.DoneCallback): void => {
+      expect.assertions(1);
+
+      service.notifyIsAppConfigured();
+      service.isAppConfigured$().subscribe({
+        error: (error): void => {
+          expect(true).toStrictEqual(false);
+          doneCallback(error);
+        },
+        next: (isTrue: boolean): void => {
+          expect(isTrue).toStrictEqual(true);
+          doneCallback();
+        },
+      });
     });
   });
 });
