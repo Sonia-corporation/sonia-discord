@@ -50,10 +50,13 @@ export class InitService extends AbstractService {
     super(ServiceNameEnum.INIT_SERVICE);
   }
 
-  public init(): void {
+  public init(): Promise<void> {
     this._loggerService.init();
     ChalkColorService.getInstance().init();
-    this._readEnvironment();
+
+    return this._readEnvironment().then((): void => {
+      this.notifyIsAppConfigured();
+    });
   }
 
   public isAppConfigured$(): Observable<boolean> {
@@ -77,9 +80,12 @@ export class InitService extends AbstractService {
     FirebaseService.getInstance().init();
   }
 
-  private _configureApp(environment: Readonly<IEnvironment>): void {
+  private _configureApp(
+    environment: Readonly<IEnvironment>
+  ): Promise<IGithubReleaseAndTotalCount> {
     this._configureAppFromEnvironment(environment);
-    this._configureAppFromPackage().then(
+
+    return this._configureAppFromPackage().then(
       (): Promise<IGithubReleaseAndTotalCount> => {
         return this._configureAppFromGitHubReleases();
       }
@@ -219,14 +225,14 @@ export class InitService extends AbstractService {
       );
   }
 
-  private _readEnvironment(): Promise<IEnvironment> {
+  private _readEnvironment(): Promise<void> {
     return fs
       .readJson(`${appRootPath}/src/environment/secret-environment.json`)
       .then(
-        (environment: Readonly<IEnvironment>): Promise<IEnvironment> => {
-          this._startApp(this._mergeEnvironments(ENVIRONMENT, environment));
-
-          return Promise.resolve(environment);
+        (environment: Readonly<IEnvironment>): Promise<void> => {
+          return this._startApp(
+            this._mergeEnvironments(ENVIRONMENT, environment)
+          );
         }
       )
       .catch(
@@ -249,8 +255,9 @@ export class InitService extends AbstractService {
       );
   }
 
-  private _startApp(environment: Readonly<IEnvironment>): void {
-    this._configureApp(environment);
-    this._runApp();
+  private _startApp(environment: Readonly<IEnvironment>): Promise<void> {
+    return this._configureApp(environment).then((): void => {
+      this._runApp();
+    });
   }
 }
