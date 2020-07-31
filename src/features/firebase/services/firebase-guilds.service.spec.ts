@@ -1,4 +1,4 @@
-import { Snowflake } from "discord.js";
+import { Guild, Snowflake } from "discord.js";
 import * as admin from "firebase-admin";
 import { Observable, of } from "rxjs";
 import { createMock } from "ts-auto-mock";
@@ -6,15 +6,18 @@ import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
 import { ILoggerLog } from "../../logger/interfaces/logger-log";
 import { LoggerService } from "../../logger/services/logger.service";
+import { FirebaseGuildVersionEnum } from "../enums/firebase-guild-version.enum";
 import { IFirebaseGuild } from "../interfaces/firebase-guild";
 import { FirebaseAppService } from "./firebase-app.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
+import moment from "moment-timezone";
 import App = admin.app.App;
 import CollectionReference = admin.firestore.CollectionReference;
 import DocumentReference = admin.firestore.DocumentReference;
 import DocumentSnapshot = admin.firestore.DocumentSnapshot;
 import Firestore = admin.firestore.Firestore;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
+import WriteResult = admin.firestore.WriteResult;
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 jest.mock(`firebase-admin`, (): unknown => {
@@ -191,7 +194,10 @@ describe(`FirebaseGuildsService`, (): void => {
     let collectionReference: CollectionReference<IFirebaseGuild>;
 
     let loggerServiceWarningSpy: jest.SpyInstance;
-    let collectionMock: jest.Mock;
+    let collectionMock: jest.Mock<
+      CollectionReference<IFirebaseGuild>,
+      string[]
+    >;
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
@@ -408,8 +414,8 @@ describe(`FirebaseGuildsService`, (): void => {
 
     let getCollectionReferenceSpy: jest.SpyInstance;
     let loggerServiceErrorSpy: jest.SpyInstance;
-    let docMock: jest.Mock;
-    let getMock: jest.Mock;
+    let docMock: jest.Mock<DocumentSnapshot<IFirebaseGuild>, string[]>;
+    let getMock: jest.Mock<void, IFirebaseGuild[]>;
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
@@ -595,6 +601,180 @@ describe(`FirebaseGuildsService`, (): void => {
 
             expect(hasGuild).toStrictEqual(true);
           });
+        });
+      });
+    });
+  });
+
+  describe(`addGuild()`, (): void => {
+    let guild: Guild;
+    let documentReference: DocumentReference<IFirebaseGuild>;
+    let collectionReference: CollectionReference<IFirebaseGuild>;
+    let writeResult: WriteResult;
+
+    let getCollectionReferenceSpy: jest.SpyInstance;
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let loggerServiceSuccessSpy: jest.SpyInstance;
+    let docMock: jest.Mock<DocumentReference<IFirebaseGuild>, string[]>;
+    let setMock: jest.Mock<WriteResult, IFirebaseGuild[]>;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsService();
+      guild = createMock<Guild>({
+        id: `dummy-id`,
+      });
+      writeResult = createMock<WriteResult>();
+      setMock = jest.fn().mockResolvedValue(writeResult);
+      documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+        set: setMock,
+      });
+      docMock = jest.fn().mockReturnValue(documentReference);
+      collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
+        doc: docMock,
+      });
+
+      getCollectionReferenceSpy = jest
+        .spyOn(service, `getCollectionReference`)
+        .mockImplementation();
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
+      loggerServiceSuccessSpy = jest
+        .spyOn(loggerService, `success`)
+        .mockImplementation();
+    });
+
+    it(`should get the guilds collection`, async (): Promise<void> => {
+      expect.assertions(3);
+
+      await expect(service.addGuild(guild)).rejects.toThrow(
+        new Error(`Collection not available`)
+      );
+
+      expect(getCollectionReferenceSpy).toHaveBeenCalledTimes(1);
+      expect(getCollectionReferenceSpy).toHaveBeenCalledWith();
+    });
+
+    describe(`when the guilds collection is undefined`, (): void => {
+      beforeEach((): void => {
+        getCollectionReferenceSpy.mockReturnValue(undefined);
+      });
+
+      it(`should throw an error`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        await expect(service.addGuild(guild)).rejects.toThrow(
+          new Error(`Collection not available`)
+        );
+      });
+
+      it(`should not add the given guild into Firebase`, async (): Promise<
+        void
+      > => {
+        expect.assertions(3);
+
+        await expect(service.addGuild(guild)).rejects.toThrow(
+          new Error(`Collection not available`)
+        );
+
+        expect(docMock).not.toHaveBeenCalled();
+        expect(setMock).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the guilds collection is valid`, (): void => {
+      beforeEach((): void => {
+        getCollectionReferenceSpy.mockReturnValue(collectionReference);
+      });
+
+      it(`should log about creating the given Firebase guild`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await service.addGuild(guild);
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+          context: `FirebaseGuildsService`,
+          message: `text-creating Firebase guild...`,
+        } as ILoggerLog);
+      });
+
+      it(`should add the given guild into Firebase`, async (): Promise<
+        void
+      > => {
+        expect.assertions(6);
+
+        await service.addGuild(guild);
+
+        expect(docMock).toHaveBeenCalledTimes(1);
+        expect(docMock).toHaveBeenCalledWith(`dummy-id`);
+        expect(setMock).toHaveBeenCalledTimes(1);
+        expect(
+          moment(setMock.mock.calls[0][0].creationDate).fromNow()
+        ).toStrictEqual(`a few seconds ago`);
+        expect(setMock.mock.calls[0][0].id).toStrictEqual(`dummy-id`);
+        expect(setMock.mock.calls[0][0].version).toStrictEqual(
+          FirebaseGuildVersionEnum.V1
+        );
+      });
+
+      describe(`when the guild was not successfully added into Firebase`, (): void => {
+        beforeEach((): void => {
+          setMock = jest.fn().mockRejectedValue(new Error(`error`));
+          documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+            set: setMock,
+          });
+          docMock = jest.fn().mockReturnValue(documentReference);
+          collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
+            {
+              doc: docMock,
+            }
+          );
+
+          getCollectionReferenceSpy.mockReturnValue(collectionReference);
+        });
+
+        it(`should throw an error`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          await expect(service.addGuild(guild)).rejects.toThrow(
+            new Error(`error`)
+          );
+        });
+      });
+
+      describe(`when the guild was successfully added into Firebase`, (): void => {
+        beforeEach((): void => {
+          writeResult = createMock<WriteResult>();
+          setMock = jest.fn().mockResolvedValue(writeResult);
+          documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+            set: setMock,
+          });
+          docMock = jest.fn().mockReturnValue(documentReference);
+          collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
+            {
+              doc: docMock,
+            }
+          );
+
+          getCollectionReferenceSpy.mockReturnValue(collectionReference);
+        });
+
+        it(`should about the success of adding the guild into Firebase`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          const result = await service.addGuild(guild);
+
+          expect(result).toStrictEqual(writeResult);
+          expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
+            context: `FirebaseGuildsService`,
+            message: `text-Firebase guild value-dummy-id created`,
+          } as ILoggerLog);
         });
       });
     });
