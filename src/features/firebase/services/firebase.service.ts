@@ -2,6 +2,7 @@ import _ from "lodash";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { FirebaseAppService } from "./firebase-app.service";
+import { FirebaseGuildsNewVersionService } from "./firebase-guilds-new-version.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
 
 export class FirebaseService extends AbstractService {
@@ -22,5 +23,6 @@ export class FirebaseService extends AbstractService {
   public init(): void {
     FirebaseAppService.getInstance().init();
     FirebaseGuildsService.getInstance().init();
+    FirebaseGuildsNewVersionService.getInstance().init();
   }
 }
