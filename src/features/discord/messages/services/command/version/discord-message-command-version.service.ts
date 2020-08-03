@@ -55,6 +55,10 @@ export class DiscordMessageCommandVersionService extends AbstractService {
       ),
     });
 
+    return this.getMessageResponse();
+  }
+
+  public getMessageResponse(): IDiscordMessageResponse {
     return {
       options: {
         embed: this._getMessageEmbed(),

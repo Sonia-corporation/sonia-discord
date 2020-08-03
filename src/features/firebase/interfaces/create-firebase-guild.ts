@@ -1,3 +1,5 @@
+import { Snowflake } from "discord.js";
+
 export interface ICreateFirebaseGuild {
-  id: string;
+  id: Snowflake;
 }

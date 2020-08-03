@@ -46,6 +46,10 @@ export class DiscordMessageCommandHelpService extends AbstractService {
       ),
     });
 
+    return this.getMessageResponse();
+  }
+
+  public getMessageResponse(): IDiscordMessageResponse {
     return {
       options: {
         embed: this._getMessageEmbed(),
