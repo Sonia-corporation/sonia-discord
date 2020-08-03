@@ -69,6 +69,9 @@ describe(`FirebaseService`, (): void => {
       service = new FirebaseService();
       firebaseAppService = createMock<FirebaseAppService>();
       firebaseGuildsService = createMock<FirebaseGuildsService>();
+      firebaseGuildsNewVersionService = createMock<
+        FirebaseGuildsNewVersionService
+      >();
 
       firebaseAppServiceGetInstanceSpy = jest
         .spyOn(FirebaseAppService, `getInstance`)
