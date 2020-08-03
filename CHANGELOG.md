@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.65.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.64.1...1.65.0) (2020-08-03)
+
+
+### :rocket: Features
+
+* **firebase:** register the guild on Firebase when Sonia is added ([236631c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/236631c0955af334b8fe9ae50e85e7fda8e9b307))
+
 ## [1.64.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.64.0...1.64.1) (2020-07-25)
 
 
