@@ -49,6 +49,7 @@ export enum ServiceNameEnum {
   DISCORD_SONIA_EMOTIONAL_STATE_SERVICE = `DiscordSoniaEmotionalStateService`,
   DISCORD_SONIA_SERVICE = `DiscordSoniaService`,
   FIREBASE_APP_SERVICE = `FirebaseAppService`,
+  FIREBASE_GUILDS_NEW_VERSION_SERVICE = `FirebaseGuildsNewVersionService`,
   FIREBASE_GUILDS_SERVICE = `FirebaseGuildsService`,
   FIREBASE_SERVICE = `FirebaseService`,
   GITHUB_CONFIG_CORE_SERVICE = `GithubConfigCoreService`,

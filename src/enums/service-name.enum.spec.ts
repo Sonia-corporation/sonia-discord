@@ -393,6 +393,14 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_SERVICE).toStrictEqual(
+      `FirebaseGuildsNewVersionService`
+    );
+  });
+
   it(`should have a member "FIREBASE_GUILDS_SERVICE"`, (): void => {
     expect.assertions(1);
 
