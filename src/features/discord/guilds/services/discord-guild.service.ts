@@ -1,3 +1,4 @@
+import { Guild, Snowflake } from "discord.js";
 import _ from "lodash";
 import { filter, take } from "rxjs/operators";
 import { AbstractService } from "../../../../classes/abstract.service";
@@ -28,6 +29,18 @@ export class DiscordGuildService extends AbstractService {
 
   public init(): void {
     this._listen();
+  }
+
+  public getGuilds(): Guild[] {
+    return this._discordClientService.getClient().guilds.cache.array();
+  }
+
+  public getGuildById(guildId: Readonly<Snowflake>): Guild | undefined {
+    return this._discordClientService
+      .getClient()
+      .guilds.cache.find((guild: Readonly<Guild>): boolean => {
+        return _.isEqual(guild.id, guildId);
+      });
   }
 
   private _listen(): void {
