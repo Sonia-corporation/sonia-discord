@@ -1,4 +1,5 @@
 import { Client } from "discord.js";
+import { Observable } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
@@ -216,6 +217,75 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       expect(loginSpy).toHaveBeenCalledTimes(1);
       expect(loginSpy).toHaveBeenCalledWith();
+    });
+  });
+
+  describe(`isAuthenticated$()`, (): void => {
+    beforeEach((): void => {
+      service = new DiscordAuthenticationService();
+    });
+
+    it(`should return an observable`, (): void => {
+      expect.assertions(1);
+
+      const result = service.isAuthenticated$();
+
+      expect(result).toStrictEqual(expect.any(Observable));
+    });
+
+    it(`should be false by default`, (doneCallback: jest.DoneCallback): void => {
+      expect.assertions(1);
+
+      service.isAuthenticated$().subscribe({
+        error: (error): void => {
+          expect(true).toStrictEqual(false);
+          doneCallback(error);
+        },
+        next: (isTrue: boolean): void => {
+          expect(isTrue).toStrictEqual(false);
+          doneCallback();
+        },
+      });
+    });
+
+    describe(`when the is authenticated event is notified`, (): void => {
+      it(`should emit a new value into the stream`, (doneCallback: jest.DoneCallback): void => {
+        expect.assertions(1);
+
+        service.notifyIsAuthenticated();
+        service.isAuthenticated$().subscribe({
+          error: (error): void => {
+            expect(true).toStrictEqual(false);
+            doneCallback(error);
+          },
+          next: (isTrue: boolean): void => {
+            expect(isTrue).toStrictEqual(true);
+            doneCallback();
+          },
+        });
+      });
+    });
+  });
+
+  describe(`notifyIsAuthenticated()`, (): void => {
+    beforeEach((): void => {
+      service = new DiscordAuthenticationService();
+    });
+
+    it(`should notify that the client is authenticated`, (doneCallback: jest.DoneCallback): void => {
+      expect.assertions(1);
+
+      service.notifyIsAuthenticated();
+      service.isAuthenticated$().subscribe({
+        error: (error): void => {
+          expect(true).toStrictEqual(false);
+          doneCallback(error);
+        },
+        next: (isTrue: boolean): void => {
+          expect(isTrue).toStrictEqual(true);
+          doneCallback();
+        },
+      });
     });
   });
 });
