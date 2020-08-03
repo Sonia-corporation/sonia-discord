@@ -24,9 +24,12 @@
     <orderEntry type="library" name="jest-extended" level="project" />
     <orderEntry type="library" name="scout_apm" level="project" />
     <orderEntry type="library" name="discordjs" level="project" />
-    <orderEntry type="library" name="firebase" level="project" />
-    <orderEntry type="library" name="ts-auto-mock" level="project" />
     <orderEntry type="library" name="jest" level="project" />
-    <orderEntry type="library" name="types" level="project" />
+    <orderEntry type="library" name="discord.js" level="project" />
+    <orderEntry type="library" name="moment" level="project" />
+    <orderEntry type="library" name="moment-timezone" level="project" />
+    <orderEntry type="library" name="firebase" level="project" />
+    <orderEntry type="library" name="firebase-admin" level="project" />
+    <orderEntry type="library" name="rxjs" level="project" />
   </component>
 </module>
