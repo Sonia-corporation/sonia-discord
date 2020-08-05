@@ -173,6 +173,39 @@ describe(`DiscordClientService`, (): void => {
     });
   });
 
+  describe(`isReady()`, (): void => {
+    beforeEach((): void => {
+      service = new DiscordClientService();
+    });
+
+    it(`should return a promise`, (): void => {
+      expect.assertions(1);
+
+      const result = service.isReady();
+
+      expect(result).toStrictEqual(expect.any(Promise));
+    });
+
+    it(`should be false by default`, async (): Promise<void> => {
+      expect.assertions(1);
+
+      const isReady = await service.isReady();
+
+      expect(isReady).toStrictEqual(false);
+    });
+
+    describe(`when the is ready event is notified`, (): void => {
+      it(`should emit a new value into the stream`, async (): Promise<void> => {
+        expect.assertions(1);
+        service.notifyIsReady();
+
+        const isReady = await service.isReady();
+
+        expect(isReady).toStrictEqual(true);
+      });
+    });
+  });
+
   describe(`notifyIsReady()`, (): void => {
     beforeEach((): void => {
       service = new DiscordClientService();
