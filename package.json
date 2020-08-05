@@ -63,6 +63,9 @@
       "CI": "true"
     }
   },
+  "akitaCli": {
+    "template": "ts"
+  },
   "engines": {
     "node": "12.x"
   },
@@ -119,6 +122,7 @@
     "git:push": "git push-upstream"
   },
   "dependencies": {
+    "@datorama/akita": "5.2.1",
     "@scout_apm/scout-apm": "0.1.10",
     "axios": "0.19.2",
     "discord.js": "12.2.0",
@@ -132,6 +136,7 @@
     "rxjs": "6.6.2"
   },
   "devDependencies": {
+    "@datorama/akita-cli": "6.1.1",
     "@semantic-release/changelog": "5.0.1",
     "@semantic-release/git": "9.0.0",
     "@semantic-release/github": "7.0.7",

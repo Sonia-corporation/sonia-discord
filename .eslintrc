@@ -108,6 +108,10 @@ rules:
   import/exports-last: error
   import/no-duplicates: error
   indent: 'off'
+  new-cap:
+    - error
+    - capIsNewExceptions:
+        - StoreConfig
   '@typescript-eslint/naming-convention':
     - error
     - selector: default
