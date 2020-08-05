@@ -409,6 +409,30 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "FIREBASE_GUILDS_STORE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_STORE).toStrictEqual(
+      `FirebaseGuildsStore`
+    );
+  });
+
+  it(`should have a member "FIREBASE_GUILDS_STORE_QUERY"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_STORE_QUERY).toStrictEqual(
+      `FirebaseGuildsStoreQuery`
+    );
+  });
+
+  it(`should have a member "FIREBASE_GUILDS_STORE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_STORE_SERVICE).toStrictEqual(
+      `FirebaseGuildsStoreService`
+    );
+  });
+
   it(`should have a member "FIREBASE_SERVICE"`, (): void => {
     expect.assertions(1);
 
