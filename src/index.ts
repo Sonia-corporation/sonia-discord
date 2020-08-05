@@ -1,3 +1,4 @@
+import { enableAkitaProdMode } from "@datorama/akita";
 import { config, DotenvConfigOutput } from "dotenv";
 import _ from "lodash";
 import { CoreService } from "./features/core/services/core.service";
@@ -18,6 +19,13 @@ if (_.isEqual(process.env.NODE_ENV, `development`)) {
   }
 } else {
   console.debug(`Skip the loading of the node environment`);
+}
+
+if (_.isEqual(process.env.NODE_ENV, `production`)) {
+  console.debug(`Start the application on production`);
+
+  enableAkitaProdMode();
+  console.debug(`Akita production mode enabled`);
 }
 
 CoreService.getInstance().init();
