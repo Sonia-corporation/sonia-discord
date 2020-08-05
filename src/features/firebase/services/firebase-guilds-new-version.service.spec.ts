@@ -1,10 +1,16 @@
+import * as admin from "firebase-admin";
 import { Subject } from "rxjs";
+import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
 import { DiscordClientService } from "../../discord/services/discord-client.service";
 import { InitService } from "../../init/services/init.service";
+import { ILoggerLog } from "../../logger/interfaces/logger-log";
+import { LoggerService } from "../../logger/services/logger.service";
+import { IFirebaseGuild } from "../interfaces/firebase-guild";
 import { FirebaseGuildsNewVersionService } from "./firebase-guilds-new-version.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
+import QuerySnapshot = admin.firestore.QuerySnapshot;
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 jest.mock(`firebase-admin`);
@@ -15,12 +21,14 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
   let initService: InitService;
   let discordClientService: DiscordClientService;
   let firebaseGuildsService: FirebaseGuildsService;
+  let loggerService: LoggerService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     initService = InitService.getInstance();
     discordClientService = DiscordClientService.getInstance();
     firebaseGuildsService = FirebaseGuildsService.getInstance();
+    loggerService = LoggerService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -61,6 +69,30 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_SERVICE
       );
+    });
+  });
+
+  describe(`init()`, (): void => {
+    let sendNewReleaseNotesToEachGuild$: Subject<[true, true, true]>;
+
+    let sendNewReleaseNotesToEachGuild$Spy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsNewVersionService();
+      sendNewReleaseNotesToEachGuild$ = new Subject<[true, true, true]>();
+
+      sendNewReleaseNotesToEachGuild$Spy = jest
+        .spyOn(service, `sendNewReleaseNotesToEachGuild$`)
+        .mockReturnValue(sendNewReleaseNotesToEachGuild$.asObservable());
+    });
+
+    it(`should send a new release note to each known guild`, (): void => {
+      expect.assertions(2);
+
+      service.init();
+
+      expect(sendNewReleaseNotesToEachGuild$Spy).toHaveBeenCalledTimes(1);
+      expect(sendNewReleaseNotesToEachGuild$Spy).toHaveBeenCalledWith();
     });
   });
 
@@ -166,6 +198,129 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             discordClientServiceIsReady$.next(true);
             firebaseGuildsServiceIsReady$.next(true);
           });
+        });
+      });
+    });
+  });
+
+  describe(`sendNewReleaseNotesToEachGuild$()`, (): void => {
+    let isReady$: Subject<[true, true, true]>;
+    let querySnapshot: QuerySnapshot<IFirebaseGuild>;
+
+    let isReady$Spy: jest.SpyInstance;
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let firebaseGuildsServiceGetGuildsSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsNewVersionService();
+      isReady$ = new Subject<[true, true, true]>();
+      querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>();
+
+      isReady$Spy = jest.spyOn(service, `isReady$`).mockReturnValue(isReady$);
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
+      firebaseGuildsServiceGetGuildsSpy = jest
+        .spyOn(firebaseGuildsService, `getGuilds`)
+        .mockResolvedValue(querySnapshot);
+    });
+
+    it(`should wait that everything is ready`, (done): void => {
+      expect.assertions(2);
+
+      service.sendNewReleaseNotesToEachGuild$().subscribe({
+        error: (): void => {
+          expect(true).toStrictEqual(false);
+          done();
+        },
+        next: (): void => {
+          expect(isReady$Spy).toHaveBeenCalledTimes(1);
+          expect(isReady$Spy).toHaveBeenCalledWith();
+          done();
+        },
+      });
+      isReady$.next([true, true, true]);
+    });
+
+    describe(`when an error occur when waiting to be ready`, (): void => {
+      beforeEach((): void => {
+        isReady$.error(new Error(`error`));
+      });
+    });
+
+    describe(`once that everything is ready`, (): void => {
+      beforeEach((): void => {
+        isReady$.next([true, true, true]);
+      });
+
+      it(`should log about sending release notes to each guild`, (done): void => {
+        expect.assertions(2);
+
+        service.sendNewReleaseNotesToEachGuild$().subscribe({
+          error: (): void => {
+            expect(true).toStrictEqual(false);
+            done();
+          },
+          next: (): void => {
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+              context: `FirebaseGuildsNewVersionService`,
+              message: `text-sending release notes to each guild...`,
+            } as ILoggerLog);
+            done();
+          },
+        });
+        isReady$.next([true, true, true]);
+      });
+
+      it(`should get the guilds`, (done): void => {
+        expect.assertions(2);
+
+        service.sendNewReleaseNotesToEachGuild$().subscribe({
+          error: (): void => {
+            expect(true).toStrictEqual(false);
+            done();
+          },
+          next: (): void => {
+            expect(firebaseGuildsServiceGetGuildsSpy).toHaveBeenCalledTimes(1);
+            expect(firebaseGuildsServiceGetGuildsSpy).toHaveBeenCalledWith();
+            done();
+          },
+        });
+        isReady$.next([true, true, true]);
+      });
+
+      describe(`when an error occurred when fetching the guilds`, (): void => {
+        beforeEach((): void => {
+          firebaseGuildsServiceGetGuildsSpy.mockRejectedValue(
+            new Error(`error`)
+          );
+        });
+      });
+
+      describe(`when the guilds were successfully fetched`, (): void => {
+        beforeEach((): void => {
+          firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(querySnapshot);
+        });
+
+        it(`should log about the guilds fetched success`, (done): void => {
+          expect.assertions(2);
+
+          service.sendNewReleaseNotesToEachGuild$().subscribe({
+            error: (): void => {
+              expect(true).toStrictEqual(false);
+              done();
+            },
+            next: (): void => {
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+                context: `FirebaseGuildsNewVersionService`,
+                message: `text-guilds fetched`,
+              } as ILoggerLog);
+              done();
+            },
+          });
+          isReady$.next([true, true, true]);
         });
       });
     });

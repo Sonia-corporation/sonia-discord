@@ -57,7 +57,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   }
 
   public init(): void {
-    this._sendNewReleaseNotesToEachGuild$().subscribe();
+    this.sendNewReleaseNotesToEachGuild$().subscribe();
   }
 
   public isReady$(): Observable<[true, true, true]> {
@@ -68,8 +68,13 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     ]);
   }
 
+  public sendNewReleaseNotesToEachGuild$(): Observable<unknown> {
+    return this._sendNewReleaseNotesToEachGuild$();
+  }
+
   private _sendNewReleaseNotesToEachGuild$(): Observable<unknown> {
     return this.isReady$().pipe(
+      take(1),
       tap({
         next: (): void => {
           this._loggerService.debug({
