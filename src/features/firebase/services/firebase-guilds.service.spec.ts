@@ -1,5 +1,6 @@
 import { Guild, Snowflake } from "discord.js";
 import * as admin from "firebase-admin";
+import moment from "moment-timezone";
 import { Observable, of } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
@@ -10,7 +11,6 @@ import { FirebaseGuildVersionEnum } from "../enums/firebase-guild-version.enum";
 import { IFirebaseGuild } from "../interfaces/firebase-guild";
 import { FirebaseAppService } from "./firebase-app.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
-import moment from "moment-timezone";
 import App = admin.app.App;
 import CollectionReference = admin.firestore.CollectionReference;
 import DocumentReference = admin.firestore.DocumentReference;
@@ -823,6 +823,27 @@ describe(`FirebaseGuildsService`, (): void => {
             doneCallback();
           },
         });
+      });
+    });
+  });
+
+  describe(`isReady()`, (): void => {
+    beforeEach((): void => {
+      service = new FirebaseGuildsService();
+    });
+
+    describe(`when the is ready event is notified`, (): void => {
+      beforeEach((): void => {
+        service.notifyIsReady();
+      });
+
+      it(`should emit a new value into the stream`, async (): Promise<void> => {
+        expect.assertions(1);
+        service.notifyIsReady();
+
+        const isReady = await service.isReady();
+
+        expect(isReady).toStrictEqual(true);
       });
     });
   });
