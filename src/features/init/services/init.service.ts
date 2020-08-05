@@ -122,7 +122,7 @@ export class InitService extends AbstractService {
         (error: unknown): Promise<never> => {
           this._loggerService.error({
             context: this._serviceName,
-            message: this._chalkService.text(`Failed to read the package file`),
+            message: this._chalkService.text(`failed to read the package file`),
           });
           this._loggerService.error({
             context: this._serviceName,
