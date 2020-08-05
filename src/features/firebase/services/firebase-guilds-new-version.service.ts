@@ -63,8 +63,8 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   public isReady$(): Observable<[true, true, true]> {
     return forkJoin([
       this._isAppConfigured(),
-      this._isFirebaseGuildsReady(),
-      this._isDiscordReady(),
+      this._firebaseGuildsService.isReady(),
+      this._discordClientService.isReady(),
     ]);
   }
 
@@ -226,35 +226,9 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       );
   }
 
-  private _isFirebaseGuildsReady(): Promise<true> {
-    return this._firebaseGuildsService
-      .isReady$()
-      .pipe(
-        filter((isReady: Readonly<boolean>): boolean => {
-          return _.isEqual(isReady, true);
-        }),
-        take(1),
-        map((): true => true)
-      )
-      .toPromise();
-  }
-
   private _isAppConfigured(): Promise<true> {
     return this._initService
       .isAppConfigured$()
-      .pipe(
-        filter((isReady: Readonly<boolean>): boolean => {
-          return _.isEqual(isReady, true);
-        }),
-        take(1),
-        map((): true => true)
-      )
-      .toPromise();
-  }
-
-  private _isDiscordReady(): Promise<true> {
-    return this._discordClientService
-      .isReady$()
       .pipe(
         filter((isReady: Readonly<boolean>): boolean => {
           return _.isEqual(isReady, true);

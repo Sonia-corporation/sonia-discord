@@ -98,24 +98,23 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
   describe(`isReady$()`, (): void => {
     let isAppConfigured$: Subject<boolean>;
-    let discordClientServiceIsReady$: Subject<boolean>;
-    let firebaseGuildsServiceIsReady$: Subject<boolean>;
+
+    let discordClientServiceIsReadySpy: jest.SpyInstance;
+    let firebaseGuildsServiceIsReadySpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsNewVersionService();
       isAppConfigured$ = new Subject<boolean>();
-      discordClientServiceIsReady$ = new Subject<boolean>();
-      firebaseGuildsServiceIsReady$ = new Subject<boolean>();
 
       jest
         .spyOn(initService, `isAppConfigured$`)
         .mockReturnValue(isAppConfigured$);
-      jest
-        .spyOn(discordClientService, `isReady$`)
-        .mockReturnValue(discordClientServiceIsReady$);
-      jest
-        .spyOn(firebaseGuildsService, `isReady$`)
-        .mockReturnValue(firebaseGuildsServiceIsReady$);
+      discordClientServiceIsReadySpy = jest
+        .spyOn(discordClientService, `isReady`)
+        .mockResolvedValue(true);
+      firebaseGuildsServiceIsReadySpy = jest
+        .spyOn(firebaseGuildsService, `isReady`)
+        .mockResolvedValue(true);
     });
 
     describe(`when the app was not successfully configured`, (): void => {
@@ -133,13 +132,15 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           },
         });
         isAppConfigured$.error(new Error(`error`));
-        discordClientServiceIsReady$.next(true);
-        firebaseGuildsServiceIsReady$.next(true);
       });
     });
 
     describe(`when the app was successfully configured`, (): void => {
       describe(`when the Firebase guilds ready check failed`, (): void => {
+        beforeEach((): void => {
+          discordClientServiceIsReadySpy.mockRejectedValue(new Error(`error`));
+        });
+
         it(`should consider that the service is not ready`, (done): void => {
           expect.assertions(1);
 
@@ -154,13 +155,17 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             },
           });
           isAppConfigured$.next(true);
-          discordClientServiceIsReady$.error(new Error(`error`));
-          firebaseGuildsServiceIsReady$.next(true);
         });
       });
 
       describe(`when the Firebase guilds are ready`, (): void => {
         describe(`when Discord ready check failed`, (): void => {
+          beforeEach((): void => {
+            firebaseGuildsServiceIsReadySpy.mockRejectedValue(
+              new Error(`error`)
+            );
+          });
+
           it(`should consider that the service is not ready`, (done): void => {
             expect.assertions(1);
 
@@ -175,8 +180,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               },
             });
             isAppConfigured$.next(true);
-            discordClientServiceIsReady$.next(true);
-            firebaseGuildsServiceIsReady$.error(new Error(`error`));
           });
         });
 
@@ -195,8 +198,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               },
             });
             isAppConfigured$.next(true);
-            discordClientServiceIsReady$.next(true);
-            firebaseGuildsServiceIsReady$.next(true);
           });
         });
       });
