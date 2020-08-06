@@ -19,6 +19,7 @@ import DocumentSnapshot = admin.firestore.DocumentSnapshot;
 import Firestore = admin.firestore.Firestore;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
 import WriteResult = admin.firestore.WriteResult;
+import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 jest.mock(`firebase-admin`, (): unknown => {
@@ -28,7 +29,7 @@ jest.mock(`firebase-admin`, (): unknown => {
   };
 });
 
-describe.only(`FirebaseGuildsService`, (): void => {
+describe(`FirebaseGuildsService`, (): void => {
   let service: FirebaseGuildsService;
   let coreEventService: CoreEventService;
   let loggerService: LoggerService;
@@ -81,9 +82,12 @@ describe.only(`FirebaseGuildsService`, (): void => {
     });
   });
 
-  describe.only(`init()`, (): void => {
+  describe(`init()`, (): void => {
     let app: App;
     let collectionReference: CollectionReference<IFirebaseGuild>;
+    let querySnapshot: QuerySnapshot<IFirebaseGuild>;
+    let queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>;
+    let firebaseGuild: IFirebaseGuild;
 
     let discordClientServiceIsReadySpy: jest.SpyInstance;
     let firebaseAppServiceGetAppSpy: jest.SpyInstance;
@@ -93,11 +97,43 @@ describe.only(`FirebaseGuildsService`, (): void => {
     let notifyIsReadySpy: jest.SpyInstance;
     let isReadySpy: jest.SpyInstance;
     let getCollectionReferenceSpy: jest.SpyInstance;
+    let notifyOnGuildsChangeSpy: jest.SpyInstance;
+    let loggerServiceErrorSpy: jest.SpyInstance;
+    let onSnapshotMock: jest.Mock;
+    let forEachMock: jest.Mock;
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
       app = createMock<App>();
-      collectionReference = createMock<CollectionReference<IFirebaseGuild>>();
+      firebaseGuild = createMock<IFirebaseGuild>();
+      queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuild>>(
+        {
+          data: jest.fn().mockReturnValue(firebaseGuild),
+          exists: true,
+        }
+      );
+      forEachMock = jest
+        .fn()
+        .mockImplementation(
+          (
+            callback: (result: QueryDocumentSnapshot<IFirebaseGuild>) => void
+          ): void => {
+            callback(queryDocumentSnapshot);
+          }
+        );
+      querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>({
+        forEach: forEachMock,
+      });
+      onSnapshotMock = jest
+        .fn()
+        .mockImplementation(
+          (onNext: (snapshot: QuerySnapshot<IFirebaseGuild>) => void): void => {
+            onNext(querySnapshot);
+          }
+        );
+      collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
+        onSnapshot: onSnapshotMock,
+      });
 
       discordClientServiceIsReadySpy = jest
         .spyOn(discordClientService, `isReady`)
@@ -120,6 +156,12 @@ describe.only(`FirebaseGuildsService`, (): void => {
       isReadySpy = jest.spyOn(service, `isReady`).mockResolvedValue(true);
       getCollectionReferenceSpy = jest
         .spyOn(service, `getCollectionReference`)
+        .mockImplementation();
+      notifyOnGuildsChangeSpy = jest
+        .spyOn(service, `notifyOnGuildsChange`)
+        .mockImplementation();
+      loggerServiceErrorSpy = jest
+        .spyOn(loggerService, `error`)
         .mockImplementation();
     });
 
@@ -289,6 +331,8 @@ describe.only(`FirebaseGuildsService`, (): void => {
             getCollectionReferenceSpy.mockReturnValue(undefined);
           });
 
+          // @todo add more
+
           it(`should throw an error`, async (): Promise<void> => {
             expect.assertions(1);
 
@@ -301,6 +345,321 @@ describe.only(`FirebaseGuildsService`, (): void => {
         describe(`when the guilds collection is valid`, (): void => {
           beforeEach((): void => {
             getCollectionReferenceSpy.mockReturnValue(collectionReference);
+          });
+
+          it(`should log about watching Firebase guilds`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
+
+            await service.init();
+
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+            expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+              context: `FirebaseGuildsService`,
+              message: `text-watching Firebase guilds...`,
+            } as ILoggerLog);
+          });
+
+          it(`should listen for the Firebase guilds snapshot to change`, async (): Promise<
+            void
+          > => {
+            expect.assertions(1);
+
+            await service.init();
+
+            expect(onSnapshotMock).toHaveBeenCalledTimes(1);
+          });
+
+          describe(`when an error occurred when fetching the Firebase guilds`, (): void => {
+            beforeEach((): void => {
+              onSnapshotMock = jest
+                .fn()
+                .mockImplementation(
+                  (
+                    _callback: () => void,
+                    onError: (error: Error) => void
+                  ): void => {
+                    onError(new Error(`error`));
+                  }
+                );
+              collectionReference = createMock<
+                CollectionReference<IFirebaseGuild>
+              >({
+                onSnapshot: onSnapshotMock,
+              });
+
+              getCollectionReferenceSpy.mockReturnValue(collectionReference);
+            });
+
+            it(`should log that the Firebase watcher catch an error`, async (): Promise<
+              void
+            > => {
+              expect.assertions(2);
+
+              await service.init();
+
+              expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
+              expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(1, {
+                context: `FirebaseGuildsService`,
+                message: `text-Firebase guilds watcher catch an error`,
+              } as ILoggerLog);
+            });
+
+            it(`should log the error`, async (): Promise<void> => {
+              expect.assertions(2);
+
+              await service.init();
+
+              expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
+              expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(2, {
+                context: `FirebaseGuildsService`,
+                message: `error-Error: error`,
+              } as ILoggerLog);
+            });
+          });
+
+          describe(`when the Firebase guilds were successfully fetched`, (): void => {
+            beforeEach((): void => {
+              onSnapshotMock = jest
+                .fn()
+                .mockImplementation(
+                  (
+                    onNext: (snapshot: QuerySnapshot<IFirebaseGuild>) => void
+                  ): void => {
+                    onNext(querySnapshot);
+                  }
+                );
+              collectionReference = createMock<
+                CollectionReference<IFirebaseGuild>
+              >({
+                onSnapshot: onSnapshotMock,
+              });
+
+              getCollectionReferenceSpy.mockReturnValue(collectionReference);
+            });
+
+            describe(`when Firebase has one valid guild`, (): void => {
+              beforeEach((): void => {
+                queryDocumentSnapshot = createMock<
+                  QueryDocumentSnapshot<IFirebaseGuild>
+                >({
+                  data: jest.fn().mockReturnValue(firebaseGuild),
+                  exists: true,
+                });
+                forEachMock = jest
+                  .fn()
+                  .mockImplementation(
+                    (
+                      callback: (
+                        result: QueryDocumentSnapshot<IFirebaseGuild>
+                      ) => void
+                    ): void => {
+                      callback(queryDocumentSnapshot);
+                    }
+                  );
+                querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>({
+                  forEach: forEachMock,
+                });
+                onSnapshotMock = jest
+                  .fn()
+                  .mockImplementation(
+                    (
+                      onNext: (snapshot: QuerySnapshot<IFirebaseGuild>) => void
+                    ): void => {
+                      onNext(querySnapshot);
+                    }
+                  );
+                collectionReference = createMock<
+                  CollectionReference<IFirebaseGuild>
+                >({
+                  onSnapshot: onSnapshotMock,
+                });
+
+                getCollectionReferenceSpy.mockReturnValue(collectionReference);
+              });
+
+              it(`should notify that the Firebase guilds changed with one guild`, async (): Promise<
+                void
+              > => {
+                expect.assertions(2);
+
+                await service.init();
+
+                expect(notifyOnGuildsChangeSpy).toHaveBeenCalledTimes(1);
+                expect(notifyOnGuildsChangeSpy).toHaveBeenCalledWith([
+                  firebaseGuild,
+                ] as IFirebaseGuild[]);
+              });
+            });
+
+            describe(`when Firebase has one invalid guild`, (): void => {
+              beforeEach((): void => {
+                queryDocumentSnapshot = createMock<
+                  QueryDocumentSnapshot<IFirebaseGuild>
+                >({
+                  data: jest.fn().mockReturnValue(firebaseGuild),
+                  exists: false,
+                });
+                forEachMock = jest
+                  .fn()
+                  .mockImplementation(
+                    (
+                      callback: (
+                        result: QueryDocumentSnapshot<IFirebaseGuild>
+                      ) => void
+                    ): void => {
+                      callback(queryDocumentSnapshot);
+                    }
+                  );
+                querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>({
+                  forEach: forEachMock,
+                });
+                onSnapshotMock = jest
+                  .fn()
+                  .mockImplementation(
+                    (
+                      onNext: (snapshot: QuerySnapshot<IFirebaseGuild>) => void
+                    ): void => {
+                      onNext(querySnapshot);
+                    }
+                  );
+                collectionReference = createMock<
+                  CollectionReference<IFirebaseGuild>
+                >({
+                  onSnapshot: onSnapshotMock,
+                });
+
+                getCollectionReferenceSpy.mockReturnValue(collectionReference);
+              });
+
+              it(`should notify that the Firebase guilds changed without guild`, async (): Promise<
+                void
+              > => {
+                expect.assertions(2);
+
+                await service.init();
+
+                expect(notifyOnGuildsChangeSpy).toHaveBeenCalledTimes(1);
+                expect(notifyOnGuildsChangeSpy).toHaveBeenCalledWith(
+                  [] as IFirebaseGuild[]
+                );
+              });
+            });
+
+            describe(`when Firebase has multiple valid guild`, (): void => {
+              beforeEach((): void => {
+                queryDocumentSnapshot = createMock<
+                  QueryDocumentSnapshot<IFirebaseGuild>
+                >({
+                  data: jest.fn().mockReturnValue(firebaseGuild),
+                  exists: true,
+                });
+                forEachMock = jest
+                  .fn()
+                  .mockImplementation(
+                    (
+                      callback: (
+                        result: QueryDocumentSnapshot<IFirebaseGuild>
+                      ) => void
+                    ): void => {
+                      callback(queryDocumentSnapshot);
+                      callback(queryDocumentSnapshot);
+                      callback(queryDocumentSnapshot);
+                    }
+                  );
+                querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>({
+                  forEach: forEachMock,
+                });
+                onSnapshotMock = jest
+                  .fn()
+                  .mockImplementation(
+                    (
+                      onNext: (snapshot: QuerySnapshot<IFirebaseGuild>) => void
+                    ): void => {
+                      onNext(querySnapshot);
+                    }
+                  );
+                collectionReference = createMock<
+                  CollectionReference<IFirebaseGuild>
+                >({
+                  onSnapshot: onSnapshotMock,
+                });
+
+                getCollectionReferenceSpy.mockReturnValue(collectionReference);
+              });
+
+              it(`should notify that the Firebase guilds changed with all valid guild`, async (): Promise<
+                void
+              > => {
+                expect.assertions(2);
+
+                await service.init();
+
+                expect(notifyOnGuildsChangeSpy).toHaveBeenCalledTimes(1);
+                expect(notifyOnGuildsChangeSpy).toHaveBeenCalledWith([
+                  firebaseGuild,
+                  firebaseGuild,
+                  firebaseGuild,
+                ] as IFirebaseGuild[]);
+              });
+            });
+
+            describe(`when Firebase has multiple invalid guild`, (): void => {
+              beforeEach((): void => {
+                queryDocumentSnapshot = createMock<
+                  QueryDocumentSnapshot<IFirebaseGuild>
+                >({
+                  data: jest.fn().mockReturnValue(firebaseGuild),
+                  exists: false,
+                });
+                forEachMock = jest
+                  .fn()
+                  .mockImplementation(
+                    (
+                      callback: (
+                        result: QueryDocumentSnapshot<IFirebaseGuild>
+                      ) => void
+                    ): void => {
+                      callback(queryDocumentSnapshot);
+                      callback(queryDocumentSnapshot);
+                      callback(queryDocumentSnapshot);
+                    }
+                  );
+                querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>({
+                  forEach: forEachMock,
+                });
+                onSnapshotMock = jest
+                  .fn()
+                  .mockImplementation(
+                    (
+                      onNext: (snapshot: QuerySnapshot<IFirebaseGuild>) => void
+                    ): void => {
+                      onNext(querySnapshot);
+                    }
+                  );
+                collectionReference = createMock<
+                  CollectionReference<IFirebaseGuild>
+                >({
+                  onSnapshot: onSnapshotMock,
+                });
+
+                getCollectionReferenceSpy.mockReturnValue(collectionReference);
+              });
+
+              it(`should notify that the Firebase guilds changed without guild`, async (): Promise<
+                void
+              > => {
+                expect.assertions(2);
+
+                await service.init();
+
+                expect(notifyOnGuildsChangeSpy).toHaveBeenCalledTimes(1);
+                expect(notifyOnGuildsChangeSpy).toHaveBeenCalledWith(
+                  [] as IFirebaseGuild[]
+                );
+              });
+            });
           });
         });
       });

@@ -226,9 +226,9 @@ export class FirebaseGuildsService extends AbstractService {
           });
         }
       );
+    } else {
+      throw new Error(`Collection not available`);
     }
-
-    throw new Error(`Collection not available`);
   }
 
   private _setStore(): Promise<true> {
