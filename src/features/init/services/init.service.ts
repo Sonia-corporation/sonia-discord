@@ -259,11 +259,7 @@ export class InitService extends AbstractService {
             `https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
           );
 
-          return Promise.reject(
-            new Error(
-              `The app must have a secret environment file with at least a "discord.sonia.secretToken" inside it`
-            )
-          );
+          return Promise.reject(error);
         }
       );
   }
