@@ -37,8 +37,13 @@ export class DiscordAuthenticationService extends AbstractService {
     this.login();
   }
 
-  public login(): void {
-    this._discordClientService
+  public login(): Promise<void> {
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(`authenticating...`),
+    });
+
+    return this._discordClientService
       .getClient()
       .login(this._discordSoniaConfigService.getSecretToken())
       .then((): void => {
@@ -58,11 +63,6 @@ export class DiscordAuthenticationService extends AbstractService {
           message: this._chalkService.error(error),
         });
       });
-
-    this._loggerService.debug({
-      context: this._serviceName,
-      message: this._chalkService.text(`authenticating...`),
-    });
   }
 
   public isAuthenticated$(): Observable<boolean> {

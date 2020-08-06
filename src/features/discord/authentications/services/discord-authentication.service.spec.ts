@@ -5,6 +5,7 @@ import { CoreEventService } from "../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordClientService } from "../../services/discord-client.service";
+import { DiscordSoniaConfigService } from "../../users/services/config/discord-sonia-config.service";
 import { DiscordAuthenticationService } from "./discord-authentication.service";
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
@@ -14,11 +15,13 @@ describe(`DiscordAuthenticationService`, (): void => {
   let coreEventService: CoreEventService;
   let discordClientService: DiscordClientService;
   let loggerService: LoggerService;
+  let discordSoniaConfigService: DiscordSoniaConfigService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     discordClientService = DiscordClientService.getInstance();
     loggerService = LoggerService.getInstance();
+    discordSoniaConfigService = DiscordSoniaConfigService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -216,6 +219,185 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       expect(loginSpy).toHaveBeenCalledTimes(1);
       expect(loginSpy).toHaveBeenCalledWith();
+    });
+  });
+
+  describe(`login()`, (): void => {
+    let client: Client;
+
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let loggerServiceSuccessSpy: jest.SpyInstance;
+    let loggerServiceErrorSpy: jest.SpyInstance;
+    let discordClientServiceGetClientSpy: jest.SpyInstance;
+    let discordSoniaConfigServiceGetSecretTokenSpy: jest.SpyInstance;
+    let notifyIsAuthenticatedSpy: jest.SpyInstance;
+    let loginMock: jest.Mock;
+
+    beforeEach((): void => {
+      loginMock = jest.fn().mockResolvedValue(``);
+      client = createMock<Client>({
+        login: loginMock,
+      });
+
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
+      loggerServiceSuccessSpy = jest
+        .spyOn(loggerService, `success`)
+        .mockImplementation();
+      loggerServiceErrorSpy = jest
+        .spyOn(loggerService, `error`)
+        .mockImplementation();
+      discordClientServiceGetClientSpy = jest
+        .spyOn(discordClientService, `getClient`)
+        .mockReturnValue(client);
+      discordSoniaConfigServiceGetSecretTokenSpy = jest
+        .spyOn(discordSoniaConfigService, `getSecretToken`)
+        .mockImplementation();
+      notifyIsAuthenticatedSpy = jest
+        .spyOn(service, `notifyIsAuthenticated`)
+        .mockImplementation();
+    });
+
+    it(`should log about the authentication`, async (): Promise<void> => {
+      expect.assertions(2);
+
+      await service.login();
+
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+        context: `DiscordAuthenticationService`,
+        message: `text-authenticating...`,
+      } as ILoggerLog);
+    });
+
+    it(`should get the Discord client`, async (): Promise<void> => {
+      expect.assertions(2);
+
+      await service.login();
+
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should get the Sonia's secret token`, async (): Promise<void> => {
+      expect.assertions(1);
+
+      await service.login();
+
+      expect(discordSoniaConfigServiceGetSecretTokenSpy).toHaveBeenCalledTimes(
+        1
+      );
+      expect(discordSoniaConfigServiceGetSecretTokenSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should login`, async (): Promise<void> => {
+      expect.assertions(1);
+
+      await service.login();
+
+      expect(loginMock).toHaveBeenCalledTimes(1);
+    });
+
+    describe(`when the login failed`, (): void => {
+      beforeEach((): void => {
+        loginMock.mockRejectedValue(new Error(`error`));
+      });
+
+      it(`should log about the authentication error`, async (): Promise<
+        void
+      > => {
+        expect.assertions(3);
+
+        await expect(service.login()).rejects.toThrow(new Error(`error`));
+
+        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
+        expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(1, {
+          context: `DiscordAuthenticationService`,
+          message: `text-authentication failed`,
+        } as ILoggerLog);
+      });
+
+      it(`should log the error`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.login()).rejects.toThrow(new Error(`error`));
+
+        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
+        expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(2, {
+          context: `DiscordAuthenticationService`,
+          message: `error-Error: error`,
+        } as ILoggerLog);
+      });
+
+      it(`should not log about the authentication success`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await expect(service.login()).rejects.toThrow(new Error(`error`));
+
+        expect(loggerServiceSuccessSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not notify that the authentication was successful`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await expect(service.login()).rejects.toThrow(new Error(`error`));
+
+        expect(notifyIsAuthenticatedSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the login was successful`, (): void => {
+      beforeEach((): void => {
+        loginMock.mockResolvedValue(``);
+      });
+
+      it(`should log about the authentication success`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await service.login();
+
+        expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
+          context: `DiscordAuthenticationService`,
+          message: `text-authentication successful`,
+        } as ILoggerLog);
+      });
+
+      it(`should notify that the authentication was successful`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await service.login();
+
+        expect(notifyIsAuthenticatedSpy).toHaveBeenCalledTimes(1);
+        expect(notifyIsAuthenticatedSpy).toHaveBeenCalledWith();
+      });
+
+      it(`should log about the authentication error`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+
+        await service.login();
+
+        expect(loggerServiceErrorSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should log the error`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        await service.login();
+
+        expect(loggerServiceErrorSpy).not.toHaveBeenCalled();
+      });
     });
   });
 
