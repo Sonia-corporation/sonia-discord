@@ -213,7 +213,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     });
   });
 
-  describe.skip(`sendNewReleaseNotesToEachGuild$()`, (): void => {
+  describe(`sendNewReleaseNotesToEachGuild$()`, (): void => {
     let isReady$: Subject<[true, true, true]>;
     let querySnapshot: QuerySnapshot<IFirebaseGuild>;
 

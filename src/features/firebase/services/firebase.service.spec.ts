@@ -1,6 +1,7 @@
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
+import { FirebaseGuildsStoreService } from "../stores/guilds/services/firebase-guilds-store.service";
 import { FirebaseAppService } from "./firebase-app.service";
 import { FirebaseGuildsNewVersionService } from "./firebase-guilds-new-version.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
@@ -57,6 +58,7 @@ describe(`FirebaseService`, (): void => {
     let firebaseAppService: FirebaseAppService;
     let firebaseGuildsService: FirebaseGuildsService;
     let firebaseGuildsNewVersionService: FirebaseGuildsNewVersionService;
+    let firebaseGuildsStoreService: FirebaseGuildsStoreService;
 
     let firebaseAppServiceGetInstanceSpy: jest.SpyInstance;
     let firebaseAppServiceGetInstanceInitSpy: jest.SpyInstance;
@@ -64,6 +66,8 @@ describe(`FirebaseService`, (): void => {
     let firebaseGuildsServiceGetInstanceInitSpy: jest.SpyInstance;
     let firebaseGuildsNewVersionServiceGetInstanceSpy: jest.SpyInstance;
     let firebaseGuildsNewVersionServiceGetInstanceInitSpy: jest.SpyInstance;
+    let firebaseGuildsStoreServiceGetInstanceSpy: jest.SpyInstance;
+    let firebaseGuildsStoreServiceGetInstanceInitSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseService();
@@ -72,6 +76,7 @@ describe(`FirebaseService`, (): void => {
       firebaseGuildsNewVersionService = createMock<
         FirebaseGuildsNewVersionService
       >();
+      firebaseGuildsStoreService = createMock<FirebaseGuildsStoreService>();
 
       firebaseAppServiceGetInstanceSpy = jest
         .spyOn(FirebaseAppService, `getInstance`)
@@ -90,6 +95,12 @@ describe(`FirebaseService`, (): void => {
         .mockReturnValue(firebaseGuildsNewVersionService);
       firebaseGuildsNewVersionServiceGetInstanceInitSpy = jest
         .spyOn(firebaseGuildsNewVersionService, `init`)
+        .mockImplementation();
+      firebaseGuildsStoreServiceGetInstanceSpy = jest
+        .spyOn(FirebaseGuildsStoreService, `getInstance`)
+        .mockReturnValue(firebaseGuildsStoreService);
+      firebaseGuildsStoreServiceGetInstanceInitSpy = jest
+        .spyOn(firebaseGuildsStoreService, `init`)
         .mockImplementation();
     });
 
@@ -152,6 +163,28 @@ describe(`FirebaseService`, (): void => {
       ).toHaveBeenCalledTimes(1);
       expect(
         firebaseGuildsNewVersionServiceGetInstanceInitSpy
+      ).toHaveBeenCalledWith();
+    });
+
+    it(`should create the FirebaseGuildsStore service`, (): void => {
+      expect.assertions(1);
+
+      service.init();
+
+      expect(firebaseGuildsStoreServiceGetInstanceSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should create and initialize the FirebaseGuildsStore service`, (): void => {
+      expect.assertions(3);
+
+      service.init();
+
+      expect(firebaseGuildsStoreServiceGetInstanceSpy).toHaveBeenCalledWith();
+      expect(
+        firebaseGuildsStoreServiceGetInstanceInitSpy
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        firebaseGuildsStoreServiceGetInstanceInitSpy
       ).toHaveBeenCalledWith();
     });
   });

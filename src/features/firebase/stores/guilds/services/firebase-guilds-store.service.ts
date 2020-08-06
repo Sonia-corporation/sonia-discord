@@ -1,3 +1,4 @@
+import { applyTransaction } from "@datorama/akita";
 import _ from "lodash";
 import { AbstractService } from "../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
@@ -21,7 +22,9 @@ export class FirebaseGuildsStoreService extends AbstractService {
 
   public constructor() {
     super(ServiceNameEnum.FIREBASE_GUILDS_STORE_SERVICE);
+  }
 
+  public init(): void {
     this._watchFirebaseGuilds();
   }
 
@@ -29,11 +32,21 @@ export class FirebaseGuildsStoreService extends AbstractService {
     this._firebaseGuildsStore.upsertMany(entities);
   }
 
+  public addEntities(entities: IFirebaseGuild[]): void {
+    this._firebaseGuildsStore.add(entities);
+  }
+
+  public removeAllEntities(): void {
+    this._firebaseGuildsStore.remove();
+  }
+
   private _watchFirebaseGuilds(): void {
     this._firebaseGuildsService.onGuildsChange$().subscribe({
       next: (entities: IFirebaseGuild[]): void => {
-        this.addOrUpdateEntities(entities);
-        console.log(entities);
+        applyTransaction((): void => {
+          this.removeAllEntities();
+          this.addEntities(entities);
+        });
       },
     });
   }

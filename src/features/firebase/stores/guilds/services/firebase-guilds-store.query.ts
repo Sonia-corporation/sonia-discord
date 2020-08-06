@@ -9,20 +9,20 @@ import { IFirebaseGuildState } from "../types/firebase-guild-state";
 @StoreConfig({
   name: StoreNameEnum.GUILDS,
 })
-export class FirebaseGuildsStoreService extends AbstractQueryEntityService<
+export class FirebaseGuildsStoreQuery extends AbstractQueryEntityService<
   FirebaseGuildsStore,
   IFirebaseGuildState
 > {
-  private static _instance: FirebaseGuildsStoreService;
+  private static _instance: FirebaseGuildsStoreQuery;
 
-  public static getInstance(): FirebaseGuildsStoreService {
-    if (_.isNil(FirebaseGuildsStoreService._instance)) {
-      FirebaseGuildsStoreService._instance = new FirebaseGuildsStoreService(
+  public static getInstance(): FirebaseGuildsStoreQuery {
+    if (_.isNil(FirebaseGuildsStoreQuery._instance)) {
+      FirebaseGuildsStoreQuery._instance = new FirebaseGuildsStoreQuery(
         FirebaseGuildsStore.getInstance()
       );
     }
 
-    return FirebaseGuildsStoreService._instance;
+    return FirebaseGuildsStoreQuery._instance;
   }
 
   public constructor(firebaseGuildsStore: FirebaseGuildsStore) {
