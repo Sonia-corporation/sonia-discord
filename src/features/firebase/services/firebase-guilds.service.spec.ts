@@ -687,6 +687,7 @@ describe(`FirebaseGuildsService`, (): void => {
       loggerServiceWarningSpy = jest
         .spyOn(loggerService, `warning`)
         .mockImplementation();
+      jest.spyOn(discordClientService, `isReady`).mockResolvedValue(true);
     });
 
     describe(`when the store is not set`, (): void => {
@@ -709,7 +710,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         service.getCollectionReference();
 
-        expect(loggerServiceWarningSpy).toHaveBeenCalledTimes(2);
+        expect(loggerServiceWarningSpy).toHaveBeenCalledTimes(3);
         expect(loggerServiceWarningSpy).toHaveBeenNthCalledWith(2, {
           context: `FirebaseGuildsService`,
           message: `text-store not set`,
@@ -737,7 +738,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         service.getCollectionReference();
 
-        expect(collectionMock).toHaveBeenCalledTimes(2);
+        expect(collectionMock).toHaveBeenCalledTimes(3);
         expect(collectionMock).toHaveBeenNthCalledWith(2, `/guilds`);
       });
 
