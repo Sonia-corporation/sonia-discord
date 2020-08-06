@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from "axios";
 import fs from "fs-extra";
 import _ from "lodash";
 import { BehaviorSubject, Observable } from "rxjs";
+import { filter, map, take } from "rxjs/operators";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { ENVIRONMENT } from "../../../environment/constants/environment";
@@ -61,6 +62,18 @@ export class InitService extends AbstractService {
 
   public isAppConfigured$(): Observable<boolean> {
     return this._isAppConfigured$.asObservable();
+  }
+
+  public isAppConfigured(): Promise<true> {
+    return this.isAppConfigured$()
+      .pipe(
+        filter((isReady: Readonly<boolean>): boolean => {
+          return _.isEqual(isReady, true);
+        }),
+        take(1),
+        map((): true => true)
+      )
+      .toPromise();
   }
 
   public notifyIsAppConfigured(): void {

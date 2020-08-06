@@ -134,6 +134,27 @@ describe(`InitService`, (): void => {
     });
   });
 
+  describe(`isAppConfigured()`, (): void => {
+    beforeEach((): void => {
+      service = new InitService();
+    });
+
+    describe(`when the is ready event is notified`, (): void => {
+      beforeEach((): void => {
+        service.notifyIsAppConfigured();
+      });
+
+      it(`should emit a new value into the stream`, async (): Promise<void> => {
+        expect.assertions(1);
+        service.notifyIsAppConfigured();
+
+        const isReady = await service.isAppConfigured();
+
+        expect(isReady).toStrictEqual(true);
+      });
+    });
+  });
+
   describe(`notifyIsAppConfigured()`, (): void => {
     beforeEach((): void => {
       service = new InitService();

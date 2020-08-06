@@ -8,7 +8,7 @@ import {
 import admin from "firebase-admin";
 import _ from "lodash";
 import { forkJoin, Observable } from "rxjs";
-import { filter, map, mergeMap, take, tap } from "rxjs/operators";
+import { mergeMap, take, tap } from "rxjs/operators";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { isDiscordGuildChannel } from "../../discord/channels/functions/is-discord-guild-channel";
@@ -62,7 +62,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
   public isReady$(): Observable<[true, true, true]> {
     return forkJoin([
-      this._isAppConfigured(),
+      this._initService.isAppConfigured(),
       this._firebaseGuildsService.isReady(),
       this._discordClientService.isReady(),
     ]);
@@ -224,18 +224,5 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           return Promise.reject(error);
         }
       );
-  }
-
-  private _isAppConfigured(): Promise<true> {
-    return this._initService
-      .isAppConfigured$()
-      .pipe(
-        filter((isReady: Readonly<boolean>): boolean => {
-          return _.isEqual(isReady, true);
-        }),
-        take(1),
-        map((): true => true)
-      )
-      .toPromise();
   }
 }

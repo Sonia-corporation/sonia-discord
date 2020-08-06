@@ -97,18 +97,15 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
   });
 
   describe(`isReady$()`, (): void => {
-    let isAppConfigured$: Subject<boolean>;
-
+    let initServiceIsAppConfiguredSpy: jest.SpyInstance;
     let discordClientServiceIsReadySpy: jest.SpyInstance;
     let firebaseGuildsServiceIsReadySpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsNewVersionService();
-      isAppConfigured$ = new Subject<boolean>();
-
-      jest
-        .spyOn(initService, `isAppConfigured$`)
-        .mockReturnValue(isAppConfigured$);
+      initServiceIsAppConfiguredSpy = jest
+        .spyOn(initService, `isAppConfigured`)
+        .mockResolvedValue(true);
       discordClientServiceIsReadySpy = jest
         .spyOn(discordClientService, `isReady`)
         .mockResolvedValue(true);
@@ -118,6 +115,10 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     });
 
     describe(`when the app was not successfully configured`, (): void => {
+      beforeEach((): void => {
+        initServiceIsAppConfiguredSpy.mockRejectedValue(new Error(`error`));
+      });
+
       it(`should consider that the service is not ready`, (done): void => {
         expect.assertions(1);
 
@@ -131,11 +132,14 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             done();
           },
         });
-        isAppConfigured$.error(new Error(`error`));
       });
     });
 
     describe(`when the app was successfully configured`, (): void => {
+      beforeEach((): void => {
+        initServiceIsAppConfiguredSpy.mockResolvedValue(true);
+      });
+
       describe(`when the Firebase guilds ready check failed`, (): void => {
         beforeEach((): void => {
           discordClientServiceIsReadySpy.mockRejectedValue(new Error(`error`));
@@ -154,11 +158,14 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               done();
             },
           });
-          isAppConfigured$.next(true);
         });
       });
 
       describe(`when the Firebase guilds are ready`, (): void => {
+        beforeEach((): void => {
+          discordClientServiceIsReadySpy.mockResolvedValue(true);
+        });
+
         describe(`when Discord ready check failed`, (): void => {
           beforeEach((): void => {
             firebaseGuildsServiceIsReadySpy.mockRejectedValue(
@@ -179,11 +186,14 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 done();
               },
             });
-            isAppConfigured$.next(true);
           });
         });
 
         describe(`when Discord is ready`, (): void => {
+          beforeEach((): void => {
+            firebaseGuildsServiceIsReadySpy.mockResolvedValue(true);
+          });
+
           it(`should consider that the service is ready`, (done): void => {
             expect.assertions(1);
 
@@ -197,7 +207,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 done();
               },
             });
-            isAppConfigured$.next(true);
           });
         });
       });
