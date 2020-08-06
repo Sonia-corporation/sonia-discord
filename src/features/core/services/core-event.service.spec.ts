@@ -1,4 +1,3 @@
-import { Observable } from "rxjs";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "./core-event.service";
 
@@ -110,14 +109,6 @@ describe(`CoreEventService`, (): void => {
     beforeEach((): void => {
       serviceName = ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE;
       service = new CoreEventService();
-    });
-
-    it(`should return an observable`, (): void => {
-      expect.assertions(1);
-
-      const result = service.serviceCreated$();
-
-      expect(result).toStrictEqual(expect.any(Observable));
     });
 
     describe(`when the service created event is notified`, (): void => {

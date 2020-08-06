@@ -1,6 +1,6 @@
 import appRootPath from "app-root-path";
 import fs from "fs-extra";
-import { Observable, Subject } from "rxjs";
+import { Subject } from "rxjs";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { IEnvironment } from "../../../environment/interfaces/environment";
 import { CoreEventService } from "../../core/services/core-event.service";
@@ -98,14 +98,6 @@ describe(`InitService`, (): void => {
   describe(`isAppConfigured$()`, (): void => {
     beforeEach((): void => {
       service = new InitService();
-    });
-
-    it(`should return an observable`, (): void => {
-      expect.assertions(1);
-
-      const result = service.isAppConfigured$();
-
-      expect(result).toStrictEqual(expect.any(Observable));
     });
 
     it(`should be false by default`, (doneCallback: jest.DoneCallback): void => {

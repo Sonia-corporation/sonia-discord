@@ -1,5 +1,4 @@
 import { Client } from "discord.js";
-import { Observable } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
@@ -223,14 +222,6 @@ describe(`DiscordAuthenticationService`, (): void => {
   describe(`isAuthenticated$()`, (): void => {
     beforeEach((): void => {
       service = new DiscordAuthenticationService();
-    });
-
-    it(`should return an observable`, (): void => {
-      expect.assertions(1);
-
-      const result = service.isAuthenticated$();
-
-      expect(result).toStrictEqual(expect.any(Observable));
     });
 
     it(`should be false by default`, (doneCallback: jest.DoneCallback): void => {

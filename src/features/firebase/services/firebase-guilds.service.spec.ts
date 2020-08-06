@@ -1,7 +1,6 @@
 import { Guild, Snowflake } from "discord.js";
 import * as admin from "firebase-admin";
 import moment from "moment-timezone";
-import { Observable } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
@@ -17,9 +16,9 @@ import CollectionReference = admin.firestore.CollectionReference;
 import DocumentReference = admin.firestore.DocumentReference;
 import DocumentSnapshot = admin.firestore.DocumentSnapshot;
 import Firestore = admin.firestore.Firestore;
+import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
 import WriteResult = admin.firestore.WriteResult;
-import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 jest.mock(`firebase-admin`, (): unknown => {
@@ -1285,14 +1284,6 @@ describe(`FirebaseGuildsService`, (): void => {
       service = new FirebaseGuildsService();
     });
 
-    it(`should return an observable`, (): void => {
-      expect.assertions(1);
-
-      const result = service.isReady$();
-
-      expect(result).toStrictEqual(expect.any(Observable));
-    });
-
     it(`should be false by default`, (doneCallback: jest.DoneCallback): void => {
       expect.assertions(1);
 
@@ -1366,6 +1357,49 @@ describe(`FirebaseGuildsService`, (): void => {
           expect(isTrue).toStrictEqual(true);
           doneCallback();
         },
+      });
+    });
+  });
+
+  describe(`onGuildsChange$()`, (): void => {
+    let firebaseGuilds: IFirebaseGuild[];
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsService();
+
+      firebaseGuilds = createMock<IFirebaseGuild[]>();
+    });
+
+    it(`should be an empty array by default`, (doneCallback: jest.DoneCallback): void => {
+      expect.assertions(1);
+
+      service.onGuildsChange$().subscribe({
+        error: (error): void => {
+          expect(true).toStrictEqual(false);
+          doneCallback(error);
+        },
+        next: (firebaseGuilds: IFirebaseGuild[]): void => {
+          expect(firebaseGuilds).toStrictEqual([]);
+          doneCallback();
+        },
+      });
+    });
+
+    describe(`when the on guilds change event is notified`, (): void => {
+      it(`should emit a new value into the stream`, (doneCallback: jest.DoneCallback): void => {
+        expect.assertions(1);
+
+        service.notifyOnGuildsChange(firebaseGuilds);
+        service.onGuildsChange$().subscribe({
+          error: (error): void => {
+            expect(true).toStrictEqual(false);
+            doneCallback(error);
+          },
+          next: (firebaseGuilds: IFirebaseGuild[]): void => {
+            expect(firebaseGuilds).toStrictEqual(firebaseGuilds);
+            doneCallback();
+          },
+        });
       });
     });
   });
