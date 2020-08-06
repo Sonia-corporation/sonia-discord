@@ -1366,7 +1366,6 @@ describe(`FirebaseGuildsService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
-
       firebaseGuilds = createMock<IFirebaseGuild[]>();
     });
 
@@ -1400,6 +1399,31 @@ describe(`FirebaseGuildsService`, (): void => {
             doneCallback();
           },
         });
+      });
+    });
+  });
+
+  describe(`notifyOnGuildsChange()`, (): void => {
+    let firebaseGuilds: IFirebaseGuild[];
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsService();
+      firebaseGuilds = createMock<IFirebaseGuild[]>();
+    });
+
+    it(`should notify that the Firebase guilds changed`, (doneCallback: jest.DoneCallback): void => {
+      expect.assertions(1);
+
+      service.notifyOnGuildsChange(firebaseGuilds);
+      service.onGuildsChange$().subscribe({
+        error: (error): void => {
+          expect(true).toStrictEqual(false);
+          doneCallback(error);
+        },
+        next: (result: IFirebaseGuild[]): void => {
+          expect(result).toStrictEqual(firebaseGuilds);
+          doneCallback();
+        },
       });
     });
   });
