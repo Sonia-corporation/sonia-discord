@@ -1,5 +1,4 @@
 import { Client, Guild, Snowflake } from "discord.js";
-import { Subject } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
@@ -62,75 +61,55 @@ describe(`DiscordGuildService`, (): void => {
   });
 
   describe(`init()`, (): void => {
-    let isReady$: Subject<boolean>;
-
     let loggerServiceDebugSpy: jest.SpyInstance;
-    let discordClientServiceGetClientSpy: jest.SpyInstance;
+    let discordClientServiceIsReadySpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordGuildService();
-      isReady$ = new Subject<boolean>();
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
         .mockImplementation();
-      discordClientServiceGetClientSpy = jest
-        .spyOn(discordClientService, `isReady$`)
-        .mockReturnValue(isReady$.asObservable());
+      discordClientServiceIsReadySpy = jest
+        .spyOn(discordClientService, `isReady`)
+        .mockResolvedValue(true);
     });
 
-    it(`should check if the Discord client is ready`, (): void => {
+    it(`should log about listening the Discord client ready state`, async (): Promise<
+      void
+    > => {
       expect.assertions(2);
 
-      service.init();
-
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
-    });
-
-    describe(`when the Discord client is ready`, (): void => {
-      it(`should do something at some point`, (): void => {
-        expect.assertions(1);
-
-        service.init();
-        isReady$.next(true);
-
-        expect(true).toBe(true);
-      });
-    });
-
-    describe(`when the Discord client is not ready`, (): void => {
-      it(`should do something at some point`, (): void => {
-        expect.assertions(1);
-
-        service.init();
-        isReady$.next(false);
-
-        expect(true).toBe(true);
-      });
-    });
-
-    describe(`when the Discord client ready state throw error`, (): void => {
-      it(`should do something at some point`, (): void => {
-        expect.assertions(1);
-
-        service.init();
-        isReady$.error(new Error(`error`));
-
-        expect(true).toBe(true);
-      });
-    });
-
-    it(`should log about listening Discord client ready state`, (): void => {
-      expect.assertions(2);
-
-      service.init();
+      await service.init();
 
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordGuildService`,
         message: `text-listen "ready" Discord client state`,
       } as ILoggerLog);
+    });
+
+    it(`should check if the Discord client is ready`, async (): Promise<
+      void
+    > => {
+      expect.assertions(2);
+
+      await service.init();
+
+      expect(discordClientServiceIsReadySpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceIsReadySpy).toHaveBeenCalledWith();
+    });
+
+    describe(`when the check for the Discord client ready state failed`, (): void => {
+      beforeEach((): void => {
+        discordClientServiceIsReadySpy.mockRejectedValue(new Error(`error`));
+      });
+
+      it(`should throw an error`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        await expect(service.init()).rejects.toThrow(new Error(`error`));
+      });
     });
   });
 
@@ -189,7 +168,11 @@ describe(`DiscordGuildService`, (): void => {
       service = new DiscordGuildService();
       guild = createMock<Guild>();
 
-      findMock = jest.fn().mockReturnValue(guild);
+      findMock = jest
+        .fn()
+        .mockImplementation((fn: (value: Guild) => boolean): void => {
+          fn(guild);
+        });
       discordClientServiceGetClientSpy = jest
         .spyOn(discordClientService, `getClient`)
         .mockReturnValue(
