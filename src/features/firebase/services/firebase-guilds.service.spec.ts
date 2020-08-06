@@ -1,10 +1,11 @@
 import { Guild, Snowflake } from "discord.js";
 import * as admin from "firebase-admin";
 import moment from "moment-timezone";
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
+import { DiscordClientService } from "../../discord/services/discord-client.service";
 import { ILoggerLog } from "../../logger/interfaces/logger-log";
 import { LoggerService } from "../../logger/services/logger.service";
 import { FirebaseGuildVersionEnum } from "../enums/firebase-guild-version.enum";
@@ -27,16 +28,18 @@ jest.mock(`firebase-admin`, (): unknown => {
   };
 });
 
-describe(`FirebaseGuildsService`, (): void => {
+describe.only(`FirebaseGuildsService`, (): void => {
   let service: FirebaseGuildsService;
   let coreEventService: CoreEventService;
   let loggerService: LoggerService;
   let firebaseAppService: FirebaseAppService;
+  let discordClientService: DiscordClientService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     loggerService = LoggerService.getInstance();
     firebaseAppService = FirebaseAppService.getInstance();
+    discordClientService = DiscordClientService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -78,25 +81,33 @@ describe(`FirebaseGuildsService`, (): void => {
     });
   });
 
-  describe(`init()`, (): void => {
+  describe.only(`init()`, (): void => {
     let app: App;
+    let collectionReference: CollectionReference<IFirebaseGuild>;
 
+    let discordClientServiceIsReadySpy: jest.SpyInstance;
     let firebaseAppServiceGetAppSpy: jest.SpyInstance;
     let getGuildsCountSpy: jest.SpyInstance;
     let loggerServiceDebugSpy: jest.SpyInstance;
     let firestoreSpy: jest.SpyInstance;
     let notifyIsReadySpy: jest.SpyInstance;
+    let isReadySpy: jest.SpyInstance;
+    let getCollectionReferenceSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
       app = createMock<App>();
+      collectionReference = createMock<CollectionReference<IFirebaseGuild>>();
 
+      discordClientServiceIsReadySpy = jest
+        .spyOn(discordClientService, `isReady`)
+        .mockResolvedValue(true);
       firebaseAppServiceGetAppSpy = jest
         .spyOn(firebaseAppService, `getApp`)
         .mockReturnValue(app);
       getGuildsCountSpy = jest
         .spyOn(service, `getGuildsCount`)
-        .mockReturnValue(Promise.resolve(8));
+        .mockResolvedValue(8);
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
         .mockImplementation();
@@ -106,84 +117,191 @@ describe(`FirebaseGuildsService`, (): void => {
       notifyIsReadySpy = jest
         .spyOn(service, `notifyIsReady`)
         .mockImplementation();
+      isReadySpy = jest.spyOn(service, `isReady`).mockResolvedValue(true);
+      getCollectionReferenceSpy = jest
+        .spyOn(service, `getCollectionReference`)
+        .mockImplementation();
     });
 
-    it(`should get the Firebase app`, async (): Promise<void> => {
-      expect.assertions(2);
-
-      await service.init();
-
-      expect(firebaseAppServiceGetAppSpy).toHaveBeenCalledTimes(1);
-      expect(firebaseAppServiceGetAppSpy).toHaveBeenCalledWith();
-    });
-
-    it(`should create the store`, async (): Promise<void> => {
-      expect.assertions(2);
-
-      await service.init();
-
-      expect(firestoreSpy).toHaveBeenCalledTimes(1);
-      expect(firestoreSpy).toHaveBeenCalledWith(app);
-    });
-
-    it(`should notify that the Firebase app is ready`, async (): Promise<
+    it(`should wait for the Discord app to be ready`, async (): Promise<
       void
     > => {
-      expect.assertions(2);
+      expect.assertions(3);
 
-      await service.init();
+      await expect(service.init()).rejects.toThrow(
+        new Error(`Collection not available`)
+      );
 
-      expect(notifyIsReadySpy).toHaveBeenCalledTimes(1);
-      expect(notifyIsReadySpy).toHaveBeenCalledWith();
+      expect(discordClientServiceIsReadySpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceIsReadySpy).toHaveBeenCalledWith();
     });
 
-    it(`should count the guilds in the store`, async (): Promise<void> => {
-      expect.assertions(2);
-
-      await service.init();
-
-      expect(getGuildsCountSpy).toHaveBeenCalledTimes(1);
-      expect(getGuildsCountSpy).toHaveBeenCalledWith();
-    });
-
-    describe(`when the count of guilds was successful`, (): void => {
+    describe(`when the Discord app failed to be ready`, (): void => {
       beforeEach((): void => {
-        getGuildsCountSpy.mockReturnValue(Promise.resolve(8));
+        discordClientServiceIsReadySpy.mockRejectedValue(new Error(`error`));
       });
 
-      describe(`when the count is 1`, (): void => {
-        beforeEach((): void => {
-          getGuildsCountSpy.mockReturnValue(of(1).toPromise());
-        });
+      // @todo add coverage
+    });
 
-        it(`should log the count of guilds`, async (): Promise<void> => {
-          expect.assertions(2);
-
-          await service.init();
-
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-          expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-            context: `FirebaseGuildsService`,
-            message: `text-value-1 guild found`,
-          } as ILoggerLog);
-        });
+    describe(`once the Discord app is ready`, (): void => {
+      beforeEach((): void => {
+        discordClientServiceIsReadySpy.mockResolvedValue(true);
       });
 
-      describe(`when the count is 8`, (): void => {
+      it(`should get the Firebase app`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.init()).rejects.toThrow(
+          new Error(`Collection not available`)
+        );
+
+        expect(firebaseAppServiceGetAppSpy).toHaveBeenCalledTimes(1);
+        expect(firebaseAppServiceGetAppSpy).toHaveBeenCalledWith();
+      });
+
+      it(`should create the store`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.init()).rejects.toThrow(
+          new Error(`Collection not available`)
+        );
+
+        expect(firestoreSpy).toHaveBeenCalledTimes(1);
+        expect(firestoreSpy).toHaveBeenCalledWith(app);
+      });
+
+      it(`should notify that the Firebase app is ready`, async (): Promise<
+        void
+      > => {
+        expect.assertions(3);
+
+        await expect(service.init()).rejects.toThrow(
+          new Error(`Collection not available`)
+        );
+
+        expect(notifyIsReadySpy).toHaveBeenCalledTimes(1);
+        expect(notifyIsReadySpy).toHaveBeenCalledWith();
+      });
+
+      describe(`when the Firebase app failed to be ready`, (): void => {
         beforeEach((): void => {
-          getGuildsCountSpy.mockReturnValue(of(8).toPromise());
+          isReadySpy.mockRejectedValue(new Error(`error`));
         });
 
-        it(`should log the count of guilds`, async (): Promise<void> => {
-          expect.assertions(2);
+        // @todo add coverage
+      });
 
-          await service.init();
+      describe(`once the Firebase app is ready`, (): void => {
+        beforeEach((): void => {
+          isReadySpy.mockResolvedValue(true);
+        });
 
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-          expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-            context: `FirebaseGuildsService`,
-            message: `text-value-8 guilds found`,
-          } as ILoggerLog);
+        it(`should count the guilds in the store`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          await expect(service.init()).rejects.toThrow(
+            new Error(`Collection not available`)
+          );
+
+          expect(getGuildsCountSpy).toHaveBeenCalledTimes(1);
+          expect(getGuildsCountSpy).toHaveBeenCalledWith();
+        });
+
+        describe(`when the count of guilds failed`, (): void => {
+          beforeEach((): void => {
+            getGuildsCountSpy.mockRejectedValue(new Error(`error`));
+          });
+
+          it(`should not log the count of guilds`, async (): Promise<void> => {
+            expect.assertions(2);
+
+            await expect(service.init()).rejects.toThrow(
+              new Error(`Collection not available`)
+            );
+
+            expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
+              context: `FirebaseGuildsService`,
+              message: `text-value-8 guilds found`,
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the count of guilds was successful`, (): void => {
+          beforeEach((): void => {
+            getGuildsCountSpy.mockResolvedValue(8);
+          });
+
+          describe(`when the count is 1`, (): void => {
+            beforeEach((): void => {
+              getGuildsCountSpy.mockResolvedValue(1);
+            });
+
+            it(`should log the count of guilds`, async (): Promise<void> => {
+              expect.assertions(3);
+
+              await expect(service.init()).rejects.toThrow(
+                new Error(`Collection not available`)
+              );
+
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+                context: `FirebaseGuildsService`,
+                message: `text-value-1 guild found`,
+              } as ILoggerLog);
+            });
+          });
+
+          describe(`when the count is 8`, (): void => {
+            beforeEach((): void => {
+              getGuildsCountSpy.mockResolvedValue(8);
+            });
+
+            it(`should log the count of guilds`, async (): Promise<void> => {
+              expect.assertions(3);
+
+              await expect(service.init()).rejects.toThrow(
+                new Error(`Collection not available`)
+              );
+
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+                context: `FirebaseGuildsService`,
+                message: `text-value-8 guilds found`,
+              } as ILoggerLog);
+            });
+          });
+        });
+
+        it(`should get the guilds collection`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          await expect(service.getGuilds()).rejects.toThrow(
+            new Error(`Collection not available`)
+          );
+
+          expect(getCollectionReferenceSpy).toHaveBeenCalledTimes(1);
+          expect(getCollectionReferenceSpy).toHaveBeenCalledWith();
+        });
+
+        describe(`when the guilds collection is undefined`, (): void => {
+          beforeEach((): void => {
+            getCollectionReferenceSpy.mockReturnValue(undefined);
+          });
+
+          it(`should throw an error`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            await expect(service.getGuilds()).rejects.toThrow(
+              new Error(`Collection not available`)
+            );
+          });
+        });
+
+        describe(`when the guilds collection is valid`, (): void => {
+          beforeEach((): void => {
+            getCollectionReferenceSpy.mockReturnValue(collectionReference);
+          });
         });
       });
     });

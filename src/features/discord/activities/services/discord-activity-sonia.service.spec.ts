@@ -597,7 +597,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
       });
       setPresenceMock = jest
         .fn()
-        .mockReturnValue(Promise.reject(new Error(`setPresence: error`)));
+        .mockRejectedValue(new Error(`setPresence: error`));
       presenceActivity = {
         name: DiscordActivityNameEnum.APOLLO,
         type: `PLAYING`,
@@ -692,7 +692,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       describe(`when the presence was successfully set`, (): void => {
         beforeEach((): void => {
-          setPresenceMock.mockReturnValue(Promise.resolve(presence));
+          setPresenceMock.mockResolvedValue(presence);
         });
 
         it(`should log about the update of the presence`, async (): Promise<

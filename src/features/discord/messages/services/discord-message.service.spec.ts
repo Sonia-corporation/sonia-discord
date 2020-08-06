@@ -398,7 +398,7 @@ describe(`DiscordMessageService`, (): void => {
       service = new DiscordMessageService();
       anyDiscordMessageChannelSendMock = jest
         .fn()
-        .mockReturnValue(Promise.reject(new Error(`Fake test error: send`)));
+        .mockRejectedValue(new Error(`Fake test error: send`));
       anyDiscordMessage = createMock<AnyDiscordMessage>({
         channel: {
           send: anyDiscordMessageChannelSendMock,

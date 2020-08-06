@@ -2,8 +2,10 @@ import { Guild, Snowflake } from "discord.js";
 import admin, { firestore } from "firebase-admin";
 import _ from "lodash";
 import { BehaviorSubject, Observable } from "rxjs";
+import { filter, map, take } from "rxjs/operators";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { DiscordClientService } from "../../discord/services/discord-client.service";
 import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
 import { FirebaseCollectionEnum } from "../enums/firebase-collection.enum";
@@ -13,6 +15,7 @@ import { FirebaseAppService } from "./firebase-app.service";
 import CollectionReference = admin.firestore.CollectionReference;
 import DocumentSnapshot = admin.firestore.DocumentSnapshot;
 import Firestore = admin.firestore.Firestore;
+import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
 import WriteResult = admin.firestore.WriteResult;
 
@@ -30,18 +33,24 @@ export class FirebaseGuildsService extends AbstractService {
   private readonly _firebaseAppService: FirebaseAppService = FirebaseAppService.getInstance();
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
+  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
   private readonly _isReady$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(false);
+  private readonly _onGuildsChange$: BehaviorSubject<
+    IFirebaseGuild[]
+  > = new BehaviorSubject<IFirebaseGuild[]>([]);
   private _store: Firestore | undefined = undefined;
 
   public constructor() {
     super(ServiceNameEnum.FIREBASE_GUILDS_SERVICE);
   }
 
-  public init(): void {
-    this._setStore();
-    this._logGuildCount();
+  public init(): Promise<void> {
+    return this._setStore().then((): void => {
+      this._logGuildCount();
+      this._watchGuilds();
+    });
   }
 
   public getCollectionReference():
@@ -153,28 +162,101 @@ export class FirebaseGuildsService extends AbstractService {
     return this._isReady$.asObservable();
   }
 
+  public isReady(): Promise<true> {
+    return this.isReady$()
+      .pipe(
+        filter((isReady: Readonly<boolean>): boolean => {
+          return _.isEqual(isReady, true);
+        }),
+        take(1),
+        map((): true => true)
+      )
+      .toPromise();
+  }
+
   public notifyIsReady(): void {
     this._isReady$.next(true);
   }
 
-  private _setStore(): void {
-    this._store = firestore(this._firebaseAppService.getApp());
+  public onGuildsChange$(): Observable<IFirebaseGuild[]> {
+    return this._onGuildsChange$.asObservable();
+  }
 
-    this.notifyIsReady();
+  public notifyOnGuildsChange(guilds: Readonly<IFirebaseGuild>[]): void {
+    this._onGuildsChange$.next(guilds);
+  }
+
+  private _watchGuilds(): void {
+    const collectionReference:
+      | CollectionReference<IFirebaseGuild>
+      | undefined = this.getCollectionReference();
+
+    if (!_.isNil(collectionReference)) {
+      this._loggerService.debug({
+        context: this._serviceName,
+        message: this._chalkService.text(`watching Firebase guilds...`),
+      });
+
+      collectionReference.onSnapshot(
+        (querySnapshot: QuerySnapshot<IFirebaseGuild>): void => {
+          const firebaseGuilds: IFirebaseGuild[] = [];
+
+          querySnapshot.forEach(
+            (
+              queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>
+            ): void => {
+              if (_.isEqual(queryDocumentSnapshot.exists, true)) {
+                firebaseGuilds.push(queryDocumentSnapshot.data());
+              }
+            }
+          );
+
+          this.notifyOnGuildsChange(firebaseGuilds);
+        },
+        (error: Readonly<Error>): void => {
+          this._loggerService.error({
+            context: this._serviceName,
+            message: this._chalkService.text(
+              `Firebase guilds watcher catch an error`
+            ),
+          });
+          this._loggerService.error({
+            context: this._serviceName,
+            message: this._chalkService.error(error),
+          });
+        }
+      );
+    }
+
+    throw new Error(`Collection not available`);
+  }
+
+  private _setStore(): Promise<true> {
+    return this._discordClientService.isReady().then(
+      (): Promise<true> => {
+        this._store = firestore(this._firebaseAppService.getApp());
+
+        this.notifyIsReady();
+
+        return Promise.resolve(true);
+      }
+    );
   }
 
   private _logGuildCount(): Promise<number> {
-    return this.getGuildsCount().then((count: Readonly<number>): number => {
-      this._loggerService.debug({
-        context: this._serviceName,
-        message: this._chalkService.text(
-          `${this._chalkService.value(count)} guild${
-            _.gt(count, 1) ? `s` : ``
-          } found`
-        ),
-      });
+    return this.getGuildsCount().then(
+      (count: Readonly<number>): Promise<number> => {
+        this._loggerService.debug({
+          context: this._serviceName,
+          message: this._chalkService.text(
+            `${this._chalkService.value(count)} guild${
+              _.gt(count, 1) ? `s` : ``
+            } found`
+          ),
+        });
 
-      return count;
-    });
+        return Promise.resolve(count);
+      }
+    );
   }
 }
