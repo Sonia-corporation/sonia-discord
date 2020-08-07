@@ -55,7 +55,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   }
 
   public init(): void {
-    // this.sendNewReleaseNotesToEachGuild$().subscribe();
+    this.sendNewReleaseNotesToEachGuild$().subscribe();
   }
 
   public isReady$(): Observable<[true, true]> {
