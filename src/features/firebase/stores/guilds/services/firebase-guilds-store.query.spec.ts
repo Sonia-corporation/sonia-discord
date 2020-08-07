@@ -1,3 +1,4 @@
+import { Subject } from "rxjs";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../core/services/core-event.service";
 import { FirebaseGuildsStore } from "../firebase-guilds-store";
@@ -49,6 +50,28 @@ describe(`FirebaseGuildsStoreQuery`, (): void => {
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.FIREBASE_GUILDS_STORE_QUERY
       );
+    });
+  });
+
+  describe(`wasLoaded()`, (): void => {
+    let selectLoading$: Subject<boolean>;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsStoreQuery(firebaseGuildsStore);
+      selectLoading$ = new Subject<boolean>();
+
+      jest.spyOn(service, `selectLoading`).mockReturnValue(selectLoading$);
+    });
+
+    describe(`when the store is no longer loading`, (): void => {
+      it(`should emit a new value into the stream`, async (): Promise<void> => {
+        expect.assertions(1);
+        selectLoading$.next(true);
+
+        const isReady = await service.wasLoaded();
+
+        expect(isReady).toStrictEqual(true);
+      });
     });
   });
 });

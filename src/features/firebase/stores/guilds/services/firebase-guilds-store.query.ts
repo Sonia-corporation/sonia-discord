@@ -1,5 +1,6 @@
 import { StoreConfig } from "@datorama/akita";
 import _ from "lodash";
+import { filter, map, take } from "rxjs/operators";
 import { AbstractQueryEntityService } from "../../../../../classes/abstract-query-entity.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { StoreNameEnum } from "../../../../../enums/store-name.enum";
@@ -27,5 +28,17 @@ export class FirebaseGuildsStoreQuery extends AbstractQueryEntityService<
 
   public constructor(firebaseGuildsStore: FirebaseGuildsStore) {
     super(ServiceNameEnum.FIREBASE_GUILDS_STORE_QUERY, firebaseGuildsStore);
+  }
+
+  public wasLoaded(): Promise<true> {
+    return this.selectLoading()
+      .pipe(
+        filter((isLoaded: Readonly<boolean>): boolean => {
+          return _.isEqual(isLoaded, true);
+        }),
+        take(1),
+        map((): true => true)
+      )
+      .toPromise();
   }
 }
