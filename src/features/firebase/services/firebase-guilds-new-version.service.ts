@@ -22,7 +22,6 @@ import { DiscordLoggerErrorService } from "../../discord/logger/services/discord
 import { IDiscordMessageResponse } from "../../discord/messages/interfaces/discord-message-response";
 import { DiscordMessageCommandReleaseNotesService } from "../../discord/messages/services/command/release-notes/discord-message-command-release-notes.service";
 import { DiscordClientService } from "../../discord/services/discord-client.service";
-import { InitService } from "../../init/services/init.service";
 import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
 import { IFirebaseGuild } from "../types/firebase-guild";
@@ -44,7 +43,6 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _firebaseGuildsService: FirebaseGuildsService = FirebaseGuildsService.getInstance();
-  private readonly _initService: InitService = InitService.getInstance();
   private readonly _discordMessageCommandReleaseNotesService: DiscordMessageCommandReleaseNotesService = DiscordMessageCommandReleaseNotesService.getInstance();
   private readonly _discordGuildService: DiscordGuildService = DiscordGuildService.getInstance();
   private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
@@ -57,12 +55,11 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   }
 
   public init(): void {
-    this.sendNewReleaseNotesToEachGuild$().subscribe();
+    // this.sendNewReleaseNotesToEachGuild$().subscribe();
   }
 
-  public isReady$(): Observable<[true, true, true]> {
+  public isReady$(): Observable<[true, true]> {
     return forkJoin([
-      this._initService.isAppConfigured(),
       this._firebaseGuildsService.isReady(),
       this._discordClientService.isReady(),
     ]);
