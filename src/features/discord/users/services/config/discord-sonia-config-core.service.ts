@@ -17,7 +17,7 @@ export class DiscordSoniaConfigCoreService extends AbstractService
     return DiscordSoniaConfigCoreService._instance;
   }
 
-  public corporationImageUrl = IconEnum.GIRL;
+  public corporationImageUrl: IconEnum.GIRL = IconEnum.GIRL;
   public corporationMessageEmbedAuthor: IDiscordSoniaCorporationMessageEmbedAuthorConfig = {
     iconURL: IconEnum.GIRL,
     name: `Sonia`,

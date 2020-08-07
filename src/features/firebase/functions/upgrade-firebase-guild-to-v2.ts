@@ -7,7 +7,7 @@ export function upgradeFirebaseGuildToV2(
 ): IFirebaseGuildV2 {
   return {
     id: firebaseGuild.id,
-    lastReleaseNotesVersion: undefined,
+    lastReleaseNotesVersion: `0.0.0`,
     version: FirebaseGuildVersionEnum.V2,
   };
 }

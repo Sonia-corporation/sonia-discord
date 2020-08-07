@@ -19,12 +19,12 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
       expect(result.id).toStrictEqual(firebaseGuild.id);
     });
 
-    it(`should return an undefined last release notes version`, (): void => {
+    it(`should return a last release notes version of 0.0.0`, (): void => {
       expect.assertions(1);
 
       const result = handleFirebaseGuildBreakingChange(firebaseGuild);
 
-      expect(result.lastReleaseNotesVersion).toBeUndefined();
+      expect(result.lastReleaseNotesVersion).toStrictEqual(`0.0.0`);
     });
 
     it(`should return a v2 version`, (): void => {

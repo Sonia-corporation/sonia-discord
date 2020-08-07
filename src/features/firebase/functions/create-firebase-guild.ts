@@ -7,7 +7,7 @@ export function createFirebaseGuild({
 }: ICreateFirebaseGuild): IFirebaseGuild {
   return {
     id,
-    lastReleaseNotesVersion: undefined,
+    lastReleaseNotesVersion: `0.0.0`,
     version: FIREBASE_GUILD_CURRENT_VERSION,
   };
 }
