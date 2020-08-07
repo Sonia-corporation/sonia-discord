@@ -1,10 +1,12 @@
 import { createMock } from "ts-auto-mock";
 import { FirebaseGuildVersionEnum } from "../enums/firebase-guild-version.enum";
 import { IFirebaseGuildV1 } from "../interfaces/firebase-guild-v1";
+import { IFirebaseGuildV2 } from "../interfaces/firebase-guild-v2";
+import { IAnyFirebaseGuild } from "../types/any-firebase-guild";
 import { handleFirebaseGuildBreakingChange } from "./handle-firebase-guild-breaking-change";
 
 describe(`handleFirebaseGuildBreakingChange()`, (): void => {
-  let firebaseGuild: IFirebaseGuildV1;
+  let firebaseGuild: IAnyFirebaseGuild;
 
   describe(`when the given Firebase guild is a v1`, (): void => {
     beforeEach((): void => {
@@ -38,7 +40,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
 
   describe(`when the given Firebase guild is a v2`, (): void => {
     beforeEach((): void => {
-      firebaseGuild = createMock<IFirebaseGuildV1>();
+      firebaseGuild = createMock<IFirebaseGuildV2>();
     });
 
     it(`should return the given Firebase guild without changes`, (): void => {
