@@ -1,13 +1,19 @@
+import { Subject } from "rxjs";
+import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../core/services/core-event.service";
+import { IFirebaseGuild } from "../../../interfaces/firebase-guild";
+import { FirebaseGuildsService } from "../../../services/firebase-guilds.service";
 import { FirebaseGuildsStoreService } from "./firebase-guilds-store.service";
 
 describe(`FirebaseGuildsStoreService`, (): void => {
   let service: FirebaseGuildsStoreService;
   let coreEventService: CoreEventService;
+  let firebaseGuildsService: FirebaseGuildsService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
+    firebaseGuildsService = FirebaseGuildsService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -46,6 +52,93 @@ describe(`FirebaseGuildsStoreService`, (): void => {
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.FIREBASE_GUILDS_STORE_SERVICE
       );
+    });
+  });
+
+  describe(`init()`, (): void => {
+    let onGuildsChange$: Subject<IFirebaseGuild[]>;
+    let firebaseGuilds: IFirebaseGuild[];
+
+    let firebaseGuildsServiceOnGuildsChange$Spy: jest.SpyInstance;
+    let removeAllEntitiesSpy: jest.SpyInstance;
+    let addEntitiesSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsStoreService();
+      onGuildsChange$ = new Subject<IFirebaseGuild[]>();
+      firebaseGuilds = createMock<IFirebaseGuild[]>();
+
+      firebaseGuildsServiceOnGuildsChange$Spy = jest
+        .spyOn(firebaseGuildsService, `onGuildsChange$`)
+        .mockReturnValue(onGuildsChange$);
+      removeAllEntitiesSpy = jest
+        .spyOn(service, `removeAllEntities`)
+        .mockImplementation();
+      addEntitiesSpy = jest.spyOn(service, `addEntities`).mockImplementation();
+    });
+
+    it(`should watch the Firebase guilds changes`, (): void => {
+      expect.assertions(2);
+
+      service.init();
+      onGuildsChange$.next(firebaseGuilds);
+
+      expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledWith();
+    });
+
+    describe(`when an error occurred when watching the Firebase guilds`, (): void => {
+      it(`should watch the Firebase guilds changes`, (): void => {
+        expect.assertions(2);
+
+        service.init();
+        onGuildsChange$.error(new Error(`error`));
+
+        expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledTimes(
+          1
+        );
+        expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledWith();
+      });
+
+      it(`should not remove all the Firebase guilds from the store`, (): void => {
+        expect.assertions(1);
+
+        service.init();
+        onGuildsChange$.error(new Error(`error`));
+
+        expect(removeAllEntitiesSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not add the new Firebase guilds into the store`, (): void => {
+        expect.assertions(1);
+
+        service.init();
+        onGuildsChange$.error(new Error(`error`));
+
+        expect(addEntitiesSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the Firebase guilds changed`, (): void => {
+      it(`should remove all the Firebase guilds from the store`, (): void => {
+        expect.assertions(2);
+
+        service.init();
+        onGuildsChange$.next(firebaseGuilds);
+
+        expect(removeAllEntitiesSpy).toHaveBeenCalledTimes(1);
+        expect(removeAllEntitiesSpy).toHaveBeenCalledWith();
+      });
+
+      it(`should add the new Firebase guilds into the store`, (): void => {
+        expect.assertions(2);
+
+        service.init();
+        onGuildsChange$.next(firebaseGuilds);
+
+        expect(addEntitiesSpy).toHaveBeenCalledTimes(1);
+        expect(addEntitiesSpy).toHaveBeenCalledWith(firebaseGuilds);
+      });
     });
   });
 });

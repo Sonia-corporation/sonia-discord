@@ -1,5 +1,7 @@
 import { applyTransaction } from "@datorama/akita";
 import _ from "lodash";
+import { Observable } from "rxjs";
+import { tap } from "rxjs/operators";
 import { AbstractService } from "../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { IFirebaseGuild } from "../../../interfaces/firebase-guild";
@@ -25,7 +27,7 @@ export class FirebaseGuildsStoreService extends AbstractService {
   }
 
   public init(): void {
-    this._watchFirebaseGuilds();
+    this._watchFirebaseGuilds$().subscribe();
   }
 
   public addOrUpdateEntities(entities: IFirebaseGuild[]): void {
@@ -40,14 +42,16 @@ export class FirebaseGuildsStoreService extends AbstractService {
     this._firebaseGuildsStore.remove();
   }
 
-  private _watchFirebaseGuilds(): void {
-    this._firebaseGuildsService.onGuildsChange$().subscribe({
-      next: (entities: IFirebaseGuild[]): void => {
-        applyTransaction((): void => {
-          this.removeAllEntities();
-          this.addEntities(entities);
-        });
-      },
-    });
+  private _watchFirebaseGuilds$(): Observable<IFirebaseGuild[]> {
+    return this._firebaseGuildsService.onGuildsChange$().pipe(
+      tap({
+        next: (entities: IFirebaseGuild[]): void => {
+          applyTransaction((): void => {
+            this.removeAllEntities();
+            this.addEntities(entities);
+          });
+        },
+      })
+    );
   }
 }
