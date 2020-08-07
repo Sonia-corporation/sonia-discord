@@ -100,6 +100,7 @@ describe(`FirebaseGuildsService`, (): void => {
     let loggerServiceErrorSpy: jest.SpyInstance;
     let onSnapshotMock: jest.Mock;
     let forEachMock: jest.Mock;
+    let settingsMock: jest.Mock;
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
@@ -133,6 +134,7 @@ describe(`FirebaseGuildsService`, (): void => {
       collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
         onSnapshot: onSnapshotMock,
       });
+      settingsMock = jest.fn();
 
       discordClientServiceIsReadySpy = jest
         .spyOn(discordClientService, `isReady`)
@@ -146,9 +148,11 @@ describe(`FirebaseGuildsService`, (): void => {
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
         .mockImplementation();
-      firestoreSpy = jest
-        .spyOn(admin, `firestore`)
-        .mockReturnValue(createMock<Firestore>());
+      firestoreSpy = jest.spyOn(admin, `firestore`).mockReturnValue(
+        createMock<Firestore>({
+          settings: settingsMock,
+        })
+      );
       notifyIsReadySpy = jest
         .spyOn(service, `notifyIsReady`)
         .mockImplementation();
@@ -209,6 +213,19 @@ describe(`FirebaseGuildsService`, (): void => {
 
         expect(firestoreSpy).toHaveBeenCalledTimes(1);
         expect(firestoreSpy).toHaveBeenCalledWith(app);
+      });
+
+      it(`should configure the store`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.init()).rejects.toThrow(
+          new Error(`Collection not available`)
+        );
+
+        expect(settingsMock).toHaveBeenCalledTimes(1);
+        expect(settingsMock).toHaveBeenCalledWith({
+          ignoreUndefinedProperties: true,
+        });
       });
 
       it(`should notify that the Firebase app is ready`, async (): Promise<

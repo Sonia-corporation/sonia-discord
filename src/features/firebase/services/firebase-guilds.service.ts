@@ -244,6 +244,9 @@ export class FirebaseGuildsService extends AbstractService {
     return this._discordClientService.isReady().then(
       (): Promise<true> => {
         this._store = firestore(this._firebaseAppService.getApp());
+        this._store.settings({
+          ignoreUndefinedProperties: true,
+        });
 
         this.notifyIsReady();
 
