@@ -17,6 +17,14 @@ describe(`createFirebaseGuild()`, (): void => {
     expect(result.id).toStrictEqual(data.id);
   });
 
+  it(`should return an undefined last release notes version`, (): void => {
+    expect.assertions(1);
+
+    const result = createFirebaseGuild(data);
+
+    expect(result.lastReleaseNotesVersion).toBeUndefined();
+  });
+
   it(`should return a Firebase guild with last possible version`, (): void => {
     expect.assertions(1);
 

@@ -10,7 +10,7 @@ import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
 import { FirebaseCollectionEnum } from "../enums/firebase-collection.enum";
 import { createFirebaseGuild } from "../functions/create-firebase-guild";
-import { IFirebaseGuild } from "../interfaces/firebase-guild";
+import { IFirebaseGuild } from "../types/firebase-guild";
 import { FirebaseAppService } from "./firebase-app.service";
 import CollectionReference = admin.firestore.CollectionReference;
 import DocumentSnapshot = admin.firestore.DocumentSnapshot;

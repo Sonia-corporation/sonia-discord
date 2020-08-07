@@ -8,7 +8,7 @@ import { DiscordClientService } from "../../discord/services/discord-client.serv
 import { ILoggerLog } from "../../logger/interfaces/logger-log";
 import { LoggerService } from "../../logger/services/logger.service";
 import { FirebaseGuildVersionEnum } from "../enums/firebase-guild-version.enum";
-import { IFirebaseGuild } from "../interfaces/firebase-guild";
+import { IFirebaseGuild } from "../types/firebase-guild";
 import { FirebaseAppService } from "./firebase-app.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
 import App = admin.app.App;

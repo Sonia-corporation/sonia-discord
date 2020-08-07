@@ -7,7 +7,7 @@ import { DiscordClientService } from "../../discord/services/discord-client.serv
 import { InitService } from "../../init/services/init.service";
 import { ILoggerLog } from "../../logger/interfaces/logger-log";
 import { LoggerService } from "../../logger/services/logger.service";
-import { IFirebaseGuild } from "../interfaces/firebase-guild";
+import { IFirebaseGuild } from "../types/firebase-guild";
 import { FirebaseGuildsNewVersionService } from "./firebase-guilds-new-version.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
 import QuerySnapshot = admin.firestore.QuerySnapshot;

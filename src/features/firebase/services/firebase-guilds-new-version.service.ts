@@ -25,7 +25,7 @@ import { DiscordClientService } from "../../discord/services/discord-client.serv
 import { InitService } from "../../init/services/init.service";
 import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
-import { IFirebaseGuild } from "../interfaces/firebase-guild";
+import { IFirebaseGuild } from "../types/firebase-guild";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
 import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
