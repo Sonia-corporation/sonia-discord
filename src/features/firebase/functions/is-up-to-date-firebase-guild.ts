@@ -4,7 +4,7 @@ import { IAnyFirebaseGuild } from "../types/any-firebase-guild";
 import { IFirebaseGuild } from "../types/firebase-guild";
 
 export function isUpToDateFirebaseGuild(
-  firebaseGuild: IAnyFirebaseGuild
+  firebaseGuild: Readonly<IAnyFirebaseGuild>
 ): firebaseGuild is IFirebaseGuild {
   return _.isEqual(firebaseGuild.version, FIREBASE_GUILD_CURRENT_VERSION);
 }

@@ -4,7 +4,7 @@ import { IFirebaseGuild } from "../types/firebase-guild";
 
 export function createFirebaseGuild({
   id,
-}: ICreateFirebaseGuild): IFirebaseGuild {
+}: Readonly<ICreateFirebaseGuild>): IFirebaseGuild {
   return {
     id,
     lastReleaseNotesVersion: `0.0.0`,

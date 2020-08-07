@@ -13,7 +13,7 @@ import { upgradeFirebaseGuildToV2 } from "./upgrade-firebase-guild-to-v2";
  * @return {IFirebaseGuild} Updated [Firebase guild]{@link IFirebaseGuild}
  */
 export function handleFirebaseGuildBreakingChange(
-  firebaseGuild: IAnyFirebaseGuild
+  firebaseGuild: Readonly<IAnyFirebaseGuild>
 ): IFirebaseGuild | never {
   if (firebaseGuild.version === FirebaseGuildVersionEnum.V1) {
     return handleFirebaseGuildBreakingChange(
