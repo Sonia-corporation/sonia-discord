@@ -1,15 +1,21 @@
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
+import { DiscordClientService } from "../../discord/services/discord-client.service";
 import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
+import { FirebaseGuildsService } from "./firebase-guilds.service";
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 
 describe(`FirebaseGuildsBreakingChangeService`, (): void => {
   let service: FirebaseGuildsBreakingChangeService;
   let coreEventService: CoreEventService;
+  let discordClientService: DiscordClientService;
+  let firebaseGuildsService: FirebaseGuildsService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
+    discordClientService = DiscordClientService.getInstance();
+    firebaseGuildsService = FirebaseGuildsService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -131,6 +137,90 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
           expect(isTrue).toStrictEqual(true);
           doneCallback();
         },
+      });
+    });
+  });
+
+  describe(`isReady$()`, (): void => {
+    let discordClientServiceIsReadySpy: jest.SpyInstance;
+    let firebaseGuildsServiceIsReadySpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsBreakingChangeService();
+      discordClientServiceIsReadySpy = jest
+        .spyOn(discordClientService, `isReady`)
+        .mockResolvedValue(true);
+      firebaseGuildsServiceIsReadySpy = jest
+        .spyOn(firebaseGuildsService, `isReady`)
+        .mockResolvedValue(true);
+    });
+
+    describe(`when the Firebase guilds ready check failed`, (): void => {
+      beforeEach((): void => {
+        discordClientServiceIsReadySpy.mockRejectedValue(new Error(`error`));
+      });
+
+      it(`should consider that the service is not ready`, (done): void => {
+        expect.assertions(1);
+
+        service.isReady$().subscribe({
+          error: (error): void => {
+            expect(error).toStrictEqual(new Error(`error`));
+            done();
+          },
+          next: (): void => {
+            expect(true).toStrictEqual(false);
+            done();
+          },
+        });
+      });
+    });
+
+    describe(`when the Firebase guilds are ready`, (): void => {
+      beforeEach((): void => {
+        discordClientServiceIsReadySpy.mockResolvedValue(true);
+      });
+
+      describe(`when Discord ready check failed`, (): void => {
+        beforeEach((): void => {
+          firebaseGuildsServiceIsReadySpy.mockRejectedValue(new Error(`error`));
+        });
+
+        it(`should consider that the service is not ready`, (done): void => {
+          expect.assertions(1);
+
+          service.isReady$().subscribe({
+            error: (error): void => {
+              expect(error).toStrictEqual(new Error(`error`));
+              done();
+            },
+            next: (): void => {
+              expect(true).toStrictEqual(false);
+              done();
+            },
+          });
+        });
+      });
+
+      describe(`when Discord is ready`, (): void => {
+        beforeEach((): void => {
+          firebaseGuildsServiceIsReadySpy.mockResolvedValue(true);
+        });
+
+        it(`should consider that the service is ready`, (done): void => {
+          expect.assertions(1);
+
+          service.isReady$().subscribe({
+            error: (): void => {
+              expect(true).toStrictEqual(false);
+              done();
+            },
+            next: (result): void => {
+              expect(result).toStrictEqual([true, true]);
+              done();
+            },
+          });
+        });
       });
     });
   });

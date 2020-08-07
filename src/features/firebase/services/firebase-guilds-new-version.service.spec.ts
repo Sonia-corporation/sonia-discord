@@ -168,7 +168,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               done();
             },
             next: (result): void => {
-              expect(result).toStrictEqual([true, true, true]);
+              expect(result).toStrictEqual([true, true]);
               done();
             },
           });
