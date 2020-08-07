@@ -170,4 +170,28 @@ describe(`FirebaseGuildsStoreService`, (): void => {
       );
     });
   });
+
+  describe(`addEntities()`, (): void => {
+    let firebaseGuilds: IFirebaseGuild[];
+
+    let firebaseGuildsStoreAddSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsStoreService();
+      firebaseGuilds = createMock<IFirebaseGuild[]>();
+
+      firebaseGuildsStoreAddSpy = jest
+        .spyOn(firebaseGuildsStore, `add`)
+        .mockImplementation();
+    });
+
+    it(`should add the given Firebase guilds into the store`, (): void => {
+      expect.assertions(1);
+
+      service.addEntities(firebaseGuilds);
+
+      expect(firebaseGuildsStoreAddSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsStoreAddSpy).toHaveBeenCalledWith(firebaseGuilds);
+    });
+  });
 });
