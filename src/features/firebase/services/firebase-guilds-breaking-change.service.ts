@@ -1,8 +1,21 @@
+import admin from "firebase-admin";
 import _ from "lodash";
-import { BehaviorSubject, Observable } from "rxjs";
-import { filter, map, take } from "rxjs/operators";
+import { BehaviorSubject, forkJoin, Observable } from "rxjs";
+import { filter, map, mergeMap, take } from "rxjs/operators";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { DiscordClientService } from "../../discord/services/discord-client.service";
+import { ChalkService } from "../../logger/services/chalk/chalk.service";
+import { LoggerService } from "../../logger/services/logger.service";
+import { FIREBASE_GUILD_CURRENT_VERSION } from "../constants/firebase-guild-current-version";
+import { handleFirebaseGuildBreakingChange } from "../functions/handle-firebase-guild-breaking-change";
+import { isUpToDateFirebaseGuild } from "../functions/is-up-to-date-firebase-guild";
+import { IFirebaseGuild } from "../types/firebase-guild";
+import { FirebaseGuildsService } from "./firebase-guilds.service";
+import WriteBatch = admin.firestore.WriteBatch;
+import QuerySnapshot = admin.firestore.QuerySnapshot;
+import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
+import WriteResult = admin.firestore.WriteResult;
 
 export class FirebaseGuildsBreakingChangeService extends AbstractService {
   private static _instance: FirebaseGuildsBreakingChangeService;
@@ -15,6 +28,10 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
     return FirebaseGuildsBreakingChangeService._instance;
   }
 
+  private readonly _loggerService: LoggerService = LoggerService.getInstance();
+  private readonly _chalkService: ChalkService = ChalkService.getInstance();
+  private readonly _firebaseGuildsService: FirebaseGuildsService = FirebaseGuildsService.getInstance();
+  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
   private readonly _hasFinished$: BehaviorSubject<
     boolean
   > = new BehaviorSubject<boolean>(false);
@@ -23,8 +40,13 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
     super(ServiceNameEnum.FIREBASE_GUILDS_BREAKING_CHANGES_SERVICE);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  public init(): void {}
+  public init(): void {
+    this._updateAllFirebaseGuilds$().subscribe({
+      next: (): void => {
+        this.notifyHasFinished();
+      },
+    });
+  }
 
   public hasFinished$(): Observable<boolean> {
     return this._hasFinished$.asObservable();
@@ -33,8 +55,8 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
   public hasFinished(): Promise<true> {
     return this.hasFinished$()
       .pipe(
-        filter((isReady: Readonly<boolean>): boolean => {
-          return _.isEqual(isReady, true);
+        filter((hasFinished: Readonly<boolean>): boolean => {
+          return _.isEqual(hasFinished, true);
         }),
         take(1),
         map((): true => true)
@@ -44,5 +66,96 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
 
   public notifyHasFinished(): void {
     this._hasFinished$.next(true);
+  }
+
+  public isReady$(): Observable<[true, true]> {
+    return forkJoin([
+      this._firebaseGuildsService.isReady(),
+      this._discordClientService.isReady(),
+    ]);
+  }
+
+  private _updateAllFirebaseGuilds$(): Observable<WriteResult[] | void> {
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(
+        `handle breaking changes for all Firebase guilds`
+      ),
+    });
+
+    return this.isReady$().pipe(
+      take(1),
+      mergeMap(
+        (): Promise<QuerySnapshot<IFirebaseGuild>> => {
+          return this._firebaseGuildsService.getGuilds();
+        }
+      ),
+      mergeMap(
+        (
+          querySnapshot: QuerySnapshot<IFirebaseGuild>
+        ): Promise<WriteResult[] | void> => {
+          return this._updateAllFirebaseGuilds(querySnapshot);
+        }
+      )
+    );
+  }
+
+  private _updateAllFirebaseGuilds(
+    querySnapshot: QuerySnapshot<IFirebaseGuild>
+  ): Promise<WriteResult[] | void> {
+    const batch:
+      | WriteBatch
+      | undefined = this._firebaseGuildsService.getBatch();
+
+    if (!_.isNil(batch)) {
+      let firebaseGuildsUpdated = 0;
+
+      querySnapshot.forEach(
+        (
+          queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>
+        ): void => {
+          if (_.isEqual(queryDocumentSnapshot.exists, true)) {
+            if (!isUpToDateFirebaseGuild(queryDocumentSnapshot.data())) {
+              firebaseGuildsUpdated = _.add(firebaseGuildsUpdated, 1);
+              batch.update(
+                queryDocumentSnapshot.ref,
+                handleFirebaseGuildBreakingChange(queryDocumentSnapshot.data())
+              );
+            }
+          }
+        }
+      );
+
+      if (_.gt(firebaseGuildsUpdated, 0)) {
+        this._loggerService.debug({
+          context: this._serviceName,
+          message: this._chalkService.text(
+            `updating ${this._chalkService.value(
+              firebaseGuildsUpdated
+            )} Firebase guild${_.gt(firebaseGuildsUpdated, 1) ? `s` : ``}...`
+          ),
+        });
+
+        return batch.commit();
+      }
+
+      this._loggerService.log({
+        context: this._serviceName,
+        message: this._chalkService.text(
+          `all Firebase guilds up-to-date ${this._chalkService.hint(
+            `(v${FIREBASE_GUILD_CURRENT_VERSION})`
+          )}`
+        ),
+      });
+
+      return Promise.resolve();
+    }
+
+    this._loggerService.error({
+      context: this._serviceName,
+      message: this._chalkService.text(`Firebase guilds batch not available`),
+    });
+
+    return Promise.reject(new Error(`Firebase guilds batch not available`));
   }
 }
