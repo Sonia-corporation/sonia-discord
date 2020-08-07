@@ -3,6 +3,7 @@ import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
 import { FirebaseGuildsStoreService } from "../stores/guilds/services/firebase-guilds-store.service";
 import { FirebaseAppService } from "./firebase-app.service";
+import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
 import { FirebaseGuildsNewVersionService } from "./firebase-guilds-new-version.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
 import { FirebaseService } from "./firebase.service";
@@ -59,6 +60,7 @@ describe(`FirebaseService`, (): void => {
     let firebaseGuildsService: FirebaseGuildsService;
     let firebaseGuildsNewVersionService: FirebaseGuildsNewVersionService;
     let firebaseGuildsStoreService: FirebaseGuildsStoreService;
+    let firebaseGuildsBreakingChangeService: FirebaseGuildsBreakingChangeService;
 
     let firebaseAppServiceGetInstanceSpy: jest.SpyInstance;
     let firebaseAppServiceGetInstanceInitSpy: jest.SpyInstance;
@@ -68,6 +70,8 @@ describe(`FirebaseService`, (): void => {
     let firebaseGuildsNewVersionServiceGetInstanceInitSpy: jest.SpyInstance;
     let firebaseGuildsStoreServiceGetInstanceSpy: jest.SpyInstance;
     let firebaseGuildsStoreServiceGetInstanceInitSpy: jest.SpyInstance;
+    let firebaseGuildsBreakingChangeServiceGetInstanceSpy: jest.SpyInstance;
+    let firebaseGuildsBreakingChangeServiceGetInstanceInitSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseService();
@@ -77,6 +81,9 @@ describe(`FirebaseService`, (): void => {
         FirebaseGuildsNewVersionService
       >();
       firebaseGuildsStoreService = createMock<FirebaseGuildsStoreService>();
+      firebaseGuildsBreakingChangeService = createMock<
+        FirebaseGuildsBreakingChangeService
+      >();
 
       firebaseAppServiceGetInstanceSpy = jest
         .spyOn(FirebaseAppService, `getInstance`)
@@ -101,6 +108,12 @@ describe(`FirebaseService`, (): void => {
         .mockReturnValue(firebaseGuildsStoreService);
       firebaseGuildsStoreServiceGetInstanceInitSpy = jest
         .spyOn(firebaseGuildsStoreService, `init`)
+        .mockImplementation();
+      firebaseGuildsBreakingChangeServiceGetInstanceSpy = jest
+        .spyOn(FirebaseGuildsBreakingChangeService, `getInstance`)
+        .mockReturnValue(firebaseGuildsBreakingChangeService);
+      firebaseGuildsBreakingChangeServiceGetInstanceInitSpy = jest
+        .spyOn(firebaseGuildsBreakingChangeService, `init`)
         .mockImplementation();
     });
 
@@ -185,6 +198,32 @@ describe(`FirebaseService`, (): void => {
       ).toHaveBeenCalledTimes(1);
       expect(
         firebaseGuildsStoreServiceGetInstanceInitSpy
+      ).toHaveBeenCalledWith();
+    });
+
+    it(`should create the FirebaseGuildsBreakingChange service`, (): void => {
+      expect.assertions(1);
+
+      service.init();
+
+      expect(
+        firebaseGuildsBreakingChangeServiceGetInstanceSpy
+      ).toHaveBeenCalledWith();
+    });
+
+    it(`should create and initialize the FirebaseGuildsBreakingChange service`, (): void => {
+      expect.assertions(3);
+
+      service.init();
+
+      expect(
+        firebaseGuildsBreakingChangeServiceGetInstanceSpy
+      ).toHaveBeenCalledWith();
+      expect(
+        firebaseGuildsBreakingChangeServiceGetInstanceInitSpy
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        firebaseGuildsBreakingChangeServiceGetInstanceInitSpy
       ).toHaveBeenCalledWith();
     });
   });
