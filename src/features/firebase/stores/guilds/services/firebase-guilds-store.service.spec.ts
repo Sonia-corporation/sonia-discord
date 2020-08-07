@@ -160,7 +160,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
     });
 
     it(`should update or add the given Firebase guilds into the store`, (): void => {
-      expect.assertions(1);
+      expect.assertions(2);
 
       service.addOrUpdateEntities(firebaseGuilds);
 
@@ -186,12 +186,33 @@ describe(`FirebaseGuildsStoreService`, (): void => {
     });
 
     it(`should add the given Firebase guilds into the store`, (): void => {
-      expect.assertions(1);
+      expect.assertions(2);
 
       service.addEntities(firebaseGuilds);
 
       expect(firebaseGuildsStoreAddSpy).toHaveBeenCalledTimes(1);
       expect(firebaseGuildsStoreAddSpy).toHaveBeenCalledWith(firebaseGuilds);
+    });
+  });
+
+  describe(`removeAllEntities()`, (): void => {
+    let firebaseGuildsStoreRemoveSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsStoreService();
+
+      firebaseGuildsStoreRemoveSpy = jest
+        .spyOn(firebaseGuildsStore, `remove`)
+        .mockImplementation();
+    });
+
+    it(`should remove all the Firebase guilds in the store`, (): void => {
+      expect.assertions(2);
+
+      service.removeAllEntities();
+
+      expect(firebaseGuildsStoreRemoveSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsStoreRemoveSpy).toHaveBeenCalledWith();
     });
   });
 });
