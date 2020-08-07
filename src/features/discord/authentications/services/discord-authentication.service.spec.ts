@@ -234,7 +234,7 @@ describe(`DiscordAuthenticationService`, (): void => {
     let loginMock: jest.Mock;
 
     beforeEach((): void => {
-      loginMock = jest.fn().mockResolvedValue(``);
+      loginMock = jest.fn().mockResolvedValue(`login`);
       client = createMock<Client>({
         login: loginMock,
       });
@@ -281,7 +281,7 @@ describe(`DiscordAuthenticationService`, (): void => {
     });
 
     it(`should get the Sonia's secret token`, async (): Promise<void> => {
-      expect.assertions(1);
+      expect.assertions(2);
 
       await service.login();
 
@@ -301,7 +301,12 @@ describe(`DiscordAuthenticationService`, (): void => {
 
     describe(`when the login failed`, (): void => {
       beforeEach((): void => {
-        loginMock.mockRejectedValue(new Error(`error`));
+        loginMock = jest.fn().mockRejectedValue(new Error(`error`));
+        client = createMock<Client>({
+          login: loginMock,
+        });
+
+        discordClientServiceGetClientSpy.mockReturnValue(client);
       });
 
       it(`should log about the authentication error`, async (): Promise<
@@ -354,6 +359,11 @@ describe(`DiscordAuthenticationService`, (): void => {
     describe(`when the login was successful`, (): void => {
       beforeEach((): void => {
         loginMock.mockResolvedValue(``);
+        client = createMock<Client>({
+          login: loginMock,
+        });
+
+        discordClientServiceGetClientSpy.mockReturnValue(client);
       });
 
       it(`should log about the authentication success`, async (): Promise<
@@ -381,7 +391,7 @@ describe(`DiscordAuthenticationService`, (): void => {
         expect(notifyIsAuthenticatedSpy).toHaveBeenCalledWith();
       });
 
-      it(`should log about the authentication error`, async (): Promise<
+      it(`should not log about the authentication error`, async (): Promise<
         void
       > => {
         expect.assertions(1);
@@ -391,7 +401,7 @@ describe(`DiscordAuthenticationService`, (): void => {
         expect(loggerServiceErrorSpy).not.toHaveBeenCalled();
       });
 
-      it(`should log the error`, async (): Promise<void> => {
+      it(`should not log the error`, async (): Promise<void> => {
         expect.assertions(1);
 
         await service.login();

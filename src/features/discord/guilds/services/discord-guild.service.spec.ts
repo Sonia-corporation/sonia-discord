@@ -168,11 +168,11 @@ describe(`DiscordGuildService`, (): void => {
       service = new DiscordGuildService();
       guild = createMock<Guild>();
 
-      findMock = jest
-        .fn()
-        .mockImplementation((fn: (value: Guild) => boolean): void => {
-          fn(guild);
-        });
+      findMock = jest.fn().mockImplementation(
+        (): Guild => {
+          return guild;
+        }
+      );
       discordClientServiceGetClientSpy = jest
         .spyOn(discordClientService, `getClient`)
         .mockReturnValue(

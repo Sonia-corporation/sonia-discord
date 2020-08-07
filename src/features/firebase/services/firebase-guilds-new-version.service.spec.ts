@@ -272,8 +272,8 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             done();
           },
           next: (): void => {
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-            expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+            expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
               context: `FirebaseGuildsNewVersionService`,
               message: `text-sending release notes to each guild...`,
             } as ILoggerLog);

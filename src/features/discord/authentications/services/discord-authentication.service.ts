@@ -53,16 +53,20 @@ export class DiscordAuthenticationService extends AbstractService {
         });
         this.notifyIsAuthenticated();
       })
-      .catch((error: unknown): void => {
-        this._loggerService.error({
-          context: this._serviceName,
-          message: this._chalkService.text(`authentication failed`),
-        });
-        this._loggerService.error({
-          context: this._serviceName,
-          message: this._chalkService.error(error),
-        });
-      });
+      .catch(
+        (error: unknown): Promise<void> => {
+          this._loggerService.error({
+            context: this._serviceName,
+            message: this._chalkService.text(`authentication failed`),
+          });
+          this._loggerService.error({
+            context: this._serviceName,
+            message: this._chalkService.error(error),
+          });
+
+          return Promise.reject(error);
+        }
+      );
   }
 
   public isAuthenticated$(): Observable<boolean> {
