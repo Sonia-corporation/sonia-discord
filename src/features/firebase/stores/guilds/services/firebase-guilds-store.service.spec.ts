@@ -4,16 +4,19 @@ import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../core/services/core-event.service";
 import { IFirebaseGuild } from "../../../interfaces/firebase-guild";
 import { FirebaseGuildsService } from "../../../services/firebase-guilds.service";
+import { FirebaseGuildsStore } from "../firebase-guilds-store";
 import { FirebaseGuildsStoreService } from "./firebase-guilds-store.service";
 
 describe(`FirebaseGuildsStoreService`, (): void => {
   let service: FirebaseGuildsStoreService;
   let coreEventService: CoreEventService;
   let firebaseGuildsService: FirebaseGuildsService;
+  let firebaseGuildsStore: FirebaseGuildsStore;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     firebaseGuildsService = FirebaseGuildsService.getInstance();
+    firebaseGuildsStore = FirebaseGuildsStore.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -139,6 +142,32 @@ describe(`FirebaseGuildsStoreService`, (): void => {
         expect(addEntitiesSpy).toHaveBeenCalledTimes(1);
         expect(addEntitiesSpy).toHaveBeenCalledWith(firebaseGuilds);
       });
+    });
+  });
+
+  describe(`addOrUpdateEntities()`, (): void => {
+    let firebaseGuilds: IFirebaseGuild[];
+
+    let firebaseGuildsStoreUpsertManySpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsStoreService();
+      firebaseGuilds = createMock<IFirebaseGuild[]>();
+
+      firebaseGuildsStoreUpsertManySpy = jest
+        .spyOn(firebaseGuildsStore, `upsertMany`)
+        .mockImplementation();
+    });
+
+    it(`should update or add the given Firebase guilds into the store`, (): void => {
+      expect.assertions(1);
+
+      service.addOrUpdateEntities(firebaseGuilds);
+
+      expect(firebaseGuildsStoreUpsertManySpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsStoreUpsertManySpy).toHaveBeenCalledWith(
+        firebaseGuilds
+      );
     });
   });
 });
