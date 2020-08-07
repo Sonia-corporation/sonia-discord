@@ -65,6 +65,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
     let firebaseGuildsServiceOnGuildsChange$Spy: jest.SpyInstance;
     let removeAllEntitiesSpy: jest.SpyInstance;
     let addEntitiesSpy: jest.SpyInstance;
+    let stopLoadingSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsStoreService();
@@ -78,6 +79,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
         .spyOn(service, `removeAllEntities`)
         .mockImplementation();
       addEntitiesSpy = jest.spyOn(service, `addEntities`).mockImplementation();
+      stopLoadingSpy = jest.spyOn(service, `stopLoading`).mockImplementation();
     });
 
     it(`should watch the Firebase guilds changes`, (): void => {
@@ -120,6 +122,15 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
         expect(addEntitiesSpy).not.toHaveBeenCalled();
       });
+
+      it(`should not stop the loading state of the store`, (): void => {
+        expect.assertions(1);
+
+        service.init();
+        onGuildsChange$.error(new Error(`error`));
+
+        expect(stopLoadingSpy).not.toHaveBeenCalled();
+      });
     });
 
     describe(`when the Firebase guilds changed`, (): void => {
@@ -141,6 +152,16 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
         expect(addEntitiesSpy).toHaveBeenCalledTimes(1);
         expect(addEntitiesSpy).toHaveBeenCalledWith(firebaseGuilds);
+      });
+
+      it(`should stop the loading state of the store`, (): void => {
+        expect.assertions(2);
+
+        service.init();
+        onGuildsChange$.next(firebaseGuilds);
+
+        expect(stopLoadingSpy).toHaveBeenCalledTimes(1);
+        expect(stopLoadingSpy).toHaveBeenCalledWith();
       });
     });
   });
@@ -213,6 +234,27 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
       expect(firebaseGuildsStoreRemoveSpy).toHaveBeenCalledTimes(1);
       expect(firebaseGuildsStoreRemoveSpy).toHaveBeenCalledWith();
+    });
+  });
+
+  describe(`stopLoading()`, (): void => {
+    let firebaseGuildsStoreSetLoadingSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsStoreService();
+
+      firebaseGuildsStoreSetLoadingSpy = jest
+        .spyOn(firebaseGuildsStore, `setLoading`)
+        .mockImplementation();
+    });
+
+    it(`should stop the loading state of the store`, (): void => {
+      expect.assertions(2);
+
+      service.stopLoading();
+
+      expect(firebaseGuildsStoreSetLoadingSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsStoreSetLoadingSpy).toHaveBeenCalledWith(false);
     });
   });
 });

@@ -67,8 +67,8 @@ export class InitService extends AbstractService {
   public isAppConfigured(): Promise<true> {
     return this.isAppConfigured$()
       .pipe(
-        filter((isReady: Readonly<boolean>): boolean => {
-          return _.isEqual(isReady, true);
+        filter((isAppConfigured: Readonly<boolean>): boolean => {
+          return _.isEqual(isAppConfigured, true);
         }),
         take(1),
         map((): true => true)

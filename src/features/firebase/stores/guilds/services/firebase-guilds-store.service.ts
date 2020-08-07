@@ -42,6 +42,10 @@ export class FirebaseGuildsStoreService extends AbstractService {
     this._firebaseGuildsStore.remove();
   }
 
+  public stopLoading(): void {
+    this._firebaseGuildsStore.setLoading(false);
+  }
+
   private _watchFirebaseGuilds$(): Observable<IFirebaseGuild[]> {
     return this._firebaseGuildsService.onGuildsChange$().pipe(
       tap({
@@ -49,6 +53,7 @@ export class FirebaseGuildsStoreService extends AbstractService {
           applyTransaction((): void => {
             this.removeAllEntities();
             this.addEntities(entities);
+            this.stopLoading();
           });
         },
       })
