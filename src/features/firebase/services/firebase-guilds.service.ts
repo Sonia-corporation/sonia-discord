@@ -17,6 +17,7 @@ import DocumentSnapshot = admin.firestore.DocumentSnapshot;
 import Firestore = admin.firestore.Firestore;
 import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
+import WriteBatch = admin.firestore.WriteBatch;
 import WriteResult = admin.firestore.WriteResult;
 
 export class FirebaseGuildsService extends AbstractService {
@@ -184,6 +185,14 @@ export class FirebaseGuildsService extends AbstractService {
 
   public notifyOnGuildsChange(guilds: Readonly<IFirebaseGuild>[]): void {
     this._onGuildsChange$.next(guilds);
+  }
+
+  public getBatch(): WriteBatch | undefined {
+    if (!_.isNil(this._store)) {
+      return this._store.batch();
+    }
+
+    return undefined;
   }
 
   private _watchGuilds(): void {

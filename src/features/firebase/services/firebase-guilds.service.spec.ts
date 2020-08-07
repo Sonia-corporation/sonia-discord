@@ -19,6 +19,7 @@ import Firestore = admin.firestore.Firestore;
 import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
 import WriteResult = admin.firestore.WriteResult;
+import WriteBatch = admin.firestore.WriteBatch;
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 jest.mock(`firebase-admin`, (): unknown => {
@@ -1424,6 +1425,73 @@ describe(`FirebaseGuildsService`, (): void => {
           expect(result).toStrictEqual(firebaseGuilds);
           doneCallback();
         },
+      });
+    });
+  });
+
+  describe(`getBatch()`, (): void => {
+    let firestore: Firestore;
+    let writeBatch: WriteBatch;
+
+    let batchMock: jest.Mock<WriteBatch>;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsService();
+      writeBatch = createMock<WriteBatch>();
+      batchMock = jest.fn().mockReturnValue(writeBatch);
+      firestore = createMock<Firestore>({
+        batch: batchMock,
+      });
+
+      jest.spyOn(discordClientService, `isReady`).mockResolvedValue(true);
+    });
+
+    describe(`when the store is not set`, (): void => {
+      beforeEach((): void => {
+        jest.spyOn(admin, `firestore`).mockImplementation();
+
+        service.init();
+      });
+
+      it(`should not get the batch from the store`, (): void => {
+        expect.assertions(1);
+
+        service.getBatch();
+
+        expect(batchMock).not.toHaveBeenCalled();
+      });
+
+      it(`should return undefined`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getBatch();
+
+        expect(result).toBeUndefined();
+      });
+    });
+
+    describe(`when the store is set`, (): void => {
+      beforeEach((): void => {
+        jest.spyOn(admin, `firestore`).mockReturnValue(firestore);
+
+        service.init();
+      });
+
+      it(`should get the batch from the store`, (): void => {
+        expect.assertions(2);
+
+        service.getBatch();
+
+        expect(batchMock).toHaveBeenCalledTimes(3);
+        expect(batchMock).toHaveBeenNthCalledWith(2);
+      });
+
+      it(`should return the batch`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getBatch();
+
+        expect(result).toStrictEqual(writeBatch);
       });
     });
   });
