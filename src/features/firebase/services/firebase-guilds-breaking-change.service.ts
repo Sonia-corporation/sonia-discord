@@ -37,15 +37,15 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
   > = new BehaviorSubject<boolean>(false);
 
   public constructor() {
-    super(ServiceNameEnum.FIREBASE_GUILDS_BREAKING_CHANGES_SERVICE);
+    super(ServiceNameEnum.FIREBASE_GUILDS_BREAKING_CHANGE_SERVICE);
   }
 
-  public init(): void {
-    this._updateAllFirebaseGuilds$().subscribe({
-      next: (): void => {
+  public init(): Promise<WriteResult[] | void> {
+    return this._updateAllFirebaseGuilds$()
+      .toPromise()
+      .then((): void => {
         this.notifyHasFinished();
-      },
-    });
+      });
   }
 
   public hasFinished$(): Observable<boolean> {
@@ -108,7 +108,7 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
       | undefined = this._firebaseGuildsService.getBatch();
 
     if (!_.isNil(batch)) {
-      let firebaseGuildsUpdated = 0;
+      let countFirebaseGuildsUpdated = 0;
 
       querySnapshot.forEach(
         (
@@ -116,7 +116,7 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
         ): void => {
           if (_.isEqual(queryDocumentSnapshot.exists, true)) {
             if (!isUpToDateFirebaseGuild(queryDocumentSnapshot.data())) {
-              firebaseGuildsUpdated = _.add(firebaseGuildsUpdated, 1);
+              countFirebaseGuildsUpdated = _.add(countFirebaseGuildsUpdated, 1);
               batch.update(
                 queryDocumentSnapshot.ref,
                 handleFirebaseGuildBreakingChange(queryDocumentSnapshot.data())
@@ -126,13 +126,15 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
         }
       );
 
-      if (_.gt(firebaseGuildsUpdated, 0)) {
+      if (_.gt(countFirebaseGuildsUpdated, 0)) {
         this._loggerService.debug({
           context: this._serviceName,
           message: this._chalkService.text(
             `updating ${this._chalkService.value(
-              firebaseGuildsUpdated
-            )} Firebase guild${_.gt(firebaseGuildsUpdated, 1) ? `s` : ``}...`
+              countFirebaseGuildsUpdated
+            )} Firebase guild${
+              _.gt(countFirebaseGuildsUpdated, 1) ? `s` : ``
+            }...`
           ),
         });
 

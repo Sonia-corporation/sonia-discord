@@ -397,8 +397,8 @@ describe(`ServiceNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(
-      ServiceNameEnum.FIREBASE_GUILDS_BREAKING_CHANGES_SERVICE
-    ).toStrictEqual(`FirebaseGuildsBreakingChangesService`);
+      ServiceNameEnum.FIREBASE_GUILDS_BREAKING_CHANGE_SERVICE
+    ).toStrictEqual(`FirebaseGuildsBreakingChangeService`);
   });
 
   it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_SERVICE"`, (): void => {
