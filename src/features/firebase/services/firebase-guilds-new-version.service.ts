@@ -11,6 +11,7 @@ import { forkJoin, Observable } from "rxjs";
 import { mergeMap, take, tap } from "rxjs/operators";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { getRandomValueFromEnum } from "../../../functions/randoms/get-random-value-from-enum";
 import { AppConfigService } from "../../app/services/config/app-config.service";
 import { isDiscordGuildChannel } from "../../discord/channels/functions/is-discord-guild-channel";
 import { isDiscordGuildChannelWritable } from "../../discord/channels/functions/types/is-discord-guild-channel-writable";
@@ -24,6 +25,7 @@ import { IDiscordMessageResponse } from "../../discord/messages/interfaces/disco
 import { DiscordMessageCommandReleaseNotesService } from "../../discord/messages/services/command/release-notes/discord-message-command-release-notes.service";
 import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
+import { FirebaseGuildNewVersionResponseEnum } from "../enums/firebase-guild-new-version-response.enum";
 import { getUpdateFirebaseGuildLastReleaseNotesVersion } from "../functions/get-updated-firebase-guild-last-release-notes-version";
 import { IFirebaseGuild } from "../types/firebase-guild";
 import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
@@ -243,7 +245,8 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     guildId: Readonly<Snowflake>
   ): Promise<Message | void> {
     const messageResponse: IDiscordMessageResponse = this._discordMessageCommandReleaseNotesService.getMessageResponse();
-    messageResponse.response = `hello!`;
+    messageResponse.response =
+      getRandomValueFromEnum(FirebaseGuildNewVersionResponseEnum) || `Cool!`;
 
     return textChannel
       .send(messageResponse.response, messageResponse.options)
