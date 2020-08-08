@@ -1,7 +1,7 @@
 import admin from "firebase-admin";
 import _ from "lodash";
 import { BehaviorSubject, forkJoin, Observable } from "rxjs";
-import { filter, map, mergeMap, take } from "rxjs/operators";
+import { filter, map, mergeMap, take, tap } from "rxjs/operators";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { DiscordClientService } from "../../discord/services/discord-client.service";
@@ -76,15 +76,18 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
   }
 
   private _updateAllFirebaseGuilds$(): Observable<WriteResult[] | void> {
-    this._loggerService.debug({
-      context: this._serviceName,
-      message: this._chalkService.text(
-        `handle breaking changes for all Firebase guilds`
-      ),
-    });
-
     return this.isReady$().pipe(
       take(1),
+      tap({
+        next: (): void => {
+          this._loggerService.debug({
+            context: this._serviceName,
+            message: this._chalkService.text(
+              `handle breaking changes for all Firebase guilds`
+            ),
+          });
+        },
+      }),
       mergeMap(
         (): Promise<QuerySnapshot<IFirebaseGuild>> => {
           return this._firebaseGuildsService.getGuilds();

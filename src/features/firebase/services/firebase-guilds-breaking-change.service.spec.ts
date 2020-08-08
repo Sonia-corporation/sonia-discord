@@ -138,20 +138,6 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should log about handling the breaking changes of the Firebase guilds`, async (): Promise<
-      void
-    > => {
-      expect.assertions(3);
-
-      await expect(service.init()).rejects.toThrow(new Error(`isReady$ error`));
-
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-        context: `FirebaseGuildsBreakingChangeService`,
-        message: `text-handle breaking changes for all Firebase guilds`,
-      } as ILoggerLog);
-    });
-
     it(`should wait for everything to be ready`, async (): Promise<void> => {
       expect.assertions(3);
 
@@ -214,6 +200,22 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
     describe(`when everything is ready`, (): void => {
       beforeEach((): void => {
         isReady$Spy.mockReturnValue(of([true, true]));
+      });
+
+      it(`should log about handling the breaking changes of the Firebase guilds`, async (): Promise<
+        void
+      > => {
+        expect.assertions(3);
+
+        await expect(service.init()).rejects.toThrow(
+          new Error(`getGuilds error`)
+        );
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+          context: `FirebaseGuildsBreakingChangeService`,
+          message: `text-handle breaking changes for all Firebase guilds`,
+        } as ILoggerLog);
       });
 
       it(`should get the Firebase guilds`, async (): Promise<void> => {
