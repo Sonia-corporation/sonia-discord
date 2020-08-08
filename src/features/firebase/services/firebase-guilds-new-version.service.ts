@@ -24,11 +24,14 @@ import { IDiscordMessageResponse } from "../../discord/messages/interfaces/disco
 import { DiscordMessageCommandReleaseNotesService } from "../../discord/messages/services/command/release-notes/discord-message-command-release-notes.service";
 import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
+import { getUpdateFirebaseGuildLastReleaseNotesVersion } from "../functions/get-updated-firebase-guild-last-release-notes-version";
 import { IFirebaseGuild } from "../types/firebase-guild";
 import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
 import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
+import WriteBatch = admin.firestore.WriteBatch;
+import WriteResult = admin.firestore.WriteResult;
 
 export class FirebaseGuildsNewVersionService extends AbstractService {
   private static _instance: FirebaseGuildsNewVersionService;
@@ -100,18 +103,75 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
   private _sendNewReleaseNotesToEachGuild(
     querySnapshot: QuerySnapshot<IFirebaseGuild>
-  ): void {
-    querySnapshot.forEach(
-      (queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>): void => {
-        if (_.isEqual(queryDocumentSnapshot.exists, true)) {
-          const firebaseGuild: IFirebaseGuild = queryDocumentSnapshot.data();
+  ): Promise<WriteResult[] | void> {
+    const batch:
+      | WriteBatch
+      | undefined = this._firebaseGuildsService.getBatch();
 
-          if (this._shouldSendNewReleaseNotesFromFirebaseGuild(firebaseGuild)) {
-            this._sendNewReleaseNotesFromFirebaseGuild(firebaseGuild).catch();
+    if (!_.isNil(batch)) {
+      let countFirebaseGuildsUpdated = 0;
+      let countFirebaseGuilds = 0;
+
+      querySnapshot.forEach(
+        (
+          queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>
+        ): void => {
+          if (_.isEqual(queryDocumentSnapshot.exists, true)) {
+            countFirebaseGuilds = _.add(countFirebaseGuilds, 1);
+            const firebaseGuild: IFirebaseGuild = queryDocumentSnapshot.data();
+
+            if (
+              this._shouldSendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+            ) {
+              countFirebaseGuildsUpdated = _.add(countFirebaseGuildsUpdated, 1);
+
+              batch.update(
+                queryDocumentSnapshot.ref,
+                getUpdateFirebaseGuildLastReleaseNotesVersion(
+                  this._appConfigService.getVersion()
+                )
+              );
+              this._sendNewReleaseNotesFromFirebaseGuild(firebaseGuild).catch();
+            }
           }
         }
+      );
+
+      if (_.gt(countFirebaseGuildsUpdated, 0)) {
+        this._loggerService.debug({
+          context: this._serviceName,
+          message: this._chalkService.text(
+            `updating ${this._chalkService.value(
+              countFirebaseGuildsUpdated
+            )} Firebase guild${
+              _.gt(countFirebaseGuildsUpdated, 1) ? `s` : ``
+            }...`
+          ),
+        });
+
+        return batch.commit();
       }
-    );
+
+      this._loggerService.log({
+        context: this._serviceName,
+        message: this._chalkService.text(
+          `all Firebase guild${
+            _.gt(countFirebaseGuilds, 1) ? `s` : ``
+          } ${this._chalkService.hint(
+            `(${countFirebaseGuilds})`
+          )} release notes already sent`
+        ),
+      });
+
+      return Promise.resolve();
+    }
+
+    this._loggerService.error({
+      context: this._serviceName,
+      message: this._chalkService.text(`Firebase guilds batch not available`),
+    });
+
+    return Promise.reject(new Error(`Firebase guilds batch not available`));
   }
 
   private _sendNewReleaseNotesFromFirebaseGuild(
