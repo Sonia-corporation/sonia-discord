@@ -1,6 +1,5 @@
 import { Guild, Snowflake } from "discord.js";
 import * as admin from "firebase-admin";
-import moment from "moment-timezone";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
@@ -749,8 +748,8 @@ describe(`FirebaseGuildsService`, (): void => {
 
         service.getCollectionReference();
 
-        expect(loggerServiceWarningSpy).toHaveBeenCalledTimes(3);
-        expect(loggerServiceWarningSpy).toHaveBeenNthCalledWith(2, {
+        expect(loggerServiceWarningSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceWarningSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsService`,
           message: `text-store not set`,
         } as ILoggerLog);
@@ -1228,12 +1227,12 @@ describe(`FirebaseGuildsService`, (): void => {
         expect(docMock).toHaveBeenCalledTimes(1);
         expect(docMock).toHaveBeenCalledWith(`dummy-id`);
         expect(setMock).toHaveBeenCalledTimes(1);
-        expect(
-          moment(setMock.mock.calls[0][0].creationDate).fromNow()
-        ).toStrictEqual(`a few seconds ago`);
         expect(setMock.mock.calls[0][0].id).toStrictEqual(`dummy-id`);
+        expect(setMock.mock.calls[0][0].lastReleaseNotesVersion).toStrictEqual(
+          `0.0.0`
+        );
         expect(setMock.mock.calls[0][0].version).toStrictEqual(
-          FirebaseGuildVersionEnum.V1
+          FirebaseGuildVersionEnum.V2
         );
       });
 
@@ -1499,8 +1498,8 @@ describe(`FirebaseGuildsService`, (): void => {
 
         service.getBatch();
 
-        expect(batchMock).toHaveBeenCalledTimes(3);
-        expect(batchMock).toHaveBeenNthCalledWith(2);
+        expect(batchMock).toHaveBeenCalledTimes(1);
+        expect(batchMock).toHaveBeenCalledWith();
       });
 
       it(`should return the batch`, (): void => {

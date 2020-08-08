@@ -6,7 +6,9 @@ describe(`createFirebaseGuild()`, (): void => {
   let data: ICreateFirebaseGuild;
 
   beforeEach((): void => {
-    data = createMock<ICreateFirebaseGuild>();
+    data = createMock<ICreateFirebaseGuild>({
+      id: `dummy-id`,
+    });
   });
 
   it(`should return the id from the given data`, (): void => {
@@ -14,7 +16,7 @@ describe(`createFirebaseGuild()`, (): void => {
 
     const result = createFirebaseGuild(data);
 
-    expect(result.id).toStrictEqual(data.id);
+    expect(result.id).toStrictEqual(`dummy-id`);
   });
 
   it(`should return a last release notes version of 0.0.0`, (): void => {
@@ -30,6 +32,6 @@ describe(`createFirebaseGuild()`, (): void => {
 
     const result = createFirebaseGuild(data);
 
-    expect(result.version).toStrictEqual(1);
+    expect(result.version).toStrictEqual(2);
   });
 });

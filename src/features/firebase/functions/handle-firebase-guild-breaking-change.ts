@@ -15,14 +15,14 @@ import { upgradeFirebaseGuildToV2 } from "./upgrade-firebase-guild-to-v2";
 export function handleFirebaseGuildBreakingChange(
   firebaseGuild: Readonly<IAnyFirebaseGuild>
 ): IFirebaseGuild | never {
+  if (firebaseGuild.version === FirebaseGuildVersionEnum.V2) {
+    return firebaseGuild;
+  }
+
   if (firebaseGuild.version === FirebaseGuildVersionEnum.V1) {
     return handleFirebaseGuildBreakingChange(
       upgradeFirebaseGuildToV2(firebaseGuild)
     );
-  }
-
-  if (firebaseGuild.version === FirebaseGuildVersionEnum.V2) {
-    return firebaseGuild;
   }
 
   throw new Error(`Firebase guild version not valid`);

@@ -1,4 +1,4 @@
-import { Subject } from "rxjs";
+import { of } from "rxjs";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../core/services/core-event.service";
 import { FirebaseGuildsStore } from "../firebase-guilds-store";
@@ -54,19 +54,15 @@ describe(`FirebaseGuildsStoreQuery`, (): void => {
   });
 
   describe(`wasLoaded()`, (): void => {
-    let selectLoading$: Subject<boolean>;
-
     beforeEach((): void => {
       service = new FirebaseGuildsStoreQuery(firebaseGuildsStore);
-      selectLoading$ = new Subject<boolean>();
 
-      jest.spyOn(service, `selectLoading`).mockReturnValue(selectLoading$);
+      jest.spyOn(service, `selectLoading`).mockReturnValue(of(true));
     });
 
     describe(`when the store is no longer loading`, (): void => {
       it(`should emit a new value into the stream`, async (): Promise<void> => {
         expect.assertions(1);
-        selectLoading$.next(true);
 
         const isReady = await service.wasLoaded();
 
