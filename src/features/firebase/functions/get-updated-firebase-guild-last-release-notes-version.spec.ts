@@ -1,6 +1,7 @@
-import { getUpdateFirebaseGuildLastReleaseNotesVersion } from "./get-updated-firebase-guild-last-release-notes-version";
+import { IUpdatedFirebaseGuildLastReleaseNotesVersion } from "../types/updated-firebase-guild-last-release-notes-version";
+import { getUpdatedFirebaseGuildLastReleaseNotesVersion } from "./get-updated-firebase-guild-last-release-notes-version";
 
-describe(`getUpdateFirebaseGuildLastReleaseNotesVersion()`, (): void => {
+describe(`getUpdatedFirebaseGuildLastReleaseNotesVersion()`, (): void => {
   let version: string;
 
   beforeEach((): void => {
@@ -10,8 +11,10 @@ describe(`getUpdateFirebaseGuildLastReleaseNotesVersion()`, (): void => {
   it(`should return a partial Firebase guild with the last release notes version equalling the given one`, (): void => {
     expect.assertions(1);
 
-    const result = getUpdateFirebaseGuildLastReleaseNotesVersion(version);
+    const result = getUpdatedFirebaseGuildLastReleaseNotesVersion(version);
 
-    expect(result).toStrictEqual(`dummy-version`);
+    expect(result).toStrictEqual({
+      lastReleaseNotesVersion: `dummy-version`,
+    } as IUpdatedFirebaseGuildLastReleaseNotesVersion);
   });
 });

@@ -26,7 +26,7 @@ import { DiscordMessageCommandReleaseNotesService } from "../../discord/messages
 import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
 import { FirebaseGuildNewVersionResponseEnum } from "../enums/firebase-guild-new-version-response.enum";
-import { getUpdateFirebaseGuildLastReleaseNotesVersion } from "../functions/get-updated-firebase-guild-last-release-notes-version";
+import { getUpdatedFirebaseGuildLastReleaseNotesVersion } from "../functions/get-updated-firebase-guild-last-release-notes-version";
 import { IFirebaseGuild } from "../types/firebase-guild";
 import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
@@ -129,7 +129,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
               batch.update(
                 queryDocumentSnapshot.ref,
-                getUpdateFirebaseGuildLastReleaseNotesVersion(
+                getUpdatedFirebaseGuildLastReleaseNotesVersion(
                   this._appConfigService.getVersion()
                 )
               );

@@ -1,9 +1,8 @@
-import { IFirebaseGuild } from "../types/firebase-guild";
+import { IUpdatedFirebaseGuildLastReleaseNotesVersion } from "../types/updated-firebase-guild-last-release-notes-version";
 
-export function getUpdateFirebaseGuildLastReleaseNotesVersion(
+export function getUpdatedFirebaseGuildLastReleaseNotesVersion(
   version: Readonly<string>
-  // eslint-disable-next-line quotes
-): Pick<IFirebaseGuild, "lastReleaseNotesVersion"> {
+): IUpdatedFirebaseGuildLastReleaseNotesVersion {
   return {
     lastReleaseNotesVersion: version,
   };
