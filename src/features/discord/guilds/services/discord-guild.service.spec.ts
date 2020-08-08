@@ -169,7 +169,9 @@ describe(`DiscordGuildService`, (): void => {
       guild = createMock<Guild>();
 
       findMock = jest.fn().mockImplementation(
-        (): Guild => {
+        (fn: (value: Guild) => boolean): Guild => {
+          fn(guild);
+
           return guild;
         }
       );
