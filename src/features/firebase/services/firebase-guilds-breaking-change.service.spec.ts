@@ -467,7 +467,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               expect(commitMock).not.toHaveBeenCalled();
             });
 
-            it(`should log that all guilds are already up-to-date`, async (): Promise<
+            it(`should log that one guild is already up-to-date`, async (): Promise<
               void
             > => {
               expect.assertions(2);
@@ -477,7 +477,74 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsBreakingChangeService`,
-                message: `text-all Firebase guilds up-to-date hint-(v2)`,
+                message: `text-all Firebase guild hint-(1) up-to-date hint-(v2)`,
+              } as ILoggerLog);
+            });
+          });
+
+          describe(`when there is two Firebase guilds but on latest version`, (): void => {
+            beforeEach((): void => {
+              queryDocumentSnapshot = createMock<
+                QueryDocumentSnapshot<IFirebaseGuild>
+              >({
+                data: (): IFirebaseGuild => {
+                  // @todo replace with createMock function (see https://github.com/Typescript-TDD/ts-auto-mock/issues/458)
+                  return {
+                    id: `dummy-id`,
+                    lastReleaseNotesVersion: `0.0.0`,
+                    version: FirebaseGuildVersionEnum.V2,
+                  };
+                },
+                exists: true,
+              });
+              forEachMock = jest
+                .fn()
+                .mockImplementation(
+                  (
+                    callback: (
+                      result: QueryDocumentSnapshot<IFirebaseGuild>
+                    ) => void
+                  ): void => {
+                    callback(queryDocumentSnapshot);
+                    callback(queryDocumentSnapshot);
+                  }
+                );
+              querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>({
+                forEach: forEachMock,
+              });
+
+              firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(
+                querySnapshot
+              );
+            });
+
+            it(`should not update the batch`, async (): Promise<void> => {
+              expect.assertions(1);
+
+              await service.init();
+
+              expect(updateMock).not.toHaveBeenCalled();
+            });
+
+            it(`should not commit the batch`, async (): Promise<void> => {
+              expect.assertions(1);
+
+              await service.init();
+
+              expect(commitMock).not.toHaveBeenCalled();
+            });
+
+            it(`should log that two guilds are already up-to-date`, async (): Promise<
+              void
+            > => {
+              expect.assertions(2);
+
+              await service.init();
+
+              expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+                context: `FirebaseGuildsBreakingChangeService`,
+                message: `text-all Firebase guilds hint-(2) up-to-date hint-(v2)`,
               } as ILoggerLog);
             });
           });

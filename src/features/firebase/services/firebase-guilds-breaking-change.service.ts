@@ -114,12 +114,15 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
 
     if (!_.isNil(batch)) {
       let countFirebaseGuildsUpdated = 0;
+      let countFirebaseGuilds = 0;
 
       querySnapshot.forEach(
         (
           queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>
         ): void => {
           if (_.isEqual(queryDocumentSnapshot.exists, true)) {
+            countFirebaseGuilds = _.add(countFirebaseGuilds, 1);
+
             if (!isUpToDateFirebaseGuild(queryDocumentSnapshot.data())) {
               countFirebaseGuildsUpdated = _.add(countFirebaseGuildsUpdated, 1);
               batch.update(
@@ -149,7 +152,11 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
       this._loggerService.log({
         context: this._serviceName,
         message: this._chalkService.text(
-          `all Firebase guilds up-to-date ${this._chalkService.hint(
+          `all Firebase guild${
+            _.gt(countFirebaseGuilds, 1) ? `s` : ``
+          } ${this._chalkService.hint(
+            `(${countFirebaseGuilds})`
+          )} up-to-date ${this._chalkService.hint(
             `(v${FIREBASE_GUILD_CURRENT_VERSION})`
           )}`
         ),
