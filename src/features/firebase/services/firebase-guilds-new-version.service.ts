@@ -11,6 +11,7 @@ import { forkJoin, Observable } from "rxjs";
 import { mergeMap, take, tap } from "rxjs/operators";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { AppConfigService } from "../../app/services/config/app-config.service";
 import { isDiscordGuildChannel } from "../../discord/channels/functions/is-discord-guild-channel";
 import { isDiscordGuildChannelWritable } from "../../discord/channels/functions/types/is-discord-guild-channel-writable";
 import { DiscordChannelGuildService } from "../../discord/channels/services/discord-channel-guild.service";
@@ -21,10 +22,10 @@ import { DiscordGuildService } from "../../discord/guilds/services/discord-guild
 import { DiscordLoggerErrorService } from "../../discord/logger/services/discord-logger-error.service";
 import { IDiscordMessageResponse } from "../../discord/messages/interfaces/discord-message-response";
 import { DiscordMessageCommandReleaseNotesService } from "../../discord/messages/services/command/release-notes/discord-message-command-release-notes.service";
-import { DiscordClientService } from "../../discord/services/discord-client.service";
 import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
 import { IFirebaseGuild } from "../types/firebase-guild";
+import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
 import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
@@ -48,7 +49,8 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
   private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
   private readonly _discordLoggerErrorService: DiscordLoggerErrorService = DiscordLoggerErrorService.getInstance();
-  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
+  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
+  private readonly _firebaseGuildsBreakingChangeService: FirebaseGuildsBreakingChangeService = FirebaseGuildsBreakingChangeService.getInstance();
 
   public constructor() {
     super(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_SERVICE);
@@ -58,11 +60,8 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     this.sendNewReleaseNotesToEachGuild$().subscribe();
   }
 
-  public isReady$(): Observable<[true, true]> {
-    return forkJoin([
-      this._firebaseGuildsService.isReady(),
-      this._discordClientService.isReady(),
-    ]);
+  public isReady$(): Observable<[true]> {
+    return forkJoin([this._firebaseGuildsBreakingChangeService.hasFinished()]);
   }
 
   public sendNewReleaseNotesToEachGuild$(): Observable<unknown> {
@@ -105,9 +104,11 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     querySnapshot.forEach(
       (queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>): void => {
         if (_.isEqual(queryDocumentSnapshot.exists, true)) {
-          this._sendNewReleaseNotesFromFirebaseGuild(
-            queryDocumentSnapshot.data()
-          ).catch();
+          const firebaseGuild: IFirebaseGuild = queryDocumentSnapshot.data();
+
+          if (this._shouldSendNewReleaseNotesFromFirebaseGuild(firebaseGuild)) {
+            this._sendNewReleaseNotesFromFirebaseGuild(firebaseGuild).catch();
+          }
         }
       }
     );
@@ -124,6 +125,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       if (isDiscordGuild(guild)) {
         return this._sendNewReleaseNotesFromDiscordGuild(guild);
       }
+
       this._loggerService.debug({
         context: this._serviceName,
         message: this._chalkService.text(
@@ -221,5 +223,13 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           return Promise.reject(error);
         }
       );
+  }
+
+  private _shouldSendNewReleaseNotesFromFirebaseGuild(
+    firebaseGuild: Readonly<IFirebaseGuild>
+  ): boolean {
+    const appVersion: string = this._appConfigService.getVersion();
+
+    return !_.isEqual(firebaseGuild.lastReleaseNotesVersion, appVersion);
   }
 }

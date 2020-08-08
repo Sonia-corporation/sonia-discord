@@ -83,7 +83,7 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
           this._loggerService.debug({
             context: this._serviceName,
             message: this._chalkService.text(
-              `handle breaking changes for all Firebase guilds`
+              `handling breaking changes for all Firebase guilds...`
             ),
           });
         },

@@ -3,10 +3,10 @@ import { Subject } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
-import { DiscordClientService } from "../../discord/services/discord-client.service";
 import { ILoggerLog } from "../../logger/interfaces/logger-log";
 import { LoggerService } from "../../logger/services/logger.service";
 import { IFirebaseGuild } from "../types/firebase-guild";
+import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
 import { FirebaseGuildsNewVersionService } from "./firebase-guilds-new-version.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
 import QuerySnapshot = admin.firestore.QuerySnapshot;
@@ -17,15 +17,15 @@ jest.mock(`firebase-admin`);
 describe(`FirebaseGuildsNewVersionService`, (): void => {
   let service: FirebaseGuildsNewVersionService;
   let coreEventService: CoreEventService;
-  let discordClientService: DiscordClientService;
   let firebaseGuildsService: FirebaseGuildsService;
   let loggerService: LoggerService;
+  let firebaseGuildsBreakingChangeService: FirebaseGuildsBreakingChangeService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
-    discordClientService = DiscordClientService.getInstance();
     firebaseGuildsService = FirebaseGuildsService.getInstance();
     loggerService = LoggerService.getInstance();
+    firebaseGuildsBreakingChangeService = FirebaseGuildsBreakingChangeService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -94,22 +94,20 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
   });
 
   describe(`isReady$()`, (): void => {
-    let discordClientServiceIsReadySpy: jest.SpyInstance;
-    let firebaseGuildsServiceIsReadySpy: jest.SpyInstance;
+    let firebaseGuildsBreakingChangeServiceHasFinishedSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsNewVersionService();
-      discordClientServiceIsReadySpy = jest
-        .spyOn(discordClientService, `isReady`)
-        .mockResolvedValue(true);
-      firebaseGuildsServiceIsReadySpy = jest
-        .spyOn(firebaseGuildsService, `isReady`)
+      firebaseGuildsBreakingChangeServiceHasFinishedSpy = jest
+        .spyOn(firebaseGuildsBreakingChangeService, `hasFinished`)
         .mockResolvedValue(true);
     });
 
-    describe(`when the Firebase guilds ready check failed`, (): void => {
+    describe(`when the Firebase guilds breaking changes failed`, (): void => {
       beforeEach((): void => {
-        discordClientServiceIsReadySpy.mockRejectedValue(new Error(`error`));
+        firebaseGuildsBreakingChangeServiceHasFinishedSpy.mockRejectedValue(
+          new Error(`error`)
+        );
       });
 
       it(`should consider that the service is not ready`, (done): void => {
@@ -128,57 +126,32 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       });
     });
 
-    describe(`when the Firebase guilds are ready`, (): void => {
+    describe(`when the Firebase guilds breaking changes were successful`, (): void => {
       beforeEach((): void => {
-        discordClientServiceIsReadySpy.mockResolvedValue(true);
+        firebaseGuildsBreakingChangeServiceHasFinishedSpy.mockResolvedValue(
+          true
+        );
       });
 
-      describe(`when Discord ready check failed`, (): void => {
-        beforeEach((): void => {
-          firebaseGuildsServiceIsReadySpy.mockRejectedValue(new Error(`error`));
-        });
+      it(`should consider that the service is ready`, (done): void => {
+        expect.assertions(1);
 
-        it(`should consider that the service is not ready`, (done): void => {
-          expect.assertions(1);
-
-          service.isReady$().subscribe({
-            error: (error): void => {
-              expect(error).toStrictEqual(new Error(`error`));
-              done();
-            },
-            next: (): void => {
-              expect(true).toStrictEqual(false);
-              done();
-            },
-          });
-        });
-      });
-
-      describe(`when Discord is ready`, (): void => {
-        beforeEach((): void => {
-          firebaseGuildsServiceIsReadySpy.mockResolvedValue(true);
-        });
-
-        it(`should consider that the service is ready`, (done): void => {
-          expect.assertions(1);
-
-          service.isReady$().subscribe({
-            error: (): void => {
-              expect(true).toStrictEqual(false);
-              done();
-            },
-            next: (result): void => {
-              expect(result).toStrictEqual([true, true]);
-              done();
-            },
-          });
+        service.isReady$().subscribe({
+          error: (): void => {
+            expect(true).toStrictEqual(false);
+            done();
+          },
+          next: (result): void => {
+            expect(result).toStrictEqual([true]);
+            done();
+          },
         });
       });
     });
   });
 
   describe(`sendNewReleaseNotesToEachGuild$()`, (): void => {
-    let isReady$: Subject<[true, true]>;
+    let isReady$: Subject<[true]>;
     let querySnapshot: QuerySnapshot<IFirebaseGuild>;
 
     let isReady$Spy: jest.SpyInstance;
@@ -187,7 +160,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsNewVersionService();
-      isReady$ = new Subject<[true, true]>();
+      isReady$ = new Subject<[true]>();
       querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>();
 
       isReady$Spy = jest.spyOn(service, `isReady$`).mockReturnValue(isReady$);
@@ -213,7 +186,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           done();
         },
       });
-      isReady$.next([true, true]);
+      isReady$.next([true]);
     });
 
     describe(`when an error occur when waiting to be ready`, (): void => {
@@ -224,7 +197,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
     describe(`once that everything is ready`, (): void => {
       beforeEach((): void => {
-        isReady$.next([true, true]);
+        isReady$.next([true]);
       });
 
       it(`should log about sending release notes to each guild`, (done): void => {
@@ -244,7 +217,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             done();
           },
         });
-        isReady$.next([true, true]);
+        isReady$.next([true]);
       });
 
       it(`should get the guilds`, (done): void => {
@@ -261,7 +234,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             done();
           },
         });
-        isReady$.next([true, true]);
+        isReady$.next([true]);
       });
 
       describe(`when an error occurred when fetching the guilds`, (): void => {
@@ -294,7 +267,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               done();
             },
           });
-          isReady$.next([true, true]);
+          isReady$.next([true]);
         });
       });
     });

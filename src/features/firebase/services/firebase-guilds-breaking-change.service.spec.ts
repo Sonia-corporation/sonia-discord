@@ -214,7 +214,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsBreakingChangeService`,
-          message: `text-handle breaking changes for all Firebase guilds`,
+          message: `text-handling breaking changes for all Firebase guilds...`,
         } as ILoggerLog);
       });
 
