@@ -94,6 +94,11 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
         (
           querySnapshot: QuerySnapshot<IFirebaseGuild>
         ): Promise<WriteResult[] | void> => {
+          this._loggerService.debug({
+            context: this._serviceName,
+            message: this._chalkService.text(`guilds fetched`),
+          });
+
           return this._updateAllFirebaseGuilds(querySnapshot);
         }
       )

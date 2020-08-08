@@ -284,6 +284,22 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
           firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(querySnapshot);
         });
 
+        it(`should log that the Firebase guilds were fetched`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          await expect(service.init()).rejects.toThrow(
+            new Error(`Firebase guilds batch not available`)
+          );
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+            context: `FirebaseGuildsBreakingChangeService`,
+            message: `text-guilds fetched`,
+          } as ILoggerLog);
+        });
+
         it(`should get a batch for the Firebase guilds`, async (): Promise<
           void
         > => {
@@ -537,8 +553,8 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
               await service.init();
 
-              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
-              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
                 context: `FirebaseGuildsBreakingChangeService`,
                 message: `text-updating value-1 Firebase guild...`,
               } as ILoggerLog);
@@ -617,8 +633,8 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
               await service.init();
 
-              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
-              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
                 context: `FirebaseGuildsBreakingChangeService`,
                 message: `text-updating value-2 Firebase guilds...`,
               } as ILoggerLog);
