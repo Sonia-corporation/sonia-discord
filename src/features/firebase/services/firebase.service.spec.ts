@@ -1,3 +1,4 @@
+import * as admin from "firebase-admin";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
@@ -7,6 +8,7 @@ import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-
 import { FirebaseGuildsNewVersionService } from "./firebase-guilds-new-version.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
 import { FirebaseService } from "./firebase.service";
+import WriteResult = admin.firestore.WriteResult;
 
 describe(`FirebaseService`, (): void => {
   let service: FirebaseService;
@@ -66,6 +68,7 @@ describe(`FirebaseService`, (): void => {
     let firebaseAppServiceGetInstanceInitSpy: jest.SpyInstance;
     let firebaseGuildsServiceGetInstanceSpy: jest.SpyInstance;
     let firebaseGuildsServiceGetInstanceInitSpy: jest.SpyInstance;
+    let firebaseGuildsServiceGetInstanceWatchGuildsSpy: jest.SpyInstance;
     let firebaseGuildsNewVersionServiceGetInstanceSpy: jest.SpyInstance;
     let firebaseGuildsNewVersionServiceGetInstanceInitSpy: jest.SpyInstance;
     let firebaseGuildsStoreServiceGetInstanceSpy: jest.SpyInstance;
@@ -97,6 +100,9 @@ describe(`FirebaseService`, (): void => {
       firebaseGuildsServiceGetInstanceInitSpy = jest
         .spyOn(firebaseGuildsService, `init`)
         .mockImplementation();
+      firebaseGuildsServiceGetInstanceWatchGuildsSpy = jest
+        .spyOn(firebaseGuildsService, `watchGuilds`)
+        .mockImplementation();
       firebaseGuildsNewVersionServiceGetInstanceSpy = jest
         .spyOn(FirebaseGuildsNewVersionService, `getInstance`)
         .mockReturnValue(firebaseGuildsNewVersionService);
@@ -114,59 +120,67 @@ describe(`FirebaseService`, (): void => {
         .mockReturnValue(firebaseGuildsBreakingChangeService);
       firebaseGuildsBreakingChangeServiceGetInstanceInitSpy = jest
         .spyOn(firebaseGuildsBreakingChangeService, `init`)
-        .mockImplementation();
+        .mockRejectedValue(new Error(`init error`));
     });
 
-    it(`should create the FirebaseApp service`, (): void => {
+    it(`should create the FirebaseApp service`, async (): Promise<void> => {
       expect.assertions(1);
 
-      service.init();
+      await service.init();
 
       expect(firebaseAppServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the FirebaseApp service`, (): void => {
+    it(`should create and initialize the FirebaseApp service`, async (): Promise<
+      void
+    > => {
       expect.assertions(3);
 
-      service.init();
+      await service.init();
 
       expect(firebaseAppServiceGetInstanceSpy).toHaveBeenCalledWith();
       expect(firebaseAppServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
       expect(firebaseAppServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
-    it(`should create the FirebaseGuilds service`, (): void => {
+    it(`should create the FirebaseGuilds service`, async (): Promise<void> => {
       expect.assertions(1);
 
-      service.init();
+      await service.init();
 
       expect(firebaseGuildsServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the FirebaseGuilds service`, (): void => {
+    it(`should create and initialize the FirebaseGuilds service`, async (): Promise<
+      void
+    > => {
       expect.assertions(3);
 
-      service.init();
+      await service.init();
 
       expect(firebaseGuildsServiceGetInstanceSpy).toHaveBeenCalledWith();
       expect(firebaseGuildsServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
       expect(firebaseGuildsServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
-    it(`should create the FirebaseGuildsNewVersion service`, (): void => {
+    it(`should create the FirebaseGuildsNewVersion service`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
 
-      service.init();
+      await service.init();
 
       expect(
         firebaseGuildsNewVersionServiceGetInstanceSpy
       ).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the FirebaseGuildsNewVersion service`, (): void => {
+    it(`should create and initialize the FirebaseGuildsNewVersion service`, async (): Promise<
+      void
+    > => {
       expect.assertions(3);
 
-      service.init();
+      await service.init();
 
       expect(
         firebaseGuildsNewVersionServiceGetInstanceSpy
@@ -179,18 +193,22 @@ describe(`FirebaseService`, (): void => {
       ).toHaveBeenCalledWith();
     });
 
-    it(`should create the FirebaseGuildsStore service`, (): void => {
+    it(`should create the FirebaseGuildsStore service`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
 
-      service.init();
+      await service.init();
 
       expect(firebaseGuildsStoreServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the FirebaseGuildsStore service`, (): void => {
+    it(`should create and initialize the FirebaseGuildsStore service`, async (): Promise<
+      void
+    > => {
       expect.assertions(3);
 
-      service.init();
+      await service.init();
 
       expect(firebaseGuildsStoreServiceGetInstanceSpy).toHaveBeenCalledWith();
       expect(
@@ -201,20 +219,24 @@ describe(`FirebaseService`, (): void => {
       ).toHaveBeenCalledWith();
     });
 
-    it(`should create the FirebaseGuildsBreakingChange service`, (): void => {
+    it(`should create the FirebaseGuildsBreakingChange service`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
 
-      service.init();
+      await service.init();
 
       expect(
         firebaseGuildsBreakingChangeServiceGetInstanceSpy
       ).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the FirebaseGuildsBreakingChange service`, (): void => {
+    it(`should create and initialize the FirebaseGuildsBreakingChange service`, async (): Promise<
+      void
+    > => {
       expect.assertions(3);
 
-      service.init();
+      await service.init();
 
       expect(
         firebaseGuildsBreakingChangeServiceGetInstanceSpy
@@ -225,6 +247,49 @@ describe(`FirebaseService`, (): void => {
       expect(
         firebaseGuildsBreakingChangeServiceGetInstanceInitSpy
       ).toHaveBeenCalledWith();
+    });
+
+    describe(`when the FirebaseGuildsBreakingChange service failed to be initialized`, (): void => {
+      beforeEach((): void => {
+        firebaseGuildsBreakingChangeServiceGetInstanceInitSpy.mockRejectedValue(
+          new Error(`init error`)
+        );
+      });
+
+      it(`should not watch the Firebase guilds`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        await service.init();
+
+        expect(
+          firebaseGuildsServiceGetInstanceWatchGuildsSpy
+        ).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the FirebaseGuildsBreakingChange service was successfully initialized`, (): void => {
+      let writeResult: WriteResult;
+
+      beforeEach((): void => {
+        writeResult = createMock<WriteResult>();
+
+        firebaseGuildsBreakingChangeServiceGetInstanceInitSpy.mockResolvedValue(
+          writeResult
+        );
+      });
+
+      it(`should watch the Firebase guilds`, async (): Promise<void> => {
+        expect.assertions(2);
+
+        await service.init();
+
+        expect(
+          firebaseGuildsServiceGetInstanceWatchGuildsSpy
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          firebaseGuildsServiceGetInstanceWatchGuildsSpy
+        ).toHaveBeenCalledWith();
+      });
     });
   });
 });

@@ -47,11 +47,12 @@ export class FirebaseGuildsService extends AbstractService {
     super(ServiceNameEnum.FIREBASE_GUILDS_SERVICE);
   }
 
-  public init(): Promise<void> {
-    return this._setStore().then((): void => {
-      this._logGuildCount();
-      this._watchGuilds();
-    });
+  public init(): Promise<number> {
+    return this._setStore().then(
+      (): Promise<number> => {
+        return this._logGuildCount();
+      }
+    );
   }
 
   public getCollectionReference():
@@ -195,7 +196,7 @@ export class FirebaseGuildsService extends AbstractService {
     return undefined;
   }
 
-  private _watchGuilds(): void {
+  public watchGuilds(): void {
     const collectionReference:
       | CollectionReference<IFirebaseGuild>
       | undefined = this.getCollectionReference();

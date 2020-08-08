@@ -27,6 +27,10 @@ export class FirebaseService extends AbstractService {
     FirebaseGuildsService.getInstance().init();
     FirebaseGuildsNewVersionService.getInstance().init();
     FirebaseGuildsStoreService.getInstance().init();
-    FirebaseGuildsBreakingChangeService.getInstance().init();
+    FirebaseGuildsBreakingChangeService.getInstance()
+      .init()
+      .then((): void => {
+        FirebaseGuildsService.getInstance().watchGuilds();
+      });
   }
 }
