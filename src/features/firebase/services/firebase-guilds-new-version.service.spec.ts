@@ -252,7 +252,69 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         isReady$.error(new Error(`error`));
       });
 
-      // @todo add coverage
+      it(`should not get the guilds`, (done): void => {
+        expect.assertions(1);
+
+        service.sendNewReleaseNotesToEachGuild$().subscribe({
+          error: (): void => {
+            expect(firebaseGuildsServiceGetGuildsSpy).not.toHaveBeenCalled();
+            done();
+          },
+          next: (): void => {
+            expect(true).toStrictEqual(false);
+            done();
+          },
+        });
+        isReady$.next([true]);
+      });
+
+      it(`should not get a Firebase guilds batch`, (done): void => {
+        expect.assertions(1);
+
+        service.sendNewReleaseNotesToEachGuild$().subscribe({
+          error: (): void => {
+            expect(firebaseGuildsServiceGetBatchSpy).not.toHaveBeenCalled();
+            done();
+          },
+          next: (): void => {
+            expect(true).toStrictEqual(false);
+            done();
+          },
+        });
+        isReady$.next([true]);
+      });
+
+      it(`should not update the Firebase guild batch`, (done): void => {
+        expect.assertions(1);
+
+        service.sendNewReleaseNotesToEachGuild$().subscribe({
+          error: (): void => {
+            expect(updateMock).not.toHaveBeenCalled();
+            done();
+          },
+          next: (): void => {
+            expect(true).toStrictEqual(false);
+            done();
+          },
+        });
+        isReady$.next([true]);
+      });
+
+      it(`should not commit the batch`, (done): void => {
+        expect.assertions(1);
+
+        service.sendNewReleaseNotesToEachGuild$().subscribe({
+          error: (): void => {
+            expect(commitMock).not.toHaveBeenCalled();
+            done();
+          },
+          next: (): void => {
+            expect(true).toStrictEqual(false);
+            done();
+          },
+        });
+        isReady$.next([true]);
+      });
     });
 
     describe(`once that everything is ready`, (): void => {
@@ -304,7 +366,53 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           );
         });
 
-        // @todo add coverage
+        it(`should not get a Firebase guilds batch`, (done): void => {
+          expect.assertions(2);
+
+          service.sendNewReleaseNotesToEachGuild$().subscribe({
+            error: (): void => {
+              expect(firebaseGuildsServiceGetBatchSpy).not.toHaveBeenCalled();
+              done();
+            },
+            next: (): void => {
+              expect(true).toStrictEqual(false);
+              done();
+            },
+          });
+          isReady$.next([true]);
+        });
+
+        it(`should not update the Firebase guild batch`, (done): void => {
+          expect.assertions(1);
+
+          service.sendNewReleaseNotesToEachGuild$().subscribe({
+            error: (): void => {
+              expect(updateMock).not.toHaveBeenCalled();
+              done();
+            },
+            next: (): void => {
+              expect(true).toStrictEqual(false);
+              done();
+            },
+          });
+          isReady$.next([true]);
+        });
+
+        it(`should not commit the batch`, (done): void => {
+          expect.assertions(1);
+
+          service.sendNewReleaseNotesToEachGuild$().subscribe({
+            error: (): void => {
+              expect(commitMock).not.toHaveBeenCalled();
+              done();
+            },
+            next: (): void => {
+              expect(true).toStrictEqual(false);
+              done();
+            },
+          });
+          isReady$.next([true]);
+        });
       });
 
       describe(`when the guilds were successfully fetched`, (): void => {
@@ -392,7 +500,37 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             isReady$.next([true]);
           });
 
-          // @todo add more coverage
+          it(`should not update the Firebase guild batch`, (done): void => {
+            expect.assertions(1);
+
+            service.sendNewReleaseNotesToEachGuild$().subscribe({
+              error: (): void => {
+                expect(updateMock).not.toHaveBeenCalled();
+                done();
+              },
+              next: (): void => {
+                expect(true).toStrictEqual(false);
+                done();
+              },
+            });
+            isReady$.next([true]);
+          });
+
+          it(`should not commit the batch`, (done): void => {
+            expect.assertions(1);
+
+            service.sendNewReleaseNotesToEachGuild$().subscribe({
+              error: (): void => {
+                expect(commitMock).not.toHaveBeenCalled();
+                done();
+              },
+              next: (): void => {
+                expect(true).toStrictEqual(false);
+                done();
+              },
+            });
+            isReady$.next([true]);
+          });
         });
 
         describe(`when the Firebase guilds batch was found`, (): void => {
@@ -412,7 +550,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               );
             });
 
-            // @todo add coverage
             it(`should log that all Firebase guilds release notes were already sent`, (done): void => {
               expect.assertions(2);
 
@@ -427,6 +564,38 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     context: `FirebaseGuildsNewVersionService`,
                     message: `text-all Firebase guild hint-(0) release notes already sent`,
                   } as ILoggerLog);
+                  done();
+                },
+              });
+              isReady$.next([true]);
+            });
+
+            it(`should not update the Firebase guild batch`, (done): void => {
+              expect.assertions(1);
+
+              service.sendNewReleaseNotesToEachGuild$().subscribe({
+                error: (): void => {
+                  expect(true).toStrictEqual(false);
+                  done();
+                },
+                next: (): void => {
+                  expect(updateMock).not.toHaveBeenCalled();
+                  done();
+                },
+              });
+              isReady$.next([true]);
+            });
+
+            it(`should not commit the batch`, (done): void => {
+              expect.assertions(1);
+
+              service.sendNewReleaseNotesToEachGuild$().subscribe({
+                error: (): void => {
+                  expect(true).toStrictEqual(false);
+                  done();
+                },
+                next: (): void => {
+                  expect(commitMock).not.toHaveBeenCalled();
                   done();
                 },
               });
@@ -464,7 +633,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               );
             });
 
-            // @todo add coverage
             it(`should log that all Firebase guilds release notes were already sent`, (done): void => {
               expect.assertions(2);
 
@@ -479,6 +647,38 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     context: `FirebaseGuildsNewVersionService`,
                     message: `text-all Firebase guild hint-(0) release notes already sent`,
                   } as ILoggerLog);
+                  done();
+                },
+              });
+              isReady$.next([true]);
+            });
+
+            it(`should not update the Firebase guild batch`, (done): void => {
+              expect.assertions(1);
+
+              service.sendNewReleaseNotesToEachGuild$().subscribe({
+                error: (): void => {
+                  expect(true).toStrictEqual(false);
+                  done();
+                },
+                next: (): void => {
+                  expect(updateMock).not.toHaveBeenCalled();
+                  done();
+                },
+              });
+              isReady$.next([true]);
+            });
+
+            it(`should not commit the batch`, (done): void => {
+              expect.assertions(1);
+
+              service.sendNewReleaseNotesToEachGuild$().subscribe({
+                error: (): void => {
+                  expect(true).toStrictEqual(false);
+                  done();
+                },
+                next: (): void => {
+                  expect(commitMock).not.toHaveBeenCalled();
                   done();
                 },
               });
@@ -521,7 +721,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 appConfigServiceGetVersionSpy.mockReturnValue(`1.0.0`);
               });
 
-              // @todo add coverage
               it(`should log that all Firebase guilds release notes were already sent`, (done): void => {
                 expect.assertions(2);
 
@@ -536,6 +735,38 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                       context: `FirebaseGuildsNewVersionService`,
                       message: `text-all Firebase guild hint-(1) release notes already sent`,
                     } as ILoggerLog);
+                    done();
+                  },
+                });
+                isReady$.next([true]);
+              });
+
+              it(`should not update the Firebase guild batch`, (done): void => {
+                expect.assertions(1);
+
+                service.sendNewReleaseNotesToEachGuild$().subscribe({
+                  error: (): void => {
+                    expect(true).toStrictEqual(false);
+                    done();
+                  },
+                  next: (): void => {
+                    expect(updateMock).not.toHaveBeenCalled();
+                    done();
+                  },
+                });
+                isReady$.next([true]);
+              });
+
+              it(`should not commit the batch`, (done): void => {
+                expect.assertions(1);
+
+                service.sendNewReleaseNotesToEachGuild$().subscribe({
+                  error: (): void => {
+                    expect(true).toStrictEqual(false);
+                    done();
+                  },
+                  next: (): void => {
+                    expect(commitMock).not.toHaveBeenCalled();
                     done();
                   },
                 });

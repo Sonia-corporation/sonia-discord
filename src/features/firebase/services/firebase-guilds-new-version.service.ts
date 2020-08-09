@@ -142,7 +142,13 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
             });
 
             return forkJoin(
-              ...firebaseGuilds.map(this.sendNewReleaseNotesFromFirebaseGuild)
+              ...firebaseGuilds.map(
+                (firebaseGuild: IFirebaseGuild): Promise<Message | void> => {
+                  return this.sendNewReleaseNotesFromFirebaseGuild(
+                    firebaseGuild
+                  );
+                }
+              )
             );
           }
 
