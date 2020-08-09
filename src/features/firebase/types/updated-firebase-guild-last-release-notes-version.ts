@@ -1,7 +1,7 @@
-import { IFirebaseGuild } from "./firebase-guild";
+import { IFirebaseGuildVFinal } from "./firebase-guild-v-final";
 
 export type IUpdatedFirebaseGuildLastReleaseNotesVersion = Pick<
-  IFirebaseGuild,
+  IFirebaseGuildVFinal,
   // eslint-disable-next-line quotes
   "lastReleaseNotesVersion"
 >;

@@ -4,7 +4,7 @@ import { ColorEnum } from "../../../../../enums/color.enum";
 import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { removeUndefined } from "../../../../../functions/formatters/remove-undefined";
-import { PartialNested } from "../../../../../types/partial-nested";
+import { IPartialNested } from "../../../../../types/partial-nested";
 import { LoggerService } from "../../../../logger/services/logger.service";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
@@ -26,7 +26,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   private static _instance: DiscordMessageConfigMutatorService;
 
   public static getInstance(
-    config?: Readonly<PartialNested<IDiscordConfig>>
+    config?: Readonly<IPartialNested<IDiscordConfig>>
   ): DiscordMessageConfigMutatorService {
     if (_.isNil(DiscordMessageConfigMutatorService._instance)) {
       DiscordMessageConfigMutatorService._instance = new DiscordMessageConfigMutatorService(
@@ -41,7 +41,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   private _discordMessageConfigCoreService: DiscordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
   private _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
 
-  public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
+  public constructor(config?: Readonly<IPartialNested<IDiscordConfig>>) {
     super(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -51,7 +51,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     this._discordMessageConfigService = DiscordMessageConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
+  public updateConfig(config?: Readonly<IPartialNested<IDiscordConfig>>): void {
     if (!_.isNil(config)) {
       this.updateMessage(config.message);
 
@@ -63,7 +63,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessage(
-    message?: Readonly<PartialNested<IDiscordMessageConfig>>
+    message?: Readonly<IPartialNested<IDiscordMessageConfig>>
   ): void {
     if (!_.isNil(message)) {
       this.updateMessageCommand(message.command);
@@ -73,7 +73,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommand(
-    command?: Readonly<PartialNested<IDiscordMessageCommandConfig>>
+    command?: Readonly<IPartialNested<IDiscordMessageCommandConfig>>
   ): void {
     if (!_.isNil(command)) {
       this.updateMessageCommandCookie(command.cookie);
@@ -87,7 +87,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommandCookie(
-    cookie?: Readonly<PartialNested<IDiscordMessageCommandCookieConfig>>
+    cookie?: Readonly<IPartialNested<IDiscordMessageCommandCookieConfig>>
   ): void {
     if (!_.isNil(cookie)) {
       this.updateMessageCommandCookieImageColor(cookie.imageColor);
@@ -122,7 +122,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommandError(
-    error?: Readonly<PartialNested<IDiscordMessageCommandErrorConfig>>
+    error?: Readonly<IPartialNested<IDiscordMessageCommandErrorConfig>>
   ): void {
     if (!_.isNil(error)) {
       this.updateMessageCommandErrorImageColor(error.imageColor);
@@ -157,7 +157,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommandHelp(
-    error?: Readonly<PartialNested<IDiscordMessageCommandErrorConfig>>
+    error?: Readonly<IPartialNested<IDiscordMessageCommandErrorConfig>>
   ): void {
     if (!_.isNil(error)) {
       this.updateMessageCommandHelpImageColor(error.imageColor);
@@ -190,7 +190,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommandLunch(
-    lunch?: Readonly<PartialNested<IDiscordMessageCommandLunchConfig>>
+    lunch?: Readonly<IPartialNested<IDiscordMessageCommandLunchConfig>>
   ): void {
     if (!_.isNil(lunch)) {
       this.updateMessageCommandLunchImageColor(lunch.imageColor);
@@ -247,7 +247,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
 
   public updateMessageCommandReleaseNotes(
     releaseNotes?: Readonly<
-      PartialNested<IDiscordMessageCommandReleaseNotesConfig>
+      IPartialNested<IDiscordMessageCommandReleaseNotesConfig>
     >
   ): void {
     if (!_.isNil(releaseNotes)) {
@@ -285,7 +285,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageCommandVersion(
-    version?: Readonly<PartialNested<IDiscordMessageCommandVersionConfig>>
+    version?: Readonly<IPartialNested<IDiscordMessageCommandVersionConfig>>
   ): void {
     if (!_.isNil(version)) {
       this.updateMessageCommandVersionImageColor(version.imageColor);
@@ -321,7 +321,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageError(
-    error?: Readonly<PartialNested<IDiscordMessageErrorConfig>>
+    error?: Readonly<IPartialNested<IDiscordMessageErrorConfig>>
   ): void {
     if (!_.isNil(error)) {
       this.updateMessageErrorImageColor(error.imageColor);
@@ -352,7 +352,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageWarning(
-    warning?: Readonly<PartialNested<IDiscordMessageWarningConfig>>
+    warning?: Readonly<IPartialNested<IDiscordMessageWarningConfig>>
   ): void {
     if (!_.isNil(warning)) {
       this.updateMessageWarningImageColor(warning.imageColor);

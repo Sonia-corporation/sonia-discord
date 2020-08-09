@@ -8,7 +8,7 @@ import { DiscordChannelService } from "../../channels/services/discord-channel.s
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordAuthorService } from "../../users/services/discord-author.service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../types/any-discord-message";
+import { IAnyDiscordMessage } from "../types/any-discord-message";
 import { DiscordMessageDmService } from "./discord-message-dm.service";
 import { DiscordMessageErrorService } from "./discord-message-error.service";
 import { DiscordMessageTextService } from "./discord-message-text.service";
@@ -79,7 +79,7 @@ describe(`DiscordMessageService`, (): void => {
 
   describe(`init()`, (): void => {
     let client: Client;
-    let anyDiscordMessage: AnyDiscordMessage;
+    let anyDiscordMessage: IAnyDiscordMessage;
     let discordClientServiceGetClientOnMock: jest.Mock;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
@@ -92,7 +92,7 @@ describe(`DiscordMessageService`, (): void => {
       client = createMock<Client>({
         on: discordClientServiceGetClientOnMock,
       });
-      anyDiscordMessage = createMock<AnyDiscordMessage>();
+      anyDiscordMessage = createMock<IAnyDiscordMessage>();
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
@@ -133,7 +133,7 @@ describe(`DiscordMessageService`, (): void => {
         discordClientServiceGetClientOnMock = jest.fn(
           (
             _event: string,
-            listener: (anyDiscordMessage: Readonly<AnyDiscordMessage>) => void
+            listener: (anyDiscordMessage: Readonly<IAnyDiscordMessage>) => void
           ): void => {
             listener(anyDiscordMessage);
           }
@@ -169,7 +169,7 @@ describe(`DiscordMessageService`, (): void => {
   });
 
   describe(`sendMessage()`, (): void => {
-    let anyDiscordMessage: AnyDiscordMessage;
+    let anyDiscordMessage: IAnyDiscordMessage;
 
     let loggerServiceLogSpy: jest.SpyInstance;
     let handleChannelMessageSpy: jest.SpyInstance;
@@ -179,7 +179,7 @@ describe(`DiscordMessageService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageService();
-      anyDiscordMessage = createMock<AnyDiscordMessage>({
+      anyDiscordMessage = createMock<IAnyDiscordMessage>({
         id: `dummy-id`,
       });
 
@@ -381,7 +381,7 @@ describe(`DiscordMessageService`, (): void => {
   });
 
   describe(`handleChannelMessage()`, (): void => {
-    let anyDiscordMessage: AnyDiscordMessage;
+    let anyDiscordMessage: IAnyDiscordMessage;
     let discordMessageResponse: IDiscordMessageResponse;
     let anyDiscordMessageChannelSendMock: jest.Mock;
 
@@ -399,7 +399,7 @@ describe(`DiscordMessageService`, (): void => {
       anyDiscordMessageChannelSendMock = jest
         .fn()
         .mockRejectedValue(new Error(`Fake test error: send`));
-      anyDiscordMessage = createMock<AnyDiscordMessage>({
+      anyDiscordMessage = createMock<IAnyDiscordMessage>({
         channel: {
           send: anyDiscordMessageChannelSendMock,
         },
@@ -600,7 +600,7 @@ describe(`DiscordMessageService`, (): void => {
                   Promise.reject(new Error(`Message sending error`))
                 );
 
-                anyDiscordMessage = createMock<AnyDiscordMessage>({
+                anyDiscordMessage = createMock<IAnyDiscordMessage>({
                   channel: {
                     send: anyDiscordMessageChannelSendMock,
                   },
@@ -643,7 +643,7 @@ describe(`DiscordMessageService`, (): void => {
                   Promise.resolve()
                 );
 
-                anyDiscordMessage = createMock<AnyDiscordMessage>({
+                anyDiscordMessage = createMock<IAnyDiscordMessage>({
                   channel: {
                     send: anyDiscordMessageChannelSendMock,
                   },
@@ -808,7 +808,7 @@ describe(`DiscordMessageService`, (): void => {
                 Promise.reject(new Error(`Message sending error`))
               );
 
-              anyDiscordMessage = createMock<AnyDiscordMessage>({
+              anyDiscordMessage = createMock<IAnyDiscordMessage>({
                 channel: {
                   send: anyDiscordMessageChannelSendMock,
                 },
@@ -851,7 +851,7 @@ describe(`DiscordMessageService`, (): void => {
                 Promise.resolve()
               );
 
-              anyDiscordMessage = createMock<AnyDiscordMessage>({
+              anyDiscordMessage = createMock<IAnyDiscordMessage>({
                 channel: {
                   send: anyDiscordMessageChannelSendMock,
                 },

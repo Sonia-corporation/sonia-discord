@@ -8,7 +8,7 @@ import { DiscordChannelService } from "../../channels/services/discord-channel.s
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordAuthorService } from "../../users/services/discord-author.service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../types/any-discord-message";
+import { IAnyDiscordMessage } from "../types/any-discord-message";
 import { DiscordMessageDmService } from "./discord-message-dm.service";
 import { DiscordMessageErrorService } from "./discord-message-error.service";
 import { DiscordMessageTextService } from "./discord-message-text.service";
@@ -42,7 +42,7 @@ export class DiscordMessageService extends AbstractService {
   }
 
   public sendMessage(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<void> {
     if (
       _.isString(anyDiscordMessage.content) &&
@@ -76,7 +76,7 @@ export class DiscordMessageService extends AbstractService {
   }
 
   public handleChannelMessage(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<void> {
     if (this._discordChannelService.isDm(anyDiscordMessage.channel)) {
       return this._dmMessage(anyDiscordMessage);
@@ -92,29 +92,32 @@ export class DiscordMessageService extends AbstractService {
   private _listen(): void {
     this._discordClientService
       .getClient()
-      .on(`message`, (anyDiscordMessage: Readonly<AnyDiscordMessage>): void => {
-        this.sendMessage(anyDiscordMessage).catch(
-          (error: Readonly<Error>): void => {
-            // @todo add coverage
-            this._loggerService.debug({
-              context: this._serviceName,
-              extendedContext: true,
-              message: this._loggerService.getSnowflakeContext(
-                anyDiscordMessage.id,
-                `message ignored`
-              ),
-            });
-            this._loggerService.warning({
-              context: this._serviceName,
-              extendedContext: true,
-              message: this._loggerService.getSnowflakeContext(
-                anyDiscordMessage.id,
-                error
-              ),
-            });
-          }
-        );
-      });
+      .on(
+        `message`,
+        (anyDiscordMessage: Readonly<IAnyDiscordMessage>): void => {
+          this.sendMessage(anyDiscordMessage).catch(
+            (error: Readonly<Error>): void => {
+              // @todo add coverage
+              this._loggerService.debug({
+                context: this._serviceName,
+                extendedContext: true,
+                message: this._loggerService.getSnowflakeContext(
+                  anyDiscordMessage.id,
+                  `message ignored`
+                ),
+              });
+              this._loggerService.warning({
+                context: this._serviceName,
+                extendedContext: true,
+                message: this._loggerService.getSnowflakeContext(
+                  anyDiscordMessage.id,
+                  error
+                ),
+              });
+            }
+          );
+        }
+      );
 
     this._loggerService.debug({
       context: this._serviceName,
@@ -125,7 +128,7 @@ export class DiscordMessageService extends AbstractService {
   }
 
   private _dmMessage(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<void> {
     this._loggerService.debug({
       context: this._serviceName,
@@ -150,7 +153,7 @@ export class DiscordMessageService extends AbstractService {
   }
 
   private _textMessage(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<void> {
     this._loggerService.debug({
       context: this._serviceName,
@@ -175,7 +178,7 @@ export class DiscordMessageService extends AbstractService {
   }
 
   private _sendMessage(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>,
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     discordMessageResponse: Readonly<IDiscordMessageResponse>
   ): Promise<void> {
     if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {

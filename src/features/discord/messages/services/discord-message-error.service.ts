@@ -18,7 +18,7 @@ import { DiscordGuildConfigService } from "../../guilds/services/config/discord-
 import { DiscordGuildSoniaService } from "../../guilds/services/discord-guild-sonia.service";
 import { DiscordSoniaService } from "../../users/services/discord-sonia.service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../types/any-discord-message";
+import { IAnyDiscordMessage } from "../types/any-discord-message";
 import { DiscordMessageConfigService } from "./config/discord-message-config.service";
 
 export class DiscordMessageErrorService extends AbstractService {
@@ -46,7 +46,7 @@ export class DiscordMessageErrorService extends AbstractService {
 
   public handleError(
     error: unknown,
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): void {
     this._logOnError(error, anyDiscordMessage);
     this._sendMessage(error, anyDiscordMessage);
@@ -54,7 +54,7 @@ export class DiscordMessageErrorService extends AbstractService {
 
   private _sendMessage(
     error: unknown,
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): void {
     const messageResponse: IDiscordMessageResponse = this._getMessageResponse(
       error,
@@ -66,7 +66,7 @@ export class DiscordMessageErrorService extends AbstractService {
   }
 
   private _sendMessageToOriginalChannel(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>,
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     messageResponse: Readonly<IDiscordMessageResponse>
   ): void {
     if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
@@ -99,7 +99,7 @@ export class DiscordMessageErrorService extends AbstractService {
 
   private _logOnError(
     error: unknown,
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): void {
     this._loggerService.error({
       context: this._serviceName,
@@ -121,14 +121,14 @@ export class DiscordMessageErrorService extends AbstractService {
 
   private _getMessageResponse(
     error: unknown,
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
     return this._getErrorMessageResponse(error, anyDiscordMessage);
   }
 
   private _getErrorMessageResponse(
     error: unknown,
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
     return {
       options: {
@@ -141,7 +141,7 @@ export class DiscordMessageErrorService extends AbstractService {
 
   private _getMessageEmbed(
     error: unknown,
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): MessageEmbedOptions {
     return {
       author: this._getMessageEmbedAuthor(),
@@ -189,7 +189,7 @@ export class DiscordMessageErrorService extends AbstractService {
 
   private _getMessageEmbedFields(
     error: unknown,
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): EmbedFieldData[] {
     return [
       this._getMessageEmbedFieldMessageId(anyDiscordMessage),
@@ -199,7 +199,7 @@ export class DiscordMessageErrorService extends AbstractService {
   }
 
   private _getMessageEmbedFieldMessageId(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): EmbedFieldData {
     return {
       name: `The message's id that killed me`,

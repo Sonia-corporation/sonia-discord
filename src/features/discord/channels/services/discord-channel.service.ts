@@ -4,7 +4,7 @@ import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { isDiscordDmChannel } from "../functions/is-discord-dm-channel";
 import { isDiscordTextChannel } from "../functions/is-discord-text-channel";
-import { AnyDiscordChannel } from "../types/any-discord-channel";
+import { IAnyDiscordChannel } from "../types/any-discord-channel";
 
 export class DiscordChannelService extends AbstractService {
   private static _instance: DiscordChannelService;
@@ -21,7 +21,7 @@ export class DiscordChannelService extends AbstractService {
     super(ServiceNameEnum.DISCORD_CHANNEL_SERVICE);
   }
 
-  public isValid(channel: unknown): channel is AnyDiscordChannel {
+  public isValid(channel: unknown): channel is IAnyDiscordChannel {
     if (this.isText(channel)) {
       return true;
     } else if (this.isDm(channel)) {

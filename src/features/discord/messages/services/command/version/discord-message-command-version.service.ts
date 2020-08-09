@@ -18,7 +18,7 @@ import { DiscordSoniaEmotionalStateEnum } from "../../../../emotional-states/enu
 import { DiscordSoniaEmotionalStateService } from "../../../../emotional-states/services/discord-sonia-emotional-state.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../../../types/any-discord-message";
+import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 
 export class DiscordMessageCommandVersionService extends AbstractService {
@@ -44,7 +44,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   }
 
   public handleResponse(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
     this._loggerService.debug({
       context: this._serviceName,

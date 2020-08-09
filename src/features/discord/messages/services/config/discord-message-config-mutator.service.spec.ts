@@ -1,7 +1,7 @@
 import { ColorEnum } from "../../../../../enums/color.enum";
 import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { PartialNested } from "../../../../../types/partial-nested";
+import { IPartialNested } from "../../../../../types/partial-nested";
 import { IConfigUpdateNumber } from "../../../../config/interfaces/config-update-number";
 import { IConfigUpdateString } from "../../../../config/interfaces/config-update-string";
 import { IConfigUpdateStringOrArray } from "../../../../config/interfaces/config-update-string-or-array";
@@ -39,7 +39,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
   });
 
   describe(`getInstance()`, (): void => {
-    let config: PartialNested<IDiscordConfig> | undefined;
+    let config: IPartialNested<IDiscordConfig> | undefined;
 
     beforeEach((): void => {
       config = {
@@ -103,7 +103,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
   });
 
   describe(`constructor()`, (): void => {
-    let config: PartialNested<IDiscordConfig> | undefined;
+    let config: IPartialNested<IDiscordConfig> | undefined;
 
     let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
 
@@ -625,7 +625,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
   });
 
   describe(`updateConfig()`, (): void => {
-    let config: PartialNested<IDiscordConfig> | undefined;
+    let config: IPartialNested<IDiscordConfig> | undefined;
 
     let loggerLogSpy: jest.SpyInstance;
 
@@ -894,7 +894,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
   });
 
   describe(`updateMessage()`, (): void => {
-    let config: PartialNested<IDiscordMessageConfig> | undefined;
+    let config: IPartialNested<IDiscordMessageConfig> | undefined;
 
     beforeEach((): void => {
       service = DiscordMessageConfigMutatorService.getInstance();
@@ -1097,7 +1097,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
   });
 
   describe(`updateMessageCommand()`, (): void => {
-    let config: PartialNested<IDiscordMessageCommandConfig> | undefined;
+    let config: IPartialNested<IDiscordMessageCommandConfig> | undefined;
 
     beforeEach((): void => {
       service = DiscordMessageConfigMutatorService.getInstance();
@@ -1324,7 +1324,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
   });
 
   describe(`updateMessageCommandCookie()`, (): void => {
-    let config: PartialNested<IDiscordMessageCommandCookieConfig> | undefined;
+    let config: IPartialNested<IDiscordMessageCommandCookieConfig> | undefined;
 
     beforeEach((): void => {
       service = DiscordMessageConfigMutatorService.getInstance();
@@ -1471,7 +1471,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
   });
 
   describe(`updateMessageCommandError()`, (): void => {
-    let config: PartialNested<IDiscordMessageCommandErrorConfig> | undefined;
+    let config: IPartialNested<IDiscordMessageCommandErrorConfig> | undefined;
 
     beforeEach((): void => {
       service = DiscordMessageConfigMutatorService.getInstance();
@@ -1618,7 +1618,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
   });
 
   describe(`updateMessageCommandHelp()`, (): void => {
-    let config: PartialNested<IDiscordMessageCommandHelpConfig> | undefined;
+    let config: IPartialNested<IDiscordMessageCommandHelpConfig> | undefined;
 
     beforeEach((): void => {
       service = DiscordMessageConfigMutatorService.getInstance();
@@ -1764,7 +1764,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
   });
 
   describe(`updateMessageCommandLunch()`, (): void => {
-    let config: PartialNested<IDiscordMessageCommandLunchConfig> | undefined;
+    let config: IPartialNested<IDiscordMessageCommandLunchConfig> | undefined;
 
     beforeEach((): void => {
       service = DiscordMessageConfigMutatorService.getInstance();
@@ -2000,7 +2000,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
   describe(`updateMessageCommandReleaseNotes()`, (): void => {
     let config:
-      | PartialNested<IDiscordMessageCommandReleaseNotesConfig>
+      | IPartialNested<IDiscordMessageCommandReleaseNotesConfig>
       | undefined;
 
     beforeEach((): void => {
@@ -2150,7 +2150,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
   });
 
   describe(`updateMessageCommandVersion()`, (): void => {
-    let config: PartialNested<IDiscordMessageCommandVersionConfig> | undefined;
+    let config: IPartialNested<IDiscordMessageCommandVersionConfig> | undefined;
 
     beforeEach((): void => {
       service = DiscordMessageConfigMutatorService.getInstance();
@@ -2297,7 +2297,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
   });
 
   describe(`updateMessageError()`, (): void => {
-    let config: PartialNested<IDiscordMessageErrorConfig> | undefined;
+    let config: IPartialNested<IDiscordMessageErrorConfig> | undefined;
 
     beforeEach((): void => {
       service = DiscordMessageConfigMutatorService.getInstance();
@@ -2442,7 +2442,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
   });
 
   describe(`updateMessageWarning()`, (): void => {
-    let config: PartialNested<IDiscordMessageWarningConfig> | undefined;
+    let config: IPartialNested<IDiscordMessageWarningConfig> | undefined;
 
     beforeEach((): void => {
       service = DiscordMessageConfigMutatorService.getInstance();

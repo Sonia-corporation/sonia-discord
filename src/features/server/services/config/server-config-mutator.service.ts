@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { PartialNested } from "../../../../types/partial-nested";
+import { IPartialNested } from "../../../../types/partial-nested";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { getEnvironmentPort } from "../../../node/functions/get-environment-port";
 import { ServerConfigValueNameEnum } from "../../enums/server-config-value-name.enum";
@@ -15,7 +15,7 @@ export class ServerConfigMutatorService extends AbstractConfigService<
   private static _instance: ServerConfigMutatorService;
 
   public static getInstance(
-    config?: Readonly<PartialNested<IServerConfig>>
+    config?: Readonly<IPartialNested<IServerConfig>>
   ): ServerConfigMutatorService {
     if (_.isNil(ServerConfigMutatorService._instance)) {
       ServerConfigMutatorService._instance = new ServerConfigMutatorService(
@@ -30,7 +30,7 @@ export class ServerConfigMutatorService extends AbstractConfigService<
   private _serverConfigCoreService: ServerConfigCoreService = ServerConfigCoreService.getInstance();
   private _serverConfigService: ServerConfigService = ServerConfigService.getInstance();
 
-  public constructor(config?: Readonly<PartialNested<IServerConfig>>) {
+  public constructor(config?: Readonly<IPartialNested<IServerConfig>>) {
     super(ServiceNameEnum.SERVER_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -46,7 +46,7 @@ export class ServerConfigMutatorService extends AbstractConfigService<
     this._serverConfigService = ServerConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<PartialNested<IServerConfig>>): void {
+  public updateConfig(config?: Readonly<IPartialNested<IServerConfig>>): void {
     if (!_.isNil(config)) {
       this.updatePort(config.port);
 

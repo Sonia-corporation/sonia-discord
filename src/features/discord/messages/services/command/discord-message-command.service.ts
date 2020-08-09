@@ -3,7 +3,7 @@ import { AbstractService } from "../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../../types/any-discord-message";
+import { IAnyDiscordMessage } from "../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../config/discord-message-config.service";
 import { DiscordMessageCommandCookieService } from "./cookie/discord-message-command-cookie.service";
 import { DiscordMessageCommandErrorService } from "./error/discord-message-command-error.service";
@@ -99,7 +99,7 @@ export class DiscordMessageCommandService extends AbstractService {
   }
 
   public handleVersionCommand(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
     return this._discordMessageCommandVersionService.handleResponse(
       anyDiscordMessage
@@ -107,7 +107,7 @@ export class DiscordMessageCommandService extends AbstractService {
   }
 
   public handleErrorCommand(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
     return this._discordMessageCommandErrorService.handleResponse(
       anyDiscordMessage
@@ -115,7 +115,7 @@ export class DiscordMessageCommandService extends AbstractService {
   }
 
   public handleHelpCommand(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
     return this._discordMessageCommandHelpService.handleResponse(
       anyDiscordMessage
@@ -123,7 +123,7 @@ export class DiscordMessageCommandService extends AbstractService {
   }
 
   public handleCookieCommand(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
     return this._discordMessageCommandCookieService.handleResponse(
       anyDiscordMessage
@@ -131,7 +131,7 @@ export class DiscordMessageCommandService extends AbstractService {
   }
 
   public handleLunchCommand(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
     return this._discordMessageCommandLunchService.handleResponse(
       anyDiscordMessage
@@ -139,7 +139,7 @@ export class DiscordMessageCommandService extends AbstractService {
   }
 
   public handleReleaseNotesCommand(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
     return this._discordMessageCommandReleaseNotesService.handleResponse(
       anyDiscordMessage
@@ -147,7 +147,7 @@ export class DiscordMessageCommandService extends AbstractService {
   }
 
   public handleCommands(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse | null {
     if (
       this._discordMessageContentService.hasContent(anyDiscordMessage.content)

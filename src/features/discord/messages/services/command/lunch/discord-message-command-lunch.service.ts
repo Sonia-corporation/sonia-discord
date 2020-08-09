@@ -14,7 +14,7 @@ import { DiscordSoniaService } from "../../../../users/services/discord-sonia.se
 import { DiscordMessageCommandLunchDescriptionEnum } from "../../../enums/command/lunch/discord-message-command-lunch-description.enum";
 import { DiscordMessageCommandLunchTitleEnum } from "../../../enums/command/lunch/discord-message-command-lunch-title.enum";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../../../types/any-discord-message";
+import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 
 export class DiscordMessageCommandLunchService extends AbstractService {
@@ -37,7 +37,7 @@ export class DiscordMessageCommandLunchService extends AbstractService {
   }
 
   public handleResponse(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
     this._loggerService.debug({
       context: this._serviceName,

@@ -1,6 +1,6 @@
-import { DiscordMessageOptions } from "../types/discord-message-options";
+import { IDiscordMessageOptions } from "../types/discord-message-options";
 
 export interface IDiscordMessageResponse {
-  options?: DiscordMessageOptions;
+  options?: IDiscordMessageOptions;
   response: string;
 }

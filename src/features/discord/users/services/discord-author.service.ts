@@ -2,7 +2,7 @@ import _ from "lodash";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { isDiscordUser } from "../functions/is-discord-user";
-import { AnyDiscordAuthor } from "../types/any-discord-author";
+import { IAnyDiscordAuthor } from "../types/any-discord-author";
 
 export class DiscordAuthorService extends AbstractService {
   private static _instance: DiscordAuthorService;
@@ -19,15 +19,15 @@ export class DiscordAuthorService extends AbstractService {
     super(ServiceNameEnum.DISCORD_AUTHOR_SERVICE);
   }
 
-  public isValid(author: unknown): author is AnyDiscordAuthor {
+  public isValid(author: unknown): author is IAnyDiscordAuthor {
     return isDiscordUser(author);
   }
 
-  public hasValidUsername(author: Readonly<AnyDiscordAuthor>): boolean {
+  public hasValidUsername(author: Readonly<IAnyDiscordAuthor>): boolean {
     return _.isString(author.username) && !_.isEmpty(author.username);
   }
 
-  public isBot(author: Readonly<AnyDiscordAuthor>): boolean {
+  public isBot(author: Readonly<IAnyDiscordAuthor>): boolean {
     return _.isEqual(author.bot, true);
   }
 }

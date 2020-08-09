@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { PartialNested } from "../../../../types/partial-nested";
+import { IPartialNested } from "../../../../types/partial-nested";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { isNodeProduction } from "../../../node/functions/is-node-production";
 import { TimeService } from "../../../time/services/time.service";
@@ -14,7 +14,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   private static _instance: AppConfigMutatorService;
 
   public static getInstance(
-    config?: Readonly<PartialNested<IAppConfig>>
+    config?: Readonly<IPartialNested<IAppConfig>>
   ): AppConfigMutatorService {
     if (_.isNil(AppConfigMutatorService._instance)) {
       AppConfigMutatorService._instance = new AppConfigMutatorService(config);
@@ -28,7 +28,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   private _appConfigCoreService: AppConfigCoreService = AppConfigCoreService.getInstance();
   private _appConfigService: AppConfigService = AppConfigService.getInstance();
 
-  public constructor(config?: Readonly<PartialNested<IAppConfig>>) {
+  public constructor(config?: Readonly<IPartialNested<IAppConfig>>) {
     super(ServiceNameEnum.APP_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -46,7 +46,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     this._appConfigService = AppConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<PartialNested<IAppConfig>>): void {
+  public updateConfig(config?: Readonly<IPartialNested<IAppConfig>>): void {
     if (!_.isNil(config)) {
       this.updateFirstReleaseDate(config.firstReleaseDate);
       this.updateInitializationDate(config.initializationDate);

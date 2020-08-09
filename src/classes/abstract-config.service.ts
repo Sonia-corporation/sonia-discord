@@ -1,6 +1,6 @@
 import { ConfigService } from "../features/config/services/config.service";
 import { ChalkService } from "../features/logger/services/chalk/chalk.service";
-import { PartialNested } from "../types/partial-nested";
+import { IPartialNested } from "../types/partial-nested";
 import { AbstractService } from "./abstract.service";
 import { ServiceNameEnum } from "../enums/service-name.enum";
 
@@ -10,7 +10,7 @@ export abstract class AbstractConfigService<TConfig> extends AbstractService {
 
   protected constructor(
     serviceName: Readonly<ServiceNameEnum>,
-    config?: Readonly<PartialNested<TConfig>>
+    config?: Readonly<IPartialNested<TConfig>>
   ) {
     super(serviceName);
     this.preUpdateConfig();
@@ -40,5 +40,7 @@ export abstract class AbstractConfigService<TConfig> extends AbstractService {
     // Avoid lint error :)
   }
 
-  public abstract updateConfig(config?: Readonly<PartialNested<TConfig>>): void;
+  public abstract updateConfig(
+    config?: Readonly<IPartialNested<TConfig>>
+  ): void;
 }

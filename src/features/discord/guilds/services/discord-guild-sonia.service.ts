@@ -6,7 +6,7 @@ import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
-import { AnyDiscordChannel } from "../../channels/types/any-discord-channel";
+import { IAnyDiscordChannel } from "../../channels/types/any-discord-channel";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordGuildSoniaChannelNameEnum } from "../enums/discord-guild-sonia-channel-name.enum";
 import { IDiscordGuildSoniaSendMessageToChannel } from "../interfaces/discord-guild-sonia-send-message-to-channel";
@@ -53,7 +53,7 @@ export class DiscordGuildSoniaService extends AbstractService {
       if (!_.isNil(guildChannel)) {
         this._sendMessageToChannel(
           sendMessageToChannel,
-          guildChannel as AnyDiscordChannel
+          guildChannel as IAnyDiscordChannel
         );
       } else {
         this._loggerService.warning({
@@ -113,7 +113,7 @@ export class DiscordGuildSoniaService extends AbstractService {
 
   private _sendMessageToChannel(
     sendMessageToChannel: Readonly<IDiscordGuildSoniaSendMessageToChannel>,
-    guildChannel: Readonly<AnyDiscordChannel>
+    guildChannel: Readonly<IAnyDiscordChannel>
   ): void {
     guildChannel
       .send(

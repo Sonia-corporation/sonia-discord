@@ -1,6 +1,6 @@
 import { FirebaseGuildVersionEnum } from "../enums/firebase-guild-version.enum";
-import { IAnyFirebaseGuild } from "../types/any-firebase-guild";
 import { IFirebaseGuild } from "../types/firebase-guild";
+import { IFirebaseGuildVFinal } from "../types/firebase-guild-v-final";
 import { upgradeFirebaseGuildToV2 } from "./upgrade-firebase-guild-to-v2";
 
 /**
@@ -13,8 +13,8 @@ import { upgradeFirebaseGuildToV2 } from "./upgrade-firebase-guild-to-v2";
  * @return {IFirebaseGuild} Updated [Firebase guild]{@link IFirebaseGuild}
  */
 export function handleFirebaseGuildBreakingChange(
-  firebaseGuild: Readonly<IAnyFirebaseGuild>
-): IFirebaseGuild | never {
+  firebaseGuild: Readonly<IFirebaseGuild>
+): IFirebaseGuildVFinal | never {
   if (firebaseGuild.version === FirebaseGuildVersionEnum.V2) {
     return firebaseGuild;
   }

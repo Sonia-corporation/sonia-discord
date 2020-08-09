@@ -1,5 +1,5 @@
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { PartialNested } from "../../../../types/partial-nested";
+import { IPartialNested } from "../../../../types/partial-nested";
 import { IConfigUpdateNumber } from "../../../config/interfaces/config-update-number";
 import { ConfigService } from "../../../config/services/config.service";
 import { CoreEventService } from "../../../core/services/core-event.service";
@@ -26,7 +26,7 @@ describe(`ServerConfigMutatorService`, (): void => {
   });
 
   describe(`getInstance()`, (): void => {
-    let config: PartialNested<IServerConfig> | undefined;
+    let config: IPartialNested<IServerConfig> | undefined;
 
     beforeEach((): void => {
       config = {
@@ -52,7 +52,7 @@ describe(`ServerConfigMutatorService`, (): void => {
   });
 
   describe(`constructor()`, (): void => {
-    let config: PartialNested<IServerConfig> | undefined;
+    let config: IPartialNested<IServerConfig> | undefined;
 
     let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
 
@@ -207,7 +207,7 @@ describe(`ServerConfigMutatorService`, (): void => {
   });
 
   describe(`updateConfig()`, (): void => {
-    let config: PartialNested<IServerConfig> | undefined;
+    let config: IPartialNested<IServerConfig> | undefined;
 
     let loggerLogSpy: jest.SpyInstance;
 
