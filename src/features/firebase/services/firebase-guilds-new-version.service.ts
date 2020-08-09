@@ -84,17 +84,19 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
         return this._sendNewReleaseNotesFromDiscordGuild(guild);
       }
 
-      this._loggerService.debug({
+      this._loggerService.error({
         context: this._serviceName,
         message: this._chalkService.text(
-          `Discord guild ${firebaseGuild.id} does not exists`
+          `Discord guild ${this._chalkService.value(
+            firebaseGuild.id
+          )} does not exists`
         ),
       });
 
       return Promise.reject(new Error(`Discord guild not found`));
     }
 
-    this._loggerService.debug({
+    this._loggerService.error({
       context: this._serviceName,
       message: this._chalkService.text(`Firebase guild id nil`),
     });
@@ -261,7 +263,9 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       this._loggerService.debug({
         context: this._serviceName,
         message: this._chalkService.text(
-          `guild ${guild.id} primary channel is not writable`
+          `guild ${this._chalkService.value(
+            guild.id
+          )} primary channel is not writable`
         ),
       });
 
@@ -271,7 +275,9 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     this._loggerService.debug({
       context: this._serviceName,
       message: this._chalkService.text(
-        `guild ${guild.id} does not have a primary channel`
+        `guild ${this._chalkService.value(
+          guild.id
+        )} does not have a primary channel`
       ),
     });
 

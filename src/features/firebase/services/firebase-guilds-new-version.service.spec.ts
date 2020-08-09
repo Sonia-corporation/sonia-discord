@@ -4,6 +4,8 @@ import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { AppConfigService } from "../../app/services/config/app-config.service";
 import { CoreEventService } from "../../core/services/core-event.service";
+import { DiscordChannelGuildService } from "../../discord/channels/services/discord-channel-guild.service";
+import { DiscordGuildService } from "../../discord/guilds/services/discord-guild.service";
 import { ILoggerLog } from "../../logger/interfaces/logger-log";
 import { LoggerService } from "../../logger/services/logger.service";
 import { FirebaseGuildVersionEnum } from "../enums/firebase-guild-version.enum";
@@ -12,6 +14,7 @@ import { IUpdatedFirebaseGuildLastReleaseNotesVersion } from "../types/updated-f
 import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
 import { FirebaseGuildsNewVersionService } from "./firebase-guilds-new-version.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
+import { Guild } from "discord.js";
 import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
 import WriteBatch = admin.firestore.WriteBatch;
@@ -27,6 +30,8 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
   let loggerService: LoggerService;
   let firebaseGuildsBreakingChangeService: FirebaseGuildsBreakingChangeService;
   let appConfigService: AppConfigService;
+  let discordGuildService: DiscordGuildService;
+  let discordChannelGuildService: DiscordChannelGuildService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -34,6 +39,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     loggerService = LoggerService.getInstance();
     firebaseGuildsBreakingChangeService = FirebaseGuildsBreakingChangeService.getInstance();
     appConfigService = AppConfigService.getInstance();
+    discordChannelGuildService = DiscordChannelGuildService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -1227,6 +1233,254 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 });
               });
             });
+          });
+        });
+      });
+    });
+  });
+
+  describe(`sendNewReleaseNotesFromFirebaseGuild()`, (): void => {
+    let firebaseGuild: IFirebaseGuildVFinal;
+    let guild: Guild;
+
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let loggerServiceErrorSpy: jest.SpyInstance;
+    let discordGuildServiceGetGuildByIdSpy: jest.SpyInstance;
+    let discordChannelGuildServiceGetPrimarySpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsNewVersionService();
+      firebaseGuild = createMock<IFirebaseGuildVFinal>();
+      guild = createMock<Guild>();
+
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
+      loggerServiceErrorSpy = jest
+        .spyOn(loggerService, `error`)
+        .mockImplementation();
+      discordGuildServiceGetGuildByIdSpy = jest
+        .spyOn(discordGuildService, `getGuildById`)
+        .mockImplementation();
+      discordChannelGuildServiceGetPrimarySpy = jest
+        .spyOn(discordChannelGuildService, `getPrimary`)
+        .mockImplementation();
+    });
+
+    describe(`when the given Firebase guild id is undefined`, (): void => {
+      beforeEach((): void => {
+        firebaseGuild.id = undefined;
+      });
+
+      it(`should log an error about the wrong id`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(
+          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+        ).rejects.toThrow(new Error(`Firebase guild id nil`));
+
+        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
+          context: `FirebaseGuildsNewVersionService`,
+          message: `text-Firebase guild id nil`,
+        } as ILoggerLog);
+      });
+
+      it(`should not get the Discord guild`, async (): Promise<void> => {
+        expect.assertions(2);
+
+        await expect(
+          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+        ).rejects.toThrow(new Error(`Firebase guild id nil`));
+
+        expect(discordGuildServiceGetGuildByIdSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not log an error about the Discord guild not existing`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await expect(
+          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+        ).rejects.toThrow(new Error(`Firebase guild id nil`));
+
+        expect(loggerServiceErrorSpy).not.toHaveBeenCalledWith({
+          context: `FirebaseGuildsNewVersionService`,
+          message: `text-Discord guild value-dummy-id does not exists`,
+        } as ILoggerLog);
+      });
+
+      it(`should not get the Discord guild primary channel`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await expect(
+          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+        ).rejects.toThrow(new Error(`Firebase guild id nil`));
+
+        expect(discordChannelGuildServiceGetPrimarySpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not log about not having a Discord guild primary found`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await expect(
+          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+        ).rejects.toThrow(new Error(`Firebase guild id nil`));
+
+        expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
+          context: `FirebaseGuildsNewVersionService`,
+          message: `text-guild value-dummy-id does not have a primary channel`,
+        } as ILoggerLog);
+      });
+    });
+
+    describe(`when the given Firebase guild id is valid`, (): void => {
+      beforeEach((): void => {
+        firebaseGuild.id = `dummy-id`;
+      });
+
+      it(`should not log an error about the wrong id`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await expect(
+          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+        ).rejects.toThrow(new Error(`Discord guild not found`));
+
+        expect(loggerServiceErrorSpy).not.toHaveBeenCalledWith({
+          context: `FirebaseGuildsNewVersionService`,
+          message: `text-Firebase guild id nil`,
+        } as ILoggerLog);
+      });
+
+      it(`should get the Discord guild by using the given Firebase guild id`, async (): Promise<
+        void
+      > => {
+        expect.assertions(3);
+
+        await expect(
+          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+        ).rejects.toThrow(new Error(`Discord guild not found`));
+
+        expect(discordGuildServiceGetGuildByIdSpy).toHaveBeenCalledTimes(1);
+        expect(discordGuildServiceGetGuildByIdSpy).toHaveBeenCalledWith(
+          `dummy-id`
+        );
+      });
+
+      describe(`when the Discord guild was not found`, (): void => {
+        beforeEach((): void => {
+          discordGuildServiceGetGuildByIdSpy.mockReturnValue(undefined);
+        });
+
+        it(`should log an error about the Discord guild not existing`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          await expect(
+            service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+          ).rejects.toThrow(new Error(`Discord guild not found`));
+
+          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
+          expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(2, {
+            context: `FirebaseGuildsNewVersionService`,
+            message: `text-Discord guild value-dummy-id does not exists`,
+          } as ILoggerLog);
+        });
+
+        it(`should not get the Discord guild primary channel`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await expect(
+            service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+          ).rejects.toThrow(new Error(`Discord guild not found`));
+
+          expect(
+            discordChannelGuildServiceGetPrimarySpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should not log about not having a Discord guild primary found`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await expect(
+            service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+          ).rejects.toThrow(new Error(`Discord guild not found`));
+
+          expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
+            context: `FirebaseGuildsNewVersionService`,
+            message: `text-guild value-dummy-id does not have a primary channel`,
+          } as ILoggerLog);
+        });
+      });
+
+      describe(`when the Discord guild was found`, (): void => {
+        beforeEach((): void => {
+          discordGuildServiceGetGuildByIdSpy.mockReturnValue(guild);
+        });
+
+        it(`should not log an error about the Discord guild not existing`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await expect(
+            service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+          ).rejects.toThrow(new Error(`Primary channel not found`));
+
+          expect(loggerServiceErrorSpy).not.toHaveBeenCalledWith({
+            context: `FirebaseGuildsNewVersionService`,
+            message: `text-Discord guild value-dummy-id does not exists`,
+          } as ILoggerLog);
+        });
+
+        it(`should get the Discord guild primary channel`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          await expect(
+            service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+          ).rejects.toThrow(new Error(`Primary channel not found`));
+
+          expect(discordChannelGuildServiceGetPrimarySpy).toHaveBeenCalledTimes(
+            1
+          );
+          expect(discordChannelGuildServiceGetPrimarySpy).toHaveBeenCalledWith(
+            guild
+          );
+        });
+
+        describe(`when the Discord guild primary channel was not found`, (): void => {
+          beforeEach((): void => {
+            discordChannelGuildServiceGetPrimarySpy.mockReturnValue(null);
+          });
+
+          it(`should log about not having a Discord guild primary found`, async (): Promise<
+            void
+          > => {
+            expect.assertions(3);
+
+            await expect(
+              service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+            ).rejects.toThrow(new Error(`Primary channel not found`));
+
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+              context: `FirebaseGuildsNewVersionService`,
+              message: `text-guild value-dummy-id does not have a primary channel`,
+            } as ILoggerLog);
           });
         });
       });
