@@ -16,7 +16,6 @@ import { FirebaseGuildsService } from "./firebase-guilds.service";
 import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
 import WriteBatch = admin.firestore.WriteBatch;
-import WriteResult = admin.firestore.WriteResult;
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 jest.mock(`firebase-admin`);
@@ -79,13 +78,13 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
   });
 
   describe(`init()`, (): void => {
-    let sendNewReleaseNotesToEachGuild$: Subject<WriteResult[] | void>;
+    let sendNewReleaseNotesToEachGuild$: Subject<true>;
 
     let sendNewReleaseNotesToEachGuild$Spy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsNewVersionService();
-      sendNewReleaseNotesToEachGuild$ = new Subject<WriteResult[] | void>();
+      sendNewReleaseNotesToEachGuild$ = new Subject<true>();
 
       sendNewReleaseNotesToEachGuild$Spy = jest
         .spyOn(service, `sendNewReleaseNotesToEachGuild$`)
@@ -261,7 +260,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         isReady$.next([true]);
       });
 
-      it(`should log about sending release notes to each guild`, (done): void => {
+      it(`should log about processing the sending of release notes to each guild...`, (done): void => {
         expect.assertions(2);
 
         service.sendNewReleaseNotesToEachGuild$().subscribe({
@@ -269,7 +268,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
             expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
               context: `FirebaseGuildsNewVersionService`,
-              message: `text-sending release notes to each guild...`,
+              message: `text-processing the sending of release notes to each guild...`,
             } as ILoggerLog);
             done();
           },

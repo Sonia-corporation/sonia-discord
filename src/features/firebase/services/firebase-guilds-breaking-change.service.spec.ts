@@ -425,7 +425,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
                 QueryDocumentSnapshot<IFirebaseGuildVFinal>
               >({
                 data: (): IFirebaseGuildVFinal => {
-                  return createMock({
+                  return createMock<IFirebaseGuildVFinal>({
                     version: FirebaseGuildVersionEnum.V2,
                   });
                 },
@@ -551,6 +551,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
             beforeEach((): void => {
               firebaseGuildV1 = createMock<IFirebaseGuildV1>({
+                id: `dummy-id`,
                 version: FirebaseGuildVersionEnum.V1,
               });
               queryDocumentSnapshot = createMock<
@@ -628,6 +629,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
             beforeEach((): void => {
               firebaseGuildV1 = createMock<IFirebaseGuildV1>({
+                id: `dummy-id`,
                 version: FirebaseGuildVersionEnum.V1,
               });
               queryDocumentSnapshot = createMock<
