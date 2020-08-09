@@ -577,7 +577,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
   describe(`setPresence()`, (): void => {
     let presence: Presence;
-    let setPresenceMock: jest.Mock;
+    let setPresenceMock: jest.Mock<Promise<Presence>>;
     let presenceActivity: IDiscordPresenceActivity;
     let client: Client;
 

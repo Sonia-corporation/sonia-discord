@@ -9,6 +9,7 @@ import { LoggerService } from "../../logger/services/logger.service";
 import { FirebaseGuildVersionEnum } from "../enums/firebase-guild-version.enum";
 import { IFirebaseGuildV1 } from "../interfaces/firebase-guild-v1";
 import { IFirebaseGuild } from "../types/firebase-guild";
+import { IFirebaseGuildVFinal } from "../types/firebase-guild-v-final";
 import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
 import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
@@ -421,15 +422,12 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
           describe(`when there is a Firebase guild but on latest version`, (): void => {
             beforeEach((): void => {
               queryDocumentSnapshot = createMock<
-                QueryDocumentSnapshot<IFirebaseGuild>
+                QueryDocumentSnapshot<IFirebaseGuildVFinal>
               >({
-                data: (): IFirebaseGuild => {
-                  // @todo replace with createMock function (see https://github.com/Typescript-TDD/ts-auto-mock/issues/458)
-                  return {
-                    id: `dummy-id`,
-                    lastReleaseNotesVersion: `0.0.0`,
+                data: (): IFirebaseGuildVFinal => {
+                  return createMock({
                     version: FirebaseGuildVersionEnum.V2,
-                  };
+                  });
                 },
                 exists: true,
               });
@@ -487,15 +485,12 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
           describe(`when there is two Firebase guilds but on latest version`, (): void => {
             beforeEach((): void => {
               queryDocumentSnapshot = createMock<
-                QueryDocumentSnapshot<IFirebaseGuild>
+                QueryDocumentSnapshot<IFirebaseGuildVFinal>
               >({
-                data: (): IFirebaseGuild => {
-                  // @todo replace with createMock function (see https://github.com/Typescript-TDD/ts-auto-mock/issues/458)
-                  return {
-                    id: `dummy-id`,
-                    lastReleaseNotesVersion: `0.0.0`,
+                data: (): IFirebaseGuildVFinal => {
+                  return createMock<IFirebaseGuildVFinal>({
                     version: FirebaseGuildVersionEnum.V2,
-                  };
+                  });
                 },
                 exists: true,
               });
@@ -555,11 +550,9 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
             let firebaseGuildV1: IFirebaseGuildV1;
 
             beforeEach((): void => {
-              // @todo replace with createMock function (see https://github.com/Typescript-TDD/ts-auto-mock/issues/458)
-              firebaseGuildV1 = {
-                id: `dummy-id`,
+              firebaseGuildV1 = createMock<IFirebaseGuildV1>({
                 version: FirebaseGuildVersionEnum.V1,
-              };
+              });
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuild>
               >({
@@ -622,8 +615,8 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
               await service.init();
 
-              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
-              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+              expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsBreakingChangeService`,
                 message: `text-updating value-1 Firebase guild...`,
               } as ILoggerLog);
@@ -634,11 +627,9 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
             let firebaseGuildV1: IFirebaseGuildV1;
 
             beforeEach((): void => {
-              // @todo replace with createMock function (see https://github.com/Typescript-TDD/ts-auto-mock/issues/458)
-              firebaseGuildV1 = {
-                id: `dummy-id`,
+              firebaseGuildV1 = createMock<IFirebaseGuildV1>({
                 version: FirebaseGuildVersionEnum.V1,
-              };
+              });
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuild>
               >({
@@ -702,8 +693,8 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
               await service.init();
 
-              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
-              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+              expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsBreakingChangeService`,
                 message: `text-updating value-2 Firebase guilds...`,
               } as ILoggerLog);

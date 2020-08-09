@@ -138,7 +138,7 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
       );
 
       if (_.gt(countFirebaseGuildsUpdated, 0)) {
-        this._loggerService.debug({
+        this._loggerService.log({
           context: this._serviceName,
           message: this._chalkService.text(
             `updating ${this._chalkService.value(

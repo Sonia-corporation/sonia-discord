@@ -8,7 +8,7 @@ import {
 import admin from "firebase-admin";
 import _ from "lodash";
 import { forkJoin, Observable } from "rxjs";
-import { mergeMap, take, tap } from "rxjs/operators";
+import { mergeMap, take } from "rxjs/operators";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { getRandomValueFromEnum } from "../../../functions/randoms/get-random-value-from-enum";
@@ -69,37 +69,37 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     return forkJoin([this._firebaseGuildsBreakingChangeService.hasFinished()]);
   }
 
-  public sendNewReleaseNotesToEachGuild$(): Observable<unknown> {
+  public sendNewReleaseNotesToEachGuild$(): Observable<WriteResult[] | void> {
     return this._sendNewReleaseNotesToEachGuild$();
   }
 
-  private _sendNewReleaseNotesToEachGuild$(): Observable<unknown> {
+  private _sendNewReleaseNotesToEachGuild$(): Observable<WriteResult[] | void> {
     return this.isReady$().pipe(
       take(1),
-      tap({
-        next: (): void => {
+      mergeMap(
+        (): Promise<QuerySnapshot<IFirebaseGuild>> => {
           this._loggerService.debug({
             context: this._serviceName,
             message: this._chalkService.text(
               `sending release notes to each guild...`
             ),
           });
-        },
-      }),
-      mergeMap(
-        (): Promise<QuerySnapshot<IFirebaseGuild>> => {
+
           return this._firebaseGuildsService.getGuilds();
         }
       ),
-      tap({
-        next: (querySnapshot: QuerySnapshot<IFirebaseGuild>): void => {
+      mergeMap(
+        (
+          querySnapshot: QuerySnapshot<IFirebaseGuild>
+        ): Promise<WriteResult[] | void> => {
           this._loggerService.debug({
             context: this._serviceName,
             message: this._chalkService.text(`guilds fetched`),
           });
-          this._sendNewReleaseNotesToEachGuild(querySnapshot);
-        },
-      })
+
+          return this._sendNewReleaseNotesToEachGuild(querySnapshot);
+        }
+      )
     );
   }
 
@@ -140,7 +140,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       );
 
       if (_.gt(countFirebaseGuildsUpdated, 0)) {
-        this._loggerService.debug({
+        this._loggerService.log({
           context: this._serviceName,
           message: this._chalkService.text(
             `updating ${this._chalkService.value(

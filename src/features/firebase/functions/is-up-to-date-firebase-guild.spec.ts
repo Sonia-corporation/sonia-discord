@@ -1,3 +1,4 @@
+import { createMock } from "ts-auto-mock";
 import { FirebaseGuildVersionEnum } from "../enums/firebase-guild-version.enum";
 import { IFirebaseGuildV1 } from "../interfaces/firebase-guild-v1";
 import { IFirebaseGuildV2 } from "../interfaces/firebase-guild-v2";
@@ -8,11 +9,9 @@ describe(`isUpToDateFirebaseGuild()`, (): void => {
     let firebaseGuild: IFirebaseGuildV1;
 
     beforeEach((): void => {
-      // @todo replace with createMock function (see https://github.com/Typescript-TDD/ts-auto-mock/issues/458)
-      firebaseGuild = {
-        id: `dummy-id`,
+      firebaseGuild = createMock<IFirebaseGuildV1>({
         version: FirebaseGuildVersionEnum.V1,
-      };
+      });
     });
 
     it(`should return false`, (): void => {
@@ -28,12 +27,9 @@ describe(`isUpToDateFirebaseGuild()`, (): void => {
     let firebaseGuild: IFirebaseGuildV2;
 
     beforeEach((): void => {
-      // @todo replace with createMock function (see https://github.com/Typescript-TDD/ts-auto-mock/issues/458)
-      firebaseGuild = {
-        id: `dummy-id`,
-        lastReleaseNotesVersion: `dummy-last-release-notes-version`,
+      firebaseGuild = createMock<IFirebaseGuildV2>({
         version: FirebaseGuildVersionEnum.V2,
-      };
+      });
     });
 
     it(`should return true`, (): void => {
