@@ -104,9 +104,10 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     let discordSoniaEmotionalStateServiceGetEmotionalStateSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
         id: `dummy-id`,
-      });
+      } as unknown) as IAnyDiscordMessage);
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy = jest.spyOn(

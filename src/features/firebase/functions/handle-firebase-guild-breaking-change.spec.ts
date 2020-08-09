@@ -27,6 +27,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
 
     beforeEach((): void => {
       firebaseGuild = createMock<IFirebaseGuildV1>({
+        id: `dummy-id`,
         version: FirebaseGuildVersionEnum.V1,
       });
     });

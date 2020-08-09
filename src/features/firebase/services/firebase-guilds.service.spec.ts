@@ -519,13 +519,15 @@ describe(`FirebaseGuildsService`, (): void => {
       guildId = `dummy-guild-id`;
       documentSnapshot = createMock<DocumentSnapshot<IFirebaseGuild>>();
       getMock = jest.fn().mockResolvedValue(documentSnapshot);
-      documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
         get: getMock,
-      });
+      } as unknown) as DocumentReference<IFirebaseGuild>);
       docMock = jest.fn().mockReturnValue(documentReference);
-      collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      collectionReference = createMock<CollectionReference<IFirebaseGuild>>(({
         doc: docMock,
-      });
+      } as unknown) as CollectionReference<IFirebaseGuild>);
 
       getCollectionReferenceSpy = jest
         .spyOn(service, `getCollectionReference`)
@@ -593,14 +595,16 @@ describe(`FirebaseGuildsService`, (): void => {
       describe(`when the fetch of the guild failed`, (): void => {
         beforeEach((): void => {
           getMock = jest.fn().mockRejectedValue(new Error(`error`));
-          documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+          // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+          documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
             get: getMock,
-          });
+          } as unknown) as DocumentReference<IFirebaseGuild>);
           docMock = jest.fn().mockReturnValue(documentReference);
+          // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
           collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
-            {
+            ({
               doc: docMock,
-            }
+            } as unknown) as CollectionReference<IFirebaseGuild>
           );
 
           getCollectionReferenceSpy.mockReturnValue(collectionReference);
@@ -631,14 +635,16 @@ describe(`FirebaseGuildsService`, (): void => {
         beforeEach((): void => {
           documentSnapshot = createMock<DocumentSnapshot<IFirebaseGuild>>();
           getMock = jest.fn().mockResolvedValue(documentSnapshot);
-          documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+          // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+          documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
             get: getMock,
-          });
+          } as unknown) as DocumentReference<IFirebaseGuild>);
           docMock = jest.fn().mockReturnValue(documentReference);
+          // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
           collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
-            {
+            ({
               doc: docMock,
-            }
+            } as unknown) as CollectionReference<IFirebaseGuild>
           );
 
           getCollectionReferenceSpy.mockReturnValue(collectionReference);
@@ -650,15 +656,17 @@ describe(`FirebaseGuildsService`, (): void => {
               exists: false,
             });
             getMock = jest.fn().mockResolvedValue(documentSnapshot);
-            documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+            // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+            documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
               get: getMock,
-            });
+            } as unknown) as DocumentReference<IFirebaseGuild>);
             docMock = jest.fn().mockReturnValue(documentReference);
+            // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
             collectionReference = createMock<
               CollectionReference<IFirebaseGuild>
-            >({
+            >(({
               doc: docMock,
-            });
+            } as unknown) as CollectionReference<IFirebaseGuild>);
 
             getCollectionReferenceSpy.mockReturnValue(collectionReference);
           });
@@ -678,15 +686,17 @@ describe(`FirebaseGuildsService`, (): void => {
               exists: true,
             });
             getMock = jest.fn().mockResolvedValue(documentSnapshot);
-            documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+            // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+            documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
               get: getMock,
-            });
+            } as unknown) as DocumentReference<IFirebaseGuild>);
             docMock = jest.fn().mockReturnValue(documentReference);
+            // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
             collectionReference = createMock<
               CollectionReference<IFirebaseGuild>
-            >({
+            >(({
               doc: docMock,
-            });
+            } as unknown) as CollectionReference<IFirebaseGuild>);
 
             getCollectionReferenceSpy.mockReturnValue(collectionReference);
           });
@@ -717,14 +727,16 @@ describe(`FirebaseGuildsService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
-      guild = createMock<Guild>({
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      guild = createMock<Guild>(({
         id: `dummy-id`,
-      });
+      } as unknown) as Guild);
       writeResult = createMock<WriteResult>();
       setMock = jest.fn().mockResolvedValue(writeResult);
-      documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
         set: setMock,
-      });
+      } as unknown) as DocumentReference<IFirebaseGuild>);
       docMock = jest.fn().mockReturnValue(documentReference);
       collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
         doc: docMock,
@@ -820,9 +832,10 @@ describe(`FirebaseGuildsService`, (): void => {
       describe(`when the guild was not successfully added into Firebase`, (): void => {
         beforeEach((): void => {
           setMock = jest.fn().mockRejectedValue(new Error(`error`));
-          documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+          // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+          documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
             set: setMock,
-          });
+          } as unknown) as DocumentReference<IFirebaseGuild>);
           docMock = jest.fn().mockReturnValue(documentReference);
           collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
             {
@@ -846,9 +859,10 @@ describe(`FirebaseGuildsService`, (): void => {
         beforeEach((): void => {
           writeResult = createMock<WriteResult>();
           setMock = jest.fn().mockResolvedValue(writeResult);
-          documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+          // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+          documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
             set: setMock,
-          });
+          } as unknown) as DocumentReference<IFirebaseGuild>);
           docMock = jest.fn().mockReturnValue(documentReference);
           collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
             {
