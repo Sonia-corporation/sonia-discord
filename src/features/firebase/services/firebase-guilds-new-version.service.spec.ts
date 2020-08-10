@@ -409,7 +409,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         });
 
         it(`should not get a Firebase guilds batch`, (done): void => {
-          expect.assertions(2);
+          expect.assertions(1);
 
           service.sendNewReleaseNotesToEachGuild$().subscribe({
             error: (): void => {
