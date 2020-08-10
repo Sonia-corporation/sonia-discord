@@ -1,3 +1,3 @@
-export type PartialNested<T> = {
-  [P in keyof T]?: PartialNested<T[P]>;
+export type IPartialNested<T> = {
+  [P in keyof T]?: IPartialNested<T[P]>;
 };

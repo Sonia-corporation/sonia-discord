@@ -1,6 +1,6 @@
 import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { PartialNested } from "../../../../../types/partial-nested";
+import { IPartialNested } from "../../../../../types/partial-nested";
 import { IConfigUpdateString } from "../../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../../config/services/config.service";
 import { CoreEventService } from "../../../../core/services/core-event.service";
@@ -28,7 +28,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
   });
 
   describe(`getInstance()`, (): void => {
-    let config: PartialNested<IDiscordConfig> | undefined;
+    let config: IPartialNested<IDiscordConfig> | undefined;
 
     beforeEach((): void => {
       config = {
@@ -65,7 +65,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
   });
 
   describe(`constructor()`, (): void => {
-    let config: PartialNested<IDiscordConfig> | undefined;
+    let config: IPartialNested<IDiscordConfig> | undefined;
 
     let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
 
@@ -291,7 +291,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
   });
 
   describe(`updateConfig()`, (): void => {
-    let config: PartialNested<IDiscordConfig> | undefined;
+    let config: IPartialNested<IDiscordConfig> | undefined;
 
     let loggerLogSpy: jest.SpyInstance;
 
@@ -505,7 +505,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
   });
 
   describe(`updateSonia()`, (): void => {
-    let config: PartialNested<IDiscordSoniaConfig> | undefined;
+    let config: IPartialNested<IDiscordSoniaConfig> | undefined;
 
     beforeEach((): void => {
       service = DiscordSoniaConfigMutatorService.getInstance();
@@ -667,7 +667,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
   describe(`updateCorporationMessageEmbedAuthor()`, (): void => {
     let config:
-      | PartialNested<IDiscordSoniaCorporationMessageEmbedAuthorConfig>
+      | IPartialNested<IDiscordSoniaCorporationMessageEmbedAuthorConfig>
       | undefined;
 
     beforeEach((): void => {

@@ -2,7 +2,7 @@ import _ from "lodash";
 import { AbstractConfigService } from "../../../../../classes/abstract-config.service";
 import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { PartialNested } from "../../../../../types/partial-nested";
+import { IPartialNested } from "../../../../../types/partial-nested";
 import { LoggerService } from "../../../../logger/services/logger.service";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordSoniaConfig } from "../../../interfaces/discord-sonia-config";
@@ -17,7 +17,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<
   private static _instance: DiscordSoniaConfigMutatorService;
 
   public static getInstance(
-    config?: Readonly<PartialNested<IDiscordConfig>>
+    config?: Readonly<IPartialNested<IDiscordConfig>>
   ): DiscordSoniaConfigMutatorService {
     if (_.isNil(DiscordSoniaConfigMutatorService._instance)) {
       DiscordSoniaConfigMutatorService._instance = new DiscordSoniaConfigMutatorService(
@@ -32,7 +32,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<
   private _discordSoniaConfigCoreService: DiscordSoniaConfigCoreService = DiscordSoniaConfigCoreService.getInstance();
   private _discordSoniaConfigService: DiscordSoniaConfigService = DiscordSoniaConfigService.getInstance();
 
-  public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
+  public constructor(config?: Readonly<IPartialNested<IDiscordConfig>>) {
     super(ServiceNameEnum.DISCORD_SONIA_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -42,7 +42,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<
     this._discordSoniaConfigService = DiscordSoniaConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
+  public updateConfig(config?: Readonly<IPartialNested<IDiscordConfig>>): void {
     if (!_.isNil(config)) {
       this.updateSonia(config.sonia);
 
@@ -54,7 +54,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<
   }
 
   public updateSonia(
-    sonia?: Readonly<PartialNested<IDiscordSoniaConfig>>
+    sonia?: Readonly<IPartialNested<IDiscordSoniaConfig>>
   ): void {
     if (!_.isNil(sonia)) {
       this.updateCorporationImageUrl(sonia.corporationImageUrl);
@@ -81,7 +81,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<
 
   public updateCorporationMessageEmbedAuthor(
     corporationMessageEmbedAuthor?: Readonly<
-      PartialNested<IDiscordSoniaCorporationMessageEmbedAuthorConfig>
+      IPartialNested<IDiscordSoniaCorporationMessageEmbedAuthorConfig>
     >
   ): void {
     if (!_.isNil(corporationMessageEmbedAuthor)) {

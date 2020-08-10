@@ -4,7 +4,7 @@ import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordAuthorService } from "../../users/services/discord-author.service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../types/any-discord-message";
+import { IAnyDiscordMessage } from "../types/any-discord-message";
 import { DiscordMessageCommandService } from "./command/discord-message-command.service";
 import { DiscordMessageAuthorService } from "./discord-message-author.service";
 import { DiscordMessageContentService } from "./discord-message-content.service";
@@ -31,7 +31,7 @@ export class DiscordMessageDmService extends AbstractService {
   }
 
   public getMessage(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse | null {
     if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
       return this._getMessageResponse(anyDiscordMessage);
@@ -41,7 +41,7 @@ export class DiscordMessageDmService extends AbstractService {
   }
 
   private _getMessageResponse(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse | null {
     if (
       this._discordMessageContentService.hasContent(anyDiscordMessage.content)
@@ -57,7 +57,7 @@ export class DiscordMessageDmService extends AbstractService {
   }
 
   private _getCommandMessageResponse(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse | null {
     this._loggerService.debug({
       context: this._serviceName,

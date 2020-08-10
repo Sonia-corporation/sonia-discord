@@ -248,6 +248,10 @@ export const DISCORD_PRESENCE_ACTIVITY_LISTENING: IDiscordPresenceActivity[] = [
     type: DiscordActivityTypeEnum.LISTENING,
   },
   {
+    name: DiscordActivityNameEnum.OUSE,
+    type: DiscordActivityTypeEnum.LISTENING,
+  },
+  {
     name: DiscordActivityNameEnum.P_MO,
     type: DiscordActivityTypeEnum.LISTENING,
   },
@@ -257,6 +261,10 @@ export const DISCORD_PRESENCE_ACTIVITY_LISTENING: IDiscordPresenceActivity[] = [
   },
   {
     name: DiscordActivityNameEnum.PHORA,
+    type: DiscordActivityTypeEnum.LISTENING,
+  },
+  {
+    name: DiscordActivityNameEnum.POWFU,
     type: DiscordActivityTypeEnum.LISTENING,
   },
   {
@@ -281,6 +289,10 @@ export const DISCORD_PRESENCE_ACTIVITY_LISTENING: IDiscordPresenceActivity[] = [
   },
   {
     name: DiscordActivityNameEnum.RYAN_CARAVEO,
+    type: DiscordActivityTypeEnum.LISTENING,
+  },
+  {
+    name: DiscordActivityNameEnum.SAD_BOY_PROLIFIC,
     type: DiscordActivityTypeEnum.LISTENING,
   },
   {

@@ -8,11 +8,11 @@ import { addDiscordDevPrefix } from "../../functions/dev-prefix/add-discord-dev-
 import { DiscordMentionService } from "../../mentions/services/discord-mention.service";
 import { DiscordAuthorService } from "../../users/services/discord-author.service";
 import { DiscordSoniaService } from "../../users/services/discord-sonia.service";
-import { Sonia } from "../../users/types/sonia";
+import { ISonia } from "../../users/types/sonia";
 import { isDiscordMessage } from "../functions/is-discord-message";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../types/any-discord-message";
-import { DiscordMessage } from "../types/discord-message";
+import { IAnyDiscordMessage } from "../types/any-discord-message";
+import { IDiscordMessage } from "../types/discord-message";
 import { DiscordMessageCommandService } from "./command/discord-message-command.service";
 import { DiscordMessageAuthorService } from "./discord-message-author.service";
 import { DiscordMessageContentService } from "./discord-message-content.service";
@@ -43,7 +43,7 @@ export class DiscordMessageTextService extends AbstractService {
   }
 
   public getMessage(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse | null {
     if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
       if (this._discordMentionService.isValid(anyDiscordMessage.mentions)) {
@@ -55,7 +55,7 @@ export class DiscordMessageTextService extends AbstractService {
   }
 
   private _getAnyDiscordMessageResponse(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse | null {
     this._loggerService.debug({
       context: this._serviceName,
@@ -74,13 +74,13 @@ export class DiscordMessageTextService extends AbstractService {
   }
 
   private _getDiscordMessageResponse(
-    discordMessage: Readonly<DiscordMessage>
+    discordMessage: Readonly<IDiscordMessage>
   ): IDiscordMessageResponse | null {
     if (this._discordMentionService.isForEveryone(discordMessage.mentions)) {
       return this._getEveryoneMentionMessageResponse(discordMessage);
     }
 
-    const sonia: Sonia | null = this._discordSoniaService.getSonia();
+    const sonia: ISonia | null = this._discordSoniaService.getSonia();
 
     if (this._discordSoniaService.isValid(sonia)) {
       if (
@@ -97,7 +97,7 @@ export class DiscordMessageTextService extends AbstractService {
   }
 
   private _getEveryoneMentionMessageResponse(
-    discordMessage: Readonly<DiscordMessage>
+    discordMessage: Readonly<IDiscordMessage>
   ): IDiscordMessageResponse {
     this._loggerService.debug({
       context: this._serviceName,
@@ -131,7 +131,7 @@ export class DiscordMessageTextService extends AbstractService {
   }
 
   private _getSoniaMentionMessageResponse(
-    discordMessage: Readonly<DiscordMessage>
+    discordMessage: Readonly<IDiscordMessage>
   ): IDiscordMessageResponse | null {
     this._loggerService.debug({
       context: this._serviceName,

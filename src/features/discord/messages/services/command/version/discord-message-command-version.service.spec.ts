@@ -18,7 +18,7 @@ import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordSoniaEmotionalStateEnum } from "../../../../emotional-states/enums/discord-sonia-emotional-state.enum";
 import { DiscordSoniaEmotionalStateService } from "../../../../emotional-states/services/discord-sonia-emotional-state.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
-import { AnyDiscordMessage } from "../../../types/any-discord-message";
+import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandVersionService } from "./discord-message-command-version.service";
 
@@ -86,7 +86,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
   });
 
   describe(`handleResponse()`, (): void => {
-    let anyDiscordMessage: AnyDiscordMessage;
+    let anyDiscordMessage: IAnyDiscordMessage;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
@@ -104,9 +104,10 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     let discordSoniaEmotionalStateServiceGetEmotionalStateSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      anyDiscordMessage = createMock<AnyDiscordMessage>({
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
         id: `dummy-id`,
-      });
+      } as unknown) as IAnyDiscordMessage);
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy = jest.spyOn(

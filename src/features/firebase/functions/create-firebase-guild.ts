@@ -1,14 +1,13 @@
 import { FIREBASE_GUILD_CURRENT_VERSION } from "../constants/firebase-guild-current-version";
 import { ICreateFirebaseGuild } from "../interfaces/create-firebase-guild";
-import { IFirebaseGuild } from "../interfaces/firebase-guild";
-import moment from "moment-timezone";
+import { IFirebaseGuildVFinal } from "../types/firebase-guild-v-final";
 
 export function createFirebaseGuild({
   id,
-}: ICreateFirebaseGuild): IFirebaseGuild {
+}: Readonly<ICreateFirebaseGuild>): IFirebaseGuildVFinal {
   return {
-    creationDate: moment().toISOString(),
     id,
+    lastReleaseNotesVersion: `0.0.0`,
     version: FIREBASE_GUILD_CURRENT_VERSION,
   };
 }

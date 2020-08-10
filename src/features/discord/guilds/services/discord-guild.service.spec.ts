@@ -1,4 +1,5 @@
-import { Subject } from "rxjs";
+import { Client, Guild, Snowflake } from "discord.js";
+import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../logger/interfaces/logger-log";
@@ -60,75 +61,151 @@ describe(`DiscordGuildService`, (): void => {
   });
 
   describe(`init()`, (): void => {
-    let isReady$: Subject<boolean>;
-
     let loggerServiceDebugSpy: jest.SpyInstance;
-    let discordClientServiceGetClientSpy: jest.SpyInstance;
+    let discordClientServiceIsReadySpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordGuildService();
-      isReady$ = new Subject<boolean>();
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
         .mockImplementation();
-      discordClientServiceGetClientSpy = jest
-        .spyOn(discordClientService, `isReady$`)
-        .mockReturnValue(isReady$.asObservable());
+      discordClientServiceIsReadySpy = jest
+        .spyOn(discordClientService, `isReady`)
+        .mockResolvedValue(true);
     });
 
-    it(`should check if the Discord client is ready`, (): void => {
+    it(`should log about listening the Discord client ready state`, async (): Promise<
+      void
+    > => {
       expect.assertions(2);
 
-      service.init();
-
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
-    });
-
-    describe(`when the Discord client is ready`, (): void => {
-      it(`should do something at some point`, (): void => {
-        expect.assertions(1);
-
-        service.init();
-        isReady$.next(true);
-
-        expect(true).toBe(true);
-      });
-    });
-
-    describe(`when the Discord client is not ready`, (): void => {
-      it(`should do something at some point`, (): void => {
-        expect.assertions(1);
-
-        service.init();
-        isReady$.next(false);
-
-        expect(true).toBe(true);
-      });
-    });
-
-    describe(`when the Discord client ready state throw error`, (): void => {
-      it(`should do something at some point`, (): void => {
-        expect.assertions(1);
-
-        service.init();
-        isReady$.error(new Error(`error`));
-
-        expect(true).toBe(true);
-      });
-    });
-
-    it(`should log about listening Discord client ready state`, (): void => {
-      expect.assertions(2);
-
-      service.init();
+      await service.init();
 
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordGuildService`,
         message: `text-listen "ready" Discord client state`,
       } as ILoggerLog);
+    });
+
+    it(`should check if the Discord client is ready`, async (): Promise<
+      void
+    > => {
+      expect.assertions(2);
+
+      await service.init();
+
+      expect(discordClientServiceIsReadySpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceIsReadySpy).toHaveBeenCalledWith();
+    });
+
+    describe(`when the check for the Discord client ready state failed`, (): void => {
+      beforeEach((): void => {
+        discordClientServiceIsReadySpy.mockRejectedValue(new Error(`error`));
+      });
+
+      it(`should throw an error`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        await expect(service.init()).rejects.toThrow(new Error(`error`));
+      });
+    });
+  });
+
+  describe(`getGuilds()`, (): void => {
+    let guilds: Guild[];
+
+    let discordClientServiceGetClientSpy: jest.SpyInstance;
+    let arrayMock: jest.Mock;
+
+    beforeEach((): void => {
+      service = new DiscordGuildService();
+      guilds = [createMock<Guild>(), createMock<Guild>()];
+
+      arrayMock = jest.fn().mockReturnValue(guilds);
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      discordClientServiceGetClientSpy = jest
+        .spyOn(discordClientService, `getClient`)
+        .mockReturnValue(
+          createMock<Client>({
+            guilds: {
+              cache: ({
+                array: arrayMock,
+              } as unknown) as undefined,
+            },
+          })
+        );
+    });
+
+    it(`should get the Discord client`, (): void => {
+      expect.assertions(2);
+
+      service.getGuilds();
+
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should return the list of guilds`, (): void => {
+      expect.assertions(3);
+
+      const result = service.getGuilds();
+
+      expect(arrayMock).toHaveBeenCalledTimes(1);
+      expect(arrayMock).toHaveBeenCalledWith();
+      expect(result).toStrictEqual(guilds);
+    });
+  });
+
+  describe(`getGuildById()`, (): void => {
+    let guild: Guild;
+    let guildId: Snowflake;
+
+    let discordClientServiceGetClientSpy: jest.SpyInstance;
+    let findMock: jest.Mock;
+
+    beforeEach((): void => {
+      service = new DiscordGuildService();
+      guild = createMock<Guild>();
+
+      findMock = jest.fn().mockImplementation(
+        (fn: (value: Guild) => boolean): Guild => {
+          fn(guild);
+
+          return guild;
+        }
+      );
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      discordClientServiceGetClientSpy = jest
+        .spyOn(discordClientService, `getClient`)
+        .mockReturnValue(
+          createMock<Client>({
+            guilds: {
+              cache: ({
+                find: findMock,
+              } as unknown) as undefined,
+            },
+          })
+        );
+    });
+
+    it(`should get the Discord client`, (): void => {
+      expect.assertions(2);
+
+      service.getGuildById(guildId);
+
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should return the guild matching the given guild id`, (): void => {
+      expect.assertions(2);
+
+      const result = service.getGuildById(guildId);
+
+      expect(findMock).toHaveBeenCalledTimes(1);
+      expect(result).toStrictEqual(guild);
     });
   });
 });

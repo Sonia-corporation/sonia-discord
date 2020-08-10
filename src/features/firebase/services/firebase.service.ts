@@ -1,7 +1,10 @@
 import _ from "lodash";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { FirebaseGuildsStoreService } from "../stores/guilds/services/firebase-guilds-store.service";
 import { FirebaseAppService } from "./firebase-app.service";
+import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
+import { FirebaseGuildsNewVersionService } from "./firebase-guilds-new-version.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
 
 export class FirebaseService extends AbstractService {
@@ -22,5 +25,12 @@ export class FirebaseService extends AbstractService {
   public init(): void {
     FirebaseAppService.getInstance().init();
     FirebaseGuildsService.getInstance().init();
+    FirebaseGuildsNewVersionService.getInstance().init();
+    FirebaseGuildsStoreService.getInstance().init();
+    FirebaseGuildsBreakingChangeService.getInstance()
+      .init()
+      .then((): void => {
+        FirebaseGuildsService.getInstance().watchGuilds();
+      });
   }
 }

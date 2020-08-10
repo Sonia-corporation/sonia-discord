@@ -31,5 +31,6 @@
     <orderEntry type="library" name="firebase" level="project" />
     <orderEntry type="library" name="firebase-admin" level="project" />
     <orderEntry type="library" name="rxjs" level="project" />
+    <orderEntry type="library" name="datorama" level="project" />
   </component>
 </module>

@@ -7,7 +7,7 @@ import { CoreEventService } from "../../../../../core/services/core-event.servic
 import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
-import { AnyDiscordMessage } from "../../../types/any-discord-message";
+import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandErrorService } from "./discord-message-command-error.service";
 import {
@@ -75,7 +75,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
   });
 
   describe(`handleResponse()`, (): void => {
-    let anyDiscordMessage: AnyDiscordMessage;
+    let anyDiscordMessage: IAnyDiscordMessage;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
@@ -84,9 +84,10 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
     let discordMessageConfigServiceGetMessageCommandErrorImageUrlSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      anyDiscordMessage = createMock<AnyDiscordMessage>({
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
         id: `dummy-id`,
-      });
+      } as unknown) as IAnyDiscordMessage);
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy = jest.spyOn(

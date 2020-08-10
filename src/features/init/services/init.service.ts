@@ -2,6 +2,8 @@ import appRootPath from "app-root-path";
 import axios, { AxiosResponse } from "axios";
 import fs from "fs-extra";
 import _ from "lodash";
+import { BehaviorSubject, Observable } from "rxjs";
+import { filter, map, take } from "rxjs/operators";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { ENVIRONMENT } from "../../../environment/constants/environment";
@@ -41,15 +43,41 @@ export class InitService extends AbstractService {
 
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
+  private readonly _isAppConfigured$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
 
   public constructor() {
     super(ServiceNameEnum.INIT_SERVICE);
   }
 
-  public init(): void {
+  public init(): Promise<void> {
     this._loggerService.init();
     ChalkColorService.getInstance().init();
-    this._readEnvironment();
+
+    return this._readEnvironment().then((): void => {
+      this.notifyIsAppConfigured();
+    });
+  }
+
+  public isAppConfigured$(): Observable<boolean> {
+    return this._isAppConfigured$.asObservable();
+  }
+
+  public isAppConfigured(): Promise<true> {
+    return this.isAppConfigured$()
+      .pipe(
+        filter((isAppConfigured: Readonly<boolean>): boolean => {
+          return _.isEqual(isAppConfigured, true);
+        }),
+        take(1),
+        map((): true => true)
+      )
+      .toPromise();
+  }
+
+  public notifyIsAppConfigured(): void {
+    this._isAppConfigured$.next(true);
   }
 
   private _mergeEnvironments(
@@ -65,9 +93,12 @@ export class InitService extends AbstractService {
     FirebaseService.getInstance().init();
   }
 
-  private _configureApp(environment: Readonly<IEnvironment>): void {
+  private _configureApp(
+    environment: Readonly<IEnvironment>
+  ): Promise<IGithubReleaseAndTotalCount> {
     this._configureAppFromEnvironment(environment);
-    this._configureAppFromPackage().then(
+
+    return this._configureAppFromPackage().then(
       (): Promise<IGithubReleaseAndTotalCount> => {
         return this._configureAppFromGitHubReleases();
       }
@@ -104,7 +135,7 @@ export class InitService extends AbstractService {
         (error: unknown): Promise<never> => {
           this._loggerService.error({
             context: this._serviceName,
-            message: this._chalkService.text(`Failed to read the package file`),
+            message: this._chalkService.text(`failed to read the package file`),
           });
           this._loggerService.error({
             context: this._serviceName,
@@ -207,14 +238,14 @@ export class InitService extends AbstractService {
       );
   }
 
-  private _readEnvironment(): Promise<IEnvironment> {
+  private _readEnvironment(): Promise<void> {
     return fs
       .readJson(`${appRootPath}/src/environment/secret-environment.json`)
       .then(
-        (environment: Readonly<IEnvironment>): Promise<IEnvironment> => {
-          this._startApp(this._mergeEnvironments(ENVIRONMENT, environment));
-
-          return Promise.resolve(environment);
+        (environment: Readonly<IEnvironment>): Promise<void> => {
+          return this._startApp(
+            this._mergeEnvironments(ENVIRONMENT, environment)
+          );
         }
       )
       .catch(
@@ -228,17 +259,14 @@ export class InitService extends AbstractService {
             `https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
           );
 
-          return Promise.reject(
-            new Error(
-              `The app must have a secret environment file with at least a "discord.sonia.secretToken" inside it`
-            )
-          );
+          return Promise.reject(error);
         }
       );
   }
 
-  private _startApp(environment: Readonly<IEnvironment>): void {
-    this._configureApp(environment);
-    this._runApp();
+  private _startApp(environment: Readonly<IEnvironment>): Promise<void> {
+    return this._configureApp(environment).then((): void => {
+      this._runApp();
+    });
   }
 }

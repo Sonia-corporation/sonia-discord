@@ -210,6 +210,18 @@ __Sonia new guild message:__
 
 When Sonia joins a new guild, she will send a cookie to the `general` channel.
 
+__New guild member:__
+
+When a new member joins your guild, she will send a message on the `general` channel to welcome him.
+
+__New release notes:__
+
+When a new version of Sonia is available, she will send a message on the `general` channel containing basically the `release-notes` command.
+
+___Note:___
+
+Works with Firebase. See the [Firebase section](#firebase) to learn more about it.
+
 ### Errors
 
 If Sonia receives a Discord error after sending a message she will send a new message containing this error to help you to debug it.  
@@ -223,6 +235,22 @@ Sonia sends the generic Discord errors to the [Sonia Discord errors channel](htt
 ### Warnings
 
 Sonia sends the generic Discord warnings to the [Sonia Discord warnings channel](http://discordapp.com/channels/689833865279307782/701041732086792202).
+
+### Firebase
+
+Because Sonia is more and more enhanced as the time fly and that each guild wants to configure Sonia differently a storage solution was required.  
+Firebase was used to have a dedicated storage and allow basically to do whatever we want.
+
+#### Guilds
+
+Each guild has its own configuration through Firebase based on the guild's Snowflake.  
+Basically, any option edited via Sonia's commands is stored per guild on a Firestore.  
+The guilds have a version to easily maintain and handle the breaking changes during the new releases.  
+The breaking changes are handled at the start of the application and no other operation related to Firebase guilds are allowed during that time.  
+Once the breaking changes are handled the Firestore is watched and any changes that occurred trigger a DML with an Akita store.  
+This is a very efficient way to handle the data and avoid performance issues related to Network.
+
+Once the store loading is done - where the first Firebase guilds were received -, Sonia will try to send the release notes on each guild.
 
 ## Contributing
 

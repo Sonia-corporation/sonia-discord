@@ -13,7 +13,7 @@ import { AppConfigService } from "../../../../../app/services/config/app-config.
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../../../types/any-discord-message";
+import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 
 export class DiscordMessageCommandReleaseNotesService extends AbstractService {
@@ -38,7 +38,7 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
   }
 
   public handleResponse(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
     this._loggerService.debug({
       context: this._serviceName,
@@ -49,6 +49,10 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
       ),
     });
 
+    return this.getMessageResponse();
+  }
+
+  public getMessageResponse(): IDiscordMessageResponse {
     return {
       options: {
         embed: this._getMessageEmbed(),

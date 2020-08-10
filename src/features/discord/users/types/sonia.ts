@@ -1,3 +1,3 @@
 import { ClientUser } from "discord.js";
 
-export type Sonia = ClientUser;
+export type ISonia = ClientUser;
