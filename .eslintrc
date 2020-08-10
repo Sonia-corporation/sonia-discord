@@ -86,9 +86,7 @@ rules:
     - asc
     - caseSensitive: true
       natural: true
-  quotes:
-    - error
-    - backtick
+  quotes: 'off'
   no-else-return:
     - error
     - allowElseIf: true
@@ -98,6 +96,9 @@ rules:
     - caseSensitive: true
       natural: true
       minKeys: 2
+  '@typescript-eslint/quotes':
+    - error
+    - backtick
   '@typescript-eslint/no-var-requires': 'off'
   '@typescript-eslint/explicit-function-return-type': 'off'
   '@typescript-eslint/no-unused-vars':
