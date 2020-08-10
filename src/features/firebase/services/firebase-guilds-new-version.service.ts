@@ -13,11 +13,9 @@ import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { getRandomValueFromEnum } from "../../../functions/randoms/get-random-value-from-enum";
 import { AppConfigService } from "../../app/services/config/app-config.service";
-import { isDiscordGuildChannel } from "../../discord/channels/functions/is-discord-guild-channel";
 import { isDiscordGuildChannelWritable } from "../../discord/channels/functions/types/is-discord-guild-channel-writable";
 import { DiscordChannelGuildService } from "../../discord/channels/services/discord-channel-guild.service";
 import { DiscordGuildSoniaChannelNameEnum } from "../../discord/guilds/enums/discord-guild-sonia-channel-name.enum";
-import { isDiscordGuild } from "../../discord/guilds/functions/is-discord-guild";
 import { DiscordGuildSoniaService } from "../../discord/guilds/services/discord-guild-sonia.service";
 import { DiscordGuildService } from "../../discord/guilds/services/discord-guild.service";
 import { DiscordLoggerErrorService } from "../../discord/logger/services/discord-logger-error.service";
@@ -80,7 +78,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
         firebaseGuild.id
       );
 
-      if (isDiscordGuild(guild)) {
+      if (!_.isNil(guild)) {
         return this._sendNewReleaseNotesFromDiscordGuild(guild);
       }
 
@@ -253,13 +251,14 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       guild
     );
 
-    if (isDiscordGuildChannel(guildChannel)) {
+    if (!_.isNil(guildChannel)) {
       if (isDiscordGuildChannelWritable(guildChannel)) {
         return this._sendNewReleaseNotesFromDiscordChannel(
           guildChannel,
           guild.id
         );
       }
+
       this._loggerService.debug({
         context: this._serviceName,
         message: this._chalkService.text(

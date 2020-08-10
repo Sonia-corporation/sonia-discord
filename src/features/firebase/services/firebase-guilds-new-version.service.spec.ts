@@ -14,7 +14,7 @@ import { IUpdatedFirebaseGuildLastReleaseNotesVersion } from "../types/updated-f
 import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
 import { FirebaseGuildsNewVersionService } from "./firebase-guilds-new-version.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
-import { Guild } from "discord.js";
+import { Guild, GuildChannel } from "discord.js";
 import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
 import WriteBatch = admin.firestore.WriteBatch;
@@ -39,6 +39,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     loggerService = LoggerService.getInstance();
     firebaseGuildsBreakingChangeService = FirebaseGuildsBreakingChangeService.getInstance();
     appConfigService = AppConfigService.getInstance();
+    discordGuildService = DiscordGuildService.getInstance();
     discordChannelGuildService = DiscordChannelGuildService.getInstance();
   });
 
@@ -1242,6 +1243,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
   describe(`sendNewReleaseNotesFromFirebaseGuild()`, (): void => {
     let firebaseGuild: IFirebaseGuildVFinal;
     let guild: Guild;
+    let guildChannel: GuildChannel;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let loggerServiceErrorSpy: jest.SpyInstance;
@@ -1251,7 +1253,14 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     beforeEach((): void => {
       service = new FirebaseGuildsNewVersionService();
       firebaseGuild = createMock<IFirebaseGuildVFinal>();
-      guild = createMock<Guild>();
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      guild = createMock<Guild>(({
+        id: `dummy-id`,
+      } as unknown) as Guild);
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      guildChannel = createMock<GuildChannel>(({
+        type: `news`,
+      } as unknown) as GuildChannel);
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
@@ -1323,7 +1332,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         expect(discordChannelGuildServiceGetPrimarySpy).not.toHaveBeenCalled();
       });
 
-      it(`should not log about not having a Discord guild primary found`, async (): Promise<
+      it(`should not log about not having a Discord guild primary channel found`, async (): Promise<
         void
       > => {
         expect.assertions(2);
@@ -1335,6 +1344,21 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionService`,
           message: `text-guild value-dummy-id does not have a primary channel`,
+        } as ILoggerLog);
+      });
+
+      it(`should not log about the Discord guild primary channel not being writable`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await expect(
+          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+        ).rejects.toThrow(new Error(`Firebase guild id nil`));
+
+        expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
+          context: `FirebaseGuildsNewVersionService`,
+          message: `text-guild value-dummy-id primary channel is not writable`,
         } as ILoggerLog);
       });
     });
@@ -1388,8 +1412,8 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
           ).rejects.toThrow(new Error(`Discord guild not found`));
 
-          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
-          expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(2, {
+          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
             context: `FirebaseGuildsNewVersionService`,
             message: `text-Discord guild value-dummy-id does not exists`,
           } as ILoggerLog);
@@ -1409,7 +1433,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           ).not.toHaveBeenCalled();
         });
 
-        it(`should not log about not having a Discord guild primary found`, async (): Promise<
+        it(`should not log about not having a Discord guild primary channel found`, async (): Promise<
           void
         > => {
           expect.assertions(2);
@@ -1421,6 +1445,21 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
             context: `FirebaseGuildsNewVersionService`,
             message: `text-guild value-dummy-id does not have a primary channel`,
+          } as ILoggerLog);
+        });
+
+        it(`should not log about the Discord guild primary channel not being writable`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await expect(
+            service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+          ).rejects.toThrow(new Error(`Discord guild not found`));
+
+          expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
+            context: `FirebaseGuildsNewVersionService`,
+            message: `text-guild value-dummy-id primary channel is not writable`,
           } as ILoggerLog);
         });
       });
@@ -1467,7 +1506,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             discordChannelGuildServiceGetPrimarySpy.mockReturnValue(null);
           });
 
-          it(`should log about not having a Discord guild primary found`, async (): Promise<
+          it(`should log about not having a Discord guild primary channel found`, async (): Promise<
             void
           > => {
             expect.assertions(3);
@@ -1480,6 +1519,60 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `FirebaseGuildsNewVersionService`,
               message: `text-guild value-dummy-id does not have a primary channel`,
+            } as ILoggerLog);
+          });
+
+          it(`should not log about the Discord guild primary channel not being writable`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
+
+            await expect(
+              service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+            ).rejects.toThrow(new Error(`Primary channel not found`));
+
+            expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
+              context: `FirebaseGuildsNewVersionService`,
+              message: `text-guild value-dummy-id primary channel is not writable`,
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the Discord guild primary channel was found`, (): void => {
+          beforeEach((): void => {
+            discordChannelGuildServiceGetPrimarySpy.mockReturnValue(
+              guildChannel
+            );
+          });
+
+          it(`should not log about not having a Discord guild primary channel found`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
+
+            await expect(
+              service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+            ).rejects.toThrow(new Error(`Primary channel not writable`));
+
+            expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
+              context: `FirebaseGuildsNewVersionService`,
+              message: `text-guild value-dummy-id does not have a primary channel`,
+            } as ILoggerLog);
+          });
+
+          it(`should log about the Discord guild primary channel not being writable`, async (): Promise<
+            void
+          > => {
+            expect.assertions(3);
+
+            await expect(
+              service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+            ).rejects.toThrow(new Error(`Primary channel not writable`));
+
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+              context: `FirebaseGuildsNewVersionService`,
+              message: `text-guild value-dummy-id primary channel is not writable`,
             } as ILoggerLog);
           });
         });
