@@ -1,5 +1,19 @@
 # Semantic Versioning Changelog
 
+# [1.66.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.65.0...1.66.0) (2020-08-10)
+
+
+### :rocket: Features
+
+* **activity:** add three new activities for Sonia ([1f2d295](https://github.com/Sonia-corporation/il-est-midi-discord/commit/1f2d29563d9c69e889b44b2ed93ff7e363ddcdc5))
+* **release-notes:** do not send them if already sent ([ee48589](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ee48589581b408eb7718551d3e7a6297da820a06))
+* **discord:** send the release notes on each general channel ([1a5a242](https://github.com/Sonia-corporation/il-est-midi-discord/commit/1a5a2429610ea73513e2a7ca276987683e24ee93))
+
+
+### :zap: Performance Improvements
+
+* **akita:** enable prod mode for akita ([1090c80](https://github.com/Sonia-corporation/il-est-midi-discord/commit/1090c80b07ccb1efcef6f4ab25137c1fd0a6321f))
+
 # [1.65.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.64.1...1.65.0) (2020-08-03)
 
 
