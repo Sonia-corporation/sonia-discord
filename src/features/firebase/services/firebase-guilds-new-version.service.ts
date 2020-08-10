@@ -312,7 +312,9 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           this._loggerService.error({
             context: this._serviceName,
             message: this._chalkService.text(
-              `release notes message sending failed for the guild ${guildId} on the general channel`
+              `release notes message sending failed for the guild ${this._chalkService.value(
+                guildId
+              )} on the general channel`
             ),
           });
           this._loggerService.error({

@@ -1,3 +1,4 @@
+import { Guild, GuildChannel, Message, TextChannel } from "discord.js";
 import * as admin from "firebase-admin";
 import { Subject } from "rxjs";
 import { createMock } from "ts-auto-mock";
@@ -6,6 +7,8 @@ import { AppConfigService } from "../../app/services/config/app-config.service";
 import { CoreEventService } from "../../core/services/core-event.service";
 import { DiscordChannelGuildService } from "../../discord/channels/services/discord-channel-guild.service";
 import { DiscordGuildService } from "../../discord/guilds/services/discord-guild.service";
+import { IDiscordMessageResponse } from "../../discord/messages/interfaces/discord-message-response";
+import { DiscordMessageCommandReleaseNotesService } from "../../discord/messages/services/command/release-notes/discord-message-command-release-notes.service";
 import { ILoggerLog } from "../../logger/interfaces/logger-log";
 import { LoggerService } from "../../logger/services/logger.service";
 import { FirebaseGuildVersionEnum } from "../enums/firebase-guild-version.enum";
@@ -14,7 +17,6 @@ import { IUpdatedFirebaseGuildLastReleaseNotesVersion } from "../types/updated-f
 import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
 import { FirebaseGuildsNewVersionService } from "./firebase-guilds-new-version.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
-import { Guild, GuildChannel } from "discord.js";
 import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
 import WriteBatch = admin.firestore.WriteBatch;
@@ -32,6 +34,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
   let appConfigService: AppConfigService;
   let discordGuildService: DiscordGuildService;
   let discordChannelGuildService: DiscordChannelGuildService;
+  let discordMessageCommandReleaseNotesService: DiscordMessageCommandReleaseNotesService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -41,6 +44,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     appConfigService = AppConfigService.getInstance();
     discordGuildService = DiscordGuildService.getInstance();
     discordChannelGuildService = DiscordChannelGuildService.getInstance();
+    discordMessageCommandReleaseNotesService = DiscordMessageCommandReleaseNotesService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -1244,11 +1248,16 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     let firebaseGuild: IFirebaseGuildVFinal;
     let guild: Guild;
     let guildChannel: GuildChannel;
+    let textChannel: TextChannel;
+    let discordMessageResponse: IDiscordMessageResponse;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let loggerServiceErrorSpy: jest.SpyInstance;
+    let loggerServiceLogSpy: jest.SpyInstance;
     let discordGuildServiceGetGuildByIdSpy: jest.SpyInstance;
     let discordChannelGuildServiceGetPrimarySpy: jest.SpyInstance;
+    let discordMessageCommandReleaseNotesServiceGetMessageResponseSpy: jest.SpyInstance;
+    let sendMock: jest.Mock;
 
     beforeEach((): void => {
       service = new FirebaseGuildsNewVersionService();
@@ -1261,6 +1270,12 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       guildChannel = createMock<GuildChannel>(({
         type: `news`,
       } as unknown) as GuildChannel);
+      sendMock = jest.fn().mockRejectedValue(new Error(`send error`));
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      textChannel = createMock<TextChannel>(({
+        send: sendMock,
+      } as unknown) as TextChannel);
+      discordMessageResponse = createMock<IDiscordMessageResponse>();
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
@@ -1268,12 +1283,18 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       loggerServiceErrorSpy = jest
         .spyOn(loggerService, `error`)
         .mockImplementation();
+      loggerServiceLogSpy = jest
+        .spyOn(loggerService, `log`)
+        .mockImplementation();
       discordGuildServiceGetGuildByIdSpy = jest
         .spyOn(discordGuildService, `getGuildById`)
         .mockImplementation();
       discordChannelGuildServiceGetPrimarySpy = jest
         .spyOn(discordChannelGuildService, `getPrimary`)
         .mockImplementation();
+      discordMessageCommandReleaseNotesServiceGetMessageResponseSpy = jest
+        .spyOn(discordMessageCommandReleaseNotesService, `getMessageResponse`)
+        .mockReturnValue(discordMessageResponse);
     });
 
     describe(`when the given Firebase guild id is undefined`, (): void => {
@@ -1359,6 +1380,75 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionService`,
           message: `text-guild value-dummy-id primary channel is not writable`,
+        } as ILoggerLog);
+      });
+
+      it(`should not get the release notes command message response`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await expect(
+          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+        ).rejects.toThrow(new Error(`Firebase guild id nil`));
+
+        expect(
+          discordMessageCommandReleaseNotesServiceGetMessageResponseSpy
+        ).not.toHaveBeenCalled();
+      });
+
+      it(`should send the message on the Discord guild primary channel`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await expect(
+          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+        ).rejects.toThrow(new Error(`Firebase guild id nil`));
+
+        expect(sendMock).not.toHaveBeenCalled();
+      });
+
+      it(`should not log about successfully sent the release notes`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await expect(
+          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+        ).rejects.toThrow(new Error(`Firebase guild id nil`));
+
+        expect(loggerServiceLogSpy).not.toHaveBeenCalledWith({
+          context: `FirebaseGuildsNewVersionService`,
+          message: `text-release notes message sent for guild value-dummy-id on general channel`,
+        } as ILoggerLog);
+      });
+
+      it(`should not log about the fail of the message sending`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await expect(
+          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+        ).rejects.toThrow(new Error(`Firebase guild id nil`));
+
+        expect(loggerServiceErrorSpy).not.toHaveBeenCalledWith({
+          context: `FirebaseGuildsNewVersionService`,
+          message: `text-release notes message sending failed for the guild value-dummy-id on the general channel`,
+        } as ILoggerLog);
+      });
+
+      it(`should not log the error`, async (): Promise<void> => {
+        expect.assertions(2);
+
+        await expect(
+          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+        ).rejects.toThrow(new Error(`Firebase guild id nil`));
+
+        expect(loggerServiceErrorSpy).not.toHaveBeenCalledWith({
+          context: `FirebaseGuildsNewVersionService`,
+          message: `text-Error: send error`,
         } as ILoggerLog);
       });
     });
@@ -1462,6 +1552,75 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             message: `text-guild value-dummy-id primary channel is not writable`,
           } as ILoggerLog);
         });
+
+        it(`should not get the release notes command message response`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await expect(
+            service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+          ).rejects.toThrow(new Error(`Discord guild not found`));
+
+          expect(
+            discordMessageCommandReleaseNotesServiceGetMessageResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should send the message on the Discord guild primary channel`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await expect(
+            service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+          ).rejects.toThrow(new Error(`Discord guild not found`));
+
+          expect(sendMock).not.toHaveBeenCalled();
+        });
+
+        it(`should not log about successfully sent the release notes`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await expect(
+            service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+          ).rejects.toThrow(new Error(`Discord guild not found`));
+
+          expect(loggerServiceLogSpy).not.toHaveBeenCalledWith({
+            context: `FirebaseGuildsNewVersionService`,
+            message: `text-release notes message sent for guild value-dummy-id on general channel`,
+          } as ILoggerLog);
+        });
+
+        it(`should not log about the fail of the message sending`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await expect(
+            service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+          ).rejects.toThrow(new Error(`Discord guild not found`));
+
+          expect(loggerServiceErrorSpy).not.toHaveBeenCalledWith({
+            context: `FirebaseGuildsNewVersionService`,
+            message: `text-release notes message sending failed for the guild value-dummy-id on the general channel`,
+          } as ILoggerLog);
+        });
+
+        it(`should not log the error`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await expect(
+            service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+          ).rejects.toThrow(new Error(`Discord guild not found`));
+
+          expect(loggerServiceErrorSpy).not.toHaveBeenCalledWith({
+            context: `FirebaseGuildsNewVersionService`,
+            message: `text-Error: send error`,
+          } as ILoggerLog);
+        });
       });
 
       describe(`when the Discord guild was found`, (): void => {
@@ -1536,6 +1695,75 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               message: `text-guild value-dummy-id primary channel is not writable`,
             } as ILoggerLog);
           });
+
+          it(`should not get the release notes command message response`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
+
+            await expect(
+              service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+            ).rejects.toThrow(new Error(`Primary channel not found`));
+
+            expect(
+              discordMessageCommandReleaseNotesServiceGetMessageResponseSpy
+            ).not.toHaveBeenCalled();
+          });
+
+          it(`should send the message on the Discord guild primary channel`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
+
+            await expect(
+              service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+            ).rejects.toThrow(new Error(`Primary channel not found`));
+
+            expect(sendMock).not.toHaveBeenCalled();
+          });
+
+          it(`should not log about successfully sent the release notes`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
+
+            await expect(
+              service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+            ).rejects.toThrow(new Error(`Primary channel not found`));
+
+            expect(loggerServiceLogSpy).not.toHaveBeenCalledWith({
+              context: `FirebaseGuildsNewVersionService`,
+              message: `text-release notes message sent for guild value-dummy-id on general channel`,
+            } as ILoggerLog);
+          });
+
+          it(`should not log about the fail of the message sending`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
+
+            await expect(
+              service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+            ).rejects.toThrow(new Error(`Primary channel not found`));
+
+            expect(loggerServiceErrorSpy).not.toHaveBeenCalledWith({
+              context: `FirebaseGuildsNewVersionService`,
+              message: `text-release notes message sending failed for the guild value-dummy-id on the general channel`,
+            } as ILoggerLog);
+          });
+
+          it(`should not log the error`, async (): Promise<void> => {
+            expect.assertions(2);
+
+            await expect(
+              service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+            ).rejects.toThrow(new Error(`Primary channel not found`));
+
+            expect(loggerServiceErrorSpy).not.toHaveBeenCalledWith({
+              context: `FirebaseGuildsNewVersionService`,
+              message: `text-Error: send error`,
+            } as ILoggerLog);
+          });
         });
 
         describe(`when the Discord guild primary channel was found`, (): void => {
@@ -1560,20 +1788,256 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             } as ILoggerLog);
           });
 
-          it(`should log about the Discord guild primary channel not being writable`, async (): Promise<
-            void
-          > => {
-            expect.assertions(3);
+          describe(`when the Discord guild primary channel is not writable`, (): void => {
+            beforeEach((): void => {
+              guildChannel.type = `news`;
 
-            await expect(
-              service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
-            ).rejects.toThrow(new Error(`Primary channel not writable`));
+              discordChannelGuildServiceGetPrimarySpy.mockReturnValue(
+                guildChannel
+              );
+            });
 
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-            expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-              context: `FirebaseGuildsNewVersionService`,
-              message: `text-guild value-dummy-id primary channel is not writable`,
-            } as ILoggerLog);
+            it(`should log about the Discord guild primary channel not being writable`, async (): Promise<
+              void
+            > => {
+              expect.assertions(3);
+
+              await expect(
+                service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+              ).rejects.toThrow(new Error(`Primary channel not writable`));
+
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+                context: `FirebaseGuildsNewVersionService`,
+                message: `text-guild value-dummy-id primary channel is not writable`,
+              } as ILoggerLog);
+            });
+
+            it(`should not get the release notes command message response`, async (): Promise<
+              void
+            > => {
+              expect.assertions(2);
+
+              await expect(
+                service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+              ).rejects.toThrow(new Error(`Primary channel not writable`));
+
+              expect(
+                discordMessageCommandReleaseNotesServiceGetMessageResponseSpy
+              ).not.toHaveBeenCalled();
+            });
+
+            it(`should send the message on the Discord guild primary channel`, async (): Promise<
+              void
+            > => {
+              expect.assertions(2);
+
+              await expect(
+                service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+              ).rejects.toThrow(new Error(`Primary channel not writable`));
+
+              expect(sendMock).not.toHaveBeenCalled();
+            });
+
+            it(`should not log about successfully sent the release notes`, async (): Promise<
+              void
+            > => {
+              expect.assertions(2);
+
+              await expect(
+                service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+              ).rejects.toThrow(new Error(`Primary channel not writable`));
+
+              expect(loggerServiceLogSpy).not.toHaveBeenCalledWith({
+                context: `FirebaseGuildsNewVersionService`,
+                message: `text-release notes message sent for guild value-dummy-id on general channel`,
+              } as ILoggerLog);
+            });
+
+            it(`should not log about the fail of the message sending`, async (): Promise<
+              void
+            > => {
+              expect.assertions(2);
+
+              await expect(
+                service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+              ).rejects.toThrow(new Error(`Primary channel not writable`));
+
+              expect(loggerServiceErrorSpy).not.toHaveBeenCalledWith({
+                context: `FirebaseGuildsNewVersionService`,
+                message: `text-release notes message sending failed for the guild value-dummy-id on the general channel`,
+              } as ILoggerLog);
+            });
+
+            it(`should not log the error`, async (): Promise<void> => {
+              expect.assertions(2);
+
+              await expect(
+                service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+              ).rejects.toThrow(new Error(`Primary channel not writable`));
+
+              expect(loggerServiceErrorSpy).not.toHaveBeenCalledWith({
+                context: `FirebaseGuildsNewVersionService`,
+                message: `text-Error: send error`,
+              } as ILoggerLog);
+            });
+          });
+
+          describe(`when the Discord guild primary channel is writable`, (): void => {
+            beforeEach((): void => {
+              discordChannelGuildServiceGetPrimarySpy.mockReturnValue(
+                textChannel
+              );
+            });
+
+            it(`should not log about the Discord guild primary channel not being writable`, async (): Promise<
+              void
+            > => {
+              expect.assertions(2);
+
+              await expect(
+                service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+              ).rejects.toThrow(new Error(`send error`));
+
+              expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
+                context: `FirebaseGuildsNewVersionService`,
+                message: `text-guild value-dummy-id primary channel is not writable`,
+              } as ILoggerLog);
+            });
+
+            it(`should get the release notes command message response`, async (): Promise<
+              void
+            > => {
+              expect.assertions(3);
+
+              await expect(
+                service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+              ).rejects.toThrow(new Error(`send error`));
+
+              expect(
+                discordMessageCommandReleaseNotesServiceGetMessageResponseSpy
+              ).toHaveBeenCalledTimes(1);
+              expect(
+                discordMessageCommandReleaseNotesServiceGetMessageResponseSpy
+              ).toHaveBeenCalledWith();
+            });
+
+            it(`should send the message on the Discord guild primary channel`, async (): Promise<
+              void
+            > => {
+              expect.assertions(3);
+
+              await expect(
+                service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+              ).rejects.toThrow(new Error(`send error`));
+
+              expect(sendMock).toHaveBeenCalledTimes(1);
+              expect(sendMock).toHaveBeenCalledWith(
+                discordMessageResponse.response,
+                discordMessageResponse.options
+              );
+            });
+
+            describe(`when the Discord message failed to be sent`, (): void => {
+              beforeEach((): void => {
+                sendMock.mockRejectedValue(new Error(`send error`));
+              });
+
+              it(`should not log about successfully sent the release notes`, async (): Promise<
+                void
+              > => {
+                expect.assertions(2);
+
+                await expect(
+                  service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+                ).rejects.toThrow(new Error(`send error`));
+
+                expect(loggerServiceLogSpy).not.toHaveBeenCalledWith({
+                  context: `FirebaseGuildsNewVersionService`,
+                  message: `text-release notes message sent for guild value-dummy-id on general channel`,
+                } as ILoggerLog);
+              });
+
+              it(`should log about the fail of the message sending`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+                ).rejects.toThrow(new Error(`send error`));
+
+                expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
+                expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(1, {
+                  context: `FirebaseGuildsNewVersionService`,
+                  message: `text-release notes message sending failed for the guild value-dummy-id on the general channel`,
+                } as ILoggerLog);
+              });
+
+              it(`should log the error`, async (): Promise<void> => {
+                expect.assertions(3);
+
+                await expect(
+                  service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+                ).rejects.toThrow(new Error(`send error`));
+
+                expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
+                expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(2, {
+                  context: `FirebaseGuildsNewVersionService`,
+                  message: `text-Error: send error`,
+                } as ILoggerLog);
+              });
+            });
+
+            describe(`when the Discord message was successfully sent`, (): void => {
+              beforeEach((): void => {
+                sendMock.mockResolvedValue(createMock<Message>());
+              });
+
+              it(`should log about successfully sent the release notes`, async (): Promise<
+                void
+              > => {
+                expect.assertions(2);
+
+                await service.sendNewReleaseNotesFromFirebaseGuild(
+                  firebaseGuild
+                );
+
+                expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+                  context: `FirebaseGuildsNewVersionService`,
+                  message: `text-release notes message sent for guild value-dummy-id on general channel`,
+                } as ILoggerLog);
+              });
+
+              it(`should not log about the fail of the message sending`, async (): Promise<
+                void
+              > => {
+                expect.assertions(1);
+
+                await service.sendNewReleaseNotesFromFirebaseGuild(
+                  firebaseGuild
+                );
+
+                expect(loggerServiceErrorSpy).not.toHaveBeenCalledWith({
+                  context: `FirebaseGuildsNewVersionService`,
+                  message: `text-release notes message sending failed for the guild value-dummy-id on the general channel`,
+                } as ILoggerLog);
+              });
+
+              it(`should not log the error`, async (): Promise<void> => {
+                expect.assertions(1);
+
+                await service.sendNewReleaseNotesFromFirebaseGuild(
+                  firebaseGuild
+                );
+
+                expect(loggerServiceErrorSpy).not.toHaveBeenCalledWith({
+                  context: `FirebaseGuildsNewVersionService`,
+                  message: `text-Error: send error`,
+                } as ILoggerLog);
+              });
+            });
           });
         });
       });
