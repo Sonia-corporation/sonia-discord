@@ -19,12 +19,6 @@ export class DiscordLoggerService extends AbstractService {
     return DiscordLoggerService._instance;
   }
 
-  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-  private readonly _discordLoggerErrorService: DiscordLoggerErrorService = DiscordLoggerErrorService.getInstance();
-  private readonly _discordLoggerWarningService: DiscordLoggerWarningService = DiscordLoggerWarningService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_LOGGER_SERVICE);
   }
@@ -35,28 +29,32 @@ export class DiscordLoggerService extends AbstractService {
   }
 
   private _listenForWarnings(): void {
-    this._discordClientService
+    DiscordClientService.getInstance()
       .getClient()
       .on(`warn`, (warning: Readonly<string>): void => {
-        this._discordLoggerWarningService.handleWarning(warning);
+        DiscordLoggerWarningService.getInstance().handleWarning(warning);
       });
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(`listen ${wrapInQuotes(`warn`)} event`),
+      message: ChalkService.getInstance().text(
+        `listen ${wrapInQuotes(`warn`)} event`
+      ),
     });
   }
 
   private _listenForErrors(): void {
-    this._discordClientService
+    DiscordClientService.getInstance()
       .getClient()
       .on(`error`, (error: Readonly<Error | string>): void => {
-        this._discordLoggerErrorService.handleError(error);
+        DiscordLoggerErrorService.getInstance().handleError(error);
       });
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(`listen ${wrapInQuotes(`error`)} event`),
+      message: ChalkService.getInstance().text(
+        `listen ${wrapInQuotes(`error`)} event`
+      ),
     });
   }
 }

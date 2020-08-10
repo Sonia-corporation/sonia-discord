@@ -16,13 +16,11 @@ export class ConfigService {
     return ConfigService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-
   public getUpdatedNumber(
     configUpdateNumber: Readonly<IConfigUpdateNumber>
   ): number {
     if (_.isNumber(configUpdateNumber.newValue)) {
-      this._loggerService.log({
+      LoggerService.getInstance().log({
         context: configUpdateNumber.context,
         message: `${configUpdateNumber.valueName} updated to: ${configUpdateNumber.newValue}`,
       });
@@ -40,7 +38,7 @@ export class ConfigService {
       let message = `${configUpdateString.valueName} updated`;
 
       if (_.isEqual(configUpdateString.isValueHidden, true)) {
-        message = this._loggerService.getHiddenValueUpdate(
+        message = LoggerService.getInstance().getHiddenValueUpdate(
           `${message} to: `,
           true
         );
@@ -52,7 +50,7 @@ export class ConfigService {
         }
       }
 
-      this._loggerService.log({
+      LoggerService.getInstance().log({
         context: configUpdateString.context,
         message: message,
       });
@@ -67,7 +65,7 @@ export class ConfigService {
     configUpdateString: Readonly<IConfigUpdateBoolean>
   ): boolean {
     if (_.isBoolean(configUpdateString.newValue)) {
-      this._loggerService.log({
+      LoggerService.getInstance().log({
         context: configUpdateString.context,
         message: `${configUpdateString.valueName} updated to: ${configUpdateString.newValue}`,
       });

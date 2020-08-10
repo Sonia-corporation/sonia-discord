@@ -27,29 +27,23 @@ export class DiscordLoggerWarningService extends AbstractService {
     return DiscordLoggerWarningService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-  private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
-  private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
-  private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_LOGGER_WARNING_SERVICE);
   }
 
   public handleWarning(warning: Readonly<string>): void {
-    this._loggerService.warning({
+    LoggerService.getInstance().warning({
       context: this._serviceName,
-      message: this._chalkService.text(warning),
+      message: ChalkService.getInstance().text(warning),
     });
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
+      message: ChalkService.getInstance().text(
         `send message to Sonia Discord warnings channel`
       ),
     });
 
-    this._discordGuildSoniaService.sendMessageToChannel({
+    DiscordGuildSoniaService.getInstance().sendMessageToChannel({
       channelName: DiscordGuildSoniaChannelNameEnum.WARNINGS,
       messageResponse: this._getErrorMessageResponse(warning),
     });
@@ -80,19 +74,19 @@ export class DiscordLoggerWarningService extends AbstractService {
   }
 
   private _getMessageEmbedAuthor(): MessageEmbedAuthor {
-    return this._discordSoniaService.getCorporationMessageEmbedAuthor();
+    return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
-      url: this._discordMessageConfigService.getMessageWarningImageUrl(),
+      url: DiscordMessageConfigService.getInstance().getMessageWarningImageUrl(),
     };
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
     const soniaImageUrl:
       | string
-      | null = this._discordSoniaService.getImageUrl();
+      | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
       iconURL: soniaImageUrl || undefined,
@@ -101,7 +95,7 @@ export class DiscordLoggerWarningService extends AbstractService {
   }
 
   private _getMessageEmbedColor(): number {
-    return this._discordMessageConfigService.getMessageWarningImageColor();
+    return DiscordMessageConfigService.getInstance().getMessageWarningImageColor();
   }
 
   private _getMessageEmbedTimestamp(): Date {

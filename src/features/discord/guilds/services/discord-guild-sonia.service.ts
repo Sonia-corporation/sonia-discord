@@ -24,11 +24,6 @@ export class DiscordGuildSoniaService extends AbstractService {
     return DiscordGuildSoniaService._instance;
   }
 
-  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
-  private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
-  private readonly _discordGuildService: DiscordGuildService = DiscordGuildService.getInstance();
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private _soniaGuild: Guild | undefined = undefined;
 
   public constructor() {
@@ -56,19 +51,19 @@ export class DiscordGuildSoniaService extends AbstractService {
           guildChannel as IAnyDiscordChannel
         );
       } else {
-        this._loggerService.warning({
+        LoggerService.getInstance().warning({
           context: this._serviceName,
-          message: this._chalkService.text(
-            `Could not find channel with name: ${this._chalkService.value(
+          message: ChalkService.getInstance().text(
+            `Could not find channel with name: ${ChalkService.getInstance().value(
               sendMessageToChannel.channelName
             )}`
           ),
         });
       }
     } else {
-      this._loggerService.warning({
+      LoggerService.getInstance().warning({
         context: this._serviceName,
-        message: this._chalkService.text(`Sonia guild does not exists`),
+        message: ChalkService.getInstance().text(`Sonia guild does not exists`),
       });
     }
   }
@@ -87,9 +82,9 @@ export class DiscordGuildSoniaService extends AbstractService {
       );
     }
 
-    this._loggerService.warning({
+    LoggerService.getInstance().warning({
       context: this._serviceName,
-      message: this._chalkService.text(`Sonia guild does not exists`),
+      message: ChalkService.getInstance().text(`Sonia guild does not exists`),
     });
 
     return null;
@@ -99,14 +94,14 @@ export class DiscordGuildSoniaService extends AbstractService {
     this._soniaGuild = this._getSoniaGuild();
 
     if (_.isNil(this._soniaGuild)) {
-      this._loggerService.error({
+      LoggerService.getInstance().error({
         context: this._serviceName,
-        message: this._chalkService.text(`Sonia guild not found`),
+        message: ChalkService.getInstance().text(`Sonia guild not found`),
       });
     } else {
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(`Sonia guild found`),
+        message: ChalkService.getInstance().text(`Sonia guild found`),
       });
     }
   }
@@ -121,31 +116,33 @@ export class DiscordGuildSoniaService extends AbstractService {
         sendMessageToChannel.messageResponse.options
       )
       .then((): void => {
-        this._loggerService.log({
+        LoggerService.getInstance().log({
           context: this._serviceName,
-          message: this._chalkService.text(`channel message sent`),
+          message: ChalkService.getInstance().text(`channel message sent`),
         });
       })
       .catch((error: unknown): void => {
-        this._loggerService.error({
+        LoggerService.getInstance().error({
           context: this._serviceName,
-          message: this._chalkService.text(`channel message sending failed`),
+          message: ChalkService.getInstance().text(
+            `channel message sending failed`
+          ),
         });
-        this._loggerService.error({
+        LoggerService.getInstance().error({
           context: this._serviceName,
-          message: this._chalkService.error(error),
+          message: ChalkService.getInstance().error(error),
         });
       });
   }
 
   private _getSoniaGuild(): Guild | undefined {
-    return this._discordGuildService.getGuildById(
-      this._discordGuildConfigService.getSoniaGuildId()
+    return DiscordGuildService.getInstance().getGuildById(
+      DiscordGuildConfigService.getInstance().getSoniaGuildId()
     );
   }
 
   private _listen(): void {
-    this._discordClientService
+    DiscordClientService.getInstance()
       .isReady$()
       .pipe(
         filter((isReady: Readonly<boolean>): boolean => {
@@ -159,9 +156,9 @@ export class DiscordGuildSoniaService extends AbstractService {
         },
       });
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
+      message: ChalkService.getInstance().text(
         `listen ${wrapInQuotes(`ready`)} Discord client state`
       ),
     });

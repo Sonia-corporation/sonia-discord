@@ -32,13 +32,6 @@ export class DiscordMessageCommandVersionService extends AbstractService {
     return DiscordMessageCommandVersionService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
-  private readonly _appConfigQueryService: AppConfigQueryService = AppConfigQueryService.getInstance();
-  private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
-  private readonly _discordSoniaEmotionalStateService: DiscordSoniaEmotionalStateService = DiscordSoniaEmotionalStateService.getInstance();
-  private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERSION_SERVICE);
   }
@@ -46,10 +39,10 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   public handleResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(
+      message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `version command detected`
       ),
@@ -81,23 +74,23 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   }
 
   private _getMessageEmbedAuthor(): MessageEmbedAuthor {
-    return this._discordSoniaService.getCorporationMessageEmbedAuthor();
+    return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
-      url: this._discordMessageConfigService.getMessageCommandVersionImageUrl(),
+      url: DiscordMessageConfigService.getInstance().getMessageCommandVersionImageUrl(),
     };
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
     const soniaImageUrl:
       | string
-      | null = this._discordSoniaService.getImageUrl();
-    const totalReleaseCountHumanized: string = this._appConfigQueryService.getTotalReleaseCountHumanized(
+      | null = DiscordSoniaService.getInstance().getImageUrl();
+    const totalReleaseCountHumanized: string = AppConfigQueryService.getInstance().getTotalReleaseCountHumanized(
       `birthday`
     );
-    const firstReleaseDate: string = this._appConfigQueryService.getFirstReleaseDateFormatted(
+    const firstReleaseDate: string = AppConfigQueryService.getInstance().getFirstReleaseDateFormatted(
       `[the ]Do MMMM YYYY`
     );
 
@@ -108,7 +101,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   }
 
   private _getMessageEmbedColor(): number {
-    return this._discordMessageConfigService.getMessageCommandVersionImageColor();
+    return DiscordMessageConfigService.getInstance().getMessageCommandVersionImageColor();
   }
 
   private _getMessageEmbedTimestamp(): Date {
@@ -118,7 +111,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   private _getMessageEmbedTitle(): string {
     const soniaFullName:
       | string
-      | null = this._discordSoniaService.getFullName();
+      | null = DiscordSoniaService.getInstance().getFullName();
 
     return `${soniaFullName} version`;
   }
@@ -135,7 +128,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   }
 
   private _getMessageEmbedFieldApplicationVersion(): EmbedFieldData {
-    const appVersion: string = this._appConfigService.getVersion();
+    const appVersion: string = AppConfigService.getInstance().getVersion();
 
     return {
       name: `My age`,
@@ -147,7 +140,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
     return {
       inline: true,
       name: `My last birthday`,
-      value: this._appConfigQueryService.getReleaseDateHumanized(),
+      value: AppConfigQueryService.getInstance().getReleaseDateHumanized(),
     };
   }
 
@@ -155,12 +148,12 @@ export class DiscordMessageCommandVersionService extends AbstractService {
     return {
       inline: true,
       name: `The last time I woken up`,
-      value: this._appConfigQueryService.getInitializationDateHumanized(),
+      value: AppConfigQueryService.getInstance().getInitializationDateHumanized(),
     };
   }
 
   private _getMessageEmbedFieldReleaseNotes(): EmbedFieldData {
-    const appReleaseNotes: string = this._appConfigService.getReleaseNotes();
+    const appReleaseNotes: string = AppConfigService.getInstance().getReleaseNotes();
 
     return {
       name: `My birthday card`,
@@ -172,7 +165,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   }
 
   private _getMessageEmbedFieldStatus(): EmbedFieldData {
-    const appProductionStateHumanized: AppProductionStateEnum = this._appConfigQueryService.getProductionStateHumanized();
+    const appProductionStateHumanized: AppProductionStateEnum = AppConfigQueryService.getInstance().getProductionStateHumanized();
 
     return {
       inline: true,
@@ -184,7 +177,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   private _getMessageEmbedFieldEmotionalState(): EmbedFieldData {
     const soniaEmotionalState:
       | DiscordSoniaEmotionalStateEnum
-      | undefined = this._discordSoniaEmotionalStateService.getEmotionalState();
+      | undefined = DiscordSoniaEmotionalStateService.getInstance().getEmotionalState();
 
     return {
       inline: true,

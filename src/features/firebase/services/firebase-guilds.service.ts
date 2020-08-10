@@ -31,10 +31,6 @@ export class FirebaseGuildsService extends AbstractService {
     return FirebaseGuildsService._instance;
   }
 
-  private readonly _firebaseAppService: FirebaseAppService = FirebaseAppService.getInstance();
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
   private readonly _isReady$: BehaviorSubject<boolean> = new BehaviorSubject<
     boolean
   >(false);
@@ -62,9 +58,9 @@ export class FirebaseGuildsService extends AbstractService {
       return this._store.collection(`/${FirebaseCollectionEnum.GUILDS}`);
     }
 
-    this._loggerService.warning({
+    LoggerService.getInstance().warning({
       context: this._serviceName,
-      message: this._chalkService.text(`store not set`),
+      message: ChalkService.getInstance().text(`store not set`),
     });
 
     return undefined;
@@ -108,10 +104,10 @@ export class FirebaseGuildsService extends AbstractService {
         )
         .catch(
           (): Promise<boolean> => {
-            this._loggerService.error({
+            LoggerService.getInstance().error({
               context: this._serviceName,
-              message: this._chalkService.text(
-                `failed to check if Firebase has ${this._chalkService.value(
+              message: ChalkService.getInstance().text(
+                `failed to check if Firebase has ${ChalkService.getInstance().value(
                   guildId
                 )} guild`
               ),
@@ -131,9 +127,9 @@ export class FirebaseGuildsService extends AbstractService {
       | undefined = this.getCollectionReference();
 
     if (!_.isNil(collectionReference)) {
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(`creating Firebase guild...`),
+        message: ChalkService.getInstance().text(`creating Firebase guild...`),
       });
 
       return collectionReference
@@ -145,10 +141,12 @@ export class FirebaseGuildsService extends AbstractService {
         )
         .then(
           (writeResult: WriteResult): Promise<WriteResult> => {
-            this._loggerService.success({
+            LoggerService.getInstance().success({
               context: this._serviceName,
-              message: this._chalkService.text(
-                `Firebase guild ${this._chalkService.value(guild.id)} created`
+              message: ChalkService.getInstance().text(
+                `Firebase guild ${ChalkService.getInstance().value(
+                  guild.id
+                )} created`
               ),
             });
 
@@ -202,9 +200,9 @@ export class FirebaseGuildsService extends AbstractService {
       | undefined = this.getCollectionReference();
 
     if (!_.isNil(collectionReference)) {
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(`watching Firebase guilds...`),
+        message: ChalkService.getInstance().text(`watching Firebase guilds...`),
       });
 
       collectionReference.onSnapshot(
@@ -224,15 +222,15 @@ export class FirebaseGuildsService extends AbstractService {
           this.notifyOnGuildsChange(firebaseGuilds);
         },
         (error: Readonly<Error>): void => {
-          this._loggerService.error({
+          LoggerService.getInstance().error({
             context: this._serviceName,
-            message: this._chalkService.text(
+            message: ChalkService.getInstance().text(
               `Firebase guilds watcher catch an error`
             ),
           });
-          this._loggerService.error({
+          LoggerService.getInstance().error({
             context: this._serviceName,
-            message: this._chalkService.error(error),
+            message: ChalkService.getInstance().error(error),
           });
         }
       );
@@ -242,27 +240,29 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   private _setStore(): Promise<true> {
-    return this._discordClientService.isReady().then(
-      (): Promise<true> => {
-        this._store = firestore(this._firebaseAppService.getApp());
-        this._store.settings({
-          ignoreUndefinedProperties: true,
-        });
+    return DiscordClientService.getInstance()
+      .isReady()
+      .then(
+        (): Promise<true> => {
+          this._store = firestore(FirebaseAppService.getInstance().getApp());
+          this._store.settings({
+            ignoreUndefinedProperties: true,
+          });
 
-        this.notifyIsReady();
+          this.notifyIsReady();
 
-        return Promise.resolve(true);
-      }
-    );
+          return Promise.resolve(true);
+        }
+      );
   }
 
   private _logGuildCount(): Promise<number> {
     return this.getGuildsCount().then(
       (count: Readonly<number>): Promise<number> => {
-        this._loggerService.debug({
+        LoggerService.getInstance().debug({
           context: this._serviceName,
-          message: this._chalkService.text(
-            `${this._chalkService.value(count)} guild${
+          message: ChalkService.getInstance().text(
+            `${ChalkService.getInstance().value(count)} guild${
               _.gt(count, 1) ? `s` : ``
             } found`
           ),

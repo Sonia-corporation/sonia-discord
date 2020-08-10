@@ -16,8 +16,6 @@ export class LoggerConfigService extends AbstractService {
     return LoggerConfigService._instance;
   }
 
-  private readonly _loggerConfigCoreService: LoggerConfigCoreService = LoggerConfigCoreService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.LOGGER_CONFIG_SERVICE);
   }
@@ -30,10 +28,10 @@ export class LoggerConfigService extends AbstractService {
   }
 
   public isEnabled(): boolean {
-    return this._loggerConfigCoreService.isEnabled;
+    return LoggerConfigCoreService.getInstance().isEnabled;
   }
 
   public getLevel(): LoggerConfigLevelEnum {
-    return this._loggerConfigCoreService.level;
+    return LoggerConfigCoreService.getInstance().level;
   }
 }

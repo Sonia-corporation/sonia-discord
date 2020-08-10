@@ -24,15 +24,6 @@ export class DiscordMessageService extends AbstractService {
     return DiscordMessageService._instance;
   }
 
-  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _discordChannelService: DiscordChannelService = DiscordChannelService.getInstance();
-  private readonly _discordMessageDmService: DiscordMessageDmService = DiscordMessageDmService.getInstance();
-  private readonly _discordMessageTextService: DiscordMessageTextService = DiscordMessageTextService.getInstance();
-  private readonly _discordMessageErrorService: DiscordMessageErrorService = DiscordMessageErrorService.getInstance();
-  private readonly _discordAuthorService: DiscordAuthorService = DiscordAuthorService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_SERVICE);
   }
@@ -48,22 +39,28 @@ export class DiscordMessageService extends AbstractService {
       _.isString(anyDiscordMessage.content) &&
       !_.isEmpty(anyDiscordMessage.content)
     ) {
-      this._loggerService.log({
+      LoggerService.getInstance().log({
         context: this._serviceName,
         extendedContext: true,
-        message: this._loggerService.getSnowflakeContext(
+        message: LoggerService.getInstance().getSnowflakeContext(
           anyDiscordMessage.id,
           anyDiscordMessage.content
         ),
       });
 
-      if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
-        if (this._discordAuthorService.isBot(anyDiscordMessage.author)) {
+      if (
+        DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)
+      ) {
+        if (
+          DiscordAuthorService.getInstance().isBot(anyDiscordMessage.author)
+        ) {
           return Promise.reject(new Error(`Discord message author is a Bot`));
         }
       }
 
-      if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
+      if (
+        DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)
+      ) {
         return this.handleChannelMessage(anyDiscordMessage);
       }
 
@@ -78,9 +75,11 @@ export class DiscordMessageService extends AbstractService {
   public handleChannelMessage(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<void> {
-    if (this._discordChannelService.isDm(anyDiscordMessage.channel)) {
+    if (DiscordChannelService.getInstance().isDm(anyDiscordMessage.channel)) {
       return this._dmMessage(anyDiscordMessage);
-    } else if (this._discordChannelService.isText(anyDiscordMessage.channel)) {
+    } else if (
+      DiscordChannelService.getInstance().isText(anyDiscordMessage.channel)
+    ) {
       return this._textMessage(anyDiscordMessage);
     }
 
@@ -90,7 +89,7 @@ export class DiscordMessageService extends AbstractService {
   }
 
   private _listen(): void {
-    this._discordClientService
+    DiscordClientService.getInstance()
       .getClient()
       .on(
         `message`,
@@ -98,18 +97,18 @@ export class DiscordMessageService extends AbstractService {
           this.sendMessage(anyDiscordMessage).catch(
             (error: Readonly<Error>): void => {
               // @todo add coverage
-              this._loggerService.debug({
+              LoggerService.getInstance().debug({
                 context: this._serviceName,
                 extendedContext: true,
-                message: this._loggerService.getSnowflakeContext(
+                message: LoggerService.getInstance().getSnowflakeContext(
                   anyDiscordMessage.id,
                   `message ignored`
                 ),
               });
-              this._loggerService.warning({
+              LoggerService.getInstance().warning({
                 context: this._serviceName,
                 extendedContext: true,
-                message: this._loggerService.getSnowflakeContext(
+                message: LoggerService.getInstance().getSnowflakeContext(
                   anyDiscordMessage.id,
                   error
                 ),
@@ -119,9 +118,9 @@ export class DiscordMessageService extends AbstractService {
         }
       );
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
+      message: ChalkService.getInstance().text(
         `listen ${wrapInQuotes(`message`)} event`
       ),
     });
@@ -130,16 +129,16 @@ export class DiscordMessageService extends AbstractService {
   private _dmMessage(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<void> {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(
+      message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `dm message`
       ),
     });
 
-    const discordMessageResponse: IDiscordMessageResponse | null = this._discordMessageDmService.getMessage(
+    const discordMessageResponse: IDiscordMessageResponse | null = DiscordMessageDmService.getInstance().getMessage(
       anyDiscordMessage
     );
 
@@ -155,16 +154,16 @@ export class DiscordMessageService extends AbstractService {
   private _textMessage(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<void> {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(
+      message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `text message`
       ),
     });
 
-    const discordMessageResponse: IDiscordMessageResponse | null = this._discordMessageTextService.getMessage(
+    const discordMessageResponse: IDiscordMessageResponse | null = DiscordMessageTextService.getInstance().getMessage(
       anyDiscordMessage
     );
 
@@ -181,11 +180,13 @@ export class DiscordMessageService extends AbstractService {
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     discordMessageResponse: Readonly<IDiscordMessageResponse>
   ): Promise<void> {
-    if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
-      this._loggerService.debug({
+    if (
+      DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)
+    ) {
+      LoggerService.getInstance().debug({
         context: this._serviceName,
         extendedContext: true,
-        message: this._loggerService.getSnowflakeContext(
+        message: LoggerService.getInstance().getSnowflakeContext(
           anyDiscordMessage.id,
           `sending message...`
         ),
@@ -195,10 +196,10 @@ export class DiscordMessageService extends AbstractService {
         .send(discordMessageResponse.response, discordMessageResponse.options)
         .then(
           (): Promise<void> => {
-            this._loggerService.log({
+            LoggerService.getInstance().log({
               context: this._serviceName,
               extendedContext: true,
-              message: this._loggerService.getSnowflakeContext(
+              message: LoggerService.getInstance().getSnowflakeContext(
                 anyDiscordMessage.id,
                 `message sent`
               ),
@@ -209,7 +210,7 @@ export class DiscordMessageService extends AbstractService {
         )
         .catch(
           (error: unknown): Promise<never> => {
-            this._discordMessageErrorService.handleError(
+            DiscordMessageErrorService.getInstance().handleError(
               error,
               anyDiscordMessage
             );

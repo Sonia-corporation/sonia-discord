@@ -25,8 +25,6 @@ export class DiscordMessageConfigService extends AbstractService {
     return DiscordMessageConfigService._instance;
   }
 
-  private readonly _discordMessageConfigCoreService: DiscordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_SERVICE);
   }
@@ -40,107 +38,115 @@ export class DiscordMessageConfigService extends AbstractService {
   }
 
   public getMessageCommand(): IDiscordMessageCommandConfig {
-    return this._discordMessageConfigCoreService.command;
+    return DiscordMessageConfigCoreService.getInstance().command;
   }
 
   public getMessageCommandCookie(): IDiscordMessageCommandCookieConfig {
-    return this._discordMessageConfigCoreService.command.cookie;
+    return DiscordMessageConfigCoreService.getInstance().command.cookie;
   }
 
   public getMessageCommandCookieImageColor(): ColorEnum {
-    return this._discordMessageConfigCoreService.command.cookie.imageColor;
+    return DiscordMessageConfigCoreService.getInstance().command.cookie
+      .imageColor;
   }
 
   public getMessageCommandCookieImageUrl(): IconEnum {
-    return this._discordMessageConfigCoreService.command.cookie.imageUrl;
+    return DiscordMessageConfigCoreService.getInstance().command.cookie
+      .imageUrl;
   }
 
   public getMessageCommandError(): IDiscordMessageCommandCookieConfig {
-    return this._discordMessageConfigCoreService.command.error;
+    return DiscordMessageConfigCoreService.getInstance().command.error;
   }
 
   public getMessageCommandErrorImageColor(): ColorEnum {
-    return this._discordMessageConfigCoreService.command.error.imageColor;
+    return DiscordMessageConfigCoreService.getInstance().command.error
+      .imageColor;
   }
 
   public getMessageCommandErrorImageUrl(): IconEnum {
-    return this._discordMessageConfigCoreService.command.error.imageUrl;
+    return DiscordMessageConfigCoreService.getInstance().command.error.imageUrl;
   }
 
   public getMessageCommandHelp(): IDiscordMessageCommandHelpConfig {
-    return this._discordMessageConfigCoreService.command.help;
+    return DiscordMessageConfigCoreService.getInstance().command.help;
   }
 
   public getMessageCommandHelpImageColor(): ColorEnum {
-    return this._discordMessageConfigCoreService.command.help.imageColor;
+    return DiscordMessageConfigCoreService.getInstance().command.help
+      .imageColor;
   }
 
   public getMessageCommandHelpImageUrl(): IconEnum {
-    return this._discordMessageConfigCoreService.command.help.imageUrl;
+    return DiscordMessageConfigCoreService.getInstance().command.help.imageUrl;
   }
 
   public getMessageCommandLunch(): IDiscordMessageCommandLunchConfig {
-    return this._discordMessageConfigCoreService.command.lunch;
+    return DiscordMessageConfigCoreService.getInstance().command.lunch;
   }
 
   public getMessageCommandLunchImageColor(): ColorEnum {
-    return this._discordMessageConfigCoreService.command.lunch.imageColor;
+    return DiscordMessageConfigCoreService.getInstance().command.lunch
+      .imageColor;
   }
 
   public getMessageCommandLunchImageUrl(): IconEnum {
-    return this._discordMessageConfigCoreService.command.lunch.imageUrl;
+    return DiscordMessageConfigCoreService.getInstance().command.lunch.imageUrl;
   }
 
   public getMessageCommandPrefix(): string | string[] {
-    return this._discordMessageConfigCoreService.command.prefix;
+    return DiscordMessageConfigCoreService.getInstance().command.prefix;
   }
 
   public getMessageCommandReleaseNotes(): IDiscordMessageCommandReleaseNotesConfig {
-    return this._discordMessageConfigCoreService.command.releaseNotes;
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes;
   }
 
   public getMessageCommandReleaseNotesImageColor(): ColorEnum {
-    return this._discordMessageConfigCoreService.command.releaseNotes
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes
       .imageColor;
   }
 
   public getMessageCommandReleaseNotesImageUrl(): IconEnum {
-    return this._discordMessageConfigCoreService.command.releaseNotes.imageUrl;
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes
+      .imageUrl;
   }
 
   public getMessageCommandVersion(): IDiscordMessageCommandVersionConfig {
-    return this._discordMessageConfigCoreService.command.version;
+    return DiscordMessageConfigCoreService.getInstance().command.version;
   }
 
   public getMessageCommandVersionImageColor(): ColorEnum {
-    return this._discordMessageConfigCoreService.command.version.imageColor;
+    return DiscordMessageConfigCoreService.getInstance().command.version
+      .imageColor;
   }
 
   public getMessageCommandVersionImageUrl(): IconEnum {
-    return this._discordMessageConfigCoreService.command.version.imageUrl;
+    return DiscordMessageConfigCoreService.getInstance().command.version
+      .imageUrl;
   }
 
   public getMessageError(): IDiscordMessageErrorConfig {
-    return this._discordMessageConfigCoreService.error;
+    return DiscordMessageConfigCoreService.getInstance().error;
   }
 
   public getMessageErrorImageColor(): ColorEnum {
-    return this._discordMessageConfigCoreService.error.imageColor;
+    return DiscordMessageConfigCoreService.getInstance().error.imageColor;
   }
 
   public getMessageErrorImageUrl(): IconEnum {
-    return this._discordMessageConfigCoreService.error.imageUrl;
+    return DiscordMessageConfigCoreService.getInstance().error.imageUrl;
   }
 
   public getMessageWarning(): IDiscordMessageWarningConfig {
-    return this._discordMessageConfigCoreService.warning;
+    return DiscordMessageConfigCoreService.getInstance().warning;
   }
 
   public getMessageWarningImageColor(): ColorEnum {
-    return this._discordMessageConfigCoreService.warning.imageColor;
+    return DiscordMessageConfigCoreService.getInstance().warning.imageColor;
   }
 
   public getMessageWarningImageUrl(): IconEnum {
-    return this._discordMessageConfigCoreService.warning.imageUrl;
+    return DiscordMessageConfigCoreService.getInstance().warning.imageUrl;
   }
 }

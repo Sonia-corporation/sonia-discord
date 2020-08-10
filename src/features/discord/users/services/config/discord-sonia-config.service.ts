@@ -17,8 +17,6 @@ export class DiscordSoniaConfigService extends AbstractService {
     return DiscordSoniaConfigService._instance;
   }
 
-  private readonly _discordSoniaConfigCoreService: DiscordSoniaConfigCoreService = DiscordSoniaConfigCoreService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_SONIA_CONFIG_SERVICE);
   }
@@ -33,33 +31,34 @@ export class DiscordSoniaConfigService extends AbstractService {
   }
 
   public getCorporationImageUrl(): IconEnum {
-    return this._discordSoniaConfigCoreService.corporationImageUrl;
+    return DiscordSoniaConfigCoreService.getInstance().corporationImageUrl;
   }
 
   public getCorporationMessageEmbedAuthor(): IDiscordSoniaCorporationMessageEmbedAuthorConfig {
-    return this._discordSoniaConfigCoreService.corporationMessageEmbedAuthor;
+    return DiscordSoniaConfigCoreService.getInstance()
+      .corporationMessageEmbedAuthor;
   }
 
   public getCorporationMessageEmbedAuthorIconUrl(): string {
-    return this._discordSoniaConfigCoreService.corporationMessageEmbedAuthor
-      .iconURL;
+    return DiscordSoniaConfigCoreService.getInstance()
+      .corporationMessageEmbedAuthor.iconURL;
   }
 
   public getCorporationMessageEmbedAuthorName(): string {
-    return this._discordSoniaConfigCoreService.corporationMessageEmbedAuthor
-      .name;
+    return DiscordSoniaConfigCoreService.getInstance()
+      .corporationMessageEmbedAuthor.name;
   }
 
   public getCorporationMessageEmbedAuthorUrl(): string {
-    return this._discordSoniaConfigCoreService.corporationMessageEmbedAuthor
-      .url;
+    return DiscordSoniaConfigCoreService.getInstance()
+      .corporationMessageEmbedAuthor.url;
   }
 
   public getId(): string {
-    return this._discordSoniaConfigCoreService.id;
+    return DiscordSoniaConfigCoreService.getInstance().id;
   }
 
   public getSecretToken(): string {
-    return this._discordSoniaConfigCoreService.secretToken;
+    return DiscordSoniaConfigCoreService.getInstance().secretToken;
   }
 }

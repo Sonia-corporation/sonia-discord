@@ -15,8 +15,6 @@ export class AppConfigService extends AbstractService {
     return AppConfigService._instance;
   }
 
-  private readonly _appConfigCoreService = AppConfigCoreService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.APP_CONFIG_SERVICE);
   }
@@ -34,30 +32,30 @@ export class AppConfigService extends AbstractService {
   }
 
   public getFirstReleaseDate(): string {
-    return this._appConfigCoreService.firstReleaseDate;
+    return AppConfigCoreService.getInstance().firstReleaseDate;
   }
 
   public getVersion(): string {
-    return this._appConfigCoreService.version;
+    return AppConfigCoreService.getInstance().version;
   }
 
   public getReleaseDate(): string {
-    return this._appConfigCoreService.releaseDate;
+    return AppConfigCoreService.getInstance().releaseDate;
   }
 
   public getInitializationDate(): string {
-    return this._appConfigCoreService.initializationDate;
+    return AppConfigCoreService.getInstance().initializationDate;
   }
 
   public isProduction(): boolean {
-    return this._appConfigCoreService.isProduction;
+    return AppConfigCoreService.getInstance().isProduction;
   }
 
   public getTotalReleaseCount(): number {
-    return this._appConfigCoreService.totalReleaseCount;
+    return AppConfigCoreService.getInstance().totalReleaseCount;
   }
 
   public getReleaseNotes(): string {
-    return this._appConfigCoreService.releaseNotes;
+    return AppConfigCoreService.getInstance().releaseNotes;
   }
 }

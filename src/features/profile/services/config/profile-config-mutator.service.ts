@@ -1,6 +1,8 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
+import { ConfigService } from "../../../config/services/config.service";
+import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { IProfileConfig } from "../../interfaces/profile-config";
 import { ProfileConfigCoreService } from "./profile-config-core.service";
@@ -23,18 +25,14 @@ export class ProfileConfigMutatorService extends AbstractConfigService<
     return ProfileConfigMutatorService._instance;
   }
 
-  private _loggerService: LoggerService = LoggerService.getInstance();
-  private _profileConfigCoreService: ProfileConfigCoreService = ProfileConfigCoreService.getInstance();
-  private _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();
-
   public constructor(config?: Readonly<Partial<IProfileConfig>>) {
     super(ServiceNameEnum.PROFILE_CONFIG_MUTATOR_SERVICE, config);
   }
 
   public preUpdateConfig(): void {
-    this._loggerService = LoggerService.getInstance();
-    this._profileConfigCoreService = ProfileConfigCoreService.getInstance();
-    this._profileConfigService = ProfileConfigService.getInstance();
+    LoggerService.getInstance();
+    ProfileConfigCoreService.getInstance();
+    ProfileConfigService.getInstance();
   }
 
   public updateConfig(config?: Readonly<Partial<IProfileConfig>>): void {
@@ -42,30 +40,30 @@ export class ProfileConfigMutatorService extends AbstractConfigService<
       this.updateDiscordId(config.discordId);
       this.updateNickname(config.nickname);
 
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(`configuration updated`),
+        message: ChalkService.getInstance().text(`configuration updated`),
       });
     }
   }
 
   public updateDiscordId(discordId?: Readonly<string | null>): void {
-    this._profileConfigCoreService.discordId = this._configService.getUpdatedString(
+    ProfileConfigCoreService.getInstance().discordId = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: discordId,
-        oldValue: this._profileConfigService.getDiscordId(),
+        oldValue: ProfileConfigService.getInstance().getDiscordId(),
         valueName: `discord id`,
       }
     );
   }
 
   public updateNickname(nickname?: Readonly<string | null>): void {
-    this._profileConfigCoreService.nickname = this._configService.getUpdatedString(
+    ProfileConfigCoreService.getInstance().nickname = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: nickname,
-        oldValue: this._profileConfigService.getNickname(),
+        oldValue: ProfileConfigService.getInstance().getNickname(),
         valueName: `nickname`,
       }
     );
