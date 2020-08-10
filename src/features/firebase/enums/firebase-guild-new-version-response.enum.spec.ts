@@ -1,6 +1,22 @@
 import { FirebaseGuildNewVersionResponseEnum } from "./firebase-guild-new-version-response.enum";
 
 describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
+  it(`should have a member "A_QUEEN_HAS_TO_WORKS"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      FirebaseGuildNewVersionResponseEnum.A_QUEEN_HAS_TO_WORKS
+    ).toStrictEqual(`A queen has to works.`);
+  });
+
+  it(`should have a member "BALL_SACK"`, (): void => {
+    expect.assertions(1);
+
+    expect(FirebaseGuildNewVersionResponseEnum.BALL_SACK).toStrictEqual(
+      `Ball sack.`
+    );
+  });
+
   it(`should have a member "BEST_BIRTHDAY_EVER"`, (): void => {
     expect.assertions(1);
 
@@ -103,6 +119,14 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     );
   });
 
+  it(`should have a member "I_AM_A_QUEEN"`, (): void => {
+    expect.assertions(1);
+
+    expect(FirebaseGuildNewVersionResponseEnum.I_AM_A_QUEEN).toStrictEqual(
+      `I am a queen.`
+    );
+  });
+
   it(`should have a member "I_AM_CLOSER_TO_GOD"`, (): void => {
     expect.assertions(1);
 
@@ -135,6 +159,14 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     );
   });
 
+  it(`should have a member "I_AM_THRILLED"`, (): void => {
+    expect.assertions(1);
+
+    expect(FirebaseGuildNewVersionResponseEnum.I_AM_THRILLED).toStrictEqual(
+      `I am thrilled.`
+    );
+  });
+
   it(`should have a member "I_KNOW_WHAT_I_AM_DOING"`, (): void => {
     expect.assertions(1);
 
@@ -149,6 +181,14 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     expect(FirebaseGuildNewVersionResponseEnum.LOVE_THAT_ONE).toStrictEqual(
       `Love that one!`
     );
+  });
+
+  it(`should have a member "MY_THRONE_IS_WAITING_FOR_ME"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      FirebaseGuildNewVersionResponseEnum.MY_THRONE_IS_WAITING_FOR_ME
+    ).toStrictEqual(`My throne is waiting for me.`);
   });
 
   it(`should have a member "NOTHING_CAN_STOP_ME"`, (): void => {
@@ -181,6 +221,14 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     expect(
       FirebaseGuildNewVersionResponseEnum.THAT_IS_FREAKING_AWESOME
     ).toStrictEqual(`That is freaking awesome!`);
+  });
+
+  it(`should have a member "THE_THRONE_IS_WAITING_FOR_HIS_QUEEN"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      FirebaseGuildNewVersionResponseEnum.THE_THRONE_IS_WAITING_FOR_HIS_QUEEN
+    ).toStrictEqual(`The throne is waiting for his queen.`);
   });
 
   it(`should have a member "THIS_IS_MY_BIRTHDAY"`, (): void => {
