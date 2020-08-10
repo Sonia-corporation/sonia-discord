@@ -17,9 +17,6 @@ export class ChalkColorService extends AbstractService {
     return ChalkColorService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.CHALK_COLOR_SERVICE);
   }
@@ -29,11 +26,11 @@ export class ChalkColorService extends AbstractService {
   }
 
   private _logColorLevel(): void {
-    const chalkLevel: chalk.Level = this._chalkService.getLevel();
+    const chalkLevel: chalk.Level = ChalkService.getInstance().getLevel();
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._loggerService.getValueUpdateWithHint(
+      message: LoggerService.getInstance().getValueUpdateWithHint(
         `chalk color level: `,
         _.toString(chalkLevel),
         ` (${this._getHumanizedColorLevel(chalkLevel)})`

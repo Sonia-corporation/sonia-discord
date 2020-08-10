@@ -29,11 +29,6 @@ export class DiscordActivitySoniaService extends AbstractService {
     return DiscordActivitySoniaService._instance;
   }
 
-  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-  private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
-  private readonly _discordLoggerErrorService: DiscordLoggerErrorService = DiscordLoggerErrorService.getInstance();
   private readonly _updaterRule: string = getEveryHourScheduleRule();
   private _rule: string = getRandomRangeMinuteScheduleRule(5, 15);
   private _updaterJob: Job | undefined = undefined;
@@ -55,7 +50,7 @@ export class DiscordActivitySoniaService extends AbstractService {
   public setPresence(
     presenceActivity: Readonly<IDiscordPresenceActivity>
   ): Promise<Presence> {
-    const clientUser: ClientUser | null = this._discordClientService.getClient()
+    const clientUser: ClientUser | null = DiscordClientService.getInstance().getClient()
       .user;
 
     if (!_.isNil(clientUser)) {
@@ -67,12 +62,14 @@ export class DiscordActivitySoniaService extends AbstractService {
         })
         .then(
           (presence: Readonly<Presence>): Promise<Presence> => {
-            this._loggerService.debug({
+            LoggerService.getInstance().debug({
               context: this._serviceName,
-              message: this._chalkService.text(
-                `Sonia presence updated to: ${this._chalkService.value(
+              message: ChalkService.getInstance().text(
+                `Sonia presence updated to: ${ChalkService.getInstance().value(
                   presence.activities[0].type
-                )} ${this._chalkService.text(`x`)} ${this._chalkService.value(
+                )} ${ChalkService.getInstance().text(
+                  `x`
+                )} ${ChalkService.getInstance().value(
                   presence.activities[0].name
                 )}`
               ),
@@ -83,19 +80,19 @@ export class DiscordActivitySoniaService extends AbstractService {
         )
         .catch(
           (error: Readonly<Error | string>): Promise<never> => {
-            this._loggerService.error({
+            LoggerService.getInstance().error({
               context: this._serviceName,
-              message: this._chalkService.text(
+              message: ChalkService.getInstance().text(
                 `could not set the Sonia presence`
               ),
             });
-            this._loggerService.error({
+            LoggerService.getInstance().error({
               context: this._serviceName,
-              message: this._chalkService.error(error),
+              message: ChalkService.getInstance().error(error),
             });
-            this._discordGuildSoniaService.sendMessageToChannel({
+            DiscordGuildSoniaService.getInstance().sendMessageToChannel({
               channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-              messageResponse: this._discordLoggerErrorService.getErrorMessageResponse(
+              messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
                 error
               ),
             });
@@ -139,35 +136,35 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   private _logJobRule(rule: Readonly<string>, jobName: Readonly<string>): void {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
-        `${jobName} rule: ${this._chalkService.value(rule)}`
+      message: ChalkService.getInstance().text(
+        `${jobName} rule: ${ChalkService.getInstance().value(rule)}`
       ),
     });
   }
 
   private _executeUpdaterJob(): void {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(`updater job triggered`),
+      message: ChalkService.getInstance().text(`updater job triggered`),
     });
 
     this._rule = getRandomRangeMinuteScheduleRule(5, 15);
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
-        `job rule updated to: ${this._chalkService.value(this._rule)}`
+      message: ChalkService.getInstance().text(
+        `job rule updated to: ${ChalkService.getInstance().value(this._rule)}`
       ),
     });
 
     if (!_.isNil(this._job)) {
       this._job.reschedule(this._rule);
 
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(`job reschedule successfully`),
+        message: ChalkService.getInstance().text(`job reschedule successfully`),
       });
     }
 
@@ -175,9 +172,9 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   private _executeJob(): void {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(`job triggered`),
+      message: ChalkService.getInstance().text(`job triggered`),
     });
 
     this.setRandomPresence();
@@ -197,7 +194,7 @@ export class DiscordActivitySoniaService extends AbstractService {
     jobName: Readonly<string>
   ): void {
     if (!_.isNil(job)) {
-      this._loggerService.logJobDate({
+      LoggerService.getInstance().logJobDate({
         context: this._serviceName,
         jobDate: getNextJobDate(job),
         jobDateHumanized: getNextJobDateHumanized(job),
@@ -207,7 +204,7 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   private _listen(): void {
-    this._discordClientService
+    DiscordClientService.getInstance()
       .isReady$()
       .pipe(
         filter((isReady: Readonly<boolean>): boolean => {
@@ -222,9 +219,9 @@ export class DiscordActivitySoniaService extends AbstractService {
         },
       });
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
+      message: ChalkService.getInstance().text(
         `listen ${wrapInQuotes(`ready`)} Discord client state`
       ),
     });

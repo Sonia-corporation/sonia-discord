@@ -43,17 +43,6 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     return FirebaseGuildsNewVersionService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-  private readonly _firebaseGuildsService: FirebaseGuildsService = FirebaseGuildsService.getInstance();
-  private readonly _discordMessageCommandReleaseNotesService: DiscordMessageCommandReleaseNotesService = DiscordMessageCommandReleaseNotesService.getInstance();
-  private readonly _discordGuildService: DiscordGuildService = DiscordGuildService.getInstance();
-  private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
-  private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
-  private readonly _discordLoggerErrorService: DiscordLoggerErrorService = DiscordLoggerErrorService.getInstance();
-  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
-  private readonly _firebaseGuildsBreakingChangeService: FirebaseGuildsBreakingChangeService = FirebaseGuildsBreakingChangeService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_SERVICE);
   }
@@ -63,7 +52,9 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   }
 
   public isReady$(): Observable<[true]> {
-    return forkJoin([this._firebaseGuildsBreakingChangeService.hasFinished()]);
+    return forkJoin([
+      FirebaseGuildsBreakingChangeService.getInstance().hasFinished(),
+    ]);
   }
 
   public sendNewReleaseNotesToEachGuild$(): Observable<true> {
@@ -74,7 +65,9 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     firebaseGuild: Readonly<IFirebaseGuild>
   ): Promise<Message | void> {
     if (!_.isNil(firebaseGuild.id)) {
-      const guild: Guild | undefined = this._discordGuildService.getGuildById(
+      const guild:
+        | Guild
+        | undefined = DiscordGuildService.getInstance().getGuildById(
         firebaseGuild.id
       );
 
@@ -82,10 +75,10 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
         return this._sendNewReleaseNotesFromDiscordGuild(guild);
       }
 
-      this._loggerService.error({
+      LoggerService.getInstance().error({
         context: this._serviceName,
-        message: this._chalkService.text(
-          `Discord guild ${this._chalkService.value(
+        message: ChalkService.getInstance().text(
+          `Discord guild ${ChalkService.getInstance().value(
             firebaseGuild.id
           )} does not exists`
         ),
@@ -94,9 +87,9 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       return Promise.reject(new Error(`Discord guild not found`));
     }
 
-    this._loggerService.error({
+    LoggerService.getInstance().error({
       context: this._serviceName,
-      message: this._chalkService.text(`Firebase guild id nil`),
+      message: ChalkService.getInstance().text(`Firebase guild id nil`),
     });
 
     return Promise.reject(new Error(`Firebase guild id nil`));
@@ -107,23 +100,23 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       take(1),
       mergeMap(
         (): Promise<QuerySnapshot<IFirebaseGuild>> => {
-          this._loggerService.debug({
+          LoggerService.getInstance().debug({
             context: this._serviceName,
-            message: this._chalkService.text(
+            message: ChalkService.getInstance().text(
               `processing the sending of release notes to each guild...`
             ),
           });
 
-          return this._firebaseGuildsService.getGuilds();
+          return FirebaseGuildsService.getInstance().getGuilds();
         }
       ),
       mergeMap(
         (
           querySnapshot: QuerySnapshot<IFirebaseGuild>
         ): Promise<IFirebaseGuild[] | void> => {
-          this._loggerService.debug({
+          LoggerService.getInstance().debug({
             context: this._serviceName,
-            message: this._chalkService.text(`guilds fetched`),
+            message: ChalkService.getInstance().text(`guilds fetched`),
           });
 
           return this._sendNewReleaseNotesToEachGuild(querySnapshot);
@@ -134,9 +127,9 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           firebaseGuilds: IFirebaseGuild[] | void
         ): Observable<[Message | void] | false> => {
           if (_.isArray(firebaseGuilds)) {
-            this._loggerService.debug({
+            LoggerService.getInstance().debug({
               context: this._serviceName,
-              message: this._chalkService.text(
+              message: ChalkService.getInstance().text(
                 `sending release notes messages to each guild...`
               ),
             });
@@ -164,7 +157,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   ): Promise<IFirebaseGuild[] | void> {
     const batch:
       | WriteBatch
-      | undefined = this._firebaseGuildsService.getBatch();
+      | undefined = FirebaseGuildsService.getInstance().getBatch();
 
     if (!_.isNil(batch)) {
       const firebaseGuilds: IFirebaseGuild[] = [];
@@ -187,7 +180,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
               batch.update(
                 queryDocumentSnapshot.ref,
                 getUpdatedFirebaseGuildLastReleaseNotesVersion(
-                  this._appConfigService.getVersion()
+                  AppConfigService.getInstance().getVersion()
                 )
               );
               firebaseGuilds.push(firebaseGuild);
@@ -197,10 +190,10 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       );
 
       if (_.gt(countFirebaseGuildsUpdated, 0)) {
-        this._loggerService.log({
+        LoggerService.getInstance().log({
           context: this._serviceName,
-          message: this._chalkService.text(
-            `updating ${this._chalkService.value(
+          message: ChalkService.getInstance().text(
+            `updating ${ChalkService.getInstance().value(
               countFirebaseGuildsUpdated
             )} Firebase guild${
               _.gt(countFirebaseGuildsUpdated, 1) ? `s` : ``
@@ -222,12 +215,12 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           );
       }
 
-      this._loggerService.log({
+      LoggerService.getInstance().log({
         context: this._serviceName,
-        message: this._chalkService.text(
+        message: ChalkService.getInstance().text(
           `all Firebase guild${
             _.gt(countFirebaseGuilds, 1) ? `s` : ``
-          } ${this._chalkService.hint(
+          } ${ChalkService.getInstance().hint(
             `(${countFirebaseGuilds})`
           )} release notes already sent`
         ),
@@ -236,9 +229,11 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       return Promise.resolve();
     }
 
-    this._loggerService.error({
+    LoggerService.getInstance().error({
       context: this._serviceName,
-      message: this._chalkService.text(`Firebase guilds batch not available`),
+      message: ChalkService.getInstance().text(
+        `Firebase guilds batch not available`
+      ),
     });
 
     return Promise.reject(new Error(`Firebase guilds batch not available`));
@@ -247,7 +242,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   private _sendNewReleaseNotesFromDiscordGuild(
     guild: Readonly<Guild>
   ): Promise<Message | void> {
-    const guildChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
+    const guildChannel: GuildChannel | null = DiscordChannelGuildService.getInstance().getPrimary(
       guild
     );
 
@@ -259,10 +254,10 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
         );
       }
 
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(
-          `guild ${this._chalkService.value(
+        message: ChalkService.getInstance().text(
+          `guild ${ChalkService.getInstance().value(
             guild.id
           )} primary channel is not writable`
         ),
@@ -271,10 +266,10 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       return Promise.reject(new Error(`Primary channel not writable`));
     }
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
-        `guild ${this._chalkService.value(
+      message: ChalkService.getInstance().text(
+        `guild ${ChalkService.getInstance().value(
           guild.id
         )} does not have a primary channel`
       ),
@@ -287,7 +282,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     textChannel: Readonly<TextChannel>,
     guildId: Readonly<Snowflake>
   ): Promise<Message | void> {
-    const messageResponse: IDiscordMessageResponse = this._discordMessageCommandReleaseNotesService.getMessageResponse();
+    const messageResponse: IDiscordMessageResponse = DiscordMessageCommandReleaseNotesService.getInstance().getMessageResponse();
     messageResponse.response =
       getRandomValueFromEnum(FirebaseGuildNewVersionResponseEnum) || `Cool!`;
 
@@ -295,10 +290,10 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       .send(messageResponse.response, messageResponse.options)
       .then(
         (message: Message): Promise<Message> => {
-          this._loggerService.log({
+          LoggerService.getInstance().log({
             context: this._serviceName,
-            message: this._chalkService.text(
-              `release notes message sent for guild ${this._chalkService.value(
+            message: ChalkService.getInstance().text(
+              `release notes message sent for guild ${ChalkService.getInstance().value(
                 guildId
               )} on general channel`
             ),
@@ -309,21 +304,21 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       )
       .catch(
         (error: Readonly<Error | string>): Promise<void> => {
-          this._loggerService.error({
+          LoggerService.getInstance().error({
             context: this._serviceName,
-            message: this._chalkService.text(
-              `release notes message sending failed for the guild ${this._chalkService.value(
+            message: ChalkService.getInstance().text(
+              `release notes message sending failed for the guild ${ChalkService.getInstance().value(
                 guildId
               )} on the general channel`
             ),
           });
-          this._loggerService.error({
+          LoggerService.getInstance().error({
             context: this._serviceName,
-            message: this._chalkService.error(error),
+            message: ChalkService.getInstance().error(error),
           });
-          this._discordGuildSoniaService.sendMessageToChannel({
+          DiscordGuildSoniaService.getInstance().sendMessageToChannel({
             channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-            messageResponse: this._discordLoggerErrorService.getErrorMessageResponse(
+            messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
               error
             ),
           });
@@ -336,7 +331,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   private _shouldSendNewReleaseNotesFromFirebaseGuild(
     firebaseGuild: Readonly<IFirebaseGuild>
   ): boolean {
-    const appVersion: string = this._appConfigService.getVersion();
+    const appVersion: string = AppConfigService.getInstance().getVersion();
 
     return !_.isEqual(firebaseGuild.lastReleaseNotesVersion, appVersion);
   }

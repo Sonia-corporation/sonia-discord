@@ -2,6 +2,8 @@ import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { IPartialNested } from "../../../../types/partial-nested";
+import { ConfigService } from "../../../config/services/config.service";
+import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { isNodeProduction } from "../../../node/functions/is-node-production";
 import { TimeService } from "../../../time/services/time.service";
@@ -23,11 +25,6 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     return AppConfigMutatorService._instance;
   }
 
-  private _loggerService: LoggerService = LoggerService.getInstance();
-  private _timeService: TimeService = TimeService.getInstance();
-  private _appConfigCoreService: AppConfigCoreService = AppConfigCoreService.getInstance();
-  private _appConfigService: AppConfigService = AppConfigService.getInstance();
-
   public constructor(config?: Readonly<IPartialNested<IAppConfig>>) {
     super(ServiceNameEnum.APP_CONFIG_MUTATOR_SERVICE, config);
   }
@@ -40,10 +37,10 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   }
 
   public preUpdateConfig(): void {
-    this._loggerService = LoggerService.getInstance();
-    this._timeService = TimeService.getInstance();
-    this._appConfigCoreService = AppConfigCoreService.getInstance();
-    this._appConfigService = AppConfigService.getInstance();
+    LoggerService.getInstance();
+    TimeService.getInstance();
+    AppConfigCoreService.getInstance();
+    AppConfigService.getInstance();
   }
 
   public updateConfig(config?: Readonly<IPartialNested<IAppConfig>>): void {
@@ -56,87 +53,89 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
       this.updateTotalReleaseCount(config.totalReleaseCount);
       this.updateVersion(config.version);
 
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(`configuration updated`),
+        message: ChalkService.getInstance().text(`configuration updated`),
       });
     }
   }
 
   public updateFirstReleaseDate(firstReleaseDate?: Readonly<string>): void {
-    this._appConfigCoreService.firstReleaseDate = this._configService.getUpdatedDate(
+    AppConfigCoreService.getInstance().firstReleaseDate = ConfigService.getInstance().getUpdatedDate(
       {
         context: this._serviceName,
         newValue: firstReleaseDate,
-        oldValue: this._appConfigService.getFirstReleaseDate(),
+        oldValue: AppConfigService.getInstance().getFirstReleaseDate(),
         valueName: AppConfigValueNameEnum.FIRST_RELEASE_DATE,
       }
     );
   }
 
   public updateInitializationDate(initializationDate?: Readonly<string>): void {
-    this._appConfigCoreService.initializationDate = this._configService.getUpdatedDate(
+    AppConfigCoreService.getInstance().initializationDate = ConfigService.getInstance().getUpdatedDate(
       {
         context: this._serviceName,
         newValue: initializationDate,
-        oldValue: this._appConfigService.getInitializationDate(),
+        oldValue: AppConfigService.getInstance().getInitializationDate(),
         valueName: AppConfigValueNameEnum.INITIALIZATION_DATE,
       }
     );
   }
 
   public updateProductionState(isProduction?: Readonly<boolean>): void {
-    this._appConfigCoreService.isProduction = this._configService.getUpdatedBoolean(
+    AppConfigCoreService.getInstance().isProduction = ConfigService.getInstance().getUpdatedBoolean(
       {
         context: this._serviceName,
         newValue: isProduction,
-        oldValue: this._appConfigService.isProduction(),
+        oldValue: AppConfigService.getInstance().isProduction(),
         valueName: AppConfigValueNameEnum.IS_PRODUCTION,
       }
     );
   }
 
   public updateReleaseDate(releaseDate?: Readonly<string>): void {
-    this._appConfigCoreService.releaseDate = this._configService.getUpdatedDate(
+    AppConfigCoreService.getInstance().releaseDate = ConfigService.getInstance().getUpdatedDate(
       {
         context: this._serviceName,
         newValue: releaseDate,
-        oldValue: this._appConfigService.getReleaseDate(),
+        oldValue: AppConfigService.getInstance().getReleaseDate(),
         valueName: AppConfigValueNameEnum.RELEASE_DATE,
       }
     );
   }
 
   public updateReleaseNotes(releaseNotes?: Readonly<string>): void {
-    this._appConfigCoreService.releaseNotes = this._configService.getUpdatedString(
+    AppConfigCoreService.getInstance().releaseNotes = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         isValueDisplay: false,
         newValue: releaseNotes,
-        oldValue: this._appConfigService.getReleaseNotes(),
+        oldValue: AppConfigService.getInstance().getReleaseNotes(),
         valueName: AppConfigValueNameEnum.RELEASE_NOTES,
       }
     );
   }
 
   public updateTotalReleaseCount(totalReleaseCount?: Readonly<number>): void {
-    this._appConfigCoreService.totalReleaseCount = this._configService.getUpdatedNumber(
+    AppConfigCoreService.getInstance().totalReleaseCount = ConfigService.getInstance().getUpdatedNumber(
       {
         context: this._serviceName,
         newValue: totalReleaseCount,
-        oldValue: this._appConfigService.getTotalReleaseCount(),
+        oldValue: AppConfigService.getInstance().getTotalReleaseCount(),
         valueName: AppConfigValueNameEnum.TOTAL_RELEASE_COUNT,
       }
     );
   }
 
   public updateVersion(version?: Readonly<string>): void {
-    this._appConfigCoreService.version = this._configService.getUpdatedString({
-      context: this._serviceName,
-      newValue: version,
-      oldValue: this._appConfigService.getVersion(),
-      valueName: AppConfigValueNameEnum.VERSION,
-    });
+    AppConfigCoreService.getInstance().version = ConfigService.getInstance().getUpdatedString(
+      {
+        context: this._serviceName,
+        newValue: version,
+        oldValue: AppConfigService.getInstance().getVersion(),
+        valueName: AppConfigValueNameEnum.VERSION,
+      }
+    );
   }
 
   private _setProductionState(): void {
@@ -144,8 +143,8 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   }
 
   private _setBuildDate(): void {
-    if (!this._appConfigService.isProduction()) {
-      this.updateInitializationDate(this._timeService.now());
+    if (!AppConfigService.getInstance().isProduction()) {
+      this.updateInitializationDate(TimeService.getInstance().now());
     }
   }
 }

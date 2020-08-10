@@ -27,12 +27,6 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
     return DiscordMessageCommandReleaseNotesService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
-  private readonly _appConfigQueryService: AppConfigQueryService = AppConfigQueryService.getInstance();
-  private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
-  private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_RELEASE_NOTES_SERVICE);
   }
@@ -40,10 +34,10 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
   public handleResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(
+      message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `release notes command detected`
       ),
@@ -75,21 +69,21 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
   }
 
   private _getMessageEmbedAuthor(): MessageEmbedAuthor {
-    return this._discordSoniaService.getCorporationMessageEmbedAuthor();
+    return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
-      url: this._discordMessageConfigService.getMessageCommandReleaseNotesImageUrl(),
+      url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesImageUrl(),
     };
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
     const soniaImageUrl:
       | string
-      | null = this._discordSoniaService.getImageUrl();
-    const totalReleaseCountHumanized: string = this._appConfigQueryService.getTotalReleaseCountHumanized();
-    const firstReleaseDate: string = this._appConfigQueryService.getFirstReleaseDateFormatted(
+      | null = DiscordSoniaService.getInstance().getImageUrl();
+    const totalReleaseCountHumanized: string = AppConfigQueryService.getInstance().getTotalReleaseCountHumanized();
+    const firstReleaseDate: string = AppConfigQueryService.getInstance().getFirstReleaseDateFormatted(
       `[the ]Do MMMM YYYY`
     );
 
@@ -100,7 +94,7 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
   }
 
   private _getMessageEmbedColor(): number {
-    return this._discordMessageConfigService.getMessageCommandReleaseNotesImageColor();
+    return DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesImageColor();
   }
 
   private _getMessageEmbedTimestamp(): Date {
@@ -108,13 +102,13 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
   }
 
   private _getMessageEmbedTitle(): string {
-    const appVersion: string = this._appConfigService.getVersion();
+    const appVersion: string = AppConfigService.getInstance().getVersion();
 
-    return `**${appVersion}** release notes - ${this._appConfigQueryService.getReleaseDateHumanized()}`;
+    return `**${appVersion}** release notes - ${AppConfigQueryService.getInstance().getReleaseDateHumanized()}`;
   }
 
   private _getMessageDescription(): string {
-    const appReleaseNotes: string = this._appConfigService.getReleaseNotes();
+    const appReleaseNotes: string = AppConfigService.getInstance().getReleaseNotes();
 
     return `${appReleaseNotes}\n\nCheckout all the [release notes](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md).`;
   }

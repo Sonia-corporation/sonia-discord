@@ -2,6 +2,8 @@ import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { IPartialNested } from "../../../../types/partial-nested";
+import { ConfigService } from "../../../config/services/config.service";
+import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { GithubConfigValueNameEnum } from "../../enums/github-config-value-name.enum";
 import { IGithubConfig } from "../../interfaces/github-config";
@@ -25,18 +27,14 @@ export class GithubConfigMutatorService extends AbstractConfigService<
     return GithubConfigMutatorService._instance;
   }
 
-  private _loggerService: LoggerService = LoggerService.getInstance();
-  private _githubConfigCoreService: GithubConfigCoreService = GithubConfigCoreService.getInstance();
-  private _githubConfigService: GithubConfigService = GithubConfigService.getInstance();
-
   public constructor(config?: Readonly<IPartialNested<IGithubConfig>>) {
     super(ServiceNameEnum.GITHUB_CONFIG_MUTATOR_SERVICE, config);
   }
 
   public preUpdateConfig(): void {
-    this._loggerService = LoggerService.getInstance();
-    this._githubConfigCoreService = GithubConfigCoreService.getInstance();
-    this._githubConfigService = GithubConfigService.getInstance();
+    LoggerService.getInstance();
+    GithubConfigCoreService.getInstance();
+    GithubConfigService.getInstance();
   }
 
   public updateConfig(config?: Readonly<IPartialNested<IGithubConfig>>): void {
@@ -44,19 +42,19 @@ export class GithubConfigMutatorService extends AbstractConfigService<
       this.updateBugReportUrl(config.bugReportUrl);
       this.updatePersonalAccessToken(config.personalAccessToken);
 
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(`configuration updated`),
+        message: ChalkService.getInstance().text(`configuration updated`),
       });
     }
   }
 
   public updateBugReportUrl(bugReportUrl?: Readonly<string>): void {
-    this._githubConfigCoreService.bugReportUrl = this._configService.getUpdatedString(
+    GithubConfigCoreService.getInstance().bugReportUrl = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: bugReportUrl,
-        oldValue: this._githubConfigService.getBugReportUrl(),
+        oldValue: GithubConfigService.getInstance().getBugReportUrl(),
         valueName: GithubConfigValueNameEnum.BUG_REPORT_URL,
       }
     );
@@ -65,12 +63,12 @@ export class GithubConfigMutatorService extends AbstractConfigService<
   public updatePersonalAccessToken(
     personalAccessToken?: Readonly<string>
   ): void {
-    this._githubConfigCoreService.personalAccessToken = this._configService.getUpdatedString(
+    GithubConfigCoreService.getInstance().personalAccessToken = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         isValueHidden: true,
         newValue: personalAccessToken,
-        oldValue: this._githubConfigService.getPersonalAccessToken(),
+        oldValue: GithubConfigService.getInstance().getPersonalAccessToken(),
         valueName: GithubConfigValueNameEnum.PERSONAL_ACCESS_TOKEN,
       }
     );

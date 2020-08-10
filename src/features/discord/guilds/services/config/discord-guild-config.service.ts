@@ -15,8 +15,6 @@ export class DiscordGuildConfigService extends AbstractService {
     return DiscordGuildConfigService._instance;
   }
 
-  private readonly _discordGuildConfigCoreService: DiscordGuildConfigCoreService = DiscordGuildConfigCoreService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_GUILD_CONFIG_SERVICE);
   }
@@ -32,22 +30,25 @@ export class DiscordGuildConfigService extends AbstractService {
   }
 
   public shouldSendCookiesOnCreate(): boolean {
-    return this._discordGuildConfigCoreService.shouldSendCookiesOnCreate;
+    return DiscordGuildConfigCoreService.getInstance()
+      .shouldSendCookiesOnCreate;
   }
 
   public shouldSendIlEstMidiMessage(): boolean {
-    return this._discordGuildConfigCoreService.shouldSendIlEstMidiMessage;
+    return DiscordGuildConfigCoreService.getInstance()
+      .shouldSendIlEstMidiMessage;
   }
 
   public shouldWelcomeNewMembers(): boolean {
-    return this._discordGuildConfigCoreService.shouldWelcomeNewMembers;
+    return DiscordGuildConfigCoreService.getInstance().shouldWelcomeNewMembers;
   }
 
   public getSoniaGuildId(): string {
-    return this._discordGuildConfigCoreService.soniaGuildId;
+    return DiscordGuildConfigCoreService.getInstance().soniaGuildId;
   }
 
   public getSoniaPermanentGuildInviteUrl(): string {
-    return this._discordGuildConfigCoreService.soniaPermanentGuildInviteUrl;
+    return DiscordGuildConfigCoreService.getInstance()
+      .soniaPermanentGuildInviteUrl;
   }
 }

@@ -20,10 +20,6 @@ export class ServerService extends AbstractService {
     return ServerService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
-  private readonly _serverConfigService: ServerConfigService = ServerConfigService.getInstance();
   private _app: Express | undefined = undefined;
 
   public constructor() {
@@ -44,14 +40,14 @@ export class ServerService extends AbstractService {
   }
 
   private _listen(): void {
-    const port: number = this._serverConfigService.getPort();
+    const port: number = ServerConfigService.getInstance().getPort();
 
     if (!_.isNil(this._app)) {
       this._app.listen(port, (): void => {
-        this._loggerService.log({
+        LoggerService.getInstance().log({
           context: this._serviceName,
-          message: this._chalkService.text(
-            `listening on port: ${this._chalkService.value(port)}`
+          message: ChalkService.getInstance().text(
+            `listening on port: ${ChalkService.getInstance().value(port)}`
           ),
         });
       });
@@ -60,7 +56,7 @@ export class ServerService extends AbstractService {
 
   private _setScoutMiddleware(): void {
     if (!_.isNil(this._app)) {
-      if (this._appConfigService.isProduction()) {
+      if (AppConfigService.getInstance().isProduction()) {
         this._app.use(scout.expressMiddleware());
       }
     }

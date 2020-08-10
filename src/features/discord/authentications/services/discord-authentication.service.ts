@@ -20,10 +20,6 @@ export class DiscordAuthenticationService extends AbstractService {
     return DiscordAuthenticationService._instance;
   }
 
-  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _discordSoniaConfigService: DiscordSoniaConfigService = DiscordSoniaConfigService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _isAuthenticated$: BehaviorSubject<
     boolean
   > = new BehaviorSubject<boolean>(false);
@@ -38,30 +34,30 @@ export class DiscordAuthenticationService extends AbstractService {
   }
 
   public login(): Promise<void> {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(`authenticating...`),
+      message: ChalkService.getInstance().text(`authenticating...`),
     });
 
-    return this._discordClientService
+    return DiscordClientService.getInstance()
       .getClient()
-      .login(this._discordSoniaConfigService.getSecretToken())
+      .login(DiscordSoniaConfigService.getInstance().getSecretToken())
       .then((): void => {
-        this._loggerService.success({
+        LoggerService.getInstance().success({
           context: this._serviceName,
-          message: this._chalkService.text(`authentication successful`),
+          message: ChalkService.getInstance().text(`authentication successful`),
         });
         this.notifyIsAuthenticated();
       })
       .catch(
         (error: unknown): Promise<void> => {
-          this._loggerService.error({
+          LoggerService.getInstance().error({
             context: this._serviceName,
-            message: this._chalkService.text(`authentication failed`),
+            message: ChalkService.getInstance().text(`authentication failed`),
           });
-          this._loggerService.error({
+          LoggerService.getInstance().error({
             context: this._serviceName,
-            message: this._chalkService.error(error),
+            message: ChalkService.getInstance().error(error),
           });
 
           return Promise.reject(error);
@@ -78,13 +74,17 @@ export class DiscordAuthenticationService extends AbstractService {
   }
 
   private _listen(): void {
-    this._discordClientService.getClient().on(`ready`, (): void => {
-      this._handleReady();
-    });
+    DiscordClientService.getInstance()
+      .getClient()
+      .on(`ready`, (): void => {
+        this._handleReady();
+      });
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(`listen ${wrapInQuotes(`ready`)} event`),
+      message: ChalkService.getInstance().text(
+        `listen ${wrapInQuotes(`ready`)} event`
+      ),
     });
   }
 
@@ -94,28 +94,30 @@ export class DiscordAuthenticationService extends AbstractService {
   }
 
   private _logWhenReady(): void {
-    const client: Client = this._discordClientService.getClient();
+    const client: Client = DiscordClientService.getInstance().getClient();
 
     if (!_.isNil(client.user)) {
-      this._loggerService.log({
+      LoggerService.getInstance().log({
         context: this._serviceName,
-        message: this._chalkService.text(
-          `authenticated as: ${this._chalkService.value(
+        message: ChalkService.getInstance().text(
+          `authenticated as: ${ChalkService.getInstance().value(
             wrapInQuotes(client.user.tag)
           )}`
         ),
       });
     } else {
-      this._loggerService.log({
+      LoggerService.getInstance().log({
         context: this._serviceName,
-        message: this._chalkService.text(
-          `authenticated as: ${this._chalkService.value(`unknown user`)}`
+        message: ChalkService.getInstance().text(
+          `authenticated as: ${ChalkService.getInstance().value(
+            `unknown user`
+          )}`
         ),
       });
     }
   }
 
   private _updateReadyState(): void {
-    this._discordClientService.notifyIsReady();
+    DiscordClientService.getInstance().notifyIsReady();
   }
 }

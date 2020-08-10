@@ -32,14 +32,6 @@ export class DiscordMessageErrorService extends AbstractService {
     return DiscordMessageErrorService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _discordChannelService: DiscordChannelService = DiscordChannelService.getInstance();
-  private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
-  private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
-  private readonly _githubConfigService: GithubConfigService = GithubConfigService.getInstance();
-  private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
-  private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_ERROR_SERVICE);
   }
@@ -69,14 +61,16 @@ export class DiscordMessageErrorService extends AbstractService {
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     messageResponse: Readonly<IDiscordMessageResponse>
   ): void {
-    if (this._discordChannelService.isValid(anyDiscordMessage.channel)) {
+    if (
+      DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)
+    ) {
       anyDiscordMessage.channel
         .send(messageResponse.response, messageResponse.options)
         .then((): void => {
-          this._loggerService.log({
+          LoggerService.getInstance().log({
             context: this._serviceName,
             extendedContext: true,
-            message: this._loggerService.getSnowflakeContext(
+            message: LoggerService.getInstance().getSnowflakeContext(
               anyDiscordMessage.id,
               `message sent`
             ),
@@ -91,7 +85,7 @@ export class DiscordMessageErrorService extends AbstractService {
   private _sendMessageToSoniaDiscord(
     messageResponse: Readonly<IDiscordMessageResponse>
   ): void {
-    this._discordGuildSoniaService.sendMessageToChannel({
+    DiscordGuildSoniaService.getInstance().sendMessageToChannel({
       channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
       messageResponse: messageResponse,
     });
@@ -101,18 +95,18 @@ export class DiscordMessageErrorService extends AbstractService {
     error: unknown,
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): void {
-    this._loggerService.error({
+    LoggerService.getInstance().error({
       context: this._serviceName,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(
+      message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `message sending failed`
       ),
     });
-    this._loggerService.error({
+    LoggerService.getInstance().error({
       context: this._serviceName,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(
+      message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         error
       ),
@@ -155,19 +149,19 @@ export class DiscordMessageErrorService extends AbstractService {
   }
 
   private _getMessageEmbedAuthor(): MessageEmbedAuthor {
-    return this._discordSoniaService.getCorporationMessageEmbedAuthor();
+    return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
-      url: this._discordMessageConfigService.getMessageCommandErrorImageUrl(),
+      url: DiscordMessageConfigService.getInstance().getMessageCommandErrorImageUrl(),
     };
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
     const soniaImageUrl:
       | string
-      | null = this._discordSoniaService.getImageUrl();
+      | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
       iconURL: soniaImageUrl || undefined,
@@ -176,7 +170,7 @@ export class DiscordMessageErrorService extends AbstractService {
   }
 
   private _getMessageEmbedColor(): number {
-    return this._discordMessageConfigService.getMessageCommandErrorImageColor();
+    return DiscordMessageConfigService.getInstance().getMessageCommandErrorImageColor();
   }
 
   private _getMessageEmbedTimestamp(): Date {
@@ -215,8 +209,8 @@ export class DiscordMessageErrorService extends AbstractService {
   }
 
   private _getMessageEmbedFieldHint(): EmbedFieldData {
-    const githubBugReportUrl: string = this._githubConfigService.getBugReportUrl();
-    const discordSoniaPermanentGuildInviteUrl: string = this._discordGuildConfigService.getSoniaPermanentGuildInviteUrl();
+    const githubBugReportUrl: string = GithubConfigService.getInstance().getBugReportUrl();
+    const discordSoniaPermanentGuildInviteUrl: string = DiscordGuildConfigService.getInstance().getSoniaPermanentGuildInviteUrl();
 
     return {
       name: `Help me to help you`,

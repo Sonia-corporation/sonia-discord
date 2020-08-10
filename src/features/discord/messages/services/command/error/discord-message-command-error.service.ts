@@ -26,10 +26,6 @@ export class DiscordMessageCommandErrorService extends AbstractService {
     return DiscordMessageCommandErrorService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
-  private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_ERROR_SERVICE);
   }
@@ -37,10 +33,10 @@ export class DiscordMessageCommandErrorService extends AbstractService {
   public handleResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(
+      message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `error command detected`
       ),
@@ -72,11 +68,11 @@ export class DiscordMessageCommandErrorService extends AbstractService {
   }
 
   private _getMessageEmbedAuthor(): MessageEmbedAuthor {
-    return this._discordSoniaService.getCorporationMessageEmbedAuthor();
+    return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
   private _getMessageEmbedColor(): number {
-    return this._discordMessageConfigService.getMessageCommandErrorImageColor();
+    return DiscordMessageConfigService.getInstance().getMessageCommandErrorImageColor();
   }
 
   private _getMessageEmbedFields(): EmbedFieldData[] {
@@ -104,7 +100,7 @@ export class DiscordMessageCommandErrorService extends AbstractService {
   private _getMessageEmbedFooter(): MessageEmbedFooter {
     const soniaImageUrl:
       | string
-      | null = this._discordSoniaService.getImageUrl();
+      | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
       iconURL: soniaImageUrl || undefined,
@@ -114,7 +110,7 @@ export class DiscordMessageCommandErrorService extends AbstractService {
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
-      url: this._discordMessageConfigService.getMessageCommandErrorImageUrl(),
+      url: DiscordMessageConfigService.getInstance().getMessageCommandErrorImageUrl(),
     };
   }
 

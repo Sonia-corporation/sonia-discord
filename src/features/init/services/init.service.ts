@@ -41,8 +41,6 @@ export class InitService extends AbstractService {
     return InitService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _isAppConfigured$: BehaviorSubject<
     boolean
   > = new BehaviorSubject<boolean>(false);
@@ -52,7 +50,7 @@ export class InitService extends AbstractService {
   }
 
   public init(): Promise<void> {
-    this._loggerService.init();
+    LoggerService.getInstance().init();
     ChalkColorService.getInstance().init();
 
     return this._readEnvironment().then((): void => {
@@ -133,13 +131,15 @@ export class InitService extends AbstractService {
       )
       .catch(
         (error: unknown): Promise<never> => {
-          this._loggerService.error({
+          LoggerService.getInstance().error({
             context: this._serviceName,
-            message: this._chalkService.text(`failed to read the package file`),
+            message: ChalkService.getInstance().text(
+              `failed to read the package file`
+            ),
           });
-          this._loggerService.error({
+          LoggerService.getInstance().error({
             context: this._serviceName,
-            message: this._chalkService.text(error),
+            message: ChalkService.getInstance().text(error),
           });
 
           return Promise.reject(error);
@@ -152,10 +152,10 @@ export class InitService extends AbstractService {
   > {
     const appVersion: string = AppConfigService.getInstance().getVersion();
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
-        `app version: ${this._chalkService.value(appVersion)}`
+      message: ChalkService.getInstance().text(
+        `app version: ${ChalkService.getInstance().value(appVersion)}`
       ),
     });
 
@@ -179,9 +179,9 @@ export class InitService extends AbstractService {
             axiosResponse.data.data.repository.releases.totalCount
           );
 
-          this._loggerService.success({
+          LoggerService.getInstance().success({
             context: this._serviceName,
-            message: this._chalkService.text(
+            message: ChalkService.getInstance().text(
               `Total release count updated from GitHub API`
             ),
           });
@@ -196,16 +196,16 @@ export class InitService extends AbstractService {
               )
             );
 
-            this._loggerService.success({
+            LoggerService.getInstance().success({
               context: this._serviceName,
-              message: this._chalkService.text(
+              message: ChalkService.getInstance().text(
                 `Release notes updated from GitHub API`
               ),
             });
           } else {
-            this._loggerService.error({
+            LoggerService.getInstance().error({
               context: this._serviceName,
-              message: this._chalkService.text(
+              message: ChalkService.getInstance().text(
                 `Failed to find a release with the given tag name from GitHub API`
               ),
             });
@@ -216,21 +216,21 @@ export class InitService extends AbstractService {
       )
       .catch(
         (error: unknown): Promise<never> => {
-          this._loggerService.error({
+          LoggerService.getInstance().error({
             context: this._serviceName,
-            message: this._chalkService.text(
+            message: ChalkService.getInstance().text(
               `Failed to get the total release count from GitHub API`
             ),
           });
-          this._loggerService.error({
+          LoggerService.getInstance().error({
             context: this._serviceName,
-            message: this._chalkService.text(
+            message: ChalkService.getInstance().text(
               `Failed to get the release notes for the app version from GitHub API`
             ),
           });
-          this._loggerService.error({
+          LoggerService.getInstance().error({
             context: this._serviceName,
-            message: this._chalkService.text(error),
+            message: ChalkService.getInstance().text(error),
           });
 
           return Promise.reject(error);

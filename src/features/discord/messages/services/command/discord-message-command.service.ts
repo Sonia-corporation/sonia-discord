@@ -24,15 +24,6 @@ export class DiscordMessageCommandService extends AbstractService {
     return DiscordMessageCommandService._instance;
   }
 
-  private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
-  private readonly _discordMessageCommandVersionService: DiscordMessageCommandVersionService = DiscordMessageCommandVersionService.getInstance();
-  private readonly _discordMessageCommandErrorService: DiscordMessageCommandErrorService = DiscordMessageCommandErrorService.getInstance();
-  private readonly _discordMessageCommandHelpService: DiscordMessageCommandHelpService = DiscordMessageCommandHelpService.getInstance();
-  private readonly _discordMessageCommandCookieService: DiscordMessageCommandCookieService = DiscordMessageCommandCookieService.getInstance();
-  private readonly _discordMessageCommandLunchService: DiscordMessageCommandLunchService = DiscordMessageCommandLunchService.getInstance();
-  private readonly _discordMessageContentService: DiscordMessageContentService = DiscordMessageContentService.getInstance();
-  private readonly _discordMessageCommandReleaseNotesService: DiscordMessageCommandReleaseNotesService = DiscordMessageCommandReleaseNotesService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_SERVICE);
   }
@@ -101,7 +92,7 @@ export class DiscordMessageCommandService extends AbstractService {
   public handleVersionCommand(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
-    return this._discordMessageCommandVersionService.handleResponse(
+    return DiscordMessageCommandVersionService.getInstance().handleResponse(
       anyDiscordMessage
     );
   }
@@ -109,7 +100,7 @@ export class DiscordMessageCommandService extends AbstractService {
   public handleErrorCommand(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
-    return this._discordMessageCommandErrorService.handleResponse(
+    return DiscordMessageCommandErrorService.getInstance().handleResponse(
       anyDiscordMessage
     );
   }
@@ -117,7 +108,7 @@ export class DiscordMessageCommandService extends AbstractService {
   public handleHelpCommand(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
-    return this._discordMessageCommandHelpService.handleResponse(
+    return DiscordMessageCommandHelpService.getInstance().handleResponse(
       anyDiscordMessage
     );
   }
@@ -125,7 +116,7 @@ export class DiscordMessageCommandService extends AbstractService {
   public handleCookieCommand(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
-    return this._discordMessageCommandCookieService.handleResponse(
+    return DiscordMessageCommandCookieService.getInstance().handleResponse(
       anyDiscordMessage
     );
   }
@@ -133,7 +124,7 @@ export class DiscordMessageCommandService extends AbstractService {
   public handleLunchCommand(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
-    return this._discordMessageCommandLunchService.handleResponse(
+    return DiscordMessageCommandLunchService.getInstance().handleResponse(
       anyDiscordMessage
     );
   }
@@ -141,7 +132,7 @@ export class DiscordMessageCommandService extends AbstractService {
   public handleReleaseNotesCommand(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
-    return this._discordMessageCommandReleaseNotesService.handleResponse(
+    return DiscordMessageCommandReleaseNotesService.getInstance().handleResponse(
       anyDiscordMessage
     );
   }
@@ -150,7 +141,9 @@ export class DiscordMessageCommandService extends AbstractService {
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse | null {
     if (
-      this._discordMessageContentService.hasContent(anyDiscordMessage.content)
+      DiscordMessageContentService.getInstance().hasContent(
+        anyDiscordMessage.content
+      )
     ) {
       if (this.hasVersionCommand(anyDiscordMessage.content)) {
         return this.handleVersionCommand(anyDiscordMessage);
@@ -242,7 +235,7 @@ export class DiscordMessageCommandService extends AbstractService {
   ): boolean {
     const prefix:
       | string
-      | string[] = this._discordMessageConfigService.getMessageCommandPrefix();
+      | string[] = DiscordMessageConfigService.getInstance().getMessageCommandPrefix();
 
     if (_.isString(prefix)) {
       return this._containsThisCommandWithPrefix(message, prefix, commands);

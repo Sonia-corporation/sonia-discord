@@ -28,10 +28,6 @@ export class DiscordMessageCommandCookieService extends AbstractService {
     return DiscordMessageCommandCookieService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
-  private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_COOKIE_SERVICE);
   }
@@ -39,10 +35,10 @@ export class DiscordMessageCommandCookieService extends AbstractService {
   public handleResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(
+      message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `cookie command detected`
       ),
@@ -74,11 +70,11 @@ export class DiscordMessageCommandCookieService extends AbstractService {
   }
 
   private _getMessageEmbedAuthor(): MessageEmbedAuthor {
-    return this._discordSoniaService.getCorporationMessageEmbedAuthor();
+    return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
   private _getMessageEmbedColor(): number {
-    return this._discordMessageConfigService.getMessageCommandCookieImageColor();
+    return DiscordMessageConfigService.getInstance().getMessageCommandCookieImageColor();
   }
 
   private _getMessageDescription(): string {
@@ -91,7 +87,7 @@ export class DiscordMessageCommandCookieService extends AbstractService {
   private _getMessageEmbedFooter(): MessageEmbedFooter {
     const soniaImageUrl:
       | string
-      | null = this._discordSoniaService.getImageUrl();
+      | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
       iconURL: soniaImageUrl || undefined,
@@ -101,7 +97,7 @@ export class DiscordMessageCommandCookieService extends AbstractService {
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
-      url: this._discordMessageConfigService.getMessageCommandCookieImageUrl(),
+      url: DiscordMessageConfigService.getInstance().getMessageCommandCookieImageUrl(),
     };
   }
 

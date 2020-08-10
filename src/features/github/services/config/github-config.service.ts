@@ -15,8 +15,6 @@ export class GithubConfigService extends AbstractService {
     return GithubConfigService._instance;
   }
 
-  private readonly _githubConfigCoreService: GithubConfigCoreService = GithubConfigCoreService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.GITHUB_CONFIG_SERVICE);
   }
@@ -29,10 +27,10 @@ export class GithubConfigService extends AbstractService {
   }
 
   public getBugReportUrl(): string {
-    return this._githubConfigCoreService.bugReportUrl;
+    return GithubConfigCoreService.getInstance().bugReportUrl;
   }
 
   public getPersonalAccessToken(): string {
-    return this._githubConfigCoreService.personalAccessToken;
+    return GithubConfigCoreService.getInstance().personalAccessToken;
   }
 }

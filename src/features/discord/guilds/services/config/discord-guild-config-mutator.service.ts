@@ -2,6 +2,8 @@ import _ from "lodash";
 import { AbstractConfigService } from "../../../../../classes/abstract-config.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { IPartialNested } from "../../../../../types/partial-nested";
+import { ConfigService } from "../../../../config/services/config.service";
+import { ChalkService } from "../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../logger/services/logger.service";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordGuildConfig } from "../../../interfaces/discord-guild-config";
@@ -26,27 +28,23 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
     return DiscordGuildConfigMutatorService._instance;
   }
 
-  private _loggerService: LoggerService = LoggerService.getInstance();
-  private _discordGuildConfigCoreService: DiscordGuildConfigCoreService = DiscordGuildConfigCoreService.getInstance();
-  private _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
-
   public constructor(config?: Readonly<IPartialNested<IDiscordConfig>>) {
     super(ServiceNameEnum.DISCORD_GUILD_CONFIG_MUTATOR_SERVICE, config);
   }
 
   public preUpdateConfig(): void {
-    this._loggerService = LoggerService.getInstance();
-    this._discordGuildConfigCoreService = DiscordGuildConfigCoreService.getInstance();
-    this._discordGuildConfigService = DiscordGuildConfigService.getInstance();
+    LoggerService.getInstance();
+    DiscordGuildConfigCoreService.getInstance();
+    DiscordGuildConfigService.getInstance();
   }
 
   public updateConfig(config?: Readonly<IPartialNested<IDiscordConfig>>): void {
     if (!_.isNil(config)) {
       this.updateGuild(config.guild);
 
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(`configuration updated`),
+        message: ChalkService.getInstance().text(`configuration updated`),
       });
     }
   }
@@ -68,11 +66,11 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
   public updateSendCookiesOnCreateState(
     shouldSendCookiesOnCreate?: Readonly<boolean>
   ): void {
-    this._discordGuildConfigCoreService.shouldSendCookiesOnCreate = this._configService.getUpdatedBoolean(
+    DiscordGuildConfigCoreService.getInstance().shouldSendCookiesOnCreate = ConfigService.getInstance().getUpdatedBoolean(
       {
         context: this._serviceName,
         newValue: shouldSendCookiesOnCreate,
-        oldValue: this._discordGuildConfigService.shouldSendCookiesOnCreate(),
+        oldValue: DiscordGuildConfigService.getInstance().shouldSendCookiesOnCreate(),
         valueName:
           DiscordGuildConfigValueNameEnum.SHOULD_SEND_COOKIES_ON_CREATE,
       }
@@ -82,11 +80,11 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
   public updateSendIlEstMidiMessageState(
     shouldSendIlEstMidiMessage?: Readonly<boolean>
   ): void {
-    this._discordGuildConfigCoreService.shouldSendIlEstMidiMessage = this._configService.getUpdatedBoolean(
+    DiscordGuildConfigCoreService.getInstance().shouldSendIlEstMidiMessage = ConfigService.getInstance().getUpdatedBoolean(
       {
         context: this._serviceName,
         newValue: shouldSendIlEstMidiMessage,
-        oldValue: this._discordGuildConfigService.shouldSendIlEstMidiMessage(),
+        oldValue: DiscordGuildConfigService.getInstance().shouldSendIlEstMidiMessage(),
         valueName:
           DiscordGuildConfigValueNameEnum.SHOULD_SEND_IL_EST_MIDI_MESSAGE,
       }
@@ -96,22 +94,22 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
   public updateWelcomeNewMembersState(
     shouldWelcomeNewMembers?: Readonly<boolean>
   ): void {
-    this._discordGuildConfigCoreService.shouldWelcomeNewMembers = this._configService.getUpdatedBoolean(
+    DiscordGuildConfigCoreService.getInstance().shouldWelcomeNewMembers = ConfigService.getInstance().getUpdatedBoolean(
       {
         context: this._serviceName,
         newValue: shouldWelcomeNewMembers,
-        oldValue: this._discordGuildConfigService.shouldWelcomeNewMembers(),
+        oldValue: DiscordGuildConfigService.getInstance().shouldWelcomeNewMembers(),
         valueName: DiscordGuildConfigValueNameEnum.SHOULD_WELCOME_NEW_MEMBERS,
       }
     );
   }
 
   public updateSoniaGuildId(soniaGuildId?: Readonly<string>): void {
-    this._discordGuildConfigCoreService.soniaGuildId = this._configService.getUpdatedString(
+    DiscordGuildConfigCoreService.getInstance().soniaGuildId = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: soniaGuildId,
-        oldValue: this._discordGuildConfigService.getSoniaGuildId(),
+        oldValue: DiscordGuildConfigService.getInstance().getSoniaGuildId(),
         valueName: DiscordGuildConfigValueNameEnum.SONIA_GUILD_ID,
       }
     );
@@ -120,11 +118,11 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
   public updateSoniaPermanentGuildInviteUrl(
     soniaPermanentGuildInviteUrl?: Readonly<string>
   ): void {
-    this._discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = this._configService.getUpdatedString(
+    DiscordGuildConfigCoreService.getInstance().soniaPermanentGuildInviteUrl = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: soniaPermanentGuildInviteUrl,
-        oldValue: this._discordGuildConfigService.getSoniaPermanentGuildInviteUrl(),
+        oldValue: DiscordGuildConfigService.getInstance().getSoniaPermanentGuildInviteUrl(),
         valueName:
           DiscordGuildConfigValueNameEnum.SONIA_PERMANENT_GUILD_INVITE_URL,
       }

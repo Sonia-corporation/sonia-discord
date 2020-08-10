@@ -28,16 +28,6 @@ export class DiscordMessageTextService extends AbstractService {
     return DiscordMessageTextService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
-  private readonly _discordAuthorService: DiscordAuthorService = DiscordAuthorService.getInstance();
-  private readonly _discordMentionService: DiscordMentionService = DiscordMentionService.getInstance();
-  private readonly _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();
-  private readonly _discordMessageAuthorService: DiscordMessageAuthorService = DiscordMessageAuthorService.getInstance();
-  private readonly _discordMessageCommandService: DiscordMessageCommandService = DiscordMessageCommandService.getInstance();
-  private readonly _discordMessageContentService: DiscordMessageContentService = DiscordMessageContentService.getInstance();
-  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_TEXT_SERVICE);
   }
@@ -45,8 +35,10 @@ export class DiscordMessageTextService extends AbstractService {
   public getMessage(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse | null {
-    if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
-      if (this._discordMentionService.isValid(anyDiscordMessage.mentions)) {
+    if (DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
+      if (
+        DiscordMentionService.getInstance().isValid(anyDiscordMessage.mentions)
+      ) {
         return this._getAnyDiscordMessageResponse(anyDiscordMessage);
       }
     }
@@ -57,10 +49,10 @@ export class DiscordMessageTextService extends AbstractService {
   private _getAnyDiscordMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse | null {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(
+      message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `message with valid mention`
       ),
@@ -76,15 +68,17 @@ export class DiscordMessageTextService extends AbstractService {
   private _getDiscordMessageResponse(
     discordMessage: Readonly<IDiscordMessage>
   ): IDiscordMessageResponse | null {
-    if (this._discordMentionService.isForEveryone(discordMessage.mentions)) {
+    if (
+      DiscordMentionService.getInstance().isForEveryone(discordMessage.mentions)
+    ) {
       return this._getEveryoneMentionMessageResponse(discordMessage);
     }
 
-    const sonia: ISonia | null = this._discordSoniaService.getSonia();
+    const sonia: ISonia | null = DiscordSoniaService.getInstance().getSonia();
 
-    if (this._discordSoniaService.isValid(sonia)) {
+    if (DiscordSoniaService.getInstance().isValid(sonia)) {
       if (
-        this._discordMentionService.isUserMentioned(
+        DiscordMentionService.getInstance().isUserMentioned(
           discordMessage.mentions,
           sonia
         )
@@ -99,10 +93,10 @@ export class DiscordMessageTextService extends AbstractService {
   private _getEveryoneMentionMessageResponse(
     discordMessage: Readonly<IDiscordMessage>
   ): IDiscordMessageResponse {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(
+      message: LoggerService.getInstance().getSnowflakeContext(
         discordMessage.id,
         `everyone mention`
       ),
@@ -118,12 +112,12 @@ export class DiscordMessageTextService extends AbstractService {
   private _getEveryoneMentionMessageResponseWithEnvPrefix(
     response: Readonly<string>
   ): string {
-    if (!this._appConfigService.isProduction()) {
+    if (!AppConfigService.getInstance().isProduction()) {
       return addDiscordDevPrefix({
         asMention: true,
-        discordId: this._profileConfigService.getDiscordId(),
+        discordId: ProfileConfigService.getInstance().getDiscordId(),
         message: response,
-        nickname: this._profileConfigService.getNickname(),
+        nickname: ProfileConfigService.getInstance().getNickname(),
       });
     }
 
@@ -133,25 +127,31 @@ export class DiscordMessageTextService extends AbstractService {
   private _getSoniaMentionMessageResponse(
     discordMessage: Readonly<IDiscordMessage>
   ): IDiscordMessageResponse | null {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(
+      message: LoggerService.getInstance().getSnowflakeContext(
         discordMessage.id,
         `Sonia was mentioned`
       ),
     });
 
-    if (this._discordMessageContentService.hasContent(discordMessage.content)) {
+    if (
+      DiscordMessageContentService.getInstance().hasContent(
+        discordMessage.content
+      )
+    ) {
       if (
-        this._discordMessageCommandService.hasCommand(discordMessage.content)
+        DiscordMessageCommandService.getInstance().hasCommand(
+          discordMessage.content
+        )
       ) {
-        return this._discordMessageCommandService.handleCommands(
+        return DiscordMessageCommandService.getInstance().handleCommands(
           discordMessage
         );
       }
     }
 
-    return this._discordMessageAuthorService.reply(discordMessage);
+    return DiscordMessageAuthorService.getInstance().reply(discordMessage);
   }
 }

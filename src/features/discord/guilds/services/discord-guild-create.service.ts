@@ -30,16 +30,6 @@ export class DiscordGuildCreateService extends AbstractService {
     return DiscordGuildCreateService._instance;
   }
 
-  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
-  private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
-  private readonly _discordMessageCommandCookieService: DiscordMessageCommandCookieService = DiscordMessageCommandCookieService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-  private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
-  private readonly _discordLoggerErrorService: DiscordLoggerErrorService = DiscordLoggerErrorService.getInstance();
-  private readonly _firebaseGuildsService: FirebaseGuildsService = FirebaseGuildsService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE);
   }
@@ -53,7 +43,7 @@ export class DiscordGuildCreateService extends AbstractService {
   }
 
   public addFirebaseGuild(guild: Readonly<Guild>): Promise<WriteResult | void> {
-    return this._firebaseGuildsService
+    return FirebaseGuildsService.getInstance()
       .isReady$()
       .pipe(
         filter((isReady: Readonly<boolean>): boolean => {
@@ -62,29 +52,31 @@ export class DiscordGuildCreateService extends AbstractService {
         take(1),
         mergeMap(
           (): Promise<WriteResult | void> => {
-            return this._firebaseGuildsService.hasGuild(guild.id).then(
-              (hasGuild: Readonly<boolean>): Promise<WriteResult | void> => {
-                if (_.isEqual(hasGuild, false)) {
-                  return this._addFirebaseGuild(guild).catch((): void => {
-                    this._loggerService.debug({
-                      context: this._serviceName,
-                      message: this._chalkService.text(
-                        `could not add the guild into Firestore`
-                      ),
+            return FirebaseGuildsService.getInstance()
+              .hasGuild(guild.id)
+              .then(
+                (hasGuild: Readonly<boolean>): Promise<WriteResult | void> => {
+                  if (_.isEqual(hasGuild, false)) {
+                    return this._addFirebaseGuild(guild).catch((): void => {
+                      LoggerService.getInstance().debug({
+                        context: this._serviceName,
+                        message: ChalkService.getInstance().text(
+                          `could not add the guild into Firestore`
+                        ),
+                      });
                     });
+                  }
+
+                  LoggerService.getInstance().debug({
+                    context: this._serviceName,
+                    message: ChalkService.getInstance().text(
+                      `Firebase guild already created`
+                    ),
                   });
+
+                  return Promise.resolve();
                 }
-
-                this._loggerService.debug({
-                  context: this._serviceName,
-                  message: this._chalkService.text(
-                    `Firebase guild already created`
-                  ),
-                });
-
-                return Promise.resolve();
-              }
-            );
+              );
           }
         )
       )
@@ -92,26 +84,32 @@ export class DiscordGuildCreateService extends AbstractService {
   }
 
   private _addFirebaseGuild(guild: Readonly<Guild>): Promise<WriteResult> {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(`guild not yet created on Firebase`),
+      message: ChalkService.getInstance().text(
+        `guild not yet created on Firebase`
+      ),
     });
 
-    return this._firebaseGuildsService.addGuild(guild).then(
-      (writeResult: WriteResult): Promise<WriteResult> => {
-        this._loggerService.success({
-          context: this._serviceName,
-          message: this._chalkService.text(`guild added into Firebase`),
-        });
+    return FirebaseGuildsService.getInstance()
+      .addGuild(guild)
+      .then(
+        (writeResult: WriteResult): Promise<WriteResult> => {
+          LoggerService.getInstance().success({
+            context: this._serviceName,
+            message: ChalkService.getInstance().text(
+              `guild added into Firebase`
+            ),
+          });
 
-        return Promise.resolve(writeResult);
-      }
-    );
+          return Promise.resolve(writeResult);
+        }
+      );
   }
 
   private _sendCookieMessage(guild: Readonly<Guild>): Promise<Message | void> {
     if (this._canSendCookiesMessage()) {
-      const primaryGuildChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
+      const primaryGuildChannel: GuildChannel | null = DiscordChannelGuildService.getInstance().getPrimary(
         guild
       );
 
@@ -126,12 +124,12 @@ export class DiscordGuildCreateService extends AbstractService {
   }
 
   private _listen(): void {
-    this._discordClientService
+    DiscordClientService.getInstance()
       .getClient()
       .on(`guildCreate`, (guild: Readonly<Guild>): void => {
-        this._loggerService.debug({
+        LoggerService.getInstance().debug({
           context: this._serviceName,
-          message: this._chalkService.text(
+          message: ChalkService.getInstance().text(
             `${wrapInQuotes(`guildCreate`)} event triggered`
           ),
         });
@@ -140,22 +138,22 @@ export class DiscordGuildCreateService extends AbstractService {
         this.addFirebaseGuild(guild);
       });
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
+      message: ChalkService.getInstance().text(
         `listen ${wrapInQuotes(`guildCreate`)} event`
       ),
     });
   }
 
   private _canSendCookiesMessage(): boolean {
-    if (this._discordGuildConfigService.shouldSendCookiesOnCreate()) {
+    if (DiscordGuildConfigService.getInstance().shouldSendCookiesOnCreate()) {
       return true;
     }
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
+      message: ChalkService.getInstance().text(
         `guild create cookies message sending disabled`
       ),
     });
@@ -169,9 +167,9 @@ export class DiscordGuildCreateService extends AbstractService {
     if (isDiscordGuildChannelWritable(guildChannel)) {
       const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
 
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(
+        message: ChalkService.getInstance().text(
           `sending message for the guild create...`
         ),
       });
@@ -180,9 +178,9 @@ export class DiscordGuildCreateService extends AbstractService {
         .send(messageResponse.response, messageResponse.options)
         .then(
           (message: Message): Promise<Message> => {
-            this._loggerService.log({
+            LoggerService.getInstance().log({
               context: this._serviceName,
-              message: this._chalkService.text(
+              message: ChalkService.getInstance().text(
                 `cookies message for the create guild sent`
               ),
             });
@@ -192,19 +190,19 @@ export class DiscordGuildCreateService extends AbstractService {
         )
         .catch(
           (error: Readonly<Error | string>): Promise<void> => {
-            this._loggerService.error({
+            LoggerService.getInstance().error({
               context: this._serviceName,
-              message: this._chalkService.text(
+              message: ChalkService.getInstance().text(
                 `cookies message sending for the create guild failed`
               ),
             });
-            this._loggerService.error({
+            LoggerService.getInstance().error({
               context: this._serviceName,
-              message: this._chalkService.error(error),
+              message: ChalkService.getInstance().error(error),
             });
-            this._discordGuildSoniaService.sendMessageToChannel({
+            DiscordGuildSoniaService.getInstance().sendMessageToChannel({
               channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-              messageResponse: this._discordLoggerErrorService.getErrorMessageResponse(
+              messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
                 error
               ),
             });
@@ -214,15 +212,17 @@ export class DiscordGuildCreateService extends AbstractService {
         );
     }
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(`primary guild channel not writable`),
+      message: ChalkService.getInstance().text(
+        `primary guild channel not writable`
+      ),
     });
 
     return Promise.reject(new Error(`Primary guild channel not writable`));
   }
 
   private _getMessageResponse(): IDiscordMessageResponse {
-    return this._discordMessageCommandCookieService.getMessageResponse();
+    return DiscordMessageCommandCookieService.getInstance().getMessageResponse();
   }
 }
