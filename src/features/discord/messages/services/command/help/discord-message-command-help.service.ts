@@ -26,10 +26,6 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     return DiscordMessageCommandHelpService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _discordSoniaService: DiscordSoniaService = DiscordSoniaService.getInstance();
-  private readonly _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_HELP_SERVICE);
   }
@@ -37,10 +33,10 @@ export class DiscordMessageCommandHelpService extends AbstractService {
   public handleResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(
+      message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `help command detected`
       ),
@@ -73,11 +69,11 @@ export class DiscordMessageCommandHelpService extends AbstractService {
   }
 
   private _getMessageEmbedAuthor(): MessageEmbedAuthor {
-    return this._discordSoniaService.getCorporationMessageEmbedAuthor();
+    return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
   private _getMessageEmbedColor(): number {
-    return this._discordMessageConfigService.getMessageCommandHelpImageColor();
+    return DiscordMessageConfigService.getInstance().getMessageCommandHelpImageColor();
   }
 
   private _getMessageDescription(): string {
@@ -150,7 +146,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
   private _getMessageEmbedFooter(): MessageEmbedFooter {
     const soniaImageUrl:
       | string
-      | null = this._discordSoniaService.getImageUrl();
+      | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
       iconURL: soniaImageUrl || undefined,
@@ -160,7 +156,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
-      url: this._discordMessageConfigService.getMessageCommandHelpImageUrl(),
+      url: DiscordMessageConfigService.getInstance().getMessageCommandHelpImageUrl(),
     };
   }
 

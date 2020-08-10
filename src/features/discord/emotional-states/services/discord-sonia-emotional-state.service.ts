@@ -24,9 +24,6 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
     return DiscordSoniaEmotionalStateService._instance;
   }
 
-  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
   private readonly _rule: string = getEveryHourScheduleRule();
   private _job: Job | undefined = undefined;
   private _emotionalState: DiscordSoniaEmotionalStateEnum =
@@ -49,10 +46,10 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
   ): void {
     this._emotionalState = emotionalState;
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
-        `Sonia emotional state updated to: ${this._chalkService.value(
+      message: ChalkService.getInstance().text(
+        `Sonia emotional state updated to: ${ChalkService.getInstance().value(
           this._emotionalState
         )}`
       ),
@@ -86,9 +83,9 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
   }
 
   private _executeJob(): void {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(`job triggered`),
+      message: ChalkService.getInstance().text(`job triggered`),
     });
 
     this.setRandomEmotionalState();
@@ -97,7 +94,7 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
 
   private _logNextJobDate(): void {
     if (!_.isNil(this._job)) {
-      this._loggerService.logJobDate({
+      LoggerService.getInstance().logJobDate({
         context: this._serviceName,
         jobDate: getNextJobDate(this._job),
         jobDateHumanized: getNextJobDateHumanized(this._job),
@@ -107,7 +104,7 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
   }
 
   private _listen(): void {
-    this._discordClientService
+    DiscordClientService.getInstance()
       .isReady$()
       .pipe(
         filter((isReady: Readonly<boolean>): boolean => {
@@ -122,9 +119,9 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
         },
       });
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
+      message: ChalkService.getInstance().text(
         `listen ${wrapInQuotes(`ready`)} Discord client state`
       ),
     });

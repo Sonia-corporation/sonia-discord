@@ -2,6 +2,8 @@ import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { IPartialNested } from "../../../../types/partial-nested";
+import { ConfigService } from "../../../config/services/config.service";
+import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { getEnvironmentPort } from "../../../node/functions/get-environment-port";
 import { ServerConfigValueNameEnum } from "../../enums/server-config-value-name.enum";
@@ -26,10 +28,6 @@ export class ServerConfigMutatorService extends AbstractConfigService<
     return ServerConfigMutatorService._instance;
   }
 
-  private _loggerService: LoggerService = LoggerService.getInstance();
-  private _serverConfigCoreService: ServerConfigCoreService = ServerConfigCoreService.getInstance();
-  private _serverConfigService: ServerConfigService = ServerConfigService.getInstance();
-
   public constructor(config?: Readonly<IPartialNested<IServerConfig>>) {
     super(ServiceNameEnum.SERVER_CONFIG_MUTATOR_SERVICE, config);
   }
@@ -41,29 +39,31 @@ export class ServerConfigMutatorService extends AbstractConfigService<
   }
 
   public preUpdateConfig(): void {
-    this._loggerService = LoggerService.getInstance();
-    this._serverConfigCoreService = ServerConfigCoreService.getInstance();
-    this._serverConfigService = ServerConfigService.getInstance();
+    LoggerService.getInstance();
+    ServerConfigCoreService.getInstance();
+    ServerConfigService.getInstance();
   }
 
   public updateConfig(config?: Readonly<IPartialNested<IServerConfig>>): void {
     if (!_.isNil(config)) {
       this.updatePort(config.port);
 
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(`configuration updated`),
+        message: ChalkService.getInstance().text(`configuration updated`),
       });
     }
   }
 
   public updatePort(port?: Readonly<number>): void {
-    this._serverConfigCoreService.port = this._configService.getUpdatedNumber({
-      context: this._serviceName,
-      newValue: port,
-      oldValue: this._serverConfigService.getPort(),
-      valueName: ServerConfigValueNameEnum.PORT,
-    });
+    ServerConfigCoreService.getInstance().port = ConfigService.getInstance().getUpdatedNumber(
+      {
+        context: this._serviceName,
+        newValue: port,
+        oldValue: ServerConfigService.getInstance().getPort(),
+        valueName: ServerConfigValueNameEnum.PORT,
+      }
+    );
   }
 
   private _setPort(): void {

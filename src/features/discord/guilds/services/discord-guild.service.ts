@@ -18,10 +18,6 @@ export class DiscordGuildService extends AbstractService {
     return DiscordGuildService._instance;
   }
 
-  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_GUILD_SERVICE);
   }
@@ -31,11 +27,11 @@ export class DiscordGuildService extends AbstractService {
   }
 
   public getGuilds(): Guild[] {
-    return this._discordClientService.getClient().guilds.cache.array();
+    return DiscordClientService.getInstance().getClient().guilds.cache.array();
   }
 
   public getGuildById(guildId: Readonly<Snowflake>): Guild | undefined {
-    return this._discordClientService
+    return DiscordClientService.getInstance()
       .getClient()
       .guilds.cache.find((guild: Readonly<Guild>): boolean => {
         return _.isEqual(guild.id, guildId);
@@ -43,13 +39,13 @@ export class DiscordGuildService extends AbstractService {
   }
 
   private _listen(): Promise<void> {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
+      message: ChalkService.getInstance().text(
         `listen ${wrapInQuotes(`ready`)} Discord client state`
       ),
     });
 
-    return this._discordClientService.isReady().then();
+    return DiscordClientService.getInstance().isReady().then();
   }
 }

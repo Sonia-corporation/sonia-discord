@@ -12,7 +12,6 @@ export abstract class AbstractQueryEntityService<
   TStoreState
 > extends QueryEntity<TStoreState> {
   protected readonly _serviceName: ServiceNameEnum;
-  private readonly _coreEventService: CoreEventService = CoreEventService.getInstance();
 
   protected constructor(serviceName: Readonly<ServiceNameEnum>, store: T) {
     super(store);
@@ -22,6 +21,6 @@ export abstract class AbstractQueryEntityService<
   }
 
   private _notifyServiceCreated(): void {
-    this._coreEventService.notifyServiceCreated(this._serviceName);
+    CoreEventService.getInstance().notifyServiceCreated(this._serviceName);
   }
 }

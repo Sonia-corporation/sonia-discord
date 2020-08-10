@@ -19,9 +19,6 @@ export class FirebaseGuildsStoreService extends AbstractService {
     return FirebaseGuildsStoreService._instance;
   }
 
-  private readonly _firebaseGuildsStore: FirebaseGuildsStore = FirebaseGuildsStore.getInstance();
-  private readonly _firebaseGuildsService: FirebaseGuildsService = FirebaseGuildsService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.FIREBASE_GUILDS_STORE_SERVICE);
   }
@@ -31,32 +28,34 @@ export class FirebaseGuildsStoreService extends AbstractService {
   }
 
   public addOrUpdateEntities(entities: IFirebaseGuild[]): void {
-    this._firebaseGuildsStore.upsertMany(entities);
+    FirebaseGuildsStore.getInstance().upsertMany(entities);
   }
 
   public addEntities(entities: IFirebaseGuild[]): void {
-    this._firebaseGuildsStore.add(entities);
+    FirebaseGuildsStore.getInstance().add(entities);
   }
 
   public removeAllEntities(): void {
-    this._firebaseGuildsStore.remove();
+    FirebaseGuildsStore.getInstance().remove();
   }
 
   public stopLoading(): void {
-    this._firebaseGuildsStore.setLoading(false);
+    FirebaseGuildsStore.getInstance().setLoading(false);
   }
 
   private _watchFirebaseGuilds$(): Observable<IFirebaseGuild[]> {
-    return this._firebaseGuildsService.onGuildsChange$().pipe(
-      tap({
-        next: (entities: IFirebaseGuild[]): void => {
-          applyTransaction((): void => {
-            this.removeAllEntities();
-            this.addEntities(entities);
-            this.stopLoading();
-          });
-        },
-      })
-    );
+    return FirebaseGuildsService.getInstance()
+      .onGuildsChange$()
+      .pipe(
+        tap({
+          next: (entities: IFirebaseGuild[]): void => {
+            applyTransaction((): void => {
+              this.removeAllEntities();
+              this.addEntities(entities);
+              this.stopLoading();
+            });
+          },
+        })
+      );
   }
 }

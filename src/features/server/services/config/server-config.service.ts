@@ -15,8 +15,6 @@ export class ServerConfigService extends AbstractService {
     return ServerConfigService._instance;
   }
 
-  private readonly _serverConfigCoreService = ServerConfigCoreService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.SERVER_CONFIG_SERVICE);
   }
@@ -28,6 +26,6 @@ export class ServerConfigService extends AbstractService {
   }
 
   public getPort(): number {
-    return this._serverConfigCoreService.port;
+    return ServerConfigCoreService.getInstance().port;
   }
 }

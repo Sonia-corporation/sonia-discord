@@ -22,21 +22,16 @@ export class DiscordSoniaService extends AbstractService {
     return DiscordSoniaService._instance;
   }
 
-  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
-  private readonly _discordSoniaConfigService: DiscordSoniaConfigService = DiscordSoniaConfigService.getInstance();
-  private readonly _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();
-  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_SONIA_SERVICE);
   }
 
   public isSonia(id: Readonly<string>): boolean {
-    return _.isEqual(id, this._discordSoniaConfigService.getId());
+    return _.isEqual(id, DiscordSoniaConfigService.getInstance().getId());
   }
 
   public getSonia(): ISonia | null {
-    return this._discordClientService.getClient().user;
+    return DiscordClientService.getInstance().getClient().user;
   }
 
   public getFullName(): string | null {
@@ -54,7 +49,7 @@ export class DiscordSoniaService extends AbstractService {
   }
 
   public getCorporationMessageEmbedAuthor(): MessageEmbedAuthor {
-    const discordSoniaCorporationMessageEmbedAuthorConfig: IDiscordSoniaCorporationMessageEmbedAuthorConfig = this._discordSoniaConfigService.getCorporationMessageEmbedAuthor();
+    const discordSoniaCorporationMessageEmbedAuthorConfig: IDiscordSoniaCorporationMessageEmbedAuthorConfig = DiscordSoniaConfigService.getInstance().getCorporationMessageEmbedAuthor();
 
     return {
       iconURL: discordSoniaCorporationMessageEmbedAuthorConfig.iconURL,
@@ -64,14 +59,14 @@ export class DiscordSoniaService extends AbstractService {
   }
 
   public getCorporationMessageEmbedAuthorName(): string {
-    const discordSoniaCorporationMessageEmbedAuthorConfigName: string = this._discordSoniaConfigService.getCorporationMessageEmbedAuthorName();
+    const discordSoniaCorporationMessageEmbedAuthorConfigName: string = DiscordSoniaConfigService.getInstance().getCorporationMessageEmbedAuthorName();
 
-    if (!this._appConfigService.isProduction()) {
+    if (!AppConfigService.getInstance().isProduction()) {
       return addDiscordDevPrefix({
-        discordId: this._profileConfigService.getDiscordId(),
+        discordId: ProfileConfigService.getInstance().getDiscordId(),
         hasEmphasis: false,
         message: discordSoniaCorporationMessageEmbedAuthorConfigName,
-        nickname: this._profileConfigService.getNickname(),
+        nickname: ProfileConfigService.getInstance().getNickname(),
       });
     }
 
@@ -79,7 +74,7 @@ export class DiscordSoniaService extends AbstractService {
   }
 
   public getCorporationImageUrl(): string {
-    return this._discordSoniaConfigService.getCorporationImageUrl();
+    return DiscordSoniaConfigService.getInstance().getCorporationImageUrl();
   }
 
   public getImageUrl(): string | null {

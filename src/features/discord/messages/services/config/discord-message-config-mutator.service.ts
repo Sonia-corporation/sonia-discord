@@ -5,6 +5,8 @@ import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { removeUndefined } from "../../../../../functions/formatters/remove-undefined";
 import { IPartialNested } from "../../../../../types/partial-nested";
+import { ConfigService } from "../../../../config/services/config.service";
+import { ChalkService } from "../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../logger/services/logger.service";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
@@ -37,27 +39,23 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     return DiscordMessageConfigMutatorService._instance;
   }
 
-  private _loggerService: LoggerService = LoggerService.getInstance();
-  private _discordMessageConfigCoreService: DiscordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
-  private _discordMessageConfigService: DiscordMessageConfigService = DiscordMessageConfigService.getInstance();
-
   public constructor(config?: Readonly<IPartialNested<IDiscordConfig>>) {
     super(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_MUTATOR_SERVICE, config);
   }
 
   public preUpdateConfig(): void {
-    this._loggerService = LoggerService.getInstance();
-    this._discordMessageConfigCoreService = DiscordMessageConfigCoreService.getInstance();
-    this._discordMessageConfigService = DiscordMessageConfigService.getInstance();
+    LoggerService.getInstance();
+    DiscordMessageConfigCoreService.getInstance();
+    DiscordMessageConfigService.getInstance();
   }
 
   public updateConfig(config?: Readonly<IPartialNested<IDiscordConfig>>): void {
     if (!_.isNil(config)) {
       this.updateMessage(config.message);
 
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(`configuration updated`),
+        message: ChalkService.getInstance().text(`configuration updated`),
       });
     }
   }
@@ -98,11 +96,11 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   public updateMessageCommandCookieImageColor(
     imageColor?: Readonly<ColorEnum>
   ): void {
-    this._discordMessageConfigCoreService.command.cookie.imageColor = this._configService.getUpdatedNumber(
+    DiscordMessageConfigCoreService.getInstance().command.cookie.imageColor = ConfigService.getInstance().getUpdatedNumber(
       {
         context: this._serviceName,
         newValue: imageColor,
-        oldValue: this._discordMessageConfigService.getMessageCommandCookieImageColor(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandCookieImageColor(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_COOKIE_IMAGE_COLOR,
       }
     );
@@ -111,11 +109,11 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   public updateMessageCommandCookieImageUrl(
     imageUrl?: Readonly<IconEnum>
   ): void {
-    this._discordMessageConfigCoreService.command.cookie.imageUrl = this._configService.getUpdatedString(
+    DiscordMessageConfigCoreService.getInstance().command.cookie.imageUrl = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: imageUrl,
-        oldValue: this._discordMessageConfigService.getMessageCommandCookieImageUrl(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandCookieImageUrl(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_COOKIE_IMAGE_URL,
       }
     );
@@ -133,11 +131,11 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   public updateMessageCommandErrorImageColor(
     imageColor?: Readonly<ColorEnum>
   ): void {
-    this._discordMessageConfigCoreService.command.error.imageColor = this._configService.getUpdatedNumber(
+    DiscordMessageConfigCoreService.getInstance().command.error.imageColor = ConfigService.getInstance().getUpdatedNumber(
       {
         context: this._serviceName,
         newValue: imageColor,
-        oldValue: this._discordMessageConfigService.getMessageCommandErrorImageColor(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandErrorImageColor(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_ERROR_IMAGE_COLOR,
       }
     );
@@ -146,11 +144,11 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   public updateMessageCommandErrorImageUrl(
     imageUrl?: Readonly<IconEnum>
   ): void {
-    this._discordMessageConfigCoreService.command.error.imageUrl = this._configService.getUpdatedString(
+    DiscordMessageConfigCoreService.getInstance().command.error.imageUrl = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: imageUrl,
-        oldValue: this._discordMessageConfigService.getMessageCommandErrorImageUrl(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandErrorImageUrl(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_ERROR_IMAGE_URL,
       }
     );
@@ -168,22 +166,22 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   public updateMessageCommandHelpImageColor(
     imageColor?: Readonly<ColorEnum>
   ): void {
-    this._discordMessageConfigCoreService.command.help.imageColor = this._configService.getUpdatedNumber(
+    DiscordMessageConfigCoreService.getInstance().command.help.imageColor = ConfigService.getInstance().getUpdatedNumber(
       {
         context: this._serviceName,
         newValue: imageColor,
-        oldValue: this._discordMessageConfigService.getMessageCommandHelpImageColor(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandHelpImageColor(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_HELP_IMAGE_COLOR,
       }
     );
   }
 
   public updateMessageCommandHelpImageUrl(imageUrl?: Readonly<IconEnum>): void {
-    this._discordMessageConfigCoreService.command.help.imageUrl = this._configService.getUpdatedString(
+    DiscordMessageConfigCoreService.getInstance().command.help.imageUrl = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: imageUrl,
-        oldValue: this._discordMessageConfigService.getMessageCommandHelpImageUrl(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandHelpImageUrl(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_HELP_IMAGE_URL,
       }
     );
@@ -201,11 +199,11 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   public updateMessageCommandLunchImageColor(
     imageColor?: Readonly<ColorEnum>
   ): void {
-    this._discordMessageConfigCoreService.command.lunch.imageColor = this._configService.getUpdatedNumber(
+    DiscordMessageConfigCoreService.getInstance().command.lunch.imageColor = ConfigService.getInstance().getUpdatedNumber(
       {
         context: this._serviceName,
         newValue: imageColor,
-        oldValue: this._discordMessageConfigService.getMessageCommandLunchImageColor(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandLunchImageColor(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_LUNCH_IMAGE_COLOR,
       }
     );
@@ -214,11 +212,11 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   public updateMessageCommandLunchImageUrl(
     imageUrl?: Readonly<IconEnum>
   ): void {
-    this._discordMessageConfigCoreService.command.lunch.imageUrl = this._configService.getUpdatedString(
+    DiscordMessageConfigCoreService.getInstance().command.lunch.imageUrl = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: imageUrl,
-        oldValue: this._discordMessageConfigService.getMessageCommandLunchImageUrl(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandLunchImageUrl(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_LUNCH_IMAGE_URL,
       }
     );
@@ -235,11 +233,11 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
       updatedPrefix = prefix;
     }
 
-    this._discordMessageConfigCoreService.command.prefix = this._configService.getUpdatedStringOrArray(
+    DiscordMessageConfigCoreService.getInstance().command.prefix = ConfigService.getInstance().getUpdatedStringOrArray(
       {
         context: this._serviceName,
         newValue: updatedPrefix,
-        oldValue: this._discordMessageConfigService.getMessageCommandPrefix(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_PREFIX,
       }
     );
@@ -259,11 +257,11 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   public updateMessageCommandReleaseNotesImageColor(
     imageColor?: Readonly<ColorEnum>
   ): void {
-    this._discordMessageConfigCoreService.command.releaseNotes.imageColor = this._configService.getUpdatedNumber(
+    DiscordMessageConfigCoreService.getInstance().command.releaseNotes.imageColor = ConfigService.getInstance().getUpdatedNumber(
       {
         context: this._serviceName,
         newValue: imageColor,
-        oldValue: this._discordMessageConfigService.getMessageCommandReleaseNotesImageColor(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesImageColor(),
         valueName:
           DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_IMAGE_COLOR,
       }
@@ -273,11 +271,11 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   public updateMessageCommandReleaseNotesImageUrl(
     imageUrl?: Readonly<IconEnum>
   ): void {
-    this._discordMessageConfigCoreService.command.releaseNotes.imageUrl = this._configService.getUpdatedString(
+    DiscordMessageConfigCoreService.getInstance().command.releaseNotes.imageUrl = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: imageUrl,
-        oldValue: this._discordMessageConfigService.getMessageCommandReleaseNotesImageUrl(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesImageUrl(),
         valueName:
           DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_IMAGE_URL,
       }
@@ -296,11 +294,11 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   public updateMessageCommandVersionImageColor(
     imageColor?: Readonly<ColorEnum>
   ): void {
-    this._discordMessageConfigCoreService.command.version.imageColor = this._configService.getUpdatedNumber(
+    DiscordMessageConfigCoreService.getInstance().command.version.imageColor = ConfigService.getInstance().getUpdatedNumber(
       {
         context: this._serviceName,
         newValue: imageColor,
-        oldValue: this._discordMessageConfigService.getMessageCommandVersionImageColor(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandVersionImageColor(),
         valueName:
           DiscordMessageConfigValueNameEnum.COMMAND_VERSION_IMAGE_COLOR,
       }
@@ -310,11 +308,11 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   public updateMessageCommandVersionImageUrl(
     imageUrl?: Readonly<IconEnum>
   ): void {
-    this._discordMessageConfigCoreService.command.version.imageUrl = this._configService.getUpdatedString(
+    DiscordMessageConfigCoreService.getInstance().command.version.imageUrl = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: imageUrl,
-        oldValue: this._discordMessageConfigService.getMessageCommandVersionImageUrl(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandVersionImageUrl(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_VERSION_IMAGE_URL,
       }
     );
@@ -330,22 +328,22 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   }
 
   public updateMessageErrorImageColor(imageColor?: Readonly<ColorEnum>): void {
-    this._discordMessageConfigCoreService.error.imageColor = this._configService.getUpdatedNumber(
+    DiscordMessageConfigCoreService.getInstance().error.imageColor = ConfigService.getInstance().getUpdatedNumber(
       {
         context: this._serviceName,
         newValue: imageColor,
-        oldValue: this._discordMessageConfigService.getMessageErrorImageColor(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageErrorImageColor(),
         valueName: DiscordMessageConfigValueNameEnum.ERROR_IMAGE_COLOR,
       }
     );
   }
 
   public updateMessageErrorImageUrl(imageUrl?: Readonly<IconEnum>): void {
-    this._discordMessageConfigCoreService.error.imageUrl = this._configService.getUpdatedString(
+    DiscordMessageConfigCoreService.getInstance().error.imageUrl = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: imageUrl,
-        oldValue: this._discordMessageConfigService.getMessageErrorImageUrl(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageErrorImageUrl(),
         valueName: DiscordMessageConfigValueNameEnum.ERROR_IMAGE_URL,
       }
     );
@@ -363,22 +361,22 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
   public updateMessageWarningImageColor(
     imageColor?: Readonly<ColorEnum>
   ): void {
-    this._discordMessageConfigCoreService.warning.imageColor = this._configService.getUpdatedNumber(
+    DiscordMessageConfigCoreService.getInstance().warning.imageColor = ConfigService.getInstance().getUpdatedNumber(
       {
         context: this._serviceName,
         newValue: imageColor,
-        oldValue: this._discordMessageConfigService.getMessageWarningImageColor(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageWarningImageColor(),
         valueName: DiscordMessageConfigValueNameEnum.WARNING_IMAGE_COLOR,
       }
     );
   }
 
   public updateMessageWarningImageUrl(imageUrl?: Readonly<IconEnum>): void {
-    this._discordMessageConfigCoreService.warning.imageUrl = this._configService.getUpdatedString(
+    DiscordMessageConfigCoreService.getInstance().warning.imageUrl = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: imageUrl,
-        oldValue: this._discordMessageConfigService.getMessageWarningImageUrl(),
+        oldValue: DiscordMessageConfigService.getInstance().getMessageWarningImageUrl(),
         valueName: DiscordMessageConfigValueNameEnum.WARNING_IMAGE_URL,
       }
     );

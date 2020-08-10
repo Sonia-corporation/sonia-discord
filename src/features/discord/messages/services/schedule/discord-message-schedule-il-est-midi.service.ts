@@ -31,13 +31,6 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
     return DiscordMessageScheduleIlEstMidiService._instance;
   }
 
-  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-  private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
-  private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
-  private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
-  private readonly _discordLoggerErrorService: DiscordLoggerErrorService = DiscordLoggerErrorService.getInstance();
   private readonly _rule: string = getEveryHourScheduleRule();
   private _job: Job | undefined = undefined;
 
@@ -54,7 +47,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   }
 
   public sendMessage(guild: Readonly<Guild>): void {
-    const primaryChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
+    const primaryChannel: GuildChannel | null = DiscordChannelGuildService.getInstance().getPrimary(
       guild
     );
 
@@ -72,9 +65,9 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   }
 
   private _executeJob(): void {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(`job triggered`),
+      message: ChalkService.getInstance().text(`job triggered`),
     });
 
     this._handleMessages();
@@ -83,7 +76,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
 
   private _logNextJobDate(): void {
     if (!_.isNil(this._job)) {
-      this._loggerService.logJobDate({
+      LoggerService.getInstance().logJobDate({
         context: this._serviceName,
         jobDate: getNextJobDate(this._job),
         jobDateHumanized: getNextJobDateHumanized(this._job),
@@ -100,7 +93,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
 
   private _handleMessages(): void {
     if (this._canSendMessage()) {
-      this._discordClientService
+      DiscordClientService.getInstance()
         .getClient()
         .guilds.cache.forEach((guild: Readonly<Guild>): void => {
           this.sendMessage(guild);
@@ -109,19 +102,19 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   }
 
   private _canSendMessage(): boolean {
-    if (this._discordGuildConfigService.shouldSendIlEstMidiMessage()) {
+    if (DiscordGuildConfigService.getInstance().shouldSendIlEstMidiMessage()) {
       if (this._isNoonInParis()) {
         return true;
       }
 
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(`not noon in Paris`),
+        message: ChalkService.getInstance().text(`not noon in Paris`),
       });
     } else {
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(
+        message: ChalkService.getInstance().text(
           `il est midi message sending disabled`
         ),
       });
@@ -138,26 +131,32 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
     const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
 
     if (isDiscordGuildChannelWritable(guildChannel)) {
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(`sending message for il est midi...`),
+        message: ChalkService.getInstance().text(
+          `sending message for il est midi...`
+        ),
       });
 
       guildChannel
         .send(messageResponse.response, messageResponse.options)
         .then((): void => {
-          this._loggerService.log({
+          LoggerService.getInstance().log({
             context: this._serviceName,
-            message: this._chalkService.text(`il est midi message sent`),
+            message: ChalkService.getInstance().text(
+              `il est midi message sent`
+            ),
           });
         })
         .catch((error: string): void => {
           this._onMessageError(error);
         });
     } else {
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(`the guild channel is not writable`),
+        message: ChalkService.getInstance().text(
+          `the guild channel is not writable`
+        ),
       });
     }
   }
@@ -168,20 +167,22 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   }
 
   private _messageErrorLog(error: string): void {
-    this._loggerService.error({
+    LoggerService.getInstance().error({
       context: this._serviceName,
-      message: this._chalkService.text(`il est midi message sending failed`),
+      message: ChalkService.getInstance().text(
+        `il est midi message sending failed`
+      ),
     });
-    this._loggerService.error({
+    LoggerService.getInstance().error({
       context: this._serviceName,
-      message: this._chalkService.error(error),
+      message: ChalkService.getInstance().error(error),
     });
   }
 
   private _sendMessageToSoniaDiscord(error: string): void {
-    this._discordGuildSoniaService.sendMessageToChannel({
+    DiscordGuildSoniaService.getInstance().sendMessageToChannel({
       channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-      messageResponse: this._discordLoggerErrorService.getErrorMessageResponse(
+      messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
         error
       ),
     });

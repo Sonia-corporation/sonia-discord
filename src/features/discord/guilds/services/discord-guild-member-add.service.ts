@@ -30,16 +30,6 @@ export class DiscordGuildMemberAddService extends AbstractService {
     return DiscordGuildMemberAddService._instance;
   }
 
-  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _discordChannelGuildService: DiscordChannelGuildService = DiscordChannelGuildService.getInstance();
-  private readonly _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
-  private readonly _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
-  private readonly _discordGuildSoniaService: DiscordGuildSoniaService = DiscordGuildSoniaService.getInstance();
-  private readonly _discordLoggerErrorService: DiscordLoggerErrorService = DiscordLoggerErrorService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_GUILD_MEMBER_ADD_SERVICE);
   }
@@ -50,7 +40,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
 
   public sendMessage(member: Readonly<IAnyGuildMember>): void {
     if (this._canSendMessage()) {
-      const primaryChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
+      const primaryChannel: GuildChannel | null = DiscordChannelGuildService.getInstance().getPrimary(
         member.guild
       );
 
@@ -61,12 +51,12 @@ export class DiscordGuildMemberAddService extends AbstractService {
   }
 
   private _listen(): void {
-    this._discordClientService
+    DiscordClientService.getInstance()
       .getClient()
       .on(`guildMemberAdd`, (member: Readonly<IAnyGuildMember>): void => {
-        this._loggerService.debug({
+        LoggerService.getInstance().debug({
           context: this._serviceName,
-          message: this._chalkService.text(
+          message: ChalkService.getInstance().text(
             `${wrapInQuotes(`guildMemberAdd`)} event triggered`
           ),
         });
@@ -74,22 +64,22 @@ export class DiscordGuildMemberAddService extends AbstractService {
         this.sendMessage(member);
       });
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
+      message: ChalkService.getInstance().text(
         `listen ${wrapInQuotes(`guildMemberAdd`)} event`
       ),
     });
   }
 
   private _canSendMessage(): boolean {
-    if (this._discordGuildConfigService.shouldWelcomeNewMembers()) {
+    if (DiscordGuildConfigService.getInstance().shouldWelcomeNewMembers()) {
       return true;
     }
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
+      message: ChalkService.getInstance().text(
         `welcome new members message sending disabled`
       ),
     });
@@ -106,9 +96,9 @@ export class DiscordGuildMemberAddService extends AbstractService {
     );
 
     if (isDiscordGuildChannelWritable(guildChannel)) {
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(
+        message: ChalkService.getInstance().text(
           `sending message for the new guild member...`
         ),
       });
@@ -117,36 +107,38 @@ export class DiscordGuildMemberAddService extends AbstractService {
         .send(messageResponse.response, messageResponse.options)
         .then((): void => {
           // @todo add coverage
-          this._loggerService.log({
+          LoggerService.getInstance().log({
             context: this._serviceName,
-            message: this._chalkService.text(
+            message: ChalkService.getInstance().text(
               `welcome message for the new guild sent`
             ),
           });
         })
         .catch((error: Readonly<Error | string>): void => {
           // @todo add coverage
-          this._loggerService.error({
+          LoggerService.getInstance().error({
             context: this._serviceName,
-            message: this._chalkService.text(
+            message: ChalkService.getInstance().text(
               `message sending for the new guild member failed`
             ),
           });
-          this._loggerService.error({
+          LoggerService.getInstance().error({
             context: this._serviceName,
-            message: this._chalkService.error(error),
+            message: ChalkService.getInstance().error(error),
           });
-          this._discordGuildSoniaService.sendMessageToChannel({
+          DiscordGuildSoniaService.getInstance().sendMessageToChannel({
             channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-            messageResponse: this._discordLoggerErrorService.getErrorMessageResponse(
+            messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
               error
             ),
           });
         });
     } else {
-      this._loggerService.debug({
+      LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: this._chalkService.text(`the guild channel is not writable`),
+        message: ChalkService.getInstance().text(
+          `the guild channel is not writable`
+        ),
       });
     }
   }
@@ -162,12 +154,12 @@ export class DiscordGuildMemberAddService extends AbstractService {
   }
 
   private _getMessageResponseWithEnvPrefix(response: Readonly<string>): string {
-    if (!this._appConfigService.isProduction()) {
+    if (!AppConfigService.getInstance().isProduction()) {
       return addDiscordDevPrefix({
         asMention: true,
-        discordId: this._profileConfigService.getDiscordId(),
+        discordId: ProfileConfigService.getInstance().getDiscordId(),
         message: response,
-        nickname: this._profileConfigService.getNickname(),
+        nickname: ProfileConfigService.getInstance().getNickname(),
       });
     }
 

@@ -19,10 +19,6 @@ export class DiscordMessageAuthorService extends AbstractService {
     return DiscordMessageAuthorService._instance;
   }
 
-  private readonly _profileConfigService: ProfileConfigService = ProfileConfigService.getInstance();
-  private readonly _discordAuthorService: DiscordAuthorService = DiscordAuthorService.getInstance();
-  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_AUTHOR_SERVICE);
   }
@@ -32,9 +28,11 @@ export class DiscordMessageAuthorService extends AbstractService {
   ): IDiscordMessageResponse {
     let response = `Il est midi!`;
 
-    if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
+    if (DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
       if (
-        this._discordAuthorService.hasValidUsername(anyDiscordMessage.author)
+        DiscordAuthorService.getInstance().hasValidUsername(
+          anyDiscordMessage.author
+        )
       ) {
         response = `Il est midi <@!${anyDiscordMessage.author.id}>!`;
       }
@@ -46,12 +44,12 @@ export class DiscordMessageAuthorService extends AbstractService {
   }
 
   private _getReplyWithEnvPrefix(response: Readonly<string>): string {
-    if (!this._appConfigService.isProduction()) {
+    if (!AppConfigService.getInstance().isProduction()) {
       return addDiscordDevPrefix({
         asMention: true,
-        discordId: this._profileConfigService.getDiscordId(),
+        discordId: ProfileConfigService.getInstance().getDiscordId(),
         message: response,
-        nickname: this._profileConfigService.getNickname(),
+        nickname: ProfileConfigService.getInstance().getNickname(),
       });
     }
 

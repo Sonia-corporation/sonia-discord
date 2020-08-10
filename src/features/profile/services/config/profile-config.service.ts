@@ -15,8 +15,6 @@ export class ProfileConfigService extends AbstractService {
     return ProfileConfigService._instance;
   }
 
-  private readonly _profileConfigCoreService: ProfileConfigCoreService = ProfileConfigCoreService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.PROFILE_CONFIG_SERVICE);
   }
@@ -29,10 +27,10 @@ export class ProfileConfigService extends AbstractService {
   }
 
   public getDiscordId(): string | null {
-    return this._profileConfigCoreService.discordId;
+    return ProfileConfigCoreService.getInstance().discordId;
   }
 
   public getNickname(): string | null {
-    return this._profileConfigCoreService.nickname;
+    return ProfileConfigCoreService.getInstance().nickname;
   }
 }

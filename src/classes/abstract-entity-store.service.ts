@@ -9,7 +9,6 @@ import { CoreEventService } from "../features/core/services/core-event.service";
  */
 export abstract class AbstractEntityStoreService<T> extends EntityStore<T> {
   protected readonly _serviceName: ServiceNameEnum;
-  private readonly _coreEventService: CoreEventService = CoreEventService.getInstance();
 
   protected constructor(
     serviceName: Readonly<ServiceNameEnum>,
@@ -22,6 +21,6 @@ export abstract class AbstractEntityStoreService<T> extends EntityStore<T> {
   }
 
   private _notifyServiceCreated(): void {
-    this._coreEventService.notifyServiceCreated(this._serviceName);
+    CoreEventService.getInstance().notifyServiceCreated(this._serviceName);
   }
 }

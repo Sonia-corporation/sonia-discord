@@ -153,6 +153,12 @@ __Troubleshooting:__
 If the command `push-upstream` does not exists, you can link it to your git:  
 Run `git config --local include.path ../.gitconfig`.
 
+___Note:___
+
+The error should be something like:
+
+`git: 'push-upstream' is not a git command. See 'git --help'.`
+
 ## Commit Message Guidelines
 
 We have very precise rules over how our git commit messages can be formatted.  

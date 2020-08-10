@@ -23,10 +23,6 @@ export class LoggerService {
     return LoggerService._instance;
   }
 
-  private readonly _coreEventService: CoreEventService = CoreEventService.getInstance();
-  private readonly _timeService: TimeService = TimeService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-  private readonly _loggerConfigService: LoggerConfigService = LoggerConfigService.getInstance();
   private readonly _logPrefix = `● `;
   private readonly _serviceName: ServiceNameEnum =
     ServiceNameEnum.LOGGER_SERVICE;
@@ -88,7 +84,7 @@ export class LoggerService {
   ): void {
     this.debug({
       context: loggerServiceCreated.service,
-      message: this._chalkService.text(`created`),
+      message: ChalkService.getInstance().text(`created`),
     });
   }
 
@@ -106,9 +102,11 @@ export class LoggerService {
     value: Readonly<string>,
     hint: Readonly<string>
   ): string {
-    return `${this._chalkService.text(text)}${this._chalkService.value(
+    return `${ChalkService.getInstance().text(
+      text
+    )}${ChalkService.getInstance().value(
       value
-    )}${this._chalkService.hint(hint)}`;
+    )}${ChalkService.getInstance().hint(hint)}`;
   }
 
   public getHiddenValueUpdate(
@@ -143,24 +141,24 @@ export class LoggerService {
     context: Readonly<string>,
     message: Readonly<string | null | undefined> | unknown
   ): string {
-    return `${this._chalkService.context(
+    return `${ChalkService.getInstance().context(
       `[${context}] `
-    )}${this._chalkService.text(message)}`;
+    )}${ChalkService.getInstance().text(message)}`;
   }
 
   public logJobDate(jobDateLog: Readonly<IJobDateLog>): void {
     this.debug({
       context: jobDateLog.context,
-      message: this._chalkService.text(
-        `${jobDateLog.jobName} job: ${this._chalkService.value(
+      message: ChalkService.getInstance().text(
+        `${jobDateLog.jobName} job: ${ChalkService.getInstance().value(
           jobDateLog.jobDateHumanized
-        )} ${this._chalkService.hint(`(${jobDateLog.jobDate})`)}`
+        )} ${ChalkService.getInstance().hint(`(${jobDateLog.jobDate})`)}`
       ),
     });
   }
 
   private _log(loggerLogInternal: Readonly<ILoggerLogInternal>): void {
-    if (_.isEqual(this._loggerConfigService.isEnabled(), true)) {
+    if (_.isEqual(LoggerConfigService.getInstance().isEnabled(), true)) {
       const logTypePrefix: string = this._getLogTypePrefix(
         loggerLogInternal.loggerLogType
       );
@@ -185,7 +183,7 @@ export class LoggerService {
     name: Readonly<string>,
     hasExtendedContext: Readonly<boolean> = false
   ): string {
-    let message = `[${name}][${this._timeService.now(`HH:mm:ss:SSS`)}]`;
+    let message = `[${name}][${TimeService.getInstance().now(`HH:mm:ss:SSS`)}]`;
 
     if (
       _.isEqual(hasExtendedContext, false) ||
@@ -194,44 +192,44 @@ export class LoggerService {
       message = `${message} `;
     }
 
-    return this._chalkService.context(message);
+    return ChalkService.getInstance().context(message);
   }
 
   private _getLogTypePrefix(logType: Readonly<LoggerConfigLevelEnum>): string {
-    return this._chalkService[logType](this._logPrefix);
+    return ChalkService.getInstance()[logType](this._logPrefix);
   }
 
   private _isErrorEnabled(): boolean {
     return _.gte(
-      LoggerConfigLevelValueEnum[this._loggerConfigService.getLevel()],
+      LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()],
       0
     );
   }
 
   private _isWarningEnabled(): boolean {
     return _.gte(
-      LoggerConfigLevelValueEnum[this._loggerConfigService.getLevel()],
+      LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()],
       1
     );
   }
 
   private _isSuccessEnabled(): boolean {
     return _.gte(
-      LoggerConfigLevelValueEnum[this._loggerConfigService.getLevel()],
+      LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()],
       2
     );
   }
 
   private _isLogEnabled(): boolean {
     return _.gte(
-      LoggerConfigLevelValueEnum[this._loggerConfigService.getLevel()],
+      LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()],
       3
     );
   }
 
   private _isDebugEnabled(): boolean {
     return _.gte(
-      LoggerConfigLevelValueEnum[this._loggerConfigService.getLevel()],
+      LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()],
       4
     );
   }
@@ -242,7 +240,7 @@ export class LoggerService {
   }
 
   private _logAlreadyCreatedServices(): void {
-    const createdServices: ServiceNameEnum[] = this._coreEventService.getCreatedServices();
+    const createdServices: ServiceNameEnum[] = CoreEventService.getInstance().getCreatedServices();
 
     _.forEach(
       createdServices,
@@ -255,12 +253,14 @@ export class LoggerService {
   }
 
   private _listenServiceCreatedEvent(): void {
-    this._coreEventService.serviceCreated$().subscribe({
-      next: (createdService: Readonly<ServiceNameEnum>): void => {
-        this.serviceCreated({
-          service: createdService,
-        });
-      },
-    });
+    CoreEventService.getInstance()
+      .serviceCreated$()
+      .subscribe({
+        next: (createdService: Readonly<ServiceNameEnum>): void => {
+          this.serviceCreated({
+            service: createdService,
+          });
+        },
+      });
   }
 }

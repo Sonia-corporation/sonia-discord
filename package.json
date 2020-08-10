@@ -122,7 +122,7 @@
     "git:push": "git push-upstream"
   },
   "dependencies": {
-    "@datorama/akita": "5.2.1",
+    "@datorama/akita": "5.2.2",
     "@scout_apm/scout-apm": "0.1.10",
     "axios": "0.19.2",
     "discord.js": "12.2.0",

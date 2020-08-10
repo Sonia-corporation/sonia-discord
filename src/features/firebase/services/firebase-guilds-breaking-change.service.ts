@@ -28,10 +28,6 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
     return FirebaseGuildsBreakingChangeService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-  private readonly _firebaseGuildsService: FirebaseGuildsService = FirebaseGuildsService.getInstance();
-  private readonly _discordClientService: DiscordClientService = DiscordClientService.getInstance();
   private readonly _hasFinished$: BehaviorSubject<
     boolean
   > = new BehaviorSubject<boolean>(false);
@@ -70,8 +66,8 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
 
   public isReady$(): Observable<[true, true]> {
     return forkJoin([
-      this._firebaseGuildsService.isReady(),
-      this._discordClientService.isReady(),
+      FirebaseGuildsService.getInstance().isReady(),
+      DiscordClientService.getInstance().isReady(),
     ]);
   }
 
@@ -80,9 +76,9 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
       take(1),
       tap({
         next: (): void => {
-          this._loggerService.debug({
+          LoggerService.getInstance().debug({
             context: this._serviceName,
-            message: this._chalkService.text(
+            message: ChalkService.getInstance().text(
               `handling breaking changes for all Firebase guilds...`
             ),
           });
@@ -90,16 +86,16 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
       }),
       mergeMap(
         (): Promise<QuerySnapshot<IFirebaseGuild>> => {
-          return this._firebaseGuildsService.getGuilds();
+          return FirebaseGuildsService.getInstance().getGuilds();
         }
       ),
       mergeMap(
         (
           querySnapshot: QuerySnapshot<IFirebaseGuild>
         ): Promise<WriteResult[] | void> => {
-          this._loggerService.debug({
+          LoggerService.getInstance().debug({
             context: this._serviceName,
-            message: this._chalkService.text(`guilds fetched`),
+            message: ChalkService.getInstance().text(`guilds fetched`),
           });
 
           return this._updateAllFirebaseGuilds(querySnapshot);
@@ -113,7 +109,7 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
   ): Promise<WriteResult[] | void> {
     const batch:
       | WriteBatch
-      | undefined = this._firebaseGuildsService.getBatch();
+      | undefined = FirebaseGuildsService.getInstance().getBatch();
 
     if (!_.isNil(batch)) {
       let countFirebaseGuildsUpdated = 0;
@@ -138,10 +134,10 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
       );
 
       if (_.gt(countFirebaseGuildsUpdated, 0)) {
-        this._loggerService.log({
+        LoggerService.getInstance().log({
           context: this._serviceName,
-          message: this._chalkService.text(
-            `updating ${this._chalkService.value(
+          message: ChalkService.getInstance().text(
+            `updating ${ChalkService.getInstance().value(
               countFirebaseGuildsUpdated
             )} Firebase guild${
               _.gt(countFirebaseGuildsUpdated, 1) ? `s` : ``
@@ -152,14 +148,14 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
         return batch.commit();
       }
 
-      this._loggerService.log({
+      LoggerService.getInstance().log({
         context: this._serviceName,
-        message: this._chalkService.text(
+        message: ChalkService.getInstance().text(
           `all Firebase guild${
             _.gt(countFirebaseGuilds, 1) ? `s` : ``
-          } ${this._chalkService.hint(
+          } ${ChalkService.getInstance().hint(
             `(${countFirebaseGuilds})`
-          )} up-to-date ${this._chalkService.hint(
+          )} up-to-date ${ChalkService.getInstance().hint(
             `(v${FIREBASE_GUILD_CURRENT_VERSION})`
           )}`
         ),
@@ -168,9 +164,11 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
       return Promise.resolve();
     }
 
-    this._loggerService.error({
+    LoggerService.getInstance().error({
       context: this._serviceName,
-      message: this._chalkService.text(`Firebase guilds batch not available`),
+      message: ChalkService.getInstance().text(
+        `Firebase guilds batch not available`
+      ),
     });
 
     return Promise.reject(new Error(`Firebase guilds batch not available`));

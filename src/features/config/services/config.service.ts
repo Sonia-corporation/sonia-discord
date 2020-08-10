@@ -25,10 +25,6 @@ export class ConfigService extends AbstractService {
     return ConfigService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-  private readonly _timeService: TimeService = TimeService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.CONFIG_SERVICE);
   }
@@ -37,12 +33,12 @@ export class ConfigService extends AbstractService {
     configUpdateNumber: Readonly<IConfigUpdateNumber>
   ): number {
     if (_.isNumber(configUpdateNumber.newValue)) {
-      this._loggerService.log({
+      LoggerService.getInstance().log({
         context: configUpdateNumber.context,
-        message: this._chalkService.text(
+        message: ChalkService.getInstance().text(
           `${
             configUpdateNumber.valueName
-          } updated to: ${this._chalkService.value(
+          } updated to: ${ChalkService.getInstance().value(
             configUpdateNumber.newValue
           )}`
         ),
@@ -58,7 +54,7 @@ export class ConfigService extends AbstractService {
     configUpdateString: Readonly<IConfigUpdateString<T>>
   ): T {
     if (_.isString(configUpdateString.newValue)) {
-      this._loggerService.log({
+      LoggerService.getInstance().log({
         context: configUpdateString.context,
         message: this._getUpdatedStringMessage(configUpdateString),
       });
@@ -73,7 +69,7 @@ export class ConfigService extends AbstractService {
     configUpdateDate: Readonly<IConfigUpdateDate<T>>
   ): T {
     if (_.isString(configUpdateDate.newValue)) {
-      this._loggerService.log({
+      LoggerService.getInstance().log({
         context: configUpdateDate.context,
         message: this._getUpdatedDateMessage(configUpdateDate),
       });
@@ -88,14 +84,14 @@ export class ConfigService extends AbstractService {
     configUpdateStringOrArray: Readonly<IConfigUpdateStringOrArray<T>>
   ): T {
     if (_.isString(configUpdateStringOrArray.newValue)) {
-      this._loggerService.log({
+      LoggerService.getInstance().log({
         context: configUpdateStringOrArray.context,
         message: this._getUpdatedStringMessage(configUpdateStringOrArray),
       });
 
       return configUpdateStringOrArray.newValue;
     } else if (_.isArray(configUpdateStringOrArray.newValue)) {
-      this._loggerService.log({
+      LoggerService.getInstance().log({
         context: configUpdateStringOrArray.context,
         message: this._getUpdatedStringOrArrayMessage(
           configUpdateStringOrArray
@@ -112,12 +108,12 @@ export class ConfigService extends AbstractService {
     configUpdateBoolean: Readonly<IConfigUpdateBoolean>
   ): boolean {
     if (_.isBoolean(configUpdateBoolean.newValue)) {
-      this._loggerService.log({
+      LoggerService.getInstance().log({
         context: configUpdateBoolean.context,
-        message: this._chalkService.text(
+        message: ChalkService.getInstance().text(
           `${
             configUpdateBoolean.valueName
-          } updated to: ${this._chalkService.value(
+          } updated to: ${ChalkService.getInstance().value(
             configUpdateBoolean.newValue
           )}`
         ),
@@ -135,19 +131,19 @@ export class ConfigService extends AbstractService {
     let message = `${configUpdateStringInternal.valueName} updated`;
 
     if (_.isEqual(configUpdateStringInternal.isValueHidden, true)) {
-      message = this._loggerService.getHiddenValueUpdate(
+      message = LoggerService.getInstance().getHiddenValueUpdate(
         `${message} to: `,
         true
       );
     } else {
       if (!_.isEqual(configUpdateStringInternal.isValueDisplay, false)) {
-        message = this._chalkService.text(
-          `${message} to: ${this._chalkService.value(
+        message = ChalkService.getInstance().text(
+          `${message} to: ${ChalkService.getInstance().value(
             wrapInQuotes<T>(configUpdateStringInternal.newValue)
           )}`
         );
       } else {
-        message = this._chalkService.text(message);
+        message = ChalkService.getInstance().text(message);
       }
     }
 
@@ -160,7 +156,7 @@ export class ConfigService extends AbstractService {
     let message = `${configUpdateStringInternal.valueName} updated`;
 
     if (_.isEqual(configUpdateStringInternal.isValueHidden, true)) {
-      message = this._loggerService.getHiddenValueArrayUpdate(
+      message = LoggerService.getInstance().getHiddenValueArrayUpdate(
         `${message} to: `,
         true
       );
@@ -169,15 +165,15 @@ export class ConfigService extends AbstractService {
         !_.isEqual(configUpdateStringInternal.isValueDisplay, false) &&
         _.isArray(configUpdateStringInternal.newValue)
       ) {
-        message = this._chalkService.text(
-          `${message} to: ${this._chalkService.value(
-            this._loggerService.getStringArray<T>(
+        message = ChalkService.getInstance().text(
+          `${message} to: ${ChalkService.getInstance().value(
+            LoggerService.getInstance().getStringArray<T>(
               configUpdateStringInternal.newValue
             )
           )}`
         );
       } else {
-        message = this._chalkService.text(message);
+        message = ChalkService.getInstance().text(message);
       }
     }
 
@@ -190,24 +186,24 @@ export class ConfigService extends AbstractService {
     let message = `${configUpdateDate.valueName} updated`;
 
     if (_.isEqual(configUpdateDate.isValueHidden, true)) {
-      message = this._loggerService.getHiddenValueUpdate(
+      message = LoggerService.getInstance().getHiddenValueUpdate(
         `${message} to: `,
         true
       );
     } else {
       if (!_.isEqual(configUpdateDate.isValueDisplay, false)) {
-        message = this._chalkService.text(
-          `${message} to: ${this._chalkService.value(
+        message = ChalkService.getInstance().text(
+          `${message} to: ${ChalkService.getInstance().value(
             wrapInQuotes<T>(configUpdateDate.newValue)
-          )} ${this._chalkService.hint(
-            `(${this._timeService.fromNow<T>(
+          )} ${ChalkService.getInstance().hint(
+            `(${TimeService.getInstance().fromNow<T>(
               configUpdateDate.newValue,
               false
             )})`
           )}`
         );
       } else {
-        message = this._chalkService.text(message);
+        message = ChalkService.getInstance().text(message);
       }
     }
 

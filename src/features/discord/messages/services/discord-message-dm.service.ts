@@ -20,12 +20,6 @@ export class DiscordMessageDmService extends AbstractService {
     return DiscordMessageDmService._instance;
   }
 
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
-  private readonly _discordAuthorService: DiscordAuthorService = DiscordAuthorService.getInstance();
-  private readonly _discordMessageAuthorService: DiscordMessageAuthorService = DiscordMessageAuthorService.getInstance();
-  private readonly _discordMessageContentService: DiscordMessageContentService = DiscordMessageContentService.getInstance();
-  private readonly _discordMessageCommandService: DiscordMessageCommandService = DiscordMessageCommandService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_DM_SERVICE);
   }
@@ -33,7 +27,7 @@ export class DiscordMessageDmService extends AbstractService {
   public getMessage(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse | null {
-    if (this._discordAuthorService.isValid(anyDiscordMessage.author)) {
+    if (DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
       return this._getMessageResponse(anyDiscordMessage);
     }
 
@@ -44,30 +38,36 @@ export class DiscordMessageDmService extends AbstractService {
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse | null {
     if (
-      this._discordMessageContentService.hasContent(anyDiscordMessage.content)
+      DiscordMessageContentService.getInstance().hasContent(
+        anyDiscordMessage.content
+      )
     ) {
       if (
-        this._discordMessageCommandService.hasCommand(anyDiscordMessage.content)
+        DiscordMessageCommandService.getInstance().hasCommand(
+          anyDiscordMessage.content
+        )
       ) {
         return this._getCommandMessageResponse(anyDiscordMessage);
       }
     }
 
-    return this._discordMessageAuthorService.reply(anyDiscordMessage);
+    return DiscordMessageAuthorService.getInstance().reply(anyDiscordMessage);
   }
 
   private _getCommandMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse | null {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
-      message: this._loggerService.getSnowflakeContext(
+      message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `message with command`
       ),
     });
 
-    return this._discordMessageCommandService.handleCommands(anyDiscordMessage);
+    return DiscordMessageCommandService.getInstance().handleCommands(
+      anyDiscordMessage
+    );
   }
 }

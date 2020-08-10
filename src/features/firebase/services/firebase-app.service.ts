@@ -19,8 +19,6 @@ export class FirebaseAppService extends AbstractService {
     return FirebaseAppService._instance;
   }
 
-  private readonly _chalkService: ChalkService = ChalkService.getInstance();
-  private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private _app: App | undefined = undefined;
 
   public constructor() {
@@ -39,9 +37,9 @@ export class FirebaseAppService extends AbstractService {
 
   private _checkGoogleApplicationCredentials(): void | never {
     if (_.isNil(process.env.GOOGLE_APPLICATION_CREDENTIALS)) {
-      this._loggerService.error({
+      LoggerService.getInstance().error({
         context: this._serviceName,
-        message: this._chalkService.text(
+        message: ChalkService.getInstance().text(
           `This error should not happen. If everything is as expected this is not related to the current developer environment and it means that a breaking change happened.`
         ),
       });
@@ -51,10 +49,10 @@ export class FirebaseAppService extends AbstractService {
   }
 
   private _logGoogleApplicationCredentials(): void {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(
-        `GOOGLE_APPLICATION_CREDENTIALS env: ${this._chalkService.value(
+      message: ChalkService.getInstance().text(
+        `GOOGLE_APPLICATION_CREDENTIALS env: ${ChalkService.getInstance().value(
           process.env.GOOGLE_APPLICATION_CREDENTIALS
         )}`
       ),
@@ -62,9 +60,9 @@ export class FirebaseAppService extends AbstractService {
   }
 
   private _initializeFirebaseApp(): void {
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(`creating app...`),
+      message: ChalkService.getInstance().text(`creating app...`),
     });
 
     this._app = initializeApp(
@@ -75,9 +73,9 @@ export class FirebaseAppService extends AbstractService {
       FirebaseAppEnum.SONIA_IL_EST_MIDI_DISCORD
     );
 
-    this._loggerService.debug({
+    LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: this._chalkService.text(`app created`),
+      message: ChalkService.getInstance().text(`app created`),
     });
   }
 }

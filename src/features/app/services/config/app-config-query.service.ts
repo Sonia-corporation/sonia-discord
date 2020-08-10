@@ -18,15 +18,12 @@ export class AppConfigQueryService extends AbstractService {
     return AppConfigQueryService._instance;
   }
 
-  private readonly _appConfigService: AppConfigService = AppConfigService.getInstance();
-  private readonly _timeService: TimeService = TimeService.getInstance();
-
   public constructor() {
     super(ServiceNameEnum.APP_CONFIG_QUERY_SERVICE);
   }
 
   public getFirstReleaseDateFormatted(format?: Readonly<string>): string {
-    const firstReleaseDate: string = this._appConfigService.getFirstReleaseDate();
+    const firstReleaseDate: string = AppConfigService.getInstance().getFirstReleaseDate();
 
     if (isValidDate(firstReleaseDate)) {
       return moment(firstReleaseDate).format(format);
@@ -36,26 +33,26 @@ export class AppConfigQueryService extends AbstractService {
   }
 
   public getInitializationDateHumanized(): string {
-    const initializationDate: string = this._appConfigService.getInitializationDate();
+    const initializationDate: string = AppConfigService.getInstance().getInitializationDate();
 
     if (isValidDate(initializationDate)) {
-      return this._timeService.fromNow(initializationDate);
+      return TimeService.getInstance().fromNow(initializationDate);
     }
 
     return initializationDate;
   }
 
   public getProductionStateHumanized(): AppProductionStateEnum {
-    return this._appConfigService.isProduction()
+    return AppConfigService.getInstance().isProduction()
       ? AppProductionStateEnum.PRODUCTION
       : AppProductionStateEnum.DEVELOPMENT;
   }
 
   public getReleaseDateHumanized(): string {
-    const releaseDate: string = this._appConfigService.getReleaseDate();
+    const releaseDate: string = AppConfigService.getInstance().getReleaseDate();
 
     if (isValidDate(releaseDate)) {
-      return this._timeService.fromNow(releaseDate);
+      return TimeService.getInstance().fromNow(releaseDate);
     }
 
     return releaseDate;
@@ -64,7 +61,7 @@ export class AppConfigQueryService extends AbstractService {
   public getTotalReleaseCountHumanized(
     releaseWord: Readonly<string> = `version`
   ): string {
-    const totalReleaseCount: number = this._appConfigService.getTotalReleaseCount();
+    const totalReleaseCount: number = AppConfigService.getInstance().getTotalReleaseCount();
     let sentence = `${totalReleaseCount} ${releaseWord}`;
 
     if (_.gt(totalReleaseCount, 1)) {
