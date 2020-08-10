@@ -1,5 +1,6 @@
 import { Client } from "discord.js";
 import _ from "lodash";
+import { BehaviorSubject, Observable } from "rxjs";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
@@ -23,6 +24,9 @@ export class DiscordAuthenticationService extends AbstractService {
   private readonly _loggerService: LoggerService = LoggerService.getInstance();
   private readonly _discordSoniaConfigService: DiscordSoniaConfigService = DiscordSoniaConfigService.getInstance();
   private readonly _chalkService: ChalkService = ChalkService.getInstance();
+  private readonly _isAuthenticated$: BehaviorSubject<
+    boolean
+  > = new BehaviorSubject<boolean>(false);
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_AUTHENTICATION_SERVICE);
@@ -33,8 +37,13 @@ export class DiscordAuthenticationService extends AbstractService {
     this.login();
   }
 
-  public login(): void {
-    this._discordClientService
+  public login(): Promise<void> {
+    this._loggerService.debug({
+      context: this._serviceName,
+      message: this._chalkService.text(`authenticating...`),
+    });
+
+    return this._discordClientService
       .getClient()
       .login(this._discordSoniaConfigService.getSecretToken())
       .then((): void => {
@@ -42,22 +51,30 @@ export class DiscordAuthenticationService extends AbstractService {
           context: this._serviceName,
           message: this._chalkService.text(`authentication successful`),
         });
+        this.notifyIsAuthenticated();
       })
-      .catch((error: unknown): void => {
-        this._loggerService.error({
-          context: this._serviceName,
-          message: this._chalkService.text(`authentication failed`),
-        });
-        this._loggerService.error({
-          context: this._serviceName,
-          message: this._chalkService.error(error),
-        });
-      });
+      .catch(
+        (error: unknown): Promise<void> => {
+          this._loggerService.error({
+            context: this._serviceName,
+            message: this._chalkService.text(`authentication failed`),
+          });
+          this._loggerService.error({
+            context: this._serviceName,
+            message: this._chalkService.error(error),
+          });
 
-    this._loggerService.debug({
-      context: this._serviceName,
-      message: this._chalkService.text(`authenticating...`),
-    });
+          return Promise.reject(error);
+        }
+      );
+  }
+
+  public isAuthenticated$(): Observable<boolean> {
+    return this._isAuthenticated$.asObservable();
+  }
+
+  public notifyIsAuthenticated(): void {
+    this._isAuthenticated$.next(true);
   }
 
   private _listen(): void {

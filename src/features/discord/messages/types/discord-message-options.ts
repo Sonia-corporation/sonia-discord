@@ -1,5 +1,5 @@
 import { MessageAdditions, MessageOptions, SplitOptions } from "discord.js";
 
-export type DiscordMessageOptions =
+export type IDiscordMessageOptions =
   | (MessageOptions & { split: true | SplitOptions })
   | MessageAdditions;

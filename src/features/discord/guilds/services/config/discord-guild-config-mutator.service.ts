@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../../classes/abstract-config.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { PartialNested } from "../../../../../types/partial-nested";
+import { IPartialNested } from "../../../../../types/partial-nested";
 import { LoggerService } from "../../../../logger/services/logger.service";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
 import { IDiscordGuildConfig } from "../../../interfaces/discord-guild-config";
@@ -15,7 +15,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
   private static _instance: DiscordGuildConfigMutatorService;
 
   public static getInstance(
-    config?: Readonly<PartialNested<IDiscordConfig>>
+    config?: Readonly<IPartialNested<IDiscordConfig>>
   ): DiscordGuildConfigMutatorService {
     if (_.isNil(DiscordGuildConfigMutatorService._instance)) {
       DiscordGuildConfigMutatorService._instance = new DiscordGuildConfigMutatorService(
@@ -30,7 +30,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
   private _discordGuildConfigCoreService: DiscordGuildConfigCoreService = DiscordGuildConfigCoreService.getInstance();
   private _discordGuildConfigService: DiscordGuildConfigService = DiscordGuildConfigService.getInstance();
 
-  public constructor(config?: Readonly<PartialNested<IDiscordConfig>>) {
+  public constructor(config?: Readonly<IPartialNested<IDiscordConfig>>) {
     super(ServiceNameEnum.DISCORD_GUILD_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -40,7 +40,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
     this._discordGuildConfigService = DiscordGuildConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<PartialNested<IDiscordConfig>>): void {
+  public updateConfig(config?: Readonly<IPartialNested<IDiscordConfig>>): void {
     if (!_.isNil(config)) {
       this.updateGuild(config.guild);
 
@@ -52,7 +52,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
   }
 
   public updateGuild(
-    guild?: Readonly<PartialNested<IDiscordGuildConfig>>
+    guild?: Readonly<IPartialNested<IDiscordGuildConfig>>
   ): void {
     if (!_.isNil(guild)) {
       this.updateSendCookiesOnCreateState(guild.shouldSendCookiesOnCreate);

@@ -1,5 +1,5 @@
+import { Guild, Snowflake } from "discord.js";
 import _ from "lodash";
-import { filter, take } from "rxjs/operators";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
@@ -26,29 +26,30 @@ export class DiscordGuildService extends AbstractService {
     super(ServiceNameEnum.DISCORD_GUILD_SERVICE);
   }
 
-  public init(): void {
-    this._listen();
+  public init(): Promise<void> {
+    return this._listen();
   }
 
-  private _listen(): void {
-    this._discordClientService
-      .isReady$()
-      .pipe(
-        filter((isReady: Readonly<boolean>): boolean => {
-          return _.isEqual(isReady, true);
-        }),
-        take(1)
-      )
-      .subscribe({
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        next: (): void => {},
-      });
+  public getGuilds(): Guild[] {
+    return this._discordClientService.getClient().guilds.cache.array();
+  }
 
+  public getGuildById(guildId: Readonly<Snowflake>): Guild | undefined {
+    return this._discordClientService
+      .getClient()
+      .guilds.cache.find((guild: Readonly<Guild>): boolean => {
+        return _.isEqual(guild.id, guildId);
+      });
+  }
+
+  private _listen(): Promise<void> {
     this._loggerService.debug({
       context: this._serviceName,
       message: this._chalkService.text(
         `listen ${wrapInQuotes(`ready`)} Discord client state`
       ),
     });
+
+    return this._discordClientService.isReady().then();
   }
 }

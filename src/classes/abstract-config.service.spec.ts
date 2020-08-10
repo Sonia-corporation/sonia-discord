@@ -1,6 +1,6 @@
 import { ServiceNameEnum } from "../enums/service-name.enum";
 import { CoreEventService } from "../features/core/services/core-event.service";
-import { PartialNested } from "../types/partial-nested";
+import { IPartialNested } from "../types/partial-nested";
 import { AbstractConfigService } from "./abstract-config.service";
 
 jest.mock(`../features/logger/services/logger.service`);
@@ -14,12 +14,12 @@ interface IDummy {
 class DummyService extends AbstractConfigService<IDummy> {
   public constructor(
     serviceName: Readonly<ServiceNameEnum>,
-    config?: Readonly<PartialNested<IDummy>>
+    config?: Readonly<IPartialNested<IDummy>>
   ) {
     super(serviceName, config);
   }
 
-  public updateConfig(_config?: Readonly<PartialNested<IDummy>>): void {
+  public updateConfig(_config?: Readonly<IPartialNested<IDummy>>): void {
     // Avoid lint error :)
   }
 }

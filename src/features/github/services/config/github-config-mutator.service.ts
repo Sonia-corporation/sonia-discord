@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { AbstractConfigService } from "../../../../classes/abstract-config.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { PartialNested } from "../../../../types/partial-nested";
+import { IPartialNested } from "../../../../types/partial-nested";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { GithubConfigValueNameEnum } from "../../enums/github-config-value-name.enum";
 import { IGithubConfig } from "../../interfaces/github-config";
@@ -14,7 +14,7 @@ export class GithubConfigMutatorService extends AbstractConfigService<
   private static _instance: GithubConfigMutatorService;
 
   public static getInstance(
-    config?: Readonly<PartialNested<IGithubConfig>>
+    config?: Readonly<IPartialNested<IGithubConfig>>
   ): GithubConfigMutatorService {
     if (_.isNil(GithubConfigMutatorService._instance)) {
       GithubConfigMutatorService._instance = new GithubConfigMutatorService(
@@ -29,7 +29,7 @@ export class GithubConfigMutatorService extends AbstractConfigService<
   private _githubConfigCoreService: GithubConfigCoreService = GithubConfigCoreService.getInstance();
   private _githubConfigService: GithubConfigService = GithubConfigService.getInstance();
 
-  public constructor(config?: Readonly<PartialNested<IGithubConfig>>) {
+  public constructor(config?: Readonly<IPartialNested<IGithubConfig>>) {
     super(ServiceNameEnum.GITHUB_CONFIG_MUTATOR_SERVICE, config);
   }
 
@@ -39,7 +39,7 @@ export class GithubConfigMutatorService extends AbstractConfigService<
     this._githubConfigService = GithubConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<PartialNested<IGithubConfig>>): void {
+  public updateConfig(config?: Readonly<IPartialNested<IGithubConfig>>): void {
     if (!_.isNil(config)) {
       this.updateBugReportUrl(config.bugReportUrl);
       this.updatePersonalAccessToken(config.personalAccessToken);

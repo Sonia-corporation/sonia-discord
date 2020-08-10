@@ -253,6 +253,10 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.OUSE,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.P_MO,
         type: DiscordActivityTypeEnum.LISTENING,
       },
@@ -262,6 +266,10 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
       },
       {
         name: DiscordActivityNameEnum.PHORA,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.POWFU,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -286,6 +294,10 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
       },
       {
         name: DiscordActivityNameEnum.RYAN_CARAVEO,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.SAD_BOY_PROLIFIC,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {

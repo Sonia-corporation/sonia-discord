@@ -8,7 +8,7 @@ import { DiscordChannelService } from "../../channels/services/discord-channel.s
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordAuthorService } from "../../users/services/discord-author.service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../types/any-discord-message";
+import { IAnyDiscordMessage } from "../types/any-discord-message";
 import { DiscordMessageDmService } from "./discord-message-dm.service";
 import { DiscordMessageErrorService } from "./discord-message-error.service";
 import { DiscordMessageTextService } from "./discord-message-text.service";
@@ -79,7 +79,7 @@ describe(`DiscordMessageService`, (): void => {
 
   describe(`init()`, (): void => {
     let client: Client;
-    let anyDiscordMessage: AnyDiscordMessage;
+    let anyDiscordMessage: IAnyDiscordMessage;
     let discordClientServiceGetClientOnMock: jest.Mock;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
@@ -92,7 +92,7 @@ describe(`DiscordMessageService`, (): void => {
       client = createMock<Client>({
         on: discordClientServiceGetClientOnMock,
       });
-      anyDiscordMessage = createMock<AnyDiscordMessage>();
+      anyDiscordMessage = createMock<IAnyDiscordMessage>();
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
@@ -133,7 +133,7 @@ describe(`DiscordMessageService`, (): void => {
         discordClientServiceGetClientOnMock = jest.fn(
           (
             _event: string,
-            listener: (anyDiscordMessage: Readonly<AnyDiscordMessage>) => void
+            listener: (anyDiscordMessage: Readonly<IAnyDiscordMessage>) => void
           ): void => {
             listener(anyDiscordMessage);
           }
@@ -169,7 +169,7 @@ describe(`DiscordMessageService`, (): void => {
   });
 
   describe(`sendMessage()`, (): void => {
-    let anyDiscordMessage: AnyDiscordMessage;
+    let anyDiscordMessage: IAnyDiscordMessage;
 
     let loggerServiceLogSpy: jest.SpyInstance;
     let handleChannelMessageSpy: jest.SpyInstance;
@@ -179,9 +179,10 @@ describe(`DiscordMessageService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageService();
-      anyDiscordMessage = createMock<AnyDiscordMessage>({
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
         id: `dummy-id`,
-      });
+      } as unknown) as IAnyDiscordMessage);
 
       loggerServiceLogSpy = jest
         .spyOn(loggerService, `log`)
@@ -381,7 +382,7 @@ describe(`DiscordMessageService`, (): void => {
   });
 
   describe(`handleChannelMessage()`, (): void => {
-    let anyDiscordMessage: AnyDiscordMessage;
+    let anyDiscordMessage: IAnyDiscordMessage;
     let discordMessageResponse: IDiscordMessageResponse;
     let anyDiscordMessageChannelSendMock: jest.Mock;
 
@@ -398,11 +399,14 @@ describe(`DiscordMessageService`, (): void => {
       service = new DiscordMessageService();
       anyDiscordMessageChannelSendMock = jest
         .fn()
-        .mockReturnValue(Promise.reject(new Error(`Fake test error: send`)));
-      anyDiscordMessage = createMock<AnyDiscordMessage>({
-        channel: {
+        .mockRejectedValue(new Error(`Fake test error: send`));
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        channel: ({
           send: anyDiscordMessageChannelSendMock,
-        },
+        } as unknown) as unknown,
         id: `dummy-id`,
       });
       discordMessageResponse = createMock<IDiscordMessageResponse>({
@@ -600,10 +604,13 @@ describe(`DiscordMessageService`, (): void => {
                   Promise.reject(new Error(`Message sending error`))
                 );
 
-                anyDiscordMessage = createMock<AnyDiscordMessage>({
-                  channel: {
+                // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+                anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  channel: ({
                     send: anyDiscordMessageChannelSendMock,
-                  },
+                  } as unknown) as unknown,
                   id: `dummy-id`,
                 });
               });
@@ -643,10 +650,13 @@ describe(`DiscordMessageService`, (): void => {
                   Promise.resolve()
                 );
 
-                anyDiscordMessage = createMock<AnyDiscordMessage>({
-                  channel: {
+                // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+                anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  channel: ({
                     send: anyDiscordMessageChannelSendMock,
-                  },
+                  } as unknown) as unknown,
                   id: `dummy-id`,
                 });
               });
@@ -808,10 +818,13 @@ describe(`DiscordMessageService`, (): void => {
                 Promise.reject(new Error(`Message sending error`))
               );
 
-              anyDiscordMessage = createMock<AnyDiscordMessage>({
-                channel: {
+              // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+              anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                channel: ({
                   send: anyDiscordMessageChannelSendMock,
-                },
+                } as unknown) as unknown,
                 id: `dummy-id`,
               });
             });
@@ -851,10 +864,13 @@ describe(`DiscordMessageService`, (): void => {
                 Promise.resolve()
               );
 
-              anyDiscordMessage = createMock<AnyDiscordMessage>({
-                channel: {
+              // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+              anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                channel: ({
                   send: anyDiscordMessageChannelSendMock,
-                },
+                } as unknown) as unknown,
                 id: `dummy-id`,
               });
             });

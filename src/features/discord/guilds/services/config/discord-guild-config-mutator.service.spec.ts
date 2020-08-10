@@ -1,5 +1,5 @@
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { PartialNested } from "../../../../../types/partial-nested";
+import { IPartialNested } from "../../../../../types/partial-nested";
 import { IConfigUpdateBoolean } from "../../../../config/interfaces/config-update-boolean";
 import { IConfigUpdateString } from "../../../../config/interfaces/config-update-string";
 import { ConfigService } from "../../../../config/services/config.service";
@@ -27,7 +27,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
   });
 
   describe(`getInstance()`, (): void => {
-    let config: PartialNested<IDiscordConfig> | undefined;
+    let config: IPartialNested<IDiscordConfig> | undefined;
 
     beforeEach((): void => {
       config = {
@@ -61,7 +61,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
   });
 
   describe(`constructor()`, (): void => {
-    let config: PartialNested<IDiscordConfig> | undefined;
+    let config: IPartialNested<IDiscordConfig> | undefined;
 
     let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
 
@@ -265,7 +265,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
   });
 
   describe(`updateConfig()`, (): void => {
-    let config: PartialNested<IDiscordConfig> | undefined;
+    let config: IPartialNested<IDiscordConfig> | undefined;
 
     let loggerLogSpy: jest.SpyInstance;
 
@@ -503,7 +503,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
   });
 
   describe(`updateGuild()`, (): void => {
-    let config: PartialNested<IDiscordGuildConfig> | undefined;
+    let config: IPartialNested<IDiscordGuildConfig> | undefined;
 
     beforeEach((): void => {
       service = DiscordGuildConfigMutatorService.getInstance();

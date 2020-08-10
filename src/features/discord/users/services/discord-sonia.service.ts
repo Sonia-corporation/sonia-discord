@@ -8,7 +8,7 @@ import { addDiscordDevPrefix } from "../../functions/dev-prefix/add-discord-dev-
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../interfaces/discord-sonia-corporation-message-embed-author-config";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { isDiscordClientUser } from "../functions/is-discord-client-user";
-import { Sonia } from "../types/sonia";
+import { ISonia } from "../types/sonia";
 import { DiscordSoniaConfigService } from "./config/discord-sonia-config.service";
 
 export class DiscordSoniaService extends AbstractService {
@@ -35,12 +35,12 @@ export class DiscordSoniaService extends AbstractService {
     return _.isEqual(id, this._discordSoniaConfigService.getId());
   }
 
-  public getSonia(): Sonia | null {
+  public getSonia(): ISonia | null {
     return this._discordClientService.getClient().user;
   }
 
   public getFullName(): string | null {
-    const sonia: Sonia | null = this.getSonia();
+    const sonia: ISonia | null = this.getSonia();
 
     if (!_.isNil(sonia)) {
       return `${sonia.username}#${sonia.discriminator}`;
@@ -49,7 +49,7 @@ export class DiscordSoniaService extends AbstractService {
     return null;
   }
 
-  public isValid(sonia: unknown): sonia is Sonia {
+  public isValid(sonia: unknown): sonia is ISonia {
     return isDiscordClientUser(sonia);
   }
 
@@ -83,7 +83,7 @@ export class DiscordSoniaService extends AbstractService {
   }
 
   public getImageUrl(): string | null {
-    const sonia: Sonia | null = this.getSonia();
+    const sonia: ISonia | null = this.getSonia();
 
     if (!_.isNil(sonia)) {
       return sonia.displayAvatarURL();

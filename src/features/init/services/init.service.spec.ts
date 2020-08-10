@@ -94,4 +94,86 @@ describe(`InitService`, (): void => {
       );
     });
   });
+
+  describe(`isAppConfigured$()`, (): void => {
+    beforeEach((): void => {
+      service = new InitService();
+    });
+
+    it(`should be false by default`, (doneCallback: jest.DoneCallback): void => {
+      expect.assertions(1);
+
+      service.isAppConfigured$().subscribe({
+        error: (error): void => {
+          expect(true).toStrictEqual(false);
+          doneCallback(error);
+        },
+        next: (isTrue: boolean): void => {
+          expect(isTrue).toStrictEqual(false);
+          doneCallback();
+        },
+      });
+    });
+
+    describe(`when the is app configured event is notified`, (): void => {
+      it(`should emit a new value into the stream`, (doneCallback: jest.DoneCallback): void => {
+        expect.assertions(1);
+
+        service.notifyIsAppConfigured();
+        service.isAppConfigured$().subscribe({
+          error: (error): void => {
+            expect(true).toStrictEqual(false);
+            doneCallback(error);
+          },
+          next: (isTrue: boolean): void => {
+            expect(isTrue).toStrictEqual(true);
+            doneCallback();
+          },
+        });
+      });
+    });
+  });
+
+  describe(`isAppConfigured()`, (): void => {
+    beforeEach((): void => {
+      service = new InitService();
+    });
+
+    describe(`when the is ready event is notified`, (): void => {
+      beforeEach((): void => {
+        service.notifyIsAppConfigured();
+      });
+
+      it(`should emit a new value into the stream`, async (): Promise<void> => {
+        expect.assertions(1);
+        service.notifyIsAppConfigured();
+
+        const isReady = await service.isAppConfigured();
+
+        expect(isReady).toStrictEqual(true);
+      });
+    });
+  });
+
+  describe(`notifyIsAppConfigured()`, (): void => {
+    beforeEach((): void => {
+      service = new InitService();
+    });
+
+    it(`should notify that the app is configured`, (doneCallback: jest.DoneCallback): void => {
+      expect.assertions(1);
+
+      service.notifyIsAppConfigured();
+      service.isAppConfigured$().subscribe({
+        error: (error): void => {
+          expect(true).toStrictEqual(false);
+          doneCallback(error);
+        },
+        next: (isTrue: boolean): void => {
+          expect(isTrue).toStrictEqual(true);
+          doneCallback();
+        },
+      });
+    });
+  });
 });

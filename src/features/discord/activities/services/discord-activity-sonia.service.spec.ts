@@ -1,4 +1,4 @@
-import { Client, Presence, PresenceData } from "discord.js";
+import { Client, ClientUser, Presence, PresenceData } from "discord.js";
 import _ from "lodash";
 import * as NodeScheduleModule from "node-schedule";
 import { Job } from "node-schedule";
@@ -577,7 +577,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
   describe(`setPresence()`, (): void => {
     let presence: Presence;
-    let setPresenceMock: jest.Mock;
+    let setPresenceMock: jest.Mock<Promise<Presence>>;
     let presenceActivity: IDiscordPresenceActivity;
     let client: Client;
 
@@ -597,16 +597,17 @@ describe(`DiscordActivitySoniaService`, (): void => {
       });
       setPresenceMock = jest
         .fn()
-        .mockReturnValue(Promise.reject(new Error(`setPresence: error`)));
+        .mockRejectedValue(new Error(`setPresence: error`));
       presenceActivity = {
         name: DiscordActivityNameEnum.APOLLO,
         type: `PLAYING`,
         url: `dummy-url`,
       };
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
       client = createMock<Client>({
-        user: {
+        user: ({
           setPresence: setPresenceMock,
-        },
+        } as unknown) as ClientUser,
       });
 
       discordClientServiceGetClientSpy = jest
@@ -692,7 +693,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       describe(`when the presence was successfully set`, (): void => {
         beforeEach((): void => {
-          setPresenceMock.mockReturnValue(Promise.resolve(presence));
+          setPresenceMock.mockResolvedValue(presence);
         });
 
         it(`should log about the update of the presence`, async (): Promise<

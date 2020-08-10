@@ -6,7 +6,7 @@ import { ProfileConfigService } from "../../../profile/services/config/profile-c
 import { addDiscordDevPrefix } from "../../functions/dev-prefix/add-discord-dev-prefix";
 import { DiscordAuthorService } from "../../users/services/discord-author.service";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
-import { AnyDiscordMessage } from "../types/any-discord-message";
+import { IAnyDiscordMessage } from "../types/any-discord-message";
 
 export class DiscordMessageAuthorService extends AbstractService {
   private static _instance: DiscordMessageAuthorService;
@@ -28,7 +28,7 @@ export class DiscordMessageAuthorService extends AbstractService {
   }
 
   public reply(
-    anyDiscordMessage: Readonly<AnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
     let response = `Il est midi!`;
 

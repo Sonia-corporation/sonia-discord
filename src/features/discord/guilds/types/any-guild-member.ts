@@ -1,3 +1,3 @@
 import { GuildMember, PartialGuildMember } from "discord.js";
 
-export type AnyGuildMember = GuildMember | PartialGuildMember;
+export type IAnyGuildMember = GuildMember | PartialGuildMember;

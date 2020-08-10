@@ -15,7 +15,7 @@ import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-
 import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordGuildSoniaChannelNameEnum } from "../enums/discord-guild-sonia-channel-name.enum";
-import { AnyGuildMember } from "../types/any-guild-member";
+import { IAnyGuildMember } from "../types/any-guild-member";
 import { DiscordGuildConfigService } from "./config/discord-guild-config.service";
 import { DiscordGuildSoniaService } from "./discord-guild-sonia.service";
 
@@ -48,7 +48,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
     this._listen();
   }
 
-  public sendMessage(member: Readonly<AnyGuildMember>): void {
+  public sendMessage(member: Readonly<IAnyGuildMember>): void {
     if (this._canSendMessage()) {
       const primaryChannel: GuildChannel | null = this._discordChannelGuildService.getPrimary(
         member.guild
@@ -63,7 +63,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
   private _listen(): void {
     this._discordClientService
       .getClient()
-      .on(`guildMemberAdd`, (member: Readonly<AnyGuildMember>): void => {
+      .on(`guildMemberAdd`, (member: Readonly<IAnyGuildMember>): void => {
         this._loggerService.debug({
           context: this._serviceName,
           message: this._chalkService.text(
@@ -99,7 +99,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
 
   private _sendMessage(
     guildChannel: Readonly<GuildChannel>,
-    member: Readonly<AnyGuildMember>
+    member: Readonly<IAnyGuildMember>
   ): void {
     const messageResponse: IDiscordMessageResponse = this._getMessageResponse(
       member
@@ -152,7 +152,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
   }
 
   private _getMessageResponse(
-    member: Readonly<AnyGuildMember>
+    member: Readonly<IAnyGuildMember>
   ): IDiscordMessageResponse {
     return {
       response: this._getMessageResponseWithEnvPrefix(

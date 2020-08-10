@@ -1,5 +1,4 @@
 import { Client } from "discord.js";
-import { Observable } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
@@ -131,14 +130,6 @@ describe(`DiscordClientService`, (): void => {
       service = new DiscordClientService();
     });
 
-    it(`should return an observable`, (): void => {
-      expect.assertions(1);
-
-      const result = service.isReady$();
-
-      expect(result).toStrictEqual(expect.any(Observable));
-    });
-
     it(`should be false by default`, (doneCallback: jest.DoneCallback): void => {
       expect.assertions(1);
 
@@ -169,6 +160,27 @@ describe(`DiscordClientService`, (): void => {
             doneCallback();
           },
         });
+      });
+    });
+  });
+
+  describe(`isReady()`, (): void => {
+    beforeEach((): void => {
+      service = new DiscordClientService();
+    });
+
+    describe(`when the is ready event is notified`, (): void => {
+      beforeEach((): void => {
+        service.notifyIsReady();
+      });
+
+      it(`should emit a new value into the stream`, async (): Promise<void> => {
+        expect.assertions(1);
+        service.notifyIsReady();
+
+        const isReady = await service.isReady();
+
+        expect(isReady).toStrictEqual(true);
       });
     });
   });

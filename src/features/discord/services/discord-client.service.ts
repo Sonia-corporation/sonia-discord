@@ -1,6 +1,7 @@
 import { Client } from "discord.js";
 import _ from "lodash";
 import { BehaviorSubject, Observable } from "rxjs";
+import { filter, map, take } from "rxjs/operators";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 
@@ -40,6 +41,18 @@ export class DiscordClientService extends AbstractService {
 
   public isReady$(): Observable<boolean> {
     return this._isReady$.asObservable();
+  }
+
+  public isReady(): Promise<true> {
+    return this.isReady$()
+      .pipe(
+        filter((isReady: Readonly<boolean>): boolean => {
+          return _.isEqual(isReady, true);
+        }),
+        take(1),
+        map((): true => true)
+      )
+      .toPromise();
   }
 
   public notifyIsReady(): void {

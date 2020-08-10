@@ -372,9 +372,10 @@ describe(`DiscordGuildCreateService`, (): void => {
 
         describe(`when the primary guild channel is not writable`, (): void => {
           beforeEach((): void => {
-            primaryGuildChannel = createMock<GuildChannel>({
+            // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+            primaryGuildChannel = createMock<GuildChannel>(({
               type: `voice`,
-            });
+            } as unknown) as GuildChannel);
 
             discordChannelGuildServiceGetPrimarySpy.mockReturnValue(
               primaryGuildChannel
@@ -414,10 +415,11 @@ describe(`DiscordGuildCreateService`, (): void => {
 
         describe(`when the primary guild channel is writable`, (): void => {
           beforeEach((): void => {
-            primaryGuildChannel = createMock<TextChannel>({
+            // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+            primaryGuildChannel = createMock<TextChannel>(({
               send: guildChannelSendMock,
               type: `text`,
-            });
+            } as unknown) as TextChannel);
 
             discordChannelGuildServiceGetPrimarySpy.mockReturnValue(
               primaryGuildChannel
@@ -583,9 +585,10 @@ describe(`DiscordGuildCreateService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordGuildCreateService();
-      guild = createMock<Guild>({
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      guild = createMock<Guild>(({
         id: `dummy-id`,
-      });
+      } as unknown) as Guild);
       writeResult = createMock<WriteResult>();
 
       firebaseGuildsServiceIsReady$Spy = jest

@@ -393,11 +393,51 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "FIREBASE_GUILDS_BREAKING_CHANGES_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.FIREBASE_GUILDS_BREAKING_CHANGE_SERVICE
+    ).toStrictEqual(`FirebaseGuildsBreakingChangeService`);
+  });
+
+  it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_SERVICE).toStrictEqual(
+      `FirebaseGuildsNewVersionService`
+    );
+  });
+
   it(`should have a member "FIREBASE_GUILDS_SERVICE"`, (): void => {
     expect.assertions(1);
 
     expect(ServiceNameEnum.FIREBASE_GUILDS_SERVICE).toStrictEqual(
       `FirebaseGuildsService`
+    );
+  });
+
+  it(`should have a member "FIREBASE_GUILDS_STORE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_STORE).toStrictEqual(
+      `FirebaseGuildsStore`
+    );
+  });
+
+  it(`should have a member "FIREBASE_GUILDS_STORE_QUERY"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_STORE_QUERY).toStrictEqual(
+      `FirebaseGuildsStoreQuery`
+    );
+  });
+
+  it(`should have a member "FIREBASE_GUILDS_STORE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_STORE_SERVICE).toStrictEqual(
+      `FirebaseGuildsStoreService`
     );
   });
 

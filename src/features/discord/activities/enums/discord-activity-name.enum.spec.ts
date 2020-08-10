@@ -575,6 +575,12 @@ describe(`DiscordActivityNameEnum`, (): void => {
     expect(DiscordActivityNameEnum.ON_CUE).toStrictEqual(`OnCue`);
   });
 
+  it(`should have a member "OUSE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.OUSE).toStrictEqual(`Ouse`);
+  });
+
   it(`should have a member "P_MO"`, (): void => {
     expect.assertions(1);
 
@@ -591,6 +597,12 @@ describe(`DiscordActivityNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordActivityNameEnum.PHORA).toStrictEqual(`Phora`);
+  });
+
+  it(`should have a member "POWFU"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.POWFU).toStrictEqual(`Powfu`);
   });
 
   it(`should have a member "QUINN_XCII"`, (): void => {
@@ -627,6 +639,14 @@ describe(`DiscordActivityNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordActivityNameEnum.RYAN_CARAVEO).toStrictEqual(`Ryan Caraveo`);
+  });
+
+  it(`should have a member "SAD_BOY_PROLIFIC"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.SAD_BOY_PROLIFIC).toStrictEqual(
+      `SadBoyProlific`
+    );
   });
 
   it(`should have a member "SAMMY_PHARAOH"`, (): void => {
