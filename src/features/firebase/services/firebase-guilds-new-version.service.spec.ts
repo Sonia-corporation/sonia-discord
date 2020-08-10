@@ -6,7 +6,10 @@ import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { AppConfigService } from "../../app/services/config/app-config.service";
 import { CoreEventService } from "../../core/services/core-event.service";
 import { DiscordChannelGuildService } from "../../discord/channels/services/discord-channel-guild.service";
+import { IDiscordGuildSoniaSendMessageToChannel } from "../../discord/guilds/interfaces/discord-guild-sonia-send-message-to-channel";
+import { DiscordGuildSoniaService } from "../../discord/guilds/services/discord-guild-sonia.service";
 import { DiscordGuildService } from "../../discord/guilds/services/discord-guild.service";
+import { DiscordLoggerErrorService } from "../../discord/logger/services/discord-logger-error.service";
 import { IDiscordMessageResponse } from "../../discord/messages/interfaces/discord-message-response";
 import { DiscordMessageCommandReleaseNotesService } from "../../discord/messages/services/command/release-notes/discord-message-command-release-notes.service";
 import { ILoggerLog } from "../../logger/interfaces/logger-log";
@@ -35,6 +38,8 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
   let discordGuildService: DiscordGuildService;
   let discordChannelGuildService: DiscordChannelGuildService;
   let discordMessageCommandReleaseNotesService: DiscordMessageCommandReleaseNotesService;
+  let discordGuildSoniaService: DiscordGuildSoniaService;
+  let discordLoggerErrorService: DiscordLoggerErrorService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -45,6 +50,8 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     discordGuildService = DiscordGuildService.getInstance();
     discordChannelGuildService = DiscordChannelGuildService.getInstance();
     discordMessageCommandReleaseNotesService = DiscordMessageCommandReleaseNotesService.getInstance();
+    discordGuildSoniaService = DiscordGuildSoniaService.getInstance();
+    discordLoggerErrorService = DiscordLoggerErrorService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -1250,6 +1257,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     let guildChannel: GuildChannel;
     let textChannel: TextChannel;
     let discordMessageResponse: IDiscordMessageResponse;
+    let discordMessageResponseError: IDiscordMessageResponse;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let loggerServiceErrorSpy: jest.SpyInstance;
@@ -1257,6 +1265,8 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     let discordGuildServiceGetGuildByIdSpy: jest.SpyInstance;
     let discordChannelGuildServiceGetPrimarySpy: jest.SpyInstance;
     let discordMessageCommandReleaseNotesServiceGetMessageResponseSpy: jest.SpyInstance;
+    let discordGuildSoniaServiceSendMessageToChannelSpy: jest.SpyInstance;
+    let discordLoggerErrorServiceGetErrorMessageResponseSpy: jest.SpyInstance;
     let sendMock: jest.Mock;
 
     beforeEach((): void => {
@@ -1276,6 +1286,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         send: sendMock,
       } as unknown) as TextChannel);
       discordMessageResponse = createMock<IDiscordMessageResponse>();
+      discordMessageResponseError = createMock<IDiscordMessageResponse>();
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
@@ -1295,6 +1306,12 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       discordMessageCommandReleaseNotesServiceGetMessageResponseSpy = jest
         .spyOn(discordMessageCommandReleaseNotesService, `getMessageResponse`)
         .mockReturnValue(discordMessageResponse);
+      discordGuildSoniaServiceSendMessageToChannelSpy = jest
+        .spyOn(discordGuildSoniaService, `sendMessageToChannel`)
+        .mockImplementation();
+      discordLoggerErrorServiceGetErrorMessageResponseSpy = jest
+        .spyOn(discordLoggerErrorService, `getErrorMessageResponse`)
+        .mockReturnValue(discordMessageResponseError);
     });
 
     describe(`when the given Firebase guild id is undefined`, (): void => {
@@ -1450,6 +1467,34 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           context: `FirebaseGuildsNewVersionService`,
           message: `text-Error: send error`,
         } as ILoggerLog);
+      });
+
+      it(`should get an error message response for Sonia`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await expect(
+          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+        ).rejects.toThrow(new Error(`Firebase guild id nil`));
+
+        expect(
+          discordLoggerErrorServiceGetErrorMessageResponseSpy
+        ).not.toHaveBeenCalled();
+      });
+
+      it(`should send an error message to the Discord Sonia errors channel`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await expect(
+          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+        ).rejects.toThrow(new Error(`Firebase guild id nil`));
+
+        expect(
+          discordGuildSoniaServiceSendMessageToChannelSpy
+        ).not.toHaveBeenCalled();
       });
     });
 
@@ -1621,6 +1666,34 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             message: `text-Error: send error`,
           } as ILoggerLog);
         });
+
+        it(`should get an error message response for Sonia`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await expect(
+            service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+          ).rejects.toThrow(new Error(`Discord guild not found`));
+
+          expect(
+            discordLoggerErrorServiceGetErrorMessageResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should send an error message to the Discord Sonia errors channel`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await expect(
+            service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+          ).rejects.toThrow(new Error(`Discord guild not found`));
+
+          expect(
+            discordGuildSoniaServiceSendMessageToChannelSpy
+          ).not.toHaveBeenCalled();
+        });
       });
 
       describe(`when the Discord guild was found`, (): void => {
@@ -1764,6 +1837,34 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               message: `text-Error: send error`,
             } as ILoggerLog);
           });
+
+          it(`should get an error message response for Sonia`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
+
+            await expect(
+              service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+            ).rejects.toThrow(new Error(`Primary channel not found`));
+
+            expect(
+              discordLoggerErrorServiceGetErrorMessageResponseSpy
+            ).not.toHaveBeenCalled();
+          });
+
+          it(`should send an error message to the Discord Sonia errors channel`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
+
+            await expect(
+              service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+            ).rejects.toThrow(new Error(`Primary channel not found`));
+
+            expect(
+              discordGuildSoniaServiceSendMessageToChannelSpy
+            ).not.toHaveBeenCalled();
+          });
         });
 
         describe(`when the Discord guild primary channel was found`, (): void => {
@@ -1881,6 +1982,34 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 message: `text-Error: send error`,
               } as ILoggerLog);
             });
+
+            it(`should get an error message response for Sonia`, async (): Promise<
+              void
+            > => {
+              expect.assertions(2);
+
+              await expect(
+                service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+              ).rejects.toThrow(new Error(`Primary channel not writable`));
+
+              expect(
+                discordLoggerErrorServiceGetErrorMessageResponseSpy
+              ).not.toHaveBeenCalled();
+            });
+
+            it(`should send an error message to the Discord Sonia errors channel`, async (): Promise<
+              void
+            > => {
+              expect.assertions(2);
+
+              await expect(
+                service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+              ).rejects.toThrow(new Error(`Primary channel not writable`));
+
+              expect(
+                discordGuildSoniaServiceSendMessageToChannelSpy
+              ).not.toHaveBeenCalled();
+            });
           });
 
           describe(`when the Discord guild primary channel is writable`, (): void => {
@@ -1984,8 +2113,45 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
                 expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(2, {
                   context: `FirebaseGuildsNewVersionService`,
-                  message: `text-Error: send error`,
+                  message: `error-Error: send error`,
                 } as ILoggerLog);
+              });
+
+              it(`should get an error message response for Sonia`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+                ).rejects.toThrow(new Error(`send error`));
+
+                expect(
+                  discordLoggerErrorServiceGetErrorMessageResponseSpy
+                ).toHaveBeenCalledTimes(1);
+                expect(
+                  discordLoggerErrorServiceGetErrorMessageResponseSpy
+                ).toHaveBeenCalledWith(new Error(`send error`));
+              });
+
+              it(`should send an error message to the Discord Sonia errors channel`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+                ).rejects.toThrow(new Error(`send error`));
+
+                expect(
+                  discordGuildSoniaServiceSendMessageToChannelSpy
+                ).toHaveBeenCalledTimes(1);
+                expect(
+                  discordGuildSoniaServiceSendMessageToChannelSpy
+                ).toHaveBeenCalledWith({
+                  channelName: `errors`,
+                  messageResponse: discordMessageResponseError,
+                } as IDiscordGuildSoniaSendMessageToChannel);
               });
             });
 
@@ -2036,6 +2202,34 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   context: `FirebaseGuildsNewVersionService`,
                   message: `text-Error: send error`,
                 } as ILoggerLog);
+              });
+
+              it(`should not get an error message response for Sonia`, async (): Promise<
+                void
+              > => {
+                expect.assertions(1);
+
+                await service.sendNewReleaseNotesFromFirebaseGuild(
+                  firebaseGuild
+                );
+
+                expect(
+                  discordLoggerErrorServiceGetErrorMessageResponseSpy
+                ).not.toHaveBeenCalled();
+              });
+
+              it(`should not send an error message to the Discord Sonia errors channel`, async (): Promise<
+                void
+              > => {
+                expect.assertions(1);
+
+                await service.sendNewReleaseNotesFromFirebaseGuild(
+                  firebaseGuild
+                );
+
+                expect(
+                  discordGuildSoniaServiceSendMessageToChannelSpy
+                ).not.toHaveBeenCalled();
               });
             });
           });
