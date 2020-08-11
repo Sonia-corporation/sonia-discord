@@ -164,7 +164,7 @@ export class DiscordMessageCommandService extends AbstractService {
           anyDiscordMessage.content
         )
       ) {
-        return this.handleReleaseNotesCommand(anyDiscordMessage);
+        return this.handleFeatureCommand(anyDiscordMessage);
       }
     }
 
