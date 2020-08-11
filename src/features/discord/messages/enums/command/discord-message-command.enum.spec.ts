@@ -66,4 +66,30 @@ describe(`DiscordMessageCommandEnum`, (): void => {
 
     expect(DiscordMessageCommandEnum.L).toStrictEqual(`l`);
   });
+
+  it(`should have a member "RELEASE_NOTES"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandEnum.RELEASE_NOTES).toStrictEqual(
+      `release-notes`
+    );
+  });
+
+  it(`should have a member "R"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandEnum.R).toStrictEqual(`r`);
+  });
+
+  it(`should have a member "FEATURE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandEnum.FEATURE).toStrictEqual(`feature`);
+  });
+
+  it(`should have a member "F"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandEnum.F).toStrictEqual(`f`);
+  });
 });

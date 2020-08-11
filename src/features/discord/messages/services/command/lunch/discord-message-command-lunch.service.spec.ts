@@ -87,6 +87,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
     let getRandomValueFromEnumSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = new DiscordMessageCommandLunchService();
       // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
       anyDiscordMessage = createMock<IAnyDiscordMessage>(({
         id: `dummy-id`,
@@ -315,6 +316,1018 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
       const result = service.handleResponse(anyDiscordMessage);
 
       expect(result.response).toStrictEqual(``);
+    });
+  });
+
+  describe(`hasCommand()`, (): void => {
+    let message: string;
+
+    let discordMessageConfigServiceGetMessageCommandPrefixSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageCommandLunchService();
+      message = `dummy-message`;
+
+      discordMessageConfigServiceGetMessageCommandPrefixSpy = jest
+        .spyOn(discordMessageConfigService, `getMessageCommandPrefix`)
+        .mockImplementation();
+    });
+
+    describe(`when the message command prefix is "@"`, (): void => {
+      beforeEach((): void => {
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
+          `@`
+        );
+      });
+
+      describe(`when the given message is an empty string`, (): void => {
+        beforeEach((): void => {
+          message = ``;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message without a command`, (): void => {
+        beforeEach((): void => {
+          message = `hello world`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost lunch command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@lun`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost lunch command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-lun`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost lunch command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!lun`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost lunch command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@lun dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost lunch command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-lun dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost lunch command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!lun dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@lunch`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-lunch`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!lunch`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@lunch dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-lunch dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!lunch dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@l`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-l`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!l`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@l dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-l dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!l dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command starting uppercase with @`, (): void => {
+        beforeEach((): void => {
+          message = `@LUNCH`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command uppercase starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-LUNCH`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!LUNCH`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@LUNCH dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command uppercase starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-LUNCH dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!LUNCH dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command starting uppercase with @`, (): void => {
+        beforeEach((): void => {
+          message = `@L`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command uppercase starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-L`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!L`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@L dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command uppercase starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-L dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!L dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+    });
+
+    describe(`when the message command prefix is "-" or "!"`, (): void => {
+      beforeEach((): void => {
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
+          `-`,
+          `!`,
+        ]);
+      });
+
+      describe(`when the given message is an empty string`, (): void => {
+        beforeEach((): void => {
+          message = ``;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message without a command`, (): void => {
+        beforeEach((): void => {
+          message = `hello world`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost lunch command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@lun`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost lunch command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-lun`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost lunch command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!lun`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost lunch command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@lun dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost lunch command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-lun dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost lunch command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!lun dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@lunch`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-lunch`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!lunch`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@lunch dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-lunch dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!lunch dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command uppercase starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@LUNCH`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command uppercase starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-LUNCH`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!LUNCH`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@LUNCH dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command uppercase starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-LUNCH dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the lunch command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!LUNCH dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@l`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-l`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!l`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@l dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-l dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!l dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command uppercase starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@L`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command uppercase starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-L`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!L`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@L dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command uppercase starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-L dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut lunch command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!L dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
     });
   });
 });

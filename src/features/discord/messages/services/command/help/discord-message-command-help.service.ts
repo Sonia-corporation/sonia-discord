@@ -11,6 +11,8 @@ import { AbstractService } from "../../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
+import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
+import { hasThisCommand } from "../../../functions/commands/has-this-command";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
@@ -55,6 +57,14 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     };
   }
 
+  public hasCommand(message: Readonly<string>): boolean {
+    return hasThisCommand({
+      commands: [DiscordMessageCommandEnum.HELP, DiscordMessageCommandEnum.H],
+      message,
+      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
+    });
+  }
+
   private _getMessageEmbed(): MessageEmbedOptions {
     return {
       author: this._getMessageEmbedAuthor(),
@@ -85,6 +95,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     return [
       this._getMessageEmbedFieldCookie(),
       this._getMessageEmbedFieldError(),
+      this._getMessageEmbedFieldFeature(),
       this._getMessageEmbedFieldHelp(),
       this._getMessageEmbedFieldLunch(),
       this._getMessageEmbedFieldReleaseNotes(),
@@ -104,6 +115,13 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     return {
       name: `Error (*error* or *bug*)`,
       value: `Create a bug in my core system. Do not do this one, of course!`,
+    };
+  }
+
+  private _getMessageEmbedFieldFeature(): EmbedFieldData {
+    return {
+      name: `Feature (*feature* or *f*)`,
+      value: `Change my behavior on this guild. Help me to be better!`,
     };
   }
 
