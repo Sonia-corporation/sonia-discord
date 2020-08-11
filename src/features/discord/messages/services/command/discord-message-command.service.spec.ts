@@ -1362,7 +1362,7 @@ describe(`DiscordMessageCommandService`, (): void => {
 
       describe(`when the message contains the feature command`, (): void => {
         beforeEach((): void => {
-          anyDiscordMessage.content = `-release-notes`;
+          anyDiscordMessage.content = `-feature`;
         });
 
         it(`should not handle the version command`, (): void => {
@@ -1425,7 +1425,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           ).not.toHaveBeenCalled();
         });
 
-        it(`should not handle the feature command`, (): void => {
+        it(`should handle the feature command`, (): void => {
           expect.assertions(2);
 
           service.handleCommands(anyDiscordMessage);
@@ -1438,7 +1438,7 @@ describe(`DiscordMessageCommandService`, (): void => {
           ).toHaveBeenCalledWith(anyDiscordMessage);
         });
 
-        it(`should return the Discord message response for the release notes command`, (): void => {
+        it(`should return the Discord message response for the feature command`, (): void => {
           expect.assertions(1);
 
           const result = service.handleCommands(anyDiscordMessage);
