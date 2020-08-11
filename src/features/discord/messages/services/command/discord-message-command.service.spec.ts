@@ -7,6 +7,7 @@ import { DiscordMessageConfigService } from "../config/discord-message-config.se
 import { DiscordMessageCommandCookieService } from "./cookie/discord-message-command-cookie.service";
 import { DiscordMessageCommandService } from "./discord-message-command.service";
 import { DiscordMessageCommandErrorService } from "./error/discord-message-command-error.service";
+import { DiscordMessageCommandFeatureService } from "./feature/discord-message-command-feature.service";
 import { DiscordMessageCommandHelpService } from "./help/discord-message-command-help.service";
 import { DiscordMessageCommandLunchService } from "./lunch/discord-message-command-lunch.service";
 import { DiscordMessageCommandReleaseNotesService } from "./release-notes/discord-message-command-release-notes.service";
@@ -20,6 +21,7 @@ describe(`DiscordMessageCommandService`, (): void => {
   let discordMessageCommandCookieService: DiscordMessageCommandCookieService;
   let discordMessageCommandLunchService: DiscordMessageCommandLunchService;
   let discordMessageCommandReleaseNotesService: DiscordMessageCommandReleaseNotesService;
+  let discordMessageCommandFeatureService: DiscordMessageCommandFeatureService;
   let discordMessageConfigService: DiscordMessageConfigService;
   let coreEventService: CoreEventService;
 
@@ -32,6 +34,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     discordMessageCommandCookieService = DiscordMessageCommandCookieService.getInstance();
     discordMessageCommandLunchService = DiscordMessageCommandLunchService.getInstance();
     discordMessageCommandReleaseNotesService = DiscordMessageCommandReleaseNotesService.getInstance();
+    discordMessageCommandFeatureService = DiscordMessageCommandFeatureService.getInstance();
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
     coreEventService = CoreEventService.getInstance();
 
@@ -323,6 +326,34 @@ describe(`DiscordMessageCommandService`, (): void => {
         expect(hasCommandResult).toStrictEqual(true);
       });
     });
+
+    describe(`when the given message contains the feature command`, (): void => {
+      beforeEach((): void => {
+        message = `-feature`;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const hasCommandResult = service.hasCommand(message);
+
+        expect(hasCommandResult).toStrictEqual(true);
+      });
+    });
+
+    describe(`when the given message contains the shortcut feature command`, (): void => {
+      beforeEach((): void => {
+        message = `-f`;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const hasCommandResult = service.hasCommand(message);
+
+        expect(hasCommandResult).toStrictEqual(true);
+      });
+    });
   });
 
   describe(`handleVersionCommand()`, (): void => {
@@ -553,6 +584,44 @@ describe(`DiscordMessageCommandService`, (): void => {
     });
   });
 
+  describe(`handleFeatureCommand()`, (): void => {
+    let anyDiscordMessage: Message;
+    let discordMessageResponse: IDiscordMessageResponse;
+
+    let discordMessageCommandFeatureServiceResponseSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = DiscordMessageCommandService.getInstance();
+      anyDiscordMessage = createMock<Message>();
+      discordMessageResponse = createMock<IDiscordMessageResponse>();
+
+      discordMessageCommandFeatureServiceResponseSpy = jest
+        .spyOn(discordMessageCommandFeatureService, `handleResponse`)
+        .mockReturnValue(discordMessageResponse);
+    });
+
+    it(`should handle the message command feature`, (): void => {
+      expect.assertions(2);
+
+      service.handleFeatureCommand(anyDiscordMessage);
+
+      expect(
+        discordMessageCommandFeatureServiceResponseSpy
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        discordMessageCommandFeatureServiceResponseSpy
+      ).toHaveBeenCalledWith(anyDiscordMessage);
+    });
+
+    it(`should return a message response`, (): void => {
+      expect.assertions(1);
+
+      const result = service.handleFeatureCommand(anyDiscordMessage);
+
+      expect(result).toStrictEqual(discordMessageResponse);
+    });
+  });
+
   describe(`handleCommands()`, (): void => {
     let anyDiscordMessage: Message;
     let discordMessageResponse: IDiscordMessageResponse;
@@ -563,6 +632,7 @@ describe(`DiscordMessageCommandService`, (): void => {
     let discordMessageCommandCookieServiceHandleResponseSpy: jest.SpyInstance;
     let discordMessageCommandLunchServiceHandleResponseSpy: jest.SpyInstance;
     let discordMessageCommandReleaseNotesServiceHandleResponseSpy: jest.SpyInstance;
+    let discordMessageCommandFeatureServiceHandleResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
@@ -589,6 +659,9 @@ describe(`DiscordMessageCommandService`, (): void => {
         .mockReturnValue(discordMessageResponse);
       discordMessageCommandReleaseNotesServiceHandleResponseSpy = jest
         .spyOn(discordMessageCommandReleaseNotesService, `handleResponse`)
+        .mockReturnValue(discordMessageResponse);
+      discordMessageCommandFeatureServiceHandleResponseSpy = jest
+        .spyOn(discordMessageCommandFeatureService, `handleResponse`)
         .mockReturnValue(discordMessageResponse);
     });
 
@@ -654,6 +727,16 @@ describe(`DiscordMessageCommandService`, (): void => {
 
         expect(
           discordMessageCommandReleaseNotesServiceHandleResponseSpy
+        ).not.toHaveBeenCalled();
+      });
+
+      it(`should not handle the feature command`, (): void => {
+        expect.assertions(1);
+
+        service.handleCommands(anyDiscordMessage);
+
+        expect(
+          discordMessageCommandFeatureServiceHandleResponseSpy
         ).not.toHaveBeenCalled();
       });
 
@@ -736,6 +819,16 @@ describe(`DiscordMessageCommandService`, (): void => {
           ).not.toHaveBeenCalled();
         });
 
+        it(`should not handle the feature command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandFeatureServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
         it(`should return null`, (): void => {
           expect.assertions(1);
 
@@ -810,6 +903,16 @@ describe(`DiscordMessageCommandService`, (): void => {
 
           expect(
             discordMessageCommandReleaseNotesServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should not handle the feature command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandFeatureServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -890,6 +993,16 @@ describe(`DiscordMessageCommandService`, (): void => {
           ).not.toHaveBeenCalled();
         });
 
+        it(`should not handle the feature command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandFeatureServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
         it(`should return the Discord message response for the error command`, (): void => {
           expect.assertions(1);
 
@@ -964,6 +1077,16 @@ describe(`DiscordMessageCommandService`, (): void => {
 
           expect(
             discordMessageCommandReleaseNotesServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should not handle the feature command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandFeatureServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -1044,6 +1167,16 @@ describe(`DiscordMessageCommandService`, (): void => {
           ).not.toHaveBeenCalled();
         });
 
+        it(`should not handle the feature command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandFeatureServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
         it(`should return the Discord message response for the cookie command`, (): void => {
           expect.assertions(1);
 
@@ -1118,6 +1251,16 @@ describe(`DiscordMessageCommandService`, (): void => {
 
           expect(
             discordMessageCommandReleaseNotesServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should not handle the feature command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandFeatureServiceHandleResponseSpy
           ).not.toHaveBeenCalled();
         });
 
@@ -1198,7 +1341,104 @@ describe(`DiscordMessageCommandService`, (): void => {
           ).toHaveBeenCalledWith(anyDiscordMessage);
         });
 
+        it(`should not handle the feature command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandFeatureServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
         it(`should return the Discord message response for the release notes command`, (): void => {
+          expect.assertions(1);
+
+          const result = service.handleCommands(anyDiscordMessage);
+
+          expect(result).toStrictEqual(discordMessageResponse);
+        });
+      });
+
+      describe(`when the message contains the feature command`, (): void => {
+        beforeEach((): void => {
+          anyDiscordMessage.content = `-feature`;
+        });
+
+        it(`should not handle the version command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandVersionServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should not handle the error command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandErrorServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should not handle the help command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandHelpServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should not handle the cookie command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandCookieServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should not handle the lunch command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandLunchServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should handle the release notes command`, (): void => {
+          expect.assertions(1);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandReleaseNotesServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should handle the feature command`, (): void => {
+          expect.assertions(2);
+
+          service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandFeatureServiceHandleResponseSpy
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            discordMessageCommandFeatureServiceHandleResponseSpy
+          ).toHaveBeenCalledWith(anyDiscordMessage);
+        });
+
+        it(`should return the Discord message response for the feature command`, (): void => {
           expect.assertions(1);
 
           const result = service.handleCommands(anyDiscordMessage);

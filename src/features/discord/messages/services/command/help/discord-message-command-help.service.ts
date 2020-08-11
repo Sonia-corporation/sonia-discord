@@ -95,6 +95,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     return [
       this._getMessageEmbedFieldCookie(),
       this._getMessageEmbedFieldError(),
+      this._getMessageEmbedFieldFeature(),
       this._getMessageEmbedFieldHelp(),
       this._getMessageEmbedFieldLunch(),
       this._getMessageEmbedFieldReleaseNotes(),
@@ -114,6 +115,13 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     return {
       name: `Error (*error* or *bug*)`,
       value: `Create a bug in my core system. Do not do this one, of course!`,
+    };
+  }
+
+  private _getMessageEmbedFieldFeature(): EmbedFieldData {
+    return {
+      name: `Feature (*feature* or *f*)`,
+      value: `Change my behavior on this guild. Help me to be better!`,
     };
   }
 

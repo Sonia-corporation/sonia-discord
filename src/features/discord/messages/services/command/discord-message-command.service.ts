@@ -5,6 +5,7 @@ import { IDiscordMessageResponse } from "../../interfaces/discord-message-respon
 import { IAnyDiscordMessage } from "../../types/any-discord-message";
 import { DiscordMessageCommandCookieService } from "./cookie/discord-message-command-cookie.service";
 import { DiscordMessageCommandErrorService } from "./error/discord-message-command-error.service";
+import { DiscordMessageCommandFeatureService } from "./feature/discord-message-command-feature.service";
 import { DiscordMessageCommandHelpService } from "./help/discord-message-command-help.service";
 import { DiscordMessageCommandLunchService } from "./lunch/discord-message-command-lunch.service";
 import { DiscordMessageCommandReleaseNotesService } from "./release-notes/discord-message-command-release-notes.service";
@@ -47,6 +48,10 @@ export class DiscordMessageCommandService extends AbstractService {
       return true;
     } else if (
       DiscordMessageCommandReleaseNotesService.getInstance().hasCommand(message)
+    ) {
+      return true;
+    } else if (
+      DiscordMessageCommandFeatureService.getInstance().hasCommand(message)
     ) {
       return true;
     }
@@ -102,6 +107,14 @@ export class DiscordMessageCommandService extends AbstractService {
     );
   }
 
+  public handleFeatureCommand(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+  ): IDiscordMessageResponse {
+    return DiscordMessageCommandFeatureService.getInstance().handleResponse(
+      anyDiscordMessage
+    );
+  }
+
   public handleCommands(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse | null {
@@ -146,6 +159,12 @@ export class DiscordMessageCommandService extends AbstractService {
         )
       ) {
         return this.handleReleaseNotesCommand(anyDiscordMessage);
+      } else if (
+        DiscordMessageCommandFeatureService.getInstance().hasCommand(
+          anyDiscordMessage.content
+        )
+      ) {
+        return this.handleFeatureCommand(anyDiscordMessage);
       }
     }
 
