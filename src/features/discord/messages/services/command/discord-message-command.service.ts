@@ -2,6 +2,7 @@ import _ from "lodash";
 import { AbstractService } from "../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
+import { hasThisCommand } from "../../functions/commands/has-this-command";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../config/discord-message-config.service";
@@ -47,46 +48,64 @@ export class DiscordMessageCommandService extends AbstractService {
   }
 
   public hasVersionCommand(message: Readonly<string>): boolean {
-    return this._hasThisCommand(message, [
-      DiscordMessageCommandEnum.VERSION,
-      DiscordMessageCommandEnum.V,
-    ]);
+    return hasThisCommand({
+      commands: [
+        DiscordMessageCommandEnum.VERSION,
+        DiscordMessageCommandEnum.V,
+      ],
+      message,
+      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
+    });
   }
 
   public hasErrorCommand(message: Readonly<string>): boolean {
-    return this._hasThisCommand(message, [
-      DiscordMessageCommandEnum.ERROR,
-      DiscordMessageCommandEnum.BUG,
-    ]);
+    return hasThisCommand({
+      commands: [
+        DiscordMessageCommandEnum.ERROR,
+        DiscordMessageCommandEnum.BUG,
+      ],
+      message,
+      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
+    });
   }
 
   public hasHelpCommand(message: Readonly<string>): boolean {
-    return this._hasThisCommand(message, [
-      DiscordMessageCommandEnum.HELP,
-      DiscordMessageCommandEnum.H,
-    ]);
+    return hasThisCommand({
+      commands: [DiscordMessageCommandEnum.HELP, DiscordMessageCommandEnum.H],
+      message,
+      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
+    });
   }
 
   public hasCookieCommand(message: Readonly<string>): boolean {
-    return this._hasThisCommand(message, [
-      DiscordMessageCommandEnum.COOKIE,
-      DiscordMessageCommandEnum.COOKIES,
-      DiscordMessageCommandEnum.C,
-    ]);
+    return hasThisCommand({
+      commands: [
+        DiscordMessageCommandEnum.COOKIE,
+        DiscordMessageCommandEnum.COOKIES,
+        DiscordMessageCommandEnum.C,
+      ],
+      message,
+      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
+    });
   }
 
   public hasLunchCommand(message: Readonly<string>): boolean {
-    return this._hasThisCommand(message, [
-      DiscordMessageCommandEnum.LUNCH,
-      DiscordMessageCommandEnum.L,
-    ]);
+    return hasThisCommand({
+      commands: [DiscordMessageCommandEnum.LUNCH, DiscordMessageCommandEnum.L],
+      message,
+      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
+    });
   }
 
   public hasReleaseNotesCommand(message: Readonly<string>): boolean {
-    return this._hasThisCommand(message, [
-      DiscordMessageCommandEnum.RELEASE_NOTES,
-      DiscordMessageCommandEnum.R,
-    ]);
+    return hasThisCommand({
+      commands: [
+        DiscordMessageCommandEnum.RELEASE_NOTES,
+        DiscordMessageCommandEnum.R,
+      ],
+      message,
+      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
+    });
   }
 
   public handleVersionCommand(
@@ -161,92 +180,5 @@ export class DiscordMessageCommandService extends AbstractService {
     }
 
     return null;
-  }
-
-  private _containsThisCommandWithPrefix(
-    message: Readonly<string>,
-    prefix: Readonly<string>,
-    commands:
-      | Readonly<DiscordMessageCommandEnum>
-      | Readonly<DiscordMessageCommandEnum>[]
-  ): boolean {
-    let containsThisCommandWithPrefix = false;
-
-    if (_.isString(commands)) {
-      containsThisCommandWithPrefix = this._strictlyContainsThisCommandWithPrefix(
-        message,
-        prefix,
-        commands
-      );
-    } else if (_.isArray(commands)) {
-      _.forEach(commands, (command: Readonly<DiscordMessageCommandEnum>):
-        | false
-        | void => {
-        if (
-          this._strictlyContainsThisCommandWithPrefix(message, prefix, command)
-        ) {
-          containsThisCommandWithPrefix = true;
-
-          return false;
-        }
-      });
-    }
-
-    return containsThisCommandWithPrefix;
-  }
-
-  private _strictlyContainsThisCommandWithPrefix(
-    message: Readonly<string>,
-    prefix: Readonly<string>,
-    command: Readonly<DiscordMessageCommandEnum>
-  ): boolean {
-    // @todo could be better to use a RegExp instead of pure white space
-    return (
-      _.includes(_.toLower(message), _.toLower(`${prefix}${command} `)) ||
-      _.endsWith(_.toLower(message), _.toLower(`${prefix}${command}`))
-    );
-  }
-
-  private _containsThisCommandWithOneOfThesePrefixes(
-    message: Readonly<string>,
-    prefixes: Readonly<string[]>,
-    commands:
-      | Readonly<DiscordMessageCommandEnum>
-      | Readonly<DiscordMessageCommandEnum>[]
-  ): boolean {
-    let containsThisCommand = false;
-
-    _.forEach(prefixes, (prefix: Readonly<string>): false | void => {
-      if (this._containsThisCommandWithPrefix(message, prefix, commands)) {
-        containsThisCommand = true;
-
-        return false;
-      }
-    });
-
-    return containsThisCommand;
-  }
-
-  private _hasThisCommand(
-    message: Readonly<string>,
-    commands:
-      | Readonly<DiscordMessageCommandEnum>
-      | Readonly<DiscordMessageCommandEnum>[]
-  ): boolean {
-    const prefix:
-      | string
-      | string[] = DiscordMessageConfigService.getInstance().getMessageCommandPrefix();
-
-    if (_.isString(prefix)) {
-      return this._containsThisCommandWithPrefix(message, prefix, commands);
-    } else if (_.isArray(prefix)) {
-      return this._containsThisCommandWithOneOfThesePrefixes(
-        message,
-        prefix,
-        commands
-      );
-    }
-
-    return false;
   }
 }
