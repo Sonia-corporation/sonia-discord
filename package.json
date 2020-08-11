@@ -1,6 +1,6 @@
 {
   "name": "@sonia-corporation/il-est-midi-discord",
-  "version": "1.66.0",
+  "version": "1.66.1",
   "author": {
     "email": "geoffrey.testelin@gmail.com",
     "name": "Geoffrey 'C0ZEN' Testelin",
@@ -185,7 +185,7 @@
     "semantic-release": "17.1.1",
     "stryker-cli": "1.0.0",
     "ts-auto-mock": "2.3.4",
-    "ts-jest": "26.1.4",
+    "ts-jest": "26.2.0",
     "ts-node-dev": "1.0.0-pre.56",
     "tsconfig-paths": "3.9.0",
     "ttypescript": "1.5.10",

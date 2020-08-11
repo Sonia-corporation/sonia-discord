@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.66.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.66.0...1.66.1) (2020-08-10)
+
+
+### :zap: Performance Improvements
+
+* **services:** lazy create all services ([c799510](https://github.com/Sonia-corporation/il-est-midi-discord/commit/c79951056b4f7b33b87b18290b18d847e19a5c95))
+
 # [1.66.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.65.0...1.66.0) (2020-08-10)
 
 
