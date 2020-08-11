@@ -11,6 +11,8 @@ import { AbstractService } from "../../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
+import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
+import { hasThisCommand } from "../../../functions/commands/has-this-command";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
@@ -53,6 +55,14 @@ export class DiscordMessageCommandHelpService extends AbstractService {
       },
       response: ``,
     };
+  }
+
+  public hasCommand(message: Readonly<string>): boolean {
+    return hasThisCommand({
+      commands: [DiscordMessageCommandEnum.HELP, DiscordMessageCommandEnum.H],
+      message,
+      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
+    });
   }
 
   private _getMessageEmbed(): MessageEmbedOptions {
