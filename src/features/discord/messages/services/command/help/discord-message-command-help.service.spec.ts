@@ -84,6 +84,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     let discordMessageConfigServiceGetMessageCommandHelpImageUrlSpy: jest.SpyInstance;
 
     beforeEach((): void => {
+      service = new DiscordMessageCommandHelpService();
       // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
       anyDiscordMessage = createMock<IAnyDiscordMessage>(({
         id: `dummy-id`,
@@ -376,6 +377,1018 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       const result = service.handleResponse(anyDiscordMessage);
 
       expect(result.response).toStrictEqual(``);
+    });
+  });
+
+  describe(`hasCommand()`, (): void => {
+    let message: string;
+
+    let discordMessageConfigServiceGetMessageCommandPrefixSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageCommandHelpService();
+      message = `dummy-message`;
+
+      discordMessageConfigServiceGetMessageCommandPrefixSpy = jest
+        .spyOn(discordMessageConfigService, `getMessageCommandPrefix`)
+        .mockImplementation();
+    });
+
+    describe(`when the message command prefix is "@"`, (): void => {
+      beforeEach((): void => {
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
+          `@`
+        );
+      });
+
+      describe(`when the given message is an empty string`, (): void => {
+        beforeEach((): void => {
+          message = ``;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message without a command`, (): void => {
+        beforeEach((): void => {
+          message = `hello world`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost help command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@hel`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost help command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-hel`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost help command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!hel`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost help command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@hel dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost help command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-hel dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost help command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!hel dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the help command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@help`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the help command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-help`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the help command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!help`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the help command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@help dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the help command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-help dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the help command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!help dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@h`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-h`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!h`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@h dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-h dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!h dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the help command starting uppercase with @`, (): void => {
+        beforeEach((): void => {
+          message = `@HELP`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the help command uppercase starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-HELP`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the help command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!HELP`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the help command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@HELP dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the help command uppercase starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-HELP dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the help command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!HELP dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command starting uppercase with @`, (): void => {
+        beforeEach((): void => {
+          message = `@H`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command uppercase starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-H`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!H`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@H dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command uppercase starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-H dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!H dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+    });
+
+    describe(`when the message command prefix is "-" or "!"`, (): void => {
+      beforeEach((): void => {
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
+          `-`,
+          `!`,
+        ]);
+      });
+
+      describe(`when the given message is an empty string`, (): void => {
+        beforeEach((): void => {
+          message = ``;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message without a command`, (): void => {
+        beforeEach((): void => {
+          message = `hello world`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with another command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!version`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost help command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@hel`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost help command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-hel`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost help command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!hel`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost help command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@hel dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost help command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-hel dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with an almost help command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!hel dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the help command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@help`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the help command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-help`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the help command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!help`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the help command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@help dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the help command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-help dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the help command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!help dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the help command uppercase starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@HELP`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the help command uppercase starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-HELP`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the help command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!HELP`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the help command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@HELP dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the help command uppercase starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-HELP dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the help command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!HELP dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@h`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-h`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!h`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@h dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-h dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!h dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command uppercase starting with @`, (): void => {
+        beforeEach((): void => {
+          message = `@H`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command uppercase starting with -`, (): void => {
+        beforeEach((): void => {
+          message = `-H`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command uppercase starting with !`, (): void => {
+        beforeEach((): void => {
+          message = `!H`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command uppercase starting with @ and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `@H dummy`;
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command uppercase starting with - and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `-H dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
+
+      describe(`when the given message is a message with the shortcut help command uppercase starting with ! and have more text after that`, (): void => {
+        beforeEach((): void => {
+          message = `!H dummy`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const hasCommandResult = service.hasCommand(message);
+
+          expect(hasCommandResult).toStrictEqual(true);
+        });
+      });
     });
   });
 });

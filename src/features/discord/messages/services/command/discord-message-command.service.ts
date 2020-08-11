@@ -36,7 +36,9 @@ export class DiscordMessageCommandService extends AbstractService {
       DiscordMessageCommandErrorService.getInstance().hasCommand(message)
     ) {
       return true;
-    } else if (this.hasHelpCommand(message)) {
+    } else if (
+      DiscordMessageCommandHelpService.getInstance().hasCommand(message)
+    ) {
       return true;
     } else if (this.hasCookieCommand(message)) {
       return true;
@@ -47,14 +49,6 @@ export class DiscordMessageCommandService extends AbstractService {
     }
 
     return false;
-  }
-
-  public hasHelpCommand(message: Readonly<string>): boolean {
-    return hasThisCommand({
-      commands: [DiscordMessageCommandEnum.HELP, DiscordMessageCommandEnum.H],
-      message,
-      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
-    });
   }
 
   public hasCookieCommand(message: Readonly<string>): boolean {
@@ -156,7 +150,11 @@ export class DiscordMessageCommandService extends AbstractService {
         )
       ) {
         return this.handleErrorCommand(anyDiscordMessage);
-      } else if (this.hasHelpCommand(anyDiscordMessage.content)) {
+      } else if (
+        DiscordMessageCommandHelpService.getInstance().hasCommand(
+          anyDiscordMessage.content
+        )
+      ) {
         return this.handleHelpCommand(anyDiscordMessage);
       } else if (this.hasCookieCommand(anyDiscordMessage.content)) {
         return this.handleCookieCommand(anyDiscordMessage);
