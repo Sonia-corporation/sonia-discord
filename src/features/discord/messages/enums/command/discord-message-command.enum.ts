@@ -33,4 +33,9 @@ export enum DiscordMessageCommandEnum {
    * Shortcut for {@link RELEASE_NOTES}
    */
   R = `r`,
+  FEATURE = `feature`,
+  /**
+   * Shortcut for {@link FEATURE}
+   */
+  F = `f`,
 }
