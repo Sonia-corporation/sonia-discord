@@ -360,93 +360,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the alias "cookies" feature command starting with @`, (): void => {
-        beforeEach((): void => {
-          message = `@cookies`;
-        });
-
-        it(`should return true`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(true);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command starting with -`, (): void => {
-        beforeEach((): void => {
-          message = `-cookies`;
-        });
-
-        it(`should return false`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(false);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command starting with !`, (): void => {
-        beforeEach((): void => {
-          message = `!cookies`;
-        });
-
-        it(`should return false`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(false);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command starting with @ and have more text after that`, (): void => {
-        beforeEach((): void => {
-          message = `@cookies dummy`;
-        });
-
-        it(`should return true`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(true);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command starting with - and have more text after that`, (): void => {
-        beforeEach((): void => {
-          message = `-cookies dummy`;
-        });
-
-        it(`should return false`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(false);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command starting with ! and have more text after that`, (): void => {
-        beforeEach((): void => {
-          message = `!cookies dummy`;
-        });
-
-        it(`should return false`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(false);
-        });
-      });
-
       describe(`when the given message is a message with the shortcut feature command starting with @`, (): void => {
         beforeEach((): void => {
-          message = `@c`;
+          message = `@f`;
         });
 
         it(`should return true`, (): void => {
@@ -460,7 +376,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
       describe(`when the given message is a message with the shortcut feature command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `-c`;
+          message = `-f`;
         });
 
         it(`should return false`, (): void => {
@@ -474,7 +390,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
       describe(`when the given message is a message with the shortcut feature command starting with !`, (): void => {
         beforeEach((): void => {
-          message = `!c`;
+          message = `!f`;
         });
 
         it(`should return false`, (): void => {
@@ -488,7 +404,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
       describe(`when the given message is a message with the shortcut feature command starting with @ and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `@c dummy`;
+          message = `@f dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -502,7 +418,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
       describe(`when the given message is a message with the shortcut feature command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `-c dummy`;
+          message = `-f dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -516,7 +432,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
       describe(`when the given message is a message with the shortcut feature command starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `!c dummy`;
+          message = `!f dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -601,90 +517,6 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       describe(`when the given message is a message with the feature command uppercase starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
           message = `!FEATURE dummy`;
-        });
-
-        it(`should return false`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(false);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command starting uppercase with @`, (): void => {
-        beforeEach((): void => {
-          message = `@COOKIES`;
-        });
-
-        it(`should return true`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(true);
-        });
-      });
-
-      describe(`when the given message is a message with the shortcualias "cookies" uppercase starting with -`, (): void => {
-        beforeEach((): void => {
-          message = `-COOKIES`;
-        });
-
-        it(`should return false`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(false);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command uppercase starting with !`, (): void => {
-        beforeEach((): void => {
-          message = `!COOKIES`;
-        });
-
-        it(`should return false`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(false);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command uppercase starting with @ and have more text after that`, (): void => {
-        beforeEach((): void => {
-          message = `@COOKIES dummy`;
-        });
-
-        it(`should return true`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(true);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command uppercase starting with - and have more text after that`, (): void => {
-        beforeEach((): void => {
-          message = `-COOKIES dummy`;
-        });
-
-        it(`should return false`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(false);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command uppercase starting with ! and have more text after that`, (): void => {
-        beforeEach((): void => {
-          message = `!COOKIES dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -1111,177 +943,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the alias "cookies" feature command starting with @`, (): void => {
-        beforeEach((): void => {
-          message = `@cookies`;
-        });
-
-        it(`should return false`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(false);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command starting with -`, (): void => {
-        beforeEach((): void => {
-          message = `-cookies`;
-        });
-
-        it(`should return true`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(true);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command starting with !`, (): void => {
-        beforeEach((): void => {
-          message = `!cookies`;
-        });
-
-        it(`should return true`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(true);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command starting with @ and have more text after that`, (): void => {
-        beforeEach((): void => {
-          message = `@cookies dummy`;
-        });
-
-        it(`should return false`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(false);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command starting with - and have more text after that`, (): void => {
-        beforeEach((): void => {
-          message = `-cookies dummy`;
-        });
-
-        it(`should return true`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(true);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command starting with ! and have more text after that`, (): void => {
-        beforeEach((): void => {
-          message = `!cookies dummy`;
-        });
-
-        it(`should return true`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(true);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command uppercase starting with @`, (): void => {
-        beforeEach((): void => {
-          message = `@COOKIES`;
-        });
-
-        it(`should return false`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(false);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command uppercase starting with -`, (): void => {
-        beforeEach((): void => {
-          message = `-COOKIES`;
-        });
-
-        it(`should return true`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(true);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command uppercase starting with !`, (): void => {
-        beforeEach((): void => {
-          message = `!COOKIES`;
-        });
-
-        it(`should return true`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(true);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command uppercase starting with @ and have more text after that`, (): void => {
-        beforeEach((): void => {
-          message = `@COOKIES dummy`;
-        });
-
-        it(`should return false`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(false);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command uppercase starting with - and have more text after that`, (): void => {
-        beforeEach((): void => {
-          message = `-COOKIES dummy`;
-        });
-
-        it(`should return true`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(true);
-        });
-      });
-
-      describe(`when the given message is a message with the alias "cookies" feature command uppercase starting with ! and have more text after that`, (): void => {
-        beforeEach((): void => {
-          message = `!COOKIES dummy`;
-        });
-
-        it(`should return true`, (): void => {
-          expect.assertions(1);
-
-          const hasCommandResult = service.hasCommand(message);
-
-          expect(hasCommandResult).toStrictEqual(true);
-        });
-      });
-
       describe(`when the given message is a message with the shortcut feature command starting with @`, (): void => {
         beforeEach((): void => {
-          message = `@c`;
+          message = `@f`;
         });
 
         it(`should return false`, (): void => {
@@ -1295,7 +959,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
       describe(`when the given message is a message with the shortcut feature command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `-c`;
+          message = `-f`;
         });
 
         it(`should return true`, (): void => {
@@ -1309,7 +973,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
       describe(`when the given message is a message with the shortcut feature command starting with !`, (): void => {
         beforeEach((): void => {
-          message = `!c`;
+          message = `!f`;
         });
 
         it(`should return true`, (): void => {
@@ -1323,7 +987,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
       describe(`when the given message is a message with the shortcut feature command starting with @ and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `@c dummy`;
+          message = `@f dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -1337,7 +1001,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
       describe(`when the given message is a message with the shortcut feature command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `-c dummy`;
+          message = `-f dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -1351,7 +1015,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
       describe(`when the given message is a message with the shortcut feature command starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `!c dummy`;
+          message = `!f dummy`;
         });
 
         it(`should return true`, (): void => {
