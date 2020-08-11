@@ -199,7 +199,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a help field`, (): void => {
+    it(`should return a Discord message response embed with a feature field`, (): void => {
       expect.assertions(1);
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
@@ -207,6 +207,19 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.fields[2]).toStrictEqual({
+        name: `Feature (*feature* or *f*)`,
+        value: `Change my behavior on this guild. Help me to be better!`,
+      } as EmbedFieldData);
+    });
+
+    it(`should return a Discord message response embed with a help field`, (): void => {
+      expect.assertions(1);
+
+      const result: unknown = service.handleResponse(anyDiscordMessage);
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(result.options.embed.fields[3]).toStrictEqual({
         name: `Help (*help* or *h*)`,
         value: `Ask for my help, it is obvious! And maybe I will, who knows?`,
       } as EmbedFieldData);
@@ -219,7 +232,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      expect(result.options.embed.fields[3]).toStrictEqual({
+      expect(result.options.embed.fields[4]).toStrictEqual({
         name: `Lunch (*lunch* or *l*)`,
         value: `There is a time to eat.`,
       } as EmbedFieldData);
@@ -232,7 +245,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      expect(result.options.embed.fields[4]).toStrictEqual({
+      expect(result.options.embed.fields[5]).toStrictEqual({
         name: `Release notes (*release-notes* or *r*)`,
         value: `Display the last version release notes.`,
       } as EmbedFieldData);
@@ -245,7 +258,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      expect(result.options.embed.fields[5]).toStrictEqual({
+      expect(result.options.embed.fields[6]).toStrictEqual({
         name: `Version (*version* or *v*)`,
         value: `Display my current application version.`,
       } as EmbedFieldData);
@@ -258,7 +271,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      expect(result.options.embed.fields[6]).toStrictEqual({
+      expect(result.options.embed.fields[7]).toStrictEqual({
         name: `Further help`,
         value: `You can also checkout the [readme](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/README.md).
       It contains more information about how I work.`,
