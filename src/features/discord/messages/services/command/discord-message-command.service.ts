@@ -1,11 +1,8 @@
 import _ from "lodash";
 import { AbstractService } from "../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
-import { hasThisCommand } from "../../functions/commands/has-this-command";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../config/discord-message-config.service";
 import { DiscordMessageCommandCookieService } from "./cookie/discord-message-command-cookie.service";
 import { DiscordMessageCommandErrorService } from "./error/discord-message-command-error.service";
 import { DiscordMessageCommandHelpService } from "./help/discord-message-command-help.service";
@@ -48,22 +45,13 @@ export class DiscordMessageCommandService extends AbstractService {
       DiscordMessageCommandLunchService.getInstance().hasCommand(message)
     ) {
       return true;
-    } else if (this.hasReleaseNotesCommand(message)) {
+    } else if (
+      DiscordMessageCommandReleaseNotesService.getInstance().hasCommand(message)
+    ) {
       return true;
     }
 
     return false;
-  }
-
-  public hasReleaseNotesCommand(message: Readonly<string>): boolean {
-    return hasThisCommand({
-      commands: [
-        DiscordMessageCommandEnum.RELEASE_NOTES,
-        DiscordMessageCommandEnum.R,
-      ],
-      message,
-      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
-    });
   }
 
   public handleVersionCommand(
@@ -152,7 +140,11 @@ export class DiscordMessageCommandService extends AbstractService {
         )
       ) {
         return this.handleLunchCommand(anyDiscordMessage);
-      } else if (this.hasReleaseNotesCommand(anyDiscordMessage.content)) {
+      } else if (
+        DiscordMessageCommandReleaseNotesService.getInstance().hasCommand(
+          anyDiscordMessage.content
+        )
+      ) {
         return this.handleReleaseNotesCommand(anyDiscordMessage);
       }
     }
