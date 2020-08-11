@@ -1,5 +1,14 @@
 # Semantic Versioning Changelog
 
+# [1.67.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.66.1...1.67.0) (2020-08-11)
+
+
+### :rocket: Features
+
+* **command-help:** add information about the feature command ([035bbed](https://github.com/Sonia-corporation/il-est-midi-discord/commit/035bbed47aca5b4f5197f9f162a6b69b3f8061be))
+* **commands:** add new command "feature" (useless for now) ([be0a69b](https://github.com/Sonia-corporation/il-est-midi-discord/commit/be0a69b6210917b8cacc8360bce99d0854429def))
+* **new-version:** use more message variations when sending the release notes ([5b08475](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5b08475b492855f8829dcb0960031bfb71278862))
+
 ## [1.66.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.66.0...1.66.1) (2020-08-10)
 
 
