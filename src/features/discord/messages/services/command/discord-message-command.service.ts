@@ -30,7 +30,7 @@ export class DiscordMessageCommandService extends AbstractService {
   }
 
   public hasCommand(message: Readonly<string>): boolean {
-    if (this.hasVersionCommand(message)) {
+    if (DiscordMessageCommandVersionService.getInstance().hasCommand(message)) {
       return true;
     } else if (this.hasErrorCommand(message)) {
       return true;
@@ -45,17 +45,6 @@ export class DiscordMessageCommandService extends AbstractService {
     }
 
     return false;
-  }
-
-  public hasVersionCommand(message: Readonly<string>): boolean {
-    return hasThisCommand({
-      commands: [
-        DiscordMessageCommandEnum.VERSION,
-        DiscordMessageCommandEnum.V,
-      ],
-      message,
-      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
-    });
   }
 
   public hasErrorCommand(message: Readonly<string>): boolean {
@@ -164,7 +153,11 @@ export class DiscordMessageCommandService extends AbstractService {
         anyDiscordMessage.content
       )
     ) {
-      if (this.hasVersionCommand(anyDiscordMessage.content)) {
+      if (
+        DiscordMessageCommandVersionService.getInstance().hasCommand(
+          anyDiscordMessage.content
+        )
+      ) {
         return this.handleVersionCommand(anyDiscordMessage);
       } else if (this.hasErrorCommand(anyDiscordMessage.content)) {
         return this.handleErrorCommand(anyDiscordMessage);
