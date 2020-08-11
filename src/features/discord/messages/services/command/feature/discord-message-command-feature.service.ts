@@ -40,7 +40,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
 
   public getMessageResponse(): IDiscordMessageResponse {
     return {
-      response: ``,
+      response: `No feature for now. Work in progress.`,
     };
   }
 

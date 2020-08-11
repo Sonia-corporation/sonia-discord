@@ -95,7 +95,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
       const result = service.handleResponse(anyDiscordMessage);
 
-      expect(result.response).toStrictEqual(``);
+      expect(result.response).toStrictEqual(
+        `No feature for now. Work in progress.`
+      );
     });
   });
 
