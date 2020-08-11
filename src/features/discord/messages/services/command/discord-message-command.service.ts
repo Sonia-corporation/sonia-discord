@@ -44,21 +44,15 @@ export class DiscordMessageCommandService extends AbstractService {
       DiscordMessageCommandCookieService.getInstance().hasCommand(message)
     ) {
       return true;
-    } else if (this.hasLunchCommand(message)) {
+    } else if (
+      DiscordMessageCommandLunchService.getInstance().hasCommand(message)
+    ) {
       return true;
     } else if (this.hasReleaseNotesCommand(message)) {
       return true;
     }
 
     return false;
-  }
-
-  public hasLunchCommand(message: Readonly<string>): boolean {
-    return hasThisCommand({
-      commands: [DiscordMessageCommandEnum.LUNCH, DiscordMessageCommandEnum.L],
-      message,
-      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
-    });
   }
 
   public hasReleaseNotesCommand(message: Readonly<string>): boolean {
@@ -152,7 +146,11 @@ export class DiscordMessageCommandService extends AbstractService {
         )
       ) {
         return this.handleCookieCommand(anyDiscordMessage);
-      } else if (this.hasLunchCommand(anyDiscordMessage.content)) {
+      } else if (
+        DiscordMessageCommandLunchService.getInstance().hasCommand(
+          anyDiscordMessage.content
+        )
+      ) {
         return this.handleLunchCommand(anyDiscordMessage);
       } else if (this.hasReleaseNotesCommand(anyDiscordMessage.content)) {
         return this.handleReleaseNotesCommand(anyDiscordMessage);
