@@ -9,6 +9,7 @@ import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
 import { DiscordMessageCommandCookieDescriptionEnum } from "../../../enums/command/cookie/discord-message-command-cookie-description.enum";
 import { DiscordMessageCommandCookieTitleEnum } from "../../../enums/command/cookie/discord-message-command-cookie-title.enum";
+import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandCookieService } from "./discord-message-command-cookie.service";
@@ -78,8 +79,58 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
   describe(`handleResponse()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
+    let discordMessageResponse: IDiscordMessageResponse;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
+    let getMessageResponseSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageCommandCookieService();
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
+        id: `dummy-id`,
+      } as unknown) as IAnyDiscordMessage);
+
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
+      getMessageResponseSpy = jest
+        .spyOn(service, `getMessageResponse`)
+        .mockReturnValue(discordMessageResponse);
+    });
+
+    it(`should log about the command`, (): void => {
+      expect.assertions(2);
+
+      service.handleResponse(anyDiscordMessage);
+
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageCommandCookieService`,
+        extendedContext: true,
+        message: `context-[dummy-id] text-cookie command detected`,
+      } as ILoggerLog);
+    });
+
+    it(`should get a message response`, (): void => {
+      expect.assertions(2);
+
+      service.handleResponse(anyDiscordMessage);
+
+      expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(getMessageResponseSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should return the message response`, (): void => {
+      expect.assertions(1);
+
+      const result = service.handleResponse(anyDiscordMessage);
+
+      expect(result).toStrictEqual(discordMessageResponse);
+    });
+  });
+
+  describe(`getMessageResponse()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+
     let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandCookieImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
@@ -93,7 +144,6 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         id: `dummy-id`,
       } as unknown) as IAnyDiscordMessage);
 
-      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy = jest.spyOn(
         discordSoniaService,
         `getCorporationMessageEmbedAuthor`
@@ -116,19 +166,6 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       );
     });
 
-    it(`should log about the command`, (): void => {
-      expect.assertions(2);
-
-      service.handleResponse(anyDiscordMessage);
-
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-        context: `DiscordMessageCommandCookieService`,
-        extendedContext: true,
-        message: `context-[dummy-id] text-cookie command detected`,
-      } as ILoggerLog);
-    });
-
     it(`should return a Discord message response embed with an author`, (): void => {
       expect.assertions(1);
       const messageEmbedAuthor: MessageEmbedAuthor = createMock<
@@ -138,7 +175,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         messageEmbedAuthor
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -151,7 +188,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         ColorEnum.CANDY
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -164,7 +201,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         DiscordMessageCommandCookieDescriptionEnum.CHUCK_NORRIS_CAN_NOT_BEAT_ME
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -181,7 +218,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       it(`should return a Discord message response embed with a description`, (): void => {
         expect.assertions(1);
 
-        const result: unknown = service.handleResponse(anyDiscordMessage);
+        const result = service.getMessageResponse();
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -193,7 +230,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -211,7 +248,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       it(`should return a Discord message response embed with a footer but without an icon`, (): void => {
         expect.assertions(1);
 
-        const result: unknown = service.handleResponse(anyDiscordMessage);
+        const result = service.getMessageResponse();
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -230,7 +267,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       it(`should return a Discord message response embed with a footer containing an icon and a text`, (): void => {
         expect.assertions(1);
 
-        const result: unknown = service.handleResponse(anyDiscordMessage);
+        const result = service.getMessageResponse();
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -247,7 +284,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         IconEnum.ARTIFICIAL_INTELLIGENCE
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -259,7 +296,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
     it(`should return a Discord message response embed with a timestamp`, (): void => {
       expect.assertions(2);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -279,7 +316,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         DiscordMessageCommandCookieTitleEnum.COOKIE_DELIVERY
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -294,7 +331,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       it(`should return a Discord message response embed with a title`, (): void => {
         expect.assertions(1);
 
-        const result: unknown = service.handleResponse(anyDiscordMessage);
+        const result = service.getMessageResponse();
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -305,7 +342,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
     it(`should return a Discord message response splitted`, (): void => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
