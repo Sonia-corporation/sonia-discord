@@ -40,7 +40,9 @@ export class DiscordMessageCommandService extends AbstractService {
       DiscordMessageCommandHelpService.getInstance().hasCommand(message)
     ) {
       return true;
-    } else if (this.hasCookieCommand(message)) {
+    } else if (
+      DiscordMessageCommandCookieService.getInstance().hasCommand(message)
+    ) {
       return true;
     } else if (this.hasLunchCommand(message)) {
       return true;
@@ -49,18 +51,6 @@ export class DiscordMessageCommandService extends AbstractService {
     }
 
     return false;
-  }
-
-  public hasCookieCommand(message: Readonly<string>): boolean {
-    return hasThisCommand({
-      commands: [
-        DiscordMessageCommandEnum.COOKIE,
-        DiscordMessageCommandEnum.COOKIES,
-        DiscordMessageCommandEnum.C,
-      ],
-      message,
-      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
-    });
   }
 
   public hasLunchCommand(message: Readonly<string>): boolean {
@@ -156,7 +146,11 @@ export class DiscordMessageCommandService extends AbstractService {
         )
       ) {
         return this.handleHelpCommand(anyDiscordMessage);
-      } else if (this.hasCookieCommand(anyDiscordMessage.content)) {
+      } else if (
+        DiscordMessageCommandCookieService.getInstance().hasCommand(
+          anyDiscordMessage.content
+        )
+      ) {
         return this.handleCookieCommand(anyDiscordMessage);
       } else if (this.hasLunchCommand(anyDiscordMessage.content)) {
         return this.handleLunchCommand(anyDiscordMessage);
