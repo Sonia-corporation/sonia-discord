@@ -163,14 +163,14 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     You can either use *-*, *!* or *$* as prefix to run a command.`);
     });
 
-    it(`should return a Discord message response embed with 7 fields`, (): void => {
+    it(`should return a Discord message response embed with 8 fields`, (): void => {
       expect.assertions(1);
 
       const result: unknown = service.handleResponse(anyDiscordMessage);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      expect(result.options.embed.fields).toHaveLength(7);
+      expect(result.options.embed.fields).toHaveLength(8);
     });
 
     it(`should return a Discord message response embed with a cookie field`, (): void => {
