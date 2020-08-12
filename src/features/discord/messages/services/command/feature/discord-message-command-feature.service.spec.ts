@@ -3,6 +3,7 @@ import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../logger/services/logger.service";
+import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandFeatureService } from "./discord-message-command-feature.service";
@@ -64,8 +65,10 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
   describe(`handleResponse()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
+    let discordMessageResponse: IDiscordMessageResponse;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
+    let getMessageResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureService();
@@ -75,6 +78,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       } as unknown) as IAnyDiscordMessage);
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
+      getMessageResponseSpy = jest
+        .spyOn(service, `getMessageResponse`)
+        .mockReturnValue(discordMessageResponse);
     });
 
     it(`should log about the command`, (): void => {
@@ -90,10 +96,33 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       } as ILoggerLog);
     });
 
-    it(`should return a Discord message response without a response text`, (): void => {
+    it(`should get a message response`, (): void => {
+      expect.assertions(2);
+
+      service.handleResponse(anyDiscordMessage);
+
+      expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(getMessageResponseSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should return the message response`, (): void => {
       expect.assertions(1);
 
       const result = service.handleResponse(anyDiscordMessage);
+
+      expect(result).toStrictEqual(discordMessageResponse);
+    });
+  });
+
+  describe(`getMessageResponse()`, (): void => {
+    beforeEach((): void => {
+      service = new DiscordMessageCommandFeatureService();
+    });
+
+    it(`should return a Discord message response without a response text`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageResponse();
 
       expect(result.response).toStrictEqual(
         `No feature for now. Work in progress.`

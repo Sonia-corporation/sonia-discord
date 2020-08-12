@@ -14,6 +14,7 @@ import { CoreEventService } from "../../../../../core/services/core-event.servic
 import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
+import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandReleaseNotesService } from "./discord-message-command-release-notes.service";
@@ -81,8 +82,56 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
   describe(`handleResponse()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
+    let discordMessageResponse: IDiscordMessageResponse;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
+    let getMessageResponseSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageCommandReleaseNotesService();
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
+        id: `dummy-id`,
+      } as unknown) as IAnyDiscordMessage);
+
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
+      getMessageResponseSpy = jest
+        .spyOn(service, `getMessageResponse`)
+        .mockReturnValue(discordMessageResponse);
+    });
+
+    it(`should log about the command`, (): void => {
+      expect.assertions(2);
+
+      service.handleResponse(anyDiscordMessage);
+
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageCommandReleaseNotesService`,
+        extendedContext: true,
+        message: `context-[dummy-id] text-release notes command detected`,
+      } as ILoggerLog);
+    });
+
+    it(`should get a message response`, (): void => {
+      expect.assertions(2);
+
+      service.handleResponse(anyDiscordMessage);
+
+      expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(getMessageResponseSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should return the message response`, (): void => {
+      expect.assertions(1);
+
+      const result = service.handleResponse(anyDiscordMessage);
+
+      expect(result).toStrictEqual(discordMessageResponse);
+    });
+  });
+
+  describe(`getMessageResponse()`, (): void => {
     let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandReleaseNotesImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
@@ -95,12 +144,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandReleaseNotesService();
-      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
-        id: `dummy-id`,
-      } as unknown) as IAnyDiscordMessage);
 
-      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy = jest.spyOn(
         discordSoniaService,
         `getCorporationMessageEmbedAuthor`
@@ -139,19 +183,6 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
       );
     });
 
-    it(`should log about the command`, (): void => {
-      expect.assertions(2);
-
-      service.handleResponse(anyDiscordMessage);
-
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-        context: `DiscordMessageCommandReleaseNotesService`,
-        extendedContext: true,
-        message: `context-[dummy-id] text-release notes command detected`,
-      } as ILoggerLog);
-    });
-
     it(`should return a Discord message response embed with an author`, (): void => {
       expect.assertions(1);
       const messageEmbedAuthor: MessageEmbedAuthor = createMock<
@@ -161,7 +192,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
         messageEmbedAuthor
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -174,7 +205,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
         ColorEnum.CANDY
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -185,7 +216,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
       expect.assertions(1);
       appConfigServiceGetReleaseNotesSpy.mockReturnValue(`dummy-release-notes`);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -204,7 +235,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
         `the 24th March 2020`
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -228,7 +259,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
       it(`should return a Discord message response embed with a footer but without an icon`, (): void => {
         expect.assertions(1);
 
-        const result: unknown = service.handleResponse(anyDiscordMessage);
+        const result = service.getMessageResponse();
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -253,7 +284,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
       it(`should return a Discord message response embed with a footer containing an icon and a text`, (): void => {
         expect.assertions(1);
 
-        const result: unknown = service.handleResponse(anyDiscordMessage);
+        const result = service.getMessageResponse();
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -270,7 +301,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
         IconEnum.NEW_PRODUCT
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -282,7 +313,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
     it(`should return a Discord message response embed with a timestamp`, (): void => {
       expect.assertions(2);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -303,7 +334,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
         `dummy-release-date-humanized`
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -315,7 +346,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
     it(`should return a Discord message response splitted`, (): void => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -325,7 +356,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
     it(`should return a Discord message response without a response text`, (): void => {
       expect.assertions(1);
 
-      const result = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       expect(result.response).toStrictEqual(``);
     });
