@@ -13,6 +13,7 @@ import { CoreEventService } from "../../../../../core/services/core-event.servic
 import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
+import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandHelpService } from "./discord-message-command-help.service";
@@ -76,12 +77,10 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
   describe(`handleResponse()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
+    let discordMessageResponse: IDiscordMessageResponse;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
-    let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
-    let discordMessageConfigServiceGetMessageCommandHelpImageColorSpy: jest.SpyInstance;
-    let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
-    let discordMessageConfigServiceGetMessageCommandHelpImageUrlSpy: jest.SpyInstance;
+    let getMessageResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandHelpService();
@@ -91,6 +90,51 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       } as unknown) as IAnyDiscordMessage);
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
+      getMessageResponseSpy = jest
+        .spyOn(service, `getMessageResponse`)
+        .mockReturnValue(discordMessageResponse);
+    });
+
+    it(`should log about the command`, (): void => {
+      expect.assertions(2);
+
+      service.handleResponse(anyDiscordMessage);
+
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageCommandHelpService`,
+        extendedContext: true,
+        message: `context-[dummy-id] text-help command detected`,
+      } as ILoggerLog);
+    });
+
+    it(`should get a message response`, (): void => {
+      expect.assertions(2);
+
+      service.handleResponse(anyDiscordMessage);
+
+      expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(getMessageResponseSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should return the message response`, (): void => {
+      expect.assertions(1);
+
+      const result = service.handleResponse(anyDiscordMessage);
+
+      expect(result).toStrictEqual(discordMessageResponse);
+    });
+  });
+
+  describe(`getMessageResponse()`, (): void => {
+    let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandHelpImageColorSpy: jest.SpyInstance;
+    let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandHelpImageUrlSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageCommandHelpService();
+
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy = jest.spyOn(
         discordSoniaService,
         `getCorporationMessageEmbedAuthor`
@@ -109,19 +153,6 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       );
     });
 
-    it(`should log about the command`, (): void => {
-      expect.assertions(2);
-
-      service.handleResponse(anyDiscordMessage);
-
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-        context: `DiscordMessageCommandHelpService`,
-        extendedContext: true,
-        message: `context-[dummy-id] text-help command detected`,
-      } as ILoggerLog);
-    });
-
     it(`should return a Discord message response embed with an author`, (): void => {
       expect.assertions(1);
       const messageEmbedAuthor: MessageEmbedAuthor = createMock<
@@ -131,7 +162,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         messageEmbedAuthor
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -144,7 +175,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         ColorEnum.CANDY
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -154,7 +185,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     it(`should return a Discord message response embed with a description`, (): void => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -166,7 +197,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     it(`should return a Discord message response embed with 8 fields`, (): void => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -176,7 +207,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     it(`should return a Discord message response embed with a cookie field`, (): void => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -189,7 +220,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     it(`should return a Discord message response embed with an error field`, (): void => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -202,7 +233,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     it(`should return a Discord message response embed with a feature field`, (): void => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -215,7 +246,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     it(`should return a Discord message response embed with a help field`, (): void => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -228,7 +259,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     it(`should return a Discord message response embed with a lunch field`, (): void => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -241,7 +272,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     it(`should return a Discord message response embed with a release notes field`, (): void => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -254,7 +285,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     it(`should return a Discord message response embed with a version field`, (): void => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -267,7 +298,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     it(`should return a Discord message response embed with a more help field`, (): void => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -282,7 +313,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -300,7 +331,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       it(`should return a Discord message response embed with a footer but without an icon`, (): void => {
         expect.assertions(1);
 
-        const result: unknown = service.handleResponse(anyDiscordMessage);
+        const result = service.getMessageResponse();
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -319,7 +350,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       it(`should return a Discord message response embed with a footer containing an icon and a text`, (): void => {
         expect.assertions(1);
 
-        const result: unknown = service.handleResponse(anyDiscordMessage);
+        const result = service.getMessageResponse();
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -336,7 +367,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         IconEnum.ARTIFICIAL_INTELLIGENCE
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -348,7 +379,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     it(`should return a Discord message response embed with a timestamp`, (): void => {
       expect.assertions(2);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -365,7 +396,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     it(`should return a Discord message response embed with a title`, (): void => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -377,7 +408,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     it(`should return a Discord message response splitted`, (): void => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -387,7 +418,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
     it(`should return a Discord message response without a response text`, (): void => {
       expect.assertions(1);
 
-      const result = service.handleResponse(anyDiscordMessage);
+      const result = service.getMessageResponse();
 
       expect(result.response).toStrictEqual(``);
     });
