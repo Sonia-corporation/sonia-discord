@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
 import { IDiscordGetCommandFirstArgumentData } from "../../interfaces/commands/discord-get-command-first-argument-data";
-import { discordGetCommandRegexp } from "./discord-get-command-regexp";
+import { discordGetCompleteCommandRegexp } from "./discord-get-complete-command-regexp";
 import { discordGetFormattedMessage } from "./discord-get-formatted-message";
 import xregexp from "xregexp";
 
@@ -16,7 +16,7 @@ export function discordGetCommandFirstArgument(
       const prefix: string = data.prefixes;
       const argument1: string | undefined = xregexp.exec(
         formattedMessage,
-        discordGetCommandRegexp({
+        discordGetCompleteCommandRegexp({
           command,
           prefix,
         })

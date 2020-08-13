@@ -1,13 +1,13 @@
 import { createMock } from "ts-auto-mock";
 import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
-import { IDiscordGetCommandRegexp } from "../../interfaces/commands/discord-get-command-regexp";
-import { discordGetCommandRegexp } from "./discord-get-command-regexp";
+import { IDiscordGetCompleteCommandRegexp } from "../../interfaces/commands/discord-get-complete-command-regexp";
+import { discordGetCompleteCommandRegexp } from "./discord-get-complete-command-regexp";
 
-describe(`discordGetCommandRegexp()`, (): void => {
-  let data: IDiscordGetCommandRegexp;
+describe(`discordGetCompleteCommandRegexp()`, (): void => {
+  let data: IDiscordGetCompleteCommandRegexp;
 
   beforeEach((): void => {
-    data = createMock<IDiscordGetCommandRegexp>();
+    data = createMock<IDiscordGetCompleteCommandRegexp>();
   });
 
   describe(`when the given prefix is !`, (): void => {
@@ -23,10 +23,10 @@ describe(`discordGetCommandRegexp()`, (): void => {
       it(`should return a regexp`, (): void => {
         expect.assertions(1);
 
-        const result = discordGetCommandRegexp(data);
+        const result = discordGetCompleteCommandRegexp(data);
 
         // eslint-disable-next-line no-useless-escape
-        expect(result).toStrictEqual(/(\!)(?:)(help)(?:)(?=$|\s)(?:)/gim);
+        expect(result).toStrictEqual(/(\!)(?:)(help)(?:)(\s)(?:)(\S+)(?:)/gim);
       });
     });
 
@@ -38,11 +38,11 @@ describe(`discordGetCommandRegexp()`, (): void => {
       it(`should return a regexp`, (): void => {
         expect.assertions(1);
 
-        const result = discordGetCommandRegexp(data);
+        const result = discordGetCompleteCommandRegexp(data);
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\!)(?:)(cookie)(?:)(?=$|\s)(?:)/gim
+          /(\!)(?:)(cookie)(?:)(\s)(?:)(\S+)(?:)/gim
         );
       });
     });
@@ -61,11 +61,11 @@ describe(`discordGetCommandRegexp()`, (): void => {
       it(`should return a regexp`, (): void => {
         expect.assertions(1);
 
-        const result = discordGetCommandRegexp(data);
+        const result = discordGetCompleteCommandRegexp(data);
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\-)(?:)(help)(?:)(?=$|\s)(?:)/gim
+          /(\-)(?:)(help)(?:)(\s)(?:)(\S+)(?:)/gim
         );
       });
     });
@@ -78,11 +78,11 @@ describe(`discordGetCommandRegexp()`, (): void => {
       it(`should return a regexp`, (): void => {
         expect.assertions(1);
 
-        const result = discordGetCommandRegexp(data);
+        const result = discordGetCompleteCommandRegexp(data);
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\-)(?:)(cookie)(?:)(?=$|\s)(?:)/gim
+          /(\-)(?:)(cookie)(?:)(\s)(?:)(\S+)(?:)/gim
         );
       });
     });
