@@ -7,16 +7,20 @@ export function discordHasThisCommand(
   data: Readonly<IDiscordHasThisCommandData>
 ): boolean {
   if (_.isString(data.prefixes)) {
+    const prefix: string = data.prefixes;
+
     return discordContainsThisCommandWithPrefix({
       commands: data.commands,
       message: data.message,
-      prefix: data.prefixes,
+      prefix,
     });
   } else if (_.isArray(data.prefixes)) {
+    const prefixes: string[] = data.prefixes;
+
     return discordContainsThisCommandWithOneOfThesePrefixes({
       commands: data.commands,
       message: data.message,
-      prefixes: data.prefixes,
+      prefixes,
     });
   }
 

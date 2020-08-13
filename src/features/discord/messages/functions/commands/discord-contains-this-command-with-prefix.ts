@@ -9,15 +9,19 @@ export function discordContainsThisCommandWithPrefix(
   let containsThisCommandWithPrefix = false;
 
   if (_.isString(data.commands)) {
+    const command: DiscordMessageCommandEnum = data.commands;
+
     containsThisCommandWithPrefix = discordStrictlyContainsThisCommandWithPrefix(
       {
-        command: data.commands,
+        command,
         message: data.message,
         prefix: data.prefix,
       }
     );
   } else if (_.isArray(data.commands)) {
-    _.forEach(data.commands, (command: Readonly<DiscordMessageCommandEnum>):
+    const commands: DiscordMessageCommandEnum[] = data.commands;
+
+    _.forEach(commands, (command: Readonly<DiscordMessageCommandEnum>):
       | false
       | void => {
       if (

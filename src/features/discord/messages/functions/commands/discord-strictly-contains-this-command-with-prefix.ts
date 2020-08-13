@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { IDiscordStrictlyContainsThisCommandWithPrefixData } from "../../interfaces/commands/discord-strictly-contains-this-command-with-prefix-data";
+import { discordGetCommandWithPrefix } from "./discord-get-command-with-prefix";
 
 export function discordStrictlyContainsThisCommandWithPrefix(
   data: Readonly<IDiscordStrictlyContainsThisCommandWithPrefixData>
@@ -8,11 +9,17 @@ export function discordStrictlyContainsThisCommandWithPrefix(
   return (
     _.includes(
       _.toLower(data.message),
-      _.toLower(`${data.prefix}${data.command} `)
+      discordGetCommandWithPrefix({
+        command: data.command,
+        prefix: data.prefix,
+      })
     ) ||
     _.endsWith(
       _.toLower(data.message),
-      _.toLower(`${data.prefix}${data.command}`)
+      discordGetCommandWithPrefix({
+        command: data.command,
+        prefix: data.prefix,
+      })
     )
   );
 }
