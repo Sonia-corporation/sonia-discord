@@ -1,7 +1,7 @@
 import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
 
-export interface IContainsThisCommandWithPrefixData {
+export interface IDiscordHasThisCommandData {
   commands: DiscordMessageCommandEnum | DiscordMessageCommandEnum[];
   message: string;
-  prefix: string;
+  prefixes: string | string[];
 }

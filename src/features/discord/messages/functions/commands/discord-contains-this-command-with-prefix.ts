@@ -1,27 +1,29 @@
 import _ from "lodash";
 import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
-import { IContainsThisCommandWithPrefixData } from "../../interfaces/commands/contains-this-command-with-prefix-data";
-import { strictlyContainsThisCommandWithPrefix } from "./strictly-contains-this-command-with-prefix";
+import { IDiscordContainsThisCommandWithPrefixData } from "../../interfaces/commands/discord-contains-this-command-with-prefix-data";
+import { discordStrictlyContainsThisCommandWithPrefix } from "./discord-strictly-contains-this-command-with-prefix";
 
-export function containsThisCommandWithPrefix(
+export function discordContainsThisCommandWithPrefix(
   containsThisCommandWithPrefixData: Readonly<
-    IContainsThisCommandWithPrefixData
+    IDiscordContainsThisCommandWithPrefixData
   >
 ): boolean {
   let containsThisCommandWithPrefix = false;
 
   if (_.isString(containsThisCommandWithPrefixData.commands)) {
-    containsThisCommandWithPrefix = strictlyContainsThisCommandWithPrefix({
-      command: containsThisCommandWithPrefixData.commands,
-      message: containsThisCommandWithPrefixData.message,
-      prefix: containsThisCommandWithPrefixData.prefix,
-    });
+    containsThisCommandWithPrefix = discordStrictlyContainsThisCommandWithPrefix(
+      {
+        command: containsThisCommandWithPrefixData.commands,
+        message: containsThisCommandWithPrefixData.message,
+        prefix: containsThisCommandWithPrefixData.prefix,
+      }
+    );
   } else if (_.isArray(containsThisCommandWithPrefixData.commands)) {
     _.forEach(
       containsThisCommandWithPrefixData.commands,
       (command: Readonly<DiscordMessageCommandEnum>): false | void => {
         if (
-          strictlyContainsThisCommandWithPrefix({
+          discordStrictlyContainsThisCommandWithPrefix({
             command,
             message: containsThisCommandWithPrefixData.message,
             prefix: containsThisCommandWithPrefixData.prefix,

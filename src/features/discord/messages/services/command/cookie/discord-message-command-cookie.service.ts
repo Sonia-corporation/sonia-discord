@@ -14,7 +14,7 @@ import { DiscordSoniaService } from "../../../../users/services/discord-sonia.se
 import { DiscordMessageCommandCookieDescriptionEnum } from "../../../enums/command/cookie/discord-message-command-cookie-description.enum";
 import { DiscordMessageCommandCookieTitleEnum } from "../../../enums/command/cookie/discord-message-command-cookie-title.enum";
 import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
-import { hasThisCommand } from "../../../functions/commands/has-this-command";
+import { discordHasThisCommand } from "../../../functions/commands/discord-has-this-command";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
@@ -60,7 +60,7 @@ export class DiscordMessageCommandCookieService extends AbstractService {
   }
 
   public hasCommand(message: Readonly<string>): boolean {
-    return hasThisCommand({
+    return discordHasThisCommand({
       commands: [
         DiscordMessageCommandEnum.COOKIE,
         DiscordMessageCommandEnum.COOKIES,

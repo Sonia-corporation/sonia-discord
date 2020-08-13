@@ -1,9 +1,9 @@
 import _ from "lodash";
-import { IStrictlyContainsThisCommandWithPrefixData } from "../../interfaces/commands/strictly-contains-this-command-with-prefix-data";
+import { IDiscordStrictlyContainsThisCommandWithPrefixData } from "../../interfaces/commands/discord-strictly-contains-this-command-with-prefix-data";
 
-export function strictlyContainsThisCommandWithPrefix(
+export function discordStrictlyContainsThisCommandWithPrefix(
   strictlyContainsThisCommandWithPrefixData: Readonly<
-    IStrictlyContainsThisCommandWithPrefixData
+    IDiscordStrictlyContainsThisCommandWithPrefixData
   >
 ): boolean {
   // @todo could be better to use a RegExp instead of pure white space

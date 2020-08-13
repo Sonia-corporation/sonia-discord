@@ -1,10 +1,10 @@
 import _ from "lodash";
-import { IContainsThisCommandWithOneOfThesePrefixesData } from "../../interfaces/commands/contains-this-command-with-one-of-these-prefixes-data";
-import { containsThisCommandWithPrefix } from "./contains-this-command-with-prefix";
+import { IDiscordContainsThisCommandWithOneOfThesePrefixesData } from "../../interfaces/commands/discord-contains-this-command-with-one-of-these-prefixes-data";
+import { discordContainsThisCommandWithPrefix } from "./discord-contains-this-command-with-prefix";
 
-export function containsThisCommandWithOneOfThesePrefixes(
+export function discordContainsThisCommandWithOneOfThesePrefixes(
   containsThisCommandWithOneOfThesePrefixesData: Readonly<
-    IContainsThisCommandWithOneOfThesePrefixesData
+    IDiscordContainsThisCommandWithOneOfThesePrefixesData
   >
 ): boolean {
   let containsThisCommand = false;
@@ -13,7 +13,7 @@ export function containsThisCommandWithOneOfThesePrefixes(
     containsThisCommandWithOneOfThesePrefixesData.prefixes,
     (prefix: Readonly<string>): false | void => {
       if (
-        containsThisCommandWithPrefix({
+        discordContainsThisCommandWithPrefix({
           commands: containsThisCommandWithOneOfThesePrefixesData.commands,
           message: containsThisCommandWithOneOfThesePrefixesData.message,
           prefix,

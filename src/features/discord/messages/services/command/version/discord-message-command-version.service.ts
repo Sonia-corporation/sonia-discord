@@ -18,7 +18,7 @@ import { DiscordSoniaEmotionalStateEnum } from "../../../../emotional-states/enu
 import { DiscordSoniaEmotionalStateService } from "../../../../emotional-states/services/discord-sonia-emotional-state.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
 import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
-import { hasThisCommand } from "../../../functions/commands/has-this-command";
+import { discordHasThisCommand } from "../../../functions/commands/discord-has-this-command";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
@@ -64,7 +64,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   }
 
   public hasCommand(message: Readonly<string>): boolean {
-    return hasThisCommand({
+    return discordHasThisCommand({
       commands: [
         DiscordMessageCommandEnum.VERSION,
         DiscordMessageCommandEnum.V,
