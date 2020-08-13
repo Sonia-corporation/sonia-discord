@@ -4,19 +4,19 @@ import { discordContainsThisCommandWithOneOfThesePrefixes } from "./discord-cont
 import { discordContainsThisCommandWithPrefix } from "./discord-contains-this-command-with-prefix";
 
 export function discordHasThisCommand(
-  hasThisCommandData: Readonly<IDiscordHasThisCommandData>
+  data: Readonly<IDiscordHasThisCommandData>
 ): boolean {
-  if (_.isString(hasThisCommandData.prefixes)) {
+  if (_.isString(data.prefixes)) {
     return discordContainsThisCommandWithPrefix({
-      commands: hasThisCommandData.commands,
-      message: hasThisCommandData.message,
-      prefix: hasThisCommandData.prefixes,
+      commands: data.commands,
+      message: data.message,
+      prefix: data.prefixes,
     });
-  } else if (_.isArray(hasThisCommandData.prefixes)) {
+  } else if (_.isArray(data.prefixes)) {
     return discordContainsThisCommandWithOneOfThesePrefixes({
-      commands: hasThisCommandData.commands,
-      message: hasThisCommandData.message,
-      prefixes: hasThisCommandData.prefixes,
+      commands: data.commands,
+      message: data.message,
+      prefixes: data.prefixes,
     });
   }
 

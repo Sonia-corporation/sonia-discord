@@ -4,37 +4,34 @@ import { IDiscordContainsThisCommandWithPrefixData } from "../../interfaces/comm
 import { discordStrictlyContainsThisCommandWithPrefix } from "./discord-strictly-contains-this-command-with-prefix";
 
 export function discordContainsThisCommandWithPrefix(
-  containsThisCommandWithPrefixData: Readonly<
-    IDiscordContainsThisCommandWithPrefixData
-  >
+  data: Readonly<IDiscordContainsThisCommandWithPrefixData>
 ): boolean {
   let containsThisCommandWithPrefix = false;
 
-  if (_.isString(containsThisCommandWithPrefixData.commands)) {
+  if (_.isString(data.commands)) {
     containsThisCommandWithPrefix = discordStrictlyContainsThisCommandWithPrefix(
       {
-        command: containsThisCommandWithPrefixData.commands,
-        message: containsThisCommandWithPrefixData.message,
-        prefix: containsThisCommandWithPrefixData.prefix,
+        command: data.commands,
+        message: data.message,
+        prefix: data.prefix,
       }
     );
-  } else if (_.isArray(containsThisCommandWithPrefixData.commands)) {
-    _.forEach(
-      containsThisCommandWithPrefixData.commands,
-      (command: Readonly<DiscordMessageCommandEnum>): false | void => {
-        if (
-          discordStrictlyContainsThisCommandWithPrefix({
-            command,
-            message: containsThisCommandWithPrefixData.message,
-            prefix: containsThisCommandWithPrefixData.prefix,
-          })
-        ) {
-          containsThisCommandWithPrefix = true;
+  } else if (_.isArray(data.commands)) {
+    _.forEach(data.commands, (command: Readonly<DiscordMessageCommandEnum>):
+      | false
+      | void => {
+      if (
+        discordStrictlyContainsThisCommandWithPrefix({
+          command,
+          message: data.message,
+          prefix: data.prefix,
+        })
+      ) {
+        containsThisCommandWithPrefix = true;
 
-          return false;
-        }
+        return false;
       }
-    );
+    });
   }
 
   return containsThisCommandWithPrefix;

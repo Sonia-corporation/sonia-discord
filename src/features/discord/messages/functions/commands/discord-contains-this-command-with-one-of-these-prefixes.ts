@@ -3,28 +3,23 @@ import { IDiscordContainsThisCommandWithOneOfThesePrefixesData } from "../../int
 import { discordContainsThisCommandWithPrefix } from "./discord-contains-this-command-with-prefix";
 
 export function discordContainsThisCommandWithOneOfThesePrefixes(
-  containsThisCommandWithOneOfThesePrefixesData: Readonly<
-    IDiscordContainsThisCommandWithOneOfThesePrefixesData
-  >
+  data: Readonly<IDiscordContainsThisCommandWithOneOfThesePrefixesData>
 ): boolean {
   let containsThisCommand = false;
 
-  _.forEach(
-    containsThisCommandWithOneOfThesePrefixesData.prefixes,
-    (prefix: Readonly<string>): false | void => {
-      if (
-        discordContainsThisCommandWithPrefix({
-          commands: containsThisCommandWithOneOfThesePrefixesData.commands,
-          message: containsThisCommandWithOneOfThesePrefixesData.message,
-          prefix,
-        })
-      ) {
-        containsThisCommand = true;
+  _.forEach(data.prefixes, (prefix: Readonly<string>): false | void => {
+    if (
+      discordContainsThisCommandWithPrefix({
+        commands: data.commands,
+        message: data.message,
+        prefix,
+      })
+    ) {
+      containsThisCommand = true;
 
-        return false;
-      }
+      return false;
     }
-  );
+  });
 
   return containsThisCommand;
 }
