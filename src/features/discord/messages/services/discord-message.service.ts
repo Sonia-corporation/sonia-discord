@@ -146,6 +146,15 @@ export class DiscordMessageService extends AbstractService {
       return this._sendMessage(anyDiscordMessage, discordMessageResponse);
     }
 
+    LoggerService.getInstance().error({
+      context: this._serviceName,
+      extendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        anyDiscordMessage.id,
+        `failed to get a valid message response`
+      ),
+    });
+
     return Promise.reject(
       new Error(`Discord message response null or undefined`)
     );
@@ -170,6 +179,15 @@ export class DiscordMessageService extends AbstractService {
     if (!_.isNil(discordMessageResponse)) {
       return this._sendMessage(anyDiscordMessage, discordMessageResponse);
     }
+
+    LoggerService.getInstance().error({
+      context: this._serviceName,
+      extendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        anyDiscordMessage.id,
+        `failed to get a valid message response`
+      ),
+    });
 
     return Promise.reject(
       new Error(`Discord message response null or undefined`)
@@ -209,7 +227,7 @@ export class DiscordMessageService extends AbstractService {
           }
         )
         .catch(
-          (error: unknown): Promise<never> => {
+          (error: unknown): Promise<void> => {
             DiscordMessageErrorService.getInstance().handleError(
               error,
               anyDiscordMessage

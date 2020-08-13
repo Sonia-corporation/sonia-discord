@@ -102,7 +102,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       service.handleResponse(anyDiscordMessage);
 
       expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
-      expect(getMessageResponseSpy).toHaveBeenCalledWith();
+      expect(getMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
     });
 
     it(`should return the message response`, (): void => {
@@ -115,14 +115,17 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
   });
 
   describe(`getMessageResponse()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureService();
+      anyDiscordMessage = createMock<IAnyDiscordMessage>();
     });
 
     it(`should return a Discord message response without a response text`, (): void => {
       expect.assertions(1);
 
-      const result = service.getMessageResponse();
+      const result = service.getMessageResponse(anyDiscordMessage);
 
       expect(result.response).toStrictEqual(
         `No feature for now. Work in progress.`

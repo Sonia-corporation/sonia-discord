@@ -35,10 +35,20 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       ),
     });
 
-    return this.getMessageResponse();
+    return this.getMessageResponse(anyDiscordMessage);
   }
 
-  public getMessageResponse(): IDiscordMessageResponse {
+  public getMessageResponse(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+  ): IDiscordMessageResponse {
+    if (_.isString(anyDiscordMessage.content)) {
+      const featureName: string | undefined = this._getFeatureName(
+        anyDiscordMessage.content
+      );
+
+      console.log(featureName);
+    }
+
     return {
       response: `No feature for now. Work in progress.`,
     };
@@ -53,5 +63,9 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       message,
       prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
     });
+  }
+
+  private _getFeatureName(message: Readonly<string>): string | undefined {
+    return message;
   }
 }

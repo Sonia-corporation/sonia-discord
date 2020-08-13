@@ -390,6 +390,7 @@ describe(`DiscordMessageService`, (): void => {
     let discordChannelServiceIsTextSpy: jest.SpyInstance;
     let loggerServiceDebugSpy: jest.SpyInstance;
     let loggerServiceLogSpy: jest.SpyInstance;
+    let loggerServiceErrorSpy: jest.SpyInstance;
     let discordMessageDmServiceGetMessageSpy: jest.SpyInstance;
     let discordMessageTextServiceGetMessageSpy: jest.SpyInstance;
     let discordMessageErrorServiceHandleErrorSpy: jest.SpyInstance;
@@ -426,6 +427,9 @@ describe(`DiscordMessageService`, (): void => {
         .mockImplementation();
       loggerServiceLogSpy = jest
         .spyOn(loggerService, `log`)
+        .mockImplementation();
+      loggerServiceErrorSpy = jest
+        .spyOn(loggerService, `error`)
         .mockImplementation();
       discordMessageDmServiceGetMessageSpy = jest.spyOn(
         discordMessageDmService,
@@ -515,6 +519,24 @@ describe(`DiscordMessageService`, (): void => {
         describe(`when the message response is null`, (): void => {
           beforeEach((): void => {
             discordMessageTextServiceGetMessageSpy.mockReturnValue(null);
+          });
+
+          it(`should log about the fail to get a valid message response`, async (): Promise<
+            void
+          > => {
+            expect.assertions(3);
+
+            await expect(
+              service.handleChannelMessage(anyDiscordMessage)
+            ).rejects.toThrow(
+              new Error(`Discord message response null or undefined`)
+            );
+            expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
+              context: `DiscordMessageService`,
+              extendedContext: true,
+              message: `context-[dummy-id] text-failed to get a valid message response`,
+            } as ILoggerLog);
           });
 
           it(`should do nothing`, async (): Promise<void> => {
@@ -731,6 +753,24 @@ describe(`DiscordMessageService`, (): void => {
       describe(`when the message response is null`, (): void => {
         beforeEach((): void => {
           discordMessageDmServiceGetMessageSpy.mockReturnValue(null);
+        });
+
+        it(`should log about the fail to get a valid message response`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          await expect(
+            service.handleChannelMessage(anyDiscordMessage)
+          ).rejects.toThrow(
+            new Error(`Discord message response null or undefined`)
+          );
+          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
+            context: `DiscordMessageService`,
+            extendedContext: true,
+            message: `context-[dummy-id] text-failed to get a valid message response`,
+          } as ILoggerLog);
         });
 
         it(`should do nothing`, async (): Promise<void> => {
