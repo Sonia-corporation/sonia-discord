@@ -123,7 +123,7 @@
   },
   "dependencies": {
     "@datorama/akita": "5.2.2",
-    "@scout_apm/scout-apm": "0.1.10",
+    "@scout_apm/scout-apm": "0.1.12",
     "axios": "0.19.2",
     "discord.js": "12.2.0",
     "dotenv": "8.2.0",
