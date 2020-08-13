@@ -263,12 +263,12 @@ describe(`getCommandFirstArgument()`, (): void => {
           data.message = `simple message !feature other with another !feature noon command`;
         });
 
-        it(`should return noon`, (): void => {
+        it(`should return other`, (): void => {
           expect.assertions(1);
 
           const result = discordGetCommandFirstArgument(data);
 
-          expect(result).toStrictEqual(`noon`);
+          expect(result).toStrictEqual(`other`);
         });
       });
     });
