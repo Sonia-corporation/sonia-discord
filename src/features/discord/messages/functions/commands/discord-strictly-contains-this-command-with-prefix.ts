@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { IDiscordStrictlyContainsThisCommandWithPrefixData } from "../../interfaces/commands/discord-strictly-contains-this-command-with-prefix-data";
 import { discordGetCommandWithPrefix } from "./discord-get-command-with-prefix";
+import { discordGetFormattedMessage } from "./discord-get-formatted-message";
 
 export function discordStrictlyContainsThisCommandWithPrefix(
   data: Readonly<IDiscordStrictlyContainsThisCommandWithPrefixData>
@@ -8,14 +9,14 @@ export function discordStrictlyContainsThisCommandWithPrefix(
   // @todo could be better to use a RegExp instead of pure white space
   return (
     _.includes(
-      _.toLower(data.message),
-      discordGetCommandWithPrefix({
+      discordGetFormattedMessage(data.message),
+      `${discordGetCommandWithPrefix({
         command: data.command,
         prefix: data.prefix,
-      })
+      })} `
     ) ||
     _.endsWith(
-      _.toLower(data.message),
+      discordGetFormattedMessage(data.message),
       discordGetCommandWithPrefix({
         command: data.command,
         prefix: data.prefix,
