@@ -9,6 +9,7 @@ import { discordHasThisCommand } from "../../../functions/commands/discord-has-t
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
+import { DiscordMessageCommandFeatureNoonService } from "./services/discord-message-command-feature-noon.service";
 
 export class DiscordMessageCommandFeatureService extends AbstractService {
   private static _instance: DiscordMessageCommandFeatureService;
@@ -53,8 +54,25 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
         anyDiscordMessage.content
       );
 
-      // eslint-disable-next-line no-empty
       if (!_.isNil(featureName)) {
+        if (
+          DiscordMessageCommandFeatureNoonService.getInstance().isNoonFeature(
+            featureName
+          )
+        ) {
+          return DiscordMessageCommandFeatureNoonService.getInstance().getMessageResponse(
+            anyDiscordMessage
+          );
+        }
+
+        LoggerService.getInstance().debug({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(
+            `feature name ${ChalkService.getInstance().value(
+              featureName
+            )} not matching an existing feature`
+          ),
+        });
       } else {
         LoggerService.getInstance().debug({
           context: this._serviceName,
