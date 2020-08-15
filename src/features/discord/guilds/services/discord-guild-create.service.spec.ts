@@ -243,7 +243,7 @@ describe(`DiscordGuildCreateService`, (): void => {
         .mockImplementation();
       discordMessageCommandCookieServiceGetMessageResponseSpy = jest
         .spyOn(discordMessageCommandCookieService, `getMessageResponse`)
-        .mockReturnValue(discordMessageResponse);
+        .mockResolvedValue(discordMessageResponse);
       discordGuildSoniaServiceSendMessageToChannelSpy = jest
         .spyOn(discordGuildSoniaService, `sendMessageToChannel`)
         .mockImplementation();
