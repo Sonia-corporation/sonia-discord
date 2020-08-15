@@ -126,7 +126,7 @@ export class DiscordMessageTextService extends AbstractService {
 
   private _getSoniaMentionMessageResponse(
     discordMessage: Readonly<IDiscordMessage>
-  ): IDiscordMessageResponse | null {
+  ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
