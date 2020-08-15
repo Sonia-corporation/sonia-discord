@@ -597,13 +597,13 @@ describe(`DiscordMessageCommandService`, (): void => {
 
       discordMessageCommandFeatureServiceResponseSpy = jest
         .spyOn(discordMessageCommandFeatureService, `handleResponse`)
-        .mockReturnValue(discordMessageResponse);
+        .mockResolvedValue(discordMessageResponse);
     });
 
-    it(`should handle the message command feature`, (): void => {
+    it(`should handle the message command feature`, async (): Promise<void> => {
       expect.assertions(2);
 
-      service.handleFeatureCommand(anyDiscordMessage);
+      await service.handleFeatureCommand(anyDiscordMessage);
 
       expect(
         discordMessageCommandFeatureServiceResponseSpy
@@ -613,10 +613,10 @@ describe(`DiscordMessageCommandService`, (): void => {
       ).toHaveBeenCalledWith(anyDiscordMessage);
     });
 
-    it(`should return a message response`, (): void => {
+    it(`should return a message response`, async (): Promise<void> => {
       expect.assertions(1);
 
-      const result = service.handleFeatureCommand(anyDiscordMessage);
+      const result = await service.handleFeatureCommand(anyDiscordMessage);
 
       expect(result).toStrictEqual(discordMessageResponse);
     });
