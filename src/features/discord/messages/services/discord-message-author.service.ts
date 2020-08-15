@@ -25,7 +25,7 @@ export class DiscordMessageAuthorService extends AbstractService {
 
   public reply(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): IDiscordMessageResponse {
+  ): Promise<IDiscordMessageResponse> {
     let response = `Il est midi!`;
 
     if (DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
@@ -38,9 +38,9 @@ export class DiscordMessageAuthorService extends AbstractService {
       }
     }
 
-    return {
+    return Promise.resolve({
       response: this._getReplyWithEnvPrefix(response),
-    };
+    });
   }
 
   private _getReplyWithEnvPrefix(response: Readonly<string>): string {
