@@ -138,26 +138,29 @@ export class DiscordMessageService extends AbstractService {
       ),
     });
 
-    const discordMessageResponse: IDiscordMessageResponse | null = DiscordMessageDmService.getInstance().getMessage(
-      anyDiscordMessage
-    );
+    return DiscordMessageDmService.getInstance()
+      .getMessage(anyDiscordMessage)
+      .then(
+        (
+          discordMessageResponse: Readonly<IDiscordMessageResponse>
+        ): Promise<void> => {
+          return this._sendMessage(anyDiscordMessage, discordMessageResponse);
+        }
+      )
+      .catch(
+        (error: Readonly<Error>): Promise<void> => {
+          LoggerService.getInstance().error({
+            context: this._serviceName,
+            extendedContext: true,
+            message: LoggerService.getInstance().getSnowflakeContext(
+              anyDiscordMessage.id,
+              `failed to get a valid message response`
+            ),
+          });
 
-    if (!_.isNil(discordMessageResponse)) {
-      return this._sendMessage(anyDiscordMessage, discordMessageResponse);
-    }
-
-    LoggerService.getInstance().error({
-      context: this._serviceName,
-      extendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        anyDiscordMessage.id,
-        `failed to get a valid message response`
-      ),
-    });
-
-    return Promise.reject(
-      new Error(`Discord message response null or undefined`)
-    );
+          return Promise.reject(error);
+        }
+      );
   }
 
   private _textMessage(

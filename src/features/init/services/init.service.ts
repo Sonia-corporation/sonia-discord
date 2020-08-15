@@ -173,7 +173,7 @@ export class InitService extends AbstractService {
     })
       .then(
         (
-          axiosResponse: AxiosResponse<IGithubReleaseAndTotalCount>
+          axiosResponse: Readonly<AxiosResponse<IGithubReleaseAndTotalCount>>
         ): Promise<IGithubReleaseAndTotalCount> => {
           AppConfigMutatorService.getInstance().updateTotalReleaseCount(
             axiosResponse.data.data.repository.releases.totalCount

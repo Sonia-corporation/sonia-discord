@@ -94,7 +94,7 @@ export class DiscordGuildCreateService extends AbstractService {
     return FirebaseGuildsService.getInstance()
       .addGuild(guild)
       .then(
-        (writeResult: WriteResult): Promise<WriteResult> => {
+        (writeResult: Readonly<WriteResult>): Promise<WriteResult> => {
           LoggerService.getInstance().success({
             context: this._serviceName,
             message: ChalkService.getInstance().text(
@@ -175,7 +175,7 @@ export class DiscordGuildCreateService extends AbstractService {
       return this._getMessageResponse()
         .then(
           (
-            messageResponse: IDiscordMessageResponse
+            messageResponse: Readonly<IDiscordMessageResponse>
           ): Promise<Message | void> => {
             return guildChannel
               .send(messageResponse.response, messageResponse.options)
