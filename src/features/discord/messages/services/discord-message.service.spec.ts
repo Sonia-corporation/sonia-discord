@@ -435,10 +435,9 @@ describe(`DiscordMessageService`, (): void => {
         discordMessageDmService,
         `getMessage`
       );
-      discordMessageTextServiceGetMessageSpy = jest.spyOn(
-        discordMessageTextService,
-        `getMessage`
-      );
+      discordMessageTextServiceGetMessageSpy = jest
+        .spyOn(discordMessageTextService, `getMessage`)
+        .mockRejectedValue(new Error(`getMessage error`));
       discordMessageErrorServiceHandleErrorSpy = jest.spyOn(
         discordMessageErrorService,
         `handleError`
@@ -487,9 +486,7 @@ describe(`DiscordMessageService`, (): void => {
 
           await expect(
             service.handleChannelMessage(anyDiscordMessage)
-          ).rejects.toThrow(
-            new Error(`Discord message response null or undefined`)
-          );
+          ).rejects.toThrow(new Error(`getMessage error`));
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
             context: `DiscordMessageService`,
@@ -505,9 +502,7 @@ describe(`DiscordMessageService`, (): void => {
 
           await expect(
             service.handleChannelMessage(anyDiscordMessage)
-          ).rejects.toThrow(
-            new Error(`Discord message response null or undefined`)
-          );
+          ).rejects.toThrow(new Error(`getMessage error`));
           expect(discordMessageTextServiceGetMessageSpy).toHaveBeenCalledTimes(
             1
           );
@@ -516,9 +511,11 @@ describe(`DiscordMessageService`, (): void => {
           );
         });
 
-        describe(`when the message response is null`, (): void => {
+        describe(`when an error occurred when getting a message response`, (): void => {
           beforeEach((): void => {
-            discordMessageTextServiceGetMessageSpy.mockReturnValue(null);
+            discordMessageTextServiceGetMessageSpy.mockRejectedValue(
+              new Error(`getMessage error`)
+            );
           });
 
           it(`should log about the fail to get a valid message response`, async (): Promise<
@@ -528,9 +525,7 @@ describe(`DiscordMessageService`, (): void => {
 
             await expect(
               service.handleChannelMessage(anyDiscordMessage)
-            ).rejects.toThrow(
-              new Error(`Discord message response null or undefined`)
-            );
+            ).rejects.toThrow(new Error(`getMessage error`));
             expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
               context: `DiscordMessageService`,
@@ -544,9 +539,7 @@ describe(`DiscordMessageService`, (): void => {
 
             await expect(
               service.handleChannelMessage(anyDiscordMessage)
-            ).rejects.toThrow(
-              new Error(`Discord message response null or undefined`)
-            );
+            ).rejects.toThrow(new Error(`getMessage error`));
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
             expect(discordChannelServiceIsValidSpy).not.toHaveBeenCalled();
             expect(loggerServiceLogSpy).not.toHaveBeenCalled();
@@ -556,9 +549,9 @@ describe(`DiscordMessageService`, (): void => {
           });
         });
 
-        describe(`when the message response is valid`, (): void => {
+        describe(`when getting a message response was successful`, (): void => {
           beforeEach((): void => {
-            discordMessageTextServiceGetMessageSpy.mockReturnValue(
+            discordMessageTextServiceGetMessageSpy.mockResolvedValue(
               discordMessageResponse
             );
           });
