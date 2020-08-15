@@ -34,7 +34,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
 
   public handleResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): IDiscordMessageResponse {
+  ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
@@ -47,14 +47,14 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     return this.getMessageResponse();
   }
 
-  public getMessageResponse(): IDiscordMessageResponse {
-    return {
+  public getMessageResponse(): Promise<IDiscordMessageResponse> {
+    return Promise.resolve({
       options: {
         embed: this._getMessageEmbed(),
         split: true,
       },
       response: ``,
-    };
+    });
   }
 
   public hasCommand(message: Readonly<string>): boolean {
