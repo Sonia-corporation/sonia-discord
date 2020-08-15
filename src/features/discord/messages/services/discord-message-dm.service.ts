@@ -26,17 +26,17 @@ export class DiscordMessageDmService extends AbstractService {
 
   public getMessage(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): IDiscordMessageResponse | null {
+  ): Promise<IDiscordMessageResponse> {
     if (DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
       return this._getMessageResponse(anyDiscordMessage);
     }
 
-    return null;
+    return Promise.reject(new Error(`Invalid author`));
   }
 
   private _getMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): IDiscordMessageResponse | null {
+  ): Promise<IDiscordMessageResponse> {
     if (
       DiscordMessageContentService.getInstance().hasContent(
         anyDiscordMessage.content
@@ -56,7 +56,7 @@ export class DiscordMessageDmService extends AbstractService {
 
   private _getCommandMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): IDiscordMessageResponse | null {
+  ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
