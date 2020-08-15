@@ -1,8 +1,10 @@
 import _ from "lodash";
 import { AbstractService } from "../../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
+import { ChalkService } from "../../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
+import { discordGetCommandFirstArgument } from "../../../functions/commands/discord-get-command-first-argument";
 import { discordHasThisCommand } from "../../../functions/commands/discord-has-this-command";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
@@ -19,13 +21,18 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
     return DiscordMessageCommandFeatureService._instance;
   }
 
+  private readonly _commands: DiscordMessageCommandEnum[] = [
+    DiscordMessageCommandEnum.FEATURE,
+    DiscordMessageCommandEnum.F,
+  ];
+
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_SERVICE);
   }
 
   public handleResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): IDiscordMessageResponse {
+  ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
@@ -40,32 +47,42 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
 
   public getMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): IDiscordMessageResponse {
+  ): Promise<IDiscordMessageResponse> {
     if (_.isString(anyDiscordMessage.content)) {
-      const featureName: string | undefined = this._getFeatureName(
+      const featureName: string | null = this._getFeatureName(
         anyDiscordMessage.content
       );
 
-      console.log(featureName);
+      // eslint-disable-next-line no-empty
+      if (!_.isNil(featureName)) {
+      } else {
+        LoggerService.getInstance().debug({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(
+            `feature name not specified`
+          ),
+        });
+      }
     }
 
-    return {
+    return Promise.resolve({
       response: `No feature for now. Work in progress.`,
-    };
+    });
   }
 
   public hasCommand(message: Readonly<string>): boolean {
     return discordHasThisCommand({
-      commands: [
-        DiscordMessageCommandEnum.FEATURE,
-        DiscordMessageCommandEnum.F,
-      ],
+      commands: this._commands,
       message,
       prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
     });
   }
 
-  private _getFeatureName(message: Readonly<string>): string | undefined {
-    return message;
+  private _getFeatureName(message: Readonly<string>): string | null {
+    return discordGetCommandFirstArgument({
+      commands: this._commands,
+      message,
+      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
+    });
   }
 }
