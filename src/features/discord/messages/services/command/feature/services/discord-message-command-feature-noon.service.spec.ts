@@ -1,5 +1,6 @@
 import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../../../core/services/core-event.service";
+import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
 import { DiscordMessageCommandFeatureNameEnum } from "../enums/discord-message-command-feature-name.enum";
 import { DiscordMessageCommandFeatureNoonService } from "./discord-message-command-feature-noon.service";
 
@@ -100,6 +101,24 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         const isNoonFeature = service.isNoonFeature(featureName);
 
         expect(isNoonFeature).toStrictEqual(true);
+      });
+    });
+  });
+
+  describe(`getMessageResponse()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+
+    beforeEach((): void => {
+      service = new DiscordMessageCommandFeatureNoonService();
+    });
+
+    it(`should return a WIP message`, async (): Promise<void> => {
+      expect.assertions(1);
+
+      const result = await service.getMessageResponse(anyDiscordMessage);
+
+      expect(result).toStrictEqual({
+        response: `No options for noon feature for now. Work in progress.`,
       });
     });
   });
