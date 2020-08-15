@@ -34,21 +34,23 @@ export class DiscordMessageTextService extends AbstractService {
 
   public getMessage(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): IDiscordMessageResponse | null {
+  ): Promise<IDiscordMessageResponse> {
     if (DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
       if (
         DiscordMentionService.getInstance().isValid(anyDiscordMessage.mentions)
       ) {
         return this._getAnyDiscordMessageResponse(anyDiscordMessage);
       }
+
+      return Promise.reject(new Error(`Invalid mention`));
     }
 
-    return null;
+    return Promise.reject(new Error(`Invalid author`));
   }
 
   private _getAnyDiscordMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): IDiscordMessageResponse | null {
+  ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
@@ -62,12 +64,12 @@ export class DiscordMessageTextService extends AbstractService {
       return this._getDiscordMessageResponse(anyDiscordMessage);
     }
 
-    return null;
+    return Promise.reject(new Error(`Invalid Discord message`));
   }
 
   private _getDiscordMessageResponse(
     discordMessage: Readonly<IDiscordMessage>
-  ): IDiscordMessageResponse | null {
+  ): Promise<IDiscordMessageResponse> {
     if (
       DiscordMentionService.getInstance().isForEveryone(discordMessage.mentions)
     ) {
@@ -85,14 +87,16 @@ export class DiscordMessageTextService extends AbstractService {
       ) {
         return this._getSoniaMentionMessageResponse(discordMessage);
       }
+
+      return Promise.reject(new Error(`Invalid user mention`));
     }
 
-    return null;
+    return Promise.reject(new Error(`Invalid Sonia`));
   }
 
   private _getEveryoneMentionMessageResponse(
     discordMessage: Readonly<IDiscordMessage>
-  ): IDiscordMessageResponse {
+  ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       extendedContext: true,
@@ -102,11 +106,11 @@ export class DiscordMessageTextService extends AbstractService {
       ),
     });
 
-    return {
+    return Promise.resolve({
       response: this._getEveryoneMentionMessageResponseWithEnvPrefix(
         `Il est midi everyone!`
       ),
-    };
+    });
   }
 
   private _getEveryoneMentionMessageResponseWithEnvPrefix(
