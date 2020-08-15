@@ -41,7 +41,6 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)?.prefix).toStrictEqual(`!`);
         });
 
@@ -50,8 +49,21 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)?.command).toStrictEqual(`help`);
+        });
+      });
+
+      describe(`when tested with "!helpp"`, (): void => {
+        beforeEach((): void => {
+          message = `!helpp`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
         });
       });
 
@@ -65,7 +77,6 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)).toBeNull();
         });
       });
@@ -80,7 +91,6 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)).toBeNull();
         });
       });
@@ -112,7 +122,6 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)?.prefix).toStrictEqual(`!`);
         });
 
@@ -121,10 +130,23 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)?.command).toStrictEqual(
             `cookie`
           );
+        });
+      });
+
+      describe(`when tested with "!cookiee"`, (): void => {
+        beforeEach((): void => {
+          message = `!cookiee`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
         });
       });
 
@@ -138,7 +160,6 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)).toBeNull();
         });
       });
@@ -153,7 +174,6 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)).toBeNull();
         });
       });
@@ -191,7 +211,6 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)?.prefix).toStrictEqual(`-`);
         });
 
@@ -200,8 +219,21 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)?.command).toStrictEqual(`help`);
+        });
+      });
+
+      describe(`when tested with "-helpp"`, (): void => {
+        beforeEach((): void => {
+          message = `-helpp`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
         });
       });
 
@@ -215,7 +247,6 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)).toBeNull();
         });
       });
@@ -230,7 +261,6 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)).toBeNull();
         });
       });
@@ -262,7 +292,6 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)?.prefix).toStrictEqual(`-`);
         });
 
@@ -271,10 +300,23 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)?.command).toStrictEqual(
             `cookie`
           );
+        });
+      });
+
+      describe(`when tested with "-cookiee"`, (): void => {
+        beforeEach((): void => {
+          message = `-cookiee`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
         });
       });
 
@@ -288,7 +330,6 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)).toBeNull();
         });
       });
@@ -303,7 +344,6 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          // eslint-disable-next-line no-useless-escape
           expect(xregexp.exec(message, result)).toBeNull();
         });
       });
