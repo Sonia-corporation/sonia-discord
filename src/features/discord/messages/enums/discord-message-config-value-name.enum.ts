@@ -1,4 +1,6 @@
 export enum DiscordMessageConfigValueNameEnum {
+  COMMAND_CLI_ERROR_IMAGE_COLOR = `message command CLI error image color`,
+  COMMAND_CLI_ERROR_IMAGE_URL = `message command CLI error image url`,
   COMMAND_COOKIE_IMAGE_COLOR = `message command cookie image color`,
   COMMAND_COOKIE_IMAGE_URL = `message command cookie image url`,
   COMMAND_ERROR_IMAGE_COLOR = `message command error image color`,

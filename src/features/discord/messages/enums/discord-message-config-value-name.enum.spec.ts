@@ -1,6 +1,22 @@
 import { DiscordMessageConfigValueNameEnum } from "./discord-message-config-value-name.enum";
 
 describe(`DiscordMessageConfigValueNameEnum`, (): void => {
+  it(`should have a member "COMMAND_CLI_ERROR_IMAGE_COLOR"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      DiscordMessageConfigValueNameEnum.COMMAND_CLI_ERROR_IMAGE_COLOR
+    ).toStrictEqual(`message command CLI error image color`);
+  });
+
+  it(`should have a member "COMMAND_CLI_ERROR_IMAGE_URL"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      DiscordMessageConfigValueNameEnum.COMMAND_CLI_ERROR_IMAGE_URL
+    ).toStrictEqual(`message command CLI error image url`);
+  });
+
   it(`should have a member "COMMAND_COOKIE_IMAGE_COLOR"`, (): void => {
     expect.assertions(1);
 

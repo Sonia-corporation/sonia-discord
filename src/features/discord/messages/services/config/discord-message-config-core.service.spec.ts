@@ -51,6 +51,24 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
     });
   });
 
+  it(`should have a specific color for the image of the CLI error command`, (): void => {
+    expect.assertions(1);
+
+    service = new DiscordMessageConfigCoreService();
+
+    expect(service.command.cliError.imageColor).toStrictEqual(15562905);
+  });
+
+  it(`should have a specific url for the image of the CLI error command`, (): void => {
+    expect.assertions(1);
+
+    service = new DiscordMessageConfigCoreService();
+
+    expect(service.command.cliError.imageUrl).toStrictEqual(
+      `https://i.ibb.co/cLM30Xb/icons8-cancel-512.png`
+    );
+  });
+
   it(`should have a specific color for the image of the cookie command`, (): void => {
     expect.assertions(1);
 

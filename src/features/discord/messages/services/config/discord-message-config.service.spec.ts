@@ -2,6 +2,7 @@ import { ColorEnum } from "../../../../../enums/color.enum";
 import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../core/services/core-event.service";
+import { IDiscordMessageCommandCliErrorConfig } from "../../../interfaces/discord-message-command-cli-error-config";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
 import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
@@ -66,8 +67,12 @@ describe(`DiscordMessageConfigService`, (): void => {
 
   describe(`getConfig()`, (): void => {
     beforeEach((): void => {
-      service = DiscordMessageConfigService.getInstance();
+      service = new DiscordMessageConfigService();
       discordMessageConfigCoreService.command = {
+        cliError: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
         cookie: {
           imageColor: ColorEnum.CANDY,
           imageUrl: IconEnum.WARNING_SHIELD,
@@ -111,6 +116,10 @@ describe(`DiscordMessageConfigService`, (): void => {
 
       expect(result).toStrictEqual({
         command: {
+          cliError: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
           cookie: {
             imageColor: ColorEnum.CANDY,
             imageUrl: IconEnum.WARNING_SHIELD,
@@ -153,6 +162,10 @@ describe(`DiscordMessageConfigService`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command = {
+        cliError: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
         cookie: {
           imageColor: ColorEnum.CANDY,
           imageUrl: IconEnum.WARNING_SHIELD,
@@ -187,6 +200,10 @@ describe(`DiscordMessageConfigService`, (): void => {
       const result = service.getMessageCommand();
 
       expect(result).toStrictEqual({
+        cliError: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
         cookie: {
           imageColor: ColorEnum.CANDY,
           imageUrl: IconEnum.WARNING_SHIELD,
@@ -213,6 +230,59 @@ describe(`DiscordMessageConfigService`, (): void => {
           imageUrl: IconEnum.WARNING_SHIELD,
         },
       } as IDiscordMessageCommandConfig);
+    });
+  });
+
+  describe(`getMessageCommandCliError()`, (): void => {
+    beforeEach((): void => {
+      service = new DiscordMessageConfigService();
+      discordMessageConfigCoreService.command.cliError = {
+        imageColor: ColorEnum.CANDY,
+        imageUrl: IconEnum.WARNING_SHIELD,
+      };
+    });
+
+    it(`should return the Discord message config command CLI error`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandCliError();
+
+      expect(result).toStrictEqual({
+        imageColor: ColorEnum.CANDY,
+        imageUrl: IconEnum.WARNING_SHIELD,
+      } as IDiscordMessageCommandCliErrorConfig);
+    });
+  });
+
+  describe(`getMessageCommandCliErrorImageColor()`, (): void => {
+    beforeEach((): void => {
+      service = new DiscordMessageConfigService();
+      discordMessageConfigCoreService.command.cliError.imageColor =
+        ColorEnum.CANDY;
+    });
+
+    it(`should return the Discord message config command CLI error image color`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandCliErrorImageColor();
+
+      expect(result).toStrictEqual(ColorEnum.CANDY);
+    });
+  });
+
+  describe(`getMessageCommandCliErrorImageUrl()`, (): void => {
+    beforeEach((): void => {
+      service = new DiscordMessageConfigService();
+      discordMessageConfigCoreService.command.cliError.imageUrl =
+        IconEnum.WARNING_SHIELD;
+    });
+
+    it(`should return the Discord message config command CLI error image url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandCliErrorImageUrl();
+
+      expect(result).toStrictEqual(IconEnum.WARNING_SHIELD);
     });
   });
 
