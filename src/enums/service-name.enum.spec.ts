@@ -211,6 +211,14 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_CLI_ERROR_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_CLI_ERROR_SERVICE
+    ).toStrictEqual(`DiscordMessageCommandCliErrorService`);
+  });
+
   it(`should have a member "DISCORD_MESSAGE_COMMAND_COOKIE_SERVICE"`, (): void => {
     expect.assertions(1);
 
@@ -225,6 +233,14 @@ describe(`ServiceNameEnum`, (): void => {
     expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_ERROR_SERVICE).toStrictEqual(
       `DiscordMessageCommandErrorService`
     );
+  });
+
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_ERROR_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_ERROR_SERVICE
+    ).toStrictEqual(`DiscordMessageCommandFeatureErrorService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_SERVICE"`, (): void => {

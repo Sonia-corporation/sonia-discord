@@ -9,6 +9,7 @@ import { ConfigService } from "../../../../config/services/config.service";
 import { ChalkService } from "../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../logger/services/logger.service";
 import { IDiscordConfig } from "../../../interfaces/discord-config";
+import { IDiscordMessageCommandCliErrorConfig } from "../../../interfaces/discord-message-command-cli-error-config";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
 import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
 import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
@@ -74,6 +75,7 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
     command?: Readonly<IPartialNested<IDiscordMessageCommandConfig>>
   ): void {
     if (!_.isNil(command)) {
+      this.updateMessageCommandCliError(command.cliError);
       this.updateMessageCommandCookie(command.cookie);
       this.updateMessageCommandError(command.error);
       this.updateMessageCommandHelp(command.help);
@@ -82,6 +84,43 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<
       this.updateMessageCommandVersion(command.version);
       this.updateMessageCommandLunch(command.lunch);
     }
+  }
+
+  public updateMessageCommandCliError(
+    cliError?: Readonly<IPartialNested<IDiscordMessageCommandCliErrorConfig>>
+  ): void {
+    if (!_.isNil(cliError)) {
+      this.updateMessageCommandCliErrorImageColor(cliError.imageColor);
+      this.updateMessageCommandCliErrorImageUrl(cliError.imageUrl);
+    }
+  }
+
+  public updateMessageCommandCliErrorImageColor(
+    imageColor?: Readonly<ColorEnum>
+  ): void {
+    DiscordMessageConfigCoreService.getInstance().command.cliError.imageColor = ConfigService.getInstance().getUpdatedNumber(
+      {
+        context: this._serviceName,
+        newValue: imageColor,
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandCliErrorImageColor(),
+        valueName:
+          DiscordMessageConfigValueNameEnum.COMMAND_CLI_ERROR_IMAGE_COLOR,
+      }
+    );
+  }
+
+  public updateMessageCommandCliErrorImageUrl(
+    imageUrl?: Readonly<IconEnum>
+  ): void {
+    DiscordMessageConfigCoreService.getInstance().command.cliError.imageUrl = ConfigService.getInstance().getUpdatedString(
+      {
+        context: this._serviceName,
+        newValue: imageUrl,
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandCliErrorImageUrl(),
+        valueName:
+          DiscordMessageConfigValueNameEnum.COMMAND_CLI_ERROR_IMAGE_URL,
+      }
+    );
   }
 
   public updateMessageCommandCookie(

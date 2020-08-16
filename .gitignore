@@ -1,27 +1,27 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
-/tmp
-/out-tsc
+dist
+tmp
+out-tsc
 .stylelintcache
 .eslintcache
 .cache
 .cache-jest
-/reports
+reports
 
 # Only exists if Bazel was run
-/bazel-out
+bazel-out
 
 # dependencies
-/node_modules
+node_modules
 
 # profiling files
 chrome-profiler-events*.json
 speed-measure-plugin*.json
 
 # IDEs and editors
-/.idea
+.idea
 .project
 .classpath
 .c9/
@@ -38,21 +38,21 @@ speed-measure-plugin*.json
 .history/*
 
 # misc
-/.sass-cache
-/connect.lock
-/coverage
-/libpeerconnection.log
+.sass-cache
+connect.lock
+coverage
+libpeerconnection.log
 npm-debug.log
 yarn-error.log
 testem.log
-/typings
+typings
 credentials.json
 token.json
 
 # System Files
 .DS_Store
 Thumbs.db
-/src/environment/secret-environment.json
+src/environment/secret-environment.json
 
 # stryker temp files
 stryker-tmp

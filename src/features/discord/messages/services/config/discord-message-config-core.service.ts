@@ -21,6 +21,10 @@ export class DiscordMessageConfigCoreService extends AbstractService
   }
 
   public command: IDiscordMessageCommandConfig = {
+    cliError: {
+      imageColor: ColorEnum.CANDY,
+      imageUrl: IconEnum.CANCEL,
+    },
     cookie: {
       imageColor: ColorEnum.SUN,
       imageUrl: IconEnum.COOKIES,

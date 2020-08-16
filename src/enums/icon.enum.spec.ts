@@ -17,6 +17,14 @@ describe(`IconEnum`, (): void => {
     );
   });
 
+  it(`should have a member "CANCEL"`, (): void => {
+    expect.assertions(1);
+
+    expect(IconEnum.CANCEL).toStrictEqual(
+      `https://i.ibb.co/cLM30Xb/icons8-cancel-512.png`
+    );
+  });
+
   it(`should have a member "COOKIES"`, (): void => {
     expect.assertions(1);
 

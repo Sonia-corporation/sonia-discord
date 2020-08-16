@@ -9,6 +9,7 @@ import { discordHasThisCommand } from "../../../functions/commands/discord-has-t
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
+import { DiscordMessageCommandFeatureErrorService } from "./discord-message-command-feature-error.service";
 import { DiscordMessageCommandFeatureNoonService } from "./services/discord-message-command-feature-noon.service";
 
 export class DiscordMessageCommandFeatureService extends AbstractService {
@@ -83,9 +84,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       }
     }
 
-    return Promise.resolve({
-      response: `No feature for now. Work in progress.`,
-    });
+    return DiscordMessageCommandFeatureErrorService.getInstance().getEmptyContentErrorMessageResponse();
   }
 
   public hasCommand(message: Readonly<string>): boolean {

@@ -41,6 +41,20 @@ export class DiscordMessageConfigService extends AbstractService {
     return DiscordMessageConfigCoreService.getInstance().command;
   }
 
+  public getMessageCommandCliError(): IDiscordMessageCommandCookieConfig {
+    return DiscordMessageConfigCoreService.getInstance().command.cliError;
+  }
+
+  public getMessageCommandCliErrorImageColor(): ColorEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.cliError
+      .imageColor;
+  }
+
+  public getMessageCommandCliErrorImageUrl(): IconEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.cliError
+      .imageUrl;
+  }
+
   public getMessageCommandCookie(): IDiscordMessageCommandCookieConfig {
     return DiscordMessageConfigCoreService.getInstance().command.cookie;
   }
