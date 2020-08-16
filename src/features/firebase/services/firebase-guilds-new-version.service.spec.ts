@@ -2140,6 +2140,22 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 );
               });
 
+              it(`should log about sending the release notes message on the general channel`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+                ).rejects.toThrow(new Error(`send error`));
+
+                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+                  context: `FirebaseGuildsNewVersionService`,
+                  message: `text-sending release notes message for guild value-dummy-id on general channel`,
+                } as ILoggerLog);
+              });
+
               it(`should send the message on the Discord guild primary channel with the random response`, async (): Promise<
                 void
               > => {
