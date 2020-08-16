@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.68.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.67.0...1.68.0) (2020-08-16)
+
+
+### :rocket: Features
+
+* **feature:** add noon feature for the feature command (and n as a shortcut) ([9840b99](https://github.com/Sonia-corporation/il-est-midi-discord/commit/9840b9924bbb95419baf0c00a2e07f37d807a428))
+
 # [1.67.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.66.1...1.67.0) (2020-08-11)
 
 
