@@ -1021,6 +1021,30 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   });
                   isReady$.next([true]);
                 });
+
+                describe(`when the release notes message sending failed for the guild`, (): void => {
+                  beforeEach((): void => {
+                    sendNewReleaseNotesFromFirebaseGuildSpy.mockRejectedValue(
+                      new Error(`sendNewReleaseNotesFromFirebaseGuild error`)
+                    );
+                  });
+
+                  it(`should not throw an error`, (done): void => {
+                    expect.assertions(1);
+
+                    service.sendNewReleaseNotesToEachGuild$().subscribe({
+                      error: (): void => {
+                        expect(true).toStrictEqual(false);
+                        done();
+                      },
+                      next: (): void => {
+                        expect(true).toStrictEqual(true);
+                        done();
+                      },
+                    });
+                    isReady$.next([true]);
+                  });
+                });
               });
             });
           });
