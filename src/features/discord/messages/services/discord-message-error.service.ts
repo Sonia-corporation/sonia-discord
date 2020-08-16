@@ -152,33 +152,8 @@ export class DiscordMessageErrorService extends AbstractService {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
-    return {
-      url: DiscordMessageConfigService.getInstance().getMessageCommandErrorImageUrl(),
-    };
-  }
-
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
-    const soniaImageUrl:
-      | string
-      | null = DiscordSoniaService.getInstance().getImageUrl();
-
-    return {
-      iconURL: soniaImageUrl || undefined,
-      text: `I am very sorry for that`,
-    };
-  }
-
   private _getMessageEmbedColor(): number {
     return DiscordMessageConfigService.getInstance().getMessageCommandErrorImageColor();
-  }
-
-  private _getMessageEmbedTimestamp(): Date {
-    return moment().toDate();
-  }
-
-  private _getMessageEmbedTitle(): string {
-    return `Oops, you have found a bug`;
   }
 
   private _getMessageEmbedFields(
@@ -216,5 +191,30 @@ export class DiscordMessageErrorService extends AbstractService {
       name: `Help me to help you`,
       value: `You can create a [bug report](${githubBugReportUrl}) or reach my creators on [discord](${discordSoniaPermanentGuildInviteUrl}).`,
     };
+  }
+
+  private _getMessageEmbedFooter(): MessageEmbedFooter {
+    const soniaImageUrl:
+      | string
+      | null = DiscordSoniaService.getInstance().getImageUrl();
+
+    return {
+      iconURL: soniaImageUrl || undefined,
+      text: `I am very sorry for that`,
+    };
+  }
+
+  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+    return {
+      url: DiscordMessageConfigService.getInstance().getMessageCommandErrorImageUrl(),
+    };
+  }
+
+  private _getMessageEmbedTimestamp(): Date {
+    return moment().toDate();
+  }
+
+  private _getMessageEmbedTitle(): string {
+    return `Oops, you have found a bug`;
   }
 }
