@@ -9,6 +9,12 @@ describe(`DiscordEmojiEnum`, (): void => {
     );
   });
 
+  it(`should have a member "WORRIED"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordEmojiEnum.WORRIED).toStrictEqual(`:worried:`);
+  });
+
   it(`should have a member "YUM"`, (): void => {
     expect.assertions(1);
 
