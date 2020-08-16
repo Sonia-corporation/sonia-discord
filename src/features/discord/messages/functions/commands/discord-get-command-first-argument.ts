@@ -110,32 +110,30 @@ export function discordGetCommandFirstArgument(
         message: formattedMessage,
         prefix,
       });
-    } else if (_.isArray(data.commands)) {
-      const prefix: string = data.prefixes;
-
-      return getFirstArgumentFromMultipleCommands({
-        commands: data.commands,
-        message: formattedMessage,
-        prefix,
-      });
     }
-  } else if (_.isArray(data.prefixes)) {
-    if (_.isString(data.commands)) {
-      const command: DiscordMessageCommandEnum = data.commands;
 
-      return getFirstArgumentFromMultiplePrefixes({
-        command,
-        message: formattedMessage,
-        prefixes: data.prefixes,
-      });
-    } else if (_.isArray(data.commands)) {
-      return getFirstArgumentFromMultiplePrefixesAndCommands({
-        commands: data.commands,
-        message: formattedMessage,
-        prefixes: data.prefixes,
-      });
-    }
+    const prefix: string = data.prefixes;
+
+    return getFirstArgumentFromMultipleCommands({
+      commands: data.commands,
+      message: formattedMessage,
+      prefix,
+    });
   }
 
-  return null;
+  if (_.isString(data.commands)) {
+    const command: DiscordMessageCommandEnum = data.commands;
+
+    return getFirstArgumentFromMultiplePrefixes({
+      command,
+      message: formattedMessage,
+      prefixes: data.prefixes,
+    });
+  }
+
+  return getFirstArgumentFromMultiplePrefixesAndCommands({
+    commands: data.commands,
+    message: formattedMessage,
+    prefixes: data.prefixes,
+  });
 }
