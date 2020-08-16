@@ -13,6 +13,8 @@ import { CoreEventService } from "../../../../../core/services/core-event.servic
 import { GithubConfigService } from "../../../../../github/services/config/github-config.service";
 import { DiscordGuildConfigService } from "../../../../guilds/services/config/discord-guild-config.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
+import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
+import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandCliErrorService } from "../discord-message-command-cli-error.service";
 import { DiscordMessageCommandFeatureErrorService } from "./discord-message-command-feature-error.service";
@@ -344,6 +346,9 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
   });
 
   describe(`getEmptyFeatureNameErrorMessageResponse()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+    let commands: DiscordMessageCommandEnum[];
+
     let discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy: jest.SpyInstance;
     let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandCliErrorImageColorSpy: jest.SpyInstance;
@@ -352,6 +357,8 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureErrorService();
+      anyDiscordMessage = createMock<IAnyDiscordMessage>();
+      commands = [DiscordMessageCommandEnum.COOKIE];
 
       discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy = jest.spyOn(
         discordMessageCommandCliErrorService,
@@ -378,7 +385,10 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
     it(`should get the CLI error message response`, async (): Promise<void> => {
       expect.assertions(2);
 
-      await service.getEmptyFeatureNameErrorMessageResponse();
+      await service.getEmptyFeatureNameErrorMessageResponse(
+        anyDiscordMessage,
+        commands
+      );
 
       expect(
         discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy
@@ -399,7 +409,10 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
         messageEmbedAuthor
       );
 
-      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+      const result = await service.getEmptyFeatureNameErrorMessageResponse(
+        anyDiscordMessage,
+        commands
+      );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -414,23 +427,29 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
         ColorEnum.CANDY
       );
 
-      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+      const result = await service.getEmptyFeatureNameErrorMessageResponse(
+        anyDiscordMessage,
+        commands
+      );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
     });
 
-    it(`should return a Discord message response embed with 2 fields`, async (): Promise<
+    it(`should return a Discord message response embed with 3 fields`, async (): Promise<
       void
     > => {
       expect.assertions(1);
 
-      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+      const result = await service.getEmptyFeatureNameErrorMessageResponse(
+        anyDiscordMessage,
+        commands
+      );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      expect(result.options.embed.fields).toHaveLength(2);
+      expect(result.options.embed.fields).toHaveLength(3);
     });
 
     it(`should return a Discord message response embed with a field explaining the error`, async (): Promise<
@@ -438,7 +457,10 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
     > => {
       expect.assertions(1);
 
-      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+      const result = await service.getEmptyFeatureNameErrorMessageResponse(
+        anyDiscordMessage,
+        commands
+      );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -448,12 +470,15 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a field to report the error`, async (): Promise<
+    it(`should return a Discord message response embed with a field to display all feature names`, async (): Promise<
       void
     > => {
       expect.assertions(1);
 
-      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+      const result = await service.getEmptyFeatureNameErrorMessageResponse(
+        anyDiscordMessage,
+        commands
+      );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -463,13 +488,34 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       } as EmbedFieldData);
     });
 
+    it(`should return a Discord message response embed with a field to show an example of the command with a feature name`, async (): Promise<
+      void
+    > => {
+      expect.assertions(1);
+
+      const result = await service.getEmptyFeatureNameErrorMessageResponse(
+        anyDiscordMessage,
+        commands
+      );
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(result.options.embed.fields[2]).toStrictEqual({
+        name: `Example`,
+        value: `\`!feature Noon\``,
+      } as EmbedFieldData);
+    });
+
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
       void
     > => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
 
-      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+      const result = await service.getEmptyFeatureNameErrorMessageResponse(
+        anyDiscordMessage,
+        commands
+      );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -489,7 +535,10 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       > => {
         expect.assertions(1);
 
-        const result = await service.getEmptyFeatureNameErrorMessageResponse();
+        const result = await service.getEmptyFeatureNameErrorMessageResponse(
+          anyDiscordMessage,
+          commands
+        );
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -510,7 +559,10 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       > => {
         expect.assertions(1);
 
-        const result = await service.getEmptyFeatureNameErrorMessageResponse();
+        const result = await service.getEmptyFeatureNameErrorMessageResponse(
+          anyDiscordMessage,
+          commands
+        );
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -529,7 +581,10 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
         IconEnum.ARTIFICIAL_INTELLIGENCE
       );
 
-      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+      const result = await service.getEmptyFeatureNameErrorMessageResponse(
+        anyDiscordMessage,
+        commands
+      );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -543,7 +598,10 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
     > => {
       expect.assertions(2);
 
-      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+      const result = await service.getEmptyFeatureNameErrorMessageResponse(
+        anyDiscordMessage,
+        commands
+      );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -562,7 +620,10 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
     > => {
       expect.assertions(1);
 
-      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+      const result = await service.getEmptyFeatureNameErrorMessageResponse(
+        anyDiscordMessage,
+        commands
+      );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -576,7 +637,10 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
     > => {
       expect.assertions(1);
 
-      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+      const result = await service.getEmptyFeatureNameErrorMessageResponse(
+        anyDiscordMessage,
+        commands
+      );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -588,7 +652,10 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
     > => {
       expect.assertions(1);
 
-      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+      const result = await service.getEmptyFeatureNameErrorMessageResponse(
+        anyDiscordMessage,
+        commands
+      );
 
       expect(result.response).toStrictEqual(``);
     });

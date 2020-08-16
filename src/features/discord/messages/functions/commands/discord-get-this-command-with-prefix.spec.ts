@@ -340,7 +340,7 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
 
           const has = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toStrictEqual(`!help`);
+          expect(has).toStrictEqual(`!HELP`);
         });
       });
     });

@@ -10,7 +10,9 @@ import { GithubConfigService } from "../../../../../github/services/config/githu
 import { DiscordEmojiEnum } from "../../../../enums/discord-emoji.enum";
 import { DiscordGuildConfigService } from "../../../../guilds/services/config/discord-guild-config.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
+import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
+import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageCommandCliErrorService } from "../discord-message-command-cli-error.service";
 import { getDiscordMessageCommandAllFeatureNames } from "./functions/get-discord-message-command-all-feature-names";
 
@@ -51,9 +53,10 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
       );
   }
 
-  public getEmptyFeatureNameErrorMessageResponse(): Promise<
-    IDiscordMessageResponse
-  > {
+  public getEmptyFeatureNameErrorMessageResponse(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    commands: Readonly<DiscordMessageCommandEnum[]>
+  ): Promise<IDiscordMessageResponse> {
     return DiscordMessageCommandCliErrorService.getInstance()
       .getCliErrorMessageResponse()
       .then(
@@ -63,7 +66,10 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
           return Promise.resolve(
             _.merge(cliErrorMessageResponse, {
               options: {
-                embed: this._getEmptyFeatureNameErrorMessageEmbed(),
+                embed: this._getEmptyFeatureNameErrorMessageEmbed(
+                  anyDiscordMessage,
+                  commands
+                ),
                 split: true,
               },
               response: ``,
@@ -120,18 +126,31 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
     };
   }
 
-  private _getEmptyFeatureNameErrorMessageEmbed(): MessageEmbedOptions {
+  private _getEmptyFeatureNameErrorMessageEmbed(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    commands: Readonly<DiscordMessageCommandEnum[]>
+  ): MessageEmbedOptions {
     return {
-      fields: this._getEmptyFeatureNameErrorMessageEmbedFields(),
+      fields: this._getEmptyFeatureNameErrorMessageEmbedFields(
+        anyDiscordMessage,
+        commands
+      ),
       footer: this._getErrorMessageEmbedFooter(),
       title: this._getErrorMessageEmbedTitle(),
     };
   }
 
-  private _getEmptyFeatureNameErrorMessageEmbedFields(): EmbedFieldData[] {
+  private _getEmptyFeatureNameErrorMessageEmbedFields(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    commands: Readonly<DiscordMessageCommandEnum[]>
+  ): EmbedFieldData[] {
     return [
       this._getEmptyFeatureNameErrorMessageEmbedFieldError(),
-      this._getEmptyFeatureNameErrorMessageEmbedFieldErrorReport(),
+      this._getEmptyFeatureNameErrorMessageEmbedFieldErrorAllFeatures(),
+      this._getEmptyFeatureNameErrorMessageEmbedFieldErrorExample(
+        anyDiscordMessage,
+        commands
+      ),
     ];
   }
 
@@ -142,19 +161,35 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
     };
   }
 
-  private _getEmptyFeatureNameErrorMessageEmbedFieldErrorReport(): EmbedFieldData {
+  private _getEmptyFeatureNameErrorMessageEmbedFieldErrorAllFeatures(): EmbedFieldData {
+    const allFeatureNames: string = _.trimEnd(
+      _.reduce(
+        getDiscordMessageCommandAllFeatureNames(),
+        (value: Readonly<string>, featureName: Readonly<string>): string => {
+          return `${value}\`${_.capitalize(featureName)}\`, `;
+        },
+        ``
+      ),
+      `, `
+    );
+
     return {
       name: `All features`,
-      value: _.trimEnd(
-        _.reduce(
-          getDiscordMessageCommandAllFeatureNames(),
-          (value: Readonly<string>, featureName: Readonly<string>): string => {
-            return `${value}\`${_.capitalize(featureName)}\`, `;
-          },
-          ``
-        ),
-        `, `
-      ),
+      value: allFeatureNames,
+    };
+  }
+
+  private _getEmptyFeatureNameErrorMessageEmbedFieldErrorExample(
+    _anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    _commands: Readonly<DiscordMessageCommandEnum[]>
+  ): EmbedFieldData {
+    const randomFeatureName: string = _.capitalize(
+      _.sample(getDiscordMessageCommandAllFeatureNames())
+    );
+
+    return {
+      name: `Example`,
+      value: `\`!feature ${randomFeatureName}\``,
     };
   }
 }

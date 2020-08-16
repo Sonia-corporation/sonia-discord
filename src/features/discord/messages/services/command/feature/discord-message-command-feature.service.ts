@@ -82,7 +82,10 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
           ),
         });
 
-        return DiscordMessageCommandFeatureErrorService.getInstance().getEmptyFeatureNameErrorMessageResponse();
+        return DiscordMessageCommandFeatureErrorService.getInstance().getEmptyFeatureNameErrorMessageResponse(
+          anyDiscordMessage,
+          this._commands
+        );
       }
     }
 
