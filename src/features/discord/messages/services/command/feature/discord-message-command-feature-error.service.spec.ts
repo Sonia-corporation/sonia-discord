@@ -187,7 +187,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.fields[0]).toStrictEqual({
         name: `Empty content`,
-        value: `The content of the message is empty :thinking:. I can not process the feature command however this error should never happen :warning:! Do not be so selfish and share this information with my creators :pray:!`,
+        value: `The content of the message is empty. :thinking:\nI can not process the feature command however this error should never happen! :warning:\nDo not be so selfish and share this information with my creators! :pray:`,
       } as EmbedFieldData);
     });
 
@@ -338,6 +338,257 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       expect.assertions(1);
 
       const result = await service.getEmptyContentErrorMessageResponse();
+
+      expect(result.response).toStrictEqual(``);
+    });
+  });
+
+  describe(`getEmptyFeatureNameErrorMessageResponse()`, (): void => {
+    let discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy: jest.SpyInstance;
+    let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandCliErrorImageColorSpy: jest.SpyInstance;
+    let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageCommandFeatureErrorService();
+
+      discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy = jest.spyOn(
+        discordMessageCommandCliErrorService,
+        `getCliErrorMessageResponse`
+      );
+      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy = jest.spyOn(
+        discordSoniaService,
+        `getCorporationMessageEmbedAuthor`
+      );
+      discordMessageConfigServiceGetMessageCommandCliErrorImageColorSpy = jest.spyOn(
+        discordMessageConfigService,
+        `getMessageCommandCliErrorImageColor`
+      );
+      discordSoniaServiceGetImageUrlSpy = jest.spyOn(
+        discordSoniaService,
+        `getImageUrl`
+      );
+      discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy = jest.spyOn(
+        discordMessageConfigService,
+        `getMessageCommandCliErrorImageUrl`
+      );
+    });
+
+    it(`should get the CLI error message response`, async (): Promise<void> => {
+      expect.assertions(2);
+
+      await service.getEmptyFeatureNameErrorMessageResponse();
+
+      expect(
+        discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy
+      ).toHaveBeenCalledWith();
+    });
+
+    it(`should return a Discord message response embed with an author`, async (): Promise<
+      void
+    > => {
+      expect.assertions(1);
+      const messageEmbedAuthor: MessageEmbedAuthor = createMock<
+        MessageEmbedAuthor
+      >();
+      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(
+        messageEmbedAuthor
+      );
+
+      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(result.options.embed.author).toStrictEqual(messageEmbedAuthor);
+    });
+
+    it(`should return a Discord message response embed with a color`, async (): Promise<
+      void
+    > => {
+      expect.assertions(1);
+      discordMessageConfigServiceGetMessageCommandCliErrorImageColorSpy.mockReturnValue(
+        ColorEnum.CANDY
+      );
+
+      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
+    });
+
+    it(`should return a Discord message response embed with 2 fields`, async (): Promise<
+      void
+    > => {
+      expect.assertions(1);
+
+      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(result.options.embed.fields).toHaveLength(2);
+    });
+
+    it(`should return a Discord message response embed with a field explaining the error`, async (): Promise<
+      void
+    > => {
+      expect.assertions(1);
+
+      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(result.options.embed.fields[0]).toStrictEqual({
+        name: `Empty feature name`,
+        value: `You did not specify the name of the feature you wish to configure. :face_with_raised_eyebrow:\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure. :gift_heart:`,
+      } as EmbedFieldData);
+    });
+
+    it(`should return a Discord message response embed with a field to report the error`, async (): Promise<
+      void
+    > => {
+      expect.assertions(1);
+
+      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(result.options.embed.fields[1]).toStrictEqual({
+        name: `All features`,
+        value: `\`Noon\``,
+      } as EmbedFieldData);
+    });
+
+    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
+      void
+    > => {
+      expect.assertions(1);
+      discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
+
+      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(result.options.embed.footer).toStrictEqual({
+        iconURL: `dummy-image-url`,
+        text: `Invalid feature command`,
+      } as MessageEmbedFooter);
+    });
+
+    describe(`when the Sonia image url is null`, (): void => {
+      beforeEach((): void => {
+        discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
+      });
+
+      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+
+        const result = await service.getEmptyFeatureNameErrorMessageResponse();
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        expect(result.options.embed.footer).toStrictEqual({
+          iconURL: undefined,
+          text: `Invalid feature command`,
+        } as MessageEmbedFooter);
+      });
+    });
+
+    describe(`when the Sonia image url is "image-url"`, (): void => {
+      beforeEach((): void => {
+        discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
+      });
+
+      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+
+        const result = await service.getEmptyFeatureNameErrorMessageResponse();
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        expect(result.options.embed.footer).toStrictEqual({
+          iconURL: `image-url`,
+          text: `Invalid feature command`,
+        } as MessageEmbedFooter);
+      });
+    });
+
+    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<
+      void
+    > => {
+      expect.assertions(1);
+      discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy.mockReturnValue(
+        IconEnum.ARTIFICIAL_INTELLIGENCE
+      );
+
+      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(result.options.embed.thumbnail).toStrictEqual({
+        url: IconEnum.ARTIFICIAL_INTELLIGENCE,
+      } as MessageEmbedThumbnail);
+    });
+
+    it(`should return a Discord message response embed with a timestamp`, async (): Promise<
+      void
+    > => {
+      expect.assertions(2);
+
+      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(moment(result.options.embed.timestamp).isValid()).toStrictEqual(
+        true
+      );
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(moment(result.options.embed.timestamp).fromNow()).toStrictEqual(
+        `a few seconds ago`
+      );
+    });
+
+    it(`should return a Discord message response embed with a title`, async (): Promise<
+      void
+    > => {
+      expect.assertions(1);
+
+      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(result.options.embed.title).toStrictEqual(
+        `I can not handle your request :worried:`
+      );
+    });
+
+    it(`should return a Discord message response splitted`, async (): Promise<
+      void
+    > => {
+      expect.assertions(1);
+
+      const result = await service.getEmptyFeatureNameErrorMessageResponse();
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(result.options.split).toStrictEqual(true);
+    });
+
+    it(`should return a Discord message response without a response text`, async (): Promise<
+      void
+    > => {
+      expect.assertions(1);
+
+      const result = await service.getEmptyFeatureNameErrorMessageResponse();
 
       expect(result.response).toStrictEqual(``);
     });
