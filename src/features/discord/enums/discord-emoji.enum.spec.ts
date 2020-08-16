@@ -1,10 +1,10 @@
 import { DiscordEmojiEnum } from "./discord-emoji.enum";
 
 describe(`DiscordEmojiEnum`, (): void => {
-  it(`should have a member "FACE_WITH_SYMBOLS_OVER_MOUSE"`, (): void => {
+  it(`should have a member "FACE_WITH_SYMBOLS_OVER_MOUTH"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordEmojiEnum.FACE_WITH_SYMBOLS_OVER_MOUSE).toStrictEqual(
+    expect(DiscordEmojiEnum.FACE_WITH_SYMBOLS_OVER_MOUTH).toStrictEqual(
       `:face_with_symbols_over_mouth:`
     );
   });
