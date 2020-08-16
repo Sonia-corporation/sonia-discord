@@ -34,35 +34,35 @@ export class DiscordMessageCommandCliErrorService extends AbstractService {
    *
    * @return {IDiscordMessageResponse} A partial Discord message response
    */
-  public getCliErrorMessageResponse(): IDiscordMessageResponse {
-    return {
+  public getCliErrorMessageResponse(): Promise<IDiscordMessageResponse> {
+    return Promise.resolve({
       options: {
         embed: this._getCliErrorMessageEmbed(),
         split: true,
       },
       response: ``,
-    };
+    });
   }
 
   private _getCliErrorMessageEmbed(): MessageEmbedOptions {
     return {
-      author: this._getMessageEmbedAuthor(),
-      color: this._getMessageEmbedColor(),
-      footer: this._getMessageEmbedFooter(),
-      thumbnail: this._getMessageEmbedThumbnail(),
-      timestamp: this._getMessageEmbedTimestamp(),
+      author: this._getCliErrorMessageEmbedAuthor(),
+      color: this._getCliErrorMessageEmbedColor(),
+      footer: this._getCliErrorMessageEmbedFooter(),
+      thumbnail: this._getCliErrorMessageEmbedThumbnail(),
+      timestamp: this._getCliErrorMessageEmbedTimestamp(),
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getCliErrorMessageEmbedAuthor(): MessageEmbedAuthor {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
-  private _getMessageEmbedColor(): number {
+  private _getCliErrorMessageEmbedColor(): number {
     return DiscordMessageConfigService.getInstance().getMessageCommandCliErrorImageColor();
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
+  private _getCliErrorMessageEmbedFooter(): MessageEmbedFooter {
     const soniaImageUrl:
       | string
       | null = DiscordSoniaService.getInstance().getImageUrl();
@@ -73,13 +73,13 @@ export class DiscordMessageCommandCliErrorService extends AbstractService {
     };
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getCliErrorMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
       url: DiscordMessageConfigService.getInstance().getMessageCommandCliErrorImageUrl(),
     };
   }
 
-  private _getMessageEmbedTimestamp(): Date {
+  private _getCliErrorMessageEmbedTimestamp(): Date {
     return moment().toDate();
   }
 }
