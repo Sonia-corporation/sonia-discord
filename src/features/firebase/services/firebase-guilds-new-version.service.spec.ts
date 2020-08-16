@@ -1029,6 +1029,26 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     );
                   });
 
+                  it(`should log about the fail of the release notes message sending`, (done): void => {
+                    expect.assertions(2);
+
+                    service.sendNewReleaseNotesToEachGuild$().subscribe({
+                      error: (): void => {
+                        expect(true).toStrictEqual(false);
+                        done();
+                      },
+                      next: (): void => {
+                        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+                        expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
+                          context: `FirebaseGuildsNewVersionService`,
+                          message: `text-release notes message sending failed for guild value-dummy-id`,
+                        } as ILoggerLog);
+                        done();
+                      },
+                    });
+                    isReady$.next([true]);
+                  });
+
                   it(`should not throw an error`, (done): void => {
                     expect.assertions(1);
 
@@ -1268,6 +1288,50 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     },
                   });
                   isReady$.next([true]);
+                });
+
+                describe(`when the release notes message sending failed for the guilds`, (): void => {
+                  beforeEach((): void => {
+                    sendNewReleaseNotesFromFirebaseGuildSpy.mockRejectedValue(
+                      new Error(`sendNewReleaseNotesFromFirebaseGuild error`)
+                    );
+                  });
+
+                  it(`should log about the fail of the release notes message sending`, (done): void => {
+                    expect.assertions(2);
+
+                    service.sendNewReleaseNotesToEachGuild$().subscribe({
+                      error: (): void => {
+                        expect(true).toStrictEqual(false);
+                        done();
+                      },
+                      next: (): void => {
+                        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
+                        expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
+                          context: `FirebaseGuildsNewVersionService`,
+                          message: `text-release notes message sending failed for guild value-dummy-id`,
+                        } as ILoggerLog);
+                        done();
+                      },
+                    });
+                    isReady$.next([true]);
+                  });
+
+                  it(`should not throw an error`, (done): void => {
+                    expect.assertions(1);
+
+                    service.sendNewReleaseNotesToEachGuild$().subscribe({
+                      error: (): void => {
+                        expect(true).toStrictEqual(false);
+                        done();
+                      },
+                      next: (): void => {
+                        expect(true).toStrictEqual(true);
+                        done();
+                      },
+                    });
+                    isReady$.next([true]);
+                  });
                 });
               });
             });
