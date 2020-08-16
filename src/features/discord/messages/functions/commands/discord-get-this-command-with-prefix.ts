@@ -6,7 +6,7 @@ import xregexp, { ExecArray } from "xregexp";
 export function discordGetThisCommandWithPrefix(
   data: Readonly<IDiscordGetThisCommandWithPrefixData>
 ): string | null {
-  const a: ExecArray | null = xregexp.exec(
+  const execArray: ExecArray | null = xregexp.exec(
     data.message,
     discordGetCommandRegexp({
       command: data.command,
@@ -14,8 +14,8 @@ export function discordGetThisCommandWithPrefix(
     })
   );
 
-  if (!_.isNil(a)) {
-    return `${a.prefix}${a.command}`;
+  if (!_.isNil(execArray)) {
+    return `${execArray.prefix}${execArray.command}`;
   }
 
   return null;
