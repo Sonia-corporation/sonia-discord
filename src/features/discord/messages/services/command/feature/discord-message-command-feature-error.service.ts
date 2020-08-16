@@ -68,7 +68,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
   private _getEmptyContentErrorMessageEmbedFieldError(): EmbedFieldData {
     return {
       name: `Empty content`,
-      value: `The content of the message is empty. I can not process the command nevertheless this should never happen. Do not be so selfish and share this information!`,
+      value: `The content of the message is empty ${DiscordEmojiEnum.THINKING}. I can not process the feature command however this error should never happen ${DiscordEmojiEnum.WARNING}! Do not be so selfish and share this information with my creators ${DiscordEmojiEnum.PRAY}!`,
     };
   }
 

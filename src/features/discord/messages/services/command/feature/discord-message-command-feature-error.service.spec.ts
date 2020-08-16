@@ -187,7 +187,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.fields[0]).toStrictEqual({
         name: `Empty content`,
-        value: `The content of the message is empty. I can not process the command nevertheless this should never happen. Do not be so selfish and share this information!`,
+        value: `The content of the message is empty :thinking:. I can not process the feature command however this error should never happen :warning:! Do not be so selfish and share this information with my creators :pray:!`,
       } as EmbedFieldData);
     });
 
