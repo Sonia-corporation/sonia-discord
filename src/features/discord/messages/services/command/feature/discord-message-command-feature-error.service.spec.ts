@@ -18,6 +18,8 @@ import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandCliErrorService } from "../discord-message-command-cli-error.service";
 import { DiscordMessageCommandFeatureErrorService } from "./discord-message-command-feature-error.service";
+import { DiscordMessageCommandFeatureNameEnum } from "./enums/discord-message-command-feature-name.enum";
+import * as GetDiscordMessageCommandAllFeatureNamesModule from "./functions/get-discord-message-command-all-feature-names";
 
 describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
   let service: DiscordMessageCommandFeatureErrorService;
@@ -354,6 +356,10 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
     let discordMessageConfigServiceGetMessageCommandCliErrorImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy: jest.SpyInstance;
+    let getDiscordMessageCommandAllFeatureNamesSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandPrefixSpy: jest.SpyInstance<
+      string | string[]
+    >;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureErrorService();
@@ -379,6 +385,14 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy = jest.spyOn(
         discordMessageConfigService,
         `getMessageCommandCliErrorImageUrl`
+      );
+      getDiscordMessageCommandAllFeatureNamesSpy = jest.spyOn(
+        GetDiscordMessageCommandAllFeatureNamesModule,
+        `getDiscordMessageCommandAllFeatureNames`
+      );
+      discordMessageConfigServiceGetMessageCommandPrefixSpy = jest.spyOn(
+        discordMessageConfigService,
+        `getMessageCommandPrefix`
       );
     });
 
@@ -488,22 +502,194 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a field to show an example of the command with a feature name`, async (): Promise<
-      void
-    > => {
-      expect.assertions(1);
+    describe(`when the given Discord message content is null`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage.content = null;
+      });
 
-      const result = await service.getEmptyFeatureNameErrorMessageResponse(
-        anyDiscordMessage,
-        commands
-      );
+      it(`should return a Discord message response embed with a field to show an example of the command with a feature name and the "!feature" command`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+        getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
+          DiscordMessageCommandFeatureNameEnum.NOON,
+        ]);
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
+          `-`,
+        ]);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[2]).toStrictEqual({
-        name: `Example`,
-        value: `\`!feature Noon\``,
-      } as EmbedFieldData);
+        const result = await service.getEmptyFeatureNameErrorMessageResponse(
+          anyDiscordMessage,
+          commands
+        );
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        expect(result.options.embed.fields[2]).toStrictEqual({
+          name: `Example`,
+          value: `\`!feature Noon\``,
+        } as EmbedFieldData);
+      });
+    });
+
+    describe(`when the given Discord message content is not a valid command`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage.content = `dummy message without a command`;
+      });
+
+      it(`should return a Discord message response embed with a field to show an example of the command with a feature name and the "!feature" command`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+        getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
+          DiscordMessageCommandFeatureNameEnum.NOON,
+        ]);
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
+          `-`,
+        ]);
+
+        const result = await service.getEmptyFeatureNameErrorMessageResponse(
+          anyDiscordMessage,
+          commands
+        );
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        expect(result.options.embed.fields[2]).toStrictEqual({
+          name: `Example`,
+          value: `\`!feature Noon\``,
+        } as EmbedFieldData);
+      });
+    });
+
+    describe(`when the given Discord message content is a valid command as "!f"`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage.content = `!f`;
+        commands = [DiscordMessageCommandEnum.F];
+      });
+
+      describe(`when the prefix is "!"`, (): void => {
+        beforeEach((): void => {
+          discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
+            [`!`]
+          );
+        });
+
+        it(`should return a Discord message response embed with a field to show an example of the command with a feature name by taking the prefix and command`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+          getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
+            DiscordMessageCommandFeatureNameEnum.NOON,
+          ]);
+
+          const result = await service.getEmptyFeatureNameErrorMessageResponse(
+            anyDiscordMessage,
+            commands
+          );
+
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          expect(result.options.embed.fields[2]).toStrictEqual({
+            name: `Example`,
+            value: `\`!f Noon\``,
+          } as EmbedFieldData);
+        });
+      });
+
+      describe(`when the prefix is "-"`, (): void => {
+        beforeEach((): void => {
+          discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
+            [`-`]
+          );
+        });
+
+        it(`should return a Discord message response embed with a field to show an example of the command with a feature name and the "!feature" command`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+          getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
+            DiscordMessageCommandFeatureNameEnum.NOON,
+          ]);
+
+          const result = await service.getEmptyFeatureNameErrorMessageResponse(
+            anyDiscordMessage,
+            commands
+          );
+
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          expect(result.options.embed.fields[2]).toStrictEqual({
+            name: `Example`,
+            value: `\`!feature Noon\``,
+          } as EmbedFieldData);
+        });
+      });
+    });
+
+    describe(`when the given Discord message content is a valid command as "-lunch"`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage.content = `-lunch`;
+        commands = [DiscordMessageCommandEnum.LUNCH];
+      });
+
+      describe(`when the prefix is "!"`, (): void => {
+        beforeEach((): void => {
+          discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
+            [`!`]
+          );
+        });
+
+        it(`should return a Discord message response embed with a field to show an example of the command with a feature name and the "!feature" command`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+          getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
+            DiscordMessageCommandFeatureNameEnum.NOON,
+          ]);
+
+          const result = await service.getEmptyFeatureNameErrorMessageResponse(
+            anyDiscordMessage,
+            commands
+          );
+
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          expect(result.options.embed.fields[2]).toStrictEqual({
+            name: `Example`,
+            value: `\`!feature Noon\``,
+          } as EmbedFieldData);
+        });
+      });
+
+      describe(`when the prefix is "-"`, (): void => {
+        beforeEach((): void => {
+          discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
+            [`-`]
+          );
+        });
+
+        it(`should return a Discord message response embed with a field to show an example of the command with a feature name by taking the prefix and command`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+          getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
+            DiscordMessageCommandFeatureNameEnum.NOON,
+          ]);
+
+          const result = await service.getEmptyFeatureNameErrorMessageResponse(
+            anyDiscordMessage,
+            commands
+          );
+
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          expect(result.options.embed.fields[2]).toStrictEqual({
+            name: `Example`,
+            value: `\`-lunch Noon\``,
+          } as EmbedFieldData);
+        });
+      });
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<

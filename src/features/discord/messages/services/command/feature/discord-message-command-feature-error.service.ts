@@ -11,8 +11,10 @@ import { DiscordEmojiEnum } from "../../../../enums/discord-emoji.enum";
 import { DiscordGuildConfigService } from "../../../../guilds/services/config/discord-guild-config.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
 import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
+import { discordGetCommandAndPrefix } from "../../../functions/commands/discord-get-command-and-prefix";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
+import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandCliErrorService } from "../discord-message-command-cli-error.service";
 import { getDiscordMessageCommandAllFeatureNames } from "./functions/get-discord-message-command-all-feature-names";
 
@@ -55,7 +57,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
 
   public getEmptyFeatureNameErrorMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    commands: Readonly<DiscordMessageCommandEnum[]>
+    commands: Readonly<DiscordMessageCommandEnum>[]
   ): Promise<IDiscordMessageResponse> {
     return DiscordMessageCommandCliErrorService.getInstance()
       .getCliErrorMessageResponse()
@@ -128,7 +130,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
 
   private _getEmptyFeatureNameErrorMessageEmbed(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    commands: Readonly<DiscordMessageCommandEnum[]>
+    commands: Readonly<DiscordMessageCommandEnum>[]
   ): MessageEmbedOptions {
     return {
       fields: this._getEmptyFeatureNameErrorMessageEmbedFields(
@@ -142,7 +144,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
 
   private _getEmptyFeatureNameErrorMessageEmbedFields(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    commands: Readonly<DiscordMessageCommandEnum[]>
+    commands: Readonly<DiscordMessageCommandEnum>[]
   ): EmbedFieldData[] {
     return [
       this._getEmptyFeatureNameErrorMessageEmbedFieldError(),
@@ -180,16 +182,27 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
   }
 
   private _getEmptyFeatureNameErrorMessageEmbedFieldErrorExample(
-    _anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    _commands: Readonly<DiscordMessageCommandEnum[]>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    commands: Readonly<DiscordMessageCommandEnum>[]
   ): EmbedFieldData {
     const randomFeatureName: string = _.capitalize(
       _.sample(getDiscordMessageCommandAllFeatureNames())
     );
+    let userCommand: string | null = discordGetCommandAndPrefix({
+      commands,
+      message: _.isNil(anyDiscordMessage.content)
+        ? ``
+        : anyDiscordMessage.content,
+      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
+    });
+
+    if (_.isNil(userCommand)) {
+      userCommand = `!feature`;
+    }
 
     return {
       name: `Example`,
-      value: `\`!feature ${randomFeatureName}\``,
+      value: `\`${userCommand} ${randomFeatureName}\``,
     };
   }
 }
