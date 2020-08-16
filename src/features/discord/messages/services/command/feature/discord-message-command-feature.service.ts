@@ -81,6 +81,8 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
             `feature name not specified`
           ),
         });
+
+        return DiscordMessageCommandFeatureErrorService.getInstance().getEmptyFeatureNameErrorMessageResponse();
       }
     }
 

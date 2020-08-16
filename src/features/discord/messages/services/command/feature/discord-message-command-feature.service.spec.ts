@@ -124,11 +124,13 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let discordMessageResponse: IDiscordMessageResponse;
     let getEmptyContentErrorMessageResponse: IDiscordMessageResponse;
+    let getEmptyFeatureNameErrorMessageResponse: IDiscordMessageResponse;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let discordMessageCommandFeatureNoonServiceIsNoonFeatureSpy: jest.SpyInstance;
     let discordMessageCommandFeatureNoonServiceGetMessageResponseSpy: jest.SpyInstance;
     let discordMessageCommandFeatureErrorServiceGetEmptyContentErrorMessageResponseSpy: jest.SpyInstance;
+    let discordMessageCommandFeatureErrorServiceGetEmptyFeatureNameErrorMessageResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureService();
@@ -141,6 +143,11 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           response: `getEmptyContentErrorMessageResponse`,
         }
       );
+      getEmptyFeatureNameErrorMessageResponse = createMock<
+        IDiscordMessageResponse
+      >({
+        response: `getEmptyFeatureNameErrorMessageResponse`,
+      });
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
@@ -158,6 +165,14 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         )
         .mockRejectedValue(
           new Error(`getEmptyContentErrorMessageResponse error`)
+        );
+      discordMessageCommandFeatureErrorServiceGetEmptyFeatureNameErrorMessageResponseSpy = jest
+        .spyOn(
+          discordMessageCommandFeatureErrorService,
+          `getEmptyFeatureNameErrorMessageResponse`
+        )
+        .mockRejectedValue(
+          new Error(`getEmptyFeatureNameErrorMessageResponse error`)
         );
     });
 
@@ -284,6 +299,63 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           anyDiscordMessage.content = `message !feature`;
         });
 
+        it(`should get the empty feature name error message response`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          await expect(
+            service.getMessageResponse(anyDiscordMessage)
+          ).rejects.toThrow(
+            new Error(`getEmptyFeatureNameErrorMessageResponse error`)
+          );
+
+          expect(
+            discordMessageCommandFeatureErrorServiceGetEmptyFeatureNameErrorMessageResponseSpy
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            discordMessageCommandFeatureErrorServiceGetEmptyFeatureNameErrorMessageResponseSpy
+          ).toHaveBeenCalledWith();
+        });
+
+        describe(`when the fetched of the empty feature name error message response failed`, (): void => {
+          beforeEach((): void => {
+            discordMessageCommandFeatureErrorServiceGetEmptyFeatureNameErrorMessageResponseSpy.mockRejectedValue(
+              new Error(`getEmptyFeatureNameErrorMessageResponse error`)
+            );
+          });
+
+          it(`should throw an error`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            await expect(
+              service.getMessageResponse(anyDiscordMessage)
+            ).rejects.toThrow(
+              new Error(`getEmptyFeatureNameErrorMessageResponse error`)
+            );
+          });
+        });
+
+        describe(`when the fetched of the empty feature name error message response succeeded`, (): void => {
+          beforeEach((): void => {
+            discordMessageCommandFeatureErrorServiceGetEmptyFeatureNameErrorMessageResponseSpy.mockResolvedValue(
+              getEmptyFeatureNameErrorMessageResponse
+            );
+          });
+
+          it(`should return the empty feature name error message response`, async (): Promise<
+            void
+          > => {
+            expect.assertions(1);
+
+            const result = await service.getMessageResponse(anyDiscordMessage);
+
+            expect(result).toStrictEqual(
+              getEmptyFeatureNameErrorMessageResponse
+            );
+          });
+        });
+
         it(`should log about not having a feature name`, async (): Promise<
           void
         > => {
@@ -292,7 +364,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           await expect(
             service.getMessageResponse(anyDiscordMessage)
           ).rejects.toThrow(
-            new Error(`getEmptyContentErrorMessageResponse error`)
+            new Error(`getEmptyFeatureNameErrorMessageResponse error`)
           );
 
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -310,7 +382,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           await expect(
             service.getMessageResponse(anyDiscordMessage)
           ).rejects.toThrow(
-            new Error(`getEmptyContentErrorMessageResponse error`)
+            new Error(`getEmptyFeatureNameErrorMessageResponse error`)
           );
 
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -328,7 +400,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           await expect(
             service.getMessageResponse(anyDiscordMessage)
           ).rejects.toThrow(
-            new Error(`getEmptyContentErrorMessageResponse error`)
+            new Error(`getEmptyFeatureNameErrorMessageResponse error`)
           );
 
           expect(
