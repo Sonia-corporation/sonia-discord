@@ -105,32 +105,30 @@ export function discordGetCommandAndPrefix(
         message: formattedMessage,
         prefix,
       });
-    } else if (_.isArray(data.commands)) {
-      const prefix: string = data.prefixes;
-
-      return getCommandAndPrefixFromMultipleCommands({
-        commands: data.commands,
-        message: formattedMessage,
-        prefix,
-      });
     }
-  } else if (_.isArray(data.prefixes)) {
-    if (_.isString(data.commands)) {
-      const command: DiscordMessageCommandEnum = data.commands;
 
-      return getCommandAndPrefixFromMultiplePrefixes({
-        command,
-        message: formattedMessage,
-        prefixes: data.prefixes,
-      });
-    } else if (_.isArray(data.commands)) {
-      return getCommandAndPrefixFromMultiplePrefixesAndCommands({
-        commands: data.commands,
-        message: formattedMessage,
-        prefixes: data.prefixes,
-      });
-    }
+    const prefix: string = data.prefixes;
+
+    return getCommandAndPrefixFromMultipleCommands({
+      commands: data.commands,
+      message: formattedMessage,
+      prefix,
+    });
   }
 
-  return null;
+  if (_.isString(data.commands)) {
+    const command: DiscordMessageCommandEnum = data.commands;
+
+    return getCommandAndPrefixFromMultiplePrefixes({
+      command,
+      message: formattedMessage,
+      prefixes: data.prefixes,
+    });
+  }
+
+  return getCommandAndPrefixFromMultiplePrefixesAndCommands({
+    commands: data.commands,
+    message: formattedMessage,
+    prefixes: data.prefixes,
+  });
 }
