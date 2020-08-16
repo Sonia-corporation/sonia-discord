@@ -282,48 +282,62 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     textChannel: Readonly<TextChannel>,
     guildId: Readonly<Snowflake>
   ): Promise<Message | void> {
-    const messageResponse: IDiscordMessageResponse = DiscordMessageCommandReleaseNotesService.getInstance().getMessageResponse();
-    messageResponse.response =
-      getRandomValueFromEnum(FirebaseGuildNewVersionResponseEnum) || `Cool!`;
-
-    return textChannel
-      .send(messageResponse.response, messageResponse.options)
+    return DiscordMessageCommandReleaseNotesService.getInstance()
+      .getMessageResponse()
       .then(
-        (message: Message): Promise<Message> => {
-          LoggerService.getInstance().log({
-            context: this._serviceName,
-            message: ChalkService.getInstance().text(
-              `release notes message sent for guild ${ChalkService.getInstance().value(
-                guildId
-              )} on general channel`
-            ),
-          });
+        (
+          messageResponse: Readonly<IDiscordMessageResponse>
+        ): Promise<Message | void> => {
+          const enhanceMessageResponse: IDiscordMessageResponse = _.cloneDeep(
+            messageResponse
+          );
+          enhanceMessageResponse.response =
+            getRandomValueFromEnum(FirebaseGuildNewVersionResponseEnum) ||
+            `Cool!`;
 
-          return Promise.resolve(message);
-        }
-      )
-      .catch(
-        (error: Readonly<Error | string>): Promise<void> => {
-          LoggerService.getInstance().error({
-            context: this._serviceName,
-            message: ChalkService.getInstance().text(
-              `release notes message sending failed for the guild ${ChalkService.getInstance().value(
-                guildId
-              )} on the general channel`
-            ),
-          });
-          LoggerService.getInstance().error({
-            context: this._serviceName,
-            message: ChalkService.getInstance().error(error),
-          });
-          DiscordGuildSoniaService.getInstance().sendMessageToChannel({
-            channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-            messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
-              error
-            ),
-          });
+          return textChannel
+            .send(
+              enhanceMessageResponse.response,
+              enhanceMessageResponse.options
+            )
+            .then(
+              (message: Message): Promise<Message> => {
+                LoggerService.getInstance().log({
+                  context: this._serviceName,
+                  message: ChalkService.getInstance().text(
+                    `release notes message sent for guild ${ChalkService.getInstance().value(
+                      guildId
+                    )} on general channel`
+                  ),
+                });
 
-          return Promise.reject(error);
+                return Promise.resolve(message);
+              }
+            )
+            .catch(
+              (error: Readonly<Error | string>): Promise<void> => {
+                LoggerService.getInstance().error({
+                  context: this._serviceName,
+                  message: ChalkService.getInstance().text(
+                    `release notes message sending failed for the guild ${ChalkService.getInstance().value(
+                      guildId
+                    )} on the general channel`
+                  ),
+                });
+                LoggerService.getInstance().error({
+                  context: this._serviceName,
+                  message: ChalkService.getInstance().error(error),
+                });
+                DiscordGuildSoniaService.getInstance().sendMessageToChannel({
+                  channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
+                  messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
+                    error
+                  ),
+                });
+
+                return Promise.reject(error);
+              }
+            );
         }
       );
   }

@@ -94,13 +94,13 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
       getMessageResponseSpy = jest
         .spyOn(service, `getMessageResponse`)
-        .mockReturnValue(discordMessageResponse);
+        .mockResolvedValue(discordMessageResponse);
     });
 
-    it(`should log about the command`, (): void => {
+    it(`should log about the command`, async (): Promise<void> => {
       expect.assertions(2);
 
-      service.handleResponse(anyDiscordMessage);
+      await service.handleResponse(anyDiscordMessage);
 
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -110,19 +110,19 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       } as ILoggerLog);
     });
 
-    it(`should get a message response`, (): void => {
+    it(`should get a message response`, async (): Promise<void> => {
       expect.assertions(2);
 
-      service.handleResponse(anyDiscordMessage);
+      await service.handleResponse(anyDiscordMessage);
 
       expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
       expect(getMessageResponseSpy).toHaveBeenCalledWith();
     });
 
-    it(`should return the message response`, (): void => {
+    it(`should return the message response`, async (): Promise<void> => {
       expect.assertions(1);
 
-      const result = service.handleResponse(anyDiscordMessage);
+      const result = await service.handleResponse(anyDiscordMessage);
 
       expect(result).toStrictEqual(discordMessageResponse);
     });
@@ -166,7 +166,9 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       );
     });
 
-    it(`should return a Discord message response embed with an author`, (): void => {
+    it(`should return a Discord message response embed with an author`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       const messageEmbedAuthor: MessageEmbedAuthor = createMock<
         MessageEmbedAuthor
@@ -175,33 +177,37 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         messageEmbedAuthor
       );
 
-      const result = service.getMessageResponse();
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.author).toStrictEqual(messageEmbedAuthor);
     });
 
-    it(`should return a Discord message response embed with a color`, (): void => {
+    it(`should return a Discord message response embed with a color`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       discordMessageConfigServiceGetMessageCommandCookieImageColorSpy.mockReturnValue(
         ColorEnum.CANDY
       );
 
-      const result = service.getMessageResponse();
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
     });
 
-    it(`should return a Discord message response embed with a description`, (): void => {
+    it(`should return a Discord message response embed with a description`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       getRandomValueFromEnumSpy.mockReturnValue(
         DiscordMessageCommandCookieDescriptionEnum.CHUCK_NORRIS_CAN_NOT_BEAT_ME
       );
 
-      const result = service.getMessageResponse();
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -215,10 +221,12 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         getRandomValueFromEnumSpy.mockReturnValue(undefined);
       });
 
-      it(`should return a Discord message response embed with a description`, (): void => {
+      it(`should return a Discord message response embed with a description`, async (): Promise<
+        void
+      > => {
         expect.assertions(1);
 
-        const result = service.getMessageResponse();
+        const result = await service.getMessageResponse();
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -226,11 +234,13 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       });
     });
 
-    it(`should return a Discord message response embed with a footer containing an icon and a text`, (): void => {
+    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
 
-      const result = service.getMessageResponse();
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -245,10 +255,12 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
       });
 
-      it(`should return a Discord message response embed with a footer but without an icon`, (): void => {
+      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
+        void
+      > => {
         expect.assertions(1);
 
-        const result = service.getMessageResponse();
+        const result = await service.getMessageResponse();
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -264,10 +276,12 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
       });
 
-      it(`should return a Discord message response embed with a footer containing an icon and a text`, (): void => {
+      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
+        void
+      > => {
         expect.assertions(1);
 
-        const result = service.getMessageResponse();
+        const result = await service.getMessageResponse();
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -278,13 +292,15 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       });
     });
 
-    it(`should return a Discord message response embed with a thumbnail`, (): void => {
+    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       discordMessageConfigServiceGetMessageCommandCookieImageUrlSpy.mockReturnValue(
         IconEnum.ARTIFICIAL_INTELLIGENCE
       );
 
-      const result = service.getMessageResponse();
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -293,10 +309,12 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       } as MessageEmbedThumbnail);
     });
 
-    it(`should return a Discord message response embed with a timestamp`, (): void => {
+    it(`should return a Discord message response embed with a timestamp`, async (): Promise<
+      void
+    > => {
       expect.assertions(2);
 
-      const result = service.getMessageResponse();
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -310,13 +328,15 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       );
     });
 
-    it(`should return a Discord message response embed with a title`, (): void => {
+    it(`should return a Discord message response embed with a title`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       getRandomValueFromEnumSpy.mockReturnValue(
         DiscordMessageCommandCookieTitleEnum.COOKIE_DELIVERY
       );
 
-      const result = service.getMessageResponse();
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -328,10 +348,12 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         getRandomValueFromEnumSpy.mockReturnValue(undefined);
       });
 
-      it(`should return a Discord message response embed with a title`, (): void => {
+      it(`should return a Discord message response embed with a title`, async (): Promise<
+        void
+      > => {
         expect.assertions(1);
 
-        const result = service.getMessageResponse();
+        const result = await service.getMessageResponse();
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -339,20 +361,24 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       });
     });
 
-    it(`should return a Discord message response splitted`, (): void => {
+    it(`should return a Discord message response splitted`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
 
-      const result = service.getMessageResponse();
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.split).toStrictEqual(true);
     });
 
-    it(`should return a Discord message response without a response text`, (): void => {
+    it(`should return a Discord message response without a response text`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
 
-      const result = service.handleResponse(anyDiscordMessage);
+      const result = await service.handleResponse(anyDiscordMessage);
 
       expect(result.response).toStrictEqual(``);
     });
