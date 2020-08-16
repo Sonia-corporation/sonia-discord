@@ -5,6 +5,7 @@
 __Quality:__  
 ![GitHub last commit](https://img.shields.io/github/last-commit/sonia-corporation/il-est-midi-discord?style=flat-square)
 [![Maintainability](https://api.codeclimate.com/v1/badges/6f8a651120877a0842b3/maintainability?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/il-est-midi-discord/maintainability)
+[![CodeFactor](https://www.codefactor.io/repository/github/sonia-corporation/il-est-midi-discord/badge)](https://www.codefactor.io/repository/github/sonia-corporation/il-est-midi-discord)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/6f8a651120877a0842b3/test_coverage?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/il-est-midi-discord/test_coverage)
 [![codecov](https://codecov.io/gh/Sonia-corporation/il-est-midi-discord/branch/develop/graph/badge.svg)](https://codecov.io/gh/Sonia-corporation/il-est-midi-discord)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FSonia-corporation%2Fil-est-midi-discord%2Fdevelop)](https://dashboard.stryker-mutator.io/reports/github.com/Sonia-corporation/il-est-midi-discord/develop)
