@@ -927,7 +927,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerLogSpy).toHaveBeenCalledTimes(14);
+        expect(loggerLogSpy).toHaveBeenCalledTimes(16);
         expect(loggerLogSpy).toHaveBeenLastCalledWith(
           `debug-● context-[DiscordMessageConfigMutatorService][now-format] text-configuration updated`
         );

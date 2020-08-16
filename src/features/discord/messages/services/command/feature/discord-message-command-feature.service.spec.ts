@@ -6,6 +6,7 @@ import { LoggerService } from "../../../../../logger/services/logger.service";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
+import { DiscordMessageCommandFeatureErrorService } from "./discord-message-command-feature-error.service";
 import { DiscordMessageCommandFeatureService } from "./discord-message-command-feature.service";
 import { DiscordMessageCommandFeatureNoonService } from "./services/discord-message-command-feature-noon.service";
 
@@ -17,12 +18,14 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
   let loggerService: LoggerService;
   let discordMessageConfigService: DiscordMessageConfigService;
   let discordMessageCommandFeatureNoonService: DiscordMessageCommandFeatureNoonService;
+  let discordMessageCommandFeatureErrorService: DiscordMessageCommandFeatureErrorService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     loggerService = LoggerService.getInstance();
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
     discordMessageCommandFeatureNoonService = DiscordMessageCommandFeatureNoonService.getInstance();
+    discordMessageCommandFeatureErrorService = DiscordMessageCommandFeatureErrorService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -120,15 +123,24 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
   describe(`getMessageResponse()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let discordMessageResponse: IDiscordMessageResponse;
+    let getEmptyContentErrorMessageResponse: IDiscordMessageResponse;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let discordMessageCommandFeatureNoonServiceIsNoonFeatureSpy: jest.SpyInstance;
     let discordMessageCommandFeatureNoonServiceGetMessageResponseSpy: jest.SpyInstance;
+    let discordMessageCommandFeatureErrorServiceGetEmptyContentErrorMessageResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureService();
       anyDiscordMessage = createMock<IAnyDiscordMessage>();
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      discordMessageResponse = createMock<IDiscordMessageResponse>({
+        response: `discordMessageResponse`,
+      });
+      getEmptyContentErrorMessageResponse = createMock<IDiscordMessageResponse>(
+        {
+          response: `getEmptyContentErrorMessageResponse`,
+        }
+      );
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
@@ -139,6 +151,14 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       discordMessageCommandFeatureNoonServiceGetMessageResponseSpy = jest
         .spyOn(discordMessageCommandFeatureNoonService, `getMessageResponse`)
         .mockRejectedValue(new Error(`getMessageResponse error`));
+      discordMessageCommandFeatureErrorServiceGetEmptyContentErrorMessageResponseSpy = jest
+        .spyOn(
+          discordMessageCommandFeatureErrorService,
+          `getEmptyContentErrorMessageResponse`
+        )
+        .mockRejectedValue(
+          new Error(`getEmptyContentErrorMessageResponse error`)
+        );
     });
 
     describe(`when the given message content is null`, (): void => {
@@ -146,12 +166,71 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         anyDiscordMessage.content = null;
       });
 
+      it(`should get the empty content error message response`, async (): Promise<
+        void
+      > => {
+        expect.assertions(3);
+
+        await expect(
+          service.getMessageResponse(anyDiscordMessage)
+        ).rejects.toThrow(
+          new Error(`getEmptyContentErrorMessageResponse error`)
+        );
+
+        expect(
+          discordMessageCommandFeatureErrorServiceGetEmptyContentErrorMessageResponseSpy
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          discordMessageCommandFeatureErrorServiceGetEmptyContentErrorMessageResponseSpy
+        ).toHaveBeenCalledWith();
+      });
+
+      describe(`when the fetched of the empty content error message response failed`, (): void => {
+        beforeEach((): void => {
+          discordMessageCommandFeatureErrorServiceGetEmptyContentErrorMessageResponseSpy.mockRejectedValue(
+            new Error(`getEmptyContentErrorMessageResponse error`)
+          );
+        });
+
+        it(`should throw an error`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          await expect(
+            service.getMessageResponse(anyDiscordMessage)
+          ).rejects.toThrow(
+            new Error(`getEmptyContentErrorMessageResponse error`)
+          );
+        });
+      });
+
+      describe(`when the fetched of the empty content error message response succeeded`, (): void => {
+        beforeEach((): void => {
+          discordMessageCommandFeatureErrorServiceGetEmptyContentErrorMessageResponseSpy.mockResolvedValue(
+            getEmptyContentErrorMessageResponse
+          );
+        });
+
+        it(`should return the empty content error message response`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(anyDiscordMessage);
+
+          expect(result).toStrictEqual(getEmptyContentErrorMessageResponse);
+        });
+      });
+
       it(`should not log about not having a feature name`, async (): Promise<
         void
       > => {
-        expect.assertions(2);
+        expect.assertions(3);
 
-        await service.getMessageResponse(anyDiscordMessage);
+        await expect(
+          service.getMessageResponse(anyDiscordMessage)
+        ).rejects.toThrow(
+          new Error(`getEmptyContentErrorMessageResponse error`)
+        );
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(0);
         expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
@@ -160,24 +239,16 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         } as ILoggerLog);
       });
 
-      it(`should return a Discord message response without a response text`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse(anyDiscordMessage);
-
-        expect(result.response).toStrictEqual(
-          `No feature for now. Work in progress.`
-        );
-      });
-
       it(`should not log about the fact that the feature does not exist`, async (): Promise<
         void
       > => {
-        expect.assertions(2);
+        expect.assertions(3);
 
-        await service.getMessageResponse(anyDiscordMessage);
+        await expect(
+          service.getMessageResponse(anyDiscordMessage)
+        ).rejects.toThrow(
+          new Error(`getEmptyContentErrorMessageResponse error`)
+        );
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(0);
         expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
@@ -189,9 +260,13 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       it(`should not get a message response for the noon feature`, async (): Promise<
         void
       > => {
-        expect.assertions(1);
+        expect.assertions(2);
 
-        await service.getMessageResponse(anyDiscordMessage);
+        await expect(
+          service.getMessageResponse(anyDiscordMessage)
+        ).rejects.toThrow(
+          new Error(`getEmptyContentErrorMessageResponse error`)
+        );
 
         expect(
           discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
@@ -212,9 +287,13 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should log about not having a feature name`, async (): Promise<
           void
         > => {
-          expect.assertions(2);
+          expect.assertions(3);
 
-          await service.getMessageResponse(anyDiscordMessage);
+          await expect(
+            service.getMessageResponse(anyDiscordMessage)
+          ).rejects.toThrow(
+            new Error(`getEmptyContentErrorMessageResponse error`)
+          );
 
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -223,24 +302,16 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           } as ILoggerLog);
         });
 
-        it(`should return a Discord message response without a response text`, async (): Promise<
-          void
-        > => {
-          expect.assertions(1);
-
-          const result = await service.getMessageResponse(anyDiscordMessage);
-
-          expect(result.response).toStrictEqual(
-            `No feature for now. Work in progress.`
-          );
-        });
-
         it(`should not log about the fact that the feature does not exist`, async (): Promise<
           void
         > => {
-          expect.assertions(2);
+          expect.assertions(3);
 
-          await service.getMessageResponse(anyDiscordMessage);
+          await expect(
+            service.getMessageResponse(anyDiscordMessage)
+          ).rejects.toThrow(
+            new Error(`getEmptyContentErrorMessageResponse error`)
+          );
 
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
@@ -252,9 +323,13 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should not get a message response for the noon feature`, async (): Promise<
           void
         > => {
-          expect.assertions(1);
+          expect.assertions(2);
 
-          await service.getMessageResponse(anyDiscordMessage);
+          await expect(
+            service.getMessageResponse(anyDiscordMessage)
+          ).rejects.toThrow(
+            new Error(`getEmptyContentErrorMessageResponse error`)
+          );
 
           expect(
             discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
@@ -277,9 +352,13 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           it(`should log about the fact that the feature does not exist`, async (): Promise<
             void
           > => {
-            expect.assertions(2);
+            expect.assertions(3);
 
-            await service.getMessageResponse(anyDiscordMessage);
+            await expect(
+              service.getMessageResponse(anyDiscordMessage)
+            ).rejects.toThrow(
+              new Error(`getEmptyContentErrorMessageResponse error`)
+            );
 
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -288,24 +367,16 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
             } as ILoggerLog);
           });
 
-          it(`should return a Discord message response without a response text`, async (): Promise<
-            void
-          > => {
-            expect.assertions(1);
-
-            const result = await service.getMessageResponse(anyDiscordMessage);
-
-            expect(result.response).toStrictEqual(
-              `No feature for now. Work in progress.`
-            );
-          });
-
           it(`should not log about not having a feature name`, async (): Promise<
             void
           > => {
-            expect.assertions(2);
+            expect.assertions(3);
 
-            await service.getMessageResponse(anyDiscordMessage);
+            await expect(
+              service.getMessageResponse(anyDiscordMessage)
+            ).rejects.toThrow(
+              new Error(`getEmptyContentErrorMessageResponse error`)
+            );
 
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
@@ -317,9 +388,13 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           it(`should not get a message response for the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(2);
 
-            await service.getMessageResponse(anyDiscordMessage);
+            await expect(
+              service.getMessageResponse(anyDiscordMessage)
+            ).rejects.toThrow(
+              new Error(`getEmptyContentErrorMessageResponse error`)
+            );
 
             expect(
               discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
