@@ -1,34 +1,34 @@
 import { createMock } from "ts-auto-mock";
 import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
-import { IHasThisCommandData } from "../../interfaces/commands/has-this-command-data";
-import { hasThisCommand } from "./has-this-command";
+import { IDiscordContainsThisCommandWithOneOfThesePrefixesData } from "../../interfaces/commands/discord-contains-this-command-with-one-of-these-prefixes-data";
+import { discordContainsThisCommandWithOneOfThesePrefixes } from "./discord-contains-this-command-with-one-of-these-prefixes";
 
-describe(`hasThisCommand()`, (): void => {
-  let hasThisCommandData: IHasThisCommandData;
+describe(`containsThisCommandWithOneOfThesePrefixes()`, (): void => {
+  let data: IDiscordContainsThisCommandWithOneOfThesePrefixesData;
 
   beforeEach((): void => {
-    hasThisCommandData = createMock<IHasThisCommandData>();
+    data = createMock<IDiscordContainsThisCommandWithOneOfThesePrefixesData>();
   });
 
   describe(`when the message is empty`, (): void => {
     beforeEach((): void => {
-      hasThisCommandData.message = ``;
+      data.message = ``;
     });
 
     describe(`when the command is help`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = DiscordMessageCommandEnum.HELP;
+        data.commands = DiscordMessageCommandEnum.HELP;
       });
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -36,13 +36,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -50,13 +50,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -64,13 +64,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -79,18 +79,18 @@ describe(`hasThisCommand()`, (): void => {
 
     describe(`when the command is bug`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = DiscordMessageCommandEnum.BUG;
+        data.commands = DiscordMessageCommandEnum.BUG;
       });
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -98,13 +98,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -112,13 +112,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -126,13 +126,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -141,7 +141,7 @@ describe(`hasThisCommand()`, (): void => {
 
     describe(`when the command is help and cookie`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = [
+        data.commands = [
           DiscordMessageCommandEnum.HELP,
           DiscordMessageCommandEnum.COOKIE,
         ];
@@ -149,13 +149,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -163,13 +163,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -177,13 +177,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -191,13 +191,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -206,7 +206,7 @@ describe(`hasThisCommand()`, (): void => {
 
     describe(`when the command is bug and cookie`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = [
+        data.commands = [
           DiscordMessageCommandEnum.BUG,
           DiscordMessageCommandEnum.COOKIE,
         ];
@@ -214,13 +214,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -228,13 +228,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -242,13 +242,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -256,13 +256,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -272,23 +272,23 @@ describe(`hasThisCommand()`, (): void => {
 
   describe(`when the message is a simple text message without a command`, (): void => {
     beforeEach((): void => {
-      hasThisCommandData.message = `simple message`;
+      data.message = `simple message`;
     });
 
     describe(`when the command is help`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = DiscordMessageCommandEnum.HELP;
+        data.commands = DiscordMessageCommandEnum.HELP;
       });
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -296,13 +296,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -310,13 +310,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -324,13 +324,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -339,18 +339,18 @@ describe(`hasThisCommand()`, (): void => {
 
     describe(`when the command is bug`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = DiscordMessageCommandEnum.BUG;
+        data.commands = DiscordMessageCommandEnum.BUG;
       });
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -358,13 +358,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -372,13 +372,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -386,13 +386,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -401,7 +401,7 @@ describe(`hasThisCommand()`, (): void => {
 
     describe(`when the command is help and cookie`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = [
+        data.commands = [
           DiscordMessageCommandEnum.HELP,
           DiscordMessageCommandEnum.COOKIE,
         ];
@@ -409,13 +409,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -423,13 +423,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -437,13 +437,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -451,13 +451,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -466,7 +466,7 @@ describe(`hasThisCommand()`, (): void => {
 
     describe(`when the command is bug and cookie`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = [
+        data.commands = [
           DiscordMessageCommandEnum.BUG,
           DiscordMessageCommandEnum.COOKIE,
         ];
@@ -474,13 +474,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -488,13 +488,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -502,13 +502,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -516,13 +516,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -532,23 +532,23 @@ describe(`hasThisCommand()`, (): void => {
 
   describe(`when the message is a simple text message with a "help" command but without a prefix`, (): void => {
     beforeEach((): void => {
-      hasThisCommandData.message = `simple message with help command`;
+      data.message = `simple message with help command`;
     });
 
     describe(`when the command is help`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = DiscordMessageCommandEnum.HELP;
+        data.commands = DiscordMessageCommandEnum.HELP;
       });
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -556,13 +556,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -570,13 +570,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -584,13 +584,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -599,18 +599,18 @@ describe(`hasThisCommand()`, (): void => {
 
     describe(`when the command is bug`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = DiscordMessageCommandEnum.BUG;
+        data.commands = DiscordMessageCommandEnum.BUG;
       });
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -618,13 +618,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -632,13 +632,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -646,13 +646,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -661,7 +661,7 @@ describe(`hasThisCommand()`, (): void => {
 
     describe(`when the command is help and cookie`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = [
+        data.commands = [
           DiscordMessageCommandEnum.HELP,
           DiscordMessageCommandEnum.COOKIE,
         ];
@@ -669,13 +669,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -683,13 +683,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -697,13 +697,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -711,13 +711,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -726,7 +726,7 @@ describe(`hasThisCommand()`, (): void => {
 
     describe(`when the command is bug and cookie`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = [
+        data.commands = [
           DiscordMessageCommandEnum.BUG,
           DiscordMessageCommandEnum.COOKIE,
         ];
@@ -734,13 +734,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -748,13 +748,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -762,13 +762,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -776,13 +776,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -792,23 +792,23 @@ describe(`hasThisCommand()`, (): void => {
 
   describe(`when the message is a simple text message with a "help" command and with a "!" prefix`, (): void => {
     beforeEach((): void => {
-      hasThisCommandData.message = `simple message with !help command`;
+      data.message = `simple message with !help command`;
     });
 
     describe(`when the command is help`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = DiscordMessageCommandEnum.HELP;
+        data.commands = DiscordMessageCommandEnum.HELP;
       });
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -816,13 +816,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(true);
         });
@@ -830,13 +830,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -844,13 +844,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(true);
         });
@@ -859,18 +859,18 @@ describe(`hasThisCommand()`, (): void => {
 
     describe(`when the command is bug`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = DiscordMessageCommandEnum.BUG;
+        data.commands = DiscordMessageCommandEnum.BUG;
       });
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -878,13 +878,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -892,13 +892,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -906,13 +906,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -921,7 +921,7 @@ describe(`hasThisCommand()`, (): void => {
 
     describe(`when the command is help and cookie`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = [
+        data.commands = [
           DiscordMessageCommandEnum.HELP,
           DiscordMessageCommandEnum.COOKIE,
         ];
@@ -929,13 +929,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -943,13 +943,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(true);
         });
@@ -957,13 +957,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -971,13 +971,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(true);
         });
@@ -986,7 +986,7 @@ describe(`hasThisCommand()`, (): void => {
 
     describe(`when the command is bug and cookie`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = [
+        data.commands = [
           DiscordMessageCommandEnum.BUG,
           DiscordMessageCommandEnum.COOKIE,
         ];
@@ -994,13 +994,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -1008,13 +1008,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -1022,13 +1022,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -1036,13 +1036,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -1052,23 +1052,23 @@ describe(`hasThisCommand()`, (): void => {
 
   describe(`when the message is a simple upper case text message with a "help" command and with a "!" prefix`, (): void => {
     beforeEach((): void => {
-      hasThisCommandData.message = `SIMPLE MESSAGE WITH !HELP COMMAND`;
+      data.message = `SIMPLE MESSAGE WITH !HELP COMMAND`;
     });
 
     describe(`when the command is help`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = DiscordMessageCommandEnum.HELP;
+        data.commands = DiscordMessageCommandEnum.HELP;
       });
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -1076,13 +1076,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(true);
         });
@@ -1090,13 +1090,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -1104,13 +1104,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(true);
         });
@@ -1119,18 +1119,18 @@ describe(`hasThisCommand()`, (): void => {
 
     describe(`when the command is bug`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = DiscordMessageCommandEnum.BUG;
+        data.commands = DiscordMessageCommandEnum.BUG;
       });
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -1138,13 +1138,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -1152,13 +1152,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -1166,13 +1166,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -1181,7 +1181,7 @@ describe(`hasThisCommand()`, (): void => {
 
     describe(`when the command is help and cookie`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = [
+        data.commands = [
           DiscordMessageCommandEnum.HELP,
           DiscordMessageCommandEnum.COOKIE,
         ];
@@ -1189,13 +1189,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -1203,13 +1203,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(true);
         });
@@ -1217,13 +1217,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -1231,13 +1231,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(true);
         });
@@ -1246,7 +1246,7 @@ describe(`hasThisCommand()`, (): void => {
 
     describe(`when the command is bug and cookie`, (): void => {
       beforeEach((): void => {
-        hasThisCommandData.commands = [
+        data.commands = [
           DiscordMessageCommandEnum.BUG,
           DiscordMessageCommandEnum.COOKIE,
         ];
@@ -1254,13 +1254,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `$`;
+          data.prefixes = [`$`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -1268,13 +1268,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is !`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = `!`;
+          data.prefixes = [`!`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -1282,13 +1282,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is $ and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`$`, `_`];
+          data.prefixes = [`$`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });
@@ -1296,13 +1296,13 @@ describe(`hasThisCommand()`, (): void => {
 
       describe(`when the prefix is ! and _`, (): void => {
         beforeEach((): void => {
-          hasThisCommandData.prefixes = [`!`, `_`];
+          data.prefixes = [`!`, `_`];
         });
 
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = hasThisCommand(hasThisCommandData);
+          const has = discordContainsThisCommandWithOneOfThesePrefixes(data);
 
           expect(has).toStrictEqual(false);
         });

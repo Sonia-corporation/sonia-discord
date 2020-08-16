@@ -87,6 +87,10 @@ __Commands:__
 - feature
 - f *(shortcut)*
 
+__Features (first and only argument):__
+
+- noon (configure the message sent at noon)
+
 This is a special command used to configure Sonia only for the current Guild or channel.  
 There are multiples option to customize Sonia (some will change her behavior on the whole Guild and other only for the current channel).
 
@@ -95,7 +99,7 @@ Basically she will try to help you if you fill bad information and just inform y
 
 __Example:__
 
-- `@Sonia-il-est-midi !feature`
+- `@Sonia-il-est-midi !feature noon`
 - `@Sonia-il-est-midi !F`
 
 #### Help

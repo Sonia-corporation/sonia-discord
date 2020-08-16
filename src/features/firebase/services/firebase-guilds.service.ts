@@ -80,7 +80,7 @@ export class FirebaseGuildsService extends AbstractService {
 
   public getGuildsCount(): Promise<number> {
     return this.getGuilds().then(
-      (querySnapshot: QuerySnapshot<IFirebaseGuild>): number => {
+      (querySnapshot: Readonly<QuerySnapshot<IFirebaseGuild>>): number => {
         return querySnapshot.size;
       }
     );
@@ -97,7 +97,7 @@ export class FirebaseGuildsService extends AbstractService {
         .get()
         .then(
           (
-            documentSnapshot: DocumentSnapshot<IFirebaseGuild>
+            documentSnapshot: Readonly<DocumentSnapshot<IFirebaseGuild>>
           ): Promise<boolean> => {
             return Promise.resolve(documentSnapshot.exists);
           }
@@ -140,7 +140,7 @@ export class FirebaseGuildsService extends AbstractService {
           })
         )
         .then(
-          (writeResult: WriteResult): Promise<WriteResult> => {
+          (writeResult: Readonly<WriteResult>): Promise<WriteResult> => {
             LoggerService.getInstance().success({
               context: this._serviceName,
               message: ChalkService.getInstance().text(

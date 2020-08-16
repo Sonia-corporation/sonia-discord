@@ -3,9 +3,11 @@ import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../logger/services/logger.service";
+import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandFeatureService } from "./discord-message-command-feature.service";
+import { DiscordMessageCommandFeatureNoonService } from "./services/discord-message-command-feature-noon.service";
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
@@ -14,11 +16,13 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
   let coreEventService: CoreEventService;
   let loggerService: LoggerService;
   let discordMessageConfigService: DiscordMessageConfigService;
+  let discordMessageCommandFeatureNoonService: DiscordMessageCommandFeatureNoonService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     loggerService = LoggerService.getInstance();
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
+    discordMessageCommandFeatureNoonService = DiscordMessageCommandFeatureNoonService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -64,8 +68,10 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
   describe(`handleResponse()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
+    let discordMessageResponse: IDiscordMessageResponse;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
+    let getMessageResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureService();
@@ -75,12 +81,15 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       } as unknown) as IAnyDiscordMessage);
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
+      getMessageResponseSpy = jest
+        .spyOn(service, `getMessageResponse`)
+        .mockResolvedValue(discordMessageResponse);
     });
 
-    it(`should log about the command`, (): void => {
+    it(`should log about the command`, async (): Promise<void> => {
       expect.assertions(2);
 
-      service.handleResponse(anyDiscordMessage);
+      await service.handleResponse(anyDiscordMessage);
 
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -90,14 +99,329 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       } as ILoggerLog);
     });
 
-    it(`should return a Discord message response without a response text`, (): void => {
+    it(`should get a message response`, async (): Promise<void> => {
+      expect.assertions(2);
+
+      await service.handleResponse(anyDiscordMessage);
+
+      expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(getMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
+    });
+
+    it(`should return the message response`, async (): Promise<void> => {
       expect.assertions(1);
 
-      const result = service.handleResponse(anyDiscordMessage);
+      const result = await service.handleResponse(anyDiscordMessage);
 
-      expect(result.response).toStrictEqual(
-        `No feature for now. Work in progress.`
-      );
+      expect(result).toStrictEqual(discordMessageResponse);
+    });
+  });
+
+  describe(`getMessageResponse()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+    let discordMessageResponse: IDiscordMessageResponse;
+
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let discordMessageCommandFeatureNoonServiceIsNoonFeatureSpy: jest.SpyInstance;
+    let discordMessageCommandFeatureNoonServiceGetMessageResponseSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageCommandFeatureService();
+      anyDiscordMessage = createMock<IAnyDiscordMessage>();
+      discordMessageResponse = createMock<IDiscordMessageResponse>();
+
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
+      discordMessageCommandFeatureNoonServiceIsNoonFeatureSpy = jest
+        .spyOn(discordMessageCommandFeatureNoonService, `isNoonFeature`)
+        .mockImplementation();
+      discordMessageCommandFeatureNoonServiceGetMessageResponseSpy = jest
+        .spyOn(discordMessageCommandFeatureNoonService, `getMessageResponse`)
+        .mockRejectedValue(new Error(`getMessageResponse error`));
+    });
+
+    describe(`when the given message content is null`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage.content = null;
+      });
+
+      it(`should not log about not having a feature name`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await service.getMessageResponse(anyDiscordMessage);
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(0);
+        expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
+          context: `DiscordMessageCommandFeatureService`,
+          message: `text-feature name not specified`,
+        } as ILoggerLog);
+      });
+
+      it(`should return a Discord message response without a response text`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+
+        const result = await service.getMessageResponse(anyDiscordMessage);
+
+        expect(result.response).toStrictEqual(
+          `No feature for now. Work in progress.`
+        );
+      });
+
+      it(`should not log about the fact that the feature does not exist`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await service.getMessageResponse(anyDiscordMessage);
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(0);
+        expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
+          context: `DiscordMessageCommandFeatureService`,
+          message: `text-feature name value-dummy not matching an existing feature`,
+        } as ILoggerLog);
+      });
+
+      it(`should not get a message response for the noon feature`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+
+        await service.getMessageResponse(anyDiscordMessage);
+
+        expect(
+          discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
+        ).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the given message content is valid`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage.content = `message`;
+      });
+
+      describe(`when the given message has no feature name`, (): void => {
+        beforeEach((): void => {
+          anyDiscordMessage.content = `message !feature`;
+        });
+
+        it(`should log about not having a feature name`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await service.getMessageResponse(anyDiscordMessage);
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+            context: `DiscordMessageCommandFeatureService`,
+            message: `text-feature name not specified`,
+          } as ILoggerLog);
+        });
+
+        it(`should return a Discord message response without a response text`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(anyDiscordMessage);
+
+          expect(result.response).toStrictEqual(
+            `No feature for now. Work in progress.`
+          );
+        });
+
+        it(`should not log about the fact that the feature does not exist`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await service.getMessageResponse(anyDiscordMessage);
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
+            context: `DiscordMessageCommandFeatureService`,
+            message: `text-feature name value-dummy not matching an existing feature`,
+          } as ILoggerLog);
+        });
+
+        it(`should not get a message response for the noon feature`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          await service.getMessageResponse(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+      });
+
+      describe(`when the given message has a feature name`, (): void => {
+        beforeEach((): void => {
+          anyDiscordMessage.content = `message !feature dummy`;
+        });
+
+        describe(`when the given message feature is not an existing feature`, (): void => {
+          beforeEach((): void => {
+            discordMessageCommandFeatureNoonServiceIsNoonFeatureSpy.mockReturnValue(
+              false
+            );
+          });
+
+          it(`should log about the fact that the feature does not exist`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
+
+            await service.getMessageResponse(anyDiscordMessage);
+
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+              context: `DiscordMessageCommandFeatureService`,
+              message: `text-feature name value-dummy not matching an existing feature`,
+            } as ILoggerLog);
+          });
+
+          it(`should return a Discord message response without a response text`, async (): Promise<
+            void
+          > => {
+            expect.assertions(1);
+
+            const result = await service.getMessageResponse(anyDiscordMessage);
+
+            expect(result.response).toStrictEqual(
+              `No feature for now. Work in progress.`
+            );
+          });
+
+          it(`should not log about not having a feature name`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
+
+            await service.getMessageResponse(anyDiscordMessage);
+
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
+              context: `DiscordMessageCommandFeatureService`,
+              message: `text-feature name not specified`,
+            } as ILoggerLog);
+          });
+
+          it(`should not get a message response for the noon feature`, async (): Promise<
+            void
+          > => {
+            expect.assertions(1);
+
+            await service.getMessageResponse(anyDiscordMessage);
+
+            expect(
+              discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
+            ).not.toHaveBeenCalled();
+          });
+        });
+
+        describe(`when the given message feature is the noon feature`, (): void => {
+          beforeEach((): void => {
+            discordMessageCommandFeatureNoonServiceIsNoonFeatureSpy.mockReturnValue(
+              true
+            );
+          });
+
+          it(`should get a message response for the noon feature`, async (): Promise<
+            void
+          > => {
+            expect.assertions(3);
+
+            await expect(
+              service.getMessageResponse(anyDiscordMessage)
+            ).rejects.toThrow(new Error(`getMessageResponse error`));
+
+            expect(
+              discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
+            ).toHaveBeenCalledTimes(1);
+            expect(
+              discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
+            ).toHaveBeenCalledWith(anyDiscordMessage);
+          });
+
+          describe(`when the message response for the noon feature was successfully fetched`, (): void => {
+            beforeEach((): void => {
+              discordMessageCommandFeatureNoonServiceGetMessageResponseSpy.mockResolvedValue(
+                discordMessageResponse
+              );
+            });
+
+            it(`should return a Discord message response for the noon feature`, async (): Promise<
+              void
+            > => {
+              expect.assertions(1);
+
+              const result = await service.getMessageResponse(
+                anyDiscordMessage
+              );
+
+              expect(result).toStrictEqual(discordMessageResponse);
+            });
+          });
+
+          describe(`when the message response for the noon feature failed to be fetched`, (): void => {
+            beforeEach((): void => {
+              discordMessageCommandFeatureNoonServiceGetMessageResponseSpy.mockRejectedValue(
+                new Error(`getMessageResponse error`)
+              );
+            });
+
+            it(`should return the message response error for the noon feature`, async (): Promise<
+              void
+            > => {
+              expect.assertions(1);
+
+              await expect(
+                service.getMessageResponse(anyDiscordMessage)
+              ).rejects.toThrow(new Error(`getMessageResponse error`));
+            });
+          });
+
+          it(`should not log about not having a feature name`, async (): Promise<
+            void
+          > => {
+            expect.assertions(3);
+
+            await expect(
+              service.getMessageResponse(anyDiscordMessage)
+            ).rejects.toThrow(new Error(`getMessageResponse error`));
+
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(0);
+            expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
+              context: `DiscordMessageCommandFeatureService`,
+              message: `text-feature name not specified`,
+            } as ILoggerLog);
+          });
+
+          it(`should not log about the fact that the feature does not exist`, async (): Promise<
+            void
+          > => {
+            expect.assertions(3);
+
+            await expect(
+              service.getMessageResponse(anyDiscordMessage)
+            ).rejects.toThrow(new Error(`getMessageResponse error`));
+
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(0);
+            expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
+              context: `DiscordMessageCommandFeatureService`,
+              message: `text-feature name value-dummy not matching an existing feature`,
+            } as ILoggerLog);
+          });
+        });
+      });
     });
   });
 

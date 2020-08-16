@@ -94,7 +94,7 @@ export class DiscordGuildCreateService extends AbstractService {
     return FirebaseGuildsService.getInstance()
       .addGuild(guild)
       .then(
-        (writeResult: WriteResult): Promise<WriteResult> => {
+        (writeResult: Readonly<WriteResult>): Promise<WriteResult> => {
           LoggerService.getInstance().success({
             context: this._serviceName,
             message: ChalkService.getInstance().text(
@@ -165,8 +165,6 @@ export class DiscordGuildCreateService extends AbstractService {
     guildChannel: Readonly<GuildChannel>
   ): Promise<Message | void> {
     if (isDiscordGuildChannelWritable(guildChannel)) {
-      const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
-
       LoggerService.getInstance().debug({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
@@ -174,39 +172,51 @@ export class DiscordGuildCreateService extends AbstractService {
         ),
       });
 
-      return guildChannel
-        .send(messageResponse.response, messageResponse.options)
+      return this._getMessageResponse()
         .then(
-          (message: Message): Promise<Message> => {
-            LoggerService.getInstance().log({
-              context: this._serviceName,
-              message: ChalkService.getInstance().text(
-                `cookies message for the create guild sent`
-              ),
-            });
+          (
+            messageResponse: Readonly<IDiscordMessageResponse>
+          ): Promise<Message | void> => {
+            return guildChannel
+              .send(messageResponse.response, messageResponse.options)
+              .then(
+                (message: Message): Promise<Message> => {
+                  LoggerService.getInstance().log({
+                    context: this._serviceName,
+                    message: ChalkService.getInstance().text(
+                      `cookies message for the create guild sent`
+                    ),
+                  });
 
-            return Promise.resolve(message);
+                  return Promise.resolve(message);
+                }
+              )
+              .catch(
+                (error: Readonly<Error | string>): Promise<void> => {
+                  LoggerService.getInstance().error({
+                    context: this._serviceName,
+                    message: ChalkService.getInstance().text(
+                      `cookies message sending for the create guild failed`
+                    ),
+                  });
+                  LoggerService.getInstance().error({
+                    context: this._serviceName,
+                    message: ChalkService.getInstance().error(error),
+                  });
+                  DiscordGuildSoniaService.getInstance().sendMessageToChannel({
+                    channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
+                    messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
+                      error
+                    ),
+                  });
+
+                  return Promise.reject(error);
+                }
+              );
           }
         )
         .catch(
           (error: Readonly<Error | string>): Promise<void> => {
-            LoggerService.getInstance().error({
-              context: this._serviceName,
-              message: ChalkService.getInstance().text(
-                `cookies message sending for the create guild failed`
-              ),
-            });
-            LoggerService.getInstance().error({
-              context: this._serviceName,
-              message: ChalkService.getInstance().error(error),
-            });
-            DiscordGuildSoniaService.getInstance().sendMessageToChannel({
-              channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-              messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
-                error
-              ),
-            });
-
             return Promise.reject(error);
           }
         );
@@ -222,7 +232,7 @@ export class DiscordGuildCreateService extends AbstractService {
     return Promise.reject(new Error(`Primary guild channel not writable`));
   }
 
-  private _getMessageResponse(): IDiscordMessageResponse {
+  private _getMessageResponse(): Promise<IDiscordMessageResponse> {
     return DiscordMessageCommandCookieService.getInstance().getMessageResponse();
   }
 }

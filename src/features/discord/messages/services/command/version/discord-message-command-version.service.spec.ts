@@ -18,6 +18,7 @@ import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordSoniaEmotionalStateEnum } from "../../../../emotional-states/enums/discord-sonia-emotional-state.enum";
 import { DiscordSoniaEmotionalStateService } from "../../../../emotional-states/services/discord-sonia-emotional-state.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
+import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandVersionService } from "./discord-message-command-version.service";
@@ -87,8 +88,56 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
   describe(`handleResponse()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
+    let discordMessageResponse: IDiscordMessageResponse;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
+    let getMessageResponseSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageCommandVersionService();
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
+        id: `dummy-id`,
+      } as unknown) as IAnyDiscordMessage);
+
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
+      getMessageResponseSpy = jest
+        .spyOn(service, `getMessageResponse`)
+        .mockResolvedValue(discordMessageResponse);
+    });
+
+    it(`should log about the command`, async (): Promise<void> => {
+      expect.assertions(2);
+
+      await service.handleResponse(anyDiscordMessage);
+
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageCommandVersionService`,
+        extendedContext: true,
+        message: `context-[dummy-id] text-version command detected`,
+      } as ILoggerLog);
+    });
+
+    it(`should get a message response`, async (): Promise<void> => {
+      expect.assertions(2);
+
+      await service.handleResponse(anyDiscordMessage);
+
+      expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(getMessageResponseSpy).toHaveBeenCalledWith();
+    });
+
+    it(`should return the message response`, async (): Promise<void> => {
+      expect.assertions(1);
+
+      const result = await service.handleResponse(anyDiscordMessage);
+
+      expect(result).toStrictEqual(discordMessageResponse);
+    });
+  });
+
+  describe(`getMessageResponse()`, (): void => {
     let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandVersionImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
@@ -105,12 +154,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandVersionService();
-      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
-        id: `dummy-id`,
-      } as unknown) as IAnyDiscordMessage);
 
-      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy = jest.spyOn(
         discordSoniaService,
         `getCorporationMessageEmbedAuthor`
@@ -165,20 +209,9 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       );
     });
 
-    it(`should log about the command`, (): void => {
-      expect.assertions(2);
-
-      service.handleResponse(anyDiscordMessage);
-
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-        context: `DiscordMessageCommandVersionService`,
-        extendedContext: true,
-        message: `context-[dummy-id] text-version command detected`,
-      } as ILoggerLog);
-    });
-
-    it(`should return a Discord message response embed with an author`, (): void => {
+    it(`should return a Discord message response embed with an author`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       const messageEmbedAuthor: MessageEmbedAuthor = createMock<
         MessageEmbedAuthor
@@ -187,41 +220,47 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         messageEmbedAuthor
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.author).toStrictEqual(messageEmbedAuthor);
     });
 
-    it(`should return a Discord message response embed with a color`, (): void => {
+    it(`should return a Discord message response embed with a color`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       discordMessageConfigServiceGetMessageCommandVersionImageColorSpy.mockReturnValue(
         ColorEnum.CANDY
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
     });
 
-    it(`should return a Discord message response embed with 6 fields`, (): void => {
+    it(`should return a Discord message response embed with 6 fields`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.fields).toHaveLength(6);
     });
 
-    it(`should return a Discord message response embed with an application version field`, (): void => {
+    it(`should return a Discord message response embed with an application version field`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       appConfigServiceGetVersionSpy.mockReturnValue(`8`);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -231,13 +270,15 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a release date field`, (): void => {
+    it(`should return a Discord message response embed with a release date field`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       appConfigQueryServiceGetReleaseDateHumanizedSpy.mockReturnValue(
         `dummy-release-date-humanized`
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -248,13 +289,15 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a initialization date field`, (): void => {
+    it(`should return a Discord message response embed with a initialization date field`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       appConfigQueryServiceGetInitializationDateHumanizedSpy.mockReturnValue(
         `dummy-initialization-date-humanized`
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -265,11 +308,13 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a release notes field`, (): void => {
+    it(`should return a Discord message response embed with a release notes field`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       appConfigServiceGetReleaseNotesSpy.mockReturnValue(`dummy-release-notes`);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -279,13 +324,15 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a status field`, (): void => {
+    it(`should return a Discord message response embed with a status field`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       appConfigQueryServiceGetProductionStateHumanizedSpy.mockReturnValue(
         AppProductionStateEnum.DEVELOPMENT
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -296,13 +343,15 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with an emotional state field`, (): void => {
+    it(`should return a Discord message response embed with an emotional state field`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       discordSoniaEmotionalStateServiceGetEmotionalStateSpy.mockReturnValue(
         DiscordSoniaEmotionalStateEnum.AGITATED
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -313,7 +362,9 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a footer containing an icon and a text`, (): void => {
+    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
       appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
@@ -323,7 +374,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         `the 24th March 2020`
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -344,10 +395,12 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         );
       });
 
-      it(`should return a Discord message response embed with a footer but without an icon`, (): void => {
+      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
+        void
+      > => {
         expect.assertions(1);
 
-        const result: unknown = service.handleResponse(anyDiscordMessage);
+        const result = await service.getMessageResponse();
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -369,10 +422,12 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         );
       });
 
-      it(`should return a Discord message response embed with a footer containing an icon and a text`, (): void => {
+      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
+        void
+      > => {
         expect.assertions(1);
 
-        const result: unknown = service.handleResponse(anyDiscordMessage);
+        const result = await service.getMessageResponse();
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -383,13 +438,15 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       });
     });
 
-    it(`should return a Discord message response embed with a thumbnail`, (): void => {
+    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       discordMessageConfigServiceGetMessageCommandVersionImageUrlSpy.mockReturnValue(
         IconEnum.ARTIFICIAL_INTELLIGENCE
       );
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -398,10 +455,12 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       } as MessageEmbedThumbnail);
     });
 
-    it(`should return a Discord message response embed with a timestamp`, (): void => {
+    it(`should return a Discord message response embed with a timestamp`, async (): Promise<
+      void
+    > => {
       expect.assertions(2);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -415,11 +474,13 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       );
     });
 
-    it(`should return a Discord message response embed with a title`, (): void => {
+    it(`should return a Discord message response embed with a title`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
       discordSoniaServiceGetFullNameSpy.mockReturnValue(`dummy-full-name`);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -428,20 +489,24 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       );
     });
 
-    it(`should return a Discord message response splitted`, (): void => {
+    it(`should return a Discord message response splitted`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
 
-      const result: unknown = service.handleResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.split).toStrictEqual(true);
     });
 
-    it(`should return a Discord message response without a response text`, (): void => {
+    it(`should return a Discord message response without a response text`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
 
-      const result = service.handleResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse();
 
       expect(result.response).toStrictEqual(``);
     });
