@@ -87,6 +87,16 @@ function getCommandAndPrefixFromMultiplePrefixesAndCommands(data: {
   return firstArgument;
 }
 
+function isPrefix(value: Readonly<string | string[]>): value is string {
+  return _.isString(value);
+}
+
+function isCommand(
+  value: Readonly<DiscordMessageCommandEnum | DiscordMessageCommandEnum[]>
+): value is DiscordMessageCommandEnum {
+  return _.isString(value);
+}
+
 /**
  * @description
  * No need to test it
@@ -101,8 +111,8 @@ export function discordExtractFromCommand(
 ): string | null {
   const formattedMessage: string = discordGetFormattedMessage(data.message);
 
-  if (_.isString(data.prefixes)) {
-    if (_.isString(data.commands)) {
+  if (isPrefix(data.prefixes)) {
+    if (isCommand(data.commands)) {
       const prefix: string = data.prefixes;
       const command: DiscordMessageCommandEnum = data.commands;
 
@@ -123,7 +133,7 @@ export function discordExtractFromCommand(
     });
   }
 
-  if (_.isString(data.commands)) {
+  if (isCommand(data.commands)) {
     const command: DiscordMessageCommandEnum = data.commands;
 
     return getCommandAndPrefixFromMultiplePrefixes({
