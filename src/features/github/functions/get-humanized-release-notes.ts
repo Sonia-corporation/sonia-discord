@@ -9,6 +9,14 @@ export function getHumanizedReleaseNotes(
   // Like "# [1.15.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.14.0...1.15.0) (2020-03-24)\n\n\n" by ""
   updatedReleaseNotes = _.replace(updatedReleaseNotes, /^#.+?\n\n\n/im, ``);
 
+  // Remove the closes special annotation
+  // Like ", closes [#776](https://github.com/Sonia-corporation/il-est-midi-discord/issues/776)"
+  updatedReleaseNotes = _.replace(
+    updatedReleaseNotes,
+    /,\scloses\s\[#\d+\]\(.+\)/gim,
+    ``
+  );
+
   // Change the h3
   // Like "* **logs:**"
   updatedReleaseNotes = _.replace(
