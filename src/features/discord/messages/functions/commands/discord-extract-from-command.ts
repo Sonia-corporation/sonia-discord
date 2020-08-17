@@ -5,10 +5,10 @@ import { IDiscordExtractFromCommandData } from "../../interfaces/commands/discor
 import { discordGetFormattedMessage } from "./discord-get-formatted-message";
 
 function getCommandAndPrefixFromMultipleCommands(data: {
-  callback: (
+  commands: DiscordMessageCommandEnum[];
+  finder: (
     data: Readonly<IDiscordExtractFromCommandCallbackData>
   ) => string | null;
-  commands: DiscordMessageCommandEnum[];
   message: string;
   prefix: string;
 }): string | null {
@@ -17,7 +17,7 @@ function getCommandAndPrefixFromMultipleCommands(data: {
   _.forEach(data.commands, (command: Readonly<DiscordMessageCommandEnum>):
     | false
     | void => {
-    firstArgument = data.callback({
+    firstArgument = data.finder({
       command,
       message: data.message,
       prefix: data.prefix,
@@ -32,17 +32,17 @@ function getCommandAndPrefixFromMultipleCommands(data: {
 }
 
 function getCommandAndPrefixFromMultiplePrefixes(data: {
-  callback: (
+  command: DiscordMessageCommandEnum;
+  finder: (
     data: Readonly<IDiscordExtractFromCommandCallbackData>
   ) => string | null;
-  command: DiscordMessageCommandEnum;
   message: string;
   prefixes: string[];
 }): string | null {
   let firstArgument: string | null = null;
 
   _.forEach(data.prefixes, (prefix: Readonly<string>): false | void => {
-    firstArgument = data.callback({
+    firstArgument = data.finder({
       command: data.command,
       message: data.message,
       prefix,
@@ -57,10 +57,10 @@ function getCommandAndPrefixFromMultiplePrefixes(data: {
 }
 
 function getCommandAndPrefixFromMultiplePrefixesAndCommands(data: {
-  callback: (
+  commands: DiscordMessageCommandEnum[];
+  finder: (
     data: Readonly<IDiscordExtractFromCommandCallbackData>
   ) => string | null;
-  commands: DiscordMessageCommandEnum[];
   message: string;
   prefixes: string[];
 }): string | null {
@@ -71,7 +71,7 @@ function getCommandAndPrefixFromMultiplePrefixesAndCommands(data: {
       | false
       | void => {
       if (_.isNil(firstArgument)) {
-        firstArgument = data.callback({
+        firstArgument = data.finder({
           command,
           message: data.message,
           prefix,
@@ -106,7 +106,7 @@ export function discordExtractFromCommand(
       const prefix: string = data.prefixes;
       const command: DiscordMessageCommandEnum = data.commands;
 
-      return data.callback({
+      return data.finder({
         command,
         message: formattedMessage,
         prefix,
@@ -116,8 +116,8 @@ export function discordExtractFromCommand(
     const prefix: string = data.prefixes;
 
     return getCommandAndPrefixFromMultipleCommands({
-      callback: data.callback,
       commands: data.commands,
+      finder: data.finder,
       message: formattedMessage,
       prefix,
     });
@@ -127,16 +127,16 @@ export function discordExtractFromCommand(
     const command: DiscordMessageCommandEnum = data.commands;
 
     return getCommandAndPrefixFromMultiplePrefixes({
-      callback: data.callback,
       command,
+      finder: data.finder,
       message: formattedMessage,
       prefixes: data.prefixes,
     });
   }
 
   return getCommandAndPrefixFromMultiplePrefixesAndCommands({
-    callback: data.callback,
     commands: data.commands,
+    finder: data.finder,
     message: formattedMessage,
     prefixes: data.prefixes,
   });

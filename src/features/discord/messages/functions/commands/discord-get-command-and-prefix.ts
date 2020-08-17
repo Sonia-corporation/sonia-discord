@@ -20,8 +20,8 @@ export function discordGetCommandAndPrefix(
   data: Readonly<IDiscordGetCommandAndPrefixData>
 ): string | null {
   return discordExtractFromCommand({
-    callback: getCommandAndPrefix,
     commands: data.commands,
+    finder: getCommandAndPrefix,
     message: discordGetFormattedMessage(data.message),
     prefixes: data.prefixes,
   });

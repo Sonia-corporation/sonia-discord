@@ -26,8 +26,8 @@ export function discordGetCommandFirstArgument(
   data: Readonly<IDiscordGetCommandFirstArgumentData>
 ): string | null {
   return discordExtractFromCommand({
-    callback: getFirstArgument,
     commands: data.commands,
+    finder: getFirstArgument,
     message: discordGetFormattedMessage(data.message),
     prefixes: data.prefixes,
   });

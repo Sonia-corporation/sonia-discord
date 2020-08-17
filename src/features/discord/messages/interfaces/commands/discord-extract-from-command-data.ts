@@ -2,10 +2,10 @@ import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-c
 import { IDiscordExtractFromCommandCallbackData } from "./discord-extract-from-command-callback-data";
 
 export interface IDiscordExtractFromCommandData {
-  callback: (
+  commands: DiscordMessageCommandEnum | DiscordMessageCommandEnum[];
+  finder: (
     data: Readonly<IDiscordExtractFromCommandCallbackData>
   ) => string | null;
-  commands: DiscordMessageCommandEnum | DiscordMessageCommandEnum[];
   message: string;
   prefixes: string | string[];
 }
