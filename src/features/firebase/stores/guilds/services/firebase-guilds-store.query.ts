@@ -33,9 +33,9 @@ export class FirebaseGuildsStoreQuery extends AbstractQueryEntityService<
   public wasLoaded(): Promise<true> {
     return this.selectLoading()
       .pipe(
-        filter((isLoaded: Readonly<boolean>): boolean => {
-          return _.isEqual(isLoaded, true);
-        }),
+        filter((isLoaded: Readonly<boolean>): boolean =>
+          _.isEqual(isLoaded, true)
+        ),
         take(1),
         map((): true => true)
       )

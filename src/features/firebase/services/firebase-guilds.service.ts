@@ -44,11 +44,7 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   public init(): Promise<number> {
-    return this._setStore().then(
-      (): Promise<number> => {
-        return this._logGuildCount();
-      }
-    );
+    return this._setStore().then((): Promise<number> => this._logGuildCount());
   }
 
   public getCollectionReference():
@@ -80,9 +76,8 @@ export class FirebaseGuildsService extends AbstractService {
 
   public getGuildsCount(): Promise<number> {
     return this.getGuilds().then(
-      (querySnapshot: Readonly<QuerySnapshot<IFirebaseGuild>>): number => {
-        return querySnapshot.size;
-      }
+      (querySnapshot: Readonly<QuerySnapshot<IFirebaseGuild>>): number =>
+        querySnapshot.size
     );
   }
 
@@ -98,9 +93,7 @@ export class FirebaseGuildsService extends AbstractService {
         .then(
           (
             documentSnapshot: Readonly<DocumentSnapshot<IFirebaseGuild>>
-          ): Promise<boolean> => {
-            return Promise.resolve(documentSnapshot.exists);
-          }
+          ): Promise<boolean> => Promise.resolve(documentSnapshot.exists)
         )
         .catch(
           (): Promise<boolean> => {
@@ -165,9 +158,9 @@ export class FirebaseGuildsService extends AbstractService {
   public isReady(): Promise<true> {
     return this.isReady$()
       .pipe(
-        filter((isReady: Readonly<boolean>): boolean => {
-          return _.isEqual(isReady, true);
-        }),
+        filter((isReady: Readonly<boolean>): boolean =>
+          _.isEqual(isReady, true)
+        ),
         take(1),
         map((): true => true)
       )

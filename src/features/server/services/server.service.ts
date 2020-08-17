@@ -77,9 +77,7 @@ export class ServerService extends AbstractService {
   private _serveHomePage(): void {
     if (!_.isNil(this._app)) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      this._app.get(`/`, (_req: any, res: any): any => {
-        return res.render(`home/home`);
-      });
+      this._app.get(`/`, (_req: any, res: any): any => res.render(`home/home`));
     }
   }
 }
