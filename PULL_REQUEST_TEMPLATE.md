@@ -5,7 +5,6 @@ Please check if your PR fulfills the following requirements:
 - [ ] Tests for the changes have been added/updated (for bugfix/feature)
 - [ ] Docs have been added/updated (for bugfix/feature)
 
-
 ## PR Type
 What kind of change does this PR introduce?
 
@@ -17,6 +16,7 @@ What kind of change does this PR introduce?
 - [ ] Perf (a code change that improves performance)
 - [ ] Test (adding missing tests or correcting existing tests)
 - [ ] Build (changes that affect the build system, CI configuration or external dependencies)
+- [ ] Docs (changes that affect the documentation)
 - [ ] Chore (anything else), please describe:
 
 ## What is the current behavior?

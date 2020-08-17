@@ -45,6 +45,10 @@ module.exports = {
       value: `build`,
     },
     {
+      name: `docs:     Changes that affect the documentation`,
+      value: `docs`,
+    },
+    {
       name: `chore:    Anything else`,
       value: `chore`,
     },
