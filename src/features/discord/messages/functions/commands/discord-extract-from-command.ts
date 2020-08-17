@@ -106,48 +106,51 @@ function isCommand(
  *
  * @return {string | null} The value searched or null
  */
-export function discordExtractFromCommand(
-  data: Readonly<IDiscordExtractFromCommandData>
-): string | null {
-  const formattedMessage: string = discordGetFormattedMessage(data.message);
+export function discordExtractFromCommand({
+  commands,
+  finder,
+  message,
+  prefixes,
+}: Readonly<IDiscordExtractFromCommandData>): string | null {
+  const formattedMessage: string = discordGetFormattedMessage(message);
 
-  if (isPrefix(data.prefixes)) {
-    if (isCommand(data.commands)) {
-      const prefix: string = data.prefixes;
-      const command: DiscordMessageCommandEnum = data.commands;
+  if (isPrefix(prefixes)) {
+    if (isCommand(commands)) {
+      const prefix: string = prefixes;
+      const command: DiscordMessageCommandEnum = commands;
 
-      return data.finder({
+      return finder({
         command,
         message: formattedMessage,
         prefix,
       });
     }
 
-    const prefix: string = data.prefixes;
+    const prefix: string = prefixes;
 
     return getCommandAndPrefixFromMultipleCommands({
-      commands: data.commands,
-      finder: data.finder,
+      commands,
+      finder,
       message: formattedMessage,
       prefix,
     });
   }
 
-  if (isCommand(data.commands)) {
-    const command: DiscordMessageCommandEnum = data.commands;
+  if (isCommand(commands)) {
+    const command: DiscordMessageCommandEnum = commands;
 
     return getCommandAndPrefixFromMultiplePrefixes({
       command,
-      finder: data.finder,
+      finder,
       message: formattedMessage,
-      prefixes: data.prefixes,
+      prefixes,
     });
   }
 
   return getCommandAndPrefixFromMultiplePrefixesAndCommands({
-    commands: data.commands,
-    finder: data.finder,
+    commands,
+    finder,
     message: formattedMessage,
-    prefixes: data.prefixes,
+    prefixes,
   });
 }

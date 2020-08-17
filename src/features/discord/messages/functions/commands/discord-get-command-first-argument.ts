@@ -22,13 +22,15 @@ function getFirstArgument(data: {
   return _.isNil(argument1) ? null : argument1;
 }
 
-export function discordGetCommandFirstArgument(
-  data: Readonly<IDiscordGetCommandFirstArgumentData>
-): string | null {
+export function discordGetCommandFirstArgument({
+  commands,
+  message,
+  prefixes,
+}: Readonly<IDiscordGetCommandFirstArgumentData>): string | null {
   return discordExtractFromCommand({
-    commands: data.commands,
+    commands,
     finder: getFirstArgument,
-    message: discordGetFormattedMessage(data.message),
-    prefixes: data.prefixes,
+    message: discordGetFormattedMessage(message),
+    prefixes,
   });
 }

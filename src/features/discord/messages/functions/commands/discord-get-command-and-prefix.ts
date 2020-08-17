@@ -16,13 +16,15 @@ function getCommandAndPrefix(data: {
   });
 }
 
-export function discordGetCommandAndPrefix(
-  data: Readonly<IDiscordGetCommandAndPrefixData>
-): string | null {
+export function discordGetCommandAndPrefix({
+  commands,
+  message,
+  prefixes,
+}: Readonly<IDiscordGetCommandAndPrefixData>): string | null {
   return discordExtractFromCommand({
-    commands: data.commands,
+    commands,
     finder: getCommandAndPrefix,
-    message: discordGetFormattedMessage(data.message),
-    prefixes: data.prefixes,
+    message: discordGetFormattedMessage(message),
+    prefixes,
   });
 }
