@@ -104,11 +104,11 @@ describe(`InitService`, (): void => {
       expect.assertions(1);
 
       service.isAppConfigured$().subscribe({
-        error: (error): void => {
+        error(error): void {
           expect(true).toStrictEqual(false);
           doneCallback(error);
         },
-        next: (isTrue: boolean): void => {
+        next(isTrue: boolean): void {
           expect(isTrue).toStrictEqual(false);
           doneCallback();
         },
@@ -121,11 +121,11 @@ describe(`InitService`, (): void => {
 
         service.notifyIsAppConfigured();
         service.isAppConfigured$().subscribe({
-          error: (error): void => {
+          error(error): void {
             expect(true).toStrictEqual(false);
             doneCallback(error);
           },
-          next: (isTrue: boolean): void => {
+          next(isTrue: boolean): void {
             expect(isTrue).toStrictEqual(true);
             doneCallback();
           },
@@ -165,11 +165,11 @@ describe(`InitService`, (): void => {
 
       service.notifyIsAppConfigured();
       service.isAppConfigured$().subscribe({
-        error: (error): void => {
+        error(error): void {
           expect(true).toStrictEqual(false);
           doneCallback(error);
         },
-        next: (isTrue: boolean): void => {
+        next(isTrue: boolean): void {
           expect(isTrue).toStrictEqual(true);
           doneCallback();
         },

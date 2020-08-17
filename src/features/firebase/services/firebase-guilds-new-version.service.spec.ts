@@ -142,11 +142,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         expect.assertions(1);
 
         service.isReady$().subscribe({
-          error: (error): void => {
+          error(error): void {
             expect(error).toStrictEqual(new Error(`error`));
             done();
           },
-          next: (): void => {
+          next(): void {
             expect(true).toStrictEqual(false);
             done();
           },
@@ -165,11 +165,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         expect.assertions(1);
 
         service.isReady$().subscribe({
-          error: (): void => {
+          error(): void {
             expect(true).toStrictEqual(false);
             done();
           },
-          next: (result): void => {
+          next(result): void {
             expect(result).toStrictEqual([true]);
             done();
           },
@@ -207,9 +207,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       queryDocumentSnapshot = createMock<
         QueryDocumentSnapshot<IFirebaseGuildVFinal>
       >({
-        data: (): IFirebaseGuildVFinal => {
-          return firebaseGuild;
-        },
+        data: (): IFirebaseGuildVFinal => firebaseGuild,
       });
       forEachMock = jest
         .fn()
@@ -260,12 +258,12 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       expect.assertions(2);
 
       service.sendNewReleaseNotesToEachGuild$().subscribe({
-        error: (): void => {
+        error(): void {
           expect(isReady$Spy).toHaveBeenCalledTimes(1);
           expect(isReady$Spy).toHaveBeenCalledWith();
           done();
         },
-        next: (): void => {
+        next(): void {
           expect(true).toStrictEqual(false);
           done();
         },
@@ -282,11 +280,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         expect.assertions(1);
 
         service.sendNewReleaseNotesToEachGuild$().subscribe({
-          error: (): void => {
+          error(): void {
             expect(firebaseGuildsServiceGetGuildsSpy).not.toHaveBeenCalled();
             done();
           },
-          next: (): void => {
+          next(): void {
             expect(true).toStrictEqual(false);
             done();
           },
@@ -298,11 +296,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         expect.assertions(1);
 
         service.sendNewReleaseNotesToEachGuild$().subscribe({
-          error: (): void => {
+          error(): void {
             expect(firebaseGuildsServiceGetBatchSpy).not.toHaveBeenCalled();
             done();
           },
-          next: (): void => {
+          next(): void {
             expect(true).toStrictEqual(false);
             done();
           },
@@ -314,11 +312,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         expect.assertions(1);
 
         service.sendNewReleaseNotesToEachGuild$().subscribe({
-          error: (): void => {
+          error(): void {
             expect(updateMock).not.toHaveBeenCalled();
             done();
           },
-          next: (): void => {
+          next(): void {
             expect(true).toStrictEqual(false);
             done();
           },
@@ -330,11 +328,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         expect.assertions(1);
 
         service.sendNewReleaseNotesToEachGuild$().subscribe({
-          error: (): void => {
+          error(): void {
             expect(commitMock).not.toHaveBeenCalled();
             done();
           },
-          next: (): void => {
+          next(): void {
             expect(true).toStrictEqual(false);
             done();
           },
@@ -346,13 +344,13 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         expect.assertions(1);
 
         service.sendNewReleaseNotesToEachGuild$().subscribe({
-          error: (): void => {
+          error(): void {
             expect(
               sendNewReleaseNotesFromFirebaseGuildSpy
             ).not.toHaveBeenCalled();
             done();
           },
-          next: (): void => {
+          next(): void {
             expect(true).toStrictEqual(false);
             done();
           },
@@ -370,7 +368,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         expect.assertions(2);
 
         service.sendNewReleaseNotesToEachGuild$().subscribe({
-          error: (): void => {
+          error(): void {
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
             expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
               context: `FirebaseGuildsNewVersionService`,
@@ -378,7 +376,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             } as ILoggerLog);
             done();
           },
-          next: (): void => {
+          next(): void {
             expect(true).toStrictEqual(false);
             done();
           },
@@ -390,12 +388,12 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         expect.assertions(2);
 
         service.sendNewReleaseNotesToEachGuild$().subscribe({
-          error: (): void => {
+          error(): void {
             expect(firebaseGuildsServiceGetGuildsSpy).toHaveBeenCalledTimes(1);
             expect(firebaseGuildsServiceGetGuildsSpy).toHaveBeenCalledWith();
             done();
           },
-          next: (): void => {
+          next(): void {
             expect(true).toStrictEqual(false);
             done();
           },
@@ -414,11 +412,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           expect.assertions(1);
 
           service.sendNewReleaseNotesToEachGuild$().subscribe({
-            error: (): void => {
+            error(): void {
               expect(firebaseGuildsServiceGetBatchSpy).not.toHaveBeenCalled();
               done();
             },
-            next: (): void => {
+            next(): void {
               expect(true).toStrictEqual(false);
               done();
             },
@@ -430,11 +428,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           expect.assertions(1);
 
           service.sendNewReleaseNotesToEachGuild$().subscribe({
-            error: (): void => {
+            error(): void {
               expect(updateMock).not.toHaveBeenCalled();
               done();
             },
-            next: (): void => {
+            next(): void {
               expect(true).toStrictEqual(false);
               done();
             },
@@ -446,11 +444,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           expect.assertions(1);
 
           service.sendNewReleaseNotesToEachGuild$().subscribe({
-            error: (): void => {
+            error(): void {
               expect(commitMock).not.toHaveBeenCalled();
               done();
             },
-            next: (): void => {
+            next(): void {
               expect(true).toStrictEqual(false);
               done();
             },
@@ -462,13 +460,13 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           expect.assertions(1);
 
           service.sendNewReleaseNotesToEachGuild$().subscribe({
-            error: (): void => {
+            error(): void {
               expect(
                 sendNewReleaseNotesFromFirebaseGuildSpy
               ).not.toHaveBeenCalled();
               done();
             },
-            next: (): void => {
+            next(): void {
               expect(true).toStrictEqual(false);
               done();
             },
@@ -486,7 +484,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           expect.assertions(2);
 
           service.sendNewReleaseNotesToEachGuild$().subscribe({
-            error: (): void => {
+            error(): void {
               expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
               expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
                 context: `FirebaseGuildsNewVersionService`,
@@ -494,7 +492,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               } as ILoggerLog);
               done();
             },
-            next: (): void => {
+            next(): void {
               expect(true).toStrictEqual(false);
               done();
             },
@@ -506,12 +504,12 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           expect.assertions(2);
 
           service.sendNewReleaseNotesToEachGuild$().subscribe({
-            error: (): void => {
+            error(): void {
               expect(firebaseGuildsServiceGetBatchSpy).toHaveBeenCalledTimes(1);
               expect(firebaseGuildsServiceGetBatchSpy).toHaveBeenCalledWith();
               done();
             },
-            next: (): void => {
+            next(): void {
               expect(true).toStrictEqual(false);
               done();
             },
@@ -528,7 +526,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             expect.assertions(2);
 
             service.sendNewReleaseNotesToEachGuild$().subscribe({
-              error: (): void => {
+              error(): void {
                 expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
                 expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
                   context: `FirebaseGuildsNewVersionService`,
@@ -536,7 +534,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 } as ILoggerLog);
                 done();
               },
-              next: (): void => {
+              next(): void {
                 expect(true).toStrictEqual(false);
                 done();
               },
@@ -548,13 +546,13 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             expect.assertions(1);
 
             service.sendNewReleaseNotesToEachGuild$().subscribe({
-              error: (error): void => {
+              error(error): void {
                 expect(error).toStrictEqual(
                   new Error(`Firebase guilds batch not available`)
                 );
                 done();
               },
-              next: (): void => {
+              next(): void {
                 expect(true).toStrictEqual(false);
                 done();
               },
@@ -566,11 +564,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             expect.assertions(1);
 
             service.sendNewReleaseNotesToEachGuild$().subscribe({
-              error: (): void => {
+              error(): void {
                 expect(updateMock).not.toHaveBeenCalled();
                 done();
               },
-              next: (): void => {
+              next(): void {
                 expect(true).toStrictEqual(false);
                 done();
               },
@@ -582,11 +580,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             expect.assertions(1);
 
             service.sendNewReleaseNotesToEachGuild$().subscribe({
-              error: (): void => {
+              error(): void {
                 expect(commitMock).not.toHaveBeenCalled();
                 done();
               },
-              next: (): void => {
+              next(): void {
                 expect(true).toStrictEqual(false);
                 done();
               },
@@ -598,13 +596,13 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             expect.assertions(1);
 
             service.sendNewReleaseNotesToEachGuild$().subscribe({
-              error: (): void => {
+              error(): void {
                 expect(
                   sendNewReleaseNotesFromFirebaseGuildSpy
                 ).not.toHaveBeenCalled();
                 done();
               },
-              next: (): void => {
+              next(): void {
                 expect(true).toStrictEqual(false);
                 done();
               },
@@ -634,11 +632,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               expect.assertions(2);
 
               service.sendNewReleaseNotesToEachGuild$().subscribe({
-                error: (): void => {
+                error(): void {
                   expect(true).toStrictEqual(false);
                   done();
                 },
-                next: (): void => {
+                next(): void {
                   expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
                   expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                     context: `FirebaseGuildsNewVersionService`,
@@ -654,11 +652,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               expect.assertions(1);
 
               service.sendNewReleaseNotesToEachGuild$().subscribe({
-                error: (): void => {
+                error(): void {
                   expect(true).toStrictEqual(false);
                   done();
                 },
-                next: (): void => {
+                next(): void {
                   expect(updateMock).not.toHaveBeenCalled();
                   done();
                 },
@@ -670,11 +668,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               expect.assertions(1);
 
               service.sendNewReleaseNotesToEachGuild$().subscribe({
-                error: (): void => {
+                error(): void {
                   expect(true).toStrictEqual(false);
                   done();
                 },
-                next: (): void => {
+                next(): void {
                   expect(commitMock).not.toHaveBeenCalled();
                   done();
                 },
@@ -686,11 +684,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               expect.assertions(1);
 
               service.sendNewReleaseNotesToEachGuild$().subscribe({
-                error: (): void => {
+                error(): void {
                   expect(true).toStrictEqual(false);
                   done();
                 },
-                next: (): void => {
+                next(): void {
                   expect(
                     sendNewReleaseNotesFromFirebaseGuildSpy
                   ).not.toHaveBeenCalled();
@@ -706,9 +704,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuildVFinal>
               >({
-                data: (): IFirebaseGuildVFinal => {
-                  return firebaseGuild;
-                },
+                data: (): IFirebaseGuildVFinal => firebaseGuild,
                 exists: false,
               });
               forEachMock = jest
@@ -735,11 +731,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               expect.assertions(2);
 
               service.sendNewReleaseNotesToEachGuild$().subscribe({
-                error: (): void => {
+                error(): void {
                   expect(true).toStrictEqual(false);
                   done();
                 },
-                next: (): void => {
+                next(): void {
                   expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
                   expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                     context: `FirebaseGuildsNewVersionService`,
@@ -755,11 +751,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               expect.assertions(1);
 
               service.sendNewReleaseNotesToEachGuild$().subscribe({
-                error: (): void => {
+                error(): void {
                   expect(true).toStrictEqual(false);
                   done();
                 },
-                next: (): void => {
+                next(): void {
                   expect(updateMock).not.toHaveBeenCalled();
                   done();
                 },
@@ -771,11 +767,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               expect.assertions(1);
 
               service.sendNewReleaseNotesToEachGuild$().subscribe({
-                error: (): void => {
+                error(): void {
                   expect(true).toStrictEqual(false);
                   done();
                 },
-                next: (): void => {
+                next(): void {
                   expect(commitMock).not.toHaveBeenCalled();
                   done();
                 },
@@ -787,11 +783,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               expect.assertions(1);
 
               service.sendNewReleaseNotesToEachGuild$().subscribe({
-                error: (): void => {
+                error(): void {
                   expect(true).toStrictEqual(false);
                   done();
                 },
-                next: (): void => {
+                next(): void {
                   expect(
                     sendNewReleaseNotesFromFirebaseGuildSpy
                   ).not.toHaveBeenCalled();
@@ -807,9 +803,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuildVFinal>
               >({
-                data: (): IFirebaseGuildVFinal => {
-                  return firebaseGuild;
-                },
+                data: (): IFirebaseGuildVFinal => firebaseGuild,
                 exists: true,
               });
               forEachMock = jest
@@ -841,11 +835,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 expect.assertions(2);
 
                 service.sendNewReleaseNotesToEachGuild$().subscribe({
-                  error: (): void => {
+                  error(): void {
                     expect(true).toStrictEqual(false);
                     done();
                   },
-                  next: (): void => {
+                  next(): void {
                     expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
                     expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                       context: `FirebaseGuildsNewVersionService`,
@@ -861,11 +855,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 expect.assertions(1);
 
                 service.sendNewReleaseNotesToEachGuild$().subscribe({
-                  error: (): void => {
+                  error(): void {
                     expect(true).toStrictEqual(false);
                     done();
                   },
-                  next: (): void => {
+                  next(): void {
                     expect(updateMock).not.toHaveBeenCalled();
                     done();
                   },
@@ -877,11 +871,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 expect.assertions(1);
 
                 service.sendNewReleaseNotesToEachGuild$().subscribe({
-                  error: (): void => {
+                  error(): void {
                     expect(true).toStrictEqual(false);
                     done();
                   },
-                  next: (): void => {
+                  next(): void {
                     expect(commitMock).not.toHaveBeenCalled();
                     done();
                   },
@@ -893,11 +887,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 expect.assertions(1);
 
                 service.sendNewReleaseNotesToEachGuild$().subscribe({
-                  error: (): void => {
+                  error(): void {
                     expect(true).toStrictEqual(false);
                     done();
                   },
-                  next: (): void => {
+                  next(): void {
                     expect(
                       sendNewReleaseNotesFromFirebaseGuildSpy
                     ).not.toHaveBeenCalled();
@@ -917,7 +911,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 expect.assertions(2);
 
                 service.sendNewReleaseNotesToEachGuild$().subscribe({
-                  error: (): void => {
+                  error(): void {
                     expect(updateMock).toHaveBeenCalledTimes(1);
                     expect(updateMock).toHaveBeenCalledWith(
                       queryDocumentSnapshot.ref,
@@ -927,7 +921,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     );
                     done();
                   },
-                  next: (): void => {
+                  next(): void {
                     expect(true).toStrictEqual(false);
                     done();
                   },
@@ -939,7 +933,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 expect.assertions(2);
 
                 service.sendNewReleaseNotesToEachGuild$().subscribe({
-                  error: (): void => {
+                  error(): void {
                     expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
                     expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                       context: `FirebaseGuildsNewVersionService`,
@@ -947,7 +941,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     } as ILoggerLog);
                     done();
                   },
-                  next: (): void => {
+                  next(): void {
                     expect(true).toStrictEqual(false);
                     done();
                   },
@@ -959,12 +953,12 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 expect.assertions(2);
 
                 service.sendNewReleaseNotesToEachGuild$().subscribe({
-                  error: (): void => {
+                  error(): void {
                     expect(commitMock).toHaveBeenCalledTimes(1);
                     expect(commitMock).toHaveBeenCalledWith();
                     done();
                   },
-                  next: (): void => {
+                  next(): void {
                     expect(true).toStrictEqual(false);
                     done();
                   },
@@ -981,13 +975,13 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   expect.assertions(1);
 
                   service.sendNewReleaseNotesToEachGuild$().subscribe({
-                    error: (): void => {
+                    error(): void {
                       expect(
                         sendNewReleaseNotesFromFirebaseGuildSpy
                       ).not.toHaveBeenCalled();
                       done();
                     },
-                    next: (): void => {
+                    next(): void {
                       expect(true).toStrictEqual(false);
                       done();
                     },
@@ -1005,11 +999,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   expect.assertions(2);
 
                   service.sendNewReleaseNotesToEachGuild$().subscribe({
-                    error: (): void => {
+                    error(): void {
                       expect(true).toStrictEqual(false);
                       done();
                     },
-                    next: (): void => {
+                    next(): void {
                       expect(
                         sendNewReleaseNotesFromFirebaseGuildSpy
                       ).toHaveBeenCalledTimes(1);
@@ -1036,11 +1030,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     expect.assertions(2);
 
                     service.sendNewReleaseNotesToEachGuild$().subscribe({
-                      error: (): void => {
+                      error(): void {
                         expect(true).toStrictEqual(false);
                         done();
                       },
-                      next: (): void => {
+                      next(): void {
                         expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
                         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
                           context: `FirebaseGuildsNewVersionService`,
@@ -1056,11 +1050,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     expect.assertions(1);
 
                     service.sendNewReleaseNotesToEachGuild$().subscribe({
-                      error: (): void => {
+                      error(): void {
                         expect(true).toStrictEqual(false);
                         done();
                       },
-                      next: (): void => {
+                      next(): void {
                         expect(true).toStrictEqual(true);
                         done();
                       },
@@ -1077,9 +1071,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuildVFinal>
               >({
-                data: (): IFirebaseGuildVFinal => {
-                  return firebaseGuild;
-                },
+                data: (): IFirebaseGuildVFinal => firebaseGuild,
                 exists: true,
               });
               forEachMock = jest
@@ -1112,11 +1104,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 expect.assertions(2);
 
                 service.sendNewReleaseNotesToEachGuild$().subscribe({
-                  error: (): void => {
+                  error(): void {
                     expect(true).toStrictEqual(false);
                     done();
                   },
-                  next: (): void => {
+                  next(): void {
                     expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
                     expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                       context: `FirebaseGuildsNewVersionService`,
@@ -1132,11 +1124,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 expect.assertions(1);
 
                 service.sendNewReleaseNotesToEachGuild$().subscribe({
-                  error: (): void => {
+                  error(): void {
                     expect(true).toStrictEqual(false);
                     done();
                   },
-                  next: (): void => {
+                  next(): void {
                     expect(updateMock).not.toHaveBeenCalled();
                     done();
                   },
@@ -1148,11 +1140,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 expect.assertions(1);
 
                 service.sendNewReleaseNotesToEachGuild$().subscribe({
-                  error: (): void => {
+                  error(): void {
                     expect(true).toStrictEqual(false);
                     done();
                   },
-                  next: (): void => {
+                  next(): void {
                     expect(commitMock).not.toHaveBeenCalled();
                     done();
                   },
@@ -1164,11 +1156,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 expect.assertions(1);
 
                 service.sendNewReleaseNotesToEachGuild$().subscribe({
-                  error: (): void => {
+                  error(): void {
                     expect(true).toStrictEqual(false);
                     done();
                   },
-                  next: (): void => {
+                  next(): void {
                     expect(
                       sendNewReleaseNotesFromFirebaseGuildSpy
                     ).not.toHaveBeenCalled();
@@ -1188,7 +1180,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 expect.assertions(2);
 
                 service.sendNewReleaseNotesToEachGuild$().subscribe({
-                  error: (): void => {
+                  error(): void {
                     expect(updateMock).toHaveBeenCalledTimes(2);
                     expect(updateMock).toHaveBeenCalledWith(
                       queryDocumentSnapshot.ref,
@@ -1198,7 +1190,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     );
                     done();
                   },
-                  next: (): void => {
+                  next(): void {
                     expect(true).toStrictEqual(false);
                     done();
                   },
@@ -1210,7 +1202,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 expect.assertions(2);
 
                 service.sendNewReleaseNotesToEachGuild$().subscribe({
-                  error: (): void => {
+                  error(): void {
                     expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
                     expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                       context: `FirebaseGuildsNewVersionService`,
@@ -1218,7 +1210,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     } as ILoggerLog);
                     done();
                   },
-                  next: (): void => {
+                  next(): void {
                     expect(true).toStrictEqual(false);
                     done();
                   },
@@ -1230,12 +1222,12 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 expect.assertions(2);
 
                 service.sendNewReleaseNotesToEachGuild$().subscribe({
-                  error: (): void => {
+                  error(): void {
                     expect(commitMock).toHaveBeenCalledTimes(1);
                     expect(commitMock).toHaveBeenCalledWith();
                     done();
                   },
-                  next: (): void => {
+                  next(): void {
                     expect(true).toStrictEqual(false);
                     done();
                   },
@@ -1252,13 +1244,13 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   expect.assertions(1);
 
                   service.sendNewReleaseNotesToEachGuild$().subscribe({
-                    error: (): void => {
+                    error(): void {
                       expect(
                         sendNewReleaseNotesFromFirebaseGuildSpy
                       ).not.toHaveBeenCalled();
                       done();
                     },
-                    next: (): void => {
+                    next(): void {
                       expect(true).toStrictEqual(false);
                       done();
                     },
@@ -1276,11 +1268,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   expect.assertions(2);
 
                   service.sendNewReleaseNotesToEachGuild$().subscribe({
-                    error: (): void => {
+                    error(): void {
                       expect(true).toStrictEqual(false);
                       done();
                     },
-                    next: (): void => {
+                    next(): void {
                       expect(
                         sendNewReleaseNotesFromFirebaseGuildSpy
                       ).toHaveBeenCalledTimes(2);
@@ -1307,11 +1299,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     expect.assertions(2);
 
                     service.sendNewReleaseNotesToEachGuild$().subscribe({
-                      error: (): void => {
+                      error(): void {
                         expect(true).toStrictEqual(false);
                         done();
                       },
-                      next: (): void => {
+                      next(): void {
                         expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
                         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
                           context: `FirebaseGuildsNewVersionService`,
@@ -1327,11 +1319,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     expect.assertions(1);
 
                     service.sendNewReleaseNotesToEachGuild$().subscribe({
-                      error: (): void => {
+                      error(): void {
                         expect(true).toStrictEqual(false);
                         done();
                       },
-                      next: (): void => {
+                      next(): void {
                         expect(true).toStrictEqual(true);
                         done();
                       },
