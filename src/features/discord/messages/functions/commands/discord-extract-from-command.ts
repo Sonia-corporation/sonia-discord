@@ -118,31 +118,24 @@ export function discordExtractFromCommand({
 
   if (isPrefix(prefixes)) {
     if (isCommand(commands)) {
-      const prefix: string = prefixes;
-      const command: DiscordMessageCommandEnum = commands;
-
       return finder({
-        command,
+        command: commands,
         message: formattedMessage,
-        prefix,
+        prefix: prefixes,
       });
     }
-
-    const prefix: string = prefixes;
 
     return extractFromCommandWithMultipleCommands({
       commands,
       finder,
       message: formattedMessage,
-      prefix,
+      prefix: prefixes,
     });
   }
 
   if (isCommand(commands)) {
-    const command: DiscordMessageCommandEnum = commands;
-
     return extractFromCommandWithMultiplePrefixes({
-      command,
+      command: commands,
       finder,
       message: formattedMessage,
       prefixes,
