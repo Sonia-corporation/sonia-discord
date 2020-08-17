@@ -52,7 +52,7 @@ export class ConfigService {
 
       LoggerService.getInstance().log({
         context: configUpdateString.context,
-        message: message,
+        message,
       });
 
       return configUpdateString.newValue;

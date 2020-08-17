@@ -389,7 +389,7 @@ describe(`FirebaseGuildsService`, (): void => {
       service = new FirebaseGuildsService();
       querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>();
       collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
-        get: (): Promise<QuerySnapshot<IFirebaseGuild>> => {
+        get(): Promise<QuerySnapshot<IFirebaseGuild>> {
           return Promise.resolve(querySnapshot);
         },
       });
@@ -451,7 +451,7 @@ describe(`FirebaseGuildsService`, (): void => {
         size: 8,
       });
       collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
-        get: (): Promise<QuerySnapshot<IFirebaseGuild>> => {
+        get(): Promise<QuerySnapshot<IFirebaseGuild>> {
           return Promise.resolve(querySnapshot);
         },
       });
@@ -900,11 +900,11 @@ describe(`FirebaseGuildsService`, (): void => {
       expect.assertions(1);
 
       service.isReady$().subscribe({
-        error: (error): void => {
+        error(error): void {
           expect(true).toStrictEqual(false);
           doneCallback(error);
         },
-        next: (isTrue: boolean): void => {
+        next(isTrue: boolean): void {
           expect(isTrue).toStrictEqual(false);
           doneCallback();
         },
@@ -917,11 +917,11 @@ describe(`FirebaseGuildsService`, (): void => {
 
         service.notifyIsReady();
         service.isReady$().subscribe({
-          error: (error): void => {
+          error(error): void {
             expect(true).toStrictEqual(false);
             doneCallback(error);
           },
-          next: (isTrue: boolean): void => {
+          next(isTrue: boolean): void {
             expect(isTrue).toStrictEqual(true);
             doneCallback();
           },
@@ -961,11 +961,11 @@ describe(`FirebaseGuildsService`, (): void => {
 
       service.notifyIsReady();
       service.isReady$().subscribe({
-        error: (error): void => {
+        error(error): void {
           expect(true).toStrictEqual(false);
           doneCallback(error);
         },
-        next: (isTrue: boolean): void => {
+        next(isTrue: boolean): void {
           expect(isTrue).toStrictEqual(true);
           doneCallback();
         },
@@ -985,11 +985,11 @@ describe(`FirebaseGuildsService`, (): void => {
       expect.assertions(1);
 
       service.onGuildsChange$().subscribe({
-        error: (error): void => {
+        error(error): void {
           expect(true).toStrictEqual(false);
           doneCallback(error);
         },
-        next: (firebaseGuilds: IFirebaseGuild[]): void => {
+        next(firebaseGuilds: IFirebaseGuild[]): void {
           expect(firebaseGuilds).toStrictEqual([]);
           doneCallback();
         },
@@ -1002,11 +1002,11 @@ describe(`FirebaseGuildsService`, (): void => {
 
         service.notifyOnGuildsChange(firebaseGuilds);
         service.onGuildsChange$().subscribe({
-          error: (error): void => {
+          error(error): void {
             expect(true).toStrictEqual(false);
             doneCallback(error);
           },
-          next: (firebaseGuilds: IFirebaseGuild[]): void => {
+          next(firebaseGuilds: IFirebaseGuild[]): void {
             expect(firebaseGuilds).toStrictEqual(firebaseGuilds);
             doneCallback();
           },
@@ -1028,11 +1028,11 @@ describe(`FirebaseGuildsService`, (): void => {
 
       service.notifyOnGuildsChange(firebaseGuilds);
       service.onGuildsChange$().subscribe({
-        error: (error): void => {
+        error(error): void {
           expect(true).toStrictEqual(false);
           doneCallback(error);
         },
-        next: (result: IFirebaseGuild[]): void => {
+        next(result: IFirebaseGuild[]): void {
           expect(result).toStrictEqual(firebaseGuilds);
           doneCallback();
         },

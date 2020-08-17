@@ -424,7 +424,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuildVFinal>
               >({
-                data: (): IFirebaseGuildVFinal => {
+                data(): IFirebaseGuildVFinal {
                   return createMock<IFirebaseGuildVFinal>({
                     version: FirebaseGuildVersionEnum.V2,
                   });
@@ -487,7 +487,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuildVFinal>
               >({
-                data: (): IFirebaseGuildVFinal => {
+                data(): IFirebaseGuildVFinal {
                   return createMock<IFirebaseGuildVFinal>({
                     version: FirebaseGuildVersionEnum.V2,
                   });
@@ -557,7 +557,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuild>
               >({
-                data: (): IFirebaseGuildV1 => {
+                data(): IFirebaseGuildV1 {
                   return firebaseGuildV1;
                 },
                 exists: true,
@@ -635,7 +635,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuild>
               >({
-                data: (): IFirebaseGuildV1 => {
+                data(): IFirebaseGuildV1 {
                   return firebaseGuildV1;
                 },
                 exists: true,
@@ -727,11 +727,11 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
       expect.assertions(1);
 
       service.hasFinished$().subscribe({
-        error: (error): void => {
+        error(error): void {
           expect(true).toStrictEqual(false);
           doneCallback(error);
         },
-        next: (isTrue: boolean): void => {
+        next(isTrue: boolean): void {
           expect(isTrue).toStrictEqual(false);
           doneCallback();
         },
@@ -744,11 +744,11 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
         service.notifyHasFinished();
         service.hasFinished$().subscribe({
-          error: (error): void => {
+          error(error): void {
             expect(true).toStrictEqual(false);
             doneCallback(error);
           },
-          next: (isTrue: boolean): void => {
+          next(isTrue: boolean): void {
             expect(isTrue).toStrictEqual(true);
             doneCallback();
           },
@@ -788,11 +788,11 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
       service.notifyHasFinished();
       service.hasFinished$().subscribe({
-        error: (error): void => {
+        error(error): void {
           expect(true).toStrictEqual(false);
           doneCallback(error);
         },
-        next: (isTrue: boolean): void => {
+        next(isTrue: boolean): void {
           expect(isTrue).toStrictEqual(true);
           doneCallback();
         },
@@ -823,11 +823,11 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
         expect.assertions(1);
 
         service.isReady$().subscribe({
-          error: (error): void => {
+          error(error): void {
             expect(error).toStrictEqual(new Error(`error`));
             done();
           },
-          next: (): void => {
+          next(): void {
             expect(true).toStrictEqual(false);
             done();
           },
@@ -849,11 +849,11 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
           expect.assertions(1);
 
           service.isReady$().subscribe({
-            error: (error): void => {
+            error(error): void {
               expect(error).toStrictEqual(new Error(`error`));
               done();
             },
-            next: (): void => {
+            next(): void {
               expect(true).toStrictEqual(false);
               done();
             },
@@ -870,11 +870,11 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
           expect.assertions(1);
 
           service.isReady$().subscribe({
-            error: (): void => {
+            error(): void {
               expect(true).toStrictEqual(false);
               done();
             },
-            next: (result): void => {
+            next(result): void {
               expect(result).toStrictEqual([true, true]);
               done();
             },

@@ -87,7 +87,7 @@ export class DiscordMessageErrorService extends AbstractService {
   ): void {
     DiscordGuildSoniaService.getInstance().sendMessageToChannel({
       channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-      messageResponse: messageResponse,
+      messageResponse,
     });
   }
 
