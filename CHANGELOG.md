@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.69.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.69.0...1.69.1) (2020-08-17)
+
+
+### :bug: Bug Fixes
+
+* **release-notes:** continue to send the release notes when a new version is available even when a fail occur on another guild ([1e5e85a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/1e5e85aaa89b9f933c35e3b357890ecd9d314056)), closes [#776](https://github.com/Sonia-corporation/il-est-midi-discord/issues/776)
+
 # [1.69.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.68.0...1.69.0) (2020-08-16)
 
 
