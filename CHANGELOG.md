@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.70.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.69.1...1.70.0) (2020-08-17)
+
+
+### :rocket: Features
+
+* **command-feature:** respond an embed error message when the feature name is empty ([533091c](https://github.com/Sonia-corporation/il-est-midi-discord/commit/533091c7daa92dbd424b466a90e7dade61975b59))
+
 ## [1.69.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.69.0...1.69.1) (2020-08-17)
 
 
