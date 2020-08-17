@@ -1,27 +1,22 @@
 import _ from "lodash";
 import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
-import { IDiscordGetCommandFirstArgumentData } from "../../interfaces/commands/discord-get-command-first-argument-data";
-import { discordGetCompleteCommandRegexp } from "./discord-get-complete-command-regexp";
+import { IDiscordGetCommandAndPrefixData } from "../../interfaces/commands/discord-get-command-and-prefix-data";
 import { discordGetFormattedMessage } from "./discord-get-formatted-message";
-import xregexp from "xregexp";
+import { discordGetThisCommandWithPrefix } from "./discord-get-this-command-with-prefix";
 
-function getFirstArgument(data: {
+function getCommandAndPrefix(data: {
   command: DiscordMessageCommandEnum;
   message: string;
   prefix: string;
 }): string | null {
-  const argument1: string | undefined = xregexp.exec(
-    data.message,
-    discordGetCompleteCommandRegexp({
-      command: data.command,
-      prefix: data.prefix,
-    })
-  )?.argument1;
-
-  return _.isNil(argument1) ? null : argument1;
+  return discordGetThisCommandWithPrefix({
+    command: data.command,
+    message: data.message,
+    prefix: data.prefix,
+  });
 }
 
-function getFirstArgumentFromMultipleCommands(data: {
+function getCommandAndPrefixFromMultipleCommands(data: {
   commands: DiscordMessageCommandEnum[];
   message: string;
   prefix: string;
@@ -31,7 +26,7 @@ function getFirstArgumentFromMultipleCommands(data: {
   _.forEach(data.commands, (command: Readonly<DiscordMessageCommandEnum>):
     | false
     | void => {
-    firstArgument = getFirstArgument({
+    firstArgument = getCommandAndPrefix({
       command,
       message: data.message,
       prefix: data.prefix,
@@ -45,7 +40,7 @@ function getFirstArgumentFromMultipleCommands(data: {
   return firstArgument;
 }
 
-function getFirstArgumentFromMultiplePrefixes(data: {
+function getCommandAndPrefixFromMultiplePrefixes(data: {
   command: DiscordMessageCommandEnum;
   message: string;
   prefixes: string[];
@@ -53,7 +48,7 @@ function getFirstArgumentFromMultiplePrefixes(data: {
   let firstArgument: string | null = null;
 
   _.forEach(data.prefixes, (prefix: Readonly<string>): false | void => {
-    firstArgument = getFirstArgument({
+    firstArgument = getCommandAndPrefix({
       command: data.command,
       message: data.message,
       prefix,
@@ -67,7 +62,7 @@ function getFirstArgumentFromMultiplePrefixes(data: {
   return firstArgument;
 }
 
-function getFirstArgumentFromMultiplePrefixesAndCommands(data: {
+function getCommandAndPrefixFromMultiplePrefixesAndCommands(data: {
   commands: DiscordMessageCommandEnum[];
   message: string;
   prefixes: string[];
@@ -79,7 +74,7 @@ function getFirstArgumentFromMultiplePrefixesAndCommands(data: {
       | false
       | void => {
       if (_.isNil(firstArgument)) {
-        firstArgument = getFirstArgument({
+        firstArgument = getCommandAndPrefix({
           command,
           message: data.message,
           prefix,
@@ -95,8 +90,8 @@ function getFirstArgumentFromMultiplePrefixesAndCommands(data: {
   return firstArgument;
 }
 
-export function discordGetCommandFirstArgument(
-  data: Readonly<IDiscordGetCommandFirstArgumentData>
+export function discordGetCommandAndPrefix(
+  data: Readonly<IDiscordGetCommandAndPrefixData>
 ): string | null {
   const formattedMessage: string = discordGetFormattedMessage(data.message);
 
@@ -105,7 +100,7 @@ export function discordGetCommandFirstArgument(
       const prefix: string = data.prefixes;
       const command: DiscordMessageCommandEnum = data.commands;
 
-      return getFirstArgument({
+      return getCommandAndPrefix({
         command,
         message: formattedMessage,
         prefix,
@@ -114,7 +109,7 @@ export function discordGetCommandFirstArgument(
 
     const prefix: string = data.prefixes;
 
-    return getFirstArgumentFromMultipleCommands({
+    return getCommandAndPrefixFromMultipleCommands({
       commands: data.commands,
       message: formattedMessage,
       prefix,
@@ -124,14 +119,14 @@ export function discordGetCommandFirstArgument(
   if (_.isString(data.commands)) {
     const command: DiscordMessageCommandEnum = data.commands;
 
-    return getFirstArgumentFromMultiplePrefixes({
+    return getCommandAndPrefixFromMultiplePrefixes({
       command,
       message: formattedMessage,
       prefixes: data.prefixes,
     });
   }
 
-  return getFirstArgumentFromMultiplePrefixesAndCommands({
+  return getCommandAndPrefixFromMultiplePrefixesAndCommands({
     commands: data.commands,
     message: formattedMessage,
     prefixes: data.prefixes,
