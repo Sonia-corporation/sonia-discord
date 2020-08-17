@@ -4,7 +4,12 @@ import { IDiscordExtractFromCommandCallbackData } from "../../interfaces/command
 import { IDiscordExtractFromCommandData } from "../../interfaces/commands/discord-extract-from-command-data";
 import { discordGetFormattedMessage } from "./discord-get-formatted-message";
 
-function getCommandAndPrefixFromMultipleCommands(data: {
+function getCommandAndPrefixFromMultipleCommands({
+  commands,
+  finder,
+  message,
+  prefix,
+}: {
   commands: DiscordMessageCommandEnum[];
   finder: (
     data: Readonly<IDiscordExtractFromCommandCallbackData>
@@ -14,37 +19,12 @@ function getCommandAndPrefixFromMultipleCommands(data: {
 }): string | null {
   let firstArgument: string | null = null;
 
-  _.forEach(data.commands, (command: Readonly<DiscordMessageCommandEnum>):
+  _.forEach(commands, (command: Readonly<DiscordMessageCommandEnum>):
     | false
     | void => {
-    firstArgument = data.finder({
+    firstArgument = finder({
       command,
-      message: data.message,
-      prefix: data.prefix,
-    });
-
-    if (!_.isNil(firstArgument)) {
-      return false;
-    }
-  });
-
-  return firstArgument;
-}
-
-function getCommandAndPrefixFromMultiplePrefixes(data: {
-  command: DiscordMessageCommandEnum;
-  finder: (
-    data: Readonly<IDiscordExtractFromCommandCallbackData>
-  ) => string | null;
-  message: string;
-  prefixes: string[];
-}): string | null {
-  let firstArgument: string | null = null;
-
-  _.forEach(data.prefixes, (prefix: Readonly<string>): false | void => {
-    firstArgument = data.finder({
-      command: data.command,
-      message: data.message,
+      message,
       prefix,
     });
 
@@ -56,7 +36,42 @@ function getCommandAndPrefixFromMultiplePrefixes(data: {
   return firstArgument;
 }
 
-function getCommandAndPrefixFromMultiplePrefixesAndCommands(data: {
+function getCommandAndPrefixFromMultiplePrefixes({
+  command,
+  finder,
+  message,
+  prefixes,
+}: {
+  command: DiscordMessageCommandEnum;
+  finder: (
+    data: Readonly<IDiscordExtractFromCommandCallbackData>
+  ) => string | null;
+  message: string;
+  prefixes: string[];
+}): string | null {
+  let firstArgument: string | null = null;
+
+  _.forEach(prefixes, (prefix: Readonly<string>): false | void => {
+    firstArgument = finder({
+      command,
+      message,
+      prefix,
+    });
+
+    if (!_.isNil(firstArgument)) {
+      return false;
+    }
+  });
+
+  return firstArgument;
+}
+
+function getCommandAndPrefixFromMultiplePrefixesAndCommands({
+  commands,
+  finder,
+  message,
+  prefixes,
+}: {
   commands: DiscordMessageCommandEnum[];
   finder: (
     data: Readonly<IDiscordExtractFromCommandCallbackData>
@@ -66,14 +81,14 @@ function getCommandAndPrefixFromMultiplePrefixesAndCommands(data: {
 }): string | null {
   let firstArgument: string | null = null;
 
-  _.forEach(data.prefixes, (prefix: Readonly<string>): false | void => {
-    _.forEach(data.commands, (command: Readonly<DiscordMessageCommandEnum>):
+  _.forEach(prefixes, (prefix: Readonly<string>): false | void => {
+    _.forEach(commands, (command: Readonly<DiscordMessageCommandEnum>):
       | false
       | void => {
       if (_.isNil(firstArgument)) {
-        firstArgument = data.finder({
+        firstArgument = finder({
           command,
-          message: data.message,
+          message,
           prefix,
         });
 
