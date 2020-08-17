@@ -253,7 +253,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         .mockImplementation();
       sendNewReleaseNotesFromFirebaseGuildSpy = jest
         .spyOn(service, `sendNewReleaseNotesFromFirebaseGuild`)
-        .mockResolvedValue();
+        .mockResolvedValue(createMock<Message>());
     });
 
     it(`should wait that everything is ready`, (done): void => {
@@ -1021,6 +1021,53 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   });
                   isReady$.next([true]);
                 });
+
+                /**
+                 * @todo fix the damn test alright
+                 */
+                describe.skip(`when the release notes message sending failed for the guild`, (): void => {
+                  beforeEach((): void => {
+                    sendNewReleaseNotesFromFirebaseGuildSpy.mockRejectedValue(
+                      new Error(`sendNewReleaseNotesFromFirebaseGuild error`)
+                    );
+                  });
+
+                  it(`should log about the fail of the release notes message sending`, (done): void => {
+                    expect.assertions(2);
+
+                    service.sendNewReleaseNotesToEachGuild$().subscribe({
+                      error: (): void => {
+                        expect(true).toStrictEqual(false);
+                        done();
+                      },
+                      next: (): void => {
+                        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+                        expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
+                          context: `FirebaseGuildsNewVersionService`,
+                          message: `text-release notes message sending failed for guild value-dummy-id`,
+                        } as ILoggerLog);
+                        done();
+                      },
+                    });
+                    isReady$.next([true]);
+                  });
+
+                  it(`should not throw an error`, (done): void => {
+                    expect.assertions(1);
+
+                    service.sendNewReleaseNotesToEachGuild$().subscribe({
+                      error: (): void => {
+                        expect(true).toStrictEqual(false);
+                        done();
+                      },
+                      next: (): void => {
+                        expect(true).toStrictEqual(true);
+                        done();
+                      },
+                    });
+                    isReady$.next([true]);
+                  });
+                });
               });
             });
           });
@@ -1244,6 +1291,53 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     },
                   });
                   isReady$.next([true]);
+                });
+
+                /**
+                 * @todo fix the damn test alright
+                 */
+                describe.skip(`when the release notes message sending failed for the guilds`, (): void => {
+                  beforeEach((): void => {
+                    sendNewReleaseNotesFromFirebaseGuildSpy.mockRejectedValue(
+                      new Error(`sendNewReleaseNotesFromFirebaseGuild error`)
+                    );
+                  });
+
+                  it(`should log about the fail of the release notes message sending`, (done): void => {
+                    expect.assertions(2);
+
+                    service.sendNewReleaseNotesToEachGuild$().subscribe({
+                      error: (): void => {
+                        expect(true).toStrictEqual(false);
+                        done();
+                      },
+                      next: (): void => {
+                        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
+                        expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
+                          context: `FirebaseGuildsNewVersionService`,
+                          message: `text-release notes message sending failed for guild value-dummy-id`,
+                        } as ILoggerLog);
+                        done();
+                      },
+                    });
+                    isReady$.next([true]);
+                  });
+
+                  it(`should not throw an error`, (done): void => {
+                    expect.assertions(1);
+
+                    service.sendNewReleaseNotesToEachGuild$().subscribe({
+                      error: (): void => {
+                        expect(true).toStrictEqual(false);
+                        done();
+                      },
+                      next: (): void => {
+                        expect(true).toStrictEqual(true);
+                        done();
+                      },
+                    });
+                    isReady$.next([true]);
+                  });
                 });
               });
             });
@@ -2138,6 +2232,22 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 getRandomValueFromEnumSpy.mockReturnValue(
                   FirebaseGuildNewVersionResponseEnum.A_QUEEN_HAS_TO_WORKS
                 );
+              });
+
+              it(`should log about sending the release notes message on the general channel`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
+                ).rejects.toThrow(new Error(`send error`));
+
+                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+                  context: `FirebaseGuildsNewVersionService`,
+                  message: `text-sending release notes message for guild value-dummy-id on general channel`,
+                } as ILoggerLog);
               });
 
               it(`should send the message on the Discord guild primary channel with the random response`, async (): Promise<
