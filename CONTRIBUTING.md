@@ -200,6 +200,7 @@ Must be one of the following:
 * **perf**    : A code change that improves performance
 * **test**    : Adding missing tests or correcting existing tests
 * **build**   : Changes that affect the build system, CI configuration or external dependencies
+* **docs**    : Changes that affect the documentation
 * **chore**   : Anything else
 
 ### Scope
