@@ -90,9 +90,7 @@ export class LoggerService {
 
   public getStringArray<T = string>(array: Readonly<T[]>): string {
     return `[ ${_.join(
-      _.map(array, (value: Readonly<T>): string => {
-        return wrapInQuotes<T>(value);
-      }),
+      _.map(array, (value: Readonly<T>): string => wrapInQuotes<T>(value)),
       `, `
     )} ]`;
   }

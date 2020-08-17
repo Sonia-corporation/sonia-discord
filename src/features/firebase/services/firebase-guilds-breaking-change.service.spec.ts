@@ -424,11 +424,10 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuildVFinal>
               >({
-                data(): IFirebaseGuildVFinal {
-                  return createMock<IFirebaseGuildVFinal>({
+                data: (): IFirebaseGuildVFinal =>
+                  createMock<IFirebaseGuildVFinal>({
                     version: FirebaseGuildVersionEnum.V2,
-                  });
-                },
+                  }),
                 exists: true,
               });
               forEachMock = jest
@@ -487,11 +486,10 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuildVFinal>
               >({
-                data(): IFirebaseGuildVFinal {
-                  return createMock<IFirebaseGuildVFinal>({
+                data: (): IFirebaseGuildVFinal =>
+                  createMock<IFirebaseGuildVFinal>({
                     version: FirebaseGuildVersionEnum.V2,
-                  });
-                },
+                  }),
                 exists: true,
               });
               forEachMock = jest
@@ -557,9 +555,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuild>
               >({
-                data(): IFirebaseGuildV1 {
-                  return firebaseGuildV1;
-                },
+                data: (): IFirebaseGuildV1 => firebaseGuildV1,
                 exists: true,
               });
               forEachMock = jest
@@ -635,9 +631,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuild>
               >({
-                data(): IFirebaseGuildV1 {
-                  return firebaseGuildV1;
-                },
+                data: (): IFirebaseGuildV1 => firebaseGuildV1,
                 exists: true,
               });
               forEachMock = jest

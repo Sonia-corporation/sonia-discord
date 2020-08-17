@@ -51,9 +51,9 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
   public hasFinished(): Promise<true> {
     return this.hasFinished$()
       .pipe(
-        filter((hasFinished: Readonly<boolean>): boolean => {
-          return _.isEqual(hasFinished, true);
-        }),
+        filter((hasFinished: Readonly<boolean>): boolean =>
+          _.isEqual(hasFinished, true)
+        ),
         take(1),
         map((): true => true)
       )
@@ -85,9 +85,8 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
         },
       }),
       mergeMap(
-        (): Promise<QuerySnapshot<IFirebaseGuild>> => {
-          return FirebaseGuildsService.getInstance().getGuilds();
-        }
+        (): Promise<QuerySnapshot<IFirebaseGuild>> =>
+          FirebaseGuildsService.getInstance().getGuilds()
       ),
       mergeMap(
         (

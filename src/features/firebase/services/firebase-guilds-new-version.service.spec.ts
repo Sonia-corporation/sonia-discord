@@ -207,9 +207,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       queryDocumentSnapshot = createMock<
         QueryDocumentSnapshot<IFirebaseGuildVFinal>
       >({
-        data(): IFirebaseGuildVFinal {
-          return firebaseGuild;
-        },
+        data: (): IFirebaseGuildVFinal => firebaseGuild,
       });
       forEachMock = jest
         .fn()
@@ -706,9 +704,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuildVFinal>
               >({
-                data(): IFirebaseGuildVFinal {
-                  return firebaseGuild;
-                },
+                data: (): IFirebaseGuildVFinal => firebaseGuild,
                 exists: false,
               });
               forEachMock = jest
@@ -807,9 +803,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuildVFinal>
               >({
-                data(): IFirebaseGuildVFinal {
-                  return firebaseGuild;
-                },
+                data: (): IFirebaseGuildVFinal => firebaseGuild,
                 exists: true,
               });
               forEachMock = jest
@@ -1077,9 +1071,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               queryDocumentSnapshot = createMock<
                 QueryDocumentSnapshot<IFirebaseGuildVFinal>
               >({
-                data(): IFirebaseGuildVFinal {
-                  return firebaseGuild;
-                },
+                data: (): IFirebaseGuildVFinal => firebaseGuild,
                 exists: true,
               });
               forEachMock = jest

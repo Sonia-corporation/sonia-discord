@@ -389,9 +389,8 @@ describe(`FirebaseGuildsService`, (): void => {
       service = new FirebaseGuildsService();
       querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>();
       collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
-        get(): Promise<QuerySnapshot<IFirebaseGuild>> {
-          return Promise.resolve(querySnapshot);
-        },
+        get: (): Promise<QuerySnapshot<IFirebaseGuild>> =>
+          Promise.resolve(querySnapshot),
       });
 
       getCollectionReferenceSpy = jest
@@ -451,9 +450,8 @@ describe(`FirebaseGuildsService`, (): void => {
         size: 8,
       });
       collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
-        get(): Promise<QuerySnapshot<IFirebaseGuild>> {
-          return Promise.resolve(querySnapshot);
-        },
+        get: (): Promise<QuerySnapshot<IFirebaseGuild>> =>
+          Promise.resolve(querySnapshot),
       });
 
       getCollectionReferenceSpy = jest

@@ -210,6 +210,10 @@ rules:
     - error
     - always
     - avoidExplicitReturnArrows: true
+  arrow-body-style:
+    - error
+    - as-needed
+    - requireReturnForObjectLiteral: true
 overrides:
   - files:
       - '*.ts'

@@ -143,9 +143,8 @@ export class DiscordMessageService extends AbstractService {
       .then(
         (
           discordMessageResponse: Readonly<IDiscordMessageResponse>
-        ): Promise<void> => {
-          return this._sendMessage(anyDiscordMessage, discordMessageResponse);
-        }
+        ): Promise<void> =>
+          this._sendMessage(anyDiscordMessage, discordMessageResponse)
       )
       .catch(
         (error: Readonly<Error>): Promise<void> => {
@@ -180,9 +179,8 @@ export class DiscordMessageService extends AbstractService {
       .then(
         (
           discordMessageResponse: Readonly<IDiscordMessageResponse>
-        ): Promise<void> => {
-          return this._sendMessage(anyDiscordMessage, discordMessageResponse);
-        }
+        ): Promise<void> =>
+          this._sendMessage(anyDiscordMessage, discordMessageResponse)
       )
       .catch(
         (error: Readonly<Error>): Promise<void> => {

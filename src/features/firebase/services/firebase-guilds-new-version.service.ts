@@ -138,8 +138,8 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
               ...firebaseGuilds.map(
                 (
                   firebaseGuild: Readonly<IFirebaseGuild>
-                ): Promise<Message | void> => {
-                  return this.sendNewReleaseNotesFromFirebaseGuild(
+                ): Promise<Message | void> =>
+                  this.sendNewReleaseNotesFromFirebaseGuild(
                     firebaseGuild
                   ).catch(
                     (): Promise<void> => {
@@ -154,8 +154,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
                       return Promise.resolve();
                     }
-                  );
-                }
+                  )
               )
             );
           }
@@ -219,15 +218,9 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
         return batch
           .commit()
           .then(
-            (): Promise<IFirebaseGuild[]> => {
-              return Promise.resolve(firebaseGuilds);
-            }
+            (): Promise<IFirebaseGuild[]> => Promise.resolve(firebaseGuilds)
           )
-          .catch(
-            (error: Error): Promise<void> => {
-              return Promise.reject(error);
-            }
-          );
+          .catch((error: Error): Promise<void> => Promise.reject(error));
       }
 
       LoggerService.getInstance().log({
