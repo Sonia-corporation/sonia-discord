@@ -136,9 +136,24 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
             return forkJoin(
               ...firebaseGuilds.map(
-                (firebaseGuild: IFirebaseGuild): Promise<Message | void> => {
+                (
+                  firebaseGuild: Readonly<IFirebaseGuild>
+                ): Promise<Message | void> => {
                   return this.sendNewReleaseNotesFromFirebaseGuild(
                     firebaseGuild
+                  ).catch(
+                    (): Promise<void> => {
+                      LoggerService.getInstance().error({
+                        context: this._serviceName,
+                        message: ChalkService.getInstance().text(
+                          `release notes message sending failed for guild ${ChalkService.getInstance().value(
+                            firebaseGuild.id
+                          )}`
+                        ),
+                      });
+
+                      return Promise.resolve();
+                    }
                   );
                 }
               )
@@ -294,6 +309,15 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           enhanceMessageResponse.response =
             getRandomValueFromEnum(FirebaseGuildNewVersionResponseEnum) ||
             `Cool!`;
+
+          LoggerService.getInstance().debug({
+            context: this._serviceName,
+            message: ChalkService.getInstance().text(
+              `sending release notes message for guild ${ChalkService.getInstance().value(
+                guildId
+              )} on general channel`
+            ),
+          });
 
           return textChannel
             .send(
