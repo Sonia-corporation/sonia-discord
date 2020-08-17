@@ -4,7 +4,7 @@ import { IDiscordExtractFromCommandCallbackData } from "../../interfaces/command
 import { IDiscordExtractFromCommandData } from "../../interfaces/commands/discord-extract-from-command-data";
 import { discordGetFormattedMessage } from "./discord-get-formatted-message";
 
-function getCommandAndPrefixFromMultipleCommands({
+function extracrFromCommandWithFromMultipleCommands({
   commands,
   finder,
   message,
@@ -36,7 +36,7 @@ function getCommandAndPrefixFromMultipleCommands({
   return firstArgument;
 }
 
-function getCommandAndPrefixFromMultiplePrefixes({
+function extractFromCommandWithMultiplePrefixes({
   command,
   finder,
   message,
@@ -66,7 +66,7 @@ function getCommandAndPrefixFromMultiplePrefixes({
   return firstArgument;
 }
 
-function getCommandAndPrefixFromMultiplePrefixesAndCommands({
+function extractFromCommandWithMultiplePrefixesAndCommands({
   commands,
   finder,
   message,
@@ -143,7 +143,7 @@ export function discordExtractFromCommand({
 
     const prefix: string = prefixes;
 
-    return getCommandAndPrefixFromMultipleCommands({
+    return extracrFromCommandWithFromMultipleCommands({
       commands,
       finder,
       message: formattedMessage,
@@ -154,7 +154,7 @@ export function discordExtractFromCommand({
   if (isCommand(commands)) {
     const command: DiscordMessageCommandEnum = commands;
 
-    return getCommandAndPrefixFromMultiplePrefixes({
+    return extractFromCommandWithMultiplePrefixes({
       command,
       finder,
       message: formattedMessage,
@@ -162,7 +162,7 @@ export function discordExtractFromCommand({
     });
   }
 
-  return getCommandAndPrefixFromMultiplePrefixesAndCommands({
+  return extractFromCommandWithMultiplePrefixesAndCommands({
     commands,
     finder,
     message: formattedMessage,
