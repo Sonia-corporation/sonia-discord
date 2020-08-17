@@ -421,11 +421,11 @@ describe(`DiscordAuthenticationService`, (): void => {
       expect.assertions(1);
 
       service.isAuthenticated$().subscribe({
-        error: (error): void => {
+        error(error): void {
           expect(true).toStrictEqual(false);
           doneCallback(error);
         },
-        next: (isTrue: boolean): void => {
+        next(isTrue: boolean): void {
           expect(isTrue).toStrictEqual(false);
           doneCallback();
         },
@@ -438,11 +438,11 @@ describe(`DiscordAuthenticationService`, (): void => {
 
         service.notifyIsAuthenticated();
         service.isAuthenticated$().subscribe({
-          error: (error): void => {
+          error(error): void {
             expect(true).toStrictEqual(false);
             doneCallback(error);
           },
-          next: (isTrue: boolean): void => {
+          next(isTrue: boolean): void {
             expect(isTrue).toStrictEqual(true);
             doneCallback();
           },
@@ -461,11 +461,11 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       service.notifyIsAuthenticated();
       service.isAuthenticated$().subscribe({
-        error: (error): void => {
+        error(error): void {
           expect(true).toStrictEqual(false);
           doneCallback(error);
         },
-        next: (isTrue: boolean): void => {
+        next(isTrue: boolean): void {
           expect(isTrue).toStrictEqual(true);
           doneCallback();
         },

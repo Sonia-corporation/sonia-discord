@@ -65,11 +65,11 @@ describe(`CoreEventService`, (): void => {
         expect.assertions(1);
 
         service.serviceCreated$().subscribe({
-          error: (error): void => {
+          error(error): void {
             expect(true).toStrictEqual(false);
             doneCallback(error);
           },
-          next: (result: ServiceNameEnum): void => {
+          next(result: ServiceNameEnum): void {
             expect(result).toStrictEqual(ServiceNameEnum.CHALK_SERVICE);
             doneCallback();
           },
@@ -87,11 +87,11 @@ describe(`CoreEventService`, (): void => {
         expect.assertions(1);
 
         service.serviceCreated$().subscribe({
-          error: (error): void => {
+          error(error): void {
             expect(true).toStrictEqual(false);
             doneCallback(error);
           },
-          next: (result: ServiceNameEnum): void => {
+          next(result: ServiceNameEnum): void {
             expect(result).toStrictEqual(
               ServiceNameEnum.APP_CONFIG_QUERY_SERVICE
             );
@@ -116,11 +116,11 @@ describe(`CoreEventService`, (): void => {
         expect.assertions(1);
 
         service.serviceCreated$().subscribe({
-          error: (error): void => {
+          error(error): void {
             expect(true).toStrictEqual(false);
             doneCallback(error);
           },
-          next: (result: ServiceNameEnum): void => {
+          next(result: ServiceNameEnum): void {
             expect(result).toStrictEqual(
               ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE
             );
