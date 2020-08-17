@@ -107,9 +107,9 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
     DiscordClientService.getInstance()
       .isReady$()
       .pipe(
-        filter((isReady: Readonly<boolean>): boolean => {
-          return _.isEqual(isReady, true);
-        }),
+        filter((isReady: Readonly<boolean>): boolean =>
+          _.isEqual(isReady, true)
+        ),
         take(1)
       )
       .subscribe({

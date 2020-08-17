@@ -206,6 +206,10 @@ rules:
   require-jsdoc: 'off'
   max-len: 'off'
   comma-dangle: 'off'
+  arrow-body-style:
+    - error
+    - as-needed
+    - requireReturnForObjectLiteral: true
 overrides:
   - files:
       - '*.ts'

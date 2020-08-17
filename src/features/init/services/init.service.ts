@@ -65,9 +65,9 @@ export class InitService extends AbstractService {
   public isAppConfigured(): Promise<true> {
     return this.isAppConfigured$()
       .pipe(
-        filter((isAppConfigured: Readonly<boolean>): boolean => {
-          return _.isEqual(isAppConfigured, true);
-        }),
+        filter((isAppConfigured: Readonly<boolean>): boolean =>
+          _.isEqual(isAppConfigured, true)
+        ),
         take(1),
         map((): true => true)
       )
@@ -97,9 +97,8 @@ export class InitService extends AbstractService {
     this._configureAppFromEnvironment(environment);
 
     return this._configureAppFromPackage().then(
-      (): Promise<IGithubReleaseAndTotalCount> => {
-        return this._configureAppFromGitHubReleases();
-      }
+      (): Promise<IGithubReleaseAndTotalCount> =>
+        this._configureAppFromGitHubReleases()
     );
   }
 
@@ -242,11 +241,8 @@ export class InitService extends AbstractService {
     return fs
       .readJson(`${appRootPath}/src/environment/secret-environment.json`)
       .then(
-        (environment: Readonly<IEnvironment>): Promise<void> => {
-          return this._startApp(
-            this._mergeEnvironments(ENVIRONMENT, environment)
-          );
-        }
+        (environment: Readonly<IEnvironment>): Promise<void> =>
+          this._startApp(this._mergeEnvironments(ENVIRONMENT, environment))
       )
       .catch(
         (error: unknown): Promise<never> => {

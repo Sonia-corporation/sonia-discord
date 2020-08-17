@@ -41,8 +41,8 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
       .then(
         (
           cliErrorMessageResponse: Readonly<IDiscordMessageResponse>
-        ): Promise<IDiscordMessageResponse> => {
-          return Promise.resolve(
+        ): Promise<IDiscordMessageResponse> =>
+          Promise.resolve(
             _.merge(cliErrorMessageResponse, {
               options: {
                 embed: this._getEmptyContentErrorMessageEmbed(),
@@ -50,8 +50,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
               },
               response: ``,
             } as IDiscordMessageResponse)
-          );
-        }
+          )
       );
   }
 
@@ -64,8 +63,8 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
       .then(
         (
           cliErrorMessageResponse: Readonly<IDiscordMessageResponse>
-        ): Promise<IDiscordMessageResponse> => {
-          return Promise.resolve(
+        ): Promise<IDiscordMessageResponse> =>
+          Promise.resolve(
             _.merge(cliErrorMessageResponse, {
               options: {
                 embed: this._getEmptyFeatureNameErrorMessageEmbed(
@@ -76,8 +75,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
               },
               response: ``,
             } as IDiscordMessageResponse)
-          );
-        }
+          )
       );
   }
 
@@ -167,9 +165,8 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
     const allFeatureNames: string = _.trimEnd(
       _.reduce(
         getDiscordMessageCommandAllFeatureNames(),
-        (value: Readonly<string>, featureName: Readonly<string>): string => {
-          return `${value}\`${_.capitalize(featureName)}\`, `;
-        },
+        (value: Readonly<string>, featureName: Readonly<string>): string =>
+          `${value}\`${_.capitalize(featureName)}\`, `,
         ``
       ),
       `, `
