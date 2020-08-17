@@ -206,6 +206,10 @@ rules:
   require-jsdoc: 'off'
   max-len: 'off'
   comma-dangle: 'off'
+  object-shorthand:
+    - error
+    - always
+    - avoidExplicitReturnArrows: true
 overrides:
   - files:
       - '*.ts'
