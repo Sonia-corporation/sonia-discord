@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+## [1.70.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.70.0...1.70.1) (2020-08-18)
+
+
+### :bug: Bug Fixes
+
+* **typo:** change `has to works` to `has to work` ([901d62e](https://github.com/Sonia-corporation/il-est-midi-discord/commit/901d62ece690bd1a2ba3130713a2b0e6b2103a29)), closes [#800](https://github.com/Sonia-corporation/il-est-midi-discord/issues/800)
+* **release-notes:** remove the special closes mention ([83c2ce0](https://github.com/Sonia-corporation/il-est-midi-discord/commit/83c2ce0a15bccfc45640f96dd0be0c4a328175ae))
+
 # [1.70.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.69.1...1.70.0) (2020-08-17)
 
 
