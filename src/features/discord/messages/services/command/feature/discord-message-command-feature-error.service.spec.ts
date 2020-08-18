@@ -191,7 +191,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.fields[0]).toStrictEqual({
         name: `Empty content`,
-        value: `The content of the message is empty. :thinking:\nI can not process the feature command however this error should never happen! :warning:\nDo not be so selfish and share this information with my creators! :pray:`,
+        value: `The content of the message is empty.\nI can not process the feature command however this error should never happen!\nDo not be so selfish and share this information with my creators!`,
       } as EmbedFieldData);
     });
 
@@ -320,7 +320,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.title).toStrictEqual(
-        `I can not handle your request :worried:`
+        `I can not handle your request`
       );
     });
 
@@ -480,7 +480,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.fields[0]).toStrictEqual({
         name: `Empty feature name`,
-        value: `You did not specify the name of the feature you wish to configure. :face_with_raised_eyebrow:\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure. :gift_heart:`,
+        value: `You did not specify the name of the feature you wish to configure.\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure.`,
       } as EmbedFieldData);
     });
 
@@ -814,7 +814,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.title).toStrictEqual(
-        `I can not handle your request :worried:`
+        `I can not handle your request`
       );
     });
 
