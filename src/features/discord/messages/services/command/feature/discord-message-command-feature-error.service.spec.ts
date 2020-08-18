@@ -191,7 +191,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.fields[0]).toStrictEqual({
         name: `Empty content`,
-        value: `The content of the message is empty. :thinking:\nI can not process the feature command however this error should never happen! :warning:\nDo not be so selfish and share this information with my creators! :pray:`,
+        value: `The content of the message is empty.\nI can not process the feature command however this error should never happen!\nDo not be so selfish and share this information with my creators!`,
       } as EmbedFieldData);
     });
 
@@ -320,7 +320,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.title).toStrictEqual(
-        `I can not handle your request :worried:`
+        `I can not handle your request`
       );
     });
 
@@ -480,26 +480,62 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.fields[0]).toStrictEqual({
         name: `Empty feature name`,
-        value: `You did not specify the name of the feature you wish to configure. :face_with_raised_eyebrow:\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure. :gift_heart:`,
+        value: `You did not specify the name of the feature you wish to configure.\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure.`,
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a field to display all feature names`, async (): Promise<
-      void
-    > => {
-      expect.assertions(1);
+    describe(`when there is only one feature`, (): void => {
+      beforeEach((): void => {
+        getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
+          DiscordMessageCommandFeatureNameEnum.NOON,
+        ]);
+      });
 
-      const result = await service.getEmptyFeatureNameErrorMessageResponse(
-        anyDiscordMessage,
-        commands
-      );
+      it(`should return a Discord message response embed with a field to display all feature names`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[1]).toStrictEqual({
-        name: `All features`,
-        value: `\`Noon\``,
-      } as EmbedFieldData);
+        const result = await service.getEmptyFeatureNameErrorMessageResponse(
+          anyDiscordMessage,
+          commands
+        );
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        expect(result.options.embed.fields[1]).toStrictEqual({
+          name: `All features`,
+          value: `\`noon\``,
+        } as EmbedFieldData);
+      });
+    });
+
+    describe(`when there are multiple features`, (): void => {
+      beforeEach((): void => {
+        getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
+          DiscordMessageCommandFeatureNameEnum.NOON,
+          DiscordMessageCommandFeatureNameEnum.NOON,
+          DiscordMessageCommandFeatureNameEnum.NOON,
+        ]);
+      });
+
+      it(`should return a Discord message response embed with a field to display all feature names separated with a comma and a space`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+
+        const result = await service.getEmptyFeatureNameErrorMessageResponse(
+          anyDiscordMessage,
+          commands
+        );
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        expect(result.options.embed.fields[1]).toStrictEqual({
+          name: `All features`,
+          value: `\`noon\`, \`noon\`, \`noon\``,
+        } as EmbedFieldData);
+      });
     });
 
     describe(`when the given Discord message content is null`, (): void => {
@@ -527,7 +563,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.fields[2]).toStrictEqual({
           name: `Example`,
-          value: `\`!feature Noon\``,
+          value: `\`!feature noon\``,
         } as EmbedFieldData);
       });
     });
@@ -557,7 +593,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.fields[2]).toStrictEqual({
           name: `Example`,
-          value: `\`!feature Noon\``,
+          value: `\`!feature noon\``,
         } as EmbedFieldData);
       });
     });
@@ -592,7 +628,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
           // @ts-ignore
           expect(result.options.embed.fields[2]).toStrictEqual({
             name: `Example`,
-            value: `\`!f Noon\``,
+            value: `\`!f noon\``,
           } as EmbedFieldData);
         });
       });
@@ -621,7 +657,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
           // @ts-ignore
           expect(result.options.embed.fields[2]).toStrictEqual({
             name: `Example`,
-            value: `\`!feature Noon\``,
+            value: `\`!feature noon\``,
           } as EmbedFieldData);
         });
       });
@@ -657,7 +693,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
           // @ts-ignore
           expect(result.options.embed.fields[2]).toStrictEqual({
             name: `Example`,
-            value: `\`!feature Noon\``,
+            value: `\`!feature noon\``,
           } as EmbedFieldData);
         });
       });
@@ -686,7 +722,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
           // @ts-ignore
           expect(result.options.embed.fields[2]).toStrictEqual({
             name: `Example`,
-            value: `\`-lunch Noon\``,
+            value: `\`-lunch noon\``,
           } as EmbedFieldData);
         });
       });
@@ -814,7 +850,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.title).toStrictEqual(
-        `I can not handle your request :worried:`
+        `I can not handle your request`
       );
     });
 
