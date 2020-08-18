@@ -1,5 +1,5 @@
 export enum FirebaseGuildNewVersionResponseEnum {
-  A_QUEEN_HAS_TO_WORKS = `A queen has to works.`,
+  A_QUEEN_HAS_TO_WORK = `A queen has to work.`,
   BALL_SACK = `Ball sack.`,
   BEST_BIRTHDAY_EVER = `Best birthday ever!`,
   CHECK_THIS_NEW_ABILITY = `Check this new ability!`,

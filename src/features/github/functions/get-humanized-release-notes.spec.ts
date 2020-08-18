@@ -218,4 +218,20 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
       );
     });
   });
+
+  describe(`when the given release notes contain a fix tag, one h3 with fix and a closes special mention`, (): void => {
+    beforeEach((): void => {
+      releaseNotes = `## [1.69.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.69.0...1.69.1) (2020-08-17)\n\n\n### :bug: Bug Fixes\n\n* **release-notes:** continue to send the release notes when a new version is available even when a fail occur on another guild ([1e5e85a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/1e5e85aaa89b9f933c35e3b357890ecd9d314056)), closes [#776](https://github.com/Sonia-corporation/il-est-midi-discord/issues/776)`;
+    });
+
+    it(`should format the given release notes for Discord and remove the closes special mention`, (): void => {
+      expect.assertions(1);
+
+      const result = getHumanizedReleaseNotes(releaseNotes);
+
+      expect(result).toStrictEqual(
+        `**__Bug Fixes:__\nrelease-notes:** continue to send the release notes when a new version is available even when a fail occur on another guild`
+      );
+    });
+  });
 });

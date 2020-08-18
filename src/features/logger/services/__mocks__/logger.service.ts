@@ -64,9 +64,7 @@ export class LoggerService {
 
   public getStringArray(array: Readonly<string>[]): string {
     return `[ ${_.join(
-      _.map(array, (value: Readonly<string>): string => {
-        return wrapInQuotes(value);
-      }),
+      _.map(array, (value: Readonly<string>): string => wrapInQuotes(value)),
       `, `
     )} ]`;
   }

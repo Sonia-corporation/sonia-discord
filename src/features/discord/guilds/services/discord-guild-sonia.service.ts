@@ -73,12 +73,11 @@ export class DiscordGuildSoniaService extends AbstractService {
   ): GuildChannel | null | undefined {
     if (!_.isNil(this._soniaGuild)) {
       return this._soniaGuild.channels.cache.find(
-        (guildChannel: Readonly<GuildChannel>): boolean => {
-          return _.isEqual(
+        (guildChannel: Readonly<GuildChannel>): boolean =>
+          _.isEqual(
             _.toLower(_.deburr(guildChannel.name)),
             _.toLower(channelName)
-          );
-        }
+          )
       );
     }
 
@@ -145,9 +144,9 @@ export class DiscordGuildSoniaService extends AbstractService {
     DiscordClientService.getInstance()
       .isReady$()
       .pipe(
-        filter((isReady: Readonly<boolean>): boolean => {
-          return _.isEqual(isReady, true);
-        }),
+        filter((isReady: Readonly<boolean>): boolean =>
+          _.isEqual(isReady, true)
+        ),
         take(1)
       )
       .subscribe({

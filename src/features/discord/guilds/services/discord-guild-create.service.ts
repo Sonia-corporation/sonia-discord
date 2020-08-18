@@ -46,13 +46,13 @@ export class DiscordGuildCreateService extends AbstractService {
     return FirebaseGuildsService.getInstance()
       .isReady$()
       .pipe(
-        filter((isReady: Readonly<boolean>): boolean => {
-          return _.isEqual(isReady, true);
-        }),
+        filter((isReady: Readonly<boolean>): boolean =>
+          _.isEqual(isReady, true)
+        ),
         take(1),
         mergeMap(
-          (): Promise<WriteResult | void> => {
-            return FirebaseGuildsService.getInstance()
+          (): Promise<WriteResult | void> =>
+            FirebaseGuildsService.getInstance()
               .hasGuild(guild.id)
               .then(
                 (hasGuild: Readonly<boolean>): Promise<WriteResult | void> => {
@@ -76,8 +76,7 @@ export class DiscordGuildCreateService extends AbstractService {
 
                   return Promise.resolve();
                 }
-              );
-          }
+              )
         )
       )
       .toPromise();
@@ -176,8 +175,8 @@ export class DiscordGuildCreateService extends AbstractService {
         .then(
           (
             messageResponse: Readonly<IDiscordMessageResponse>
-          ): Promise<Message | void> => {
-            return guildChannel
+          ): Promise<Message | void> =>
+            guildChannel
               .send(messageResponse.response, messageResponse.options)
               .then(
                 (message: Message): Promise<Message> => {
@@ -212,13 +211,11 @@ export class DiscordGuildCreateService extends AbstractService {
 
                   return Promise.reject(error);
                 }
-              );
-          }
+              )
         )
         .catch(
-          (error: Readonly<Error | string>): Promise<void> => {
-            return Promise.reject(error);
-          }
+          (error: Readonly<Error | string>): Promise<void> =>
+            Promise.reject(error)
         );
     }
 
