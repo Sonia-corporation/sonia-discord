@@ -2222,7 +2222,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             describe(`when the random response was found`, (): void => {
               beforeEach((): void => {
                 getRandomValueFromEnumSpy.mockReturnValue(
-                  FirebaseGuildNewVersionResponseEnum.A_QUEEN_HAS_TO_WORKS
+                  FirebaseGuildNewVersionResponseEnum.A_QUEEN_HAS_TO_WORK
                 );
               });
 
@@ -2253,7 +2253,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
                 expect(sendMock).toHaveBeenCalledTimes(1);
                 expect(sendMock).toHaveBeenCalledWith(
-                  FirebaseGuildNewVersionResponseEnum.A_QUEEN_HAS_TO_WORKS,
+                  FirebaseGuildNewVersionResponseEnum.A_QUEEN_HAS_TO_WORK,
                   discordMessageResponse.options
                 );
               });
