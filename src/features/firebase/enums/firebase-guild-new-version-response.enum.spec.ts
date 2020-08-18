@@ -1,12 +1,12 @@
 import { FirebaseGuildNewVersionResponseEnum } from "./firebase-guild-new-version-response.enum";
 
 describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
-  it(`should have a member "A_QUEEN_HAS_TO_WORKS"`, (): void => {
+  it(`should have a member "A_QUEEN_HAS_TO_WORK"`, (): void => {
     expect.assertions(1);
 
     expect(
-      FirebaseGuildNewVersionResponseEnum.A_QUEEN_HAS_TO_WORKS
-    ).toStrictEqual(`A queen has to works.`);
+      FirebaseGuildNewVersionResponseEnum.A_QUEEN_HAS_TO_WORK
+    ).toStrictEqual(`A queen has to work.`);
   });
 
   it(`should have a member "BALL_SACK"`, (): void => {
