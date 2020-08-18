@@ -484,22 +484,58 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a field to display all feature names`, async (): Promise<
-      void
-    > => {
-      expect.assertions(1);
+    describe(`when there is only one feature`, (): void => {
+      beforeEach((): void => {
+        getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
+          DiscordMessageCommandFeatureNameEnum.NOON,
+        ]);
+      });
 
-      const result = await service.getEmptyFeatureNameErrorMessageResponse(
-        anyDiscordMessage,
-        commands
-      );
+      it(`should return a Discord message response embed with a field to display all feature names`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[1]).toStrictEqual({
-        name: `All features`,
-        value: `\`Noon\``,
-      } as EmbedFieldData);
+        const result = await service.getEmptyFeatureNameErrorMessageResponse(
+          anyDiscordMessage,
+          commands
+        );
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        expect(result.options.embed.fields[1]).toStrictEqual({
+          name: `All features`,
+          value: `\`noon\``,
+        } as EmbedFieldData);
+      });
+    });
+
+    describe(`when there are multiple features`, (): void => {
+      beforeEach((): void => {
+        getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
+          DiscordMessageCommandFeatureNameEnum.NOON,
+          DiscordMessageCommandFeatureNameEnum.NOON,
+          DiscordMessageCommandFeatureNameEnum.NOON,
+        ]);
+      });
+
+      it(`should return a Discord message response embed with a field to display all feature names separated with a comma and a space`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+
+        const result = await service.getEmptyFeatureNameErrorMessageResponse(
+          anyDiscordMessage,
+          commands
+        );
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        expect(result.options.embed.fields[1]).toStrictEqual({
+          name: `All features`,
+          value: `\`noon\`, \`noon\`, \`noon\``,
+        } as EmbedFieldData);
+      });
     });
 
     describe(`when the given Discord message content is null`, (): void => {
@@ -527,7 +563,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.fields[2]).toStrictEqual({
           name: `Example`,
-          value: `\`!feature Noon\``,
+          value: `\`!feature noon\``,
         } as EmbedFieldData);
       });
     });
@@ -557,7 +593,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
         // @ts-ignore
         expect(result.options.embed.fields[2]).toStrictEqual({
           name: `Example`,
-          value: `\`!feature Noon\``,
+          value: `\`!feature noon\``,
         } as EmbedFieldData);
       });
     });
@@ -592,7 +628,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
           // @ts-ignore
           expect(result.options.embed.fields[2]).toStrictEqual({
             name: `Example`,
-            value: `\`!f Noon\``,
+            value: `\`!f noon\``,
           } as EmbedFieldData);
         });
       });
@@ -621,7 +657,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
           // @ts-ignore
           expect(result.options.embed.fields[2]).toStrictEqual({
             name: `Example`,
-            value: `\`!feature Noon\``,
+            value: `\`!feature noon\``,
           } as EmbedFieldData);
         });
       });
@@ -657,7 +693,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
           // @ts-ignore
           expect(result.options.embed.fields[2]).toStrictEqual({
             name: `Example`,
-            value: `\`!feature Noon\``,
+            value: `\`!feature noon\``,
           } as EmbedFieldData);
         });
       });
@@ -686,7 +722,7 @@ describe(`DiscordMessageCommandFeatureErrorService`, (): void => {
           // @ts-ignore
           expect(result.options.embed.fields[2]).toStrictEqual({
             name: `Example`,
-            value: `\`-lunch Noon\``,
+            value: `\`-lunch noon\``,
           } as EmbedFieldData);
         });
       });

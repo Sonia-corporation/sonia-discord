@@ -165,7 +165,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
       _.reduce(
         getDiscordMessageCommandAllFeatureNames(),
         (value: Readonly<string>, featureName: Readonly<string>): string =>
-          `${value}\`${_.capitalize(featureName)}\`, `,
+          `${value}\`${_.toLower(featureName)}\`, `,
         ``
       ),
       `, `
@@ -181,7 +181,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     commands: Readonly<DiscordMessageCommandEnum>[]
   ): EmbedFieldData {
-    const randomFeatureName: string = _.capitalize(
+    const randomFeatureName: string = _.toLower(
       _.sample(getDiscordMessageCommandAllFeatureNames())
     );
     let userCommand: string | null = discordGetCommandAndPrefix({
@@ -193,7 +193,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
     });
 
     if (_.isNil(userCommand)) {
-      userCommand = `!feature`;
+      userCommand = `!${_.toLower(DiscordMessageCommandEnum.FEATURE)}`;
     }
 
     return {
