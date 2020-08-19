@@ -21,6 +21,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
         config.discordId = null;
       });
 
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev]`);
+          });
+        });
+      });
+
       describe(`when the given as mention is false`, (): void => {
         beforeEach((): void => {
           config.asMention = false;
@@ -121,6 +169,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
     describe(`when the given Discord id is an empty string`, (): void => {
       beforeEach((): void => {
         config.discordId = ``;
+      });
+
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev]`);
+          });
+        });
       });
 
       describe(`when the given as mention is false`, (): void => {
@@ -225,6 +321,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
         config.discordId = `dummy-discord-id`;
       });
 
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev]`);
+          });
+        });
+      });
+
       describe(`when the given as mention is false`, (): void => {
         beforeEach((): void => {
           config.asMention = false;
@@ -325,6 +469,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
     describe(`when the given Discord id is "discord-id"`, (): void => {
       beforeEach((): void => {
         config.discordId = `discord-id`;
+      });
+
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev]`);
+          });
+        });
       });
 
       describe(`when the given as mention is false`, (): void => {
@@ -435,6 +627,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
         config.discordId = null;
       });
 
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev]`);
+          });
+        });
+      });
+
       describe(`when the given as mention is false`, (): void => {
         beforeEach((): void => {
           config.asMention = false;
@@ -535,6 +775,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
     describe(`when the given Discord id is an empty string`, (): void => {
       beforeEach((): void => {
         config.discordId = ``;
+      });
+
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev]`);
+          });
+        });
       });
 
       describe(`when the given as mention is false`, (): void => {
@@ -639,6 +927,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
         config.discordId = `dummy-discord-id`;
       });
 
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev]`);
+          });
+        });
+      });
+
       describe(`when the given as mention is false`, (): void => {
         beforeEach((): void => {
           config.asMention = false;
@@ -739,6 +1075,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
     describe(`when the given Discord id is "discord-id"`, (): void => {
       beforeEach((): void => {
         config.discordId = `discord-id`;
+      });
+
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev]`);
+          });
+        });
       });
 
       describe(`when the given as mention is false`, (): void => {
@@ -849,6 +1233,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
         config.discordId = null;
       });
 
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - dummy-nickname]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - dummy-nickname]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix and a nickname`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev - dummy-nickname]`);
+          });
+        });
+      });
+
       describe(`when the given as mention is false`, (): void => {
         beforeEach((): void => {
           config.asMention = false;
@@ -949,6 +1381,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
     describe(`when the given Discord id is an empty string`, (): void => {
       beforeEach((): void => {
         config.discordId = ``;
+      });
+
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - dummy-nickname]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - dummy-nickname]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix and a nickname`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev - dummy-nickname]`);
+          });
+        });
       });
 
       describe(`when the given as mention is false`, (): void => {
@@ -1053,6 +1533,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
         config.discordId = `dummy-discord-id`;
       });
 
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - dummy-nickname]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - dummy-nickname]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix and a nickname`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev - dummy-nickname]`);
+          });
+        });
+      });
+
       describe(`when the given as mention is false`, (): void => {
         beforeEach((): void => {
           config.asMention = false;
@@ -1153,6 +1681,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
     describe(`when the given Discord id is "discord-id"`, (): void => {
       beforeEach((): void => {
         config.discordId = `discord-id`;
+      });
+
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - dummy-nickname]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - dummy-nickname]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix and a nickname`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev - dummy-nickname]`);
+          });
+        });
       });
 
       describe(`when the given as mention is false`, (): void => {
@@ -1263,6 +1839,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
         config.discordId = null;
       });
 
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - sonia]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - sonia]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix and a nickname`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev - sonia]`);
+          });
+        });
+      });
+
       describe(`when the given as mention is false`, (): void => {
         beforeEach((): void => {
           config.asMention = false;
@@ -1363,6 +1987,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
     describe(`when the given Discord id is an empty string`, (): void => {
       beforeEach((): void => {
         config.discordId = ``;
+      });
+
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - sonia]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - sonia]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix and a nickname`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev - sonia]`);
+          });
+        });
       });
 
       describe(`when the given as mention is false`, (): void => {
@@ -1467,6 +2139,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
         config.discordId = `dummy-discord-id`;
       });
 
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - sonia]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - sonia]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix and a nickname`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev - sonia]`);
+          });
+        });
+      });
+
       describe(`when the given as mention is false`, (): void => {
         beforeEach((): void => {
           config.asMention = false;
@@ -1567,6 +2287,54 @@ describe(`getDiscordDevPrefix()`, (): void => {
     describe(`when the given Discord id is "discord-id"`, (): void => {
       beforeEach((): void => {
         config.discordId = `discord-id`;
+      });
+
+      describe(`when the given as mention is undefined`, (): void => {
+        beforeEach((): void => {
+          config.asMention = undefined;
+        });
+
+        describe(`when the emphasis is undefined`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = undefined;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - sonia]**`);
+          });
+        });
+
+        describe(`when the emphasis is enabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = true;
+          });
+
+          it(`should return a dev prefix and a nickname with an emphasis`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`**[dev - sonia]**`);
+          });
+        });
+
+        describe(`when the emphasis is disabled`, (): void => {
+          beforeEach((): void => {
+            config.hasEmphasis = false;
+          });
+
+          it(`should return a dev prefix and a nickname`, (): void => {
+            expect.assertions(1);
+
+            const result = getDiscordDevPrefix(config);
+
+            expect(result).toStrictEqual(`[dev - sonia]`);
+          });
+        });
       });
 
       describe(`when the given as mention is false`, (): void => {
