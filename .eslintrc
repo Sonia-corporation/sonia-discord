@@ -218,6 +218,8 @@ rules:
     - error
   no-unmodified-loop-condition:
     - error
+  no-eval:
+    - error
 overrides:
   - files:
       - '*.ts'
