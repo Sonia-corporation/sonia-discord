@@ -7,7 +7,6 @@ import _ from "lodash";
 import { AbstractService } from "../../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
 import { GithubConfigService } from "../../../../../github/services/config/github-config.service";
-import { DiscordEmojiEnum } from "../../../../enums/discord-emoji.enum";
 import { DiscordGuildConfigService } from "../../../../guilds/services/config/discord-guild-config.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
 import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
@@ -91,7 +90,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
   }
 
   private _getErrorMessageEmbedTitle(): string {
-    return `I can not handle your request ${DiscordEmojiEnum.WORRIED}`;
+    return `I can not handle your request`;
   }
 
   private _getEmptyContentErrorMessageEmbed(): MessageEmbedOptions {
@@ -112,7 +111,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
   private _getEmptyContentErrorMessageEmbedFieldError(): EmbedFieldData {
     return {
       name: `Empty content`,
-      value: `The content of the message is empty. ${DiscordEmojiEnum.THINKING}\nI can not process the feature command however this error should never happen! ${DiscordEmojiEnum.WARNING}\nDo not be so selfish and share this information with my creators! ${DiscordEmojiEnum.PRAY}`,
+      value: `The content of the message is empty.\nI can not process the feature command however this error should never happen!\nDo not be so selfish and share this information with my creators!`,
     };
   }
 
@@ -157,7 +156,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
   private _getEmptyFeatureNameErrorMessageEmbedFieldError(): EmbedFieldData {
     return {
       name: `Empty feature name`,
-      value: `You did not specify the name of the feature you wish to configure. ${DiscordEmojiEnum.FACE_WITH_RAISED_EYEBROW}\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure. ${DiscordEmojiEnum.GIFT_HEART}`,
+      value: `You did not specify the name of the feature you wish to configure.\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure.`,
     };
   }
 
@@ -166,7 +165,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
       _.reduce(
         getDiscordMessageCommandAllFeatureNames(),
         (value: Readonly<string>, featureName: Readonly<string>): string =>
-          `${value}\`${_.capitalize(featureName)}\`, `,
+          `${value}\`${_.toLower(featureName)}\`, `,
         ``
       ),
       `, `
@@ -182,7 +181,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     commands: Readonly<DiscordMessageCommandEnum>[]
   ): EmbedFieldData {
-    const randomFeatureName: string = _.capitalize(
+    const randomFeatureName: string = _.toLower(
       _.sample(getDiscordMessageCommandAllFeatureNames())
     );
     let userCommand: string | null = discordGetCommandAndPrefix({
@@ -194,7 +193,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
     });
 
     if (_.isNil(userCommand)) {
-      userCommand = `!feature`;
+      userCommand = `!${_.toLower(DiscordMessageCommandEnum.FEATURE)}`;
     }
 
     return {
