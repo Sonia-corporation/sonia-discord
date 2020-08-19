@@ -220,6 +220,8 @@ rules:
     - error
   no-eval:
     - error
+  no-extra-label:
+    - error
 overrides:
   - files:
       - '*.ts'
