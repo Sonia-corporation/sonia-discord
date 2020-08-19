@@ -222,6 +222,9 @@ rules:
     - error
   no-extra-label:
     - error
+  curly:
+    - error
+    - all
 overrides:
   - files:
       - '*.ts'
