@@ -9,6 +9,22 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     ).toStrictEqual(`A queen has to work.`);
   });
 
+  it(`should have a member "ABOUT_TIME"`, (): void => {
+    expect.assertions(1);
+
+    expect(FirebaseGuildNewVersionResponseEnum.ABOUT_TIME).toStrictEqual(
+      `About time!`
+    );
+  });
+
+  it(`should have a member "ABOUT_TIME_USER_ID"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      FirebaseGuildNewVersionResponseEnum.ABOUT_TIME_USER_ID
+    ).toStrictEqual(`About time {{ userId }}!`);
+  });
+
   it(`should have a member "BALL_SACK"`, (): void => {
     expect.assertions(1);
 
@@ -93,6 +109,14 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     expect(
       FirebaseGuildNewVersionResponseEnum.ENJOY_THIS_NEW_FEATURE
     ).toStrictEqual(`Enjoy this new feature!`);
+  });
+
+  it(`should have a member "GLAD_YOU_FIXES_THAT_BUG_USER_ID"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      FirebaseGuildNewVersionResponseEnum.GLAD_YOU_FIXES_THAT_BUG_USER_ID
+    ).toStrictEqual(`Glad you fixed that bug {{ userId }}!`);
   });
 
   it(`should have a member "GOTTA_LOVE_IT"`, (): void => {
@@ -191,6 +215,14 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     ).toStrictEqual(`My throne is waiting for me.`);
   });
 
+  it(`should have a member "NO_SPAM_IF_USER_ID_COULD_STOP_WORKING"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      FirebaseGuildNewVersionResponseEnum.NO_SPAM_IF_USER_ID_COULD_STOP_WORKING
+    ).toStrictEqual(`No spam if {{ userId }} could stop working.`);
+  });
+
   it(`should have a member "NOTHING_CAN_STOP_ME"`, (): void => {
     expect.assertions(1);
 
@@ -207,12 +239,62 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     );
   });
 
+  it(`should have a member "PLEASE_USER_ID_STOP_IT_AM_EXHAUSTED_OF_SENDING_RELEASE_NOTES_MESSAGES"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      FirebaseGuildNewVersionResponseEnum.PLEASE_USER_ID_STOP_IT_AM_EXHAUSTED_OF_SENDING_RELEASE_NOTES_MESSAGES
+    ).toStrictEqual(
+      `Please {{ userId }} stop it. I am exhausted of sending release notes messages...`
+    );
+  });
+
+  it(`should have a member "SERIOUSLY_USER_ID_THIS_FEATURE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      FirebaseGuildNewVersionResponseEnum.SERIOUSLY_USER_ID_THIS_FEATURE
+    ).toStrictEqual(`Seriously {{ userId }}? This feature!?`);
+  });
+
+  it(`should have a member "SLOW_DOWN_USER_ID"`, (): void => {
+    expect.assertions(1);
+
+    expect(FirebaseGuildNewVersionResponseEnum.SLOW_DOWN_USER_ID).toStrictEqual(
+      `Slow down {{ userId }}.`
+    );
+  });
+
   it(`should have a member "SONIA_IS_BRAND_NEW"`, (): void => {
     expect.assertions(1);
 
     expect(
       FirebaseGuildNewVersionResponseEnum.SONIA_IS_BRAND_NEW
     ).toStrictEqual(`Sonia is brand new!`);
+  });
+
+  it(`should have a member "STOP_WORKING_USER_ID"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      FirebaseGuildNewVersionResponseEnum.STOP_WORKING_USER_ID
+    ).toStrictEqual(`Stop working {{ userId }}!`);
+  });
+
+  it(`should have a member "THANK_YOU_USER_DI"`, (): void => {
+    expect.assertions(1);
+
+    expect(FirebaseGuildNewVersionResponseEnum.THANK_YOU_USER_DI).toStrictEqual(
+      `Thank you {{ userId }}.`
+    );
+  });
+
+  it(`should have a member "THANK_YOU_USER_ID_FOR_THIS_WONDERFUL_FEATURE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      FirebaseGuildNewVersionResponseEnum.THANK_YOU_USER_ID_FOR_THIS_WONDERFUL_FEATURE
+    ).toStrictEqual(`Thank you {{ userId }} for this wonderful feature!`);
   });
 
   it(`should have a member "THAT_IS_FREAKING_AWESOME"`, (): void => {
@@ -247,6 +329,30 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     ).toStrictEqual(`This new feature sucks.`);
   });
 
+  it(`should have a member "THIS_SPAM_IS_NOT_MY_FAULT"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      FirebaseGuildNewVersionResponseEnum.THIS_SPAM_IS_NOT_MY_FAULT
+    ).toStrictEqual(`This spam is not my fault!`);
+  });
+
+  it(`should have a member "USER_ID_SLOW_DOWN_FOR_GODS_SAKE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      FirebaseGuildNewVersionResponseEnum.USER_ID_SLOW_DOWN_FOR_GODS_SAKE
+    ).toStrictEqual(`{{ userId }}, slow down for god's sake!`);
+  });
+
+  it(`should have a member "USER_ID_YOU_SHOULD_REST_A_LITTLE_DONT_YOU_THINK"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      FirebaseGuildNewVersionResponseEnum.USER_ID_YOU_SHOULD_REST_A_LITTLE_DONT_YOU_THINK
+    ).toStrictEqual(`{{ userId }} you should rest a little don't you think?`);
+  });
+
   it(`should have a member "WORST_BIRTHDAY_EVER"`, (): void => {
     expect.assertions(1);
 
@@ -261,6 +367,14 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     expect(
       FirebaseGuildNewVersionResponseEnum.WOW_CHECK_THIS_OUT
     ).toStrictEqual(`Wow! Check this out!`);
+  });
+
+  it(`should have a member "WOW_SLOW_DOWN_USER_ID"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      FirebaseGuildNewVersionResponseEnum.WOW_SLOW_DOWN_USER_ID
+    ).toStrictEqual(`Wow! Slow down {{ userId }}!`);
   });
 
   it(`should have a member "YEP_THATS_BRAND_NEW"`, (): void => {
