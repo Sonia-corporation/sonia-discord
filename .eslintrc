@@ -214,6 +214,8 @@ rules:
     - error
     - as-needed
     - requireReturnForObjectLiteral: true
+  no-dupe-else-if:
+    - error
 overrides:
   - files:
       - '*.ts'
