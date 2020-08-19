@@ -225,6 +225,8 @@ rules:
   curly:
     - error
     - all
+  no-await-in-loop:
+    - error
 overrides:
   - files:
       - '*.ts'
