@@ -216,6 +216,8 @@ rules:
     - requireReturnForObjectLiteral: true
   no-dupe-else-if:
     - error
+  no-unmodified-loop-condition:
+    - error
 overrides:
   - files:
       - '*.ts'
