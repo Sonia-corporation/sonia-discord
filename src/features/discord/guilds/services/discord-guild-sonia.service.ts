@@ -73,11 +73,8 @@ export class DiscordGuildSoniaService extends AbstractService {
   ): GuildChannel | null | undefined {
     if (!_.isNil(this._soniaGuild)) {
       return this._soniaGuild.channels.cache.find(
-        (guildChannel: Readonly<GuildChannel>): boolean =>
-          _.isEqual(
-            _.toLower(_.deburr(guildChannel.name)),
-            _.toLower(channelName)
-          )
+        ({ name }: Readonly<GuildChannel>): boolean =>
+          _.isEqual(_.toLower(_.deburr(name)), _.toLower(channelName))
       );
     }
 
@@ -106,14 +103,11 @@ export class DiscordGuildSoniaService extends AbstractService {
   }
 
   private _sendMessageToChannel(
-    sendMessageToChannel: Readonly<IDiscordGuildSoniaSendMessageToChannel>,
+    { messageResponse }: Readonly<IDiscordGuildSoniaSendMessageToChannel>,
     guildChannel: Readonly<IAnyDiscordChannel>
   ): void {
     guildChannel
-      .send(
-        sendMessageToChannel.messageResponse.response,
-        sendMessageToChannel.messageResponse.options
-      )
+      .send(messageResponse.response, messageResponse.options)
       .then((): void => {
         LoggerService.getInstance().log({
           context: this._serviceName,
