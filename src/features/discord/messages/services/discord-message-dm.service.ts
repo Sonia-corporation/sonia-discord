@@ -59,7 +59,7 @@ export class DiscordMessageDmService extends AbstractService {
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      extendedContext: true,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `message with command`

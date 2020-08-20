@@ -24,20 +24,14 @@ export class DiscordMessageAuthorService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_AUTHOR_SERVICE);
   }
 
-  public reply(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  public reply({
+    author,
+  }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
     let response = `Il est midi!`;
 
-    if (DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
-      if (
-        DiscordAuthorService.getInstance().hasValidUsername(
-          anyDiscordMessage.author
-        )
-      ) {
-        response = `Il est midi ${wrapUserIdIntoMention(
-          anyDiscordMessage.author.id
-        )}!`;
+    if (DiscordAuthorService.getInstance().isValid(author)) {
+      if (DiscordAuthorService.getInstance().hasValidUsername(author)) {
+        response = `Il est midi ${wrapUserIdIntoMention(author.id)}!`;
       }
     }
 

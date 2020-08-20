@@ -102,19 +102,19 @@ export class InitService extends AbstractService {
     );
   }
 
-  private _configureAppFromEnvironment(
-    environment: Readonly<IEnvironment>
-  ): void {
-    LoggerConfigMutatorService.getInstance().updateConfig(environment.logger);
-    GithubConfigMutatorService.getInstance().updateConfig(environment.github);
-    DiscordSoniaConfigMutatorService.getInstance().updateConfig(
-      environment.discord
-    );
-    DiscordMessageConfigMutatorService.getInstance().updateConfig(
-      environment.discord
-    );
-    ProfileConfigMutatorService.getInstance().updateConfig(environment.profile);
-    AppConfigMutatorService.getInstance().init().updateConfig(environment.app);
+  private _configureAppFromEnvironment({
+    logger,
+    github,
+    discord,
+    profile,
+    app,
+  }: Readonly<IEnvironment>): void {
+    LoggerConfigMutatorService.getInstance().updateConfig(logger);
+    GithubConfigMutatorService.getInstance().updateConfig(github);
+    DiscordSoniaConfigMutatorService.getInstance().updateConfig(discord);
+    DiscordMessageConfigMutatorService.getInstance().updateConfig(discord);
+    ProfileConfigMutatorService.getInstance().updateConfig(profile);
+    AppConfigMutatorService.getInstance().init().updateConfig(app);
     ServerConfigMutatorService.getInstance().init();
   }
 
@@ -171,11 +171,13 @@ export class InitService extends AbstractService {
       url: GITHUB_API_URL,
     })
       .then(
-        (
-          axiosResponse: Readonly<AxiosResponse<IGithubReleaseAndTotalCount>>
-        ): Promise<IGithubReleaseAndTotalCount> => {
+        ({
+          data,
+        }: Readonly<AxiosResponse<IGithubReleaseAndTotalCount>>): Promise<
+          IGithubReleaseAndTotalCount
+        > => {
           AppConfigMutatorService.getInstance().updateTotalReleaseCount(
-            axiosResponse.data.data.repository.releases.totalCount
+            data.data.repository.releases.totalCount
           );
 
           LoggerService.getInstance().success({
@@ -185,14 +187,12 @@ export class InitService extends AbstractService {
             ),
           });
 
-          if (!_.isNil(axiosResponse.data.data.repository.release)) {
+          if (!_.isNil(data.data.repository.release)) {
             AppConfigMutatorService.getInstance().updateReleaseDate(
-              axiosResponse.data.data.repository.release.updatedAt
+              data.data.repository.release.updatedAt
             );
             AppConfigMutatorService.getInstance().updateReleaseNotes(
-              getHumanizedReleaseNotes(
-                axiosResponse.data.data.repository.release.description
-              )
+              getHumanizedReleaseNotes(data.data.repository.release.description)
             );
 
             LoggerService.getInstance().success({
@@ -210,7 +210,7 @@ export class InitService extends AbstractService {
             });
           }
 
-          return Promise.resolve(axiosResponse.data);
+          return Promise.resolve(data);
         }
       )
       .catch(

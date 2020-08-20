@@ -108,7 +108,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandReleaseNotesService`,
-        extendedContext: true,
+        hasExtendedContext: true,
         message: `context-[dummy-id] text-release notes command detected`,
       } as ILoggerLog);
     });

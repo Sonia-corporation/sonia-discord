@@ -105,7 +105,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandLunchService`,
-        extendedContext: true,
+        hasExtendedContext: true,
         message: `context-[dummy-id] text-lunch command detected`,
       } as ILoggerLog);
     });

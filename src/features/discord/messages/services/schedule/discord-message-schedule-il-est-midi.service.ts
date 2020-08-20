@@ -161,12 +161,12 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
     }
   }
 
-  private _onMessageError(error: string): void {
+  private _onMessageError(error: Readonly<string>): void {
     this._messageErrorLog(error);
     this._sendMessageToSoniaDiscord(error);
   }
 
-  private _messageErrorLog(error: string): void {
+  private _messageErrorLog(error: Readonly<string>): void {
     LoggerService.getInstance().error({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
@@ -179,7 +179,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
     });
   }
 
-  private _sendMessageToSoniaDiscord(error: string): void {
+  private _sendMessageToSoniaDiscord(error: Readonly<string>): void {
     DiscordGuildSoniaService.getInstance().sendMessageToChannel({
       channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
       messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
