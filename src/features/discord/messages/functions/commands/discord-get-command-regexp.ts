@@ -14,7 +14,7 @@ export function discordGetCommandRegexp({
     `
     (?<prefix>\\${prefix}) # Command prefix
     (?<command>${command}) # Command name
-    (?=$|\\s)                   # End of the message or space after the command name (required for shortcuts like help and h)
+    (?=$|\\s)              # End of the message or space after the command name (required for shortcuts like help and h)
     `,
     `gimx`
   );

@@ -27,8 +27,10 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
 
         const result = discordGetCompleteCommandRegexp(data);
 
-        // eslint-disable-next-line no-useless-escape
-        expect(result).toStrictEqual(/(\!)(?:)(help)(?:)(\s)(?:)(\S+)(?:)/gim);
+        expect(result).toStrictEqual(
+          // eslint-disable-next-line no-useless-escape
+          /(\!)(?:)(help)(?:)(\s)(?:)(\S+)(?:)(-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
+        );
       });
 
       describe(`when tested with "!help me"`, (): void => {
@@ -138,7 +140,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\!)(?:)(cookie)(?:)(\s)(?:)(\S+)(?:)/gim
+          /(\!)(?:)(cookie)(?:)(\s)(?:)(\S+)(?:)(-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
         );
       });
 
@@ -259,7 +261,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\-)(?:)(help)(?:)(\s)(?:)(\S+)(?:)/gim
+          /(\-)(?:)(help)(?:)(\s)(?:)(\S+)(?:)(-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
         );
       });
 
@@ -370,7 +372,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\-)(?:)(cookie)(?:)(\s)(?:)(\S+)(?:)/gim
+          /(\-)(?:)(cookie)(?:)(\s)(?:)(\S+)(?:)(-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
         );
       });
 

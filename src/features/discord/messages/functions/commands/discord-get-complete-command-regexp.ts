@@ -12,10 +12,11 @@ export function discordGetCompleteCommandRegexp({
 }: Readonly<IDiscordGetCompleteCommandRegexp>): RegExp {
   return xregexp(
     `
-    (?<prefix>\\${prefix}) # Command prefix
-    (?<command>${command}) # Command name
-    (?<separator>\\s)           # Space
-    (?<argument1>\\S+)          # Argument 1
+    (?<prefix>\\${prefix})                     # Command prefix
+    (?<command>${command})                     # Command name
+    (?<separator>\\s)                          # Space
+    (?<argument1>\\S+)                         # Argument 1
+    (?<flags>-{1,2}\\w+(\\=\\w+\\s?|\\s?)){0,} # Flags
     `,
     `gimx`
   );
