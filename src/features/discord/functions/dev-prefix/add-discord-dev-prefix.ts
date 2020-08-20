@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { IAddDiscordDevPrefix } from "../../interfaces/dev-prefix/add-discord-dev-prefix";
 import { getDiscordDevPrefix } from "./get-discord-dev-prefix";
 
@@ -9,21 +8,19 @@ import { getDiscordDevPrefix } from "./get-discord-dev-prefix";
  *
  * @return {string} The given message with a prefix representing the current developer profile
  */
-export function addDiscordDevPrefix(
-  config: Readonly<IAddDiscordDevPrefix>
-): string {
-  const hasEmphasis: boolean = _.isBoolean(config.hasEmphasis)
-    ? config.hasEmphasis
-    : true;
-  const asMention: boolean = _.isBoolean(config.asMention)
-    ? config.asMention
-    : false;
+export function addDiscordDevPrefix({
+  hasEmphasis = true,
+  asMention = false,
+  discordId,
+  nickname,
+  message,
+}: Readonly<IAddDiscordDevPrefix>): string {
   const discordDevPrefix: string = getDiscordDevPrefix({
     asMention,
-    discordId: config.discordId,
+    discordId,
     hasEmphasis,
-    nickname: config.nickname,
+    nickname,
   });
 
-  return `${discordDevPrefix} ${config.message}`;
+  return `${discordDevPrefix} ${message}`;
 }
