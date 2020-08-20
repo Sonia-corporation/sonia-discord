@@ -227,6 +227,15 @@ rules:
     - all
   no-await-in-loop:
     - error
+  prefer-destructuring:
+    - error
+    - VariableDeclarator:
+        array: true
+        object: true
+      AssignmentExpression:
+        array: true
+        object: true
+    - enforceForRenamedProperties: false
 overrides:
   - files:
       - '*.ts'
