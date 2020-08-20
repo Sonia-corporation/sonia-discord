@@ -15,7 +15,8 @@ export function discordGetCompleteCommandRegexp({
     (?<prefix>\\${prefix})                     # Command prefix
     (?<command>${command})                     # Command name
     (?<separator>\\s)                          # Space
-    (?<argument1>\\S+)                         # Argument 1
+    (?<argument1>\\w+)                         # Argument 1
+    (?<flagsSeparator>\\s){0,1}                # Space
     (?<flags>-{1,2}\\w+(\\=\\w+\\s?|\\s?)){0,} # Flags
     `,
     `gimx`

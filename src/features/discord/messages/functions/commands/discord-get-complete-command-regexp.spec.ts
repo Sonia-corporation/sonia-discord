@@ -29,7 +29,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\!)(?:)(help)(?:)(\s)(?:)(\S+)(?:)(-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
+          /(\!)(?:)(help)(?:)(\s)(?:)(\S+)(?:)(\s?-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
         );
       });
 
@@ -140,7 +140,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\!)(?:)(cookie)(?:)(\s)(?:)(\S+)(?:)(-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
+          /(\!)(?:)(cookie)(?:)(\s)(?:)(\S+)(?:)(\s?-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
         );
       });
 
@@ -261,7 +261,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\-)(?:)(help)(?:)(\s)(?:)(\S+)(?:)(-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
+          /(\-)(?:)(help)(?:)(\s)(?:)(\S+)(?:)(\s?-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
         );
       });
 
@@ -372,7 +372,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\-)(?:)(cookie)(?:)(\s)(?:)(\S+)(?:)(-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
+          /(\-)(?:)(cookie)(?:)(\s)(?:)(\S+)(?:)(\s?-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
         );
       });
 
@@ -414,6 +414,58 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
 
           expect(xregexp.exec(message, result)?.argument1).toStrictEqual(
             `miam`
+          );
+        });
+      });
+
+      describe(`when tested with "-cookie miam --arg1 --arg2=value2"`, (): void => {
+        beforeEach((): void => {
+          message = `-cookie miam --arg1 --arg2=value2`;
+        });
+
+        it(`should find "-" as prefix`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCompleteCommandRegexp(data);
+
+          expect(xregexp.exec(message, result)?.prefix).toStrictEqual(`-`);
+        });
+
+        it(`should find "cookie" as command`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCompleteCommandRegexp(data);
+
+          expect(xregexp.exec(message, result)?.command).toStrictEqual(
+            `cookie`
+          );
+        });
+
+        it(`should find " " as separator`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCompleteCommandRegexp(data);
+
+          expect(xregexp.exec(message, result)?.separator).toStrictEqual(` `);
+        });
+
+        it(`should find "miam" as argument 1`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCompleteCommandRegexp(data);
+
+          expect(xregexp.exec(message, result)?.argument1).toStrictEqual(
+            `miam`
+          );
+        });
+
+        it(`should find "--arg1 --arg2=value2" as flags`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCompleteCommandRegexp(data);
+
+          expect(xregexp.exec(message, result)?.flags).toStrictEqual(
+            `--arg1 --arg2=value2`
           );
         });
       });
