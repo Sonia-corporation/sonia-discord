@@ -214,6 +214,28 @@ rules:
     - error
     - as-needed
     - requireReturnForObjectLiteral: true
+  no-dupe-else-if:
+    - error
+  no-unmodified-loop-condition:
+    - error
+  no-eval:
+    - error
+  no-extra-label:
+    - error
+  curly:
+    - error
+    - all
+  no-await-in-loop:
+    - error
+  prefer-destructuring:
+    - error
+    - VariableDeclarator:
+        array: true
+        object: true
+      AssignmentExpression:
+        array: true
+        object: true
+    - enforceForRenamedProperties: false
 overrides:
   - files:
       - '*.ts'

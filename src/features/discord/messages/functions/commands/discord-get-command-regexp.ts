@@ -6,13 +6,14 @@ import xregexp from "xregexp";
  *
  * @return {RegExp} A RegExp matching a prefix with a command
  */
-export function discordGetCommandRegexp(
-  data: Readonly<IDiscordGetCommandRegexp>
-): RegExp {
+export function discordGetCommandRegexp({
+  prefix,
+  command,
+}: Readonly<IDiscordGetCommandRegexp>): RegExp {
   return xregexp(
     `
-    (?<prefix>\\${data.prefix}) # Command prefix
-    (?<command>${data.command}) # Command name
+    (?<prefix>\\${prefix}) # Command prefix
+    (?<command>${command}) # Command name
     (?=$|\\s)                   # End of the message or space after the command name (required for shortcuts like help and h)
     `,
     `gimx`

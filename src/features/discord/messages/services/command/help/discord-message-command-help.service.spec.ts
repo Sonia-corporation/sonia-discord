@@ -103,7 +103,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandHelpService`,
-        extendedContext: true,
+        hasExtendedContext: true,
         message: `context-[dummy-id] text-help command detected`,
       } as ILoggerLog);
     });

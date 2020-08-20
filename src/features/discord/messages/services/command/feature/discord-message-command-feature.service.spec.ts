@@ -98,7 +98,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandFeatureService`,
-        extendedContext: true,
+        hasExtendedContext: true,
         message: `context-[dummy-id] text-feature command detected`,
       } as ILoggerLog);
     });
@@ -126,12 +126,14 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
     let discordMessageResponse: IDiscordMessageResponse;
     let getEmptyContentErrorMessageResponse: IDiscordMessageResponse;
     let getEmptyFeatureNameErrorMessageResponse: IDiscordMessageResponse;
+    let getWrongFeatureNameErrorMessageResponse: IDiscordMessageResponse;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let discordMessageCommandFeatureNoonServiceIsNoonFeatureSpy: jest.SpyInstance;
     let discordMessageCommandFeatureNoonServiceGetMessageResponseSpy: jest.SpyInstance;
     let discordMessageCommandFeatureErrorServiceGetEmptyContentErrorMessageResponseSpy: jest.SpyInstance;
     let discordMessageCommandFeatureErrorServiceGetEmptyFeatureNameErrorMessageResponseSpy: jest.SpyInstance;
+    let discordMessageCommandFeatureErrorServiceGetWrongFeatureNameErrorMessageResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureService();
@@ -148,6 +150,11 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         IDiscordMessageResponse
       >({
         response: `getEmptyFeatureNameErrorMessageResponse`,
+      });
+      getWrongFeatureNameErrorMessageResponse = createMock<
+        IDiscordMessageResponse
+      >({
+        response: `getWrongFeatureNameErrorMessageResponse`,
       });
 
       loggerServiceDebugSpy = jest
@@ -174,6 +181,14 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         )
         .mockRejectedValue(
           new Error(`getEmptyFeatureNameErrorMessageResponse error`)
+        );
+      discordMessageCommandFeatureErrorServiceGetWrongFeatureNameErrorMessageResponseSpy = jest
+        .spyOn(
+          discordMessageCommandFeatureErrorService,
+          `getWrongFeatureNameErrorMessageResponse`
+        )
+        .mockRejectedValue(
+          new Error(`getWrongFeatureNameErrorMessageResponse error`)
         );
     });
 
@@ -425,6 +440,69 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
             );
           });
 
+          it(`should get the wrong feature name error message response`, async (): Promise<
+            void
+          > => {
+            expect.assertions(3);
+
+            await expect(
+              service.getMessageResponse(anyDiscordMessage)
+            ).rejects.toThrow(
+              new Error(`getWrongFeatureNameErrorMessageResponse error`)
+            );
+
+            expect(
+              discordMessageCommandFeatureErrorServiceGetWrongFeatureNameErrorMessageResponseSpy
+            ).toHaveBeenCalledTimes(1);
+            expect(
+              discordMessageCommandFeatureErrorServiceGetWrongFeatureNameErrorMessageResponseSpy
+            ).toHaveBeenCalledWith(
+              anyDiscordMessage,
+              [DiscordMessageCommandEnum.FEATURE, DiscordMessageCommandEnum.F],
+              `dummy`
+            );
+          });
+
+          describe(`when the fetched of the wrong feature name error message response failed`, (): void => {
+            beforeEach((): void => {
+              discordMessageCommandFeatureErrorServiceGetWrongFeatureNameErrorMessageResponseSpy.mockRejectedValue(
+                new Error(`getWrongFeatureNameErrorMessageResponse error`)
+              );
+            });
+
+            it(`should throw an error`, async (): Promise<void> => {
+              expect.assertions(1);
+
+              await expect(
+                service.getMessageResponse(anyDiscordMessage)
+              ).rejects.toThrow(
+                new Error(`getWrongFeatureNameErrorMessageResponse error`)
+              );
+            });
+          });
+
+          describe(`when the fetched of the wrong feature name error message response succeeded`, (): void => {
+            beforeEach((): void => {
+              discordMessageCommandFeatureErrorServiceGetWrongFeatureNameErrorMessageResponseSpy.mockResolvedValue(
+                getWrongFeatureNameErrorMessageResponse
+              );
+            });
+
+            it(`should return the wrong feature name error message response`, async (): Promise<
+              void
+            > => {
+              expect.assertions(1);
+
+              const result = await service.getMessageResponse(
+                anyDiscordMessage
+              );
+
+              expect(result).toStrictEqual(
+                getWrongFeatureNameErrorMessageResponse
+              );
+            });
+          });
+
           it(`should log about the fact that the feature does not exist`, async (): Promise<
             void
           > => {
@@ -433,7 +511,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
             await expect(
               service.getMessageResponse(anyDiscordMessage)
             ).rejects.toThrow(
-              new Error(`getEmptyContentErrorMessageResponse error`)
+              new Error(`getWrongFeatureNameErrorMessageResponse error`)
             );
 
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -451,7 +529,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
             await expect(
               service.getMessageResponse(anyDiscordMessage)
             ).rejects.toThrow(
-              new Error(`getEmptyContentErrorMessageResponse error`)
+              new Error(`getWrongFeatureNameErrorMessageResponse error`)
             );
 
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -469,7 +547,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
             await expect(
               service.getMessageResponse(anyDiscordMessage)
             ).rejects.toThrow(
-              new Error(`getEmptyContentErrorMessageResponse error`)
+              new Error(`getWrongFeatureNameErrorMessageResponse error`)
             );
 
             expect(

@@ -59,17 +59,17 @@ export class DiscordMessageErrorService extends AbstractService {
 
   private _sendMessageToOriginalChannel(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    messageResponse: Readonly<IDiscordMessageResponse>
+    { response, options }: Readonly<IDiscordMessageResponse>
   ): void {
     if (
       DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)
     ) {
       anyDiscordMessage.channel
-        .send(messageResponse.response, messageResponse.options)
+        .send(response, options)
         .then((): void => {
           LoggerService.getInstance().log({
             context: this._serviceName,
-            extendedContext: true,
+            hasExtendedContext: true,
             message: LoggerService.getInstance().getSnowflakeContext(
               anyDiscordMessage.id,
               `message sent`
@@ -93,23 +93,20 @@ export class DiscordMessageErrorService extends AbstractService {
 
   private _logOnError(
     error: unknown,
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    { id }: Readonly<IAnyDiscordMessage>
   ): void {
     LoggerService.getInstance().error({
       context: this._serviceName,
-      extendedContext: true,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
-        anyDiscordMessage.id,
+        id,
         `message sending failed`
       ),
     });
     LoggerService.getInstance().error({
       context: this._serviceName,
-      extendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        anyDiscordMessage.id,
-        error
-      ),
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(id, error),
     });
   }
 
@@ -167,12 +164,12 @@ export class DiscordMessageErrorService extends AbstractService {
     ];
   }
 
-  private _getMessageEmbedFieldMessageId(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): EmbedFieldData {
+  private _getMessageEmbedFieldMessageId({
+    id,
+  }: Readonly<IAnyDiscordMessage>): EmbedFieldData {
     return {
       name: `The message's id that killed me`,
-      value: anyDiscordMessage.id,
+      value: id,
     };
   }
 

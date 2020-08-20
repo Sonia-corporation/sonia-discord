@@ -38,14 +38,14 @@ export class DiscordMessageCommandVersionService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERSION_SERVICE);
   }
 
-  public handleResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  public handleResponse({
+    id,
+  }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      extendedContext: true,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
-        anyDiscordMessage.id,
+        id,
         `version command detected`
       ),
     });

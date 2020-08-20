@@ -24,10 +24,11 @@ export class DiscordMentionService extends AbstractService {
     return isDiscordMessageMentions(mention);
   }
 
-  public isForEveryone(
-    anyDiscordMessageMentions: Readonly<IAnyDiscordMessageMentions>
-  ): boolean {
-    return _.isEqual(anyDiscordMessageMentions.everyone, true);
+  public isForEveryone({
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    everyone,
+  }: Readonly<IAnyDiscordMessageMentions>): boolean {
+    return _.isEqual(everyone, true);
   }
 
   public isUserMentioned(

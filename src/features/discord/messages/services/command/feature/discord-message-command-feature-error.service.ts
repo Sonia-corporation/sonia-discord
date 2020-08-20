@@ -7,7 +7,6 @@ import _ from "lodash";
 import { AbstractService } from "../../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
 import { GithubConfigService } from "../../../../../github/services/config/github-config.service";
-import { DiscordEmojiEnum } from "../../../../enums/discord-emoji.enum";
 import { DiscordGuildConfigService } from "../../../../guilds/services/config/discord-guild-config.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
 import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
@@ -79,6 +78,33 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
       );
   }
 
+  public getWrongFeatureNameErrorMessageResponse(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    commands: Readonly<DiscordMessageCommandEnum>[],
+    featureName: Readonly<string>
+  ): Promise<IDiscordMessageResponse> {
+    return DiscordMessageCommandCliErrorService.getInstance()
+      .getCliErrorMessageResponse()
+      .then(
+        (
+          cliErrorMessageResponse: Readonly<IDiscordMessageResponse>
+        ): Promise<IDiscordMessageResponse> =>
+          Promise.resolve(
+            _.merge(cliErrorMessageResponse, {
+              options: {
+                embed: this._getWrongFeatureNameErrorMessageEmbed(
+                  anyDiscordMessage,
+                  commands,
+                  featureName
+                ),
+                split: true,
+              },
+              response: ``,
+            } as IDiscordMessageResponse)
+          )
+      );
+  }
+
   private _getErrorMessageEmbedFooter(): MessageEmbedFooter {
     const soniaImageUrl:
       | string
@@ -91,7 +117,47 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
   }
 
   private _getErrorMessageEmbedTitle(): string {
-    return `I can not handle your request ${DiscordEmojiEnum.WORRIED}`;
+    return `I can not handle your request`;
+  }
+
+  private _getMessageEmbedFieldErrorAllFeatures(): EmbedFieldData {
+    const allFeatureNames: string = _.trimEnd(
+      _.reduce(
+        getDiscordMessageCommandAllFeatureNames(),
+        (value: Readonly<string>, featureName: Readonly<string>): string =>
+          `${value}\`${_.toLower(featureName)}\`, `,
+        ``
+      ),
+      `, `
+    );
+
+    return {
+      name: `All features`,
+      value: allFeatureNames,
+    };
+  }
+
+  private _getMessageEmbedFieldErrorExample(
+    { content }: Readonly<IAnyDiscordMessage>,
+    commands: Readonly<DiscordMessageCommandEnum>[]
+  ): EmbedFieldData {
+    const randomFeatureName: string = _.toLower(
+      _.sample(getDiscordMessageCommandAllFeatureNames())
+    );
+    let userCommand: string | null = discordGetCommandAndPrefix({
+      commands,
+      message: _.isNil(content) ? `` : content,
+      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
+    });
+
+    if (_.isNil(userCommand)) {
+      userCommand = `!${_.toLower(DiscordMessageCommandEnum.FEATURE)}`;
+    }
+
+    return {
+      name: `Example`,
+      value: `\`${userCommand} ${randomFeatureName}\``,
+    };
   }
 
   private _getEmptyContentErrorMessageEmbed(): MessageEmbedOptions {
@@ -112,7 +178,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
   private _getEmptyContentErrorMessageEmbedFieldError(): EmbedFieldData {
     return {
       name: `Empty content`,
-      value: `The content of the message is empty. ${DiscordEmojiEnum.THINKING}\nI can not process the feature command however this error should never happen! ${DiscordEmojiEnum.WARNING}\nDo not be so selfish and share this information with my creators! ${DiscordEmojiEnum.PRAY}`,
+      value: `The content of the message is empty.\nI can not process the feature command however this error should never happen!\nDo not be so selfish and share this information with my creators!`,
     };
   }
 
@@ -146,60 +212,52 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
   ): EmbedFieldData[] {
     return [
       this._getEmptyFeatureNameErrorMessageEmbedFieldError(),
-      this._getEmptyFeatureNameErrorMessageEmbedFieldErrorAllFeatures(),
-      this._getEmptyFeatureNameErrorMessageEmbedFieldErrorExample(
-        anyDiscordMessage,
-        commands
-      ),
+      this._getMessageEmbedFieldErrorAllFeatures(),
+      this._getMessageEmbedFieldErrorExample(anyDiscordMessage, commands),
     ];
   }
 
   private _getEmptyFeatureNameErrorMessageEmbedFieldError(): EmbedFieldData {
     return {
       name: `Empty feature name`,
-      value: `You did not specify the name of the feature you wish to configure. ${DiscordEmojiEnum.FACE_WITH_RAISED_EYEBROW}\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure. ${DiscordEmojiEnum.GIFT_HEART}`,
+      value: `You did not specify the name of the feature you wish to configure.\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure.`,
     };
   }
 
-  private _getEmptyFeatureNameErrorMessageEmbedFieldErrorAllFeatures(): EmbedFieldData {
-    const allFeatureNames: string = _.trimEnd(
-      _.reduce(
-        getDiscordMessageCommandAllFeatureNames(),
-        (value: Readonly<string>, featureName: Readonly<string>): string =>
-          `${value}\`${_.capitalize(featureName)}\`, `,
-        ``
-      ),
-      `, `
-    );
-
-    return {
-      name: `All features`,
-      value: allFeatureNames,
-    };
-  }
-
-  private _getEmptyFeatureNameErrorMessageEmbedFieldErrorExample(
+  private _getWrongFeatureNameErrorMessageEmbed(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    commands: Readonly<DiscordMessageCommandEnum>[]
-  ): EmbedFieldData {
-    const randomFeatureName: string = _.capitalize(
-      _.sample(getDiscordMessageCommandAllFeatureNames())
-    );
-    let userCommand: string | null = discordGetCommandAndPrefix({
-      commands,
-      message: _.isNil(anyDiscordMessage.content)
-        ? ``
-        : anyDiscordMessage.content,
-      prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
-    });
-
-    if (_.isNil(userCommand)) {
-      userCommand = `!feature`;
-    }
-
+    commands: Readonly<DiscordMessageCommandEnum>[],
+    featureName: Readonly<string>
+  ): MessageEmbedOptions {
     return {
-      name: `Example`,
-      value: `\`${userCommand} ${randomFeatureName}\``,
+      fields: this._getWrongFeatureNameErrorMessageEmbedFields(
+        anyDiscordMessage,
+        commands,
+        featureName
+      ),
+      footer: this._getErrorMessageEmbedFooter(),
+      title: this._getErrorMessageEmbedTitle(),
+    };
+  }
+
+  private _getWrongFeatureNameErrorMessageEmbedFields(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    commands: Readonly<DiscordMessageCommandEnum>[],
+    featureName: Readonly<string>
+  ): EmbedFieldData[] {
+    return [
+      this._getWrongFeatureNameErrorMessageEmbedFieldError(featureName),
+      this._getMessageEmbedFieldErrorAllFeatures(),
+      this._getMessageEmbedFieldErrorExample(anyDiscordMessage, commands),
+    ];
+  }
+
+  private _getWrongFeatureNameErrorMessageEmbedFieldError(
+    featureName: Readonly<string>
+  ): EmbedFieldData {
+    return {
+      name: `Wrong feature name`,
+      value: `\`${featureName}\` is not an existing feature...\nLet me show you the list of available features and maybe try again with a valid one this time, ok?`,
     };
   }
 }

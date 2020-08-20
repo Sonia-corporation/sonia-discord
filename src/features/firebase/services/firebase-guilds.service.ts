@@ -76,8 +76,7 @@ export class FirebaseGuildsService extends AbstractService {
 
   public getGuildsCount(): Promise<number> {
     return this.getGuilds().then(
-      (querySnapshot: Readonly<QuerySnapshot<IFirebaseGuild>>): number =>
-        querySnapshot.size
+      ({ size }: Readonly<QuerySnapshot<IFirebaseGuild>>): number => size
     );
   }
 
@@ -91,9 +90,11 @@ export class FirebaseGuildsService extends AbstractService {
         .doc(guildId)
         .get()
         .then(
-          (
-            documentSnapshot: Readonly<DocumentSnapshot<IFirebaseGuild>>
-          ): Promise<boolean> => Promise.resolve(documentSnapshot.exists)
+          ({
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            exists,
+          }: Readonly<DocumentSnapshot<IFirebaseGuild>>): Promise<boolean> =>
+            Promise.resolve(exists)
         )
         .catch(
           (): Promise<boolean> => {
@@ -114,7 +115,7 @@ export class FirebaseGuildsService extends AbstractService {
     return Promise.reject(new Error(`Collection not available`));
   }
 
-  public addGuild(guild: Readonly<Guild>): Promise<WriteResult> {
+  public addGuild({ id }: Readonly<Guild>): Promise<WriteResult> {
     const collectionReference:
       | CollectionReference<IFirebaseGuild>
       | undefined = this.getCollectionReference();
@@ -126,10 +127,10 @@ export class FirebaseGuildsService extends AbstractService {
       });
 
       return collectionReference
-        .doc(guild.id)
+        .doc(id)
         .set(
           createFirebaseGuild({
-            id: guild.id,
+            id,
           })
         )
         .then(
@@ -137,9 +138,7 @@ export class FirebaseGuildsService extends AbstractService {
             LoggerService.getInstance().success({
               context: this._serviceName,
               message: ChalkService.getInstance().text(
-                `Firebase guild ${ChalkService.getInstance().value(
-                  guild.id
-                )} created`
+                `Firebase guild ${ChalkService.getInstance().value(id)} created`
               ),
             });
 
@@ -199,15 +198,14 @@ export class FirebaseGuildsService extends AbstractService {
       });
 
       collectionReference.onSnapshot(
-        (querySnapshot: QuerySnapshot<IFirebaseGuild>): void => {
+        ({ forEach }: QuerySnapshot<IFirebaseGuild>): void => {
           const firebaseGuilds: IFirebaseGuild[] = [];
 
-          querySnapshot.forEach(
-            (
-              queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>
-            ): void => {
-              if (_.isEqual(queryDocumentSnapshot.exists, true)) {
-                firebaseGuilds.push(queryDocumentSnapshot.data());
+          forEach(
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            ({ exists, data }: QueryDocumentSnapshot<IFirebaseGuild>): void => {
+              if (_.isEqual(exists, true)) {
+                firebaseGuilds.push(data());
               }
             }
           );

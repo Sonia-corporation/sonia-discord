@@ -3,14 +3,16 @@ import { IDiscordGetThisCommandWithPrefixData } from "../../interfaces/commands/
 import { discordGetCommandRegexp } from "./discord-get-command-regexp";
 import xregexp, { ExecArray } from "xregexp";
 
-export function discordGetThisCommandWithPrefix(
-  data: Readonly<IDiscordGetThisCommandWithPrefixData>
-): string | null {
+export function discordGetThisCommandWithPrefix({
+  message,
+  command,
+  prefix,
+}: Readonly<IDiscordGetThisCommandWithPrefixData>): string | null {
   const execArray: ExecArray | null = xregexp.exec(
-    data.message,
+    message,
     discordGetCommandRegexp({
-      command: data.command,
-      prefix: data.prefix,
+      command,
+      prefix,
     })
   );
 

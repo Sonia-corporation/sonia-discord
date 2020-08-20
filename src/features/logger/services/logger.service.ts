@@ -79,11 +79,9 @@ export class LoggerService {
     }
   }
 
-  public serviceCreated(
-    loggerServiceCreated: Readonly<ILoggerServiceCreated>
-  ): void {
+  public serviceCreated({ service }: Readonly<ILoggerServiceCreated>): void {
     this.debug({
-      context: loggerServiceCreated.service,
+      context: service,
       message: ChalkService.getInstance().text(`created`),
     });
   }
@@ -144,35 +142,40 @@ export class LoggerService {
     )}${ChalkService.getInstance().text(message)}`;
   }
 
-  public logJobDate(jobDateLog: Readonly<IJobDateLog>): void {
+  public logJobDate({
+    context,
+    jobName,
+    jobDateHumanized,
+    jobDate,
+  }: Readonly<IJobDateLog>): void {
     this.debug({
-      context: jobDateLog.context,
+      context,
       message: ChalkService.getInstance().text(
-        `${jobDateLog.jobName} job: ${ChalkService.getInstance().value(
-          jobDateLog.jobDateHumanized
-        )} ${ChalkService.getInstance().hint(`(${jobDateLog.jobDate})`)}`
+        `${jobName} job: ${ChalkService.getInstance().value(
+          jobDateHumanized
+        )} ${ChalkService.getInstance().hint(`(${jobDate})`)}`
       ),
     });
   }
 
-  private _log(loggerLogInternal: Readonly<ILoggerLogInternal>): void {
+  private _log({
+    loggerLogType,
+    context,
+    hasExtendedContext,
+    message,
+  }: Readonly<ILoggerLogInternal>): void {
     if (_.isEqual(LoggerConfigService.getInstance().isEnabled(), true)) {
-      const logTypePrefix: string = this._getLogTypePrefix(
-        loggerLogInternal.loggerLogType
-      );
+      const logTypePrefix: string = this._getLogTypePrefix(loggerLogType);
 
-      if (
-        _.isString(loggerLogInternal.context) &&
-        !_.isEmpty(loggerLogInternal.context)
-      ) {
+      if (_.isString(context) && !_.isEmpty(context)) {
         console.log(
           `${logTypePrefix}${this._context(
-            loggerLogInternal.context,
-            loggerLogInternal.extendedContext
-          )}${loggerLogInternal.message}`
+            context,
+            hasExtendedContext
+          )}${message}`
         );
       } else {
-        console.log(`${logTypePrefix}${loggerLogInternal.message}`);
+        console.log(`${logTypePrefix}${message}`);
       }
     }
   }

@@ -53,7 +53,7 @@ export class DiscordMessageTextService extends AbstractService {
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      extendedContext: true,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `message with valid mention`
@@ -94,14 +94,14 @@ export class DiscordMessageTextService extends AbstractService {
     return Promise.reject(new Error(`Invalid Sonia`));
   }
 
-  private _getEveryoneMentionMessageResponse(
-    discordMessage: Readonly<IDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  private _getEveryoneMentionMessageResponse({
+    id,
+  }: Readonly<IDiscordMessage>): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      extendedContext: true,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
-        discordMessage.id,
+        id,
         `everyone mention`
       ),
     });
@@ -133,7 +133,7 @@ export class DiscordMessageTextService extends AbstractService {
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      extendedContext: true,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         discordMessage.id,
         `Sonia was mentioned`

@@ -105,7 +105,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandCookieService`,
-        extendedContext: true,
+        hasExtendedContext: true,
         message: `context-[dummy-id] text-cookie command detected`,
       } as ILoggerLog);
     });

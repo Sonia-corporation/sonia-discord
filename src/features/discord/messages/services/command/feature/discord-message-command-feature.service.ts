@@ -37,7 +37,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      extendedContext: true,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `feature command detected`
@@ -74,19 +74,22 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
             )} not matching an existing feature`
           ),
         });
-      } else {
-        LoggerService.getInstance().debug({
-          context: this._serviceName,
-          message: ChalkService.getInstance().text(
-            `feature name not specified`
-          ),
-        });
 
-        return DiscordMessageCommandFeatureErrorService.getInstance().getEmptyFeatureNameErrorMessageResponse(
+        return DiscordMessageCommandFeatureErrorService.getInstance().getWrongFeatureNameErrorMessageResponse(
           anyDiscordMessage,
-          this._commands
+          this._commands,
+          featureName
         );
       }
+      LoggerService.getInstance().debug({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(`feature name not specified`),
+      });
+
+      return DiscordMessageCommandFeatureErrorService.getInstance().getEmptyFeatureNameErrorMessageResponse(
+        anyDiscordMessage,
+        this._commands
+      );
     }
 
     return DiscordMessageCommandFeatureErrorService.getInstance().getEmptyContentErrorMessageResponse();

@@ -11,6 +11,7 @@ import { forkJoin, Observable, of } from "rxjs";
 import { mapTo, mergeMap, take } from "rxjs/operators";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { replaceInterpolation } from "../../../functions/formatters/replace-interpolation";
 import { getRandomValueFromEnum } from "../../../functions/randoms/get-random-value-from-enum";
 import { AppConfigService } from "../../app/services/config/app-config.service";
 import { isDiscordGuildChannelWritable } from "../../discord/channels/functions/types/is-discord-guild-channel-writable";
@@ -19,8 +20,10 @@ import { DiscordGuildSoniaChannelNameEnum } from "../../discord/guilds/enums/dis
 import { DiscordGuildSoniaService } from "../../discord/guilds/services/discord-guild-sonia.service";
 import { DiscordGuildService } from "../../discord/guilds/services/discord-guild.service";
 import { DiscordLoggerErrorService } from "../../discord/logger/services/discord-logger-error.service";
+import { wrapUserIdIntoMention } from "../../discord/mentions/functions/wrap-user-id-into-mention";
 import { IDiscordMessageResponse } from "../../discord/messages/interfaces/discord-message-response";
 import { DiscordMessageCommandReleaseNotesService } from "../../discord/messages/services/command/release-notes/discord-message-command-release-notes.service";
+import { DiscordGithubContributorsIdEnum } from "../../discord/users/enums/discord-github-contributors-id.enum";
 import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
 import { FirebaseGuildNewVersionResponseEnum } from "../enums/firebase-guild-new-version-response.enum";
@@ -61,15 +64,13 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     return this._sendNewReleaseNotesToEachGuild$();
   }
 
-  public sendNewReleaseNotesFromFirebaseGuild(
-    firebaseGuild: Readonly<IFirebaseGuild>
-  ): Promise<Message | void> {
-    if (!_.isNil(firebaseGuild.id)) {
+  public sendNewReleaseNotesFromFirebaseGuild({
+    id,
+  }: Readonly<IFirebaseGuild>): Promise<Message | void> {
+    if (!_.isNil(id)) {
       const guild:
         | Guild
-        | undefined = DiscordGuildService.getInstance().getGuildById(
-        firebaseGuild.id
-      );
+        | undefined = DiscordGuildService.getInstance().getGuildById(id);
 
       if (!_.isNil(guild)) {
         return this._sendNewReleaseNotesFromDiscordGuild(guild);
@@ -79,7 +80,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
         context: this._serviceName,
         message: ChalkService.getInstance().text(
           `Discord guild ${ChalkService.getInstance().value(
-            firebaseGuild.id
+            id
           )} does not exists`
         ),
       });
@@ -166,9 +167,9 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     );
   }
 
-  private _sendNewReleaseNotesToEachGuild(
-    querySnapshot: QuerySnapshot<IFirebaseGuild>
-  ): Promise<IFirebaseGuild[] | void> {
+  private _sendNewReleaseNotesToEachGuild({
+    forEach,
+  }: QuerySnapshot<IFirebaseGuild>): Promise<IFirebaseGuild[] | void> {
     const batch:
       | WriteBatch
       | undefined = FirebaseGuildsService.getInstance().getBatch();
@@ -178,13 +179,16 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       let countFirebaseGuildsUpdated = 0;
       let countFirebaseGuilds = 0;
 
-      querySnapshot.forEach(
-        (
-          queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>
-        ): void => {
-          if (_.isEqual(queryDocumentSnapshot.exists, true)) {
+      forEach(
+        ({
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          exists,
+          data,
+          ref,
+        }: QueryDocumentSnapshot<IFirebaseGuild>): void => {
+          if (_.isEqual(exists, true)) {
             countFirebaseGuilds = _.add(countFirebaseGuilds, 1);
-            const firebaseGuild: IFirebaseGuild = queryDocumentSnapshot.data();
+            const firebaseGuild: IFirebaseGuild = data();
 
             if (
               this._shouldSendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
@@ -192,7 +196,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
               countFirebaseGuildsUpdated = _.add(countFirebaseGuildsUpdated, 1);
 
               batch.update(
-                queryDocumentSnapshot.ref,
+                ref,
                 getUpdatedFirebaseGuildLastReleaseNotesVersion(
                   AppConfigService.getInstance().getVersion()
                 )
@@ -299,9 +303,15 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           const enhanceMessageResponse: IDiscordMessageResponse = _.cloneDeep(
             messageResponse
           );
-          enhanceMessageResponse.response =
+          const response: FirebaseGuildNewVersionResponseEnum | string =
             getRandomValueFromEnum(FirebaseGuildNewVersionResponseEnum) ||
             `Cool!`;
+          enhanceMessageResponse.response = replaceInterpolation(response, {
+            userId: wrapUserIdIntoMention(
+              getRandomValueFromEnum(DiscordGithubContributorsIdEnum) ||
+                DiscordGithubContributorsIdEnum.C0ZEN
+            ),
+          });
 
           LoggerService.getInstance().debug({
             context: this._serviceName,
@@ -359,11 +369,11 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       );
   }
 
-  private _shouldSendNewReleaseNotesFromFirebaseGuild(
-    firebaseGuild: Readonly<IFirebaseGuild>
-  ): boolean {
+  private _shouldSendNewReleaseNotesFromFirebaseGuild({
+    lastReleaseNotesVersion,
+  }: Readonly<IFirebaseGuild>): boolean {
     const appVersion: string = AppConfigService.getInstance().getVersion();
 
-    return !_.isEqual(firebaseGuild.lastReleaseNotesVersion, appVersion);
+    return !_.isEqual(lastReleaseNotesVersion, appVersion);
   }
 }
