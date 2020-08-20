@@ -1,5 +1,5 @@
 export interface ILoggerLog {
   context?: string;
-  extendedContext?: boolean;
+  hasExtendedContext?: boolean;
   message: unknown;
 }

@@ -6,13 +6,14 @@ import { IDiscordGetCompleteCommandRegexp } from "../../interfaces/commands/disc
  *
  * @return {RegExp} A RegExp matching a prefix with a command and one argument
  */
-export function discordGetCompleteCommandRegexp(
-  data: Readonly<IDiscordGetCompleteCommandRegexp>
-): RegExp {
+export function discordGetCompleteCommandRegexp({
+  prefix,
+  command,
+}: Readonly<IDiscordGetCompleteCommandRegexp>): RegExp {
   return xregexp(
     `
-    (?<prefix>\\${data.prefix}) # Command prefix
-    (?<command>${data.command}) # Command name
+    (?<prefix>\\${prefix}) # Command prefix
+    (?<command>${command}) # Command name
     (?<separator>\\s)           # Space
     (?<argument1>\\S+)          # Argument 1
     `,

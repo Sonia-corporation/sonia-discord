@@ -267,7 +267,7 @@ describe(`DiscordMessageService`, (): void => {
         expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `DiscordMessageService`,
-          extendedContext: true,
+          hasExtendedContext: true,
           message: `context-[dummy-id] text-dummy-content`,
         } as ILoggerLog);
       });
@@ -489,7 +489,7 @@ describe(`DiscordMessageService`, (): void => {
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
             context: `DiscordMessageService`,
-            extendedContext: true,
+            hasExtendedContext: true,
             message: `context-[dummy-id] text-text message`,
           } as ILoggerLog);
         });
@@ -528,7 +528,7 @@ describe(`DiscordMessageService`, (): void => {
             expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
               context: `DiscordMessageService`,
-              extendedContext: true,
+              hasExtendedContext: true,
               message: `context-[dummy-id] text-failed to get a valid message response`,
             } as ILoggerLog);
           });
@@ -590,7 +590,7 @@ describe(`DiscordMessageService`, (): void => {
               expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
               expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
                 context: `DiscordMessageService`,
-                extendedContext: true,
+                hasExtendedContext: true,
                 message: `context-[dummy-id] text-sending message...`,
               } as ILoggerLog);
             });
@@ -685,7 +685,7 @@ describe(`DiscordMessageService`, (): void => {
                 expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
                 expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageService`,
-                  extendedContext: true,
+                  hasExtendedContext: true,
                   message: `context-[dummy-id] text-message sent`,
                 } as ILoggerLog);
               });
@@ -719,7 +719,7 @@ describe(`DiscordMessageService`, (): void => {
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageService`,
-          extendedContext: true,
+          hasExtendedContext: true,
           message: `context-[dummy-id] text-dm message`,
         } as ILoggerLog);
       });
@@ -756,7 +756,7 @@ describe(`DiscordMessageService`, (): void => {
           expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
             context: `DiscordMessageService`,
-            extendedContext: true,
+            hasExtendedContext: true,
             message: `context-[dummy-id] text-failed to get a valid message response`,
           } as ILoggerLog);
         });
@@ -816,7 +816,7 @@ describe(`DiscordMessageService`, (): void => {
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
             expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
               context: `DiscordMessageService`,
-              extendedContext: true,
+              hasExtendedContext: true,
               message: `context-[dummy-id] text-sending message...`,
             } as ILoggerLog);
           });
@@ -911,7 +911,7 @@ describe(`DiscordMessageService`, (): void => {
               expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `DiscordMessageService`,
-                extendedContext: true,
+                hasExtendedContext: true,
                 message: `context-[dummy-id] text-message sent`,
               } as ILoggerLog);
             });

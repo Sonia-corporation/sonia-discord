@@ -23,11 +23,12 @@ export class DiscordAuthorService extends AbstractService {
     return isDiscordUser(author);
   }
 
-  public hasValidUsername(author: Readonly<IAnyDiscordAuthor>): boolean {
-    return _.isString(author.username) && !_.isEmpty(author.username);
+  public hasValidUsername({ username }: Readonly<IAnyDiscordAuthor>): boolean {
+    return _.isString(username) && !_.isEmpty(username);
   }
 
-  public isBot(author: Readonly<IAnyDiscordAuthor>): boolean {
-    return _.isEqual(author.bot, true);
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  public isBot({ bot }: Readonly<IAnyDiscordAuthor>): boolean {
+    return _.isEqual(bot, true);
   }
 }

@@ -41,7 +41,7 @@ export class DiscordMessageService extends AbstractService {
     ) {
       LoggerService.getInstance().log({
         context: this._serviceName,
-        extendedContext: true,
+        hasExtendedContext: true,
         message: LoggerService.getInstance().getSnowflakeContext(
           anyDiscordMessage.id,
           anyDiscordMessage.content
@@ -99,7 +99,7 @@ export class DiscordMessageService extends AbstractService {
               // @todo add coverage
               LoggerService.getInstance().debug({
                 context: this._serviceName,
-                extendedContext: true,
+                hasExtendedContext: true,
                 message: LoggerService.getInstance().getSnowflakeContext(
                   anyDiscordMessage.id,
                   `message ignored`
@@ -107,7 +107,7 @@ export class DiscordMessageService extends AbstractService {
               });
               LoggerService.getInstance().warning({
                 context: this._serviceName,
-                extendedContext: true,
+                hasExtendedContext: true,
                 message: LoggerService.getInstance().getSnowflakeContext(
                   anyDiscordMessage.id,
                   error
@@ -131,7 +131,7 @@ export class DiscordMessageService extends AbstractService {
   ): Promise<void> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      extendedContext: true,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `dm message`
@@ -150,7 +150,7 @@ export class DiscordMessageService extends AbstractService {
         (error: Readonly<Error>): Promise<void> => {
           LoggerService.getInstance().error({
             context: this._serviceName,
-            extendedContext: true,
+            hasExtendedContext: true,
             message: LoggerService.getInstance().getSnowflakeContext(
               anyDiscordMessage.id,
               `failed to get a valid message response`
@@ -167,7 +167,7 @@ export class DiscordMessageService extends AbstractService {
   ): Promise<void> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      extendedContext: true,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `text message`
@@ -186,7 +186,7 @@ export class DiscordMessageService extends AbstractService {
         (error: Readonly<Error>): Promise<void> => {
           LoggerService.getInstance().error({
             context: this._serviceName,
-            extendedContext: true,
+            hasExtendedContext: true,
             message: LoggerService.getInstance().getSnowflakeContext(
               anyDiscordMessage.id,
               `failed to get a valid message response`
@@ -200,14 +200,14 @@ export class DiscordMessageService extends AbstractService {
 
   private _sendMessage(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    discordMessageResponse: Readonly<IDiscordMessageResponse>
+    { response, options }: Readonly<IDiscordMessageResponse>
   ): Promise<void> {
     if (
       DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)
     ) {
       LoggerService.getInstance().debug({
         context: this._serviceName,
-        extendedContext: true,
+        hasExtendedContext: true,
         message: LoggerService.getInstance().getSnowflakeContext(
           anyDiscordMessage.id,
           `sending message...`
@@ -215,12 +215,12 @@ export class DiscordMessageService extends AbstractService {
       });
 
       return anyDiscordMessage.channel
-        .send(discordMessageResponse.response, discordMessageResponse.options)
+        .send(response, options)
         .then(
           (): Promise<void> => {
             LoggerService.getInstance().log({
               context: this._serviceName,
-              extendedContext: true,
+              hasExtendedContext: true,
               message: LoggerService.getInstance().getSnowflakeContext(
                 anyDiscordMessage.id,
                 `message sent`

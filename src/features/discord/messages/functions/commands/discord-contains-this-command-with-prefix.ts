@@ -3,32 +3,32 @@ import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-c
 import { IDiscordContainsThisCommandWithPrefixData } from "../../interfaces/commands/discord-contains-this-command-with-prefix-data";
 import { discordStrictlyContainsThisCommandWithPrefix } from "./discord-strictly-contains-this-command-with-prefix";
 
-export function discordContainsThisCommandWithPrefix(
-  data: Readonly<IDiscordContainsThisCommandWithPrefixData>
-): boolean {
+export function discordContainsThisCommandWithPrefix({
+  commands,
+  message,
+  prefix,
+}: Readonly<IDiscordContainsThisCommandWithPrefixData>): boolean {
   let containsThisCommandWithPrefix = false;
 
-  if (_.isString(data.commands)) {
-    const command: DiscordMessageCommandEnum = data.commands;
+  if (_.isString(commands)) {
+    const command: DiscordMessageCommandEnum = commands;
 
     containsThisCommandWithPrefix = discordStrictlyContainsThisCommandWithPrefix(
       {
         command,
-        message: data.message,
-        prefix: data.prefix,
+        message,
+        prefix,
       }
     );
-  } else if (_.isArray(data.commands)) {
-    const commands: DiscordMessageCommandEnum[] = data.commands;
-
+  } else if (_.isArray(commands)) {
     _.forEach(commands, (command: Readonly<DiscordMessageCommandEnum>):
       | false
       | void => {
       if (
         discordStrictlyContainsThisCommandWithPrefix({
           command,
-          message: data.message,
-          prefix: data.prefix,
+          message,
+          prefix,
         })
       ) {
         containsThisCommandWithPrefix = true;

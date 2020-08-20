@@ -9,26 +9,23 @@ import { wrapUserIdIntoMention } from "../../mentions/functions/wrap-user-id-int
  *
  * @return {string} A string representing the current developer profile
  */
-export function getDiscordDevPrefix(
-  config: Readonly<IGetDiscordDevPrefix>
-): string {
-  const hasEmphasis: boolean = _.isBoolean(config.hasEmphasis)
-    ? config.hasEmphasis
-    : true;
-  const asMention: boolean = _.isBoolean(config.asMention)
-    ? config.asMention
-    : false;
+export function getDiscordDevPrefix({
+  hasEmphasis = true,
+  asMention = false,
+  discordId,
+  nickname,
+}: Readonly<IGetDiscordDevPrefix>): string {
   let discordDevPrefix = `[dev]`;
 
   if (
     _.isEqual(asMention, true) &&
-    _.isString(config.discordId) &&
-    !_.isEmpty(config.discordId)
+    _.isString(discordId) &&
+    !_.isEmpty(discordId)
   ) {
-    discordDevPrefix = `[dev - ${wrapUserIdIntoMention(config.discordId)}]`;
+    discordDevPrefix = `[dev - ${wrapUserIdIntoMention(discordId)}]`;
   } else {
-    if (_.isString(config.nickname) && !_.isEmpty(config.nickname)) {
-      discordDevPrefix = `[dev - ${config.nickname}]`;
+    if (_.isString(nickname) && !_.isEmpty(nickname)) {
+      discordDevPrefix = `[dev - ${nickname}]`;
     }
   }
 

@@ -33,14 +33,14 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_RELEASE_NOTES_SERVICE);
   }
 
-  public handleResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  public handleResponse({
+    id,
+  }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      extendedContext: true,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
-        anyDiscordMessage.id,
+        id,
         `release notes command detected`
       ),
     });

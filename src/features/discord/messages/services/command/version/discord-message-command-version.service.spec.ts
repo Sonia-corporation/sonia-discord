@@ -114,7 +114,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandVersionService`,
-        extendedContext: true,
+        hasExtendedContext: true,
         message: `context-[dummy-id] text-version command detected`,
       } as ILoggerLog);
     });

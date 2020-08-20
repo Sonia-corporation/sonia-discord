@@ -178,7 +178,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
   }
 
   private _getEmptyFeatureNameErrorMessageEmbedFieldErrorExample(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    { content }: Readonly<IAnyDiscordMessage>,
     commands: Readonly<DiscordMessageCommandEnum>[]
   ): EmbedFieldData {
     const randomFeatureName: string = _.toLower(
@@ -186,9 +186,7 @@ export class DiscordMessageCommandFeatureErrorService extends AbstractService {
     );
     let userCommand: string | null = discordGetCommandAndPrefix({
       commands,
-      message: _.isNil(anyDiscordMessage.content)
-        ? ``
-        : anyDiscordMessage.content,
+      message: _.isNil(content) ? `` : content,
       prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
     });
 

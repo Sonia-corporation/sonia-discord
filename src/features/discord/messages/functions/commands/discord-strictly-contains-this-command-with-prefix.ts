@@ -2,14 +2,16 @@ import { IDiscordStrictlyContainsThisCommandWithPrefixData } from "../../interfa
 import { discordGetCommandRegexp } from "./discord-get-command-regexp";
 import xregexp from "xregexp";
 
-export function discordStrictlyContainsThisCommandWithPrefix(
-  data: Readonly<IDiscordStrictlyContainsThisCommandWithPrefixData>
-): boolean {
+export function discordStrictlyContainsThisCommandWithPrefix({
+  message,
+  command,
+  prefix,
+}: Readonly<IDiscordStrictlyContainsThisCommandWithPrefixData>): boolean {
   return xregexp.test(
-    data.message,
+    message,
     discordGetCommandRegexp({
-      command: data.command,
-      prefix: data.prefix,
+      command,
+      prefix,
     })
   );
 }

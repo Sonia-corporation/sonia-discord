@@ -582,7 +582,7 @@ describe(`LoggerService`, (): void => {
       beforeEach((): void => {
         loggerLog = {
           context: `dummy-context`,
-          extendedContext: false,
+          hasExtendedContext: false,
           message: `dummy-message`,
         };
       });
@@ -777,7 +777,7 @@ describe(`LoggerService`, (): void => {
       beforeEach((): void => {
         loggerLog = {
           context: `dummy-context`,
-          extendedContext: true,
+          hasExtendedContext: true,
           message: `[custom-context] dummy-message`,
         };
       });
@@ -1365,7 +1365,7 @@ describe(`LoggerService`, (): void => {
       beforeEach((): void => {
         loggerLog = {
           context: `dummy-context`,
-          extendedContext: false,
+          hasExtendedContext: false,
           message: `dummy-message`,
         };
       });
@@ -1557,7 +1557,7 @@ describe(`LoggerService`, (): void => {
       beforeEach((): void => {
         loggerLog = {
           context: `dummy-context`,
-          extendedContext: true,
+          hasExtendedContext: true,
           message: `[custom-context] dummy-message`,
         };
       });
@@ -2136,7 +2136,7 @@ describe(`LoggerService`, (): void => {
       beforeEach((): void => {
         loggerLog = {
           context: `dummy-context`,
-          extendedContext: false,
+          hasExtendedContext: false,
           message: `dummy-message`,
         };
       });
@@ -2325,7 +2325,7 @@ describe(`LoggerService`, (): void => {
       beforeEach((): void => {
         loggerLog = {
           context: `dummy-context`,
-          extendedContext: true,
+          hasExtendedContext: true,
           message: `[custom-context] dummy-message`,
         };
       });
@@ -2891,7 +2891,7 @@ describe(`LoggerService`, (): void => {
       beforeEach((): void => {
         loggerLog = {
           context: `dummy-context`,
-          extendedContext: false,
+          hasExtendedContext: false,
           message: `dummy-message`,
         };
       });
@@ -3077,7 +3077,7 @@ describe(`LoggerService`, (): void => {
       beforeEach((): void => {
         loggerLog = {
           context: `dummy-context`,
-          extendedContext: true,
+          hasExtendedContext: true,
           message: `[custom-context] dummy-message`,
         };
       });
@@ -3636,7 +3636,7 @@ describe(`LoggerService`, (): void => {
       beforeEach((): void => {
         loggerLog = {
           context: `dummy-context`,
-          extendedContext: false,
+          hasExtendedContext: false,
           message: `dummy-message`,
         };
       });
@@ -3819,7 +3819,7 @@ describe(`LoggerService`, (): void => {
       beforeEach((): void => {
         loggerLog = {
           context: `dummy-context`,
-          extendedContext: true,
+          hasExtendedContext: true,
           message: `[custom-context] dummy-message`,
         };
       });

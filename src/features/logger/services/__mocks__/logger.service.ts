@@ -122,7 +122,7 @@ export class LoggerService {
       console.log(
         `${logTypePrefix}${this._context(
           loggerLogInternal.context,
-          loggerLogInternal.extendedContext
+          loggerLogInternal.hasExtendedContext
         )}${loggerLogInternal.message}`
       );
     } else {

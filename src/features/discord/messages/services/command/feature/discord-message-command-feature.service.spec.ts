@@ -98,7 +98,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandFeatureService`,
-        extendedContext: true,
+        hasExtendedContext: true,
         message: `context-[dummy-id] text-feature command detected`,
       } as ILoggerLog);
     });

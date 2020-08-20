@@ -144,12 +144,12 @@ export class DiscordGuildMemberAddService extends AbstractService {
     }
   }
 
-  private _getMessageResponse(
-    member: Readonly<IAnyGuildMember>
-  ): IDiscordMessageResponse {
+  private _getMessageResponse({
+    id,
+  }: Readonly<IAnyGuildMember>): IDiscordMessageResponse {
     return {
       response: this._getMessageResponseWithEnvPrefix(
-        `Welcome ${wrapUserIdIntoMention(member.id)}! il est midi!`
+        `Welcome ${wrapUserIdIntoMention(id)}! il est midi!`
       ),
     };
   }
