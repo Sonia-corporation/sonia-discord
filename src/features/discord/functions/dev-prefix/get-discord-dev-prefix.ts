@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { IGetDiscordDevPrefix } from "../../interfaces/dev-prefix/get-discord-dev-prefix";
+import { wrapUserIdIntoMention } from "../../mentions/functions/wrap-user-id-into-mention";
 
 /**
  * @param {Readonly<IGetDiscordDevPrefix>} config The configuration object
@@ -21,7 +22,7 @@ export function getDiscordDevPrefix({
     _.isString(discordId) &&
     !_.isEmpty(discordId)
   ) {
-    discordDevPrefix = `[dev - <@!${discordId}>]`;
+    discordDevPrefix = `[dev - ${wrapUserIdIntoMention(discordId)}]`;
   } else {
     if (_.isString(nickname) && !_.isEmpty(nickname)) {
       discordDevPrefix = `[dev - ${nickname}]`;

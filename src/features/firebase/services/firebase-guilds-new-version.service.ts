@@ -11,6 +11,7 @@ import { forkJoin, Observable, of } from "rxjs";
 import { mapTo, mergeMap, take } from "rxjs/operators";
 import { AbstractService } from "../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { replaceInterpolation } from "../../../functions/formatters/replace-interpolation";
 import { getRandomValueFromEnum } from "../../../functions/randoms/get-random-value-from-enum";
 import { AppConfigService } from "../../app/services/config/app-config.service";
 import { isDiscordGuildChannelWritable } from "../../discord/channels/functions/types/is-discord-guild-channel-writable";
@@ -19,8 +20,10 @@ import { DiscordGuildSoniaChannelNameEnum } from "../../discord/guilds/enums/dis
 import { DiscordGuildSoniaService } from "../../discord/guilds/services/discord-guild-sonia.service";
 import { DiscordGuildService } from "../../discord/guilds/services/discord-guild.service";
 import { DiscordLoggerErrorService } from "../../discord/logger/services/discord-logger-error.service";
+import { wrapUserIdIntoMention } from "../../discord/mentions/functions/wrap-user-id-into-mention";
 import { IDiscordMessageResponse } from "../../discord/messages/interfaces/discord-message-response";
 import { DiscordMessageCommandReleaseNotesService } from "../../discord/messages/services/command/release-notes/discord-message-command-release-notes.service";
+import { DiscordGithubContributorsIdEnum } from "../../discord/users/enums/discord-github-contributors-id.enum";
 import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
 import { FirebaseGuildNewVersionResponseEnum } from "../enums/firebase-guild-new-version-response.enum";
@@ -299,9 +302,15 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           const enhanceMessageResponse: IDiscordMessageResponse = _.cloneDeep(
             messageResponse
           );
-          enhanceMessageResponse.response =
+          const response: FirebaseGuildNewVersionResponseEnum | string =
             getRandomValueFromEnum(FirebaseGuildNewVersionResponseEnum) ||
             `Cool!`;
+          enhanceMessageResponse.response = replaceInterpolation(response, {
+            userId: wrapUserIdIntoMention(
+              getRandomValueFromEnum(DiscordGithubContributorsIdEnum) ||
+                DiscordGithubContributorsIdEnum.C0ZEN
+            ),
+          });
 
           LoggerService.getInstance().debug({
             context: this._serviceName,

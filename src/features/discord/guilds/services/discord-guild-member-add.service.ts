@@ -12,6 +12,7 @@ import { isDiscordGuildChannelWritable } from "../../channels/functions/types/is
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
 import { addDiscordDevPrefix } from "../../functions/dev-prefix/add-discord-dev-prefix";
 import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-error.service";
+import { wrapUserIdIntoMention } from "../../mentions/functions/wrap-user-id-into-mention";
 import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordGuildSoniaChannelNameEnum } from "../enums/discord-guild-sonia-channel-name.enum";
@@ -148,7 +149,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
   }: Readonly<IAnyGuildMember>): IDiscordMessageResponse {
     return {
       response: this._getMessageResponseWithEnvPrefix(
-        `Welcome <@!${id}>! il est midi!`
+        `Welcome ${wrapUserIdIntoMention(id)}! il est midi!`
       ),
     };
   }

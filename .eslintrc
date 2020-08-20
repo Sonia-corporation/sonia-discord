@@ -214,6 +214,19 @@ rules:
     - error
     - as-needed
     - requireReturnForObjectLiteral: true
+  no-dupe-else-if:
+    - error
+  no-unmodified-loop-condition:
+    - error
+  no-eval:
+    - error
+  no-extra-label:
+    - error
+  curly:
+    - error
+    - all
+  no-await-in-loop:
+    - error
 overrides:
   - files:
       - '*.ts'
