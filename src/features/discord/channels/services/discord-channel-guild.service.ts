@@ -20,8 +20,8 @@ export class DiscordChannelGuildService extends AbstractService {
     super(ServiceNameEnum.DISCORD_CHANNEL_GUILD_SERVICE);
   }
 
-  public isGeneral(channel: Readonly<GuildChannel>): boolean {
-    return _.isEqual(_.toLower(_.deburr(channel.name)), `general`);
+  public isGeneral({ name }: Readonly<GuildChannel>): boolean {
+    return _.isEqual(_.toLower(_.deburr(name)), `general`);
   }
 
   public getPrimary(guild: Readonly<Guild>): GuildChannel | null {
