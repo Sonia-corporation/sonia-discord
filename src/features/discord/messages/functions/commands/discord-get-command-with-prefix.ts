@@ -1,8 +1,9 @@
 import _ from "lodash";
 import { IDiscordGetCommandWithPrefix } from "../../interfaces/commands/discord-get-command-with-prefix";
 
-export function discordGetCommandWithPrefix(
-  data: Readonly<IDiscordGetCommandWithPrefix>
-): string {
-  return _.toLower(`${data.prefix}${data.command}`);
+export function discordGetCommandWithPrefix({
+  prefix,
+  command,
+}: Readonly<IDiscordGetCommandWithPrefix>): string {
+  return _.toLower(`${prefix}${command}`);
 }
