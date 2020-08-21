@@ -103,9 +103,9 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
     );
   }
 
-  private _updateAllFirebaseGuilds({
-    forEach,
-  }: QuerySnapshot<IFirebaseGuild>): Promise<WriteResult[] | void> {
+  private _updateAllFirebaseGuilds(
+    querySnapshot: QuerySnapshot<IFirebaseGuild>
+  ): Promise<WriteResult[] | void> {
     const batch:
       | WriteBatch
       | undefined = FirebaseGuildsService.getInstance().getBatch();
@@ -114,19 +114,19 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
       let countFirebaseGuildsUpdated = 0;
       let countFirebaseGuilds = 0;
 
-      forEach(
-        ({
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          exists,
-          data,
-          ref,
-        }: QueryDocumentSnapshot<IFirebaseGuild>): void => {
-          if (_.isEqual(exists, true)) {
+      querySnapshot.forEach(
+        (
+          queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>
+        ): void => {
+          if (_.isEqual(queryDocumentSnapshot.exists, true)) {
             countFirebaseGuilds = _.add(countFirebaseGuilds, 1);
 
-            if (!isUpToDateFirebaseGuild(data())) {
+            if (!isUpToDateFirebaseGuild(queryDocumentSnapshot.data())) {
               countFirebaseGuildsUpdated = _.add(countFirebaseGuildsUpdated, 1);
-              batch.update(ref, handleFirebaseGuildBreakingChange(data()));
+              batch.update(
+                queryDocumentSnapshot.ref,
+                handleFirebaseGuildBreakingChange(queryDocumentSnapshot.data())
+              );
             }
           }
         }
