@@ -1,15 +1,15 @@
-import { IDiscordGetCommandRegexp } from "../../interfaces/commands/discord-get-command-regexp";
+import { IDiscordGetCommandRegexpData } from "../../interfaces/commands/discord-get-command-regexp-data";
 import xregexp from "xregexp";
 
 /**
- * @param {Readonly<IDiscordGetCommandRegexp>} data The data used as a command
+ * @param {Readonly<IDiscordGetCommandRegexpData>} data The data used as a command
  *
  * @return {RegExp} A RegExp matching a prefix with a command
  */
 export function discordGetCommandRegexp({
   prefix,
   command,
-}: Readonly<IDiscordGetCommandRegexp>): RegExp {
+}: Readonly<IDiscordGetCommandRegexpData>): RegExp {
   return xregexp(
     `
     (?<prefix>\\${prefix}) # Command prefix

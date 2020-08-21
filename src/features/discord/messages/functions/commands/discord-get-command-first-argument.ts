@@ -2,7 +2,7 @@ import _ from "lodash";
 import { IDiscordExtractFromCommandCallbackData } from "../../interfaces/commands/discord-extract-from-command-callback-data";
 import { IDiscordGetCommandFirstArgumentData } from "../../interfaces/commands/discord-get-command-first-argument-data";
 import { discordExtractFromCommand } from "./discord-extract-from-command";
-import { discordGetCompleteCommandRegexp } from "./discord-get-complete-command-regexp";
+import { discordGetCommandWithFirstArgumentRegexp } from "./discord-get-command-with-first-argument-regexp";
 import { discordGetFormattedMessage } from "./discord-get-formatted-message";
 import xregexp from "xregexp";
 
@@ -13,7 +13,7 @@ function getFirstArgument({
 }: Readonly<IDiscordExtractFromCommandCallbackData>): string | null {
   const argument1: string | undefined = xregexp.exec(
     message,
-    discordGetCompleteCommandRegexp({
+    discordGetCommandWithFirstArgumentRegexp({
       command,
       prefix,
     })
