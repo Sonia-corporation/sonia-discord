@@ -235,12 +235,20 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
-  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_ERROR_SERVICE"`, (): void => {
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_CONTENT_ERROR_SERVICE"`, (): void => {
     expect.assertions(1);
 
     expect(
-      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_ERROR_SERVICE
-    ).toStrictEqual(`DiscordMessageCommandFeatureErrorService`);
+      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_CONTENT_ERROR_SERVICE
+    ).toStrictEqual(`DiscordMessageCommandFeatureEmptyContentErrorService`);
+  });
+
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_FEATURE_NAME_ERROR_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_FEATURE_NAME_ERROR_SERVICE
+    ).toStrictEqual(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_SERVICE"`, (): void => {
@@ -257,6 +265,14 @@ describe(`ServiceNameEnum`, (): void => {
     expect(
       ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_SERVICE
     ).toStrictEqual(`DiscordMessageCommandFeatureService`);
+  });
+
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_WRONG_FEATURE_NAME_ERROR_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_WRONG_FEATURE_NAME_ERROR_SERVICE
+    ).toStrictEqual(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_HELP_SERVICE"`, (): void => {

@@ -1,7 +1,7 @@
-import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../../../core/services/core-event.service";
-import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
-import { DiscordMessageCommandFeatureNameEnum } from "../enums/discord-message-command-feature-name.enum";
+import { ServiceNameEnum } from "../../../../../../../../enums/service-name.enum";
+import { CoreEventService } from "../../../../../../../core/services/core-event.service";
+import { IAnyDiscordMessage } from "../../../../../types/any-discord-message";
+import { DiscordMessageCommandFeatureNameEnum } from "../../enums/discord-message-command-feature-name.enum";
 import { DiscordMessageCommandFeatureNoonService } from "./discord-message-command-feature-noon.service";
 
 jest.mock(`../../../../../../logger/services/chalk/chalk.service`);

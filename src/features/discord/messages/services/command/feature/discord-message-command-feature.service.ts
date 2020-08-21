@@ -9,8 +9,10 @@ import { discordHasThisCommand } from "../../../functions/commands/discord-has-t
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
-import { DiscordMessageCommandFeatureErrorService } from "./discord-message-command-feature-error.service";
-import { DiscordMessageCommandFeatureNoonService } from "./services/discord-message-command-feature-noon.service";
+import { DiscordMessageCommandFeatureEmptyContentErrorService } from "./services/discord-message-command-feature-empty-content-error.service";
+import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from "./services/discord-message-command-feature-empty-feature-name-error.service";
+import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from "./services/discord-message-command-feature-wrong-feature-name-error.service";
+import { DiscordMessageCommandFeatureNoonService } from "./services/noon/discord-message-command-feature-noon.service";
 
 export class DiscordMessageCommandFeatureService extends AbstractService {
   private static _instance: DiscordMessageCommandFeatureService;
@@ -75,7 +77,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
           ),
         });
 
-        return DiscordMessageCommandFeatureErrorService.getInstance().getWrongFeatureNameErrorMessageResponse(
+        return DiscordMessageCommandFeatureWrongFeatureNameErrorService.getInstance().getMessageResponse(
           anyDiscordMessage,
           this._commands,
           featureName
@@ -86,13 +88,13 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
         message: ChalkService.getInstance().text(`feature name not specified`),
       });
 
-      return DiscordMessageCommandFeatureErrorService.getInstance().getEmptyFeatureNameErrorMessageResponse(
+      return DiscordMessageCommandFeatureEmptyFeatureNameErrorService.getInstance().getMessageResponse(
         anyDiscordMessage,
         this._commands
       );
     }
 
-    return DiscordMessageCommandFeatureErrorService.getInstance().getEmptyContentErrorMessageResponse();
+    return DiscordMessageCommandFeatureEmptyContentErrorService.getInstance().getMessageResponse();
   }
 
   public hasCommand(message: Readonly<string>): boolean {
