@@ -4,9 +4,9 @@ import { IAnyDiscordMessage } from "../../../../../types/any-discord-message";
 import { DiscordMessageCommandFeatureNameEnum } from "../../enums/discord-message-command-feature-name.enum";
 import { DiscordMessageCommandFeatureNoonService } from "./discord-message-command-feature-noon.service";
 
-jest.mock(`../../../../../../logger/services/chalk/chalk.service`);
+jest.mock(`../../../../../../../logger/services/chalk/chalk.service`);
 
-describe(`DiscordMessageCommandFeatureService`, (): void => {
+describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
   let service: DiscordMessageCommandFeatureNoonService;
   let coreEventService: CoreEventService;
 
