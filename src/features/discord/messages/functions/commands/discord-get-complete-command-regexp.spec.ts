@@ -29,7 +29,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\!)(?:)(help)(?:)(\s)(?:)(\S+)(?:)(\s?-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
+          /(\!)(?:)(help)(?:)(\s)(?:)(\w+)(?:)((\s){0,1})(?:)((-{1,2}\w+(\=\w+\s?|\s?)){0,})(?:)/gim
         );
       });
 
@@ -140,7 +140,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\!)(?:)(cookie)(?:)(\s)(?:)(\S+)(?:)(\s?-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
+          /(\!)(?:)(cookie)(?:)(\s)(?:)(\w+)(?:)((\s){0,1})(?:)((-{1,2}\w+(\=\w+\s?|\s?)){0,})(?:)/gim
         );
       });
 
@@ -261,7 +261,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\-)(?:)(help)(?:)(\s)(?:)(\S+)(?:)(\s?-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
+          /(\-)(?:)(help)(?:)(\s)(?:)(\w+)(?:)((\s){0,1})(?:)((-{1,2}\w+(\=\w+\s?|\s?)){0,})(?:)/gim
         );
       });
 
@@ -372,7 +372,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\-)(?:)(cookie)(?:)(\s)(?:)(\S+)(?:)(\s?-{1,2}\w+(\=\w+\s?|\s?)){0,}(?:)/gim
+          /(\-)(?:)(cookie)(?:)(\s)(?:)(\w+)(?:)((\s){0,1})(?:)((-{1,2}\w+(\=\w+\s?|\s?)){0,})(?:)/gim
         );
       });
 
