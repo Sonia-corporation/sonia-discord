@@ -1,5 +1,15 @@
 # Semantic Versioning Changelog
 
+# [1.71.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.70.1...1.71.0) (2020-08-20)
+
+
+### :rocket: Features
+
+* **release-notes:** add more message variations ([a178579](https://github.com/Sonia-corporation/il-est-midi-discord/commit/a1785793edd34a6c16e48e175f227bce478dd554))
+* **command-feature-errors:** remove the emojis from the embed messages ([0eb0e07](https://github.com/Sonia-corporation/il-est-midi-discord/commit/0eb0e073bacbb3ebcb23ac9c8292bd92bf886c2b)), closes [#805](https://github.com/Sonia-corporation/il-est-midi-discord/issues/805)
+* **command-feature:** respond an embed message when the given feature name is not valid ([a9f9315](https://github.com/Sonia-corporation/il-est-midi-discord/commit/a9f931555d3f40124cf1a3e9aa263eca12b86690))
+* **command-feature-errors:** use lowercase feature name instead of capitalized ([18e5779](https://github.com/Sonia-corporation/il-est-midi-discord/commit/18e5779c226bcf15e152c9f13453d9a0539d5342)), closes [#804](https://github.com/Sonia-corporation/il-est-midi-discord/issues/804)
+
 ## [1.70.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.70.0...1.70.1) (2020-08-18)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "@sonia-corporation/il-est-midi-discord",
-  "version": "1.70.1",
+  "version": "1.71.0",
   "author": {
     "email": "geoffrey.testelin@gmail.com",
     "name": "Geoffrey 'C0ZEN' Testelin",
@@ -129,11 +129,11 @@
   "dependencies": {
     "@datorama/akita": "5.2.2",
     "@scout_apm/scout-apm": "0.1.12",
-    "axios": "0.19.2",
+    "axios": "0.20.0",
     "discord.js": "12.2.0",
     "dotenv": "8.2.0",
     "express": "4.17.1",
-    "firebase-admin": "9.1.0",
+    "firebase-admin": "9.1.1",
     "lodash": "4.17.20",
     "moment": "2.27.0",
     "moment-timezone": "0.5.31",

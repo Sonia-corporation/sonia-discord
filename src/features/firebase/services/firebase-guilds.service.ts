@@ -198,14 +198,16 @@ export class FirebaseGuildsService extends AbstractService {
       });
 
       collectionReference.onSnapshot(
-        ({ forEach }: QuerySnapshot<IFirebaseGuild>): void => {
+        (querySnapshot: QuerySnapshot<IFirebaseGuild>): void => {
           const firebaseGuilds: IFirebaseGuild[] = [];
 
-          forEach(
+          querySnapshot.forEach(
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            ({ exists, data }: QueryDocumentSnapshot<IFirebaseGuild>): void => {
-              if (_.isEqual(exists, true)) {
-                firebaseGuilds.push(data());
+            (
+              queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>
+            ): void => {
+              if (_.isEqual(queryDocumentSnapshot.exists, true)) {
+                firebaseGuilds.push(queryDocumentSnapshot.data());
               }
             }
           );
