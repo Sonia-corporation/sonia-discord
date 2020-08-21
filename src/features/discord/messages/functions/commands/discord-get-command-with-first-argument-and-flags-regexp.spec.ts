@@ -418,6 +418,158 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
         });
       });
 
+      describe(`when tested with "-cookie miam --arg1"`, (): void => {
+        beforeEach((): void => {
+          message = `-cookie miam --arg1`;
+        });
+
+        it(`should find "-" as prefix`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.prefix).toStrictEqual(`-`);
+        });
+
+        it(`should find "cookie" as command`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.command).toStrictEqual(
+            `cookie`
+          );
+        });
+
+        it(`should find " " as separator`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.separator).toStrictEqual(` `);
+        });
+
+        it(`should find "miam" as argument 1`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.argument1).toStrictEqual(
+            `miam`
+          );
+        });
+
+        it(`should find "--arg1" as flags`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.flags).toStrictEqual(`--arg1`);
+        });
+      });
+
+      describe(`when tested with "-cookie miam -arg1"`, (): void => {
+        beforeEach((): void => {
+          message = `-cookie miam -arg1`;
+        });
+
+        it(`should find "-" as prefix`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.prefix).toStrictEqual(`-`);
+        });
+
+        it(`should find "cookie" as command`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.command).toStrictEqual(
+            `cookie`
+          );
+        });
+
+        it(`should find " " as separator`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.separator).toStrictEqual(` `);
+        });
+
+        it(`should find "miam" as argument 1`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.argument1).toStrictEqual(
+            `miam`
+          );
+        });
+
+        it(`should find "-arg1" as flags`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.flags).toStrictEqual(`-arg1`);
+        });
+      });
+
+      describe(`when tested with "-cookie miam --arg1=value1"`, (): void => {
+        beforeEach((): void => {
+          message = `-cookie miam --arg1=value1`;
+        });
+
+        it(`should find "-" as prefix`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.prefix).toStrictEqual(`-`);
+        });
+
+        it(`should find "cookie" as command`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.command).toStrictEqual(
+            `cookie`
+          );
+        });
+
+        it(`should find " " as separator`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.separator).toStrictEqual(` `);
+        });
+
+        it(`should find "miam" as argument 1`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.argument1).toStrictEqual(
+            `miam`
+          );
+        });
+
+        it(`should find "--arg1=value1" as flags`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.flags).toStrictEqual(
+            `--arg1=value1`
+          );
+        });
+      });
+
       describe(`when tested with "-cookie miam --arg1 --arg2=value2"`, (): void => {
         beforeEach((): void => {
           message = `-cookie miam --arg1 --arg2=value2`;
@@ -466,6 +618,110 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
 
           expect(xregexp.exec(message, result)?.flags).toStrictEqual(
             `--arg1 --arg2=value2`
+          );
+        });
+      });
+
+      describe(`when tested with "-cookie miam --arg1=value1 --arg2=value2"`, (): void => {
+        beforeEach((): void => {
+          message = `-cookie miam --arg1=value1 --arg2=value2`;
+        });
+
+        it(`should find "-" as prefix`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.prefix).toStrictEqual(`-`);
+        });
+
+        it(`should find "cookie" as command`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.command).toStrictEqual(
+            `cookie`
+          );
+        });
+
+        it(`should find " " as separator`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.separator).toStrictEqual(` `);
+        });
+
+        it(`should find "miam" as argument 1`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.argument1).toStrictEqual(
+            `miam`
+          );
+        });
+
+        it(`should find "--arg1=value1 --arg2=value2" as flags`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.flags).toStrictEqual(
+            `--arg1=value1 --arg2=value2`
+          );
+        });
+      });
+
+      describe(`when tested with "-cookie miam -arg1 --arg2=value2"`, (): void => {
+        beforeEach((): void => {
+          message = `-cookie miam -arg1 --arg2=value2`;
+        });
+
+        it(`should find "-" as prefix`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.prefix).toStrictEqual(`-`);
+        });
+
+        it(`should find "cookie" as command`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.command).toStrictEqual(
+            `cookie`
+          );
+        });
+
+        it(`should find " " as separator`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.separator).toStrictEqual(` `);
+        });
+
+        it(`should find "miam" as argument 1`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.argument1).toStrictEqual(
+            `miam`
+          );
+        });
+
+        it(`should find "-arg1 --arg2=value2" as flags`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.flags).toStrictEqual(
+            `-arg1 --arg2=value2`
           );
         });
       });
