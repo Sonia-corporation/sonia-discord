@@ -1,15 +1,15 @@
 import { createMock } from "ts-auto-mock";
 import xregexp from "xregexp";
 import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
-import { IDiscordGetCompleteCommandRegexp } from "../../interfaces/commands/discord-get-complete-command-regexp";
-import { discordGetCompleteCommandRegexp } from "./discord-get-complete-command-regexp";
+import { IDiscordGetCommandWithFirstArgumentRegexpData } from "../../interfaces/commands/discord-get-command-with-first-argument-regexp-data";
+import { discordGetCommandWithFirstArgumentRegexp } from "./discord-get-command-with-first-argument-regexp";
 
-describe(`discordGetCompleteCommandRegexp()`, (): void => {
-  let data: IDiscordGetCompleteCommandRegexp;
+describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {
+  let data: IDiscordGetCommandWithFirstArgumentRegexpData;
   let message: string;
 
   beforeEach((): void => {
-    data = createMock<IDiscordGetCompleteCommandRegexp>();
+    data = createMock<IDiscordGetCommandWithFirstArgumentRegexpData>();
   });
 
   describe(`when the given prefix is !`, (): void => {
@@ -25,10 +25,12 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
       it(`should return a regexp`, (): void => {
         expect.assertions(1);
 
-        const result = discordGetCompleteCommandRegexp(data);
+        const result = discordGetCommandWithFirstArgumentRegexp(data);
 
-        // eslint-disable-next-line no-useless-escape
-        expect(result).toStrictEqual(/(\!)(?:)(help)(?:)(\s)(?:)(\S+)(?:)/gim);
+        expect(result).toStrictEqual(
+          // eslint-disable-next-line no-useless-escape
+          /(\!)(?:)(help)(?:)(\s)(?:)(\w+)(?:)/gim
+        );
       });
 
       describe(`when tested with "!help me"`, (): void => {
@@ -39,7 +41,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find "!" as prefix`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.prefix).toStrictEqual(`!`);
         });
@@ -47,7 +49,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find "help" as command`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.command).toStrictEqual(`help`);
         });
@@ -55,7 +57,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find " " as separator`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.separator).toStrictEqual(` `);
         });
@@ -63,7 +65,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find "me" as argument 1`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.argument1).toStrictEqual(`me`);
         });
@@ -77,7 +79,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });
@@ -91,7 +93,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });
@@ -105,7 +107,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });
@@ -119,7 +121,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });
@@ -134,11 +136,11 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
       it(`should return a regexp`, (): void => {
         expect.assertions(1);
 
-        const result = discordGetCompleteCommandRegexp(data);
+        const result = discordGetCommandWithFirstArgumentRegexp(data);
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\!)(?:)(cookie)(?:)(\s)(?:)(\S+)(?:)/gim
+          /(\!)(?:)(cookie)(?:)(\s)(?:)(\w+)(?:)/gim
         );
       });
 
@@ -150,7 +152,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find "!" as prefix`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.prefix).toStrictEqual(`!`);
         });
@@ -158,7 +160,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find "cookie" as command`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.command).toStrictEqual(
             `cookie`
@@ -168,7 +170,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find " " as separator`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.separator).toStrictEqual(` `);
         });
@@ -176,7 +178,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find "miam" as argument 1`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.argument1).toStrictEqual(
             `miam`
@@ -192,7 +194,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });
@@ -206,7 +208,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });
@@ -220,7 +222,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });
@@ -234,7 +236,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });
@@ -255,11 +257,11 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
       it(`should return a regexp`, (): void => {
         expect.assertions(1);
 
-        const result = discordGetCompleteCommandRegexp(data);
+        const result = discordGetCommandWithFirstArgumentRegexp(data);
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\-)(?:)(help)(?:)(\s)(?:)(\S+)(?:)/gim
+          /(\-)(?:)(help)(?:)(\s)(?:)(\w+)(?:)/gim
         );
       });
 
@@ -271,7 +273,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find "-" as prefix`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.prefix).toStrictEqual(`-`);
         });
@@ -279,7 +281,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find "help" as command`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.command).toStrictEqual(`help`);
         });
@@ -287,7 +289,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find " " as separator`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.separator).toStrictEqual(` `);
         });
@@ -295,7 +297,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find "me" as argument 1`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.argument1).toStrictEqual(`me`);
         });
@@ -309,7 +311,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });
@@ -323,7 +325,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });
@@ -337,7 +339,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });
@@ -351,7 +353,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });
@@ -366,11 +368,11 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
       it(`should return a regexp`, (): void => {
         expect.assertions(1);
 
-        const result = discordGetCompleteCommandRegexp(data);
+        const result = discordGetCommandWithFirstArgumentRegexp(data);
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\-)(?:)(cookie)(?:)(\s)(?:)(\S+)(?:)/gim
+          /(\-)(?:)(cookie)(?:)(\s)(?:)(\w+)(?:)/gim
         );
       });
 
@@ -382,7 +384,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find "-" as prefix`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.prefix).toStrictEqual(`-`);
         });
@@ -390,7 +392,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find "cookie" as command`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.command).toStrictEqual(
             `cookie`
@@ -400,7 +402,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find " " as separator`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.separator).toStrictEqual(` `);
         });
@@ -408,7 +410,49 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find "miam" as argument 1`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
+
+          expect(xregexp.exec(message, result)?.argument1).toStrictEqual(
+            `miam`
+          );
+        });
+      });
+
+      describe(`when tested with "-cookie miam --arg1 --arg2=value2"`, (): void => {
+        beforeEach((): void => {
+          message = `-cookie miam --arg1 --arg2=value2`;
+        });
+
+        it(`should find "-" as prefix`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
+
+          expect(xregexp.exec(message, result)?.prefix).toStrictEqual(`-`);
+        });
+
+        it(`should find "cookie" as command`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
+
+          expect(xregexp.exec(message, result)?.command).toStrictEqual(
+            `cookie`
+          );
+        });
+
+        it(`should find " " as separator`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
+
+          expect(xregexp.exec(message, result)?.separator).toStrictEqual(` `);
+        });
+
+        it(`should find "miam" as argument 1`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)?.argument1).toStrictEqual(
             `miam`
@@ -424,7 +468,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });
@@ -438,7 +482,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });
@@ -452,7 +496,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });
@@ -466,7 +510,7 @@ describe(`discordGetCompleteCommandRegexp()`, (): void => {
         it(`should find nothing`, (): void => {
           expect.assertions(1);
 
-          const result = discordGetCompleteCommandRegexp(data);
+          const result = discordGetCommandWithFirstArgumentRegexp(data);
 
           expect(xregexp.exec(message, result)).toBeNull();
         });

@@ -1,15 +1,15 @@
 import { createMock } from "ts-auto-mock";
 import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
-import { IDiscordGetCommandRegexp } from "../../interfaces/commands/discord-get-command-regexp";
+import { IDiscordGetCommandRegexpData } from "../../interfaces/commands/discord-get-command-regexp-data";
 import { discordGetCommandRegexp } from "./discord-get-command-regexp";
 import xregexp from "xregexp";
 
 describe(`discordGetCommandRegexp()`, (): void => {
-  let data: IDiscordGetCommandRegexp;
+  let data: IDiscordGetCommandRegexpData;
   let message: string;
 
   beforeEach((): void => {
-    data = createMock<IDiscordGetCommandRegexp>();
+    data = createMock<IDiscordGetCommandRegexpData>();
   });
 
   describe(`when the given prefix is !`, (): void => {
