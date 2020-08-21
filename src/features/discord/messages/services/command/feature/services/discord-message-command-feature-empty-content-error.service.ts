@@ -1,18 +1,13 @@
-import {
-  EmbedFieldData,
-  MessageEmbedFooter,
-  MessageEmbedOptions,
-} from "discord.js";
+import { EmbedFieldData, MessageEmbedOptions } from "discord.js";
 import _ from "lodash";
-import { AbstractService } from "../../../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
 import { GithubConfigService } from "../../../../../../github/services/config/github-config.service";
 import { DiscordGuildConfigService } from "../../../../../guilds/services/config/discord-guild-config.service";
-import { DiscordSoniaService } from "../../../../../users/services/discord-sonia.service";
 import { IDiscordMessageResponse } from "../../../../interfaces/discord-message-response";
 import { DiscordMessageCommandCliErrorService } from "../../discord-message-command-cli-error.service";
+import { DiscordMessageCommandFeatureErrorCoreService } from "./discord-message-command-feature-error-core.service";
 
-export class DiscordMessageCommandFeatureEmptyContentErrorService extends AbstractService {
+export class DiscordMessageCommandFeatureEmptyContentErrorService extends DiscordMessageCommandFeatureErrorCoreService {
   private static _instance: DiscordMessageCommandFeatureEmptyContentErrorService;
 
   public static getInstance(): DiscordMessageCommandFeatureEmptyContentErrorService {
@@ -48,21 +43,6 @@ export class DiscordMessageCommandFeatureEmptyContentErrorService extends Abstra
             } as IDiscordMessageResponse)
           )
       );
-  }
-
-  private _getErrorMessageEmbedFooter(): MessageEmbedFooter {
-    const soniaImageUrl:
-      | string
-      | null = DiscordSoniaService.getInstance().getImageUrl();
-
-    return {
-      iconURL: soniaImageUrl || undefined,
-      text: `Invalid feature command`,
-    };
-  }
-
-  private _getErrorMessageEmbedTitle(): string {
-    return `I can not handle your request`;
   }
 
   private _getEmptyContentErrorMessageEmbed(): MessageEmbedOptions {
