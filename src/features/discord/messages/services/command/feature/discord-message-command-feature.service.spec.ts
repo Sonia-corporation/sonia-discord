@@ -11,7 +11,7 @@ import { DiscordMessageCommandFeatureEmptyContentErrorService } from "./services
 import { DiscordMessageCommandFeatureService } from "./discord-message-command-feature.service";
 import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from "./services/discord-message-command-feature-empty-feature-name-error.service";
 import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from "./services/discord-message-command-feature-wrong-feature-name-error.service";
-import { DiscordMessageCommandFeatureNoonService } from "./services/noon/discord-message-command-feature-noon.service";
+import { DiscordMessageCommandFeatureNoonService } from "./features/noon/services/discord-message-command-feature-noon.service";
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
