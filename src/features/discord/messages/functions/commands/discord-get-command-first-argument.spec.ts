@@ -3,7 +3,7 @@ import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-c
 import { IDiscordGetCommandFirstArgumentData } from "../../interfaces/commands/discord-get-command-first-argument-data";
 import { discordGetCommandFirstArgument } from "./discord-get-command-first-argument";
 
-describe(`getCommandFirstArgument()`, (): void => {
+describe(`discordGetCommandFirstArgument()`, (): void => {
   let data: IDiscordGetCommandFirstArgumentData;
 
   beforeEach((): void => {
