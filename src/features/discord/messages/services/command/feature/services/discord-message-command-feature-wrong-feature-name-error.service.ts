@@ -79,7 +79,10 @@ export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends Di
     return [
       this._getWrongFeatureNameErrorMessageEmbedFieldError(featureName),
       this._getMessageEmbedFieldErrorAllFeatures(),
-      this._getMessageEmbedFieldErrorExample(anyDiscordMessage, commands),
+      this._getMessageEmbedFieldErrorFeatureExample(
+        anyDiscordMessage,
+        commands
+      ),
     ];
   }
 

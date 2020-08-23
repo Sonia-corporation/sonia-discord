@@ -51,7 +51,7 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
     };
   }
 
-  protected _getMessageEmbedFieldErrorExample(
+  protected _getMessageEmbedFieldErrorFeatureExample(
     { content }: Readonly<IAnyDiscordMessage>,
     commands: Readonly<DiscordMessageCommandEnum>[]
   ): EmbedFieldData {
