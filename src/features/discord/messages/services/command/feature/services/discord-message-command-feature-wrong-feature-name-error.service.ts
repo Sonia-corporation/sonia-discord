@@ -88,7 +88,7 @@ export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends Di
   ): EmbedFieldData {
     return {
       name: `Wrong feature name`,
-      value: `\`${featureName}\` is not an existing feature...\nLet me show you the list of available features and maybe try again with a valid one this time, ok?`,
+      value: `\`${featureName}\` is not an existing feature...\nLet me show you the list of available features with an example and maybe try again with a valid one this time, ok?`,
     };
   }
 }

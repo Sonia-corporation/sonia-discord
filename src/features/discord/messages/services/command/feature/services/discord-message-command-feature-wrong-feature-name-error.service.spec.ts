@@ -214,7 +214,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
       // @ts-ignore
       expect(result.options.embed.fields[0]).toStrictEqual({
         name: `Wrong feature name`,
-        value: `\`dummy-feature-name\` is not an existing feature...\nLet me show you the list of available features and maybe try again with a valid one this time, ok?`,
+        value: `\`dummy-feature-name\` is not an existing feature...\nLet me show you the list of available features with an example and maybe try again with a valid one this time, ok?`,
       } as EmbedFieldData);
     });
 
