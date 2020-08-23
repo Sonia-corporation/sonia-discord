@@ -74,7 +74,10 @@ export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends Di
     return [
       this._getEmptyFeatureNameErrorMessageEmbedFieldError(),
       this._getMessageEmbedFieldErrorAllFeatures(),
-      this._getMessageEmbedFieldErrorExample(anyDiscordMessage, commands),
+      this._getMessageEmbedFieldErrorFeatureExample(
+        anyDiscordMessage,
+        commands
+      ),
     ];
   }
 
