@@ -204,7 +204,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
       // @ts-ignore
       expect(result.options.embed.fields[0]).toStrictEqual({
         name: `Empty feature name`,
-        value: `You did not specify the name of the feature you wish to configure.\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure.`,
+        value: `You did not specify the name of the feature you wish to configure.\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure with an example.`,
       } as EmbedFieldData);
     });
 
