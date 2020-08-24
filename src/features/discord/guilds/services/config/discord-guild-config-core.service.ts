@@ -3,7 +3,8 @@ import { AbstractService } from "../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { IDiscordGuildConfig } from "../../../interfaces/discord-guild-config";
 
-export class DiscordGuildConfigCoreService extends AbstractService
+export class DiscordGuildConfigCoreService
+  extends AbstractService
   implements IDiscordGuildConfig {
   private static _instance: DiscordGuildConfigCoreService;
 
