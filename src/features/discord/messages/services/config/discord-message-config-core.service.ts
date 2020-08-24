@@ -8,7 +8,8 @@ import { IDiscordMessageConfig } from "../../../interfaces/discord-message-confi
 import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
 import { IDiscordMessageWarningConfig } from "../../../interfaces/discord-message-warning-config";
 
-export class DiscordMessageConfigCoreService extends AbstractService
+export class DiscordMessageConfigCoreService
+  extends AbstractService
   implements IDiscordMessageConfig {
   private static _instance: DiscordMessageConfigCoreService;
 
