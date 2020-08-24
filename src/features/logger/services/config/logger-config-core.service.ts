@@ -4,7 +4,8 @@ import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
 import { ILoggerConfig } from "../../interfaces/logger-config";
 
-export class LoggerConfigCoreService extends AbstractService
+export class LoggerConfigCoreService
+  extends AbstractService
   implements ILoggerConfig {
   private static _instance: LoggerConfigCoreService;
 

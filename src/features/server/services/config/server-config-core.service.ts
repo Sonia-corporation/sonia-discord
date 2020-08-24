@@ -3,7 +3,8 @@ import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { IServerConfig } from "../../interfaces/server-config";
 
-export class ServerConfigCoreService extends AbstractService
+export class ServerConfigCoreService
+  extends AbstractService
   implements IServerConfig {
   private static _instance: ServerConfigCoreService;
 
