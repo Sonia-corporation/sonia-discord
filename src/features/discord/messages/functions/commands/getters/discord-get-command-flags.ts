@@ -1,10 +1,10 @@
 import _ from "lodash";
 import xregexp, { ExecArray } from "xregexp";
-import { IDiscordExtractFromCommandCallbackData } from "../../interfaces/commands/discord-extract-from-command-callback-data";
-import { IDiscordGetCommandFlagsData } from "../../interfaces/commands/discord-get-command-flags-data";
-import { discordExtractFromCommand } from "./discord-extract-from-command";
-import { discordGetCommandWithFirstArgumentAndFlagsRegexp } from "./discord-get-command-with-first-argument-and-flags-regexp";
-import { discordGetFormattedMessage } from "./discord-get-formatted-message";
+import { IDiscordExtractFromCommandCallbackData } from "../../../interfaces/commands/discord-extract-from-command-callback-data";
+import { IDiscordGetCommandFlagsData } from "../../../interfaces/commands/discord-get-command-flags-data";
+import { discordExtractFromCommand } from "../checks/discord-extract-from-command";
+import { discordGetCommandWithFirstArgumentAndFlagsRegexp } from "../regexp/discord-get-command-with-first-argument-and-flags-regexp";
+import { discordGetFormattedMessage } from "../formatters/discord-get-formatted-message";
 
 function getFlags({
   command,

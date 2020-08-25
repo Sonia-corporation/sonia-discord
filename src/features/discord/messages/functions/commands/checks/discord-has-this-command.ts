@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { IDiscordHasThisCommandData } from "../../interfaces/commands/discord-has-this-command-data";
+import { IDiscordHasThisCommandData } from "../../../interfaces/commands/discord-has-this-command-data";
 import { discordContainsThisCommandWithOneOfThesePrefixes } from "./discord-contains-this-command-with-one-of-these-prefixes";
 import { discordContainsThisCommandWithPrefix } from "./discord-contains-this-command-with-prefix";
 

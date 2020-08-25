@@ -1,6 +1,6 @@
 import _ from "lodash";
-import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
-import { IDiscordContainsThisCommandWithPrefixData } from "../../interfaces/commands/discord-contains-this-command-with-prefix-data";
+import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
+import { IDiscordContainsThisCommandWithPrefixData } from "../../../interfaces/commands/discord-contains-this-command-with-prefix-data";
 import { discordStrictlyContainsThisCommandWithPrefix } from "./discord-strictly-contains-this-command-with-prefix";
 
 export function discordContainsThisCommandWithPrefix({

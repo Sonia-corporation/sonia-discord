@@ -1,6 +1,6 @@
 import { createMock } from "ts-auto-mock";
-import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
-import { IDiscordContainsThisCommandWithPrefixData } from "../../interfaces/commands/discord-contains-this-command-with-prefix-data";
+import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
+import { IDiscordContainsThisCommandWithPrefixData } from "../../../interfaces/commands/discord-contains-this-command-with-prefix-data";
 import { discordContainsThisCommandWithPrefix } from "./discord-contains-this-command-with-prefix";
 
 describe(`containsThisCommandWithPrefix()`, (): void => {

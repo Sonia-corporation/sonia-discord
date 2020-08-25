@@ -1,5 +1,5 @@
-import { IDiscordStrictlyContainsThisCommandWithPrefixData } from "../../interfaces/commands/discord-strictly-contains-this-command-with-prefix-data";
-import { discordGetCommandRegexp } from "./discord-get-command-regexp";
+import { IDiscordStrictlyContainsThisCommandWithPrefixData } from "../../../interfaces/commands/discord-strictly-contains-this-command-with-prefix-data";
+import { discordGetCommandRegexp } from "../regexp/discord-get-command-regexp";
 import xregexp from "xregexp";
 
 export function discordStrictlyContainsThisCommandWithPrefix({

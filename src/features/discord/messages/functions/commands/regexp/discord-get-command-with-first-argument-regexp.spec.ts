@@ -1,7 +1,7 @@
 import { createMock } from "ts-auto-mock";
 import xregexp from "xregexp";
-import { DiscordMessageCommandEnum } from "../../enums/command/discord-message-command.enum";
-import { IDiscordGetCommandWithFirstArgumentRegexpData } from "../../interfaces/commands/discord-get-command-with-first-argument-regexp-data";
+import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
+import { IDiscordGetCommandWithFirstArgumentRegexpData } from "../../../interfaces/commands/discord-get-command-with-first-argument-regexp-data";
 import { discordGetCommandWithFirstArgumentRegexp } from "./discord-get-command-with-first-argument-regexp";
 
 describe(`discordGetCommandWithFirstArgumentRegexp()`, (): void => {

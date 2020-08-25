@@ -2,7 +2,7 @@ import { EmbedFieldData, MessageEmbedOptions } from "discord.js";
 import _ from "lodash";
 import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
 import { DiscordMessageCommandEnum } from "../../../../enums/command/discord-message-command.enum";
-import { discordGetCommandAndFirstArgument } from "../../../../functions/commands/discord-get-command-and-first-argument";
+import { discordGetCommandAndFirstArgument } from "../../../../functions/commands/getters/discord-get-command-and-first-argument";
 import { IDiscordMessageResponse } from "../../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";

@@ -4,7 +4,7 @@ import { AbstractService } from "../../../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
 import { DiscordSoniaService } from "../../../../../users/services/discord-sonia.service";
 import { DiscordMessageCommandEnum } from "../../../../enums/command/discord-message-command.enum";
-import { discordGetCommandAndPrefix } from "../../../../functions/commands/discord-get-command-and-prefix";
+import { discordGetCommandAndPrefix } from "../../../../functions/commands/getters/discord-get-command-and-prefix";
 import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";
 import { getDiscordMessageCommandAllFeatureNames } from "../functions/get-discord-message-command-all-feature-names";

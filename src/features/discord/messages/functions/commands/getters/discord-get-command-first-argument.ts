@@ -1,9 +1,9 @@
 import _ from "lodash";
-import { IDiscordExtractFromCommandCallbackData } from "../../interfaces/commands/discord-extract-from-command-callback-data";
-import { IDiscordGetCommandFirstArgumentData } from "../../interfaces/commands/discord-get-command-first-argument-data";
-import { discordExtractFromCommand } from "./discord-extract-from-command";
-import { discordGetCommandWithFirstArgumentRegexp } from "./discord-get-command-with-first-argument-regexp";
-import { discordGetFormattedMessage } from "./discord-get-formatted-message";
+import { IDiscordExtractFromCommandCallbackData } from "../../../interfaces/commands/discord-extract-from-command-callback-data";
+import { IDiscordGetCommandFirstArgumentData } from "../../../interfaces/commands/discord-get-command-first-argument-data";
+import { discordExtractFromCommand } from "../checks/discord-extract-from-command";
+import { discordGetCommandWithFirstArgumentRegexp } from "../regexp/discord-get-command-with-first-argument-regexp";
+import { discordGetFormattedMessage } from "../formatters/discord-get-formatted-message";
 import xregexp, { ExecArray } from "xregexp";
 
 function getFirstArgument({

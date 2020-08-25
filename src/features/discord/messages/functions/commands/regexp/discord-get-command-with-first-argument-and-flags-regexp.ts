@@ -1,5 +1,5 @@
 import xregexp from "xregexp";
-import { IDiscordGetCommandWithFirstArgumentAndFlagsRegexpData } from "../../interfaces/commands/discord-get-command-with-first-argument-and-flags-regexp-data";
+import { IDiscordGetCommandWithFirstArgumentAndFlagsRegexpData } from "../../../interfaces/commands/discord-get-command-with-first-argument-and-flags-regexp-data";
 
 /**
  * @description

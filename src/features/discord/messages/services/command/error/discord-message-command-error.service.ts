@@ -12,7 +12,7 @@ import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
 import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
-import { discordHasThisCommand } from "../../../functions/commands/discord-has-this-command";
+import { discordHasThisCommand } from "../../../functions/commands/checks/discord-has-this-command";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
