@@ -1,4 +1,6 @@
 import _ from "lodash";
+import { getRandomBoolean } from "../../../../../functions/randoms/get-random-boolean";
+import { DiscordCommandFlagTypeEnum } from "../../enums/commands/discord-command-flag-type.enum";
 import { DiscordCommandFlag } from "./discord-command-flag";
 
 export class DiscordCommandFlags<T> {
@@ -21,5 +23,23 @@ export class DiscordCommandFlags<T> {
 
   public getRandomFlag(): DiscordCommandFlag<T> | undefined {
     return _.sample(this._flags);
+  }
+
+  public getRandomFlagUsageExample(): string | undefined {
+    const randomFlag: DiscordCommandFlag<T> | undefined = this.getRandomFlag();
+
+    if (!_.isNil(randomFlag)) {
+      const flagName: string = randomFlag.getLowerCaseName();
+      const flagType: DiscordCommandFlagTypeEnum = randomFlag.getType();
+      let usageExample = `--${flagName}`;
+
+      if (flagType === DiscordCommandFlagTypeEnum.BOOLEAN) {
+        usageExample += `=${getRandomBoolean()}`;
+      }
+
+      return usageExample;
+    }
+
+    return undefined;
   }
 }
