@@ -102,9 +102,9 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
     { content }: Readonly<IAnyDiscordMessage>,
     commands: Readonly<DiscordMessageCommandEnum>[]
   ): EmbedFieldData {
-    const randomFlag: string = _.toLower(
-      DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getRandomFlag()?.getName()
-    );
+    const randomFlag:
+      | string
+      | undefined = DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getRandomFlagUsageExample();
     const userCommand: string | null = discordGetCommandAndFirstArgument({
       commands,
       message: _.isNil(content) ? `` : content,
@@ -113,7 +113,7 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
 
     return {
       name: `Example`,
-      value: `\`${userCommand} --${randomFlag}\``,
+      value: `\`${userCommand} ${randomFlag}\``,
     };
   }
 }

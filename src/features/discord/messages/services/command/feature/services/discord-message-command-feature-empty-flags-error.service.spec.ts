@@ -16,6 +16,7 @@ import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";
 import { DiscordMessageCommandCliErrorService } from "../../discord-message-command-cli-error.service";
 import { DiscordMessageCommandFeatureNameEnum } from "../enums/discord-message-command-feature-name.enum";
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../features/noon/constants/discord-message-command-feature-noon-flags";
 import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from "./discord-message-command-feature-empty-flags-error.service";
 
 describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
@@ -83,11 +84,12 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
     let discordMessageConfigServiceGetMessageCommandCliErrorImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy: jest.SpyInstance;
+    let getRandomFlagUsageExampleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureEmptyFlagsErrorService();
       anyDiscordMessage = createMock<IAnyDiscordMessage>();
-      commands = [DiscordMessageCommandEnum.COOKIE];
+      commands = [DiscordMessageCommandEnum.FEATURE];
       featureName = DiscordMessageCommandFeatureNameEnum.NOON;
 
       discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy = jest.spyOn(
@@ -109,6 +111,10 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
       discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy = jest.spyOn(
         discordMessageConfigService,
         `getMessageCommandCliErrorImageUrl`
+      );
+      getRandomFlagUsageExampleSpy = jest.spyOn(
+        DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS,
+        `getRandomFlagUsageExample`
       );
     });
 
@@ -202,6 +208,27 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
       expect(result.options.embed.fields[0]).toStrictEqual({
         name: `No flags specified`,
         value: `You did not specify a flag to configure the \`noon\` feature.\nI will not guess what you wish to configure so please try again with a flag!\nAnd because I am kind and generous here is the list of all the flags you can configure for the \`noon\` feature with an example.`,
+      } as EmbedFieldData);
+    });
+
+    it(`should return a Discord message response embed with a field to show an example of the command with a random valid flag`, async (): Promise<
+      void
+    > => {
+      expect.assertions(1);
+      getRandomFlagUsageExampleSpy.mockReturnValue(`--dummy-flag=dummy-value`);
+      anyDiscordMessage.content = `dummy message !feature noon`;
+
+      const result = await service.getMessageResponse(
+        anyDiscordMessage,
+        commands,
+        featureName
+      );
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(result.options.embed.fields[1]).toStrictEqual({
+        name: `Example`,
+        value: `\`!feature noon --dummy-flag=dummy-value\``,
       } as EmbedFieldData);
     });
 
