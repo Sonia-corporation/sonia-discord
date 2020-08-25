@@ -177,6 +177,29 @@ describe(`DiscordCommandFlag`, (): void => {
     });
   });
 
+  describe(`getLowerCaseName()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlag = new DiscordCommandFlag<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >(
+        createMock<
+          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+        >()
+      );
+    });
+
+    it(`should return the lower case name`, (): void => {
+      expect.assertions(1);
+      discordCommandFlag.setName(
+        DiscordMessageCommandFeatureNoonFlagEnum.ENABLED
+      );
+
+      const result = discordCommandFlag.getLowerCaseName();
+
+      expect(result).toStrictEqual(`enabled`);
+    });
+  });
+
   describe(`setName()`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandFlag<

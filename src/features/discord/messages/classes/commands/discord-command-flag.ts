@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { DiscordCommandFlagTypeEnum } from "../../enums/commands/discord-command-flag-type.enum";
 import { IDiscordCommandFlag } from "../../interfaces/commands/discord-command-flag";
 
@@ -32,6 +33,10 @@ export class DiscordCommandFlag<T> {
 
   public getName(): T {
     return this._name;
+  }
+
+  public getLowerCaseName(): string {
+    return _.toLower(_.toString(this.getName()));
   }
 
   public setName(name: Readonly<T>): void {
