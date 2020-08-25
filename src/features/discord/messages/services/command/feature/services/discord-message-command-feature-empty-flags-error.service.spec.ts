@@ -10,8 +10,6 @@ import { ColorEnum } from "../../../../../../../enums/color.enum";
 import { IconEnum } from "../../../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../../../core/services/core-event.service";
-import { GithubConfigService } from "../../../../../../github/services/config/github-config.service";
-import { DiscordGuildConfigService } from "../../../../../guilds/services/config/discord-guild-config.service";
 import { DiscordSoniaService } from "../../../../../users/services/discord-sonia.service";
 import { DiscordMessageCommandEnum } from "../../../../enums/command/discord-message-command.enum";
 import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
@@ -26,16 +24,12 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
   let discordSoniaService: DiscordSoniaService;
   let discordMessageConfigService: DiscordMessageConfigService;
   let discordMessageCommandCliErrorService: DiscordMessageCommandCliErrorService;
-  let githubConfigService: GithubConfigService;
-  let discordGuildConfigService: DiscordGuildConfigService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     discordSoniaService = DiscordSoniaService.getInstance();
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
     discordMessageCommandCliErrorService = DiscordMessageCommandCliErrorService.getInstance();
-    githubConfigService = GithubConfigService.getInstance();
-    discordGuildConfigService = DiscordGuildConfigService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -89,8 +83,6 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
     let discordMessageConfigServiceGetMessageCommandCliErrorImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy: jest.SpyInstance;
-    let githubConfigServiceGetBugReportUrlSpy: jest.SpyInstance;
-    let discordGuildConfigServiceGetSoniaPermanentGuildInviteUrlSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureEmptyFlagsErrorService();
@@ -117,14 +109,6 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
       discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy = jest.spyOn(
         discordMessageConfigService,
         `getMessageCommandCliErrorImageUrl`
-      );
-      githubConfigServiceGetBugReportUrlSpy = jest.spyOn(
-        githubConfigService,
-        `getBugReportUrl`
-      );
-      discordGuildConfigServiceGetSoniaPermanentGuildInviteUrlSpy = jest.spyOn(
-        discordGuildConfigService,
-        `getSoniaPermanentGuildInviteUrl`
       );
     });
 
@@ -216,33 +200,8 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.fields[0]).toStrictEqual({
-        name: `Empty content`,
-        value: `The content of the message is empty.\nI can not process the feature command however this error should never happen!\nDo not be so selfish and share this information with my creators!`,
-      } as EmbedFieldData);
-    });
-
-    it(`should return a Discord message response embed with a field to report the error`, async (): Promise<
-      void
-    > => {
-      expect.assertions(1);
-      githubConfigServiceGetBugReportUrlSpy.mockReturnValue(
-        `dummy-bug-report-url`
-      );
-      discordGuildConfigServiceGetSoniaPermanentGuildInviteUrlSpy.mockReturnValue(
-        `dummy-sonia-permanent-guild-invite-url`
-      );
-
-      const result = await service.getMessageResponse(
-        anyDiscordMessage,
-        commands,
-        featureName
-      );
-
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[1]).toStrictEqual({
-        name: `Help me to help you`,
-        value: `You can create a [bug report](dummy-bug-report-url) or reach my creators on [discord](dummy-sonia-permanent-guild-invite-url).`,
+        name: `No flags specified`,
+        value: `You did not specify a flag to configure the \`noon\` feature.\nI will not guess what you wish to configure so please try again with a flag!\nAnd because I am kind and generous here is the list of all the flags you can configure for the \`noon\` feature with an example.`,
       } as EmbedFieldData);
     });
 

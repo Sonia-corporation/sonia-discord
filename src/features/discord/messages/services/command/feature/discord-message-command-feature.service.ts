@@ -93,6 +93,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
           featureName
         );
       }
+
       LoggerService.getInstance().debug({
         context: this._serviceName,
         message: ChalkService.getInstance().text(`feature name not specified`),
