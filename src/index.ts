@@ -1,6 +1,7 @@
 import { enableAkitaProdMode } from "@datorama/akita";
 import { config, DotenvConfigOutput } from "dotenv";
 import _ from "lodash";
+import xregexp from "xregexp";
 import { CoreService } from "./features/core/services/core.service";
 import { InitService } from "./features/init/services/init.service";
 
@@ -27,6 +28,15 @@ if (_.isEqual(process.env.NODE_ENV, `production`)) {
   enableAkitaProdMode();
   console.debug(`Akita production mode enabled`);
 }
+
+/**
+ * @description
+ * Required to handle groups and unicode
+ */
+xregexp.install({
+  astral: true,
+  namespacing: true,
+});
 
 CoreService.getInstance().init();
 InitService.getInstance().init();

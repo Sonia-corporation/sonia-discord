@@ -51,6 +51,7 @@
     "./jest.config.js"
   ],
   "exclude": [
-    "./src/**.*.spec.ts"
+    "./src/**.*.spec.ts",
+    "./test.ts"
   ]
 }
