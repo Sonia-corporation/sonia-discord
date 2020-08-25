@@ -1,6 +1,6 @@
 import { createMock } from "ts-auto-mock";
 import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
-import { IDiscordGetCommandFlagsData } from "../../../interfaces/commands/discord-get-command-flags-data";
+import { IDiscordGetCommandFlagsData } from "../../../interfaces/commands/getters/discord-get-command-flags-data";
 import { discordGetCommandFlags } from "./discord-get-command-flags";
 
 describe(`discordGetCommandFlags()`, (): void => {

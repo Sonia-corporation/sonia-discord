@@ -1,9 +1,9 @@
 import _ from "lodash";
 import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
-import { IDiscordExtractFromCommandData } from "../../../interfaces/commands/discord-extract-from-command-data";
-import { IDiscordExtractFromCommandWithMultipleCommandsData } from "../../../interfaces/commands/discord-extract-from-command-with-multiple-commands-data";
-import { IDiscordExtractFromCommandWithMultiplePrefixesAndCommandsData } from "../../../interfaces/commands/discord-extract-from-command-with-multiple-prefixes-and-commands-data";
-import { IDiscordExtractFromCommandWithMultiplePrefixesData } from "../../../interfaces/commands/discord-extract-from-command-with-multiple-prefixes-data";
+import { IDiscordExtractFromCommandData } from "../../../interfaces/commands/checks/discord-extract-from-command-data";
+import { IDiscordExtractFromCommandWithMultipleCommandsData } from "../../../interfaces/commands/checks/discord-extract-from-command-with-multiple-commands-data";
+import { IDiscordExtractFromCommandWithMultiplePrefixesAndCommandsData } from "../../../interfaces/commands/checks/discord-extract-from-command-with-multiple-prefixes-and-commands-data";
+import { IDiscordExtractFromCommandWithMultiplePrefixesData } from "../../../interfaces/commands/checks/discord-extract-from-command-with-multiple-prefixes-data";
 import { discordGetFormattedMessage } from "../formatters/discord-get-formatted-message";
 
 function extractFromCommandWithMultipleCommands({

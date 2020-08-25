@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { IDiscordContainsThisCommandWithOneOfThesePrefixesData } from "../../../interfaces/commands/discord-contains-this-command-with-one-of-these-prefixes-data";
+import { IDiscordContainsThisCommandWithOneOfThesePrefixesData } from "../../../interfaces/commands/checks/discord-contains-this-command-with-one-of-these-prefixes-data";
 import { discordContainsThisCommandWithPrefix } from "./discord-contains-this-command-with-prefix";
 
 export function discordContainsThisCommandWithOneOfThesePrefixes({

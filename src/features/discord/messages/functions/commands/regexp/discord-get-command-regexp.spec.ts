@@ -1,6 +1,6 @@
 import { createMock } from "ts-auto-mock";
 import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
-import { IDiscordGetCommandRegexpData } from "../../../interfaces/commands/discord-get-command-regexp-data";
+import { IDiscordGetCommandRegexpData } from "../../../interfaces/commands/getters/discord-get-command-regexp-data";
 import { discordGetCommandRegexp } from "./discord-get-command-regexp";
 import xregexp from "xregexp";
 

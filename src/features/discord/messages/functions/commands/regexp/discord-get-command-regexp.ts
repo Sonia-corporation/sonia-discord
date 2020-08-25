@@ -1,4 +1,4 @@
-import { IDiscordGetCommandRegexpData } from "../../../interfaces/commands/discord-get-command-regexp-data";
+import { IDiscordGetCommandRegexpData } from "../../../interfaces/commands/getters/discord-get-command-regexp-data";
 import xregexp from "xregexp";
 
 /**

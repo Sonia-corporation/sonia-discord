@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { IDiscordGetThisCommandWithPrefixData } from "../../../interfaces/commands/discord-get-this-command-with-prefix-data";
+import { IDiscordGetThisCommandWithPrefixData } from "../../../interfaces/commands/getters/discord-get-this-command-with-prefix-data";
 import { discordGetCommandRegexp } from "../regexp/discord-get-command-regexp";
 import xregexp, { ExecArray } from "xregexp";
 
