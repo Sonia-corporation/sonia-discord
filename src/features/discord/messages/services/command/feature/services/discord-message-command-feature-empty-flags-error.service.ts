@@ -78,6 +78,7 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
   ): EmbedFieldData[] {
     return [
       this._getEmptyFlagsErrorMessageEmbedFieldError(featureName),
+      this._getEmptyFlagsErrorMessageEmbedFieldAllFlags(),
       this._getEmptyFlagsErrorMessageEmbedFieldExample(
         anyDiscordMessage,
         commands
@@ -95,6 +96,13 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
       )}\` feature.\nI will not guess what you wish to configure so please try again with a flag!\nAnd because I am kind and generous here is the list of all the flags you can configure for the \`${_.lowerCase(
         featureName
       )}\` feature with an example.`,
+    };
+  }
+
+  private _getEmptyFlagsErrorMessageEmbedFieldAllFlags(): EmbedFieldData {
+    return {
+      name: `All flags`,
+      value: DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getAllFlagsNameExample(),
     };
   }
 

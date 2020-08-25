@@ -85,6 +85,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy: jest.SpyInstance;
     let getRandomFlagUsageExampleSpy: jest.SpyInstance;
+    let getAllFlagsNameExampleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureEmptyFlagsErrorService();
@@ -115,6 +116,10 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
       getRandomFlagUsageExampleSpy = jest.spyOn(
         DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS,
         `getRandomFlagUsageExample`
+      );
+      getAllFlagsNameExampleSpy = jest.spyOn(
+        DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS,
+        `getAllFlagsNameExample`
       );
     });
 
@@ -176,7 +181,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
       expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
     });
 
-    it(`should return a Discord message response embed with 2 fields`, async (): Promise<
+    it(`should return a Discord message response embed with 3 fields`, async (): Promise<
       void
     > => {
       expect.assertions(1);
@@ -189,7 +194,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      expect(result.options.embed.fields).toHaveLength(2);
+      expect(result.options.embed.fields).toHaveLength(3);
     });
 
     it(`should return a Discord message response embed with a field explaining the error`, async (): Promise<
@@ -211,6 +216,26 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
       } as EmbedFieldData);
     });
 
+    it(`should return a Discord message response embed with a field listing all flags`, async (): Promise<
+      void
+    > => {
+      expect.assertions(1);
+      getAllFlagsNameExampleSpy.mockReturnValue(`\`dummy-flag, other-flag\``);
+
+      const result = await service.getMessageResponse(
+        anyDiscordMessage,
+        commands,
+        featureName
+      );
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(result.options.embed.fields[1]).toStrictEqual({
+        name: `All flags`,
+        value: `\`dummy-flag, other-flag\``,
+      } as EmbedFieldData);
+    });
+
     it(`should return a Discord message response embed with a field to show an example of the command with a random valid flag`, async (): Promise<
       void
     > => {
@@ -226,7 +251,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      expect(result.options.embed.fields[1]).toStrictEqual({
+      expect(result.options.embed.fields[2]).toStrictEqual({
         name: `Example`,
         value: `\`!feature noon --dummy-flag=dummy-value\``,
       } as EmbedFieldData);
