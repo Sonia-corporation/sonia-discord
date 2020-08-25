@@ -16,9 +16,11 @@ export function discordGetThisCommandWithPrefix({
     })
   );
 
-  if (!_.isNil(execArray)) {
-    return `${execArray.prefix}${execArray.command}`;
+  if (_.isNil(execArray)) {
+    return null;
   }
 
-  return null;
+  const fullCommand: string | undefined = _.head(execArray);
+
+  return _.isNil(fullCommand) ? null : fullCommand;
 }

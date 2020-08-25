@@ -1,25 +1,29 @@
 import _ from "lodash";
+import xregexp, { ExecArray } from "xregexp";
 import { IDiscordExtractFromCommandCallbackData } from "../../interfaces/commands/discord-extract-from-command-callback-data";
 import { IDiscordGetCommandFlagsData } from "../../interfaces/commands/discord-get-command-flags-data";
 import { discordExtractFromCommand } from "./discord-extract-from-command";
 import { discordGetCommandWithFirstArgumentAndFlagsRegexp } from "./discord-get-command-with-first-argument-and-flags-regexp";
 import { discordGetFormattedMessage } from "./discord-get-formatted-message";
-import xregexp from "xregexp";
 
 function getFlags({
   command,
   message,
   prefix,
 }: Readonly<IDiscordExtractFromCommandCallbackData>): string | null {
-  const flags: string | undefined = xregexp.exec(
+  const execArray: ExecArray | null = xregexp.exec(
     message,
     discordGetCommandWithFirstArgumentAndFlagsRegexp({
       command,
       prefix,
     })
-  )?.flags;
+  );
 
-  return _.isNil(flags) ? null : flags;
+  if (_.isNil(execArray) || _.isNil(execArray.groups)) {
+    return null;
+  }
+
+  return execArray.groups.flags;
 }
 
 export function discordGetCommandFlags({

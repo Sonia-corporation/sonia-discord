@@ -19,11 +19,13 @@ function getCommandAndFirstArgument({
     })
   );
 
-  if (!_.isNil(execArray)) {
-    return `${execArray.prefix}${execArray.command} ${execArray.argument1}`;
+  if (_.isNil(execArray)) {
+    return null;
   }
 
-  return null;
+  const fullCommand: string | undefined = _.head(execArray);
+
+  return _.isNil(fullCommand) ? null : fullCommand;
 }
 
 export function discordGetCommandAndFirstArgument({
