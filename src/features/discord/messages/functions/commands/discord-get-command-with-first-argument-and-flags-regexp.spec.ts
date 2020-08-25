@@ -29,8 +29,224 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\!)(?:)(help)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s?)+)(?:)/gim
+          /(\!)(?:)(help)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s)?(-{1,2}\w+(\=\w+)?){1})(?:)/gim
         );
+      });
+
+      describe(`when tested with an empty string`, (): void => {
+        beforeEach((): void => {
+          message = ``;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!"`, (): void => {
+        beforeEach((): void => {
+          message = `!`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help"`, (): void => {
+        beforeEach((): void => {
+          message = `!help`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me "`, (): void => {
+        beforeEach((): void => {
+          message = `!help me `;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me -"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me -`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me -arg1"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me -arg1`;
+        });
+
+        it(`should find "!" as prefix`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(
+            `!`
+          );
+        });
+
+        it(`should find "help" as command`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(
+            `help`
+          );
+        });
+
+        it(`should find " " as separator`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(
+            xregexp.exec(message, result)?.groups?.separator
+          ).toStrictEqual(` `);
+        });
+
+        it(`should find "me" as argument 1`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(
+            xregexp.exec(message, result)?.groups?.argument1
+          ).toStrictEqual(`me`);
+        });
+
+        it(`should find " " as flags separator`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(
+            xregexp.exec(message, result)?.groups?.flagsSeparator
+          ).toStrictEqual(` `);
+        });
+
+        it(`should find "-arg1" as flags`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.groups?.flags).toStrictEqual(
+            `-arg1`
+          );
+        });
+      });
+
+      describe(`when tested with "!help me --arg1=value1"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me --arg1=value1`;
+        });
+
+        it(`should find "!" as prefix`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(
+            `!`
+          );
+        });
+
+        it(`should find "help" as command`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(
+            `help`
+          );
+        });
+
+        it(`should find " " as separator`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(
+            xregexp.exec(message, result)?.groups?.separator
+          ).toStrictEqual(` `);
+        });
+
+        it(`should find "me" as argument 1`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(
+            xregexp.exec(message, result)?.groups?.argument1
+          ).toStrictEqual(`me`);
+        });
+
+        it(`should find " " as flags separator`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(
+            xregexp.exec(message, result)?.groups?.flagsSeparator
+          ).toStrictEqual(` `);
+        });
+
+        it(`should find "--arg1=value1" as flags`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.groups?.flags).toStrictEqual(
+            `--arg1=value1`
+          );
+        });
       });
 
       describe(`when tested with "!help me -arg1 --arg2=value2"`, (): void => {
@@ -96,6 +312,549 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
           expect(xregexp.exec(message, result)?.groups?.flags).toStrictEqual(
             `-arg1 --arg2=value2`
           );
+        });
+      });
+
+      describe(`when tested with "!help me -arg1 --arg2=value2 "`, (): void => {
+        beforeEach((): void => {
+          message = `!help me -arg1 --arg2=value2 `;
+        });
+
+        it(`should find "!" as prefix`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(
+            `!`
+          );
+        });
+
+        it(`should find "help" as command`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(
+            `help`
+          );
+        });
+
+        it(`should find " " as separator`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(
+            xregexp.exec(message, result)?.groups?.separator
+          ).toStrictEqual(` `);
+        });
+
+        it(`should find "me" as argument 1`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(
+            xregexp.exec(message, result)?.groups?.argument1
+          ).toStrictEqual(`me`);
+        });
+
+        it(`should find " " as flags separator`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(
+            xregexp.exec(message, result)?.groups?.flagsSeparator
+          ).toStrictEqual(` `);
+        });
+
+        it(`should find "-arg1 --arg2=value2" as flags`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.groups?.flags).toStrictEqual(
+            `-arg1 --arg2=value2`
+          );
+        });
+      });
+    });
+
+    describe(`when the given command is feature`, (): void => {
+      beforeEach((): void => {
+        data.command = DiscordMessageCommandEnum.FEATURE;
+      });
+
+      it(`should return a regexp to find the !help command content`, (): void => {
+        expect.assertions(1);
+
+        const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+        expect(result).toStrictEqual(
+          // eslint-disable-next-line no-useless-escape
+          /(\!)(?:)(feature)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s)?(-{1,2}\w+(\=\w+)?){1})(?:)/gim
+        );
+      });
+
+      describe(`when tested with an empty string`, (): void => {
+        beforeEach((): void => {
+          message = ``;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!"`, (): void => {
+        beforeEach((): void => {
+          message = `!`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help"`, (): void => {
+        beforeEach((): void => {
+          message = `!help`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me "`, (): void => {
+        beforeEach((): void => {
+          message = `!help me `;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me -"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me -`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me -arg1"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me -arg1`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me --arg1=value1"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me --arg1=value1`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me -arg1 --arg2=value2"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me -arg1 --arg2=value2`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me -arg1 --arg2=value2 "`, (): void => {
+        beforeEach((): void => {
+          message = `!help me -arg1 --arg2=value2 `;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+    });
+  });
+
+  describe(`when the given prefix is -`, (): void => {
+    beforeEach((): void => {
+      data.prefix = `-`;
+    });
+
+    describe(`when the given command is help`, (): void => {
+      beforeEach((): void => {
+        data.command = DiscordMessageCommandEnum.HELP;
+      });
+
+      it(`should return a regexp to find the !help command content`, (): void => {
+        expect.assertions(1);
+
+        const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+        expect(result).toStrictEqual(
+          // eslint-disable-next-line no-useless-escape
+          /(\-)(?:)(help)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s)?(-{1,2}\w+(\=\w+)?){1})(?:)/gim
+        );
+      });
+
+      describe(`when tested with an empty string`, (): void => {
+        beforeEach((): void => {
+          message = ``;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!"`, (): void => {
+        beforeEach((): void => {
+          message = `!`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help"`, (): void => {
+        beforeEach((): void => {
+          message = `!help`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me "`, (): void => {
+        beforeEach((): void => {
+          message = `!help me `;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me -"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me -`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me -arg1"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me -arg1`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me --arg1=value1"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me --arg1=value1`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me -arg1 --arg2=value2"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me -arg1 --arg2=value2`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me -arg1 --arg2=value2 "`, (): void => {
+        beforeEach((): void => {
+          message = `!help me -arg1 --arg2=value2 `;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+    });
+
+    describe(`when the given command is feature`, (): void => {
+      beforeEach((): void => {
+        data.command = DiscordMessageCommandEnum.FEATURE;
+      });
+
+      it(`should return a regexp to find the !help command content`, (): void => {
+        expect.assertions(1);
+
+        const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+        expect(result).toStrictEqual(
+          // eslint-disable-next-line no-useless-escape
+          /(\-)(?:)(feature)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s)?(-{1,2}\w+(\=\w+)?){1})(?:)/gim
+        );
+      });
+
+      describe(`when tested with an empty string`, (): void => {
+        beforeEach((): void => {
+          message = ``;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!"`, (): void => {
+        beforeEach((): void => {
+          message = `!`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help"`, (): void => {
+        beforeEach((): void => {
+          message = `!help`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me "`, (): void => {
+        beforeEach((): void => {
+          message = `!help me `;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me -"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me -`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me -arg1"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me -arg1`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me --arg1=value1"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me --arg1=value1`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me -arg1 --arg2=value2"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me -arg1 --arg2=value2`;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me -arg1 --arg2=value2 "`, (): void => {
+        beforeEach((): void => {
+          message = `!help me -arg1 --arg2=value2 `;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
         });
       });
     });
