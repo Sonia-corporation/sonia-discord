@@ -11,7 +11,7 @@ import { IconEnum } from "../../../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../../../core/services/core-event.service";
 import { DiscordSoniaService } from "../../../../../users/services/discord-sonia.service";
-import { DiscordMessageCommandEnum } from "../../../../enums/command/discord-message-command.enum";
+import { DiscordMessageCommandEnum } from "../../../../enums/commands/discord-message-command.enum";
 import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";
 import { DiscordMessageCommandCliErrorService } from "../../discord-message-command-cli-error.service";

@@ -3,7 +3,7 @@ import { AbstractService } from "../../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
 import { ChalkService } from "../../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../../logger/services/logger.service";
-import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
+import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
 import { discordGetCommandFirstArgument } from "../../../functions/commands/getters/discord-get-command-first-argument";
 import { discordGetCommandFlags } from "../../../functions/commands/getters/discord-get-command-flags";
 import { discordHasThisCommand } from "../../../functions/commands/checks/discord-has-this-command";

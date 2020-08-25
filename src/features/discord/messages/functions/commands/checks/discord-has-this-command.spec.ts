@@ -1,5 +1,5 @@
 import { createMock } from "ts-auto-mock";
-import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
+import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
 import { IDiscordHasThisCommandData } from "../../../interfaces/commands/checks/discord-has-this-command-data";
 import { discordHasThisCommand } from "./discord-has-this-command";
 

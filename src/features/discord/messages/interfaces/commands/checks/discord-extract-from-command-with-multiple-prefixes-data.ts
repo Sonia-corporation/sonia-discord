@@ -1,4 +1,4 @@
-import { DiscordMessageCommandEnum } from "../../../enums/command/discord-message-command.enum";
+import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
 import { IDiscordExtractFromCommandData } from "./discord-extract-from-command-data";
 
 export interface IDiscordExtractFromCommandWithMultiplePrefixesData
