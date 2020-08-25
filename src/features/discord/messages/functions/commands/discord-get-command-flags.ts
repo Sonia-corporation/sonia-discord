@@ -23,8 +23,6 @@ function getFlags({
     return null;
   }
 
-  console.log(execArray);
-
   return execArray.groups.flags;
 }
 
