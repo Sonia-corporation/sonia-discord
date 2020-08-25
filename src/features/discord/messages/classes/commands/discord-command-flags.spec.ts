@@ -69,4 +69,49 @@ describe(`DiscordCommandFlags`, (): void => {
       expect(discordCommandFlags.getFlags()).toStrictEqual(flags);
     });
   });
+
+  describe(`getRandomFlag()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlags = new DiscordCommandFlags<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >(
+        createMock<
+          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+        >()
+      );
+    });
+
+    describe(`when there is no flags`, (): void => {
+      beforeEach((): void => {
+        discordCommandFlags.setFlags([]);
+      });
+
+      it(`should return undefined`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getRandomFlag();
+
+        expect(result).toBeUndefined();
+      });
+    });
+
+    describe(`when there is one flag`, (): void => {
+      let flag: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+
+      beforeEach((): void => {
+        flag = createMock<
+          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+        >();
+        discordCommandFlags.setFlags([flag]);
+      });
+
+      it(`should return the flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getRandomFlag();
+
+        expect(result).toStrictEqual(flag);
+      });
+    });
+  });
 });

@@ -8,7 +8,7 @@ import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";
 import { DiscordMessageCommandCliErrorService } from "../../discord-message-command-cli-error.service";
 import { DiscordMessageCommandFeatureNameEnum } from "../enums/discord-message-command-feature-name.enum";
-import { getDiscordMessageCommandNoonAllFlags } from "../features/noon/functions/get-discord-message-command-noon-all-flags";
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../features/noon/constants/discord-message-command-feature-noon-flags";
 import { DiscordMessageCommandFeatureErrorCoreService } from "./discord-message-command-feature-error-core.service";
 
 export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordMessageCommandFeatureErrorCoreService {
@@ -103,7 +103,7 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
     commands: Readonly<DiscordMessageCommandEnum>[]
   ): EmbedFieldData {
     const randomFlag: string = _.toLower(
-      _.sample(getDiscordMessageCommandNoonAllFlags())
+      DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getRandomFlag()?.getName()
     );
     const userCommand: string | null = discordGetCommandAndFirstArgument({
       commands,
