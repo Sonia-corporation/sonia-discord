@@ -48,7 +48,7 @@ export class DiscordCommandFlags<T> {
       _.reduce(
         this.getAllFlagsLowerCaseName(),
         (value: Readonly<string>, flagName: Readonly<string>): string =>
-          `${value}\`${flagName}\`, `,
+          `${value}\`--${flagName}\`, `,
         ``
       ),
       `, `

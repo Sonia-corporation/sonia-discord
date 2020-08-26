@@ -363,7 +363,7 @@ describe(`DiscordCommandFlag`, (): void => {
 
         const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`enabled`);
+        expect(result).toStrictEqual(`--enabled`);
       });
     });
 
@@ -377,7 +377,7 @@ describe(`DiscordCommandFlag`, (): void => {
 
         const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`enabled`);
+        expect(result).toStrictEqual(`--enabled`);
       });
     });
 
@@ -393,7 +393,7 @@ describe(`DiscordCommandFlag`, (): void => {
 
         const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`enabled (or e)`);
+        expect(result).toStrictEqual(`--enabled (or -e)`);
       });
     });
 
@@ -410,7 +410,7 @@ describe(`DiscordCommandFlag`, (): void => {
 
         const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`enabled (or e, e)`);
+        expect(result).toStrictEqual(`--enabled (or -e, -e)`);
       });
     });
   });

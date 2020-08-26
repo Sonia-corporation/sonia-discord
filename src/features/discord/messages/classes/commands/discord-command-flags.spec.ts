@@ -238,7 +238,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameExample();
 
-        expect(result).toStrictEqual(`\`enabled\``);
+        expect(result).toStrictEqual(`\`--enabled\``);
       });
     });
 
@@ -273,7 +273,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameExample();
 
-        expect(result).toStrictEqual(`\`enabled\`, \`e\``);
+        expect(result).toStrictEqual(`\`--enabled\`, \`--e\``);
       });
     });
   });
@@ -322,7 +322,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(`\`enabled\``);
+        expect(result).toStrictEqual(`\`--enabled\``);
       });
     });
 
@@ -349,7 +349,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(`\`enabled (or e, e)\``);
+        expect(result).toStrictEqual(`\`--enabled (or -e, -e)\``);
       });
     });
 
@@ -384,7 +384,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(`\`enabled\`, \`e\``);
+        expect(result).toStrictEqual(`\`--enabled\`, \`--e\``);
       });
     });
 
@@ -427,7 +427,9 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(`\`enabled (or e, e)\`, \`e (or e, e)\``);
+        expect(result).toStrictEqual(
+          `\`--enabled (or -e, -e)\`, \`--e (or -e, -e)\``
+        );
       });
     });
   });

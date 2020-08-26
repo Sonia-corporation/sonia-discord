@@ -220,7 +220,15 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
 
     expect(
       FirebaseGuildNewVersionResponseEnum.NO_SPAM_IF_USER_ID_COULD_STOP_WORKING
-    ).toStrictEqual(`No spam if {{ userId }} could stop working.`);
+    ).toStrictEqual(`No spam if {{ userId }} could stop working...`);
+  });
+
+  it(`should have a member "NO_SPAM_IF_USER_ID_COULD_STOP_WORKING_RIGHT"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      FirebaseGuildNewVersionResponseEnum.NO_SPAM_IF_USER_ID_COULD_STOP_WORKING_RIGHT
+    ).toStrictEqual(`No spam if {{ userId }} could stop working, right?`);
   });
 
   it(`should have a member "NOTHING_CAN_STOP_ME"`, (): void => {

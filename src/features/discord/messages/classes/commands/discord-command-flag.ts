@@ -67,14 +67,14 @@ export class DiscordCommandFlag<T> {
 
   public getLowerCaseNameAndShortcutsExample(): string {
     const shortcuts: string[] | undefined = this.getLowerCaseShortcuts();
-    let example = this.getLowerCaseName();
+    let example = `--${this.getLowerCaseName()}`;
 
     if (_.isArray(shortcuts) && !_.isEmpty(shortcuts)) {
       example += ` (or ${_.trimEnd(
         _.reduce(
           shortcuts,
           (value: Readonly<string>, shortcut: Readonly<string>): string =>
-            `${value}${shortcut}, `,
+            `${value}-${shortcut}, `,
           ``
         ),
         `, `
