@@ -278,6 +278,160 @@ describe(`DiscordCommandFlags`, (): void => {
     });
   });
 
+  describe(`getAllFlagsNameWithShortcutsExample()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlags = new DiscordCommandFlags<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >(
+        createMock<
+          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+        >()
+      );
+    });
+
+    describe(`when there is no flags`, (): void => {
+      beforeEach((): void => {
+        discordCommandFlags.setFlags([]);
+      });
+
+      it(`should return an empty string`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
+
+        expect(result).toStrictEqual(``);
+      });
+    });
+
+    describe(`when there is one flag`, (): void => {
+      let flag: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+
+      beforeEach((): void => {
+        flag = new DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+          })
+        );
+        discordCommandFlags.setFlags([flag]);
+      });
+
+      it(`should return a string containing the name of the flag on lower case wrapped with backtick`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
+
+        expect(result).toStrictEqual(`\`enabled\``);
+      });
+    });
+
+    describe(`when there is one flag with two shortcuts`, (): void => {
+      let flag: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+
+      beforeEach((): void => {
+        flag = new DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+            shortcuts: [
+              DiscordMessageCommandFeatureNoonFlagEnum.E,
+              DiscordMessageCommandFeatureNoonFlagEnum.E,
+            ],
+          })
+        );
+        discordCommandFlags.setFlags([flag]);
+      });
+
+      it(`should return a string containing the name and the shortcuts of the flag on lower case wrapped with backtick`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
+
+        expect(result).toStrictEqual(`\`enabled (or e, e)\``);
+      });
+    });
+
+    describe(`when there is two flags`, (): void => {
+      let flag1: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag2: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+
+      beforeEach((): void => {
+        flag1 = new DiscordCommandFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+          })
+        );
+        flag2 = new DiscordCommandFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.E,
+          })
+        );
+        discordCommandFlags.setFlags([flag1, flag2]);
+      });
+
+      it(`should return a string containing the names of the flags on lower case wrapped with backtick and comma separated`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
+
+        expect(result).toStrictEqual(`\`enabled\`, \`e\``);
+      });
+    });
+
+    describe(`when there is two flags with two shortcuts`, (): void => {
+      let flag1: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag2: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+
+      beforeEach((): void => {
+        flag1 = new DiscordCommandFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+            shortcuts: [
+              DiscordMessageCommandFeatureNoonFlagEnum.E,
+              DiscordMessageCommandFeatureNoonFlagEnum.E,
+            ],
+          })
+        );
+        flag2 = new DiscordCommandFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.E,
+            shortcuts: [
+              DiscordMessageCommandFeatureNoonFlagEnum.E,
+              DiscordMessageCommandFeatureNoonFlagEnum.E,
+            ],
+          })
+        );
+        discordCommandFlags.setFlags([flag1, flag2]);
+      });
+
+      it(`should return a string containing the names of the flags on lower case wrapped with backtick and comma separated`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
+
+        expect(result).toStrictEqual(`\`enabled (or e, e)\`, \`e (or e, e)\``);
+      });
+    });
+  });
+
   describe(`getAllFlagsLowerCaseName()`, (): void => {
     beforeEach((): void => {
       discordCommandFlags = new DiscordCommandFlags<
@@ -322,9 +476,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsLowerCaseName();
 
-        expect(result).toStrictEqual([
-          DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
-        ]);
+        expect(result).toStrictEqual([`enabled`]);
       });
     });
 
@@ -359,9 +511,142 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsLowerCaseName();
 
+        expect(result).toStrictEqual([`enabled`, `e`]);
+      });
+    });
+  });
+
+  describe(`getAllFlagsLowerCaseNameWithShortcuts()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlags = new DiscordCommandFlags<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >(
+        createMock<
+          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+        >()
+      );
+    });
+
+    describe(`when there is no flags`, (): void => {
+      beforeEach((): void => {
+        discordCommandFlags.setFlags([]);
+      });
+
+      it(`should return an empty array`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsLowerCaseNameWithShortcuts();
+
+        expect(result).toStrictEqual([]);
+      });
+    });
+
+    describe(`when there is one flag`, (): void => {
+      let flag: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+
+      beforeEach((): void => {
+        flag = new DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+          })
+        );
+        discordCommandFlags.setFlags([flag]);
+      });
+
+      it(`should return an array containing the name of the flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsLowerCaseNameWithShortcuts();
+
+        expect(result).toStrictEqual([`enabled`]);
+      });
+    });
+
+    describe(`when there is two flags with one shortcut each`, (): void => {
+      let flag1: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag2: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+
+      beforeEach((): void => {
+        flag1 = new DiscordCommandFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+            shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
+          })
+        );
+        flag2 = new DiscordCommandFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.E,
+            shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.ENABLED],
+          })
+        );
+        discordCommandFlags.setFlags([flag1, flag2]);
+      });
+
+      it(`should return an array containing the names of the flags and the shortcuts`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsLowerCaseNameWithShortcuts();
+
+        expect(result).toStrictEqual([`enabled`, `e`, `e`, `enabled`]);
+      });
+    });
+
+    describe(`when there is two flags with two shortcuts each`, (): void => {
+      let flag1: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag2: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+
+      beforeEach((): void => {
+        flag1 = new DiscordCommandFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+            shortcuts: [
+              DiscordMessageCommandFeatureNoonFlagEnum.E,
+              DiscordMessageCommandFeatureNoonFlagEnum.E,
+            ],
+          })
+        );
+        flag2 = new DiscordCommandFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.E,
+            shortcuts: [
+              DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+              DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+            ],
+          })
+        );
+        discordCommandFlags.setFlags([flag1, flag2]);
+      });
+
+      it(`should return an array containing the names of the flags and the shortcuts`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsLowerCaseNameWithShortcuts();
+
         expect(result).toStrictEqual([
-          DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
-          DiscordMessageCommandFeatureNoonFlagEnum.E,
+          `enabled`,
+          `e`,
+          `e`,
+          `e`,
+          `enabled`,
+          `enabled`,
         ]);
       });
     });

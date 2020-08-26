@@ -55,10 +55,37 @@ export class DiscordCommandFlags<T> {
     );
   }
 
+  public getAllFlagsNameWithShortcutsExample(): string {
+    return _.trimEnd(
+      _.reduce(
+        this.getFlags(),
+        (
+          value: Readonly<string>,
+          flag: Readonly<DiscordCommandFlag<T>>
+        ): string =>
+          `${value}\`${flag.getLowerCaseNameAndShortcutsExample()}\`, `,
+        ``
+      ),
+      `, `
+    );
+  }
+
   public getAllFlagsLowerCaseName(): string[] {
     return _.map(
       this.getFlags(),
       (flag: Readonly<DiscordCommandFlag<T>>): string => flag.getLowerCaseName()
+    );
+  }
+
+  public getAllFlagsLowerCaseNameWithShortcuts(): string[] {
+    return _.flatten(
+      _.map(
+        this.getFlags(),
+        (flag: Readonly<DiscordCommandFlag<T>>): string[] =>
+          _.compact(
+            _.flatten([flag.getLowerCaseName(), flag.getLowerCaseShortcuts()])
+          )
+      )
     );
   }
 }
