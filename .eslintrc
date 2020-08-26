@@ -242,6 +242,10 @@ rules:
   '@typescript-eslint/no-unsafe-member-access': off
   '@typescript-eslint/no-unsafe-return': off
   '@typescript-eslint/no-unsafe-assignment': off
+  '@typescript-eslint/prefer-enum-initializers':
+    - error
+  '@typescript-eslint/prefer-literal-enum-member':
+    - error
 overrides:
   - files:
       - '*.ts'
