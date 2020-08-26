@@ -8,6 +8,7 @@ extends:
   - google
   - 'plugin:@typescript-eslint/eslint-recommended'
   - 'plugin:@typescript-eslint/recommended'
+  - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
   - 'plugin:import/errors'
   - 'plugin:import/warnings'
   - 'plugin:import/typescript'
@@ -37,8 +38,8 @@ settings:
   import/cache:
     lifetime: Infinity
 rules:
-  jest/no-test-callback: 'off'
-  jest/no-disabled-tests: 'off'
+  jest/no-test-callback: off
+  jest/no-disabled-tests: off
   '@typescript-eslint/member-ordering':
     - error
     - default:
@@ -86,7 +87,7 @@ rules:
     - asc
     - caseSensitive: true
       natural: true
-  quotes: 'off'
+  quotes: off
   no-else-return:
     - error
     - allowElseIf: true
@@ -99,16 +100,16 @@ rules:
   '@typescript-eslint/quotes':
     - error
     - backtick
-  '@typescript-eslint/no-var-requires': 'off'
-  '@typescript-eslint/explicit-function-return-type': 'off'
+  '@typescript-eslint/no-var-requires': off
+  '@typescript-eslint/explicit-function-return-type': off
   '@typescript-eslint/no-unused-vars':
     - error
     - argsIgnorePattern: ^_
-  import/no-namespace: 'off'
+  import/no-namespace: off
   import/first: error
   import/exports-last: error
   import/no-duplicates: error
-  indent: 'off'
+  indent: off
   new-cap:
     - error
     - capIsNewExceptions:
@@ -197,15 +198,15 @@ rules:
   object-curly-spacing:
     - error
     - always
-  linebreak-style: 'off'
+  linebreak-style: off
   computed-property-spacing:
     - error
     - never
-  array-bracket-spacing: 'off'
-  prefer-rest-params: 'off'
-  require-jsdoc: 'off'
-  max-len: 'off'
-  comma-dangle: 'off'
+  array-bracket-spacing: off
+  prefer-rest-params: off
+  require-jsdoc: off
+  max-len: off
+  comma-dangle: off
   object-shorthand:
     - error
     - always
@@ -236,6 +237,10 @@ rules:
         array: true
         object: true
     - enforceForRenamedProperties: false
+  '@typescript-eslint/unbound-method': off
+  '@typescript-eslint/no-unsafe-call': off
+  '@typescript-eslint/no-unsafe-member-access': off
+  '@typescript-eslint/no-unsafe-return': off
 overrides:
   - files:
       - '*.ts'
