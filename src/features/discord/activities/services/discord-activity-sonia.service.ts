@@ -40,7 +40,7 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   public async init(): Promise<Presence> {
-    return await this._listen().toPromise();
+    return this._listen().toPromise();
   }
 
   public startSchedule(): void {
@@ -112,7 +112,7 @@ export class DiscordActivitySoniaService extends AbstractService {
     );
 
     if (!_.isNil(presenceActivity)) {
-      return await this.setPresence(presenceActivity);
+      return this.setPresence(presenceActivity);
     }
 
     return Promise.reject(new Error(`No presence activity`));
@@ -181,7 +181,7 @@ export class DiscordActivitySoniaService extends AbstractService {
     });
 
     this._logNextJobDate();
-    return await this.setRandomPresence();
+    return this.setRandomPresence();
   }
 
   private _logNextUpdaterJobDate(): void {
