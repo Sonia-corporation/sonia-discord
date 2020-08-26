@@ -7,7 +7,7 @@ import { DiscordMessageCommandEnum } from "../../../../enums/commands/discord-me
 import { discordGetCommandAndPrefix } from "../../../../functions/commands/getters/discord-get-command-and-prefix";
 import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";
-import { getDiscordMessageCommandAllFeatureNames } from "../functions/get-discord-message-command-all-feature-names";
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NAMES } from "../constants/discord-message-command-feature-names";
 
 /**
  * @description
@@ -35,19 +35,9 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
   }
 
   protected _getMessageEmbedFieldErrorAllFeatures(): EmbedFieldData {
-    const allFeatureNames: string = _.trimEnd(
-      _.reduce(
-        getDiscordMessageCommandAllFeatureNames(),
-        (value: Readonly<string>, featureName: Readonly<string>): string =>
-          `${value}\`${_.toLower(featureName)}\`, `,
-        ``
-      ),
-      `, `
-    );
-
     return {
       name: `All features`,
-      value: allFeatureNames,
+      value: DISCORD_MESSAGE_COMMAND_FEATURE_NAMES.getAllArgumentsNameWithShortcutsExample(),
     };
   }
 
@@ -55,9 +45,9 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
     { content }: Readonly<IAnyDiscordMessage>,
     commands: Readonly<DiscordMessageCommandEnum>[]
   ): EmbedFieldData {
-    const randomFeatureName: string = _.toLower(
-      _.sample(getDiscordMessageCommandAllFeatureNames())
-    );
+    const randomFeature:
+      | string
+      | undefined = DISCORD_MESSAGE_COMMAND_FEATURE_NAMES.getRandomArgumentUsageExample();
     let userCommand: string | null = discordGetCommandAndPrefix({
       commands,
       message: _.isNil(content) ? `` : content,
@@ -70,7 +60,7 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
 
     return {
       name: `Example`,
-      value: `\`${userCommand} ${randomFeatureName}\``,
+      value: `\`${userCommand} ${_.toString(randomFeature)}\``,
     };
   }
 }
