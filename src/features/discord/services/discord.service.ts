@@ -28,19 +28,19 @@ export class DiscordService extends AbstractService {
     super(ServiceNameEnum.DISCORD_SERVICE);
   }
 
-  public async init(): Promise<true> {
+  public init(): Promise<true> {
     DiscordSoniaService.getInstance();
     DiscordLoggerService.getInstance().init();
-    await DiscordGuildService.getInstance().init();
+    void DiscordGuildService.getInstance().init();
     DiscordGuildMemberAddService.getInstance().init();
     DiscordGuildCreateService.getInstance().init();
     DiscordMessageService.getInstance().init();
-    await DiscordAuthenticationService.getInstance().init();
+    void DiscordAuthenticationService.getInstance().init();
     DiscordMessageScheduleIlEstMidiService.getInstance().init();
     DiscordGuildSoniaService.getInstance().init();
-    await DiscordActivitySoniaService.getInstance().init();
+    void DiscordActivitySoniaService.getInstance().init();
     DiscordSoniaEmotionalStateService.getInstance().init();
 
-    return true;
+    return Promise.resolve(true);
   }
 }
