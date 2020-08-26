@@ -1,5 +1,20 @@
 # Semantic Versioning Changelog
 
+# [1.72.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.71.0...1.72.0) (2020-08-26)
+
+
+### :bug: Bug Fixes
+
+* **release-notes:** send the release notes when a new version is available ([7482d58](https://github.com/Sonia-corporation/il-est-midi-discord/commit/7482d586dbd3f0e4ca19e83e181d8dd4f2c4bf32))
+
+
+### :rocket: Features
+
+* **command-feature:** enhance the text for the empty feature name error message ([dd14a10](https://github.com/Sonia-corporation/il-est-midi-discord/commit/dd14a10969627161659f29755ecab198a5b6ec23))
+* **command-feature:** enhance the text for the empty feature name error message ([d4f12cf](https://github.com/Sonia-corporation/il-est-midi-discord/commit/d4f12cf80b42e270f865903e29632dee55a0947c))
+* **command-feature:** enhance the text for the empty feature name error message ([b0d21bd](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b0d21bda2f418a59d614dcba9b2cc4666c089e10))
+* **command-feature:** respond an error when no flag is specified ([dd2857f](https://github.com/Sonia-corporation/il-est-midi-discord/commit/dd2857f2831e787c1b3f5947fd56b3d1d55d08a8))
+
 # [1.71.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.70.1...1.71.0) (2020-08-20)
 
 
