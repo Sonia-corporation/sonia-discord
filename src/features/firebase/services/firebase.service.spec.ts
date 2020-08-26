@@ -257,9 +257,9 @@ describe(`FirebaseService`, (): void => {
       });
 
       it(`should not watch the Firebase guilds`, async (): Promise<void> => {
-        expect.assertions(2);
+        expect.assertions(1);
 
-        await expect(service.init()).rejects.toThrow(new Error(`init error`));
+        await service.init();
 
         expect(
           firebaseGuildsServiceGetInstanceWatchGuildsSpy

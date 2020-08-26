@@ -110,12 +110,12 @@ export class InitService extends AbstractService {
     return _.merge({}, environmentA, environmentB);
   }
 
-  private async _runApp(): Promise<true> {
-    await DiscordService.getInstance().init();
+  private _runApp(): Promise<true> {
+    void DiscordService.getInstance().init();
     ServerService.getInstance().initializeApp();
-    await FirebaseService.getInstance().init();
+    void FirebaseService.getInstance().init();
 
-    return true;
+    return Promise.resolve(true);
   }
 
   private _configureApp(
