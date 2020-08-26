@@ -249,6 +249,30 @@ describe(`DiscordCommandFlag`, (): void => {
     });
   });
 
+  describe(`getLowerCaseShortcuts()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlag = new DiscordCommandFlag<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >(
+        createMock<
+          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+        >()
+      );
+    });
+
+    it(`should return the shortcuts as lower case`, (): void => {
+      expect.assertions(1);
+      discordCommandFlag.setShortcuts([
+        DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+        DiscordMessageCommandFeatureNoonFlagEnum.E,
+      ]);
+
+      const result = discordCommandFlag.getShortcuts();
+
+      expect(result).toStrictEqual([`enabled`, `e`]);
+    });
+  });
+
   describe(`setShortcuts()`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandFlag<
