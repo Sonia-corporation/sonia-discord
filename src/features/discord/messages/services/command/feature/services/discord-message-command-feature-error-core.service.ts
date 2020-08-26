@@ -3,8 +3,8 @@ import _ from "lodash";
 import { AbstractService } from "../../../../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
 import { DiscordSoniaService } from "../../../../../users/services/discord-sonia.service";
-import { DiscordMessageCommandEnum } from "../../../../enums/command/discord-message-command.enum";
-import { discordGetCommandAndPrefix } from "../../../../functions/commands/discord-get-command-and-prefix";
+import { DiscordMessageCommandEnum } from "../../../../enums/commands/discord-message-command.enum";
+import { discordGetCommandAndPrefix } from "../../../../functions/commands/getters/discord-get-command-and-prefix";
 import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";
 import { getDiscordMessageCommandAllFeatureNames } from "../functions/get-discord-message-command-all-feature-names";
@@ -51,7 +51,7 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
     };
   }
 
-  protected _getMessageEmbedFieldErrorExample(
+  protected _getMessageEmbedFieldErrorFeatureExample(
     { content }: Readonly<IAnyDiscordMessage>,
     commands: Readonly<DiscordMessageCommandEnum>[]
   ): EmbedFieldData {

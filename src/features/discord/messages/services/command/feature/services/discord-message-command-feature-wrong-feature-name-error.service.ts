@@ -1,7 +1,7 @@
 import { EmbedFieldData, MessageEmbedOptions } from "discord.js";
 import _ from "lodash";
 import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { DiscordMessageCommandEnum } from "../../../../enums/command/discord-message-command.enum";
+import { DiscordMessageCommandEnum } from "../../../../enums/commands/discord-message-command.enum";
 import { IDiscordMessageResponse } from "../../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
 import { DiscordMessageCommandCliErrorService } from "../../discord-message-command-cli-error.service";
@@ -79,7 +79,10 @@ export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends Di
     return [
       this._getWrongFeatureNameErrorMessageEmbedFieldError(featureName),
       this._getMessageEmbedFieldErrorAllFeatures(),
-      this._getMessageEmbedFieldErrorExample(anyDiscordMessage, commands),
+      this._getMessageEmbedFieldErrorFeatureExample(
+        anyDiscordMessage,
+        commands
+      ),
     ];
   }
 
@@ -88,7 +91,7 @@ export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends Di
   ): EmbedFieldData {
     return {
       name: `Wrong feature name`,
-      value: `\`${featureName}\` is not an existing feature...\nLet me show you the list of available features and maybe try again with a valid one this time, ok?`,
+      value: `\`${featureName}\` is not an existing feature...\nLet me show you the list of available features with an example and maybe try again with a valid one this time, ok?`,
     };
   }
 }

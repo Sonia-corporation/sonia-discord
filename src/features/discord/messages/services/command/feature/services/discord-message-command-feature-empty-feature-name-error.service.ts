@@ -1,7 +1,7 @@
 import { EmbedFieldData, MessageEmbedOptions } from "discord.js";
 import _ from "lodash";
 import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { DiscordMessageCommandEnum } from "../../../../enums/command/discord-message-command.enum";
+import { DiscordMessageCommandEnum } from "../../../../enums/commands/discord-message-command.enum";
 import { IDiscordMessageResponse } from "../../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
 import { DiscordMessageCommandCliErrorService } from "../../discord-message-command-cli-error.service";
@@ -74,14 +74,17 @@ export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends Di
     return [
       this._getEmptyFeatureNameErrorMessageEmbedFieldError(),
       this._getMessageEmbedFieldErrorAllFeatures(),
-      this._getMessageEmbedFieldErrorExample(anyDiscordMessage, commands),
+      this._getMessageEmbedFieldErrorFeatureExample(
+        anyDiscordMessage,
+        commands
+      ),
     ];
   }
 
   private _getEmptyFeatureNameErrorMessageEmbedFieldError(): EmbedFieldData {
     return {
       name: `Empty feature name`,
-      value: `You did not specify the name of the feature you wish to configure.\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure.`,
+      value: `You did not specify the name of the feature you wish to configure.\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure with an example.`,
     };
   }
 }
