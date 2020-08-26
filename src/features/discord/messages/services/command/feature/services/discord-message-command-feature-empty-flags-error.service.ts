@@ -102,7 +102,7 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
   private _getEmptyFlagsErrorMessageEmbedFieldAllFlags(): EmbedFieldData {
     return {
       name: `All flags`,
-      value: DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getAllFlagsNameExample(),
+      value: DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getAllFlagsNameWithShortcutsExample(),
     };
   }
 

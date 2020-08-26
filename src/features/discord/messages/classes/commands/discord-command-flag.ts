@@ -47,6 +47,12 @@ export class DiscordCommandFlag<T> {
     return this._shortcuts;
   }
 
+  public getLowerCaseShortcuts(): string[] | undefined {
+    return _.map(this.getShortcuts(), (shortcut: Readonly<T>): string =>
+      _.toLower(_.toString(shortcut))
+    );
+  }
+
   public setShortcuts(shortcuts: Readonly<T>[] | Readonly<undefined>): void {
     this._shortcuts = shortcuts;
   }
@@ -57,5 +63,24 @@ export class DiscordCommandFlag<T> {
 
   public setType(type: Readonly<DiscordCommandFlagTypeEnum>): void {
     this._type = type;
+  }
+
+  public getLowerCaseNameAndShortcutsExample(): string {
+    const shortcuts: string[] | undefined = this.getLowerCaseShortcuts();
+    let example = `--${this.getLowerCaseName()}`;
+
+    if (_.isArray(shortcuts) && !_.isEmpty(shortcuts)) {
+      example += ` (or ${_.trimEnd(
+        _.reduce(
+          shortcuts,
+          (value: Readonly<string>, shortcut: Readonly<string>): string =>
+            `${value}-${shortcut}, `,
+          ``
+        ),
+        `, `
+      )})`;
+    }
+
+    return example;
   }
 }

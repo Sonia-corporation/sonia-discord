@@ -249,6 +249,30 @@ describe(`DiscordCommandFlag`, (): void => {
     });
   });
 
+  describe(`getLowerCaseShortcuts()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlag = new DiscordCommandFlag<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >(
+        createMock<
+          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+        >()
+      );
+    });
+
+    it(`should return the shortcuts as lower case`, (): void => {
+      expect.assertions(1);
+      discordCommandFlag.setShortcuts([
+        DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+        DiscordMessageCommandFeatureNoonFlagEnum.E,
+      ]);
+
+      const result = discordCommandFlag.getShortcuts();
+
+      expect(result).toStrictEqual([`enabled`, `e`]);
+    });
+  });
+
   describe(`setShortcuts()`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandFlag<
@@ -313,6 +337,81 @@ describe(`DiscordCommandFlag`, (): void => {
       expect(discordCommandFlag.getType()).toStrictEqual(
         DiscordCommandFlagTypeEnum.BOOLEAN
       );
+    });
+  });
+
+  describe(`getLowerCaseNameAndShortcutsExample()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlag = new DiscordCommandFlag<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >(
+        createMock<
+          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+        >({
+          name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+        })
+      );
+    });
+
+    describe(`when the shortcuts are undefined`, (): void => {
+      beforeEach((): void => {
+        discordCommandFlag.setShortcuts(undefined);
+      });
+
+      it(`should return only the lower case name`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
+
+        expect(result).toStrictEqual(`--enabled`);
+      });
+    });
+
+    describe(`when there is no shortcuts`, (): void => {
+      beforeEach((): void => {
+        discordCommandFlag.setShortcuts([]);
+      });
+
+      it(`should return only the lower case name`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
+
+        expect(result).toStrictEqual(`--enabled`);
+      });
+    });
+
+    describe(`when there is one shortcut`, (): void => {
+      beforeEach((): void => {
+        discordCommandFlag.setShortcuts([
+          DiscordMessageCommandFeatureNoonFlagEnum.E,
+        ]);
+      });
+
+      it(`should return the lower case name and the shortcut wrapped in parentheses`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
+
+        expect(result).toStrictEqual(`--enabled (or -e)`);
+      });
+    });
+
+    describe(`when there is two shortcuts`, (): void => {
+      beforeEach((): void => {
+        discordCommandFlag.setShortcuts([
+          DiscordMessageCommandFeatureNoonFlagEnum.E,
+          DiscordMessageCommandFeatureNoonFlagEnum.E,
+        ]);
+      });
+
+      it(`should return the lower case name and the shortcuts wrapped in parentheses and separator with comma`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
+
+        expect(result).toStrictEqual(`--enabled (or -e, -e)`);
+      });
     });
   });
 });

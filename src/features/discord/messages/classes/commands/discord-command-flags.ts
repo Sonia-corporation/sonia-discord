@@ -48,7 +48,22 @@ export class DiscordCommandFlags<T> {
       _.reduce(
         this.getAllFlagsLowerCaseName(),
         (value: Readonly<string>, flagName: Readonly<string>): string =>
-          `${value}\`${flagName}\`, `,
+          `${value}\`--${flagName}\`, `,
+        ``
+      ),
+      `, `
+    );
+  }
+
+  public getAllFlagsNameWithShortcutsExample(): string {
+    return _.trimEnd(
+      _.reduce(
+        this.getFlags(),
+        (
+          value: Readonly<string>,
+          flag: Readonly<DiscordCommandFlag<T>>
+        ): string =>
+          `${value}\`${flag.getLowerCaseNameAndShortcutsExample()}\`, `,
         ``
       ),
       `, `
@@ -59,6 +74,18 @@ export class DiscordCommandFlags<T> {
     return _.map(
       this.getFlags(),
       (flag: Readonly<DiscordCommandFlag<T>>): string => flag.getLowerCaseName()
+    );
+  }
+
+  public getAllFlagsLowerCaseNameWithShortcuts(): string[] {
+    return _.flatten(
+      _.map(
+        this.getFlags(),
+        (flag: Readonly<DiscordCommandFlag<T>>): string[] =>
+          _.compact(
+            _.flatten([flag.getLowerCaseName(), flag.getLowerCaseShortcuts()])
+          )
+      )
     );
   }
 }
