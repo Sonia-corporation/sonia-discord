@@ -22,15 +22,17 @@ export class FirebaseService extends AbstractService {
     super(ServiceNameEnum.FIREBASE_SERVICE);
   }
 
-  public init(): void {
+  public async init(): Promise<true> {
     FirebaseAppService.getInstance().init();
-    FirebaseGuildsService.getInstance().init();
+    await FirebaseGuildsService.getInstance().init();
     FirebaseGuildsNewVersionService.getInstance().init();
     FirebaseGuildsStoreService.getInstance().init();
-    FirebaseGuildsBreakingChangeService.getInstance()
+    await FirebaseGuildsBreakingChangeService.getInstance()
       .init()
       .then((): void => {
         FirebaseGuildsService.getInstance().watchGuilds();
       });
+
+    return true;
   }
 }

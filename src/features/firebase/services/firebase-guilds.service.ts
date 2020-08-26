@@ -238,10 +238,10 @@ export class FirebaseGuildsService extends AbstractService {
       .then(
         (): Promise<true> => {
           this._store = firestore(FirebaseAppService.getInstance().getApp());
+
           this._store.settings({
             ignoreUndefinedProperties: true,
           });
-
           this.notifyIsReady();
 
           return Promise.resolve(true);

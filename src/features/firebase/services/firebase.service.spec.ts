@@ -99,7 +99,7 @@ describe(`FirebaseService`, (): void => {
         .mockReturnValue(firebaseGuildsService);
       firebaseGuildsServiceGetInstanceInitSpy = jest
         .spyOn(firebaseGuildsService, `init`)
-        .mockImplementation();
+        .mockResolvedValue(8);
       firebaseGuildsServiceGetInstanceWatchGuildsSpy = jest
         .spyOn(firebaseGuildsService, `watchGuilds`)
         .mockImplementation();
@@ -120,7 +120,7 @@ describe(`FirebaseService`, (): void => {
         .mockReturnValue(firebaseGuildsBreakingChangeService);
       firebaseGuildsBreakingChangeServiceGetInstanceInitSpy = jest
         .spyOn(firebaseGuildsBreakingChangeService, `init`)
-        .mockRejectedValue(new Error(`init error`));
+        .mockResolvedValue();
     });
 
     it(`should create the FirebaseApp service`, async (): Promise<void> => {
@@ -257,9 +257,9 @@ describe(`FirebaseService`, (): void => {
       });
 
       it(`should not watch the Firebase guilds`, async (): Promise<void> => {
-        expect.assertions(1);
+        expect.assertions(2);
 
-        await service.init();
+        await expect(service.init()).rejects.toThrow(new Error(`init error`));
 
         expect(
           firebaseGuildsServiceGetInstanceWatchGuildsSpy

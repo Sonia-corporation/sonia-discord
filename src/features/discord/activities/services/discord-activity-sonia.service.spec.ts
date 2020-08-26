@@ -2,7 +2,7 @@ import { Client, ClientUser, Presence, PresenceData } from "discord.js";
 import _ from "lodash";
 import * as NodeScheduleModule from "node-schedule";
 import { Job } from "node-schedule";
-import { Subject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import * as GetEveryHourScheduleRuleModule from "../../../../functions/schedule/get-every-hour-schedule-rule";
@@ -73,112 +73,135 @@ describe(`DiscordActivitySoniaService`, (): void => {
   });
 
   describe(`init()`, (): void => {
-    let isReady$: Subject<boolean>;
+    let isReady$: BehaviorSubject<boolean>;
+    let presence: Presence;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let discordClientServiceGetClientSpy: jest.SpyInstance;
-    let setRandomPresenceSpy: jest.SpyInstance;
+    let setRandomPresenceSpy: jest.SpyInstance<Promise<Presence>>;
     let startScheduleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordActivitySoniaService();
-      isReady$ = new Subject<boolean>();
+      presence = createMock<Presence>();
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
         .mockImplementation();
       discordClientServiceGetClientSpy = jest
         .spyOn(discordClientService, `isReady$`)
-        .mockReturnValue(isReady$.asObservable());
+        .mockReturnValue(isReady$);
       setRandomPresenceSpy = jest
         .spyOn(service, `setRandomPresence`)
-        .mockImplementation();
+        .mockResolvedValue(presence);
       startScheduleSpy = jest
         .spyOn(service, `startSchedule`)
         .mockImplementation();
     });
 
-    it(`should check if the Discord client is ready`, (): void => {
+    it(`should log about listening Discord client ready state`, async (): Promise<
+      void
+    > => {
       expect.assertions(2);
+      isReady$ = new BehaviorSubject<boolean>(true);
+      discordClientServiceGetClientSpy.mockReturnValue(isReady$);
 
-      service.init();
-
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
-    });
-
-    describe(`when the Discord client is ready`, (): void => {
-      it(`should set a random presence for Sonia`, (): void => {
-        expect.assertions(2);
-
-        service.init();
-        isReady$.next(true);
-
-        expect(setRandomPresenceSpy).toHaveBeenCalledTimes(1);
-        expect(setRandomPresenceSpy).toHaveBeenCalledWith();
-      });
-
-      it(`should start the schedule`, (): void => {
-        expect.assertions(2);
-
-        service.init();
-        isReady$.next(true);
-
-        expect(startScheduleSpy).toHaveBeenCalledTimes(1);
-        expect(startScheduleSpy).toHaveBeenCalledWith();
-      });
-    });
-
-    describe(`when the Discord client is not ready`, (): void => {
-      it(`should not set a random presence for Sonia`, (): void => {
-        expect.assertions(1);
-
-        service.init();
-        isReady$.next(false);
-
-        expect(setRandomPresenceSpy).not.toHaveBeenCalled();
-      });
-
-      it(`should not start the schedule`, (): void => {
-        expect.assertions(1);
-
-        service.init();
-        isReady$.next(false);
-
-        expect(startScheduleSpy).not.toHaveBeenCalled();
-      });
-    });
-
-    describe(`when the Discord client ready state throw error`, (): void => {
-      it(`should not set a random presence for Sonia`, (): void => {
-        expect.assertions(1);
-
-        service.init();
-        isReady$.error(new Error(`error`));
-
-        expect(setRandomPresenceSpy).not.toHaveBeenCalled();
-      });
-
-      it(`should not start the schedule`, (): void => {
-        expect.assertions(1);
-
-        service.init();
-        isReady$.error(new Error(`error`));
-
-        expect(startScheduleSpy).not.toHaveBeenCalled();
-      });
-    });
-
-    it(`should log about listening Discord client ready state`, (): void => {
-      expect.assertions(2);
-
-      service.init();
+      await service.init();
 
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordActivitySoniaService`,
         message: `text-listen "ready" Discord client state`,
       } as ILoggerLog);
+    });
+
+    it(`should check if the Discord client is ready`, async (): Promise<
+      void
+    > => {
+      expect.assertions(2);
+      isReady$ = new BehaviorSubject<boolean>(true);
+      discordClientServiceGetClientSpy.mockReturnValue(isReady$);
+
+      await service.init();
+
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
+    });
+
+    describe(`when the Discord client is ready`, (): void => {
+      it(`should set a random presence for Sonia`, async (): Promise<void> => {
+        expect.assertions(2);
+        isReady$ = new BehaviorSubject<boolean>(true);
+        discordClientServiceGetClientSpy.mockReturnValue(isReady$);
+
+        await service.init();
+
+        expect(setRandomPresenceSpy).toHaveBeenCalledTimes(1);
+        expect(setRandomPresenceSpy).toHaveBeenCalledWith();
+      });
+
+      describe(`when the random presence for Sonia failed to be set`, (): void => {
+        beforeEach((): void => {
+          setRandomPresenceSpy.mockRejectedValue(
+            new Error(`setRandomPresence error`)
+          );
+        });
+
+        it(`should not start the schedule`, async (): Promise<void> => {
+          expect.assertions(2);
+          isReady$ = new BehaviorSubject<boolean>(true);
+          discordClientServiceGetClientSpy.mockReturnValue(isReady$);
+
+          await expect(service.init()).rejects.toThrow(
+            new Error(`setRandomPresence error`)
+          );
+
+          expect(startScheduleSpy).not.toHaveBeenCalled();
+        });
+      });
+
+      describe(`when the random presence for Sonia was successfully set`, (): void => {
+        beforeEach((): void => {
+          setRandomPresenceSpy.mockResolvedValue(presence);
+        });
+
+        it(`should start the schedule`, async (): Promise<void> => {
+          expect.assertions(2);
+          isReady$ = new BehaviorSubject<boolean>(true);
+          discordClientServiceGetClientSpy.mockReturnValue(isReady$);
+
+          await service.init();
+
+          expect(startScheduleSpy).toHaveBeenCalledTimes(1);
+          expect(startScheduleSpy).toHaveBeenCalledWith();
+        });
+      });
+    });
+
+    describe(`when the Discord client ready state throw error`, (): void => {
+      it(`should not set a random presence for Sonia`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+        isReady$ = new BehaviorSubject<boolean>(true);
+        isReady$.error(new Error(`error`));
+        discordClientServiceGetClientSpy.mockReturnValue(isReady$);
+
+        await expect(service.init()).rejects.toThrow(new Error(`error`));
+
+        expect(setRandomPresenceSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not start the schedule`, async (): Promise<void> => {
+        expect.assertions(2);
+        isReady$ = new BehaviorSubject<boolean>(true);
+        isReady$.error(new Error(`error`));
+        discordClientServiceGetClientSpy.mockReturnValue(isReady$);
+
+        await expect(service.init()).rejects.toThrow(new Error(`error`));
+
+        expect(startScheduleSpy).not.toHaveBeenCalled();
+      });
     });
   });
 
@@ -577,7 +600,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
   describe(`setPresence()`, (): void => {
     let presence: Presence;
-    let setPresenceMock: jest.Mock<Promise<Presence>>;
+    let setPresenceMock: jest.Mock<Promise<Presence>, unknown[]>;
     let presenceActivity: IDiscordPresenceActivity;
     let client: Client;
 
@@ -596,7 +619,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
         ],
       });
       setPresenceMock = jest
-        .fn()
+        .fn<Promise<Presence>, unknown[]>()
         .mockRejectedValue(new Error(`setPresence: error`));
       presenceActivity = {
         name: DiscordActivityNameEnum.APOLLO,
@@ -721,14 +744,18 @@ describe(`DiscordActivitySoniaService`, (): void => {
     beforeEach((): void => {
       service = new DiscordActivitySoniaService();
 
-      sampleSpy = jest.spyOn(_, `sample`);
-      setPresenceSpy = jest.spyOn(service, `setPresence`);
+      sampleSpy = jest.spyOn(_, `sample`).mockImplementation();
+      setPresenceSpy = jest.spyOn(service, `setPresence`).mockImplementation();
     });
 
-    it(`should get a random Discord presence activity`, (): void => {
-      expect.assertions(2);
+    it(`should get a random Discord presence activity`, async (): Promise<
+      void
+    > => {
+      expect.assertions(3);
 
-      service.setRandomPresence();
+      await expect(service.setRandomPresence()).rejects.toThrow(
+        new Error(`No presence activity`)
+      );
 
       expect(sampleSpy).toHaveBeenCalledTimes(1);
       expect(sampleSpy).toHaveBeenCalledWith(DISCORD_PRESENCE_ACTIVITY);
@@ -739,10 +766,14 @@ describe(`DiscordActivitySoniaService`, (): void => {
         sampleSpy.mockReturnValue(undefined);
       });
 
-      it(`should not set the Discord presence activity`, (): void => {
-        expect.assertions(1);
+      it(`should not set the Discord presence activity`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
 
-        service.setRandomPresence();
+        await expect(service.setRandomPresence()).rejects.toThrow(
+          new Error(`No presence activity`)
+        );
 
         expect(setPresenceSpy).not.toHaveBeenCalled();
       });
@@ -753,10 +784,12 @@ describe(`DiscordActivitySoniaService`, (): void => {
         sampleSpy.mockReturnValue(DISCORD_PRESENCE_ACTIVITY[0]);
       });
 
-      it(`should set the Discord presence activity`, (): void => {
+      it(`should set the Discord presence activity`, async (): Promise<
+        void
+      > => {
         expect.assertions(2);
 
-        service.setRandomPresence();
+        await service.setRandomPresence();
 
         expect(setPresenceSpy).toHaveBeenCalledTimes(1);
         expect(setPresenceSpy).toHaveBeenCalledWith(

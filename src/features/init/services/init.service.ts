@@ -53,7 +53,7 @@ export class InitService extends AbstractService {
     LoggerService.getInstance().init();
     ChalkColorService.getInstance().init();
 
-    return this._readEnvironment().then((): void => {
+    return this.readEnvironment().then((): void => {
       this.notifyIsAppConfigured();
     });
   }
@@ -78,6 +78,31 @@ export class InitService extends AbstractService {
     this._isAppConfigured$.next(true);
   }
 
+  public readEnvironment(): Promise<true | void> {
+    return fs
+      .readJson(
+        `${_.toString(appRootPath)}/src/environment/secret-environment.json`
+      )
+      .then(
+        (environment: Readonly<IEnvironment>): Promise<true> =>
+          this._startApp(this._mergeEnvironments(ENVIRONMENT, environment))
+      )
+      .catch(
+        (error: unknown): Promise<never> => {
+          console.error(`Failed to read the secret environment file`);
+          console.error(error);
+          console.debug(
+            `Follow the instructions about the secret environment to fix this:`
+          );
+          console.debug(
+            `https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
+          );
+
+          return Promise.reject(error);
+        }
+      );
+  }
+
   private _mergeEnvironments(
     environmentA: Readonly<IEnvironment>,
     environmentB: Readonly<IEnvironment>
@@ -85,10 +110,12 @@ export class InitService extends AbstractService {
     return _.merge({}, environmentA, environmentB);
   }
 
-  private _runApp(): void {
-    DiscordService.getInstance().init();
+  private async _runApp(): Promise<true> {
+    await DiscordService.getInstance().init();
     ServerService.getInstance().initializeApp();
-    FirebaseService.getInstance().init();
+    await FirebaseService.getInstance().init();
+
+    return true;
   }
 
   private _configureApp(
@@ -120,7 +147,7 @@ export class InitService extends AbstractService {
 
   private _configureAppFromPackage(): Promise<IPackage> {
     return fs
-      .readJson(`${appRootPath}/package.json`)
+      .readJson(`${_.toString(appRootPath)}/package.json`)
       .then(
         (data: Readonly<IPackage>): Promise<IPackage> => {
           AppConfigMutatorService.getInstance().updateVersion(data.version);
@@ -237,32 +264,9 @@ export class InitService extends AbstractService {
       );
   }
 
-  private _readEnvironment(): Promise<void> {
-    return fs
-      .readJson(`${appRootPath}/src/environment/secret-environment.json`)
-      .then(
-        (environment: Readonly<IEnvironment>): Promise<void> =>
-          this._startApp(this._mergeEnvironments(ENVIRONMENT, environment))
-      )
-      .catch(
-        (error: unknown): Promise<never> => {
-          console.error(`Failed to read the secret environment file`);
-          console.error(error);
-          console.debug(
-            `Follow the instructions about the secret environment to fix this:`
-          );
-          console.debug(
-            `https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
-          );
-
-          return Promise.reject(error);
-        }
-      );
-  }
-
-  private _startApp(environment: Readonly<IEnvironment>): Promise<void> {
-    return this._configureApp(environment).then((): void => {
-      this._runApp();
-    });
+  private _startApp(environment: Readonly<IEnvironment>): Promise<true> {
+    return this._configureApp(environment).then(
+      (): Promise<true> => this._runApp()
+    );
   }
 }

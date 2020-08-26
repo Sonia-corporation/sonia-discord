@@ -298,7 +298,9 @@ describe(`FirebaseGuildsService`, (): void => {
     beforeEach((): void => {
       service = new FirebaseGuildsService();
       collectionReference = createMock<CollectionReference<IFirebaseGuild>>();
-      collectionMock = jest.fn().mockReturnValue(collectionReference);
+      collectionMock = jest
+        .fn<CollectionReference<IFirebaseGuild>, string[]>()
+        .mockReturnValue(collectionReference);
       firestore = createMock<Firestore>({
         collection: collectionMock,
       });
@@ -310,12 +312,6 @@ describe(`FirebaseGuildsService`, (): void => {
     });
 
     describe(`when the store is not set`, (): void => {
-      beforeEach((): void => {
-        jest.spyOn(admin, `firestore`).mockImplementation();
-
-        service.init();
-      });
-
       it(`should not get the guilds collection from the store`, (): void => {
         expect.assertions(1);
 
@@ -348,12 +344,13 @@ describe(`FirebaseGuildsService`, (): void => {
     describe(`when the store is set`, (): void => {
       beforeEach((): void => {
         jest.spyOn(admin, `firestore`).mockReturnValue(firestore);
-
-        service.init();
       });
 
-      it(`should get the guilds collection from the store`, (): void => {
+      it(`should get the guilds collection from the store`, async (): Promise<
+        void
+      > => {
         expect.assertions(2);
+        await service.init();
 
         service.getCollectionReference();
 
@@ -361,16 +358,20 @@ describe(`FirebaseGuildsService`, (): void => {
         expect(collectionMock).toHaveBeenNthCalledWith(2, `/guilds`);
       });
 
-      it(`should not log a warning about the store being not set`, (): void => {
+      it(`should not log a warning about the store being not set`, async (): Promise<
+        void
+      > => {
         expect.assertions(1);
+        await service.init();
 
         service.getCollectionReference();
 
         expect(loggerServiceWarningSpy).not.toHaveBeenCalled();
       });
 
-      it(`should return the guilds collection`, (): void => {
+      it(`should return the guilds collection`, async (): Promise<void> => {
         expect.assertions(1);
+        await service.init();
 
         const result = service.getCollectionReference();
 
@@ -509,19 +510,26 @@ describe(`FirebaseGuildsService`, (): void => {
 
     let getCollectionReferenceSpy: jest.SpyInstance;
     let loggerServiceErrorSpy: jest.SpyInstance;
-    let docMock: jest.Mock<DocumentSnapshot<IFirebaseGuild>, string[]>;
-    let getMock: jest.Mock<void, IFirebaseGuild[]>;
+    let docMock: jest.Mock<DocumentReference<IFirebaseGuild>, string[]>;
+    let getMock: jest.Mock<
+      Promise<DocumentSnapshot<IFirebaseGuild>>,
+      IFirebaseGuild[]
+    >;
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
       guildId = `dummy-guild-id`;
       documentSnapshot = createMock<DocumentSnapshot<IFirebaseGuild>>();
-      getMock = jest.fn().mockResolvedValue(documentSnapshot);
+      getMock = jest
+        .fn<Promise<DocumentSnapshot<IFirebaseGuild>>, IFirebaseGuild[]>()
+        .mockResolvedValue(documentSnapshot);
       // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
       documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
         get: getMock,
       } as unknown) as DocumentReference<IFirebaseGuild>);
-      docMock = jest.fn().mockReturnValue(documentReference);
+      docMock = jest
+        .fn<DocumentReference<IFirebaseGuild>, string[]>()
+        .mockReturnValue(documentReference);
       // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
       collectionReference = createMock<CollectionReference<IFirebaseGuild>>(({
         doc: docMock,
@@ -592,12 +600,12 @@ describe(`FirebaseGuildsService`, (): void => {
 
       describe(`when the fetch of the guild failed`, (): void => {
         beforeEach((): void => {
-          getMock = jest.fn().mockRejectedValue(new Error(`error`));
+          getMock.mockRejectedValue(new Error(`error`));
           // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
           documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
             get: getMock,
           } as unknown) as DocumentReference<IFirebaseGuild>);
-          docMock = jest.fn().mockReturnValue(documentReference);
+          docMock.mockReturnValue(documentReference);
           // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
           collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
             ({
@@ -632,12 +640,12 @@ describe(`FirebaseGuildsService`, (): void => {
       describe(`when the fetch of the guild was successful`, (): void => {
         beforeEach((): void => {
           documentSnapshot = createMock<DocumentSnapshot<IFirebaseGuild>>();
-          getMock = jest.fn().mockResolvedValue(documentSnapshot);
+          getMock.mockResolvedValue(documentSnapshot);
           // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
           documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
             get: getMock,
           } as unknown) as DocumentReference<IFirebaseGuild>);
-          docMock = jest.fn().mockReturnValue(documentReference);
+          docMock.mockReturnValue(documentReference);
           // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
           collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
             ({
@@ -653,12 +661,12 @@ describe(`FirebaseGuildsService`, (): void => {
             documentSnapshot = createMock<DocumentSnapshot<IFirebaseGuild>>({
               exists: false,
             });
-            getMock = jest.fn().mockResolvedValue(documentSnapshot);
+            getMock.mockResolvedValue(documentSnapshot);
             // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
             documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
               get: getMock,
             } as unknown) as DocumentReference<IFirebaseGuild>);
-            docMock = jest.fn().mockReturnValue(documentReference);
+            docMock.mockReturnValue(documentReference);
             // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
             collectionReference = createMock<
               CollectionReference<IFirebaseGuild>
@@ -683,12 +691,12 @@ describe(`FirebaseGuildsService`, (): void => {
             documentSnapshot = createMock<DocumentSnapshot<IFirebaseGuild>>({
               exists: true,
             });
-            getMock = jest.fn().mockResolvedValue(documentSnapshot);
+            getMock.mockResolvedValue(documentSnapshot);
             // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
             documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
               get: getMock,
             } as unknown) as DocumentReference<IFirebaseGuild>);
-            docMock = jest.fn().mockReturnValue(documentReference);
+            docMock.mockReturnValue(documentReference);
             // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
             collectionReference = createMock<
               CollectionReference<IFirebaseGuild>
@@ -721,7 +729,7 @@ describe(`FirebaseGuildsService`, (): void => {
     let loggerServiceDebugSpy: jest.SpyInstance;
     let loggerServiceSuccessSpy: jest.SpyInstance;
     let docMock: jest.Mock<DocumentReference<IFirebaseGuild>, string[]>;
-    let setMock: jest.Mock<WriteResult, IFirebaseGuild[]>;
+    let setMock: jest.Mock<Promise<WriteResult>, IFirebaseGuild[]>;
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
@@ -730,12 +738,16 @@ describe(`FirebaseGuildsService`, (): void => {
         id: `dummy-id`,
       } as unknown) as Guild);
       writeResult = createMock<WriteResult>();
-      setMock = jest.fn().mockResolvedValue(writeResult);
+      setMock = jest
+        .fn<Promise<WriteResult>, IFirebaseGuild[]>()
+        .mockResolvedValue(writeResult);
       // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
       documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
         set: setMock,
       } as unknown) as DocumentReference<IFirebaseGuild>);
-      docMock = jest.fn().mockReturnValue(documentReference);
+      docMock = jest
+        .fn<DocumentReference<IFirebaseGuild>, string[]>()
+        .mockReturnValue(documentReference);
       collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
         doc: docMock,
       });
@@ -829,12 +841,12 @@ describe(`FirebaseGuildsService`, (): void => {
 
       describe(`when the guild was not successfully added into Firebase`, (): void => {
         beforeEach((): void => {
-          setMock = jest.fn().mockRejectedValue(new Error(`error`));
+          setMock.mockRejectedValue(new Error(`error`));
           // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
           documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
             set: setMock,
           } as unknown) as DocumentReference<IFirebaseGuild>);
-          docMock = jest.fn().mockReturnValue(documentReference);
+          docMock.mockReturnValue(documentReference);
           collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
             {
               doc: docMock,
@@ -856,12 +868,12 @@ describe(`FirebaseGuildsService`, (): void => {
       describe(`when the guild was successfully added into Firebase`, (): void => {
         beforeEach((): void => {
           writeResult = createMock<WriteResult>();
-          setMock = jest.fn().mockResolvedValue(writeResult);
+          setMock.mockResolvedValue(writeResult);
           // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
           documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
             set: setMock,
           } as unknown) as DocumentReference<IFirebaseGuild>);
-          docMock = jest.fn().mockReturnValue(documentReference);
+          docMock.mockReturnValue(documentReference);
           collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
             {
               doc: docMock,
@@ -1042,12 +1054,12 @@ describe(`FirebaseGuildsService`, (): void => {
     let firestore: Firestore;
     let writeBatch: WriteBatch;
 
-    let batchMock: jest.Mock<WriteBatch>;
+    let batchMock: jest.Mock<WriteBatch, unknown[]>;
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
       writeBatch = createMock<WriteBatch>();
-      batchMock = jest.fn().mockReturnValue(writeBatch);
+      batchMock = jest.fn<WriteBatch, unknown[]>().mockReturnValue(writeBatch);
       firestore = createMock<Firestore>({
         batch: batchMock,
       });
@@ -1056,12 +1068,6 @@ describe(`FirebaseGuildsService`, (): void => {
     });
 
     describe(`when the store is not set`, (): void => {
-      beforeEach((): void => {
-        jest.spyOn(admin, `firestore`).mockImplementation();
-
-        service.init();
-      });
-
       it(`should not get the batch from the store`, (): void => {
         expect.assertions(1);
 
@@ -1082,12 +1088,11 @@ describe(`FirebaseGuildsService`, (): void => {
     describe(`when the store is set`, (): void => {
       beforeEach((): void => {
         jest.spyOn(admin, `firestore`).mockReturnValue(firestore);
-
-        service.init();
       });
 
-      it(`should get the batch from the store`, (): void => {
+      it(`should get the batch from the store`, async (): Promise<void> => {
         expect.assertions(2);
+        await service.init();
 
         service.getBatch();
 
@@ -1095,8 +1100,9 @@ describe(`FirebaseGuildsService`, (): void => {
         expect(batchMock).toHaveBeenCalledWith();
       });
 
-      it(`should return the batch`, (): void => {
+      it(`should return the batch`, async (): Promise<void> => {
         expect.assertions(1);
+        await service.init();
 
         const result = service.getBatch();
 
@@ -1210,12 +1216,10 @@ describe(`FirebaseGuildsService`, (): void => {
         getCollectionReferenceSpy.mockReturnValue(collectionReference);
       });
 
-      it(`should log about watching Firebase guilds`, async (): Promise<
-        void
-      > => {
+      it(`should log about watching Firebase guilds`, (): void => {
         expect.assertions(2);
 
-        await service.watchGuilds();
+        service.watchGuilds();
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -1224,12 +1228,10 @@ describe(`FirebaseGuildsService`, (): void => {
         } as ILoggerLog);
       });
 
-      it(`should listen for the Firebase guilds snapshot to change`, async (): Promise<
-        void
-      > => {
+      it(`should listen for the Firebase guilds snapshot to change`, (): void => {
         expect.assertions(1);
 
-        await service.watchGuilds();
+        service.watchGuilds();
 
         expect(onSnapshotMock).toHaveBeenCalledTimes(1);
       });
@@ -1255,12 +1257,10 @@ describe(`FirebaseGuildsService`, (): void => {
           getCollectionReferenceSpy.mockReturnValue(collectionReference);
         });
 
-        it(`should log that the Firebase watcher catch an error`, async (): Promise<
-          void
-        > => {
+        it(`should log that the Firebase watcher catch an error`, (): void => {
           expect.assertions(2);
 
-          await service.watchGuilds();
+          service.watchGuilds();
 
           expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
           expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(1, {
@@ -1269,10 +1269,10 @@ describe(`FirebaseGuildsService`, (): void => {
           } as ILoggerLog);
         });
 
-        it(`should log the error`, async (): Promise<void> => {
+        it(`should log the error`, (): void => {
           expect.assertions(2);
 
-          await service.watchGuilds();
+          service.watchGuilds();
 
           expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
           expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(2, {
@@ -1281,12 +1281,10 @@ describe(`FirebaseGuildsService`, (): void => {
           } as ILoggerLog);
         });
 
-        it(`should not notify that the Firebase guilds changed`, async (): Promise<
-          void
-        > => {
+        it(`should not notify that the Firebase guilds changed`, (): void => {
           expect.assertions(1);
 
-          await service.watchGuilds();
+          service.watchGuilds();
 
           expect(notifyOnGuildsChangeSpy).not.toHaveBeenCalled();
         });
@@ -1352,12 +1350,10 @@ describe(`FirebaseGuildsService`, (): void => {
             getCollectionReferenceSpy.mockReturnValue(collectionReference);
           });
 
-          it(`should notify that the Firebase guilds changed with one guild`, async (): Promise<
-            void
-          > => {
+          it(`should notify that the Firebase guilds changed with one guild`, (): void => {
             expect.assertions(2);
 
-            await service.watchGuilds();
+            service.watchGuilds();
 
             expect(notifyOnGuildsChangeSpy).toHaveBeenCalledTimes(1);
             expect(notifyOnGuildsChangeSpy).toHaveBeenCalledWith([
@@ -1406,12 +1402,10 @@ describe(`FirebaseGuildsService`, (): void => {
             getCollectionReferenceSpy.mockReturnValue(collectionReference);
           });
 
-          it(`should notify that the Firebase guilds changed without guild`, async (): Promise<
-            void
-          > => {
+          it(`should notify that the Firebase guilds changed without guild`, (): void => {
             expect.assertions(2);
 
-            await service.watchGuilds();
+            service.watchGuilds();
 
             expect(notifyOnGuildsChangeSpy).toHaveBeenCalledTimes(1);
             expect(notifyOnGuildsChangeSpy).toHaveBeenCalledWith(
@@ -1462,12 +1456,10 @@ describe(`FirebaseGuildsService`, (): void => {
             getCollectionReferenceSpy.mockReturnValue(collectionReference);
           });
 
-          it(`should notify that the Firebase guilds changed with all valid guild`, async (): Promise<
-            void
-          > => {
+          it(`should notify that the Firebase guilds changed with all valid guild`, (): void => {
             expect.assertions(2);
 
-            await service.watchGuilds();
+            service.watchGuilds();
 
             expect(notifyOnGuildsChangeSpy).toHaveBeenCalledTimes(1);
             expect(notifyOnGuildsChangeSpy).toHaveBeenCalledWith([
@@ -1520,12 +1512,10 @@ describe(`FirebaseGuildsService`, (): void => {
             getCollectionReferenceSpy.mockReturnValue(collectionReference);
           });
 
-          it(`should notify that the Firebase guilds changed without guild`, async (): Promise<
-            void
-          > => {
+          it(`should notify that the Firebase guilds changed without guild`, (): void => {
             expect.assertions(2);
 
-            await service.watchGuilds();
+            service.watchGuilds();
 
             expect(notifyOnGuildsChangeSpy).toHaveBeenCalledTimes(1);
             expect(notifyOnGuildsChangeSpy).toHaveBeenCalledWith(

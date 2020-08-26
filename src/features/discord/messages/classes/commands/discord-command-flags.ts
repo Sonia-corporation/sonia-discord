@@ -34,7 +34,7 @@ export class DiscordCommandFlags<T> {
       let usageExample = `--${flagName}`;
 
       if (flagType === DiscordCommandFlagTypeEnum.BOOLEAN) {
-        usageExample += `=${getRandomBoolean()}`;
+        usageExample += `=${_.toString(getRandomBoolean())}`;
       }
 
       return usageExample;

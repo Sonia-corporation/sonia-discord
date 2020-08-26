@@ -121,7 +121,7 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
 
     return {
       name: `Example`,
-      value: `\`${userCommand} ${randomFlag}\``,
+      value: `\`${_.toString(userCommand)} ${_.toString(randomFlag)}\``,
     };
   }
 }

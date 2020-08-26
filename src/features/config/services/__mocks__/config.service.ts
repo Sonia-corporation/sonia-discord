@@ -67,7 +67,9 @@ export class ConfigService {
     if (_.isBoolean(configUpdateString.newValue)) {
       LoggerService.getInstance().log({
         context: configUpdateString.context,
-        message: `${configUpdateString.valueName} updated to: ${configUpdateString.newValue}`,
+        message: `${configUpdateString.valueName} updated to: ${_.toString(
+          configUpdateString.newValue
+        )}`,
       });
 
       return configUpdateString.newValue;

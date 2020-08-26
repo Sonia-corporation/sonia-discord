@@ -172,10 +172,10 @@ export class LoggerService {
           `${logTypePrefix}${this._context(
             context,
             hasExtendedContext
-          )}${message}`
+          )}${_.toString(message)}`
         );
       } else {
-        console.log(`${logTypePrefix}${message}`);
+        console.log(`${logTypePrefix}${_.toString(message)}`);
       }
     }
   }

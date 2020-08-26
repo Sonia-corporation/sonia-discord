@@ -1,6 +1,8 @@
+import _ from "lodash";
+
 export function wrapInQuotes<T = string>(
   value: Readonly<T>,
   quotes: Readonly<string> = `"`
 ): string {
-  return `${quotes}${value}${quotes}`;
+  return `${quotes}${_.toString(value)}${quotes}`;
 }
