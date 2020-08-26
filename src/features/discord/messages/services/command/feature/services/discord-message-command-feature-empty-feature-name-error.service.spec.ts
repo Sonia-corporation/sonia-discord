@@ -15,6 +15,7 @@ import { DiscordMessageCommandEnum } from "../../../../enums/commands/discord-me
 import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";
 import { DiscordMessageCommandCliErrorService } from "../../discord-message-command-cli-error.service";
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NAMES } from "../constants/discord-message-command-feature-names";
 import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from "./discord-message-command-feature-empty-feature-name-error.service";
 
 describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void => {
@@ -114,6 +115,12 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         discordMessageConfigService,
         `getMessageCommandPrefix`
       );
+      jest
+        .spyOn(
+          DISCORD_MESSAGE_COMMAND_FEATURE_NAMES,
+          `getRandomArgumentUsageExample`
+        )
+        .mockReturnValue(`noon`);
     });
 
     it(`should get the CLI error message response`, async (): Promise<void> => {
