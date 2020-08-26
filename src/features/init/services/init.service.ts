@@ -120,7 +120,7 @@ export class InitService extends AbstractService {
 
   private _configureAppFromPackage(): Promise<IPackage> {
     return fs
-      .readJson(`${appRootPath}/package.json`)
+      .readJson(`${_.toString(appRootPath)}/package.json`)
       .then(
         (data: Readonly<IPackage>): Promise<IPackage> => {
           AppConfigMutatorService.getInstance().updateVersion(data.version);
@@ -239,7 +239,9 @@ export class InitService extends AbstractService {
 
   private _readEnvironment(): Promise<void> {
     return fs
-      .readJson(`${appRootPath}/src/environment/secret-environment.json`)
+      .readJson(
+        `${_.toString(appRootPath)}/src/environment/secret-environment.json`
+      )
       .then(
         (environment: Readonly<IEnvironment>): Promise<void> =>
           this._startApp(this._mergeEnvironments(ENVIRONMENT, environment))

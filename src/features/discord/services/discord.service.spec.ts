@@ -1,3 +1,4 @@
+import { Presence } from "discord.js";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
@@ -77,7 +78,7 @@ describe(`DiscordService`, (): void => {
     let discordLoggerServiceGetInstanceSpy: jest.SpyInstance;
     let discordLoggerServiceGetInstanceInitSpy: jest.SpyInstance;
     let discordGuildServiceGetInstanceSpy: jest.SpyInstance;
-    let discordGuildServiceGetInstanceInitSpy: jest.SpyInstance;
+    let discordGuildServiceGetInstanceInitSpy: jest.SpyInstance<Promise<void>>;
     let discordGuildMemberAddServiceGetInstanceSpy: jest.SpyInstance;
     let discordGuildMemberAddServiceGetInstanceInitSpy: jest.SpyInstance;
     let discordGuildCreateServiceGetInstanceSpy: jest.SpyInstance;
@@ -91,7 +92,7 @@ describe(`DiscordService`, (): void => {
     let discordGuildSoniaServiceGetInstanceSpy: jest.SpyInstance;
     let discordGuildSoniaServiceGetInstanceInitSpy: jest.SpyInstance;
     let discordActivitySoniaServiceGetInstanceSpy: jest.SpyInstance;
-    let discordActivitySoniaServiceInitSpy: jest.SpyInstance;
+    let discordActivitySoniaServiceInitSpy: jest.SpyInstance<Promise<Presence>>;
     let discordSoniaEmotionalStateServiceGetInstanceSpy: jest.SpyInstance;
     let discordSoniaEmotionalStateServiceInitSpy: jest.SpyInstance;
 
@@ -126,10 +127,9 @@ describe(`DiscordService`, (): void => {
       discordGuildServiceGetInstanceSpy = jest
         .spyOn(DiscordGuildService, `getInstance`)
         .mockReturnValue(discordGuildService);
-      discordGuildServiceGetInstanceInitSpy = jest.spyOn(
-        discordGuildService,
-        `init`
-      );
+      discordGuildServiceGetInstanceInitSpy = jest
+        .spyOn(discordGuildService, `init`)
+        .mockResolvedValue();
       discordGuildMemberAddServiceGetInstanceSpy = jest
         .spyOn(DiscordGuildMemberAddService, `getInstance`)
         .mockReturnValue(discordGuildMemberAddService);
@@ -175,10 +175,9 @@ describe(`DiscordService`, (): void => {
       discordActivitySoniaServiceGetInstanceSpy = jest
         .spyOn(DiscordActivitySoniaService, `getInstance`)
         .mockReturnValue(discordActivitySoniaService);
-      discordActivitySoniaServiceInitSpy = jest.spyOn(
-        discordActivitySoniaService,
-        `init`
-      );
+      discordActivitySoniaServiceInitSpy = jest
+        .spyOn(discordActivitySoniaService, `init`)
+        .mockResolvedValue(createMock<Presence>());
       discordSoniaEmotionalStateServiceGetInstanceSpy = jest
         .spyOn(DiscordSoniaEmotionalStateService, `getInstance`)
         .mockReturnValue(discordSoniaEmotionalStateService);
@@ -188,38 +187,44 @@ describe(`DiscordService`, (): void => {
       );
     });
 
-    it(`should create the DiscordSonia service`, (): void => {
+    it(`should create the DiscordSonia service`, async (): Promise<void> => {
       expect.assertions(1);
 
-      service.init();
+      await service.init();
 
       expect(discordSoniaServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the DiscordLogger service`, (): void => {
+    it(`should create and initialize the DiscordLogger service`, async (): Promise<
+      void
+    > => {
       expect.assertions(3);
 
-      service.init();
+      await service.init();
 
       expect(discordLoggerServiceGetInstanceSpy).toHaveBeenCalledWith();
       expect(discordLoggerServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
       expect(discordLoggerServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the DiscordGuild service`, (): void => {
+    it(`should create and initialize the DiscordGuild service`, async (): Promise<
+      void
+    > => {
       expect.assertions(3);
 
-      service.init();
+      await service.init();
 
       expect(discordGuildServiceGetInstanceSpy).toHaveBeenCalledWith();
       expect(discordGuildServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
       expect(discordGuildServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the DiscordGuildMemberAdd service`, (): void => {
+    it(`should create and initialize the DiscordGuildMemberAdd service`, async (): Promise<
+      void
+    > => {
       expect.assertions(3);
 
-      service.init();
+      await service.init();
 
       expect(discordGuildMemberAddServiceGetInstanceSpy).toHaveBeenCalledWith();
       expect(
@@ -230,10 +235,12 @@ describe(`DiscordService`, (): void => {
       ).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the DiscordGuildCreate service`, (): void => {
+    it(`should create and initialize the DiscordGuildCreate service`, async (): Promise<
+      void
+    > => {
       expect.assertions(3);
 
-      service.init();
+      await service.init();
 
       expect(discordGuildCreateServiceGetInstanceSpy).toHaveBeenCalledWith();
       expect(discordGuildCreateServiceGetInstanceInitSpy).toHaveBeenCalledTimes(
@@ -244,20 +251,24 @@ describe(`DiscordService`, (): void => {
       ).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the DiscordMessage service`, (): void => {
+    it(`should create and initialize the DiscordMessage service`, async (): Promise<
+      void
+    > => {
       expect.assertions(3);
 
-      service.init();
+      await service.init();
 
       expect(discordMessageServiceGetInstanceSpy).toHaveBeenCalledWith();
       expect(discordMessageServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
       expect(discordMessageServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the DiscordAuthentication service`, (): void => {
+    it(`should create and initialize the DiscordAuthentication service`, async (): Promise<
+      void
+    > => {
       expect.assertions(3);
 
-      service.init();
+      await service.init();
 
       expect(discordAuthenticationServiceGetInstanceSpy).toHaveBeenCalledWith();
       expect(
@@ -268,10 +279,12 @@ describe(`DiscordService`, (): void => {
       ).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the DiscordMessageScheduleIlEstMidi service`, (): void => {
+    it(`should create and initialize the DiscordMessageScheduleIlEstMidi service`, async (): Promise<
+      void
+    > => {
       expect.assertions(3);
 
-      service.init();
+      await service.init();
 
       expect(
         discordMessageScheduleIlEstMidiServiceGetInstanceSpy
@@ -284,10 +297,12 @@ describe(`DiscordService`, (): void => {
       ).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the DiscordGuildSonia service`, (): void => {
+    it(`should create and initialize the DiscordGuildSonia service`, async (): Promise<
+      void
+    > => {
       expect.assertions(3);
 
-      service.init();
+      await service.init();
 
       expect(discordGuildSoniaServiceGetInstanceSpy).toHaveBeenCalledWith();
       expect(discordGuildSoniaServiceGetInstanceInitSpy).toHaveBeenCalledTimes(
@@ -296,20 +311,24 @@ describe(`DiscordService`, (): void => {
       expect(discordGuildSoniaServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the DiscordActivitySonia service`, (): void => {
+    it(`should create and initialize the DiscordActivitySonia service`, async (): Promise<
+      void
+    > => {
       expect.assertions(3);
 
-      service.init();
+      await service.init();
 
       expect(discordActivitySoniaServiceGetInstanceSpy).toHaveBeenCalledWith();
       expect(discordActivitySoniaServiceInitSpy).toHaveBeenCalledTimes(1);
       expect(discordActivitySoniaServiceInitSpy).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the discordSoniaEmotionalState service`, (): void => {
+    it(`should create and initialize the discordSoniaEmotionalState service`, async (): Promise<
+      void
+    > => {
       expect.assertions(3);
 
-      service.init();
+      await service.init();
 
       expect(
         discordSoniaEmotionalStateServiceGetInstanceSpy

@@ -298,7 +298,9 @@ describe(`FirebaseGuildsService`, (): void => {
     beforeEach((): void => {
       service = new FirebaseGuildsService();
       collectionReference = createMock<CollectionReference<IFirebaseGuild>>();
-      collectionMock = jest.fn().mockReturnValue(collectionReference);
+      collectionMock = jest
+        .fn<CollectionReference<IFirebaseGuild>, string[]>()
+        .mockReturnValue(collectionReference);
       firestore = createMock<Firestore>({
         collection: collectionMock,
       });

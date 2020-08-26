@@ -1,7 +1,8 @@
 import { ClientUser, Presence } from "discord.js";
 import _ from "lodash";
 import { Job, scheduleJob } from "node-schedule";
-import { filter, take } from "rxjs/operators";
+import { Observable } from "rxjs";
+import { filter, mergeMap, take, tap } from "rxjs/operators";
 import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
@@ -38,8 +39,8 @@ export class DiscordActivitySoniaService extends AbstractService {
     super(ServiceNameEnum.DISCORD_ACTIVITY_SONIA_SERVICE);
   }
 
-  public init(): void {
-    this._listen();
+  public async init(): Promise<Presence> {
+    return await this._listen().toPromise();
   }
 
   public startSchedule(): void {
@@ -105,14 +106,16 @@ export class DiscordActivitySoniaService extends AbstractService {
     return Promise.reject(new Error(`Client user is not valid`));
   }
 
-  public setRandomPresence(): void {
+  public async setRandomPresence(): Promise<Presence> {
     const presenceActivity: IDiscordPresenceActivity | undefined = _.sample(
       DISCORD_PRESENCE_ACTIVITY
     );
 
     if (!_.isNil(presenceActivity)) {
-      this.setPresence(presenceActivity);
+      return await this.setPresence(presenceActivity);
     }
+
+    return Promise.reject(new Error(`No presence activity`));
   }
 
   private _createUpdaterSchedule(): void {
@@ -129,7 +132,7 @@ export class DiscordActivitySoniaService extends AbstractService {
     this._logJobRule(this._rule, `job`);
 
     this._job = scheduleJob(this._rule, (): void => {
-      this._executeJob();
+      void this._executeJob();
     });
 
     this._logNextJobDate();
@@ -171,14 +174,14 @@ export class DiscordActivitySoniaService extends AbstractService {
     this._logNextUpdaterJobDate();
   }
 
-  private _executeJob(): void {
+  private async _executeJob(): Promise<Presence> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(`job triggered`),
     });
 
-    this.setRandomPresence();
     this._logNextJobDate();
+    return await this.setRandomPresence();
   }
 
   private _logNextUpdaterJobDate(): void {
@@ -203,27 +206,27 @@ export class DiscordActivitySoniaService extends AbstractService {
     }
   }
 
-  private _listen(): void {
-    DiscordClientService.getInstance()
-      .isReady$()
-      .pipe(
-        filter((isReady: Readonly<boolean>): boolean =>
-          _.isEqual(isReady, true)
-        ),
-        take(1)
-      )
-      .subscribe({
-        next: (): void => {
-          this.setRandomPresence();
-          this.startSchedule();
-        },
-      });
-
+  private _listen(): Observable<Presence> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
         `listen ${wrapInQuotes(`ready`)} Discord client state`
       ),
     });
+
+    return DiscordClientService.getInstance()
+      .isReady$()
+      .pipe(
+        filter((isReady: Readonly<boolean>): boolean =>
+          _.isEqual(isReady, true)
+        ),
+        mergeMap((): Promise<Presence> => this.setRandomPresence()),
+        take(1),
+        tap({
+          next: (): void => {
+            this.startSchedule();
+          },
+        })
+      );
   }
 }
