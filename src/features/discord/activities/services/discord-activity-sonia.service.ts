@@ -39,7 +39,7 @@ export class DiscordActivitySoniaService extends AbstractService {
     super(ServiceNameEnum.DISCORD_ACTIVITY_SONIA_SERVICE);
   }
 
-  public async init(): Promise<Presence> {
+  public init(): Promise<Presence> {
     return this._listen().toPromise();
   }
 
@@ -106,7 +106,7 @@ export class DiscordActivitySoniaService extends AbstractService {
     return Promise.reject(new Error(`Client user is not valid`));
   }
 
-  public async setRandomPresence(): Promise<Presence> {
+  public setRandomPresence(): Promise<Presence> {
     const presenceActivity: IDiscordPresenceActivity | undefined = _.sample(
       DISCORD_PRESENCE_ACTIVITY
     );
@@ -174,13 +174,14 @@ export class DiscordActivitySoniaService extends AbstractService {
     this._logNextUpdaterJobDate();
   }
 
-  private async _executeJob(): Promise<Presence> {
+  private _executeJob(): Promise<Presence> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(`job triggered`),
     });
 
     this._logNextJobDate();
+
     return this.setRandomPresence();
   }
 
