@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+## [1.72.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.72.0...1.72.1) (2020-08-26)
+
+
+### :bug: Bug Fixes
+
+* **sonia:** the bot will no longer be disconnected from Discord ([22cdfe6](https://github.com/Sonia-corporation/il-est-midi-discord/commit/22cdfe666fd077a91c6ceda0b042f14e63295370)), closes [#863](https://github.com/Sonia-corporation/il-est-midi-discord/issues/863)
+* **sonia:** the bot will no longer be disconnected from Discord ([b004f54](https://github.com/Sonia-corporation/il-est-midi-discord/commit/b004f549ac11b0758f81bb378e079e9bc2f898ce))
+
 # [1.72.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.71.0...1.72.0) (2020-08-26)
 
 
