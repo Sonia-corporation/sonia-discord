@@ -64,4 +64,23 @@ export class DiscordCommandFlag<T> {
   public setType(type: Readonly<DiscordCommandFlagTypeEnum>): void {
     this._type = type;
   }
+
+  public getLowerCaseNameAndShortcutsExample(): string {
+    const shortcuts: string[] | undefined = this.getLowerCaseShortcuts();
+    let example = this.getLowerCaseName();
+
+    if (_.isArray(shortcuts) && !_.isEmpty(shortcuts)) {
+      example += ` (or ${_.trimEnd(
+        _.reduce(
+          shortcuts,
+          (value: Readonly<string>, shortcut: Readonly<string>): string =>
+            `${value}${shortcut}, `,
+          ``
+        ),
+        `, `
+      )})`;
+    }
+
+    return example;
+  }
 }
