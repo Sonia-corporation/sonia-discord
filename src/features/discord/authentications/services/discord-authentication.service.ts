@@ -28,7 +28,7 @@ export class DiscordAuthenticationService extends AbstractService {
     super(ServiceNameEnum.DISCORD_AUTHENTICATION_SERVICE);
   }
 
-  public async init(): Promise<void> {
+  public init(): Promise<void> {
     this._listen();
 
     return this.login();
