@@ -85,7 +85,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy: jest.SpyInstance;
     let getRandomFlagUsageExampleSpy: jest.SpyInstance;
-    let getAllFlagsNameExampleSpy: jest.SpyInstance;
+    let getAllFlagsNameWithShortcutsExampleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureEmptyFlagsErrorService();
@@ -117,9 +117,9 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
         DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS,
         `getRandomFlagUsageExample`
       );
-      getAllFlagsNameExampleSpy = jest.spyOn(
+      getAllFlagsNameWithShortcutsExampleSpy = jest.spyOn(
         DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS,
-        `getAllFlagsNameExample`
+        `getAllFlagsNameWithShortcutsExample`
       );
     });
 
@@ -220,7 +220,9 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
       void
     > => {
       expect.assertions(1);
-      getAllFlagsNameExampleSpy.mockReturnValue(`\`dummy-flag, other-flag\``);
+      getAllFlagsNameWithShortcutsExampleSpy.mockReturnValue(
+        `\`dummy-flag, other-flag\``
+      );
 
       const result = await service.getMessageResponse(
         anyDiscordMessage,
