@@ -17,7 +17,7 @@ export function discordGetThisCommandWithPrefix({
   );
 
   if (!_.isNil(execArray)) {
-    return `${execArray.prefix}${execArray.command}`;
+    return `${_.toString(execArray.prefix)}${_.toString(execArray.command)}`;
   }
 
   return null;

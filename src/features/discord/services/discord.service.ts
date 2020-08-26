@@ -35,7 +35,7 @@ export class DiscordService extends AbstractService {
     DiscordGuildMemberAddService.getInstance().init();
     DiscordGuildCreateService.getInstance().init();
     DiscordMessageService.getInstance().init();
-    DiscordAuthenticationService.getInstance().init();
+    await DiscordAuthenticationService.getInstance().init();
     DiscordMessageScheduleIlEstMidiService.getInstance().init();
     DiscordGuildSoniaService.getInstance().init();
     await DiscordActivitySoniaService.getInstance().init();

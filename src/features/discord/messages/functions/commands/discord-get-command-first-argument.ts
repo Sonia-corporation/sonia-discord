@@ -4,22 +4,26 @@ import { IDiscordGetCommandFirstArgumentData } from "../../interfaces/commands/d
 import { discordExtractFromCommand } from "./discord-extract-from-command";
 import { discordGetCommandWithFirstArgumentRegexp } from "./discord-get-command-with-first-argument-regexp";
 import { discordGetFormattedMessage } from "./discord-get-formatted-message";
-import xregexp from "xregexp";
+import xregexp, { ExecArray } from "xregexp";
 
 function getFirstArgument({
   command,
   message,
   prefix,
 }: Readonly<IDiscordExtractFromCommandCallbackData>): string | null {
-  const argument1: string | undefined = xregexp.exec(
+  const execArray: ExecArray | null = xregexp.exec(
     message,
     discordGetCommandWithFirstArgumentRegexp({
       command,
       prefix,
     })
-  )?.argument1;
+  );
 
-  return _.isNil(argument1) ? null : argument1;
+  if (!_.isNil(execArray)) {
+    return execArray.argument1;
+  }
+
+  return null;
 }
 
 export function discordGetCommandFirstArgument({

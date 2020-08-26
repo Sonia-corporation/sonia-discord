@@ -86,7 +86,9 @@ describe(`DiscordService`, (): void => {
     let discordMessageServiceGetInstanceSpy: jest.SpyInstance;
     let discordMessageServiceGetInstanceInitSpy: jest.SpyInstance;
     let discordAuthenticationServiceGetInstanceSpy: jest.SpyInstance;
-    let discordAuthenticationServiceGetInstanceInitSpy: jest.SpyInstance;
+    let discordAuthenticationServiceGetInstanceInitSpy: jest.SpyInstance<Promise<
+      void
+    >>;
     let discordMessageScheduleIlEstMidiServiceGetInstanceSpy: jest.SpyInstance;
     let discordMessageScheduleIlEstMidiServiceGetInstanceInitSpy: jest.SpyInstance;
     let discordGuildSoniaServiceGetInstanceSpy: jest.SpyInstance;
@@ -154,10 +156,9 @@ describe(`DiscordService`, (): void => {
       discordAuthenticationServiceGetInstanceSpy = jest
         .spyOn(DiscordAuthenticationService, `getInstance`)
         .mockReturnValue(discordAuthenticationService);
-      discordAuthenticationServiceGetInstanceInitSpy = jest.spyOn(
-        discordAuthenticationService,
-        `init`
-      );
+      discordAuthenticationServiceGetInstanceInitSpy = jest
+        .spyOn(discordAuthenticationService, `init`)
+        .mockResolvedValue();
       discordMessageScheduleIlEstMidiServiceGetInstanceSpy = jest
         .spyOn(DiscordMessageScheduleIlEstMidiService, `getInstance`)
         .mockReturnValue(discordMessageScheduleIlEstMidiService);
