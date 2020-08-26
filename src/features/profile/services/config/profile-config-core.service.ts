@@ -3,7 +3,8 @@ import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { IProfileConfig } from "../../interfaces/profile-config";
 
-export class ProfileConfigCoreService extends AbstractService
+export class ProfileConfigCoreService
+  extends AbstractService
   implements IProfileConfig {
   private static _instance: ProfileConfigCoreService;
 

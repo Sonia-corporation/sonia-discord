@@ -3,7 +3,8 @@ import { AbstractService } from "../../../../classes/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { IGithubConfig } from "../../interfaces/github-config";
 
-export class GithubConfigCoreService extends AbstractService
+export class GithubConfigCoreService
+  extends AbstractService
   implements IGithubConfig {
   private static _instance: GithubConfigCoreService;
 

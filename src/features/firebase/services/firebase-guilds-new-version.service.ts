@@ -167,9 +167,9 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     );
   }
 
-  private _sendNewReleaseNotesToEachGuild({
-    forEach,
-  }: QuerySnapshot<IFirebaseGuild>): Promise<IFirebaseGuild[] | void> {
+  private _sendNewReleaseNotesToEachGuild(
+    querySnapshot: QuerySnapshot<IFirebaseGuild>
+  ): Promise<IFirebaseGuild[] | void> {
     const batch:
       | WriteBatch
       | undefined = FirebaseGuildsService.getInstance().getBatch();
@@ -179,16 +179,13 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       let countFirebaseGuildsUpdated = 0;
       let countFirebaseGuilds = 0;
 
-      forEach(
-        ({
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          exists,
-          data,
-          ref,
-        }: QueryDocumentSnapshot<IFirebaseGuild>): void => {
-          if (_.isEqual(exists, true)) {
+      querySnapshot.forEach(
+        (
+          queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>
+        ): void => {
+          if (_.isEqual(queryDocumentSnapshot.exists, true)) {
             countFirebaseGuilds = _.add(countFirebaseGuilds, 1);
-            const firebaseGuild: IFirebaseGuild = data();
+            const firebaseGuild: IFirebaseGuild = queryDocumentSnapshot.data();
 
             if (
               this._shouldSendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
@@ -196,7 +193,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
               countFirebaseGuildsUpdated = _.add(countFirebaseGuildsUpdated, 1);
 
               batch.update(
-                ref,
+                queryDocumentSnapshot.ref,
                 getUpdatedFirebaseGuildLastReleaseNotesVersion(
                   AppConfigService.getInstance().getVersion()
                 )

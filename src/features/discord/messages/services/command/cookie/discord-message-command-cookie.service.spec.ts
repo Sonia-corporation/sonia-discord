@@ -7,8 +7,8 @@ import { CoreEventService } from "../../../../../core/services/core-event.servic
 import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
-import { DiscordMessageCommandCookieDescriptionEnum } from "../../../enums/command/cookie/discord-message-command-cookie-description.enum";
-import { DiscordMessageCommandCookieTitleEnum } from "../../../enums/command/cookie/discord-message-command-cookie-title.enum";
+import { DiscordMessageCommandCookieDescriptionEnum } from "../../../enums/commands/cookie/discord-message-command-cookie-description.enum";
+import { DiscordMessageCommandCookieTitleEnum } from "../../../enums/commands/cookie/discord-message-command-cookie-title.enum";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";

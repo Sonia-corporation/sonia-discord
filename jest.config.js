@@ -137,7 +137,7 @@ module.exports = {
   // snapshotSerializers: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  setupFilesAfterEnv: [`jest-extended`],
+  setupFilesAfterEnv: [`jest-extended`, `./test.ts`],
 
   // Prevent tests from printing messages through the console
   silent: true,

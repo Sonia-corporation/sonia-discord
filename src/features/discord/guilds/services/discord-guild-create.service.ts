@@ -133,8 +133,8 @@ export class DiscordGuildCreateService extends AbstractService {
           ),
         });
 
-        this.sendMessage(guild);
-        this.addFirebaseGuild(guild);
+        void this.sendMessage(guild);
+        void this.addFirebaseGuild(guild);
       });
 
     LoggerService.getInstance().debug({

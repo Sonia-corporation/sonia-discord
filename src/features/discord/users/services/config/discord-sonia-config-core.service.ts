@@ -5,7 +5,8 @@ import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { IDiscordSoniaConfig } from "../../../interfaces/discord-sonia-config";
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../../interfaces/discord-sonia-corporation-message-embed-author-config";
 
-export class DiscordSoniaConfigCoreService extends AbstractService
+export class DiscordSoniaConfigCoreService
+  extends AbstractService
   implements IDiscordSoniaConfig {
   private static _instance: DiscordSoniaConfigCoreService;
 

@@ -13,8 +13,8 @@ import { CoreEventService } from "../../../../../core/services/core-event.servic
 import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
-import { DiscordMessageCommandLunchDescriptionEnum } from "../../../enums/command/lunch/discord-message-command-lunch-description.enum";
-import { DiscordMessageCommandLunchTitleEnum } from "../../../enums/command/lunch/discord-message-command-lunch-title.enum";
+import { DiscordMessageCommandLunchDescriptionEnum } from "../../../enums/commands/lunch/discord-message-command-lunch-description.enum";
+import { DiscordMessageCommandLunchTitleEnum } from "../../../enums/commands/lunch/discord-message-command-lunch-title.enum";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
