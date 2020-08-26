@@ -22,7 +22,7 @@ export class DiscordCommandFlags<T> {
   }
 
   public getRandomFlag(): DiscordCommandFlag<T> | undefined {
-    return _.sample(this._flags);
+    return _.sample(this.getFlags());
   }
 
   public getRandomFlagUsageExample(): string | undefined {
@@ -41,5 +41,24 @@ export class DiscordCommandFlags<T> {
     }
 
     return undefined;
+  }
+
+  public getAllFlagsNameExample(): string {
+    return _.trimEnd(
+      _.reduce(
+        this.getAllFlagsLowerCaseName(),
+        (value: Readonly<string>, flagName: Readonly<string>): string =>
+          `${value}\`${flagName}\`, `,
+        ``
+      ),
+      `, `
+    );
+  }
+
+  public getAllFlagsLowerCaseName(): string[] {
+    return _.map(
+      this.getFlags(),
+      (flag: Readonly<DiscordCommandFlag<T>>): string => flag.getLowerCaseName()
+    );
   }
 }

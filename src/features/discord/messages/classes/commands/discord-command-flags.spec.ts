@@ -193,4 +193,177 @@ describe(`DiscordCommandFlags`, (): void => {
       });
     });
   });
+
+  describe(`getAllFlagsNameExample()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlags = new DiscordCommandFlags<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >(
+        createMock<
+          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+        >()
+      );
+    });
+
+    describe(`when there is no flags`, (): void => {
+      beforeEach((): void => {
+        discordCommandFlags.setFlags([]);
+      });
+
+      it(`should return an empty string`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsNameExample();
+
+        expect(result).toStrictEqual(``);
+      });
+    });
+
+    describe(`when there is one flag`, (): void => {
+      let flag: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+
+      beforeEach((): void => {
+        flag = new DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+          })
+        );
+        discordCommandFlags.setFlags([flag]);
+      });
+
+      it(`should return a string containing the name of the flag on lower case wrapped with backtick`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsNameExample();
+
+        expect(result).toStrictEqual(`\`enabled\``);
+      });
+    });
+
+    describe(`when there is two flags`, (): void => {
+      let flag1: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag2: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+
+      beforeEach((): void => {
+        flag1 = new DiscordCommandFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+          })
+        );
+        flag2 = new DiscordCommandFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.E,
+          })
+        );
+        discordCommandFlags.setFlags([flag1, flag2]);
+      });
+
+      it(`should return a string containing the names of the flags on lower case wrapped with backtick and comma separated`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsNameExample();
+
+        expect(result).toStrictEqual(`\`enabled\`, \`e\``);
+      });
+    });
+  });
+
+  describe(`getAllFlagsLowerCaseName()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlags = new DiscordCommandFlags<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >(
+        createMock<
+          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+        >()
+      );
+    });
+
+    describe(`when there is no flags`, (): void => {
+      beforeEach((): void => {
+        discordCommandFlags.setFlags([]);
+      });
+
+      it(`should return an empty array`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsLowerCaseName();
+
+        expect(result).toStrictEqual([]);
+      });
+    });
+
+    describe(`when there is one flag`, (): void => {
+      let flag: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+
+      beforeEach((): void => {
+        flag = new DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+          })
+        );
+        discordCommandFlags.setFlags([flag]);
+      });
+
+      it(`should return an array containing the name of the flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsLowerCaseName();
+
+        expect(result).toStrictEqual([
+          DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+        ]);
+      });
+    });
+
+    describe(`when there is two flags`, (): void => {
+      let flag1: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag2: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+
+      beforeEach((): void => {
+        flag1 = new DiscordCommandFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+          })
+        );
+        flag2 = new DiscordCommandFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            name: DiscordMessageCommandFeatureNoonFlagEnum.E,
+          })
+        );
+        discordCommandFlags.setFlags([flag1, flag2]);
+      });
+
+      it(`should return an array containing the names of the flags`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsLowerCaseName();
+
+        expect(result).toStrictEqual([
+          DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+          DiscordMessageCommandFeatureNoonFlagEnum.E,
+        ]);
+      });
+    });
+  });
 });
