@@ -31,7 +31,7 @@ export class DiscordAuthenticationService extends AbstractService {
   public async init(): Promise<void> {
     this._listen();
 
-    return await this.login();
+    return this.login();
   }
 
   public login(): Promise<void> {
