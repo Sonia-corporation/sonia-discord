@@ -40,7 +40,8 @@
     "plugins": [
       {
         "transform": "ts-auto-mock/transformer",
-        "cacheBetweenTests": false
+        "cacheBetweenTests": false,
+        "debug": false
       }
     ]
   },
