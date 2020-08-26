@@ -4,7 +4,7 @@ import _ from "lodash";
 import { CoreService } from "./features/core/services/core.service";
 import { InitService } from "./features/init/services/init.service";
 
-console.debug(`Node env: ${process.env.NODE_ENV}`);
+console.debug(`Node env: ${_.toString(process.env.NODE_ENV)}`);
 
 if (_.isEqual(process.env.NODE_ENV, `development`)) {
   console.debug(`Loading the node environment...`);
@@ -29,4 +29,4 @@ if (_.isEqual(process.env.NODE_ENV, `production`)) {
 }
 
 CoreService.getInstance().init();
-InitService.getInstance().init();
+void InitService.getInstance().init();

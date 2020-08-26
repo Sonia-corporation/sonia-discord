@@ -109,7 +109,7 @@ export class LoggerService {
     context: Readonly<string>,
     message: Readonly<string | null | undefined> | unknown
   ): string {
-    return `[${context}] ${message}`;
+    return `[${context}] ${_.toString(message)}`;
   }
 
   private _log(loggerLogInternal: Readonly<ILoggerLogInternal>): void {
@@ -123,10 +123,10 @@ export class LoggerService {
         `${logTypePrefix}${this._context(
           loggerLogInternal.context,
           loggerLogInternal.hasExtendedContext
-        )}${loggerLogInternal.message}`
+        )}${_.toString(loggerLogInternal.message)}`
       );
     } else {
-      console.log(`${logTypePrefix}${loggerLogInternal.message}`);
+      console.log(`${logTypePrefix}${_.toString(loggerLogInternal.message)}`);
     }
   }
 

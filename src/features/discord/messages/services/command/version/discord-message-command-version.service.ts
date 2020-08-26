@@ -126,7 +126,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
       | string
       | null = DiscordSoniaService.getInstance().getFullName();
 
-    return `${soniaFullName} version`;
+    return `${_.toString(soniaFullName)} version`;
   }
 
   private _getMessageEmbedFields(): EmbedFieldData[] {

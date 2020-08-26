@@ -405,9 +405,9 @@ describe(`DiscordMessageService`, (): void => {
       anyDiscordMessage = createMock<IAnyDiscordMessage>({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        channel: ({
+        channel: {
           send: anyDiscordMessageChannelSendMock,
-        } as unknown) as unknown,
+        } as unknown,
         id: `dummy-id`,
       });
       discordMessageResponse = createMock<IDiscordMessageResponse>({
@@ -622,9 +622,9 @@ describe(`DiscordMessageService`, (): void => {
                 anyDiscordMessage = createMock<IAnyDiscordMessage>({
                   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                   // @ts-ignore
-                  channel: ({
+                  channel: {
                     send: anyDiscordMessageChannelSendMock,
-                  } as unknown) as unknown,
+                  } as unknown,
                   id: `dummy-id`,
                 });
               });
@@ -668,9 +668,9 @@ describe(`DiscordMessageService`, (): void => {
                 anyDiscordMessage = createMock<IAnyDiscordMessage>({
                   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                   // @ts-ignore
-                  channel: ({
+                  channel: {
                     send: anyDiscordMessageChannelSendMock,
-                  } as unknown) as unknown,
+                  } as unknown,
                   id: `dummy-id`,
                 });
               });
@@ -848,9 +848,9 @@ describe(`DiscordMessageService`, (): void => {
               anyDiscordMessage = createMock<IAnyDiscordMessage>({
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
-                channel: ({
+                channel: {
                   send: anyDiscordMessageChannelSendMock,
-                } as unknown) as unknown,
+                } as unknown,
                 id: `dummy-id`,
               });
             });
@@ -894,9 +894,9 @@ describe(`DiscordMessageService`, (): void => {
               anyDiscordMessage = createMock<IAnyDiscordMessage>({
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
-                channel: ({
+                channel: {
                   send: anyDiscordMessageChannelSendMock,
-                } as unknown) as unknown,
+                } as unknown,
                 id: `dummy-id`,
               });
             });

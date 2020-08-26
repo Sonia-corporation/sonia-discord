@@ -95,19 +95,21 @@ describe(`DiscordAuthenticationService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should get the Discord client`, (): void => {
+    it(`should get the Discord client`, async (): Promise<void> => {
       expect.assertions(2);
 
-      service.init();
+      await service.init();
 
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
     });
 
-    it(`should listen for the Discord client ready event`, (): void => {
+    it(`should listen for the Discord client ready event`, async (): Promise<
+      void
+    > => {
       expect.assertions(2);
 
-      service.init();
+      await service.init();
 
       expect(discordClientServiceGetClientOnMock).toHaveBeenCalledTimes(1);
       expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(
@@ -130,10 +132,10 @@ describe(`DiscordAuthenticationService`, (): void => {
         discordClientServiceGetClientSpy.mockReturnValue(client);
       });
 
-      it(`should get the Discord client`, (): void => {
+      it(`should get the Discord client`, async (): Promise<void> => {
         expect.assertions(2);
 
-        service.init();
+        await service.init();
 
         expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(2);
         expect(discordClientServiceGetClientSpy).toHaveBeenNthCalledWith(2);
@@ -149,10 +151,12 @@ describe(`DiscordAuthenticationService`, (): void => {
           discordClientServiceGetClientSpy.mockReturnValue(client);
         });
 
-        it(`should log about the unknown user authentication`, (): void => {
+        it(`should log about the unknown user authentication`, async (): Promise<
+          void
+        > => {
           expect.assertions(2);
 
-          service.init();
+          await service.init();
 
           expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceLogSpy).toHaveBeenCalledWith({
@@ -178,10 +182,12 @@ describe(`DiscordAuthenticationService`, (): void => {
           discordClientServiceGetClientSpy.mockReturnValue(client);
         });
 
-        it(`should log about the unknown user authentication`, (): void => {
+        it(`should log about the unknown user authentication`, async (): Promise<
+          void
+        > => {
           expect.assertions(2);
 
-          service.init();
+          await service.init();
 
           expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceLogSpy).toHaveBeenCalledWith({
@@ -191,20 +197,24 @@ describe(`DiscordAuthenticationService`, (): void => {
         });
       });
 
-      it(`should notify that the Discord client is ready`, (): void => {
+      it(`should notify that the Discord client is ready`, async (): Promise<
+        void
+      > => {
         expect.assertions(2);
 
-        service.init();
+        await service.init();
 
         expect(discordClientServiceNotifyIsReadySpy).toHaveBeenCalledTimes(1);
         expect(discordClientServiceNotifyIsReadySpy).toHaveBeenCalledWith();
       });
     });
 
-    it(`should log about listening Discord ready event`, (): void => {
+    it(`should log about listening Discord ready event`, async (): Promise<
+      void
+    > => {
       expect.assertions(2);
 
-      service.init();
+      await service.init();
 
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -213,10 +223,10 @@ describe(`DiscordAuthenticationService`, (): void => {
       } as ILoggerLog);
     });
 
-    it(`should login`, (): void => {
+    it(`should login`, async (): Promise<void> => {
       expect.assertions(2);
 
-      service.init();
+      await service.init();
 
       expect(loginSpy).toHaveBeenCalledTimes(1);
       expect(loginSpy).toHaveBeenCalledWith();
