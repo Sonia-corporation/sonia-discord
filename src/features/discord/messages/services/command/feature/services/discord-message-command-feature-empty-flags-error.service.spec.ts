@@ -84,8 +84,6 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
     let discordMessageConfigServiceGetMessageCommandCliErrorImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy: jest.SpyInstance;
-    let getRandomFlagUsageExampleSpy: jest.SpyInstance;
-    let getAllFlagsNameWithShortcutsExampleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureEmptyFlagsErrorService();
@@ -113,14 +111,12 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
         discordMessageConfigService,
         `getMessageCommandCliErrorImageUrl`
       );
-      getRandomFlagUsageExampleSpy = jest.spyOn(
-        DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS,
-        `getRandomFlagUsageExample`
-      );
-      getAllFlagsNameWithShortcutsExampleSpy = jest.spyOn(
-        DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS,
-        `getAllFlagsNameWithShortcutsExample`
-      );
+      jest
+        .spyOn(
+          DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS,
+          `getRandomFlagUsageExample`
+        )
+        .mockReturnValue(`--dummy-flag=dummy-value`);
     });
 
     it(`should get the CLI error message response`, async (): Promise<void> => {
@@ -220,9 +216,6 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
       void
     > => {
       expect.assertions(1);
-      getAllFlagsNameWithShortcutsExampleSpy.mockReturnValue(
-        `\`dummy-flag, other-flag\``
-      );
 
       const result = await service.getMessageResponse(
         anyDiscordMessage,
@@ -234,7 +227,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.fields[1]).toStrictEqual({
         name: `All flags`,
-        value: `\`dummy-flag, other-flag\``,
+        value: `\`--enabled (or -e)\``,
       } as EmbedFieldData);
     });
 
@@ -242,7 +235,6 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
       void
     > => {
       expect.assertions(1);
-      getRandomFlagUsageExampleSpy.mockReturnValue(`--dummy-flag=dummy-value`);
       anyDiscordMessage.content = `dummy message !feature noon`;
 
       const result = await service.getMessageResponse(

@@ -113,15 +113,19 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
     const randomFlag:
       | string
       | undefined = DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getRandomFlagUsageExample();
-    const userCommand: string | null = discordGetCommandAndFirstArgument({
+    let userCommand: string | null = discordGetCommandAndFirstArgument({
       commands,
       message: _.isNil(content) ? `` : content,
       prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
     });
 
+    if (_.isNil(userCommand)) {
+      userCommand = `!${_.toLower(DiscordMessageCommandEnum.FEATURE)}`;
+    }
+
     return {
       name: `Example`,
-      value: `\`${_.toString(userCommand)} ${_.toString(randomFlag)}\``,
+      value: `\`${userCommand} ${_.toString(randomFlag)}\``,
     };
   }
 }

@@ -15,8 +15,7 @@ import { DiscordMessageCommandEnum } from "../../../../enums/commands/discord-me
 import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";
 import { DiscordMessageCommandCliErrorService } from "../../discord-message-command-cli-error.service";
-import { DiscordMessageCommandFeatureNameEnum } from "../enums/discord-message-command-feature-name.enum";
-import * as GetDiscordMessageCommandAllFeatureNamesModule from "../functions/get-discord-message-command-all-feature-names";
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NAMES } from "../constants/discord-message-command-feature-names";
 import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from "./discord-message-command-feature-empty-feature-name-error.service";
 
 describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void => {
@@ -83,7 +82,6 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
     let discordMessageConfigServiceGetMessageCommandCliErrorImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy: jest.SpyInstance;
-    let getDiscordMessageCommandAllFeatureNamesSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandPrefixSpy: jest.SpyInstance<
       string | string[]
     >;
@@ -113,14 +111,16 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         discordMessageConfigService,
         `getMessageCommandCliErrorImageUrl`
       );
-      getDiscordMessageCommandAllFeatureNamesSpy = jest.spyOn(
-        GetDiscordMessageCommandAllFeatureNamesModule,
-        `getDiscordMessageCommandAllFeatureNames`
-      );
       discordMessageConfigServiceGetMessageCommandPrefixSpy = jest.spyOn(
         discordMessageConfigService,
         `getMessageCommandPrefix`
       );
+      jest
+        .spyOn(
+          DISCORD_MESSAGE_COMMAND_FEATURE_NAMES,
+          `getRandomArgumentUsageExample`
+        )
+        .mockReturnValue(`noon`);
     });
 
     it(`should get the CLI error message response`, async (): Promise<void> => {
@@ -208,58 +208,22 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
       } as EmbedFieldData);
     });
 
-    describe(`when there is only one feature`, (): void => {
-      beforeEach((): void => {
-        getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
-          DiscordMessageCommandFeatureNameEnum.NOON,
-        ]);
-      });
+    it(`should return a Discord message response embed with a field to display all feature names separated with a comma and a space`, async (): Promise<
+      void
+    > => {
+      expect.assertions(1);
 
-      it(`should return a Discord message response embed with a field to display all feature names`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
+      const result = await service.getMessageResponse(
+        anyDiscordMessage,
+        commands
+      );
 
-        const result = await service.getMessageResponse(
-          anyDiscordMessage,
-          commands
-        );
-
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields[1]).toStrictEqual({
-          name: `All features`,
-          value: `\`noon\``,
-        } as EmbedFieldData);
-      });
-    });
-
-    describe(`when there are multiple features`, (): void => {
-      beforeEach((): void => {
-        getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
-          DiscordMessageCommandFeatureNameEnum.NOON,
-          DiscordMessageCommandFeatureNameEnum.NOON,
-          DiscordMessageCommandFeatureNameEnum.NOON,
-        ]);
-      });
-
-      it(`should return a Discord message response embed with a field to display all feature names separated with a comma and a space`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse(
-          anyDiscordMessage,
-          commands
-        );
-
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields[1]).toStrictEqual({
-          name: `All features`,
-          value: `\`noon\`, \`noon\`, \`noon\``,
-        } as EmbedFieldData);
-      });
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      expect(result.options.embed.fields[1]).toStrictEqual({
+        name: `All features`,
+        value: `\`noon (or n)\``,
+      } as EmbedFieldData);
     });
 
     describe(`when the given Discord message content is null`, (): void => {
@@ -271,9 +235,6 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         void
       > => {
         expect.assertions(1);
-        getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
-          DiscordMessageCommandFeatureNameEnum.NOON,
-        ]);
         discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
           `-`,
         ]);
@@ -301,9 +262,6 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         void
       > => {
         expect.assertions(1);
-        getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
-          DiscordMessageCommandFeatureNameEnum.NOON,
-        ]);
         discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
           `-`,
         ]);
@@ -339,9 +297,6 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
           void
         > => {
           expect.assertions(1);
-          getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
-            DiscordMessageCommandFeatureNameEnum.NOON,
-          ]);
 
           const result = await service.getMessageResponse(
             anyDiscordMessage,
@@ -368,9 +323,6 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
           void
         > => {
           expect.assertions(1);
-          getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
-            DiscordMessageCommandFeatureNameEnum.NOON,
-          ]);
 
           const result = await service.getMessageResponse(
             anyDiscordMessage,
@@ -404,9 +356,6 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
           void
         > => {
           expect.assertions(1);
-          getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
-            DiscordMessageCommandFeatureNameEnum.NOON,
-          ]);
 
           const result = await service.getMessageResponse(
             anyDiscordMessage,
@@ -433,9 +382,6 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
           void
         > => {
           expect.assertions(1);
-          getDiscordMessageCommandAllFeatureNamesSpy.mockReturnValue([
-            DiscordMessageCommandFeatureNameEnum.NOON,
-          ]);
 
           const result = await service.getMessageResponse(
             anyDiscordMessage,
