@@ -4,6 +4,10 @@ import { DiscordSoniaEmotionalStateEnum } from "../../emotional-states/enums/dis
 import { IMessageConfig } from "../interfaces/message-config";
 import { Messages } from "./messages";
 
+enum DummyEnum {
+  WITH_VAR = `dummy message with {{ variable }}`,
+}
+
 describe(`Messages`, (): void => {
   let messages: Messages<DiscordSoniaEmotionalStateEnum>;
 
@@ -37,6 +41,24 @@ describe(`Messages`, (): void => {
         expect(messages.getMessages()).toStrictEqual(
           DiscordSoniaEmotionalStateEnum
         );
+      });
+    });
+
+    describe(`when the class is created with params`, (): void => {
+      it(`should update the params inside the class`, (): void => {
+        expect.assertions(1);
+
+        messages = new Messages<DiscordSoniaEmotionalStateEnum>(
+          createMock<IMessageConfig<DiscordSoniaEmotionalStateEnum>>({
+            params: {
+              key1: `value1`,
+            },
+          })
+        );
+
+        expect(messages.getParams()).toStrictEqual({
+          key1: `value1`,
+        });
       });
     });
   });
@@ -111,6 +133,47 @@ describe(`Messages`, (): void => {
     });
   });
 
+  describe(`getParams()`, (): void => {
+    beforeEach((): void => {
+      messages = new Messages<DiscordSoniaEmotionalStateEnum>(
+        createMock<IMessageConfig<DiscordSoniaEmotionalStateEnum>>()
+      );
+    });
+
+    it(`should return the params`, (): void => {
+      expect.assertions(1);
+      messages.setParams({
+        key1: `value1`,
+      });
+
+      const result = messages.getParams();
+
+      expect(result).toStrictEqual({
+        key1: `value1`,
+      });
+    });
+  });
+
+  describe(`setParams()`, (): void => {
+    beforeEach((): void => {
+      messages = new Messages<DiscordSoniaEmotionalStateEnum>(
+        createMock<IMessageConfig<DiscordSoniaEmotionalStateEnum>>()
+      );
+    });
+
+    it(`should update the params with the given ones`, (): void => {
+      expect.assertions(1);
+
+      messages.setParams({
+        key1: `value1`,
+      });
+
+      expect(messages.getParams()).toStrictEqual({
+        key1: `value1`,
+      });
+    });
+  });
+
   describe(`getRandomMessage()`, (): void => {
     beforeEach((): void => {
       messages = new Messages<DiscordSoniaEmotionalStateEnum>(
@@ -147,6 +210,158 @@ describe(`Messages`, (): void => {
         expect(result).toBeOneOf(
           _.flatten(_.values(DiscordSoniaEmotionalStateEnum))
         );
+      });
+    });
+  });
+
+  describe(`getHumanizedRandomMessage()`, (): void => {
+    let messages: Messages<DummyEnum>;
+
+    beforeEach((): void => {
+      messages = new Messages<DummyEnum>(
+        createMock<IMessageConfig<DummyEnum>>({
+          defaultMessage: DummyEnum.WITH_VAR,
+        })
+      );
+    });
+
+    describe(`when there is no messages`, (): void => {
+      beforeEach((): void => {
+        messages.setMessages({});
+      });
+
+      describe(`when there is no params`, (): void => {
+        beforeEach((): void => {
+          messages.setParams(_.stubObject());
+        });
+
+        describe(`when there is no given params`, (): void => {
+          it(`should return the default message instead without replacing the variable`, (): void => {
+            expect.assertions(1);
+
+            const result = messages.getHumanizedRandomMessage();
+
+            expect(result).toStrictEqual(`dummy message with {{ variable }}`);
+          });
+        });
+
+        describe(`when there is a given params but not matching the replacement`, (): void => {
+          it(`should return the default message instead without replacing the variable`, (): void => {
+            expect.assertions(1);
+
+            const result = messages.getHumanizedRandomMessage({
+              key2: `value2`,
+            });
+
+            expect(result).toStrictEqual(`dummy message with {{ variable }}`);
+          });
+        });
+
+        describe(`when there is a given params matching the replacement`, (): void => {
+          it(`should return the default message instead and replace the variable`, (): void => {
+            expect.assertions(1);
+
+            const result = messages.getHumanizedRandomMessage({
+              variable: `replacement argument`,
+            });
+
+            expect(result).toStrictEqual(
+              `dummy message with replacement argument`
+            );
+          });
+        });
+      });
+
+      describe(`when there is params but not matching the replacement`, (): void => {
+        beforeEach((): void => {
+          messages.setParams({
+            key1: `value1`,
+          });
+        });
+
+        describe(`when there is no given params`, (): void => {
+          it(`should return the default message instead without replacing the variable`, (): void => {
+            expect.assertions(1);
+
+            const result = messages.getHumanizedRandomMessage();
+
+            expect(result).toStrictEqual(`dummy message with {{ variable }}`);
+          });
+        });
+
+        describe(`when there is a given params but not matching the replacement`, (): void => {
+          it(`should return the default message instead without replacing the variable`, (): void => {
+            expect.assertions(1);
+
+            const result = messages.getHumanizedRandomMessage({
+              key2: `value2`,
+            });
+
+            expect(result).toStrictEqual(`dummy message with {{ variable }}`);
+          });
+        });
+
+        describe(`when there is a given params matching the replacement`, (): void => {
+          it(`should return the default message instead and replace the variable`, (): void => {
+            expect.assertions(1);
+
+            const result = messages.getHumanizedRandomMessage({
+              variable: `replacement argument`,
+            });
+
+            expect(result).toStrictEqual(
+              `dummy message with replacement argument`
+            );
+          });
+        });
+      });
+
+      describe(`when there is params matching the replacement`, (): void => {
+        beforeEach((): void => {
+          messages.setParams({
+            variable: `replacement`,
+          });
+        });
+
+        describe(`when there is no given params`, (): void => {
+          it(`should return the default message instead and replace the variable`, (): void => {
+            expect.assertions(1);
+
+            const result = messages.getHumanizedRandomMessage();
+
+            expect(result).toStrictEqual(
+              `dummy message with replacement argument`
+            );
+          });
+        });
+
+        describe(`when there is a given params but not matching the replacement`, (): void => {
+          it(`should return the default message instead and replace the variable`, (): void => {
+            expect.assertions(1);
+
+            const result = messages.getHumanizedRandomMessage({
+              key2: `value2`,
+            });
+
+            expect(result).toStrictEqual(
+              `dummy message with replacement argument`
+            );
+          });
+        });
+
+        describe(`when there is a given params matching the replacement`, (): void => {
+          it(`should return the default message instead and replace the variable`, (): void => {
+            expect.assertions(1);
+
+            const result = messages.getHumanizedRandomMessage({
+              variable: `replacement argument`,
+            });
+
+            expect(result).toStrictEqual(
+              `dummy message with replacement argument`
+            );
+          });
+        });
       });
     });
   });
