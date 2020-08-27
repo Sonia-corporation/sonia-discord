@@ -3,7 +3,7 @@ import { getRandomBoolean } from "../../../../../../functions/randoms/get-random
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { DiscordCommandFlag } from "./discord-command-flag";
 
-export class DiscordCommandFlags<T> {
+export class DiscordCommandFlags<T extends string> {
   private _flags: DiscordCommandFlag<T>[] = [];
 
   /**

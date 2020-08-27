@@ -2,7 +2,9 @@ import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-comm
 import { IDiscordCommandFlag } from "../../../interfaces/commands/discord-command-flag";
 import { DiscordCommandFlag } from "./discord-command-flag";
 
-export class DiscordCommandBooleanFlag<T> extends DiscordCommandFlag<T> {
+export class DiscordCommandBooleanFlag<
+  T extends string
+> extends DiscordCommandFlag<T> {
   protected _type: DiscordCommandFlagTypeEnum.BOOLEAN =
     DiscordCommandFlagTypeEnum.BOOLEAN;
 
