@@ -301,6 +301,9 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
     <td align="center"><a href="https://github.com/Zoridg"><img src="https://avatars0.githubusercontent.com/u/32258487?v=4" width="80px;" alt=""/><br /><sub><b>Nathan Bergamini</b></sub></a><br /><a href="https://github.com/Sonia-corporation/il-est-midi-discord/commits?author=Zoridg" title="Code">💻</a> <a href="#ideas-Zoridg" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/asmodee-bellanie"><img src="https://avatars0.githubusercontent.com/u/69478591?v=4" width="80px;" alt=""/><br /><sub><b>asmodee-bellanie</b></sub></a><br /><a href="https://github.com/Sonia-corporation/il-est-midi-discord/pulls?q=is%3Apr+reviewed-by%3Aasmodee-bellanie" title="Reviewed Pull Requests">👀</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://www.codefactor.io"><img src="https://avatars0.githubusercontent.com/u/13309880?v=4" width="80px;" alt=""/><br /><sub><b>Automated code reviews</b></sub></a><br /><a href="https://github.com/Sonia-corporation/il-est-midi-discord/pulls?q=is%3Apr+reviewed-by%3Acode-factor" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/Sonia-corporation/il-est-midi-discord/issues?q=author%3Acode-factor" title="Bug reports">🐛</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
