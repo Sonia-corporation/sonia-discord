@@ -3,7 +3,6 @@ import { Job } from "node-schedule";
 import { Subject } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import * as GetRandomValueFromEnumModule from "../../../../functions/randoms/get-random-value-from-enum";
 import * as GetEveryHourScheduleRuleModule from "../../../../functions/schedule/get-every-hour-schedule-rule";
 import { CoreEventService } from "../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../logger/interfaces/logger-log";
@@ -11,6 +10,7 @@ import { LoggerService } from "../../../logger/services/logger.service";
 import * as GetNextJobDateModule from "../../../schedules/functions/get-next-job-date";
 import * as GetNextJobDateHumanizedModule from "../../../schedules/functions/get-next-job-date-humanized";
 import { DiscordClientService } from "../../services/discord-client.service";
+import { DISCORD_EMOTIONAL_STATE_MESSAGES } from "../constants/discord-emotional-state-messages";
 import { DiscordSoniaEmotionalStateEnum } from "../enums/discord-sonia-emotional-state.enum";
 import { DiscordSoniaEmotionalStateService } from "./discord-sonia-emotional-state.service";
 
@@ -353,11 +353,12 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
     beforeEach((): void => {
       service = new DiscordSoniaEmotionalStateService();
 
-      getRandomEmotionalStateSpy = jest.spyOn(
-        service,
-        `getRandomEmotionalState`
-      );
-      setEmotionalStateSpy = jest.spyOn(service, `setEmotionalState`);
+      getRandomEmotionalStateSpy = jest
+        .spyOn(service, `getRandomEmotionalState`)
+        .mockReturnValue(DiscordSoniaEmotionalStateEnum.COMFORTABLE);
+      setEmotionalStateSpy = jest
+        .spyOn(service, `setEmotionalState`)
+        .mockImplementation();
     });
 
     it(`should get a random emotional state`, (): void => {
@@ -369,34 +370,13 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
       expect(getRandomEmotionalStateSpy).toHaveBeenCalledWith();
     });
 
-    describe(`when a random emotional state was not found`, (): void => {
-      beforeEach((): void => {
-        getRandomEmotionalStateSpy.mockReturnValue(undefined);
-      });
+    it(`should update the emotional state with the random one`, (): void => {
+      expect.assertions(2);
 
-      it(`should not set the Discord presence activity`, (): void => {
-        expect.assertions(1);
+      service.setRandomEmotionalState();
 
-        service.setRandomEmotionalState();
-
-        expect(setEmotionalStateSpy).not.toHaveBeenCalled();
-      });
-    });
-
-    describe(`when a random emotional state was found`, (): void => {
-      beforeEach((): void => {
-        getRandomEmotionalStateSpy.mockReturnValue(
-          DiscordSoniaEmotionalStateEnum.COMFORTABLE
-        );
-      });
-
-      it(`should update the emotional state with the random one`, (): void => {
-        expect.assertions(1);
-
-        service.setRandomEmotionalState();
-
-        expect(service.getEmotionalState()).toStrictEqual(`comfortable`);
-      });
+      expect(setEmotionalStateSpy).toHaveBeenCalledTimes(1);
+      expect(setEmotionalStateSpy).toHaveBeenCalledWith(`comfortable`);
     });
   });
 
@@ -429,13 +409,13 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
   });
 
   describe(`getRandomEmotionalState()`, (): void => {
-    let getRandomValueFromEnumSpy: jest.SpyInstance;
+    let getRandomMessageSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordSoniaEmotionalStateService();
 
-      getRandomValueFromEnumSpy = jest
-        .spyOn(GetRandomValueFromEnumModule, `getRandomValueFromEnum`)
+      getRandomMessageSpy = jest
+        .spyOn(DISCORD_EMOTIONAL_STATE_MESSAGES, `getRandomMessage`)
         .mockReturnValue(DiscordSoniaEmotionalStateEnum.COMFORTABLE);
     });
 
@@ -444,7 +424,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
       service.getRandomEmotionalState();
 
-      expect(getRandomValueFromEnumSpy).toHaveBeenCalledTimes(1);
+      expect(getRandomMessageSpy).toHaveBeenCalledTimes(1);
     });
 
     it(`should return the random Sonia emotional state`, (): void => {

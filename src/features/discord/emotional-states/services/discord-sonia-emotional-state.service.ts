@@ -4,13 +4,13 @@ import { filter, take } from "rxjs/operators";
 import { AbstractService } from "../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
-import { getRandomValueFromEnum } from "../../../../functions/randoms/get-random-value-from-enum";
 import { getEveryHourScheduleRule } from "../../../../functions/schedule/get-every-hour-schedule-rule";
 import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { getNextJobDate } from "../../../schedules/functions/get-next-job-date";
 import { getNextJobDateHumanized } from "../../../schedules/functions/get-next-job-date-humanized";
 import { DiscordClientService } from "../../services/discord-client.service";
+import { DISCORD_EMOTIONAL_STATE_MESSAGES } from "../constants/discord-emotional-state-messages";
 import { DiscordSoniaEmotionalStateEnum } from "../enums/discord-sonia-emotional-state.enum";
 
 export class DiscordSoniaEmotionalStateService extends AbstractService {
@@ -57,21 +57,15 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
   }
 
   public setRandomEmotionalState(): void {
-    const emotionalState:
-      | DiscordSoniaEmotionalStateEnum
-      | undefined = this.getRandomEmotionalState();
-
-    if (!_.isNil(emotionalState)) {
-      this.setEmotionalState(emotionalState);
-    }
+    this.setEmotionalState(this.getRandomEmotionalState());
   }
 
   public getEmotionalState(): DiscordSoniaEmotionalStateEnum {
     return this._emotionalState;
   }
 
-  public getRandomEmotionalState(): DiscordSoniaEmotionalStateEnum | undefined {
-    return getRandomValueFromEnum(DiscordSoniaEmotionalStateEnum);
+  public getRandomEmotionalState(): DiscordSoniaEmotionalStateEnum {
+    return DISCORD_EMOTIONAL_STATE_MESSAGES.getRandomMessage();
   }
 
   private _createSchedule(): void {
