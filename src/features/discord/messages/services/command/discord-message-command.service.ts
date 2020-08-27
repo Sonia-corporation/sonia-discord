@@ -7,7 +7,7 @@ import { DiscordMessageCommandCookieService } from "./cookie/services/discord-me
 import { DiscordMessageCommandErrorService } from "./error/discord-message-command-error.service";
 import { DiscordMessageCommandFeatureService } from "./feature/discord-message-command-feature.service";
 import { DiscordMessageCommandHelpService } from "./help/discord-message-command-help.service";
-import { DiscordMessageCommandLunchService } from "./lunch/discord-message-command-lunch.service";
+import { DiscordMessageCommandLunchService } from "./lunch/services/discord-message-command-lunch.service";
 import { DiscordMessageCommandReleaseNotesService } from "./release-notes/discord-message-command-release-notes.service";
 import { DiscordMessageCommandVersionService } from "./version/discord-message-command-version.service";
 import { DiscordMessageContentService } from "../discord-message-content.service";

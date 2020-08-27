@@ -5,22 +5,23 @@ import {
 } from "discord.js";
 import moment from "moment-timezone";
 import { createMock } from "ts-auto-mock";
-import { ColorEnum } from "../../../../../../enums/color.enum";
-import { IconEnum } from "../../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
-import * as GetRandomValueFromEnumModule from "../../../../../../functions/randoms/get-random-value-from-enum";
-import { CoreEventService } from "../../../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../../../logger/services/logger.service";
-import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
-import { DiscordMessageCommandLunchDescriptionEnum } from "../../../enums/commands/lunch/discord-message-command-lunch-description.enum";
-import { DiscordMessageCommandLunchTitleEnum } from "../../../enums/commands/lunch/discord-message-command-lunch-title.enum";
-import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
+import { ColorEnum } from "../../../../../../../enums/color.enum";
+import { IconEnum } from "../../../../../../../enums/icon.enum";
+import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
+import { CoreEventService } from "../../../../../../core/services/core-event.service";
+import { ILoggerLog } from "../../../../../../logger/interfaces/logger-log";
+import { LoggerService } from "../../../../../../logger/services/logger.service";
+import { DiscordSoniaService } from "../../../../../users/services/discord-sonia.service";
+import { DiscordMessageCommandLunchDescriptionEnum } from "../../../../enums/commands/lunch/discord-message-command-lunch-description.enum";
+import { DiscordMessageCommandLunchTitleEnum } from "../../../../enums/commands/lunch/discord-message-command-lunch-title.enum";
+import { IDiscordMessageResponse } from "../../../../interfaces/discord-message-response";
+import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
+import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";
+import { DISCORD_MESSAGE_COMMAND_LUNCH_DESCRIPTION_MESSAGES } from "../constants/discord-message-command-lunch-description-messages";
+import { DISCORD_MESSAGE_COMMAND_LUNCH_TITLE_MESSAGES } from "../constants/discord-message-command-lunch-title-messages";
 import { DiscordMessageCommandLunchService } from "./discord-message-command-lunch.service";
 
-jest.mock(`../../../../../logger/services/chalk/chalk.service`);
+jest.mock(`../../../../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordMessageCommandLunchService`, (): void => {
   let service: DiscordMessageCommandLunchService;
@@ -133,7 +134,6 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
     let discordMessageConfigServiceGetMessageCommandLunchImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandLunchImageUrlSpy: jest.SpyInstance;
-    let getRandomValueFromEnumSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandLunchService();
@@ -154,10 +154,17 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         discordMessageConfigService,
         `getMessageCommandLunchImageUrl`
       );
-      getRandomValueFromEnumSpy = jest.spyOn(
-        GetRandomValueFromEnumModule,
-        `getRandomValueFromEnum`
-      );
+      jest
+        .spyOn(
+          DISCORD_MESSAGE_COMMAND_LUNCH_DESCRIPTION_MESSAGES,
+          `getRandomMessage`
+        )
+        .mockReturnValue(
+          DiscordMessageCommandLunchDescriptionEnum.I_WAS_STARVING
+        );
+      jest
+        .spyOn(DISCORD_MESSAGE_COMMAND_LUNCH_TITLE_MESSAGES, `getRandomMessage`)
+        .mockReturnValue(DiscordMessageCommandLunchTitleEnum.TIME_TO_EAT);
     });
 
     it(`should return a Discord message response embed with an author`, async (): Promise<
@@ -197,33 +204,12 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
       void
     > => {
       expect.assertions(1);
-      getRandomValueFromEnumSpy.mockReturnValue(
-        DiscordMessageCommandLunchDescriptionEnum.I_WAS_STARVING
-      );
 
       const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.description).toStrictEqual(`I was starving.`);
-    });
-
-    describe(`when the description can not be found inside the random lunch descriptions`, (): void => {
-      beforeEach((): void => {
-        getRandomValueFromEnumSpy.mockReturnValue(undefined);
-      });
-
-      it(`should return a Discord message response embed with a description`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse();
-
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.description).toStrictEqual(`Cool.`);
-      });
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
@@ -324,33 +310,12 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
       void
     > => {
       expect.assertions(1);
-      getRandomValueFromEnumSpy.mockReturnValue(
-        DiscordMessageCommandLunchTitleEnum.TIME_TO_EAT
-      );
 
       const result = await service.getMessageResponse();
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.title).toStrictEqual(`Time to eat!`);
-    });
-
-    describe(`when the title can not be found inside the random lunch titles`, (): void => {
-      beforeEach((): void => {
-        getRandomValueFromEnumSpy.mockReturnValue(undefined);
-      });
-
-      it(`should return a Discord message response embed with a title`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse();
-
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.title).toStrictEqual(`Lunch time!`);
-      });
     });
 
     it(`should return a Discord message response splitted`, async (): Promise<
