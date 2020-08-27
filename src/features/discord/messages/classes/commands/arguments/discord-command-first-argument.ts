@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { IDiscordCommandFirstArgument } from "../../interfaces/commands/discord-command-first-argument";
+import { IDiscordCommandFirstArgument } from "../../../interfaces/commands/discord-command-first-argument";
 
 export class DiscordCommandFirstArgument<T> {
   private _description;

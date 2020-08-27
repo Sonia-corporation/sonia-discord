@@ -1,6 +1,6 @@
 import { createMock } from "ts-auto-mock";
-import { IDiscordCommandFirstArgument } from "../../interfaces/commands/discord-command-first-argument";
-import { DiscordMessageCommandFeatureNameEnum } from "../../services/command/feature/enums/discord-message-command-feature-name.enum";
+import { IDiscordCommandFirstArgument } from "../../../interfaces/commands/discord-command-first-argument";
+import { DiscordMessageCommandFeatureNameEnum } from "../../../services/command/feature/enums/discord-message-command-feature-name.enum";
 import { DiscordCommandFirstArgument } from "./discord-command-first-argument";
 
 describe(`DiscordCommandFirstArgument`, (): void => {

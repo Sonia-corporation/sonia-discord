@@ -1,26 +1,29 @@
 import _ from "lodash";
-import { DiscordCommandFlagTypeEnum } from "../../enums/commands/discord-command-flag-type.enum";
-import { IDiscordCommandFlag } from "../../interfaces/commands/discord-command-flag";
+import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
+import { IDiscordCommandFlag } from "../../../interfaces/commands/discord-command-flag";
 
-export class DiscordCommandFlag<T> {
-  private _description;
-  private _name: T;
-  private _shortcuts: T[] | undefined;
-  private _type: DiscordCommandFlagTypeEnum;
+/**
+ * @description
+ * Common flag class
+ * Contains all basic properties and methods for the flags
+ */
+export abstract class DiscordCommandFlag<T> {
+  protected abstract _type: DiscordCommandFlagTypeEnum;
+  protected _description: string;
+  protected _name: T;
+  protected _shortcuts: T[] | undefined;
 
   /**
    * @param {Readonly<IDiscordCommandFlag>} discordCommandFlag Default values
    */
-  public constructor({
+  protected constructor({
     description,
     name,
     shortcuts,
-    type,
   }: Readonly<IDiscordCommandFlag<T>>) {
     this._description = description;
     this._name = name;
     this._shortcuts = shortcuts;
-    this._type = type;
   }
 
   public getDescription(): string {

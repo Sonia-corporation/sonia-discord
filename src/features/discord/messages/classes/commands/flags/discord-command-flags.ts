@@ -1,6 +1,6 @@
 import _ from "lodash";
-import { getRandomBoolean } from "../../../../../functions/randoms/get-random-boolean";
-import { DiscordCommandFlagTypeEnum } from "../../enums/commands/discord-command-flag-type.enum";
+import { getRandomBoolean } from "../../../../../../functions/randoms/get-random-boolean";
+import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { DiscordCommandFlag } from "./discord-command-flag";
 
 export class DiscordCommandFlags<T> {
