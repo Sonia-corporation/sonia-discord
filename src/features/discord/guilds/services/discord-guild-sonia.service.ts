@@ -1,7 +1,7 @@
 import { Guild, GuildChannel } from "discord.js";
 import _ from "lodash";
 import { filter, take } from "rxjs/operators";
-import { AbstractService } from "../../../../classes/abstract.service";
+import { AbstractService } from "../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../../logger/services/chalk/chalk.service";

@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { AbstractConfigService } from "../../../../../classes/abstract-config.service";
+import { AbstractConfigService } from "../../../../../classes/services/abstract-config.service";
 import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { IPartialNested } from "../../../../../types/partial-nested";

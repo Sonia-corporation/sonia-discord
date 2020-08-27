@@ -1,51 +1,20 @@
-import { EntityState, StoreConfig } from "@datorama/akita";
-import _ from "lodash";
-import { ServiceNameEnum } from "../enums/service-name.enum";
-import { StoreNameEnum } from "../enums/store-name.enum";
-import { CoreEventService } from "../features/core/services/core-event.service";
-import { AbstractEntityStoreService } from "./abstract-entity-store.service";
-import { AbstractQueryEntityService } from "./abstract-query-entity.service";
+import { createMock } from "ts-auto-mock";
+import { ServiceNameEnum } from "../../enums/service-name.enum";
+import { CoreEventService } from "../../features/core/services/core-event.service";
+import { AbstractStoreService } from "./abstract-store.service";
 
 interface IDummy {
   name: string;
 }
 
-interface IDummyState extends EntityState<IDummy, string> {
-  sort: string;
-}
-
-@StoreConfig({
-  idKey: `name`,
-  name: StoreNameEnum.GUILDS,
-})
-class DummyStore extends AbstractEntityStoreService<IDummyState> {
-  private static _instance: DummyStore;
-
-  public static getInstance(): DummyStore {
-    if (_.isNil(DummyStore._instance)) {
-      DummyStore._instance = new DummyStore();
-    }
-
-    return DummyStore._instance;
-  }
-
-  public constructor() {
-    super(ServiceNameEnum.CORE_SERVICE);
+class DummyService extends AbstractStoreService<IDummy> {
+  public constructor(serviceName: Readonly<ServiceNameEnum>) {
+    super(serviceName, createMock<IDummy>());
   }
 }
 
-class DummyQuery extends AbstractQueryEntityService<DummyStore, IDummyState> {
-  public constructor(
-    serviceName: Readonly<ServiceNameEnum>,
-    dummyStore: DummyStore
-  ) {
-    super(serviceName, dummyStore);
-  }
-}
-
-describe(`AbstractQueryEntityService`, (): void => {
+describe(`AbstractStoreService`, (): void => {
   let coreEventService: CoreEventService;
-  let dummyStore: DummyStore;
 
   let serviceName: ServiceNameEnum;
 
@@ -53,7 +22,6 @@ describe(`AbstractQueryEntityService`, (): void => {
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
-    dummyStore = DummyStore.getInstance();
 
     coreEventServiceNotifyServiceCreatedSpy = jest
       .spyOn(coreEventService, `notifyServiceCreated`)
@@ -68,7 +36,7 @@ describe(`AbstractQueryEntityService`, (): void => {
     it(`should notify about the creation of the AppConfig service`, (): void => {
       expect.assertions(2);
 
-      new DummyQuery(serviceName, dummyStore);
+      new DummyService(serviceName);
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
@@ -85,7 +53,7 @@ describe(`AbstractQueryEntityService`, (): void => {
     it(`should notify about the creation of the AppConfigCore service`, (): void => {
       expect.assertions(2);
 
-      new DummyQuery(serviceName, dummyStore);
+      new DummyService(serviceName);
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(

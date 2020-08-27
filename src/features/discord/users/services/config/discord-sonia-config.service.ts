@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { AbstractService } from "../../../../../classes/abstract.service";
+import { AbstractService } from "../../../../../classes/services/abstract.service";
 import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { IDiscordSoniaConfig } from "../../../interfaces/discord-sonia-config";

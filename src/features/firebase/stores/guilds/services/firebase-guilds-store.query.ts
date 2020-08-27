@@ -1,7 +1,7 @@
 import { StoreConfig } from "@datorama/akita";
 import _ from "lodash";
 import { filter, map, take } from "rxjs/operators";
-import { AbstractQueryEntityService } from "../../../../../classes/abstract-query-entity.service";
+import { AbstractQueryEntityService } from "../../../../../classes/stores/abstract-query-entity.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { StoreNameEnum } from "../../../../../enums/store-name.enum";
 import { FirebaseGuildsStore } from "../firebase-guilds-store";

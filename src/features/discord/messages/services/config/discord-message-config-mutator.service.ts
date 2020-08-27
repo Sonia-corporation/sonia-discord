@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { AbstractConfigService } from "../../../../../classes/abstract-config.service";
+import { AbstractConfigService } from "../../../../../classes/services/abstract-config.service";
 import { ColorEnum } from "../../../../../enums/color.enum";
 import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";

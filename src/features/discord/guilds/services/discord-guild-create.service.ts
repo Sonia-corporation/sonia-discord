@@ -2,7 +2,7 @@ import { Guild, GuildChannel, Message } from "discord.js";
 import admin from "firebase-admin";
 import _ from "lodash";
 import { filter, mergeMap, take } from "rxjs/operators";
-import { AbstractService } from "../../../../classes/abstract.service";
+import { AbstractService } from "../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { FirebaseGuildsService } from "../../../firebase/services/firebase-guilds.service";

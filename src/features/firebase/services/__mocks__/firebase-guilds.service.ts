@@ -1,6 +1,6 @@
 import admin from "firebase-admin";
 import _ from "lodash";
-import { AbstractService } from "../../../../classes/abstract.service";
+import { AbstractService } from "../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { IFirebaseGuild } from "../../types/firebase-guild";
 import CollectionReference = admin.firestore.CollectionReference;

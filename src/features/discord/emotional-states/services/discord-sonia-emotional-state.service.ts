@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { Job, scheduleJob } from "node-schedule";
 import { filter, take } from "rxjs/operators";
-import { AbstractService } from "../../../../classes/abstract.service";
+import { AbstractService } from "../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { getRandomValueFromEnum } from "../../../../functions/randoms/get-random-value-from-enum";

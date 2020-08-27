@@ -1,7 +1,7 @@
 import { Client } from "discord.js";
 import _ from "lodash";
 import { BehaviorSubject, Observable } from "rxjs";
-import { AbstractService } from "../../../../classes/abstract.service";
+import { AbstractService } from "../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../../logger/services/chalk/chalk.service";

@@ -4,7 +4,7 @@ import fs from "fs-extra";
 import _ from "lodash";
 import { BehaviorSubject, Observable } from "rxjs";
 import { filter, map, take } from "rxjs/operators";
-import { AbstractService } from "../../../classes/abstract.service";
+import { AbstractService } from "../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { ENVIRONMENT } from "../../../environment/constants/environment";
 import { IEnvironment } from "../../../environment/interfaces/environment";

@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { AbstractService } from "../../../../../../classes/abstract.service";
+import { AbstractService } from "../../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
 import { ChalkService } from "../../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../../logger/services/logger.service";

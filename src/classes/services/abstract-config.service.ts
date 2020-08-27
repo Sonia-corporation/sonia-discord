@@ -1,6 +1,6 @@
-import { IPartialNested } from "../types/partial-nested";
+import { IPartialNested } from "../../types/partial-nested";
 import { AbstractService } from "./abstract.service";
-import { ServiceNameEnum } from "../enums/service-name.enum";
+import { ServiceNameEnum } from "../../enums/service-name.enum";
 
 export abstract class AbstractConfigService<TConfig> extends AbstractService {
   protected constructor(

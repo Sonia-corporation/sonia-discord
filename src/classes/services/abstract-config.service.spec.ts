@@ -1,6 +1,6 @@
-import { ServiceNameEnum } from "../enums/service-name.enum";
-import { CoreEventService } from "../features/core/services/core-event.service";
-import { IPartialNested } from "../types/partial-nested";
+import { ServiceNameEnum } from "../../enums/service-name.enum";
+import { CoreEventService } from "../../features/core/services/core-event.service";
+import { IPartialNested } from "../../types/partial-nested";
 import { AbstractConfigService } from "./abstract-config.service";
 
 jest.mock(`../features/logger/services/logger.service`);

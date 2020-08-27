@@ -2,7 +2,7 @@ import scout from "@scout_apm/scout-apm";
 import { path } from "app-root-path";
 import express, { Express } from "express";
 import _ from "lodash";
-import { AbstractService } from "../../../classes/abstract.service";
+import { AbstractService } from "../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { AppConfigService } from "../../app/services/config/app-config.service";
 import { ChalkService } from "../../logger/services/chalk/chalk.service";

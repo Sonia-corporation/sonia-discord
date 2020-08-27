@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import _ from "lodash";
 import moment from "moment-timezone";
-import { AbstractService } from "../../../../../classes/abstract.service";
+import { AbstractService } from "../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { DiscordSoniaService } from "../../../users/services/discord-sonia.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";

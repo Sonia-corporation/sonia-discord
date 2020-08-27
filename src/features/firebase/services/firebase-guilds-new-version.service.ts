@@ -9,7 +9,7 @@ import admin from "firebase-admin";
 import _ from "lodash";
 import { forkJoin, Observable, of } from "rxjs";
 import { mapTo, mergeMap, take } from "rxjs/operators";
-import { AbstractService } from "../../../classes/abstract.service";
+import { AbstractService } from "../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { replaceInterpolation } from "../../../functions/formatters/replace-interpolation";
 import { getRandomValueFromEnum } from "../../../functions/randoms/get-random-value-from-enum";

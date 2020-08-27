@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { AbstractService } from "../../../classes/abstract.service";
+import { AbstractService } from "../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { FirebaseGuildsStoreService } from "../stores/guilds/services/firebase-guilds-store.service";
 import { FirebaseAppService } from "./firebase-app.service";
