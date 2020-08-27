@@ -7,7 +7,7 @@ import { IDiscordCommandFlag } from "../../../interfaces/commands/discord-comman
  * Common flag class
  * Contains all basic properties and methods for the flags
  */
-export abstract class DiscordCommandFlag<T> {
+export abstract class DiscordCommandFlag<T extends string> {
   protected abstract _type: DiscordCommandFlagTypeEnum;
   protected _description: string;
   protected _name: T;

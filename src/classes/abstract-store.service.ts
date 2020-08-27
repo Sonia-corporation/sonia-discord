@@ -1,13 +1,14 @@
 import { Store } from "@datorama/akita";
 import { ServiceNameEnum } from "../enums/service-name.enum";
 import { CoreEventService } from "../features/core/services/core-event.service";
+import { IAnyObject } from "../types/any-object";
 
 /**
  * @description
  * Log the creation of the service
  * Used for Store only
  */
-export abstract class AbstractStoreService<T> extends Store<T> {
+export abstract class AbstractStoreService<T = IAnyObject> extends Store<T> {
   protected readonly _serviceName: ServiceNameEnum;
 
   protected constructor(
