@@ -1,26 +1,22 @@
 import _ from "lodash";
-import { DiscordCommandFlagTypeEnum } from "../../enums/commands/discord-command-flag-type.enum";
-import { IDiscordCommandFlag } from "../../interfaces/commands/discord-command-flag";
+import { IDiscordCommandFirstArgument } from "../../../interfaces/commands/discord-command-first-argument";
 
-export class DiscordCommandFlag<T> {
+export class DiscordCommandFirstArgument<T> {
   private _description;
   private _name: T;
   private _shortcuts: T[] | undefined;
-  private _type: DiscordCommandFlagTypeEnum;
 
   /**
-   * @param {Readonly<IDiscordCommandFlag>} discordCommandFlag Default values
+   * @param {Readonly<DiscordCommandFirstArgument>} discordCommandFirstArgument Default values
    */
   public constructor({
     description,
     name,
     shortcuts,
-    type,
-  }: Readonly<IDiscordCommandFlag<T>>) {
+  }: Readonly<IDiscordCommandFirstArgument<T>>) {
     this._description = description;
     this._name = name;
     this._shortcuts = shortcuts;
-    this._type = type;
   }
 
   public getDescription(): string {
@@ -57,24 +53,16 @@ export class DiscordCommandFlag<T> {
     this._shortcuts = shortcuts;
   }
 
-  public getType(): DiscordCommandFlagTypeEnum {
-    return this._type;
-  }
-
-  public setType(type: Readonly<DiscordCommandFlagTypeEnum>): void {
-    this._type = type;
-  }
-
   public getLowerCaseNameAndShortcutsExample(): string {
     const shortcuts: string[] | undefined = this.getLowerCaseShortcuts();
-    let example = `--${this.getLowerCaseName()}`;
+    let example = this.getLowerCaseName();
 
     if (_.isArray(shortcuts) && !_.isEmpty(shortcuts)) {
       example += ` (or ${_.trimEnd(
         _.reduce(
           shortcuts,
           (value: Readonly<string>, shortcut: Readonly<string>): string =>
-            `${value}-${shortcut}, `,
+            `${value}${shortcut}, `,
           ``
         ),
         `, `

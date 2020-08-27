@@ -1,19 +1,26 @@
 import _ from "lodash";
-import { IDiscordCommandFirstArgument } from "../../interfaces/commands/discord-command-first-argument";
+import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
+import { IDiscordCommandFlag } from "../../../interfaces/commands/discord-command-flag";
 
-export class DiscordCommandFirstArgument<T> {
-  private _description;
-  private _name: T;
-  private _shortcuts: T[] | undefined;
+/**
+ * @description
+ * Common flag class
+ * Contains all basic properties and methods for the flags
+ */
+export abstract class DiscordCommandFlag<T> {
+  protected abstract _type: DiscordCommandFlagTypeEnum;
+  protected _description;
+  protected _name: T;
+  protected _shortcuts: T[] | undefined;
 
   /**
-   * @param {Readonly<DiscordCommandFirstArgument>} discordCommandFirstArgument Default values
+   * @param {Readonly<IDiscordCommandFlag>} discordCommandFlag Default values
    */
-  public constructor({
+  protected constructor({
     description,
     name,
     shortcuts,
-  }: Readonly<IDiscordCommandFirstArgument<T>>) {
+  }: Readonly<IDiscordCommandFlag<T>>) {
     this._description = description;
     this._name = name;
     this._shortcuts = shortcuts;
@@ -53,16 +60,24 @@ export class DiscordCommandFirstArgument<T> {
     this._shortcuts = shortcuts;
   }
 
+  public getType(): DiscordCommandFlagTypeEnum {
+    return this._type;
+  }
+
+  public setType(type: Readonly<DiscordCommandFlagTypeEnum>): void {
+    this._type = type;
+  }
+
   public getLowerCaseNameAndShortcutsExample(): string {
     const shortcuts: string[] | undefined = this.getLowerCaseShortcuts();
-    let example = this.getLowerCaseName();
+    let example = `--${this.getLowerCaseName()}`;
 
     if (_.isArray(shortcuts) && !_.isEmpty(shortcuts)) {
       example += ` (or ${_.trimEnd(
         _.reduce(
           shortcuts,
           (value: Readonly<string>, shortcut: Readonly<string>): string =>
-            `${value}${shortcut}, `,
+            `${value}-${shortcut}, `,
           ``
         ),
         `, `

@@ -1,18 +1,18 @@
 import { createMock } from "ts-auto-mock";
-import { DiscordCommandFlagTypeEnum } from "../../enums/commands/discord-command-flag-type.enum";
-import { IDiscordCommandFlag } from "../../interfaces/commands/discord-command-flag";
-import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
-import { DiscordCommandFlag } from "./discord-command-flag";
+import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
+import { IDiscordCommandFlag } from "../../../interfaces/commands/discord-command-flag";
+import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
+import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
 
-describe(`DiscordCommandFlag`, (): void => {
-  let discordCommandFlag: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+describe(`DiscordCommandBooleanFlag`, (): void => {
+  let discordCommandFlag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
   describe(`constructor()`, (): void => {
     describe(`when the class is created with a description`, (): void => {
       it(`should update the description inside the class`, (): void => {
         expect.assertions(1);
 
-        discordCommandFlag = new DiscordCommandFlag<
+        discordCommandFlag = new DiscordCommandBooleanFlag<
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
@@ -32,7 +32,7 @@ describe(`DiscordCommandFlag`, (): void => {
       it(`should update the name inside the class`, (): void => {
         expect.assertions(1);
 
-        discordCommandFlag = new DiscordCommandFlag<
+        discordCommandFlag = new DiscordCommandBooleanFlag<
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
@@ -53,7 +53,7 @@ describe(`DiscordCommandFlag`, (): void => {
         it(`should remove the shortcuts inside the class`, (): void => {
           expect.assertions(1);
 
-          discordCommandFlag = new DiscordCommandFlag<
+          discordCommandFlag = new DiscordCommandBooleanFlag<
             DiscordMessageCommandFeatureNoonFlagEnum
           >(
             createMock<
@@ -71,7 +71,7 @@ describe(`DiscordCommandFlag`, (): void => {
         it(`should update the shortcuts inside the class`, (): void => {
           expect.assertions(1);
 
-          discordCommandFlag = new DiscordCommandFlag<
+          discordCommandFlag = new DiscordCommandBooleanFlag<
             DiscordMessageCommandFeatureNoonFlagEnum
           >(
             createMock<
@@ -87,31 +87,11 @@ describe(`DiscordCommandFlag`, (): void => {
         });
       });
     });
-
-    describe(`when the class is created with a type`, (): void => {
-      it(`should update the type inside the class`, (): void => {
-        expect.assertions(1);
-
-        discordCommandFlag = new DiscordCommandFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            type: DiscordCommandFlagTypeEnum.BOOLEAN,
-          })
-        );
-
-        expect(discordCommandFlag.getType()).toStrictEqual(
-          DiscordCommandFlagTypeEnum.BOOLEAN
-        );
-      });
-    });
   });
 
   describe(`getDescription()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandFlag<
+      discordCommandFlag = new DiscordCommandBooleanFlag<
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
@@ -132,7 +112,7 @@ describe(`DiscordCommandFlag`, (): void => {
 
   describe(`setDescription()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandFlag<
+      discordCommandFlag = new DiscordCommandBooleanFlag<
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
@@ -154,7 +134,7 @@ describe(`DiscordCommandFlag`, (): void => {
 
   describe(`getName()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandFlag<
+      discordCommandFlag = new DiscordCommandBooleanFlag<
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
@@ -179,7 +159,7 @@ describe(`DiscordCommandFlag`, (): void => {
 
   describe(`getLowerCaseName()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandFlag<
+      discordCommandFlag = new DiscordCommandBooleanFlag<
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
@@ -202,7 +182,7 @@ describe(`DiscordCommandFlag`, (): void => {
 
   describe(`setName()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandFlag<
+      discordCommandFlag = new DiscordCommandBooleanFlag<
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
@@ -226,7 +206,7 @@ describe(`DiscordCommandFlag`, (): void => {
 
   describe(`getShortcuts()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandFlag<
+      discordCommandFlag = new DiscordCommandBooleanFlag<
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
@@ -251,7 +231,7 @@ describe(`DiscordCommandFlag`, (): void => {
 
   describe(`getLowerCaseShortcuts()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandFlag<
+      discordCommandFlag = new DiscordCommandBooleanFlag<
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
@@ -275,7 +255,7 @@ describe(`DiscordCommandFlag`, (): void => {
 
   describe(`setShortcuts()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandFlag<
+      discordCommandFlag = new DiscordCommandBooleanFlag<
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
@@ -299,7 +279,7 @@ describe(`DiscordCommandFlag`, (): void => {
 
   describe(`getType()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandFlag<
+      discordCommandFlag = new DiscordCommandBooleanFlag<
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
@@ -320,7 +300,7 @@ describe(`DiscordCommandFlag`, (): void => {
 
   describe(`setType()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandFlag<
+      discordCommandFlag = new DiscordCommandBooleanFlag<
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
@@ -342,7 +322,7 @@ describe(`DiscordCommandFlag`, (): void => {
 
   describe(`getLowerCaseNameAndShortcutsExample()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandFlag<
+      discordCommandFlag = new DiscordCommandBooleanFlag<
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<

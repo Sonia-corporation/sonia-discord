@@ -1,8 +1,8 @@
 import { createMock } from "ts-auto-mock";
-import { DiscordCommandFlagTypeEnum } from "../../enums/commands/discord-command-flag-type.enum";
-import { IDiscordCommandFlag } from "../../interfaces/commands/discord-command-flag";
-import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
-import { DiscordCommandFlag } from "./discord-command-flag";
+import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
+import { IDiscordCommandFlag } from "../../../interfaces/commands/discord-command-flag";
+import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
+import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
 import { DiscordCommandFlags } from "./discord-command-flags";
 
 describe(`DiscordCommandFlags`, (): void => {
@@ -13,7 +13,7 @@ describe(`DiscordCommandFlags`, (): void => {
       it(`should update the flags inside the class`, (): void => {
         expect.assertions(1);
         const flags = createMock<
-          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
         >();
 
         discordCommandFlags = new DiscordCommandFlags<
@@ -31,7 +31,7 @@ describe(`DiscordCommandFlags`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
         >()
       );
     });
@@ -39,7 +39,7 @@ describe(`DiscordCommandFlags`, (): void => {
     it(`should return the flags`, (): void => {
       expect.assertions(1);
       const flags = createMock<
-        DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+        DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
       >();
       discordCommandFlags.setFlags(flags);
 
@@ -55,7 +55,7 @@ describe(`DiscordCommandFlags`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
         >()
       );
     });
@@ -63,7 +63,7 @@ describe(`DiscordCommandFlags`, (): void => {
     it(`should update the flags with the given ones`, (): void => {
       expect.assertions(1);
       const flags = createMock<
-        DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+        DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
       >();
 
       discordCommandFlags.setFlags(flags);
@@ -78,7 +78,7 @@ describe(`DiscordCommandFlags`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
         >()
       );
     });
@@ -98,11 +98,11 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is one flag`, (): void => {
-      let flag: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
       beforeEach((): void => {
         flag = createMock<
-          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>
         >();
         discordCommandFlags.setFlags([flag]);
       });
@@ -117,15 +117,15 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is multiple flags`, (): void => {
-      let flag1: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
-      let flag2: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag1: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
       beforeEach((): void => {
         flag1 = createMock<
-          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>
         >();
         flag2 = createMock<
-          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>
         >();
         discordCommandFlags.setFlags([flag1, flag2]);
       });
@@ -146,7 +146,7 @@ describe(`DiscordCommandFlags`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
         >()
       );
     });
@@ -166,10 +166,12 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is one flag`, (): void => {
-      let flag: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
       beforeEach((): void => {
-        flag = new DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>(
+        flag = new DiscordCommandBooleanFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
           createMock<
             IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
           >()
@@ -200,7 +202,7 @@ describe(`DiscordCommandFlags`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
         >()
       );
     });
@@ -220,10 +222,12 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is one flag`, (): void => {
-      let flag: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
       beforeEach((): void => {
-        flag = new DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>(
+        flag = new DiscordCommandBooleanFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
           createMock<
             IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
           >({
@@ -243,11 +247,11 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is two flags`, (): void => {
-      let flag1: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
-      let flag2: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag1: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
       beforeEach((): void => {
-        flag1 = new DiscordCommandFlag<
+        flag1 = new DiscordCommandBooleanFlag<
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
@@ -256,7 +260,7 @@ describe(`DiscordCommandFlags`, (): void => {
             name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
           })
         );
-        flag2 = new DiscordCommandFlag<
+        flag2 = new DiscordCommandBooleanFlag<
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
@@ -284,7 +288,7 @@ describe(`DiscordCommandFlags`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
         >()
       );
     });
@@ -304,10 +308,12 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is one flag`, (): void => {
-      let flag: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
       beforeEach((): void => {
-        flag = new DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>(
+        flag = new DiscordCommandBooleanFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
           createMock<
             IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
           >({
@@ -327,10 +333,12 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is one flag with two shortcuts`, (): void => {
-      let flag: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
       beforeEach((): void => {
-        flag = new DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>(
+        flag = new DiscordCommandBooleanFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
           createMock<
             IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
           >({
@@ -354,11 +362,11 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is two flags`, (): void => {
-      let flag1: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
-      let flag2: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag1: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
       beforeEach((): void => {
-        flag1 = new DiscordCommandFlag<
+        flag1 = new DiscordCommandBooleanFlag<
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
@@ -367,7 +375,7 @@ describe(`DiscordCommandFlags`, (): void => {
             name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
           })
         );
-        flag2 = new DiscordCommandFlag<
+        flag2 = new DiscordCommandBooleanFlag<
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
@@ -389,11 +397,11 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is two flags with two shortcuts`, (): void => {
-      let flag1: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
-      let flag2: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag1: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
       beforeEach((): void => {
-        flag1 = new DiscordCommandFlag<
+        flag1 = new DiscordCommandBooleanFlag<
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
@@ -406,7 +414,7 @@ describe(`DiscordCommandFlags`, (): void => {
             ],
           })
         );
-        flag2 = new DiscordCommandFlag<
+        flag2 = new DiscordCommandBooleanFlag<
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
@@ -440,7 +448,7 @@ describe(`DiscordCommandFlags`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
         >()
       );
     });
@@ -460,10 +468,12 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is one flag`, (): void => {
-      let flag: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
       beforeEach((): void => {
-        flag = new DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>(
+        flag = new DiscordCommandBooleanFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
           createMock<
             IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
           >({
@@ -483,11 +493,11 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is two flags`, (): void => {
-      let flag1: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
-      let flag2: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag1: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
       beforeEach((): void => {
-        flag1 = new DiscordCommandFlag<
+        flag1 = new DiscordCommandBooleanFlag<
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
@@ -496,7 +506,7 @@ describe(`DiscordCommandFlags`, (): void => {
             name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
           })
         );
-        flag2 = new DiscordCommandFlag<
+        flag2 = new DiscordCommandBooleanFlag<
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
@@ -524,7 +534,7 @@ describe(`DiscordCommandFlags`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
         >()
       );
     });
@@ -544,10 +554,12 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is one flag`, (): void => {
-      let flag: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
       beforeEach((): void => {
-        flag = new DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>(
+        flag = new DiscordCommandBooleanFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
           createMock<
             IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
           >({
@@ -567,11 +579,11 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is two flags with one shortcut each`, (): void => {
-      let flag1: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
-      let flag2: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag1: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
       beforeEach((): void => {
-        flag1 = new DiscordCommandFlag<
+        flag1 = new DiscordCommandBooleanFlag<
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
@@ -581,7 +593,7 @@ describe(`DiscordCommandFlags`, (): void => {
             shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
           })
         );
-        flag2 = new DiscordCommandFlag<
+        flag2 = new DiscordCommandBooleanFlag<
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
@@ -604,11 +616,11 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is two flags with two shortcuts each`, (): void => {
-      let flag1: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
-      let flag2: DiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag1: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
       beforeEach((): void => {
-        flag1 = new DiscordCommandFlag<
+        flag1 = new DiscordCommandBooleanFlag<
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
@@ -621,7 +633,7 @@ describe(`DiscordCommandFlags`, (): void => {
             ],
           })
         );
-        flag2 = new DiscordCommandFlag<
+        flag2 = new DiscordCommandBooleanFlag<
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<

@@ -1,5 +1,5 @@
-import { DiscordCommandFirstArgument } from "../../../../classes/commands/discord-command-first-argument";
-import { DiscordCommandFirstArguments } from "../../../../classes/commands/discord-command-first-arguments";
+import { DiscordCommandFirstArgument } from "../../../../classes/commands/arguments/discord-command-first-argument";
+import { DiscordCommandFirstArguments } from "../../../../classes/commands/arguments/discord-command-first-arguments";
 import { DiscordMessageCommandFeatureNameEnum } from "../enums/discord-message-command-feature-name.enum";
 
 export const DISCORD_MESSAGE_COMMAND_FEATURE_NAMES: DiscordCommandFirstArguments<DiscordMessageCommandFeatureNameEnum> = new DiscordCommandFirstArguments(
