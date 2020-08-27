@@ -9,7 +9,7 @@ import { IDiscordCommandFlag } from "../../../interfaces/commands/discord-comman
  */
 export abstract class DiscordCommandFlag<T> {
   protected abstract _type: DiscordCommandFlagTypeEnum;
-  protected _description;
+  protected _description: string;
   protected _name: T;
   protected _shortcuts: T[] | undefined;
 
