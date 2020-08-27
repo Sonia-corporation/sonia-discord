@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { IDiscordCommandFirstArgument } from "../../../interfaces/commands/discord-command-first-argument";
 
-export class DiscordCommandFirstArgument<T> {
+export class DiscordCommandFirstArgument<T extends string> {
   private _description;
   private _name: T;
   private _shortcuts: T[] | undefined;

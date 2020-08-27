@@ -1,7 +1,8 @@
 import _ from "lodash";
+import { removeUndefined } from "../../../../../../functions/formatters/remove-undefined";
 import { DiscordCommandFirstArgument } from "./discord-command-first-argument";
 
-export class DiscordCommandFirstArguments<T> {
+export class DiscordCommandFirstArguments<T extends string> {
   private _arguments: DiscordCommandFirstArgument<T>[] = [];
 
   /**
@@ -77,7 +78,7 @@ export class DiscordCommandFirstArguments<T> {
       _.map(
         this.getArguments(),
         (argument: Readonly<DiscordCommandFirstArgument<T>>): string[] =>
-          _.compact(
+          removeUndefined(
             _.flatten([
               argument.getLowerCaseName(),
               argument.getLowerCaseShortcuts(),
