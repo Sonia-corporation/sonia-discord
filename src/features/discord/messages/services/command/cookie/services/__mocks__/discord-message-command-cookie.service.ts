@@ -1,9 +1,9 @@
 import { MessageEmbed } from "discord.js";
 import _ from "lodash";
 import { createMock } from "ts-auto-mock";
-import { AbstractService } from "../../../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { IDiscordMessageResponse } from "../../../../interfaces/discord-message-response";
+import { AbstractService } from "../../../../../../../../classes/services/abstract.service";
+import { ServiceNameEnum } from "../../../../../../../../enums/service-name.enum";
+import { IDiscordMessageResponse } from "../../../../../interfaces/discord-message-response";
 
 export class DiscordMessageCommandCookieService extends AbstractService {
   private static _instance: DiscordMessageCommandCookieService;

@@ -12,7 +12,7 @@ import { isDiscordGuildChannelWritable } from "../../channels/functions/types/is
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
 import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-error.service";
 import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
-import { DiscordMessageCommandCookieService } from "../../messages/services/command/cookie/discord-message-command-cookie.service";
+import { DiscordMessageCommandCookieService } from "../../messages/services/command/cookie/services/discord-message-command-cookie.service";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordGuildSoniaChannelNameEnum } from "../enums/discord-guild-sonia-channel-name.enum";
 import { DiscordGuildConfigService } from "./config/discord-guild-config.service";

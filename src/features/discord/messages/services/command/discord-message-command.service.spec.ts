@@ -4,7 +4,7 @@ import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../core/services/core-event.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 import { DiscordMessageConfigService } from "../config/discord-message-config.service";
-import { DiscordMessageCommandCookieService } from "./cookie/discord-message-command-cookie.service";
+import { DiscordMessageCommandCookieService } from "./cookie/services/discord-message-command-cookie.service";
 import { DiscordMessageCommandService } from "./discord-message-command.service";
 import { DiscordMessageCommandErrorService } from "./error/discord-message-command-error.service";
 import { DiscordMessageCommandFeatureService } from "./feature/discord-message-command-feature.service";

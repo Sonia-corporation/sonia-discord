@@ -10,7 +10,7 @@ import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
 import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-error.service";
 import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
-import { DiscordMessageCommandCookieService } from "../../messages/services/command/cookie/discord-message-command-cookie.service";
+import { DiscordMessageCommandCookieService } from "../../messages/services/command/cookie/services/discord-message-command-cookie.service";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordGuildSoniaChannelNameEnum } from "../enums/discord-guild-sonia-channel-name.enum";
 import { IDiscordGuildSoniaSendMessageToChannel } from "../interfaces/discord-guild-sonia-send-message-to-channel";
@@ -23,7 +23,7 @@ jest.mock(`./discord-guild-sonia.service`);
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 jest.mock(`../../logger/services/discord-logger-error.service`);
 jest.mock(
-  `../../messages/services/command/cookie/discord-message-command-cookie.service`
+  `../../messages/services/command/cookie/services/discord-message-command-cookie.service`
 );
 
 describe(`DiscordGuildCreateService`, (): void => {

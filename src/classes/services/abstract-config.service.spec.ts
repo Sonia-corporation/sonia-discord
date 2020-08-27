@@ -3,9 +3,9 @@ import { CoreEventService } from "../../features/core/services/core-event.servic
 import { IPartialNested } from "../../types/partial-nested";
 import { AbstractConfigService } from "./abstract-config.service";
 
-jest.mock(`../features/logger/services/logger.service`);
-jest.mock(`../features/logger/services/chalk/chalk.service`);
-jest.mock(`../features/config/services/config.service`);
+jest.mock(`../../features/logger/services/logger.service`);
+jest.mock(`../../features/logger/services/chalk/chalk.service`);
+jest.mock(`../../features/config/services/config.service`);
 
 interface IDummy {
   key1: string;

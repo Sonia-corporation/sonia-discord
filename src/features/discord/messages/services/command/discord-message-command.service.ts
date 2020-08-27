@@ -3,7 +3,7 @@ import { AbstractService } from "../../../../../classes/services/abstract.servic
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../types/any-discord-message";
-import { DiscordMessageCommandCookieService } from "./cookie/discord-message-command-cookie.service";
+import { DiscordMessageCommandCookieService } from "./cookie/services/discord-message-command-cookie.service";
 import { DiscordMessageCommandErrorService } from "./error/discord-message-command-error.service";
 import { DiscordMessageCommandFeatureService } from "./feature/discord-message-command-feature.service";
 import { DiscordMessageCommandHelpService } from "./help/discord-message-command-help.service";
