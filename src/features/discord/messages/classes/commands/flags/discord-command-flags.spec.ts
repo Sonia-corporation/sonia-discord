@@ -877,7 +877,7 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(result).toStrictEqual([
             {
               description: `The flag \`enabled\` does not have a value. Specify either \`true\` or \`false\`.`,
-              isUnknown: true,
+              isUnknown: false,
               name: `Invalid boolean flag`,
             },
           ] as IDiscordCommandFlagsErrors);
@@ -897,7 +897,7 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(result).toStrictEqual([
             {
               description: `The flag \`enabled\` does not have a value. Specify either \`true\` or \`false\`.`,
-              isUnknown: true,
+              isUnknown: false,
               name: `Invalid boolean flag`,
             },
           ] as IDiscordCommandFlagsErrors);
@@ -1051,7 +1051,7 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(result).toStrictEqual([
             {
               description: `The flag \`enabled\` does not have a value. Specify either \`true\` or \`false\`.`,
-              isUnknown: true,
+              isUnknown: false,
               name: `Invalid boolean flag`,
             },
           ] as IDiscordCommandFlagsErrors);
@@ -1071,7 +1071,7 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(result).toStrictEqual([
             {
               description: `The flag \`enabled\` does not have a value. Specify either \`true\` or \`false\`.`,
-              isUnknown: true,
+              isUnknown: false,
               name: `Invalid boolean flag`,
             },
           ] as IDiscordCommandFlagsErrors);
@@ -1245,7 +1245,7 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(result).toStrictEqual([
             {
               description: `The flag \`enabled\` does not have a value. Specify either \`true\` or \`false\`.`,
-              isUnknown: true,
+              isUnknown: false,
               name: `Invalid boolean flag`,
             },
             {
@@ -1270,7 +1270,7 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(result).toStrictEqual([
             {
               description: `The flag \`enabled\` does not have a value. Specify either \`true\` or \`false\`.`,
-              isUnknown: true,
+              isUnknown: false,
               name: `Invalid boolean flag`,
             },
             {

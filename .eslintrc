@@ -134,6 +134,7 @@ rules:
         - should
         - contains
         - as
+        - to
     - selector: parameter
       format:
         - camelCase
@@ -150,6 +151,7 @@ rules:
         - should
         - contains
         - as
+        - to
     - selector: function
       format:
         - camelCase

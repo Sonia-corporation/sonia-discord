@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { discordCommandRemoveFlagPrefix } from "./discord-command-remove-flag-prefix";
 
 /**
  * @description
@@ -14,15 +15,21 @@ import _ from "lodash";
  * discordCommandGetFlagName('--f=dummy') => f
  *
  * @param {Readonly<string>} messageFlag A flag as a message
+ * @param {Readonly<boolean>} toLowerCase Return the flag name to lower case
  *
  * @return {string | null} a string when the flag name exists
  */
 export function discordCommandGetFlagName(
-  messageFlag: Readonly<string>
+  messageFlag: Readonly<string>,
+  toLowerCase: Readonly<boolean> = false
 ): string | null {
   const flagName: string | undefined = _.head(
-    _.split(_.trimStart(messageFlag, `--`), `=`)
+    _.split(discordCommandRemoveFlagPrefix(messageFlag), `=`)
   );
 
-  return _.isNil(flagName) || _.isEmpty(flagName) ? null : flagName;
+  return _.isNil(flagName) || _.isEmpty(flagName)
+    ? null
+    : _.isEqual(toLowerCase, true)
+    ? _.toLower(flagName)
+    : flagName;
 }
