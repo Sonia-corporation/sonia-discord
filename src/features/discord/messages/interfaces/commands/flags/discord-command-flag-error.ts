@@ -10,6 +10,12 @@ export interface IDiscordCommandFlagError {
 
   /**
    * @description
+   * true when the flag is not allowed in the associated list of flags
+   */
+  isUnknown: boolean;
+
+  /**
+   * @description
    * The name of the error
    *
    * Usually used as the title for an embed field
