@@ -10,9 +10,9 @@ import { DiscordMessageConfigService } from "../../config/discord-message-config
 import { DiscordMessageCommandFeatureService } from "./discord-message-command-feature.service";
 import { DiscordMessageCommandFeatureNoonService } from "./features/noon/services/discord-message-command-feature-noon.service";
 import { DiscordMessageCommandFeatureEmptyContentErrorService } from "./services/discord-message-command-feature-empty-content-error.service";
-import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from "./services/discord-message-command-feature-empty-feature-name-error.service";
-import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from "./services/discord-message-command-feature-empty-flags-error.service";
-import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from "./services/discord-message-command-feature-wrong-feature-name-error.service";
+import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from "./services/feature-names/discord-message-command-feature-empty-feature-name-error.service";
+import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from "./services/flags/discord-message-command-feature-empty-flags-error.service";
+import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from "./services/feature-names/discord-message-command-feature-wrong-feature-name-error.service";
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 

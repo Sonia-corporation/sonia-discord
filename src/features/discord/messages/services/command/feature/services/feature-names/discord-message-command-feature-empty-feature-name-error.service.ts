@@ -1,11 +1,11 @@
 import { EmbedFieldData, MessageEmbedOptions } from "discord.js";
 import _ from "lodash";
-import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { DiscordMessageCommandEnum } from "../../../../enums/commands/discord-message-command.enum";
-import { IDiscordMessageResponse } from "../../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
-import { DiscordMessageCommandCliErrorService } from "../../discord-message-command-cli-error.service";
-import { DiscordMessageCommandFeatureErrorCoreService } from "./discord-message-command-feature-error-core.service";
+import { ServiceNameEnum } from "../../../../../../../../enums/service-name.enum";
+import { DiscordMessageCommandEnum } from "../../../../../enums/commands/discord-message-command.enum";
+import { IDiscordMessageResponse } from "../../../../../interfaces/discord-message-response";
+import { IAnyDiscordMessage } from "../../../../../types/any-discord-message";
+import { DiscordMessageCommandCliErrorService } from "../../../discord-message-command-cli-error.service";
+import { DiscordMessageCommandFeatureErrorCoreService } from "../discord-message-command-feature-error-core.service";
 
 export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends DiscordMessageCommandFeatureErrorCoreService {
   private static _instance: DiscordMessageCommandFeatureEmptyFeatureNameErrorService;

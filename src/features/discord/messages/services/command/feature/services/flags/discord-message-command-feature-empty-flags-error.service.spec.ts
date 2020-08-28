@@ -6,17 +6,17 @@ import {
 } from "discord.js";
 import moment from "moment-timezone";
 import { createMock } from "ts-auto-mock";
-import { ColorEnum } from "../../../../../../../enums/color.enum";
-import { IconEnum } from "../../../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../../../core/services/core-event.service";
-import { DiscordSoniaService } from "../../../../../users/services/discord-sonia.service";
-import { DiscordMessageCommandEnum } from "../../../../enums/commands/discord-message-command.enum";
-import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";
-import { DiscordMessageCommandCliErrorService } from "../../discord-message-command-cli-error.service";
-import { DiscordMessageCommandFeatureNameEnum } from "../enums/discord-message-command-feature-name.enum";
-import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../features/noon/constants/discord-message-command-feature-noon-flags";
+import { ColorEnum } from "../../../../../../../../enums/color.enum";
+import { IconEnum } from "../../../../../../../../enums/icon.enum";
+import { ServiceNameEnum } from "../../../../../../../../enums/service-name.enum";
+import { CoreEventService } from "../../../../../../../core/services/core-event.service";
+import { DiscordSoniaService } from "../../../../../../users/services/discord-sonia.service";
+import { DiscordMessageCommandEnum } from "../../../../../enums/commands/discord-message-command.enum";
+import { IAnyDiscordMessage } from "../../../../../types/any-discord-message";
+import { DiscordMessageConfigService } from "../../../../config/discord-message-config.service";
+import { DiscordMessageCommandCliErrorService } from "../../../discord-message-command-cli-error.service";
+import { DiscordMessageCommandFeatureNameEnum } from "../../enums/discord-message-command-feature-name.enum";
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../../features/noon/constants/discord-message-command-feature-noon-flags";
 import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from "./discord-message-command-feature-empty-flags-error.service";
 
 describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {

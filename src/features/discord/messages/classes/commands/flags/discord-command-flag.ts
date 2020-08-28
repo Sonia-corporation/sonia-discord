@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
-import { IDiscordCommandFlag } from "../../../interfaces/commands/discord-command-flag";
+import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 
 /**
  * @description

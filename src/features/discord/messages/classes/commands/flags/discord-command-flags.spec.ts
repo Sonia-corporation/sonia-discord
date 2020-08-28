@@ -1,6 +1,6 @@
 import { createMock } from "ts-auto-mock";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
-import { IDiscordCommandFlag } from "../../../interfaces/commands/discord-command-flag";
+import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
 import { DiscordCommandFlags } from "./discord-command-flags";

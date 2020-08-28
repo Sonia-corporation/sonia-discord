@@ -1,15 +1,15 @@
 import { EmbedFieldData, MessageEmbedOptions } from "discord.js";
 import _ from "lodash";
-import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { DiscordMessageCommandEnum } from "../../../../enums/commands/discord-message-command.enum";
-import { discordGetCommandAndFirstArgument } from "../../../../functions/commands/getters/discord-get-command-and-first-argument";
-import { IDiscordMessageResponse } from "../../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";
-import { DiscordMessageCommandCliErrorService } from "../../discord-message-command-cli-error.service";
-import { DiscordMessageCommandFeatureNameEnum } from "../enums/discord-message-command-feature-name.enum";
-import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../features/noon/constants/discord-message-command-feature-noon-flags";
-import { DiscordMessageCommandFeatureErrorCoreService } from "./discord-message-command-feature-error-core.service";
+import { ServiceNameEnum } from "../../../../../../../../enums/service-name.enum";
+import { DiscordMessageCommandEnum } from "../../../../../enums/commands/discord-message-command.enum";
+import { discordGetCommandAndFirstArgument } from "../../../../../functions/commands/getters/discord-get-command-and-first-argument";
+import { IDiscordMessageResponse } from "../../../../../interfaces/discord-message-response";
+import { IAnyDiscordMessage } from "../../../../../types/any-discord-message";
+import { DiscordMessageConfigService } from "../../../../config/discord-message-config.service";
+import { DiscordMessageCommandCliErrorService } from "../../../discord-message-command-cli-error.service";
+import { DiscordMessageCommandFeatureNameEnum } from "../../enums/discord-message-command-feature-name.enum";
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../../features/noon/constants/discord-message-command-feature-noon-flags";
+import { DiscordMessageCommandFeatureErrorCoreService } from "../discord-message-command-feature-error-core.service";
 
 export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordMessageCommandFeatureErrorCoreService {
   private static _instance: DiscordMessageCommandFeatureEmptyFlagsErrorService;
