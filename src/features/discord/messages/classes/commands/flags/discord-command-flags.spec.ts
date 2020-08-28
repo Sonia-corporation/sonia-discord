@@ -1,7 +1,9 @@
 import { createMock } from "ts-auto-mock";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON } from "../../../services/command/feature/constants/discord-message-command-feature-name-noon";
 import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
+import { IDiscordCommandFlagsErrors } from "../../../types/commands/discord-command-flags-errors";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
 import { DiscordCommandFlags } from "./discord-command-flags";
 
@@ -9,6 +11,27 @@ describe(`DiscordCommandFlags`, (): void => {
   let discordCommandFlags: DiscordCommandFlags<DiscordMessageCommandFeatureNoonFlagEnum>;
 
   describe(`constructor()`, (): void => {
+    describe(`when the class is created with a command`, (): void => {
+      it(`should update the command inside the class`, (): void => {
+        expect.assertions(1);
+
+        discordCommandFlags = new DiscordCommandFlags<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >({
+          command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+          flags: createMock<
+            DiscordCommandBooleanFlag<
+              DiscordMessageCommandFeatureNoonFlagEnum
+            >[]
+          >(),
+        });
+
+        expect(discordCommandFlags.getCommand()).toStrictEqual(
+          DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON
+        );
+      });
+    });
+
     describe(`when the class is created with some flags`, (): void => {
       it(`should update the flags inside the class`, (): void => {
         expect.assertions(1);
@@ -18,10 +41,58 @@ describe(`DiscordCommandFlags`, (): void => {
 
         discordCommandFlags = new DiscordCommandFlags<
           DiscordMessageCommandFeatureNoonFlagEnum
-        >(flags);
+        >({
+          command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+          flags,
+        });
 
         expect(discordCommandFlags.getFlags()).toStrictEqual(flags);
       });
+    });
+  });
+
+  describe(`getCommand()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlags = new DiscordCommandFlags<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >({
+        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        flags: createMock<
+          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+        >(),
+      });
+    });
+
+    it(`should return the command`, (): void => {
+      expect.assertions(1);
+      discordCommandFlags.setCommand(DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON);
+
+      const result = discordCommandFlags.getCommand();
+
+      expect(result).toStrictEqual(DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON);
+    });
+  });
+
+  describe(`setCommand()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlags = new DiscordCommandFlags<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >({
+        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        flags: createMock<
+          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+        >(),
+      });
+    });
+
+    it(`should update the command with the given ones`, (): void => {
+      expect.assertions(1);
+
+      discordCommandFlags.setCommand(DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON);
+
+      expect(discordCommandFlags.getCommand()).toStrictEqual(
+        DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON
+      );
     });
   });
 
@@ -29,11 +100,12 @@ describe(`DiscordCommandFlags`, (): void => {
     beforeEach((): void => {
       discordCommandFlags = new DiscordCommandFlags<
         DiscordMessageCommandFeatureNoonFlagEnum
-      >(
-        createMock<
+      >({
+        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        flags: createMock<
           DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >()
-      );
+        >(),
+      });
     });
 
     it(`should return the flags`, (): void => {
@@ -53,11 +125,12 @@ describe(`DiscordCommandFlags`, (): void => {
     beforeEach((): void => {
       discordCommandFlags = new DiscordCommandFlags<
         DiscordMessageCommandFeatureNoonFlagEnum
-      >(
-        createMock<
+      >({
+        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        flags: createMock<
           DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >()
-      );
+        >(),
+      });
     });
 
     it(`should update the flags with the given ones`, (): void => {
@@ -76,11 +149,12 @@ describe(`DiscordCommandFlags`, (): void => {
     beforeEach((): void => {
       discordCommandFlags = new DiscordCommandFlags<
         DiscordMessageCommandFeatureNoonFlagEnum
-      >(
-        createMock<
+      >({
+        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        flags: createMock<
           DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >()
-      );
+        >(),
+      });
     });
 
     describe(`when there is no flags`, (): void => {
@@ -144,11 +218,12 @@ describe(`DiscordCommandFlags`, (): void => {
     beforeEach((): void => {
       discordCommandFlags = new DiscordCommandFlags<
         DiscordMessageCommandFeatureNoonFlagEnum
-      >(
-        createMock<
+      >({
+        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        flags: createMock<
           DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >()
-      );
+        >(),
+      });
     });
 
     describe(`when there is no flags`, (): void => {
@@ -200,11 +275,12 @@ describe(`DiscordCommandFlags`, (): void => {
     beforeEach((): void => {
       discordCommandFlags = new DiscordCommandFlags<
         DiscordMessageCommandFeatureNoonFlagEnum
-      >(
-        createMock<
+      >({
+        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        flags: createMock<
           DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >()
-      );
+        >(),
+      });
     });
 
     describe(`when there is no flags`, (): void => {
@@ -286,11 +362,12 @@ describe(`DiscordCommandFlags`, (): void => {
     beforeEach((): void => {
       discordCommandFlags = new DiscordCommandFlags<
         DiscordMessageCommandFeatureNoonFlagEnum
-      >(
-        createMock<
+      >({
+        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        flags: createMock<
           DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >()
-      );
+        >(),
+      });
     });
 
     describe(`when there is no flags`, (): void => {
@@ -446,11 +523,12 @@ describe(`DiscordCommandFlags`, (): void => {
     beforeEach((): void => {
       discordCommandFlags = new DiscordCommandFlags<
         DiscordMessageCommandFeatureNoonFlagEnum
-      >(
-        createMock<
+      >({
+        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        flags: createMock<
           DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >()
-      );
+        >(),
+      });
     });
 
     describe(`when there is no flags`, (): void => {
@@ -532,11 +610,12 @@ describe(`DiscordCommandFlags`, (): void => {
     beforeEach((): void => {
       discordCommandFlags = new DiscordCommandFlags<
         DiscordMessageCommandFeatureNoonFlagEnum
-      >(
-        createMock<
+      >({
+        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        flags: createMock<
           DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >()
-      );
+        >(),
+      });
     });
 
     describe(`when there is no flags`, (): void => {
@@ -662,6 +741,69 @@ describe(`DiscordCommandFlags`, (): void => {
           `enabled`,
           `enabled`,
         ]);
+      });
+    });
+  });
+
+  describe(`getErrors()`, (): void => {
+    let message: string;
+
+    beforeEach((): void => {
+      discordCommandFlags = new DiscordCommandFlags<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >({
+        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        flags: createMock<
+          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+        >(),
+      });
+    });
+
+    describe(`when the given message is empty`, (): void => {
+      beforeEach((): void => {
+        message = ``;
+      });
+
+      it(`should throw an error`, (): void => {
+        expect.assertions(1);
+
+        expect((): void => {
+          discordCommandFlags.getErrors(message);
+        }).toThrow(new Error(`The message should not be empty`));
+      });
+    });
+
+    describe(`when the given message contains an unknown flag`, (): void => {
+      beforeEach((): void => {
+        message = `--flag`;
+      });
+
+      it(`should return a list with one error about the unknown flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`flag\` is not a valid flag for the `,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains an unknown valid flag`, (): void => {
+      beforeEach((): void => {
+        message = `--`;
+      });
+
+      it(`should throw an error`, (): void => {
+        expect.assertions(1);
+
+        expect((): void => {
+          discordCommandFlags.getErrors(message);
+        }).toThrow(new Error(`The message should not be empty`));
       });
     });
   });

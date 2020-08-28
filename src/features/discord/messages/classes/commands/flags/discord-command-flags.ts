@@ -1,16 +1,30 @@
 import _ from "lodash";
 import { getRandomBoolean } from "../../../../../../functions/randoms/get-random-boolean";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
+import { IDiscordCommandFlags } from "../../../interfaces/commands/flags/discord-command-flags";
+import { IDiscordCommandFlagsErrors } from "../../../types/commands/discord-command-flags-errors";
+import { DiscordCommandFirstArgument } from "../arguments/discord-command-first-argument";
 import { DiscordCommandFlag } from "./discord-command-flag";
 
 export class DiscordCommandFlags<T extends string> {
+  private _command: DiscordCommandFirstArgument<string>;
   private _flags: DiscordCommandFlag<T>[] = [];
 
   /**
-   * @param {Readonly<DiscordCommandFlag>} discordCommandFlags Default values
+   * @param {Readonly<string>} command Default values
+   * @param {DiscordCommandFlag[]} flags Default values
    */
-  public constructor(discordCommandFlags: DiscordCommandFlag<T>[]) {
-    this._flags = discordCommandFlags;
+  public constructor({ command, flags }: Readonly<IDiscordCommandFlags<T>>) {
+    this._command = command;
+    this._flags = flags;
+  }
+
+  public getCommand(): string | DiscordCommandFirstArgument<string> {
+    return this._command;
+  }
+
+  public setCommand(command: DiscordCommandFirstArgument<string>): void {
+    this._command = command;
   }
 
   public getFlags(): DiscordCommandFlag<T>[] {
@@ -87,5 +101,30 @@ export class DiscordCommandFlags<T extends string> {
           )
       )
     );
+  }
+
+  /**
+   * @description
+   * Search inside the given message for all the flags on error
+   *
+   * Throw an error if the given message is empty
+   *
+   * @example
+   * getErrors('--enabled=true')
+   * getErrors('--enabled=wrong-value')
+   * getErrors('-e')
+   *
+   * @param {Readonly<string>} message A partial message containing only a string with flags
+   *
+   * @return {IDiscordCommandFlagsErrors | null} A list of errors or null
+   */
+  public getErrors(
+    message: Readonly<string>
+  ): IDiscordCommandFlagsErrors | null | never {
+    if (_.isEmpty(message)) {
+      throw new Error(`The message should not be empty`);
+    }
+
+    return null;
   }
 }
