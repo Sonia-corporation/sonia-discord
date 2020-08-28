@@ -394,4 +394,104 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       });
     });
   });
+
+  describe(`isValid()`, (): void => {
+    let messageFlag: string;
+
+    beforeEach((): void => {
+      discordCommandFlag = new DiscordCommandBooleanFlag<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >(
+        createMock<
+          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+        >({
+          name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+        })
+      );
+    });
+
+    describe(`when the given flag is empty`, (): void => {
+      beforeEach((): void => {
+        messageFlag = ``;
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const isValid = discordCommandFlag.isValid(messageFlag);
+
+        expect(isValid).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given flag is "enabled"`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `enabled`;
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const isValid = discordCommandFlag.isValid(messageFlag);
+
+        expect(isValid).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given flag is "enabled="`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `enabled=`;
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const isValid = discordCommandFlag.isValid(messageFlag);
+
+        expect(isValid).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given flag is "enabled=dummy"`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `enabled=dummy`;
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const isValid = discordCommandFlag.isValid(messageFlag);
+
+        expect(isValid).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given flag is "enabled=true"`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `enabled=true`;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const isValid = discordCommandFlag.isValid(messageFlag);
+
+        expect(isValid).toStrictEqual(true);
+      });
+    });
+
+    describe(`when the given flag is "enabled=false"`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `enabled=false`;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const isValid = discordCommandFlag.isValid(messageFlag);
+
+        expect(isValid).toStrictEqual(true);
+      });
+    });
+  });
 });

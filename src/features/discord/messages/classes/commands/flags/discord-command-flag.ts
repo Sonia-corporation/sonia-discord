@@ -86,4 +86,6 @@ export abstract class DiscordCommandFlag<T extends string> {
 
     return example;
   }
+
+  public abstract isValid(flag: Readonly<string>): boolean;
 }

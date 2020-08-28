@@ -1753,9 +1753,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const result = service.hasFlags(message);
+        const hasFlags = service.hasFlags(message);
 
-        expect(result).toStrictEqual(false);
+        expect(hasFlags).toStrictEqual(false);
       });
     });
 
@@ -1767,9 +1767,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const result = service.hasFlags(message);
+        const hasFlags = service.hasFlags(message);
 
-        expect(result).toStrictEqual(true);
+        expect(hasFlags).toStrictEqual(true);
       });
     });
   });

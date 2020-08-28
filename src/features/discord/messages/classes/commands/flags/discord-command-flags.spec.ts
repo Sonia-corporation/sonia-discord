@@ -753,9 +753,15 @@ describe(`DiscordCommandFlags`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >({
         command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
-        flags: createMock<
-          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >(),
+        flags: [
+          new DiscordCommandBooleanFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum
+          >({
+            description: ``,
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+            shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
+          }),
+        ],
       });
     });
 
@@ -773,7 +779,7 @@ describe(`DiscordCommandFlags`, (): void => {
       });
     });
 
-    describe(`when the given message contains an unknown flag`, (): void => {
+    describe(`when the given message contains an unknown invalid flag`, (): void => {
       beforeEach((): void => {
         message = `--flag`;
       });
@@ -785,7 +791,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`flag\` is not a valid flag for the `,
+            description: `The flag \`flag\` is unknown to the \`noon\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -793,17 +799,552 @@ describe(`DiscordCommandFlags`, (): void => {
       });
     });
 
-    describe(`when the given message contains an unknown valid flag`, (): void => {
+    describe(`when the given message contains an unknown flag`, (): void => {
       beforeEach((): void => {
-        message = `--`;
+        message = `--flag=true`;
       });
 
-      it(`should throw an error`, (): void => {
+      it(`should return a list with one error about the unknown flag`, (): void => {
         expect.assertions(1);
 
-        expect((): void => {
-          discordCommandFlags.getErrors(message);
-        }).toThrow(new Error(`The message should not be empty`));
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`flag\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains an unknown invalid shortcut flag`, (): void => {
+      beforeEach((): void => {
+        message = `-f`;
+      });
+
+      it(`should return a list with one error about the unknown flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains an unknown shortcut flag`, (): void => {
+      beforeEach((): void => {
+        message = `-f=true`;
+      });
+
+      it(`should return a list with one error about the unknown flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains an existing boolean flag`, (): void => {
+      beforeEach((): void => {
+        message = `--enabled`;
+      });
+
+      describe(`when the flag does not have a value at all`, (): void => {
+        beforeEach((): void => {
+          message = `--enabled`;
+        });
+
+        it(`should return a list with one error about the invalid flag`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toStrictEqual([
+            {
+              description: `The flag \`enabled\` does not have a value. Use it with either \`true\` or \`false\`.`,
+              isUnknown: true,
+              name: `Invalid boolean flag`,
+            },
+          ] as IDiscordCommandFlagsErrors);
+        });
+      });
+
+      describe(`when the flag does not have a value`, (): void => {
+        beforeEach((): void => {
+          message = `--enabled=`;
+        });
+
+        it(`should return a list with one error about the invalid flag`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toStrictEqual([
+            {
+              description: `The flag \`enabled\` does not have a value. Use it with either \`true\` or \`false\`.`,
+              isUnknown: true,
+              name: `Invalid boolean flag`,
+            },
+          ] as IDiscordCommandFlagsErrors);
+        });
+      });
+
+      describe(`when the flag has an invalid value`, (): void => {
+        beforeEach((): void => {
+          message = `--enabled=bad`;
+        });
+
+        it(`should return a list with one error about the invalid flag`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toStrictEqual([
+            {
+              description: `The flag \`enabled\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+              isUnknown: true,
+              name: `Invalid boolean flag`,
+            },
+          ] as IDiscordCommandFlagsErrors);
+        });
+      });
+
+      describe(`when the flag has true as value`, (): void => {
+        beforeEach((): void => {
+          message = `--enabled=true`;
+        });
+
+        it(`should return null`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toBeNull();
+        });
+      });
+
+      describe(`when the flag has false as value`, (): void => {
+        beforeEach((): void => {
+          message = `--enabled=false`;
+        });
+
+        it(`should return null`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toBeNull();
+        });
+      });
+    });
+
+    describe(`when the given message contains a valid boolean flag and an unknown invalid flag`, (): void => {
+      beforeEach((): void => {
+        message = `--enabled=true --flag`;
+      });
+
+      it(`should return a list with one error about the unknown flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`flag\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains a valid boolean flag and an unknown flag`, (): void => {
+      beforeEach((): void => {
+        message = `--enabled=true --flag=true`;
+      });
+
+      it(`should return a list with one error about the unknown flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`flag\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains a valid boolean flag and an unknown invalid shortcut flag`, (): void => {
+      beforeEach((): void => {
+        message = `--enabled=true -f`;
+      });
+
+      it(`should return a list with one error about the unknown flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains a valid boolean flag and an unknown shortcut flag`, (): void => {
+      beforeEach((): void => {
+        message = `--enabled=true -f=true`;
+      });
+
+      it(`should return a list with one error about the unknown flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains a valid boolean flag and an existing boolean flag`, (): void => {
+      beforeEach((): void => {
+        message = `--enabled=true --enabled`;
+      });
+
+      describe(`when the flag does not have a value at all`, (): void => {
+        beforeEach((): void => {
+          message = `--enabled=true --enabled`;
+        });
+
+        it(`should return a list with one error about the invalid flag`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toStrictEqual([
+            {
+              description: `The flag \`enabled\` does not have a value. Use it with either \`true\` or \`false\`.`,
+              isUnknown: true,
+              name: `Invalid boolean flag`,
+            },
+          ] as IDiscordCommandFlagsErrors);
+        });
+      });
+
+      describe(`when the flag does not have a value`, (): void => {
+        beforeEach((): void => {
+          message = `--enabled=true --enabled=`;
+        });
+
+        it(`should return a list with one error about the invalid flag`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toStrictEqual([
+            {
+              description: `The flag \`enabled\` does not have a value. Use it with either \`true\` or \`false\`.`,
+              isUnknown: true,
+              name: `Invalid boolean flag`,
+            },
+          ] as IDiscordCommandFlagsErrors);
+        });
+      });
+
+      describe(`when the flag has an invalid value`, (): void => {
+        beforeEach((): void => {
+          message = `--enabled=true --enabled=bad`;
+        });
+
+        it(`should return a list with one error about the invalid flag`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toStrictEqual([
+            {
+              description: `The flag \`enabled\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+              isUnknown: true,
+              name: `Invalid boolean flag`,
+            },
+          ] as IDiscordCommandFlagsErrors);
+        });
+      });
+
+      describe(`when the flag has true as value`, (): void => {
+        beforeEach((): void => {
+          message = `--enabled=true --enabled=true`;
+        });
+
+        it(`should return null`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toBeNull();
+        });
+      });
+
+      describe(`when the flag has false as value`, (): void => {
+        beforeEach((): void => {
+          message = `--enabled=true --enabled=false`;
+        });
+
+        it(`should return null`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toBeNull();
+        });
+      });
+    });
+
+    describe(`when the given message contains two unknown invalid flags`, (): void => {
+      beforeEach((): void => {
+        message = `--flag --other-flag`;
+      });
+
+      it(`should return a list with two errors about the unknown flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`flag\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+          {
+            description: `The flag \`other-flag\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains two unknown flags`, (): void => {
+      beforeEach((): void => {
+        message = `--flag=true --other-flag=true`;
+      });
+
+      it(`should return a list with two errors about the unknown flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`flag\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+          {
+            description: `The flag \`other-flag\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains two unknown invalid shortcut flags`, (): void => {
+      beforeEach((): void => {
+        message = `-f -d`;
+      });
+
+      it(`should return a list with two errors about the unknown flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+          {
+            description: `The flag \`d\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains two unknown shortcut flags`, (): void => {
+      beforeEach((): void => {
+        message = `-f=true -d=true`;
+      });
+
+      it(`should return a list with two errors about the unknown flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+          {
+            description: `The flag \`d\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains two existing boolean flags`, (): void => {
+      beforeEach((): void => {
+        message = `--enabled --other-flag`;
+      });
+
+      describe(`when the flags does not have a value at all`, (): void => {
+        beforeEach((): void => {
+          message = `--enabled --other-flag`;
+        });
+
+        it(`should return a list with two errors about the invalid flag`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toStrictEqual([
+            {
+              description: `The flag \`enabled\` does not have a value. Use it with either \`true\` or \`false\`.`,
+              isUnknown: true,
+              name: `Invalid boolean flag`,
+            },
+            {
+              description: `The flag \`other-flag\` is unknown to the \`noon\` feature.`,
+              isUnknown: true,
+              name: `Unknown flag`,
+            },
+          ] as IDiscordCommandFlagsErrors);
+        });
+      });
+
+      describe(`when the flags does not have a value`, (): void => {
+        beforeEach((): void => {
+          message = `--enabled= --other-flag=`;
+        });
+
+        it(`should return a list with two errors about the invalid flag`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toStrictEqual([
+            {
+              description: `The flag \`enabled\` does not have a value. Use it with either \`true\` or \`false\`.`,
+              isUnknown: true,
+              name: `Invalid boolean flag`,
+            },
+            {
+              description: `The flag \`other-flag\` is unknown to the \`noon\` feature.`,
+              isUnknown: true,
+              name: `Unknown flag`,
+            },
+          ] as IDiscordCommandFlagsErrors);
+        });
+      });
+
+      describe(`when the flags has an invalid value`, (): void => {
+        beforeEach((): void => {
+          message = `--enabled=bad --other-flag=bad`;
+        });
+
+        it(`should return a list with two errors about the invalid flag`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toStrictEqual([
+            {
+              description: `The flag \`enabled\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+              isUnknown: true,
+              name: `Invalid boolean flag`,
+            },
+            {
+              description: `The flag \`other-flag\` is unknown to the \`noon\` feature.`,
+              isUnknown: true,
+              name: `Unknown flag`,
+            },
+          ] as IDiscordCommandFlagsErrors);
+        });
+      });
+
+      describe(`when the flag has true as value`, (): void => {
+        beforeEach((): void => {
+          message = `--enabled=true --other-flag=bad`;
+        });
+
+        it(`should return a list with one error about the invalid flag`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toStrictEqual([
+            {
+              description: `The flag \`other-flag\` is unknown to the \`noon\` feature.`,
+              isUnknown: true,
+              name: `Unknown flag`,
+            },
+          ] as IDiscordCommandFlagsErrors);
+        });
+      });
+
+      describe(`when the flag has false as value`, (): void => {
+        beforeEach((): void => {
+          message = `--enabled=false --other-flag=bad`;
+        });
+
+        it(`should return a list with one error about the invalid flag`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toStrictEqual([
+            {
+              description: `The flag \`other-flag\` is unknown to the \`noon\` feature.`,
+              isUnknown: true,
+              name: `Unknown flag`,
+            },
+          ] as IDiscordCommandFlagsErrors);
+        });
       });
     });
   });
