@@ -329,23 +329,19 @@ describe(`Messages`, (): void => {
 
             const result = messages.getHumanizedRandomMessage();
 
-            expect(result).toStrictEqual(
-              `dummy message with replacement argument`
-            );
+            expect(result).toStrictEqual(`dummy message with replacement`);
           });
         });
 
         describe(`when there is a given params but not matching the replacement`, (): void => {
-          it(`should return the default message instead and replace the variable`, (): void => {
+          it(`should return the default message instead without replacing the variable`, (): void => {
             expect.assertions(1);
 
             const result = messages.getHumanizedRandomMessage({
               key2: `value2`,
             });
 
-            expect(result).toStrictEqual(
-              `dummy message with replacement argument`
-            );
+            expect(result).toStrictEqual(`dummy message with {{ variable }}`);
           });
         });
 

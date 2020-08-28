@@ -11,8 +11,6 @@ import { forkJoin, Observable, of } from "rxjs";
 import { mapTo, mergeMap, take } from "rxjs/operators";
 import { AbstractService } from "../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { replaceInterpolation } from "../../../functions/formatters/replace-interpolation";
-import { getRandomValueFromEnum } from "../../../functions/randoms/get-random-value-from-enum";
 import { AppConfigService } from "../../app/services/config/app-config.service";
 import { isDiscordGuildChannelWritable } from "../../discord/channels/functions/types/is-discord-guild-channel-writable";
 import { DiscordChannelGuildService } from "../../discord/channels/services/discord-channel-guild.service";
@@ -23,10 +21,10 @@ import { DiscordLoggerErrorService } from "../../discord/logger/services/discord
 import { wrapUserIdIntoMention } from "../../discord/mentions/functions/wrap-user-id-into-mention";
 import { IDiscordMessageResponse } from "../../discord/messages/interfaces/discord-message-response";
 import { DiscordMessageCommandReleaseNotesService } from "../../discord/messages/services/command/release-notes/discord-message-command-release-notes.service";
-import { DiscordGithubContributorsIdEnum } from "../../discord/users/enums/discord-github-contributors-id.enum";
+import { DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES } from "../../discord/users/constants/discord-github-contributors-id-messages";
 import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
-import { FirebaseGuildNewVersionResponseEnum } from "../enums/firebase-guild-new-version-response.enum";
+import { FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES } from "../constants/firebase-guild-new-version-response-messages";
 import { getUpdatedFirebaseGuildLastReleaseNotesVersion } from "../functions/get-updated-firebase-guild-last-release-notes-version";
 import { IFirebaseGuild } from "../types/firebase-guild";
 import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
@@ -300,15 +298,13 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           const enhanceMessageResponse: IDiscordMessageResponse = _.cloneDeep(
             messageResponse
           );
-          const response: FirebaseGuildNewVersionResponseEnum | string =
-            getRandomValueFromEnum(FirebaseGuildNewVersionResponseEnum) ||
-            `Cool!`;
-          enhanceMessageResponse.response = replaceInterpolation(response, {
-            userId: wrapUserIdIntoMention(
-              getRandomValueFromEnum(DiscordGithubContributorsIdEnum) ||
-                DiscordGithubContributorsIdEnum.C0ZEN
-            ),
-          });
+          enhanceMessageResponse.response = FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage(
+            {
+              userId: wrapUserIdIntoMention(
+                DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()
+              ),
+            }
+          );
 
           LoggerService.getInstance().debug({
             context: this._serviceName,
