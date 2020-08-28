@@ -72,7 +72,8 @@
     "template": "ts"
   },
   "engines": {
-    "node": "12.x"
+    "node": ">=12.x",
+    "npm": ">=6"
   },
   "private": false,
   "files": [
@@ -118,7 +119,6 @@
     "lint": "eslint --fix --ext .js,.ts --cache scripts/ src/ jest.config.js config.ts",
     "lint:ci": "eslint --ext .js,.ts scripts/ src/ jest.config.js config.ts",
     "\n# UTILS SCRIPTS:": "",
-    "commitmsg": "cz-customizable-ghooks",
     "cz": "git add . && git-cz && npm run git:push",
     "semver": "semantic-release",
     "clean:dist": "rimraf dist",
