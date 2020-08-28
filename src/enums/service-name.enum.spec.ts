@@ -283,6 +283,14 @@ describe(`ServiceNameEnum`, (): void => {
     ).toStrictEqual(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`);
   });
 
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_WRONG_FLAGS_ERROR_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_WRONG_FLAGS_ERROR_SERVICE
+    ).toStrictEqual(`DiscordMessageCommandFeatureWrongFlagsErrorService`);
+  });
+
   it(`should have a member "DISCORD_MESSAGE_COMMAND_HELP_SERVICE"`, (): void => {
     expect.assertions(1);
 

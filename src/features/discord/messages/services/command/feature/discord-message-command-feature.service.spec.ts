@@ -11,8 +11,8 @@ import { DiscordMessageCommandFeatureService } from "./discord-message-command-f
 import { DiscordMessageCommandFeatureNoonService } from "./features/noon/services/discord-message-command-feature-noon.service";
 import { DiscordMessageCommandFeatureEmptyContentErrorService } from "./services/discord-message-command-feature-empty-content-error.service";
 import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from "./services/feature-names/discord-message-command-feature-empty-feature-name-error.service";
-import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from "./services/flags/discord-message-command-feature-empty-flags-error.service";
 import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from "./services/feature-names/discord-message-command-feature-wrong-feature-name-error.service";
+import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from "./services/flags/discord-message-command-feature-empty-flags-error.service";
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
@@ -1734,6 +1734,78 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           expect(hasCommandResult).toStrictEqual(true);
         });
+      });
+    });
+  });
+
+  describe(`hasFlags()`, (): void => {
+    let message: string;
+
+    beforeEach((): void => {
+      service = new DiscordMessageCommandFeatureService();
+    });
+
+    describe(`when the given message does not contains some flags`, (): void => {
+      beforeEach((): void => {
+        message = `!feature noon`;
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.hasFlags(message);
+
+        expect(result).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given message contains some flags`, (): void => {
+      beforeEach((): void => {
+        message = `!feature noon --enabled=true`;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.hasFlags(message);
+
+        expect(result).toStrictEqual(true);
+      });
+    });
+  });
+
+  describe(`getFlags()`, (): void => {
+    let message: string;
+
+    beforeEach((): void => {
+      service = new DiscordMessageCommandFeatureService();
+    });
+
+    describe(`when the given message does not contains some flags`, (): void => {
+      beforeEach((): void => {
+        message = `!feature noon`;
+      });
+
+      it(`should return null`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getFlags(message);
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe(`when the given message contains some flags`, (): void => {
+      beforeEach((): void => {
+        message = `!feature noon --enabled=true`;
+      });
+
+      it(`should return the flags`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getFlags(message);
+
+        expect(result).toStrictEqual(`--enabled=true`);
       });
     });
   });
