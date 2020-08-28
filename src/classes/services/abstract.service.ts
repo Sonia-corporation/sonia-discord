@@ -1,5 +1,5 @@
-import { ServiceNameEnum } from "../enums/service-name.enum";
-import { CoreEventService } from "../features/core/services/core-event.service";
+import { ServiceNameEnum } from "../../enums/service-name.enum";
+import { CoreEventService } from "../../features/core/services/core-event.service";
 
 /**
  * @description

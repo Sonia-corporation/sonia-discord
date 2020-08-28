@@ -1,19 +1,19 @@
 import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../enums/service-name.enum";
-import { CoreEventService } from "../features/core/services/core-event.service";
-import { AbstractStoreService } from "./abstract-store.service";
+import { ServiceNameEnum } from "../../enums/service-name.enum";
+import { CoreEventService } from "../../features/core/services/core-event.service";
+import { AbstractEntityStoreService } from "./abstract-entity-store.service";
 
 interface IDummy {
   name: string;
 }
 
-class DummyService extends AbstractStoreService<IDummy> {
+class DummyService extends AbstractEntityStoreService<IDummy> {
   public constructor(serviceName: Readonly<ServiceNameEnum>) {
     super(serviceName, createMock<IDummy>());
   }
 }
 
-describe(`AbstractStoreService`, (): void => {
+describe(`AbstractEntityStoreService`, (): void => {
   let coreEventService: CoreEventService;
 
   let serviceName: ServiceNameEnum;

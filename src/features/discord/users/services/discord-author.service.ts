@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { AbstractService } from "../../../../classes/abstract.service";
+import { AbstractService } from "../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { isDiscordUser } from "../functions/is-discord-user";
 import { IAnyDiscordAuthor } from "../types/any-discord-author";

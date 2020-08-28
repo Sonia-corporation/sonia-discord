@@ -2,7 +2,7 @@ import { Guild, GuildChannel } from "discord.js";
 import _ from "lodash";
 import moment from "moment-timezone";
 import { Job, scheduleJob } from "node-schedule";
-import { AbstractService } from "../../../../../classes/abstract.service";
+import { AbstractService } from "../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { getEveryHourScheduleRule } from "../../../../../functions/schedule/get-every-hour-schedule-rule";
 import { ChalkService } from "../../../../logger/services/chalk/chalk.service";

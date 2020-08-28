@@ -3,7 +3,6 @@ import * as admin from "firebase-admin";
 import { Subject } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import * as GetRandomValueFromEnumModule from "../../../functions/randoms/get-random-value-from-enum";
 import { AppConfigService } from "../../app/services/config/app-config.service";
 import { CoreEventService } from "../../core/services/core-event.service";
 import { DiscordChannelGuildService } from "../../discord/channels/services/discord-channel-guild.service";
@@ -13,9 +12,11 @@ import { DiscordGuildService } from "../../discord/guilds/services/discord-guild
 import { DiscordLoggerErrorService } from "../../discord/logger/services/discord-logger-error.service";
 import { IDiscordMessageResponse } from "../../discord/messages/interfaces/discord-message-response";
 import { DiscordMessageCommandReleaseNotesService } from "../../discord/messages/services/command/release-notes/discord-message-command-release-notes.service";
+import { DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES } from "../../discord/users/constants/discord-github-contributors-id-messages";
 import { DiscordGithubContributorsIdEnum } from "../../discord/users/enums/discord-github-contributors-id.enum";
 import { ILoggerLog } from "../../logger/interfaces/logger-log";
 import { LoggerService } from "../../logger/services/logger.service";
+import { FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES } from "../constants/firebase-guild-new-version-response-messages";
 import { FirebaseGuildNewVersionResponseEnum } from "../enums/firebase-guild-new-version-response.enum";
 import { FirebaseGuildVersionEnum } from "../enums/firebase-guild-version.enum";
 import { IFirebaseGuildVFinal } from "../types/firebase-guild-v-final";
@@ -1356,7 +1357,8 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     let discordMessageCommandReleaseNotesServiceGetMessageResponseSpy: jest.SpyInstance;
     let discordGuildSoniaServiceSendMessageToChannelSpy: jest.SpyInstance;
     let discordLoggerErrorServiceGetErrorMessageResponseSpy: jest.SpyInstance;
-    let getRandomValueFromEnumSpy: jest.SpyInstance;
+    let firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy: jest.SpyInstance;
+    let discordGithubContributorsIdMessagesGetRandomMessageSpy: jest.SpyInstance;
     let sendMock: jest.Mock;
 
     beforeEach((): void => {
@@ -1402,10 +1404,17 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       discordLoggerErrorServiceGetErrorMessageResponseSpy = jest
         .spyOn(discordLoggerErrorService, `getErrorMessageResponse`)
         .mockReturnValue(discordMessageResponseError);
-      getRandomValueFromEnumSpy = jest.spyOn(
-        GetRandomValueFromEnumModule,
-        `getRandomValueFromEnum`
-      );
+      firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy = jest
+        .spyOn(
+          FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES,
+          `getHumanizedRandomMessage`
+        )
+        .mockReturnValue(
+          FirebaseGuildNewVersionResponseEnum.A_QUEEN_HAS_TO_WORK
+        );
+      discordGithubContributorsIdMessagesGetRandomMessageSpy = jest
+        .spyOn(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES, `getRandomMessage`)
+        .mockReturnValue(DiscordGithubContributorsIdEnum.C0ZEN);
     });
 
     describe(`when the given Firebase guild id is undefined`, (): void => {
@@ -1506,16 +1515,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         expect(
           discordMessageCommandReleaseNotesServiceGetMessageResponseSpy
         ).not.toHaveBeenCalled();
-      });
-
-      it(`should not get a random response`, async (): Promise<void> => {
-        expect.assertions(2);
-
-        await expect(
-          service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
-        ).rejects.toThrow(new Error(`Firebase guild id nil`));
-
-        expect(getRandomValueFromEnumSpy).not.toHaveBeenCalled();
       });
 
       it(`should send the message on the Discord guild primary channel`, async (): Promise<
@@ -1716,16 +1715,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           ).not.toHaveBeenCalled();
         });
 
-        it(`should not get a random response`, async (): Promise<void> => {
-          expect.assertions(2);
-
-          await expect(
-            service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
-          ).rejects.toThrow(new Error(`Discord guild not found`));
-
-          expect(getRandomValueFromEnumSpy).not.toHaveBeenCalled();
-        });
-
         it(`should send the message on the Discord guild primary channel`, async (): Promise<
           void
         > => {
@@ -1897,16 +1886,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             ).not.toHaveBeenCalled();
           });
 
-          it(`should not get a random response`, async (): Promise<void> => {
-            expect.assertions(2);
-
-            await expect(
-              service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
-            ).rejects.toThrow(new Error(`Primary channel not found`));
-
-            expect(getRandomValueFromEnumSpy).not.toHaveBeenCalled();
-          });
-
           it(`should send the message on the Discord guild primary channel`, async (): Promise<
             void
           > => {
@@ -2052,16 +2031,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               ).not.toHaveBeenCalled();
             });
 
-            it(`should not get a random response`, async (): Promise<void> => {
-              expect.assertions(2);
-
-              await expect(
-                service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
-              ).rejects.toThrow(new Error(`Primary channel not writable`));
-
-              expect(getRandomValueFromEnumSpy).not.toHaveBeenCalled();
-            });
-
             it(`should send the message on the Discord guild primary channel`, async (): Promise<
               void
             > => {
@@ -2185,169 +2154,54 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               ).toHaveBeenCalledWith();
             });
 
-            it(`should get a random response`, async (): Promise<void> => {
+            it(`should log about sending the release notes message on the general channel`, async (): Promise<
+              void
+            > => {
               expect.assertions(3);
 
               await expect(
                 service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
               ).rejects.toThrow(new Error(`send error`));
 
-              expect(getRandomValueFromEnumSpy).toHaveBeenCalledTimes(2);
-              expect(getRandomValueFromEnumSpy).toHaveBeenNthCalledWith(
-                1,
-                FirebaseGuildNewVersionResponseEnum
-              );
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+                context: `FirebaseGuildsNewVersionService`,
+                message: `text-sending release notes message for guild value-dummy-id on general channel`,
+              } as ILoggerLog);
             });
 
-            describe(`when the random response was not found`, (): void => {
+            describe(`when the random response is a text with a userId variable`, (): void => {
               beforeEach((): void => {
-                getRandomValueFromEnumSpy.mockImplementation();
+                firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy.mockReturnValue(
+                  FirebaseGuildNewVersionResponseEnum.ABOUT_TIME_USER_ID
+                );
+                discordGithubContributorsIdMessagesGetRandomMessageSpy.mockReturnValue(
+                  DiscordGithubContributorsIdEnum.C0ZEN
+                );
               });
 
-              it(`should send the message on the Discord guild primary channel with a fallback response`, async (): Promise<
+              it(`should send the message on the Discord guild primary channel with the random response, replace the userId with the found one and wrap it as a mention`, async (): Promise<
                 void
               > => {
-                expect.assertions(3);
+                expect.assertions(5);
 
                 await expect(
                   service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
                 ).rejects.toThrow(new Error(`send error`));
 
+                expect(
+                  firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy
+                ).toHaveBeenCalledTimes(1);
+                expect(
+                  firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy
+                ).toHaveBeenCalledWith({
+                  userId: `<@!260525899991089165>`,
+                });
                 expect(sendMock).toHaveBeenCalledTimes(1);
                 expect(sendMock).toHaveBeenCalledWith(
-                  `Cool!`,
+                  FirebaseGuildNewVersionResponseEnum.ABOUT_TIME_USER_ID,
                   discordMessageResponse.options
                 );
-              });
-            });
-
-            describe(`when the random response was found`, (): void => {
-              beforeEach((): void => {
-                getRandomValueFromEnumSpy.mockReturnValue(
-                  FirebaseGuildNewVersionResponseEnum.A_QUEEN_HAS_TO_WORK
-                );
-              });
-
-              it(`should log about sending the release notes message on the general channel`, async (): Promise<
-                void
-              > => {
-                expect.assertions(3);
-
-                await expect(
-                  service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
-                ).rejects.toThrow(new Error(`send error`));
-
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-                expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-                  context: `FirebaseGuildsNewVersionService`,
-                  message: `text-sending release notes message for guild value-dummy-id on general channel`,
-                } as ILoggerLog);
-              });
-
-              describe(`when the random response is a simple text`, (): void => {
-                beforeEach((): void => {
-                  getRandomValueFromEnumSpy.mockReturnValue(
-                    FirebaseGuildNewVersionResponseEnum.A_QUEEN_HAS_TO_WORK
-                  );
-                });
-
-                it(`should send the message on the Discord guild primary channel with the random response`, async (): Promise<
-                  void
-                > => {
-                  expect.assertions(3);
-
-                  await expect(
-                    service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
-                  ).rejects.toThrow(new Error(`send error`));
-
-                  expect(sendMock).toHaveBeenCalledTimes(1);
-                  expect(sendMock).toHaveBeenCalledWith(
-                    FirebaseGuildNewVersionResponseEnum.A_QUEEN_HAS_TO_WORK,
-                    discordMessageResponse.options
-                  );
-                });
-              });
-
-              describe(`when the random response is a text with a userId variable`, (): void => {
-                beforeEach((): void => {
-                  getRandomValueFromEnumSpy.mockReturnValue(
-                    FirebaseGuildNewVersionResponseEnum.ABOUT_TIME_USER_ID
-                  );
-                });
-
-                it(`should get a random GitHub contributor Discord id`, async (): Promise<
-                  void
-                > => {
-                  expect.assertions(3);
-
-                  await expect(
-                    service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
-                  ).rejects.toThrow(new Error(`send error`));
-
-                  expect(getRandomValueFromEnumSpy).toHaveBeenCalledTimes(2);
-                  expect(getRandomValueFromEnumSpy).toHaveBeenNthCalledWith(
-                    2,
-                    DiscordGithubContributorsIdEnum
-                  );
-                });
-
-                describe(`when the random GitHub contributor Discord id was not found`, (): void => {
-                  beforeEach((): void => {
-                    getRandomValueFromEnumSpy
-                      .mockReturnValueOnce(
-                        FirebaseGuildNewVersionResponseEnum.ABOUT_TIME_USER_ID
-                      )
-                      .mockReturnValueOnce(undefined);
-                  });
-
-                  it(`should send the message on the Discord guild primary channel with the random response, replace the userId with C0ZEN'id and wrap it as a mention`, async (): Promise<
-                    void
-                  > => {
-                    expect.assertions(3);
-
-                    await expect(
-                      service.sendNewReleaseNotesFromFirebaseGuild(
-                        firebaseGuild
-                      )
-                    ).rejects.toThrow(new Error(`send error`));
-
-                    expect(sendMock).toHaveBeenCalledTimes(1);
-                    expect(sendMock).toHaveBeenCalledWith(
-                      `About time <@!260525899991089165>!`,
-                      discordMessageResponse.options
-                    );
-                  });
-                });
-
-                describe(`when the random GitHub contributor Discord id was found`, (): void => {
-                  beforeEach((): void => {
-                    getRandomValueFromEnumSpy
-                      .mockReturnValueOnce(
-                        FirebaseGuildNewVersionResponseEnum.ABOUT_TIME_USER_ID
-                      )
-                      .mockReturnValueOnce(
-                        DiscordGithubContributorsIdEnum.C0ZEN
-                      );
-                  });
-
-                  it(`should send the message on the Discord guild primary channel with the random response, replace the userId with the found one and wrap it as a mention`, async (): Promise<
-                    void
-                  > => {
-                    expect.assertions(3);
-
-                    await expect(
-                      service.sendNewReleaseNotesFromFirebaseGuild(
-                        firebaseGuild
-                      )
-                    ).rejects.toThrow(new Error(`send error`));
-
-                    expect(sendMock).toHaveBeenCalledTimes(1);
-                    expect(sendMock).toHaveBeenCalledWith(
-                      `About time <@!260525899991089165>!`,
-                      discordMessageResponse.options
-                    );
-                  });
-                });
               });
             });
 

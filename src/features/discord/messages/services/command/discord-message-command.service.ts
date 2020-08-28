@@ -1,13 +1,13 @@
 import _ from "lodash";
-import { AbstractService } from "../../../../../classes/abstract.service";
+import { AbstractService } from "../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../types/any-discord-message";
-import { DiscordMessageCommandCookieService } from "./cookie/discord-message-command-cookie.service";
+import { DiscordMessageCommandCookieService } from "./cookie/services/discord-message-command-cookie.service";
 import { DiscordMessageCommandErrorService } from "./error/discord-message-command-error.service";
 import { DiscordMessageCommandFeatureService } from "./feature/discord-message-command-feature.service";
 import { DiscordMessageCommandHelpService } from "./help/discord-message-command-help.service";
-import { DiscordMessageCommandLunchService } from "./lunch/discord-message-command-lunch.service";
+import { DiscordMessageCommandLunchService } from "./lunch/services/discord-message-command-lunch.service";
 import { DiscordMessageCommandReleaseNotesService } from "./release-notes/discord-message-command-release-notes.service";
 import { DiscordMessageCommandVersionService } from "./version/discord-message-command-version.service";
 import { DiscordMessageContentService } from "../discord-message-content.service";

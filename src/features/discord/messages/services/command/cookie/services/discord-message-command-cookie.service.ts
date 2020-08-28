@@ -6,18 +6,17 @@ import {
 } from "discord.js";
 import _ from "lodash";
 import moment from "moment-timezone";
-import { AbstractService } from "../../../../../../classes/abstract.service";
-import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
-import { getRandomValueFromEnum } from "../../../../../../functions/randoms/get-random-value-from-enum";
-import { LoggerService } from "../../../../../logger/services/logger.service";
-import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
-import { DiscordMessageCommandCookieDescriptionEnum } from "../../../enums/commands/cookie/discord-message-command-cookie-description.enum";
-import { DiscordMessageCommandCookieTitleEnum } from "../../../enums/commands/cookie/discord-message-command-cookie-title.enum";
-import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
-import { discordHasThisCommand } from "../../../functions/commands/checks/discord-has-this-command";
-import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
+import { AbstractService } from "../../../../../../../classes/services/abstract.service";
+import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
+import { LoggerService } from "../../../../../../logger/services/logger.service";
+import { DiscordSoniaService } from "../../../../../users/services/discord-sonia.service";
+import { DiscordMessageCommandEnum } from "../../../../enums/commands/discord-message-command.enum";
+import { discordHasThisCommand } from "../../../../functions/commands/checks/discord-has-this-command";
+import { IDiscordMessageResponse } from "../../../../interfaces/discord-message-response";
+import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
+import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";
+import { DISCORD_MESSAGE_COMMAND_COOKIE_DESCRIPTION_MESSAGES } from "../constants/discord-message-command-cookie-description-messages";
+import { DISCORD_MESSAGE_COMMAND_COOKIE_TITLE_MESSAGES } from "../constants/discord-message-command-cookie-title-messages";
 
 export class DiscordMessageCommandCookieService extends AbstractService {
   private static _instance: DiscordMessageCommandCookieService;
@@ -92,10 +91,7 @@ export class DiscordMessageCommandCookieService extends AbstractService {
   }
 
   private _getMessageDescription(): string {
-    return (
-      getRandomValueFromEnum(DiscordMessageCommandCookieDescriptionEnum) ||
-      `Yes.`
-    );
+    return DISCORD_MESSAGE_COMMAND_COOKIE_DESCRIPTION_MESSAGES.getRandomMessage();
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
@@ -120,8 +116,6 @@ export class DiscordMessageCommandCookieService extends AbstractService {
   }
 
   private _getMessageEmbedTitle(): string {
-    return (
-      getRandomValueFromEnum(DiscordMessageCommandCookieTitleEnum) || `Cookies!`
-    );
+    return DISCORD_MESSAGE_COMMAND_COOKIE_TITLE_MESSAGES.getRandomMessage();
   }
 }

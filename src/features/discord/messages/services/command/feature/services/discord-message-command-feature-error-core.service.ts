@@ -1,6 +1,6 @@
 import { EmbedFieldData, MessageEmbedFooter } from "discord.js";
 import _ from "lodash";
-import { AbstractService } from "../../../../../../../classes/abstract.service";
+import { AbstractService } from "../../../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
 import { DiscordSoniaService } from "../../../../../users/services/discord-sonia.service";
 import { DiscordMessageCommandEnum } from "../../../../enums/commands/discord-message-command.enum";
