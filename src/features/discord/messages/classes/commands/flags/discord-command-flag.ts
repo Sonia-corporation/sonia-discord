@@ -1,6 +1,7 @@
 import _ from "lodash";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
+import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 
 /**
  * @description
@@ -87,5 +88,9 @@ export abstract class DiscordCommandFlag<T extends string> {
     return example;
   }
 
-  public abstract isValid(flag: Readonly<string>): boolean;
+  public abstract isValid(messageFlag: Readonly<string>): boolean;
+
+  public abstract getInvalidFlagError(
+    messageFlag: Readonly<string>
+  ): IDiscordCommandFlagError | null;
 }

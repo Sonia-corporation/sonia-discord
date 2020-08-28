@@ -1,3 +1,5 @@
+import { DiscordCommandFlagErrorTitleEnum } from "../../../enums/commands/flags/discord-command-flag-error-title.enum";
+
 export interface IDiscordCommandFlagError {
   /**
    * @description
@@ -20,5 +22,5 @@ export interface IDiscordCommandFlagError {
    *
    * Usually used as the title for an embed field
    */
-  name: string;
+  name: DiscordCommandFlagErrorTitleEnum;
 }

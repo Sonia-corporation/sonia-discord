@@ -1,6 +1,8 @@
 import _ from "lodash";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
+import { DiscordCommandFlagErrorTitleEnum } from "../../../enums/commands/flags/discord-command-flag-error-title.enum";
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
+import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { DiscordCommandFlag } from "./discord-command-flag";
 
 export class DiscordCommandBooleanFlag<
@@ -42,5 +44,39 @@ export class DiscordCommandBooleanFlag<
     const value: string | undefined = _.last(splittedFlag);
 
     return _.includes([`true`, `false`], value);
+  }
+
+  public getInvalidFlagError(
+    messageFlag: Readonly<string>
+  ): IDiscordCommandFlagError | null {
+    const splittedFlag: string[] = _.split(messageFlag, `=`);
+    const splittedFlagSize: number = _.size(splittedFlag);
+
+    if (_.lt(splittedFlagSize, 2)) {
+      return {
+        description: `The flag \`${_.trimStart(
+          _.head(splittedFlag),
+          `--`
+        )}\` does not have a value. Specify either \`true\` or \`false\`.`,
+        isUnknown: false,
+        name: DiscordCommandFlagErrorTitleEnum.INVALID_BOOLEAN_FLAG,
+      };
+    }
+
+    const value: string | undefined = _.last(splittedFlag);
+    const isValid: boolean = _.includes([`true`, `false`], value);
+
+    if (_.isEqual(isValid, false)) {
+      return {
+        description: `The flag \`${_.trimStart(
+          _.head(splittedFlag),
+          `--`
+        )}\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+        isUnknown: false,
+        name: DiscordCommandFlagErrorTitleEnum.INVALID_BOOLEAN_FLAG,
+      };
+    }
+
+    return null;
   }
 }

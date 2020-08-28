@@ -1,6 +1,7 @@
 import { createMock } from "ts-auto-mock";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
+import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
 
@@ -491,6 +492,122 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         const isValid = discordCommandFlag.isValid(messageFlag);
 
         expect(isValid).toStrictEqual(true);
+      });
+    });
+  });
+
+  describe(`getInvalidFlagError()`, (): void => {
+    let messageFlag: string;
+
+    beforeEach((): void => {
+      discordCommandFlag = new DiscordCommandBooleanFlag<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >(
+        createMock<
+          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+        >({
+          name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+        })
+      );
+    });
+
+    describe(`when the given flag is empty`, (): void => {
+      beforeEach((): void => {
+        messageFlag = ``;
+      });
+
+      it(`should return an error about not having specified a value`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlag.getInvalidFlagError(messageFlag);
+
+        expect(result).toStrictEqual({
+          description: `The flag \`\` does not have a value. Specify either \`true\` or \`false\`.`,
+          isUnknown: false,
+          name: `Invalid boolean flag`,
+        } as IDiscordCommandFlagError);
+      });
+    });
+
+    describe(`when the given flag is "enabled"`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `enabled`;
+      });
+
+      it(`should return an error about not having specified a value`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlag.getInvalidFlagError(messageFlag);
+
+        expect(result).toStrictEqual({
+          description: `The flag \`enabled\` does not have a value. Specify either \`true\` or \`false\`.`,
+          isUnknown: false,
+          name: `Invalid boolean flag`,
+        } as IDiscordCommandFlagError);
+      });
+    });
+
+    describe(`when the given flag is "enabled="`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `enabled=`;
+      });
+
+      it(`should return an error about not having specified a value`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlag.getInvalidFlagError(messageFlag);
+
+        expect(result).toStrictEqual({
+          description: `The flag \`enabled\` does not have a value. Specify either \`true\` or \`false\`.`,
+          isUnknown: false,
+          name: `Invalid boolean flag`,
+        } as IDiscordCommandFlagError);
+      });
+    });
+
+    describe(`when the given flag is "enabled=dummy"`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `enabled=dummy`;
+      });
+
+      it(`should return an error about not having specified a valid value`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlag.getInvalidFlagError(messageFlag);
+
+        expect(result).toStrictEqual({
+          description: `The flag \`enabled\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+          isUnknown: false,
+          name: `Invalid boolean flag`,
+        } as IDiscordCommandFlagError);
+      });
+    });
+
+    describe(`when the given flag is "enabled=true"`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `enabled=true`;
+      });
+
+      it(`should return null`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlag.getInvalidFlagError(messageFlag);
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe(`when the given flag is "enabled=false"`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `enabled=false`;
+      });
+
+      it(`should return null`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlag.getInvalidFlagError(messageFlag);
+
+        expect(result).toBeNull();
       });
     });
   });
