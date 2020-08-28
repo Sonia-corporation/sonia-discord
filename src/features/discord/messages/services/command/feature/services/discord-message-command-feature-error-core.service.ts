@@ -19,7 +19,7 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
     super(serviceName);
   }
 
-  protected _getErrorMessageEmbedFooter(): MessageEmbedFooter {
+  protected _getMessageEmbedFooter(): MessageEmbedFooter {
     const soniaImageUrl:
       | string
       | null = DiscordSoniaService.getInstance().getImageUrl();
@@ -30,18 +30,18 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
     };
   }
 
-  protected _getErrorMessageEmbedTitle(): string {
+  protected _getMessageEmbedTitle(): string {
     return `I can not handle your request`;
   }
 
-  protected _getMessageEmbedFieldErrorAllFeatures(): EmbedFieldData {
+  protected _getMessageEmbedFieldAllFeatures(): EmbedFieldData {
     return {
       name: `All features`,
       value: DISCORD_MESSAGE_COMMAND_FEATURE_NAMES.getAllArgumentsNameWithShortcutsExample(),
     };
   }
 
-  protected _getMessageEmbedFieldErrorFeatureExample(
+  protected _getMessageEmbedFieldFeatureExample(
     { content }: Readonly<IAnyDiscordMessage>,
     commands: Readonly<DiscordMessageCommandEnum>[]
   ): EmbedFieldData {

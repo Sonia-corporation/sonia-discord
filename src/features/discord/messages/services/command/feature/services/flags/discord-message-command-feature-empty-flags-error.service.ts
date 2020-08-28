@@ -42,7 +42,7 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
           Promise.resolve(
             _.merge(cliErrorMessageResponse, {
               options: {
-                embed: this._getEmptyContentErrorMessageEmbed(
+                embed: this._getMessageEmbed(
                   anyDiscordMessage,
                   commands,
                   featureName
@@ -55,38 +55,35 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
       );
   }
 
-  private _getEmptyContentErrorMessageEmbed(
+  private _getMessageEmbed(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     commands: Readonly<DiscordMessageCommandEnum>[],
     featureName: Readonly<DiscordMessageCommandFeatureNameEnum>
   ): MessageEmbedOptions {
     return {
-      fields: this._getEmptyFlagsErrorMessageEmbedFields(
+      fields: this._getMessageEmbedFields(
         anyDiscordMessage,
         commands,
         featureName
       ),
-      footer: this._getErrorMessageEmbedFooter(),
-      title: this._getErrorMessageEmbedTitle(),
+      footer: this._getMessageEmbedFooter(),
+      title: this._getMessageEmbedTitle(),
     };
   }
 
-  private _getEmptyFlagsErrorMessageEmbedFields(
+  private _getMessageEmbedFields(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     commands: Readonly<DiscordMessageCommandEnum>[],
     featureName: Readonly<DiscordMessageCommandFeatureNameEnum>
   ): EmbedFieldData[] {
     return [
-      this._getEmptyFlagsErrorMessageEmbedFieldError(featureName),
-      this._getEmptyFlagsErrorMessageEmbedFieldAllFlags(),
-      this._getEmptyFlagsErrorMessageEmbedFieldExample(
-        anyDiscordMessage,
-        commands
-      ),
+      this._getMessageEmbedFieldError(featureName),
+      this._getMessageEmbedFieldAllFlags(),
+      this._getMessageEmbedFieldExample(anyDiscordMessage, commands),
     ];
   }
 
-  private _getEmptyFlagsErrorMessageEmbedFieldError(
+  private _getMessageEmbedFieldError(
     featureName: Readonly<DiscordMessageCommandFeatureNameEnum>
   ): EmbedFieldData {
     return {
@@ -99,14 +96,14 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
     };
   }
 
-  private _getEmptyFlagsErrorMessageEmbedFieldAllFlags(): EmbedFieldData {
+  private _getMessageEmbedFieldAllFlags(): EmbedFieldData {
     return {
       name: `All flags`,
       value: DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getAllFlagsNameWithShortcutsExample(),
     };
   }
 
-  private _getEmptyFlagsErrorMessageEmbedFieldExample(
+  private _getMessageEmbedFieldExample(
     { content }: Readonly<IAnyDiscordMessage>,
     commands: Readonly<DiscordMessageCommandEnum>[]
   ): EmbedFieldData {

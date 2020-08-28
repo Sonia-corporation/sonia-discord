@@ -27,7 +27,7 @@ describe(`wrapInBold()`, (): void => {
 
       const result = wrapInBold(value);
 
-      expect(result).toStrictEqual(`"dummy"`);
+      expect(result).toStrictEqual(`**dummy**`);
     });
   });
 

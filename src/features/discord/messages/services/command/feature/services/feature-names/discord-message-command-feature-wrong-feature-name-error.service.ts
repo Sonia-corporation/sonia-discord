@@ -42,7 +42,7 @@ export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends Di
           Promise.resolve(
             _.merge(cliErrorMessageResponse, {
               options: {
-                embed: this._getWrongFeatureNameErrorMessageEmbed(
+                embed: this._getMessageEmbed(
                   anyDiscordMessage,
                   commands,
                   featureName
@@ -55,38 +55,35 @@ export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends Di
       );
   }
 
-  private _getWrongFeatureNameErrorMessageEmbed(
+  private _getMessageEmbed(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     commands: Readonly<DiscordMessageCommandEnum>[],
     featureName: Readonly<string>
   ): MessageEmbedOptions {
     return {
-      fields: this._getWrongFeatureNameErrorMessageEmbedFields(
+      fields: this._getMessageEmbedFields(
         anyDiscordMessage,
         commands,
         featureName
       ),
-      footer: this._getErrorMessageEmbedFooter(),
-      title: this._getErrorMessageEmbedTitle(),
+      footer: this._getMessageEmbedFooter(),
+      title: this._getMessageEmbedTitle(),
     };
   }
 
-  private _getWrongFeatureNameErrorMessageEmbedFields(
+  private _getMessageEmbedFields(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     commands: Readonly<DiscordMessageCommandEnum>[],
     featureName: Readonly<string>
   ): EmbedFieldData[] {
     return [
-      this._getWrongFeatureNameErrorMessageEmbedFieldError(featureName),
-      this._getMessageEmbedFieldErrorAllFeatures(),
-      this._getMessageEmbedFieldErrorFeatureExample(
-        anyDiscordMessage,
-        commands
-      ),
+      this._getMessageEmbedFieldError(featureName),
+      this._getMessageEmbedFieldAllFeatures(),
+      this._getMessageEmbedFieldFeatureExample(anyDiscordMessage, commands),
     ];
   }
 
-  private _getWrongFeatureNameErrorMessageEmbedFieldError(
+  private _getMessageEmbedFieldError(
     featureName: Readonly<string>
   ): EmbedFieldData {
     return {
