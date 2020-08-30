@@ -838,6 +838,7 @@ describe(`DiscordCommandFlags`, (): void => {
         ] as IDiscordCommandFlagsErrors);
       });
     });
+
     describe(`when the given message contains an unknown UPPERCASE flag`, (): void => {
       beforeEach((): void => {
         message = `--FLAG=TRUE`;
@@ -881,6 +882,46 @@ describe(`DiscordCommandFlags`, (): void => {
     describe(`when the given message contains an unknown invalid shortcut uppercase flag`, (): void => {
       beforeEach((): void => {
         message = `-F`;
+      });
+
+      it(`should return a list with one error about the unknown flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`F\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains an unknown shortcut flag without value`, (): void => {
+      beforeEach((): void => {
+        message = `-f=`;
+      });
+
+      it(`should return a list with one error about the unknown flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains an unknown shortcut uppercase flag without value`, (): void => {
+      beforeEach((): void => {
+        message = `-F=`;
       });
 
       it(`should return a list with one error about the unknown flag`, (): void => {
@@ -1114,6 +1155,102 @@ describe(`DiscordCommandFlags`, (): void => {
       describe(`when the flag has false as value`, (): void => {
         beforeEach((): void => {
           message = `--ENABLED=FALSE`;
+        });
+
+        it(`should return null`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toBeNull();
+        });
+      });
+    });
+
+    describe(`when the given message contains an existing flag`, (): void => {
+      beforeEach((): void => {
+        message = `-e`;
+      });
+
+      describe(`when the flag does not have a value at all`, (): void => {
+        beforeEach((): void => {
+          message = `-e`;
+        });
+
+        it(`should return null`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toBeNull();
+        });
+      });
+
+      describe(`when the flag does not have a value`, (): void => {
+        beforeEach((): void => {
+          message = `-e=`;
+        });
+
+        it(`should return null`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toBeNull();
+        });
+      });
+
+      describe(`when the flag has an invalid value`, (): void => {
+        beforeEach((): void => {
+          message = `-e=bad`;
+        });
+
+        it(`should return null`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toBeNull();
+        });
+      });
+    });
+
+    describe(`when the given message contains an existing shortcut uppercase flag`, (): void => {
+      beforeEach((): void => {
+        message = `-e`;
+      });
+
+      describe(`when the flag does not have a value at all`, (): void => {
+        beforeEach((): void => {
+          message = `-e`;
+        });
+
+        it(`should return null`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toBeNull();
+        });
+      });
+
+      describe(`when the flag does not have a value`, (): void => {
+        beforeEach((): void => {
+          message = `-e=`;
+        });
+
+        it(`should return null`, (): void => {
+          expect.assertions(1);
+
+          const result = discordCommandFlags.getErrors(message);
+
+          expect(result).toBeNull();
+        });
+      });
+
+      describe(`when the flag has a value`, (): void => {
+        beforeEach((): void => {
+          message = `-e=BAD`;
         });
 
         it(`should return null`, (): void => {
@@ -1602,6 +1739,56 @@ describe(`DiscordCommandFlags`, (): void => {
     describe(`when the given message contains two unknown invalid shortcut uppercase flags`, (): void => {
       beforeEach((): void => {
         message = `-F -D`;
+      });
+
+      it(`should return a list with two errors about the unknown flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`F\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+          {
+            description: `The flag \`D\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains two unknown shortcut flags without value`, (): void => {
+      beforeEach((): void => {
+        message = `-f= -d=`;
+      });
+
+      it(`should return a list with two errors about the unknown flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getErrors(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+          {
+            description: `The flag \`d\` is unknown to the \`noon\` feature.`,
+            isUnknown: true,
+            name: `Unknown flag`,
+          },
+        ] as IDiscordCommandFlagsErrors);
+      });
+    });
+
+    describe(`when the given message contains two unknown shortcut uppercase flags without value`, (): void => {
+      beforeEach((): void => {
+        message = `-F= -D=`;
       });
 
       it(`should return a list with two errors about the unknown flag`, (): void => {
