@@ -179,13 +179,7 @@ export class DiscordCommandFlags<T extends string> {
         );
       }
 
-      return {
-        description: `The flag \`${_.toString(
-          discordCommandGetFlagName(messageFlag)
-        )}\` is unknown to the \`${this.getCommand().getLowerCaseName()}\` feature.`,
-        isUnknown: true,
-        name: DiscordCommandFlagErrorTitleEnum.UNKNOWN_FLAG,
-      };
+      return this._getUnknownFlagError(messageFlag);
     }
     const flag: DiscordCommandFlag<T> | undefined = _.find(
       this.getFlags(),
@@ -199,16 +193,22 @@ export class DiscordCommandFlags<T extends string> {
     );
 
     if (_.isNil(flag)) {
-      return {
-        description: `The flag \`${_.toString(
-          discordCommandGetFlagName(messageFlag)
-        )}\` is unknown to the \`${this.getCommand().getLowerCaseName()}\` feature.`,
-        isUnknown: true,
-        name: DiscordCommandFlagErrorTitleEnum.UNKNOWN_FLAG,
-      };
+      return this._getUnknownFlagError(messageFlag);
     }
 
     return null;
+  }
+
+  private _getUnknownFlagError(
+    messageFlag: Readonly<string>
+  ): IDiscordCommandFlagError {
+    return {
+      description: `The flag \`${_.toString(
+        discordCommandGetFlagName(messageFlag)
+      )}\` is unknown to the \`${this.getCommand().getLowerCaseName()}\` feature.`,
+      isUnknown: true,
+      name: DiscordCommandFlagErrorTitleEnum.UNKNOWN_FLAG,
+    };
   }
 
   private _splitMessageFlags(message: Readonly<string>): string[] {
