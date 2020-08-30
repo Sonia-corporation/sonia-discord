@@ -107,6 +107,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
   describe(`getMessageResponse()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
+    let messageFlags: string;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonService();
@@ -115,7 +116,10 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
     it(`should return a WIP message`, async (): Promise<void> => {
       expect.assertions(1);
 
-      const result = await service.getMessageResponse(anyDiscordMessage);
+      const result = await service.getMessageResponse(
+        anyDiscordMessage,
+        messageFlags
+      );
 
       expect(result).toStrictEqual({
         response: `No options for noon feature for now. Work in progress.`,
