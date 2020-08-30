@@ -3,6 +3,7 @@ import { getRandomBoolean } from "../../../../../../functions/randoms/get-random
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { DiscordCommandFlagErrorTitleEnum } from "../../../enums/commands/flags/discord-command-flag-error-title.enum";
 import { discordCommandGetFlagName } from "../../../functions/commands/flags/discord-command-get-flag-name";
+import { discordCommandIsMessageFlag } from "../../../functions/commands/flags/discord-command-is-message-flag";
 import { discordCommandRemoveFlagPrefix } from "../../../functions/commands/flags/discord-command-remove-flag-prefix";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { IDiscordCommandFlags } from "../../../interfaces/commands/flags/discord-command-flags";
@@ -163,7 +164,7 @@ export class DiscordCommandFlags<T extends string> {
   private _getFlagError(
     messageFlag: Readonly<string>
   ): IDiscordCommandFlagError | null {
-    if (_.startsWith(messageFlag, `--`)) {
+    if (discordCommandIsMessageFlag(messageFlag)) {
       const flag:
         | DiscordCommandFlag<T>
         | undefined = this._getFlagFromMessageFlag(messageFlag);
