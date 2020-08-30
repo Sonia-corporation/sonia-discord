@@ -142,6 +142,46 @@ export class DiscordCommandFlags<T extends string> {
     return _.isEmpty(flagsErrors) ? null : flagsErrors;
   }
 
+  /**
+   * @description
+   * Execute the action related to this flag
+   *
+   * @param {Readonly<IDiscordMessageFlag>} messageFlag A message flag
+   *
+   * @return {Promise<unknown>}
+   */
+  public execute(
+    messageFlag: Readonly<IDiscordMessageFlag>
+  ): Promise<unknown | never> {
+    if (discordCommandIsMessageFlag(messageFlag)) {
+      const flag:
+        | DiscordCommandFlag<T>
+        | undefined = this._getFlagFromMessageFlag(messageFlag);
+
+      if (this._isFlag(flag)) {
+        return flag.executeAction();
+      }
+
+      return Promise.reject(
+        new Error(`The flag does not exists. Could not perform the execution`)
+      );
+    }
+
+    const shortcutFlag:
+      | DiscordCommandFlag<T>
+      | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
+
+    if (this._isFlag(shortcutFlag)) {
+      return Promise.resolve();
+    }
+
+    return Promise.reject(
+      new Error(
+        `The shortcut flag does not exists. Could not perform the execution`
+      )
+    );
+  }
+
   private _getFlagsErrors(
     messageFlags: Readonly<string>[]
   ): IDiscordCommandFlagsErrors {
@@ -182,11 +222,11 @@ export class DiscordCommandFlags<T extends string> {
       return this._getUnknownFlagError(messageFlag);
     }
 
-    const flag:
+    const shortcutFlag:
       | DiscordCommandFlag<T>
       | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
 
-    if (this._isFlag(flag)) {
+    if (this._isFlag(shortcutFlag)) {
       return null;
     }
 
