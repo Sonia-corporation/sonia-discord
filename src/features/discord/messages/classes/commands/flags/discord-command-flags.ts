@@ -164,16 +164,11 @@ export class DiscordCommandFlags<T extends string> {
     messageFlag: Readonly<string>
   ): IDiscordCommandFlagError | null {
     if (_.startsWith(messageFlag, `--`)) {
-      const flag: DiscordCommandFlag<T> | undefined = _.find(
-        this.getFlags(),
-        (flag: Readonly<DiscordCommandFlag<T>>): boolean =>
-          _.isEqual(
-            flag.getLowerCaseName(),
-            discordCommandGetFlagName(messageFlag, true)
-          )
-      );
+      const flag:
+        | DiscordCommandFlag<T>
+        | undefined = this._getFlagFromMessageFlag(messageFlag);
 
-      if (!_.isNil(flag)) {
+      if (this._isFlag(flag)) {
         return flag.getInvalidFlagError(
           discordCommandRemoveFlagPrefix(messageFlag)
         );
@@ -181,7 +176,41 @@ export class DiscordCommandFlags<T extends string> {
 
       return this._getUnknownFlagError(messageFlag);
     }
-    const flag: DiscordCommandFlag<T> | undefined = _.find(
+
+    const flag:
+      | DiscordCommandFlag<T>
+      | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
+
+    if (this._isFlag(flag)) {
+      return null;
+    }
+
+    return this._getUnknownFlagError(messageFlag);
+  }
+
+  private _isFlag(
+    flag: DiscordCommandFlag<T> | null | undefined
+  ): flag is DiscordCommandFlag<T> {
+    return !_.isNil(flag);
+  }
+
+  private _getFlagFromMessageFlag(
+    messageFlag: Readonly<string>
+  ): DiscordCommandFlag<T> | undefined {
+    return _.find(
+      this.getFlags(),
+      (flag: Readonly<DiscordCommandFlag<T>>): boolean =>
+        _.isEqual(
+          flag.getLowerCaseName(),
+          discordCommandGetFlagName(messageFlag, true)
+        )
+    );
+  }
+
+  private _getShortcutFlagFromMessageFlag(
+    messageFlag: Readonly<string>
+  ): DiscordCommandFlag<T> | undefined {
+    return _.find(
       this.getFlags(),
       (flag: Readonly<DiscordCommandFlag<T>>): boolean =>
         !_.isNil(
@@ -191,12 +220,6 @@ export class DiscordCommandFlags<T extends string> {
           )
         )
     );
-
-    if (_.isNil(flag)) {
-      return this._getUnknownFlagError(messageFlag);
-    }
-
-    return null;
   }
 
   private _getUnknownFlagError(
