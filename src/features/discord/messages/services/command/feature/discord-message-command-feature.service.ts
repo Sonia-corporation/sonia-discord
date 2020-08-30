@@ -69,20 +69,24 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
             featureName
           )
         ) {
-          const flags: string | null = this.getFlags(anyDiscordMessage.content);
+          const messageFlags: string | null = this.getFlags(
+            anyDiscordMessage.content
+          );
 
-          if (!_.isNil(flags)) {
+          if (!_.isNil(messageFlags)) {
             const flagsErrors: IDiscordCommandFlagsErrors | null = DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getErrors(
-              flags
+              messageFlags
             );
 
             if (_.isNil(flagsErrors)) {
               return DiscordMessageCommandFeatureNoonService.getInstance().getMessageResponse(
-                anyDiscordMessage
+                anyDiscordMessage,
+                messageFlags
               );
             }
 
             return this._getWrongFlagsErrorMessageResponse(
+              anyDiscordMessage,
               DiscordMessageCommandFeatureNameEnum.NOON,
               flagsErrors
             );
@@ -96,7 +100,8 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
 
         LoggerService.getInstance().debug({
           context: this._serviceName,
-          message: ChalkService.getInstance().text(
+          message: LoggerService.getInstance().getSnowflakeContext(
+            anyDiscordMessage.id,
             `feature name ${ChalkService.getInstance().value(
               featureName
             )} not matching an existing feature`
@@ -112,7 +117,10 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
 
       LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: ChalkService.getInstance().text(`feature name not specified`),
+        message: LoggerService.getInstance().getSnowflakeContext(
+          anyDiscordMessage.id,
+          `feature name not specified`
+        ),
       });
 
       return DiscordMessageCommandFeatureEmptyFeatureNameErrorService.getInstance().getMessageResponse(
@@ -160,7 +168,8 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
+      message: LoggerService.getInstance().getSnowflakeContext(
+        anyDiscordMessage.id,
         `feature name ${ChalkService.getInstance().value(
           _.capitalize(featureName)
         )} not having any flags`
@@ -175,12 +184,14 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   }
 
   private _getWrongFlagsErrorMessageResponse(
+    { id }: Readonly<IAnyDiscordMessage>,
     featureName: Readonly<DiscordMessageCommandFeatureNameEnum>,
     flagsErrors: Readonly<IDiscordCommandFlagsErrors>
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
+      message: LoggerService.getInstance().getSnowflakeContext(
+        id,
         `feature name ${ChalkService.getInstance().value(
           _.capitalize(featureName)
         )} not having all valid flags`
