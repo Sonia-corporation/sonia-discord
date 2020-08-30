@@ -216,8 +216,15 @@ export class DiscordCommandFlags<T extends string> {
       (flag: Readonly<DiscordCommandFlag<T>>): boolean =>
         !_.isNil(
           _.find(
-            flag.getShortcuts(),
-            discordCommandRemoveFlagPrefix(messageFlag)
+            flag.getLowerCaseShortcuts(),
+            (shortcutFlag: Readonly<string>): boolean => {
+              const flagName: string | null = discordCommandGetFlagName(
+                messageFlag,
+                true
+              );
+
+              return _.isEqual(shortcutFlag, flagName);
+            }
           )
         )
     );

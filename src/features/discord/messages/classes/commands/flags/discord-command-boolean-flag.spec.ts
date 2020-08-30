@@ -547,6 +547,24 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       });
     });
 
+    describe(`when the given flag is "ENABLED"`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `ENABLED`;
+      });
+
+      it(`should return an error about not having specified a value`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlag.getInvalidFlagError(messageFlag);
+
+        expect(result).toStrictEqual({
+          description: `The flag \`ENABLED\` does not have a value. Specify either \`true\` or \`false\`.`,
+          isUnknown: false,
+          name: `Invalid boolean flag`,
+        } as IDiscordCommandFlagError);
+      });
+    });
+
     describe(`when the given flag is "enabled="`, (): void => {
       beforeEach((): void => {
         messageFlag = `enabled=`;
@@ -559,6 +577,24 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         expect(result).toStrictEqual({
           description: `The flag \`enabled\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+          isUnknown: false,
+          name: `Invalid boolean flag`,
+        } as IDiscordCommandFlagError);
+      });
+    });
+
+    describe(`when the given flag is "ENABLED="`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `ENABLED=`;
+      });
+
+      it(`should return an error about not having specified a valid value`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlag.getInvalidFlagError(messageFlag);
+
+        expect(result).toStrictEqual({
+          description: `The flag \`ENABLED\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
           isUnknown: false,
           name: `Invalid boolean flag`,
         } as IDiscordCommandFlagError);
@@ -583,6 +619,24 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       });
     });
 
+    describe(`when the given flag is "ENABLED=DUMMY"`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `ENABLED=DUMMY`;
+      });
+
+      it(`should return an error about not having specified a valid value`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlag.getInvalidFlagError(messageFlag);
+
+        expect(result).toStrictEqual({
+          description: `The flag \`ENABLED\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+          isUnknown: false,
+          name: `Invalid boolean flag`,
+        } as IDiscordCommandFlagError);
+      });
+    });
+
     describe(`when the given flag is "enabled=true"`, (): void => {
       beforeEach((): void => {
         messageFlag = `enabled=true`;
@@ -597,9 +651,37 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       });
     });
 
+    describe(`when the given flag is "ENABLED=TRUE"`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `ENABLED=TRUE`;
+      });
+
+      it(`should return null`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlag.getInvalidFlagError(messageFlag);
+
+        expect(result).toBeNull();
+      });
+    });
+
     describe(`when the given flag is "enabled=false"`, (): void => {
       beforeEach((): void => {
         messageFlag = `enabled=false`;
+      });
+
+      it(`should return null`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlag.getInvalidFlagError(messageFlag);
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe(`when the given flag is "ENABLED=FALSE"`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `ENABLED=FALSE`;
       });
 
       it(`should return null`, (): void => {

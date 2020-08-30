@@ -63,7 +63,7 @@ export class DiscordCommandBooleanFlag<
       };
     }
 
-    const value: string | undefined = _.last(splittedFlag);
+    const value: string = _.toLower(_.last(splittedFlag));
     const isValid: boolean = _.includes([`true`, `false`], value);
 
     if (_.isEqual(isValid, false)) {
