@@ -130,74 +130,85 @@ export class DiscordCommandFlags<T extends string> {
     }
 
     const splittedMessageFlags = this._splitMessageFlags(message);
-    const flagsErrors: IDiscordCommandFlagsErrors = _.reduce(
-      splittedMessageFlags,
-      (
-        value: IDiscordCommandFlagsErrors,
-        messageFlag: Readonly<string>
-      ): IDiscordCommandFlagsErrors => {
-        if (_.startsWith(messageFlag, `--`)) {
-          const flag:
-            | DiscordCommandFlag<T>
-            | undefined = _.find(
-            this.getFlags(),
-            (flag: Readonly<DiscordCommandFlag<T>>): boolean =>
-              _.isEqual(
-                flag.getLowerCaseName(),
-                discordCommandGetFlagName(messageFlag, true)
-              )
-          );
-
-          if (!_.isNil(flag)) {
-            const flagError: IDiscordCommandFlagError | null = flag.getInvalidFlagError(
-              discordCommandRemoveFlagPrefix(messageFlag)
-            );
-
-            if (!_.isNil(flagError)) {
-              value.push(flagError);
-
-              return value;
-            }
-
-            return value;
-          }
-
-          value.push({
-            description: `The flag \`${_.toString(
-              discordCommandGetFlagName(messageFlag)
-            )}\` is unknown to the \`${this.getCommand().getLowerCaseName()}\` feature.`,
-            isUnknown: true,
-            name: DiscordCommandFlagErrorTitleEnum.UNKNOWN_FLAG,
-          });
-        } else {
-          const flag: DiscordCommandFlag<T> | undefined = _.find(
-            this.getFlags(),
-            (flag: Readonly<DiscordCommandFlag<T>>): boolean =>
-              !_.isNil(
-                _.find(
-                  flag.getShortcuts(),
-                  discordCommandRemoveFlagPrefix(messageFlag)
-                )
-              )
-          );
-
-          if (_.isNil(flag)) {
-            value.push({
-              description: `The flag \`${_.toString(
-                discordCommandGetFlagName(messageFlag)
-              )}\` is unknown to the \`${this.getCommand().getLowerCaseName()}\` feature.`,
-              isUnknown: true,
-              name: DiscordCommandFlagErrorTitleEnum.UNKNOWN_FLAG,
-            });
-          }
-        }
-
-        return value;
-      },
-      []
+    const flagsErrors: IDiscordCommandFlagsErrors = this._getFlagsErrors(
+      splittedMessageFlags
     );
 
     return _.isEmpty(flagsErrors) ? null : flagsErrors;
+  }
+
+  private _getFlagsErrors(
+    messageFlags: Readonly<string>[]
+  ): IDiscordCommandFlagsErrors {
+    return _.reduce(
+      messageFlags,
+      (
+        flagsErrors: IDiscordCommandFlagsErrors,
+        messageFlag: Readonly<string>
+      ): IDiscordCommandFlagsErrors => {
+        const flagError: IDiscordCommandFlagError | null = this._getFlagError(
+          messageFlag
+        );
+
+        if (!_.isNil(flagError)) {
+          flagsErrors.push(flagError);
+        }
+
+        return flagsErrors;
+      },
+      []
+    );
+  }
+
+  private _getFlagError(
+    messageFlag: Readonly<string>
+  ): IDiscordCommandFlagError | null {
+    if (_.startsWith(messageFlag, `--`)) {
+      const flag: DiscordCommandFlag<T> | undefined = _.find(
+        this.getFlags(),
+        (flag: Readonly<DiscordCommandFlag<T>>): boolean =>
+          _.isEqual(
+            flag.getLowerCaseName(),
+            discordCommandGetFlagName(messageFlag, true)
+          )
+      );
+
+      if (!_.isNil(flag)) {
+        return flag.getInvalidFlagError(
+          discordCommandRemoveFlagPrefix(messageFlag)
+        );
+      }
+
+      return {
+        description: `The flag \`${_.toString(
+          discordCommandGetFlagName(messageFlag)
+        )}\` is unknown to the \`${this.getCommand().getLowerCaseName()}\` feature.`,
+        isUnknown: true,
+        name: DiscordCommandFlagErrorTitleEnum.UNKNOWN_FLAG,
+      };
+    }
+    const flag: DiscordCommandFlag<T> | undefined = _.find(
+      this.getFlags(),
+      (flag: Readonly<DiscordCommandFlag<T>>): boolean =>
+        !_.isNil(
+          _.find(
+            flag.getShortcuts(),
+            discordCommandRemoveFlagPrefix(messageFlag)
+          )
+        )
+    );
+
+    if (_.isNil(flag)) {
+      return {
+        description: `The flag \`${_.toString(
+          discordCommandGetFlagName(messageFlag)
+        )}\` is unknown to the \`${this.getCommand().getLowerCaseName()}\` feature.`,
+        isUnknown: true,
+        name: DiscordCommandFlagErrorTitleEnum.UNKNOWN_FLAG,
+      };
+    }
+
+    return null;
   }
 
   private _splitMessageFlags(message: Readonly<string>): string[] {
