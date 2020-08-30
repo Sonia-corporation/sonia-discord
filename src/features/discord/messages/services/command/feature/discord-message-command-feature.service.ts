@@ -72,7 +72,6 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
           const flags: string | null = this.getFlags(anyDiscordMessage.content);
 
           if (!_.isNil(flags)) {
-            // @todo add coverage
             const flagsErrors: IDiscordCommandFlagsErrors | null = DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getErrors(
               flags
             );
