@@ -7,6 +7,8 @@ export interface IDiscordCommandFlagError {
    *
    * Basically what is causing the error
    * How to solve it
+   *
+   * Usually used as the value for an [embed field]{@link EmbedFieldData}
    */
   description: string;
 
@@ -20,7 +22,7 @@ export interface IDiscordCommandFlagError {
    * @description
    * The name of the error
    *
-   * Usually used as the title for an embed field
+   * Usually used as the title for an [embed field]{@link EmbedFieldData}
    */
   name: DiscordCommandFlagErrorTitleEnum;
 }
