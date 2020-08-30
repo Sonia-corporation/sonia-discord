@@ -5,6 +5,7 @@ import { DiscordCommandFlagErrorTitleEnum } from "../../../enums/commands/flags/
 import { discordCommandGetFlagName } from "../../../functions/commands/flags/discord-command-get-flag-name";
 import { discordCommandIsMessageFlag } from "../../../functions/commands/flags/discord-command-is-message-flag";
 import { discordCommandRemoveFlagPrefix } from "../../../functions/commands/flags/discord-command-remove-flag-prefix";
+import { discordCommandSplitMessageFlags } from "../../../functions/commands/flags/discord-command-split-message-flags";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { IDiscordCommandFlags } from "../../../interfaces/commands/flags/discord-command-flags";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
@@ -120,18 +121,20 @@ export class DiscordCommandFlags<T extends string> {
    * getErrors('--enabled=wrong-value')
    * getErrors('-e')
    *
-   * @param {Readonly<string>} message A partial message containing only a string with flags
+   * @param {Readonly<string>} messageFlags A partial message containing only a string with flags
    *
    * @return {IDiscordCommandFlagsErrors | null} A list of errors or null
    */
   public getErrors(
-    message: Readonly<string>
+    messageFlags: Readonly<string>
   ): IDiscordCommandFlagsErrors | null | never {
-    if (_.isEmpty(message)) {
+    if (_.isEmpty(messageFlags)) {
       throw new Error(`The message should not be empty`);
     }
 
-    const splittedMessageFlags = this._splitMessageFlags(message);
+    const splittedMessageFlags: IDiscordMessageFlag[] = discordCommandSplitMessageFlags(
+      messageFlags
+    );
     const flagsErrors: IDiscordCommandFlagsErrors = this._getFlagsErrors(
       splittedMessageFlags
     );
@@ -241,9 +244,5 @@ export class DiscordCommandFlags<T extends string> {
       isUnknown: true,
       name: DiscordCommandFlagErrorTitleEnum.UNKNOWN_FLAG,
     };
-  }
-
-  private _splitMessageFlags(message: Readonly<string>): string[] {
-    return _.split(message, ` `);
   }
 }
