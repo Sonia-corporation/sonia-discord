@@ -3,6 +3,7 @@ import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-comm
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
+import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
 
 describe(`DiscordCommandBooleanFlag`, (): void => {
@@ -397,7 +398,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
   });
 
   describe(`isValid()`, (): void => {
-    let messageFlag: string;
+    let messageFlag: IDiscordMessageFlag;
 
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandBooleanFlag<
@@ -497,7 +498,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
   });
 
   describe(`getInvalidFlagError()`, (): void => {
-    let messageFlag: string;
+    let messageFlag: IDiscordMessageFlag;
 
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandBooleanFlag<

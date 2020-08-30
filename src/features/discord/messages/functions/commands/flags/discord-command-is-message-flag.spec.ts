@@ -1,7 +1,8 @@
+import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { discordCommandIsMessageFlag } from "./discord-command-is-message-flag";
 
 describe(`discordCommandIsMessageFlag()`, (): void => {
-  let messageFlag: string;
+  let messageFlag: IDiscordMessageFlag;
 
   describe(`when the given message flag is empty`, (): void => {
     beforeEach((): void => {

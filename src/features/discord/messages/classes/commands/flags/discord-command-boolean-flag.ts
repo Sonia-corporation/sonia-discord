@@ -4,6 +4,7 @@ import { DiscordCommandFlagErrorTitleEnum } from "../../../enums/commands/flags/
 import { discordCommandGetFlagName } from "../../../functions/commands/flags/discord-command-get-flag-name";
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
+import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandFlag } from "./discord-command-flag";
 
 export class DiscordCommandBooleanFlag<
@@ -30,11 +31,11 @@ export class DiscordCommandBooleanFlag<
    * isValid('enabled=true')  => true
    * isValid('enabled=false') => true
    *
-   * @param {Readonly<string>} messageFlag A flag as a message
+   * @param {Readonly<IDiscordMessageFlag>} messageFlag A flag as a message
    *
    * @return {boolean} true if the flag value is valid
    */
-  public isValid(messageFlag: Readonly<string>): boolean {
+  public isValid(messageFlag: Readonly<IDiscordMessageFlag>): boolean {
     const splittedFlag: string[] = _.split(messageFlag, `=`);
     const splittedFlagSize: number = _.size(splittedFlag);
 
@@ -48,7 +49,7 @@ export class DiscordCommandBooleanFlag<
   }
 
   public getInvalidFlagError(
-    messageFlag: Readonly<string>
+    messageFlag: Readonly<IDiscordMessageFlag>
   ): IDiscordCommandFlagError | null {
     const splittedFlag: string[] = _.split(messageFlag, `=`);
     const splittedFlagSize: number = _.size(splittedFlag);

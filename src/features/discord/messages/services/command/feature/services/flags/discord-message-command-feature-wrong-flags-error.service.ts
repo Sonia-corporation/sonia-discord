@@ -4,7 +4,7 @@ import { ServiceNameEnum } from "../../../../../../../../enums/service-name.enum
 import { wrapInBold } from "../../../../../../../../functions/formatters/wrap-in-bold";
 import { IDiscordCommandFlagError } from "../../../../../interfaces/commands/flags/discord-command-flag-error";
 import { IDiscordMessageResponse } from "../../../../../interfaces/discord-message-response";
-import { IDiscordCommandFlagsErrors } from "../../../../../types/commands/discord-command-flags-errors";
+import { IDiscordCommandFlagsErrors } from "../../../../../types/commands/flags/discord-command-flags-errors";
 import { DiscordMessageCommandCliErrorService } from "../../../discord-message-command-cli-error.service";
 import { DiscordMessageCommandFeatureErrorCoreService } from "../discord-message-command-feature-error-core.service";
 

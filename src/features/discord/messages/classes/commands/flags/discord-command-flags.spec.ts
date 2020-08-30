@@ -3,7 +3,7 @@ import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-comm
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON } from "../../../services/command/feature/constants/discord-message-command-feature-name-noon";
 import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
-import { IDiscordCommandFlagsErrors } from "../../../types/commands/discord-command-flags-errors";
+import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
 import { DiscordCommandFlags } from "./discord-command-flags";
 

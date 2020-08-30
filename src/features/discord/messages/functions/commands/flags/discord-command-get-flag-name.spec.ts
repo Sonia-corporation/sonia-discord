@@ -1,7 +1,8 @@
+import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { discordCommandGetFlagName } from "./discord-command-get-flag-name";
 
 describe(`discordCommandGetFlagName()`, (): void => {
-  let messageFlag: string;
+  let messageFlag: IDiscordMessageFlag;
   let toLowerCase: boolean;
 
   describe(`when the given flag is empty`, (): void => {

@@ -1,7 +1,8 @@
+import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { discordCommandRemoveFlagPrefix } from "./discord-command-remove-flag-prefix";
 
 describe(`discordCommandRemoveFlagPrefix()`, (): void => {
-  let messageFlag: string;
+  let messageFlag: IDiscordMessageFlag;
 
   describe(`when the given flag is empty`, (): void => {
     beforeEach((): void => {

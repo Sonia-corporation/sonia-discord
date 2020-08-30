@@ -12,7 +12,7 @@ import { ServiceNameEnum } from "../../../../../../../../enums/service-name.enum
 import { CoreEventService } from "../../../../../../../core/services/core-event.service";
 import { DiscordSoniaService } from "../../../../../../users/services/discord-sonia.service";
 import { IDiscordCommandFlagError } from "../../../../../interfaces/commands/flags/discord-command-flag-error";
-import { IDiscordCommandFlagsErrors } from "../../../../../types/commands/discord-command-flags-errors";
+import { IDiscordCommandFlagsErrors } from "../../../../../types/commands/flags/discord-command-flags-errors";
 import { DiscordMessageConfigService } from "../../../../config/discord-message-config.service";
 import { DiscordMessageCommandCliErrorService } from "../../../discord-message-command-cli-error.service";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../../features/noon/constants/discord-message-command-feature-noon-flags";

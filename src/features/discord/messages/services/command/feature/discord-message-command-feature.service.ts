@@ -9,7 +9,7 @@ import { discordGetCommandFlags } from "../../../functions/commands/getters/disc
 import { discordHasThisCommand } from "../../../functions/commands/checks/discord-has-this-command";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
-import { IDiscordCommandFlagsErrors } from "../../../types/commands/discord-command-flags-errors";
+import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandFeatureNameEnum } from "./enums/discord-message-command-feature-name.enum";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "./features/noon/constants/discord-message-command-feature-noon-flags";

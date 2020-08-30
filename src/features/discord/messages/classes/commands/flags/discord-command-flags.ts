@@ -7,7 +7,8 @@ import { discordCommandIsMessageFlag } from "../../../functions/commands/flags/d
 import { discordCommandRemoveFlagPrefix } from "../../../functions/commands/flags/discord-command-remove-flag-prefix";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { IDiscordCommandFlags } from "../../../interfaces/commands/flags/discord-command-flags";
-import { IDiscordCommandFlagsErrors } from "../../../types/commands/discord-command-flags-errors";
+import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
+import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandFirstArgument } from "../arguments/discord-command-first-argument";
 import { DiscordCommandFlag } from "./discord-command-flag";
 
@@ -145,7 +146,7 @@ export class DiscordCommandFlags<T extends string> {
       messageFlags,
       (
         flagsErrors: IDiscordCommandFlagsErrors,
-        messageFlag: Readonly<string>
+        messageFlag: Readonly<IDiscordMessageFlag>
       ): IDiscordCommandFlagsErrors => {
         const flagError: IDiscordCommandFlagError | null = this._getFlagError(
           messageFlag
@@ -162,7 +163,7 @@ export class DiscordCommandFlags<T extends string> {
   }
 
   private _getFlagError(
-    messageFlag: Readonly<string>
+    messageFlag: Readonly<IDiscordMessageFlag>
   ): IDiscordCommandFlagError | null {
     if (discordCommandIsMessageFlag(messageFlag)) {
       const flag:
@@ -196,7 +197,7 @@ export class DiscordCommandFlags<T extends string> {
   }
 
   private _getFlagFromMessageFlag(
-    messageFlag: Readonly<string>
+    messageFlag: Readonly<IDiscordMessageFlag>
   ): DiscordCommandFlag<T> | undefined {
     return _.find(
       this.getFlags(),
@@ -209,7 +210,7 @@ export class DiscordCommandFlags<T extends string> {
   }
 
   private _getShortcutFlagFromMessageFlag(
-    messageFlag: Readonly<string>
+    messageFlag: Readonly<IDiscordMessageFlag>
   ): DiscordCommandFlag<T> | undefined {
     return _.find(
       this.getFlags(),
@@ -231,7 +232,7 @@ export class DiscordCommandFlags<T extends string> {
   }
 
   private _getUnknownFlagError(
-    messageFlag: Readonly<string>
+    messageFlag: Readonly<IDiscordMessageFlag>
   ): IDiscordCommandFlagError {
     return {
       description: `The flag \`${_.toString(

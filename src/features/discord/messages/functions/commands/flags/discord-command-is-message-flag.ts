@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 
 /**
  * @description
@@ -13,12 +14,12 @@ import _ from "lodash";
  * discordCommandIsMessageFlag('--dummy=')     => true
  * discordCommandIsMessageFlag('--dummy=true') => true
  *
- * @param {Readonly<string>} messageFlag The message containing a flag
+ * @param {Readonly<IDiscordMessageFlag>} messageFlag The message containing a flag
  *
  * @return {boolean} true when a flag
  */
 export function discordCommandIsMessageFlag(
-  messageFlag: Readonly<string>
+  messageFlag: Readonly<IDiscordMessageFlag>
 ): boolean {
   return _.startsWith(messageFlag, `--`);
 }
