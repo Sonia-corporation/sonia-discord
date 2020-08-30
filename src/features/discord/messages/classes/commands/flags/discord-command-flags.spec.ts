@@ -757,6 +757,7 @@ describe(`DiscordCommandFlags`, (): void => {
           new DiscordCommandBooleanFlag<
             DiscordMessageCommandFeatureNoonFlagEnum
           >({
+            action: (): Promise<unknown> => Promise.resolve(`dummy`),
             description: ``,
             name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
             shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],

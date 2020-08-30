@@ -259,6 +259,14 @@ describe(`ServiceNameEnum`, (): void => {
     ).toStrictEqual(`DiscordMessageCommandFeatureEmptyFlagsErrorService`);
   });
 
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SERVICE
+    ).toStrictEqual(`DiscordMessageCommandFeatureNoonEnabledService`);
+  });
+
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_SERVICE"`, (): void => {
     expect.assertions(1);
 
