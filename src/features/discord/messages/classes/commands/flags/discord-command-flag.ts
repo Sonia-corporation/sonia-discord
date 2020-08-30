@@ -11,6 +11,7 @@ import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-messa
  */
 export abstract class DiscordCommandFlag<T extends string> {
   protected abstract _type: DiscordCommandFlagTypeEnum;
+  protected _action: () => Promise<unknown>;
   protected _description: string;
   protected _name: T;
   protected _shortcuts: T[] | undefined;
@@ -19,13 +20,23 @@ export abstract class DiscordCommandFlag<T extends string> {
    * @param {Readonly<IDiscordCommandFlag>} discordCommandFlag Default values
    */
   protected constructor({
+    action,
     description,
     name,
     shortcuts,
   }: Readonly<IDiscordCommandFlag<T>>) {
+    this._action = action;
     this._description = description;
     this._name = name;
     this._shortcuts = shortcuts;
+  }
+
+  public getAction(): () => Promise<unknown> {
+    return this._action;
+  }
+
+  public setAction(action: () => Promise<unknown>): void {
+    this._action = action;
   }
 
   public getDescription(): string {
@@ -87,6 +98,10 @@ export abstract class DiscordCommandFlag<T extends string> {
     }
 
     return example;
+  }
+
+  public executeAction(): Promise<unknown> {
+    return this._action();
   }
 
   public abstract isValid(messageFlag: Readonly<IDiscordMessageFlag>): boolean;
