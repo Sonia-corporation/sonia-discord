@@ -552,13 +552,13 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         messageFlag = `enabled=`;
       });
 
-      it(`should return an error about not having specified a value`, (): void => {
+      it(`should return an error about not having specified a valid value`, (): void => {
         expect.assertions(1);
 
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
         expect(result).toStrictEqual({
-          description: `The flag \`enabled\` does not have a value. Specify either \`true\` or \`false\`.`,
+          description: `The flag \`enabled\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
           isUnknown: false,
           name: `Invalid boolean flag`,
         } as IDiscordCommandFlagError);

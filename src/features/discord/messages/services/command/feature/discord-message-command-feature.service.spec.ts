@@ -863,7 +863,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   service.getMessageResponse(anyDiscordMessage)
                 ).rejects.toThrow(
                   new Error(
-                    `discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`
+                    `discordMessageCommandFeatureNoonService getMessageResponse error`
                   )
                 );
 
@@ -933,7 +933,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 )
               );
 
-              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(0);
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
                 context: `DiscordMessageCommandFeatureService`,
                 message: `text-feature name not specified`,
@@ -953,7 +953,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 )
               );
 
-              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(0);
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
                 context: `DiscordMessageCommandFeatureService`,
                 message: `text-feature name value-dummy not matching an existing feature`,

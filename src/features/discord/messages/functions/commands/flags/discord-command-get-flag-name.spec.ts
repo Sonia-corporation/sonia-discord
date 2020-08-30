@@ -159,7 +159,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
         const result = discordCommandGetFlagName(messageFlag, toLowerCase);
 
-        expect(result).toStrictEqual(`flag`);
+        expect(result).toStrictEqual(`Flag`);
       });
     });
 

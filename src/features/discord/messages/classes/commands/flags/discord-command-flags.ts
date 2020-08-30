@@ -1,6 +1,10 @@
 import _ from "lodash";
 import { getRandomBoolean } from "../../../../../../functions/randoms/get-random-boolean";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
+import { DiscordCommandFlagErrorTitleEnum } from "../../../enums/commands/flags/discord-command-flag-error-title.enum";
+import { discordCommandGetFlagName } from "../../../functions/commands/flags/discord-command-get-flag-name";
+import { discordCommandRemoveFlagPrefix } from "../../../functions/commands/flags/discord-command-remove-flag-prefix";
+import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { IDiscordCommandFlags } from "../../../interfaces/commands/flags/discord-command-flags";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/discord-command-flags-errors";
 import { DiscordCommandFirstArgument } from "../arguments/discord-command-first-argument";
@@ -19,7 +23,7 @@ export class DiscordCommandFlags<T extends string> {
     this._flags = flags;
   }
 
-  public getCommand(): string | DiscordCommandFirstArgument<string> {
+  public getCommand(): DiscordCommandFirstArgument<string> {
     return this._command;
   }
 
@@ -125,6 +129,78 @@ export class DiscordCommandFlags<T extends string> {
       throw new Error(`The message should not be empty`);
     }
 
-    return null;
+    const splittedMessageFlags = this._splitMessageFlags(message);
+    const flagsErrors: IDiscordCommandFlagsErrors = _.reduce(
+      splittedMessageFlags,
+      (
+        value: IDiscordCommandFlagsErrors,
+        messageFlag: Readonly<string>
+      ): IDiscordCommandFlagsErrors => {
+        if (_.startsWith(messageFlag, `--`)) {
+          const flag:
+            | DiscordCommandFlag<T>
+            | undefined = _.find(
+            this.getFlags(),
+            (flag: Readonly<DiscordCommandFlag<T>>): boolean =>
+              _.isEqual(
+                flag.getLowerCaseName(),
+                discordCommandGetFlagName(messageFlag, true)
+              )
+          );
+
+          if (!_.isNil(flag)) {
+            const flagError: IDiscordCommandFlagError | null = flag.getInvalidFlagError(
+              discordCommandRemoveFlagPrefix(messageFlag)
+            );
+
+            if (!_.isNil(flagError)) {
+              value.push(flagError);
+
+              return value;
+            }
+
+            return value;
+          }
+
+          value.push({
+            description: `The flag \`${_.toString(
+              discordCommandGetFlagName(messageFlag)
+            )}\` is unknown to the \`${this.getCommand().getLowerCaseName()}\` feature.`,
+            isUnknown: true,
+            name: DiscordCommandFlagErrorTitleEnum.UNKNOWN_FLAG,
+          });
+        } else {
+          const flag: DiscordCommandFlag<T> | undefined = _.find(
+            this.getFlags(),
+            (flag: Readonly<DiscordCommandFlag<T>>): boolean =>
+              !_.isNil(
+                _.find(
+                  flag.getShortcuts(),
+                  discordCommandRemoveFlagPrefix(messageFlag)
+                )
+              )
+          );
+
+          if (_.isNil(flag)) {
+            value.push({
+              description: `The flag \`${_.toString(
+                discordCommandGetFlagName(messageFlag)
+              )}\` is unknown to the \`${this.getCommand().getLowerCaseName()}\` feature.`,
+              isUnknown: true,
+              name: DiscordCommandFlagErrorTitleEnum.UNKNOWN_FLAG,
+            });
+          }
+        }
+
+        return value;
+      },
+      []
+    );
+
+    return _.isEmpty(flagsErrors) ? null : flagsErrors;
+  }
+
+  private _splitMessageFlags(message: Readonly<string>): string[] {
+    return _.split(message, ` `);
   }
 }
