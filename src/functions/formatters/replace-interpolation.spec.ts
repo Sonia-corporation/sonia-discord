@@ -1,9 +1,9 @@
-import { IAnyObject } from "../../types/any-object";
+import { IObject } from "../../types/object";
 import { replaceInterpolation } from "./replace-interpolation";
 
 describe(`replaceInterpolation()`, (): void => {
   let text: string;
-  let replacement: IAnyObject;
+  let replacement: IObject;
 
   describe(`when the given text is empty`, (): void => {
     beforeEach((): void => {
