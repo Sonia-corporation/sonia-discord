@@ -247,6 +247,10 @@ rules:
   '@typescript-eslint/prefer-enum-initializers':
     - error
   '@typescript-eslint/prefer-literal-enum-member': off
+  no-magic-numbers:
+    - error
+    - enforceConst: true
+      detectObjects: false
 overrides:
   - files:
       - '*.ts'
