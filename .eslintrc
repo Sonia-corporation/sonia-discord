@@ -262,3 +262,7 @@ overrides:
           allowHigherOrderFunctions: false
       '@typescript-eslint/no-var-requires':
         - error
+  - files:
+      - '*.spec.ts'
+    rules:
+      no-magic-numbers: off
