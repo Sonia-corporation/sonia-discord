@@ -1,0 +1,1 @@
+export const DECIMAL_COLOR_MINT = 7522991;

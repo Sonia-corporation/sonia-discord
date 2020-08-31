@@ -7,6 +7,8 @@ import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/dis
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandFlag } from "./discord-command-flag";
 
+const SPLITTED_FLAG_LENGTH = 2;
+
 export class DiscordCommandBooleanFlag<
   T extends string
 > extends DiscordCommandFlag<T> {
@@ -39,7 +41,7 @@ export class DiscordCommandBooleanFlag<
     const splittedFlag: string[] = _.split(messageFlag, `=`);
     const splittedFlagSize: number = _.size(splittedFlag);
 
-    if (_.lt(splittedFlagSize, 2)) {
+    if (_.lt(splittedFlagSize, SPLITTED_FLAG_LENGTH)) {
       return false;
     }
 
@@ -54,7 +56,7 @@ export class DiscordCommandBooleanFlag<
     const splittedFlag: string[] = _.split(messageFlag, `=`);
     const splittedFlagSize: number = _.size(splittedFlag);
 
-    if (_.lt(splittedFlagSize, 2)) {
+    if (_.lt(splittedFlagSize, SPLITTED_FLAG_LENGTH)) {
       return {
         description: `The flag \`${_.toString(
           discordCommandGetFlagName(messageFlag)

@@ -16,7 +16,7 @@ import { discordCommandRemoveFlagPrefix } from "./discord-command-remove-flag-pr
  * discordCommandGetFlagName('--f=dummy') => f
  *
  * @param {Readonly<IDiscordMessageFlag>} messageFlag A flag as a message
- * @param {Readonly<boolean>} toLowerCase Return the flag name to lower case
+ * @param {Readonly<boolean>} [toLowerCase=false] Return the flag name to lower case
  *
  * @return {string | null} a string when the flag name exists
  */

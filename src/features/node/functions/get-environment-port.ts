@@ -1,11 +1,13 @@
 import _ from "lodash";
 import { isValidPort } from "./is-valid-port";
 
+const RADIX = 10;
+
 export function getEnvironmentPort(): number | null {
   const port: string | undefined = process.env.PORT;
 
   if (isValidPort(port)) {
-    return _.parseInt(port, 10);
+    return _.parseInt(port, RADIX);
   }
 
   return null;

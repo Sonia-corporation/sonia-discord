@@ -3,6 +3,7 @@ import admin from "firebase-admin";
 import _ from "lodash";
 import { filter, mergeMap, take } from "rxjs/operators";
 import { AbstractService } from "../../../../classes/services/abstract.service";
+import { ONE_EMITTER } from "../../../../constants/one-emitter";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { FirebaseGuildsService } from "../../../firebase/services/firebase-guilds.service";
@@ -49,7 +50,7 @@ export class DiscordGuildCreateService extends AbstractService {
         filter((isReady: Readonly<boolean>): boolean =>
           _.isEqual(isReady, true)
         ),
-        take(1),
+        take(ONE_EMITTER),
         mergeMap(
           (): Promise<WriteResult | void> =>
             FirebaseGuildsService.getInstance()

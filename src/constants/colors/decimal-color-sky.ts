@@ -1,0 +1,1 @@
+export const DECIMAL_COLOR_SKY = 11912416;

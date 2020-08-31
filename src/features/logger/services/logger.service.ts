@@ -3,6 +3,11 @@ import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../functions/formatters/wrap-in-quotes";
 import { CoreEventService } from "../../core/services/core-event.service";
 import { TimeService } from "../../time/services/time.service";
+import { LOGGER_DEBUG_LEVEL } from "../constants/levels/logger-debug-level";
+import { LOGGER_ERROR_LEVEL } from "../constants/levels/logger-error-level";
+import { LOGGER_LOG_LEVEL } from "../constants/levels/logger-log-level";
+import { LOGGER_SUCCESS_LEVEL } from "../constants/levels/logger-success-level";
+import { LOGGER_WARNING_LEVEL } from "../constants/levels/logger-warning-level";
 import { LoggerConfigLevelValueEnum } from "../enums/logger-config-level-value.enum";
 import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
 import { IJobDateLog } from "../interfaces/job-date-log";
@@ -203,35 +208,35 @@ export class LoggerService {
   private _isErrorEnabled(): boolean {
     return _.gte(
       LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()],
-      0
+      LOGGER_ERROR_LEVEL
     );
   }
 
   private _isWarningEnabled(): boolean {
     return _.gte(
       LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()],
-      1
+      LOGGER_WARNING_LEVEL
     );
   }
 
   private _isSuccessEnabled(): boolean {
     return _.gte(
       LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()],
-      2
+      LOGGER_SUCCESS_LEVEL
     );
   }
 
   private _isLogEnabled(): boolean {
     return _.gte(
       LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()],
-      3
+      LOGGER_LOG_LEVEL
     );
   }
 
   private _isDebugEnabled(): boolean {
     return _.gte(
       LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()],
-      4
+      LOGGER_DEBUG_LEVEL
     );
   }
 
