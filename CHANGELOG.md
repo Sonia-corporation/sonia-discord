@@ -1,5 +1,15 @@
 # Semantic Versioning Changelog
 
+# [1.73.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.72.1...1.73.0) (2020-09-01)
+
+
+### :rocket: Features
+
+* **command-feature:** return an embed message when a flag is incorrect ([86b3552](https://github.com/Sonia-corporation/il-est-midi-discord/commit/86b3552a853882c69a6dc80d28785a8b1ec3c7c6))
+* **command-feature-empty-flags-error:** show also the shortcuts in the list of flags ([88cabfb](https://github.com/Sonia-corporation/il-est-midi-discord/commit/88cabfbae42608e142455aa8a233a358a26d9a5b))
+* **command-feature-empty-flags-error:** show the flags prefixes in the list of flags ([5d30e89](https://github.com/Sonia-corporation/il-est-midi-discord/commit/5d30e89d2543a497f83f4e8df946df88d73e54b5)), closes [#858](https://github.com/Sonia-corporation/il-est-midi-discord/issues/858)
+* **command-feature-errors:** show the shortcuts for the feature names when listing all features ([6c48813](https://github.com/Sonia-corporation/il-est-midi-discord/commit/6c48813f4962e8d0977778f9d9c92e258503daa6)), closes [#857](https://github.com/Sonia-corporation/il-est-midi-discord/issues/857)
+
 ## [1.72.1](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.72.0...1.72.1) (2020-08-26)
 
 

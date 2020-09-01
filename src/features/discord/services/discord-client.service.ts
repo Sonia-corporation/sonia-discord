@@ -3,6 +3,7 @@ import _ from "lodash";
 import { BehaviorSubject, Observable } from "rxjs";
 import { filter, map, take } from "rxjs/operators";
 import { AbstractService } from "../../../classes/services/abstract.service";
+import { ONE_EMITTER } from "../../../constants/one-emitter";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 
 export class DiscordClientService extends AbstractService {
@@ -49,7 +50,7 @@ export class DiscordClientService extends AbstractService {
         filter((isReady: Readonly<boolean>): boolean =>
           _.isEqual(isReady, true)
         ),
-        take(1),
+        take(ONE_EMITTER),
         map((): true => true)
       )
       .toPromise();

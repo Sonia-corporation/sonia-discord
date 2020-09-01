@@ -70,7 +70,7 @@ export class Messages<T extends string> {
    * getHumanizedRandomMessage();
    * // -> 'a message with a dummy'
    *
-   * @param {Readonly<IObject | undefined>} params The object containing the replacements [default {@link getParams}]
+   * @param {Readonly<IObject | undefined>} [params=getParams] The object containing the replacements
    *
    * @return {string} The humanized and parsed message
    */

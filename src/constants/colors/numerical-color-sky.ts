@@ -1,0 +1,1 @@
+export const NUMERICAL_COLOR_SKY = 11912416;

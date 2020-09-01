@@ -1,0 +1,1 @@
+export const NUMERICAL_COLOR_SUN = 16376750;

@@ -127,11 +127,11 @@ export class DiscordLoggerErrorService extends AbstractService {
   private _getMessageEmbedFields({ stack }: Readonly<Error>): EmbedFieldData[] {
     const embedFieldData: EmbedFieldData[] = [];
 
-    if (!_.isNil(stack)) {
-      embedFieldData.push(this._getMessageEmbedFieldError(stack));
+    if (_.isNil(stack)) {
+      return embedFieldData;
     }
 
-    return embedFieldData;
+    return _.concat(embedFieldData, this._getMessageEmbedFieldError(stack));
   }
 
   private _getMessageEmbedFieldError(stack: Readonly<string>): EmbedFieldData {

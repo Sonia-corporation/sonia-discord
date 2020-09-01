@@ -195,11 +195,11 @@ export class DiscordCommandFlags<T extends string> {
           messageFlag
         );
 
-        if (!_.isNil(flagError)) {
-          flagsErrors.push(flagError);
+        if (_.isNil(flagError)) {
+          return flagsErrors;
         }
 
-        return flagsErrors;
+        return _.concat(flagsErrors, flagError);
       },
       []
     );

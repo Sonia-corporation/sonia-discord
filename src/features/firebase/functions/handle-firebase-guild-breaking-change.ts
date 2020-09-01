@@ -8,7 +8,7 @@ import { upgradeFirebaseGuildToV2 } from "./upgrade-firebase-guild-to-v2";
  * Upgrade the given object to the latest possible version of a [Firebase guild]{@link IFirebaseGuild}
  * Based on the [version]{@link IFirebaseGuild#version}
  *
- * @param {AnyObject} firebaseGuild The [Firebase guild]{@link IFirebaseGuild} to update
+ * @param {Readonly<IFirebaseGuild>} firebaseGuild The [Firebase guild]{@link IFirebaseGuild} to update
  *
  * @return {IFirebaseGuild} Updated [Firebase guild]{@link IFirebaseGuild}
  */

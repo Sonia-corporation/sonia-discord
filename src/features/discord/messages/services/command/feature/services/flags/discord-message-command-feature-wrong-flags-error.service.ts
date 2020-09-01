@@ -8,6 +8,8 @@ import { IDiscordCommandFlagsErrors } from "../../../../../types/commands/flags/
 import { DiscordMessageCommandCliErrorService } from "../../../discord-message-command-cli-error.service";
 import { DiscordMessageCommandFeatureErrorCoreService } from "../discord-message-command-feature-error-core.service";
 
+const ONE_FLAG_ERROR = 1;
+
 export class DiscordMessageCommandFeatureWrongFlagsErrorService extends DiscordMessageCommandFeatureErrorCoreService {
   private static _instance: DiscordMessageCommandFeatureWrongFlagsErrorService;
 
@@ -63,7 +65,7 @@ export class DiscordMessageCommandFeatureWrongFlagsErrorService extends DiscordM
     const flagsErrorsCount: number = this._getFlagsErrorsCount(flagsErrors);
 
     return `${wrapInBold(flagsErrorsCount)} error${
-      _.gt(flagsErrorsCount, 1) ? `s` : ``
+      _.gt(flagsErrorsCount, ONE_FLAG_ERROR) ? `s` : ``
     } found.`;
   }
 

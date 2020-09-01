@@ -3,6 +3,8 @@ import { AbstractService } from "../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { IServerConfig } from "../../interfaces/server-config";
 
+const DEFAULT_PORT = 3001;
+
 export class ServerConfigCoreService
   extends AbstractService
   implements IServerConfig {
@@ -16,7 +18,7 @@ export class ServerConfigCoreService
     return ServerConfigCoreService._instance;
   }
 
-  public port = 3001;
+  public port = DEFAULT_PORT;
 
   public constructor() {
     super(ServiceNameEnum.SERVER_CONFIG_CORE_SERVICE);

@@ -2,6 +2,7 @@ import { StoreConfig } from "@datorama/akita";
 import _ from "lodash";
 import { filter, map, take } from "rxjs/operators";
 import { AbstractQueryEntityService } from "../../../../../classes/stores/abstract-query-entity.service";
+import { ONE_EMITTER } from "../../../../../constants/one-emitter";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { StoreNameEnum } from "../../../../../enums/store-name.enum";
 import { FirebaseGuildsStore } from "../firebase-guilds-store";
@@ -36,7 +37,7 @@ export class FirebaseGuildsStoreQuery extends AbstractQueryEntityService<
         filter((isLoaded: Readonly<boolean>): boolean =>
           _.isEqual(isLoaded, true)
         ),
-        take(1),
+        take(ONE_EMITTER),
         map((): true => true)
       )
       .toPromise();

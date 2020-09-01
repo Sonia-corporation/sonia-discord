@@ -1,3 +1,5 @@
+/* eslint-disable no-magic-numbers */
+
 /**
  * @description
  * Add a new version each time the [Firebase guild]{@link IFirebaseGuild} model change
