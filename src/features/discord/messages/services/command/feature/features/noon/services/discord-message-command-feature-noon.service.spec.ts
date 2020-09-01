@@ -1,7 +1,10 @@
+import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../../../../../core/services/core-event.service";
+import { IDiscordMessageResponse } from "../../../../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
 import { DiscordMessageCommandFeatureNameEnum } from "../../../enums/discord-message-command-feature-name.enum";
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../constants/discord-message-command-feature-noon-flags";
 import { DiscordMessageCommandFeatureNoonService } from "./discord-message-command-feature-noon.service";
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
@@ -108,12 +111,34 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
   describe(`getMessageResponse()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let messageFlags: string;
+    let discordMessageResponse: IDiscordMessageResponse;
+
+    let executeAllSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonService();
+      discordMessageResponse = createMock<IDiscordMessageResponse>();
+
+      executeAllSpy = jest
+        .spyOn(DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS, `executeAll`)
+        .mockResolvedValue(discordMessageResponse);
     });
 
-    it(`should return a WIP message`, async (): Promise<void> => {
+    it(`should execute the associated action for each flag`, async (): Promise<
+      void
+    > => {
+      expect.assertions(2);
+
+      await service.getMessageResponse(anyDiscordMessage, messageFlags);
+
+      expect(executeAllSpy).toHaveBeenCalledTimes(1);
+      expect(executeAllSpy).toHaveBeenCalledWith(
+        anyDiscordMessage,
+        messageFlags
+      );
+    });
+
+    it(`should return a message response`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse(
@@ -121,9 +146,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
         messageFlags
       );
 
-      expect(result).toStrictEqual({
-        response: `No options for noon feature for now. Work in progress.`,
-      });
+      expect(result).toStrictEqual(discordMessageResponse);
     });
   });
 });

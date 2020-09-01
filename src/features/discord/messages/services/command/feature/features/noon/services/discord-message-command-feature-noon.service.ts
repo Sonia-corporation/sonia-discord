@@ -1,12 +1,8 @@
 import _ from "lodash";
 import { AbstractService } from "../../../../../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../../../../../enums/service-name.enum";
-import { ChalkService } from "../../../../../../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../../../../../../logger/services/logger.service";
-import { discordCommandSplitMessageFlags } from "../../../../../../functions/commands/flags/discord-command-split-message-flags";
 import { IDiscordMessageResponse } from "../../../../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
-import { IDiscordMessageFlag } from "../../../../../../types/commands/flags/discord-message-flag";
 import { DiscordMessageCommandFeatureNameEnum } from "../../../enums/discord-message-command-feature-name.enum";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../constants/discord-message-command-feature-noon-flags";
 import { IDiscordMessageCommandFeatureNameNoon } from "../types/discord-message-command-feature-name-noon";
@@ -52,63 +48,9 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     messageFlags: Readonly<string>
   ): Promise<IDiscordMessageResponse> {
-    return this._handleAllFlags(anyDiscordMessage, messageFlags);
-  }
-
-  private _handleAllFlags(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    messageFlags: Readonly<string>
-  ): Promise<IDiscordMessageResponse> {
-    const discordMessageFlags: IDiscordMessageFlag[] = discordCommandSplitMessageFlags(
+    return DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.executeAll(
+      anyDiscordMessage,
       messageFlags
     );
-
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        anyDiscordMessage.id,
-        `handling all flags...`
-      ),
-    });
-
-    return Promise.all(
-      _.map(
-        discordMessageFlags,
-        (discordMessageFlag: Readonly<IDiscordMessageFlag>): Promise<unknown> =>
-          this._handleFlag(anyDiscordMessage, discordMessageFlag)
-      )
-    ).then(
-      (): Promise<IDiscordMessageResponse> => {
-        LoggerService.getInstance().success({
-          context: this._serviceName,
-          hasExtendedContext: true,
-          message: LoggerService.getInstance().getSnowflakeContext(
-            anyDiscordMessage.id,
-            `all flags handled`
-          ),
-        });
-
-        return Promise.resolve({
-          response: `No options for noon feature for now. Work in progress.`,
-        });
-      }
-    );
-  }
-
-  private _handleFlag(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    messageFlag: Readonly<IDiscordMessageFlag>
-  ): Promise<unknown> {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        anyDiscordMessage.id,
-        `handling ${ChalkService.getInstance().value(messageFlag)} flag...`
-      ),
-    });
-
-    return DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.execute(messageFlag);
   }
 }
