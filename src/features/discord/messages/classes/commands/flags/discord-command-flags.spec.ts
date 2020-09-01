@@ -3,7 +3,9 @@ import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-comm
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON } from "../../../services/command/feature/constants/discord-message-command-feature-name-noon";
 import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
+import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
+import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
 import { DiscordCommandFlags } from "./discord-command-flags";
 
@@ -2101,6 +2103,40 @@ describe(`DiscordCommandFlags`, (): void => {
             },
           ] as IDiscordCommandFlagsErrors);
         });
+      });
+    });
+  });
+
+  describe(`execute()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+    let messageFlag: IDiscordMessageFlag;
+
+    beforeEach((): void => {
+      discordCommandFlags = new DiscordCommandFlags<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >({
+        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        flags: [
+          new DiscordCommandBooleanFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum
+          >({
+            action: (): Promise<unknown> => Promise.resolve(`dummy`),
+            description: ``,
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+            shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
+          }),
+        ],
+      });
+      anyDiscordMessage = createMock<IAnyDiscordMessage>();
+    });
+
+    describe(`when the given message flag`, (): void => {
+      it(`should`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        await discordCommandFlags.execute(anyDiscordMessage, messageFlag);
+
+        expect(true).toStrictEqual(true);
       });
     });
   });

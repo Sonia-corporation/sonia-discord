@@ -1,5 +1,7 @@
 import _ from "lodash";
 import { getRandomBoolean } from "../../../../../../functions/randoms/get-random-boolean";
+import { ChalkService } from "../../../../../logger/services/chalk/chalk.service";
+import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { DiscordCommandFlagErrorTitleEnum } from "../../../enums/commands/flags/discord-command-flag-error-title.enum";
 import { discordCommandGetFlagName } from "../../../functions/commands/flags/discord-command-get-flag-name";
@@ -8,6 +10,8 @@ import { discordCommandRemoveFlagPrefix } from "../../../functions/commands/flag
 import { discordCommandSplitMessageFlags } from "../../../functions/commands/flags/discord-command-split-message-flags";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { IDiscordCommandFlags } from "../../../interfaces/commands/flags/discord-command-flags";
+import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
+import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandFirstArgument } from "../arguments/discord-command-first-argument";
@@ -16,6 +20,7 @@ import { DiscordCommandFlag } from "./discord-command-flag";
 export class DiscordCommandFlags<T extends string> {
   private _command: DiscordCommandFirstArgument<string>;
   private _flags: DiscordCommandFlag<T>[] = [];
+  private readonly _className = `DiscordCommandFlags`;
 
   /**
    * @param {Readonly<string>} command Default values
@@ -142,17 +147,69 @@ export class DiscordCommandFlags<T extends string> {
     return _.isEmpty(flagsErrors) ? null : flagsErrors;
   }
 
+  public executeAll(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    messageFlags: Readonly<string>
+  ): Promise<IDiscordMessageResponse> {
+    LoggerService.getInstance().debug({
+      context: this._className,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        anyDiscordMessage.id,
+        `handling all flags...`
+      ),
+    });
+
+    const discordMessageFlags: IDiscordMessageFlag[] = discordCommandSplitMessageFlags(
+      messageFlags
+    );
+
+    return Promise.all(
+      _.map(
+        discordMessageFlags,
+        (discordMessageFlag: Readonly<IDiscordMessageFlag>): Promise<unknown> =>
+          this.execute(anyDiscordMessage, discordMessageFlag)
+      )
+    ).then(
+      (): Promise<IDiscordMessageResponse> => {
+        LoggerService.getInstance().success({
+          context: this._className,
+          hasExtendedContext: true,
+          message: LoggerService.getInstance().getSnowflakeContext(
+            anyDiscordMessage.id,
+            `all flags handled`
+          ),
+        });
+
+        return Promise.resolve({
+          response: `No options for noon feature for now. Work in progress.`,
+        });
+      }
+    );
+  }
+
   /**
    * @description
    * Execute the action related to this flag
    *
+   * @param {Readonly<IAnyDiscordMessage>} id The original Discord message
    * @param {Readonly<IDiscordMessageFlag>} messageFlag A message flag
    *
    * @return {Promise<unknown>}
    */
   public execute(
+    { id }: Readonly<IAnyDiscordMessage>,
     messageFlag: Readonly<IDiscordMessageFlag>
   ): Promise<unknown | never> {
+    LoggerService.getInstance().debug({
+      context: this._className,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        id,
+        `handling ${ChalkService.getInstance().value(messageFlag)} flag...`
+      ),
+    });
+
     if (discordCommandIsMessageFlag(messageFlag)) {
       const flag:
         | DiscordCommandFlag<T>
