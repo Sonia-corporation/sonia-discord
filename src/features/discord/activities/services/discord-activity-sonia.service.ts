@@ -3,7 +3,8 @@ import _ from "lodash";
 import { Job, scheduleJob } from "node-schedule";
 import { Observable } from "rxjs";
 import { filter, mergeMap, take, tap } from "rxjs/operators";
-import { AbstractService } from "../../../../classes/abstract.service";
+import { AbstractService } from "../../../../classes/services/abstract.service";
+import { ONE_EMITTER } from "../../../../constants/one-emitter";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { getEveryHourScheduleRule } from "../../../../functions/schedule/get-every-hour-schedule-rule";
@@ -19,6 +20,9 @@ import { DiscordClientService } from "../../services/discord-client.service";
 import { DISCORD_PRESENCE_ACTIVITY } from "../constants/discord-presence-activity";
 import { IDiscordPresenceActivity } from "../interfaces/discord-presence-activity";
 
+const MINIMAL_RANGE_MINUTES = 5;
+const MAXIMUM_RANGE_MINUTES = 15;
+
 export class DiscordActivitySoniaService extends AbstractService {
   private static _instance: DiscordActivitySoniaService;
 
@@ -31,7 +35,10 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   private readonly _updaterRule: string = getEveryHourScheduleRule();
-  private _rule: string = getRandomRangeMinuteScheduleRule(5, 15);
+  private _rule: string = getRandomRangeMinuteScheduleRule(
+    MINIMAL_RANGE_MINUTES,
+    MAXIMUM_RANGE_MINUTES
+  );
   private _updaterJob: Job | undefined = undefined;
   private _job: Job | undefined = undefined;
 
@@ -67,11 +74,11 @@ export class DiscordActivitySoniaService extends AbstractService {
               context: this._serviceName,
               message: ChalkService.getInstance().text(
                 `Sonia presence updated to: ${ChalkService.getInstance().value(
-                  presence.activities[0].type
+                  _.head(presence.activities)?.type
                 )} ${ChalkService.getInstance().text(
                   `x`
                 )} ${ChalkService.getInstance().value(
-                  presence.activities[0].name
+                  _.head(presence.activities)?.name
                 )}`
               ),
             });
@@ -153,7 +160,10 @@ export class DiscordActivitySoniaService extends AbstractService {
       message: ChalkService.getInstance().text(`updater job triggered`),
     });
 
-    this._rule = getRandomRangeMinuteScheduleRule(5, 15);
+    this._rule = getRandomRangeMinuteScheduleRule(
+      MINIMAL_RANGE_MINUTES,
+      MAXIMUM_RANGE_MINUTES
+    );
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -222,7 +232,7 @@ export class DiscordActivitySoniaService extends AbstractService {
           _.isEqual(isReady, true)
         ),
         mergeMap((): Promise<Presence> => this.setRandomPresence()),
-        take(1),
+        take(ONE_EMITTER),
         tap({
           next: (): void => {
             this.startSchedule();

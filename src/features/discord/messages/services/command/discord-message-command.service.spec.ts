@@ -4,12 +4,12 @@ import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../core/services/core-event.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 import { DiscordMessageConfigService } from "../config/discord-message-config.service";
-import { DiscordMessageCommandCookieService } from "./cookie/discord-message-command-cookie.service";
+import { DiscordMessageCommandCookieService } from "./cookie/services/discord-message-command-cookie.service";
 import { DiscordMessageCommandService } from "./discord-message-command.service";
 import { DiscordMessageCommandErrorService } from "./error/discord-message-command-error.service";
 import { DiscordMessageCommandFeatureService } from "./feature/discord-message-command-feature.service";
 import { DiscordMessageCommandHelpService } from "./help/discord-message-command-help.service";
-import { DiscordMessageCommandLunchService } from "./lunch/discord-message-command-lunch.service";
+import { DiscordMessageCommandLunchService } from "./lunch/services/discord-message-command-lunch.service";
 import { DiscordMessageCommandReleaseNotesService } from "./release-notes/discord-message-command-release-notes.service";
 import { DiscordMessageCommandVersionService } from "./version/discord-message-command-version.service";
 

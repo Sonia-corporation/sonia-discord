@@ -92,6 +92,16 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "code-factor",
+      "name": "Automated code reviews",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/13309880?v=4",
+      "profile": "https://www.codefactor.io",
+      "contributions": [
+        "review",
+        "bug"
+      ]
     }
   ],
   "skipCi": false,

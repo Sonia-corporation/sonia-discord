@@ -1,5 +1,6 @@
 export enum DiscordMessageCommandLunchDescriptionEnum {
   AWESOME = `Awesome!`,
+  COOL = `Cool.`,
   FOOD_IS_HEART = `Food is :heart:`,
   FOOD_IS_HEARTS = `Food is :hearts:`,
   FOOD_IS_YUM = `Food is :yum:`,

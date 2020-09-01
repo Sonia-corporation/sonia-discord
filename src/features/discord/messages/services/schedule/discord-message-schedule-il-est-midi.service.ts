@@ -2,7 +2,7 @@ import { Guild, GuildChannel } from "discord.js";
 import _ from "lodash";
 import moment from "moment-timezone";
 import { Job, scheduleJob } from "node-schedule";
-import { AbstractService } from "../../../../../classes/abstract.service";
+import { AbstractService } from "../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { getEveryHourScheduleRule } from "../../../../../functions/schedule/get-every-hour-schedule-rule";
 import { ChalkService } from "../../../../logger/services/chalk/chalk.service";
@@ -19,6 +19,8 @@ import { DiscordGuildSoniaService } from "../../../guilds/services/discord-guild
 import { DiscordLoggerErrorService } from "../../../logger/services/discord-logger-error.service";
 import { DiscordClientService } from "../../../services/discord-client.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
+
+const NOON_HOUR = 12;
 
 export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   private static _instance: DiscordMessageScheduleIlEstMidiService;
@@ -124,7 +126,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   }
 
   private _isNoonInParis(): boolean {
-    return _.isEqual(moment().tz(TimezoneEnum.PARIS).get(`hour`), 12);
+    return _.isEqual(moment().tz(TimezoneEnum.PARIS).get(`hour`), NOON_HOUR);
   }
 
   private _sendMessage(guildChannel: Readonly<GuildChannel>): void {

@@ -1,6 +1,6 @@
 import { StoreConfig } from "@datorama/akita";
 import _ from "lodash";
-import { AbstractEntityStoreService } from "../../../../classes/abstract-entity-store.service";
+import { AbstractEntityStoreService } from "../../../../classes/stores/abstract-entity-store.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { StoreNameEnum } from "../../../../enums/store-name.enum";
 import { IFirebaseGuildState } from "./types/firebase-guild-state";

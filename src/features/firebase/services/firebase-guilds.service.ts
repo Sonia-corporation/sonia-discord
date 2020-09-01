@@ -3,7 +3,8 @@ import admin, { firestore } from "firebase-admin";
 import _ from "lodash";
 import { BehaviorSubject, Observable } from "rxjs";
 import { filter, map, take } from "rxjs/operators";
-import { AbstractService } from "../../../classes/abstract.service";
+import { AbstractService } from "../../../classes/services/abstract.service";
+import { ONE_EMITTER } from "../../../constants/one-emitter";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { DiscordClientService } from "../../discord/services/discord-client.service";
 import { ChalkService } from "../../logger/services/chalk/chalk.service";
@@ -19,6 +20,8 @@ import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
 import WriteBatch = admin.firestore.WriteBatch;
 import WriteResult = admin.firestore.WriteResult;
+
+const ONE_GUILD = 1;
 
 export class FirebaseGuildsService extends AbstractService {
   private static _instance: FirebaseGuildsService;
@@ -160,7 +163,7 @@ export class FirebaseGuildsService extends AbstractService {
         filter((isReady: Readonly<boolean>): boolean =>
           _.isEqual(isReady, true)
         ),
-        take(1),
+        take(ONE_EMITTER),
         map((): true => true)
       )
       .toPromise();
@@ -256,7 +259,7 @@ export class FirebaseGuildsService extends AbstractService {
           context: this._serviceName,
           message: ChalkService.getInstance().text(
             `${ChalkService.getInstance().value(count)} guild${
-              _.gt(count, 1) ? `s` : ``
+              _.gt(count, ONE_GUILD) ? `s` : ``
             } found`
           ),
         });

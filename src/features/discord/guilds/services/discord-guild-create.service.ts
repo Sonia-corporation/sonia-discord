@@ -2,7 +2,8 @@ import { Guild, GuildChannel, Message } from "discord.js";
 import admin from "firebase-admin";
 import _ from "lodash";
 import { filter, mergeMap, take } from "rxjs/operators";
-import { AbstractService } from "../../../../classes/abstract.service";
+import { AbstractService } from "../../../../classes/services/abstract.service";
+import { ONE_EMITTER } from "../../../../constants/one-emitter";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { FirebaseGuildsService } from "../../../firebase/services/firebase-guilds.service";
@@ -12,7 +13,7 @@ import { isDiscordGuildChannelWritable } from "../../channels/functions/types/is
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
 import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-error.service";
 import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
-import { DiscordMessageCommandCookieService } from "../../messages/services/command/cookie/discord-message-command-cookie.service";
+import { DiscordMessageCommandCookieService } from "../../messages/services/command/cookie/services/discord-message-command-cookie.service";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordGuildSoniaChannelNameEnum } from "../enums/discord-guild-sonia-channel-name.enum";
 import { DiscordGuildConfigService } from "./config/discord-guild-config.service";
@@ -49,7 +50,7 @@ export class DiscordGuildCreateService extends AbstractService {
         filter((isReady: Readonly<boolean>): boolean =>
           _.isEqual(isReady, true)
         ),
-        take(1),
+        take(ONE_EMITTER),
         mergeMap(
           (): Promise<WriteResult | void> =>
             FirebaseGuildsService.getInstance()

@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { AbstractService } from "../../../classes/abstract.service";
+import { AbstractService } from "../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../logger/services/chalk/chalk.service";
@@ -51,7 +51,7 @@ export class ConfigService extends AbstractService {
     return oldValue;
   }
 
-  public getUpdatedString<T>(
+  public getUpdatedString<T = string>(
     configUpdateString: Readonly<IConfigUpdateString<T>>
   ): T {
     if (_.isString(configUpdateString.newValue)) {
@@ -66,7 +66,7 @@ export class ConfigService extends AbstractService {
     return configUpdateString.oldValue;
   }
 
-  public getUpdatedDate<T>(
+  public getUpdatedDate<T = string>(
     configUpdateDate: Readonly<IConfigUpdateDate<T>>
   ): T {
     if (_.isString(configUpdateDate.newValue)) {
@@ -81,7 +81,7 @@ export class ConfigService extends AbstractService {
     return configUpdateDate.oldValue;
   }
 
-  public getUpdatedStringOrArray<T>(
+  public getUpdatedStringOrArray<T = string>(
     configUpdateStringOrArray: Readonly<IConfigUpdateStringOrArray<T>>
   ): T {
     if (_.isString(configUpdateStringOrArray.newValue)) {
@@ -129,7 +129,7 @@ export class ConfigService extends AbstractService {
     return oldValue;
   }
 
-  private _getUpdatedStringMessage<T>({
+  private _getUpdatedStringMessage<T = string>({
     isValueDisplay,
     isValueHidden,
     newValue,
@@ -157,7 +157,7 @@ export class ConfigService extends AbstractService {
     return message;
   }
 
-  private _getUpdatedStringOrArrayMessage<T>({
+  private _getUpdatedStringOrArrayMessage<T = string>({
     valueName,
     isValueHidden,
     isValueDisplay,
@@ -185,7 +185,7 @@ export class ConfigService extends AbstractService {
     return message;
   }
 
-  private _getUpdatedDateMessage<T>({
+  private _getUpdatedDateMessage<T = string>({
     valueName,
     isValueHidden,
     isValueDisplay,

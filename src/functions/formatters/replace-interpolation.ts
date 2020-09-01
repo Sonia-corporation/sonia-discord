@@ -1,10 +1,10 @@
 import _ from "lodash";
-import { IAnyObject } from "../../types/any-object";
+import { IObject } from "../../types/object";
 import { getInterpolationRegexp } from "./get-interpolation-regexp";
 
 export function replaceInterpolation(
   text: Readonly<string>,
-  replacement: Readonly<IAnyObject>
+  replacement: Readonly<IObject>
 ): string {
   return _.reduce(
     replacement,

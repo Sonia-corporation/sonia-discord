@@ -36,7 +36,7 @@ export class DiscordMessageCommandFeatureEmptyContentErrorService extends Discor
           Promise.resolve(
             _.merge(cliErrorMessageResponse, {
               options: {
-                embed: this._getEmptyContentErrorMessageEmbed(),
+                embed: this._getMessageEmbed(),
                 split: true,
               },
               response: ``,
@@ -45,29 +45,29 @@ export class DiscordMessageCommandFeatureEmptyContentErrorService extends Discor
       );
   }
 
-  private _getEmptyContentErrorMessageEmbed(): MessageEmbedOptions {
+  private _getMessageEmbed(): MessageEmbedOptions {
     return {
-      fields: this._getEmptyContentErrorMessageEmbedFields(),
-      footer: this._getErrorMessageEmbedFooter(),
-      title: this._getErrorMessageEmbedTitle(),
+      fields: this._getMessageEmbedFields(),
+      footer: this._getMessageEmbedFooter(),
+      title: this._getMessageEmbedTitle(),
     };
   }
 
-  private _getEmptyContentErrorMessageEmbedFields(): EmbedFieldData[] {
+  private _getMessageEmbedFields(): EmbedFieldData[] {
     return [
-      this._getEmptyContentErrorMessageEmbedFieldError(),
-      this._getEmptyContentErrorMessageEmbedFieldErrorReport(),
+      this._getMessageEmbedFieldError(),
+      this._getMessageEmbedFieldErrorReport(),
     ];
   }
 
-  private _getEmptyContentErrorMessageEmbedFieldError(): EmbedFieldData {
+  private _getMessageEmbedFieldError(): EmbedFieldData {
     return {
       name: `Empty content`,
       value: `The content of the message is empty.\nI can not process the feature command however this error should never happen!\nDo not be so selfish and share this information with my creators!`,
     };
   }
 
-  private _getEmptyContentErrorMessageEmbedFieldErrorReport(): EmbedFieldData {
+  private _getMessageEmbedFieldErrorReport(): EmbedFieldData {
     const githubBugReportUrl: string = GithubConfigService.getInstance().getBugReportUrl();
     const discordSoniaPermanentGuildInviteUrl: string = DiscordGuildConfigService.getInstance().getSoniaPermanentGuildInviteUrl();
 

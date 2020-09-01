@@ -134,6 +134,7 @@ rules:
         - should
         - contains
         - as
+        - to
     - selector: parameter
       format:
         - camelCase
@@ -150,6 +151,7 @@ rules:
         - should
         - contains
         - as
+        - to
     - selector: function
       format:
         - camelCase
@@ -245,6 +247,10 @@ rules:
   '@typescript-eslint/prefer-enum-initializers':
     - error
   '@typescript-eslint/prefer-literal-enum-member': off
+  no-magic-numbers:
+    - error
+    - enforceConst: true
+      detectObjects: false
 overrides:
   - files:
       - '*.ts'
@@ -256,3 +262,7 @@ overrides:
           allowHigherOrderFunctions: false
       '@typescript-eslint/no-var-requires':
         - error
+  - files:
+      - '*.spec.ts'
+    rules:
+      no-magic-numbers: off

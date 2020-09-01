@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { AbstractService } from "../../../../../classes/abstract.service";
+import { AbstractService } from "../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { IDiscordGuildConfig } from "../../../interfaces/discord-guild-config";
 import { DiscordGuildConfigCoreService } from "./discord-guild-config-core.service";

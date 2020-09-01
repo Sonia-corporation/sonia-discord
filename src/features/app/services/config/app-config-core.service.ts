@@ -1,7 +1,9 @@
 import _ from "lodash";
-import { AbstractService } from "../../../../classes/abstract.service";
+import { AbstractService } from "../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { IAppConfig } from "../../interfaces/app-config";
+
+const INITIAL_TOTAL_RELEASE_COUNT = 0;
 
 export class AppConfigCoreService
   extends AbstractService
@@ -21,7 +23,7 @@ export class AppConfigCoreService
   public isProduction = false;
   public releaseDate = `unknown`;
   public releaseNotes = ``;
-  public totalReleaseCount = 0;
+  public totalReleaseCount = INITIAL_TOTAL_RELEASE_COUNT;
   public version = `unknown`;
 
   public constructor() {

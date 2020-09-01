@@ -7,7 +7,7 @@ import {
 } from "discord.js";
 import _ from "lodash";
 import moment from "moment-timezone";
-import { AbstractService } from "../../../../classes/abstract.service";
+import { AbstractService } from "../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { ellipsis } from "../../../../functions/formatters/ellipsis";
 import { ChalkService } from "../../../logger/services/chalk/chalk.service";
@@ -127,11 +127,11 @@ export class DiscordLoggerErrorService extends AbstractService {
   private _getMessageEmbedFields({ stack }: Readonly<Error>): EmbedFieldData[] {
     const embedFieldData: EmbedFieldData[] = [];
 
-    if (!_.isNil(stack)) {
-      embedFieldData.push(this._getMessageEmbedFieldError(stack));
+    if (_.isNil(stack)) {
+      return embedFieldData;
     }
 
-    return embedFieldData;
+    return _.concat(embedFieldData, this._getMessageEmbedFieldError(stack));
   }
 
   private _getMessageEmbedFieldError(stack: Readonly<string>): EmbedFieldData {

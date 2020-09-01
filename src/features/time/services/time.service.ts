@@ -1,6 +1,6 @@
 import _ from "lodash";
 import moment from "moment-timezone";
-import { AbstractService } from "../../../classes/abstract.service";
+import { AbstractService } from "../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { fromNow } from "../functions/from-now";
 

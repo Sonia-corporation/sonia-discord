@@ -2,7 +2,8 @@ import admin from "firebase-admin";
 import _ from "lodash";
 import { BehaviorSubject, forkJoin, Observable } from "rxjs";
 import { filter, map, mergeMap, take, tap } from "rxjs/operators";
-import { AbstractService } from "../../../classes/abstract.service";
+import { AbstractService } from "../../../classes/services/abstract.service";
+import { ONE_EMITTER } from "../../../constants/one-emitter";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { DiscordClientService } from "../../discord/services/discord-client.service";
 import { ChalkService } from "../../logger/services/chalk/chalk.service";
@@ -16,6 +17,9 @@ import WriteBatch = admin.firestore.WriteBatch;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
 import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import WriteResult = admin.firestore.WriteResult;
+
+const NO_GUILD = 0;
+const ONE_GUILD = 1;
 
 export class FirebaseGuildsBreakingChangeService extends AbstractService {
   private static _instance: FirebaseGuildsBreakingChangeService;
@@ -54,7 +58,7 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
         filter((hasFinished: Readonly<boolean>): boolean =>
           _.isEqual(hasFinished, true)
         ),
-        take(1),
+        take(ONE_EMITTER),
         map((): true => true)
       )
       .toPromise();
@@ -73,7 +77,7 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
 
   private _updateAllFirebaseGuilds$(): Observable<WriteResult[] | void> {
     return this.isReady$().pipe(
-      take(1),
+      take(ONE_EMITTER),
       tap({
         next: (): void => {
           LoggerService.getInstance().debug({
@@ -111,18 +115,21 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
       | undefined = FirebaseGuildsService.getInstance().getBatch();
 
     if (!_.isNil(batch)) {
-      let countFirebaseGuildsUpdated = 0;
-      let countFirebaseGuilds = 0;
+      let countFirebaseGuildsUpdated = NO_GUILD;
+      let countFirebaseGuilds = NO_GUILD;
 
       querySnapshot.forEach(
         (
           queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>
         ): void => {
           if (_.isEqual(queryDocumentSnapshot.exists, true)) {
-            countFirebaseGuilds = _.add(countFirebaseGuilds, 1);
+            countFirebaseGuilds = _.add(countFirebaseGuilds, ONE_GUILD);
 
             if (!isUpToDateFirebaseGuild(queryDocumentSnapshot.data())) {
-              countFirebaseGuildsUpdated = _.add(countFirebaseGuildsUpdated, 1);
+              countFirebaseGuildsUpdated = _.add(
+                countFirebaseGuildsUpdated,
+                ONE_GUILD
+              );
               batch.update(
                 queryDocumentSnapshot.ref,
                 handleFirebaseGuildBreakingChange(queryDocumentSnapshot.data())
@@ -132,14 +139,14 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
         }
       );
 
-      if (_.gt(countFirebaseGuildsUpdated, 0)) {
+      if (_.gte(countFirebaseGuildsUpdated, ONE_GUILD)) {
         LoggerService.getInstance().log({
           context: this._serviceName,
           message: ChalkService.getInstance().text(
             `updating ${ChalkService.getInstance().value(
               countFirebaseGuildsUpdated
             )} Firebase guild${
-              _.gt(countFirebaseGuildsUpdated, 1) ? `s` : ``
+              _.gt(countFirebaseGuildsUpdated, ONE_GUILD) ? `s` : ``
             }...`
           ),
         });
@@ -151,7 +158,7 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
         context: this._serviceName,
         message: ChalkService.getInstance().text(
           `all Firebase guild${
-            _.gt(countFirebaseGuilds, 1) ? `s` : ``
+            _.gt(countFirebaseGuilds, ONE_GUILD) ? `s` : ``
           } ${ChalkService.getInstance().hint(
             `(${countFirebaseGuilds})`
           )} up-to-date ${ChalkService.getInstance().hint(

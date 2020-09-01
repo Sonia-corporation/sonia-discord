@@ -9,6 +9,14 @@ describe(`DiscordMessageCommandLunchDescriptionEnum`, (): void => {
     );
   });
 
+  it(`should have a member "COOL"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandLunchDescriptionEnum.COOL).toStrictEqual(
+      `Cool.`
+    );
+  });
+
   it(`should have a member "FOOD_IS_HEART"`, (): void => {
     expect.assertions(1);
 

@@ -9,10 +9,9 @@ import admin from "firebase-admin";
 import _ from "lodash";
 import { forkJoin, Observable, of } from "rxjs";
 import { mapTo, mergeMap, take } from "rxjs/operators";
-import { AbstractService } from "../../../classes/abstract.service";
+import { AbstractService } from "../../../classes/services/abstract.service";
+import { ONE_EMITTER } from "../../../constants/one-emitter";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { replaceInterpolation } from "../../../functions/formatters/replace-interpolation";
-import { getRandomValueFromEnum } from "../../../functions/randoms/get-random-value-from-enum";
 import { AppConfigService } from "../../app/services/config/app-config.service";
 import { isDiscordGuildChannelWritable } from "../../discord/channels/functions/types/is-discord-guild-channel-writable";
 import { DiscordChannelGuildService } from "../../discord/channels/services/discord-channel-guild.service";
@@ -23,10 +22,10 @@ import { DiscordLoggerErrorService } from "../../discord/logger/services/discord
 import { wrapUserIdIntoMention } from "../../discord/mentions/functions/wrap-user-id-into-mention";
 import { IDiscordMessageResponse } from "../../discord/messages/interfaces/discord-message-response";
 import { DiscordMessageCommandReleaseNotesService } from "../../discord/messages/services/command/release-notes/discord-message-command-release-notes.service";
-import { DiscordGithubContributorsIdEnum } from "../../discord/users/enums/discord-github-contributors-id.enum";
+import { DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES } from "../../discord/users/constants/discord-github-contributors-id-messages";
 import { ChalkService } from "../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../logger/services/logger.service";
-import { FirebaseGuildNewVersionResponseEnum } from "../enums/firebase-guild-new-version-response.enum";
+import { FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES } from "../constants/firebase-guild-new-version-response-messages";
 import { getUpdatedFirebaseGuildLastReleaseNotesVersion } from "../functions/get-updated-firebase-guild-last-release-notes-version";
 import { IFirebaseGuild } from "../types/firebase-guild";
 import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
@@ -34,6 +33,9 @@ import { FirebaseGuildsService } from "./firebase-guilds.service";
 import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
 import WriteBatch = admin.firestore.WriteBatch;
+
+const NO_GUILD = 0;
+const ONE_GUILD = 1;
 
 export class FirebaseGuildsNewVersionService extends AbstractService {
   private static _instance: FirebaseGuildsNewVersionService;
@@ -98,7 +100,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
   private _sendNewReleaseNotesToEachGuild$(): Observable<true> {
     return this.isReady$().pipe(
-      take(1),
+      take(ONE_EMITTER),
       mergeMap(
         (): Promise<QuerySnapshot<IFirebaseGuild>> => {
           LoggerService.getInstance().debug({
@@ -176,21 +178,24 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
     if (!_.isNil(batch)) {
       const firebaseGuilds: IFirebaseGuild[] = [];
-      let countFirebaseGuildsUpdated = 0;
-      let countFirebaseGuilds = 0;
+      let countFirebaseGuildsUpdated = NO_GUILD;
+      let countFirebaseGuilds = NO_GUILD;
 
       querySnapshot.forEach(
         (
           queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>
         ): void => {
           if (_.isEqual(queryDocumentSnapshot.exists, true)) {
-            countFirebaseGuilds = _.add(countFirebaseGuilds, 1);
+            countFirebaseGuilds = _.add(countFirebaseGuilds, ONE_GUILD);
             const firebaseGuild: IFirebaseGuild = queryDocumentSnapshot.data();
 
             if (
               this._shouldSendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
             ) {
-              countFirebaseGuildsUpdated = _.add(countFirebaseGuildsUpdated, 1);
+              countFirebaseGuildsUpdated = _.add(
+                countFirebaseGuildsUpdated,
+                ONE_GUILD
+              );
 
               batch.update(
                 queryDocumentSnapshot.ref,
@@ -204,14 +209,14 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
         }
       );
 
-      if (_.gt(countFirebaseGuildsUpdated, 0)) {
+      if (_.gte(countFirebaseGuildsUpdated, ONE_GUILD)) {
         LoggerService.getInstance().log({
           context: this._serviceName,
           message: ChalkService.getInstance().text(
             `updating ${ChalkService.getInstance().value(
               countFirebaseGuildsUpdated
             )} Firebase guild${
-              _.gt(countFirebaseGuildsUpdated, 1) ? `s` : ``
+              _.gt(countFirebaseGuildsUpdated, ONE_GUILD) ? `s` : ``
             }...`
           ),
         });
@@ -228,7 +233,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
         context: this._serviceName,
         message: ChalkService.getInstance().text(
           `all Firebase guild${
-            _.gt(countFirebaseGuilds, 1) ? `s` : ``
+            _.gt(countFirebaseGuilds, ONE_GUILD) ? `s` : ``
           } ${ChalkService.getInstance().hint(
             `(${countFirebaseGuilds})`
           )} release notes already sent`
@@ -300,15 +305,13 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           const enhanceMessageResponse: IDiscordMessageResponse = _.cloneDeep(
             messageResponse
           );
-          const response: FirebaseGuildNewVersionResponseEnum | string =
-            getRandomValueFromEnum(FirebaseGuildNewVersionResponseEnum) ||
-            `Cool!`;
-          enhanceMessageResponse.response = replaceInterpolation(response, {
-            userId: wrapUserIdIntoMention(
-              getRandomValueFromEnum(DiscordGithubContributorsIdEnum) ||
-                DiscordGithubContributorsIdEnum.C0ZEN
-            ),
-          });
+          enhanceMessageResponse.response = FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage(
+            {
+              userId: wrapUserIdIntoMention(
+                DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()
+              ),
+            }
+          );
 
           LoggerService.getInstance().debug({
             context: this._serviceName,

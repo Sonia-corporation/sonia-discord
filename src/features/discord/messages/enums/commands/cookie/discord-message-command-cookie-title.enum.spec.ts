@@ -1,11 +1,19 @@
 import { DiscordMessageCommandCookieTitleEnum } from "./discord-message-command-cookie-title.enum";
 
 describe(`DiscordMessageCommandCookieTitleEnum`, (): void => {
-  it(`should have a member "HUNGRY_COOKIES"`, (): void => {
+  it(`should have a member "COOKIE"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandCookieTitleEnum.HUNGRY_COOKIES).toStrictEqual(
-      `Hungry? Cookies!`
+    expect(DiscordMessageCommandCookieTitleEnum.COOKIE).toStrictEqual(
+      `Cookie!`
+    );
+  });
+
+  it(`should have a member "COOKIE_DELIVERY"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandCookieTitleEnum.COOKIE_DELIVERY).toStrictEqual(
+      `Cookie delivery!`
     );
   });
 
@@ -14,14 +22,6 @@ describe(`DiscordMessageCommandCookieTitleEnum`, (): void => {
 
     expect(DiscordMessageCommandCookieTitleEnum.COOKIES).toStrictEqual(
       `Cookies!`
-    );
-  });
-
-  it(`should have a member "COOKIE"`, (): void => {
-    expect.assertions(1);
-
-    expect(DiscordMessageCommandCookieTitleEnum.COOKIE).toStrictEqual(
-      `Cookie!`
     );
   });
 
@@ -49,6 +49,14 @@ describe(`DiscordMessageCommandCookieTitleEnum`, (): void => {
     );
   });
 
+  it(`should have a member "HOT_HOT"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandCookieTitleEnum.HOT_HOT).toStrictEqual(
+      `Hot! Hot!`
+    );
+  });
+
   it(`should have a member "HOTEL_TRIVAGO"`, (): void => {
     expect.assertions(1);
 
@@ -57,35 +65,11 @@ describe(`DiscordMessageCommandCookieTitleEnum`, (): void => {
     );
   });
 
-  it(`should have a member "SOMEONE_ORDERED_SOME_COOKIES"`, (): void => {
+  it(`should have a member "HUNGRY_COOKIES"`, (): void => {
     expect.assertions(1);
 
-    expect(
-      DiscordMessageCommandCookieTitleEnum.SOMEONE_ORDERED_SOME_COOKIES
-    ).toStrictEqual(`Someone ordered some cookies?`);
-  });
-
-  it(`should have a member "YOU_WANT_SOME_COOKIES"`, (): void => {
-    expect.assertions(1);
-
-    expect(
-      DiscordMessageCommandCookieTitleEnum.YOU_WANT_SOME_COOKIES
-    ).toStrictEqual(`You want some cookies?`);
-  });
-
-  it(`should have a member "COOKIE_DELIVERY"`, (): void => {
-    expect.assertions(1);
-
-    expect(DiscordMessageCommandCookieTitleEnum.COOKIE_DELIVERY).toStrictEqual(
-      `Cookie delivery!`
-    );
-  });
-
-  it(`should have a member "HOT_HOT"`, (): void => {
-    expect.assertions(1);
-
-    expect(DiscordMessageCommandCookieTitleEnum.HOT_HOT).toStrictEqual(
-      `Hot! Hot!`
+    expect(DiscordMessageCommandCookieTitleEnum.HUNGRY_COOKIES).toStrictEqual(
+      `Hungry? Cookies!`
     );
   });
 
@@ -97,11 +81,27 @@ describe(`DiscordMessageCommandCookieTitleEnum`, (): void => {
     );
   });
 
+  it(`should have a member "SOMEONE_ORDERED_SOME_COOKIES"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      DiscordMessageCommandCookieTitleEnum.SOMEONE_ORDERED_SOME_COOKIES
+    ).toStrictEqual(`Someone ordered some cookies?`);
+  });
+
   it(`should have a member "YOU_GOTTA_LOVE_THEM_ALL"`, (): void => {
     expect.assertions(1);
 
     expect(
       DiscordMessageCommandCookieTitleEnum.YOU_GOTTA_LOVE_THEM_ALL
     ).toStrictEqual(`You gotta love them all!`);
+  });
+
+  it(`should have a member "YOU_WANT_SOME_COOKIES"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      DiscordMessageCommandCookieTitleEnum.YOU_WANT_SOME_COOKIES
+    ).toStrictEqual(`You want some cookies?`);
   });
 });

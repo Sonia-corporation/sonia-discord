@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import _ from "lodash";
 import moment from "moment-timezone";
-import { AbstractService } from "../../../../../../classes/abstract.service";
+import { AbstractService } from "../../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
 import { AppConfigQueryService } from "../../../../../app/services/config/app-config-query.service";
 import { AppConfigService } from "../../../../../app/services/config/app-config.service";
