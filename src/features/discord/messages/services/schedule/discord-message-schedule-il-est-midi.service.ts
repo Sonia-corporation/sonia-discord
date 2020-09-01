@@ -20,6 +20,8 @@ import { DiscordLoggerErrorService } from "../../../logger/services/discord-logg
 import { DiscordClientService } from "../../../services/discord-client.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
 
+const NOON_HOUR = 12;
+
 export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   private static _instance: DiscordMessageScheduleIlEstMidiService;
 
@@ -124,7 +126,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   }
 
   private _isNoonInParis(): boolean {
-    return _.isEqual(moment().tz(TimezoneEnum.PARIS).get(`hour`), 12);
+    return _.isEqual(moment().tz(TimezoneEnum.PARIS).get(`hour`), NOON_HOUR);
   }
 
   private _sendMessage(guildChannel: Readonly<GuildChannel>): void {

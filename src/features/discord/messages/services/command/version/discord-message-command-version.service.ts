@@ -23,6 +23,8 @@ import { IDiscordMessageResponse } from "../../../interfaces/discord-message-res
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 
+const BIRTHDAY_CARD_VALUE_LIMIT = 900;
+
 export class DiscordMessageCommandVersionService extends AbstractService {
   private static _instance: DiscordMessageCommandVersionService;
 
@@ -172,7 +174,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
       name: `My birthday card`,
       value: `${ellipsis(
         appReleaseNotes,
-        1000
+        BIRTHDAY_CARD_VALUE_LIMIT
       )}\n\nCheckout all my [birthday cards](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md).`,
     };
   }
