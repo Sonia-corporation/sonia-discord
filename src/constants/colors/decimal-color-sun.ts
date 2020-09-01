@@ -1,1 +1,0 @@
-export const DECIMAL_COLOR_SUN = 16376750;

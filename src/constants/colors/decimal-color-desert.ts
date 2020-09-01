@@ -1,1 +1,0 @@
-export const DECIMAL_COLOR_DESERT = 15718590;

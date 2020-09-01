@@ -1,1 +1,0 @@
-export const DECIMAL_COLOR_SILK = 14082034;
