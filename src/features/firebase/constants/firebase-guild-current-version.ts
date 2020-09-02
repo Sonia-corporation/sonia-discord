@@ -9,5 +9,5 @@ import { FirebaseGuildVersionEnum } from "../enums/firebase-guild-version.enum";
  * The model should be upgraded before manipulating it
  * Each change should be followed with a breaking change strategy
  */
-export const FIREBASE_GUILD_CURRENT_VERSION: FirebaseGuildVersionEnum.V2 =
-  FirebaseGuildVersionEnum.V2;
+export const FIREBASE_GUILD_CURRENT_VERSION: FirebaseGuildVersionEnum.V3 =
+  FirebaseGuildVersionEnum.V3;

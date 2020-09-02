@@ -204,7 +204,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       isReady$ = new Subject<[true]>();
       firebaseGuild = createMock<IFirebaseGuildVFinal>({
         lastReleaseNotesVersion: `1.0.0`,
-        version: FirebaseGuildVersionEnum.V2,
+        version: FirebaseGuildVersionEnum.V3,
       });
       queryDocumentSnapshot = createMock<
         QueryDocumentSnapshot<IFirebaseGuildVFinal>

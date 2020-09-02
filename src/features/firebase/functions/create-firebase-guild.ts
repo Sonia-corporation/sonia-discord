@@ -6,6 +6,7 @@ export function createFirebaseGuild({
   id,
 }: Readonly<ICreateFirebaseGuild>): IFirebaseGuildVFinal {
   return {
+    channels: [],
     id,
     lastReleaseNotesVersion: `0.0.0`,
     version: FIREBASE_GUILD_CURRENT_VERSION,

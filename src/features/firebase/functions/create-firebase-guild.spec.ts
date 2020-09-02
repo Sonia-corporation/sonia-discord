@@ -11,6 +11,14 @@ describe(`createFirebaseGuild()`, (): void => {
     });
   });
 
+  it(`should return an empty list of channels`, (): void => {
+    expect.assertions(1);
+
+    const result = createFirebaseGuild(data);
+
+    expect(result.channels).toStrictEqual([]);
+  });
+
   it(`should return the id from the given data`, (): void => {
     expect.assertions(1);
 
@@ -32,6 +40,6 @@ describe(`createFirebaseGuild()`, (): void => {
 
     const result = createFirebaseGuild(data);
 
-    expect(result.version).toStrictEqual(2);
+    expect(result.version).toStrictEqual(3);
   });
 });

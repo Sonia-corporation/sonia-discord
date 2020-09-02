@@ -1,3 +1,3 @@
-import { IFirebaseGuildV2 } from "../interfaces/firebase-guild-v2";
+import { IFirebaseGuildV3 } from "../interfaces/firebase-guild-v3";
 
-export type IFirebaseGuildVFinal = IFirebaseGuildV2;
+export type IFirebaseGuildVFinal = IFirebaseGuildV3;

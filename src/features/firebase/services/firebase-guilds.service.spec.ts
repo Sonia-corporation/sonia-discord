@@ -8,6 +8,7 @@ import { ILoggerLog } from "../../logger/interfaces/logger-log";
 import { LoggerService } from "../../logger/services/logger.service";
 import { FirebaseGuildVersionEnum } from "../enums/firebase-guild-version.enum";
 import { IFirebaseGuild } from "../types/firebase-guild";
+import { IFirebaseGuildVFinal } from "../types/firebase-guild-v-final";
 import { FirebaseAppService } from "./firebase-app.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
 import App = admin.app.App;
@@ -729,7 +730,7 @@ describe(`FirebaseGuildsService`, (): void => {
     let loggerServiceDebugSpy: jest.SpyInstance;
     let loggerServiceSuccessSpy: jest.SpyInstance;
     let docMock: jest.Mock<DocumentReference<IFirebaseGuild>, string[]>;
-    let setMock: jest.Mock<Promise<WriteResult>, IFirebaseGuild[]>;
+    let setMock: jest.Mock<Promise<WriteResult>, IFirebaseGuildVFinal[]>;
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
@@ -739,7 +740,7 @@ describe(`FirebaseGuildsService`, (): void => {
       } as unknown) as Guild);
       writeResult = createMock<WriteResult>();
       setMock = jest
-        .fn<Promise<WriteResult>, IFirebaseGuild[]>()
+        .fn<Promise<WriteResult>, IFirebaseGuildVFinal[]>()
         .mockResolvedValue(writeResult);
       // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
       documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
@@ -823,19 +824,20 @@ describe(`FirebaseGuildsService`, (): void => {
       it(`should add the given guild into Firebase`, async (): Promise<
         void
       > => {
-        expect.assertions(6);
+        expect.assertions(7);
 
         await service.addGuild(guild);
 
         expect(docMock).toHaveBeenCalledTimes(1);
         expect(docMock).toHaveBeenCalledWith(`dummy-id`);
         expect(setMock).toHaveBeenCalledTimes(1);
+        expect(setMock.mock.calls[0][0].channels).toStrictEqual([]);
         expect(setMock.mock.calls[0][0].id).toStrictEqual(`dummy-id`);
         expect(setMock.mock.calls[0][0].lastReleaseNotesVersion).toStrictEqual(
           `0.0.0`
         );
         expect(setMock.mock.calls[0][0].version).toStrictEqual(
-          FirebaseGuildVersionEnum.V2
+          FirebaseGuildVersionEnum.V3
         );
       });
 
