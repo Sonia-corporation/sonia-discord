@@ -1,7 +1,12 @@
 import { FirebaseGuildChannelFeatureVersionEnum } from "../../../../enums/guilds/channels/features/firebase-guild-channel-feature-version.enum";
+import { IFirebaseGuildChannelFeatureNoonV1 } from "./firebase-guild-channel-feature-noon-v1";
 
 export interface IFirebaseGuildChannelFeatureV1 {
-  noon?: undefined;
+  /**
+   * @description
+   * Noon feature configuration
+   */
+  noon?: IFirebaseGuildChannelFeatureNoonV1 | undefined;
 
   /**
    * @description
