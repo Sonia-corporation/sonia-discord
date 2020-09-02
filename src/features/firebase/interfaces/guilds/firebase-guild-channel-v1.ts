@@ -1,13 +1,14 @@
 import { Snowflake } from "discord.js";
 import { FirebaseGuildChannelVersionEnum } from "../../enums/guilds/firebase-guild-channel-version.enum";
+import { IFirebaseGuildChannelFeatureV1 } from "./firebase-guild-channel-feature-v1";
 
 export interface IFirebaseGuildChannelV1 {
   /**
    * @description
-   * Used to store the last release notes version sent on the guild
-   * This is useful to avoid sending release notes on each run
+   * Used to store the configuration of each Sonia feature
+   * Related to the feature command obviously
    */
-  features?: string | undefined;
+  features?: IFirebaseGuildChannelFeatureV1 | undefined;
 
   /**
    * @description
