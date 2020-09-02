@@ -4,8 +4,8 @@ import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
 import { AbstractService } from "../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { IFirebaseGuild } from "../../../types/firebase-guild";
-import { FirebaseGuildsService } from "../../../services/firebase-guilds.service";
+import { IFirebaseGuild } from "../../../types/guilds/firebase-guild";
+import { FirebaseGuildsService } from "../../../services/guilds/firebase-guilds.service";
 import { FirebaseGuildsStore } from "../firebase-guilds-store";
 
 export class FirebaseGuildsStoreService extends AbstractService {
