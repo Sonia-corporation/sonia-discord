@@ -206,7 +206,9 @@ export class DiscordCommandFlags<T extends string> {
       hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         id,
-        `handling ${ChalkService.getInstance().value(messageFlag)} flag...`
+        `handling ${ChalkService.getInstance().value(
+          discordCommandGetFlagName(messageFlag)
+        )} flag...`
       ),
     });
 
@@ -229,7 +231,7 @@ export class DiscordCommandFlags<T extends string> {
       | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
 
     if (this._isFlag(shortcutFlag)) {
-      return Promise.resolve();
+      return shortcutFlag.executeAction();
     }
 
     return Promise.reject(

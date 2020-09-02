@@ -1,4 +1,6 @@
 import { createMock } from "ts-auto-mock";
+import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
+import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON } from "../../../services/command/feature/constants/discord-message-command-feature-name-noon";
@@ -9,8 +11,15 @@ import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-messa
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
 import { DiscordCommandFlags } from "./discord-command-flags";
 
+jest.mock(`../../../../../logger/services/chalk/chalk.service`);
+
 describe(`DiscordCommandFlags`, (): void => {
   let discordCommandFlags: DiscordCommandFlags<DiscordMessageCommandFeatureNoonFlagEnum>;
+  let loggerService: LoggerService;
+
+  beforeEach((): void => {
+    loggerService = LoggerService.getInstance();
+  });
 
   describe(`constructor()`, (): void => {
     describe(`when the class is created with a command`, (): void => {
@@ -2111,7 +2120,11 @@ describe(`DiscordCommandFlags`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let messageFlag: IDiscordMessageFlag;
 
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let actionMock: jest.Mock;
+
     beforeEach((): void => {
+      actionMock = jest.fn().mockResolvedValue(`dummy`);
       discordCommandFlags = new DiscordCommandFlags<
         DiscordMessageCommandFeatureNoonFlagEnum
       >({
@@ -2120,23 +2133,148 @@ describe(`DiscordCommandFlags`, (): void => {
           new DiscordCommandBooleanFlag<
             DiscordMessageCommandFeatureNoonFlagEnum
           >({
-            action: (): Promise<unknown> => Promise.resolve(`dummy`),
+            action: actionMock,
             description: ``,
             name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
             shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
           }),
         ],
       });
-      anyDiscordMessage = createMock<IAnyDiscordMessage>();
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
+        id: `dummy-id`,
+      } as unknown) as IAnyDiscordMessage);
+      messageFlag = `--enabled=true`;
+
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
     });
 
-    describe(`when the given message flag`, (): void => {
-      it(`should`, async (): Promise<void> => {
-        expect.assertions(1);
+    it(`should log about handling the given flag`, async (): Promise<void> => {
+      expect.assertions(2);
 
-        await discordCommandFlags.execute(anyDiscordMessage, messageFlag);
+      await discordCommandFlags.execute(anyDiscordMessage, messageFlag);
 
-        expect(true).toStrictEqual(true);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+        context: `DiscordCommandFlags`,
+        hasExtendedContext: true,
+        message: `context-[dummy-id] text-handling value-enabled flag...`,
+      } as ILoggerLog);
+    });
+
+    describe(`when the given message flag is a flag with a value`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `--enabled=true`;
+      });
+
+      describe(`when the given message flag is an unknown flag`, (): void => {
+        beforeEach((): void => {
+          messageFlag = `--dummy=true`;
+        });
+
+        it(`should throw an error`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          await expect(
+            discordCommandFlags.execute(anyDiscordMessage, messageFlag)
+          ).rejects.toThrow(
+            new Error(
+              `The flag does not exists. Could not perform the execution`
+            )
+          );
+        });
+
+        it(`should not execute the flag action`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await expect(
+            discordCommandFlags.execute(anyDiscordMessage, messageFlag)
+          ).rejects.toThrow(
+            new Error(
+              `The flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(actionMock).not.toHaveBeenCalled();
+        });
+      });
+
+      describe(`when the given message flag is a valid flag`, (): void => {
+        beforeEach((): void => {
+          messageFlag = `--enabled=true`;
+        });
+
+        it(`should execute the flag action`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          const result = await discordCommandFlags.execute(
+            anyDiscordMessage,
+            messageFlag
+          );
+
+          expect(result).toStrictEqual(`dummy`);
+          expect(actionMock).toHaveBeenCalledTimes(1);
+          expect(actionMock).toHaveBeenCalledWith();
+        });
+      });
+    });
+
+    describe(`when the given message flag is a shortcut flag`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `-e`;
+      });
+
+      describe(`when the given message shortcut flag is an unknown flag`, (): void => {
+        beforeEach((): void => {
+          messageFlag = `-d`;
+        });
+
+        it(`should throw an error`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          await expect(
+            discordCommandFlags.execute(anyDiscordMessage, messageFlag)
+          ).rejects.toThrow(
+            new Error(
+              `The shortcut flag does not exists. Could not perform the execution`
+            )
+          );
+        });
+
+        it(`should not execute the flag action`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await expect(
+            discordCommandFlags.execute(anyDiscordMessage, messageFlag)
+          ).rejects.toThrow(
+            new Error(
+              `The shortcut flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(actionMock).not.toHaveBeenCalled();
+        });
+      });
+
+      describe(`when the given message shortcut flag is a valid flag`, (): void => {
+        beforeEach((): void => {
+          messageFlag = `-e`;
+        });
+
+        it(`should execute the flag action`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          const result = await discordCommandFlags.execute(
+            anyDiscordMessage,
+            messageFlag
+          );
+
+          expect(result).toStrictEqual(`dummy`);
+          expect(actionMock).toHaveBeenCalledTimes(1);
+          expect(actionMock).toHaveBeenCalledWith();
+        });
       });
     });
   });
