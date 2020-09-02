@@ -1,6 +1,3 @@
-import { IDiscordMessageNormalFlag } from "./discord-message-normal-flag";
-import { IDiscordMessageShortcutFlag } from "./discord-message-shortcut-flag";
-
 /**
  * @description
  * Is a text message containing only the flags part
@@ -11,6 +8,4 @@ import { IDiscordMessageShortcutFlag } from "./discord-message-shortcut-flag";
  * -e
  * --enabled=true
  */
-export type IDiscordMessageFlag =
-  | IDiscordMessageNormalFlag
-  | IDiscordMessageShortcutFlag;
+export type IDiscordMessageNormalFlag = string;
