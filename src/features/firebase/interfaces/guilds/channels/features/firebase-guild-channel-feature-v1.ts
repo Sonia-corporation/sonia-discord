@@ -1,4 +1,4 @@
-import { FirebaseGuildChannelFeatureVersionEnum } from "../../enums/guilds/firebase-guild-channel-feature-version.enum";
+import { FirebaseGuildChannelFeatureVersionEnum } from "../../../../enums/guilds/channels/features/firebase-guild-channel-feature-version.enum";
 
 export interface IFirebaseGuildChannelFeatureV1 {
   noon?: undefined;

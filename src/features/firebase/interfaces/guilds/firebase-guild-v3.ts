@@ -1,7 +1,7 @@
 import { Snowflake } from "discord.js";
 import admin from "firebase-admin";
 import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-version.enum";
-import { IFirebaseGuildChannelV1 } from "./firebase-guild-channel-v1";
+import { IFirebaseGuildChannelV1 } from "./channels/firebase-guild-channel-v1";
 import DocumentData = admin.firestore.DocumentData;
 
 export interface IFirebaseGuildV3 extends DocumentData {

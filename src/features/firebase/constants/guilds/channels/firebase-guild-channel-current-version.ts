@@ -1,4 +1,4 @@
-import { FirebaseGuildChannelVersionEnum } from "../../enums/guilds/firebase-guild-channel-version.enum";
+import { FirebaseGuildChannelVersionEnum } from "../../../enums/guilds/channels/firebase-guild-channel-version.enum";
 
 /**
  * @description
