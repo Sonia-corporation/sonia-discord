@@ -2274,7 +2274,7 @@ describe(`DiscordCommandFlags`, (): void => {
             response: `No options for noon feature for now. Work in progress.`,
           });
           expect(actionMock).toHaveBeenCalledTimes(1);
-          expect(actionMock).toHaveBeenCalledWith();
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
         });
 
         it(`should log about successfully handled the given flags`, async (): Promise<
@@ -2406,7 +2406,7 @@ describe(`DiscordCommandFlags`, (): void => {
             response: `No options for noon feature for now. Work in progress.`,
           });
           expect(actionMock).toHaveBeenCalledTimes(1);
-          expect(actionMock).toHaveBeenCalledWith();
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
         });
 
         it(`should log about successfully handled the given flags`, async (): Promise<
@@ -2548,7 +2548,7 @@ describe(`DiscordCommandFlags`, (): void => {
             response: `No options for noon feature for now. Work in progress.`,
           });
           expect(actionMock).toHaveBeenCalledTimes(2);
-          expect(actionMock).toHaveBeenCalledWith();
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
         });
 
         it(`should log about successfully handled the given flags`, async (): Promise<
@@ -2690,7 +2690,7 @@ describe(`DiscordCommandFlags`, (): void => {
             response: `No options for noon feature for now. Work in progress.`,
           });
           expect(actionMock).toHaveBeenCalledTimes(2);
-          expect(actionMock).toHaveBeenCalledWith();
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
         });
 
         it(`should log about successfully handled the given shortcut flags`, async (): Promise<
@@ -2817,7 +2817,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual(`dummy`);
           expect(actionMock).toHaveBeenCalledTimes(1);
-          expect(actionMock).toHaveBeenCalledWith();
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
         });
       });
     });
@@ -2874,7 +2874,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual(`dummy`);
           expect(actionMock).toHaveBeenCalledTimes(1);
-          expect(actionMock).toHaveBeenCalledWith();
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
         });
       });
     });

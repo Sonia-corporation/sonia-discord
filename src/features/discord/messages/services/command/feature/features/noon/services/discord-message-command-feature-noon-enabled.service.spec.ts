@@ -1,5 +1,7 @@
+import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../../../../../core/services/core-event.service";
+import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
 import { DiscordMessageCommandFeatureNoonEnabledService } from "./discord-message-command-feature-noon-enabled.service";
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
@@ -54,14 +56,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabledService`, (): void => {
   });
 
   describe(`execute()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonEnabledService();
+      anyDiscordMessage = createMock<IAnyDiscordMessage>();
     });
 
-    it(`adaz`, async (): Promise<void> => {
+    it(`to do`, async (): Promise<void> => {
       expect.assertions(0);
 
-      await service.execute();
+      await service.execute(anyDiscordMessage);
     });
   });
 });

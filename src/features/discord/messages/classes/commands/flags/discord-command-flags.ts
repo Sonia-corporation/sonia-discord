@@ -192,20 +192,20 @@ export class DiscordCommandFlags<T extends string> {
    * @description
    * Execute the action related to this flag
    *
-   * @param {Readonly<IAnyDiscordMessage>} id The original Discord message
+   * @param {Readonly<IAnyDiscordMessage>} anyDiscordMessage The original Discord message
    * @param {Readonly<IDiscordMessageFlag>} messageFlag A message flag
    *
    * @return {Promise<unknown>}
    */
   public execute(
-    { id }: Readonly<IAnyDiscordMessage>,
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     messageFlag: Readonly<IDiscordMessageFlag>
   ): Promise<unknown | never> {
     LoggerService.getInstance().debug({
       context: this._className,
       hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
-        id,
+        anyDiscordMessage.id,
         `handling ${ChalkService.getInstance().value(
           discordCommandGetFlagName(messageFlag)
         )} flag...`
@@ -218,7 +218,7 @@ export class DiscordCommandFlags<T extends string> {
         | undefined = this._getFlagFromMessageFlag(messageFlag);
 
       if (this._isFlag(flag)) {
-        return flag.executeAction();
+        return flag.executeAction(anyDiscordMessage);
       }
 
       return Promise.reject(
@@ -231,7 +231,7 @@ export class DiscordCommandFlags<T extends string> {
       | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
 
     if (this._isFlag(shortcutFlag)) {
-      return shortcutFlag.executeAction();
+      return shortcutFlag.executeAction(anyDiscordMessage);
     }
 
     return Promise.reject(

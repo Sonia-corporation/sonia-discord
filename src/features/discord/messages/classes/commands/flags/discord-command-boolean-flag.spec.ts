@@ -3,6 +3,7 @@ import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-comm
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
+import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
 
@@ -758,6 +759,8 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
   });
 
   describe(`executeAction()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandBooleanFlag<
         DiscordMessageCommandFeatureNoonFlagEnum
@@ -766,6 +769,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
           IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
         >()
       );
+      anyDiscordMessage = createMock<IAnyDiscordMessage>();
     });
 
     it(`should execute the action`, async (): Promise<void> => {
@@ -773,7 +777,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       const action = (): Promise<unknown> => Promise.resolve(`dummy`);
       discordCommandFlag.setAction(action);
 
-      const result = await discordCommandFlag.executeAction();
+      const result = await discordCommandFlag.executeAction(anyDiscordMessage);
 
       expect(result).toStrictEqual(`dummy`);
     });
