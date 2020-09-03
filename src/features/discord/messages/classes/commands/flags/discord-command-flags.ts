@@ -5,6 +5,7 @@ import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { DiscordCommandFlagErrorTitleEnum } from "../../../enums/commands/flags/discord-command-flag-error-title.enum";
 import { discordCommandGetFlagName } from "../../../functions/commands/flags/discord-command-get-flag-name";
+import { discordCommandGetFlagValue } from "../../../functions/commands/flags/discord-command-get-flag-value";
 import { discordCommandIsMessageFlag } from "../../../functions/commands/flags/discord-command-is-message-flag";
 import { discordCommandRemoveFlagPrefix } from "../../../functions/commands/flags/discord-command-remove-flag-prefix";
 import { discordCommandSplitMessageFlags } from "../../../functions/commands/flags/discord-command-split-message-flags";
@@ -218,7 +219,10 @@ export class DiscordCommandFlags<T extends string> {
         | undefined = this._getFlagFromMessageFlag(messageFlag);
 
       if (this._isFlag(flag)) {
-        return flag.executeAction(anyDiscordMessage);
+        return flag.executeAction(
+          anyDiscordMessage,
+          discordCommandGetFlagValue(messageFlag)
+        );
       }
 
       return Promise.reject(

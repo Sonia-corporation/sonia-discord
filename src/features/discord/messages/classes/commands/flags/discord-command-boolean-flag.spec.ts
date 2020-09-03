@@ -760,6 +760,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`executeAction()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
+    let messageFlag: IDiscordMessageFlag;
 
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandBooleanFlag<
@@ -770,6 +771,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         >()
       );
       anyDiscordMessage = createMock<IAnyDiscordMessage>();
+      messageFlag = `--enabled=true`;
     });
 
     it(`should execute the action`, async (): Promise<void> => {
@@ -777,7 +779,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       const action = (): Promise<unknown> => Promise.resolve(`dummy`);
       discordCommandFlag.setAction(action);
 
-      const result = await discordCommandFlag.executeAction(anyDiscordMessage);
+      const result = await discordCommandFlag.executeAction(
+        anyDiscordMessage,
+        messageFlag
+      );
 
       expect(result).toStrictEqual(`dummy`);
     });

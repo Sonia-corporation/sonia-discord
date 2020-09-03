@@ -13,7 +13,8 @@ import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-messa
 export abstract class DiscordCommandFlag<T extends string> {
   protected abstract _type: DiscordCommandFlagTypeEnum;
   protected _action: (
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    value?: Readonly<string | null | undefined>
   ) => Promise<unknown>;
   protected _description: string;
   protected _name: T;
@@ -35,7 +36,8 @@ export abstract class DiscordCommandFlag<T extends string> {
   }
 
   public getAction(): (
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    value?: Readonly<string | null | undefined>
   ) => Promise<unknown> {
     return this._action;
   }
@@ -106,9 +108,10 @@ export abstract class DiscordCommandFlag<T extends string> {
   }
 
   public executeAction(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    value?: Readonly<string | null | undefined>
   ): Promise<unknown> {
-    return this._action(anyDiscordMessage);
+    return this._action(anyDiscordMessage, value);
   }
 
   public abstract isValid(messageFlag: Readonly<IDiscordMessageFlag>): boolean;
