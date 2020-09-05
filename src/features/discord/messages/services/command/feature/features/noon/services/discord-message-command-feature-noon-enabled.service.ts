@@ -8,6 +8,8 @@ import { IFirebaseGuildChannel } from "../../../../../../../../firebase/types/gu
 import { IFirebaseGuild } from "../../../../../../../../firebase/types/guilds/firebase-guild";
 import { ChalkService } from "../../../../../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../../../../../logger/services/logger.service";
+import { DiscordCommandFlagSuccessTitleEnum } from "../../../../../../enums/commands/flags/discord-command-flag-success-title.enum";
+import { IDiscordCommandFlagSuccess } from "../../../../../../interfaces/commands/flags/discord-command-flag-success";
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
 
 export class DiscordMessageCommandFeatureNoonEnabledService extends AbstractService {
@@ -28,7 +30,7 @@ export class DiscordMessageCommandFeatureNoonEnabledService extends AbstractServ
   public async execute(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     value?: Readonly<string | null | undefined>
-  ): Promise<unknown> {
+  ): Promise<IDiscordCommandFlagSuccess> {
     const shouldEnable: boolean = toBoolean(value, true);
 
     LoggerService.getInstance().debug({
@@ -58,7 +60,43 @@ export class DiscordMessageCommandFeatureNoonEnabledService extends AbstractServ
       ),
     });
 
-    return Promise.resolve();
+    if (_.isNil(isEnabled)) {
+      if (_.isEqual(shouldEnable, true)) {
+        return {
+          description: `The \`noon\` feature was not configured yet and is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
+          name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
+        };
+      }
+
+      return {
+        description: `The \`noon\` feature was not configured yet and is now disabled on this channel.`,
+        name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
+      };
+    } else if (_.isEqual(isEnabled, true)) {
+      if (_.isEqual(shouldEnable, true)) {
+        return {
+          description: `The \`noon\` feature was already enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
+          name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
+        };
+      }
+
+      return {
+        description: `The \`noon\` feature is now disabled on this channel.`,
+        name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
+      };
+    }
+
+    if (_.isEqual(shouldEnable, true)) {
+      return {
+        description: `The \`noon\` feature is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
+        name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
+      };
+    }
+
+    return {
+      description: `The \`noon\` feature was already disabled on this channel.`,
+      name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
+    };
   }
 
   public async isEnabled(
