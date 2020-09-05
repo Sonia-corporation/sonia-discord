@@ -1,4 +1,10 @@
-import { Client, ClientUser, Presence, PresenceData } from "discord.js";
+import {
+  Activity,
+  Client,
+  ClientUser,
+  Presence,
+  PresenceData,
+} from "discord.js";
 import _ from "lodash";
 import * as NodeScheduleModule from "node-schedule";
 import { Job } from "node-schedule";
@@ -615,7 +621,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
             name: DiscordActivityNameEnum.APOLLO,
             type: `PLAYING`,
             url: `dummy-url`,
-          },
+          } as Activity,
         ],
       });
       setPresenceMock = jest
