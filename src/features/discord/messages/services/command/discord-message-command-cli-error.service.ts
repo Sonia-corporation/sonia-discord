@@ -37,32 +37,32 @@ export class DiscordMessageCommandCliErrorService extends AbstractService {
   public getCliErrorMessageResponse(): Promise<IDiscordMessageResponse> {
     return Promise.resolve({
       options: {
-        embed: this._getCliErrorMessageEmbed(),
+        embed: this._getMessageEmbed(),
         split: true,
       },
       response: ``,
     });
   }
 
-  private _getCliErrorMessageEmbed(): MessageEmbedOptions {
+  private _getMessageEmbed(): MessageEmbedOptions {
     return {
-      author: this._getCliErrorMessageEmbedAuthor(),
-      color: this._getCliErrorMessageEmbedColor(),
-      footer: this._getCliErrorMessageEmbedFooter(),
-      thumbnail: this._getCliErrorMessageEmbedThumbnail(),
-      timestamp: this._getCliErrorMessageEmbedTimestamp(),
+      author: this._getMessageEmbedAuthor(),
+      color: this._getMessageEmbedColor(),
+      footer: this._getMessageEmbedFooter(),
+      thumbnail: this._getMessageEmbedThumbnail(),
+      timestamp: this._getMessageEmbedTimestamp(),
     };
   }
 
-  private _getCliErrorMessageEmbedAuthor(): MessageEmbedAuthor {
+  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
-  private _getCliErrorMessageEmbedColor(): number {
+  private _getMessageEmbedColor(): number {
     return DiscordMessageConfigService.getInstance().getMessageCommandCliErrorImageColor();
   }
 
-  private _getCliErrorMessageEmbedFooter(): MessageEmbedFooter {
+  private _getMessageEmbedFooter(): MessageEmbedFooter {
     const soniaImageUrl:
       | string
       | null = DiscordSoniaService.getInstance().getImageUrl();
@@ -73,13 +73,13 @@ export class DiscordMessageCommandCliErrorService extends AbstractService {
     };
   }
 
-  private _getCliErrorMessageEmbedThumbnail(): MessageEmbedThumbnail {
+  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
       url: DiscordMessageConfigService.getInstance().getMessageCommandCliErrorImageUrl(),
     };
   }
 
-  private _getCliErrorMessageEmbedTimestamp(): Date {
+  private _getMessageEmbedTimestamp(): Date {
     return moment().toDate();
   }
 }
