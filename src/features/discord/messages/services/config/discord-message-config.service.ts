@@ -3,6 +3,7 @@ import { AbstractService } from "../../../../../classes/services/abstract.servic
 import { ColorEnum } from "../../../../../enums/color.enum";
 import { IconEnum } from "../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
+import { IDiscordMessageCommandCliErrorConfig } from "../../../interfaces/discord-message-command-cli-error-config";
 import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
 import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
 import { IDiscordMessageCommandHelpConfig } from "../../../interfaces/discord-message-command-help-config";
@@ -41,7 +42,7 @@ export class DiscordMessageConfigService extends AbstractService {
     return DiscordMessageConfigCoreService.getInstance().command;
   }
 
-  public getMessageCommandCliError(): IDiscordMessageCommandCookieConfig {
+  public getMessageCommandCliError(): IDiscordMessageCommandCliErrorConfig {
     return DiscordMessageConfigCoreService.getInstance().command.cliError;
   }
 

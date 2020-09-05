@@ -1,6 +1,14 @@
 import { IconEnum } from "./icon.enum";
 
 describe(`IconEnum`, (): void => {
+  it(`should have a member "ALARM"`, (): void => {
+    expect.assertions(1);
+
+    expect(IconEnum.ALARM).toStrictEqual(
+      `https://i.ibb.co/S7BxtDh/icons8-alarm-512.png`
+    );
+  });
+
   it(`should have a member "ARTIFICIAL_INTELLIGENCE"`, (): void => {
     expect.assertions(1);
 

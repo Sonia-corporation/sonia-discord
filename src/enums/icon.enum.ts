@@ -1,4 +1,5 @@
 export enum IconEnum {
+  ALARM = `https://i.ibb.co/S7BxtDh/icons8-alarm-512.png`,
   ARTIFICIAL_INTELLIGENCE = `https://i.ibb.co/ph17BqP/icons8-artificial-intelligence-512.png`,
   BUG = `https://i.ibb.co/r7PHJS1/icons8-bug-512.png`,
   CANCEL = `https://i.ibb.co/cLM30Xb/icons8-cancel-512.png`,

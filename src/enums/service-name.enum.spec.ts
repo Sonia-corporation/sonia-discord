@@ -259,6 +259,30 @@ describe(`ServiceNameEnum`, (): void => {
     ).toStrictEqual(`DiscordMessageCommandFeatureEmptyFlagsErrorService`);
   });
 
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_CORE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_CORE_SERVICE
+    ).toStrictEqual(`DiscordMessageCommandFeatureNoonConfigCoreService`);
+  });
+
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_MUTATOR_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_MUTATOR_SERVICE
+    ).toStrictEqual(`DiscordMessageCommandFeatureNoonConfigMutatorService`);
+  });
+
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_SERVICE
+    ).toStrictEqual(`DiscordMessageCommandFeatureNoonConfigService`);
+  });
+
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SERVICE"`, (): void => {
     expect.assertions(1);
 
