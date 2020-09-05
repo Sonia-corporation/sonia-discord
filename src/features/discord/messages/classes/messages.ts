@@ -1,12 +1,12 @@
 import _ from "lodash";
 import { replaceInterpolation } from "../../../../functions/formatters/replace-interpolation";
-import { IAnyObject } from "../../../../types/any-object";
+import { IObject } from "../../../../types/object";
 import { IMessageConfig } from "../interfaces/message-config";
 
 export class Messages<T extends string> {
   private _defaultMessage: T;
-  private _messages: IAnyObject<T>;
-  private _params: IAnyObject | undefined;
+  private _messages: IObject<T>;
+  private _params: IObject | undefined;
 
   public constructor({
     defaultMessage,
@@ -26,19 +26,19 @@ export class Messages<T extends string> {
     this._defaultMessage = message;
   }
 
-  public getMessages(): IAnyObject<T> {
+  public getMessages(): IObject<T> {
     return this._messages;
   }
 
-  public setMessages(messages: Readonly<IAnyObject<T>>): void {
+  public setMessages(messages: Readonly<IObject<T>>): void {
     this._messages = messages;
   }
 
-  public getParams(): IAnyObject | undefined {
+  public getParams(): IObject | undefined {
     return this._params;
   }
 
-  public setParams(params: Readonly<IAnyObject | undefined>): void {
+  public setParams(params: Readonly<IObject | undefined>): void {
     this._params = params;
   }
 
@@ -70,12 +70,12 @@ export class Messages<T extends string> {
    * getHumanizedRandomMessage();
    * // -> 'a message with a dummy'
    *
-   * @param {Readonly<IAnyObject | undefined>} params The object containing the replacements [default {@link getParams}]
+   * @param {Readonly<IObject | undefined>} [params=getParams] The object containing the replacements
    *
    * @return {string} The humanized and parsed message
    */
   public getHumanizedRandomMessage(
-    params: Readonly<IAnyObject | undefined> = this.getParams()
+    params: Readonly<IObject | undefined> = this.getParams()
   ): string {
     return replaceInterpolation(
       this.getRandomMessage(),

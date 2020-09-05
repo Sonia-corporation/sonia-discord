@@ -6,20 +6,20 @@ import {
 } from "discord.js";
 import moment from "moment-timezone";
 import { createMock } from "ts-auto-mock";
-import { ColorEnum } from "../../../../../../../enums/color.enum";
-import { IconEnum } from "../../../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../../../core/services/core-event.service";
-import { DiscordSoniaService } from "../../../../../users/services/discord-sonia.service";
-import { DiscordMessageCommandEnum } from "../../../../enums/commands/discord-message-command.enum";
-import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";
-import { DiscordMessageCommandCliErrorService } from "../../discord-message-command-cli-error.service";
-import { DISCORD_MESSAGE_COMMAND_FEATURE_NAMES } from "../constants/discord-message-command-feature-names";
-import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from "./discord-message-command-feature-wrong-feature-name-error.service";
+import { ColorEnum } from "../../../../../../../../enums/color.enum";
+import { IconEnum } from "../../../../../../../../enums/icon.enum";
+import { ServiceNameEnum } from "../../../../../../../../enums/service-name.enum";
+import { CoreEventService } from "../../../../../../../core/services/core-event.service";
+import { DiscordSoniaService } from "../../../../../../users/services/discord-sonia.service";
+import { DiscordMessageCommandEnum } from "../../../../../enums/commands/discord-message-command.enum";
+import { IAnyDiscordMessage } from "../../../../../types/any-discord-message";
+import { DiscordMessageConfigService } from "../../../../config/discord-message-config.service";
+import { DiscordMessageCommandCliErrorService } from "../../../discord-message-command-cli-error.service";
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NAMES } from "../../constants/discord-message-command-feature-names";
+import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from "./discord-message-command-feature-empty-feature-name-error.service";
 
-describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void => {
-  let service: DiscordMessageCommandFeatureWrongFeatureNameErrorService;
+describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void => {
+  let service: DiscordMessageCommandFeatureEmptyFeatureNameErrorService;
   let coreEventService: CoreEventService;
   let discordSoniaService: DiscordSoniaService;
   let discordMessageConfigService: DiscordMessageConfigService;
@@ -33,20 +33,20 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
   });
 
   describe(`getInstance()`, (): void => {
-    it(`should create a DiscordMessageCommandFeatureWrongFeatureNameError service`, (): void => {
+    it(`should create a DiscordMessageCommandFeatureEmptyFeatureNameError service`, (): void => {
       expect.assertions(1);
 
-      service = DiscordMessageCommandFeatureWrongFeatureNameErrorService.getInstance();
+      service = DiscordMessageCommandFeatureEmptyFeatureNameErrorService.getInstance();
 
       expect(service).toStrictEqual(
-        expect.any(DiscordMessageCommandFeatureWrongFeatureNameErrorService)
+        expect.any(DiscordMessageCommandFeatureEmptyFeatureNameErrorService)
       );
     });
 
-    it(`should return the created DiscordMessageCommandFeatureWrongFeatureNameError service`, (): void => {
+    it(`should return the created DiscordMessageCommandFeatureEmptyFeatureNameError service`, (): void => {
       expect.assertions(1);
 
-      const result = DiscordMessageCommandFeatureWrongFeatureNameErrorService.getInstance();
+      const result = DiscordMessageCommandFeatureEmptyFeatureNameErrorService.getInstance();
 
       expect(result).toStrictEqual(service);
     });
@@ -61,14 +61,14 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
         .mockImplementation();
     });
 
-    it(`should notify the DiscordMessageCommandFeatureWrongFeatureNameError service creation`, (): void => {
+    it(`should notify the DiscordMessageCommandFeatureEmptyFeatureNameError service creation`, (): void => {
       expect.assertions(2);
 
-      service = new DiscordMessageCommandFeatureWrongFeatureNameErrorService();
+      service = new DiscordMessageCommandFeatureEmptyFeatureNameErrorService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_WRONG_FEATURE_NAME_ERROR_SERVICE
+        ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_FEATURE_NAME_ERROR_SERVICE
       );
     });
   });
@@ -76,7 +76,6 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
   describe(`getMessageResponse()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let commands: DiscordMessageCommandEnum[];
-    let featureName: string;
 
     let discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy: jest.SpyInstance;
     let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
@@ -88,10 +87,9 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
     >;
 
     beforeEach((): void => {
-      service = new DiscordMessageCommandFeatureWrongFeatureNameErrorService();
+      service = new DiscordMessageCommandFeatureEmptyFeatureNameErrorService();
       anyDiscordMessage = createMock<IAnyDiscordMessage>();
       commands = [DiscordMessageCommandEnum.COOKIE];
-      featureName = `dummy-feature-name`;
 
       discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy = jest.spyOn(
         discordMessageCommandCliErrorService,
@@ -128,11 +126,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
     it(`should get the CLI error message response`, async (): Promise<void> => {
       expect.assertions(2);
 
-      await service.getMessageResponse(
-        anyDiscordMessage,
-        commands,
-        featureName
-      );
+      await service.getMessageResponse(anyDiscordMessage, commands);
 
       expect(
         discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy
@@ -155,8 +149,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(
         anyDiscordMessage,
-        commands,
-        featureName
+        commands
       );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -174,8 +167,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(
         anyDiscordMessage,
-        commands,
-        featureName
+        commands
       );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -190,8 +182,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(
         anyDiscordMessage,
-        commands,
-        featureName
+        commands
       );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -206,15 +197,14 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(
         anyDiscordMessage,
-        commands,
-        featureName
+        commands
       );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.fields[0]).toStrictEqual({
-        name: `Wrong feature name`,
-        value: `\`dummy-feature-name\` is not an existing feature...\nLet me show you the list of available features with an example and maybe try again with a valid one this time, ok?`,
+        name: `Empty feature name`,
+        value: `You did not specify the name of the feature you wish to configure.\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure with an example.`,
       } as EmbedFieldData);
     });
 
@@ -225,8 +215,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(
         anyDiscordMessage,
-        commands,
-        featureName
+        commands
       );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -252,8 +241,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
         const result = await service.getMessageResponse(
           anyDiscordMessage,
-          commands,
-          featureName
+          commands
         );
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -280,8 +268,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
         const result = await service.getMessageResponse(
           anyDiscordMessage,
-          commands,
-          featureName
+          commands
         );
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -313,8 +300,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
           const result = await service.getMessageResponse(
             anyDiscordMessage,
-            commands,
-            featureName
+            commands
           );
 
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -340,8 +326,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
           const result = await service.getMessageResponse(
             anyDiscordMessage,
-            commands,
-            featureName
+            commands
           );
 
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -374,8 +359,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
           const result = await service.getMessageResponse(
             anyDiscordMessage,
-            commands,
-            featureName
+            commands
           );
 
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -401,8 +385,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
           const result = await service.getMessageResponse(
             anyDiscordMessage,
-            commands,
-            featureName
+            commands
           );
 
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -423,8 +406,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(
         anyDiscordMessage,
-        commands,
-        featureName
+        commands
       );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -447,8 +429,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
         const result = await service.getMessageResponse(
           anyDiscordMessage,
-          commands,
-          featureName
+          commands
         );
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -472,8 +453,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
         const result = await service.getMessageResponse(
           anyDiscordMessage,
-          commands,
-          featureName
+          commands
         );
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -495,8 +475,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(
         anyDiscordMessage,
-        commands,
-        featureName
+        commands
       );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -513,8 +492,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(
         anyDiscordMessage,
-        commands,
-        featureName
+        commands
       );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -536,8 +514,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(
         anyDiscordMessage,
-        commands,
-        featureName
+        commands
       );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -554,8 +531,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(
         anyDiscordMessage,
-        commands,
-        featureName
+        commands
       );
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -570,8 +546,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
       const result = await service.getMessageResponse(
         anyDiscordMessage,
-        commands,
-        featureName
+        commands
       );
 
       expect(result.response).toStrictEqual(``);

@@ -1,11 +1,11 @@
 import { EmbedFieldData, MessageEmbedOptions } from "discord.js";
 import _ from "lodash";
-import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { DiscordMessageCommandEnum } from "../../../../enums/commands/discord-message-command.enum";
-import { IDiscordMessageResponse } from "../../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
-import { DiscordMessageCommandCliErrorService } from "../../discord-message-command-cli-error.service";
-import { DiscordMessageCommandFeatureErrorCoreService } from "./discord-message-command-feature-error-core.service";
+import { ServiceNameEnum } from "../../../../../../../../enums/service-name.enum";
+import { DiscordMessageCommandEnum } from "../../../../../enums/commands/discord-message-command.enum";
+import { IDiscordMessageResponse } from "../../../../../interfaces/discord-message-response";
+import { IAnyDiscordMessage } from "../../../../../types/any-discord-message";
+import { DiscordMessageCommandCliErrorService } from "../../../discord-message-command-cli-error.service";
+import { DiscordMessageCommandFeatureErrorCoreService } from "../discord-message-command-feature-error-core.service";
 
 export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends DiscordMessageCommandFeatureErrorCoreService {
   private static _instance: DiscordMessageCommandFeatureEmptyFeatureNameErrorService;
@@ -41,10 +41,7 @@ export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends Di
           Promise.resolve(
             _.merge(cliErrorMessageResponse, {
               options: {
-                embed: this._getEmptyFeatureNameErrorMessageEmbed(
-                  anyDiscordMessage,
-                  commands
-                ),
+                embed: this._getMessageEmbed(anyDiscordMessage, commands),
                 split: true,
               },
               response: ``,
@@ -53,35 +50,29 @@ export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends Di
       );
   }
 
-  private _getEmptyFeatureNameErrorMessageEmbed(
+  private _getMessageEmbed(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     commands: Readonly<DiscordMessageCommandEnum>[]
   ): MessageEmbedOptions {
     return {
-      fields: this._getEmptyFeatureNameErrorMessageEmbedFields(
-        anyDiscordMessage,
-        commands
-      ),
-      footer: this._getErrorMessageEmbedFooter(),
-      title: this._getErrorMessageEmbedTitle(),
+      fields: this._getMessageEmbedFields(anyDiscordMessage, commands),
+      footer: this._getMessageEmbedFooter(),
+      title: this._getMessageEmbedTitle(),
     };
   }
 
-  private _getEmptyFeatureNameErrorMessageEmbedFields(
+  private _getMessageEmbedFields(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     commands: Readonly<DiscordMessageCommandEnum>[]
   ): EmbedFieldData[] {
     return [
-      this._getEmptyFeatureNameErrorMessageEmbedFieldError(),
-      this._getMessageEmbedFieldErrorAllFeatures(),
-      this._getMessageEmbedFieldErrorFeatureExample(
-        anyDiscordMessage,
-        commands
-      ),
+      this._getMessageEmbedFieldError(),
+      this._getMessageEmbedFieldAllFeatures(),
+      this._getMessageEmbedFieldFeatureExample(anyDiscordMessage, commands),
     ];
   }
 
-  private _getEmptyFeatureNameErrorMessageEmbedFieldError(): EmbedFieldData {
+  private _getMessageEmbedFieldError(): EmbedFieldData {
     return {
       name: `Empty feature name`,
       value: `You did not specify the name of the feature you wish to configure.\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure with an example.`,
