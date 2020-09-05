@@ -106,7 +106,7 @@ export class DiscordMessageCommandFeatureNoonEnabledService extends AbstractServ
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<boolean | undefined> {
     if (_.isNil(anyDiscordMessage.guild)) {
-      return this._getNoGuildMessageError(anyDiscordMessage);
+      return this._getNoGuildMessageError(anyDiscordMessage.id);
     }
 
     const firebaseGuild:
@@ -117,7 +117,7 @@ export class DiscordMessageCommandFeatureNoonEnabledService extends AbstractServ
 
     if (_.isNil(firebaseGuild)) {
       return this._getNoFirebaseGuildError(
-        anyDiscordMessage,
+        anyDiscordMessage.id,
         anyDiscordMessage.guild.id
       );
     }
@@ -153,14 +153,14 @@ export class DiscordMessageCommandFeatureNoonEnabledService extends AbstractServ
     return _.get(firebaseGuildChannel, `features.noon.isEnabled`);
   }
 
-  private _getNoGuildMessageError({
-    id,
-  }: Readonly<IAnyDiscordMessage>): Promise<never> {
+  private _getNoGuildMessageError(
+    discordMessageId: Readonly<Snowflake>
+  ): Promise<never> {
     LoggerService.getInstance().error({
       context: this._serviceName,
       hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
-        id,
+        discordMessageId,
         `could not get the guild from the message`
       ),
     });
@@ -171,14 +171,14 @@ export class DiscordMessageCommandFeatureNoonEnabledService extends AbstractServ
   }
 
   private _getNoFirebaseGuildError(
-    { id }: Readonly<IAnyDiscordMessage>,
+    discordMessageId: Readonly<Snowflake>,
     guildId: Readonly<Snowflake>
   ): Promise<never> {
     LoggerService.getInstance().error({
       context: this._serviceName,
       hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
-        id,
+        discordMessageId,
         `could not find the guild ${ChalkService.getInstance().value(
           guildId
         )} in Firebase`
