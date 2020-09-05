@@ -74,7 +74,7 @@ export function toBoolean(
     if (_.isEqual(_.toLower(isTrue), `true`)) {
       return true;
     } else if (_.isEqual(_.toLower(isTrue), `false`)) {
-      return true;
+      return false;
     }
   }
 
