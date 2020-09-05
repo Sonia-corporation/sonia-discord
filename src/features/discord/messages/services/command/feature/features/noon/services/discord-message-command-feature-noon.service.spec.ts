@@ -1,8 +1,8 @@
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../../../../../core/services/core-event.service";
-import { IDiscordMessageResponse } from "../../../../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
+import { IDiscordCommandFlagsSuccess } from "../../../../../../types/commands/flags/discord-command-flags-success";
 import { DiscordMessageCommandFeatureNameEnum } from "../../../enums/discord-message-command-feature-name.enum";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../constants/discord-message-command-feature-noon-flags";
 import { DiscordMessageCommandFeatureNoonService } from "./discord-message-command-feature-noon.service";
@@ -111,17 +111,17 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
   describe(`getMessageResponse()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let messageFlags: string;
-    let discordMessageResponse: IDiscordMessageResponse;
+    let discordCommandFlagsSuccess: IDiscordCommandFlagsSuccess;
 
     let executeAllSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonService();
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      discordCommandFlagsSuccess = createMock<IDiscordCommandFlagsSuccess>();
 
       executeAllSpy = jest
         .spyOn(DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS, `executeAll`)
-        .mockResolvedValue(discordMessageResponse);
+        .mockResolvedValue(discordCommandFlagsSuccess);
     });
 
     it(`should execute the associated action for each flag`, async (): Promise<
@@ -146,7 +146,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
         messageFlags
       );
 
-      expect(result).toStrictEqual(discordMessageResponse);
+      expect(result).toStrictEqual(discordCommandFlagsSuccess);
     });
   });
 });

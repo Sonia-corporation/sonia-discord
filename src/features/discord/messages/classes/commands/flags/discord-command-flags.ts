@@ -176,7 +176,7 @@ export class DiscordCommandFlags<T extends string> {
       )
     ).then(
       (
-        discordCommandFlagsSuccess: Readonly<IDiscordCommandFlagsSuccess>
+        discordCommandFlagsSuccess: IDiscordCommandFlagsSuccess
       ): Promise<IDiscordCommandFlagsSuccess> => {
         LoggerService.getInstance().success({
           context: this._className,
