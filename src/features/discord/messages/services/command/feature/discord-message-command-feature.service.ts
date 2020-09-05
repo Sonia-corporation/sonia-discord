@@ -100,6 +100,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
 
         LoggerService.getInstance().debug({
           context: this._serviceName,
+          hasExtendedContext: true,
           message: LoggerService.getInstance().getSnowflakeContext(
             anyDiscordMessage.id,
             `feature name ${ChalkService.getInstance().value(
@@ -117,6 +118,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
 
       LoggerService.getInstance().debug({
         context: this._serviceName,
+        hasExtendedContext: true,
         message: LoggerService.getInstance().getSnowflakeContext(
           anyDiscordMessage.id,
           `feature name not specified`
@@ -168,6 +170,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `feature name ${ChalkService.getInstance().value(
@@ -190,6 +193,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   ): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         id,
         `feature name ${ChalkService.getInstance().value(

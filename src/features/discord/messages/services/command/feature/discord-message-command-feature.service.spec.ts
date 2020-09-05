@@ -425,6 +425,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
             context: `DiscordMessageCommandFeatureService`,
+            hasExtendedContext: true,
             message: `context-[dummy-id] text-feature name not specified`,
           } as ILoggerLog);
         });
@@ -545,6 +546,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `DiscordMessageCommandFeatureService`,
+              hasExtendedContext: true,
               message: `context-[dummy-id] text-feature name value-dummy not matching an existing feature`,
             } as ILoggerLog);
           });
@@ -666,6 +668,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
               expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                 context: `DiscordMessageCommandFeatureService`,
+                hasExtendedContext: true,
                 message: `context-[dummy-id] text-feature name value-Noon not having any flags`,
               } as ILoggerLog);
             });
@@ -768,6 +771,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
+                  hasExtendedContext: true,
                   message: `context-[dummy-id] text-feature name value-Noon not having all valid flags`,
                 } as ILoggerLog);
               });

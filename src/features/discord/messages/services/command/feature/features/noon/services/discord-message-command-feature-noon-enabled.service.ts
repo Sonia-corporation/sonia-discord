@@ -35,6 +35,7 @@ export class DiscordMessageCommandFeatureNoonEnabledService extends AbstractServ
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `executing ${ChalkService.getInstance().value(`enabled`)} action`
@@ -42,6 +43,7 @@ export class DiscordMessageCommandFeatureNoonEnabledService extends AbstractServ
     });
     LoggerService.getInstance().debug({
       context: this._serviceName,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `new state: ${ChalkService.getInstance().value(shouldEnable)}`
@@ -54,6 +56,7 @@ export class DiscordMessageCommandFeatureNoonEnabledService extends AbstractServ
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
         `current state: ${ChalkService.getInstance().value(isEnabled)}`
@@ -155,6 +158,7 @@ export class DiscordMessageCommandFeatureNoonEnabledService extends AbstractServ
   }: Readonly<IAnyDiscordMessage>): Promise<never> {
     LoggerService.getInstance().error({
       context: this._serviceName,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         id,
         `could not get the guild from the message`
@@ -172,6 +176,7 @@ export class DiscordMessageCommandFeatureNoonEnabledService extends AbstractServ
   ): Promise<never> {
     LoggerService.getInstance().error({
       context: this._serviceName,
+      hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         id,
         `could not find the guild ${ChalkService.getInstance().value(
