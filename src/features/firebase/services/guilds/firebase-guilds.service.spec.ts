@@ -734,18 +734,16 @@ describe(`FirebaseGuildsService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
-      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-      guild = createMock<Guild>(({
+      guild = createMock<Guild>({
         id: `dummy-id`,
-      } as unknown) as Guild);
+      });
       writeResult = createMock<WriteResult>();
       setMock = jest
         .fn<Promise<WriteResult>, IFirebaseGuildVFinal[]>()
         .mockResolvedValue(writeResult);
-      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-      documentReference = createMock<DocumentReference<IFirebaseGuild>>(({
+      documentReference = createMock<DocumentReference<IFirebaseGuild>>({
         set: setMock,
-      } as unknown) as DocumentReference<IFirebaseGuild>);
+      });
       docMock = jest
         .fn<DocumentReference<IFirebaseGuild>, string[]>()
         .mockReturnValue(documentReference);
