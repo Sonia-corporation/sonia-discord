@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
+import { discordCommandIsMessageFlag } from "./discord-command-is-message-flag";
 import { discordCommandRemoveFlagPrefix } from "./discord-command-remove-flag-prefix";
 
 const SPLITTED_FLAG_LENGTH = 2;
@@ -29,6 +30,10 @@ export function discordCommandGetFlagValue(
     `=`
   );
   const splittedFlagSize: number = _.size(splittedFlag);
+
+  if (!discordCommandIsMessageFlag(messageFlag)) {
+    return null;
+  }
 
   if (_.lt(splittedFlagSize, SPLITTED_FLAG_LENGTH)) {
     return null;

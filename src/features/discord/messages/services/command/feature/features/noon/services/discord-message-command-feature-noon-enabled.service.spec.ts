@@ -64,21 +64,6 @@ describe(`DiscordMessageCommandFeatureNoonEnabledService`, (): void => {
     });
   });
 
-  describe(`execute()`, (): void => {
-    let anyDiscordMessage: IAnyDiscordMessage;
-
-    beforeEach((): void => {
-      service = new DiscordMessageCommandFeatureNoonEnabledService();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>();
-    });
-
-    it(`to do`, async (): Promise<void> => {
-      expect.assertions(0);
-
-      await service.execute(anyDiscordMessage);
-    });
-  });
-
   describe(`isEnabled()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
 

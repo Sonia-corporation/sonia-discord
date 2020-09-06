@@ -13,8 +13,8 @@ import { DiscordMessageCommandFeatureNoonConfigCoreService } from "./discord-mes
 import { DiscordMessageCommandFeatureNoonConfigMutatorService } from "./discord-message-command-feature-noon-config-mutator.service";
 import { DiscordMessageCommandFeatureNoonConfigService } from "./discord-message-command-feature-noon-config.service";
 
-jest.mock(`../../../../time/services/time.service`);
-jest.mock(`../../../../logger/services/chalk/chalk.service`);
+jest.mock(`../../../../../../../../../time/services/time.service`);
+jest.mock(`../../../../../../../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
   let service: DiscordMessageCommandFeatureNoonConfigMutatorService;
@@ -228,7 +228,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
     });
 
     it(`should not update the config`, (): void => {
-      expect.assertions(3);
+      expect.assertions(1);
 
       service.updateConfig();
 
@@ -254,7 +254,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
       });
 
       it(`should not update the config`, (): void => {
-        expect.assertions(3);
+        expect.assertions(1);
 
         service.updateConfig();
 
@@ -406,7 +406,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
         context: `DiscordMessageCommandFeatureNoonConfigMutatorService`,
         newValue: ColorEnum.SUN,
         oldValue: ColorEnum.CANDY,
-        valueName: `message feature noon image color`,
+        valueName: `message command feature noon color`,
       } as IConfigUpdateNumber);
     });
 
@@ -447,7 +447,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
         context: `DiscordMessageCommandFeatureNoonConfigMutatorService`,
         newValue: IconEnum.GIRL,
         oldValue: IconEnum.INFORMATION,
-        valueName: `message feature noon image url`,
+        valueName: `message command feature noon image url`,
       } as IConfigUpdateString);
     });
 

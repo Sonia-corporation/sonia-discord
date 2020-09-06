@@ -2121,13 +2121,17 @@ describe(`DiscordCommandFlags`, (): void => {
   describe(`executeAll()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let messageFlags: string;
+    let discordCommandFlagSuccess: IDiscordCommandFlagSuccess;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let loggerServiceSuccessSpy: jest.SpyInstance;
-    let actionMock: jest.Mock;
+    let actionMock: jest.Mock<Promise<IDiscordCommandFlagSuccess>, unknown[]>;
 
     beforeEach((): void => {
-      actionMock = jest.fn().mockResolvedValue(`dummy`);
+      discordCommandFlagSuccess = createMock<IDiscordCommandFlagSuccess>();
+      actionMock = jest
+        .fn<Promise<IDiscordCommandFlagSuccess>, unknown[]>()
+        .mockResolvedValue(discordCommandFlagSuccess);
       discordCommandFlags = new DiscordCommandFlags<
         DiscordMessageCommandFeatureNoonFlagEnum
       >({
@@ -2271,9 +2275,7 @@ describe(`DiscordCommandFlags`, (): void => {
             messageFlags
           );
 
-          expect(result).toStrictEqual({
-            response: `No options for noon feature for now. Work in progress.`,
-          });
+          expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(actionMock).toHaveBeenCalledTimes(1);
           expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
         });
@@ -2288,9 +2290,7 @@ describe(`DiscordCommandFlags`, (): void => {
             messageFlags
           );
 
-          expect(result).toStrictEqual({
-            response: `No options for noon feature for now. Work in progress.`,
-          });
+          expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
             context: `DiscordCommandFlags`,
@@ -2403,9 +2403,7 @@ describe(`DiscordCommandFlags`, (): void => {
             messageFlags
           );
 
-          expect(result).toStrictEqual({
-            response: `No options for noon feature for now. Work in progress.`,
-          });
+          expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(actionMock).toHaveBeenCalledTimes(1);
           expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
         });
@@ -2420,9 +2418,7 @@ describe(`DiscordCommandFlags`, (): void => {
             messageFlags
           );
 
-          expect(result).toStrictEqual({
-            response: `No options for noon feature for now. Work in progress.`,
-          });
+          expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
             context: `DiscordCommandFlags`,
@@ -2545,9 +2541,7 @@ describe(`DiscordCommandFlags`, (): void => {
             messageFlags
           );
 
-          expect(result).toStrictEqual({
-            response: `No options for noon feature for now. Work in progress.`,
-          });
+          expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(actionMock).toHaveBeenCalledTimes(2);
           expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
         });
@@ -2562,9 +2556,7 @@ describe(`DiscordCommandFlags`, (): void => {
             messageFlags
           );
 
-          expect(result).toStrictEqual({
-            response: `No options for noon feature for now. Work in progress.`,
-          });
+          expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
             context: `DiscordCommandFlags`,
@@ -2687,9 +2679,7 @@ describe(`DiscordCommandFlags`, (): void => {
             messageFlags
           );
 
-          expect(result).toStrictEqual({
-            response: `No options for noon feature for now. Work in progress.`,
-          });
+          expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(actionMock).toHaveBeenCalledTimes(2);
           expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
         });
@@ -2704,9 +2694,7 @@ describe(`DiscordCommandFlags`, (): void => {
             messageFlags
           );
 
-          expect(result).toStrictEqual({
-            response: `No options for noon feature for now. Work in progress.`,
-          });
+          expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
             context: `DiscordCommandFlags`,
@@ -2721,12 +2709,16 @@ describe(`DiscordCommandFlags`, (): void => {
   describe(`execute()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let messageFlag: IDiscordMessageFlag;
+    let discordCommandFlagSuccess: IDiscordCommandFlagSuccess;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
-    let actionMock: jest.Mock;
+    let actionMock: jest.Mock<Promise<IDiscordCommandFlagSuccess>, unknown[]>;
 
     beforeEach((): void => {
-      actionMock = jest.fn().mockResolvedValue(`dummy`);
+      discordCommandFlagSuccess = createMock<IDiscordCommandFlagSuccess>();
+      actionMock = jest
+        .fn<Promise<IDiscordCommandFlagSuccess>, unknown[]>()
+        .mockResolvedValue(discordCommandFlagSuccess);
       discordCommandFlags = new DiscordCommandFlags<
         DiscordMessageCommandFeatureNoonFlagEnum
       >({
@@ -2742,10 +2734,9 @@ describe(`DiscordCommandFlags`, (): void => {
           }),
         ],
       });
-      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
+      anyDiscordMessage = createMock<IAnyDiscordMessage>({
         id: `dummy-id`,
-      } as unknown) as IAnyDiscordMessage);
+      });
       messageFlag = `--enabled=true`;
 
       loggerServiceDebugSpy = jest
@@ -2816,9 +2807,9 @@ describe(`DiscordCommandFlags`, (): void => {
             messageFlag
           );
 
-          expect(result).toStrictEqual(`dummy`);
+          expect(result).toStrictEqual(discordCommandFlagSuccess);
           expect(actionMock).toHaveBeenCalledTimes(1);
-          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage, `true`);
         });
       });
     });
@@ -2873,7 +2864,7 @@ describe(`DiscordCommandFlags`, (): void => {
             messageFlag
           );
 
-          expect(result).toStrictEqual(`dummy`);
+          expect(result).toStrictEqual(discordCommandFlagSuccess);
           expect(actionMock).toHaveBeenCalledTimes(1);
           expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
         });

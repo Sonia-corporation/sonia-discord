@@ -1364,19 +1364,16 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     beforeEach((): void => {
       service = new FirebaseGuildsNewVersionService();
       firebaseGuild = createMock<IFirebaseGuildVFinal>();
-      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-      guild = createMock<Guild>(({
+      guild = createMock<Guild>({
         id: `dummy-id`,
-      } as unknown) as Guild);
-      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-      guildChannel = createMock<GuildChannel>(({
+      });
+      guildChannel = createMock<GuildChannel>({
         type: `news`,
-      } as unknown) as GuildChannel);
+      });
       sendMock = jest.fn().mockRejectedValue(new Error(`send error`));
-      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-      textChannel = createMock<TextChannel>(({
+      textChannel = createMock<TextChannel>({
         send: sendMock,
-      } as unknown) as TextChannel);
+      });
       discordMessageResponse = createMock<IDiscordMessageResponse>();
       discordMessageResponseError = createMock<IDiscordMessageResponse>();
 

@@ -121,12 +121,12 @@ describe(`toBoolean()`, (): void => {
       value = false;
     });
 
-    it(`should return true`, (): void => {
+    it(`should return false`, (): void => {
       expect.assertions(1);
 
       const isValueBoolean = toBoolean(value);
 
-      expect(isValueBoolean).toStrictEqual(true);
+      expect(isValueBoolean).toStrictEqual(false);
     });
   });
 
@@ -252,12 +252,12 @@ describe(`toBoolean()`, (): void => {
         value = false;
       });
 
-      it(`should return true`, (): void => {
+      it(`should return false`, (): void => {
         expect.assertions(1);
 
         const isValueBoolean = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(true);
+        expect(isValueBoolean).toStrictEqual(false);
       });
     });
   });
@@ -384,12 +384,12 @@ describe(`toBoolean()`, (): void => {
         value = false;
       });
 
-      it(`should return true`, (): void => {
+      it(`should return false`, (): void => {
         expect.assertions(1);
 
         const isValueBoolean = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(true);
+        expect(isValueBoolean).toStrictEqual(false);
       });
     });
   });
