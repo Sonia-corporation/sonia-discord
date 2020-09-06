@@ -8,11 +8,14 @@ import { IFirebaseGuildChannel } from "../../../../../../../../firebase/types/gu
 import { IFirebaseGuild } from "../../../../../../../../firebase/types/guilds/firebase-guild";
 import { ChalkService } from "../../../../../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../../../../../logger/services/logger.service";
+import { DiscordCommandFlagActionService } from "../../../../../../classes/commands/flags/discord-command-flag-action-service";
 import { DiscordCommandFlagSuccessTitleEnum } from "../../../../../../enums/commands/flags/discord-command-flag-success-title.enum";
 import { IDiscordCommandFlagSuccess } from "../../../../../../interfaces/commands/flags/discord-command-flag-success";
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
 
-export class DiscordMessageCommandFeatureNoonEnabledService extends AbstractService {
+export class DiscordMessageCommandFeatureNoonEnabledService
+  extends AbstractService
+  implements DiscordCommandFlagActionService {
   private static _instance: DiscordMessageCommandFeatureNoonEnabledService;
 
   public static getInstance(): DiscordMessageCommandFeatureNoonEnabledService {

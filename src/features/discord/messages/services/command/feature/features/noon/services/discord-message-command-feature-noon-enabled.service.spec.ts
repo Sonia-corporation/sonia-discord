@@ -1,4 +1,4 @@
-import { Guild, TextChannel } from "discord.js";
+import { Guild, Message, TextChannel } from "discord.js";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../../../../../core/services/core-event.service";
@@ -117,7 +117,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabledService`, (): void => {
 
     describe(`when the given Discord message guild is valid`, (): void => {
       beforeEach((): void => {
-        anyDiscordMessage = createMock<IAnyDiscordMessage>({
+        anyDiscordMessage = createMock<Message>({
           channel: createMock<TextChannel>(),
           guild: createMock<Guild>({
             id: `dummy-guild-id`,

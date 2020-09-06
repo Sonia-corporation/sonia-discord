@@ -10,6 +10,7 @@ import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
+import { DiscordCommandFlagActionService } from "./discord-command-flag-action-service";
 import { DiscordCommandFlags } from "./discord-command-flags";
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
@@ -769,8 +770,10 @@ describe(`DiscordCommandFlags`, (): void => {
           new DiscordCommandBooleanFlag<
             DiscordMessageCommandFeatureNoonFlagEnum
           >({
-            action: (): Promise<IDiscordCommandFlagSuccess> =>
-              Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+            action: createMock<DiscordCommandFlagActionService>({
+              execute: (): Promise<IDiscordCommandFlagSuccess> =>
+                Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+            }),
             description: ``,
             name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
             shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
@@ -2140,7 +2143,9 @@ describe(`DiscordCommandFlags`, (): void => {
           new DiscordCommandBooleanFlag<
             DiscordMessageCommandFeatureNoonFlagEnum
           >({
-            action: actionMock,
+            action: createMock<DiscordCommandFlagActionService>({
+              execute: actionMock,
+            }),
             description: ``,
             name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
             shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
@@ -2277,7 +2282,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(actionMock).toHaveBeenCalledTimes(1);
-          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage, `true`);
         });
 
         it(`should log about successfully handled the given flags`, async (): Promise<
@@ -2541,7 +2546,10 @@ describe(`DiscordCommandFlags`, (): void => {
             messageFlags
           );
 
-          expect(result).toStrictEqual([discordCommandFlagSuccess]);
+          expect(result).toStrictEqual([
+            discordCommandFlagSuccess,
+            discordCommandFlagSuccess,
+          ]);
           expect(actionMock).toHaveBeenCalledTimes(2);
           expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
         });
@@ -2556,7 +2564,10 @@ describe(`DiscordCommandFlags`, (): void => {
             messageFlags
           );
 
-          expect(result).toStrictEqual([discordCommandFlagSuccess]);
+          expect(result).toStrictEqual([
+            discordCommandFlagSuccess,
+            discordCommandFlagSuccess,
+          ]);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
             context: `DiscordCommandFlags`,
@@ -2679,7 +2690,10 @@ describe(`DiscordCommandFlags`, (): void => {
             messageFlags
           );
 
-          expect(result).toStrictEqual([discordCommandFlagSuccess]);
+          expect(result).toStrictEqual([
+            discordCommandFlagSuccess,
+            discordCommandFlagSuccess,
+          ]);
           expect(actionMock).toHaveBeenCalledTimes(2);
           expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
         });
@@ -2694,7 +2708,10 @@ describe(`DiscordCommandFlags`, (): void => {
             messageFlags
           );
 
-          expect(result).toStrictEqual([discordCommandFlagSuccess]);
+          expect(result).toStrictEqual([
+            discordCommandFlagSuccess,
+            discordCommandFlagSuccess,
+          ]);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
             context: `DiscordCommandFlags`,
@@ -2727,7 +2744,9 @@ describe(`DiscordCommandFlags`, (): void => {
           new DiscordCommandBooleanFlag<
             DiscordMessageCommandFeatureNoonFlagEnum
           >({
-            action: actionMock,
+            action: createMock<DiscordCommandFlagActionService>({
+              execute: actionMock,
+            }),
             description: ``,
             name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
             shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],

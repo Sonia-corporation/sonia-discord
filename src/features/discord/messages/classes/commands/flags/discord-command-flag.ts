@@ -4,8 +4,8 @@ import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
-import { IDiscordCommandFlagAction } from "../../../types/commands/flags/discord-command-flag-action";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
+import { DiscordCommandFlagActionService } from "./discord-command-flag-action-service";
 
 /**
  * @description
@@ -14,7 +14,7 @@ import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-messa
  */
 export abstract class DiscordCommandFlag<T extends string> {
   protected abstract _type: DiscordCommandFlagTypeEnum;
-  protected _action: IDiscordCommandFlagAction;
+  protected _action: DiscordCommandFlagActionService;
   protected _description: string;
   protected _name: T;
   protected _shortcuts: T[] | undefined;
@@ -34,11 +34,11 @@ export abstract class DiscordCommandFlag<T extends string> {
     this._shortcuts = shortcuts;
   }
 
-  public getAction(): IDiscordCommandFlagAction {
+  public getAction(): DiscordCommandFlagActionService {
     return this._action;
   }
 
-  public setAction(action: IDiscordCommandFlagAction): void {
+  public setAction(action: DiscordCommandFlagActionService): void {
     this._action = action;
   }
 
@@ -107,7 +107,7 @@ export abstract class DiscordCommandFlag<T extends string> {
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     value?: Readonly<string | null | undefined>
   ): Promise<IDiscordCommandFlagSuccess> {
-    return this._action(anyDiscordMessage, value);
+    return this._action.execute(anyDiscordMessage, value);
   }
 
   public abstract isValid(messageFlag: Readonly<IDiscordMessageFlag>): boolean;

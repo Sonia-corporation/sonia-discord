@@ -2,7 +2,6 @@ import { toBoolean } from "./to-boolean";
 
 describe(`toBoolean()`, (): void => {
   let value: boolean | string | null | undefined;
-  let asFallback: boolean;
 
   describe(`when the given value is undefined`, (): void => {
     beforeEach((): void => {
@@ -131,6 +130,8 @@ describe(`toBoolean()`, (): void => {
   });
 
   describe(`when the given fallback value is true`, (): void => {
+    let asFallback: boolean;
+
     beforeEach((): void => {
       asFallback = true;
     });
@@ -143,7 +144,7 @@ describe(`toBoolean()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value);
+        const isValueBoolean = toBoolean(value, asFallback);
 
         expect(isValueBoolean).toStrictEqual(true);
       });
@@ -263,6 +264,8 @@ describe(`toBoolean()`, (): void => {
   });
 
   describe(`when the given fallback value is false`, (): void => {
+    let asFallback: boolean;
+
     beforeEach((): void => {
       asFallback = false;
     });
@@ -275,7 +278,7 @@ describe(`toBoolean()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value);
+        const isValueBoolean = toBoolean(value, asFallback);
 
         expect(isValueBoolean).toStrictEqual(false);
       });

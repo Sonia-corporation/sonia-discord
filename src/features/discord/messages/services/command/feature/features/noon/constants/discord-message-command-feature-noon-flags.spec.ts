@@ -15,8 +15,7 @@ describe(`DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS`, (): void => {
         command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
         flags: [
           new DiscordCommandBooleanFlag({
-            action: DiscordMessageCommandFeatureNoonEnabledService.getInstance()
-              .execute,
+            action: DiscordMessageCommandFeatureNoonEnabledService.getInstance(),
             description: `Enable the noon message on this channel. The message will be sent on the ${TimezoneEnum.PARIS} timezone.`,
             name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
             shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
