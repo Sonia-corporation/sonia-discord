@@ -19,7 +19,7 @@ export class DiscordMessageCommandFeatureNoonEnabled
 
   public execute(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    value?: Readonly<string | null | undefined>
+    value: Readonly<string | null | undefined> = undefined
   ): Promise<IDiscordCommandFlagSuccess> {
     const shouldEnable: boolean = toBoolean(value, true);
 

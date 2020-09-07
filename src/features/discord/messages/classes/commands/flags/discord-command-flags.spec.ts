@@ -2410,7 +2410,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(actionMock).toHaveBeenCalledTimes(1);
-          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage, undefined);
         });
 
         it(`should log about successfully handled the given flags`, async (): Promise<
@@ -2551,7 +2551,7 @@ describe(`DiscordCommandFlags`, (): void => {
             discordCommandFlagSuccess,
           ]);
           expect(actionMock).toHaveBeenCalledTimes(2);
-          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage, `true`);
         });
 
         it(`should log about successfully handled the given flags`, async (): Promise<
@@ -2695,7 +2695,7 @@ describe(`DiscordCommandFlags`, (): void => {
             discordCommandFlagSuccess,
           ]);
           expect(actionMock).toHaveBeenCalledTimes(2);
-          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage, undefined);
         });
 
         it(`should log about successfully handled the given shortcut flags`, async (): Promise<
@@ -2885,7 +2885,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual(discordCommandFlagSuccess);
           expect(actionMock).toHaveBeenCalledTimes(1);
-          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage, undefined);
         });
       });
     });

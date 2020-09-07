@@ -1,11 +1,10 @@
-import { Guild, Message, TextChannel } from "discord.js";
+import { Message } from "discord.js";
 import { createMock } from "ts-auto-mock";
 import { FirebaseGuildsStoreQuery } from "../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query";
 import { ILoggerLog } from "../../../../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../../../../logger/services/logger.service";
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
 import { DiscordMessageCommandFeatureNoonEnabled } from "./discord-message-command-feature-noon-enabled";
-import _ = require("lodash");
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 
@@ -42,7 +41,6 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         anyDiscordMessage = createMock<IAnyDiscordMessage>({
           guild: null,
           id: `dummy-id`,
-          valueOf: _.stubObject(),
         });
       });
 
@@ -55,7 +53,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
 
         expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
-          context: `DiscordMessageCommandFeatureNoonEnabledService`,
+          context: `DiscordMessageCommandFeatureNoonEnabled`,
           hasExtendedContext: true,
           message: `context-[dummy-id] text-could not get the guild from the message`,
         } as ILoggerLog);
@@ -73,13 +71,11 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
     describe(`when the given Discord message guild is valid`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage = createMock<Message>({
-          channel: createMock<TextChannel>(),
-          guild: createMock<Guild>({
+          channel: {},
+          guild: {
             id: `dummy-guild-id`,
-            valueOf: _.stubObject(),
-          }),
+          },
           id: `dummy-id`,
-          valueOf: _.stubObject(),
         });
       });
 
@@ -89,7 +85,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         expect.assertions(3);
 
         await expect(service.isEnabled(anyDiscordMessage)).rejects.toThrow(
-          new Error(`Could not find the guild dummy-id in Firebase`)
+          new Error(`Could not find the guild dummy-guild-id in Firebase`)
         );
 
         expect(firebaseGuildsStoreQueryGetEntitySpy).toHaveBeenCalledTimes(1);
@@ -109,12 +105,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           expect.assertions(3);
 
           await expect(service.isEnabled(anyDiscordMessage)).rejects.toThrow(
-            new Error(`Could not find the guild dummy-id in Firebase`)
+            new Error(`Could not find the guild dummy-guild-id in Firebase`)
           );
 
           expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
-            context: `DiscordMessageCommandFeatureNoonEnabledService`,
+            context: `DiscordMessageCommandFeatureNoonEnabled`,
             hasExtendedContext: true,
             message: `context-[dummy-id] text-could not find the guild value-dummy-guild-id in Firebase`,
           } as ILoggerLog);
@@ -124,7 +120,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           expect.assertions(1);
 
           await expect(service.isEnabled(anyDiscordMessage)).rejects.toThrow(
-            new Error(`Could not find the guild dummy-id in Firebase`)
+            new Error(`Could not find the guild dummy-guild-id in Firebase`)
           );
         });
       });
