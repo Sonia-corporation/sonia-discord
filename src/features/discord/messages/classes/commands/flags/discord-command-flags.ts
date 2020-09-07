@@ -1,12 +1,17 @@
 import _ from "lodash";
 import { getRandomBoolean } from "../../../../../../functions/randoms/get-random-boolean";
+import { ChalkService } from "../../../../../logger/services/chalk/chalk.service";
+import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { DiscordCommandFlagErrorTitleEnum } from "../../../enums/commands/flags/discord-command-flag-error-title.enum";
 import { discordCommandGetFlagName } from "../../../functions/commands/flags/discord-command-get-flag-name";
 import { discordCommandIsMessageFlag } from "../../../functions/commands/flags/discord-command-is-message-flag";
 import { discordCommandRemoveFlagPrefix } from "../../../functions/commands/flags/discord-command-remove-flag-prefix";
+import { discordCommandSplitMessageFlags } from "../../../functions/commands/flags/discord-command-split-message-flags";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { IDiscordCommandFlags } from "../../../interfaces/commands/flags/discord-command-flags";
+import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
+import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandFirstArgument } from "../arguments/discord-command-first-argument";
@@ -15,6 +20,7 @@ import { DiscordCommandFlag } from "./discord-command-flag";
 export class DiscordCommandFlags<T extends string> {
   private _command: DiscordCommandFirstArgument<string>;
   private _flags: DiscordCommandFlag<T>[] = [];
+  private readonly _className = `DiscordCommandFlags`;
 
   /**
    * @param {Readonly<string>} command Default values
@@ -120,23 +126,119 @@ export class DiscordCommandFlags<T extends string> {
    * getErrors('--enabled=wrong-value')
    * getErrors('-e')
    *
-   * @param {Readonly<string>} message A partial message containing only a string with flags
+   * @param {Readonly<string>} messageFlags A partial message containing only a string with flags
    *
    * @return {IDiscordCommandFlagsErrors | null} A list of errors or null
    */
   public getErrors(
-    message: Readonly<string>
+    messageFlags: Readonly<string>
   ): IDiscordCommandFlagsErrors | null | never {
-    if (_.isEmpty(message)) {
+    if (_.isEmpty(messageFlags)) {
       throw new Error(`The message should not be empty`);
     }
 
-    const splittedMessageFlags = this._splitMessageFlags(message);
+    const splittedMessageFlags: IDiscordMessageFlag[] = discordCommandSplitMessageFlags(
+      messageFlags
+    );
     const flagsErrors: IDiscordCommandFlagsErrors = this._getFlagsErrors(
       splittedMessageFlags
     );
 
     return _.isEmpty(flagsErrors) ? null : flagsErrors;
+  }
+
+  public executeAll(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    messageFlags: Readonly<string>
+  ): Promise<IDiscordMessageResponse> {
+    LoggerService.getInstance().debug({
+      context: this._className,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        anyDiscordMessage.id,
+        `handling all flags...`
+      ),
+    });
+
+    const discordMessageFlags: IDiscordMessageFlag[] = discordCommandSplitMessageFlags(
+      messageFlags
+    );
+
+    return Promise.all(
+      _.map(
+        discordMessageFlags,
+        (discordMessageFlag: Readonly<IDiscordMessageFlag>): Promise<unknown> =>
+          this.execute(anyDiscordMessage, discordMessageFlag)
+      )
+    ).then(
+      (): Promise<IDiscordMessageResponse> => {
+        LoggerService.getInstance().success({
+          context: this._className,
+          hasExtendedContext: true,
+          message: LoggerService.getInstance().getSnowflakeContext(
+            anyDiscordMessage.id,
+            `all flags handled`
+          ),
+        });
+
+        return Promise.resolve({
+          response: `No options for noon feature for now. Work in progress.`,
+        });
+      }
+    );
+  }
+
+  /**
+   * @description
+   * Execute the action related to this flag
+   *
+   * @param {Readonly<IAnyDiscordMessage>} anyDiscordMessage The original Discord message
+   * @param {Readonly<IDiscordMessageFlag>} messageFlag A message flag
+   *
+   * @return {Promise<unknown>}
+   */
+  public execute(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    messageFlag: Readonly<IDiscordMessageFlag>
+  ): Promise<unknown | never> {
+    LoggerService.getInstance().debug({
+      context: this._className,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        anyDiscordMessage.id,
+        `handling ${ChalkService.getInstance().value(
+          discordCommandGetFlagName(messageFlag)
+        )} flag...`
+      ),
+    });
+
+    if (discordCommandIsMessageFlag(messageFlag)) {
+      const flag:
+        | DiscordCommandFlag<T>
+        | undefined = this._getFlagFromMessageFlag(messageFlag);
+
+      if (this._isFlag(flag)) {
+        return flag.executeAction(anyDiscordMessage);
+      }
+
+      return Promise.reject(
+        new Error(`The flag does not exists. Could not perform the execution`)
+      );
+    }
+
+    const shortcutFlag:
+      | DiscordCommandFlag<T>
+      | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
+
+    if (this._isFlag(shortcutFlag)) {
+      return shortcutFlag.executeAction(anyDiscordMessage);
+    }
+
+    return Promise.reject(
+      new Error(
+        `The shortcut flag does not exists. Could not perform the execution`
+      )
+    );
   }
 
   private _getFlagsErrors(
@@ -179,11 +281,11 @@ export class DiscordCommandFlags<T extends string> {
       return this._getUnknownFlagError(messageFlag);
     }
 
-    const flag:
+    const shortcutFlag:
       | DiscordCommandFlag<T>
       | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
 
-    if (this._isFlag(flag)) {
+    if (this._isFlag(shortcutFlag)) {
       return null;
     }
 
@@ -241,9 +343,5 @@ export class DiscordCommandFlags<T extends string> {
       isUnknown: true,
       name: DiscordCommandFlagErrorTitleEnum.UNKNOWN_FLAG,
     };
-  }
-
-  private _splitMessageFlags(message: Readonly<string>): string[] {
-    return _.split(message, ` `);
   }
 }

@@ -1,5 +1,6 @@
 import _ from "lodash";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
+import { IDiscordMessageNormalFlag } from "../../../types/commands/flags/discord-message-normal-flag";
 
 /**
  * @description
@@ -20,6 +21,6 @@ import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-messa
  */
 export function discordCommandIsMessageFlag(
   messageFlag: Readonly<IDiscordMessageFlag>
-): boolean {
+): messageFlag is IDiscordMessageNormalFlag {
   return _.startsWith(messageFlag, `--`);
 }

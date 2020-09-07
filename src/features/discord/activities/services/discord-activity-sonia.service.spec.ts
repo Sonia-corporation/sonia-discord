@@ -627,11 +627,11 @@ describe(`DiscordActivitySoniaService`, (): void => {
       setPresenceMock = jest
         .fn<Promise<Presence>, unknown[]>()
         .mockRejectedValue(new Error(`setPresence: error`));
-      presenceActivity = {
+      presenceActivity = createMock<IDiscordPresenceActivity>({
         name: DiscordActivityNameEnum.APOLLO,
         type: `PLAYING`,
         url: `dummy-url`,
-      };
+      });
       // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
       client = createMock<Client>({
         user: ({

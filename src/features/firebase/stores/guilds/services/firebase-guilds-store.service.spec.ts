@@ -2,8 +2,8 @@ import { Subject } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../core/services/core-event.service";
-import { IFirebaseGuild } from "../../../types/firebase-guild";
-import { FirebaseGuildsService } from "../../../services/firebase-guilds.service";
+import { IFirebaseGuild } from "../../../types/guilds/firebase-guild";
+import { FirebaseGuildsService } from "../../../services/guilds/firebase-guilds.service";
 import { FirebaseGuildsStore } from "../firebase-guilds-store";
 import { FirebaseGuildsStoreService } from "./firebase-guilds-store.service";
 

@@ -4,7 +4,7 @@ import { of, throwError } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
-import { FirebaseGuildsService } from "../../../firebase/services/firebase-guilds.service";
+import { FirebaseGuildsService } from "../../../firebase/services/guilds/firebase-guilds.service";
 import { ILoggerLog } from "../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";

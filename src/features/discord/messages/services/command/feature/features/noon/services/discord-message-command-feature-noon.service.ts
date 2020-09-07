@@ -4,6 +4,7 @@ import { ServiceNameEnum } from "../../../../../../../../../enums/service-name.e
 import { IDiscordMessageResponse } from "../../../../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
 import { DiscordMessageCommandFeatureNameEnum } from "../../../enums/discord-message-command-feature-name.enum";
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../constants/discord-message-command-feature-noon-flags";
 import { IDiscordMessageCommandFeatureNameNoon } from "../types/discord-message-command-feature-name-noon";
 
 export class DiscordMessageCommandFeatureNoonService extends AbstractService {
@@ -30,11 +31,26 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
     );
   }
 
+  /**
+   * @description
+   * This method should be called once the message command was validated entirely
+   * Including checking that all flags were valid
+   *
+   * It will trigger the action on flags
+   * Then return a response
+   *
+   * @param {Readonly<IAnyDiscordMessage>} anyDiscordMessage Original message
+   * @param {Readonly<string>} messageFlags A partial message containing only a string with flags
+   *
+   * @return {Promise<IDiscordMessageResponse>} The embed message to respond
+   */
   public getMessageResponse(
-    _anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    messageFlags: Readonly<string>
   ): Promise<IDiscordMessageResponse> {
-    return Promise.resolve({
-      response: `No options for noon feature for now. Work in progress.`,
-    });
+    return DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.executeAll(
+      anyDiscordMessage,
+      messageFlags
+    );
   }
 }

@@ -1,14 +1,25 @@
 import { createMock } from "ts-auto-mock";
+import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
+import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON } from "../../../services/command/feature/constants/discord-message-command-feature-name-noon";
 import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
+import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
+import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
 import { DiscordCommandFlags } from "./discord-command-flags";
 
+jest.mock(`../../../../../logger/services/chalk/chalk.service`);
+
 describe(`DiscordCommandFlags`, (): void => {
   let discordCommandFlags: DiscordCommandFlags<DiscordMessageCommandFeatureNoonFlagEnum>;
+  let loggerService: LoggerService;
+
+  beforeEach((): void => {
+    loggerService = LoggerService.getInstance();
+  });
 
   describe(`constructor()`, (): void => {
     describe(`when the class is created with a command`, (): void => {
@@ -757,6 +768,7 @@ describe(`DiscordCommandFlags`, (): void => {
           new DiscordCommandBooleanFlag<
             DiscordMessageCommandFeatureNoonFlagEnum
           >({
+            action: (): Promise<unknown> => Promise.resolve(`dummy`),
             description: ``,
             name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
             shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
@@ -2099,6 +2111,770 @@ describe(`DiscordCommandFlags`, (): void => {
               name: `Unknown flag`,
             },
           ] as IDiscordCommandFlagsErrors);
+        });
+      });
+    });
+  });
+
+  describe(`executeAll()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+    let messageFlags: string;
+
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let loggerServiceSuccessSpy: jest.SpyInstance;
+    let actionMock: jest.Mock;
+
+    beforeEach((): void => {
+      actionMock = jest.fn().mockResolvedValue(`dummy`);
+      discordCommandFlags = new DiscordCommandFlags<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >({
+        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        flags: [
+          new DiscordCommandBooleanFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum
+          >({
+            action: actionMock,
+            description: ``,
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+            shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
+          }),
+        ],
+      });
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
+        id: `dummy-id`,
+      } as unknown) as IAnyDiscordMessage);
+      messageFlags = `--enabled=true`;
+
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
+      loggerServiceSuccessSpy = jest
+        .spyOn(loggerService, `success`)
+        .mockImplementation();
+    });
+
+    it(`should log about handling the given flags`, async (): Promise<void> => {
+      expect.assertions(2);
+
+      await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
+
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+      expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+        context: `DiscordCommandFlags`,
+        hasExtendedContext: true,
+        message: `context-[dummy-id] text-handling all flags...`,
+      } as ILoggerLog);
+    });
+
+    describe(`when the given message flags contains a flag with a value`, (): void => {
+      beforeEach((): void => {
+        messageFlags = `--enabled=true`;
+      });
+
+      describe(`when the given message flags contains an unknown flag with a value`, (): void => {
+        beforeEach((): void => {
+          messageFlags = `--dummy=true`;
+        });
+
+        it(`should log about handling the given flag`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-handling value-dummy flag...`,
+          } as ILoggerLog);
+        });
+
+        it(`should throw an error`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The flag does not exists. Could not perform the execution`
+            )
+          );
+        });
+
+        it(`should not execute the flag action`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(actionMock).not.toHaveBeenCalled();
+        });
+
+        it(`should not log about successfully handled the given flags`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(loggerServiceSuccessSpy).not.toHaveBeenCalled();
+        });
+      });
+
+      describe(`when the given message flags contains a valid flag with a value`, (): void => {
+        beforeEach((): void => {
+          messageFlags = `--enabled=true`;
+        });
+
+        it(`should log about handling the given flag`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-handling value-enabled flag...`,
+          } as ILoggerLog);
+        });
+
+        it(`should execute the flag action`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          const result = await discordCommandFlags.executeAll(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result).toStrictEqual({
+            response: `No options for noon feature for now. Work in progress.`,
+          });
+          expect(actionMock).toHaveBeenCalledTimes(1);
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
+        });
+
+        it(`should log about successfully handled the given flags`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          const result = await discordCommandFlags.executeAll(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result).toStrictEqual({
+            response: `No options for noon feature for now. Work in progress.`,
+          });
+          expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-all flags handled`,
+          } as ILoggerLog);
+        });
+      });
+    });
+
+    describe(`when the given message flags contains a shortcut flag with a value`, (): void => {
+      beforeEach((): void => {
+        messageFlags = `-e`;
+      });
+
+      describe(`when the given message flags contains an unknown shortcut flag with a value`, (): void => {
+        beforeEach((): void => {
+          messageFlags = `-d`;
+        });
+
+        it(`should log about handling the given shortcut flag`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The shortcut flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-handling value-d flag...`,
+          } as ILoggerLog);
+        });
+
+        it(`should throw an error`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The shortcut flag does not exists. Could not perform the execution`
+            )
+          );
+        });
+
+        it(`should not execute the flag action`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The shortcut flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(actionMock).not.toHaveBeenCalled();
+        });
+
+        it(`should not log about successfully handled the given shortcut flag`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The shortcut flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(loggerServiceSuccessSpy).not.toHaveBeenCalled();
+        });
+      });
+
+      describe(`when the given message flags contains a valid shortcut flag with a value`, (): void => {
+        beforeEach((): void => {
+          messageFlags = `-e`;
+        });
+
+        it(`should log about handling the given shortcut flag`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-handling value-e flag...`,
+          } as ILoggerLog);
+        });
+
+        it(`should execute the flag action`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          const result = await discordCommandFlags.executeAll(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result).toStrictEqual({
+            response: `No options for noon feature for now. Work in progress.`,
+          });
+          expect(actionMock).toHaveBeenCalledTimes(1);
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
+        });
+
+        it(`should log about successfully handled the given flags`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          const result = await discordCommandFlags.executeAll(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result).toStrictEqual({
+            response: `No options for noon feature for now. Work in progress.`,
+          });
+          expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-all flags handled`,
+          } as ILoggerLog);
+        });
+      });
+    });
+
+    describe(`when the given message flags contains two flags with a value`, (): void => {
+      beforeEach((): void => {
+        messageFlags = `--enabled=true --enabled=true`;
+      });
+
+      describe(`when the given message flags contains two unknown flags with a value`, (): void => {
+        beforeEach((): void => {
+          messageFlags = `--dummy=true --dummy=true`;
+        });
+
+        it(`should log about handling the given flags`, async (): Promise<
+          void
+        > => {
+          expect.assertions(4);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-handling value-dummy flag...`,
+          } as ILoggerLog);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-handling value-dummy flag...`,
+          } as ILoggerLog);
+        });
+
+        it(`should throw an error`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The flag does not exists. Could not perform the execution`
+            )
+          );
+        });
+
+        it(`should not execute the flag action`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(actionMock).not.toHaveBeenCalled();
+        });
+
+        it(`should not log about successfully handled the given flags`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(loggerServiceSuccessSpy).not.toHaveBeenCalled();
+        });
+      });
+
+      describe(`when the given message flags contains two valid flags with a value`, (): void => {
+        beforeEach((): void => {
+          messageFlags = `--enabled=true --enabled=true`;
+        });
+
+        it(`should log about handling the given flags`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-handling value-enabled flag...`,
+          } as ILoggerLog);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-handling value-enabled flag...`,
+          } as ILoggerLog);
+        });
+
+        it(`should execute the flags action`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          const result = await discordCommandFlags.executeAll(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result).toStrictEqual({
+            response: `No options for noon feature for now. Work in progress.`,
+          });
+          expect(actionMock).toHaveBeenCalledTimes(2);
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
+        });
+
+        it(`should log about successfully handled the given flags`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          const result = await discordCommandFlags.executeAll(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result).toStrictEqual({
+            response: `No options for noon feature for now. Work in progress.`,
+          });
+          expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-all flags handled`,
+          } as ILoggerLog);
+        });
+      });
+    });
+
+    describe(`when the given message flags contains two shortcut flags with a value`, (): void => {
+      beforeEach((): void => {
+        messageFlags = `-e -e`;
+      });
+
+      describe(`when the given message flags contains two unknown shortcuts flag with a value`, (): void => {
+        beforeEach((): void => {
+          messageFlags = `-d -d`;
+        });
+
+        it(`should log about handling the given shortcut flag`, async (): Promise<
+          void
+        > => {
+          expect.assertions(4);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The shortcut flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-handling value-d flag...`,
+          } as ILoggerLog);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-handling value-d flag...`,
+          } as ILoggerLog);
+        });
+
+        it(`should throw an error`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The shortcut flag does not exists. Could not perform the execution`
+            )
+          );
+        });
+
+        it(`should not execute the flag action`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The shortcut flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(actionMock).not.toHaveBeenCalled();
+        });
+
+        it(`should not log about successfully handled the given shortcut flags`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          await expect(
+            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
+          ).rejects.toThrow(
+            new Error(
+              `The shortcut flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(loggerServiceSuccessSpy).not.toHaveBeenCalled();
+        });
+      });
+
+      describe(`when the given message flags contains two valid shortcuts flag with a value`, (): void => {
+        beforeEach((): void => {
+          messageFlags = `-e -e`;
+        });
+
+        it(`should log about handling the given shortcut flags`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-handling value-e flag...`,
+          } as ILoggerLog);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-handling value-e flag...`,
+          } as ILoggerLog);
+        });
+
+        it(`should execute the flag actions`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          const result = await discordCommandFlags.executeAll(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result).toStrictEqual({
+            response: `No options for noon feature for now. Work in progress.`,
+          });
+          expect(actionMock).toHaveBeenCalledTimes(2);
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
+        });
+
+        it(`should log about successfully handled the given shortcut flags`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          const result = await discordCommandFlags.executeAll(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result).toStrictEqual({
+            response: `No options for noon feature for now. Work in progress.`,
+          });
+          expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
+            context: `DiscordCommandFlags`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-all flags handled`,
+          } as ILoggerLog);
+        });
+      });
+    });
+  });
+
+  describe(`execute()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+    let messageFlag: IDiscordMessageFlag;
+
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let actionMock: jest.Mock;
+
+    beforeEach((): void => {
+      actionMock = jest.fn().mockResolvedValue(`dummy`);
+      discordCommandFlags = new DiscordCommandFlags<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >({
+        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        flags: [
+          new DiscordCommandBooleanFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum
+          >({
+            action: actionMock,
+            description: ``,
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+            shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
+          }),
+        ],
+      });
+      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
+      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
+        id: `dummy-id`,
+      } as unknown) as IAnyDiscordMessage);
+      messageFlag = `--enabled=true`;
+
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
+    });
+
+    it(`should log about handling the given flag`, async (): Promise<void> => {
+      expect.assertions(2);
+
+      await discordCommandFlags.execute(anyDiscordMessage, messageFlag);
+
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+        context: `DiscordCommandFlags`,
+        hasExtendedContext: true,
+        message: `context-[dummy-id] text-handling value-enabled flag...`,
+      } as ILoggerLog);
+    });
+
+    describe(`when the given message flag is a flag with a value`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `--enabled=true`;
+      });
+
+      describe(`when the given message flag is an unknown flag`, (): void => {
+        beforeEach((): void => {
+          messageFlag = `--dummy=true`;
+        });
+
+        it(`should throw an error`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          await expect(
+            discordCommandFlags.execute(anyDiscordMessage, messageFlag)
+          ).rejects.toThrow(
+            new Error(
+              `The flag does not exists. Could not perform the execution`
+            )
+          );
+        });
+
+        it(`should not execute the flag action`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await expect(
+            discordCommandFlags.execute(anyDiscordMessage, messageFlag)
+          ).rejects.toThrow(
+            new Error(
+              `The flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(actionMock).not.toHaveBeenCalled();
+        });
+      });
+
+      describe(`when the given message flag is a valid flag`, (): void => {
+        beforeEach((): void => {
+          messageFlag = `--enabled=true`;
+        });
+
+        it(`should execute the flag action`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          const result = await discordCommandFlags.execute(
+            anyDiscordMessage,
+            messageFlag
+          );
+
+          expect(result).toStrictEqual(`dummy`);
+          expect(actionMock).toHaveBeenCalledTimes(1);
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
+        });
+      });
+    });
+
+    describe(`when the given message flag is a shortcut flag`, (): void => {
+      beforeEach((): void => {
+        messageFlag = `-e`;
+      });
+
+      describe(`when the given message shortcut flag is an unknown flag`, (): void => {
+        beforeEach((): void => {
+          messageFlag = `-d`;
+        });
+
+        it(`should throw an error`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          await expect(
+            discordCommandFlags.execute(anyDiscordMessage, messageFlag)
+          ).rejects.toThrow(
+            new Error(
+              `The shortcut flag does not exists. Could not perform the execution`
+            )
+          );
+        });
+
+        it(`should not execute the flag action`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await expect(
+            discordCommandFlags.execute(anyDiscordMessage, messageFlag)
+          ).rejects.toThrow(
+            new Error(
+              `The shortcut flag does not exists. Could not perform the execution`
+            )
+          );
+
+          expect(actionMock).not.toHaveBeenCalled();
+        });
+      });
+
+      describe(`when the given message shortcut flag is a valid flag`, (): void => {
+        beforeEach((): void => {
+          messageFlag = `-e`;
+        });
+
+        it(`should execute the flag action`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          const result = await discordCommandFlags.execute(
+            anyDiscordMessage,
+            messageFlag
+          );
+
+          expect(result).toStrictEqual(`dummy`);
+          expect(actionMock).toHaveBeenCalledTimes(1);
+          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage);
         });
       });
     });

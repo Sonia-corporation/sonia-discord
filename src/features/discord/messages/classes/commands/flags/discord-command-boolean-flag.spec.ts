@@ -3,6 +3,7 @@ import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-comm
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
+import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
 
@@ -10,6 +11,25 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
   let discordCommandFlag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
 
   describe(`constructor()`, (): void => {
+    describe(`when the class is created with an action`, (): void => {
+      it(`should update the action inside the class`, (): void => {
+        expect.assertions(1);
+        const action = (): Promise<unknown> => Promise.resolve();
+
+        discordCommandFlag = new DiscordCommandBooleanFlag<
+          DiscordMessageCommandFeatureNoonFlagEnum
+        >(
+          createMock<
+            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          >({
+            action,
+          })
+        );
+
+        expect(discordCommandFlag.getAction()).toStrictEqual(action);
+      });
+    });
+
     describe(`when the class is created with a description`, (): void => {
       it(`should update the description inside the class`, (): void => {
         expect.assertions(1);
@@ -88,6 +108,49 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
           ]);
         });
       });
+    });
+  });
+
+  describe(`getAction()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlag = new DiscordCommandBooleanFlag<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >(
+        createMock<
+          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+        >()
+      );
+    });
+
+    it(`should return the action`, (): void => {
+      expect.assertions(1);
+      const action = (): Promise<unknown> => Promise.resolve();
+      discordCommandFlag.setAction(action);
+
+      const result = discordCommandFlag.getAction();
+
+      expect(result).toStrictEqual(action);
+    });
+  });
+
+  describe(`setAction()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlag = new DiscordCommandBooleanFlag<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >(
+        createMock<
+          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+        >()
+      );
+    });
+
+    it(`should update the action with the given one`, (): void => {
+      expect.assertions(1);
+      const action = (): Promise<unknown> => Promise.resolve();
+
+      discordCommandFlag.setAction(action);
+
+      expect(discordCommandFlag.getAction()).toStrictEqual(action);
     });
   });
 
@@ -692,6 +755,31 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         expect(result).toBeNull();
       });
+    });
+  });
+
+  describe(`executeAction()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+
+    beforeEach((): void => {
+      discordCommandFlag = new DiscordCommandBooleanFlag<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >(
+        createMock<
+          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+        >()
+      );
+      anyDiscordMessage = createMock<IAnyDiscordMessage>();
+    });
+
+    it(`should execute the action`, async (): Promise<void> => {
+      expect.assertions(1);
+      const action = (): Promise<unknown> => Promise.resolve(`dummy`);
+      discordCommandFlag.setAction(action);
+
+      const result = await discordCommandFlag.executeAction(anyDiscordMessage);
+
+      expect(result).toStrictEqual(`dummy`);
     });
   });
 });

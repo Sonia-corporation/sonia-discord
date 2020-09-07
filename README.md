@@ -92,6 +92,7 @@ __Commands:__
 __Features (first and only argument):__
 
 - noon (configure the message sent at noon)
+  - enabled (or e): enable the noon message on the channel
 
 This is a special command used to configure Sonia only for the current Guild or channel.  
 There are multiples option to customize Sonia (some will change her behavior on the whole Guild and other only for the current channel).
