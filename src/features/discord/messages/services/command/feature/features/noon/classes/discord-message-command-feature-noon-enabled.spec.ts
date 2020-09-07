@@ -1,67 +1,22 @@
 import { Guild, Message, TextChannel } from "discord.js";
 import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../../../../../core/services/core-event.service";
 import { FirebaseGuildsStoreQuery } from "../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query";
 import { ILoggerLog } from "../../../../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../../../../logger/services/logger.service";
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
-import { DiscordMessageCommandFeatureNoonEnabledService } from "./discord-message-command-feature-noon-enabled.service";
+import { DiscordMessageCommandFeatureNoonEnabled } from "./discord-message-command-feature-noon-enabled";
 import _ = require("lodash");
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 
-describe(`DiscordMessageCommandFeatureNoonEnabledService`, (): void => {
-  let service: DiscordMessageCommandFeatureNoonEnabledService;
-  let coreEventService: CoreEventService;
+describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
+  let service: DiscordMessageCommandFeatureNoonEnabled;
   let loggerService: LoggerService;
   let firebaseGuildsStoreQuery: FirebaseGuildsStoreQuery;
 
   beforeEach((): void => {
-    coreEventService = CoreEventService.getInstance();
     loggerService = LoggerService.getInstance();
     firebaseGuildsStoreQuery = FirebaseGuildsStoreQuery.getInstance();
-  });
-
-  describe(`getInstance()`, (): void => {
-    it(`should create a DiscordMessageCommandFeatureNoonEnabled service`, (): void => {
-      expect.assertions(1);
-
-      service = DiscordMessageCommandFeatureNoonEnabledService.getInstance();
-
-      expect(service).toStrictEqual(
-        expect.any(DiscordMessageCommandFeatureNoonEnabledService)
-      );
-    });
-
-    it(`should return the created DiscordMessageCommandFeatureNoonEnabled service`, (): void => {
-      expect.assertions(1);
-
-      const result = DiscordMessageCommandFeatureNoonEnabledService.getInstance();
-
-      expect(result).toStrictEqual(service);
-    });
-  });
-
-  describe(`constructor()`, (): void => {
-    let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
-
-    beforeEach((): void => {
-      coreEventServiceNotifyServiceCreatedSpy = jest
-        .spyOn(coreEventService, `notifyServiceCreated`)
-        .mockImplementation();
-    });
-
-    it(`should notify the DiscordMessageCommandFeatureNoonEnabled service creation`, (): void => {
-      expect.assertions(2);
-
-      service = new DiscordMessageCommandFeatureNoonEnabledService();
-
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SERVICE
-      );
-    });
   });
 
   describe(`isEnabled()`, (): void => {
@@ -71,7 +26,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabledService`, (): void => {
     let firebaseGuildsStoreQueryGetEntitySpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      service = new DiscordMessageCommandFeatureNoonEnabledService();
+      service = new DiscordMessageCommandFeatureNoonEnabled();
       anyDiscordMessage = createMock<IAnyDiscordMessage>();
 
       loggerServiceErrorSpy = jest

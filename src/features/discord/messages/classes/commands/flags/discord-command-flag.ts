@@ -5,7 +5,7 @@ import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/dis
 import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
-import { DiscordCommandFlagActionService } from "./discord-command-flag-action-service";
+import { DiscordCommandFlagAction } from "./discord-command-flag-action";
 
 /**
  * @description
@@ -14,7 +14,7 @@ import { DiscordCommandFlagActionService } from "./discord-command-flag-action-s
  */
 export abstract class DiscordCommandFlag<T extends string> {
   protected abstract _type: DiscordCommandFlagTypeEnum;
-  protected _action: DiscordCommandFlagActionService;
+  protected _action: DiscordCommandFlagAction;
   protected _description: string;
   protected _name: T;
   protected _shortcuts: T[] | undefined;
@@ -34,11 +34,11 @@ export abstract class DiscordCommandFlag<T extends string> {
     this._shortcuts = shortcuts;
   }
 
-  public getAction(): DiscordCommandFlagActionService {
+  public getAction(): DiscordCommandFlagAction {
     return this._action;
   }
 
-  public setAction(action: DiscordCommandFlagActionService): void {
+  public setAction(action: DiscordCommandFlagAction): void {
     this._action = action;
   }
 

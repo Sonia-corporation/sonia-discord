@@ -10,7 +10,7 @@ import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
-import { DiscordCommandFlagActionService } from "./discord-command-flag-action-service";
+import { DiscordCommandFlagAction } from "./discord-command-flag-action";
 import { DiscordCommandFlags } from "./discord-command-flags";
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
@@ -770,7 +770,7 @@ describe(`DiscordCommandFlags`, (): void => {
           new DiscordCommandBooleanFlag<
             DiscordMessageCommandFeatureNoonFlagEnum
           >({
-            action: createMock<DiscordCommandFlagActionService>({
+            action: createMock<DiscordCommandFlagAction>({
               execute: (): Promise<IDiscordCommandFlagSuccess> =>
                 Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
             }),
@@ -2143,7 +2143,7 @@ describe(`DiscordCommandFlags`, (): void => {
           new DiscordCommandBooleanFlag<
             DiscordMessageCommandFeatureNoonFlagEnum
           >({
-            action: createMock<DiscordCommandFlagActionService>({
+            action: createMock<DiscordCommandFlagAction>({
               execute: actionMock,
             }),
             description: ``,
@@ -2744,7 +2744,7 @@ describe(`DiscordCommandFlags`, (): void => {
           new DiscordCommandBooleanFlag<
             DiscordMessageCommandFeatureNoonFlagEnum
           >({
-            action: createMock<DiscordCommandFlagActionService>({
+            action: createMock<DiscordCommandFlagAction>({
               execute: actionMock,
             }),
             description: ``,

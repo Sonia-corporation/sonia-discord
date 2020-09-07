@@ -1,34 +1,21 @@
 import { Snowflake } from "discord.js";
 import _ from "lodash";
-import { AbstractService } from "../../../../../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../../../../../enums/service-name.enum";
+import { ClassNameEnum } from "../../../../../../../../../enums/class-name.enum";
 import { toBoolean } from "../../../../../../../../../functions/formatters/to-boolean";
 import { FirebaseGuildsStoreQuery } from "../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query";
 import { IFirebaseGuildChannel } from "../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel";
 import { IFirebaseGuild } from "../../../../../../../../firebase/types/guilds/firebase-guild";
 import { ChalkService } from "../../../../../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../../../../../logger/services/logger.service";
-import { DiscordCommandFlagActionService } from "../../../../../../classes/commands/flags/discord-command-flag-action-service";
+import { DiscordCommandFlagAction } from "../../../../../../classes/commands/flags/discord-command-flag-action";
 import { DiscordCommandFlagSuccessTitleEnum } from "../../../../../../enums/commands/flags/discord-command-flag-success-title.enum";
 import { IDiscordCommandFlagSuccess } from "../../../../../../interfaces/commands/flags/discord-command-flag-success";
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
 
-export class DiscordMessageCommandFeatureNoonEnabledService
-  extends AbstractService
-  implements DiscordCommandFlagActionService {
-  private static _instance: DiscordMessageCommandFeatureNoonEnabledService;
-
-  public static getInstance(): DiscordMessageCommandFeatureNoonEnabledService {
-    if (_.isNil(DiscordMessageCommandFeatureNoonEnabledService._instance)) {
-      DiscordMessageCommandFeatureNoonEnabledService._instance = new DiscordMessageCommandFeatureNoonEnabledService();
-    }
-
-    return DiscordMessageCommandFeatureNoonEnabledService._instance;
-  }
-
-  public constructor() {
-    super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SERVICE);
-  }
+export class DiscordMessageCommandFeatureNoonEnabled
+  implements DiscordCommandFlagAction {
+  private readonly _serviceName =
+    ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED;
 
   public execute(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,

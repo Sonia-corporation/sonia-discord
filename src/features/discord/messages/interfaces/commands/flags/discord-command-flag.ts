@@ -1,7 +1,7 @@
-import { DiscordCommandFlagActionService } from "../../../classes/commands/flags/discord-command-flag-action-service";
+import { DiscordCommandFlagAction } from "../../../classes/commands/flags/discord-command-flag-action";
 
 export interface IDiscordCommandFlag<T = string> {
-  action: DiscordCommandFlagActionService;
+  action: DiscordCommandFlagAction;
   description: string;
   name: T;
   shortcuts?: T[] | undefined;
