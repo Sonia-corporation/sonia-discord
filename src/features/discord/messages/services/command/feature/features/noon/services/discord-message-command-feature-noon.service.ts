@@ -59,22 +59,25 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
    *
    * @return {Promise<IDiscordMessageResponse>} The embed message to respond
    */
-  public async getMessageResponse(
+  public getMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     messageFlags: Readonly<string>
   ): Promise<IDiscordMessageResponse> {
-    const flagsSuccess: IDiscordCommandFlagsSuccess = await DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.executeAll(
+    return DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.executeAll(
       anyDiscordMessage,
       messageFlags
+    ).then(
+      (
+        flagsSuccess: Readonly<IDiscordCommandFlagsSuccess>
+      ): Promise<IDiscordMessageResponse> =>
+        Promise.resolve({
+          options: {
+            embed: this._getMessageEmbed(flagsSuccess),
+            split: true,
+          },
+          response: ``,
+        })
     );
-
-    return {
-      options: {
-        embed: this._getMessageEmbed(flagsSuccess),
-        split: true,
-      },
-      response: ``,
-    };
   }
 
   private _getMessageEmbed(
