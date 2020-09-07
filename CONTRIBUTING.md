@@ -139,6 +139,7 @@ On production the CI will provide his own environment variables.
 - `npm run commit`: create a commit by using the cz
 - `npm run create-secret-environment`: create the secret-environment.json file
 - `npm run madge:circular-dependencies-check`: check if there are some circular dependencies
+- `npm run madge:image`: create the dependencies graph (Graphviz installation required)
 
 ## Git
 
