@@ -1,47 +1,25 @@
 import _ from "lodash";
 
-export function toBoolean(isTrue: Readonly<true>): true;
 export function toBoolean(
   isTrue: Readonly<true>,
-  asFallback: Readonly<true>
+  asFallback?: Readonly<boolean>
 ): true;
-export function toBoolean(
-  isTrue: Readonly<true>,
-  asFallback: Readonly<false>
-): true;
-export function toBoolean(isTrue: Readonly<false>): false;
 export function toBoolean(
   isTrue: Readonly<false>,
-  asFallback: Readonly<true>
+  asFallback?: Readonly<boolean>
 ): false;
-export function toBoolean(
-  isTrue: Readonly<false>,
-  asFallback: Readonly<false>
-): false;
-export function toBoolean(isTrue: Readonly<"true">): true;
 export function toBoolean(
   isTrue: Readonly<"true">,
-  asFallback: Readonly<true>
+  asFallback?: Readonly<boolean>
 ): true;
 export function toBoolean(
-  isTrue: Readonly<"true">,
-  asFallback: Readonly<false>
-): true;
-export function toBoolean(isTrue: Readonly<"false">): false;
-export function toBoolean(
   isTrue: Readonly<"false">,
-  asFallback: Readonly<true>
+  asFallback?: Readonly<boolean>
 ): false;
-export function toBoolean(
-  isTrue: Readonly<"false">,
-  asFallback: Readonly<false>
-): false;
-export function toBoolean(isTrue: Readonly<string>): boolean;
 export function toBoolean(
   isTrue: Readonly<string>,
-  asFallback: Readonly<boolean>
+  asFallback?: Readonly<boolean>
 ): boolean;
-export function toBoolean(isTrue: Readonly<null>): true;
 export function toBoolean(
   isTrue: Readonly<null>,
   asFallback: Readonly<true>
@@ -50,10 +28,9 @@ export function toBoolean(
   isTrue: Readonly<null>,
   asFallback: Readonly<false>
 ): false;
-export function toBoolean(isTrue: Readonly<undefined>): true;
 export function toBoolean(
   isTrue: Readonly<undefined>,
-  asFallback: Readonly<true>
+  asFallback?: Readonly<true>
 ): true;
 export function toBoolean(
   isTrue: Readonly<undefined>,
