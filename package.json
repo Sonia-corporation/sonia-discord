@@ -124,7 +124,8 @@
     "clean:dist": "rimraf dist",
     "commit": "npm run cz",
     "create-secret-environment": "node ./scripts/create-secret-environment.js",
-    "git:push": "git push-upstream"
+    "git:push": "git push-upstream",
+    "madge:circular-dependencies-check": "madge ./src/ --circular --extensions ts,js --image ./dist/dependencies-graph.svg --warning"
   },
   "dependencies": {
     "@datorama/akita": "5.2.3",
@@ -184,6 +185,7 @@
     "jest-silent-reporter": "0.2.1",
     "jest-ts-auto-mock": "1.0.11",
     "lint-staged": "10.3.0",
+    "madge": "3.9.2",
     "majestic": "1.7.0",
     "parcel-bundler": "1.12.4",
     "prettier": "2.1.1",
