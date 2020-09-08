@@ -27,6 +27,7 @@ import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES } from "../../constants/guilds/firebase-guild-new-version-response-messages";
 import { getUpdatedFirebaseGuildLastReleaseNotesVersion } from "../../functions/guilds/get-updated-firebase-guild-last-release-notes-version";
+import { hasFirebaseGuildLastReleaseNotesVersion } from "../../functions/guilds/checks/has-firebase-guild-last-release-notes-version";
 import { IFirebaseGuild } from "../../types/guilds/firebase-guild";
 import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
 import { FirebaseGuildsService } from "./firebase-guilds.service";
@@ -369,11 +370,15 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       );
   }
 
-  private _shouldSendNewReleaseNotesFromFirebaseGuild({
-    lastReleaseNotesVersion,
-  }: Readonly<IFirebaseGuild>): boolean {
+  private _shouldSendNewReleaseNotesFromFirebaseGuild(
+    firebaseGuild: Readonly<IFirebaseGuild>
+  ): boolean {
     const appVersion: string = AppConfigService.getInstance().getVersion();
 
-    return !_.isEqual(lastReleaseNotesVersion, appVersion);
+    if (hasFirebaseGuildLastReleaseNotesVersion(firebaseGuild)) {
+      return !_.isEqual(firebaseGuild.lastReleaseNotesVersion, appVersion);
+    }
+
+    return true;
   }
 }
