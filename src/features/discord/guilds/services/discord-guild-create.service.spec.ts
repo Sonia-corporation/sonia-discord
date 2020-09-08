@@ -143,10 +143,7 @@ describe(`DiscordGuildCreateService`, (): void => {
     describe(`when the Discord client guildCreate event is triggered`, (): void => {
       beforeEach((): void => {
         discordClientServiceGetClientOnMock = jest.fn(
-          (
-            _event: string,
-            listener: (guild: Readonly<Guild>) => void
-          ): void => {
+          (_event: string, listener: (guild: Guild) => void): void => {
             listener(guild);
           }
         );

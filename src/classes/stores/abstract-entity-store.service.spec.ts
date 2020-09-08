@@ -8,7 +8,7 @@ interface IDummy {
 }
 
 class DummyService extends AbstractEntityStoreService<IDummy> {
-  public constructor(serviceName: Readonly<ServiceNameEnum>) {
+  public constructor(serviceName: ServiceNameEnum) {
     super(serviceName, createMock<IDummy>());
   }
 }

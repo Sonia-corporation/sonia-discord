@@ -3,7 +3,7 @@ import { CoreEventService } from "../../features/core/services/core-event.servic
 import { AbstractService } from "./abstract.service";
 
 class DummyService extends AbstractService {
-  public constructor(serviceName: Readonly<ServiceNameEnum>) {
+  public constructor(serviceName: ServiceNameEnum) {
     super(serviceName);
   }
 }

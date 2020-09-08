@@ -35,10 +35,7 @@ class DummyStore extends AbstractEntityStoreService<IDummyState> {
 }
 
 class DummyQuery extends AbstractQueryEntityService<DummyStore, IDummyState> {
-  public constructor(
-    serviceName: Readonly<ServiceNameEnum>,
-    dummyStore: DummyStore
-  ) {
+  public constructor(serviceName: ServiceNameEnum, dummyStore: DummyStore) {
     super(serviceName, dummyStore);
   }
 }

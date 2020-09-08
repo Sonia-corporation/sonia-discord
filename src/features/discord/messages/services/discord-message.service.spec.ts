@@ -133,7 +133,7 @@ describe(`DiscordMessageService`, (): void => {
         discordClientServiceGetClientOnMock = jest.fn(
           (
             _event: string,
-            listener: (anyDiscordMessage: Readonly<IAnyDiscordMessage>) => void
+            listener: (anyDiscordMessage: IAnyDiscordMessage) => void
           ): void => {
             listener(anyDiscordMessage);
           }
