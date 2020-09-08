@@ -1,9 +1,7 @@
 import { Snowflake } from "discord.js";
-import admin from "firebase-admin";
 import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-version.enum";
-import DocumentData = admin.firestore.DocumentData;
 
-export interface IFirebaseGuildV2 extends DocumentData {
+export interface IFirebaseGuildV2 {
   /**
    * @description
    * The Discord guild id
