@@ -50,7 +50,9 @@ export class DiscordMessageCommandFeatureNoonEnabled
           hasExtendedContext: true,
           message: LoggerService.getInstance().getSnowflakeContext(
             anyDiscordMessage.id,
-            `current state: ${ChalkService.getInstance().value(isEnabled)}`
+            `current state: ${ChalkService.getInstance().value(
+              _.isNil(isEnabled) ? `undefined` : isEnabled
+            )}`
           ),
         });
 
