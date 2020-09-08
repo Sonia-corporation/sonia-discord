@@ -712,15 +712,15 @@ describe(`FirebaseGuildsService`, (): void => {
 
   describe(`addGuild()`, (): void => {
     let guild: Guild;
-    let documentReference: DocumentReference<IFirebaseGuild>;
-    let collectionReference: CollectionReference<IFirebaseGuild>;
+    let documentReference: DocumentReference<IFirebaseGuildVFinal>;
+    let collectionReference: CollectionReference<IFirebaseGuildVFinal>;
     let writeResult: WriteResult;
 
     let getCollectionReferenceSpy: jest.SpyInstance;
     let loggerServiceDebugSpy: jest.SpyInstance;
     let loggerServiceSuccessSpy: jest.SpyInstance;
-    let docMock: jest.Mock<DocumentReference<IFirebaseGuild>, string[]>;
-    let setMock: jest.Mock<Promise<WriteResult>, IFirebaseGuildVFinal[]>;
+    let docMock: jest.Mock<DocumentReference<IFirebaseGuildVFinal>, string[]>;
+    let setMock: jest.Mock<Promise<WriteResult>, [IFirebaseGuildVFinal]>;
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
@@ -729,15 +729,17 @@ describe(`FirebaseGuildsService`, (): void => {
       });
       writeResult = createMock<WriteResult>();
       setMock = jest
-        .fn<Promise<WriteResult>, IFirebaseGuildVFinal[]>()
+        .fn<Promise<WriteResult>, [IFirebaseGuildVFinal]>()
         .mockResolvedValue(writeResult);
-      documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+      documentReference = createMock<DocumentReference<IFirebaseGuildVFinal>>({
         set: setMock,
       });
       docMock = jest
-        .fn<DocumentReference<IFirebaseGuild>, string[]>()
+        .fn<DocumentReference<IFirebaseGuildVFinal>, string[]>()
         .mockReturnValue(documentReference);
-      collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
+      collectionReference = createMock<
+        CollectionReference<IFirebaseGuildVFinal>
+      >({
         doc: docMock,
       });
 
@@ -832,15 +834,17 @@ describe(`FirebaseGuildsService`, (): void => {
       describe(`when the guild was not successfully added into Firebase`, (): void => {
         beforeEach((): void => {
           setMock.mockRejectedValue(new Error(`error`));
-          documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+          documentReference = createMock<
+            DocumentReference<IFirebaseGuildVFinal>
+          >({
             set: setMock,
           });
           docMock.mockReturnValue(documentReference);
-          collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
-            {
-              doc: docMock,
-            }
-          );
+          collectionReference = createMock<
+            CollectionReference<IFirebaseGuildVFinal>
+          >({
+            doc: docMock,
+          });
 
           getCollectionReferenceSpy.mockReturnValue(collectionReference);
         });
@@ -858,15 +862,17 @@ describe(`FirebaseGuildsService`, (): void => {
         beforeEach((): void => {
           writeResult = createMock<WriteResult>();
           setMock.mockResolvedValue(writeResult);
-          documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+          documentReference = createMock<
+            DocumentReference<IFirebaseGuildVFinal>
+          >({
             set: setMock,
           });
           docMock.mockReturnValue(documentReference);
-          collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
-            {
-              doc: docMock,
-            }
-          );
+          collectionReference = createMock<
+            CollectionReference<IFirebaseGuildVFinal>
+          >({
+            doc: docMock,
+          });
 
           getCollectionReferenceSpy.mockReturnValue(collectionReference);
         });
