@@ -248,3 +248,26 @@ These errors are also sent as a fallback message instead.
 For code errors you can check the logs on [Papertrail](https://my.papertrailapp.com/systems/sonia-il-est-midi-discord/events).  
 Papertrail contains the full stack trace of the running server logs for seven days. 
 This is a good place to catch the errors thrown.
+
+## Reminders
+
+### Comments
+
+In some cases (probably due to a lack of ingenuity so any help is wanted) during the development some features are linked.  
+To help linking seem together we use comments to identify those cases.  
+To identify them easily the following syntax is used:
+
+`@see [sonia-link-XXX]{@link https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#sonia-link-XXX}` where `XXX` is an id.
+
+Here is the list of linked features:
+
+- [sonia-link-001](#sonia-link-001)
+
+### sonia-link-001
+
+Firebase guild versioning require to check if some features are available before using them.  
+The data was created at some point so to avoid having side-effects a versioning was created.  
+To avoid type errors a check is required and to avoid code duplication it is done in functions.  
+When a new version is created this is required to update these functions as well.
+This special comment help to identify the code required to be updated when a new release is available.  
+I think that a workaround with types can be made but all I was not able to do it without losing the links between models and data.
