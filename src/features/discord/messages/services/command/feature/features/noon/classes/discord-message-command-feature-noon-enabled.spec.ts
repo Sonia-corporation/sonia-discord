@@ -1,8 +1,11 @@
 import { Message } from "discord.js";
 import { createMock } from "ts-auto-mock";
 import { FirebaseGuildVersionEnum } from "../../../../../../../../firebase/enums/guilds/firebase-guild-version.enum";
+import { IFirebaseGuildV1 } from "../../../../../../../../firebase/interfaces/guilds/firebase-guild-v1";
+import { IFirebaseGuildV2 } from "../../../../../../../../firebase/interfaces/guilds/firebase-guild-v2";
 import { FirebaseGuildsStoreQuery } from "../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query";
 import { IFirebaseGuildChannelVFinal } from "../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final";
+import { IFirebaseGuild } from "../../../../../../../../firebase/types/guilds/firebase-guild";
 import { IFirebaseGuildVFinal } from "../../../../../../../../firebase/types/guilds/firebase-guild-v-final";
 import { ILoggerLog } from "../../../../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../../../../logger/services/logger.service";
@@ -521,7 +524,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
 
   describe(`isEnabled()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
-    let firebaseGuildVFinal: IFirebaseGuildVFinal;
+    let firebaseGuildVFinal: IFirebaseGuild;
 
     let loggerServiceErrorSpy: jest.SpyInstance;
     let firebaseGuildsStoreQueryGetEntitySpy: jest.SpyInstance;
@@ -642,6 +645,46 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
               channels: [],
               version: FirebaseGuildVersionEnum.V3,
+            });
+
+            firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
+              firebaseGuildVFinal
+            );
+          });
+
+          it(`should return undefined`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            const isEnabled = await service.isEnabled(anyDiscordMessage);
+
+            expect(isEnabled).toBeUndefined();
+          });
+        });
+
+        describe(`when the Firebase guilds are v1`, (): void => {
+          beforeEach((): void => {
+            firebaseGuildVFinal = createMock<IFirebaseGuildV1>({
+              version: FirebaseGuildVersionEnum.V1,
+            });
+
+            firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
+              firebaseGuildVFinal
+            );
+          });
+
+          it(`should return undefined`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            const isEnabled = await service.isEnabled(anyDiscordMessage);
+
+            expect(isEnabled).toBeUndefined();
+          });
+        });
+
+        describe(`when the Firebase guilds are v2`, (): void => {
+          beforeEach((): void => {
+            firebaseGuildVFinal = createMock<IFirebaseGuildV2>({
+              version: FirebaseGuildVersionEnum.V2,
             });
 
             firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
