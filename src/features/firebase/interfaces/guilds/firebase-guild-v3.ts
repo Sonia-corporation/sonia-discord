@@ -6,6 +6,8 @@ export interface IFirebaseGuildV3 {
   /**
    * @description
    * A list of channel within the Discord guild
+   *
+   * Created within the [v3]{@link FirebaseGuildVersionEnum.V3}
    */
   channels?: IFirebaseGuildChannelV1[] | undefined;
 

@@ -12,6 +12,8 @@ export interface IFirebaseGuildV2 {
    * @description
    * Used to store the last release notes version sent on the guild
    * This is useful to avoid sending release notes on each run
+   *
+   * Created within the [v2]{@link FirebaseGuildVersionEnum.V2}
    */
   lastReleaseNotesVersion?: string | undefined;
 
