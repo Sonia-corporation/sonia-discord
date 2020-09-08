@@ -1,6 +1,6 @@
 import { Guild, GuildChannel, Message, TextChannel } from "discord.js";
 import * as admin from "firebase-admin";
-import { Subject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { AppConfigService } from "../../../app/services/config/app-config.service";
@@ -19,6 +19,8 @@ import { LoggerService } from "../../../logger/services/logger.service";
 import { FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES } from "../../constants/guilds/firebase-guild-new-version-response-messages";
 import { FirebaseGuildNewVersionResponseEnum } from "../../enums/guilds/firebase-guild-new-version-response.enum";
 import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-version.enum";
+import { IFirebaseGuildV1 } from "../../interfaces/guilds/firebase-guild-v1";
+import { IFirebaseGuild } from "../../types/guilds/firebase-guild";
 import { IFirebaseGuildVFinal } from "../../types/guilds/firebase-guild-v-final";
 import { IUpdatedFirebaseGuildLastReleaseNotesVersion } from "../../types/guilds/updated-firebase-guild-last-release-notes-version";
 import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
@@ -181,11 +183,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
   });
 
   describe(`sendNewReleaseNotesToEachGuild$()`, (): void => {
-    let isReady$: Subject<[true]>;
+    let isReady$: BehaviorSubject<[true]>;
     let querySnapshot: QuerySnapshot<IFirebaseGuildVFinal>;
     let writeBatch: WriteBatch;
-    let queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuildVFinal>;
-    let firebaseGuild: IFirebaseGuildVFinal;
+    let queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>;
+    let firebaseGuild: IFirebaseGuild;
 
     let isReady$Spy: jest.SpyInstance;
     let loggerServiceDebugSpy: jest.SpyInstance;
@@ -201,23 +203,21 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsNewVersionService();
-      isReady$ = new Subject<[true]>();
+      isReady$ = new BehaviorSubject<[true]>([true]);
       firebaseGuild = createMock<IFirebaseGuildVFinal>({
         lastReleaseNotesVersion: `1.0.0`,
         version: FirebaseGuildVersionEnum.V3,
       });
-      queryDocumentSnapshot = createMock<
-        QueryDocumentSnapshot<IFirebaseGuildVFinal>
-      >({
-        data: (): IFirebaseGuildVFinal => firebaseGuild,
-      });
+      queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuild>>(
+        {
+          data: (): IFirebaseGuild => firebaseGuild,
+        }
+      );
       forEachMock = jest
         .fn()
         .mockImplementation(
           (
-            callback: (
-              result: QueryDocumentSnapshot<IFirebaseGuildVFinal>
-            ) => void
+            callback: (result: QueryDocumentSnapshot<IFirebaseGuild>) => void
           ): void => {
             callback(queryDocumentSnapshot);
           }
@@ -270,7 +270,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           done();
         },
       });
-      isReady$.next([true]);
     });
 
     describe(`when an error occur when waiting to be ready`, (): void => {
@@ -291,7 +290,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             done();
           },
         });
-        isReady$.next([true]);
       });
 
       it(`should not get a Firebase guilds batch`, (done): void => {
@@ -307,7 +305,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             done();
           },
         });
-        isReady$.next([true]);
       });
 
       it(`should not update the Firebase guild batch`, (done): void => {
@@ -323,7 +320,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             done();
           },
         });
-        isReady$.next([true]);
       });
 
       it(`should not commit the batch`, (done): void => {
@@ -339,7 +335,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             done();
           },
         });
-        isReady$.next([true]);
       });
 
       it(`should not send the release notes message for the guilds`, (done): void => {
@@ -357,7 +352,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             done();
           },
         });
-        isReady$.next([true]);
       });
     });
 
@@ -383,7 +377,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             done();
           },
         });
-        isReady$.next([true]);
       });
 
       it(`should get the guilds`, (done): void => {
@@ -400,7 +393,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             done();
           },
         });
-        isReady$.next([true]);
       });
 
       describe(`when an error occurred when fetching the guilds`, (): void => {
@@ -423,7 +415,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               done();
             },
           });
-          isReady$.next([true]);
         });
 
         it(`should not update the Firebase guild batch`, (done): void => {
@@ -439,7 +430,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               done();
             },
           });
-          isReady$.next([true]);
         });
 
         it(`should not commit the batch`, (done): void => {
@@ -455,7 +445,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               done();
             },
           });
-          isReady$.next([true]);
         });
 
         it(`should not send the release notes message for the guilds`, (done): void => {
@@ -473,7 +462,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               done();
             },
           });
-          isReady$.next([true]);
         });
       });
 
@@ -499,7 +487,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               done();
             },
           });
-          isReady$.next([true]);
         });
 
         it(`should get a Firebase guilds batch`, (done): void => {
@@ -516,7 +503,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               done();
             },
           });
-          isReady$.next([true]);
         });
 
         describe(`when the Firebase guilds batch was not found`, (): void => {
@@ -541,7 +527,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 done();
               },
             });
-            isReady$.next([true]);
           });
 
           it(`should throw an error`, (done): void => {
@@ -559,7 +544,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 done();
               },
             });
-            isReady$.next([true]);
           });
 
           it(`should not update the Firebase guild batch`, (done): void => {
@@ -575,7 +559,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 done();
               },
             });
-            isReady$.next([true]);
           });
 
           it(`should not commit the batch`, (done): void => {
@@ -591,7 +574,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 done();
               },
             });
-            isReady$.next([true]);
           });
 
           it(`should not send the release notes message for the guilds`, (done): void => {
@@ -609,7 +591,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 done();
               },
             });
-            isReady$.next([true]);
           });
         });
 
@@ -647,7 +628,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   done();
                 },
               });
-              isReady$.next([true]);
             });
 
             it(`should not update the Firebase guild batch`, (done): void => {
@@ -663,7 +643,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   done();
                 },
               });
-              isReady$.next([true]);
             });
 
             it(`should not commit the batch`, (done): void => {
@@ -679,7 +658,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   done();
                 },
               });
-              isReady$.next([true]);
             });
 
             it(`should not send the release notes message for the guilds`, (done): void => {
@@ -697,16 +675,15 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   done();
                 },
               });
-              isReady$.next([true]);
             });
           });
 
           describe(`when there is one Firebase guild but it does not exists`, (): void => {
             beforeEach((): void => {
               queryDocumentSnapshot = createMock<
-                QueryDocumentSnapshot<IFirebaseGuildVFinal>
+                QueryDocumentSnapshot<IFirebaseGuild>
               >({
-                data: (): IFirebaseGuildVFinal => firebaseGuild,
+                data: (): IFirebaseGuild => firebaseGuild,
                 exists: false,
               });
               forEachMock = jest
@@ -714,7 +691,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 .mockImplementation(
                   (
                     callback: (
-                      result: QueryDocumentSnapshot<IFirebaseGuildVFinal>
+                      result: QueryDocumentSnapshot<IFirebaseGuild>
                     ) => void
                   ): void => {
                     callback(queryDocumentSnapshot);
@@ -746,7 +723,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   done();
                 },
               });
-              isReady$.next([true]);
             });
 
             it(`should not update the Firebase guild batch`, (done): void => {
@@ -762,7 +738,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   done();
                 },
               });
-              isReady$.next([true]);
             });
 
             it(`should not commit the batch`, (done): void => {
@@ -778,7 +753,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   done();
                 },
               });
-              isReady$.next([true]);
             });
 
             it(`should not send the release notes message for the guilds`, (done): void => {
@@ -796,16 +770,18 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   done();
                 },
               });
-              isReady$.next([true]);
             });
           });
 
-          describe(`when there is one Firebase guild`, (): void => {
+          describe(`when there is one Firebase guild on v1`, (): void => {
             beforeEach((): void => {
+              firebaseGuild = createMock<IFirebaseGuildV1>({
+                version: FirebaseGuildVersionEnum.V1,
+              });
               queryDocumentSnapshot = createMock<
-                QueryDocumentSnapshot<IFirebaseGuildVFinal>
+                QueryDocumentSnapshot<IFirebaseGuild>
               >({
-                data: (): IFirebaseGuildVFinal => firebaseGuild,
+                data: (): IFirebaseGuild => firebaseGuild,
                 exists: true,
               });
               forEachMock = jest
@@ -813,7 +789,97 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 .mockImplementation(
                   (
                     callback: (
-                      result: QueryDocumentSnapshot<IFirebaseGuildVFinal>
+                      result: QueryDocumentSnapshot<IFirebaseGuild>
+                    ) => void
+                  ): void => {
+                    callback(queryDocumentSnapshot);
+                  }
+                );
+              querySnapshot = createMock<QuerySnapshot<IFirebaseGuildVFinal>>({
+                forEach: forEachMock,
+              });
+
+              firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(
+                querySnapshot
+              );
+            });
+
+            it(`should log that all Firebase guilds release notes were already sent`, async (): Promise<
+              void
+            > => {
+              expect.assertions(2);
+
+              await service.sendNewReleaseNotesToEachGuild$().toPromise();
+
+              expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+                context: `FirebaseGuildsNewVersionService`,
+                message: `text-all Firebase guild hint-(1) release notes already sent`,
+              } as ILoggerLog);
+            });
+
+            it(`should not update the Firebase guild batch`, (done): void => {
+              expect.assertions(1);
+
+              service.sendNewReleaseNotesToEachGuild$().subscribe({
+                error(): void {
+                  expect(true).toStrictEqual(false);
+                  done();
+                },
+                next(): void {
+                  expect(updateMock).not.toHaveBeenCalled();
+                  done();
+                },
+              });
+            });
+
+            it(`should not commit the batch`, (done): void => {
+              expect.assertions(1);
+
+              service.sendNewReleaseNotesToEachGuild$().subscribe({
+                error(): void {
+                  expect(true).toStrictEqual(false);
+                  done();
+                },
+                next(): void {
+                  expect(commitMock).not.toHaveBeenCalled();
+                  done();
+                },
+              });
+            });
+
+            it(`should not send the release notes message for the guilds`, (done): void => {
+              expect.assertions(1);
+
+              service.sendNewReleaseNotesToEachGuild$().subscribe({
+                error(): void {
+                  expect(true).toStrictEqual(false);
+                  done();
+                },
+                next(): void {
+                  expect(
+                    sendNewReleaseNotesFromFirebaseGuildSpy
+                  ).not.toHaveBeenCalled();
+                  done();
+                },
+              });
+            });
+          });
+
+          describe(`when there is one Firebase guild`, (): void => {
+            beforeEach((): void => {
+              queryDocumentSnapshot = createMock<
+                QueryDocumentSnapshot<IFirebaseGuild>
+              >({
+                data: (): IFirebaseGuild => firebaseGuild,
+                exists: true,
+              });
+              forEachMock = jest
+                .fn()
+                .mockImplementation(
+                  (
+                    callback: (
+                      result: QueryDocumentSnapshot<IFirebaseGuild>
                     ) => void
                   ): void => {
                     callback(queryDocumentSnapshot);
@@ -850,7 +916,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     done();
                   },
                 });
-                isReady$.next([true]);
               });
 
               it(`should not update the Firebase guild batch`, (done): void => {
@@ -866,7 +931,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     done();
                   },
                 });
-                isReady$.next([true]);
               });
 
               it(`should not commit the batch`, (done): void => {
@@ -882,7 +946,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     done();
                   },
                 });
-                isReady$.next([true]);
               });
 
               it(`should not send the release notes message for the guilds`, (done): void => {
@@ -900,7 +963,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     done();
                   },
                 });
-                isReady$.next([true]);
               });
             });
 
@@ -928,7 +990,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     done();
                   },
                 });
-                isReady$.next([true]);
               });
 
               it(`should log that one Firebase guild is updating`, (done): void => {
@@ -948,7 +1009,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     done();
                   },
                 });
-                isReady$.next([true]);
               });
 
               it(`should commit the batch`, (done): void => {
@@ -965,7 +1025,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     done();
                   },
                 });
-                isReady$.next([true]);
               });
 
               describe(`when the batch commit failed`, (): void => {
@@ -988,7 +1047,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                       done();
                     },
                   });
-                  isReady$.next([true]);
                 });
               });
 
@@ -1015,7 +1073,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                       done();
                     },
                   });
-                  isReady$.next([true]);
                 });
 
                 /**
@@ -1045,7 +1102,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                         done();
                       },
                     });
-                    isReady$.next([true]);
                   });
 
                   it(`should not throw an error`, (done): void => {
@@ -1061,7 +1117,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                         done();
                       },
                     });
-                    isReady$.next([true]);
                   });
                 });
               });
@@ -1071,9 +1126,9 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           describe(`when there are two Firebase guilds`, (): void => {
             beforeEach((): void => {
               queryDocumentSnapshot = createMock<
-                QueryDocumentSnapshot<IFirebaseGuildVFinal>
+                QueryDocumentSnapshot<IFirebaseGuild>
               >({
-                data: (): IFirebaseGuildVFinal => firebaseGuild,
+                data: (): IFirebaseGuild => firebaseGuild,
                 exists: true,
               });
               forEachMock = jest
@@ -1081,7 +1136,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 .mockImplementation(
                   (
                     callback: (
-                      result: QueryDocumentSnapshot<IFirebaseGuildVFinal>
+                      result: QueryDocumentSnapshot<IFirebaseGuild>
                     ) => void
                   ): void => {
                     callback(queryDocumentSnapshot);
@@ -1119,7 +1174,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     done();
                   },
                 });
-                isReady$.next([true]);
               });
 
               it(`should not update the Firebase guild batch`, (done): void => {
@@ -1135,7 +1189,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     done();
                   },
                 });
-                isReady$.next([true]);
               });
 
               it(`should not commit the batch`, (done): void => {
@@ -1151,7 +1204,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     done();
                   },
                 });
-                isReady$.next([true]);
               });
 
               it(`should not send the release notes message for the guilds`, (done): void => {
@@ -1169,7 +1221,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     done();
                   },
                 });
-                isReady$.next([true]);
               });
             });
 
@@ -1197,7 +1248,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     done();
                   },
                 });
-                isReady$.next([true]);
               });
 
               it(`should log that two Firebase guilds are updating`, (done): void => {
@@ -1217,7 +1267,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     done();
                   },
                 });
-                isReady$.next([true]);
               });
 
               it(`should commit the batch`, (done): void => {
@@ -1234,7 +1283,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                     done();
                   },
                 });
-                isReady$.next([true]);
               });
 
               describe(`when the batch commit failed`, (): void => {
@@ -1257,7 +1305,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                       done();
                     },
                   });
-                  isReady$.next([true]);
                 });
               });
 
@@ -1284,7 +1331,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                       done();
                     },
                   });
-                  isReady$.next([true]);
                 });
 
                 /**
@@ -1314,7 +1360,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                         done();
                       },
                     });
-                    isReady$.next([true]);
                   });
 
                   it(`should not throw an error`, (done): void => {
@@ -1330,7 +1375,6 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                         done();
                       },
                     });
-                    isReady$.next([true]);
                   });
                 });
               });
@@ -1363,7 +1407,9 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsNewVersionService();
-      firebaseGuild = createMock<IFirebaseGuildVFinal>();
+      firebaseGuild = createMock<IFirebaseGuildVFinal>({
+        version: FirebaseGuildVersionEnum.V3,
+      });
       guild = createMock<Guild>({
         id: `dummy-id`,
       });

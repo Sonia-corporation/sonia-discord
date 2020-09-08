@@ -394,7 +394,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           const result = await service.execute(anyDiscordMessage, value);
 
           expect(result).toStrictEqual({
-            description: `The \`noon\` feature was already enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
+            description: `The \`noon\` feature is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
             name: `Noon feature enabled`,
           } as IDiscordCommandFlagSuccess);
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);

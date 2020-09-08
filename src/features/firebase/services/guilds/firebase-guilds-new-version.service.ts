@@ -379,6 +379,6 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       return !_.isEqual(firebaseGuild.lastReleaseNotesVersion, appVersion);
     }
 
-    return true;
+    return false;
   }
 }
