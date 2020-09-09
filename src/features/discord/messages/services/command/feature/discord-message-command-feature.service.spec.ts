@@ -2123,7 +2123,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       service = new DiscordMessageCommandFeatureService();
     });
 
-    describe(`when the given message does not contains some flags`, (): void => {
+    describe(`when the given message does not contains a flag`, (): void => {
       beforeEach((): void => {
         message = `!feature noon`;
       });
@@ -2137,9 +2137,23 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       });
     });
 
-    describe(`when the given message contains some flags`, (): void => {
+    describe(`when the given message contains one flag`, (): void => {
       beforeEach((): void => {
         message = `!feature noon --enabled=true`;
+      });
+
+      it(`should return the flag`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getFlags(message);
+
+        expect(result).toStrictEqual(`--enabled=true`);
+      });
+    });
+
+    describe(`when the given message contains multiple flags`, (): void => {
+      beforeEach((): void => {
+        message = `message !feature Noon --enabled=true -e --enabled=false`;
       });
 
       it(`should return the flags`, (): void => {
@@ -2147,7 +2161,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
         const result = service.getFlags(message);
 
-        expect(result).toStrictEqual(`--enabled=true`);
+        expect(result).toStrictEqual(`--enabled=true -e --enabled=false`);
       });
     });
   });
