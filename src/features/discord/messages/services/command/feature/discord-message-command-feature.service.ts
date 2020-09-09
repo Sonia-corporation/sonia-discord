@@ -9,12 +9,14 @@ import { discordGetCommandFlags } from "../../../functions/commands/getters/disc
 import { discordHasThisCommand } from "../../../functions/commands/checks/discord-has-this-command";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
+import { IDiscordCommandFlagsDuplicated } from "../../../types/commands/flags/discord-command-flags-duplicated";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandFeatureNameEnum } from "./enums/discord-message-command-feature-name.enum";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "./features/noon/constants/discord-message-command-feature-noon-flags";
 import { DiscordMessageCommandFeatureEmptyContentErrorService } from "./services/discord-message-command-feature-empty-content-error.service";
 import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from "./services/feature-names/discord-message-command-feature-empty-feature-name-error.service";
+import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from "./services/flags/discord-message-command-feature-duplicated-flags-error.service";
 import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from "./services/flags/discord-message-command-feature-empty-flags-error.service";
 import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from "./services/feature-names/discord-message-command-feature-wrong-feature-name-error.service";
 import { DiscordMessageCommandFeatureNoonService } from "./features/noon/services/discord-message-command-feature-noon.service";
@@ -79,9 +81,21 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
             );
 
             if (_.isNil(flagsErrors)) {
-              return DiscordMessageCommandFeatureNoonService.getInstance().getMessageResponse(
-                anyDiscordMessage,
+              const flagsDuplicated: IDiscordCommandFlagsDuplicated | null = DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getDuplicated(
                 messageFlags
+              );
+
+              if (_.isNil(flagsDuplicated)) {
+                return DiscordMessageCommandFeatureNoonService.getInstance().getMessageResponse(
+                  anyDiscordMessage,
+                  messageFlags
+                );
+              }
+
+              return this._getDuplicatedFlagsErrorMessageResponse(
+                anyDiscordMessage,
+                DiscordMessageCommandFeatureNameEnum.NOON,
+                flagsDuplicated
               );
             }
 
@@ -204,6 +218,27 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
 
     return DiscordMessageCommandFeatureWrongFlagsErrorService.getInstance().getMessageResponse(
       flagsErrors
+    );
+  }
+
+  private _getDuplicatedFlagsErrorMessageResponse(
+    { id }: Readonly<IAnyDiscordMessage>,
+    featureName: Readonly<DiscordMessageCommandFeatureNameEnum>,
+    flagsDuplicated: Readonly<IDiscordCommandFlagsDuplicated>
+  ): Promise<IDiscordMessageResponse> {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        id,
+        `feature name ${ChalkService.getInstance().value(
+          _.capitalize(featureName)
+        )} has duplicated flags`
+      ),
+    });
+
+    return DiscordMessageCommandFeatureDuplicatedFlagsErrorService.getInstance().getMessageResponse(
+      flagsDuplicated
     );
   }
 }

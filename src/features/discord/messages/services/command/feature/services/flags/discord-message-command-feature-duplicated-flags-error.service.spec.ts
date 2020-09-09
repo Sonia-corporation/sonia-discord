@@ -210,14 +210,13 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
       it(`should return a Discord message response embed field containing a hint to solve this error`, async (): Promise<
         void
       > => {
-        expect.assertions(3);
+        expect.assertions(1);
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(result.options.embed.fields[1]).toStrictEqual({
-          inline: true,
           name: `How to solve this?`,
           value: `I am here to help you but do not mess with me!\nTry again but remove the extra duplicated flags and we can talk.`,
         } as EmbedFieldData);
@@ -292,14 +291,13 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
       it(`should return a Discord message response embed field containing a hint to solve this error`, async (): Promise<
         void
       > => {
-        expect.assertions(3);
+        expect.assertions(1);
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(result.options.embed.fields[3]).toStrictEqual({
-          inline: true,
           name: `How to solve this?`,
           value: `I am here to help you but do not mess with me!\nTry again but remove the extra duplicated flags and we can talk.`,
         } as EmbedFieldData);
