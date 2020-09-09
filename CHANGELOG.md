@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+# [1.74.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.73.0...1.74.0) (2020-09-09)
+
+
+### :rocket: Features
+
+* **feature-noon:** add enabled (or e) flags ([8629afb](https://github.com/Sonia-corporation/il-est-midi-discord/commit/8629afb6302867cc66cb1ee6cf56d28838b94071))
+* **feature-noon:** for each flag execute the related command ([ab56450](https://github.com/Sonia-corporation/il-est-midi-discord/commit/ab56450761545259f9d263a8b6db0a8de8fca232))
+
 # [1.73.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.72.1...1.73.0) (2020-09-01)
 
 
