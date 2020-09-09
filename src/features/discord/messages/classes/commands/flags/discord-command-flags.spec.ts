@@ -17,7 +17,7 @@ import { DiscordCommandFlags } from "./discord-command-flags";
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordCommandFlags`, (): void => {
-  let discordCommandFlags: DiscordCommandFlags<DiscordMessageCommandFeatureNoonFlagEnum>;
+  let discordCommandFlags: DiscordCommandFlags<string>;
   let loggerService: LoggerService;
 
   beforeEach((): void => {
@@ -2126,14 +2126,10 @@ describe(`DiscordCommandFlags`, (): void => {
     let message: string;
 
     beforeEach((): void => {
-      discordCommandFlags = new DiscordCommandFlags<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >({
+      discordCommandFlags = new DiscordCommandFlags<string>({
         command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
         flags: [
-          new DiscordCommandBooleanFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum
-          >({
+          new DiscordCommandBooleanFlag<string>({
             action: createMock<DiscordCommandFlagAction>({
               execute: (): Promise<IDiscordCommandFlagSuccess> =>
                 Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
@@ -2141,6 +2137,31 @@ describe(`DiscordCommandFlags`, (): void => {
             description: ``,
             name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
             shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
+          }),
+          new DiscordCommandBooleanFlag<string>({
+            action: createMock<DiscordCommandFlagAction>({
+              execute: (): Promise<IDiscordCommandFlagSuccess> =>
+                Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+            }),
+            description: ``,
+            name: `dummy`,
+          }),
+          new DiscordCommandBooleanFlag<string>({
+            action: createMock<DiscordCommandFlagAction>({
+              execute: (): Promise<IDiscordCommandFlagSuccess> =>
+                Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+            }),
+            description: ``,
+            name: `other`,
+            shortcuts: [`t`],
+          }),
+          new DiscordCommandBooleanFlag<string>({
+            action: createMock<DiscordCommandFlagAction>({
+              execute: (): Promise<IDiscordCommandFlagSuccess> =>
+                Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+            }),
+            description: ``,
+            name: `three`,
           }),
         ],
       });
@@ -2275,7 +2296,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains three not duplicated boolean flags`, (): void => {
       beforeEach((): void => {
-        message = `--one=true -t --three=FaLsE`;
+        message = `--dummy=true -t --three=FaLsE`;
       });
 
       it(`should return null`, (): void => {
