@@ -294,7 +294,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
         executeAllSpy.mockResolvedValue(discordCommandFlagsSuccess);
       });
 
-      it(`should return a Discord message response embed with a description indicating that three errors has been found`, async (): Promise<
+      it(`should return a Discord message response embed with a description indicating that three errors have been found`, async (): Promise<
         void
       > => {
         expect.assertions(1);
