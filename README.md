@@ -89,9 +89,9 @@ __Commands:__
 - feature
 - f *(shortcut)*
 
-__Features (first and only argument):__
+__Features (first and only argument followed by optional flags):__
 
-- noon (configure the message sent at noon)
+- noon: configure the message sent at noon
   - enabled (or e): enable the noon message on the channel
 
 This is a special command used to configure Sonia only for the current Guild or channel.  
