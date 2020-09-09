@@ -105,7 +105,7 @@ export abstract class DiscordCommandFlag<T extends string> {
 
   public executeAction(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    value: Readonly<string | null | undefined> = undefined
+    value?: Readonly<string | null | undefined>
   ): Promise<IDiscordCommandFlagSuccess> {
     return this._action.execute(anyDiscordMessage, value);
   }
