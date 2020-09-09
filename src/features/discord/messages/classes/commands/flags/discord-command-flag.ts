@@ -2,6 +2,7 @@ import _ from "lodash";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
+import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 
 /**
@@ -11,6 +12,9 @@ import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-messa
  */
 export abstract class DiscordCommandFlag<T extends string> {
   protected abstract _type: DiscordCommandFlagTypeEnum;
+  protected _action: (
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+  ) => Promise<unknown>;
   protected _description: string;
   protected _name: T;
   protected _shortcuts: T[] | undefined;
@@ -19,13 +23,25 @@ export abstract class DiscordCommandFlag<T extends string> {
    * @param {Readonly<IDiscordCommandFlag>} discordCommandFlag Default values
    */
   protected constructor({
+    action,
     description,
     name,
     shortcuts,
   }: Readonly<IDiscordCommandFlag<T>>) {
+    this._action = action;
     this._description = description;
     this._name = name;
     this._shortcuts = shortcuts;
+  }
+
+  public getAction(): (
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+  ) => Promise<unknown> {
+    return this._action;
+  }
+
+  public setAction(action: () => Promise<unknown>): void {
+    this._action = action;
   }
 
   public getDescription(): string {
@@ -87,6 +103,12 @@ export abstract class DiscordCommandFlag<T extends string> {
     }
 
     return example;
+  }
+
+  public executeAction(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+  ): Promise<unknown> {
+    return this._action(anyDiscordMessage);
   }
 
   public abstract isValid(messageFlag: Readonly<IDiscordMessageFlag>): boolean;

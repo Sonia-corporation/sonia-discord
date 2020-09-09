@@ -6,7 +6,7 @@ import { AbstractService } from "../../../../classes/services/abstract.service";
 import { ONE_EMITTER } from "../../../../constants/one-emitter";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
-import { FirebaseGuildsService } from "../../../firebase/services/firebase-guilds.service";
+import { FirebaseGuildsService } from "../../../firebase/services/guilds/firebase-guilds.service";
 import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { isDiscordGuildChannelWritable } from "../../channels/functions/types/is-discord-guild-channel-writable";

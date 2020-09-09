@@ -14,6 +14,7 @@ jobs:
             [~wontfix]: https://img.shields.io/badge/-wontfix-e77f67.svg
             [~dependency-fix]: https://img.shields.io/badge/-dependency%20fix-c44569.svg
             [~opened-pull-request]: https://img.shields.io/badge/-opened%20pull%20request-f5cd79.svg
+            [~help-wanted]: https://img.shields.io/badge/-help%20wanted-63cdda.svg
 
             :warning: **Warning!** :warning:
 
@@ -25,11 +26,13 @@ jobs:
             - [![label: wontfix][~wontfix]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/wontfix)
             - [![label: dependency-fix][~dependency-fix]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/dependency-fix)
             - [![label: opened-pull-request][~opened-pull-request]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/opened-pull-request)
+            - [![label: help wanted][~help-wanted]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/help%20wanted)
           stale-pr-message: |
             [~waiting]: https://img.shields.io/badge/-waiting-f5cd79.svg
             [~wontfix]: https://img.shields.io/badge/-wontfix-e77f67.svg
             [~dependency-fix]: https://img.shields.io/badge/-dependency%20fix-c44569.svg
             [~opened-pull-request]: https://img.shields.io/badge/-opened%20pull%20request-f5cd79.svg
+            [~help-wanted]: https://img.shields.io/badge/-help%20wanted-63cdda.svg
 
             :warning: **Warning!** :warning:
 
@@ -41,9 +44,10 @@ jobs:
             - [![label: wontfix][~wontfix]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/wontfix)
             - [![label: dependency-fix][~dependency-fix]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/dependency-fix)
             - [![label: opened-pull-request][~opened-pull-request]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/opened-pull-request)
+            - [![label: help wanted][~help-wanted]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/help%20wanted)
           stale-issue-label: 'no-issue-activity'
-          exempt-issue-labels: 'waiting,wontfix,dependency-fix,opened-pull-request'
+          exempt-issue-labels: 'waiting,wontfix,dependency-fix,opened-pull-request,help%20wanted'
           stale-pr-label: 'no-pull-request-activity'
-          exempt-pr-labels: 'waiting,wontfix,dependency-fix,opened-pull-request'
+          exempt-pr-labels: 'waiting,wontfix,dependency-fix,opened-pull-request,help%20wanted'
           days-before-stale: 60
           days-before-close: 30

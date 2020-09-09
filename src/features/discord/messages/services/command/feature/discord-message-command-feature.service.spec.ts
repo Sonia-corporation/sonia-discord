@@ -14,6 +14,7 @@ import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from "./serv
 import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from "./services/feature-names/discord-message-command-feature-wrong-feature-name-error.service";
 import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from "./services/flags/discord-message-command-feature-empty-flags-error.service";
 import { DiscordMessageCommandFeatureWrongFlagsErrorService } from "./services/flags/discord-message-command-feature-wrong-flags-error.service";
+import _ = require("lodash");
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
@@ -153,7 +154,10 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureService();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>();
+      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+        id: `dummy-id`,
+        valueOf: _.stubObject(),
+      });
       discordMessageResponse = createMock<IDiscordMessageResponse>({
         response: `discordMessageResponse`,
       });
@@ -310,46 +314,6 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         });
       });
 
-      it(`should not log about not having a feature name`, async (): Promise<
-        void
-      > => {
-        expect.assertions(3);
-
-        await expect(
-          service.getMessageResponse(anyDiscordMessage)
-        ).rejects.toThrow(
-          new Error(
-            `discordMessageCommandFeatureEmptyContentErrorService getMessageResponse error`
-          )
-        );
-
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(0);
-        expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
-          context: `DiscordMessageCommandFeatureService`,
-          message: `text-feature name not specified`,
-        } as ILoggerLog);
-      });
-
-      it(`should not log about the fact that the feature does not exist`, async (): Promise<
-        void
-      > => {
-        expect.assertions(3);
-
-        await expect(
-          service.getMessageResponse(anyDiscordMessage)
-        ).rejects.toThrow(
-          new Error(
-            `discordMessageCommandFeatureEmptyContentErrorService getMessageResponse error`
-          )
-        );
-
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(0);
-        expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
-          context: `DiscordMessageCommandFeatureService`,
-          message: `text-feature name value-dummy not matching an existing feature`,
-        } as ILoggerLog);
-      });
-
       it(`should not get a message response for the noon feature`, async (): Promise<
         void
       > => {
@@ -461,27 +425,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
             context: `DiscordMessageCommandFeatureService`,
-            message: `text-feature name not specified`,
-          } as ILoggerLog);
-        });
-
-        it(`should not log about the fact that the feature does not exist`, async (): Promise<
-          void
-        > => {
-          expect.assertions(3);
-
-          await expect(
-            service.getMessageResponse(anyDiscordMessage)
-          ).rejects.toThrow(
-            new Error(
-              `discordMessageCommandFeatureEmptyFeatureNameErrorService getMessageResponse error`
-            )
-          );
-
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-          expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
-            context: `DiscordMessageCommandFeatureService`,
-            message: `text-feature name value-dummy not matching an existing feature`,
+            message: `context-[dummy-id] text-feature name not specified`,
           } as ILoggerLog);
         });
 
@@ -601,27 +545,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `DiscordMessageCommandFeatureService`,
-              message: `text-feature name value-dummy not matching an existing feature`,
-            } as ILoggerLog);
-          });
-
-          it(`should not log about not having a feature name`, async (): Promise<
-            void
-          > => {
-            expect.assertions(3);
-
-            await expect(
-              service.getMessageResponse(anyDiscordMessage)
-            ).rejects.toThrow(
-              new Error(
-                `discordMessageCommandFeatureWrongFeatureNameErrorService getMessageResponse error`
-              )
-            );
-
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-            expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
-              context: `DiscordMessageCommandFeatureService`,
-              message: `text-feature name not specified`,
+              message: `context-[dummy-id] text-feature name value-dummy not matching an existing feature`,
             } as ILoggerLog);
           });
 
@@ -742,7 +666,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
               expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                 context: `DiscordMessageCommandFeatureService`,
-                message: `text-feature name value-Noon not having any flags`,
+                message: `context-[dummy-id] text-feature name value-Noon not having any flags`,
               } as ILoggerLog);
             });
           });
@@ -844,7 +768,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
-                  message: `text-feature name value-Noon not having all valid flags`,
+                  message: `context-[dummy-id] text-feature name value-Noon not having all valid flags`,
                 } as ILoggerLog);
               });
             });
@@ -872,7 +796,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 ).toHaveBeenCalledTimes(1);
                 expect(
                   discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
-                ).toHaveBeenCalledWith(anyDiscordMessage);
+                ).toHaveBeenCalledWith(anyDiscordMessage, `--enabled=true`);
               });
 
               describe(`when the message response for the noon feature failed to be fetched`, (): void => {
@@ -918,46 +842,6 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   expect(result).toStrictEqual(discordMessageResponse);
                 });
               });
-            });
-
-            it(`should not log about not having a feature name`, async (): Promise<
-              void
-            > => {
-              expect.assertions(3);
-
-              await expect(
-                service.getMessageResponse(anyDiscordMessage)
-              ).rejects.toThrow(
-                new Error(
-                  `discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`
-                )
-              );
-
-              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-              expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
-                context: `DiscordMessageCommandFeatureService`,
-                message: `text-feature name not specified`,
-              } as ILoggerLog);
-            });
-
-            it(`should not log about the fact that the feature does not exist`, async (): Promise<
-              void
-            > => {
-              expect.assertions(3);
-
-              await expect(
-                service.getMessageResponse(anyDiscordMessage)
-              ).rejects.toThrow(
-                new Error(
-                  `discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`
-                )
-              );
-
-              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-              expect(loggerServiceDebugSpy).not.toHaveBeenCalledWith({
-                context: `DiscordMessageCommandFeatureService`,
-                message: `text-feature name value-dummy not matching an existing feature`,
-              } as ILoggerLog);
             });
           });
         });

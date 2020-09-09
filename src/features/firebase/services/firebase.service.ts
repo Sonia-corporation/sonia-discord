@@ -3,9 +3,9 @@ import { AbstractService } from "../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { FirebaseGuildsStoreService } from "../stores/guilds/services/firebase-guilds-store.service";
 import { FirebaseAppService } from "./firebase-app.service";
-import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
-import { FirebaseGuildsNewVersionService } from "./firebase-guilds-new-version.service";
-import { FirebaseGuildsService } from "./firebase-guilds.service";
+import { FirebaseGuildsBreakingChangeService } from "./guilds/firebase-guilds-breaking-change.service";
+import { FirebaseGuildsNewVersionService } from "./guilds/firebase-guilds-new-version.service";
+import { FirebaseGuildsService } from "./guilds/firebase-guilds.service";
 
 export class FirebaseService extends AbstractService {
   private static _instance: FirebaseService;
