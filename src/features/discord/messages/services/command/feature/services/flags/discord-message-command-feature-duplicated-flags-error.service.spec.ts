@@ -179,7 +179,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
         );
       });
 
-      it(`should return a Discord message response embed with 1 field`, async (): Promise<
+      it(`should return a Discord message response embed with 2 field`, async (): Promise<
         void
       > => {
         expect.assertions(1);
@@ -188,7 +188,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        expect(result.options.embed.fields).toHaveLength(1);
+        expect(result.options.embed.fields).toHaveLength(2);
       });
 
       it(`should return a Discord message response embed with the fields containing the duplicated flags`, async (): Promise<
@@ -204,6 +204,22 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
           inline: true,
           name: flagsDuplicated[0].name,
           value: flagsDuplicated[0].description,
+        } as EmbedFieldData);
+      });
+
+      it(`should return a Discord message response embed field containing a hint to solve this error`, async (): Promise<
+        void
+      > => {
+        expect.assertions(3);
+
+        const result = await service.getMessageResponse(flagsDuplicated);
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        expect(result.options.embed.fields[1]).toStrictEqual({
+          inline: true,
+          name: `How to solve this?`,
+          value: `I am here to help you but do not mess with me!\nTry again but remove the extra duplicated flags and we can talk.`,
         } as EmbedFieldData);
       });
     });
@@ -231,7 +247,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
         );
       });
 
-      it(`should return a Discord message response embed with 3 fields`, async (): Promise<
+      it(`should return a Discord message response embed with 4 fields`, async (): Promise<
         void
       > => {
         expect.assertions(1);
@@ -240,7 +256,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        expect(result.options.embed.fields).toHaveLength(3);
+        expect(result.options.embed.fields).toHaveLength(4);
       });
 
       it(`should return a Discord message response embed with the fields containing the duplicated flags`, async (): Promise<
@@ -270,6 +286,22 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
           inline: true,
           name: flagsDuplicated[2].name,
           value: flagsDuplicated[2].description,
+        } as EmbedFieldData);
+      });
+
+      it(`should return a Discord message response embed field containing a hint to solve this error`, async (): Promise<
+        void
+      > => {
+        expect.assertions(3);
+
+        const result = await service.getMessageResponse(flagsDuplicated);
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        expect(result.options.embed.fields[3]).toStrictEqual({
+          inline: true,
+          name: `How to solve this?`,
+          value: `I am here to help you but do not mess with me!\nTry again but remove the extra duplicated flags and we can talk.`,
         } as EmbedFieldData);
       });
     });
