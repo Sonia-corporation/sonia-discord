@@ -16,6 +16,18 @@ function isFlag(messageFlag: Readonly<IDiscordMessageFlag>): boolean {
   return discordCommandIsMessageFlag(messageFlag);
 }
 
+function separateFlagNameFromValue(
+  messageFlag: Readonly<IDiscordMessageFlag>
+): string[] {
+  return _.split(messageFlag, `=`);
+}
+
+function hasValue(splittedFlag: Readonly<string>[]): boolean {
+  const splittedFlagSize: number = _.size(splittedFlag);
+
+  return _.isEqual(splittedFlagSize, FLAG_SIZE);
+}
+
 /**
  * @description
  * Extract the flag value from a message flag
@@ -37,10 +49,9 @@ export function discordCommandGetFlagValue(
   messageFlag: Readonly<IDiscordMessageFlag>
 ): string | null {
   if (isFlag(messageFlag)) {
-    const splittedFlag: string[] = _.split(messageFlag, `=`);
-    const splittedFlagSize: number = _.size(splittedFlag);
+    const splittedFlag: string[] = separateFlagNameFromValue(messageFlag);
 
-    if (_.isEqual(splittedFlagSize, FLAG_SIZE)) {
+    if (hasValue(splittedFlag)) {
       const flagValue: string | undefined = getFlagValue(splittedFlag);
 
       if (isValidValue(flagValue)) {
