@@ -2,5 +2,5 @@ import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-messa
 
 export interface IDiscordCommandMessageFlagWithName {
   messageFlag: IDiscordMessageFlag;
-  name: string | null;
+  name: string | undefined;
 }

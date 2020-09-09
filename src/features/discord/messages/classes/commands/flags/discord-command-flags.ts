@@ -450,26 +450,20 @@ export class DiscordCommandFlags<T extends string> {
 
   private _getHumanizedFlagName(
     messageFlag: Readonly<IDiscordMessageFlag>
-  ): string | null {
+  ): string | undefined {
     if (discordCommandIsMessageFlag(messageFlag)) {
       const flag:
         | DiscordCommandFlag<T>
         | undefined = this._getFlagFromMessageFlag(messageFlag);
 
-      if (this._isFlag(flag)) {
-        return flag.getHumanizedName();
-      }
-    } else {
-      const shortcutFlag:
-        | DiscordCommandFlag<T>
-        | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
-
-      if (this._isFlag(shortcutFlag)) {
-        return shortcutFlag.getHumanizedName();
-      }
+      return flag?.getHumanizedName();
     }
 
-    return null;
+    const shortcutFlag:
+      | DiscordCommandFlag<T>
+      | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
+
+    return shortcutFlag?.getHumanizedName();
   }
 
   private _getDuplicatedFlagsList(
