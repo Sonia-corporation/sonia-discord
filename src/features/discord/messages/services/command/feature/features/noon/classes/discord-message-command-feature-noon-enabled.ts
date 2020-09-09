@@ -9,6 +9,7 @@ import { IFirebaseGuild } from "../../../../../../../../firebase/types/guilds/fi
 import { ChalkService } from "../../../../../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../../../../../logger/services/logger.service";
 import { DiscordCommandFlagAction } from "../../../../../../classes/commands/flags/discord-command-flag-action";
+import { DiscordCommandFlagSuccessDescriptionEnum } from "../../../../../../enums/commands/flags/discord-command-flag-success-description.enum";
 import { DiscordCommandFlagSuccessTitleEnum } from "../../../../../../enums/commands/flags/discord-command-flag-success-title.enum";
 import { IDiscordCommandFlagSuccess } from "../../../../../../interfaces/commands/flags/discord-command-flag-success";
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
@@ -24,75 +25,18 @@ export class DiscordMessageCommandFeatureNoonEnabled
   ): Promise<IDiscordCommandFlagSuccess> {
     const shouldEnable: boolean = toBoolean(value, true);
 
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        anyDiscordMessage.id,
-        `executing ${ChalkService.getInstance().value(`enabled`)} action`
-      ),
-    });
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        anyDiscordMessage.id,
-        `new state: ${ChalkService.getInstance().value(shouldEnable)}`
-      ),
-    });
+    this._logExecuteAction(anyDiscordMessage.id);
+    this._logNewState(anyDiscordMessage.id, shouldEnable);
 
     return this.isEnabled(anyDiscordMessage).then(
       (
         isEnabled: Readonly<boolean | undefined>
       ): Promise<IDiscordCommandFlagSuccess> => {
-        LoggerService.getInstance().debug({
-          context: this._serviceName,
-          hasExtendedContext: true,
-          message: LoggerService.getInstance().getSnowflakeContext(
-            anyDiscordMessage.id,
-            `current state: ${ChalkService.getInstance().value(
-              _.isNil(isEnabled) ? `undefined` : isEnabled
-            )}`
-          ),
-        });
+        this._logCurrentState(anyDiscordMessage.id, isEnabled);
 
-        if (_.isNil(isEnabled)) {
-          if (_.isEqual(shouldEnable, true)) {
-            return Promise.resolve({
-              description: `The \`noon\` feature was not configured yet and is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-              name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
-            });
-          }
-
-          return Promise.resolve({
-            description: `The \`noon\` feature was not configured yet and is now disabled on this channel.`,
-            name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
-          });
-        } else if (_.isEqual(isEnabled, true)) {
-          if (_.isEqual(shouldEnable, true)) {
-            return Promise.resolve({
-              description: `The \`noon\` feature was already enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-              name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
-            });
-          }
-
-          return Promise.resolve({
-            description: `The \`noon\` feature is now disabled on this channel.`,
-            name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
-          });
-        }
-
-        if (_.isEqual(shouldEnable, true)) {
-          return Promise.resolve({
-            description: `The \`noon\` feature is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-            name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
-          });
-        }
-
-        return Promise.resolve({
-          description: `The \`noon\` feature was already disabled on this channel.`,
-          name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
-        });
+        return Promise.resolve(
+          this._getCommandFlagSuccess(shouldEnable, isEnabled)
+        );
       }
     );
   }
@@ -189,5 +133,113 @@ export class DiscordMessageCommandFeatureNoonEnabled
     return Promise.reject(
       new Error(`Could not find the guild ${guildId} in Firebase`)
     );
+  }
+
+  private _logExecuteAction(discordMessageId: Readonly<Snowflake>): void {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        discordMessageId,
+        `executing ${ChalkService.getInstance().value(`enabled`)} action`
+      ),
+    });
+  }
+
+  private _logNewState(
+    discordMessageId: Readonly<Snowflake>,
+    isEnabled: Readonly<boolean>
+  ): void {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        discordMessageId,
+        `new state: ${ChalkService.getInstance().value(isEnabled)}`
+      ),
+    });
+  }
+
+  private _logCurrentState(
+    discordMessageId: Readonly<Snowflake>,
+    isEnabled: Readonly<boolean | undefined>
+  ): void {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        discordMessageId,
+        `current state: ${ChalkService.getInstance().value(
+          _.isNil(isEnabled) ? `undefined` : isEnabled
+        )}`
+      ),
+    });
+  }
+
+  private _getCommandFlagSuccess(
+    shouldEnable: Readonly<boolean>,
+    isEnabled: Readonly<boolean | undefined>
+  ): IDiscordCommandFlagSuccess {
+    if (_.isNil(isEnabled)) {
+      return this._getCommandFlagSuccessWhenNotConfigured(shouldEnable);
+    } else if (_.isEqual(isEnabled, true)) {
+      return this._getCommandFlagSuccessWhenEnabled(shouldEnable);
+    }
+
+    return this._getCommandFlagSuccessWhenDisabled(shouldEnable);
+  }
+
+  private _getCommandFlagSuccessWhenNotConfigured(
+    shouldEnable: Readonly<boolean>
+  ): IDiscordCommandFlagSuccess {
+    if (_.isEqual(shouldEnable, true)) {
+      return {
+        description:
+          DiscordCommandFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_ENABLED,
+        name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
+      };
+    }
+
+    return {
+      description:
+        DiscordCommandFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_DISABLED,
+      name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
+    };
+  }
+
+  private _getCommandFlagSuccessWhenEnabled(
+    shouldEnable: Readonly<boolean>
+  ): IDiscordCommandFlagSuccess {
+    if (_.isEqual(shouldEnable, true)) {
+      return {
+        description:
+          DiscordCommandFlagSuccessDescriptionEnum.ENABLED_AND_ENABLED,
+        name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
+      };
+    }
+
+    return {
+      description:
+        DiscordCommandFlagSuccessDescriptionEnum.ENABLED_AND_DISABLED,
+      name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
+    };
+  }
+
+  private _getCommandFlagSuccessWhenDisabled(
+    shouldEnable: Readonly<boolean>
+  ): IDiscordCommandFlagSuccess {
+    if (_.isEqual(shouldEnable, true)) {
+      return {
+        description:
+          DiscordCommandFlagSuccessDescriptionEnum.DISABLED_AND_ENABLED,
+        name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
+      };
+    }
+
+    return {
+      description:
+        DiscordCommandFlagSuccessDescriptionEnum.DISABLED_AND_DISABLED,
+      name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
+    };
   }
 }
