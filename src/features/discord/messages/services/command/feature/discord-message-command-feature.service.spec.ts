@@ -823,7 +823,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledWith([
                   {
-                    description: `The flag \`--enabled=true\` and \`-e\` are duplicated.`,
+                    description: `The flags \`--enabled=true\` and \`-e\` are duplicated.`,
                     name: `Enabled flag duplicated`,
                   } as IDiscordCommandFlagDuplicated,
                 ]);
@@ -920,7 +920,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledWith([
                   {
-                    description: `The flag \`--enabled=true\`, \`-e\` and \`--enabled=false\` are duplicated.`,
+                    description: `The flags \`--enabled=true\`, \`-e\` and \`--enabled=false\` are duplicated.`,
                     name: `Enabled flag duplicated`,
                   } as IDiscordCommandFlagDuplicated,
                 ]);
