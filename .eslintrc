@@ -248,6 +248,8 @@ rules:
     - error
   '@typescript-eslint/prefer-literal-enum-member': off
   '@typescript-eslint/unified-signatures': error
+  no-undef-init:
+    - error
   no-magic-numbers:
     - error
     - enforceConst: true
