@@ -247,6 +247,8 @@ rules:
   '@typescript-eslint/prefer-enum-initializers':
     - error
   '@typescript-eslint/prefer-literal-enum-member': off
+  no-undef-init:
+    - error
   no-magic-numbers:
     - error
     - enforceConst: true
