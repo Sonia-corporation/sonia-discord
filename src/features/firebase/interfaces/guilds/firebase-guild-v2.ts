@@ -1,9 +1,7 @@
 import { Snowflake } from "discord.js";
-import admin from "firebase-admin";
 import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-version.enum";
-import DocumentData = admin.firestore.DocumentData;
 
-export interface IFirebaseGuildV2 extends DocumentData {
+export interface IFirebaseGuildV2 {
   /**
    * @description
    * The Discord guild id
@@ -14,6 +12,8 @@ export interface IFirebaseGuildV2 extends DocumentData {
    * @description
    * Used to store the last release notes version sent on the guild
    * This is useful to avoid sending release notes on each run
+   *
+   * Created within the [v2]{@link FirebaseGuildVersionEnum.V2}
    */
   lastReleaseNotesVersion?: string | undefined;
 

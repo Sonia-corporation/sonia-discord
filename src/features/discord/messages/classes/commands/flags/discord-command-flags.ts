@@ -5,14 +5,16 @@ import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { DiscordCommandFlagErrorTitleEnum } from "../../../enums/commands/flags/discord-command-flag-error-title.enum";
 import { discordCommandGetFlagName } from "../../../functions/commands/flags/discord-command-get-flag-name";
+import { discordCommandGetFlagValue } from "../../../functions/commands/flags/discord-command-get-flag-value";
 import { discordCommandIsMessageFlag } from "../../../functions/commands/flags/discord-command-is-message-flag";
 import { discordCommandRemoveFlagPrefix } from "../../../functions/commands/flags/discord-command-remove-flag-prefix";
 import { discordCommandSplitMessageFlags } from "../../../functions/commands/flags/discord-command-split-message-flags";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
+import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
 import { IDiscordCommandFlags } from "../../../interfaces/commands/flags/discord-command-flags";
-import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
+import { IDiscordCommandFlagsSuccess } from "../../../types/commands/flags/discord-command-flags-success";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandFirstArgument } from "../arguments/discord-command-first-argument";
 import { DiscordCommandFlag } from "./discord-command-flag";
@@ -150,7 +152,7 @@ export class DiscordCommandFlags<T extends string> {
   public executeAll(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     messageFlags: Readonly<string>
-  ): Promise<IDiscordMessageResponse> {
+  ): Promise<IDiscordCommandFlagsSuccess> {
     LoggerService.getInstance().debug({
       context: this._className,
       hasExtendedContext: true,
@@ -167,11 +169,15 @@ export class DiscordCommandFlags<T extends string> {
     return Promise.all(
       _.map(
         discordMessageFlags,
-        (discordMessageFlag: Readonly<IDiscordMessageFlag>): Promise<unknown> =>
+        (
+          discordMessageFlag: Readonly<IDiscordMessageFlag>
+        ): Promise<IDiscordCommandFlagSuccess> =>
           this.execute(anyDiscordMessage, discordMessageFlag)
       )
     ).then(
-      (): Promise<IDiscordMessageResponse> => {
+      (
+        discordCommandFlagsSuccess: IDiscordCommandFlagsSuccess
+      ): Promise<IDiscordCommandFlagsSuccess> => {
         LoggerService.getInstance().success({
           context: this._className,
           hasExtendedContext: true,
@@ -181,9 +187,7 @@ export class DiscordCommandFlags<T extends string> {
           ),
         });
 
-        return Promise.resolve({
-          response: `No options for noon feature for now. Work in progress.`,
-        });
+        return Promise.resolve(discordCommandFlagsSuccess);
       }
     );
   }
@@ -200,7 +204,7 @@ export class DiscordCommandFlags<T extends string> {
   public execute(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     messageFlag: Readonly<IDiscordMessageFlag>
-  ): Promise<unknown | never> {
+  ): Promise<IDiscordCommandFlagSuccess | never> {
     LoggerService.getInstance().debug({
       context: this._className,
       hasExtendedContext: true,
@@ -218,7 +222,10 @@ export class DiscordCommandFlags<T extends string> {
         | undefined = this._getFlagFromMessageFlag(messageFlag);
 
       if (this._isFlag(flag)) {
-        return flag.executeAction(anyDiscordMessage);
+        return flag.executeAction(
+          anyDiscordMessage,
+          discordCommandGetFlagValue(messageFlag)
+        );
       }
 
       return Promise.reject(

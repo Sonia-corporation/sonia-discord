@@ -247,6 +247,9 @@ rules:
   '@typescript-eslint/prefer-enum-initializers':
     - error
   '@typescript-eslint/prefer-literal-enum-member': off
+  '@typescript-eslint/unified-signatures': error
+  no-undef-init:
+    - error
   no-magic-numbers:
     - error
     - enforceConst: true
@@ -266,3 +269,9 @@ overrides:
       - '*.spec.ts'
     rules:
       no-magic-numbers: off
+      '@typescript-eslint/ban-types':
+        - error
+        - types:
+            Readonly:
+              message: 'Sonia rule - This is useless inside the tests'
+          extendDefaults: true

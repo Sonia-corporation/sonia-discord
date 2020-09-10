@@ -89,10 +89,9 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandReleaseNotesService();
-      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
+      anyDiscordMessage = createMock<IAnyDiscordMessage>({
         id: `dummy-id`,
-      } as unknown) as IAnyDiscordMessage);
+      });
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
       getMessageResponseSpy = jest

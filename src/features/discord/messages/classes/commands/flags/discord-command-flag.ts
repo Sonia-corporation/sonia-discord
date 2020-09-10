@@ -2,8 +2,10 @@ import _ from "lodash";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
+import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
+import { DiscordCommandFlagAction } from "./discord-command-flag-action";
 
 /**
  * @description
@@ -12,9 +14,7 @@ import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-messa
  */
 export abstract class DiscordCommandFlag<T extends string> {
   protected abstract _type: DiscordCommandFlagTypeEnum;
-  protected _action: (
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ) => Promise<unknown>;
+  protected _action: DiscordCommandFlagAction;
   protected _description: string;
   protected _name: T;
   protected _shortcuts: T[] | undefined;
@@ -34,13 +34,11 @@ export abstract class DiscordCommandFlag<T extends string> {
     this._shortcuts = shortcuts;
   }
 
-  public getAction(): (
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ) => Promise<unknown> {
+  public getAction(): DiscordCommandFlagAction {
     return this._action;
   }
 
-  public setAction(action: () => Promise<unknown>): void {
+  public setAction(action: DiscordCommandFlagAction): void {
     this._action = action;
   }
 
@@ -106,9 +104,10 @@ export abstract class DiscordCommandFlag<T extends string> {
   }
 
   public executeAction(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<unknown> {
-    return this._action(anyDiscordMessage);
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    value?: Readonly<string | null | undefined>
+  ): Promise<IDiscordCommandFlagSuccess> {
+    return this._action.execute(anyDiscordMessage, value);
   }
 
   public abstract isValid(messageFlag: Readonly<IDiscordMessageFlag>): boolean;

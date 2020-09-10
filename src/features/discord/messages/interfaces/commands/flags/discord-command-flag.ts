@@ -1,7 +1,7 @@
-import { IAnyDiscordMessage } from "../../../types/any-discord-message";
+import { DiscordCommandFlagAction } from "../../../classes/commands/flags/discord-command-flag-action";
 
 export interface IDiscordCommandFlag<T = string> {
-  action: (anyDiscordMessage: Readonly<IAnyDiscordMessage>) => Promise<unknown>;
+  action: DiscordCommandFlagAction;
   description: string;
   name: T;
   shortcuts?: T[] | undefined;

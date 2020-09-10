@@ -92,10 +92,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureService();
-      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
+      anyDiscordMessage = createMock<IAnyDiscordMessage>({
         id: `dummy-id`,
-      } as unknown) as IAnyDiscordMessage);
+      });
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
       getMessageResponseSpy = jest
@@ -425,6 +424,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
             context: `DiscordMessageCommandFeatureService`,
+            hasExtendedContext: true,
             message: `context-[dummy-id] text-feature name not specified`,
           } as ILoggerLog);
         });
@@ -545,6 +545,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `DiscordMessageCommandFeatureService`,
+              hasExtendedContext: true,
               message: `context-[dummy-id] text-feature name value-dummy not matching an existing feature`,
             } as ILoggerLog);
           });
@@ -666,6 +667,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
               expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                 context: `DiscordMessageCommandFeatureService`,
+                hasExtendedContext: true,
                 message: `context-[dummy-id] text-feature name value-Noon not having any flags`,
               } as ILoggerLog);
             });
@@ -768,6 +770,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
+                  hasExtendedContext: true,
                   message: `context-[dummy-id] text-feature name value-Noon not having all valid flags`,
                 } as ILoggerLog);
               });

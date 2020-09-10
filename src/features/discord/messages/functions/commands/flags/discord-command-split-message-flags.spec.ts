@@ -44,4 +44,46 @@ describe(`discordCommandSplitMessageFlags()`, (): void => {
       expect(result).toStrictEqual([`--dummy`, `--other`]);
     });
   });
+
+  describe(`when the given message with two shortcut flags`, (): void => {
+    beforeEach((): void => {
+      message = `-dummy -other`;
+    });
+
+    it(`should return an array with two message flags`, (): void => {
+      expect.assertions(1);
+
+      const result = discordCommandSplitMessageFlags(message);
+
+      expect(result).toStrictEqual([`-dummy`, `-other`]);
+    });
+  });
+
+  describe(`when the given message with two flags with values`, (): void => {
+    beforeEach((): void => {
+      message = `--dummy=value1 --other=value2`;
+    });
+
+    it(`should return an array with two message flags`, (): void => {
+      expect.assertions(1);
+
+      const result = discordCommandSplitMessageFlags(message);
+
+      expect(result).toStrictEqual([`--dummy=value1`, `--other=value2`]);
+    });
+  });
+
+  describe(`when the given message with two shortcut flags with values`, (): void => {
+    beforeEach((): void => {
+      message = `-dummy=value1 -other=value2`;
+    });
+
+    it(`should return an array with two message flags`, (): void => {
+      expect.assertions(1);
+
+      const result = discordCommandSplitMessageFlags(message);
+
+      expect(result).toStrictEqual([`-dummy=value1`, `-other=value2`]);
+    });
+  });
 });

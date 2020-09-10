@@ -13,13 +13,13 @@ interface IDummy {
 
 class DummyService extends AbstractConfigService<IDummy> {
   public constructor(
-    serviceName: Readonly<ServiceNameEnum>,
-    config?: Readonly<IPartialNested<IDummy>>
+    serviceName: ServiceNameEnum,
+    config?: IPartialNested<IDummy>
   ) {
     super(serviceName, config);
   }
 
-  public updateConfig(_config?: Readonly<IPartialNested<IDummy>>): void {
+  public updateConfig(_config?: IPartialNested<IDummy>): void {
     // Avoid lint error :)
   }
 }
