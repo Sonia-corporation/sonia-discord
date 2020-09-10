@@ -133,7 +133,7 @@ describe(`DiscordMessageService`, (): void => {
         discordClientServiceGetClientOnMock = jest.fn(
           (
             _event: string,
-            listener: (anyDiscordMessage: Readonly<IAnyDiscordMessage>) => void
+            listener: (anyDiscordMessage: IAnyDiscordMessage) => void
           ): void => {
             listener(anyDiscordMessage);
           }
@@ -179,10 +179,9 @@ describe(`DiscordMessageService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageService();
-      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-      anyDiscordMessage = createMock<IAnyDiscordMessage>(({
+      anyDiscordMessage = createMock<IAnyDiscordMessage>({
         id: `dummy-id`,
-      } as unknown) as IAnyDiscordMessage);
+      });
 
       loggerServiceLogSpy = jest
         .spyOn(loggerService, `log`)
@@ -401,13 +400,10 @@ describe(`DiscordMessageService`, (): void => {
       anyDiscordMessageChannelSendMock = jest
         .fn()
         .mockRejectedValue(new Error(`Fake test error: send`));
-      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
       anyDiscordMessage = createMock<IAnyDiscordMessage>({
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         channel: {
           send: anyDiscordMessageChannelSendMock,
-        } as unknown,
+        },
         id: `dummy-id`,
       });
       discordMessageResponse = createMock<IDiscordMessageResponse>({
@@ -618,13 +614,10 @@ describe(`DiscordMessageService`, (): void => {
                   Promise.reject(new Error(`Message sending error`))
                 );
 
-                // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
                 anyDiscordMessage = createMock<IAnyDiscordMessage>({
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  // @ts-ignore
                   channel: {
                     send: anyDiscordMessageChannelSendMock,
-                  } as unknown,
+                  },
                   id: `dummy-id`,
                 });
               });
@@ -664,13 +657,10 @@ describe(`DiscordMessageService`, (): void => {
                   Promise.resolve()
                 );
 
-                // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
                 anyDiscordMessage = createMock<IAnyDiscordMessage>({
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                  // @ts-ignore
                   channel: {
                     send: anyDiscordMessageChannelSendMock,
-                  } as unknown,
+                  },
                   id: `dummy-id`,
                 });
               });
@@ -844,13 +834,10 @@ describe(`DiscordMessageService`, (): void => {
                 Promise.reject(new Error(`Message sending error`))
               );
 
-              // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
               anyDiscordMessage = createMock<IAnyDiscordMessage>({
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
                 channel: {
                   send: anyDiscordMessageChannelSendMock,
-                } as unknown,
+                },
                 id: `dummy-id`,
               });
             });
@@ -890,13 +877,10 @@ describe(`DiscordMessageService`, (): void => {
                 Promise.resolve()
               );
 
-              // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
               anyDiscordMessage = createMock<IAnyDiscordMessage>({
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
                 channel: {
                   send: anyDiscordMessageChannelSendMock,
-                } as unknown,
+                },
                 id: `dummy-id`,
               });
             });

@@ -49,6 +49,22 @@ describe(`DiscordMessageConfigValueNameEnum`, (): void => {
     ).toStrictEqual(`message command error image url`);
   });
 
+  it(`should have a member "COMMAND_FEATURE_NOON_COLOR"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      DiscordMessageConfigValueNameEnum.COMMAND_FEATURE_NOON_COLOR
+    ).toStrictEqual(`message command feature noon color`);
+  });
+
+  it(`should have a member "COMMAND_FEATURE_NOON_IMAGE_URL"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      DiscordMessageConfigValueNameEnum.COMMAND_FEATURE_NOON_IMAGE_URL
+    ).toStrictEqual(`message command feature noon image url`);
+  });
+
   it(`should have a member "COMMAND_HELP_IMAGE_COLOR"`, (): void => {
     expect.assertions(1);
 

@@ -2,10 +2,12 @@ import { createMock } from "ts-auto-mock";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
+import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
 import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
+import { DiscordCommandFlagAction } from "./discord-command-flag-action";
 
 describe(`DiscordCommandBooleanFlag`, (): void => {
   let discordCommandFlag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
@@ -14,7 +16,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
     describe(`when the class is created with an action`, (): void => {
       it(`should update the action inside the class`, (): void => {
         expect.assertions(1);
-        const action = (): Promise<unknown> => Promise.resolve();
+        const action = createMock<DiscordCommandFlagAction>({
+          execute: (): Promise<IDiscordCommandFlagSuccess> =>
+            Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+        });
 
         discordCommandFlag = new DiscordCommandBooleanFlag<
           DiscordMessageCommandFeatureNoonFlagEnum
@@ -124,7 +129,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
     it(`should return the action`, (): void => {
       expect.assertions(1);
-      const action = (): Promise<unknown> => Promise.resolve();
+      const action = createMock<DiscordCommandFlagAction>({
+        execute: (): Promise<IDiscordCommandFlagSuccess> =>
+          Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+      });
       discordCommandFlag.setAction(action);
 
       const result = discordCommandFlag.getAction();
@@ -146,7 +154,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
     it(`should update the action with the given one`, (): void => {
       expect.assertions(1);
-      const action = (): Promise<unknown> => Promise.resolve();
+      const action = createMock<DiscordCommandFlagAction>({
+        execute: (): Promise<IDiscordCommandFlagSuccess> =>
+          Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+      });
 
       discordCommandFlag.setAction(action);
 
@@ -760,6 +771,8 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`executeAction()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
+    let messageFlag: IDiscordMessageFlag;
+    let discordCommandFlagSuccess: IDiscordCommandFlagSuccess;
 
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandBooleanFlag<
@@ -770,16 +783,24 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         >()
       );
       anyDiscordMessage = createMock<IAnyDiscordMessage>();
+      messageFlag = `--enabled=true`;
+      discordCommandFlagSuccess = createMock<IDiscordCommandFlagSuccess>();
     });
 
     it(`should execute the action`, async (): Promise<void> => {
       expect.assertions(1);
-      const action = (): Promise<unknown> => Promise.resolve(`dummy`);
+      const action = createMock<DiscordCommandFlagAction>({
+        execute: (): Promise<IDiscordCommandFlagSuccess> =>
+          Promise.resolve(discordCommandFlagSuccess),
+      });
       discordCommandFlag.setAction(action);
 
-      const result = await discordCommandFlag.executeAction(anyDiscordMessage);
+      const result = await discordCommandFlag.executeAction(
+        anyDiscordMessage,
+        messageFlag
+      );
 
-      expect(result).toStrictEqual(`dummy`);
+      expect(result).toStrictEqual(discordCommandFlagSuccess);
     });
   });
 });

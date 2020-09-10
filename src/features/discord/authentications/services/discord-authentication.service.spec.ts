@@ -1,4 +1,4 @@
-import { Client, ClientUser } from "discord.js";
+import { Client } from "discord.js";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
@@ -171,12 +171,11 @@ describe(`DiscordAuthenticationService`, (): void => {
 
         beforeEach((): void => {
           tag = `dummy-tag`;
-          // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
           client = createMock<Client>({
             on: discordClientServiceGetClientOnMock,
-            user: ({
+            user: {
               tag,
-            } as unknown) as ClientUser,
+            },
           });
 
           discordClientServiceGetClientSpy.mockReturnValue(client);

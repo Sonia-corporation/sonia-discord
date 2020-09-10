@@ -143,10 +143,7 @@ describe(`DiscordGuildCreateService`, (): void => {
     describe(`when the Discord client guildCreate event is triggered`, (): void => {
       beforeEach((): void => {
         discordClientServiceGetClientOnMock = jest.fn(
-          (
-            _event: string,
-            listener: (guild: Readonly<Guild>) => void
-          ): void => {
+          (_event: string, listener: (guild: Guild) => void): void => {
             listener(guild);
           }
         );
@@ -372,10 +369,9 @@ describe(`DiscordGuildCreateService`, (): void => {
 
         describe(`when the primary guild channel is not writable`, (): void => {
           beforeEach((): void => {
-            // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-            primaryGuildChannel = createMock<GuildChannel>(({
+            primaryGuildChannel = createMock<GuildChannel>({
               type: `voice`,
-            } as unknown) as GuildChannel);
+            });
 
             discordChannelGuildServiceGetPrimarySpy.mockReturnValue(
               primaryGuildChannel
@@ -415,11 +411,10 @@ describe(`DiscordGuildCreateService`, (): void => {
 
         describe(`when the primary guild channel is writable`, (): void => {
           beforeEach((): void => {
-            // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-            primaryGuildChannel = createMock<TextChannel>(({
+            primaryGuildChannel = createMock<TextChannel>({
               send: guildChannelSendMock,
               type: `text`,
-            } as unknown) as TextChannel);
+            });
 
             discordChannelGuildServiceGetPrimarySpy.mockReturnValue(
               primaryGuildChannel
@@ -585,10 +580,9 @@ describe(`DiscordGuildCreateService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordGuildCreateService();
-      // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-      guild = createMock<Guild>(({
+      guild = createMock<Guild>({
         id: `dummy-id`,
-      } as unknown) as Guild);
+      });
       writeResult = createMock<WriteResult>();
 
       firebaseGuildsServiceIsReady$Spy = jest
