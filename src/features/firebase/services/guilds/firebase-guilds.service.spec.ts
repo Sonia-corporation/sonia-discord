@@ -1,5 +1,6 @@
 import { Guild, Snowflake } from "discord.js";
 import * as admin from "firebase-admin";
+import { take } from "rxjs/operators";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
@@ -900,36 +901,22 @@ describe(`FirebaseGuildsService`, (): void => {
       service = new FirebaseGuildsService();
     });
 
-    it(`should be false by default`, (doneCallback: jest.DoneCallback): void => {
+    it(`should be false by default`, async (): Promise<void> => {
       expect.assertions(1);
 
-      service.isReady$().subscribe({
-        error(error): void {
-          expect(true).toStrictEqual(false);
-          doneCallback(error);
-        },
-        next(isTrue: boolean): void {
-          expect(isTrue).toStrictEqual(false);
-          doneCallback();
-        },
-      });
+      const isReady = await service.isReady$().pipe(take(1)).toPromise();
+
+      expect(isReady).toStrictEqual(false);
     });
 
     describe(`when the is ready event is notified`, (): void => {
-      it(`should emit a new value into the stream`, (doneCallback: jest.DoneCallback): void => {
+      it(`should emit a new value into the stream`, async (): Promise<void> => {
         expect.assertions(1);
-
         service.notifyIsReady();
-        service.isReady$().subscribe({
-          error(error): void {
-            expect(true).toStrictEqual(false);
-            doneCallback(error);
-          },
-          next(isTrue: boolean): void {
-            expect(isTrue).toStrictEqual(true);
-            doneCallback();
-          },
-        });
+
+        const isReady = await service.isReady$().pipe(take(1)).toPromise();
+
+        expect(isReady).toStrictEqual(true);
       });
     });
   });
@@ -960,20 +947,15 @@ describe(`FirebaseGuildsService`, (): void => {
       service = new FirebaseGuildsService();
     });
 
-    it(`should notify that the Firebase app is ready`, (doneCallback: jest.DoneCallback): void => {
+    it(`should notify that the Firebase app is ready`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
 
       service.notifyIsReady();
-      service.isReady$().subscribe({
-        error(error): void {
-          expect(true).toStrictEqual(false);
-          doneCallback(error);
-        },
-        next(isTrue: boolean): void {
-          expect(isTrue).toStrictEqual(true);
-          doneCallback();
-        },
-      });
+      const isReady = await service.isReady$().pipe(take(1)).toPromise();
+
+      expect(isReady).toStrictEqual(true);
     });
   });
 
@@ -985,36 +967,25 @@ describe(`FirebaseGuildsService`, (): void => {
       firebaseGuilds = createMock<IFirebaseGuild[]>();
     });
 
-    it(`should be an empty array by default`, (doneCallback: jest.DoneCallback): void => {
+    it(`should be an empty array by default`, async (): Promise<void> => {
       expect.assertions(1);
 
-      service.onGuildsChange$().subscribe({
-        error(error): void {
-          expect(true).toStrictEqual(false);
-          doneCallback(error);
-        },
-        next(firebaseGuilds: IFirebaseGuild[]): void {
-          expect(firebaseGuilds).toStrictEqual([]);
-          doneCallback();
-        },
-      });
+      const isReady = await service.onGuildsChange$().pipe(take(1)).toPromise();
+
+      expect(isReady).toStrictEqual([]);
     });
 
     describe(`when the on guilds change event is notified`, (): void => {
-      it(`should emit a new value into the stream`, (doneCallback: jest.DoneCallback): void => {
+      it(`should emit a new value into the stream`, async (): Promise<void> => {
         expect.assertions(1);
-
         service.notifyOnGuildsChange(firebaseGuilds);
-        service.onGuildsChange$().subscribe({
-          error(error): void {
-            expect(true).toStrictEqual(false);
-            doneCallback(error);
-          },
-          next(firebaseGuilds: IFirebaseGuild[]): void {
-            expect(firebaseGuilds).toStrictEqual(firebaseGuilds);
-            doneCallback();
-          },
-        });
+
+        const isReady = await service
+          .onGuildsChange$()
+          .pipe(take(1))
+          .toPromise();
+
+        expect(isReady).toStrictEqual(firebaseGuilds);
       });
     });
   });
