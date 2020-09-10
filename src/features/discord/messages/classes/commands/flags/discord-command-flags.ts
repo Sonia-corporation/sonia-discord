@@ -393,7 +393,7 @@ export class DiscordCommandFlags<T extends string> {
   private _getFlagsDuplicated(
     messageFlags: Readonly<string>[]
   ): IDiscordCommandFlagsDuplicated {
-    const active = this._getDuplicatedMessagesFlagsByName(messageFlags);
+    const messageFlagsWithName: Dictionary<IDiscordCommandMessageFlagWithName[]> = this._getDuplicatedMessagesFlagsByName(messageFlags);
 
     return _.map(
       active,
