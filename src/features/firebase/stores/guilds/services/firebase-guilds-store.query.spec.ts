@@ -64,9 +64,9 @@ describe(`FirebaseGuildsStoreQuery`, (): void => {
       it(`should emit a new value into the stream`, async (): Promise<void> => {
         expect.assertions(1);
 
-        const isReady = await service.wasLoaded();
+        const result = await service.wasLoaded();
 
-        expect(isReady).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
   });

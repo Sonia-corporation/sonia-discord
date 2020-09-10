@@ -166,9 +166,9 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       > => {
         expect.assertions(1);
 
-        const isReady = await service.isReady$().pipe(take(1)).toPromise();
+        const result = await service.isReady$().pipe(take(1)).toPromise();
 
-        expect(isReady).toStrictEqual([true]);
+        expect(result).toStrictEqual([true]);
       });
     });
   });

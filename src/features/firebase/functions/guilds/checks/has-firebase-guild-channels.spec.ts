@@ -19,9 +19,9 @@ describe(`hasFirebaseGuildChannels()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const hasProperty = hasFirebaseGuildChannels(firebaseGuild);
+      const result = hasFirebaseGuildChannels(firebaseGuild);
 
-      expect(hasProperty).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -35,9 +35,9 @@ describe(`hasFirebaseGuildChannels()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const hasProperty = hasFirebaseGuildChannels(firebaseGuild);
+      const result = hasFirebaseGuildChannels(firebaseGuild);
 
-      expect(hasProperty).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -51,9 +51,9 @@ describe(`hasFirebaseGuildChannels()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const hasProperty = hasFirebaseGuildChannels(firebaseGuild);
+      const result = hasFirebaseGuildChannels(firebaseGuild);
 
-      expect(hasProperty).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 });

@@ -10,9 +10,9 @@ describe(`hasCommandLineArguments()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const hasCommandLineArgumentsResult = hasCommandLineArguments();
+        const result = hasCommandLineArguments();
 
-        expect(hasCommandLineArgumentsResult).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -24,9 +24,7 @@ describe(`hasCommandLineArguments()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const hasCommandLineArgumentsResult = hasCommandLineArguments();
-
-        expect(hasCommandLineArgumentsResult).toStrictEqual(false);
+        const result = hasCommandLineArguments();result).toStrictEqual(false);
       });
     });
 
@@ -38,9 +36,9 @@ describe(`hasCommandLineArguments()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const hasCommandLineArgumentsResult = hasCommandLineArguments();
+        const result = hasCommandLineArguments();
 
-        expect(hasCommandLineArgumentsResult).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
 
@@ -52,9 +50,9 @@ describe(`hasCommandLineArguments()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const hasCommandLineArgumentsResult = hasCommandLineArguments();
+        const result = hasCommandLineArguments();
 
-        expect(hasCommandLineArgumentsResult).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
   });

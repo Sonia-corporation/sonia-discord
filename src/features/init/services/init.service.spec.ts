@@ -148,25 +148,22 @@ describe(`InitService`, (): void => {
     it(`should be false by default`, async (): Promise<void> => {
       expect.assertions(1);
 
-      const isAppConfigured = await service
-        .isAppConfigured$()
-        .pipe(take(1))
-        .toPromise();
+      const result = await service.isAppConfigured$().pipe(take(1)).toPromise();
 
-      expect(isAppConfigured).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
 
     describe(`when the is app configured event is notified`, (): void => {
       it(`should emit a new value into the stream`, async (): Promise<void> => {
         expect.assertions(1);
-
         service.notifyIsAppConfigured();
-        const isAppConfigured = await service
+
+        const result = await service
           .isAppConfigured$()
           .pipe(take(1))
           .toPromise();
 
-        expect(isAppConfigured).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
   });
@@ -185,9 +182,9 @@ describe(`InitService`, (): void => {
         expect.assertions(1);
         service.notifyIsAppConfigured();
 
-        const isReady = await service.isAppConfigured();
+        const result = await service.isAppConfigured();
 
-        expect(isReady).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
   });
@@ -201,12 +198,9 @@ describe(`InitService`, (): void => {
       expect.assertions(1);
       service.notifyIsAppConfigured();
 
-      const isAppConfigured = await service
-        .isAppConfigured$()
-        .pipe(take(1))
-        .toPromise();
+      const result = await service.isAppConfigured$().pipe(take(1)).toPromise();
 
-      expect(isAppConfigured).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 });

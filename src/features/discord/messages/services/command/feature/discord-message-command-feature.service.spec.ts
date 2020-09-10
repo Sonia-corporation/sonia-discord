@@ -1097,9 +1097,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1111,9 +1111,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1125,9 +1125,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1139,9 +1139,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1153,9 +1153,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1167,9 +1167,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1181,9 +1181,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1195,9 +1195,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1209,9 +1209,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1223,9 +1223,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1237,9 +1237,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1251,9 +1251,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1265,9 +1265,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1279,9 +1279,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1293,9 +1293,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1307,9 +1307,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1321,9 +1321,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1335,9 +1335,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1349,9 +1349,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1363,9 +1363,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1377,9 +1377,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1391,9 +1391,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1405,9 +1405,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1419,9 +1419,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1433,9 +1433,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1447,9 +1447,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1461,9 +1461,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1475,9 +1475,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1489,9 +1489,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1503,9 +1503,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1517,9 +1517,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1531,9 +1531,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1545,9 +1545,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1559,9 +1559,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1573,9 +1573,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -1596,9 +1596,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1610,9 +1610,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1624,9 +1624,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1638,9 +1638,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1652,9 +1652,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1666,9 +1666,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1680,9 +1680,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1694,9 +1694,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1708,9 +1708,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1722,9 +1722,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1736,9 +1736,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1750,9 +1750,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1764,9 +1764,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1778,9 +1778,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1792,9 +1792,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1806,9 +1806,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1820,9 +1820,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1834,9 +1834,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1848,9 +1848,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1862,9 +1862,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1876,9 +1876,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1890,9 +1890,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1904,9 +1904,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1918,9 +1918,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1932,9 +1932,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1946,9 +1946,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1960,9 +1960,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1974,9 +1974,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1988,9 +1988,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -2002,9 +2002,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -2016,9 +2016,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -2030,9 +2030,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -2044,9 +2044,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -2058,9 +2058,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -2072,9 +2072,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const hasCommandResult = service.hasCommand(message);
+          const result = service.hasCommand(message);
 
-          expect(hasCommandResult).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
     });
@@ -2095,9 +2095,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const hasFlags = service.hasFlags(message);
+        const result = service.hasFlags(message);
 
-        expect(hasFlags).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -2109,9 +2109,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const hasFlags = service.hasFlags(message);
+        const result = service.hasFlags(message);
 
-        expect(hasFlags).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
   });

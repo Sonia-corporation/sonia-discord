@@ -767,9 +767,9 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
         expect.assertions(1);
         service.notifyHasFinished();
 
-        const hasFinished = await service.hasFinished();
+        const result = await service.hasFinished();
 
-        expect(hasFinished).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
   });

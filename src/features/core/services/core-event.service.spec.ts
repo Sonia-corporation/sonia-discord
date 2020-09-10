@@ -1,3 +1,4 @@
+import { take, tap } from "rxjs/operators";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "./core-event.service";
 
@@ -61,20 +62,22 @@ describe(`CoreEventService`, (): void => {
         serviceName = ServiceNameEnum.CHALK_SERVICE;
       });
 
-      it(`should notify that a service was created by using the given service name`, (doneCallback: jest.DoneCallback): void => {
+      it(`should notify that a service was created by using the given service name`, async (): Promise<
+        void
+      > => {
         expect.assertions(1);
 
-        service.serviceCreated$().subscribe({
-          error(error): void {
-            expect(true).toStrictEqual(false);
-            doneCallback(error);
-          },
-          next(result: ServiceNameEnum): void {
-            expect(result).toStrictEqual(ServiceNameEnum.CHALK_SERVICE);
-            doneCallback();
-          },
-        });
-        service.notifyServiceCreated(serviceName);
+        const result = await service
+          .serviceCreated$()
+          .pipe(
+            tap({
+              next: (): void => service.notifyServiceCreated(serviceName),
+            }),
+            take(1)
+          )
+          .toPromise();
+
+        expect(result).toStrictEqual(ServiceNameEnum.CHALK_SERVICE);
       });
     });
 
@@ -83,22 +86,22 @@ describe(`CoreEventService`, (): void => {
         serviceName = ServiceNameEnum.APP_CONFIG_QUERY_SERVICE;
       });
 
-      it(`should notify that a service was created by using the given service name`, (doneCallback: jest.DoneCallback): void => {
+      it(`should notify that a service was created by using the given service name`, async (): Promise<
+        void
+      > => {
         expect.assertions(1);
 
-        service.serviceCreated$().subscribe({
-          error(error): void {
-            expect(true).toStrictEqual(false);
-            doneCallback(error);
-          },
-          next(result: ServiceNameEnum): void {
-            expect(result).toStrictEqual(
-              ServiceNameEnum.APP_CONFIG_QUERY_SERVICE
-            );
-            doneCallback();
-          },
-        });
-        service.notifyServiceCreated(serviceName);
+        const result = await service
+          .serviceCreated$()
+          .pipe(
+            tap({
+              next: (): void => service.notifyServiceCreated(serviceName),
+            }),
+            take(1)
+          )
+          .toPromise();
+
+        expect(result).toStrictEqual(ServiceNameEnum.APP_CONFIG_QUERY_SERVICE);
       });
     });
   });
@@ -112,22 +115,18 @@ describe(`CoreEventService`, (): void => {
     });
 
     describe(`when the service created event is notified`, (): void => {
-      it(`should emit a new value into the stream`, (doneCallback: jest.DoneCallback): void => {
+      it(`should emit a new value into the stream`, async (): Promise<void> => {
         expect.assertions(1);
-
-        service.serviceCreated$().subscribe({
-          error(error): void {
-            expect(true).toStrictEqual(false);
-            doneCallback(error);
-          },
-          next(result: ServiceNameEnum): void {
-            expect(result).toStrictEqual(
-              ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE
-            );
-            doneCallback();
-          },
-        });
         service.notifyServiceCreated(serviceName);
+
+        const result = await service
+          .serviceCreated$()
+          .pipe(take(1))
+          .toPromise();
+
+        expect(result).toStrictEqual(
+          ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE
+        );
       });
     });
   });

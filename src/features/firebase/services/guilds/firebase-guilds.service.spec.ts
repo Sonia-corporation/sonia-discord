@@ -589,9 +589,9 @@ describe(`FirebaseGuildsService`, (): void => {
       > => {
         expect.assertions(5);
 
-        const hasGuild = await service.hasGuild(guildId);
+        const result = await service.hasGuild(guildId);
 
-        expect(hasGuild).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
         expect(docMock).toHaveBeenCalledTimes(1);
         expect(docMock).toHaveBeenCalledWith(guildId);
         expect(getMock).toHaveBeenCalledTimes(1);
@@ -629,9 +629,9 @@ describe(`FirebaseGuildsService`, (): void => {
         it(`should return false`, async (): Promise<void> => {
           expect.assertions(1);
 
-          const hasGuild = await service.hasGuild(guildId);
+          const result = await service.hasGuild(guildId);
 
-          expect(hasGuild).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -674,9 +674,9 @@ describe(`FirebaseGuildsService`, (): void => {
           it(`should return false`, async (): Promise<void> => {
             expect.assertions(1);
 
-            const hasGuild = await service.hasGuild(guildId);
+            const result = await service.hasGuild(guildId);
 
-            expect(hasGuild).toStrictEqual(false);
+            expect(result).toStrictEqual(false);
           });
         });
 
@@ -702,9 +702,9 @@ describe(`FirebaseGuildsService`, (): void => {
           it(`should return true`, async (): Promise<void> => {
             expect.assertions(1);
 
-            const hasGuild = await service.hasGuild(guildId);
+            const result = await service.hasGuild(guildId);
 
-            expect(hasGuild).toStrictEqual(true);
+            expect(result).toStrictEqual(true);
           });
         });
       });
@@ -904,9 +904,9 @@ describe(`FirebaseGuildsService`, (): void => {
     it(`should be false by default`, async (): Promise<void> => {
       expect.assertions(1);
 
-      const isReady = await service.isReady$().pipe(take(1)).toPromise();
+      const result = await service.isReady$().pipe(take(1)).toPromise();
 
-      expect(isReady).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
 
     describe(`when the is ready event is notified`, (): void => {
@@ -914,9 +914,9 @@ describe(`FirebaseGuildsService`, (): void => {
         expect.assertions(1);
         service.notifyIsReady();
 
-        const isReady = await service.isReady$().pipe(take(1)).toPromise();
+        const result = await service.isReady$().pipe(take(1)).toPromise();
 
-        expect(isReady).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
   });
@@ -935,9 +935,9 @@ describe(`FirebaseGuildsService`, (): void => {
         expect.assertions(1);
         service.notifyIsReady();
 
-        const isReady = await service.isReady();
+        const result = await service.isReady();
 
-        expect(isReady).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
   });
@@ -953,9 +953,9 @@ describe(`FirebaseGuildsService`, (): void => {
       expect.assertions(1);
 
       service.notifyIsReady();
-      const isReady = await service.isReady$().pipe(take(1)).toPromise();
+      const result = await service.isReady$().pipe(take(1)).toPromise();
 
-      expect(isReady).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 
@@ -970,9 +970,9 @@ describe(`FirebaseGuildsService`, (): void => {
     it(`should be an empty array by default`, async (): Promise<void> => {
       expect.assertions(1);
 
-      const isReady = await service.onGuildsChange$().pipe(take(1)).toPromise();
+      const result = await service.onGuildsChange$().pipe(take(1)).toPromise();
 
-      expect(isReady).toStrictEqual([]);
+      expect(result).toStrictEqual([]);
     });
 
     describe(`when the on guilds change event is notified`, (): void => {
@@ -980,12 +980,12 @@ describe(`FirebaseGuildsService`, (): void => {
         expect.assertions(1);
         service.notifyOnGuildsChange(firebaseGuilds);
 
-        const isReady = await service
+        const result = await service
           .onGuildsChange$()
           .pipe(take(1))
           .toPromise();
 
-        expect(isReady).toStrictEqual(firebaseGuilds);
+        expect(result).toStrictEqual(firebaseGuilds);
       });
     });
   });

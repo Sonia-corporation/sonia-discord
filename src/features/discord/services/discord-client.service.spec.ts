@@ -178,9 +178,9 @@ describe(`DiscordClientService`, (): void => {
         expect.assertions(1);
         service.notifyIsReady();
 
-        const isReady = await service.isReady();
+        const result = await service.isReady();
 
-        expect(isReady).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
   });

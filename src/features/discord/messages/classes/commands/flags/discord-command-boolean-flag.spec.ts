@@ -517,9 +517,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isValid = discordCommandFlag.isValid(messageFlag);
+        const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(isValid).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -531,9 +531,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isValid = discordCommandFlag.isValid(messageFlag);
+        const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(isValid).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -545,9 +545,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isValid = discordCommandFlag.isValid(messageFlag);
+        const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(isValid).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -559,9 +559,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isValid = discordCommandFlag.isValid(messageFlag);
+        const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(isValid).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -573,9 +573,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const isValid = discordCommandFlag.isValid(messageFlag);
+        const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(isValid).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
 
@@ -587,9 +587,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const isValid = discordCommandFlag.isValid(messageFlag);
+        const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(isValid).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
   });

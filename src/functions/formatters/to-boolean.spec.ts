@@ -11,9 +11,9 @@ describe(`toBoolean()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const isValueBoolean = toBoolean(value);
+      const result = toBoolean(value);
 
-      expect(isValueBoolean).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 
@@ -25,9 +25,9 @@ describe(`toBoolean()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const isValueBoolean = toBoolean(value);
+      const result = toBoolean(value);
 
-      expect(isValueBoolean).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 
@@ -39,9 +39,9 @@ describe(`toBoolean()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const isValueBoolean = toBoolean(value);
+      const result = toBoolean(value);
 
-      expect(isValueBoolean).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 
@@ -53,9 +53,9 @@ describe(`toBoolean()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const isValueBoolean = toBoolean(value);
+      const result = toBoolean(value);
 
-      expect(isValueBoolean).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 
@@ -67,9 +67,9 @@ describe(`toBoolean()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const isValueBoolean = toBoolean(value);
+      const result = toBoolean(value);
 
-      expect(isValueBoolean).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 
@@ -81,9 +81,9 @@ describe(`toBoolean()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isValueBoolean = toBoolean(value);
+      const result = toBoolean(value);
 
-      expect(isValueBoolean).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -95,9 +95,9 @@ describe(`toBoolean()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isValueBoolean = toBoolean(value);
+      const result = toBoolean(value);
 
-      expect(isValueBoolean).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -109,9 +109,9 @@ describe(`toBoolean()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const isValueBoolean = toBoolean(value);
+      const result = toBoolean(value);
 
-      expect(isValueBoolean).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 
@@ -123,9 +123,9 @@ describe(`toBoolean()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isValueBoolean = toBoolean(value);
+      const result = toBoolean(value);
 
-      expect(isValueBoolean).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -144,9 +144,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
 
@@ -158,9 +158,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
 
@@ -172,9 +172,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
 
@@ -186,9 +186,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
 
@@ -200,9 +200,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
 
@@ -214,9 +214,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -228,9 +228,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -242,9 +242,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
 
@@ -256,9 +256,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
   });
@@ -278,9 +278,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -292,9 +292,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -306,9 +306,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -320,9 +320,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
 
@@ -334,9 +334,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
 
@@ -348,9 +348,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -362,9 +362,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -376,9 +376,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
 
@@ -390,9 +390,9 @@ describe(`toBoolean()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isValueBoolean = toBoolean(value, asFallback);
+        const result = toBoolean(value, asFallback);
 
-        expect(isValueBoolean).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
   });

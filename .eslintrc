@@ -128,7 +128,7 @@ rules:
       types:
         - boolean
       format:
-        - camelCase
+        - PascalCase
         - UPPER_CASE
       prefix:
         - is
@@ -145,7 +145,7 @@ rules:
       types:
         - boolean
       format:
-        - camelCase
+        - PascalCase
       leadingUnderscore: allow
       prefix:
         - is
