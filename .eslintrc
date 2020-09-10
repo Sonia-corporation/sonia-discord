@@ -38,7 +38,8 @@ settings:
   import/cache:
     lifetime: Infinity
 rules:
-  jest/no-done-callback: off
+  jest/no-done-callback:
+    - error
   jest/no-disabled-tests: off
   '@typescript-eslint/member-ordering':
     - error
@@ -254,6 +255,8 @@ rules:
     - error
     - enforceConst: true
       detectObjects: false
+  require-await:
+    - error
 overrides:
   - files:
       - '*.ts'
