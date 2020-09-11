@@ -13,7 +13,9 @@ describe(`isDiscordMessage()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const result = isDiscordMessage(message);result).toStrictEqual(false);
+      const result = isDiscordMessage(message);
+
+      expect(result).toStrictEqual(false);
     });
   });
 

@@ -24,7 +24,9 @@ describe(`hasCommandLineArguments()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const result = hasCommandLineArguments();result).toStrictEqual(false);
+        const result = hasCommandLineArguments();
+
+        expect(result).toStrictEqual(false);
       });
     });
 
