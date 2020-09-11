@@ -1,5 +1,17 @@
 # Semantic Versioning Changelog
 
+# [1.75.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.74.0...1.75.0) (2020-09-10)
+
+
+### :bug: Bug Fixes
+
+* **new-version:** safely send the release notes to avoid an error ([f75309f](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f75309f84a85a70c1fe694a514139fb4fdeb672c))
+
+
+### :rocket: Features
+
+* **feature-noon:** return an embed message when all flag actions were executed ([543508d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/543508d052003bf389f6504df6ca7109fc602d88))
+
 # [1.74.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.73.0...1.74.0) (2020-09-09)
 
 
