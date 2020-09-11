@@ -393,10 +393,12 @@ export class DiscordCommandFlags<T extends string> {
   private _getFlagsDuplicated(
     messageFlags: Readonly<string>[]
   ): IDiscordCommandFlagsDuplicated {
-    const messageFlagsWithName: Dictionary<IDiscordCommandMessageFlagWithName[]> = this._getDuplicatedMessagesFlagsByName(messageFlags);
+    const messageFlagsWithName: IDiscordCommandMessageFlagWithName[][] = this._getDuplicatedMessagesFlagsByName(
+      messageFlags
+    );
 
     return _.map(
-      active,
+      messageFlagsWithName,
       (
         duplicatedMessagesFlagByName: Readonly<
           IDiscordCommandMessageFlagWithName
