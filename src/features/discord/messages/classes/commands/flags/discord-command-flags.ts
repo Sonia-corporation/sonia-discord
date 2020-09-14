@@ -1,4 +1,5 @@
-import _ from "lodash";
+import _, { Dictionary } from "lodash";
+import { getLastSequenceRegexp } from "../../../../../../functions/formatters/get-last-sequence-regexp";
 import { getRandomBoolean } from "../../../../../../functions/randoms/get-random-boolean";
 import { ChalkService } from "../../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../../logger/services/logger.service";
@@ -9,15 +10,20 @@ import { discordCommandGetFlagValue } from "../../../functions/commands/flags/di
 import { discordCommandIsMessageFlag } from "../../../functions/commands/flags/discord-command-is-message-flag";
 import { discordCommandRemoveFlagPrefix } from "../../../functions/commands/flags/discord-command-remove-flag-prefix";
 import { discordCommandSplitMessageFlags } from "../../../functions/commands/flags/discord-command-split-message-flags";
+import { IDiscordCommandFlagDuplicated } from "../../../interfaces/commands/flags/discord-command-flag-duplicated";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
 import { IDiscordCommandFlags } from "../../../interfaces/commands/flags/discord-command-flags";
+import { IDiscordCommandMessageFlagWithName } from "../../../interfaces/commands/flags/discord-command-message-flag-with-name";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
+import { IDiscordCommandFlagsDuplicated } from "../../../types/commands/flags/discord-command-flags-duplicated";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
 import { IDiscordCommandFlagsSuccess } from "../../../types/commands/flags/discord-command-flags-success";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandFirstArgument } from "../arguments/discord-command-first-argument";
 import { DiscordCommandFlag } from "./discord-command-flag";
+
+const ONE_FLAG = 1;
 
 export class DiscordCommandFlags<T extends string> {
   private _command: DiscordCommandFirstArgument<string>;
@@ -147,6 +153,38 @@ export class DiscordCommandFlags<T extends string> {
     );
 
     return _.isEmpty(flagsErrors) ? null : flagsErrors;
+  }
+
+  /**
+   * @description
+   * Search inside the given message for all the duplicated flags
+   *
+   * Throw an error if the given message is empty
+   *
+   * @example
+   * getDuplicated('--enabled=true')
+   * getDuplicated('--enabled=wrong-value')
+   * getDuplicated('-e')
+   *
+   * @param {Readonly<string>} messageFlags A partial message containing only a string with flags
+   *
+   * @return {IDiscordCommandFlagsDuplicated | null} A list of duplicated flags or null
+   */
+  public getDuplicated(
+    messageFlags: Readonly<string>
+  ): IDiscordCommandFlagsDuplicated | null | never {
+    if (_.isEmpty(messageFlags)) {
+      throw new Error(`The message should not be empty`);
+    }
+
+    const splittedMessageFlags: IDiscordMessageFlag[] = discordCommandSplitMessageFlags(
+      messageFlags
+    );
+    const flagsDuplicated: IDiscordCommandFlagsDuplicated = this._getFlagsDuplicated(
+      splittedMessageFlags
+    );
+
+    return _.isEmpty(flagsDuplicated) ? null : flagsDuplicated;
   }
 
   public executeAll(
@@ -350,5 +388,106 @@ export class DiscordCommandFlags<T extends string> {
       isUnknown: true,
       name: DiscordCommandFlagErrorTitleEnum.UNKNOWN_FLAG,
     };
+  }
+
+  private _getFlagsDuplicated(
+    messageFlags: Readonly<string>[]
+  ): IDiscordCommandFlagsDuplicated {
+    const messageFlagsWithName: IDiscordCommandMessageFlagWithName[][] = this._getDuplicatedMessagesFlagsByName(
+      messageFlags
+    );
+
+    return _.map(
+      messageFlagsWithName,
+      (
+        duplicatedMessagesFlagByName: Readonly<
+          IDiscordCommandMessageFlagWithName
+        >[]
+      ): IDiscordCommandFlagDuplicated => {
+        return {
+          description: `The flags ${this._getDuplicatedFlagsList(
+            duplicatedMessagesFlagByName
+          )} are duplicated.`,
+          name: `${_.toString(
+            _.head(duplicatedMessagesFlagByName)?.name
+          )} flag duplicated`,
+        };
+      }
+    );
+  }
+
+  private _getMessageFlagWithName(
+    messageFlag: Readonly<IDiscordMessageFlag>
+  ): IDiscordCommandMessageFlagWithName {
+    return {
+      messageFlag,
+      name: this._getHumanizedFlagName(messageFlag),
+    };
+  }
+
+  private _getMessageFlagsWithName(
+    messageFlags: Readonly<string>[]
+  ): IDiscordCommandMessageFlagWithName[] {
+    return _.map(
+      messageFlags,
+      (messageFlag: Readonly<string>): IDiscordCommandMessageFlagWithName =>
+        this._getMessageFlagWithName(messageFlag)
+    );
+  }
+
+  private _getGroupedMessageFlagsByName(
+    messageFlags: Readonly<string>[]
+  ): Dictionary<IDiscordCommandMessageFlagWithName[]> {
+    return _.groupBy(this._getMessageFlagsWithName(messageFlags), `name`);
+  }
+
+  private _getDuplicatedMessagesFlagsByName(
+    messageFlags: Readonly<string>[]
+  ): IDiscordCommandMessageFlagWithName[][] {
+    return _.filter(
+      this._getGroupedMessageFlagsByName(messageFlags),
+      (array): boolean => _.gt(_.size(array), ONE_FLAG)
+    );
+  }
+
+  private _getHumanizedFlagName(
+    messageFlag: Readonly<IDiscordMessageFlag>
+  ): string | undefined {
+    if (discordCommandIsMessageFlag(messageFlag)) {
+      const flag:
+        | DiscordCommandFlag<T>
+        | undefined = this._getFlagFromMessageFlag(messageFlag);
+
+      return flag?.getHumanizedName();
+    }
+
+    const shortcutFlag:
+      | DiscordCommandFlag<T>
+      | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
+
+    return shortcutFlag?.getHumanizedName();
+  }
+
+  private _getDuplicatedFlagsList(
+    duplicatedMessagesFlagByName: Readonly<IDiscordCommandMessageFlagWithName>[]
+  ): string {
+    return _.replace(
+      _.trimEnd(
+        _.reduce(
+          duplicatedMessagesFlagByName,
+          (
+            value: Readonly<string>,
+            duplicatedMessagesFlagByName: Readonly<
+              IDiscordCommandMessageFlagWithName
+            >
+          ): string =>
+            `${value}\`${duplicatedMessagesFlagByName.messageFlag}\`, `,
+          ``
+        ),
+        `, `
+      ),
+      getLastSequenceRegexp(`, `),
+      ` and `
+    );
   }
 }

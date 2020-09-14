@@ -29,7 +29,7 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\!)(?:)(help)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s)?(-{1,2}\w+(\=\w+)?){1})(?:)/gim
+          /(\!)(?:)(help)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s){0,}(-{1,2}\w+(\=\w+)?){1})(?:)/gim
         );
       });
 
@@ -315,9 +315,9 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
         });
       });
 
-      describe(`when tested with "!help me -arg1 --arg2=value2 "`, (): void => {
+      describe(`when tested with "!help me --enabled=true -e --enabled=false"`, (): void => {
         beforeEach((): void => {
-          message = `!help me -arg1 --arg2=value2 `;
+          message = `!help me --enabled=true -e --enabled=false`;
         });
 
         it(`should find "!" as prefix`, (): void => {
@@ -370,13 +370,13 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
           ).toStrictEqual(` `);
         });
 
-        it(`should find "-arg1 --arg2=value2" as flags`, (): void => {
+        it(`should find "--enabled=true -e --enabled=false" as flags`, (): void => {
           expect.assertions(1);
 
           const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
 
           expect(xregexp.exec(message, result)?.groups?.flags).toStrictEqual(
-            `-arg1 --arg2=value2`
+            `--enabled=true -e --enabled=false`
           );
         });
       });
@@ -394,7 +394,7 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\!)(?:)(feature)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s)?(-{1,2}\w+(\=\w+)?){1})(?:)/gim
+          /(\!)(?:)(feature)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s){0,}(-{1,2}\w+(\=\w+)?){1})(?:)/gim
         );
       });
 
@@ -527,6 +527,20 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
       describe(`when tested with "!help me -arg1 --arg2=value2 "`, (): void => {
         beforeEach((): void => {
           message = `!help me -arg1 --arg2=value2 `;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me --enabled=true -e --enabled=false"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me --enabled=true -e --enabled=false`;
         });
 
         it(`should find nothing`, (): void => {
@@ -557,7 +571,7 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\-)(?:)(help)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s)?(-{1,2}\w+(\=\w+)?){1})(?:)/gim
+          /(\-)(?:)(help)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s){0,}(-{1,2}\w+(\=\w+)?){1})(?:)/gim
         );
       });
 
@@ -690,6 +704,20 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
       describe(`when tested with "!help me -arg1 --arg2=value2 "`, (): void => {
         beforeEach((): void => {
           message = `!help me -arg1 --arg2=value2 `;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me --enabled=true -e --enabled=false"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me --enabled=true -e --enabled=false`;
         });
 
         it(`should find nothing`, (): void => {
@@ -714,7 +742,7 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\-)(?:)(feature)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s)?(-{1,2}\w+(\=\w+)?){1})(?:)/gim
+          /(\-)(?:)(feature)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s){0,}(-{1,2}\w+(\=\w+)?){1})(?:)/gim
         );
       });
 
@@ -847,6 +875,20 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
       describe(`when tested with "!help me -arg1 --arg2=value2 "`, (): void => {
         beforeEach((): void => {
           message = `!help me -arg1 --arg2=value2 `;
+        });
+
+        it(`should find nothing`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)).toBeNull();
+        });
+      });
+
+      describe(`when tested with "!help me --enabled=true -e --enabled=false"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me --enabled=true -e --enabled=false`;
         });
 
         it(`should find nothing`, (): void => {

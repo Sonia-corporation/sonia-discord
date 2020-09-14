@@ -256,6 +256,29 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
     });
   });
 
+  describe(`getHumanizedName()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlag = new DiscordCommandBooleanFlag<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      >(
+        createMock<
+          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+        >()
+      );
+    });
+
+    it(`should return the capitalized case name`, (): void => {
+      expect.assertions(1);
+      discordCommandFlag.setName(
+        DiscordMessageCommandFeatureNoonFlagEnum.ENABLED
+      );
+
+      const result = discordCommandFlag.getHumanizedName();
+
+      expect(result).toStrictEqual(`Enabled`);
+    });
+  });
+
   describe(`setName()`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandBooleanFlag<
