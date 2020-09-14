@@ -18,12 +18,12 @@ export function discordGetCommandWithFirstArgumentAndFlagsRegexp({
 }: Readonly<IDiscordGetCommandWithFirstArgumentAndFlagsRegexpData>): RegExp {
   return xregexp(
     `
-    (?<prefix>\\${prefix})                                        # Command prefix
-    (?<command>${command})                                        # Command name
-    (?<separator>\\s)                                             # Space
-    (?<argument1>\\w+)                                            # Argument 1
-    (?<flagsSeparator>\\s)                                        # Space
-    (?<flags>(-{1,2}\\w+(\\=\\w+)?\\s)?(-{1,2}\\w+(\\=\\w+)?){1}) # Flags
+    (?<prefix>\\${prefix})                                           # Command prefix
+    (?<command>${command})                                           # Command name
+    (?<separator>\\s)                                                # Space
+    (?<argument1>\\w+)                                               # Argument 1
+    (?<flagsSeparator>\\s)                                           # Space
+    (?<flags>(-{1,2}\\w+(\\=\\w+)?\\s){0,}(-{1,2}\\w+(\\=\\w+)?){1}) # Flags
     `,
     `gimx`
   );

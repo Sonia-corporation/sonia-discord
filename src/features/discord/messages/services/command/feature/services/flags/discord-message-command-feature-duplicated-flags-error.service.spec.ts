@@ -11,15 +11,15 @@ import { IconEnum } from "../../../../../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../../../../core/services/core-event.service";
 import { DiscordSoniaService } from "../../../../../../users/services/discord-sonia.service";
-import { IDiscordCommandFlagError } from "../../../../../interfaces/commands/flags/discord-command-flag-error";
-import { IDiscordCommandFlagsErrors } from "../../../../../types/commands/flags/discord-command-flags-errors";
+import { IDiscordCommandFlagDuplicated } from "../../../../../interfaces/commands/flags/discord-command-flag-duplicated";
+import { IDiscordCommandFlagsDuplicated } from "../../../../../types/commands/flags/discord-command-flags-duplicated";
 import { DiscordMessageConfigService } from "../../../../config/discord-message-config.service";
 import { DiscordMessageCommandCliErrorService } from "../../../discord-message-command-cli-error.service";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../../features/noon/constants/discord-message-command-feature-noon-flags";
-import { DiscordMessageCommandFeatureWrongFlagsErrorService } from "./discord-message-command-feature-wrong-flags-error.service";
+import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from "./discord-message-command-feature-duplicated-flags-error.service";
 
-describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
-  let service: DiscordMessageCommandFeatureWrongFlagsErrorService;
+describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => {
+  let service: DiscordMessageCommandFeatureDuplicatedFlagsErrorService;
   let coreEventService: CoreEventService;
   let discordSoniaService: DiscordSoniaService;
   let discordMessageConfigService: DiscordMessageConfigService;
@@ -33,20 +33,20 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
   });
 
   describe(`getInstance()`, (): void => {
-    it(`should create a DiscordMessageCommandFeatureWrongFlagsError service`, (): void => {
+    it(`should create a DiscordMessageCommandFeatureDuplicatedFlagsError service`, (): void => {
       expect.assertions(1);
 
-      service = DiscordMessageCommandFeatureWrongFlagsErrorService.getInstance();
+      service = DiscordMessageCommandFeatureDuplicatedFlagsErrorService.getInstance();
 
       expect(service).toStrictEqual(
-        expect.any(DiscordMessageCommandFeatureWrongFlagsErrorService)
+        expect.any(DiscordMessageCommandFeatureDuplicatedFlagsErrorService)
       );
     });
 
-    it(`should return the created DiscordMessageCommandFeatureWrongFlagsError service`, (): void => {
+    it(`should return the created DiscordMessageCommandFeatureDuplicatedFlagsError service`, (): void => {
       expect.assertions(1);
 
-      const result = DiscordMessageCommandFeatureWrongFlagsErrorService.getInstance();
+      const result = DiscordMessageCommandFeatureDuplicatedFlagsErrorService.getInstance();
 
       expect(result).toStrictEqual(service);
     });
@@ -61,20 +61,20 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should notify the DiscordMessageCommandFeatureWrongFlagsError service creation`, (): void => {
+    it(`should notify the DiscordMessageCommandFeatureDuplicatedFlagsError service creation`, (): void => {
       expect.assertions(2);
 
-      service = new DiscordMessageCommandFeatureWrongFlagsErrorService();
+      service = new DiscordMessageCommandFeatureDuplicatedFlagsErrorService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_WRONG_FLAGS_ERROR_SERVICE
+        ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_DUPLICATED_FLAGS_ERROR_SERVICE
       );
     });
   });
 
   describe(`getMessageResponse()`, (): void => {
-    let flagsErrors: IDiscordCommandFlagsErrors;
+    let flagsDuplicated: IDiscordCommandFlagsDuplicated;
 
     let discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy: jest.SpyInstance;
     let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
@@ -83,8 +83,8 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
     let discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      service = new DiscordMessageCommandFeatureWrongFlagsErrorService();
-      flagsErrors = createMock<IDiscordCommandFlagsErrors>();
+      service = new DiscordMessageCommandFeatureDuplicatedFlagsErrorService();
+      flagsDuplicated = createMock<IDiscordCommandFlagsDuplicated>();
 
       discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy = jest.spyOn(
         discordMessageCommandCliErrorService,
@@ -117,7 +117,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
     it(`should get the CLI error message response`, async (): Promise<void> => {
       expect.assertions(2);
 
-      await service.getMessageResponse(flagsErrors);
+      await service.getMessageResponse(flagsDuplicated);
 
       expect(
         discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy
@@ -138,7 +138,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
         messageEmbedAuthor
       );
 
-      const result = await service.getMessageResponse(flagsErrors);
+      const result = await service.getMessageResponse(flagsDuplicated);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -153,123 +153,153 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
         ColorEnum.CANDY
       );
 
-      const result = await service.getMessageResponse(flagsErrors);
+      const result = await service.getMessageResponse(flagsDuplicated);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
     });
 
-    describe(`when there is one given flag error`, (): void => {
+    describe(`when there is one given duplicated flag`, (): void => {
       beforeEach((): void => {
-        flagsErrors = [createMock<IDiscordCommandFlagError>()];
+        flagsDuplicated = [createMock<IDiscordCommandFlagDuplicated>()];
       });
 
-      it(`should return a Discord message response embed with a description indicating that one error has been found`, async (): Promise<
+      it(`should return a Discord message response embed with a description indicating that one duplicated flag has been found`, async (): Promise<
         void
       > => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse(flagsErrors);
+        const result = await service.getMessageResponse(flagsDuplicated);
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(result.options.embed.description).toStrictEqual(
-          `**1** error found.`
+          `**1** duplicated flag found.`
         );
       });
 
-      it(`should return a Discord message response embed with 1 field`, async (): Promise<
+      it(`should return a Discord message response embed with 2 field`, async (): Promise<
         void
       > => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse(flagsErrors);
+        const result = await service.getMessageResponse(flagsDuplicated);
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        expect(result.options.embed.fields).toHaveLength(1);
+        expect(result.options.embed.fields).toHaveLength(2);
       });
 
-      it(`should return a Discord message response embed with the fields containing the flags errors`, async (): Promise<
+      it(`should return a Discord message response embed with the fields containing the duplicated flags`, async (): Promise<
         void
       > => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse(flagsErrors);
+        const result = await service.getMessageResponse(flagsDuplicated);
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(result.options.embed.fields[0]).toStrictEqual({
           inline: true,
-          name: flagsErrors[0].name,
-          value: flagsErrors[0].description,
+          name: flagsDuplicated[0].name,
+          value: flagsDuplicated[0].description,
+        } as EmbedFieldData);
+      });
+
+      it(`should return a Discord message response embed field containing a hint to solve this error`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+
+        const result = await service.getMessageResponse(flagsDuplicated);
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        expect(result.options.embed.fields[1]).toStrictEqual({
+          name: `How to solve this?`,
+          value: `I am here to help you but do not mess with me!\nTry again but remove the extra duplicated flags and then we can talk.`,
         } as EmbedFieldData);
       });
     });
 
-    describe(`when there is three given flags errors`, (): void => {
+    describe(`when there is three given duplicated flags`, (): void => {
       beforeEach((): void => {
-        flagsErrors = [
-          createMock<IDiscordCommandFlagError>(),
-          createMock<IDiscordCommandFlagError>(),
-          createMock<IDiscordCommandFlagError>(),
+        flagsDuplicated = [
+          createMock<IDiscordCommandFlagDuplicated>(),
+          createMock<IDiscordCommandFlagDuplicated>(),
+          createMock<IDiscordCommandFlagDuplicated>(),
         ];
       });
 
-      it(`should return a Discord message response embed with a description indicating that three errors have been found`, async (): Promise<
+      it(`should return a Discord message response embed with a description indicating that three duplicated flags have been found`, async (): Promise<
         void
       > => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse(flagsErrors);
+        const result = await service.getMessageResponse(flagsDuplicated);
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(result.options.embed.description).toStrictEqual(
-          `**3** errors found.`
+          `**3** duplicated flags found.`
         );
       });
 
-      it(`should return a Discord message response embed with 3 fields`, async (): Promise<
+      it(`should return a Discord message response embed with 4 fields`, async (): Promise<
         void
       > => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse(flagsErrors);
+        const result = await service.getMessageResponse(flagsDuplicated);
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        expect(result.options.embed.fields).toHaveLength(3);
+        expect(result.options.embed.fields).toHaveLength(4);
       });
 
-      it(`should return a Discord message response embed with the fields containing the flags errors`, async (): Promise<
+      it(`should return a Discord message response embed with the fields containing the duplicated flags`, async (): Promise<
         void
       > => {
         expect.assertions(3);
 
-        const result = await service.getMessageResponse(flagsErrors);
+        const result = await service.getMessageResponse(flagsDuplicated);
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(result.options.embed.fields[0]).toStrictEqual({
           inline: true,
-          name: flagsErrors[0].name,
-          value: flagsErrors[0].description,
+          name: flagsDuplicated[0].name,
+          value: flagsDuplicated[0].description,
         } as EmbedFieldData);
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(result.options.embed.fields[1]).toStrictEqual({
           inline: true,
-          name: flagsErrors[1].name,
-          value: flagsErrors[1].description,
+          name: flagsDuplicated[1].name,
+          value: flagsDuplicated[1].description,
         } as EmbedFieldData);
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         expect(result.options.embed.fields[2]).toStrictEqual({
           inline: true,
-          name: flagsErrors[2].name,
-          value: flagsErrors[2].description,
+          name: flagsDuplicated[2].name,
+          value: flagsDuplicated[2].description,
+        } as EmbedFieldData);
+      });
+
+      it(`should return a Discord message response embed field containing a hint to solve this error`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+
+        const result = await service.getMessageResponse(flagsDuplicated);
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        expect(result.options.embed.fields[3]).toStrictEqual({
+          name: `How to solve this?`,
+          value: `I am here to help you but do not mess with me!\nTry again but remove the extra duplicated flags and then we can talk.`,
         } as EmbedFieldData);
       });
     });
@@ -280,7 +310,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
 
-      const result = await service.getMessageResponse(flagsErrors);
+      const result = await service.getMessageResponse(flagsDuplicated);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -300,7 +330,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
       > => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse(flagsErrors);
+        const result = await service.getMessageResponse(flagsDuplicated);
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -321,7 +351,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
       > => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse(flagsErrors);
+        const result = await service.getMessageResponse(flagsDuplicated);
 
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -340,7 +370,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
         IconEnum.ARTIFICIAL_INTELLIGENCE
       );
 
-      const result = await service.getMessageResponse(flagsErrors);
+      const result = await service.getMessageResponse(flagsDuplicated);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -354,7 +384,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
     > => {
       expect.assertions(2);
 
-      const result = await service.getMessageResponse(flagsErrors);
+      const result = await service.getMessageResponse(flagsDuplicated);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -373,7 +403,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
     > => {
       expect.assertions(1);
 
-      const result = await service.getMessageResponse(flagsErrors);
+      const result = await service.getMessageResponse(flagsDuplicated);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -387,7 +417,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
     > => {
       expect.assertions(1);
 
-      const result = await service.getMessageResponse(flagsErrors);
+      const result = await service.getMessageResponse(flagsDuplicated);
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -399,7 +429,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
     > => {
       expect.assertions(1);
 
-      const result = await service.getMessageResponse(flagsErrors);
+      const result = await service.getMessageResponse(flagsDuplicated);
 
       expect(result.response).toStrictEqual(``);
     });

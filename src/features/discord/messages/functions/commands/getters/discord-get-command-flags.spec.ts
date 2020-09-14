@@ -202,6 +202,20 @@ describe(`discordGetCommandFlags()`, (): void => {
         });
       });
 
+      describe(`when the given message contains a command "!feature noon --enabled=true -e --enabled=false"`, (): void => {
+        beforeEach((): void => {
+          data.message = `simple message !feature noon --enabled=true -e --enabled=false`;
+        });
+
+        it(`should return "--enabled=true -e --enabled=false"`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandFlags(data);
+
+          expect(result).toStrictEqual(`--enabled=true -e --enabled=false`);
+        });
+      });
+
       describe(`when the given message contains a command "!FEATURE NOON -E --ENABLED=TRUE AND SOME TEXT"`, (): void => {
         beforeEach((): void => {
           data.message = `SIMPLE MESSAGE !FEATURE NOON -E --ENABLED=TRUE AND SOME TEXT`;
@@ -872,6 +886,62 @@ describe(`discordGetCommandFlags()`, (): void => {
           const result = discordGetCommandFlags(data);
 
           expect(result).toStrictEqual(`-e --enabled=true`);
+        });
+      });
+
+      describe(`when the given message contains a command "!feature noon --enabled=true -e --enabled=false"`, (): void => {
+        beforeEach((): void => {
+          data.message = `simple message !feature noon --enabled=true -e --enabled=false`;
+        });
+
+        it(`should return "--enabled=true -e --enabled=false"`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandFlags(data);
+
+          expect(result).toStrictEqual(`--enabled=true -e --enabled=false`);
+        });
+      });
+
+      describe(`when the given message contains a command "-feature noon --enabled=true -e --enabled=false"`, (): void => {
+        beforeEach((): void => {
+          data.message = `simple message -feature noon --enabled=true -e --enabled=false`;
+        });
+
+        it(`should return "--enabled=true -e --enabled=false"`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandFlags(data);
+
+          expect(result).toStrictEqual(`--enabled=true -e --enabled=false`);
+        });
+      });
+
+      describe(`when the given message contains a command "!f noon --enabled=true -e --enabled=false"`, (): void => {
+        beforeEach((): void => {
+          data.message = `simple message !f noon --enabled=true -e --enabled=false`;
+        });
+
+        it(`should return "--enabled=true -e --enabled=false"`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandFlags(data);
+
+          expect(result).toStrictEqual(`--enabled=true -e --enabled=false`);
+        });
+      });
+
+      describe(`when the given message contains a command "-f noon --enabled=true -e --enabled=false"`, (): void => {
+        beforeEach((): void => {
+          data.message = `simple message -f noon --enabled=true -e --enabled=false`;
+        });
+
+        it(`should return "--enabled=true -e --enabled=false"`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandFlags(data);
+
+          expect(result).toStrictEqual(`--enabled=true -e --enabled=false`);
         });
       });
 

@@ -7,6 +7,7 @@ import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/d
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON } from "../../../services/command/feature/constants/discord-message-command-feature-name-noon";
 import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
+import { IDiscordCommandFlagsDuplicated } from "../../../types/commands/flags/discord-command-flags-duplicated";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
@@ -16,7 +17,7 @@ import { DiscordCommandFlags } from "./discord-command-flags";
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordCommandFlags`, (): void => {
-  let discordCommandFlags: DiscordCommandFlags<DiscordMessageCommandFeatureNoonFlagEnum>;
+  let discordCommandFlags: DiscordCommandFlags<string>;
   let loggerService: LoggerService;
 
   beforeEach((): void => {
@@ -1184,7 +1185,7 @@ describe(`DiscordCommandFlags`, (): void => {
       });
     });
 
-    describe(`when the given message contains an existing flag`, (): void => {
+    describe(`when the given message contains an existing shortcut flag`, (): void => {
       beforeEach((): void => {
         message = `-e`;
       });
@@ -1234,12 +1235,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains an existing shortcut uppercase flag`, (): void => {
       beforeEach((): void => {
-        message = `-e`;
+        message = `-E`;
       });
 
       describe(`when the flag does not have a value at all`, (): void => {
         beforeEach((): void => {
-          message = `-e`;
+          message = `-E`;
         });
 
         it(`should return null`, (): void => {
@@ -1253,7 +1254,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag does not have a value`, (): void => {
         beforeEach((): void => {
-          message = `-e=`;
+          message = `-E=`;
         });
 
         it(`should return null`, (): void => {
@@ -1267,7 +1268,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has a value`, (): void => {
         beforeEach((): void => {
-          message = `-e=BAD`;
+          message = `-E=BAD`;
         });
 
         it(`should return null`, (): void => {
@@ -2117,6 +2118,193 @@ describe(`DiscordCommandFlags`, (): void => {
             },
           ] as IDiscordCommandFlagsErrors);
         });
+      });
+    });
+  });
+
+  describe(`getDuplicated()`, (): void => {
+    let message: string;
+
+    beforeEach((): void => {
+      discordCommandFlags = new DiscordCommandFlags<string>({
+        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        flags: [
+          new DiscordCommandBooleanFlag<string>({
+            action: createMock<DiscordCommandFlagAction>({
+              execute: (): Promise<IDiscordCommandFlagSuccess> =>
+                Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+            }),
+            description: ``,
+            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+            shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
+          }),
+          new DiscordCommandBooleanFlag<string>({
+            action: createMock<DiscordCommandFlagAction>({
+              execute: (): Promise<IDiscordCommandFlagSuccess> =>
+                Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+            }),
+            description: ``,
+            name: `dummy`,
+          }),
+          new DiscordCommandBooleanFlag<string>({
+            action: createMock<DiscordCommandFlagAction>({
+              execute: (): Promise<IDiscordCommandFlagSuccess> =>
+                Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+            }),
+            description: ``,
+            name: `other`,
+            shortcuts: [`t`],
+          }),
+          new DiscordCommandBooleanFlag<string>({
+            action: createMock<DiscordCommandFlagAction>({
+              execute: (): Promise<IDiscordCommandFlagSuccess> =>
+                Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+            }),
+            description: ``,
+            name: `three`,
+          }),
+        ],
+      });
+    });
+
+    describe(`when the given message is empty`, (): void => {
+      beforeEach((): void => {
+        message = ``;
+      });
+
+      it(`should throw an error`, (): void => {
+        expect.assertions(1);
+
+        expect((): void => {
+          discordCommandFlags.getDuplicated(message);
+        }).toThrow(new Error(`The message should not be empty`));
+      });
+    });
+
+    describe(`when the given message contains a boolean flag`, (): void => {
+      beforeEach((): void => {
+        message = `--enabled=true`;
+      });
+
+      it(`should return null`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getDuplicated(message);
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe(`when the given message contains a boolean uppercase flag`, (): void => {
+      beforeEach((): void => {
+        message = `--ENABLED=TRUE`;
+      });
+
+      it(`should return null`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getDuplicated(message);
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe(`when the given message contains a shortcut flag`, (): void => {
+      beforeEach((): void => {
+        message = `-e`;
+      });
+
+      it(`should return null`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getDuplicated(message);
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe(`when the given message contains a shortcut uppercase flag`, (): void => {
+      beforeEach((): void => {
+        message = `-E`;
+      });
+
+      it(`should return null`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getDuplicated(message);
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe(`when the given message contains two duplicated boolean flags`, (): void => {
+      beforeEach((): void => {
+        message = `--enabled=true --enabled=true`;
+      });
+
+      it(`should return a list with one error about the duplicated flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getDuplicated(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flags \`--enabled=true\` and \`--enabled=true\` are duplicated.`,
+            name: `Enabled flag duplicated`,
+          },
+        ] as IDiscordCommandFlagsDuplicated);
+      });
+    });
+
+    describe(`when the given message contains two duplicated boolean uppercase flags`, (): void => {
+      beforeEach((): void => {
+        message = `--ENABLED=TRUE --ENABLED=TRUE`;
+      });
+
+      it(`should return a list with one error about the duplicated flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getDuplicated(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flags \`--ENABLED=TRUE\` and \`--ENABLED=TRUE\` are duplicated.`,
+            name: `Enabled flag duplicated`,
+          },
+        ] as IDiscordCommandFlagsDuplicated);
+      });
+    });
+
+    describe(`when the given message contains three duplicated boolean flags`, (): void => {
+      beforeEach((): void => {
+        message = `--enabled=true -e --EnAbLeD=FaLsE`;
+      });
+
+      it(`should return a list with one error about the duplicated flag`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getDuplicated(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flags \`--enabled=true\`, \`-e\` and \`--EnAbLeD=FaLsE\` are duplicated.`,
+            name: `Enabled flag duplicated`,
+          },
+        ] as IDiscordCommandFlagsDuplicated);
+      });
+    });
+
+    describe(`when the given message contains three not duplicated boolean flags`, (): void => {
+      beforeEach((): void => {
+        message = `--dummy=true -t --three=FaLsE`;
+      });
+
+      it(`should return null`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getDuplicated(message);
+
+        expect(result).toBeNull();
       });
     });
   });

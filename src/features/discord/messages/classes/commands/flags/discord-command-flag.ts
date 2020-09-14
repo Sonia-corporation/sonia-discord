@@ -58,6 +58,10 @@ export abstract class DiscordCommandFlag<T extends string> {
     return _.toLower(_.toString(this.getName()));
   }
 
+  public getHumanizedName(): string {
+    return _.capitalize(_.toString(this.getName()));
+  }
+
   public setName(name: Readonly<T>): void {
     this._name = name;
   }
