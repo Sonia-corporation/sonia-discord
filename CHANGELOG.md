@@ -1,5 +1,29 @@
 # Semantic Versioning Changelog
 
+# [1.76.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.75.0...1.76.0) (2020-09-14)
+
+
+### :bug: Bug Fixes
+
+* **commands:** allow to catch all the flags instead of 2 ([63e3f54](https://github.com/Sonia-corporation/il-est-midi-discord/commit/63e3f5456070bbba642c7d8740f469c83f5db298)), closes [#925](https://github.com/Sonia-corporation/il-est-midi-discord/issues/925)
+
+
+### :rocket: Features
+
+* **command-feature:** display an embed message error when duplicated flags are given ([d3e7d0a](https://github.com/Sonia-corporation/il-est-midi-discord/commit/d3e7d0a22c2a143a58e0ce24d8ab0103a2c5f446)), closes [#903](https://github.com/Sonia-corporation/il-est-midi-discord/issues/903)
+
+# [1.75.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.74.0...1.75.0) (2020-09-10)
+
+
+### :bug: Bug Fixes
+
+* **new-version:** safely send the release notes to avoid an error ([f75309f](https://github.com/Sonia-corporation/il-est-midi-discord/commit/f75309f84a85a70c1fe694a514139fb4fdeb672c))
+
+
+### :rocket: Features
+
+* **feature-noon:** return an embed message when all flag actions were executed ([543508d](https://github.com/Sonia-corporation/il-est-midi-discord/commit/543508d052003bf389f6504df6ca7109fc602d88))
+
 # [1.74.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.73.0...1.74.0) (2020-09-09)
 
 

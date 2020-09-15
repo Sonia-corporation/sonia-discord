@@ -103,7 +103,7 @@ export class DiscordMessageCommandFeatureDuplicatedFlagsErrorService extends Dis
   private _getMessageEmbedHintField(): EmbedFieldData {
     return {
       name: `How to solve this?`,
-      value: `I am here to help you but do not mess with me!\nTry again but remove the extra duplicated flags and we can talk.`,
+      value: `I am here to help you but do not mess with me!\nTry again but remove the extra duplicated flags and then we can talk.`,
     };
   }
 }
