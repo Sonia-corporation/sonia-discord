@@ -129,7 +129,7 @@
     "madge:image": "madge ./src/ --extensions ts,js --image ./dist/graph.svg --warning"
   },
   "dependencies": {
-    "@datorama/akita": "5.2.3",
+    "@datorama/akita": "5.2.4",
     "@scout_apm/scout-apm": "0.1.12",
     "axios": "0.20.0",
     "discord.js": "12.3.1",
