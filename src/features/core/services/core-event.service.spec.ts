@@ -1,4 +1,4 @@
-import { take, tap } from "rxjs/operators";
+import { take } from "rxjs/operators";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "./core-event.service";
 
@@ -62,22 +62,18 @@ describe(`CoreEventService`, (): void => {
         serviceName = ServiceNameEnum.CHALK_SERVICE;
       });
 
-      it(`should notify that a service was created by using the given service name`, async (): Promise<
-        void
-      > => {
+      it(`should notify that a service was created by using the given service name`, (): void => {
         expect.assertions(1);
 
-        const result = await service
+        service
           .serviceCreated$()
-          .pipe(
-            tap({
-              next: (): void => service.notifyServiceCreated(serviceName),
-            }),
-            take(1)
-          )
-          .toPromise();
-
-        expect(result).toStrictEqual(ServiceNameEnum.CHALK_SERVICE);
+          .pipe(take(1))
+          .subscribe({
+            next(serviceName: ServiceNameEnum): void {
+              expect(serviceName).toStrictEqual(ServiceNameEnum.CHALK_SERVICE);
+            },
+          });
+        service.notifyServiceCreated(serviceName);
       });
     });
 
@@ -86,22 +82,20 @@ describe(`CoreEventService`, (): void => {
         serviceName = ServiceNameEnum.APP_CONFIG_QUERY_SERVICE;
       });
 
-      it(`should notify that a service was created by using the given service name`, async (): Promise<
-        void
-      > => {
+      it(`should notify that a service was created by using the given service name`, (): void => {
         expect.assertions(1);
 
-        const result = await service
+        service
           .serviceCreated$()
-          .pipe(
-            tap({
-              next: (): void => service.notifyServiceCreated(serviceName),
-            }),
-            take(1)
-          )
-          .toPromise();
-
-        expect(result).toStrictEqual(ServiceNameEnum.APP_CONFIG_QUERY_SERVICE);
+          .pipe(take(1))
+          .subscribe({
+            next(serviceName: ServiceNameEnum): void {
+              expect(serviceName).toStrictEqual(
+                ServiceNameEnum.APP_CONFIG_QUERY_SERVICE
+              );
+            },
+          });
+        service.notifyServiceCreated(serviceName);
       });
     });
   });
@@ -115,18 +109,20 @@ describe(`CoreEventService`, (): void => {
     });
 
     describe(`when the service created event is notified`, (): void => {
-      it(`should emit a new value into the stream`, async (): Promise<void> => {
+      it(`should emit a new value into the stream`, (): void => {
         expect.assertions(1);
-        service.notifyServiceCreated(serviceName);
 
-        const result = await service
+        service
           .serviceCreated$()
           .pipe(take(1))
-          .toPromise();
-
-        expect(result).toStrictEqual(
-          ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE
-        );
+          .subscribe({
+            next(serviceName: ServiceNameEnum): void {
+              expect(serviceName).toStrictEqual(
+                ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE
+              );
+            },
+          });
+        service.notifyServiceCreated(serviceName);
       });
     });
   });
