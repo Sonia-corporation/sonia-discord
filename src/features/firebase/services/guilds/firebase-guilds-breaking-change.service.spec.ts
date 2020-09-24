@@ -1,5 +1,6 @@
 import * as admin from "firebase-admin";
 import { of, throwError } from "rxjs";
+import { take } from "rxjs/operators";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
@@ -719,36 +720,22 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
       service = new FirebaseGuildsBreakingChangeService();
     });
 
-    it(`should be false by default`, (doneCallback: jest.DoneCallback): void => {
+    it(`should be false by default`, async (): Promise<void> => {
       expect.assertions(1);
 
-      service.hasFinished$().subscribe({
-        error(error): void {
-          expect(true).toStrictEqual(false);
-          doneCallback(error);
-        },
-        next(isTrue: boolean): void {
-          expect(isTrue).toStrictEqual(false);
-          doneCallback();
-        },
-      });
+      const result = await service.hasFinished$().pipe(take(1)).toPromise();
+
+      expect(result).toStrictEqual(false);
     });
 
     describe(`when the has finished event is notified`, (): void => {
-      it(`should emit a new value into the stream`, (doneCallback: jest.DoneCallback): void => {
+      it(`should emit a new value into the stream`, async (): Promise<void> => {
         expect.assertions(1);
-
         service.notifyHasFinished();
-        service.hasFinished$().subscribe({
-          error(error): void {
-            expect(true).toStrictEqual(false);
-            doneCallback(error);
-          },
-          next(isTrue: boolean): void {
-            expect(isTrue).toStrictEqual(true);
-            doneCallback();
-          },
-        });
+
+        const result = await service.hasFinished$().pipe(take(1)).toPromise();
+
+        expect(result).toStrictEqual(true);
       });
     });
   });
@@ -779,20 +766,15 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
       service = new FirebaseGuildsBreakingChangeService();
     });
 
-    it(`should notify that the Firebase guilds breaking changes were handled`, (doneCallback: jest.DoneCallback): void => {
+    it(`should notify that the Firebase guilds breaking changes were handled`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
-
       service.notifyHasFinished();
-      service.hasFinished$().subscribe({
-        error(error): void {
-          expect(true).toStrictEqual(false);
-          doneCallback(error);
-        },
-        next(isTrue: boolean): void {
-          expect(isTrue).toStrictEqual(true);
-          doneCallback();
-        },
-      });
+
+      const result = await service.hasFinished$().pipe(take(1)).toPromise();
+
+      expect(result).toStrictEqual(true);
     });
   });
 
@@ -815,19 +797,14 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
         discordClientServiceIsReadySpy.mockRejectedValue(new Error(`error`));
       });
 
-      it(`should consider that the service is not ready`, (done): void => {
+      it(`should consider that the service is not ready`, async (): Promise<
+        void
+      > => {
         expect.assertions(1);
 
-        service.isReady$().subscribe({
-          error(error): void {
-            expect(error).toStrictEqual(new Error(`error`));
-            done();
-          },
-          next(): void {
-            expect(true).toStrictEqual(false);
-            done();
-          },
-        });
+        await expect(
+          service.isReady$().pipe(take(1)).toPromise()
+        ).rejects.toThrow(new Error(`error`));
       });
     });
 
@@ -841,19 +818,14 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
           firebaseGuildsServiceIsReadySpy.mockRejectedValue(new Error(`error`));
         });
 
-        it(`should consider that the service is not ready`, (done): void => {
+        it(`should consider that the service is not ready`, async (): Promise<
+          void
+        > => {
           expect.assertions(1);
 
-          service.isReady$().subscribe({
-            error(error): void {
-              expect(error).toStrictEqual(new Error(`error`));
-              done();
-            },
-            next(): void {
-              expect(true).toStrictEqual(false);
-              done();
-            },
-          });
+          await expect(
+            service.isReady$().pipe(take(1)).toPromise()
+          ).rejects.toThrow(new Error(`error`));
         });
       });
 
@@ -862,19 +834,14 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
           firebaseGuildsServiceIsReadySpy.mockResolvedValue(true);
         });
 
-        it(`should consider that the service is ready`, (done): void => {
+        it(`should consider that the service is ready`, async (): Promise<
+          void
+        > => {
           expect.assertions(1);
 
-          service.isReady$().subscribe({
-            error(): void {
-              expect(true).toStrictEqual(false);
-              done();
-            },
-            next(result): void {
-              expect(result).toStrictEqual([true, true]);
-              done();
-            },
-          });
+          const result = await service.isReady$().pipe(take(1)).toPromise();
+
+          expect(result).toStrictEqual([true, true]);
         });
       });
     });
