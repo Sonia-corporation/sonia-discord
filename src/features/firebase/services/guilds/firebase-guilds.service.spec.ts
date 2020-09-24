@@ -998,20 +998,15 @@ describe(`FirebaseGuildsService`, (): void => {
       firebaseGuilds = createMock<IFirebaseGuild[]>();
     });
 
-    it(`should notify that the Firebase guilds changed`, (doneCallback: jest.DoneCallback): void => {
+    it(`should notify that the Firebase guilds changed`, async (): Promise<
+      void
+    > => {
       expect.assertions(1);
-
       service.notifyOnGuildsChange(firebaseGuilds);
-      service.onGuildsChange$().subscribe({
-        error(error): void {
-          expect(true).toStrictEqual(false);
-          doneCallback(error);
-        },
-        next(result: IFirebaseGuild[]): void {
-          expect(result).toStrictEqual(firebaseGuilds);
-          doneCallback();
-        },
-      });
+
+      const result = await service.onGuildsChange$().pipe(take(1)).toPromise();
+
+      expect(result).toStrictEqual(firebaseGuilds);
     });
   });
 
