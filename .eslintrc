@@ -38,7 +38,8 @@ settings:
   import/cache:
     lifetime: Infinity
 rules:
-  jest/no-done-callback: off
+  jest/no-done-callback:
+    - error
   jest/no-disabled-tests: off
   '@typescript-eslint/member-ordering':
     - error
@@ -128,6 +129,7 @@ rules:
         - boolean
       format:
         - PascalCase
+        - UPPER_CASE
       prefix:
         - is
         - has
@@ -254,6 +256,8 @@ rules:
     - error
     - enforceConst: true
       detectObjects: false
+  require-await:
+    - error
 overrides:
   - files:
       - '*.ts'
@@ -275,3 +279,69 @@ overrides:
             Readonly:
               message: 'Sonia rule - This is useless inside the tests'
           extendDefaults: true
+      '@typescript-eslint/naming-convention':
+        - error
+        - selector: default
+          format:
+            - camelCase
+        - selector: variable
+          format:
+            - camelCase
+            - UPPER_CASE
+        - selector: variable
+          types:
+            - boolean
+          format:
+            - camelCase
+            - UPPER_CASE
+        - selector: parameter
+          format:
+            - camelCase
+          leadingUnderscore: allow
+        - selector: parameter
+          types:
+            - boolean
+          format:
+            - camelCase
+          leadingUnderscore: allow
+        - selector: function
+          format:
+            - camelCase
+        - selector: memberLike
+          modifiers:
+            - private
+          format:
+            - camelCase
+          leadingUnderscore: require
+        - selector: memberLike
+          modifiers:
+            - protected
+          format:
+            - camelCase
+          leadingUnderscore: require
+        - selector: typeLike
+          format:
+            - PascalCase
+        - selector: typeParameter
+          format:
+            - PascalCase
+          prefix:
+            - T
+        - selector: interface
+          format:
+            - PascalCase
+          prefix:
+            - I
+        - selector: typeAlias
+          format:
+            - PascalCase
+          prefix:
+            - I
+        - selector: enumMember
+          format:
+            - UPPER_CASE
+        - selector: enum
+          format:
+            - PascalCase
+          suffix:
+            - Enum

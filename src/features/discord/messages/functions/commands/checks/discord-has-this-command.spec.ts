@@ -28,9 +28,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -42,9 +42,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -56,9 +56,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -70,9 +70,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -90,9 +90,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -104,9 +104,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -118,9 +118,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -132,9 +132,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -155,9 +155,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -169,9 +169,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -183,9 +183,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -197,9 +197,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -220,9 +220,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -234,9 +234,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -248,9 +248,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -262,9 +262,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -288,9 +288,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -302,9 +302,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -316,9 +316,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -330,9 +330,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -350,9 +350,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -364,9 +364,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -378,9 +378,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -392,9 +392,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -415,9 +415,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -429,9 +429,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -443,9 +443,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -457,9 +457,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -480,9 +480,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -494,9 +494,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -508,9 +508,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -522,9 +522,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -548,9 +548,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -562,9 +562,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -576,9 +576,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -590,9 +590,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -610,9 +610,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -624,9 +624,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -638,9 +638,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -652,9 +652,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -675,9 +675,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -689,9 +689,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -703,9 +703,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -717,9 +717,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -740,9 +740,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -754,9 +754,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -768,9 +768,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -782,9 +782,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -808,9 +808,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -822,9 +822,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -836,9 +836,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -850,9 +850,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
     });
@@ -870,9 +870,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -884,9 +884,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -898,9 +898,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -912,9 +912,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -935,9 +935,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -949,9 +949,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -963,9 +963,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -977,9 +977,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
     });
@@ -1000,9 +1000,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1014,9 +1014,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1028,9 +1028,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1042,9 +1042,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -1068,9 +1068,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1082,9 +1082,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1096,9 +1096,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1110,9 +1110,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
     });
@@ -1130,9 +1130,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1144,9 +1144,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1158,9 +1158,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1172,9 +1172,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });
@@ -1195,9 +1195,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1209,9 +1209,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
 
@@ -1223,9 +1223,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1237,9 +1237,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(true);
+          expect(result).toStrictEqual(true);
         });
       });
     });
@@ -1260,9 +1260,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1274,9 +1274,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1288,9 +1288,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -1302,9 +1302,9 @@ describe(`hasThisCommand()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const has = discordHasThisCommand(data);
+          const result = discordHasThisCommand(data);
 
-          expect(has).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
     });

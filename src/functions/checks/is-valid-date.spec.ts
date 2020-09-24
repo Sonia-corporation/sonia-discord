@@ -12,9 +12,9 @@ describe(`isValidDate()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isValidDateResult = isValidDate(date);
+      const result = isValidDate(date);
 
-      expect(isValidDateResult).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -26,9 +26,9 @@ describe(`isValidDate()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isValidDateResult = isValidDate(date);
+      const result = isValidDate(date);
 
-      expect(isValidDateResult).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -40,9 +40,9 @@ describe(`isValidDate()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isValidDateResult = isValidDate(date);
+      const result = isValidDate(date);
 
-      expect(isValidDateResult).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -54,9 +54,9 @@ describe(`isValidDate()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isValidDateResult = isValidDate(date);
+      const result = isValidDate(date);
 
-      expect(isValidDateResult).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -68,9 +68,9 @@ describe(`isValidDate()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const isValidDateResult = isValidDate(date);
+      const result = isValidDate(date);
 
-      expect(isValidDateResult).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 });

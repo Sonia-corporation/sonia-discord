@@ -19,11 +19,9 @@ describe(`hasFirebaseGuildLastReleaseNotesVersion()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const hasProperty = hasFirebaseGuildLastReleaseNotesVersion(
-        firebaseGuild
-      );
+      const result = hasFirebaseGuildLastReleaseNotesVersion(firebaseGuild);
 
-      expect(hasProperty).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -37,11 +35,9 @@ describe(`hasFirebaseGuildLastReleaseNotesVersion()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const hasProperty = hasFirebaseGuildLastReleaseNotesVersion(
-        firebaseGuild
-      );
+      const result = hasFirebaseGuildLastReleaseNotesVersion(firebaseGuild);
 
-      expect(hasProperty).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 
@@ -55,11 +51,9 @@ describe(`hasFirebaseGuildLastReleaseNotesVersion()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const hasProperty = hasFirebaseGuildLastReleaseNotesVersion(
-        firebaseGuild
-      );
+      const result = hasFirebaseGuildLastReleaseNotesVersion(firebaseGuild);
 
-      expect(hasProperty).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 });

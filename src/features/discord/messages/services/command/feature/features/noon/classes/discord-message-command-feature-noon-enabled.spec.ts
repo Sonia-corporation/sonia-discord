@@ -655,9 +655,9 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           it(`should return undefined`, async (): Promise<void> => {
             expect.assertions(1);
 
-            const isEnabled = await service.isEnabled(anyDiscordMessage);
+            const result = await service.isEnabled(anyDiscordMessage);
 
-            expect(isEnabled).toBeUndefined();
+            expect(result).toBeUndefined();
           });
         });
 
@@ -675,9 +675,9 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           it(`should return undefined`, async (): Promise<void> => {
             expect.assertions(1);
 
-            const isEnabled = await service.isEnabled(anyDiscordMessage);
+            const result = await service.isEnabled(anyDiscordMessage);
 
-            expect(isEnabled).toBeUndefined();
+            expect(result).toBeUndefined();
           });
         });
 
@@ -695,9 +695,9 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           it(`should return undefined`, async (): Promise<void> => {
             expect.assertions(1);
 
-            const isEnabled = await service.isEnabled(anyDiscordMessage);
+            const result = await service.isEnabled(anyDiscordMessage);
 
-            expect(isEnabled).toBeUndefined();
+            expect(result).toBeUndefined();
           });
         });
 
@@ -720,9 +720,9 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           it(`should return undefined`, async (): Promise<void> => {
             expect.assertions(1);
 
-            const isEnabled = await service.isEnabled(anyDiscordMessage);
+            const result = await service.isEnabled(anyDiscordMessage);
 
-            expect(isEnabled).toBeUndefined();
+            expect(result).toBeUndefined();
           });
         });
 
@@ -764,9 +764,9 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             it(`should return undefined`, async (): Promise<void> => {
               expect.assertions(1);
 
-              const isEnabled = await service.isEnabled(anyDiscordMessage);
+              const result = await service.isEnabled(anyDiscordMessage);
 
-              expect(isEnabled).toBeUndefined();
+              expect(result).toBeUndefined();
             });
           });
 
@@ -794,9 +794,9 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             it(`should return undefined`, async (): Promise<void> => {
               expect.assertions(1);
 
-              const isEnabled = await service.isEnabled(anyDiscordMessage);
+              const result = await service.isEnabled(anyDiscordMessage);
 
-              expect(isEnabled).toBeUndefined();
+              expect(result).toBeUndefined();
             });
           });
 
@@ -824,9 +824,9 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             it(`should return true`, async (): Promise<void> => {
               expect.assertions(1);
 
-              const isEnabled = await service.isEnabled(anyDiscordMessage);
+              const result = await service.isEnabled(anyDiscordMessage);
 
-              expect(isEnabled).toStrictEqual(true);
+              expect(result).toStrictEqual(true);
             });
           });
 
@@ -854,9 +854,9 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             it(`should return false`, async (): Promise<void> => {
               expect.assertions(1);
 
-              const isEnabled = await service.isEnabled(anyDiscordMessage);
+              const result = await service.isEnabled(anyDiscordMessage);
 
-              expect(isEnabled).toStrictEqual(false);
+              expect(result).toStrictEqual(false);
             });
           });
         });

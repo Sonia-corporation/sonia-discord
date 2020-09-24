@@ -9,9 +9,9 @@ describe(`isNodeProduction()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isNodeProductionResult = isNodeProduction();
+      const result = isNodeProduction();
 
-      expect(isNodeProductionResult).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -24,9 +24,9 @@ describe(`isNodeProduction()`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isNodeProductionResult = isNodeProduction();
+        const result = isNodeProduction();
 
-        expect(isNodeProductionResult).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -39,9 +39,9 @@ describe(`isNodeProduction()`, (): void => {
         it(`should return false`, (): void => {
           expect.assertions(1);
 
-          const isNodeProductionResult = isNodeProduction();
+          const result = isNodeProduction();
 
-          expect(isNodeProductionResult).toStrictEqual(false);
+          expect(result).toStrictEqual(false);
         });
       });
 
@@ -54,9 +54,9 @@ describe(`isNodeProduction()`, (): void => {
           it(`should return true`, (): void => {
             expect.assertions(1);
 
-            const isNodeProductionResult = isNodeProduction();
+            const result = isNodeProduction();
 
-            expect(isNodeProductionResult).toStrictEqual(true);
+            expect(result).toStrictEqual(true);
           });
         });
 
@@ -68,9 +68,9 @@ describe(`isNodeProduction()`, (): void => {
           it(`should return false`, (): void => {
             expect.assertions(1);
 
-            const isNodeProductionResult = isNodeProduction();
+            const result = isNodeProduction();
 
-            expect(isNodeProductionResult).toStrictEqual(false);
+            expect(result).toStrictEqual(false);
           });
         });
       });

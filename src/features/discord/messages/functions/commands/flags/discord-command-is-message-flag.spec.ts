@@ -12,9 +12,9 @@ describe(`discordCommandIsMessageFlag()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isFlag = discordCommandIsMessageFlag(messageFlag);
+      const result = discordCommandIsMessageFlag(messageFlag);
 
-      expect(isFlag).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -26,9 +26,9 @@ describe(`discordCommandIsMessageFlag()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isFlag = discordCommandIsMessageFlag(messageFlag);
+      const result = discordCommandIsMessageFlag(messageFlag);
 
-      expect(isFlag).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -40,9 +40,9 @@ describe(`discordCommandIsMessageFlag()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isFlag = discordCommandIsMessageFlag(messageFlag);
+      const result = discordCommandIsMessageFlag(messageFlag);
 
-      expect(isFlag).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -54,9 +54,9 @@ describe(`discordCommandIsMessageFlag()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const isFlag = discordCommandIsMessageFlag(messageFlag);
+      const result = discordCommandIsMessageFlag(messageFlag);
 
-      expect(isFlag).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 
@@ -68,9 +68,9 @@ describe(`discordCommandIsMessageFlag()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const isFlag = discordCommandIsMessageFlag(messageFlag);
+      const result = discordCommandIsMessageFlag(messageFlag);
 
-      expect(isFlag).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 
@@ -82,9 +82,9 @@ describe(`discordCommandIsMessageFlag()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const isFlag = discordCommandIsMessageFlag(messageFlag);
+      const result = discordCommandIsMessageFlag(messageFlag);
 
-      expect(isFlag).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 });

@@ -156,9 +156,9 @@ describe(`AppConfigService`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isProductionResult = service.isProduction();
+        const result = service.isProduction();
 
-        expect(isProductionResult).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -170,9 +170,9 @@ describe(`AppConfigService`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const isProductionResult = service.isProduction();
+        const result = service.isProduction();
 
-        expect(isProductionResult).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
   });

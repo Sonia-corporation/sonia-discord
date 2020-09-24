@@ -1,3 +1,4 @@
+import { take } from "rxjs/operators";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { CoreEventService } from "../../core/services/core-event.service";
 import { ChalkColorService } from "../../logger/services/chalk/chalk-color.service";
@@ -144,36 +145,25 @@ describe(`InitService`, (): void => {
       service = new InitService();
     });
 
-    it(`should be false by default`, (doneCallback: jest.DoneCallback): void => {
+    it(`should be false by default`, async (): Promise<void> => {
       expect.assertions(1);
 
-      service.isAppConfigured$().subscribe({
-        error(error): void {
-          expect(true).toStrictEqual(false);
-          doneCallback(error);
-        },
-        next(isTrue: boolean): void {
-          expect(isTrue).toStrictEqual(false);
-          doneCallback();
-        },
-      });
+      const result = await service.isAppConfigured$().pipe(take(1)).toPromise();
+
+      expect(result).toStrictEqual(false);
     });
 
     describe(`when the is app configured event is notified`, (): void => {
-      it(`should emit a new value into the stream`, (doneCallback: jest.DoneCallback): void => {
+      it(`should emit a new value into the stream`, async (): Promise<void> => {
         expect.assertions(1);
-
         service.notifyIsAppConfigured();
-        service.isAppConfigured$().subscribe({
-          error(error): void {
-            expect(true).toStrictEqual(false);
-            doneCallback(error);
-          },
-          next(isTrue: boolean): void {
-            expect(isTrue).toStrictEqual(true);
-            doneCallback();
-          },
-        });
+
+        const result = await service
+          .isAppConfigured$()
+          .pipe(take(1))
+          .toPromise();
+
+        expect(result).toStrictEqual(true);
       });
     });
   });
@@ -192,9 +182,9 @@ describe(`InitService`, (): void => {
         expect.assertions(1);
         service.notifyIsAppConfigured();
 
-        const isReady = await service.isAppConfigured();
+        const result = await service.isAppConfigured();
 
-        expect(isReady).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
   });
@@ -204,20 +194,13 @@ describe(`InitService`, (): void => {
       service = new InitService();
     });
 
-    it(`should notify that the app is configured`, (doneCallback: jest.DoneCallback): void => {
+    it(`should notify that the app is configured`, async (): Promise<void> => {
       expect.assertions(1);
-
       service.notifyIsAppConfigured();
-      service.isAppConfigured$().subscribe({
-        error(error): void {
-          expect(true).toStrictEqual(false);
-          doneCallback(error);
-        },
-        next(isTrue: boolean): void {
-          expect(isTrue).toStrictEqual(true);
-          doneCallback();
-        },
-      });
+
+      const result = await service.isAppConfigured$().pipe(take(1)).toPromise();
+
+      expect(result).toStrictEqual(true);
     });
   });
 });
