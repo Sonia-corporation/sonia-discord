@@ -90,9 +90,9 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
       it(`should return false`, (): void => {
         expect.assertions(1);
 
-        const isNoonFeature = service.isNoonFeature(featureName);
+        const result = service.isNoonFeature(featureName);
 
-        expect(isNoonFeature).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -104,9 +104,9 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const isNoonFeature = service.isNoonFeature(featureName);
+        const result = service.isNoonFeature(featureName);
 
-        expect(isNoonFeature).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
 
@@ -118,9 +118,9 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
       it(`should return true`, (): void => {
         expect.assertions(1);
 
-        const isNoonFeature = service.isNoonFeature(featureName);
+        const result = service.isNoonFeature(featureName);
 
-        expect(isNoonFeature).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
   });

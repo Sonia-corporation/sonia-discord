@@ -28,9 +28,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
 
@@ -42,9 +42,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
     });
@@ -62,9 +62,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
 
@@ -76,9 +76,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
     });
@@ -102,9 +102,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
 
@@ -116,9 +116,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
     });
@@ -136,9 +136,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
 
@@ -150,9 +150,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
     });
@@ -176,9 +176,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
 
@@ -190,9 +190,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
     });
@@ -210,9 +210,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
 
@@ -224,9 +224,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
     });
@@ -250,9 +250,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
 
@@ -264,9 +264,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toStrictEqual(`!help`);
+          expect(result).toStrictEqual(`!help`);
         });
       });
     });
@@ -284,9 +284,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
 
@@ -298,9 +298,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
     });
@@ -324,9 +324,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
 
@@ -338,9 +338,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return true`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toStrictEqual(`!HELP`);
+          expect(result).toStrictEqual(`!HELP`);
         });
       });
     });
@@ -358,9 +358,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
 
@@ -372,9 +372,9 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
         it(`should return null`, (): void => {
           expect.assertions(1);
 
-          const has = discordGetThisCommandWithPrefix(data);
+          const result = discordGetThisCommandWithPrefix(data);
 
-          expect(has).toBeNull();
+          expect(result).toBeNull();
         });
       });
     });

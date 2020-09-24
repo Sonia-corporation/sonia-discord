@@ -20,11 +20,9 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const isDiscordGuildChannelWritableResult = isDiscordGuildChannelWritable(
-        guildChannel
-      );
+      const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(isDiscordGuildChannelWritableResult).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 
@@ -36,11 +34,9 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isDiscordGuildChannelWritableResult = isDiscordGuildChannelWritable(
-        guildChannel
-      );
+      const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(isDiscordGuildChannelWritableResult).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -52,11 +48,9 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isDiscordGuildChannelWritableResult = isDiscordGuildChannelWritable(
-        guildChannel
-      );
+      const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(isDiscordGuildChannelWritableResult).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -68,11 +62,9 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isDiscordGuildChannelWritableResult = isDiscordGuildChannelWritable(
-        guildChannel
-      );
+      const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(isDiscordGuildChannelWritableResult).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -84,11 +76,9 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isDiscordGuildChannelWritableResult = isDiscordGuildChannelWritable(
-        guildChannel
-      );
+      const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(isDiscordGuildChannelWritableResult).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 });

@@ -18,9 +18,9 @@ describe(`isUpToDateFirebaseGuild()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isUpToDate = isUpToDateFirebaseGuild(firebaseGuild);
+      const result = isUpToDateFirebaseGuild(firebaseGuild);
 
-      expect(isUpToDate).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -36,9 +36,9 @@ describe(`isUpToDateFirebaseGuild()`, (): void => {
     it(`should return false`, (): void => {
       expect.assertions(1);
 
-      const isUpToDate = isUpToDateFirebaseGuild(firebaseGuild);
+      const result = isUpToDateFirebaseGuild(firebaseGuild);
 
-      expect(isUpToDate).toStrictEqual(false);
+      expect(result).toStrictEqual(false);
     });
   });
 
@@ -54,9 +54,9 @@ describe(`isUpToDateFirebaseGuild()`, (): void => {
     it(`should return true`, (): void => {
       expect.assertions(1);
 
-      const isUpToDate = isUpToDateFirebaseGuild(firebaseGuild);
+      const result = isUpToDateFirebaseGuild(firebaseGuild);
 
-      expect(isUpToDate).toStrictEqual(true);
+      expect(result).toStrictEqual(true);
     });
   });
 });

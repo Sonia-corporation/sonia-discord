@@ -1552,9 +1552,9 @@ describe(`ConfigService`, (): void => {
       it(`should return the old value`, (): void => {
         expect.assertions(1);
 
-        const isTrue = service.getUpdatedBoolean(configUpdateBoolean);
+        const result = service.getUpdatedBoolean(configUpdateBoolean);
 
-        expect(isTrue).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -1578,9 +1578,9 @@ describe(`ConfigService`, (): void => {
       it(`should return the new value`, (): void => {
         expect.assertions(1);
 
-        const isTrue = service.getUpdatedBoolean(configUpdateBoolean);
+        const result = service.getUpdatedBoolean(configUpdateBoolean);
 
-        expect(isTrue).toStrictEqual(false);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -1604,9 +1604,9 @@ describe(`ConfigService`, (): void => {
       it(`should return the new value`, (): void => {
         expect.assertions(1);
 
-        const isTrue = service.getUpdatedBoolean(configUpdateBoolean);
+        const result = service.getUpdatedBoolean(configUpdateBoolean);
 
-        expect(isTrue).toStrictEqual(true);
+        expect(result).toStrictEqual(true);
       });
     });
   });

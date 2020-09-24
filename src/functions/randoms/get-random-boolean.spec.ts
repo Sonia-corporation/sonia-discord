@@ -4,8 +4,8 @@ describe(`getRandomBoolean()`, (): void => {
   it(`should return true or false`, (): void => {
     expect.assertions(1);
 
-    const isTrue = getRandomBoolean();
+    const result = getRandomBoolean();
 
-    expect(isTrue).toBeOneOf([true, false]);
+    expect(result).toBeOneOf([true, false]);
   });
 });
