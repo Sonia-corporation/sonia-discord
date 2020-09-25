@@ -34,9 +34,7 @@ export class DiscordMessageCommandFeatureNoonEnabled
       ): Promise<IDiscordCommandFlagSuccess> => {
         this._logCurrentState(anyDiscordMessage.id, isEnabled);
 
-        return Promise.resolve(
-          this._getCommandFlagSuccess(shouldEnable, isEnabled)
-        );
+        return this.updateDatabase(shouldEnable, isEnabled);
       }
     );
   }
@@ -63,6 +61,15 @@ export class DiscordMessageCommandFeatureNoonEnabled
 
     return Promise.resolve(
       this._isNoonEnabled(firebaseGuild, anyDiscordMessage.channel.id)
+    );
+  }
+
+  public updateDatabase(
+    shouldEnable: Readonly<boolean>,
+    isEnabled: Readonly<boolean | undefined>
+  ): Promise<IDiscordCommandFlagSuccess> {
+    return Promise.resolve(
+      this._getCommandFlagSuccess(shouldEnable, isEnabled)
     );
   }
 

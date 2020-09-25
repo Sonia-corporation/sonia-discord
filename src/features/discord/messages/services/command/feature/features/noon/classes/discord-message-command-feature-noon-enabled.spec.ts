@@ -31,6 +31,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let isEnabledSpy: jest.SpyInstance;
+    let updateDatabaseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonEnabled();
@@ -45,6 +46,9 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
       isEnabledSpy = jest
         .spyOn(service, `isEnabled`)
         .mockRejectedValue(new Error(`isEnabled error`));
+      updateDatabaseSpy = jest
+        .spyOn(service, `updateDatabase`)
+        .mockRejectedValue(new Error(`updateDatabase error`));
     });
 
     it(`should log about executing the enabled action`, async (): Promise<
@@ -117,12 +121,10 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         it(`should log the current state`, async (): Promise<void> => {
           expect.assertions(3);
 
-          const result = await service.execute(anyDiscordMessage, value);
+          await expect(
+            service.execute(anyDiscordMessage, value)
+          ).rejects.toThrow(new Error(`updateDatabase error`));
 
-          expect(result).toStrictEqual({
-            description: `The \`noon\` feature was not configured yet and is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-            name: `Noon feature enabled`,
-          } as IDiscordCommandFlagSuccess);
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
           expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
             context: `DiscordMessageCommandFeatureNoonEnabled`,
@@ -136,17 +138,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = `true`;
           });
 
-          it(`should return a flag success about the noon feature not configured yet but enabled`, async (): Promise<
+          it(`should update the database to enable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature was not configured yet and is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-              name: `Noon feature enabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(true, undefined);
           });
         });
 
@@ -155,17 +157,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = `TRUE`;
           });
 
-          it(`should return a flag success about the noon feature not configured yet but enabled`, async (): Promise<
+          it(`should update the database to enable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature was not configured yet and is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-              name: `Noon feature enabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(true, undefined);
           });
         });
 
@@ -174,17 +176,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = `false`;
           });
 
-          it(`should return a flag success about the noon feature not configured yet but disabled`, async (): Promise<
+          it(`should update the database to disable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature was not configured yet and is now disabled on this channel.`,
-              name: `Noon feature disabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(false, undefined);
           });
         });
 
@@ -193,17 +195,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = `FALSE`;
           });
 
-          it(`should return a flag success about the noon feature not configured yet but disabled`, async (): Promise<
+          it(`should update the database to disable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature was not configured yet and is now disabled on this channel.`,
-              name: `Noon feature disabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(false, undefined);
           });
         });
 
@@ -212,17 +214,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = null;
           });
 
-          it(`should return a flag success about the noon feature not configured yet but enabled`, async (): Promise<
+          it(`should update the database to enable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature was not configured yet and is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-              name: `Noon feature enabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(true, undefined);
           });
         });
 
@@ -231,17 +233,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = undefined;
           });
 
-          it(`should return a flag success about the noon feature not configured yet but enabled`, async (): Promise<
+          it(`should update the database to enable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature was not configured yet and is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-              name: `Noon feature enabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(true, undefined);
           });
         });
       });
@@ -254,12 +256,10 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         it(`should log the current state`, async (): Promise<void> => {
           expect.assertions(3);
 
-          const result = await service.execute(anyDiscordMessage, value);
+          await expect(
+            service.execute(anyDiscordMessage, value)
+          ).rejects.toThrow(new Error(`updateDatabase error`));
 
-          expect(result).toStrictEqual({
-            description: `The \`noon\` feature was already enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-            name: `Noon feature enabled`,
-          } as IDiscordCommandFlagSuccess);
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
           expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
             context: `DiscordMessageCommandFeatureNoonEnabled`,
@@ -273,17 +273,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = `true`;
           });
 
-          it(`should return a flag success about the noon feature being already enabled`, async (): Promise<
+          it(`should update the database to enable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature was already enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-              name: `Noon feature enabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true);
           });
         });
 
@@ -292,17 +292,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = `TRUE`;
           });
 
-          it(`should return a flag success about the noon feature being already enabled`, async (): Promise<
+          it(`should update the database to enable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature was already enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-              name: `Noon feature enabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true);
           });
         });
 
@@ -311,17 +311,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = `false`;
           });
 
-          it(`should return a flag success about the noon feature being enabled but now disabled`, async (): Promise<
+          it(`should update the database to disable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature is now disabled on this channel.`,
-              name: `Noon feature disabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(false, true);
           });
         });
 
@@ -330,17 +330,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = `FALSE`;
           });
 
-          it(`should return a flag success about the noon feature being enabled but now disabled`, async (): Promise<
+          it(`should update the database to disable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature is now disabled on this channel.`,
-              name: `Noon feature disabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(false, true);
           });
         });
 
@@ -349,17 +349,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = null;
           });
 
-          it(`should return a flag success about the noon feature being already enabled`, async (): Promise<
+          it(`should update the database to enable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature was already enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-              name: `Noon feature enabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true);
           });
         });
 
@@ -368,17 +368,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = undefined;
           });
 
-          it(`should return a flag success about the noon feature being already enabled`, async (): Promise<
+          it(`should update the database to enable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature was already enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-              name: `Noon feature enabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true);
           });
         });
       });
@@ -391,12 +391,10 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         it(`should log the current state`, async (): Promise<void> => {
           expect.assertions(3);
 
-          const result = await service.execute(anyDiscordMessage, value);
+          await expect(
+            service.execute(anyDiscordMessage, value)
+          ).rejects.toThrow(new Error(`updateDatabase error`));
 
-          expect(result).toStrictEqual({
-            description: `The \`noon\` feature is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-            name: `Noon feature enabled`,
-          } as IDiscordCommandFlagSuccess);
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
           expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
             context: `DiscordMessageCommandFeatureNoonEnabled`,
@@ -410,17 +408,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = `true`;
           });
 
-          it(`should return a flag success about the noon feature being disabled but now enabled`, async (): Promise<
+          it(`should update the database to enable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-              name: `Noon feature enabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false);
           });
         });
 
@@ -429,17 +427,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = `TRUE`;
           });
 
-          it(`should return a flag success about the noon feature being disabled but now enabled`, async (): Promise<
+          it(`should update the database to enable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-              name: `Noon feature enabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false);
           });
         });
 
@@ -448,17 +446,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = `false`;
           });
 
-          it(`should return a flag success about the noon feature being already disabled`, async (): Promise<
+          it(`should update the database to disable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature was already disabled on this channel.`,
-              name: `Noon feature disabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(false, false);
           });
         });
 
@@ -467,17 +465,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = `FALSE`;
           });
 
-          it(`should return a flag success about the noon feature being already disabled`, async (): Promise<
+          it(`should update the database to disable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature was already disabled on this channel.`,
-              name: `Noon feature disabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(false, false);
           });
         });
 
@@ -486,17 +484,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = null;
           });
 
-          it(`should return a flag success about the noon feature being disabled but now enabled`, async (): Promise<
+          it(`should update the database to enable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-              name: `Noon feature enabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false);
           });
         });
 
@@ -505,17 +503,17 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             value = undefined;
           });
 
-          it(`should return a flag success about the noon feature being disabled but now enabled`, async (): Promise<
+          it(`should update the database to enable the noon feature`, async (): Promise<
             void
           > => {
-            expect.assertions(1);
+            expect.assertions(3);
 
-            const result = await service.execute(anyDiscordMessage, value);
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`updateDatabase error`));
 
-            expect(result).toStrictEqual({
-              description: `The \`noon\` feature is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
-              name: `Noon feature enabled`,
-            } as IDiscordCommandFlagSuccess);
+            expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+            expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false);
           });
         });
       });
@@ -859,6 +857,149 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               expect(result).toStrictEqual(false);
             });
           });
+        });
+      });
+    });
+  });
+
+  describe(`updateDatabase()`, (): void => {
+    let shouldEnable: boolean;
+    let isEnabled: boolean | undefined;
+
+    beforeEach((): void => {
+      service = new DiscordMessageCommandFeatureNoonEnabled();
+      shouldEnable = false;
+      isEnabled = undefined;
+    });
+
+    describe(`when the current noon feature is not configured`, (): void => {
+      beforeEach((): void => {
+        isEnabled = undefined;
+      });
+
+      describe(`when the new state is enable`, (): void => {
+        beforeEach((): void => {
+          shouldEnable = true;
+        });
+
+        it(`should return a flag success about the noon feature not configured yet but enabled`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.updateDatabase(shouldEnable, isEnabled);
+
+          expect(result).toStrictEqual({
+            description: `The \`noon\` feature was not configured yet and is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
+            name: `Noon feature enabled`,
+          } as IDiscordCommandFlagSuccess);
+        });
+      });
+
+      describe(`when the new state is disable`, (): void => {
+        beforeEach((): void => {
+          shouldEnable = false;
+        });
+
+        it(`should return a flag success about the noon feature not configured yet but disabled`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.updateDatabase(shouldEnable, isEnabled);
+
+          expect(result).toStrictEqual({
+            description: `The \`noon\` feature was not configured yet and is now disabled on this channel.`,
+            name: `Noon feature disabled`,
+          } as IDiscordCommandFlagSuccess);
+        });
+      });
+    });
+
+    describe(`when the current noon feature is enabled`, (): void => {
+      beforeEach((): void => {
+        isEnabled = true;
+      });
+
+      describe(`when the new state is enable`, (): void => {
+        beforeEach((): void => {
+          shouldEnable = true;
+        });
+
+        it(`should return a flag success about the noon feature being already enabled`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.updateDatabase(shouldEnable, isEnabled);
+
+          expect(result).toStrictEqual({
+            description: `The \`noon\` feature was already enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
+            name: `Noon feature enabled`,
+          } as IDiscordCommandFlagSuccess);
+        });
+      });
+
+      describe(`when the new state is disable`, (): void => {
+        beforeEach((): void => {
+          shouldEnable = false;
+        });
+
+        it(`should return a flag success about the noon feature being enabled but now disabled`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.updateDatabase(shouldEnable, isEnabled);
+
+          expect(result).toStrictEqual({
+            description: `The \`noon\` feature is now disabled on this channel.`,
+            name: `Noon feature disabled`,
+          } as IDiscordCommandFlagSuccess);
+        });
+      });
+    });
+
+    describe(`when the current noon feature is disabled`, (): void => {
+      beforeEach((): void => {
+        isEnabled = false;
+      });
+
+      describe(`when the new state is enable`, (): void => {
+        beforeEach((): void => {
+          shouldEnable = true;
+        });
+
+        it(`should return a flag success about the noon feature being disabled but now enabled`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.updateDatabase(shouldEnable, isEnabled);
+
+          expect(result).toStrictEqual({
+            description: `The \`noon\` feature is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
+            name: `Noon feature enabled`,
+          } as IDiscordCommandFlagSuccess);
+        });
+      });
+
+      describe(`when the new state is disable`, (): void => {
+        beforeEach((): void => {
+          isEnabled = false;
+        });
+
+        it(`should return a flag success about the noon feature being already disabled`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.updateDatabase(shouldEnable, isEnabled);
+
+          expect(result).toStrictEqual({
+            description: `The \`noon\` feature was already disabled on this channel.`,
+            name: `Noon feature disabled`,
+          } as IDiscordCommandFlagSuccess);
         });
       });
     });
