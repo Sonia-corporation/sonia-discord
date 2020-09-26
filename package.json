@@ -170,7 +170,7 @@
     "cross-env": "7.0.2",
     "cz-customizable": "6.3.0",
     "cz-customizable-ghooks": "2.0.0",
-    "eslint": "7.9.0",
+    "eslint": "7.10.0",
     "eslint-config-google": "0.14.0",
     "eslint-config-prettier": "6.12.0",
     "eslint-config-recommended": "4.1.0",
