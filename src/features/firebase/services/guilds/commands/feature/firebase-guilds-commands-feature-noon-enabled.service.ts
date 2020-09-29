@@ -3,6 +3,7 @@ import admin from "firebase-admin";
 import _ from "lodash";
 import { AbstractService } from "../../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
+import { IAnyDiscordChannel } from "../../../../../discord/channels/types/any-discord-channel";
 import { ChalkService } from "../../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { IFirebaseGuild } from "../../../../types/guilds/firebase-guild";
@@ -30,7 +31,7 @@ export class FirebaseGuildsCommandsFeatureNoonEnabledService extends AbstractSer
 
   public updateState(
     id: Readonly<Guild["id"]>,
-    channelId: Readonly<TextChannel["id"]>,
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
     isEnabled: Readonly<boolean>
   ): Promise<WriteResult> {
     const collectionReference:

@@ -1,4 +1,4 @@
-import { Message, TextChannel } from "discord.js";
+import { DMChannel, Message, NewsChannel, TextChannel } from "discord.js";
 import admin from "firebase-admin";
 import { createMock } from "ts-auto-mock";
 import { FirebaseGuildVersionEnum } from "../../../../../../../../firebase/enums/guilds/firebase-guild-version.enum";
@@ -157,431 +157,928 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           });
         });
 
-        describe(`when the current noon feature is not configured`, (): void => {
+        describe(`when the Discord message channel is not a text channel`, (): void => {
           beforeEach((): void => {
-            isEnabledSpy.mockResolvedValue(undefined);
+            anyDiscordMessage = createMock<IAnyDiscordMessage>({
+              channel: createMock<NewsChannel>(),
+              guild: {},
+              id: `dummy-id`,
+            });
           });
 
-          it(`should log the current state`, async (): Promise<void> => {
-            expect.assertions(3);
+          it(`should not update the database to enable the noon feature`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
 
             await expect(
               service.execute(anyDiscordMessage, value)
-            ).rejects.toThrow(new Error(`updateDatabase error`));
+            ).rejects.toThrow(new Error(`Firebase channel invalid`));
 
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
-            expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
-              context: `DiscordMessageCommandFeatureNoonEnabled`,
-              hasExtendedContext: true,
-              message: `context-[dummy-id] text-current state: value-undefined`,
-            } as ILoggerLog);
+            expect(updateDatabaseSpy).not.toHaveBeenCalled();
           });
 
-          describe(`when the flag value is "true"`, (): void => {
+          it(`should throw an error about the Firebase channel being invalid`, async (): Promise<
+            void
+          > => {
+            expect.assertions(1);
+
+            await expect(
+              service.execute(anyDiscordMessage, value)
+            ).rejects.toThrow(new Error(`Firebase channel invalid`));
+          });
+        });
+
+        describe(`when the Discord message channel is a DM channel`, (): void => {
+          beforeEach((): void => {
+            anyDiscordMessage = createMock<IAnyDiscordMessage>({
+              channel: createMock<DMChannel>(),
+              guild: {},
+              id: `dummy-id`,
+            });
+          });
+
+          describe(`when the current noon feature is not configured`, (): void => {
             beforeEach((): void => {
-              value = `true`;
+              isEnabledSpy.mockResolvedValue(undefined);
             });
 
-            it(`should update the database to enable the noon feature`, async (): Promise<
-              void
-            > => {
+            it(`should log the current state`, async (): Promise<void> => {
               expect.assertions(3);
 
               await expect(
                 service.execute(anyDiscordMessage, value)
               ).rejects.toThrow(new Error(`updateDatabase error`));
 
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(
-                true,
-                undefined,
-                {}
-              );
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+                context: `DiscordMessageCommandFeatureNoonEnabled`,
+                hasExtendedContext: true,
+                message: `context-[dummy-id] text-current state: value-undefined`,
+              } as ILoggerLog);
+            });
+
+            describe(`when the flag value is "true"`, (): void => {
+              beforeEach((): void => {
+                value = `true`;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  true,
+                  undefined,
+                  {}
+                );
+              });
+            });
+
+            describe(`when the flag value is "TRUE"`, (): void => {
+              beforeEach((): void => {
+                value = `TRUE`;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  true,
+                  undefined,
+                  {}
+                );
+              });
+            });
+
+            describe(`when the flag value is "false"`, (): void => {
+              beforeEach((): void => {
+                value = `false`;
+              });
+
+              it(`should update the database to disable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  false,
+                  undefined,
+                  {}
+                );
+              });
+            });
+
+            describe(`when the flag value is "FALSE"`, (): void => {
+              beforeEach((): void => {
+                value = `FALSE`;
+              });
+
+              it(`should update the database to disable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  false,
+                  undefined,
+                  {}
+                );
+              });
+            });
+
+            describe(`when the flag value is null`, (): void => {
+              beforeEach((): void => {
+                value = null;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  true,
+                  undefined,
+                  {}
+                );
+              });
+            });
+
+            describe(`when the flag value is undefined`, (): void => {
+              beforeEach((): void => {
+                value = undefined;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  true,
+                  undefined,
+                  {}
+                );
+              });
             });
           });
 
-          describe(`when the flag value is "TRUE"`, (): void => {
+          describe(`when the current noon feature is enabled`, (): void => {
             beforeEach((): void => {
-              value = `TRUE`;
+              isEnabledSpy.mockResolvedValue(true);
             });
 
-            it(`should update the database to enable the noon feature`, async (): Promise<
-              void
-            > => {
+            it(`should log the current state`, async (): Promise<void> => {
               expect.assertions(3);
 
               await expect(
                 service.execute(anyDiscordMessage, value)
               ).rejects.toThrow(new Error(`updateDatabase error`));
 
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(
-                true,
-                undefined,
-                {}
-              );
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+                context: `DiscordMessageCommandFeatureNoonEnabled`,
+                hasExtendedContext: true,
+                message: `context-[dummy-id] text-current state: value-true`,
+              } as ILoggerLog);
+            });
+
+            describe(`when the flag value is "true"`, (): void => {
+              beforeEach((): void => {
+                value = `true`;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true, {});
+              });
+            });
+
+            describe(`when the flag value is "TRUE"`, (): void => {
+              beforeEach((): void => {
+                value = `TRUE`;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true, {});
+              });
+            });
+
+            describe(`when the flag value is "false"`, (): void => {
+              beforeEach((): void => {
+                value = `false`;
+              });
+
+              it(`should update the database to disable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(false, true, {});
+              });
+            });
+
+            describe(`when the flag value is "FALSE"`, (): void => {
+              beforeEach((): void => {
+                value = `FALSE`;
+              });
+
+              it(`should update the database to disable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(false, true, {});
+              });
+            });
+
+            describe(`when the flag value is null`, (): void => {
+              beforeEach((): void => {
+                value = null;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true, {});
+              });
+            });
+
+            describe(`when the flag value is undefined`, (): void => {
+              beforeEach((): void => {
+                value = undefined;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true, {});
+              });
             });
           });
 
-          describe(`when the flag value is "false"`, (): void => {
+          describe(`when the current noon feature is disabled`, (): void => {
             beforeEach((): void => {
-              value = `false`;
+              isEnabledSpy.mockResolvedValue(false);
             });
 
-            it(`should update the database to disable the noon feature`, async (): Promise<
-              void
-            > => {
+            it(`should log the current state`, async (): Promise<void> => {
               expect.assertions(3);
 
               await expect(
                 service.execute(anyDiscordMessage, value)
               ).rejects.toThrow(new Error(`updateDatabase error`));
 
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(
-                false,
-                undefined,
-                {}
-              );
-            });
-          });
-
-          describe(`when the flag value is "FALSE"`, (): void => {
-            beforeEach((): void => {
-              value = `FALSE`;
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+                context: `DiscordMessageCommandFeatureNoonEnabled`,
+                hasExtendedContext: true,
+                message: `context-[dummy-id] text-current state: value-false`,
+              } as ILoggerLog);
             });
 
-            it(`should update the database to disable the noon feature`, async (): Promise<
-              void
-            > => {
-              expect.assertions(3);
+            describe(`when the flag value is "true"`, (): void => {
+              beforeEach((): void => {
+                value = `true`;
+              });
 
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
 
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(
-                false,
-                undefined,
-                {}
-              );
-            });
-          });
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
 
-          describe(`when the flag value is null`, (): void => {
-            beforeEach((): void => {
-              value = null;
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false, {});
+              });
             });
 
-            it(`should update the database to enable the noon feature`, async (): Promise<
-              void
-            > => {
-              expect.assertions(3);
+            describe(`when the flag value is "TRUE"`, (): void => {
+              beforeEach((): void => {
+                value = `TRUE`;
+              });
 
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
 
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(
-                true,
-                undefined,
-                {}
-              );
-            });
-          });
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
 
-          describe(`when the flag value is undefined`, (): void => {
-            beforeEach((): void => {
-              value = undefined;
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false, {});
+              });
             });
 
-            it(`should update the database to enable the noon feature`, async (): Promise<
-              void
-            > => {
-              expect.assertions(3);
+            describe(`when the flag value is "false"`, (): void => {
+              beforeEach((): void => {
+                value = `false`;
+              });
 
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
+              it(`should update the database to disable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
 
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(
-                true,
-                undefined,
-                {}
-              );
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  false,
+                  false,
+                  {}
+                );
+              });
+            });
+
+            describe(`when the flag value is "FALSE"`, (): void => {
+              beforeEach((): void => {
+                value = `FALSE`;
+              });
+
+              it(`should update the database to disable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  false,
+                  false,
+                  {}
+                );
+              });
+            });
+
+            describe(`when the flag value is null`, (): void => {
+              beforeEach((): void => {
+                value = null;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false, {});
+              });
+            });
+
+            describe(`when the flag value is undefined`, (): void => {
+              beforeEach((): void => {
+                value = undefined;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false, {});
+              });
             });
           });
         });
 
-        describe(`when the current noon feature is enabled`, (): void => {
+        describe(`when the Discord message channel is a text channel`, (): void => {
           beforeEach((): void => {
-            isEnabledSpy.mockResolvedValue(true);
+            anyDiscordMessage = createMock<IAnyDiscordMessage>({
+              channel: createMock<TextChannel>(),
+              guild: {},
+              id: `dummy-id`,
+            });
           });
 
-          it(`should log the current state`, async (): Promise<void> => {
-            expect.assertions(3);
-
-            await expect(
-              service.execute(anyDiscordMessage, value)
-            ).rejects.toThrow(new Error(`updateDatabase error`));
-
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
-            expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
-              context: `DiscordMessageCommandFeatureNoonEnabled`,
-              hasExtendedContext: true,
-              message: `context-[dummy-id] text-current state: value-true`,
-            } as ILoggerLog);
-          });
-
-          describe(`when the flag value is "true"`, (): void => {
+          describe(`when the current noon feature is not configured`, (): void => {
             beforeEach((): void => {
-              value = `true`;
+              isEnabledSpy.mockResolvedValue(undefined);
             });
 
-            it(`should update the database to enable the noon feature`, async (): Promise<
-              void
-            > => {
+            it(`should log the current state`, async (): Promise<void> => {
               expect.assertions(3);
 
               await expect(
                 service.execute(anyDiscordMessage, value)
               ).rejects.toThrow(new Error(`updateDatabase error`));
 
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true, {});
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+                context: `DiscordMessageCommandFeatureNoonEnabled`,
+                hasExtendedContext: true,
+                message: `context-[dummy-id] text-current state: value-undefined`,
+              } as ILoggerLog);
+            });
+
+            describe(`when the flag value is "true"`, (): void => {
+              beforeEach((): void => {
+                value = `true`;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  true,
+                  undefined,
+                  {}
+                );
+              });
+            });
+
+            describe(`when the flag value is "TRUE"`, (): void => {
+              beforeEach((): void => {
+                value = `TRUE`;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  true,
+                  undefined,
+                  {}
+                );
+              });
+            });
+
+            describe(`when the flag value is "false"`, (): void => {
+              beforeEach((): void => {
+                value = `false`;
+              });
+
+              it(`should update the database to disable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  false,
+                  undefined,
+                  {}
+                );
+              });
+            });
+
+            describe(`when the flag value is "FALSE"`, (): void => {
+              beforeEach((): void => {
+                value = `FALSE`;
+              });
+
+              it(`should update the database to disable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  false,
+                  undefined,
+                  {}
+                );
+              });
+            });
+
+            describe(`when the flag value is null`, (): void => {
+              beforeEach((): void => {
+                value = null;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  true,
+                  undefined,
+                  {}
+                );
+              });
+            });
+
+            describe(`when the flag value is undefined`, (): void => {
+              beforeEach((): void => {
+                value = undefined;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  true,
+                  undefined,
+                  {}
+                );
+              });
             });
           });
 
-          describe(`when the flag value is "TRUE"`, (): void => {
+          describe(`when the current noon feature is enabled`, (): void => {
             beforeEach((): void => {
-              value = `TRUE`;
+              isEnabledSpy.mockResolvedValue(true);
             });
 
-            it(`should update the database to enable the noon feature`, async (): Promise<
-              void
-            > => {
+            it(`should log the current state`, async (): Promise<void> => {
               expect.assertions(3);
 
               await expect(
                 service.execute(anyDiscordMessage, value)
               ).rejects.toThrow(new Error(`updateDatabase error`));
 
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true, {});
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+                context: `DiscordMessageCommandFeatureNoonEnabled`,
+                hasExtendedContext: true,
+                message: `context-[dummy-id] text-current state: value-true`,
+              } as ILoggerLog);
+            });
+
+            describe(`when the flag value is "true"`, (): void => {
+              beforeEach((): void => {
+                value = `true`;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true, {});
+              });
+            });
+
+            describe(`when the flag value is "TRUE"`, (): void => {
+              beforeEach((): void => {
+                value = `TRUE`;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true, {});
+              });
+            });
+
+            describe(`when the flag value is "false"`, (): void => {
+              beforeEach((): void => {
+                value = `false`;
+              });
+
+              it(`should update the database to disable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(false, true, {});
+              });
+            });
+
+            describe(`when the flag value is "FALSE"`, (): void => {
+              beforeEach((): void => {
+                value = `FALSE`;
+              });
+
+              it(`should update the database to disable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(false, true, {});
+              });
+            });
+
+            describe(`when the flag value is null`, (): void => {
+              beforeEach((): void => {
+                value = null;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true, {});
+              });
+            });
+
+            describe(`when the flag value is undefined`, (): void => {
+              beforeEach((): void => {
+                value = undefined;
+              });
+
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true, {});
+              });
             });
           });
 
-          describe(`when the flag value is "false"`, (): void => {
+          describe(`when the current noon feature is disabled`, (): void => {
             beforeEach((): void => {
-              value = `false`;
+              isEnabledSpy.mockResolvedValue(false);
             });
 
-            it(`should update the database to disable the noon feature`, async (): Promise<
-              void
-            > => {
+            it(`should log the current state`, async (): Promise<void> => {
               expect.assertions(3);
 
               await expect(
                 service.execute(anyDiscordMessage, value)
               ).rejects.toThrow(new Error(`updateDatabase error`));
 
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(false, true, {});
-            });
-          });
-
-          describe(`when the flag value is "FALSE"`, (): void => {
-            beforeEach((): void => {
-              value = `FALSE`;
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+                context: `DiscordMessageCommandFeatureNoonEnabled`,
+                hasExtendedContext: true,
+                message: `context-[dummy-id] text-current state: value-false`,
+              } as ILoggerLog);
             });
 
-            it(`should update the database to disable the noon feature`, async (): Promise<
-              void
-            > => {
-              expect.assertions(3);
+            describe(`when the flag value is "true"`, (): void => {
+              beforeEach((): void => {
+                value = `true`;
+              });
 
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
 
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(false, true, {});
-            });
-          });
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
 
-          describe(`when the flag value is null`, (): void => {
-            beforeEach((): void => {
-              value = null;
-            });
-
-            it(`should update the database to enable the noon feature`, async (): Promise<
-              void
-            > => {
-              expect.assertions(3);
-
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
-
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true, {});
-            });
-          });
-
-          describe(`when the flag value is undefined`, (): void => {
-            beforeEach((): void => {
-              value = undefined;
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false, {});
+              });
             });
 
-            it(`should update the database to enable the noon feature`, async (): Promise<
-              void
-            > => {
-              expect.assertions(3);
+            describe(`when the flag value is "TRUE"`, (): void => {
+              beforeEach((): void => {
+                value = `TRUE`;
+              });
 
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
 
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(true, true, {});
-            });
-          });
-        });
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
 
-        describe(`when the current noon feature is disabled`, (): void => {
-          beforeEach((): void => {
-            isEnabledSpy.mockResolvedValue(false);
-          });
-
-          it(`should log the current state`, async (): Promise<void> => {
-            expect.assertions(3);
-
-            await expect(
-              service.execute(anyDiscordMessage, value)
-            ).rejects.toThrow(new Error(`updateDatabase error`));
-
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
-            expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
-              context: `DiscordMessageCommandFeatureNoonEnabled`,
-              hasExtendedContext: true,
-              message: `context-[dummy-id] text-current state: value-false`,
-            } as ILoggerLog);
-          });
-
-          describe(`when the flag value is "true"`, (): void => {
-            beforeEach((): void => {
-              value = `true`;
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false, {});
+              });
             });
 
-            it(`should update the database to enable the noon feature`, async (): Promise<
-              void
-            > => {
-              expect.assertions(3);
+            describe(`when the flag value is "false"`, (): void => {
+              beforeEach((): void => {
+                value = `false`;
+              });
 
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
+              it(`should update the database to disable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
 
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false, {});
-            });
-          });
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
 
-          describe(`when the flag value is "TRUE"`, (): void => {
-            beforeEach((): void => {
-              value = `TRUE`;
-            });
-
-            it(`should update the database to enable the noon feature`, async (): Promise<
-              void
-            > => {
-              expect.assertions(3);
-
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
-
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false, {});
-            });
-          });
-
-          describe(`when the flag value is "false"`, (): void => {
-            beforeEach((): void => {
-              value = `false`;
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  false,
+                  false,
+                  {}
+                );
+              });
             });
 
-            it(`should update the database to disable the noon feature`, async (): Promise<
-              void
-            > => {
-              expect.assertions(3);
+            describe(`when the flag value is "FALSE"`, (): void => {
+              beforeEach((): void => {
+                value = `FALSE`;
+              });
 
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
+              it(`should update the database to disable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
 
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(false, false, {});
-            });
-          });
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
 
-          describe(`when the flag value is "FALSE"`, (): void => {
-            beforeEach((): void => {
-              value = `FALSE`;
-            });
-
-            it(`should update the database to disable the noon feature`, async (): Promise<
-              void
-            > => {
-              expect.assertions(3);
-
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
-
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(false, false, {});
-            });
-          });
-
-          describe(`when the flag value is null`, (): void => {
-            beforeEach((): void => {
-              value = null;
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(
+                  false,
+                  false,
+                  {}
+                );
+              });
             });
 
-            it(`should update the database to enable the noon feature`, async (): Promise<
-              void
-            > => {
-              expect.assertions(3);
+            describe(`when the flag value is null`, (): void => {
+              beforeEach((): void => {
+                value = null;
+              });
 
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
 
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false, {});
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
+
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false, {});
+              });
             });
-          });
 
-          describe(`when the flag value is undefined`, (): void => {
-            beforeEach((): void => {
-              value = undefined;
-            });
+            describe(`when the flag value is undefined`, (): void => {
+              beforeEach((): void => {
+                value = undefined;
+              });
 
-            it(`should update the database to enable the noon feature`, async (): Promise<
-              void
-            > => {
-              expect.assertions(3);
+              it(`should update the database to enable the noon feature`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
 
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(
+                  service.execute(anyDiscordMessage, value)
+                ).rejects.toThrow(new Error(`updateDatabase error`));
 
-              expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
-              expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false, {});
+                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledWith(true, false, {});
+              });
             });
           });
         });

@@ -1,4 +1,4 @@
-import { Snowflake, TextChannel } from "discord.js";
+import { Snowflake } from "discord.js";
 import _ from "lodash";
 import { ClassNameEnum } from "../../../../../../../../../enums/class-name.enum";
 import { toBoolean } from "../../../../../../../../../functions/formatters/to-boolean";
@@ -9,6 +9,8 @@ import { IFirebaseGuildChannel } from "../../../../../../../../firebase/types/gu
 import { IFirebaseGuild } from "../../../../../../../../firebase/types/guilds/firebase-guild";
 import { ChalkService } from "../../../../../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../../../../../logger/services/logger.service";
+import { DiscordChannelService } from "../../../../../../../channels/services/discord-channel.service";
+import { IAnyDiscordChannel } from "../../../../../../../channels/types/any-discord-channel";
 import { DiscordCommandFlagAction } from "../../../../../../classes/commands/flags/discord-command-flag-action";
 import { DiscordCommandFlagSuccessDescriptionEnum } from "../../../../../../enums/commands/flags/discord-command-flag-success-description.enum";
 import { DiscordCommandFlagSuccessTitleEnum } from "../../../../../../enums/commands/flags/discord-command-flag-success-title.enum";
@@ -36,12 +38,20 @@ export class DiscordMessageCommandFeatureNoonEnabled
         this._logCurrentState(anyDiscordMessage.id, isEnabled);
 
         if (!_.isNil(anyDiscordMessage.guild)) {
-          return this.updateDatabase(
-            shouldEnable,
-            isEnabled,
-            anyDiscordMessage.guild,
-            anyDiscordMessage.channel as TextChannel
-          );
+          if (
+            DiscordChannelService.getInstance().isValid(
+              anyDiscordMessage.channel
+            )
+          ) {
+            return this.updateDatabase(
+              shouldEnable,
+              isEnabled,
+              anyDiscordMessage.guild,
+              anyDiscordMessage.channel
+            );
+          }
+
+          return Promise.reject(new Error(`Firebase channel invalid`));
         }
 
         return Promise.reject(new Error(`Firebase guild invalid`));
@@ -78,11 +88,11 @@ export class DiscordMessageCommandFeatureNoonEnabled
     shouldEnable: Readonly<boolean>,
     isEnabled: Readonly<boolean | undefined>,
     { id }: Readonly<IFirebaseGuild>,
-    textChannel: Readonly<TextChannel>
+    discordChannel: Readonly<IAnyDiscordChannel>
   ): Promise<IDiscordCommandFlagSuccess> {
     if (!_.isNil(id)) {
       return FirebaseGuildsCommandsFeatureNoonEnabledService.getInstance()
-        .updateState(id, textChannel.id, shouldEnable)
+        .updateState(id, discordChannel.id, shouldEnable)
         .then(
           (): Promise<IDiscordCommandFlagSuccess> =>
             Promise.resolve(
