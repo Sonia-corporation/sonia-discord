@@ -18,4 +18,10 @@ describe(`FirebaseGuildVersionEnum`, (): void => {
 
     expect(FirebaseGuildVersionEnum.V3).toStrictEqual(3);
   });
+
+  it(`should have a member "V4"`, (): void => {
+    expect.assertions(1);
+
+    expect(FirebaseGuildVersionEnum.V4).toStrictEqual(4);
+  });
 });

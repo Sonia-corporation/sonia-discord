@@ -1,4 +1,4 @@
-import { Message } from "discord.js";
+import { Message, TextChannel } from "discord.js";
 import admin from "firebase-admin";
 import { createMock } from "ts-auto-mock";
 import { FirebaseGuildVersionEnum } from "../../../../../../../../firebase/enums/guilds/firebase-guild-version.enum";
@@ -710,8 +710,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         describe(`when the Firebase guilds store channels are empty`, (): void => {
           beforeEach((): void => {
             firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
-              channels: [],
-              version: FirebaseGuildVersionEnum.V3,
+              channels: {},
+              version: FirebaseGuildVersionEnum.V4,
             });
 
             firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
@@ -771,12 +771,14 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         describe(`when the given Discord message channel does not exist in the Firebase guilds store channels`, (): void => {
           beforeEach((): void => {
             firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
-              channels: [
-                createMock<IFirebaseGuildChannelVFinal>({
-                  id: `bad-dummy-channel-id`,
-                }),
-              ],
-              version: FirebaseGuildVersionEnum.V3,
+              channels: {
+                "bad-dummy-channel-id": createMock<IFirebaseGuildChannelVFinal>(
+                  {
+                    id: `bad-dummy-channel-id`,
+                  }
+                ),
+              },
+              version: FirebaseGuildVersionEnum.V4,
             });
 
             firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
@@ -796,12 +798,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         describe(`when the given Discord message channel exist in the Firebase guilds store channels`, (): void => {
           beforeEach((): void => {
             firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
-              channels: [
-                createMock<IFirebaseGuildChannelVFinal>({
+              channels: {
+                "dummy-channel-id": createMock<IFirebaseGuildChannelVFinal>({
                   id: `dummy-channel-id`,
                 }),
-              ],
-              version: FirebaseGuildVersionEnum.V3,
+              },
+              version: FirebaseGuildVersionEnum.V4,
             });
 
             firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
@@ -812,15 +814,15 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           describe(`when the channel does not have the noon feature configured yet`, (): void => {
             beforeEach((): void => {
               firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
-                channels: [
-                  createMock<IFirebaseGuildChannelVFinal>({
+                channels: {
+                  "dummy-channel-id": createMock<IFirebaseGuildChannelVFinal>({
                     features: {
                       noon: undefined,
                     },
                     id: `dummy-channel-id`,
                   }),
-                ],
-                version: FirebaseGuildVersionEnum.V3,
+                },
+                version: FirebaseGuildVersionEnum.V4,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
@@ -840,8 +842,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           describe(`when the channel does not have the noon feature enabled option configured yet`, (): void => {
             beforeEach((): void => {
               firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
-                channels: [
-                  createMock<IFirebaseGuildChannelVFinal>({
+                channels: {
+                  "dummy-channel-id": createMock<IFirebaseGuildChannelVFinal>({
                     features: {
                       noon: {
                         isEnabled: undefined,
@@ -849,8 +851,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                     },
                     id: `dummy-channel-id`,
                   }),
-                ],
-                version: FirebaseGuildVersionEnum.V3,
+                },
+                version: FirebaseGuildVersionEnum.V4,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
@@ -870,8 +872,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           describe(`when the channel has the noon feature enabled`, (): void => {
             beforeEach((): void => {
               firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
-                channels: [
-                  createMock<IFirebaseGuildChannelVFinal>({
+                channels: {
+                  "dummy-channel-id": createMock<IFirebaseGuildChannelVFinal>({
                     features: {
                       noon: {
                         isEnabled: true,
@@ -879,8 +881,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                     },
                     id: `dummy-channel-id`,
                   }),
-                ],
-                version: FirebaseGuildVersionEnum.V3,
+                },
+                version: FirebaseGuildVersionEnum.V4,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
@@ -900,8 +902,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           describe(`when the channel has the noon feature disabled`, (): void => {
             beforeEach((): void => {
               firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
-                channels: [
-                  createMock<IFirebaseGuildChannelVFinal>({
+                channels: {
+                  "dummy-channel-id": createMock<IFirebaseGuildChannelVFinal>({
                     features: {
                       noon: {
                         isEnabled: false,
@@ -909,8 +911,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                     },
                     id: `dummy-channel-id`,
                   }),
-                ],
-                version: FirebaseGuildVersionEnum.V3,
+                },
+                version: FirebaseGuildVersionEnum.V4,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
@@ -935,6 +937,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
     let shouldEnable: boolean;
     let isEnabled: boolean | undefined;
     let firebaseGuild: IFirebaseGuild;
+    let textChannel: TextChannel;
     let writeResult: WriteResult;
 
     let firebaseGuildsCommandsFeatureNoonEnabledServiceUpdateStateSpy: jest.SpyInstance;
@@ -944,6 +947,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
       shouldEnable = false;
       isEnabled = undefined;
       firebaseGuild = createMock<IFirebaseGuild>();
+      textChannel = createMock<TextChannel>();
       writeResult = createMock<WriteResult>();
 
       firebaseGuildsCommandsFeatureNoonEnabledServiceUpdateStateSpy = jest
@@ -962,7 +966,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         expect.assertions(2);
 
         await expect(
-          service.updateDatabase(shouldEnable, isEnabled, firebaseGuild)
+          service.updateDatabase(
+            shouldEnable,
+            isEnabled,
+            firebaseGuild,
+            textChannel
+          )
         ).rejects.toThrow(new Error(`Firebase guild id invalid`));
 
         expect(
@@ -976,7 +985,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         expect.assertions(1);
 
         await expect(
-          service.updateDatabase(shouldEnable, isEnabled, firebaseGuild)
+          service.updateDatabase(
+            shouldEnable,
+            isEnabled,
+            firebaseGuild,
+            textChannel
+          )
         ).rejects.toThrow(new Error(`Firebase guild id invalid`));
       });
     });
@@ -992,7 +1006,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         expect.assertions(3);
 
         await expect(
-          service.updateDatabase(shouldEnable, isEnabled, firebaseGuild)
+          service.updateDatabase(
+            shouldEnable,
+            isEnabled,
+            firebaseGuild,
+            textChannel
+          )
         ).rejects.toThrow(new Error(`updateState error`));
 
         expect(
@@ -1016,7 +1035,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           expect.assertions(1);
 
           await expect(
-            service.updateDatabase(shouldEnable, isEnabled, firebaseGuild)
+            service.updateDatabase(
+              shouldEnable,
+              isEnabled,
+              firebaseGuild,
+              textChannel
+            )
           ).rejects.toThrow(new Error(`updateState error`));
         });
       });
@@ -1046,7 +1070,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               const result = await service.updateDatabase(
                 shouldEnable,
                 isEnabled,
-                firebaseGuild
+                firebaseGuild,
+                textChannel
               );
 
               expect(result).toStrictEqual({
@@ -1069,7 +1094,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               const result = await service.updateDatabase(
                 shouldEnable,
                 isEnabled,
-                firebaseGuild
+                firebaseGuild,
+                textChannel
               );
 
               expect(result).toStrictEqual({
@@ -1098,7 +1124,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               const result = await service.updateDatabase(
                 shouldEnable,
                 isEnabled,
-                firebaseGuild
+                firebaseGuild,
+                textChannel
               );
 
               expect(result).toStrictEqual({
@@ -1121,7 +1148,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               const result = await service.updateDatabase(
                 shouldEnable,
                 isEnabled,
-                firebaseGuild
+                firebaseGuild,
+                textChannel
               );
 
               expect(result).toStrictEqual({
@@ -1150,7 +1178,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               const result = await service.updateDatabase(
                 shouldEnable,
                 isEnabled,
-                firebaseGuild
+                firebaseGuild,
+                textChannel
               );
 
               expect(result).toStrictEqual({
@@ -1173,7 +1202,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               const result = await service.updateDatabase(
                 shouldEnable,
                 isEnabled,
-                firebaseGuild
+                firebaseGuild,
+                textChannel
               );
 
               expect(result).toStrictEqual({

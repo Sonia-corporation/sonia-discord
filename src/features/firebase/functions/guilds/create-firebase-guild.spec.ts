@@ -16,7 +16,7 @@ describe(`createFirebaseGuild()`, (): void => {
 
     const result = createFirebaseGuild(data);
 
-    expect(result.channels).toStrictEqual([]);
+    expect(result.channels).toStrictEqual({});
   });
 
   it(`should return the id from the given data`, (): void => {
@@ -40,6 +40,6 @@ describe(`createFirebaseGuild()`, (): void => {
 
     const result = createFirebaseGuild(data);
 
-    expect(result.version).toStrictEqual(3);
+    expect(result.version).toStrictEqual(4);
   });
 });

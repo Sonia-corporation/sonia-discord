@@ -114,7 +114,7 @@ export class DiscordMessageCommandFeatureNoonEnabled
     channelId: Readonly<Snowflake>
   ): IFirebaseGuildChannel | undefined {
     if (hasFirebaseGuildChannels(firebaseGuild)) {
-      return _.find(firebaseGuild.channels, [`id`, channelId]);
+      return _.get(firebaseGuild.channels, channelId);
     }
 
     return undefined;

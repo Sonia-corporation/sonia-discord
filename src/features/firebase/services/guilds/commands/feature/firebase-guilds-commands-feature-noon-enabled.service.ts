@@ -74,8 +74,8 @@ export class FirebaseGuildsCommandsFeatureNoonEnabledService extends AbstractSer
     isEnabled: Readonly<boolean>
   ): Partial<IFirebaseGuildVFinal> {
     return {
-      channels: [
-        {
+      channels: {
+        0: {
           features: {
             noon: {
               isEnabled,
@@ -83,7 +83,7 @@ export class FirebaseGuildsCommandsFeatureNoonEnabledService extends AbstractSer
           },
           id,
         },
-      ],
+      },
     };
   }
 }
