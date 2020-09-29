@@ -1,6 +1,7 @@
 import { createMock } from "ts-auto-mock";
 import { IObject } from "../../../../types/object";
 import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-version.enum";
+import { IFirebaseGuildChannelV1 } from "../../interfaces/guilds/channels/firebase-guild-channel-v1";
 import { IFirebaseGuildV1 } from "../../interfaces/guilds/firebase-guild-v1";
 import { IFirebaseGuildV2 } from "../../interfaces/guilds/firebase-guild-v2";
 import { IFirebaseGuildV3 } from "../../interfaces/guilds/firebase-guild-v3";
@@ -110,6 +111,9 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
 
     beforeEach((): void => {
       firebaseGuild = createMock<IFirebaseGuildV3>({
+        channels: [createMock<IFirebaseGuildChannelV1>()],
+        id: `dummy-id`,
+        lastReleaseNotesVersion: `dummy-last-release-notes-version`,
         version: FirebaseGuildVersionEnum.V3,
       });
     });

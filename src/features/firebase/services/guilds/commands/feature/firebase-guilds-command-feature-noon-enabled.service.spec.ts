@@ -2,7 +2,7 @@ import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../../core/services/core-event.service";
 import { FirebaseGuildsCommandsFeatureNoonEnabledService } from "./firebase-guilds-commands-feature-noon-enabled.service";
 
-jest.mock(`../../../logger/services/chalk/chalk.service`);
+jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
 describe(`FirebaseGuildsCommandsFeatureNoonEnabledService`, (): void => {
   let service: FirebaseGuildsCommandsFeatureNoonEnabledService;
