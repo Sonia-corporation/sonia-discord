@@ -126,6 +126,7 @@ On production the CI will provide his own environment variables.
 - `npm run test:watch`: run the tests and watch them  
 - `npm run test:watch:no-cache`: run the tests and watch them without cache 
 - `npm run test:majestic`: run the tests in the browser (beautiful UI)
+- `npm run test:leaks`: run the tests once and find the memory leaks
 - `npm run test:ci`: run the tests once and stop asap on error 
 - `npm run test:ci:coverage`: run the tests once with code coverage and stop asap on error 
 - `npm run test:mutant`: run the mutation testing once
