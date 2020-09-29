@@ -4,7 +4,7 @@ import { createMock } from "ts-auto-mock";
 import { FirebaseGuildVersionEnum } from "../../../../../../../../firebase/enums/guilds/firebase-guild-version.enum";
 import { IFirebaseGuildV1 } from "../../../../../../../../firebase/interfaces/guilds/firebase-guild-v1";
 import { IFirebaseGuildV2 } from "../../../../../../../../firebase/interfaces/guilds/firebase-guild-v2";
-import { FirebaseGuildsCommandsFeatureEnabledService } from "../../../../../../../../firebase/services/guilds/commands/feature/firebase-guilds-commands-feature-enabled.service";
+import { FirebaseGuildsCommandsFeatureNoonEnabledService } from "../../../../../../../../firebase/services/guilds/commands/feature/firebase-guilds-commands-feature-noon-enabled.service";
 import { FirebaseGuildsStoreQuery } from "../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query";
 import { IFirebaseGuildChannelVFinal } from "../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final";
 import { IFirebaseGuild } from "../../../../../../../../firebase/types/guilds/firebase-guild";
@@ -22,12 +22,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
   let service: DiscordMessageCommandFeatureNoonEnabled;
   let loggerService: LoggerService;
   let firebaseGuildsStoreQuery: FirebaseGuildsStoreQuery;
-  let firebaseGuildsCommandsFeatureEnabledService: FirebaseGuildsCommandsFeatureEnabledService;
+  let firebaseGuildsCommandsFeatureNoonEnabledService: FirebaseGuildsCommandsFeatureNoonEnabledService;
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
     firebaseGuildsStoreQuery = FirebaseGuildsStoreQuery.getInstance();
-    firebaseGuildsCommandsFeatureEnabledService = FirebaseGuildsCommandsFeatureEnabledService.getInstance();
+    firebaseGuildsCommandsFeatureNoonEnabledService = FirebaseGuildsCommandsFeatureNoonEnabledService.getInstance();
   });
 
   describe(`execute()`, (): void => {
@@ -937,7 +937,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
     let firebaseGuild: IFirebaseGuild;
     let writeResult: WriteResult;
 
-    let firebaseGuildsCommandsFeatureEnabledServiceUpdateStateSpy: jest.SpyInstance;
+    let firebaseGuildsCommandsFeatureNoonEnabledServiceUpdateStateSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonEnabled();
@@ -946,8 +946,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
       firebaseGuild = createMock<IFirebaseGuild>();
       writeResult = createMock<WriteResult>();
 
-      firebaseGuildsCommandsFeatureEnabledServiceUpdateStateSpy = jest
-        .spyOn(firebaseGuildsCommandsFeatureEnabledService, `updateState`)
+      firebaseGuildsCommandsFeatureNoonEnabledServiceUpdateStateSpy = jest
+        .spyOn(firebaseGuildsCommandsFeatureNoonEnabledService, `updateState`)
         .mockRejectedValue(new Error(`updateState error`));
     });
 
@@ -966,7 +966,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         ).rejects.toThrow(new Error(`Firebase guild id invalid`));
 
         expect(
-          firebaseGuildsCommandsFeatureEnabledServiceUpdateStateSpy
+          firebaseGuildsCommandsFeatureNoonEnabledServiceUpdateStateSpy
         ).not.toHaveBeenCalled();
       });
 
@@ -996,16 +996,16 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         ).rejects.toThrow(new Error(`updateState error`));
 
         expect(
-          firebaseGuildsCommandsFeatureEnabledServiceUpdateStateSpy
+          firebaseGuildsCommandsFeatureNoonEnabledServiceUpdateStateSpy
         ).toHaveBeenCalledTimes(1);
         expect(
-          firebaseGuildsCommandsFeatureEnabledServiceUpdateStateSpy
+          firebaseGuildsCommandsFeatureNoonEnabledServiceUpdateStateSpy
         ).toHaveBeenCalledWith(`dummy-id`, false);
       });
 
       describe(`when the enable state for the feature command in the Firebase guilds was not successfully updated`, (): void => {
         beforeEach((): void => {
-          firebaseGuildsCommandsFeatureEnabledServiceUpdateStateSpy.mockRejectedValue(
+          firebaseGuildsCommandsFeatureNoonEnabledServiceUpdateStateSpy.mockRejectedValue(
             new Error(`updateState error`)
           );
         });
@@ -1023,7 +1023,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
 
       describe(`when the enable state for the feature command in the Firebase guilds was successfully updated`, (): void => {
         beforeEach((): void => {
-          firebaseGuildsCommandsFeatureEnabledServiceUpdateStateSpy.mockResolvedValue(
+          firebaseGuildsCommandsFeatureNoonEnabledServiceUpdateStateSpy.mockResolvedValue(
             writeResult
           );
         });

@@ -497,6 +497,14 @@ describe(`ServiceNameEnum`, (): void => {
     ).toStrictEqual(`FirebaseGuildsBreakingChangeService`);
   });
 
+  it(`should have a member "FIREBASE_GUILDS_COMMANDS_FEATURE_NOON_ENABLED_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.FIREBASE_GUILDS_COMMANDS_FEATURE_NOON_ENABLED_SERVICE
+    ).toStrictEqual(`FirebaseGuildsCommandsFeatureNoonEnabledService`);
+  });
+
   it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_SERVICE"`, (): void => {
     expect.assertions(1);
 

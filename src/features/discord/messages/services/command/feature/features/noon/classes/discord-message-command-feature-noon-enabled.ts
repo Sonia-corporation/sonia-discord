@@ -3,7 +3,7 @@ import _ from "lodash";
 import { ClassNameEnum } from "../../../../../../../../../enums/class-name.enum";
 import { toBoolean } from "../../../../../../../../../functions/formatters/to-boolean";
 import { hasFirebaseGuildChannels } from "../../../../../../../../firebase/functions/guilds/checks/has-firebase-guild-channels";
-import { FirebaseGuildsCommandsFeatureEnabledService } from "../../../../../../../../firebase/services/guilds/commands/feature/firebase-guilds-commands-feature-enabled.service";
+import { FirebaseGuildsCommandsFeatureNoonEnabledService } from "../../../../../../../../firebase/services/guilds/commands/feature/firebase-guilds-commands-feature-noon-enabled.service";
 import { FirebaseGuildsStoreQuery } from "../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query";
 import { IFirebaseGuildChannel } from "../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel";
 import { IFirebaseGuild } from "../../../../../../../../firebase/types/guilds/firebase-guild";
@@ -81,7 +81,7 @@ export class DiscordMessageCommandFeatureNoonEnabled
     textChannel: Readonly<TextChannel>
   ): Promise<IDiscordCommandFlagSuccess> {
     if (!_.isNil(id)) {
-      return FirebaseGuildsCommandsFeatureEnabledService.getInstance()
+      return FirebaseGuildsCommandsFeatureNoonEnabledService.getInstance()
         .updateState(id, textChannel.id, shouldEnable)
         .then(
           (): Promise<IDiscordCommandFlagSuccess> =>
