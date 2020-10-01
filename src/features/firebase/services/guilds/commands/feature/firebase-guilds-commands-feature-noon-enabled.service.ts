@@ -1,13 +1,14 @@
-import { Guild, TextChannel } from "discord.js";
+import { Guild } from "discord.js";
 import admin from "firebase-admin";
 import _ from "lodash";
 import { AbstractService } from "../../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
+import { flattenObject } from "../../../../../../functions/formatters/flatten-object";
+import { IObject } from "../../../../../../types/object";
 import { IAnyDiscordChannel } from "../../../../../discord/channels/types/any-discord-channel";
 import { ChalkService } from "../../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { IFirebaseGuild } from "../../../../types/guilds/firebase-guild";
-import { IFirebaseGuildVFinal } from "../../../../types/guilds/firebase-guild-v-final";
 import { FirebaseGuildsService } from "../../firebase-guilds.service";
 import CollectionReference = admin.firestore.CollectionReference;
 import WriteResult = admin.firestore.WriteResult;
@@ -70,21 +71,26 @@ export class FirebaseGuildsCommandsFeatureNoonEnabledService extends AbstractSer
     return Promise.reject(new Error(`Collection not available`));
   }
 
+  /**
+   * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#sonia-link-002}
+   *
+   * @param {Readonly<Snowflake>} id The [id]{@link Snowflake} of channel
+   * @param {Readonly<boolean>} isEnabled The new [enabled state]{@link IFirebaseGuildVFinal#channels#features#noon#isEnabled}
+   *
+   * @return {IObject} A flatten object updating only the enabled state
+   */
   public getUpdatedGuild(
-    id: Readonly<TextChannel["id"]>,
+    id: Readonly<IAnyDiscordChannel["id"]>,
     isEnabled: Readonly<boolean>
-  ): Partial<IFirebaseGuildVFinal> {
-    return {
-      channels: {
-        0: {
-          features: {
-            noon: {
-              isEnabled,
-            },
-          },
-          id,
-        },
-      },
-    };
+  ): IObject {
+    const flattenFirebaseGuild: IObject = {};
+
+    _.set(
+      flattenFirebaseGuild,
+      `channels.${id}.features.noon.isEnabled`,
+      isEnabled
+    );
+
+    return flattenObject(flattenFirebaseGuild);
   }
 }
