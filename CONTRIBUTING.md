@@ -263,6 +263,7 @@ To identify them easily the following syntax is used:
 Here is the list of linked features:
 
 - [sonia-link-001](#sonia-link-001)
+- [sonia-link-002](#sonia-link-002)
 
 ### sonia-link-001
 
@@ -272,3 +273,15 @@ To avoid type errors a check is required and to avoid code duplication it is don
 When a new version is created this is required to update these functions as well.
 This special comment help to identify the code required to be updated when a new release is available.  
 I think that a workaround with types can be made but all I was not able to do it without losing the links between models and data.
+
+### sonia-link-002
+
+Due to Firebase being a dick when updating nested objects we can not use a proper typing system when updating the data.  
+In fact we had to choose between two strategies:
+
+- update the whole object
+- update only the changed properties
+
+We chose to only update the minimum as possible (solution 2) to avoid potential issues with multiple parallel asynchronous updates.  
+So the main drawback is that the types are gone and any breaking change is not so easily spotted.  
+Use this reminder to avoid to miss something when a breaking change occur.
