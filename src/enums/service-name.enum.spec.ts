@@ -501,8 +501,16 @@ describe(`ServiceNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(
-      ServiceNameEnum.FIREBASE_GUILDS_COMMANDS_FEATURE_NOON_ENABLED_SERVICE
-    ).toStrictEqual(`FirebaseGuildsCommandsFeatureNoonEnabledService`);
+      ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_SERVICE
+    ).toStrictEqual(`FirebaseGuildsChannelsFeaturesNoonEnabledService`);
+  });
+
+  it(`should have a member "FIREBASE_GUILDS_CHANNELS_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_SERVICE).toStrictEqual(
+      `FirebaseGuildsChannelsService`
+    );
   });
 
   it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_SERVICE"`, (): void => {

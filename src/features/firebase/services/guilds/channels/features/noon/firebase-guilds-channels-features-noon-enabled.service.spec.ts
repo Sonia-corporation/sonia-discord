@@ -1,12 +1,12 @@
 import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../../../core/services/core-event.service";
 import { IAnyDiscordChannel } from "../../../../../../discord/channels/types/any-discord-channel";
-import { FirebaseGuildsCommandsFeatureNoonEnabledService } from "./firebase-guilds-commands-feature-noon-enabled.service";
+import { FirebaseGuildsChannelsFeaturesNoonEnabledService } from "./firebase-guilds-channels-features-noon-enabled.service";
 
 jest.mock(`../../../../../../logger/services/chalk/chalk.service`);
 
-describe(`FirebaseGuildsCommandsFeatureNoonEnabledService`, (): void => {
-  let service: FirebaseGuildsCommandsFeatureNoonEnabledService;
+describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
+  let service: FirebaseGuildsChannelsFeaturesNoonEnabledService;
   let coreEventService: CoreEventService;
 
   beforeEach((): void => {
@@ -14,20 +14,20 @@ describe(`FirebaseGuildsCommandsFeatureNoonEnabledService`, (): void => {
   });
 
   describe(`getInstance()`, (): void => {
-    it(`should create a FirebaseGuildsCommandsFeatureNoonEnabled service`, (): void => {
+    it(`should create a FirebaseGuildsChannelsFeaturesNoonEnabled service`, (): void => {
       expect.assertions(1);
 
-      service = FirebaseGuildsCommandsFeatureNoonEnabledService.getInstance();
+      service = FirebaseGuildsChannelsFeaturesNoonEnabledService.getInstance();
 
       expect(service).toStrictEqual(
-        expect.any(FirebaseGuildsCommandsFeatureNoonEnabledService)
+        expect.any(FirebaseGuildsChannelsFeaturesNoonEnabledService)
       );
     });
 
-    it(`should return the created FirebaseGuildsCommandsFeatureNoonEnabled service`, (): void => {
+    it(`should return the created FirebaseGuildsChannelsFeaturesNoonEnabled service`, (): void => {
       expect.assertions(1);
 
-      const result = FirebaseGuildsCommandsFeatureNoonEnabledService.getInstance();
+      const result = FirebaseGuildsChannelsFeaturesNoonEnabledService.getInstance();
 
       expect(result).toStrictEqual(service);
     });
@@ -42,14 +42,14 @@ describe(`FirebaseGuildsCommandsFeatureNoonEnabledService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should notify the FirebaseGuildsCommandsFeatureNoonEnabled service creation`, (): void => {
+    it(`should notify the FirebaseGuildsChannelsFeaturesNoonEnabled service creation`, (): void => {
       expect.assertions(2);
 
-      service = new FirebaseGuildsCommandsFeatureNoonEnabledService();
+      service = new FirebaseGuildsChannelsFeaturesNoonEnabledService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.FIREBASE_GUILDS_COMMANDS_FEATURE_NOON_ENABLED_SERVICE
+        ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_SERVICE
       );
     });
   });
@@ -59,7 +59,7 @@ describe(`FirebaseGuildsCommandsFeatureNoonEnabledService`, (): void => {
     let isEnabled: boolean;
 
     beforeEach((): void => {
-      service = new FirebaseGuildsCommandsFeatureNoonEnabledService();
+      service = new FirebaseGuildsChannelsFeaturesNoonEnabledService();
       id = `dummy-id`;
       isEnabled = false;
     });

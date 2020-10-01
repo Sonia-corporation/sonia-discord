@@ -13,20 +13,20 @@ import { FirebaseGuildsService } from "../../../firebase-guilds.service";
 import CollectionReference = admin.firestore.CollectionReference;
 import WriteResult = admin.firestore.WriteResult;
 
-export class FirebaseGuildsCommandsFeatureNoonEnabledService extends AbstractService {
-  private static _instance: FirebaseGuildsCommandsFeatureNoonEnabledService;
+export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractService {
+  private static _instance: FirebaseGuildsChannelsFeaturesNoonEnabledService;
 
-  public static getInstance(): FirebaseGuildsCommandsFeatureNoonEnabledService {
-    if (_.isNil(FirebaseGuildsCommandsFeatureNoonEnabledService._instance)) {
-      FirebaseGuildsCommandsFeatureNoonEnabledService._instance = new FirebaseGuildsCommandsFeatureNoonEnabledService();
+  public static getInstance(): FirebaseGuildsChannelsFeaturesNoonEnabledService {
+    if (_.isNil(FirebaseGuildsChannelsFeaturesNoonEnabledService._instance)) {
+      FirebaseGuildsChannelsFeaturesNoonEnabledService._instance = new FirebaseGuildsChannelsFeaturesNoonEnabledService();
     }
 
-    return FirebaseGuildsCommandsFeatureNoonEnabledService._instance;
+    return FirebaseGuildsChannelsFeaturesNoonEnabledService._instance;
   }
 
   public constructor() {
     super(
-      ServiceNameEnum.FIREBASE_GUILDS_COMMANDS_FEATURE_NOON_ENABLED_SERVICE
+      ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_SERVICE
     );
   }
 
