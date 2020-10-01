@@ -1,9 +1,9 @@
-import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../../core/services/core-event.service";
-import { IAnyDiscordChannel } from "../../../../../discord/channels/types/any-discord-channel";
+import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
+import { CoreEventService } from "../../../../../../core/services/core-event.service";
+import { IAnyDiscordChannel } from "../../../../../../discord/channels/types/any-discord-channel";
 import { FirebaseGuildsCommandsFeatureNoonEnabledService } from "./firebase-guilds-commands-feature-noon-enabled.service";
 
-jest.mock(`../../../../../logger/services/chalk/chalk.service`);
+jest.mock(`../../../../../../logger/services/chalk/chalk.service`);
 
 describe(`FirebaseGuildsCommandsFeatureNoonEnabledService`, (): void => {
   let service: FirebaseGuildsCommandsFeatureNoonEnabledService;

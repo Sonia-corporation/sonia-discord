@@ -1,15 +1,15 @@
 import { Guild } from "discord.js";
 import admin from "firebase-admin";
 import _ from "lodash";
-import { AbstractService } from "../../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
-import { flattenObject } from "../../../../../../functions/formatters/flatten-object";
-import { IObject } from "../../../../../../types/object";
-import { IAnyDiscordChannel } from "../../../../../discord/channels/types/any-discord-channel";
-import { ChalkService } from "../../../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../../../logger/services/logger.service";
-import { IFirebaseGuild } from "../../../../types/guilds/firebase-guild";
-import { FirebaseGuildsService } from "../../firebase-guilds.service";
+import { AbstractService } from "../../../../../../../classes/services/abstract.service";
+import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
+import { flattenObject } from "../../../../../../../functions/formatters/flatten-object";
+import { IObject } from "../../../../../../../types/object";
+import { IAnyDiscordChannel } from "../../../../../../discord/channels/types/any-discord-channel";
+import { ChalkService } from "../../../../../../logger/services/chalk/chalk.service";
+import { LoggerService } from "../../../../../../logger/services/logger.service";
+import { IFirebaseGuild } from "../../../../../types/guilds/firebase-guild";
+import { FirebaseGuildsService } from "../../../firebase-guilds.service";
 import CollectionReference = admin.firestore.CollectionReference;
 import WriteResult = admin.firestore.WriteResult;
 
