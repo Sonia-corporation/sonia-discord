@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { AbstractService } from "../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { FirebaseGuildChannelVersionEnum } from "../../../enums/guilds/channels/firebase-guild-channel-version.enum";
+import { FIREBASE_GUILD_CHANNEL_CURRENT_VERSION } from "../../../constants/guilds/channels/firebase-guild-channel-current-version";
 import { ICreateFirebaseGuildChannel } from "../../../interfaces/guilds/channels/create-firebase-guild-channel";
 import { IFirebaseGuildChannel } from "../../../types/guilds/channels/firebase-guild-channel";
 import { IFirebaseGuildChannelVFinal } from "../../../types/guilds/channels/firebase-guild-channel-v-final";
@@ -30,7 +30,7 @@ export class FirebaseGuildsChannelsService extends AbstractService {
   public isUpToDate(
     channel: Readonly<IFirebaseGuildChannel>
   ): channel is IFirebaseGuildChannelVFinal {
-    return channel.version === FirebaseGuildChannelVersionEnum.V1;
+    return _.isEqual(channel.version, FIREBASE_GUILD_CHANNEL_CURRENT_VERSION);
   }
 
   public isSet(
@@ -45,7 +45,7 @@ export class FirebaseGuildsChannelsService extends AbstractService {
     return {
       features: undefined,
       id,
-      version: FirebaseGuildChannelVersionEnum.V1,
+      version: FIREBASE_GUILD_CHANNEL_CURRENT_VERSION,
     };
   }
 
