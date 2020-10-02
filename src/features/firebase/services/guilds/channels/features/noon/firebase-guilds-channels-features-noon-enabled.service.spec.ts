@@ -1,6 +1,8 @@
+import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../../../core/services/core-event.service";
 import { IAnyDiscordChannel } from "../../../../../../discord/channels/types/any-discord-channel";
+import { IFirebaseGuildVFinal } from "../../../../../types/guilds/firebase-guild-v-final";
 import { FirebaseGuildsChannelsFeaturesNoonEnabledService } from "./firebase-guilds-channels-features-noon-enabled.service";
 
 jest.mock(`../../../../../../logger/services/chalk/chalk.service`);
@@ -57,11 +59,13 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
   describe(`getUpdatedGuild()`, (): void => {
     let id: IAnyDiscordChannel["id"];
     let isEnabled: boolean;
+    let firebaseGuild: IFirebaseGuildVFinal;
 
     beforeEach((): void => {
       service = new FirebaseGuildsChannelsFeaturesNoonEnabledService();
       id = `dummy-id`;
       isEnabled = false;
+      firebaseGuild = createMock<IFirebaseGuildVFinal>();
     });
 
     describe(`when the given enable state is false`, (): void => {
@@ -72,7 +76,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
       it(`should return an object with a single path updating the enable state to false`, (): void => {
         expect.assertions(1);
 
-        const result = service.getUpdatedGuild(id, isEnabled);
+        const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
 
         expect(result).toStrictEqual({
           "channels.dummy-id.features.noon.isEnabled": false,
@@ -88,7 +92,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
       it(`should return an object with a single path updating the enable state to true`, (): void => {
         expect.assertions(1);
 
-        const result = service.getUpdatedGuild(id, isEnabled);
+        const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
 
         expect(result).toStrictEqual({
           "channels.dummy-id.features.noon.isEnabled": true,
