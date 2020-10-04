@@ -36,7 +36,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
     id: Readonly<Guild["id"]>,
     channelId: Readonly<IAnyDiscordChannel["id"]>,
     isEnabled: Readonly<boolean>
-  ): Promise<WriteResult> {
+  ): Promise<WriteResult | void> {
     const collectionReference:
       | CollectionReference<IFirebaseGuild>
       | undefined = FirebaseGuildsService.getInstance().getCollectionReference();
@@ -61,6 +61,13 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
             }
 
             return Promise.reject(new Error(`Firebase guild does not exists`));
+          }
+        )
+        .catch(
+          (error: Readonly<Error>): Promise<void> => {
+            this._logGetFirebaseGuildError(id);
+
+            return Promise.reject(error);
           }
         );
     }
@@ -164,6 +171,17 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
           id
         )} noon feature enabled state updated to ${ChalkService.getInstance().value(
           isEnabled
+        )}`
+      ),
+    });
+  }
+
+  private _logGetFirebaseGuildError(id: Readonly<Guild["id"]>): void {
+    LoggerService.getInstance().error({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(
+        `could not find the Firebase guild with id: ${ChalkService.getInstance().value(
+          id
         )}`
       ),
     });
