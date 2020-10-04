@@ -12,6 +12,9 @@ import { isUpToDateFirebaseGuild } from "../../../../../functions/guilds/is-up-t
 import { IFirebaseGuild } from "../../../../../types/guilds/firebase-guild";
 import { IFirebaseGuildVFinal } from "../../../../../types/guilds/firebase-guild-v-final";
 import { FirebaseGuildsService } from "../../../firebase-guilds.service";
+import { FirebaseGuildsChannelsService } from "../../firebase-guilds-channels.service";
+import { FirebaseGuildsChannelsFeaturesService } from "../firebase-guilds-channels-features.service";
+import { FirebaseGuildsChannelsFeaturesNoonService } from "./firebase-guilds-channels-features-noon.service";
 import CollectionReference = admin.firestore.CollectionReference;
 import WriteResult = admin.firestore.WriteResult;
 
@@ -62,7 +65,9 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
 
             this._logInvalidFirebaseGuild(id);
 
-            return Promise.reject(new Error(`Firebase guild does not exists`));
+            return Promise.reject(
+              new Error(`Firebase guild does not exists or is not up-to-date`)
+            );
           }
         )
         .catch(
@@ -80,33 +85,66 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
   /**
    * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#sonia-link-002}
    *
-   * @param {Readonly<Snowflake>} id The [id]{@link Snowflake} of channel
+   * @param {Readonly<Snowflake>} channelId The [id]{@link Snowflake} of the channel
    * @param {Readonly<boolean>} isEnabled The new [enabled state]{@link IFirebaseGuildVFinal#channels#features#noon#isEnabled}
    * @param {Readonly<IFirebaseGuildVFinal>} firebaseGuild The current guild in the store
    *
    * @return {IObject} A flatten object updating only the enabled state
    */
   public getUpdatedGuild(
-    id: Readonly<IAnyDiscordChannel["id"]>,
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
     isEnabled: Readonly<boolean>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): IObject {
-    if (this._isGuildUpToDate(id, firebaseGuild)) {
-      return this._getUpdatedGuildWithPathOnly(id, isEnabled);
+    if (this._isGuildFullyUpToDate(channelId, firebaseGuild)) {
+      this._logFullyUpToDateFirebaseGuild(firebaseGuild.id);
+
+      return this._getUpdatedGuildWithPathOnly(channelId, isEnabled);
     }
 
-    return this._getUpdatedGuild(id, isEnabled, firebaseGuild);
+    return this._getUpdatedGuild(channelId, isEnabled, firebaseGuild);
   }
 
-  private _isGuildUpToDate(
-    _id: Readonly<IAnyDiscordChannel["id"]>,
-    _firebaseGuild: Readonly<IFirebaseGuildVFinal>
+  private _isGuildFullyUpToDate(
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): boolean {
-    return true;
+    return (
+      this._isValidChannel(channelId, firebaseGuild) &&
+      this._isValidFeature(channelId, firebaseGuild) &&
+      this._isValidNoonFeature(channelId, firebaseGuild)
+    );
+  }
+
+  private _isValidChannel(
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
+  ): boolean {
+    return FirebaseGuildsChannelsService.getInstance().isValid(
+      firebaseGuild.channels && firebaseGuild.channels[channelId]
+    );
+  }
+
+  private _isValidFeature(
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
+  ): boolean {
+    return FirebaseGuildsChannelsFeaturesService.getInstance().isValid(
+      firebaseGuild.channels && firebaseGuild.channels[channelId].features
+    );
+  }
+
+  private _isValidNoonFeature(
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
+  ): boolean {
+    return FirebaseGuildsChannelsFeaturesNoonService.getInstance().isValid(
+      firebaseGuild.channels && firebaseGuild.channels[channelId].features?.noon
+    );
   }
 
   private _getUpdatedGuild(
-    _id: Readonly<IAnyDiscordChannel["id"]>,
+    _channelId: Readonly<IAnyDiscordChannel["id"]>,
     _isEnabled: Readonly<boolean>,
     _firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): IObject {
@@ -182,7 +220,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
     LoggerService.getInstance().error({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `could not find the Firebase guild with id: ${ChalkService.getInstance().value(
+        `could not find the Firebase guild ${ChalkService.getInstance().value(
           id
         )}`
       ),
@@ -195,7 +233,18 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
       message: ChalkService.getInstance().text(
         `the Firebase guild ${ChalkService.getInstance().value(
           id
-        )} is not valid or up-to-date id`
+        )} is not valid or up-to-date`
+      ),
+    });
+  }
+
+  private _logFullyUpToDateFirebaseGuild(
+    id: Readonly<Guild["id"] | undefined>
+  ): void {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(
+        `Firebase guild ${_.toString(id)} is up-to-date`
       ),
     });
   }
