@@ -20,6 +20,6 @@ function flatten(
   );
 }
 
-export function flattenObject(object: Readonly<IObject>): IObject {
+export function flattenObject(object: Readonly<IObject<unknown>>): IObject {
   return flatten(object);
 }

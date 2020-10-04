@@ -89,7 +89,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
    * @param {Readonly<boolean>} isEnabled The new [enabled state]{@link IFirebaseGuildVFinal#channels#features#noon#isEnabled}
    * @param {Readonly<IFirebaseGuildVFinal>} firebaseGuild The current guild in the store
    *
-   * @return {IObject} A flatten object updating only the enabled state
+   * @return {IObject} A flatten object updating only the enabled state or a more complete object to also up-to-date the models
    */
   public getUpdatedGuild(
     channelId: Readonly<IAnyDiscordChannel["id"]>,
@@ -144,22 +144,48 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
   }
 
   private _getUpdatedGuild(
-    _channelId: Readonly<IAnyDiscordChannel["id"]>,
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
     _isEnabled: Readonly<boolean>,
-    _firebaseGuild: Readonly<IFirebaseGuildVFinal>
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): IObject {
-    return {};
+    const updatedFirebaseGuild: IFirebaseGuildVFinal = {
+      channels: {
+        [channelId]: FirebaseGuildsChannelsService.getInstance().getUpToDate(
+          firebaseGuild.channels && firebaseGuild.channels[channelId],
+          {
+            id: channelId,
+          }
+        ),
+      },
+    };
+
+    /**
+     * @todo remove the spread once TS handle this properly
+     *
+     * @see https://github.com/microsoft/TypeScript/issues/15300#issuecomment-436793742 for the destructuring part
+     */
+    return flattenObject({ ...updatedFirebaseGuild });
   }
 
+  /**
+   * @private
+   *
+   * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#sonia-link-002}
+   *
+   * @param {Readonly<Snowflake>} channelId The [id]{@link Snowflake} of the channel
+   * @param {Readonly<boolean>} isEnabled The new [enabled state]{@link IFirebaseGuildVFinal#channels#features#noon#isEnabled}
+   *
+   * @return {IObject} A flatten object updating only the enabled state
+   */
   private _getUpdatedGuildWithPathOnly(
-    id: Readonly<IAnyDiscordChannel["id"]>,
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
     isEnabled: Readonly<boolean>
   ): IObject {
     const flattenFirebaseGuild: IObject = {};
 
     _.set(
       flattenFirebaseGuild,
-      `channels.${id}.features.noon.isEnabled`,
+      `channels.${channelId}.features.noon.isEnabled`,
       isEnabled
     );
 

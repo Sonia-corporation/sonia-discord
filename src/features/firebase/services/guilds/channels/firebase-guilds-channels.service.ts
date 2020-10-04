@@ -54,4 +54,15 @@ export class FirebaseGuildsChannelsService extends AbstractService {
   ): IFirebaseGuildChannelVFinal {
     return channel;
   }
+
+  public getUpToDate(
+    channel: Readonly<IFirebaseGuildChannel | undefined>,
+    createChannel: Readonly<ICreateFirebaseGuildChannel>
+  ): IFirebaseGuildChannelVFinal {
+    if (this.isSet(channel) && !this.isUpToDate(channel)) {
+      return this.upgrade(channel);
+    }
+
+    return this.create(createChannel);
+  }
 }
