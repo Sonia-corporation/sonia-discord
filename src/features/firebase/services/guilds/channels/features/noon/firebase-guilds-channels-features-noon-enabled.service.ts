@@ -60,6 +60,8 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
               );
             }
 
+            this._logInvalidFirebaseGuild(id);
+
             return Promise.reject(new Error(`Firebase guild does not exists`));
           }
         )
@@ -183,6 +185,17 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
         `could not find the Firebase guild with id: ${ChalkService.getInstance().value(
           id
         )}`
+      ),
+    });
+  }
+
+  private _logInvalidFirebaseGuild(id: Readonly<Guild["id"]>): void {
+    LoggerService.getInstance().error({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(
+        `the Firebase guild ${ChalkService.getInstance().value(
+          id
+        )} is not valid or up-to-date id`
       ),
     });
   }
