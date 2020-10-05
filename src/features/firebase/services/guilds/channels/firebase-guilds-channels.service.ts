@@ -3,6 +3,7 @@ import { AbstractService } from "../../../../../classes/services/abstract.servic
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { FIREBASE_GUILD_CHANNEL_CURRENT_VERSION } from "../../../constants/guilds/channels/firebase-guild-channel-current-version";
 import { ICreateFirebaseGuildChannel } from "../../../interfaces/guilds/channels/create-firebase-guild-channel";
+import { INewFirebaseGuildChannel } from "../../../interfaces/guilds/channels/new-firebase-guild-channel";
 import { IFirebaseGuildChannel } from "../../../types/guilds/channels/firebase-guild-channel";
 import { IFirebaseGuildChannelVFinal } from "../../../types/guilds/channels/firebase-guild-channel-v-final";
 
@@ -41,9 +42,8 @@ export class FirebaseGuildsChannelsService extends AbstractService {
 
   public create({
     id,
-  }: Readonly<ICreateFirebaseGuildChannel>): IFirebaseGuildChannelVFinal {
+  }: Readonly<ICreateFirebaseGuildChannel>): INewFirebaseGuildChannel {
     return {
-      features: undefined,
       id,
       version: FIREBASE_GUILD_CHANNEL_CURRENT_VERSION,
     };

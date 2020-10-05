@@ -2,6 +2,7 @@ import _ from "lodash";
 import { AbstractService } from "../../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
 import { FIREBASE_GUILD_CHANNEL_FEATURE_CURRENT_VERSION } from "../../../../constants/guilds/channels/features/firebase-guild-channel-feature-current-version";
+import { INewFirebaseGuildChannelFeature } from "../../../../interfaces/guilds/channels/features/new-firebase-guild-channel-feature";
 import { IFirebaseGuildChannelFeature } from "../../../../types/guilds/channels/features/firebase-guild-channel-feature";
 import { IFirebaseGuildChannelFeatureVFinal } from "../../../../types/guilds/channels/features/firebase-guild-channel-feature-v-final";
 
@@ -41,7 +42,7 @@ export class FirebaseGuildsChannelsFeaturesService extends AbstractService {
     return !_.isNil(feature);
   }
 
-  public create(): IFirebaseGuildChannelFeatureVFinal {
+  public create(): INewFirebaseGuildChannelFeature {
     return {
       version: FIREBASE_GUILD_CHANNEL_FEATURE_CURRENT_VERSION,
     };
