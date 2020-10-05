@@ -181,4 +181,39 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
       });
     });
   });
+
+  describe(`getUpToDate()`, (): void => {
+    let noon: IFirebaseGuildChannelFeatureNoon | undefined;
+
+    describe(`when the given noon config is undefined`, (): void => {
+      beforeEach((): void => {
+        noon = undefined;
+      });
+
+      it(`should return a newly created noon config`, (): void => {
+        expect.assertions(3);
+
+        const result = service.getUpToDate(noon);
+
+        expect(result.version).toStrictEqual(1);
+        expect(result.isEnabled).toBeUndefined();
+      });
+    });
+
+    describe(`when the given noon config is a v1 noon config`, (): void => {
+      beforeEach((): void => {
+        noon = createMock<IFirebaseGuildChannelFeatureNoon>({
+          version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
+        });
+      });
+
+      it(`should return the given noon config`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getUpToDate(noon);
+
+        expect(result).toStrictEqual(noon);
+      });
+    });
+  });
 });

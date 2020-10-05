@@ -181,4 +181,39 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
       });
     });
   });
+
+  describe(`getUpToDate()`, (): void => {
+    let feature: IFirebaseGuildChannelFeature | undefined;
+
+    describe(`when the given feature is undefined`, (): void => {
+      beforeEach((): void => {
+        feature = undefined;
+      });
+
+      it(`should return a newly created feature`, (): void => {
+        expect.assertions(3);
+
+        const result = service.getUpToDate(feature);
+
+        expect(result.version).toStrictEqual(1);
+        expect(result.noon).toBeUndefined();
+      });
+    });
+
+    describe(`when the given feature is a v1 feature`, (): void => {
+      beforeEach((): void => {
+        feature = createMock<IFirebaseGuildChannelFeature>({
+          version: FirebaseGuildChannelFeatureVersionEnum.V1,
+        });
+      });
+
+      it(`should return the given feature`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getUpToDate(feature);
+
+        expect(result).toStrictEqual(feature);
+      });
+    });
+  });
 });

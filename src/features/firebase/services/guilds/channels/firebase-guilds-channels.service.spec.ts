@@ -196,4 +196,47 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
       });
     });
   });
+
+  describe(`getUpToDate()`, (): void => {
+    let channel: IFirebaseGuildChannel | undefined;
+    let createChannel: ICreateFirebaseGuildChannel;
+
+    beforeEach((): void => {
+      createChannel = createMock<ICreateFirebaseGuildChannel>({
+        id: `dummy-id`,
+      });
+    });
+
+    describe(`when the given channel is undefined`, (): void => {
+      beforeEach((): void => {
+        channel = undefined;
+      });
+
+      it(`should return a newly created channel`, (): void => {
+        expect.assertions(3);
+
+        const result = service.getUpToDate(channel, createChannel);
+
+        expect(result.id).toStrictEqual(`dummy-id`);
+        expect(result.version).toStrictEqual(1);
+        expect(result.features).toBeUndefined();
+      });
+    });
+
+    describe(`when the given channel is a v1 channel`, (): void => {
+      beforeEach((): void => {
+        channel = createMock<IFirebaseGuildChannel>({
+          version: FirebaseGuildChannelVersionEnum.V1,
+        });
+      });
+
+      it(`should return the given channel`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getUpToDate(channel, createChannel);
+
+        expect(result).toStrictEqual(channel);
+      });
+    });
+  });
 });
