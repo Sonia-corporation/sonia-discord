@@ -167,7 +167,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
       | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl || undefined,
+      iconURL: soniaImageUrl ?? undefined,
       text: `At your service`,
     };
   }
