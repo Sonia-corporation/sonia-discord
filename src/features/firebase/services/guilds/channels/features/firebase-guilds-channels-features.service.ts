@@ -56,7 +56,7 @@ export class FirebaseGuildsChannelsFeaturesService extends AbstractService {
 
   public getUpToDate(
     feature: Readonly<IFirebaseGuildChannelFeature | undefined>
-  ): IFirebaseGuildChannelFeatureVFinal {
+  ): IFirebaseGuildChannelFeatureVFinal | INewFirebaseGuildChannelFeature {
     if (this.isSet(feature) && !this.isUpToDate(feature)) {
       return this.upgrade(feature);
     }

@@ -9,6 +9,7 @@ import { IAnyDiscordChannel } from "../../../../../../discord/channels/types/any
 import { ChalkService } from "../../../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../../../logger/services/logger.service";
 import { isUpToDateFirebaseGuild } from "../../../../../functions/guilds/is-up-to-date-firebase-guild";
+import { IFirebaseGuildChannelVFinal } from "../../../../../types/guilds/channels/firebase-guild-channel-v-final";
 import { IFirebaseGuild } from "../../../../../types/guilds/firebase-guild";
 import { IFirebaseGuildVFinal } from "../../../../../types/guilds/firebase-guild-v-final";
 import { FirebaseGuildsService } from "../../../firebase-guilds.service";
@@ -102,6 +103,8 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
       return this._getUpdatedGuildWithPathOnly(channelId, isEnabled);
     }
 
+    this._logNotUpToDateFirebaseGuild(firebaseGuild.id);
+
     return this._getUpdatedGuild(channelId, isEnabled, firebaseGuild);
   }
 
@@ -145,7 +148,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
 
   private _getUpdatedGuild(
     channelId: Readonly<IAnyDiscordChannel["id"]>,
-    _isEnabled: Readonly<boolean>,
+    isEnabled: Readonly<boolean>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): IObject {
     const updatedFirebaseGuild: IFirebaseGuildVFinal = {
@@ -158,6 +161,23 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
         ),
       },
     };
+
+    if (
+      !_.isNil(updatedFirebaseGuild.channels) &&
+      !_.isNil(updatedFirebaseGuild.channels[channelId])
+    ) {
+      const firebaseGuildChannel: IFirebaseGuildChannelVFinal =
+        updatedFirebaseGuild.channels[channelId];
+
+      firebaseGuildChannel.features = FirebaseGuildsChannelsFeaturesService.getInstance().getUpToDate(
+        firebaseGuildChannel.features
+      );
+      firebaseGuildChannel.features.noon = FirebaseGuildsChannelsFeaturesNoonService.getInstance().getUpToDate(
+        firebaseGuildChannel.features.noon
+      );
+      firebaseGuildChannel.features.noon.isEnabled = isEnabled;
+      updatedFirebaseGuild.channels[channelId] = firebaseGuildChannel;
+    }
 
     /**
      * @todo remove the spread once TS handle this properly
@@ -271,6 +291,17 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
       context: this._serviceName,
       message: ChalkService.getInstance().text(
         `Firebase guild ${_.toString(id)} is up-to-date`
+      ),
+    });
+  }
+
+  private _logNotUpToDateFirebaseGuild(
+    id: Readonly<Guild["id"] | undefined>
+  ): void {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(
+        `Firebase guild ${_.toString(id)} is not up-to-date`
       ),
     });
   }
