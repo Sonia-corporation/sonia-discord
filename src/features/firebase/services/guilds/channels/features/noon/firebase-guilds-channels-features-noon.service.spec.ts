@@ -61,6 +61,10 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
   describe(`isValid()`, (): void => {
     let noon: IFirebaseGuildChannelFeatureNoon | undefined;
 
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsFeaturesNoonService();
+    });
+
     describe(`when the given noon config is undefined`, (): void => {
       beforeEach((): void => {
         noon = undefined;
@@ -95,6 +99,10 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
   describe(`isUpToDate()`, (): void => {
     let noon: IFirebaseGuildChannelFeatureNoon;
 
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsFeaturesNoonService();
+    });
+
     describe(`when the given noon config is a v1 config`, (): void => {
       beforeEach((): void => {
         noon = createMock<IFirebaseGuildChannelFeatureNoonV1>({
@@ -114,6 +122,10 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
 
   describe(`isSet()`, (): void => {
     let noon: IFirebaseGuildChannelFeatureNoon | undefined;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsFeaturesNoonService();
+    });
 
     describe(`when the given noon config is undefined`, (): void => {
       beforeEach((): void => {
@@ -145,6 +157,10 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
   });
 
   describe(`create()`, (): void => {
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsFeaturesNoonService();
+    });
+
     it(`should return a noon config with an enabled state`, (): void => {
       expect.assertions(1);
 
@@ -165,6 +181,10 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
   describe(`upgrade()`, (): void => {
     let noon: IFirebaseGuildChannelFeatureNoon;
 
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsFeaturesNoonService();
+    });
+
     describe(`when the given noon config is a v1`, (): void => {
       beforeEach((): void => {
         noon = createMock<IFirebaseGuildChannelFeatureNoon>({
@@ -184,6 +204,10 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
 
   describe(`getUpToDate()`, (): void => {
     let noon: IFirebaseGuildChannelFeatureNoon | undefined;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsFeaturesNoonService();
+    });
 
     describe(`when the given noon config is undefined`, (): void => {
       beforeEach((): void => {

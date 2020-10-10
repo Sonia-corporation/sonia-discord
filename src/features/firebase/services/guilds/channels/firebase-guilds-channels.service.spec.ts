@@ -60,6 +60,10 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
   describe(`isValid()`, (): void => {
     let channel: IFirebaseGuildChannel | undefined;
 
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsService();
+    });
+
     describe(`when the given channel is undefined`, (): void => {
       beforeEach((): void => {
         channel = undefined;
@@ -94,6 +98,10 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
   describe(`isUpToDate()`, (): void => {
     let channel: IFirebaseGuildChannel;
 
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsService();
+    });
+
     describe(`when the given channel is a v1 channel`, (): void => {
       beforeEach((): void => {
         channel = createMock<IFirebaseGuildChannelV1>({
@@ -113,6 +121,10 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
   describe(`isSet()`, (): void => {
     let channel: IFirebaseGuildChannel | undefined;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsService();
+    });
 
     describe(`when the given channel is undefined`, (): void => {
       beforeEach((): void => {
@@ -147,6 +159,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
     let channel: ICreateFirebaseGuildChannel;
 
     beforeEach((): void => {
+      service = new FirebaseGuildsChannelsService();
       channel = createMock<ICreateFirebaseGuildChannel>({
         id: `dummy-id`,
       });
@@ -180,6 +193,10 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
   describe(`upgrade()`, (): void => {
     let channel: IFirebaseGuildChannel;
 
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsService();
+    });
+
     describe(`when the given channel is a v1`, (): void => {
       beforeEach((): void => {
         channel = createMock<IFirebaseGuildChannel>({
@@ -202,6 +219,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
     let createChannel: ICreateFirebaseGuildChannel;
 
     beforeEach((): void => {
+      service = new FirebaseGuildsChannelsService();
       createChannel = createMock<ICreateFirebaseGuildChannel>({
         id: `dummy-id`,
       });

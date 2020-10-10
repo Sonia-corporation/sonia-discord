@@ -61,6 +61,10 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
   describe(`isValid()`, (): void => {
     let feature: IFirebaseGuildChannelFeature | undefined;
 
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsFeaturesService();
+    });
+
     describe(`when the given feature is undefined`, (): void => {
       beforeEach((): void => {
         feature = undefined;
@@ -95,6 +99,10 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
   describe(`isUpToDate()`, (): void => {
     let feature: IFirebaseGuildChannelFeature;
 
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsFeaturesService();
+    });
+
     describe(`when the given feature is a v1 feature`, (): void => {
       beforeEach((): void => {
         feature = createMock<IFirebaseGuildChannelFeatureV1>({
@@ -114,6 +122,10 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
   describe(`isSet()`, (): void => {
     let feature: IFirebaseGuildChannelFeature | undefined;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsFeaturesService();
+    });
 
     describe(`when the given feature is undefined`, (): void => {
       beforeEach((): void => {
@@ -145,6 +157,10 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
   });
 
   describe(`create()`, (): void => {
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsFeaturesService();
+    });
+
     it(`should return a feature without noon`, (): void => {
       expect.assertions(1);
 
@@ -165,6 +181,10 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
   describe(`upgrade()`, (): void => {
     let feature: IFirebaseGuildChannelFeature;
 
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsFeaturesService();
+    });
+
     describe(`when the given feature is a v1`, (): void => {
       beforeEach((): void => {
         feature = createMock<IFirebaseGuildChannelFeature>({
@@ -184,6 +204,10 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
   describe(`getUpToDate()`, (): void => {
     let feature: IFirebaseGuildChannelFeature | undefined;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsFeaturesService();
+    });
 
     describe(`when the given feature is undefined`, (): void => {
       beforeEach((): void => {
