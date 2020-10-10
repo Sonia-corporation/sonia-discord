@@ -55,10 +55,14 @@ export class FirebaseGuildsChannelsFeaturesNoonService extends AbstractService {
   }
 
   public getUpToDate(
-    feature: Readonly<IFirebaseGuildChannelFeatureNoon | undefined>
+    noon: Readonly<IFirebaseGuildChannelFeatureNoon | undefined>
   ): IFirebaseGuildChannelFeatureNoonVFinal {
-    if (this.isSet(feature) && !this.isUpToDate(feature)) {
-      return this.upgrade(feature);
+    if (this.isSet(noon)) {
+      if (!this.isUpToDate(noon)) {
+        return this.upgrade(noon);
+      }
+
+      return noon;
     }
 
     return this.create();

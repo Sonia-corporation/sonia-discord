@@ -65,37 +65,55 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
       service = new FirebaseGuildsChannelsFeaturesNoonEnabledService();
       id = `dummy-id`;
       isEnabled = false;
-      firebaseGuild = createMock<IFirebaseGuildVFinal>();
     });
 
-    describe(`when the given enable state is false`, (): void => {
+    describe(`when the given Firebase guild is fully up-to-date`, (): void => {
       beforeEach((): void => {
-        isEnabled = false;
-      });
-
-      it(`should return an object with a single path updating the enable state to false`, (): void => {
-        expect.assertions(1);
-
-        const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
-
-        expect(result).toStrictEqual({
-          "channels.dummy-id.features.noon.isEnabled": false,
+        firebaseGuild = createMock<IFirebaseGuildVFinal>({
+          channels: {
+            "dummy-id": {
+              features: {
+                noon: {
+                  version: 1,
+                },
+                version: 1,
+              },
+              id: `dummy-id`,
+              version: 1,
+            },
+          },
         });
       });
-    });
 
-    describe(`when the given enable state is true`, (): void => {
-      beforeEach((): void => {
-        isEnabled = true;
+      describe(`when the given enable state is false`, (): void => {
+        beforeEach((): void => {
+          isEnabled = false;
+        });
+
+        it(`should return an object with a single path updating the enable state to false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
+
+          expect(result).toStrictEqual({
+            "channels.dummy-id.features.noon.isEnabled": false,
+          });
+        });
       });
 
-      it(`should return an object with a single path updating the enable state to true`, (): void => {
-        expect.assertions(1);
+      describe(`when the given enable state is true`, (): void => {
+        beforeEach((): void => {
+          isEnabled = true;
+        });
 
-        const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
+        it(`should return an object with a single path updating the enable state to true`, (): void => {
+          expect.assertions(1);
 
-        expect(result).toStrictEqual({
-          "channels.dummy-id.features.noon.isEnabled": true,
+          const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
+
+          expect(result).toStrictEqual({
+            "channels.dummy-id.features.noon.isEnabled": true,
+          });
         });
       });
     });

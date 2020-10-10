@@ -191,7 +191,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
       });
 
       it(`should return a newly created feature`, (): void => {
-        expect.assertions(3);
+        expect.assertions(2);
 
         const result = service.getUpToDate(feature);
 

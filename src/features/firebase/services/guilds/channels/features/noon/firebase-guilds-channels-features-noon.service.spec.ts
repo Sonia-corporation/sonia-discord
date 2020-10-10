@@ -191,7 +191,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
       });
 
       it(`should return a newly created noon config`, (): void => {
-        expect.assertions(3);
+        expect.assertions(2);
 
         const result = service.getUpToDate(noon);
 
