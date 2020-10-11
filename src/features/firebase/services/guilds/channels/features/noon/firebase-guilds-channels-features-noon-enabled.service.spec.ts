@@ -2,6 +2,7 @@ import { Guild } from "discord.js";
 import * as admin from "firebase-admin";
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
+import { IObject } from "../../../../../../../types/object";
 import { CoreEventService } from "../../../../../../core/services/core-event.service";
 import { IAnyDiscordChannel } from "../../../../../../discord/channels/types/any-discord-channel";
 import { ILoggerLog } from "../../../../../../logger/interfaces/logger-log";
@@ -680,6 +681,175 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
             });
           });
         });
+      });
+    });
+  });
+
+  describe(`updateState()`, (): void => {
+    let collectionReference: CollectionReference<IFirebaseGuild>;
+    let id: Guild["id"];
+    let channelId: IAnyDiscordChannel["id"];
+    let isEnabled: boolean;
+    let firebaseGuild: IFirebaseGuildVFinal;
+    let updatedFirebaseGuild: IObject;
+    let writeResult: WriteResult;
+
+    let docMock: jest.Mock;
+    let updateMock: jest.Mock;
+    let getUpdatedGuildSpy: jest.SpyInstance;
+    let loggerServiceSuccessSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsChannelsFeaturesNoonEnabledService();
+      id = `dummy-id`;
+      channelId = `dummy-channel-id`;
+      isEnabled = true;
+      firebaseGuild = createMock<IFirebaseGuildVFinal>();
+      updatedFirebaseGuild = createMock<IObject>();
+
+      updateMock = jest.fn().mockRejectedValue(new Error(`update error`));
+      docMock = jest.fn().mockReturnValue({
+        update: updateMock,
+      });
+      collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
+        doc: docMock,
+      });
+      getUpdatedGuildSpy = jest
+        .spyOn(service, `getUpdatedGuild`)
+        .mockReturnValue(updatedFirebaseGuild);
+      loggerServiceSuccessSpy = jest
+        .spyOn(loggerService, `success`)
+        .mockImplementation();
+    });
+
+    it(`should get the Firebase guild with the given id from the guilds`, async (): Promise<
+      void
+    > => {
+      expect.assertions(3);
+
+      await expect(
+        service.updateState(
+          collectionReference,
+          id,
+          channelId,
+          isEnabled,
+          firebaseGuild
+        )
+      ).rejects.toThrow(new Error(`update error`));
+
+      expect(docMock).toHaveBeenCalledTimes(1);
+      expect(docMock).toHaveBeenCalledWith(`dummy-id`);
+    });
+
+    it(`should get the updated Firebase guild`, async (): Promise<void> => {
+      expect.assertions(3);
+
+      await expect(
+        service.updateState(
+          collectionReference,
+          id,
+          channelId,
+          isEnabled,
+          firebaseGuild
+        )
+      ).rejects.toThrow(new Error(`update error`));
+
+      expect(getUpdatedGuildSpy).toHaveBeenCalledTimes(1);
+      expect(getUpdatedGuildSpy).toHaveBeenCalledWith(
+        `dummy-channel-id`,
+        true,
+        firebaseGuild
+      );
+    });
+
+    it(`should update the Firebase guild`, async (): Promise<void> => {
+      expect.assertions(3);
+
+      await expect(
+        service.updateState(
+          collectionReference,
+          id,
+          channelId,
+          isEnabled,
+          firebaseGuild
+        )
+      ).rejects.toThrow(new Error(`update error`));
+
+      expect(updateMock).toHaveBeenCalledTimes(1);
+      expect(updateMock).toHaveBeenCalledWith(updatedFirebaseGuild);
+    });
+
+    describe(`when the Firebase guild was not successfully updated`, (): void => {
+      beforeEach((): void => {
+        updateMock = jest.fn().mockRejectedValue(new Error(`update error`));
+        docMock = jest.fn().mockReturnValue({
+          update: updateMock,
+        });
+        collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
+          doc: docMock,
+        });
+      });
+
+      it(`should throw an error`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        await expect(
+          service.updateState(
+            collectionReference,
+            id,
+            channelId,
+            isEnabled,
+            firebaseGuild
+          )
+        ).rejects.toThrow(new Error(`update error`));
+      });
+    });
+
+    describe(`when the Firebase guild was successfully updated`, (): void => {
+      beforeEach((): void => {
+        writeResult = createMock<WriteResult>();
+
+        updateMock = jest.fn().mockResolvedValue(writeResult);
+        docMock = jest.fn().mockReturnValue({
+          update: updateMock,
+        });
+        collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
+          doc: docMock,
+        });
+      });
+
+      it(`should log about the Firebase guild updated`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await service.updateState(
+          collectionReference,
+          id,
+          channelId,
+          isEnabled,
+          firebaseGuild
+        );
+
+        expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
+          context: `FirebaseGuildsChannelsFeaturesNoonEnabledService`,
+          message: `text-Firebase guild value-dummy-id noon feature enabled state updated to value-true`,
+        } as ILoggerLog);
+      });
+
+      it(`should return the result`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        const result = await service.updateState(
+          collectionReference,
+          id,
+          channelId,
+          isEnabled,
+          firebaseGuild
+        );
+
+        expect(result).toStrictEqual(writeResult);
       });
     });
   });

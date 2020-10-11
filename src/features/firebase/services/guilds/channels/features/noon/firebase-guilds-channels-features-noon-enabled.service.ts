@@ -102,7 +102,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
   }
 
   public updateState(
-    collectionReference: CollectionReference<IFirebaseGuild>,
+    collectionReference: Readonly<CollectionReference<IFirebaseGuild>>,
     id: Readonly<Guild["id"]>,
     channelId: Readonly<IAnyDiscordChannel["id"]>,
     isEnabled: Readonly<boolean>,
