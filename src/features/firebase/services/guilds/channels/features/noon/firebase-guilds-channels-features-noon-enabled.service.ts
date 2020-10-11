@@ -36,7 +36,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
     );
   }
 
-  public updateState(
+  public updateStateByGuildId(
     id: Readonly<Guild["id"]>,
     channelId: Readonly<IAnyDiscordChannel["id"]>,
     isEnabled: Readonly<boolean>
@@ -55,7 +55,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
             firebaseGuild: Readonly<IFirebaseGuild | null | undefined>
           ): Promise<WriteResult> => {
             if (this._isValidGuild(firebaseGuild)) {
-              return this._updateState(
+              return this.updateState(
                 collectionReference,
                 id,
                 channelId,
@@ -69,13 +69,6 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
             return Promise.reject(
               new Error(`Firebase guild does not exists or is not up-to-date`)
             );
-          }
-        )
-        .catch(
-          (error: Readonly<Error>): Promise<void> => {
-            this._logGetFirebaseGuildError(id);
-
-            return Promise.reject(error);
           }
         );
     }
@@ -106,6 +99,25 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
     this._logNotUpToDateFirebaseGuild(firebaseGuild.id);
 
     return this._getUpdatedGuild(channelId, isEnabled, firebaseGuild);
+  }
+
+  public updateState(
+    collectionReference: CollectionReference<IFirebaseGuild>,
+    id: Readonly<Guild["id"]>,
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    isEnabled: Readonly<boolean>,
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
+  ): Promise<WriteResult> {
+    return collectionReference
+      .doc(id)
+      .update(this.getUpdatedGuild(channelId, isEnabled, firebaseGuild))
+      .then(
+        (writeResult: Readonly<WriteResult>): Promise<WriteResult> => {
+          this._logUpdateStateSuccess(id, isEnabled);
+
+          return Promise.resolve(writeResult);
+        }
+      );
   }
 
   private _isGuildFullyUpToDate(
@@ -227,25 +239,6 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
     return !_.isNil(firebaseGuild) && isUpToDateFirebaseGuild(firebaseGuild);
   }
 
-  private _updateState(
-    collectionReference: CollectionReference<IFirebaseGuild>,
-    id: Readonly<Guild["id"]>,
-    channelId: Readonly<IAnyDiscordChannel["id"]>,
-    isEnabled: Readonly<boolean>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): Promise<WriteResult> {
-    return collectionReference
-      .doc(id)
-      .update(this.getUpdatedGuild(channelId, isEnabled, firebaseGuild))
-      .then(
-        (writeResult: Readonly<WriteResult>): Promise<WriteResult> => {
-          this._logUpdateStateSuccess(id, isEnabled);
-
-          return Promise.resolve(writeResult);
-        }
-      );
-  }
-
   private _logUpdateStateSuccess(
     id: Readonly<Guild["id"]>,
     isEnabled: Readonly<boolean>
@@ -257,17 +250,6 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
           id
         )} noon feature enabled state updated to ${ChalkService.getInstance().value(
           isEnabled
-        )}`
-      ),
-    });
-  }
-
-  private _logGetFirebaseGuildError(id: Readonly<Guild["id"]>): void {
-    LoggerService.getInstance().error({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `could not find the Firebase guild ${ChalkService.getInstance().value(
-          id
         )}`
       ),
     });
