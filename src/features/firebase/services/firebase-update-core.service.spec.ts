@@ -1,6 +1,7 @@
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { FirebaseUpdateCoreService } from "./firebase-update-core.service";
+import _ = require("lodash");
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 
@@ -18,8 +19,10 @@ class DummyService extends FirebaseUpdateCoreService<
     super(ServiceNameEnum.APP_CONFIG_CORE_SERVICE);
   }
 
-  public upgrade(entity: IDummy): IDummy {
-    return entity;
+  public upgrade(_entity: IDummy): IDummy {
+    return {
+      id: `new-dummy-id`,
+    };
   }
 
   public create(_createEntity: IDummy | undefined): IDummy {
@@ -28,8 +31,8 @@ class DummyService extends FirebaseUpdateCoreService<
     };
   }
 
-  public isUpToDate(_entity: IDummy): _entity is IDummy {
-    return true;
+  public isUpToDate(entity: IDummy): entity is IDummy {
+    return _.isEqual(entity.id, `dummy-id`);
   }
 }
 
@@ -57,9 +60,27 @@ describe(`FirebaseUpdateCoreService`, (): void => {
       });
     });
 
-    describe(`when the given entity is a valid`, (): void => {
+    describe(`when the given entity is a valid and not up-to-date`, (): void => {
       beforeEach((): void => {
-        entity = createMock<IDummy>();
+        entity = createMock<IDummy>({
+          id: `id`,
+        });
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.isValid(entity);
+
+        expect(result).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given entity is a valid and up-to-date`, (): void => {
+      beforeEach((): void => {
+        entity = createMock<IDummy>({
+          id: `dummy-id`,
+        });
       });
 
       it(`should return true`, (): void => {
@@ -126,9 +147,29 @@ describe(`FirebaseUpdateCoreService`, (): void => {
       });
     });
 
-    describe(`when the given IDummy is valid`, (): void => {
+    describe(`when the given IDummy is valid and not up-to-date`, (): void => {
       beforeEach((): void => {
-        entity = createMock<IDummy>();
+        entity = createMock<IDummy>({
+          id: `id`,
+        });
+      });
+
+      it(`should return the entity updated`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getUpToDate(entity, createEntity);
+
+        expect(result).toStrictEqual({
+          id: `new-dummy-id`,
+        } as IDummy);
+      });
+    });
+
+    describe(`when the given IDummy is valid and up-to-date`, (): void => {
+      beforeEach((): void => {
+        entity = createMock<IDummy>({
+          id: `dummy-id`,
+        });
       });
 
       it(`should return the given entity`, (): void => {
