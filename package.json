@@ -187,7 +187,7 @@
     "jest-ts-auto-mock": "1.0.11",
     "lint-staged": "10.4.0",
     "madge": "3.11.0",
-    "majestic": "1.7.0",
+    "majestic": "1.8.0",
     "parcel-bundler": "1.12.4",
     "prettier": "2.1.2",
     "pug": "3.0.0",
