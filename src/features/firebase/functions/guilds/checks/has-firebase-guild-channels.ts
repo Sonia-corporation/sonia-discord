@@ -1,6 +1,6 @@
 import _ from "lodash";
 import { FirebaseGuildVersionEnum } from "../../../enums/guilds/firebase-guild-version.enum";
-import { IFirebaseGuildV3 } from "../../../interfaces/guilds/firebase-guild-v3";
+import { IFirebaseGuildV4 } from "../../../interfaces/guilds/firebase-guild-v4";
 import { IFirebaseGuild } from "../../../types/guilds/firebase-guild";
 
 /**
@@ -11,10 +11,10 @@ import { IFirebaseGuild } from "../../../types/guilds/firebase-guild";
  *
  * @param {Readonly<IFirebaseGuild>} firebaseGuild The Firebase guild
  *
- * @return {boolean} true when the given guild is at least [v3]{@link FirebaseGuildVersionEnum.V3}
+ * @return {boolean} true when the given guild is at least [v4]{@link FirebaseGuildVersionEnum.V4}
  */
 export function hasFirebaseGuildChannels(
   firebaseGuild: Readonly<IFirebaseGuild>
-): firebaseGuild is IFirebaseGuildV3 {
-  return _.includes([FirebaseGuildVersionEnum.V3], firebaseGuild.version);
+): firebaseGuild is IFirebaseGuildV4 {
+  return _.includes([FirebaseGuildVersionEnum.V4], firebaseGuild.version);
 }

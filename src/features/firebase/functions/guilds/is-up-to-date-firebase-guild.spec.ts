@@ -3,6 +3,7 @@ import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-vers
 import { IFirebaseGuildV1 } from "../../interfaces/guilds/firebase-guild-v1";
 import { IFirebaseGuildV2 } from "../../interfaces/guilds/firebase-guild-v2";
 import { IFirebaseGuildV3 } from "../../interfaces/guilds/firebase-guild-v3";
+import { IFirebaseGuildV4 } from "../../interfaces/guilds/firebase-guild-v4";
 import { isUpToDateFirebaseGuild } from "./is-up-to-date-firebase-guild";
 
 describe(`isUpToDateFirebaseGuild()`, (): void => {
@@ -48,6 +49,24 @@ describe(`isUpToDateFirebaseGuild()`, (): void => {
     beforeEach((): void => {
       firebaseGuild = createMock<IFirebaseGuildV3>({
         version: FirebaseGuildVersionEnum.V3,
+      });
+    });
+
+    it(`should return false`, (): void => {
+      expect.assertions(1);
+
+      const result = isUpToDateFirebaseGuild(firebaseGuild);
+
+      expect(result).toStrictEqual(false);
+    });
+  });
+
+  describe(`when the given Firebase guild is a v4`, (): void => {
+    let firebaseGuild: IFirebaseGuildV4;
+
+    beforeEach((): void => {
+      firebaseGuild = createMock<IFirebaseGuildV4>({
+        version: FirebaseGuildVersionEnum.V4,
       });
     });
 

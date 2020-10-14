@@ -1,9 +1,11 @@
 import { createMock } from "ts-auto-mock";
 import { IObject } from "../../../../types/object";
 import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-version.enum";
+import { IFirebaseGuildChannelV1 } from "../../interfaces/guilds/channels/firebase-guild-channel-v1";
 import { IFirebaseGuildV1 } from "../../interfaces/guilds/firebase-guild-v1";
 import { IFirebaseGuildV2 } from "../../interfaces/guilds/firebase-guild-v2";
 import { IFirebaseGuildV3 } from "../../interfaces/guilds/firebase-guild-v3";
+import { IFirebaseGuildV4 } from "../../interfaces/guilds/firebase-guild-v4";
 import { handleFirebaseGuildBreakingChange } from "./handle-firebase-guild-breaking-change";
 
 describe(`handleFirebaseGuildBreakingChange()`, (): void => {
@@ -49,12 +51,12 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
       expect(result.lastReleaseNotesVersion).toStrictEqual(`0.0.0`);
     });
 
-    it(`should return a v3 version`, (): void => {
+    it(`should return a v4 version`, (): void => {
       expect.assertions(1);
 
       const result = handleFirebaseGuildBreakingChange(firebaseGuild);
 
-      expect(result.version).toStrictEqual(FirebaseGuildVersionEnum.V3);
+      expect(result.version).toStrictEqual(FirebaseGuildVersionEnum.V4);
     });
   });
 
@@ -69,12 +71,12 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
       });
     });
 
-    it(`should return an empty list of channels`, (): void => {
+    it(`should return an empty map of channels`, (): void => {
       expect.assertions(1);
 
       const result = handleFirebaseGuildBreakingChange(firebaseGuild);
 
-      expect(result.channels).toStrictEqual([]);
+      expect(result.channels).toStrictEqual({});
     });
 
     it(`should return the same id`, (): void => {
@@ -95,12 +97,12 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
       );
     });
 
-    it(`should return a v3 version`, (): void => {
+    it(`should return a v4 version`, (): void => {
       expect.assertions(1);
 
       const result = handleFirebaseGuildBreakingChange(firebaseGuild);
 
-      expect(result.version).toStrictEqual(FirebaseGuildVersionEnum.V3);
+      expect(result.version).toStrictEqual(FirebaseGuildVersionEnum.V4);
     });
   });
 
@@ -109,7 +111,54 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
 
     beforeEach((): void => {
       firebaseGuild = createMock<IFirebaseGuildV3>({
+        channels: [createMock<IFirebaseGuildChannelV1>()],
+        id: `dummy-id`,
+        lastReleaseNotesVersion: `dummy-last-release-notes-version`,
         version: FirebaseGuildVersionEnum.V3,
+      });
+    });
+
+    it(`should return an empty map of channels`, (): void => {
+      expect.assertions(1);
+
+      const result = handleFirebaseGuildBreakingChange(firebaseGuild);
+
+      expect(result.channels).toStrictEqual({});
+    });
+
+    it(`should return the same id`, (): void => {
+      expect.assertions(1);
+
+      const result = handleFirebaseGuildBreakingChange(firebaseGuild);
+
+      expect(result.id).toStrictEqual(`dummy-id`);
+    });
+
+    it(`should return the same last release notes version`, (): void => {
+      expect.assertions(1);
+
+      const result = handleFirebaseGuildBreakingChange(firebaseGuild);
+
+      expect(result.lastReleaseNotesVersion).toStrictEqual(
+        `dummy-last-release-notes-version`
+      );
+    });
+
+    it(`should return a v4 version`, (): void => {
+      expect.assertions(1);
+
+      const result = handleFirebaseGuildBreakingChange(firebaseGuild);
+
+      expect(result.version).toStrictEqual(FirebaseGuildVersionEnum.V4);
+    });
+  });
+
+  describe(`when the given Firebase guild is a v4`, (): void => {
+    let firebaseGuild: IFirebaseGuildV4;
+
+    beforeEach((): void => {
+      firebaseGuild = createMock<IFirebaseGuildV4>({
+        version: FirebaseGuildVersionEnum.V4,
       });
     });
 

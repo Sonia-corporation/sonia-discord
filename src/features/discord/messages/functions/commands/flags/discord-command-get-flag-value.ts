@@ -43,7 +43,7 @@ function hasValue(splittedFlag: Readonly<string>[]): boolean {
  *
  * @param {Readonly<IDiscordMessageFlag>} messageFlag A flag as a message
  *
- * @return {string | null} a string when the flag value exists else null
+ * @return {string | null} A string when the flag value exists else null
  */
 export function discordCommandGetFlagValue(
   messageFlag: Readonly<IDiscordMessageFlag>

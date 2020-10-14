@@ -101,7 +101,7 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
     );
 
     return {
-      iconURL: soniaImageUrl || undefined,
+      iconURL: soniaImageUrl ?? undefined,
       text: `${totalReleaseCountHumanized} since ${firstReleaseDate}`,
     };
   }

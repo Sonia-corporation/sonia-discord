@@ -121,7 +121,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
   private _getMessageEmbedFieldFeature(): EmbedFieldData {
     return {
       name: `Feature (*feature* or *f*)`,
-      value: `Change my behavior on this guild. Help me to be better!`,
+      value: `Change my behavior on this guild or on this channel. Help me to be better!`,
     };
   }
 
@@ -167,7 +167,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
       | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl || undefined,
+      iconURL: soniaImageUrl ?? undefined,
       text: `At your service`,
     };
   }
