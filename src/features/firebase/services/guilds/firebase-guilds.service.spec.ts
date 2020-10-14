@@ -711,6 +711,219 @@ describe(`FirebaseGuildsService`, (): void => {
     });
   });
 
+  describe(`getGuild()`, (): void => {
+    let guildId: Snowflake;
+    let documentReference: DocumentReference<IFirebaseGuild>;
+    let collectionReference: CollectionReference<IFirebaseGuild>;
+    let documentSnapshot: DocumentSnapshot<IFirebaseGuild>;
+    let firebaseGuild: IFirebaseGuild;
+
+    let getCollectionReferenceSpy: jest.SpyInstance;
+    let loggerServiceErrorSpy: jest.SpyInstance;
+    let docMock: jest.Mock<DocumentReference<IFirebaseGuild>, string[]>;
+    let getMock: jest.Mock<
+      Promise<DocumentSnapshot<IFirebaseGuild>>,
+      IFirebaseGuild[]
+    >;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsService();
+      guildId = `dummy-guild-id`;
+      documentSnapshot = createMock<DocumentSnapshot<IFirebaseGuild>>();
+      firebaseGuild = createMock<IFirebaseGuild>();
+
+      getMock = jest
+        .fn<Promise<DocumentSnapshot<IFirebaseGuild>>, IFirebaseGuild[]>()
+        .mockResolvedValue(documentSnapshot);
+      documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+        get: getMock,
+      });
+      docMock = jest
+        .fn<DocumentReference<IFirebaseGuild>, string[]>()
+        .mockReturnValue(documentReference);
+      collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
+        doc: docMock,
+      });
+
+      getCollectionReferenceSpy = jest
+        .spyOn(service, `getCollectionReference`)
+        .mockImplementation();
+      loggerServiceErrorSpy = jest
+        .spyOn(loggerService, `error`)
+        .mockImplementation();
+    });
+
+    it(`should get the guilds collection`, async (): Promise<void> => {
+      expect.assertions(3);
+
+      await expect(service.getGuild(guildId)).rejects.toThrow(
+        new Error(`Collection not available`)
+      );
+
+      expect(getCollectionReferenceSpy).toHaveBeenCalledTimes(1);
+      expect(getCollectionReferenceSpy).toHaveBeenCalledWith();
+    });
+
+    describe(`when the guilds collection is undefined`, (): void => {
+      beforeEach((): void => {
+        getCollectionReferenceSpy.mockReturnValue(undefined);
+      });
+
+      it(`should throw an error`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        await expect(service.getGuild(guildId)).rejects.toThrow(
+          new Error(`Collection not available`)
+        );
+      });
+
+      it(`should not get the guild`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.getGuild(guildId)).rejects.toThrow(
+          new Error(`Collection not available`)
+        );
+
+        expect(docMock).not.toHaveBeenCalled();
+        expect(getMock).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the guilds collection is valid`, (): void => {
+      beforeEach((): void => {
+        getCollectionReferenceSpy.mockReturnValue(collectionReference);
+      });
+
+      it(`should get the guild with the given guild id`, async (): Promise<
+        void
+      > => {
+        expect.assertions(5);
+
+        const result = await service.getGuild(guildId);
+
+        expect(result).toBeNull();
+        expect(docMock).toHaveBeenCalledTimes(1);
+        expect(docMock).toHaveBeenCalledWith(guildId);
+        expect(getMock).toHaveBeenCalledTimes(1);
+        expect(getMock).toHaveBeenCalledWith();
+      });
+
+      describe(`when the fetch of the guild failed`, (): void => {
+        beforeEach((): void => {
+          getMock.mockRejectedValue(new Error(`error`));
+          documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+            get: getMock,
+          });
+          docMock.mockReturnValue(documentReference);
+          collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
+            {
+              doc: docMock,
+            }
+          );
+
+          getCollectionReferenceSpy.mockReturnValue(collectionReference);
+        });
+
+        it(`should log about the error`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await service.getGuild(guildId);
+
+          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
+            context: `FirebaseGuildsService`,
+            message: `text-failed to get the value-dummy-guild-id guild from Firebase`,
+          } as ILoggerLog);
+        });
+
+        it(`should return null`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = await service.getGuild(guildId);
+
+          expect(result).toBeNull();
+        });
+      });
+
+      describe(`when the fetch of the guild was successful`, (): void => {
+        beforeEach((): void => {
+          documentSnapshot = createMock<DocumentSnapshot<IFirebaseGuild>>();
+          getMock.mockResolvedValue(documentSnapshot);
+          documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+            get: getMock,
+          });
+          docMock.mockReturnValue(documentReference);
+          collectionReference = createMock<CollectionReference<IFirebaseGuild>>(
+            {
+              doc: docMock,
+            }
+          );
+
+          getCollectionReferenceSpy.mockReturnValue(collectionReference);
+        });
+
+        describe(`when the guild does not exists`, (): void => {
+          beforeEach((): void => {
+            documentSnapshot = createMock<DocumentSnapshot<IFirebaseGuild>>({
+              exists: false,
+            });
+            getMock.mockResolvedValue(documentSnapshot);
+            documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+              get: getMock,
+            });
+            docMock.mockReturnValue(documentReference);
+            collectionReference = createMock<
+              CollectionReference<IFirebaseGuild>
+            >({
+              doc: docMock,
+            });
+
+            getCollectionReferenceSpy.mockReturnValue(collectionReference);
+          });
+
+          it(`should return null`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            const result = await service.getGuild(guildId);
+
+            expect(result).toBeNull();
+          });
+        });
+
+        describe(`when the guild exists`, (): void => {
+          beforeEach((): void => {
+            documentSnapshot = createMock<DocumentSnapshot<IFirebaseGuild>>({
+              data(): IFirebaseGuild {
+                return firebaseGuild;
+              },
+              exists: true,
+            });
+            getMock.mockResolvedValue(documentSnapshot);
+            documentReference = createMock<DocumentReference<IFirebaseGuild>>({
+              get: getMock,
+            });
+            docMock.mockReturnValue(documentReference);
+            collectionReference = createMock<
+              CollectionReference<IFirebaseGuild>
+            >({
+              doc: docMock,
+            });
+
+            getCollectionReferenceSpy.mockReturnValue(collectionReference);
+          });
+
+          it(`should return the guild`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            const result = await service.getGuild(guildId);
+
+            expect(result).toStrictEqual(firebaseGuild);
+          });
+        });
+      });
+    });
+  });
+
   describe(`addGuild()`, (): void => {
     let guild: Guild;
     let documentReference: DocumentReference<IFirebaseGuildVFinal>;
@@ -822,13 +1035,13 @@ describe(`FirebaseGuildsService`, (): void => {
         expect(docMock).toHaveBeenCalledTimes(1);
         expect(docMock).toHaveBeenCalledWith(`dummy-id`);
         expect(setMock).toHaveBeenCalledTimes(1);
-        expect(setMock.mock.calls[0][0].channels).toStrictEqual([]);
+        expect(setMock.mock.calls[0][0].channels).toStrictEqual({});
         expect(setMock.mock.calls[0][0].id).toStrictEqual(`dummy-id`);
         expect(setMock.mock.calls[0][0].lastReleaseNotesVersion).toStrictEqual(
           `0.0.0`
         );
         expect(setMock.mock.calls[0][0].version).toStrictEqual(
-          FirebaseGuildVersionEnum.V3
+          FirebaseGuildVersionEnum.V4
         );
       });
 

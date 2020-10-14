@@ -118,6 +118,47 @@ export class FirebaseGuildsService extends AbstractService {
     return Promise.reject(new Error(`Collection not available`));
   }
 
+  public getGuild(
+    guildId: Readonly<Snowflake>
+  ): Promise<IFirebaseGuild | null | undefined> {
+    const collectionReference:
+      | CollectionReference<IFirebaseGuild>
+      | undefined = this.getCollectionReference();
+
+    if (!_.isNil(collectionReference)) {
+      return collectionReference
+        .doc(guildId)
+        .get()
+        .then(
+          (
+            documentSnapshot: Readonly<DocumentSnapshot<IFirebaseGuild>>
+          ): Promise<IFirebaseGuild | null | undefined> => {
+            if (_.isEqual(documentSnapshot.exists, true)) {
+              return Promise.resolve(documentSnapshot.data());
+            }
+
+            return Promise.resolve(null);
+          }
+        )
+        .catch(
+          (): Promise<null> => {
+            LoggerService.getInstance().error({
+              context: this._serviceName,
+              message: ChalkService.getInstance().text(
+                `failed to get the ${ChalkService.getInstance().value(
+                  guildId
+                )} guild from Firebase`
+              ),
+            });
+
+            return Promise.resolve(null);
+          }
+        );
+    }
+
+    return Promise.reject(new Error(`Collection not available`));
+  }
+
   public addGuild({ id }: Readonly<Guild>): Promise<WriteResult> {
     const collectionReference:
       | CollectionReference<IFirebaseGuild>

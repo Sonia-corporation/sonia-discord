@@ -194,10 +194,9 @@ describe(`DiscordMessageService`, (): void => {
         `isValid`
       );
       discordAuthorServiceIsBotSpy = jest.spyOn(discordAuthorService, `isBot`);
-      discordChannelServiceIsValidSpy = jest.spyOn(
-        discordChannelService,
-        `isValid`
-      );
+      discordChannelServiceIsValidSpy = jest
+        .spyOn(discordChannelService, `isValid`)
+        .mockReturnValue(false);
     });
 
     describe(`when the given Discord message content is null`, (): void => {

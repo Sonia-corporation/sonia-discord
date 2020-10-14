@@ -1,4 +1,4 @@
-import { DMChannel, TextChannel } from "discord.js";
+import { DMChannel, NewsChannel, TextChannel } from "discord.js";
 import _ from "lodash";
 import { AbstractService } from "../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
@@ -21,7 +21,9 @@ export class DiscordChannelService extends AbstractService {
     super(ServiceNameEnum.DISCORD_CHANNEL_SERVICE);
   }
 
-  public isValid(channel: unknown): channel is IAnyDiscordChannel {
+  public isValid(
+    channel: Readonly<TextChannel | DMChannel | NewsChannel | null | undefined>
+  ): channel is IAnyDiscordChannel {
     if (this.isText(channel)) {
       return true;
     } else if (this.isDm(channel)) {
@@ -31,11 +33,15 @@ export class DiscordChannelService extends AbstractService {
     return false;
   }
 
-  public isText(channel: unknown): channel is TextChannel {
+  public isText(
+    channel: Readonly<TextChannel | DMChannel | NewsChannel | null | undefined>
+  ): channel is TextChannel {
     return isDiscordTextChannel(channel);
   }
 
-  public isDm(channel: unknown): channel is DMChannel {
+  public isDm(
+    channel: Readonly<TextChannel | DMChannel | NewsChannel | null | undefined>
+  ): channel is DMChannel {
     return isDiscordDmChannel(channel);
   }
 }

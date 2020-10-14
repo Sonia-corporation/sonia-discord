@@ -3,6 +3,7 @@ import { IFirebaseGuild } from "../../types/guilds/firebase-guild";
 import { IFirebaseGuildVFinal } from "../../types/guilds/firebase-guild-v-final";
 import { upgradeFirebaseGuildToV2 } from "./upgrade-firebase-guild-to-v2";
 import { upgradeFirebaseGuildToV3 } from "./upgrade-firebase-guild-to-v3";
+import { upgradeFirebaseGuildToV4 } from "./upgrade-firebase-guild-to-v4";
 
 /**
  * @description
@@ -16,8 +17,14 @@ import { upgradeFirebaseGuildToV3 } from "./upgrade-firebase-guild-to-v3";
 export function handleFirebaseGuildBreakingChange(
   firebaseGuild: Readonly<IFirebaseGuild>
 ): IFirebaseGuildVFinal | never {
-  if (firebaseGuild.version === FirebaseGuildVersionEnum.V3) {
+  if (firebaseGuild.version === FirebaseGuildVersionEnum.V4) {
     return firebaseGuild;
+  }
+
+  if (firebaseGuild.version === FirebaseGuildVersionEnum.V3) {
+    return handleFirebaseGuildBreakingChange(
+      upgradeFirebaseGuildToV4(firebaseGuild)
+    );
   }
 
   if (firebaseGuild.version === FirebaseGuildVersionEnum.V2) {

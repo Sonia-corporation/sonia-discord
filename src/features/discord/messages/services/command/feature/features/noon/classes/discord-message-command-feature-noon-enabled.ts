@@ -3,11 +3,14 @@ import _ from "lodash";
 import { ClassNameEnum } from "../../../../../../../../../enums/class-name.enum";
 import { toBoolean } from "../../../../../../../../../functions/formatters/to-boolean";
 import { hasFirebaseGuildChannels } from "../../../../../../../../firebase/functions/guilds/checks/has-firebase-guild-channels";
+import { FirebaseGuildsChannelsFeaturesNoonEnabledService } from "../../../../../../../../firebase/services/guilds/channels/features/noon/firebase-guilds-channels-features-noon-enabled.service";
 import { FirebaseGuildsStoreQuery } from "../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query";
 import { IFirebaseGuildChannel } from "../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel";
 import { IFirebaseGuild } from "../../../../../../../../firebase/types/guilds/firebase-guild";
 import { ChalkService } from "../../../../../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../../../../../logger/services/logger.service";
+import { DiscordChannelService } from "../../../../../../../channels/services/discord-channel.service";
+import { IAnyDiscordChannel } from "../../../../../../../channels/types/any-discord-channel";
 import { DiscordCommandFlagAction } from "../../../../../../classes/commands/flags/discord-command-flag-action";
 import { DiscordCommandFlagSuccessDescriptionEnum } from "../../../../../../enums/commands/flags/discord-command-flag-success-description.enum";
 import { DiscordCommandFlagSuccessTitleEnum } from "../../../../../../enums/commands/flags/discord-command-flag-success-title.enum";
@@ -34,9 +37,24 @@ export class DiscordMessageCommandFeatureNoonEnabled
       ): Promise<IDiscordCommandFlagSuccess> => {
         this._logCurrentState(anyDiscordMessage.id, isEnabled);
 
-        return Promise.resolve(
-          this._getCommandFlagSuccess(shouldEnable, isEnabled)
-        );
+        if (!_.isNil(anyDiscordMessage.guild)) {
+          if (
+            DiscordChannelService.getInstance().isValid(
+              anyDiscordMessage.channel
+            )
+          ) {
+            return this.updateDatabase(
+              shouldEnable,
+              isEnabled,
+              anyDiscordMessage.guild,
+              anyDiscordMessage.channel
+            );
+          }
+
+          return Promise.reject(new Error(`Firebase channel invalid`));
+        }
+
+        return Promise.reject(new Error(`Firebase guild invalid`));
       }
     );
   }
@@ -66,6 +84,26 @@ export class DiscordMessageCommandFeatureNoonEnabled
     );
   }
 
+  public updateDatabase(
+    shouldEnable: Readonly<boolean>,
+    isEnabled: Readonly<boolean | undefined>,
+    { id }: Readonly<IFirebaseGuild>,
+    discordChannel: Readonly<IAnyDiscordChannel>
+  ): Promise<IDiscordCommandFlagSuccess> {
+    if (!_.isNil(id)) {
+      return FirebaseGuildsChannelsFeaturesNoonEnabledService.getInstance()
+        .updateStateByGuildId(id, discordChannel.id, shouldEnable)
+        .then(
+          (): Promise<IDiscordCommandFlagSuccess> =>
+            Promise.resolve(
+              this._getCommandFlagSuccess(shouldEnable, isEnabled)
+            )
+        );
+    }
+
+    return Promise.reject(new Error(`Firebase guild id invalid`));
+  }
+
   private _isNoonEnabled(
     firebaseGuild: Readonly<IFirebaseGuild>,
     channelId: Readonly<Snowflake>
@@ -86,7 +124,7 @@ export class DiscordMessageCommandFeatureNoonEnabled
     channelId: Readonly<Snowflake>
   ): IFirebaseGuildChannel | undefined {
     if (hasFirebaseGuildChannels(firebaseGuild)) {
-      return _.find(firebaseGuild.channels, [`id`, channelId]);
+      return _.get(firebaseGuild.channels, channelId);
     }
 
     return undefined;

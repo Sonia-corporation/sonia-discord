@@ -196,7 +196,7 @@ export class DiscordMessageErrorService extends AbstractService {
       | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl || undefined,
+      iconURL: soniaImageUrl ?? undefined,
       text: `I am very sorry for that`,
     };
   }

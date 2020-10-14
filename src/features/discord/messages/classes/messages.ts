@@ -43,7 +43,7 @@ export class Messages<T extends string> {
   }
 
   public getRandomMessage(): T {
-    return _.sample(this.getMessages()) || this.getDefaultMessage();
+    return _.sample(this.getMessages()) ?? this.getDefaultMessage();
   }
 
   /**
@@ -79,7 +79,7 @@ export class Messages<T extends string> {
   ): string {
     return replaceInterpolation(
       this.getRandomMessage(),
-      params || _.stubObject()
+      params ?? _.stubObject()
     );
   }
 }

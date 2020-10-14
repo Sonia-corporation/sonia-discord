@@ -252,7 +252,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.fields[2]).toStrictEqual({
         name: `Feature (*feature* or *f*)`,
-        value: `Change my behavior on this guild. Help me to be better!`,
+        value: `Change my behavior on this guild or on this channel. Help me to be better!`,
       } as EmbedFieldData);
     });
 
