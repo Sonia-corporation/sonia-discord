@@ -154,15 +154,72 @@ describe(`DiscordLoggerErrorService`, (): void => {
         } as IDiscordGuildSoniaSendMessageToChannel);
       });
     });
+
+    describe(`when the given error is an error`, (): void => {
+      beforeEach((): void => {
+        error = new Error(`dummy-error`);
+      });
+
+      it(`should log the given error`, (): void => {
+        expect.assertions(2);
+
+        service.handleError(error);
+
+        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
+          context: `DiscordLoggerErrorService`,
+          message: `text-Error: dummy-error`,
+        } as ILoggerLog);
+      });
+
+      it(`should log about sending a message to the errors channel to Sonia Discord`, (): void => {
+        expect.assertions(2);
+
+        service.handleError(error);
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+          context: `DiscordLoggerErrorService`,
+          message: `text-send message to Sonia Discord errors channel`,
+        } as ILoggerLog);
+      });
+
+      it(`should get the error message response`, (): void => {
+        expect.assertions(2);
+
+        service.handleError(error);
+
+        expect(getErrorMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(getErrorMessageResponseSpy).toHaveBeenCalledWith(
+          new Error(`dummy-error`)
+        );
+      });
+
+      it(`should send a message to the errors channel to Sonia Discord`, (): void => {
+        expect.assertions(2);
+
+        service.handleError(error);
+
+        expect(
+          discordGuildSoniaServiceSendMessageToChannelSpy
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          discordGuildSoniaServiceSendMessageToChannelSpy
+        ).toHaveBeenCalledWith({
+          channelName: `errors`,
+          messageResponse: discordMessageResponse,
+        } as IDiscordGuildSoniaSendMessageToChannel);
+      });
+    });
   });
 
   describe(`getErrorMessageResponse()`, (): void => {
     let error: Error | string;
 
     let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
-    let discordMessageConfigServiceGetMessageCommandErrorImageColorSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageErrorImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
-    let discordMessageConfigServiceGetMessageCommandErrorImageUrlSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageErrorImageUrlSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       error = `dummy-error`;
@@ -170,14 +227,14 @@ describe(`DiscordLoggerErrorService`, (): void => {
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy = jest
         .spyOn(discordSoniaService, `getCorporationMessageEmbedAuthor`)
         .mockImplementation();
-      discordMessageConfigServiceGetMessageCommandErrorImageColorSpy = jest
-        .spyOn(discordMessageConfigService, `getMessageCommandErrorImageColor`)
+      discordMessageConfigServiceGetMessageErrorImageColorSpy = jest
+        .spyOn(discordMessageConfigService, `getMessageErrorImageColor`)
         .mockImplementation();
       discordSoniaServiceGetImageUrlSpy = jest
         .spyOn(discordSoniaService, `getImageUrl`)
         .mockImplementation();
-      discordMessageConfigServiceGetMessageCommandErrorImageUrlSpy = jest
-        .spyOn(discordMessageConfigService, `getMessageCommandErrorImageUrl`)
+      discordMessageConfigServiceGetMessageErrorImageUrlSpy = jest
+        .spyOn(discordMessageConfigService, `getMessageErrorImageUrl`)
         .mockImplementation();
     });
 
@@ -198,7 +255,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
     it(`should return an error message response with an embed color`, (): void => {
       expect.assertions(1);
       const color: ColorEnum = ColorEnum.CANDY;
-      discordMessageConfigServiceGetMessageCommandErrorImageColorSpy.mockReturnValue(
+      discordMessageConfigServiceGetMessageErrorImageColorSpy.mockReturnValue(
         color
       );
 
@@ -258,7 +315,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
     it(`should return an error message response with an embed thumbnail icon`, (): void => {
       expect.assertions(1);
       const icon: IconEnum = IconEnum.ALARM;
-      discordMessageConfigServiceGetMessageCommandErrorImageUrlSpy.mockReturnValue(
+      discordMessageConfigServiceGetMessageErrorImageUrlSpy.mockReturnValue(
         icon
       );
 
