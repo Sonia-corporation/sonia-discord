@@ -1,9 +1,9 @@
-import { TextChannel } from "discord.js";
+import { DMChannel, NewsChannel, TextChannel } from "discord.js";
 import { createMock } from "ts-auto-mock";
 import { isDiscordTextChannel } from "./is-discord-text-channel";
 
 describe(`isDiscordTextChannel()`, (): void => {
-  let channel: unknown;
+  let channel: TextChannel | DMChannel | NewsChannel | null | undefined;
 
   describe(`when the given value is undefined`, (): void => {
     beforeEach((): void => {
@@ -22,36 +22,6 @@ describe(`isDiscordTextChannel()`, (): void => {
   describe(`when the given value is null`, (): void => {
     beforeEach((): void => {
       channel = null;
-    });
-
-    it(`should return false`, (): void => {
-      expect.assertions(1);
-
-      const result = isDiscordTextChannel(channel);
-
-      expect(result).toStrictEqual(false);
-    });
-  });
-
-  describe(`when the given value is an empty object`, (): void => {
-    beforeEach((): void => {
-      channel = {};
-    });
-
-    it(`should return false`, (): void => {
-      expect.assertions(1);
-
-      const result = isDiscordTextChannel(channel);
-
-      expect(result).toStrictEqual(false);
-    });
-  });
-
-  describe(`when the given value is an object`, (): void => {
-    beforeEach((): void => {
-      channel = {
-        key: `value`,
-      };
     });
 
     it(`should return false`, (): void => {

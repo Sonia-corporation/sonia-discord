@@ -100,7 +100,7 @@ export class DiscordMessageCommandCookieService extends AbstractService {
       | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl || undefined,
+      iconURL: soniaImageUrl ?? undefined,
       text: `Bon appétit`,
     };
   }

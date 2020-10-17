@@ -8,6 +8,8 @@ import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-vers
  * Basically instead of altering each guild in the store when a new breaking change is released
  * The model should be upgraded before manipulating it
  * Each change should be followed with a breaking change strategy
+ *
+ * @see [sonia-link-001]{@link https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#sonia-link-001}
  */
-export const FIREBASE_GUILD_CURRENT_VERSION: FirebaseGuildVersionEnum.V3 =
-  FirebaseGuildVersionEnum.V3;
+export const FIREBASE_GUILD_CURRENT_VERSION: FirebaseGuildVersionEnum.V4 =
+  FirebaseGuildVersionEnum.V4;

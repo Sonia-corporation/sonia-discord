@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.77.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.76.0...1.77.0) (2020-10-14)
+
+
+### :rocket: Features
+
+* **noon-feature:** persist the command state on the database ([63b53b9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/63b53b959d16d701d1a8dbfa63acbfbea4378b07))
+
 # [1.76.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.75.0...1.76.0) (2020-09-14)
 
 

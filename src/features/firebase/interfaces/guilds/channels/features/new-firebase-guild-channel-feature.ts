@@ -1,0 +1,9 @@
+import { FirebaseGuildChannelFeatureVersionEnum } from "../../../../enums/guilds/channels/features/firebase-guild-channel-feature-version.enum";
+
+/**
+ * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#sonia-link-002}
+ */
+export interface INewFirebaseGuildChannelFeature {
+  noon?: undefined;
+  version: FirebaseGuildChannelFeatureVersionEnum.V1;
+}

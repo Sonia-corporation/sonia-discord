@@ -143,7 +143,7 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
       | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl || undefined,
+      iconURL: soniaImageUrl ?? undefined,
       text: `Noon feature successfully updated`,
     };
   }

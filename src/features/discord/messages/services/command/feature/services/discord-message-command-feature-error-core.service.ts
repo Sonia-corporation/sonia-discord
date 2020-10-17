@@ -25,7 +25,7 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
       | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl || undefined,
+      iconURL: soniaImageUrl ?? undefined,
       text: `Invalid feature command`,
     };
   }

@@ -116,7 +116,7 @@ export class DiscordMessageCommandErrorService extends AbstractService {
       | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
-      iconURL: soniaImageUrl || undefined,
+      iconURL: soniaImageUrl ?? undefined,
       text: `Nice try though`,
     };
   }

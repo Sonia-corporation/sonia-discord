@@ -427,7 +427,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               >({
                 data: (): IFirebaseGuildVFinal =>
                   createMock<IFirebaseGuildVFinal>({
-                    version: FirebaseGuildVersionEnum.V3,
+                    version: FirebaseGuildVersionEnum.V4,
                   }),
                 exists: true,
               });
@@ -477,7 +477,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsBreakingChangeService`,
-                message: `text-all Firebase guild hint-(1) up-to-date hint-(v3)`,
+                message: `text-all Firebase guild hint-(1) up-to-date hint-(v4)`,
               } as ILoggerLog);
             });
           });
@@ -489,7 +489,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               >({
                 data: (): IFirebaseGuildVFinal =>
                   createMock<IFirebaseGuildVFinal>({
-                    version: FirebaseGuildVersionEnum.V3,
+                    version: FirebaseGuildVersionEnum.V4,
                   }),
                 exists: true,
               });
@@ -540,7 +540,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsBreakingChangeService`,
-                message: `text-all Firebase guilds hint-(2) up-to-date hint-(v3)`,
+                message: `text-all Firebase guilds hint-(2) up-to-date hint-(v4)`,
               } as ILoggerLog);
             });
           });
@@ -590,10 +590,10 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               expect(updateMock).toHaveBeenCalledWith(
                 queryDocumentSnapshot.ref,
                 {
-                  channels: [],
+                  channels: {},
                   id: `dummy-id`,
                   lastReleaseNotesVersion: `0.0.0`,
-                  version: FirebaseGuildVersionEnum.V3,
+                  version: FirebaseGuildVersionEnum.V4,
                 } as IFirebaseGuildVFinal
               );
             });
@@ -668,10 +668,10 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               expect(updateMock).toHaveBeenCalledWith(
                 queryDocumentSnapshot.ref,
                 {
-                  channels: [],
+                  channels: {},
                   id: `dummy-id`,
                   lastReleaseNotesVersion: `0.0.0`,
-                  version: FirebaseGuildVersionEnum.V3,
+                  version: FirebaseGuildVersionEnum.V4,
                 } as IFirebaseGuildVFinal
               );
             });
