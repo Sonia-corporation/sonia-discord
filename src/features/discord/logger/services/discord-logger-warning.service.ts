@@ -45,11 +45,11 @@ export class DiscordLoggerWarningService extends AbstractService {
 
     DiscordGuildSoniaService.getInstance().sendMessageToChannel({
       channelName: DiscordGuildSoniaChannelNameEnum.WARNINGS,
-      messageResponse: this._getErrorMessageResponse(warning),
+      messageResponse: this.getWarningMessageResponse(warning),
     });
   }
 
-  private _getErrorMessageResponse(
+  public getWarningMessageResponse(
     warning: Readonly<string>
   ): IDiscordMessageResponse {
     return {
