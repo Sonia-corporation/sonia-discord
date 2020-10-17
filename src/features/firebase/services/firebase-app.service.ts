@@ -68,9 +68,9 @@ export class FirebaseAppService extends AbstractService {
     this._app = initializeApp(
       {
         credential: applicationDefault(),
-        databaseURL: `https://sonia-il-est-midi-discord-api.firebaseio.com`,
+        databaseURL: `https://sonia-discord-api.firebaseio.com`,
       },
-      FirebaseAppEnum.SONIA_IL_EST_MIDI_DISCORD
+      FirebaseAppEnum.SONIA_DISCORD
     );
 
     LoggerService.getInstance().debug({
