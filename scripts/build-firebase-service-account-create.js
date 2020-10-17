@@ -37,7 +37,7 @@ FS.createFile(`${APP_ROOT_PATH.path}/dist/firebase-service-account-file.json`)
           process.env.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY || `unknown`,
         private_key_id:
           process.env.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY_ID || `unknown`,
-        project_id: `sonia-discord-api`,
+        project_id: `sonia-il-est-midi-discord-api`,
         token_uri: `https://oauth2.googleapis.com/token`,
         type: `service_account`,
         /* eslint-enable @typescript-eslint/naming-convention */
