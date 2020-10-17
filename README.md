@@ -42,9 +42,9 @@ There is no case sensitivity.
 
 __Example:__
 
-- `@Sonia-il-est-midi -version`  
-- `@Sonia-il-est-midi !VERSION`  
-- `@Sonia-il-est-midi $v`  
+- `@Sonia -version`  
+- `@Sonia !VERSION`  
+- `@Sonia $v`  
 
 #### Cookie
 
@@ -60,8 +60,8 @@ Sonia will send you a message containing:
 
 __Example:__
 
-- `@Sonia-il-est-midi !cookie`
-- `@Sonia-il-est-midi !C`
+- `@Sonia !cookie`
+- `@Sonia !C`
 
 #### Error
 
@@ -79,8 +79,8 @@ Sonia will send you a message containing:
 
 __Example:__
 
-- `@Sonia-il-est-midi !error`
-- `@Sonia-il-est-midi !BUG`
+- `@Sonia !error`
+- `@Sonia !BUG`
 
 #### Feature
 
@@ -102,8 +102,8 @@ Basically she will try to help you if you fill bad information and just inform y
 
 __Example:__
 
-- `@Sonia-il-est-midi !feature noon`
-- `@Sonia-il-est-midi !F`
+- `@Sonia !feature noon`
+- `@Sonia !F`
 
 #### Help
 
@@ -119,8 +119,8 @@ Sonia will send you a message containing:
 
 __Example:__
 
-- `@Sonia-il-est-midi !help`
-- `@Sonia-il-est-midi !H`
+- `@Sonia !help`
+- `@Sonia !H`
 
 #### Lunch
 
@@ -135,8 +135,8 @@ Sonia will send you a message containing:
 
 __Example:__
 
-- `@Sonia-il-est-midi !lunch`
-- `@Sonia-il-est-midi !L`
+- `@Sonia !lunch`
+- `@Sonia !L`
 
 #### Release notes
 
@@ -155,8 +155,8 @@ Sonia will send you a message containing:
 
 __Example:__
 
-- `@Sonia-il-est-midi !release-notes`
-- `@Sonia-il-est-midi !r`
+- `@Sonia !release-notes`
+- `@Sonia !r`
 
 #### Version
 
@@ -178,10 +178,10 @@ Sonia will send you a message containing:
 
 __Example:__
 
-- `@Sonia-il-est-midi !version`
-- `@Sonia-il-est-midi !VERSION`
-- `@Sonia-il-est-midi !v`
-- `@Sonia-il-est-midi !V`
+- `@Sonia !version`
+- `@Sonia !VERSION`
+- `@Sonia !v`
+- `@Sonia !V`
 
 ### Sonia behavior
 
@@ -215,7 +215,7 @@ Special commands will be handled as a priority.
 
 __Example:__  
 
-`@Sonia-il-est-midi yo`
+`@Sonia yo`
 
 On global mentions like `@here` and `@everyone`, Sonia will send a message to tell everybody it is noon (even if it is a lie).
 
@@ -223,7 +223,7 @@ To use a command, you must ask her personally.
 
 __Example:__
 
-`@Sonia-il-est-midi !version`
+`@Sonia !version`
 
 __Guild new member welcome message:__
 

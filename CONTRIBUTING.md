@@ -246,7 +246,7 @@ These errors are also sent as a fallback message instead.
 
 ### Code issues
 
-For code errors you can check the logs on [Papertrail](https://my.papertrailapp.com/systems/sonia-il-est-midi-discord/events).  
+For code errors you can check the logs on [Papertrail](https://my.papertrailapp.com/systems/sonia-discord/events).  
 Papertrail contains the full stack trace of the running server logs for seven days. 
 This is a good place to catch the errors thrown.
 
