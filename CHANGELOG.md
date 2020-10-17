@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.78.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.77.0...1.78.0) (2020-10-17)
+
+
+### :rocket: Features
+
+* **name:** rename to Sonia ([3d8ddb9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3d8ddb9d5bfef4e41b2bcc7db149d4ab3afbb8e2))
+
 # [1.77.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.76.0...1.77.0) (2020-10-14)
 
 
