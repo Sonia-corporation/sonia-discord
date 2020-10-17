@@ -1,4 +1,9 @@
+import cryptoRandomString from "crypto-random-string";
+import { MessageEmbedAuthor } from "discord.js";
+import moment from "moment-timezone";
 import { createMock } from "ts-auto-mock";
+import { ColorEnum } from "../../../../enums/color.enum";
+import { IconEnum } from "../../../../enums/icon.enum";
 import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../logger/interfaces/logger-log";
@@ -6,7 +11,10 @@ import { LoggerService } from "../../../logger/services/logger.service";
 import { IDiscordGuildSoniaSendMessageToChannel } from "../../guilds/interfaces/discord-guild-sonia-send-message-to-channel";
 import { DiscordGuildSoniaService } from "../../guilds/services/discord-guild-sonia.service";
 import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
+import { DiscordMessageConfigService } from "../../messages/services/config/discord-message-config.service";
+import { DiscordSoniaService } from "../../users/services/discord-sonia.service";
 import { DiscordLoggerErrorService } from "./discord-logger-error.service";
+import _ from "lodash";
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -15,11 +23,15 @@ describe(`DiscordLoggerErrorService`, (): void => {
   let coreEventService: CoreEventService;
   let loggerService: LoggerService;
   let discordGuildSoniaService: DiscordGuildSoniaService;
+  let discordSoniaService: DiscordSoniaService;
+  let discordMessageConfigService: DiscordMessageConfigService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     loggerService = LoggerService.getInstance();
     discordGuildSoniaService = DiscordGuildSoniaService.getInstance();
+    discordSoniaService = DiscordSoniaService.getInstance();
+    discordMessageConfigService = DiscordMessageConfigService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -141,6 +153,291 @@ describe(`DiscordLoggerErrorService`, (): void => {
           messageResponse: discordMessageResponse,
         } as IDiscordGuildSoniaSendMessageToChannel);
       });
+    });
+  });
+
+  describe(`getErrorMessageResponse()`, (): void => {
+    let error: Error | string;
+
+    let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandErrorImageColorSpy: jest.SpyInstance;
+    let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandErrorImageUrlSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      error = `dummy-error`;
+
+      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy = jest
+        .spyOn(discordSoniaService, `getCorporationMessageEmbedAuthor`)
+        .mockImplementation();
+      discordMessageConfigServiceGetMessageCommandErrorImageColorSpy = jest
+        .spyOn(discordMessageConfigService, `getMessageCommandErrorImageColor`)
+        .mockImplementation();
+      discordSoniaServiceGetImageUrlSpy = jest
+        .spyOn(discordSoniaService, `getImageUrl`)
+        .mockImplementation();
+      discordMessageConfigServiceGetMessageCommandErrorImageUrlSpy = jest
+        .spyOn(discordMessageConfigService, `getMessageCommandErrorImageUrl`)
+        .mockImplementation();
+    });
+
+    it(`should return an error message response with an embed author`, (): void => {
+      expect.assertions(1);
+      const messageEmbedAuthor: MessageEmbedAuthor = createMock<
+        MessageEmbedAuthor
+      >();
+      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(
+        messageEmbedAuthor
+      );
+
+      const result = service.getErrorMessageResponse(error);
+
+      expect(result.options?.embed?.author).toStrictEqual(messageEmbedAuthor);
+    });
+
+    it(`should return an error message response with an embed color`, (): void => {
+      expect.assertions(1);
+      const color: ColorEnum = ColorEnum.CANDY;
+      discordMessageConfigServiceGetMessageCommandErrorImageColorSpy.mockReturnValue(
+        color
+      );
+
+      const result = service.getErrorMessageResponse(error);
+
+      expect(result.options?.embed?.color).toStrictEqual(ColorEnum.CANDY);
+    });
+
+    describe(`when the Discord Sonia image url is null`, (): void => {
+      let imageUrl: null;
+
+      beforeEach((): void => {
+        imageUrl = null;
+
+        discordSoniaServiceGetImageUrlSpy.mockReturnValue(imageUrl);
+      });
+
+      it(`should return an error message response with an embed footer without an icon`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getErrorMessageResponse(error);
+
+        expect(result.options?.embed?.footer?.iconURL).toBeUndefined();
+      });
+    });
+
+    describe(`when the Discord Sonia image url is an icon url`, (): void => {
+      let imageUrl: string;
+
+      beforeEach((): void => {
+        imageUrl = `dummy-image-url`;
+
+        discordSoniaServiceGetImageUrlSpy.mockReturnValue(imageUrl);
+      });
+
+      it(`should return an error message response with an embed footer with a Sonia icon`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getErrorMessageResponse(error);
+
+        expect(result.options?.embed?.footer?.iconURL).toStrictEqual(
+          `dummy-image-url`
+        );
+      });
+    });
+
+    it(`should return an error message response with an embed footer with a text`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getErrorMessageResponse(error);
+
+      expect(result.options?.embed?.footer?.text).toStrictEqual(
+        `Discord error`
+      );
+    });
+
+    it(`should return an error message response with an embed thumbnail icon`, (): void => {
+      expect.assertions(1);
+      const icon: IconEnum = IconEnum.ALARM;
+      discordMessageConfigServiceGetMessageCommandErrorImageUrlSpy.mockReturnValue(
+        icon
+      );
+
+      const result = service.getErrorMessageResponse(error);
+
+      expect(result.options?.embed?.thumbnail?.url).toStrictEqual(
+        IconEnum.ALARM
+      );
+    });
+
+    it(`should return an error message response with an embed timestamp set as now`, (): void => {
+      expect.assertions(2);
+
+      const result = service.getErrorMessageResponse(error);
+
+      expect(moment(result.options?.embed?.timestamp).isValid()).toStrictEqual(
+        true
+      );
+      expect(moment(result.options?.embed?.timestamp).fromNow()).toStrictEqual(
+        `a few seconds ago`
+      );
+    });
+
+    describe(`when the given error is a string`, (): void => {
+      beforeEach((): void => {
+        error = `dummy-error`;
+      });
+
+      it(`should return an error message response with an embed title displaying the given error`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getErrorMessageResponse(error);
+
+        expect(result.options?.embed?.title).toStrictEqual(`dummy-error`);
+      });
+
+      it(`should return an error message response without an embed description`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getErrorMessageResponse(error);
+
+        expect(result.options?.embed?.description).toBeUndefined();
+      });
+
+      it(`should return an error message response without an embed field`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getErrorMessageResponse(error);
+
+        expect(result.options?.embed?.fields).toBeUndefined();
+      });
+    });
+
+    describe(`when the given error is an error`, (): void => {
+      beforeEach((): void => {
+        error = new Error(`dummy-error`);
+      });
+
+      it(`should return an error message response with an embed title displaying the given error name`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getErrorMessageResponse(error);
+
+        expect(result.options?.embed?.title).toStrictEqual(`Error`);
+      });
+
+      it(`should return an error message response with an embed description displaying the given error message`, (): void => {
+        expect.assertions(1);
+
+        const result = service.getErrorMessageResponse(error);
+
+        expect(result.options?.embed?.description).toStrictEqual(`dummy-error`);
+      });
+
+      describe(`when the given error stack is undefined`, (): void => {
+        beforeEach((): void => {
+          error = new Error(`dummy-error`);
+          error.stack = undefined;
+        });
+
+        it(`should return an error message response without an embed field`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getErrorMessageResponse(error);
+
+          expect(result.options?.embed?.fields).toBeUndefined();
+        });
+      });
+
+      describe(`when the given error stack is a string`, (): void => {
+        beforeEach((): void => {
+          error = new Error(`dummy-error`);
+          error.stack = `dummy-stack`;
+        });
+
+        it(`should return an error message response with an embed field`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getErrorMessageResponse(error);
+
+          expect(result.options?.embed?.fields?.length).toStrictEqual(1);
+        });
+
+        it(`should return an error message response with an embed field title`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getErrorMessageResponse(error);
+
+          expect(result.options?.embed?.fields?.[0].name).toStrictEqual(
+            `My blood trace`
+          );
+        });
+
+        it(`should return an error message response with an embed field value displaying the given error stack trace`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getErrorMessageResponse(error);
+
+          expect(result.options?.embed?.fields?.[0].value).toStrictEqual(
+            `dummy-stack`
+          );
+        });
+      });
+
+      describe(`when the given error stack is a string greater than the Discord limit`, (): void => {
+        beforeEach((): void => {
+          error = new Error(`dummy-error`);
+          error.stack = cryptoRandomString({
+            length: 1050,
+          });
+        });
+
+        it(`should return an error message response with an embed field`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getErrorMessageResponse(error);
+
+          expect(result.options?.embed?.fields?.length).toStrictEqual(1);
+        });
+
+        it(`should return an error message response with an embed field title`, (): void => {
+          expect.assertions(1);
+
+          const result = service.getErrorMessageResponse(error);
+
+          expect(result.options?.embed?.fields?.[0].name).toStrictEqual(
+            `My blood trace`
+          );
+        });
+
+        it(`should return an error message response with an embed field value displaying the given error stack trace with an ellipsis when the limit is reached`, (): void => {
+          expect.assertions(2);
+
+          const result = service.getErrorMessageResponse(error);
+
+          expect(result.options?.embed?.fields?.[0].value.length).toStrictEqual(
+            1024
+          );
+          expect(
+            _.endsWith(result.options?.embed?.fields?.[0].value, `...`)
+          ).toStrictEqual(true);
+        });
+      });
+    });
+
+    it(`should return a split error message response`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getErrorMessageResponse(error);
+
+      expect(result.options?.split).toStrictEqual(true);
+    });
+
+    it(`should return an error message response with an empty response`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getErrorMessageResponse(error);
+
+      expect(result.response).toStrictEqual(``);
     });
   });
 });

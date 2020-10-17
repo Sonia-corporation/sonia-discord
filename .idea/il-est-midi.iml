@@ -36,5 +36,9 @@
     <orderEntry type="library" name="rxjs" level="project" />
     <orderEntry type="library" name="datorama" level="project" />
     <orderEntry type="library" name="xregexp" level="project" />
+    <orderEntry type="library" name="moment" level="project" />
+    <orderEntry type="library" name="moment-timezone" level="project" />
+    <orderEntry type="library" name="randomstring" level="project" />
+    <orderEntry type="library" name="crypto-random-string" level="project" />
   </component>
 </module>
