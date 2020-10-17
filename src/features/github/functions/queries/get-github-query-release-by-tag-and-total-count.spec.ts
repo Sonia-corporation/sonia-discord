@@ -14,7 +14,7 @@ describe(`getGithubQueryReleaseByTagAndTotalCount()`, (): void => {
       const result = getGithubQueryReleaseByTagAndTotalCount(tagName);
 
       expect(result)
-        .toStrictEqual(`{repository(owner: "Sonia-corporation", name: "il-est-midi-discord") {
+        .toStrictEqual(`{repository(owner: "Sonia-corporation", name: "sonia-discord") {
    release(tagName: "1.0.0") {
       description
       updatedAt

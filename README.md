@@ -3,19 +3,19 @@
 > *Sonia "il est midi" application for Discord*
 
 __Quality:__  
-![GitHub last commit](https://img.shields.io/github/last-commit/sonia-corporation/il-est-midi-discord?style=flat-square)
-[![Maintainability](https://api.codeclimate.com/v1/badges/6f8a651120877a0842b3/maintainability?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/il-est-midi-discord/maintainability)
-[![CodeFactor](https://www.codefactor.io/repository/github/sonia-corporation/il-est-midi-discord/badge)](https://www.codefactor.io/repository/github/sonia-corporation/il-est-midi-discord)
+![GitHub last commit](https://img.shields.io/github/last-commit/sonia-corporation/sonia-discord?style=flat-square)
+[![Maintainability](https://api.codeclimate.com/v1/badges/6f8a651120877a0842b3/maintainability?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/sonia-discord/maintainability)
+[![CodeFactor](https://www.codefactor.io/repository/github/sonia-corporation/sonia-discord/badge)](https://www.codefactor.io/repository/github/sonia-corporation/sonia-discord)
 [![DeepScan grade](https://deepscan.io/api/teams/10568/projects/13410/branches/225363/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=10568&pid=13410&bid=225363)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/6f8a651120877a0842b3/test_coverage?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/il-est-midi-discord/test_coverage)
-[![codecov](https://codecov.io/gh/Sonia-corporation/il-est-midi-discord/branch/develop/graph/badge.svg)](https://codecov.io/gh/Sonia-corporation/il-est-midi-discord)
-[![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FSonia-corporation%2Fil-est-midi-discord%2Fdevelop)](https://dashboard.stryker-mutator.io/reports/github.com/Sonia-corporation/il-est-midi-discord/develop)
-![GitHub issues](https://img.shields.io/github/issues-raw/sonia-corporation/il-est-midi-discord?style=flat-square)
-![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/sonia-corporation/il-est-midi-discord?style=flat-square)
-![Build](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Build/badge.svg?style=flat-square)
-![Release](https://github.com/Sonia-corporation/il-est-midi-discord/workflows/Release/badge.svg?style=flat-square)
-![Dependencies](https://img.shields.io/david/sonia-corporation/il-est-midi-discord?style=flat-square)
-![Dev Dependencies](https://img.shields.io/david/dev/sonia-corporation/il-est-midi-discord?style=flat-square)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/6f8a651120877a0842b3/test_coverage?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/sonia-discord/test_coverage)
+[![codecov](https://codecov.io/gh/Sonia-corporation/sonia-discord/branch/develop/graph/badge.svg)](https://codecov.io/gh/Sonia-corporation/sonia-discord)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat-square&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2FSonia-corporation%2Fsonia-discord%2Fdevelop)](https://dashboard.stryker-mutator.io/reports/github.com/Sonia-corporation/sonia-discord/develop)
+![GitHub issues](https://img.shields.io/github/issues-raw/sonia-corporation/sonia-discord?style=flat-square)
+![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/sonia-corporation/sonia-discord?style=flat-square)
+![Build](https://github.com/Sonia-corporation/sonia-discord/workflows/Build/badge.svg?style=flat-square)
+![Release](https://github.com/Sonia-corporation/sonia-discord/workflows/Release/badge.svg?style=flat-square)
+![Dependencies](https://img.shields.io/david/sonia-corporation/sonia-discord?style=flat-square)
+![Dev Dependencies](https://img.shields.io/david/dev/sonia-corporation/sonia-discord?style=flat-square)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
@@ -26,11 +26,11 @@ __Community:__
 ![Discord](https://img.shields.io/discord/689833865279307782?style=flat-square)
 
 __Statistics:__  
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/sonia-corporation/il-est-midi-discord?style=flat-square)
-![GitHub top language](https://img.shields.io/github/languages/top/sonia-corporation/il-est-midi-discord?style=flat-square)
-![GitHub repo size](https://img.shields.io/github/repo-size/sonia-corporation/il-est-midi-discord?style=flat-square)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/sonia-corporation/il-est-midi-discord?style=flat-square)
-![GitHub](https://img.shields.io/github/license/sonia-corporation/il-est-midi-discord?style=flat-square)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/sonia-corporation/sonia-discord?style=flat-square)
+![GitHub top language](https://img.shields.io/github/languages/top/sonia-corporation/sonia-discord?style=flat-square)
+![GitHub repo size](https://img.shields.io/github/repo-size/sonia-corporation/sonia-discord?style=flat-square)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/sonia-corporation/sonia-discord?style=flat-square)
+![GitHub](https://img.shields.io/github/license/sonia-corporation/sonia-discord?style=flat-square)
 
 ## Sonia bot
 
@@ -252,7 +252,7 @@ Works with Firebase. See the [Firebase section](#firebase) to learn more about i
 If Sonia receives a Discord error after sending a message she will send a new message containing this error to help you to debug it.  
 
 Nevertheless, sometimes the error is purely developmental and this is why Sonia will provide:
-- A link to create a new [GitHub issue](https://github.com/Sonia-corporation/il-est-midi-discord/issues/new?assignees=&labels=bug&template=bug_report.md&title=&projects=sonia-corporation/il-est-midi-discord/1).
+- A link to create a new [GitHub issue](https://github.com/Sonia-corporation/sonia-discord/issues/new?assignees=&labels=bug&template=bug_report.md&title=&projects=sonia-corporation/sonia-discord/1).
 - A link to reach us in [Discord](https://discord.gg/PW4JSkv).
 
 Sonia sends the generic Discord errors to the [Sonia Discord errors channel](http://discordapp.com/channels/689833865279307782/700770389655158924).
@@ -294,16 +294,16 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="http://www.geoffreytestelin.com/"><img src="https://avatars2.githubusercontent.com/u/10194542?s=460&v=4" width="80px;" alt=""/><br /><sub><b>Geoffrey 'C0ZEN' Testelin</b></sub></a><br /><a href="https://github.com/Sonia-corporation/il-est-midi-discord/commits?author=C0ZEN" title="Code">💻</a> <a href="#design-C0ZEN" title="Design">🎨</a> <a href="#infra-C0ZEN" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#ideas-C0ZEN" title="Ideas, Planning, & Feedback">🤔</a> <a href="#blog-C0ZEN" title="Blogposts">📝</a> <a href="https://github.com/Sonia-corporation/il-est-midi-discord/commits?author=C0ZEN" title="Documentation">📖</a> <a href="#tool-C0ZEN" title="Tools">🔧</a> <a href="#security-C0ZEN" title="Security">🛡️</a> <a href="https://github.com/Sonia-corporation/il-est-midi-discord/pulls?q=is%3Apr+reviewed-by%3AC0ZEN" title="Reviewed Pull Requests">👀</a> <a href="#question-C0ZEN" title="Answering Questions">💬</a> <a href="#maintenance-C0ZEN" title="Maintenance">🚧</a> <a href="https://github.com/Sonia-corporation/il-est-midi-discord/issues?q=author%3AC0ZEN" title="Bug reports">🐛</a></td>
-    <td align="center"><a href="https://allcontributors.org"><img src="https://avatars1.githubusercontent.com/u/46410174?v=4" width="80px;" alt=""/><br /><sub><b>All Contributors</b></sub></a><br /><a href="https://github.com/Sonia-corporation/il-est-midi-discord/commits?author=all-contributors" title="Documentation">📖</a> <a href="#tool-all-contributors" title="Tools">🔧</a></td>
+    <td align="center"><a href="http://www.geoffreytestelin.com/"><img src="https://avatars2.githubusercontent.com/u/10194542?s=460&v=4" width="80px;" alt=""/><br /><sub><b>Geoffrey 'C0ZEN' Testelin</b></sub></a><br /><a href="https://github.com/Sonia-corporation/sonia-discord/commits?author=C0ZEN" title="Code">💻</a> <a href="#design-C0ZEN" title="Design">🎨</a> <a href="#infra-C0ZEN" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#ideas-C0ZEN" title="Ideas, Planning, & Feedback">🤔</a> <a href="#blog-C0ZEN" title="Blogposts">📝</a> <a href="https://github.com/Sonia-corporation/sonia-discord/commits?author=C0ZEN" title="Documentation">📖</a> <a href="#tool-C0ZEN" title="Tools">🔧</a> <a href="#security-C0ZEN" title="Security">🛡️</a> <a href="https://github.com/Sonia-corporation/sonia-discord/pulls?q=is%3Apr+reviewed-by%3AC0ZEN" title="Reviewed Pull Requests">👀</a> <a href="#question-C0ZEN" title="Answering Questions">💬</a> <a href="#maintenance-C0ZEN" title="Maintenance">🚧</a> <a href="https://github.com/Sonia-corporation/sonia-discord/issues?q=author%3AC0ZEN" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://allcontributors.org"><img src="https://avatars1.githubusercontent.com/u/46410174?v=4" width="80px;" alt=""/><br /><sub><b>All Contributors</b></sub></a><br /><a href="https://github.com/Sonia-corporation/sonia-discord/commits?author=all-contributors" title="Documentation">📖</a> <a href="#tool-all-contributors" title="Tools">🔧</a></td>
     <td align="center"><a href="https://renovate.whitesourcesoftware.com"><img src="https://avatars0.githubusercontent.com/u/25180681?v=4" width="80px;" alt=""/><br /><sub><b>WhiteSource Renovate</b></sub></a><br /><a href="#tool-renovate-bot" title="Tools">🔧</a> <a href="#security-renovate-bot" title="Security">🛡️</a></td>
-    <td align="center"><a href="http://semantic-release.org/"><img src="https://avatars1.githubusercontent.com/u/32174276?v=4" width="80px;" alt=""/><br /><sub><b>Semantic Release Bot</b></sub></a><br /><a href="https://github.com/Sonia-corporation/il-est-midi-discord/commits?author=semantic-release-bot" title="Documentation">📖</a> <a href="#tool-semantic-release-bot" title="Tools">🔧</a> <a href="#security-semantic-release-bot" title="Security">🛡️</a></td>
-    <td align="center"><a href="https://github.com/vvalembois"><img src="https://avatars3.githubusercontent.com/u/34096840?v=4" width="80px;" alt=""/><br /><sub><b>Vilteros</b></sub></a><br /><a href="https://github.com/Sonia-corporation/il-est-midi-discord/commits?author=vvalembois" title="Code">💻</a> <a href="#ideas-vvalembois" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/Sonia-corporation/il-est-midi-discord/commits?author=vvalembois" title="Documentation">📖</a> <a href="https://github.com/Sonia-corporation/il-est-midi-discord/pulls?q=is%3Apr+reviewed-by%3Avvalembois" title="Reviewed Pull Requests">👀</a></td>
-    <td align="center"><a href="https://github.com/Zoridg"><img src="https://avatars0.githubusercontent.com/u/32258487?v=4" width="80px;" alt=""/><br /><sub><b>Nathan Bergamini</b></sub></a><br /><a href="https://github.com/Sonia-corporation/il-est-midi-discord/commits?author=Zoridg" title="Code">💻</a> <a href="#ideas-Zoridg" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://github.com/asmodee-bellanie"><img src="https://avatars0.githubusercontent.com/u/69478591?v=4" width="80px;" alt=""/><br /><sub><b>asmodee-bellanie</b></sub></a><br /><a href="https://github.com/Sonia-corporation/il-est-midi-discord/pulls?q=is%3Apr+reviewed-by%3Aasmodee-bellanie" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="http://semantic-release.org/"><img src="https://avatars1.githubusercontent.com/u/32174276?v=4" width="80px;" alt=""/><br /><sub><b>Semantic Release Bot</b></sub></a><br /><a href="https://github.com/Sonia-corporation/sonia-discord/commits?author=semantic-release-bot" title="Documentation">📖</a> <a href="#tool-semantic-release-bot" title="Tools">🔧</a> <a href="#security-semantic-release-bot" title="Security">🛡️</a></td>
+    <td align="center"><a href="https://github.com/vvalembois"><img src="https://avatars3.githubusercontent.com/u/34096840?v=4" width="80px;" alt=""/><br /><sub><b>Vilteros</b></sub></a><br /><a href="https://github.com/Sonia-corporation/sonia-discord/commits?author=vvalembois" title="Code">💻</a> <a href="#ideas-vvalembois" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/Sonia-corporation/sonia-discord/commits?author=vvalembois" title="Documentation">📖</a> <a href="https://github.com/Sonia-corporation/sonia-discord/pulls?q=is%3Apr+reviewed-by%3Avvalembois" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/Zoridg"><img src="https://avatars0.githubusercontent.com/u/32258487?v=4" width="80px;" alt=""/><br /><sub><b>Nathan Bergamini</b></sub></a><br /><a href="https://github.com/Sonia-corporation/sonia-discord/commits?author=Zoridg" title="Code">💻</a> <a href="#ideas-Zoridg" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/asmodee-bellanie"><img src="https://avatars0.githubusercontent.com/u/69478591?v=4" width="80px;" alt=""/><br /><sub><b>asmodee-bellanie</b></sub></a><br /><a href="https://github.com/Sonia-corporation/sonia-discord/pulls?q=is%3Apr+reviewed-by%3Aasmodee-bellanie" title="Reviewed Pull Requests">👀</a></td>
   </tr>
   <tr>
-    <td align="center"><a href="https://www.codefactor.io"><img src="https://avatars0.githubusercontent.com/u/13309880?v=4" width="80px;" alt=""/><br /><sub><b>Automated code reviews</b></sub></a><br /><a href="https://github.com/Sonia-corporation/il-est-midi-discord/pulls?q=is%3Apr+reviewed-by%3Acode-factor" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/Sonia-corporation/il-est-midi-discord/issues?q=author%3Acode-factor" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://www.codefactor.io"><img src="https://avatars0.githubusercontent.com/u/13309880?v=4" width="80px;" alt=""/><br /><sub><b>Automated code reviews</b></sub></a><br /><a href="https://github.com/Sonia-corporation/sonia-discord/pulls?q=is%3Apr+reviewed-by%3Acode-factor" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/Sonia-corporation/sonia-discord/issues?q=author%3Acode-factor" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 

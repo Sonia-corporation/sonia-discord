@@ -96,7 +96,7 @@ export class InitService extends AbstractService {
             `Follow the instructions about the secret environment to fix this:`
           );
           console.debug(
-            `https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
+            `https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
           );
 
           return Promise.reject(error);

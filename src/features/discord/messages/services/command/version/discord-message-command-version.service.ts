@@ -147,7 +147,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
 
     return {
       name: `My age`,
-      value: `[${appVersion}](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${appVersion})`,
+      value: `[${appVersion}](https://github.com/Sonia-corporation/sonia-discord/releases/tag/${appVersion})`,
     };
   }
 
@@ -175,7 +175,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
       value: `${ellipsis(
         appReleaseNotes,
         BIRTHDAY_CARD_VALUE_LIMIT
-      )}\n\nCheckout all my [birthday cards](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md).`,
+      )}\n\nCheckout all my [birthday cards](https://github.com/Sonia-corporation/sonia-discord/blob/master/CHANGELOG.md).`,
     };
   }
 

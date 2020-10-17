@@ -2,7 +2,7 @@ import { FirebaseGuildChannelFeatureVersionEnum } from "../../../../enums/guilds
 import { IFirebaseGuildChannelFeatureNoonV1 } from "./firebase-guild-channel-feature-noon-v1";
 
 /**
- * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#sonia-link-002}
+ * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-002}
  */
 export interface IFirebaseGuildChannelFeatureV1 {
   /**

@@ -7,7 +7,7 @@ describe(`getGithubRepository()`, (): void => {
     const result = getGithubRepository();
 
     expect(result).toStrictEqual(
-      `repository(owner: "Sonia-corporation", name: "il-est-midi-discord")`
+      `repository(owner: "Sonia-corporation", name: "sonia-discord")`
     );
   });
 });
