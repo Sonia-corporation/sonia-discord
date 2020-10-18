@@ -28,7 +28,7 @@
       "url": "https://github.com/asmodee-bellanie"
     }
   ],
-  "description": "The Sonia Discord bot for the famous quote: il est midi",
+  "description": "The Sonia application for Discord",
   "homepage": "https://github.com/Sonia-corporation/sonia-discord",
   "maintainers": [
     {
@@ -43,7 +43,6 @@
     "bot",
     "discord-bot",
     "sonia",
-    "il-est-midi",
     "node",
     "express",
     "heroku"
