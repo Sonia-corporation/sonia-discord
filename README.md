@@ -1,6 +1,6 @@
-# Sonia il est midi
+# Sonia Discord
 
-> *Sonia "il est midi" application for Discord*
+> *The Sonia application for Discord*
 
 __Quality:__  
 ![GitHub last commit](https://img.shields.io/github/last-commit/sonia-corporation/sonia-discord?style=flat-square)
