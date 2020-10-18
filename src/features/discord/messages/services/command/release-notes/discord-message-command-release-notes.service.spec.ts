@@ -226,7 +226,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       expect(result.options.embed.description).toStrictEqual(
-        `dummy-release-notes\n\nCheckout all the [release notes](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md).`
+        `dummy-release-notes\n\nCheckout all the [release notes](https://github.com/Sonia-corporation/sonia-discord/blob/master/CHANGELOG.md).`
       );
     });
 

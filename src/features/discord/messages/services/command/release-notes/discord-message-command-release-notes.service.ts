@@ -123,6 +123,6 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
   private _getMessageDescription(): string {
     const appReleaseNotes: string = AppConfigService.getInstance().getReleaseNotes();
 
-    return `${appReleaseNotes}\n\nCheckout all the [release notes](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md).`;
+    return `${appReleaseNotes}\n\nCheckout all the [release notes](https://github.com/Sonia-corporation/sonia-discord/blob/master/CHANGELOG.md).`;
   }
 }

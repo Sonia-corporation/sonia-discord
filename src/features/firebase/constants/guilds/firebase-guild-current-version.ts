@@ -9,7 +9,7 @@ import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-vers
  * The model should be upgraded before manipulating it
  * Each change should be followed with a breaking change strategy
  *
- * @see [sonia-link-001]{@link https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#sonia-link-001}
+ * @see [sonia-link-001]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-001}
  */
 export const FIREBASE_GUILD_CURRENT_VERSION: FirebaseGuildVersionEnum.V4 =
   FirebaseGuildVersionEnum.V4;

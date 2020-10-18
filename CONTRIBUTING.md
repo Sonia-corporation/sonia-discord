@@ -258,7 +258,7 @@ In some cases (probably due to a lack of ingenuity so any help is wanted) during
 To help linking seem together we use comments to identify those cases.  
 To identify them easily the following syntax is used:
 
-`@see [sonia-link-XXX]{@link https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#sonia-link-XXX}` where `XXX` is an id.
+`@see [sonia-link-XXX]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-XXX}` where `XXX` is an id.
 
 Here is the list of linked features:
 
