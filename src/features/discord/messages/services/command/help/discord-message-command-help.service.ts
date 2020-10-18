@@ -156,7 +156,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
   private _getMessageEmbedFieldMoreHelp(): EmbedFieldData {
     return {
       name: `Further help`,
-      value: `You can also checkout the [readme](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/README.md).
+      value: `You can also checkout the [readme](https://github.com/Sonia-corporation/sonia-discord/blob/master/README.md).
       It contains more information about how I work.`,
     };
   }

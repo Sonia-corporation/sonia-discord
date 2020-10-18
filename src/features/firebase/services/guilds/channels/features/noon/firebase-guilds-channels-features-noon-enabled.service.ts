@@ -77,7 +77,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
   }
 
   /**
-   * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#sonia-link-002}
+   * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-002}
    *
    * @param {Readonly<Snowflake>} channelId The [id]{@link Snowflake} of the channel
    * @param {Readonly<boolean>} isEnabled The new [enabled state]{@link IFirebaseGuildVFinal#channels#features#noon#isEnabled}
@@ -202,7 +202,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
   /**
    * @private
    *
-   * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#sonia-link-002}
+   * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-002}
    *
    * @param {Readonly<Snowflake>} channelId The [id]{@link Snowflake} of the channel
    * @param {Readonly<boolean>} isEnabled The new [enabled state]{@link IFirebaseGuildVFinal#channels#features#noon#isEnabled}

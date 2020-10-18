@@ -64,7 +64,7 @@ FS.access(`${APP_ROOT_PATH.path}/src/environment/secret-environment.json`)
             LOGGER.debug(
               CONTEXT,
               CHALK.text(
-                `https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
+                `https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
               )
             );
           })

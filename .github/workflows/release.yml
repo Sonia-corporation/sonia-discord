@@ -97,7 +97,7 @@ jobs:
             :tada: This PR was generated after the creation of the version ${{ steps.latest-tag.outputs.tag }} :tada:
 
             The release is available on:
-            - [npm package (@latest dist-tag)](https://www.npmjs.com/package/@sonia-corporation/il-est-midi-discord/v/${{ steps.latest-tag.outputs.tag }})
-            - [GitHub release](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/${{ steps.latest-tag.outputs.tag }})
+            - [npm package (@latest dist-tag)](https://www.npmjs.com/package/@sonia-corporation/sonia-discord/v/${{ steps.latest-tag.outputs.tag }})
+            - [GitHub release](https://github.com/Sonia-corporation/sonia-discord/releases/tag/${{ steps.latest-tag.outputs.tag }})
 
             Your **github-actions** bot :rocket:

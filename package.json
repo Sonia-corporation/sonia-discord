@@ -1,5 +1,5 @@
 {
-  "name": "@sonia-corporation/il-est-midi-discord",
+  "name": "@sonia-corporation/sonia-discord",
   "version": "1.78.0",
   "author": {
     "email": "geoffrey.testelin@gmail.com",
@@ -29,7 +29,7 @@
     }
   ],
   "description": "The Sonia Discord bot for the famous quote: il est midi",
-  "homepage": "https://github.com/Sonia-corporation/il-est-midi-discord",
+  "homepage": "https://github.com/Sonia-corporation/sonia-discord",
   "maintainers": [
     {
       "email": "geoffrey.testelin@gmail.com",
@@ -50,10 +50,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Sonia-corporation/il-est-midi-discord.git"
+    "url": "https://github.com/Sonia-corporation/sonia-discord.git"
   },
   "bugs": {
-    "url": "https://github.com/Sonia-corporation/il-est-midi-discord/issues"
+    "url": "https://github.com/Sonia-corporation/sonia-discord/issues"
   },
   "config": {
     "commitizen": {
