@@ -77,6 +77,10 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.BLACKBEAR,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.BAZANJI,
         type: DiscordActivityTypeEnum.LISTENING,
       },
@@ -153,11 +157,23 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.INDII_G,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.IVAN_B,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
         name: DiscordActivityNameEnum.JAIDEN,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.JAY_PORTAL,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.JEROME,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -237,7 +253,19 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.NICK_BONIN,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.NOAH_NORTH,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.NOTHING_NOWHERE,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.NOTIME,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -297,6 +325,10 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.RYAN_OAKES,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.SAD_BOY_PROLIFIC,
         type: DiscordActivityTypeEnum.LISTENING,
       },
@@ -313,7 +345,19 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.SNOW,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.SOL,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.TDOT_ILLDUDE,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.TEQKOI,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
