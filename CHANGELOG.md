@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.79.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.79.0...1.79.1) (2020-10-18)
+
+
+### :bug: Bug Fixes
+
+* **release:** publish the release on npm as a public package ([ccc552b](https://github.com/Sonia-corporation/sonia-discord/commit/ccc552bd16776a26983966a258345aeb9f278f52))
+
 # [1.79.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.78.0...1.79.0) (2020-10-18)
 
 
