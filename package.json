@@ -126,7 +126,9 @@
     "create-secret-environment": "node ./scripts/create-secret-environment.js",
     "git:push": "git push-upstream",
     "madge:circular-dependencies-check": "madge ./src/ --circular --extensions ts,js --image ./dist/circular-dependencies-graph.svg --warning",
-    "madge:image": "madge ./src/ --extensions ts,js --image ./dist/graph.svg --warning"
+    "madge:image": "madge ./src/ --extensions ts,js --image ./dist/graph.svg --warning",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate"
   },
   "dependencies": {
     "@datorama/akita": "5.2.5",
