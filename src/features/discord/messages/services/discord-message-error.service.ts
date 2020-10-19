@@ -124,7 +124,7 @@ export class DiscordMessageErrorService extends AbstractService {
     return {
       options: {
         embed: this._getMessageEmbed(error, anyDiscordMessage),
-        split: true,
+        split: false,
       },
       response: ``,
     };

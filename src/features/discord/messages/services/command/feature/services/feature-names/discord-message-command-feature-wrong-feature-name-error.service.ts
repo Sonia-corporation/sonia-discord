@@ -47,7 +47,7 @@ export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends Di
                   commands,
                   featureName
                 ),
-                split: true,
+                split: false,
               },
               response: ``,
             } as IDiscordMessageResponse)
