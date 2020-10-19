@@ -73,7 +73,7 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
         Promise.resolve({
           options: {
             embed: this._getMessageEmbed(flagsSuccess),
-            split: true,
+            split: false,
           },
           response: ``,
         })

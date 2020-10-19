@@ -37,7 +37,7 @@ export class DiscordMessageCommandFeatureEmptyContentErrorService extends Discor
             _.merge(cliErrorMessageResponse, {
               options: {
                 embed: this._getMessageEmbed(),
-                split: true,
+                split: false,
               },
               response: ``,
             } as IDiscordMessageResponse)

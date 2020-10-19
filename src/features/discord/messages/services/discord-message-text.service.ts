@@ -107,6 +107,7 @@ export class DiscordMessageTextService extends AbstractService {
     });
 
     return Promise.resolve({
+      options: {},
       response: this._getEveryoneMentionMessageResponseWithEnvPrefix(
         `Il est midi everyone!`
       ),

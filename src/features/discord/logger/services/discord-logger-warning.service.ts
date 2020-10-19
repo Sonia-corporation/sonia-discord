@@ -55,7 +55,7 @@ export class DiscordLoggerWarningService extends AbstractService {
     return {
       options: {
         embed: this._getMessageEmbed(warning),
-        split: true,
+        split: false,
       },
       response: ``,
     };
