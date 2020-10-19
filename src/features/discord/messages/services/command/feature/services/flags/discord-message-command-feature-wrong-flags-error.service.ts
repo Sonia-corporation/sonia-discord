@@ -40,7 +40,7 @@ export class DiscordMessageCommandFeatureWrongFlagsErrorService extends DiscordM
             _.merge(cliErrorMessageResponse, {
               options: {
                 embed: this._getMessageEmbed(flagsErrors),
-                split: true,
+                split: false,
               },
               response: ``,
             } as IDiscordMessageResponse)

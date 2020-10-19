@@ -89,6 +89,9 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
 
   private _getMessageResponse(): IDiscordMessageResponse {
     return {
+      options: {
+        split: false,
+      },
       response: `Il est midi!`,
     };
   }

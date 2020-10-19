@@ -407,7 +407,7 @@ describe(`DiscordMessageService`, (): void => {
       });
       discordMessageResponse = createMock<IDiscordMessageResponse>({
         options: {
-          split: true,
+          split: false,
         },
         response: `dummy-response`,
       });
@@ -602,7 +602,7 @@ describe(`DiscordMessageService`, (): void => {
               expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(
                 `dummy-response`,
                 {
-                  split: true,
+                  split: false,
                 } as MessageOptions
               );
             });
@@ -822,7 +822,7 @@ describe(`DiscordMessageService`, (): void => {
             expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(
               `dummy-response`,
               {
-                split: true,
+                split: false,
               } as MessageOptions
             );
           });

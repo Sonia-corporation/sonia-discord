@@ -1,4 +1,4 @@
-import { Guild, GuildChannel } from "discord.js";
+import { Guild, GuildChannel, NewsChannel, TextChannel } from "discord.js";
 import _ from "lodash";
 import { filter, take } from "rxjs/operators";
 import { AbstractService } from "../../../../classes/services/abstract.service";
@@ -7,7 +7,6 @@ import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
-import { IAnyDiscordChannel } from "../../channels/types/any-discord-channel";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordGuildSoniaChannelNameEnum } from "../enums/discord-guild-sonia-channel-name.enum";
 import { IDiscordGuildSoniaSendMessageToChannel } from "../interfaces/discord-guild-sonia-send-message-to-channel";
@@ -46,11 +45,8 @@ export class DiscordGuildSoniaService extends AbstractService {
         sendMessageToChannel.channelName
       );
 
-      if (!_.isNil(guildChannel)) {
-        this._sendMessageToChannel(
-          sendMessageToChannel,
-          guildChannel as IAnyDiscordChannel
-        );
+      if (!_.isNil(guildChannel) && guildChannel.isText()) {
+        this._sendMessageToChannel(sendMessageToChannel, guildChannel);
       } else {
         LoggerService.getInstance().warning({
           context: this._serviceName,
@@ -105,7 +101,7 @@ export class DiscordGuildSoniaService extends AbstractService {
 
   private _sendMessageToChannel(
     { messageResponse }: Readonly<IDiscordGuildSoniaSendMessageToChannel>,
-    guildChannel: Readonly<IAnyDiscordChannel>
+    guildChannel: Readonly<TextChannel | NewsChannel>
   ): void {
     guildChannel
       .send(messageResponse.response, messageResponse.options)
