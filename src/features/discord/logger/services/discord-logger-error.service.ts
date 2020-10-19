@@ -88,7 +88,7 @@ export class DiscordLoggerErrorService extends AbstractService {
   }
 
   private _getMessageEmbedColor(): number {
-    return DiscordMessageConfigService.getInstance().getMessageCommandErrorImageColor();
+    return DiscordMessageConfigService.getInstance().getMessageErrorImageColor();
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
@@ -104,7 +104,7 @@ export class DiscordLoggerErrorService extends AbstractService {
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
-      url: DiscordMessageConfigService.getInstance().getMessageCommandErrorImageUrl(),
+      url: DiscordMessageConfigService.getInstance().getMessageErrorImageUrl(),
     };
   }
 
