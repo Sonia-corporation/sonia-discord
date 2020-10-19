@@ -87,10 +87,8 @@ export class DiscordLoggerErrorService extends AbstractService {
     return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
   }
 
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
-    return {
-      url: DiscordMessageConfigService.getInstance().getMessageCommandErrorImageUrl(),
-    };
+  private _getMessageEmbedColor(): number {
+    return DiscordMessageConfigService.getInstance().getMessageCommandErrorImageColor();
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
@@ -104,8 +102,10 @@ export class DiscordLoggerErrorService extends AbstractService {
     };
   }
 
-  private _getMessageEmbedColor(): number {
-    return DiscordMessageConfigService.getInstance().getMessageCommandErrorImageColor();
+  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
+    return {
+      url: DiscordMessageConfigService.getInstance().getMessageCommandErrorImageUrl(),
+    };
   }
 
   private _getMessageEmbedTimestamp(): Date {
@@ -124,14 +124,14 @@ export class DiscordLoggerErrorService extends AbstractService {
     return message;
   }
 
-  private _getMessageEmbedFields({ stack }: Readonly<Error>): EmbedFieldData[] {
-    const embedFieldData: EmbedFieldData[] = [];
-
+  private _getMessageEmbedFields({
+    stack,
+  }: Readonly<Error>): EmbedFieldData[] | undefined {
     if (_.isNil(stack)) {
-      return embedFieldData;
+      return undefined;
     }
 
-    return _.concat(embedFieldData, this._getMessageEmbedFieldError(stack));
+    return [this._getMessageEmbedFieldError(stack)];
   }
 
   private _getMessageEmbedFieldError(stack: Readonly<string>): EmbedFieldData {

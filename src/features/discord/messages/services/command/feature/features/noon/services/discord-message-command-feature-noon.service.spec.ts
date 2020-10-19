@@ -176,8 +176,6 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
       await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       expect(executeAllSpy).toHaveBeenCalledTimes(1);
       expect(executeAllSpy).toHaveBeenCalledWith(
         anyDiscordMessage,
@@ -201,9 +199,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
         messageFlags
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.author).toStrictEqual(messageEmbedAuthor);
+      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<
@@ -219,9 +215,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
         messageFlags
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.color).toStrictEqual(ColorEnum.DESERT);
+      expect(result.options.embed?.color).toStrictEqual(ColorEnum.DESERT);
     });
 
     describe(`when there is one given success flag`, (): void => {
@@ -241,9 +235,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           messageFlags
         );
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.description).toStrictEqual(
+        expect(result.options.embed?.description).toStrictEqual(
           `**1** noon feature option updated.`
         );
       });
@@ -258,9 +250,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           messageFlags
         );
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields).toHaveLength(1);
+        expect(result.options.embed?.fields).toHaveLength(1);
       });
 
       it(`should return a Discord message response embed with the fields containing the flags success`, async (): Promise<
@@ -273,9 +263,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           messageFlags
         );
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields[0]).toStrictEqual({
+        expect(result.options.embed?.fields?.[0]).toStrictEqual({
           inline: true,
           name: discordCommandFlagsSuccess[0].name,
           value: discordCommandFlagsSuccess[0].description,
@@ -304,9 +292,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           messageFlags
         );
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.description).toStrictEqual(
+        expect(result.options.embed?.description).toStrictEqual(
           `**3** noon feature options updated.`
         );
       });
@@ -321,9 +307,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           messageFlags
         );
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields).toHaveLength(3);
+        expect(result.options.embed?.fields).toHaveLength(3);
       });
 
       it(`should return a Discord message response embed with the fields containing the flags success`, async (): Promise<
@@ -336,23 +320,19 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           messageFlags
         );
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields[0]).toStrictEqual({
+        expect(result.options.embed?.fields?.[0]).toStrictEqual({
           inline: true,
           name: discordCommandFlagsSuccess[0].name,
           value: discordCommandFlagsSuccess[0].description,
         } as EmbedFieldData);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields[1]).toStrictEqual({
+
+        expect(result.options.embed?.fields?.[1]).toStrictEqual({
           inline: true,
           name: discordCommandFlagsSuccess[1].name,
           value: discordCommandFlagsSuccess[1].description,
         } as EmbedFieldData);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields[2]).toStrictEqual({
+
+        expect(result.options.embed?.fields?.[2]).toStrictEqual({
           inline: true,
           name: discordCommandFlagsSuccess[2].name,
           value: discordCommandFlagsSuccess[2].description,
@@ -371,9 +351,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
         messageFlags
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.footer).toStrictEqual({
+      expect(result.options.embed?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `Noon feature successfully updated`,
       } as MessageEmbedFooter);
@@ -394,9 +372,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           messageFlags
         );
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.footer).toStrictEqual({
+        expect(result.options.embed?.footer).toStrictEqual({
           iconURL: undefined,
           text: `Noon feature successfully updated`,
         } as MessageEmbedFooter);
@@ -418,9 +394,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           messageFlags
         );
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.footer).toStrictEqual({
+        expect(result.options.embed?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `Noon feature successfully updated`,
         } as MessageEmbedFooter);
@@ -440,9 +414,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
         messageFlags
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.thumbnail).toStrictEqual({
+      expect(result.options.embed?.thumbnail).toStrictEqual({
         url: IconEnum.ALARM,
       } as MessageEmbedThumbnail);
     });
@@ -457,14 +429,11 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
         messageFlags
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(moment(result.options.embed.timestamp).isValid()).toStrictEqual(
+      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(
         true
       );
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(moment(result.options.embed.timestamp).fromNow()).toStrictEqual(
+
+      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(
         `a few seconds ago`
       );
     });
@@ -479,9 +448,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
         messageFlags
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.title).toStrictEqual(`Noon feature updated`);
+      expect(result.options.embed?.title).toStrictEqual(`Noon feature updated`);
     });
 
     it(`should return a Discord message response not split`, async (): Promise<
@@ -494,8 +461,6 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
         messageFlags
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       expect(result.options.split).toStrictEqual(false);
     });
 

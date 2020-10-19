@@ -179,9 +179,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.author).toStrictEqual(messageEmbedAuthor);
+      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<
@@ -194,9 +192,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
+      expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     it(`should return a Discord message response embed with a description`, async (): Promise<
@@ -206,9 +202,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.description).toStrictEqual(`I was starving.`);
+      expect(result.options.embed?.description).toStrictEqual(
+        `I was starving.`
+      );
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
@@ -219,9 +215,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.footer).toStrictEqual({
+      expect(result.options.embed?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `Bon appétit`,
       } as MessageEmbedFooter);
@@ -239,9 +233,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.footer).toStrictEqual({
+        expect(result.options.embed?.footer).toStrictEqual({
           iconURL: undefined,
           text: `Bon appétit`,
         } as MessageEmbedFooter);
@@ -260,9 +252,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.footer).toStrictEqual({
+        expect(result.options.embed?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `Bon appétit`,
         } as MessageEmbedFooter);
@@ -279,9 +269,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.thumbnail).toStrictEqual({
+      expect(result.options.embed?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
       } as MessageEmbedThumbnail);
     });
@@ -293,14 +281,11 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(moment(result.options.embed.timestamp).isValid()).toStrictEqual(
+      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(
         true
       );
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(moment(result.options.embed.timestamp).fromNow()).toStrictEqual(
+
+      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(
         `a few seconds ago`
       );
     });
@@ -312,9 +297,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.title).toStrictEqual(`Time to eat!`);
+      expect(result.options.embed?.title).toStrictEqual(`Time to eat!`);
     });
 
     it(`should return a Discord message response not split`, async (): Promise<
@@ -324,8 +307,6 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       expect(result.options.split).toStrictEqual(false);
     });
 
