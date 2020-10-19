@@ -152,9 +152,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         commands
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.author).toStrictEqual(messageEmbedAuthor);
+      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<
@@ -170,9 +168,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         commands
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
+      expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     it(`should return a Discord message response embed with 3 fields`, async (): Promise<
@@ -185,9 +181,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         commands
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields).toHaveLength(3);
+      expect(result.options.embed?.fields).toHaveLength(3);
     });
 
     it(`should return a Discord message response embed with a field explaining the error`, async (): Promise<
@@ -200,9 +194,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         commands
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[0]).toStrictEqual({
+      expect(result.options.embed?.fields?.[0]).toStrictEqual({
         name: `Empty feature name`,
         value: `You did not specify the name of the feature you wish to configure.\nI will not guess it for you so please try again with a feature name!\nAnd because I am kind and generous here is the list of all the features you can configure with an example.`,
       } as EmbedFieldData);
@@ -218,9 +210,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         commands
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[1]).toStrictEqual({
+      expect(result.options.embed?.fields?.[1]).toStrictEqual({
         name: `All features`,
         value: `\`noon (or n)\``,
       } as EmbedFieldData);
@@ -244,9 +234,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
           commands
         );
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields[2]).toStrictEqual({
+        expect(result.options.embed?.fields?.[2]).toStrictEqual({
           name: `Example`,
           value: `\`!feature noon\``,
         } as EmbedFieldData);
@@ -271,9 +259,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
           commands
         );
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields[2]).toStrictEqual({
+        expect(result.options.embed?.fields?.[2]).toStrictEqual({
           name: `Example`,
           value: `\`!feature noon\``,
         } as EmbedFieldData);
@@ -303,9 +289,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
             commands
           );
 
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          expect(result.options.embed.fields[2]).toStrictEqual({
+          expect(result.options.embed?.fields?.[2]).toStrictEqual({
             name: `Example`,
             value: `\`!f noon\``,
           } as EmbedFieldData);
@@ -329,9 +313,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
             commands
           );
 
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          expect(result.options.embed.fields[2]).toStrictEqual({
+          expect(result.options.embed?.fields?.[2]).toStrictEqual({
             name: `Example`,
             value: `\`!feature noon\``,
           } as EmbedFieldData);
@@ -362,9 +344,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
             commands
           );
 
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          expect(result.options.embed.fields[2]).toStrictEqual({
+          expect(result.options.embed?.fields?.[2]).toStrictEqual({
             name: `Example`,
             value: `\`!feature noon\``,
           } as EmbedFieldData);
@@ -388,9 +368,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
             commands
           );
 
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          expect(result.options.embed.fields[2]).toStrictEqual({
+          expect(result.options.embed?.fields?.[2]).toStrictEqual({
             name: `Example`,
             value: `\`-lunch noon\``,
           } as EmbedFieldData);
@@ -409,9 +387,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         commands
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.footer).toStrictEqual({
+      expect(result.options.embed?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `Invalid feature command`,
       } as MessageEmbedFooter);
@@ -432,9 +408,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
           commands
         );
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.footer).toStrictEqual({
+        expect(result.options.embed?.footer).toStrictEqual({
           iconURL: undefined,
           text: `Invalid feature command`,
         } as MessageEmbedFooter);
@@ -456,9 +430,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
           commands
         );
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.footer).toStrictEqual({
+        expect(result.options.embed?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `Invalid feature command`,
         } as MessageEmbedFooter);
@@ -478,9 +450,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         commands
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.thumbnail).toStrictEqual({
+      expect(result.options.embed?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
       } as MessageEmbedThumbnail);
     });
@@ -495,14 +465,11 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         commands
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(moment(result.options.embed.timestamp).isValid()).toStrictEqual(
+      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(
         true
       );
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(moment(result.options.embed.timestamp).fromNow()).toStrictEqual(
+
+      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(
         `a few seconds ago`
       );
     });
@@ -517,14 +484,12 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         commands
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.title).toStrictEqual(
+      expect(result.options.embed?.title).toStrictEqual(
         `I can not handle your request`
       );
     });
 
-    it(`should return a Discord message response splitted`, async (): Promise<
+    it(`should return a Discord message response not split`, async (): Promise<
       void
     > => {
       expect.assertions(1);
@@ -534,9 +499,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         commands
       );
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.split).toStrictEqual(true);
+      expect(result.options.split).toStrictEqual(false);
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<

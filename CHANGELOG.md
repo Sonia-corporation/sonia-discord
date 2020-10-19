@@ -1,5 +1,26 @@
 # Semantic Versioning Changelog
 
+## [1.79.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.79.0...1.79.1) (2020-10-18)
+
+
+### :bug: Bug Fixes
+
+* **release:** publish the release on npm as a public package ([ccc552b](https://github.com/Sonia-corporation/sonia-discord/commit/ccc552bd16776a26983966a258345aeb9f278f52))
+
+# [1.79.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.78.0...1.79.0) (2020-10-18)
+
+
+### :rocket: Features
+
+* **activity:** added 11 rappers to Sonia listening activity ([3591e0a](https://github.com/Sonia-corporation/sonia-discord/commit/3591e0a48a64f4fa7f882cffcd4506510f95f369)), closes [#1015](https://github.com/Sonia-corporation/sonia-discord/issues/1015)
+
+# [1.78.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.77.0...1.78.0) (2020-10-17)
+
+
+### :rocket: Features
+
+* **name:** rename to Sonia ([3d8ddb9](https://github.com/Sonia-corporation/il-est-midi-discord/commit/3d8ddb9d5bfef4e41b2bcc7db149d4ab3afbb8e2))
+
 # [1.77.0](https://github.com/Sonia-corporation/il-est-midi-discord/compare/1.76.0...1.77.0) (2020-10-14)
 
 

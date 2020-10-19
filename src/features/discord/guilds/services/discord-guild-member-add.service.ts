@@ -148,6 +148,9 @@ export class DiscordGuildMemberAddService extends AbstractService {
     id,
   }: Readonly<IAnyGuildMember>): IDiscordMessageResponse {
     return {
+      options: {
+        split: false,
+      },
       response: this._getMessageResponseWithEnvPrefix(
         `Welcome ${wrapUserIdIntoMention(id)}! il est midi!`
       ),

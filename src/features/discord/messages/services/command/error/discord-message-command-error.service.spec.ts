@@ -170,9 +170,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.author).toStrictEqual(messageEmbedAuthor);
+      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<
@@ -185,9 +183,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
+      expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     it(`should return a Discord message response embed with 2 fields`, async (): Promise<
@@ -197,9 +193,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields).toHaveLength(2);
+      expect(result.options.embed?.fields).toHaveLength(2);
     });
 
     it(`should return a Discord message response embed with a bait field`, async (): Promise<
@@ -209,9 +203,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[0]).toStrictEqual({
+      expect(result.options.embed?.fields?.[0]).toStrictEqual({
         name: `It seems that something went wrong`,
         value: `You may have found an issue with my internal core system.
       Please, inform my creator as soon as possible!
@@ -226,9 +218,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[1]).toStrictEqual({
+      expect(result.options.embed?.fields?.[1]).toStrictEqual({
         name: `Come again?`,
         value: `What do you think you are doing here?
       That is not the way it works!
@@ -244,9 +234,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.footer).toStrictEqual({
+      expect(result.options.embed?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `Nice try though`,
       } as MessageEmbedFooter);
@@ -264,9 +252,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.footer).toStrictEqual({
+        expect(result.options.embed?.footer).toStrictEqual({
           iconURL: undefined,
           text: `Nice try though`,
         } as MessageEmbedFooter);
@@ -285,9 +271,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.footer).toStrictEqual({
+        expect(result.options.embed?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `Nice try though`,
         } as MessageEmbedFooter);
@@ -304,9 +288,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.thumbnail).toStrictEqual({
+      expect(result.options.embed?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
       } as MessageEmbedThumbnail);
     });
@@ -318,14 +300,11 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(moment(result.options.embed.timestamp).isValid()).toStrictEqual(
+      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(
         true
       );
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(moment(result.options.embed.timestamp).fromNow()).toStrictEqual(
+
+      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(
         `a few seconds ago`
       );
     });
@@ -337,23 +316,19 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.title).toStrictEqual(
+      expect(result.options.embed?.title).toStrictEqual(
         `Uh-oh. What just happened?`
       );
     });
 
-    it(`should return a Discord message response splitted`, async (): Promise<
+    it(`should return a Discord message response not split`, async (): Promise<
       void
     > => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.split).toStrictEqual(true);
+      expect(result.options.split).toStrictEqual(false);
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<

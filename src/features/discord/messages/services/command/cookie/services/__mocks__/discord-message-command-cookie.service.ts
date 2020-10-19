@@ -28,7 +28,7 @@ export class DiscordMessageCommandCookieService extends AbstractService {
     return {
       options: {
         embed: createMock<MessageEmbed>(),
-        split: true,
+        split: false,
       },
       response: ``,
     };

@@ -47,7 +47,7 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
                   commands,
                   featureName
                 ),
-                split: true,
+                split: false,
               },
               response: ``,
             } as IDiscordMessageResponse)

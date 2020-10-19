@@ -7,7 +7,7 @@ import { IFirebaseGuild } from "../../../types/guilds/firebase-guild";
  * @description
  * Check if the given Firebase guild contains some [channels]{@link IFirebaseGuildV3#channels}
  *
- * @see [sonia-link-001]{@link https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CONTRIBUTING.md#sonia-link-001}
+ * @see [sonia-link-001]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-001}
  *
  * @param {Readonly<IFirebaseGuild>} firebaseGuild The Firebase guild
  *

@@ -22,11 +22,11 @@ jobs:
             In one month this issue will be closed if there is no more activity during this period. :grimacing:
 
             If you want to avoid this stale state you could add one of these labels:
-            - [![label: waiting][~waiting]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/waiting)
-            - [![label: wontfix][~wontfix]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/wontfix)
-            - [![label: dependency-fix][~dependency-fix]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/dependency-fix)
-            - [![label: opened-pull-request][~opened-pull-request]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/opened-pull-request)
-            - [![label: help wanted][~help-wanted]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/help%20wanted)
+            - [![label: waiting][~waiting]](https://github.com/Sonia-corporation/sonia-discord/labels/waiting)
+            - [![label: wontfix][~wontfix]](https://github.com/Sonia-corporation/sonia-discord/labels/wontfix)
+            - [![label: dependency-fix][~dependency-fix]](https://github.com/Sonia-corporation/sonia-discord/labels/dependency-fix)
+            - [![label: opened-pull-request][~opened-pull-request]](https://github.com/Sonia-corporation/sonia-discord/labels/opened-pull-request)
+            - [![label: help wanted][~help-wanted]](https://github.com/Sonia-corporation/sonia-discord/labels/help%20wanted)
           stale-pr-message: |
             [~waiting]: https://img.shields.io/badge/-waiting-f5cd79.svg
             [~wontfix]: https://img.shields.io/badge/-wontfix-e77f67.svg
@@ -40,11 +40,11 @@ jobs:
             In one month this pull request will be closed if there is no more activity during this period. :grimacing:
 
             If you want to avoid this stale state you could add one of these labels:
-            - [![label: waiting][~waiting]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/waiting)
-            - [![label: wontfix][~wontfix]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/wontfix)
-            - [![label: dependency-fix][~dependency-fix]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/dependency-fix)
-            - [![label: opened-pull-request][~opened-pull-request]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/opened-pull-request)
-            - [![label: help wanted][~help-wanted]](https://github.com/Sonia-corporation/il-est-midi-discord/labels/help%20wanted)
+            - [![label: waiting][~waiting]](https://github.com/Sonia-corporation/sonia-discord/labels/waiting)
+            - [![label: wontfix][~wontfix]](https://github.com/Sonia-corporation/sonia-discord/labels/wontfix)
+            - [![label: dependency-fix][~dependency-fix]](https://github.com/Sonia-corporation/sonia-discord/labels/dependency-fix)
+            - [![label: opened-pull-request][~opened-pull-request]](https://github.com/Sonia-corporation/sonia-discord/labels/opened-pull-request)
+            - [![label: help wanted][~help-wanted]](https://github.com/Sonia-corporation/sonia-discord/labels/help%20wanted)
           stale-issue-label: 'no-issue-activity'
           exempt-issue-labels: 'waiting,wontfix,dependency-fix,opened-pull-request,help%20wanted'
           stale-pr-label: 'no-pull-request-activity'

@@ -38,7 +38,7 @@ export class DiscordMessageCommandCliErrorService extends AbstractService {
     return Promise.resolve({
       options: {
         embed: this._getMessageEmbed(),
-        split: true,
+        split: false,
       },
       response: ``,
     });
