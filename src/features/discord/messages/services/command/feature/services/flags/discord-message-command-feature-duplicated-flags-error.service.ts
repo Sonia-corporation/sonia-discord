@@ -42,7 +42,7 @@ export class DiscordMessageCommandFeatureDuplicatedFlagsErrorService extends Dis
             _.merge(cliErrorMessageResponse, {
               options: {
                 embed: this._getMessageEmbed(flagsDuplicated),
-                split: true,
+                split: false,
               },
               response: ``,
             } as IDiscordMessageResponse)

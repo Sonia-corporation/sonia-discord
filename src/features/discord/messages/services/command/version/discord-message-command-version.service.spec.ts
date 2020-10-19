@@ -265,7 +265,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.fields[0]).toStrictEqual({
         name: `My age`,
-        value: `[8](https://github.com/Sonia-corporation/il-est-midi-discord/releases/tag/8)`,
+        value: `[8](https://github.com/Sonia-corporation/sonia-discord/releases/tag/8)`,
       } as EmbedFieldData);
     });
 
@@ -319,7 +319,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       // @ts-ignore
       expect(result.options.embed.fields[3]).toStrictEqual({
         name: `My birthday card`,
-        value: `dummy-release-notes\n\nCheckout all my [birthday cards](https://github.com/Sonia-corporation/il-est-midi-discord/blob/master/CHANGELOG.md).`,
+        value: `dummy-release-notes\n\nCheckout all my [birthday cards](https://github.com/Sonia-corporation/sonia-discord/blob/master/CHANGELOG.md).`,
       } as EmbedFieldData);
     });
 
@@ -488,7 +488,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       );
     });
 
-    it(`should return a Discord message response splitted`, async (): Promise<
+    it(`should return a Discord message response not split`, async (): Promise<
       void
     > => {
       expect.assertions(1);
@@ -497,7 +497,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      expect(result.options.split).toStrictEqual(true);
+      expect(result.options.split).toStrictEqual(false);
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<

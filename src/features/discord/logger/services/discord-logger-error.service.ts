@@ -57,7 +57,7 @@ export class DiscordLoggerErrorService extends AbstractService {
     return {
       options: {
         embed: this._getMessageEmbed(error),
-        split: true,
+        split: false,
       },
       response: ``,
     };

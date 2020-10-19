@@ -42,7 +42,7 @@ export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends Di
             _.merge(cliErrorMessageResponse, {
               options: {
                 embed: this._getMessageEmbed(anyDiscordMessage, commands),
-                split: true,
+                split: false,
               },
               response: ``,
             } as IDiscordMessageResponse)

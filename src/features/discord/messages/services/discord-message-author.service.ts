@@ -36,6 +36,7 @@ export class DiscordMessageAuthorService extends AbstractService {
     }
 
     return Promise.resolve({
+      options: {},
       response: this._getReplyWithEnvPrefix(response),
     });
   }
