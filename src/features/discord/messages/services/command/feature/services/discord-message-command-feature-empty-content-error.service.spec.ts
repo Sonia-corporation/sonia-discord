@@ -144,9 +144,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.author).toStrictEqual(messageEmbedAuthor);
+      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<
@@ -159,9 +157,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
+      expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     it(`should return a Discord message response embed with 2 fields`, async (): Promise<
@@ -171,9 +167,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields).toHaveLength(2);
+      expect(result.options.embed?.fields).toHaveLength(2);
     });
 
     it(`should return a Discord message response embed with a field explaining the error`, async (): Promise<
@@ -183,9 +177,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[0]).toStrictEqual({
+      expect(result.options.embed?.fields?.[0]).toStrictEqual({
         name: `Empty content`,
         value: `The content of the message is empty.\nI can not process the feature command however this error should never happen!\nDo not be so selfish and share this information with my creators!`,
       } as EmbedFieldData);
@@ -204,9 +196,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.fields[1]).toStrictEqual({
+      expect(result.options.embed?.fields?.[1]).toStrictEqual({
         name: `Help me to help you`,
         value: `You can create a [bug report](dummy-bug-report-url) or reach my creators on [discord](dummy-sonia-permanent-guild-invite-url).`,
       } as EmbedFieldData);
@@ -220,9 +210,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.footer).toStrictEqual({
+      expect(result.options.embed?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `Invalid feature command`,
       } as MessageEmbedFooter);
@@ -240,9 +228,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.footer).toStrictEqual({
+        expect(result.options.embed?.footer).toStrictEqual({
           iconURL: undefined,
           text: `Invalid feature command`,
         } as MessageEmbedFooter);
@@ -261,9 +247,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.footer).toStrictEqual({
+        expect(result.options.embed?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `Invalid feature command`,
         } as MessageEmbedFooter);
@@ -280,9 +264,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.thumbnail).toStrictEqual({
+      expect(result.options.embed?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
       } as MessageEmbedThumbnail);
     });
@@ -294,14 +276,11 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(moment(result.options.embed.timestamp).isValid()).toStrictEqual(
+      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(
         true
       );
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(moment(result.options.embed.timestamp).fromNow()).toStrictEqual(
+
+      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(
         `a few seconds ago`
       );
     });
@@ -313,9 +292,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.title).toStrictEqual(
+      expect(result.options.embed?.title).toStrictEqual(
         `I can not handle your request`
       );
     });
@@ -327,8 +304,6 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       expect(result.options.split).toStrictEqual(false);
     });
 

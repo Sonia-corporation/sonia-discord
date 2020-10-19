@@ -140,9 +140,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.author).toStrictEqual(messageEmbedAuthor);
+      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<
@@ -155,9 +153,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
+      expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     describe(`when there is one given flag error`, (): void => {
@@ -172,9 +168,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.description).toStrictEqual(
+        expect(result.options.embed?.description).toStrictEqual(
           `**1** error found.`
         );
       });
@@ -186,9 +180,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields).toHaveLength(1);
+        expect(result.options.embed?.fields).toHaveLength(1);
       });
 
       it(`should return a Discord message response embed with the fields containing the flags errors`, async (): Promise<
@@ -198,9 +190,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields[0]).toStrictEqual({
+        expect(result.options.embed?.fields?.[0]).toStrictEqual({
           inline: true,
           name: flagsErrors[0].name,
           value: flagsErrors[0].description,
@@ -224,9 +214,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.description).toStrictEqual(
+        expect(result.options.embed?.description).toStrictEqual(
           `**3** errors found.`
         );
       });
@@ -238,9 +226,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields).toHaveLength(3);
+        expect(result.options.embed?.fields).toHaveLength(3);
       });
 
       it(`should return a Discord message response embed with the fields containing the flags errors`, async (): Promise<
@@ -250,23 +236,19 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields[0]).toStrictEqual({
+        expect(result.options.embed?.fields?.[0]).toStrictEqual({
           inline: true,
           name: flagsErrors[0].name,
           value: flagsErrors[0].description,
         } as EmbedFieldData);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields[1]).toStrictEqual({
+
+        expect(result.options.embed?.fields?.[1]).toStrictEqual({
           inline: true,
           name: flagsErrors[1].name,
           value: flagsErrors[1].description,
         } as EmbedFieldData);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.fields[2]).toStrictEqual({
+
+        expect(result.options.embed?.fields?.[2]).toStrictEqual({
           inline: true,
           name: flagsErrors[2].name,
           value: flagsErrors[2].description,
@@ -282,9 +264,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.footer).toStrictEqual({
+      expect(result.options.embed?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `Invalid feature command`,
       } as MessageEmbedFooter);
@@ -302,9 +282,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.footer).toStrictEqual({
+        expect(result.options.embed?.footer).toStrictEqual({
           iconURL: undefined,
           text: `Invalid feature command`,
         } as MessageEmbedFooter);
@@ -323,9 +301,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.footer).toStrictEqual({
+        expect(result.options.embed?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `Invalid feature command`,
         } as MessageEmbedFooter);
@@ -342,9 +318,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.thumbnail).toStrictEqual({
+      expect(result.options.embed?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
       } as MessageEmbedThumbnail);
     });
@@ -356,14 +330,11 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(moment(result.options.embed.timestamp).isValid()).toStrictEqual(
+      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(
         true
       );
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(moment(result.options.embed.timestamp).fromNow()).toStrictEqual(
+
+      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(
         `a few seconds ago`
       );
     });
@@ -375,9 +346,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.title).toStrictEqual(
+      expect(result.options.embed?.title).toStrictEqual(
         `I can not handle your request`
       );
     });
@@ -389,8 +358,6 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       expect(result.options.split).toStrictEqual(false);
     });
 

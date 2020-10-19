@@ -106,9 +106,7 @@ describe(`DiscordMessageCommandCliErrorService`, (): void => {
 
       const result = await service.getCliErrorMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.author).toStrictEqual(messageEmbedAuthor);
+      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<
@@ -121,9 +119,7 @@ describe(`DiscordMessageCommandCliErrorService`, (): void => {
 
       const result = await service.getCliErrorMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.color).toStrictEqual(ColorEnum.CANDY);
+      expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
@@ -134,9 +130,7 @@ describe(`DiscordMessageCommandCliErrorService`, (): void => {
 
       const result = await service.getCliErrorMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.footer).toStrictEqual({
+      expect(result.options.embed?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `Retry with the right argument`,
       } as MessageEmbedFooter);
@@ -154,9 +148,7 @@ describe(`DiscordMessageCommandCliErrorService`, (): void => {
 
         const result = await service.getCliErrorMessageResponse();
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.footer).toStrictEqual({
+        expect(result.options.embed?.footer).toStrictEqual({
           iconURL: undefined,
           text: `Retry with the right argument`,
         } as MessageEmbedFooter);
@@ -175,9 +167,7 @@ describe(`DiscordMessageCommandCliErrorService`, (): void => {
 
         const result = await service.getCliErrorMessageResponse();
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        expect(result.options.embed.footer).toStrictEqual({
+        expect(result.options.embed?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `Retry with the right argument`,
         } as MessageEmbedFooter);
@@ -194,9 +184,7 @@ describe(`DiscordMessageCommandCliErrorService`, (): void => {
 
       const result = await service.getCliErrorMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(result.options.embed.thumbnail).toStrictEqual({
+      expect(result.options.embed?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
       } as MessageEmbedThumbnail);
     });
@@ -208,14 +196,11 @@ describe(`DiscordMessageCommandCliErrorService`, (): void => {
 
       const result = await service.getCliErrorMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(moment(result.options.embed.timestamp).isValid()).toStrictEqual(
+      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(
         true
       );
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      expect(moment(result.options.embed.timestamp).fromNow()).toStrictEqual(
+
+      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(
         `a few seconds ago`
       );
     });
@@ -227,8 +212,6 @@ describe(`DiscordMessageCommandCliErrorService`, (): void => {
 
       const result = await service.getCliErrorMessageResponse();
 
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       expect(result.options.split).toStrictEqual(false);
     });
 
