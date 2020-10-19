@@ -220,7 +220,7 @@ describe(`DiscordMessageCommandCliErrorService`, (): void => {
       );
     });
 
-    it(`should return a Discord message response splitted`, async (): Promise<
+    it(`should return a Discord message response not split`, async (): Promise<
       void
     > => {
       expect.assertions(1);
@@ -229,7 +229,7 @@ describe(`DiscordMessageCommandCliErrorService`, (): void => {
 
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      expect(result.options.split).toStrictEqual(true);
+      expect(result.options.split).toStrictEqual(false);
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<
