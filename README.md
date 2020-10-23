@@ -36,6 +36,8 @@ __Statistics:__
 
 ## Sonia bot
 
+[Add Sonia to my guild](https://discord.com/oauth2/authorize?client_id=689829775317139460&scope=bot&permissions=150592).
+
 ### Sonia commands
 
 Sonia will treat one command at a time.  

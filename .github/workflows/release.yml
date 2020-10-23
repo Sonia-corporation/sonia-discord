@@ -37,7 +37,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Cache node_modules
         if: github.event_name == 'push' || github.event_name == 'pull_request'
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         env:
           cache-name: cache-node-modules
         with:
@@ -85,7 +85,7 @@ jobs:
         run: echo 'The current tag did not change'
       - name: Create PR from master to develop
         if: needs.CurrentTag.outputs.CURRENT_TAG != steps.latest-tag.outputs.tag
-        uses: peter-evans/create-pull-request@v2
+        uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: 'chore(develop): merge master into develop due to new version ${{ steps.latest-tag.outputs.tag }}'
