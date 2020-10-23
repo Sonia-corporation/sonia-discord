@@ -1,13 +1,18 @@
+import { Guild } from "discord.js";
+import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../core/services/core-event.service";
+import { FirebaseGuildsService } from "../../../../firebase/services/guilds/firebase-guilds.service";
 import { DiscordMessageScheduleIlEstMidiService } from "./discord-message-schedule-il-est-midi.service";
 
 describe(`DiscordMessageScheduleIlEstMidiService`, (): void => {
   let service: DiscordMessageScheduleIlEstMidiService;
   let coreEventService: CoreEventService;
+  let firebaseGuildsService: FirebaseGuildsService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
+    firebaseGuildsService = FirebaseGuildsService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -69,6 +74,36 @@ describe(`DiscordMessageScheduleIlEstMidiService`, (): void => {
 
       expect(startScheduleSpy).toHaveBeenCalledTimes(1);
       expect(startScheduleSpy).toHaveBeenCalledWith();
+    });
+  });
+
+  describe(`sendMessage()`, (): void => {
+    let guild: Guild;
+
+    let firebaseGuildsServiceGetGuildSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageScheduleIlEstMidiService();
+      guild = createMock<Guild>({
+        id: `dummy-guild-id`,
+      });
+
+      firebaseGuildsServiceGetGuildSpy = jest
+        .spyOn(firebaseGuildsService, `getGuild`)
+        .mockRejectedValue(new Error(`getGuild error`));
+    });
+
+    it(`should start the schedule`, async (): Promise<void> => {
+      expect.assertions(3);
+
+      await expect(service.sendMessage(guild)).rejects.toThrow(
+        new Error(`getGuild error`)
+      );
+
+      expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledWith(
+        `dummy-guild-id`
+      );
     });
   });
 });
