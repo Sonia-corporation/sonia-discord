@@ -1,18 +1,25 @@
-import { Guild, GuildChannel } from "discord.js";
+import { Guild, GuildChannel, Message } from "discord.js";
 import _ from "lodash";
 import moment from "moment-timezone";
 import { Job, scheduleJob } from "node-schedule";
 import { AbstractService } from "../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { getEveryHourScheduleRule } from "../../../../../functions/schedule/get-every-hour-schedule-rule";
+import { isUpToDateFirebaseGuild } from "../../../../firebase/functions/guilds/is-up-to-date-firebase-guild";
+import { FirebaseGuildsChannelsFeaturesService } from "../../../../firebase/services/guilds/channels/features/firebase-guilds-channels-features.service";
+import { FirebaseGuildsChannelsFeaturesNoonService } from "../../../../firebase/services/guilds/channels/features/noon/firebase-guilds-channels-features-noon.service";
+import { FirebaseGuildsChannelsService } from "../../../../firebase/services/guilds/channels/firebase-guilds-channels.service";
+import { FirebaseGuildsService } from "../../../../firebase/services/guilds/firebase-guilds.service";
+import { IFirebaseGuildChannel } from "../../../../firebase/types/guilds/channels/firebase-guild-channel";
+import { IFirebaseGuild } from "../../../../firebase/types/guilds/firebase-guild";
+import { IFirebaseGuildVFinal } from "../../../../firebase/types/guilds/firebase-guild-v-final";
 import { ChalkService } from "../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../logger/services/logger.service";
 import { getNextJobDate } from "../../../../schedules/functions/get-next-job-date";
 import { getNextJobDateHumanized } from "../../../../schedules/functions/get-next-job-date-humanized";
 import { TimezoneEnum } from "../../../../time/enums/timezone.enum";
-import { isDiscordGuildChannel } from "../../../channels/functions/is-discord-guild-channel";
 import { isDiscordGuildChannelWritable } from "../../../channels/functions/types/is-discord-guild-channel-writable";
-import { DiscordChannelGuildService } from "../../../channels/services/discord-channel-guild.service";
+import { IAnyDiscordChannel } from "../../../channels/types/any-discord-channel";
 import { DiscordGuildSoniaChannelNameEnum } from "../../../guilds/enums/discord-guild-sonia-channel-name.enum";
 import { DiscordGuildConfigService } from "../../../guilds/services/config/discord-guild-config.service";
 import { DiscordGuildSoniaService } from "../../../guilds/services/discord-guild-sonia.service";
@@ -48,14 +55,109 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
     this._createSchedule();
   }
 
-  public sendMessage(guild: Readonly<Guild>): void {
-    const primaryChannel: GuildChannel | null = DiscordChannelGuildService.getInstance().getPrimary(
-      guild
-    );
+  public sendMessage(
+    guild: Readonly<Guild>
+  ): Promise<(Message | void)[] | void> {
+    return FirebaseGuildsService.getInstance()
+      .getGuild(guild.id)
+      .then(
+        (
+          firebaseGuild: Readonly<IFirebaseGuild | null | undefined>
+        ): Promise<(Message | void)[]> => {
+          if (this._isValidGuild(firebaseGuild)) {
+            return Promise.all(
+              _.map(
+                firebaseGuild.channels,
+                (
+                  channel: Readonly<IFirebaseGuildChannel>
+                ): Promise<Message | void> =>
+                  this.sendMessageByChannel(channel, firebaseGuild, guild)
+              )
+            );
+          }
 
-    if (isDiscordGuildChannel(primaryChannel)) {
-      this._sendMessage(primaryChannel);
+          return Promise.reject(new Error(`Invalid guild`));
+        }
+      );
+  }
+
+  public sendMessageByChannel(
+    channel: Readonly<IFirebaseGuildChannel>,
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>,
+    guild: Readonly<Guild>
+  ): Promise<Message | void> {
+    const isNoonEnabled: boolean = this._isNoonEnabled(channel, firebaseGuild);
+
+    if (_.isEqual(isNoonEnabled, true)) {
+      if (!_.isNil(channel.id)) {
+        const guildChannel: GuildChannel | undefined = guild.channels.cache.get(
+          channel.id
+        );
+
+        if (!_.isNil(guildChannel)) {
+          return this._sendMessage(guildChannel);
+        }
+
+        return Promise.reject(new Error(`Guild channel not found`));
+      }
+
+      return Promise.reject(new Error(`Channel id not found`));
     }
+
+    return Promise.reject(new Error(`Noon state disabled`));
+  }
+
+  private _isNoonEnabled(
+    channel: Readonly<IFirebaseGuildChannel>,
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
+  ): boolean {
+    const channelId: string | undefined = channel.id;
+
+    if (!_.isNil(channelId) && this._isValidChannel(channelId, firebaseGuild)) {
+      if (this._isValidFeature(channelId, firebaseGuild)) {
+        if (this._isValidNoonFeature(channelId, firebaseGuild)) {
+          return (
+            firebaseGuild.channels?.[channelId].features?.noon?.isEnabled ??
+            false
+          );
+        }
+      }
+    }
+
+    return false;
+  }
+
+  private _isValidChannel(
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
+  ): boolean {
+    return FirebaseGuildsChannelsService.getInstance().isValid(
+      firebaseGuild.channels && firebaseGuild.channels[channelId]
+    );
+  }
+
+  private _isValidFeature(
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
+  ): boolean {
+    return FirebaseGuildsChannelsFeaturesService.getInstance().isValid(
+      firebaseGuild.channels && firebaseGuild.channels[channelId].features
+    );
+  }
+
+  private _isValidNoonFeature(
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
+  ): boolean {
+    return FirebaseGuildsChannelsFeaturesNoonService.getInstance().isValid(
+      firebaseGuild.channels && firebaseGuild.channels[channelId].features?.noon
+    );
+  }
+
+  private _isValidGuild(
+    firebaseGuild: Readonly<IFirebaseGuild | null | undefined>
+  ): firebaseGuild is IFirebaseGuildVFinal {
+    return !_.isNil(firebaseGuild) && isUpToDateFirebaseGuild(firebaseGuild);
   }
 
   private _createSchedule(): void {
@@ -101,7 +203,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
       DiscordClientService.getInstance()
         .getClient()
         .guilds.cache.forEach((guild: Readonly<Guild>): void => {
-          this.sendMessage(guild);
+          void this.sendMessage(guild);
         });
     }
   }
@@ -132,7 +234,9 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
     return _.isEqual(moment().tz(TimezoneEnum.PARIS).get(`hour`), NOON_HOUR);
   }
 
-  private _sendMessage(guildChannel: Readonly<GuildChannel>): void {
+  private _sendMessage(
+    guildChannel: Readonly<GuildChannel>
+  ): Promise<Message | void> {
     const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
 
     if (isDiscordGuildChannelWritable(guildChannel)) {
@@ -143,7 +247,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
         ),
       });
 
-      guildChannel
+      return guildChannel
         .send(messageResponse.response, messageResponse.options)
         .then((): void => {
           LoggerService.getInstance().log({
@@ -153,17 +257,19 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
             ),
           });
         })
-        .catch((error: string): void => {
+        .catch((error: Readonly<string>): void => {
           this._onMessageError(error);
         });
-    } else {
-      LoggerService.getInstance().debug({
-        context: this._serviceName,
-        message: ChalkService.getInstance().text(
-          `the guild channel is not writable`
-        ),
-      });
     }
+
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(
+        `the guild channel is not writable`
+      ),
+    });
+
+    return Promise.reject(new Error(`Guild channel not writable`));
   }
 
   private _onMessageError(error: Readonly<string>): void {
