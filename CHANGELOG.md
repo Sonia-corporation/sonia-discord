@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.80.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.79.1...1.80.0) (2020-10-23)
+
+
+### :rocket: Features
+
+* **noon:** only send noon messages on enabled channels ([dde2cef](https://github.com/Sonia-corporation/sonia-discord/commit/dde2cefdbf08a08ecedac1c674767742bdbd68cb))
+
 ## [1.79.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.79.0...1.79.1) (2020-10-18)
 
 
