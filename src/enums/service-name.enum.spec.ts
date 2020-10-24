@@ -411,12 +411,12 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
-  it(`should have a member "DISCORD_MESSAGE_SCHEDULE_IL_EST_MIDI_SERVICE"`, (): void => {
+  it(`should have a member "DISCORD_MESSAGE_SCHEDULE_NOON_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(
-      ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_IL_EST_MIDI_SERVICE
-    ).toStrictEqual(`DiscordMessageScheduleIlEstMidiService`);
+    expect(ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_SERVICE).toStrictEqual(
+      `DiscordMessageScheduleNoonService`
+    );
   });
 
   it(`should have a member "DISCORD_MESSAGE_SERVICE"`, (): void => {

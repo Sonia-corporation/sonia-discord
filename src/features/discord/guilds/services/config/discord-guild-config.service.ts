@@ -22,7 +22,7 @@ export class DiscordGuildConfigService extends AbstractService {
   public getConfig(): IDiscordGuildConfig {
     return {
       shouldSendCookiesOnCreate: this.shouldSendCookiesOnCreate(),
-      shouldSendIlEstMidiMessage: this.shouldSendIlEstMidiMessage(),
+      shouldSendNoonMessage: this.shouldSendNoonMessage(),
       shouldWelcomeNewMembers: this.shouldWelcomeNewMembers(),
       soniaGuildId: this.getSoniaGuildId(),
       soniaPermanentGuildInviteUrl: this.getSoniaPermanentGuildInviteUrl(),
@@ -34,9 +34,8 @@ export class DiscordGuildConfigService extends AbstractService {
       .shouldSendCookiesOnCreate;
   }
 
-  public shouldSendIlEstMidiMessage(): boolean {
-    return DiscordGuildConfigCoreService.getInstance()
-      .shouldSendIlEstMidiMessage;
+  public shouldSendNoonMessage(): boolean {
+    return DiscordGuildConfigCoreService.getInstance().shouldSendNoonMessage;
   }
 
   public shouldWelcomeNewMembers(): boolean {

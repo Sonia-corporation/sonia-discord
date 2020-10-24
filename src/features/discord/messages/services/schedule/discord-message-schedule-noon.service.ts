@@ -211,7 +211,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   }
 
   private _canSendMessage(): boolean {
-    if (DiscordGuildConfigService.getInstance().shouldSendIlEstMidiMessage()) {
+    if (DiscordGuildConfigService.getInstance().shouldSendNoonMessage()) {
       if (this._isNoonInParis()) {
         return true;
       }

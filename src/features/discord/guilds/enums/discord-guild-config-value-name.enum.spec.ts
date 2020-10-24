@@ -9,12 +9,12 @@ describe(`DiscordGuildConfigValueNameEnum`, (): void => {
     ).toStrictEqual(`send cookies on create state`);
   });
 
-  it(`should have a member "SHOULD_SEND_IL_EST_MIDI_MESSAGE"`, (): void => {
+  it(`should have a member "SHOULD_SEND_NOON_MESSAGE"`, (): void => {
     expect.assertions(1);
 
     expect(
-      DiscordGuildConfigValueNameEnum.SHOULD_SEND_IL_EST_MIDI_MESSAGE
-    ).toStrictEqual(`send il est midi message state`);
+      DiscordGuildConfigValueNameEnum.SHOULD_SEND_NOON_MESSAGE
+    ).toStrictEqual(`send noon message state`);
   });
 
   it(`should have a member "SHOULD_WELCOME_NEW_MEMBERS"`, (): void => {
