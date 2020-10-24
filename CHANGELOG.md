@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.80.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.80.0...1.80.1) (2020-10-24)
+
+
+### :bug: Bug Fixes
+
+* **noon:** send the noon message on the channels with noon option enabled ([2fa65bd](https://github.com/Sonia-corporation/sonia-discord/commit/2fa65bdd108a9c5ca8db42d29c6899d51a11c11f))
+
 # [1.80.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.79.1...1.80.0) (2020-10-23)
 
 
