@@ -107,6 +107,16 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
     return Promise.reject(new Error(`Noon state disabled`));
   }
 
+  public handleMessages(): void {
+    if (this._canSendMessage()) {
+      DiscordClientService.getInstance()
+        .getClient()
+        .guilds.cache.forEach((guild: Readonly<Guild>): void => {
+          void this.sendMessage(guild);
+        });
+    }
+  }
+
   private _isNoonEnabled(
     channel: Readonly<IFirebaseGuildChannel>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
@@ -161,6 +171,8 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   }
 
   private _createSchedule(): void {
+    this._logJobRule(this._rule, `job`);
+
     this._job = scheduleJob(this._rule, (): void => {
       this._executeJob();
     });
@@ -174,7 +186,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
       message: ChalkService.getInstance().text(`job triggered`),
     });
 
-    this._handleMessages();
+    this.handleMessages();
     this._logNextJobDate();
   }
 
@@ -196,16 +208,6 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
       },
       response: `Il est midi!`,
     };
-  }
-
-  private _handleMessages(): void {
-    if (this._canSendMessage()) {
-      DiscordClientService.getInstance()
-        .getClient()
-        .guilds.cache.forEach((guild: Readonly<Guild>): void => {
-          void this.sendMessage(guild);
-        });
-    }
   }
 
   private _canSendMessage(): boolean {
@@ -295,6 +297,15 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
       channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
       messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
         error
+      ),
+    });
+  }
+
+  private _logJobRule(rule: Readonly<string>, jobName: Readonly<string>): void {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(
+        `${jobName} rule: ${ChalkService.getInstance().value(rule)}`
       ),
     });
   }
