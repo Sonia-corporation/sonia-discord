@@ -2,6 +2,7 @@
 
 # compiled output
 dist
+dist-local-dev
 tmp
 out-tsc
 .stylelintcache
