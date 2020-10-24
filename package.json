@@ -134,7 +134,7 @@
     "@datorama/akita": "5.2.5",
     "@scout_apm/scout-apm": "0.2.0",
     "axios": "0.21.0",
-    "discord.js": "12.4.0",
+    "discord.js": "12.4.1",
     "dotenv": "8.2.0",
     "express": "4.17.1",
     "firebase-admin": "9.3.0",
