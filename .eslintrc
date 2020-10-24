@@ -345,3 +345,4 @@ overrides:
             - PascalCase
           suffix:
             - Enum
+      '@typescript-eslint/no-explicit-any': off
