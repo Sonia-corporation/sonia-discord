@@ -29,22 +29,22 @@ import { IDiscordMessageResponse } from "../../interfaces/discord-message-respon
 
 const NOON_HOUR = 12;
 
-export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
-  private static _instance: DiscordMessageScheduleIlEstMidiService;
+export class DiscordMessageScheduleNoonService extends AbstractService {
+  private static _instance: DiscordMessageScheduleNoonService;
 
-  public static getInstance(): DiscordMessageScheduleIlEstMidiService {
-    if (_.isNil(DiscordMessageScheduleIlEstMidiService._instance)) {
-      DiscordMessageScheduleIlEstMidiService._instance = new DiscordMessageScheduleIlEstMidiService();
+  public static getInstance(): DiscordMessageScheduleNoonService {
+    if (_.isNil(DiscordMessageScheduleNoonService._instance)) {
+      DiscordMessageScheduleNoonService._instance = new DiscordMessageScheduleNoonService();
     }
 
-    return DiscordMessageScheduleIlEstMidiService._instance;
+    return DiscordMessageScheduleNoonService._instance;
   }
 
   private readonly _rule: string = getEveryHourScheduleRule();
   private _job: Job | undefined = undefined;
 
   public constructor() {
-    super(ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_IL_EST_MIDI_SERVICE);
+    super(ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_SERVICE);
   }
 
   public init(): void {
@@ -224,7 +224,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
       LoggerService.getInstance().debug({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
-          `il est midi message sending disabled`
+          `noon message sending disabled`
         ),
       });
     }
@@ -244,9 +244,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
     if (isDiscordGuildChannelWritable(guildChannel)) {
       LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: ChalkService.getInstance().text(
-          `sending message for il est midi...`
-        ),
+        message: ChalkService.getInstance().text(`sending message for noon...`),
       });
 
       return guildChannel
@@ -254,9 +252,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
         .then((): void => {
           LoggerService.getInstance().log({
             context: this._serviceName,
-            message: ChalkService.getInstance().text(
-              `il est midi message sent`
-            ),
+            message: ChalkService.getInstance().text(`noon message sent`),
           });
         })
         .catch((error: Readonly<string>): void => {
@@ -282,9 +278,7 @@ export class DiscordMessageScheduleIlEstMidiService extends AbstractService {
   private _messageErrorLog(error: Readonly<string>): void {
     LoggerService.getInstance().error({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `il est midi message sending failed`
-      ),
+      message: ChalkService.getInstance().text(`noon message sending failed`),
     });
     LoggerService.getInstance().error({
       context: this._serviceName,

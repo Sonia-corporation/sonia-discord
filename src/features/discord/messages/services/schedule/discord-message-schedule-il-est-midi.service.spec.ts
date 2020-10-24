@@ -1,4 +1,6 @@
-import { Guild } from "discord.js";
+import { Client, Collection, Guild } from "discord.js";
+import _ from "lodash";
+import moment from "moment-timezone";
 import * as NodeScheduleModule from "node-schedule";
 import { Job } from "node-schedule";
 import { createMock } from "ts-auto-mock";
@@ -10,38 +12,69 @@ import { ILoggerLog } from "../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../logger/services/logger.service";
 import * as GetNextJobDateModule from "../../../../schedules/functions/get-next-job-date";
 import * as GetNextJobDateHumanizedModule from "../../../../schedules/functions/get-next-job-date-humanized";
-import { DiscordMessageScheduleIlEstMidiService } from "./discord-message-schedule-il-est-midi.service";
+import { DiscordGuildConfigService } from "../../../guilds/services/config/discord-guild-config.service";
+import { DiscordClientService } from "../../../services/discord-client.service";
+import { DiscordMessageScheduleNoonService } from "./discord-message-schedule-noon.service";
+
+let time: number = new Date(`2020-01-02T02:00:00Z`).getTime();
 
 jest.mock(`../../../../logger/services/chalk/chalk.service`);
 jest.mock(`node-schedule`);
+jest.mock(`moment-timezone`, (): any => (): any => {
+  const moment = jest.requireActual(`moment-timezone`);
 
-describe(`DiscordMessageScheduleIlEstMidiService`, (): void => {
-  let service: DiscordMessageScheduleIlEstMidiService;
+  moment.tz.setDefault(`Europe/Paris`);
+  Date.now = (): number => time;
+
+  return moment;
+});
+
+describe(`DiscordMessageScheduleNoonService`, (): void => {
+  let service: DiscordMessageScheduleNoonService;
   let coreEventService: CoreEventService;
   let firebaseGuildsService: FirebaseGuildsService;
   let loggerService: LoggerService;
+  let discordClientService: DiscordClientService;
+  let discordGuildConfigService: DiscordGuildConfigService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     firebaseGuildsService = FirebaseGuildsService.getInstance();
     loggerService = LoggerService.getInstance();
+    discordClientService = DiscordClientService.getInstance();
+    discordGuildConfigService = DiscordGuildConfigService.getInstance();
+  });
+
+  describe(`moment-timezone mock`, (): void => {
+    it(`moment().tz() should return an object`, (): void => {
+      expect.assertions(1);
+
+      expect(moment().tz()).toBeObject();
+    });
+
+    it(`moment().tz().get() should return 3`, (): void => {
+      expect.assertions(1);
+
+      // @ts-ignore
+      expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toStrictEqual(3);
+    });
   });
 
   describe(`getInstance()`, (): void => {
-    it(`should create a DiscordMessageScheduleIlEstMidi service`, (): void => {
+    it(`should create a DiscordMessageScheduleNoon service`, (): void => {
       expect.assertions(1);
 
-      service = DiscordMessageScheduleIlEstMidiService.getInstance();
+      service = DiscordMessageScheduleNoonService.getInstance();
 
       expect(service).toStrictEqual(
-        expect.any(DiscordMessageScheduleIlEstMidiService)
+        expect.any(DiscordMessageScheduleNoonService)
       );
     });
 
-    it(`should return the created DiscordMessageScheduleIlEstMidi service`, (): void => {
+    it(`should return the created DiscordMessageScheduleNoon service`, (): void => {
       expect.assertions(1);
 
-      const result = DiscordMessageScheduleIlEstMidiService.getInstance();
+      const result = DiscordMessageScheduleNoonService.getInstance();
 
       expect(result).toStrictEqual(service);
     });
@@ -56,14 +89,14 @@ describe(`DiscordMessageScheduleIlEstMidiService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should notify the DiscordMessageScheduleIlEstMidi service creation`, (): void => {
+    it(`should notify the DiscordMessageScheduleNoon service creation`, (): void => {
       expect.assertions(2);
 
-      service = new DiscordMessageScheduleIlEstMidiService();
+      service = new DiscordMessageScheduleNoonService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_IL_EST_MIDI_SERVICE
+        ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_SERVICE
       );
     });
   });
@@ -72,7 +105,7 @@ describe(`DiscordMessageScheduleIlEstMidiService`, (): void => {
     let startScheduleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      service = new DiscordMessageScheduleIlEstMidiService();
+      service = new DiscordMessageScheduleNoonService();
 
       startScheduleSpy = jest
         .spyOn(service, `startSchedule`)
@@ -103,7 +136,7 @@ describe(`DiscordMessageScheduleIlEstMidiService`, (): void => {
       getEveryHourScheduleRuleSpy = jest
         .spyOn(GetEveryHourScheduleRuleModule, `getEveryHourScheduleRule`)
         .mockReturnValue(`dummy-schedule`);
-      service = new DiscordMessageScheduleIlEstMidiService();
+      service = new DiscordMessageScheduleNoonService();
       job = createMock<Job>({
         reschedule: jobRescheduleMock,
       });
@@ -172,7 +205,7 @@ describe(`DiscordMessageScheduleIlEstMidiService`, (): void => {
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
-          context: `DiscordMessageScheduleIlEstMidiService`,
+          context: `DiscordMessageScheduleNoonService`,
           message: `text-job rule: value-dummy-schedule`,
         } as ILoggerLog);
       });
@@ -184,7 +217,7 @@ describe(`DiscordMessageScheduleIlEstMidiService`, (): void => {
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
-          context: `DiscordMessageScheduleIlEstMidiService`,
+          context: `DiscordMessageScheduleNoonService`,
           message: `text-next job: value-dummy-next-job-date-humanized hint-(dummy-next-job-date)`,
         } as ILoggerLog);
       });
@@ -208,7 +241,7 @@ describe(`DiscordMessageScheduleIlEstMidiService`, (): void => {
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
-          context: `DiscordMessageScheduleIlEstMidiService`,
+          context: `DiscordMessageScheduleNoonService`,
           message: `text-job rule: value-dummy-schedule`,
         } as ILoggerLog);
       });
@@ -220,7 +253,7 @@ describe(`DiscordMessageScheduleIlEstMidiService`, (): void => {
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
-          context: `DiscordMessageScheduleIlEstMidiService`,
+          context: `DiscordMessageScheduleNoonService`,
           message: `text-job triggered`,
         } as ILoggerLog);
       });
@@ -241,7 +274,7 @@ describe(`DiscordMessageScheduleIlEstMidiService`, (): void => {
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
-          context: `DiscordMessageScheduleIlEstMidiService`,
+          context: `DiscordMessageScheduleNoonService`,
           message: `text-next job: value-dummy-next-job-date-humanized hint-(dummy-next-job-date)`,
         } as ILoggerLog);
       });
@@ -254,7 +287,7 @@ describe(`DiscordMessageScheduleIlEstMidiService`, (): void => {
     let firebaseGuildsServiceGetGuildSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      service = new DiscordMessageScheduleIlEstMidiService();
+      service = new DiscordMessageScheduleNoonService();
       guild = createMock<Guild>({
         id: `dummy-guild-id`,
       });
@@ -275,6 +308,230 @@ describe(`DiscordMessageScheduleIlEstMidiService`, (): void => {
       expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledWith(
         `dummy-guild-id`
       );
+    });
+  });
+
+  describe(`handleMessages()`, (): void => {
+    let discordClientServiceGetClientSpy: jest.SpyInstance;
+    let discordGuildConfigServiceShouldSendNoonMessageSpy: jest.SpyInstance;
+    let sendMessageSpy: jest.SpyInstance;
+    let loggerServiceDebugSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageScheduleNoonService();
+
+      discordClientServiceGetClientSpy = jest
+        .spyOn(discordClientService, `getClient`)
+        .mockReturnValue(
+          createMock<Client>({
+            guilds: {
+              cache: {
+                forEach: _.noop,
+              } as Collection<string, Guild>,
+            },
+          })
+        );
+      discordGuildConfigServiceShouldSendNoonMessageSpy = jest
+        .spyOn(discordGuildConfigService, `shouldSendNoonMessage`)
+        .mockImplementation();
+      sendMessageSpy = jest.spyOn(service, `sendMessage`).mockImplementation();
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
+    });
+
+    describe(`when the noon message is disabled`, (): void => {
+      beforeEach((): void => {
+        discordGuildConfigServiceShouldSendNoonMessageSpy.mockReturnValue(
+          false
+        );
+      });
+
+      it(`should log about the noon message being disabled`, (): void => {
+        expect.assertions(2);
+
+        service.handleMessages();
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+          context: `DiscordMessageScheduleNoonService`,
+          message: `text-noon message sending disabled`,
+        } as ILoggerLog);
+      });
+
+      it(`should not get the Discord client`, (): void => {
+        expect.assertions(1);
+
+        service.handleMessages();
+
+        expect(discordClientServiceGetClientSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not send a message`, (): void => {
+        expect.assertions(1);
+
+        service.handleMessages();
+
+        expect(sendMessageSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the noon message is enabled`, (): void => {
+      beforeEach((): void => {
+        discordGuildConfigServiceShouldSendNoonMessageSpy.mockReturnValue(true);
+      });
+
+      describe(`when it is not noon in Paris timezone`, (): void => {
+        beforeEach((): void => {
+          time = new Date(`2020-01-02T07:00:00Z`).getTime();
+        });
+
+        it(`moment().tz().get() should return 8`, (): void => {
+          expect.assertions(1);
+
+          // @ts-ignore
+          expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toStrictEqual(8);
+        });
+
+        it(`should log about not being noon in Paris`, (): void => {
+          expect.assertions(2);
+
+          service.handleMessages();
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+            context: `DiscordMessageScheduleNoonService`,
+            message: `text-not noon in Paris`,
+          } as ILoggerLog);
+        });
+
+        it(`should not get the Discord client`, (): void => {
+          expect.assertions(1);
+
+          service.handleMessages();
+
+          expect(discordClientServiceGetClientSpy).not.toHaveBeenCalled();
+        });
+
+        it(`should not send a message`, (): void => {
+          expect.assertions(1);
+
+          service.handleMessages();
+
+          expect(sendMessageSpy).not.toHaveBeenCalled();
+        });
+      });
+
+      describe(`when it is noon in Paris timezone`, (): void => {
+        beforeEach((): void => {
+          time = new Date(`2020-01-02T11:00:00Z`).getTime();
+        });
+
+        it(`moment().tz().get() should return 12`, (): void => {
+          expect.assertions(1);
+
+          // @ts-ignore
+          expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toStrictEqual(12);
+        });
+
+        it(`should get the Discord client`, (): void => {
+          expect.assertions(2);
+
+          service.handleMessages();
+
+          expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+          expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
+        });
+
+        describe(`when there is no guild`, (): void => {
+          beforeEach((): void => {
+            discordClientServiceGetClientSpy = jest
+              .spyOn(discordClientService, `getClient`)
+              .mockReturnValue(
+                createMock<Client>({
+                  guilds: {
+                    cache: {
+                      forEach: _.noop,
+                    } as Collection<string, Guild>,
+                  },
+                })
+              );
+          });
+
+          it(`should not send a message`, (): void => {
+            expect.assertions(1);
+
+            service.handleMessages();
+
+            expect(sendMessageSpy).not.toHaveBeenCalled();
+          });
+        });
+
+        describe(`when there is one guild`, (): void => {
+          let guild: Guild;
+
+          beforeEach((): void => {
+            guild = createMock<Guild>();
+
+            discordClientServiceGetClientSpy = jest
+              .spyOn(discordClientService, `getClient`)
+              .mockReturnValue(
+                createMock<Client>({
+                  guilds: {
+                    cache: {
+                      forEach: (callback): void =>
+                        callback(guild, `key`, new Map()),
+                    } as Collection<string, Guild>,
+                  },
+                })
+              );
+          });
+
+          it(`should send a message for the guild`, (): void => {
+            expect.assertions(2);
+
+            service.handleMessages();
+
+            expect(sendMessageSpy).toHaveBeenCalledTimes(1);
+            expect(sendMessageSpy).toHaveBeenCalledWith(guild);
+          });
+        });
+
+        describe(`when there is two guilds`, (): void => {
+          let guild1: Guild;
+          let guild2: Guild;
+
+          beforeEach((): void => {
+            guild1 = createMock<Guild>();
+            guild2 = createMock<Guild>();
+
+            discordClientServiceGetClientSpy = jest
+              .spyOn(discordClientService, `getClient`)
+              .mockReturnValue(
+                createMock<Client>({
+                  guilds: {
+                    cache: {
+                      forEach(callback): void {
+                        callback(guild1, `key`, new Map());
+                        callback(guild2, `key`, new Map());
+                      },
+                    } as Collection<string, Guild>,
+                  },
+                })
+              );
+          });
+
+          it(`should send a message for the guild`, (): void => {
+            expect.assertions(3);
+
+            service.handleMessages();
+
+            expect(sendMessageSpy).toHaveBeenCalledTimes(2);
+            expect(sendMessageSpy).toHaveBeenNthCalledWith(1, guild1);
+            expect(sendMessageSpy).toHaveBeenNthCalledWith(2, guild2);
+          });
+        });
+      });
     });
   });
 });
