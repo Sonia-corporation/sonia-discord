@@ -1,4 +1,4 @@
-import { Client, Collection, Guild, Message } from "discord.js";
+import { Client, Collection, Guild, GuildChannel, Message } from "discord.js";
 import _ from "lodash";
 import moment from "moment-timezone";
 import * as NodeScheduleModule from "node-schedule";
@@ -7,9 +7,13 @@ import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import * as GetEveryHourScheduleRuleModule from "../../../../../functions/schedule/get-every-hour-schedule-rule";
 import { CoreEventService } from "../../../../core/services/core-event.service";
+import { FirebaseGuildChannelFeatureNoonVersionEnum } from "../../../../firebase/enums/guilds/channels/features/firebase-guild-channel-feature-noon-version.enum";
+import { FirebaseGuildChannelFeatureVersionEnum } from "../../../../firebase/enums/guilds/channels/features/firebase-guild-channel-feature-version.enum";
+import { FirebaseGuildChannelVersionEnum } from "../../../../firebase/enums/guilds/channels/firebase-guild-channel-version.enum";
 import { FirebaseGuildVersionEnum } from "../../../../firebase/enums/guilds/firebase-guild-version.enum";
 import { IFirebaseGuildV3 } from "../../../../firebase/interfaces/guilds/firebase-guild-v3";
 import { FirebaseGuildsService } from "../../../../firebase/services/guilds/firebase-guilds.service";
+import { IFirebaseGuildChannel } from "../../../../firebase/types/guilds/channels/firebase-guild-channel";
 import { IFirebaseGuildChannelVFinal } from "../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final";
 import { IFirebaseGuild } from "../../../../firebase/types/guilds/firebase-guild";
 import { IFirebaseGuildVFinal } from "../../../../firebase/types/guilds/firebase-guild-v-final";
@@ -658,6 +662,293 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               const result = await service.sendMessage(guild);
 
               expect(result).toStrictEqual([message, message]);
+            });
+          });
+        });
+      });
+    });
+  });
+
+  describe(`sendMessageByChannel()`, (): void => {
+    let channel: IFirebaseGuildChannel;
+    let firebaseGuild: IFirebaseGuildVFinal;
+    let guild: Guild;
+
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let sendMessageResponseSpy: jest.SpyInstance;
+    let guildChannelsGetMock: jest.Mock;
+
+    beforeEach((): void => {
+      service = new DiscordMessageScheduleNoonService();
+      channel = createMock<IFirebaseGuildChannel>();
+      firebaseGuild = createMock<IFirebaseGuildVFinal>();
+      guildChannelsGetMock = jest.fn().mockImplementation();
+      guild = createMock<Guild>({
+        channels: {
+          cache: {
+            get: guildChannelsGetMock,
+          } as any,
+        },
+        id: `dummy-guild-id`,
+      });
+
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
+      sendMessageResponseSpy = jest
+        .spyOn(service, `sendMessageResponse`)
+        .mockRejectedValue(new Error(`sendMessageResponse error`));
+    });
+
+    describe(`when the given Firebase guild channel id is undefined`, (): void => {
+      beforeEach((): void => {
+        channel = createMock<IFirebaseGuildChannel>({
+          id: undefined,
+        });
+      });
+
+      it(`should log about the Firebase guild channel having a disabled noon feature`, async (): Promise<
+        void
+      > => {
+        expect.assertions(3);
+
+        await expect(
+          service.sendMessageByChannel(channel, firebaseGuild, guild)
+        ).rejects.toThrow(new Error(`Noon state disabled`));
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+          context: `DiscordMessageScheduleNoonService`,
+          message: `text-Firebase guild value-dummy-guild-id noon feature is disabled`,
+        } as ILoggerLog);
+      });
+    });
+
+    describe(`when the given Firebase guild channel id is valid`, (): void => {
+      beforeEach((): void => {
+        channel = createMock<IFirebaseGuildChannel>({
+          id: `dummy-channel-id`,
+        });
+      });
+
+      describe(`when the given Firebase guild has not a valid noon feature`, (): void => {
+        beforeEach((): void => {
+          firebaseGuild = createMock<IFirebaseGuildVFinal>({
+            channels: {
+              "dummy-channel-id": {
+                features: {
+                  noon: {
+                    version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
+                  },
+                  version: FirebaseGuildChannelFeatureVersionEnum.V1,
+                },
+                version: FirebaseGuildChannelVersionEnum.V1,
+              },
+            },
+            version: FirebaseGuildVersionEnum.V4,
+          });
+        });
+
+        it(`should log about the Firebase guild channel having a disabled noon feature`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          await expect(
+            service.sendMessageByChannel(channel, firebaseGuild, guild)
+          ).rejects.toThrow(new Error(`Noon state disabled`));
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+            context: `DiscordMessageScheduleNoonService`,
+            message: `text-Firebase guild value-dummy-guild-id noon feature is disabled`,
+          } as ILoggerLog);
+        });
+      });
+
+      describe(`when the given Firebase guild has a valid noon feature`, (): void => {
+        describe(`when the given Firebase guild has a valid noon feature disabled`, (): void => {
+          beforeEach((): void => {
+            firebaseGuild = createMock<IFirebaseGuildVFinal>({
+              channels: {
+                "dummy-channel-id": {
+                  features: {
+                    noon: {
+                      isEnabled: false,
+                      version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
+                    },
+                    version: FirebaseGuildChannelFeatureVersionEnum.V1,
+                  },
+                  version: FirebaseGuildChannelVersionEnum.V1,
+                },
+              },
+              version: FirebaseGuildVersionEnum.V4,
+            });
+          });
+
+          it(`should log about the Firebase guild channel having a disabled noon feature`, async (): Promise<
+            void
+          > => {
+            expect.assertions(3);
+
+            await expect(
+              service.sendMessageByChannel(channel, firebaseGuild, guild)
+            ).rejects.toThrow(new Error(`Noon state disabled`));
+
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+              context: `DiscordMessageScheduleNoonService`,
+              message: `text-Firebase guild value-dummy-guild-id noon feature is disabled`,
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the given Firebase guild has a valid noon feature enabled`, (): void => {
+          beforeEach((): void => {
+            firebaseGuild = createMock<IFirebaseGuildVFinal>({
+              channels: {
+                "dummy-channel-id": {
+                  features: {
+                    noon: {
+                      isEnabled: true,
+                      version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
+                    },
+                    version: FirebaseGuildChannelFeatureVersionEnum.V1,
+                  },
+                  version: FirebaseGuildChannelVersionEnum.V1,
+                },
+              },
+              version: FirebaseGuildVersionEnum.V4,
+            });
+          });
+
+          it(`should log about the Firebase guild channel having an enabled noon feature`, async (): Promise<
+            void
+          > => {
+            expect.assertions(3);
+
+            await expect(
+              service.sendMessageByChannel(channel, firebaseGuild, guild)
+            ).rejects.toThrow(new Error(`Guild channel not found`));
+
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+            expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+              context: `DiscordMessageScheduleNoonService`,
+              message: `text-Firebase guild value-dummy-guild-id channel value-dummy-channel-id noon feature is enabled`,
+            } as ILoggerLog);
+          });
+
+          it(`should get the Discord guild channel`, async (): Promise<
+            void
+          > => {
+            expect.assertions(3);
+
+            await expect(
+              service.sendMessageByChannel(channel, firebaseGuild, guild)
+            ).rejects.toThrow(new Error(`Guild channel not found`));
+
+            expect(guildChannelsGetMock).toHaveBeenCalledTimes(1);
+            expect(guildChannelsGetMock).toHaveBeenCalledWith(
+              `dummy-channel-id`
+            );
+          });
+
+          describe(`when the Discord guild channel is undefined`, (): void => {
+            beforeEach((): void => {
+              guildChannelsGetMock.mockReturnValue(undefined);
+            });
+
+            it(`should log about the Discord guild channel not found`, async (): Promise<
+              void
+            > => {
+              expect.assertions(3);
+
+              await expect(
+                service.sendMessageByChannel(channel, firebaseGuild, guild)
+              ).rejects.toThrow(new Error(`Guild channel not found`));
+
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+                context: `DiscordMessageScheduleNoonService`,
+                message: `text-Discord guild value-dummy-guild-id channel value-dummy-channel-id is invalid`,
+              } as ILoggerLog);
+            });
+          });
+
+          describe(`when the Discord guild channel is valid`, (): void => {
+            let guildChannel: GuildChannel;
+
+            beforeEach((): void => {
+              guildChannel = createMock<GuildChannel>({
+                id: `dummy-guild-channel-id`,
+              });
+
+              guildChannelsGetMock.mockReturnValue(guildChannel);
+            });
+
+            it(`should log about the Discord guild channel being valid`, async (): Promise<
+              void
+            > => {
+              expect.assertions(3);
+
+              await expect(
+                service.sendMessageByChannel(channel, firebaseGuild, guild)
+              ).rejects.toThrow(new Error(`sendMessageResponse error`));
+
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+                context: `DiscordMessageScheduleNoonService`,
+                message: `text-Discord guild value-dummy-guild-id channel value-dummy-channel-id is valid`,
+              } as ILoggerLog);
+            });
+
+            it(`should send a message response`, async (): Promise<void> => {
+              expect.assertions(3);
+
+              await expect(
+                service.sendMessageByChannel(channel, firebaseGuild, guild)
+              ).rejects.toThrow(new Error(`sendMessageResponse error`));
+
+              expect(sendMessageResponseSpy).toHaveBeenCalledTimes(1);
+              expect(sendMessageResponseSpy).toHaveBeenCalledWith(guildChannel);
+            });
+
+            describe(`when the message response is invalid`, (): void => {
+              beforeEach((): void => {
+                sendMessageResponseSpy.mockRejectedValue(
+                  new Error(`sendMessageResponse error`)
+                );
+              });
+
+              it(`should throw an error`, async (): Promise<void> => {
+                expect.assertions(1);
+
+                await expect(
+                  service.sendMessageByChannel(channel, firebaseGuild, guild)
+                ).rejects.toThrow(new Error(`sendMessageResponse error`));
+              });
+            });
+
+            describe(`when the message response is valid`, (): void => {
+              let message: Message;
+
+              beforeEach((): void => {
+                message = createMock<Message>();
+
+                sendMessageResponseSpy.mockResolvedValue(message);
+              });
+
+              it(`should return a message`, async (): Promise<void> => {
+                expect.assertions(1);
+
+                const result = await service.sendMessageByChannel(
+                  channel,
+                  firebaseGuild,
+                  guild
+                );
+
+                expect(result).toStrictEqual(message);
+              });
             });
           });
         });

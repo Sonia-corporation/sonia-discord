@@ -1,4 +1,4 @@
-import { Guild, GuildChannel, Message, Snowflake } from "discord.js";
+import { Guild, GuildChannel, Message } from "discord.js";
 import _ from "lodash";
 import moment from "moment-timezone";
 import { Job, scheduleJob } from "node-schedule";
@@ -98,33 +98,25 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     firebaseGuild: Readonly<IFirebaseGuildVFinal>,
     guild: Readonly<Guild>
   ): Promise<Message | void> {
-    const isNoonEnabled: boolean = this._isNoonEnabled(channel, firebaseGuild);
+    if (this._isNoonEnabled(channel, firebaseGuild)) {
+      this._logFirebaseGuildChannelNoonEnabled(guild, channel);
 
-    if (_.isEqual(isNoonEnabled, true)) {
-      this._logFirebaseGuildNoonEnabled(guild);
+      const guildChannel: GuildChannel | undefined = guild.channels.cache.get(
+        channel.id as string
+      );
 
-      if (!_.isNil(channel.id)) {
-        const guildChannel: GuildChannel | undefined = guild.channels.cache.get(
-          channel.id
-        );
+      if (!_.isNil(guildChannel)) {
+        this._logValidDiscordGuildChannel(guild, channel);
 
-        if (!_.isNil(guildChannel)) {
-          this._logValidFirebaseGuildChannel(guild, guildChannel);
-
-          return this._sendMessage(guildChannel);
-        }
-
-        this._logInValidFirebaseGuildChannel(guild, channel.id);
-
-        return Promise.reject(new Error(`Guild channel not found`));
+        return this.sendMessageResponse(guildChannel);
       }
 
-      this._logInvalidFirebaseGuildChannelId(guild);
+      this._logInValidDiscordGuildChannel(guild, channel);
 
-      return Promise.reject(new Error(`Channel id not found`));
+      return Promise.reject(new Error(`Guild channel not found`));
     }
 
-    this._logFirebaseGuildNoonDisabled(guild);
+    this._logFirebaseGuildChannelNoonDisabled(guild);
 
     return Promise.reject(new Error(`Noon state disabled`));
   }
@@ -139,18 +131,38 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     }
   }
 
+  public sendMessageResponse(
+    guildChannel: Readonly<GuildChannel>
+  ): Promise<Message | void> {
+    const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
+
+    if (isDiscordGuildChannelWritable(guildChannel)) {
+      this._logSendingMessagesForNoon();
+
+      return guildChannel
+        .send(messageResponse.response, messageResponse.options)
+        .then((): void => {
+          this._logNoonMessageSent();
+        })
+        .catch((error: Readonly<string>): void => {
+          this._onMessageError(error);
+        });
+    }
+
+    this._logGuildChannelNotWritable();
+
+    return Promise.reject(new Error(`Guild channel not writable`));
+  }
+
   private _isNoonEnabled(
-    channel: Readonly<IFirebaseGuildChannel>,
+    { id }: Readonly<IFirebaseGuildChannel>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): boolean {
-    const channelId: string | undefined = channel.id;
-
-    if (!_.isNil(channelId) && this._isValidChannel(channelId, firebaseGuild)) {
-      if (this._isValidFeature(channelId, firebaseGuild)) {
-        if (this._isValidNoonFeature(channelId, firebaseGuild)) {
+    if (!_.isNil(id) && this._isValidChannel(id, firebaseGuild)) {
+      if (this._isValidFeature(id, firebaseGuild)) {
+        if (this._isValidNoonFeature(id, firebaseGuild)) {
           return (
-            firebaseGuild.channels?.[channelId]?.features?.noon?.isEnabled ??
-            false
+            firebaseGuild.channels?.[id]?.features?.noon?.isEnabled ?? false
           );
         }
       }
@@ -251,18 +263,23 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     });
   }
 
-  private _logFirebaseGuildNoonEnabled({ id }: Readonly<Guild>): void {
+  private _logFirebaseGuildChannelNoonEnabled(
+    { id }: Readonly<Guild>,
+    guildChannel: Readonly<IFirebaseGuildChannel>
+  ): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
         `Firebase guild ${ChalkService.getInstance().value(
           id
+        )} channel ${ChalkService.getInstance().value(
+          guildChannel.id
         )} noon feature is enabled`
       ),
     });
   }
 
-  private _logFirebaseGuildNoonDisabled({ id }: Readonly<Guild>): void {
+  private _logFirebaseGuildChannelNoonDisabled({ id }: Readonly<Guild>): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
@@ -273,14 +290,14 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     });
   }
 
-  private _logValidFirebaseGuildChannel(
+  private _logValidDiscordGuildChannel(
     { id }: Readonly<Guild>,
-    guildChannel: Readonly<GuildChannel>
+    guildChannel: Readonly<IFirebaseGuildChannel>
   ): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `Firebase guild ${ChalkService.getInstance().value(
+        `Discord guild ${ChalkService.getInstance().value(
           id
         )} channel ${ChalkService.getInstance().value(
           guildChannel.id
@@ -289,27 +306,18 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     });
   }
 
-  private _logInValidFirebaseGuildChannel(
+  private _logInValidDiscordGuildChannel(
     { id }: Readonly<Guild>,
-    channelId: Readonly<Snowflake>
+    guildChannel: Readonly<IFirebaseGuildChannel>
   ): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `Firebase guild ${ChalkService.getInstance().value(
+        `Discord guild ${ChalkService.getInstance().value(
           id
-        )} channel ${ChalkService.getInstance().value(channelId)} is invalid`
-      ),
-    });
-  }
-
-  private _logInvalidFirebaseGuildChannelId({ id }: Readonly<Guild>): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `Firebase guild ${ChalkService.getInstance().value(
-          id
-        )} channel is invalid`
+        )} channel ${ChalkService.getInstance().value(
+          guildChannel.id
+        )} is invalid`
       ),
     });
   }
@@ -364,29 +372,6 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
 
   private _isNoonInParis(): boolean {
     return _.isEqual(moment().tz(TimezoneEnum.PARIS).get(`hour`), NOON_HOUR);
-  }
-
-  private _sendMessage(
-    guildChannel: Readonly<GuildChannel>
-  ): Promise<Message | void> {
-    const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
-
-    if (isDiscordGuildChannelWritable(guildChannel)) {
-      this._logSendingMessagesForNoon();
-
-      return guildChannel
-        .send(messageResponse.response, messageResponse.options)
-        .then((): void => {
-          this._logNoonMessageSent();
-        })
-        .catch((error: Readonly<string>): void => {
-          this._onMessageError(error);
-        });
-    }
-
-    this._logGuildChannelNotWritable();
-
-    return Promise.reject(new Error(`Guild channel not writable`));
   }
 
   private _logSendingMessagesForNoon(): void {
