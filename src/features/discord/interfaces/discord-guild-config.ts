@@ -1,6 +1,6 @@
 export interface IDiscordGuildConfig {
   shouldSendCookiesOnCreate: boolean;
-  shouldSendIlEstMidiMessage: boolean;
+  shouldSendNoonMessage: boolean;
   shouldWelcomeNewMembers: boolean;
   soniaGuildId: string;
   soniaPermanentGuildInviteUrl: string;

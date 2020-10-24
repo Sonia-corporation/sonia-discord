@@ -1145,6 +1145,9 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       });
       sendMock = jest.fn().mockRejectedValue(new Error(`send error`));
       textChannel = createMock<TextChannel>({
+        isText(): true {
+          return true;
+        },
         send: sendMock,
       });
       discordMessageResponse = createMock<IDiscordMessageResponse>();

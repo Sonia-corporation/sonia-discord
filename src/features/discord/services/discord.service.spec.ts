@@ -11,7 +11,7 @@ import { DiscordGuildSoniaService } from "../guilds/services/discord-guild-sonia
 import { DiscordGuildService } from "../guilds/services/discord-guild.service";
 import { DiscordLoggerService } from "../logger/services/discord-logger.service";
 import { DiscordMessageService } from "../messages/services/discord-message.service";
-import { DiscordMessageScheduleIlEstMidiService } from "../messages/services/schedule/discord-message-schedule-il-est-midi.service";
+import { DiscordMessageScheduleNoonService } from "../messages/services/schedule/discord-message-schedule-noon.service";
 import { DiscordSoniaService } from "../users/services/discord-sonia.service";
 import { DiscordService } from "./discord.service";
 
@@ -69,7 +69,7 @@ describe(`DiscordService`, (): void => {
     let discordGuildCreateService: DiscordGuildCreateService;
     let discordMessageService: DiscordMessageService;
     let discordAuthenticationService: DiscordAuthenticationService;
-    let discordMessageScheduleIlEstMidiService: DiscordMessageScheduleIlEstMidiService;
+    let discordMessageScheduleNoonService: DiscordMessageScheduleNoonService;
     let discordGuildSoniaService: DiscordGuildSoniaService;
     let discordActivitySoniaService: DiscordActivitySoniaService;
     let discordSoniaEmotionalStateService: DiscordSoniaEmotionalStateService;
@@ -89,8 +89,8 @@ describe(`DiscordService`, (): void => {
     let discordAuthenticationServiceGetInstanceInitSpy: jest.SpyInstance<Promise<
       void
     >>;
-    let discordMessageScheduleIlEstMidiServiceGetInstanceSpy: jest.SpyInstance;
-    let discordMessageScheduleIlEstMidiServiceGetInstanceInitSpy: jest.SpyInstance;
+    let discordMessageScheduleNoonServiceGetInstanceSpy: jest.SpyInstance;
+    let discordMessageScheduleNoonServiceGetInstanceInitSpy: jest.SpyInstance;
     let discordGuildSoniaServiceGetInstanceSpy: jest.SpyInstance;
     let discordGuildSoniaServiceGetInstanceInitSpy: jest.SpyInstance;
     let discordActivitySoniaServiceGetInstanceSpy: jest.SpyInstance;
@@ -106,8 +106,8 @@ describe(`DiscordService`, (): void => {
       discordGuildCreateService = createMock<DiscordGuildCreateService>();
       discordMessageService = createMock<DiscordMessageService>();
       discordAuthenticationService = createMock<DiscordAuthenticationService>();
-      discordMessageScheduleIlEstMidiService = createMock<
-        DiscordMessageScheduleIlEstMidiService
+      discordMessageScheduleNoonService = createMock<
+        DiscordMessageScheduleNoonService
       >();
       discordGuildSoniaService = createMock<DiscordGuildSoniaService>();
       discordActivitySoniaService = createMock<DiscordActivitySoniaService>();
@@ -159,11 +159,11 @@ describe(`DiscordService`, (): void => {
       discordAuthenticationServiceGetInstanceInitSpy = jest
         .spyOn(discordAuthenticationService, `init`)
         .mockResolvedValue();
-      discordMessageScheduleIlEstMidiServiceGetInstanceSpy = jest
-        .spyOn(DiscordMessageScheduleIlEstMidiService, `getInstance`)
-        .mockReturnValue(discordMessageScheduleIlEstMidiService);
-      discordMessageScheduleIlEstMidiServiceGetInstanceInitSpy = jest.spyOn(
-        discordMessageScheduleIlEstMidiService,
+      discordMessageScheduleNoonServiceGetInstanceSpy = jest
+        .spyOn(DiscordMessageScheduleNoonService, `getInstance`)
+        .mockReturnValue(discordMessageScheduleNoonService);
+      discordMessageScheduleNoonServiceGetInstanceInitSpy = jest.spyOn(
+        discordMessageScheduleNoonService,
         `init`
       );
       discordGuildSoniaServiceGetInstanceSpy = jest
@@ -280,7 +280,7 @@ describe(`DiscordService`, (): void => {
       ).toHaveBeenCalledWith();
     });
 
-    it(`should create and initialize the DiscordMessageScheduleIlEstMidi service`, async (): Promise<
+    it(`should create and initialize the DiscordMessageScheduleNoon service`, async (): Promise<
       void
     > => {
       expect.assertions(3);
@@ -288,13 +288,13 @@ describe(`DiscordService`, (): void => {
       await service.init();
 
       expect(
-        discordMessageScheduleIlEstMidiServiceGetInstanceSpy
+        discordMessageScheduleNoonServiceGetInstanceSpy
       ).toHaveBeenCalledWith();
       expect(
-        discordMessageScheduleIlEstMidiServiceGetInstanceInitSpy
+        discordMessageScheduleNoonServiceGetInstanceInitSpy
       ).toHaveBeenCalledTimes(1);
       expect(
-        discordMessageScheduleIlEstMidiServiceGetInstanceInitSpy
+        discordMessageScheduleNoonServiceGetInstanceInitSpy
       ).toHaveBeenCalledWith();
     });
 

@@ -49,7 +49,7 @@ describe(`GithubConfigCoreService`, (): void => {
     });
   });
 
-  it(`should have a bug report url for the GitHub Sonia il est midi discord repository with a bug label and a bug report template`, (): void => {
+  it(`should have a bug report url for the GitHub Sonia discord repository with a bug label and a bug report template`, (): void => {
     expect.assertions(1);
 
     service = GithubConfigCoreService.getInstance();

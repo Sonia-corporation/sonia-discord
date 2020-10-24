@@ -95,8 +95,12 @@ __Commands:__
 
 __Features (first and only argument followed by optional flags):__
 
-- noon: configure the message sent at noon
-  - enabled (or e): enable the noon message on the channel
+1. noon 
+
+Configure the message sent at noon on the given channel.  
+The default timezone is Europe/Paris and this will be configurable later.
+
+- enabled (or e): enable the noon message on the channel
 
 This is a special command used to configure Sonia only for the current Guild or channel.  
 There are multiples option to customize Sonia (some will change her behavior on the whole Guild and other only for the current channel).
@@ -207,12 +211,6 @@ In the future, Sonia will be disabled by default on all channels.
 A command will enable Sonia on the given channel (a command will also be available to disable her).  
 This dev is a bit more complicated because Sonia will have to store which channels are ready for her or not in a database.
 
-To avoid flooding, Sonia will tell you that it is noon in some conditions.  
-First of all, she will tell the `general` channel that it is noon when it is noon.  
-That is the main goal after all...  
-The default timezone is Europe/Paris.  
-In the future, when enabling this feature on a given channel, you will be able to customize the timezone used.
-
 When a message on the channel is sent, Sonia will only respond if she is mentioned personally.  
 This counts as a DM response for Sonia, so prepare to have a friendly message dedicated to you.  
 Special commands will be handled as a priority.  
@@ -287,7 +285,7 @@ Check out the [contributing](CONTRIBUTING.md) file before helping us.
 
 ## License
 
-This project is licensed under the MIT License - see the [license](LICENSE.md) for details.
+This project is licensed under the MIT License - see the [license](LICENSE) for details.
 
 ## Contributors 
 

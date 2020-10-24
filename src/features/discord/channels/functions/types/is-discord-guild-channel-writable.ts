@@ -1,8 +1,7 @@
-import { GuildChannel, TextChannel } from "discord.js";
-import _ from "lodash";
+import { GuildChannel, NewsChannel, TextChannel } from "discord.js";
 
 export function isDiscordGuildChannelWritable(
   guildChannel: Readonly<GuildChannel>
-): guildChannel is TextChannel {
-  return _.isEqual(guildChannel.type, `text`);
+): guildChannel is TextChannel | NewsChannel {
+  return guildChannel.isText();
 }

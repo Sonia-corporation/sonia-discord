@@ -17,7 +17,7 @@ export class DiscordGuildConfigCoreService
   }
 
   public shouldSendCookiesOnCreate = true;
-  public shouldSendIlEstMidiMessage = true;
+  public shouldSendNoonMessage = true;
   public shouldWelcomeNewMembers = true;
   public soniaGuildId = `689833865279307782`;
   public soniaPermanentGuildInviteUrl = `https://discord.gg/PW4JSkv`;
