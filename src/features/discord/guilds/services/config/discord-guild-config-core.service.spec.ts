@@ -57,12 +57,12 @@ describe(`DiscordGuildConfigCoreService`, (): void => {
     expect(service.shouldSendCookiesOnCreate).toStrictEqual(true);
   });
 
-  it(`should send il est midi message when it is noon`, (): void => {
+  it(`should send noon message when it is noon`, (): void => {
     expect.assertions(1);
 
     service = DiscordGuildConfigCoreService.getInstance();
 
-    expect(service.shouldSendIlEstMidiMessage).toStrictEqual(true);
+    expect(service.shouldSendNoonMessage).toStrictEqual(true);
   });
 
   it(`should send a message when new members joins the current guild`, (): void => {

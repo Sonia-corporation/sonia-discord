@@ -54,7 +54,7 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
   ): void {
     if (!_.isNil(guild)) {
       this.updateSendCookiesOnCreateState(guild.shouldSendCookiesOnCreate);
-      this.updateSendIlEstMidiMessageState(guild.shouldSendIlEstMidiMessage);
+      this.updateSendNoonMessageState(guild.shouldSendNoonMessage);
       this.updateWelcomeNewMembersState(guild.shouldWelcomeNewMembers);
       this.updateSoniaGuildId(guild.soniaGuildId);
       this.updateSoniaPermanentGuildInviteUrl(
@@ -77,16 +77,15 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<
     );
   }
 
-  public updateSendIlEstMidiMessageState(
-    shouldSendIlEstMidiMessage?: Readonly<boolean>
+  public updateSendNoonMessageState(
+    shouldSendNoonMessage?: Readonly<boolean>
   ): void {
-    DiscordGuildConfigCoreService.getInstance().shouldSendIlEstMidiMessage = ConfigService.getInstance().getUpdatedBoolean(
+    DiscordGuildConfigCoreService.getInstance().shouldSendNoonMessage = ConfigService.getInstance().getUpdatedBoolean(
       {
         context: this._serviceName,
-        newValue: shouldSendIlEstMidiMessage,
-        oldValue: DiscordGuildConfigService.getInstance().shouldSendIlEstMidiMessage(),
-        valueName:
-          DiscordGuildConfigValueNameEnum.SHOULD_SEND_IL_EST_MIDI_MESSAGE,
+        newValue: shouldSendNoonMessage,
+        oldValue: DiscordGuildConfigService.getInstance().shouldSendNoonMessage(),
+        valueName: DiscordGuildConfigValueNameEnum.SHOULD_SEND_NOON_MESSAGE,
       }
     );
   }

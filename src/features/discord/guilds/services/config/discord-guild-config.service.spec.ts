@@ -57,7 +57,7 @@ describe(`DiscordGuildConfigService`, (): void => {
     beforeEach((): void => {
       service = DiscordGuildConfigService.getInstance();
       discordGuildConfigCoreService.shouldSendCookiesOnCreate = true;
-      discordGuildConfigCoreService.shouldSendIlEstMidiMessage = true;
+      discordGuildConfigCoreService.shouldSendNoonMessage = true;
       discordGuildConfigCoreService.shouldWelcomeNewMembers = true;
       discordGuildConfigCoreService.soniaGuildId = `dummy-sonia-guild-id`;
       discordGuildConfigCoreService.soniaPermanentGuildInviteUrl = `dummy-sonia-permanent-guild-invite-url`;
@@ -70,7 +70,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
       expect(result).toStrictEqual({
         shouldSendCookiesOnCreate: true,
-        shouldSendIlEstMidiMessage: true,
+        shouldSendNoonMessage: true,
         shouldWelcomeNewMembers: true,
         soniaGuildId: `dummy-sonia-guild-id`,
         soniaPermanentGuildInviteUrl: `dummy-sonia-permanent-guild-invite-url`,
@@ -93,16 +93,16 @@ describe(`DiscordGuildConfigService`, (): void => {
     });
   });
 
-  describe(`shouldSendIlEstMidiMessage()`, (): void => {
+  describe(`shouldSendNoonMessage()`, (): void => {
     beforeEach((): void => {
       service = DiscordGuildConfigService.getInstance();
-      discordGuildConfigCoreService.shouldSendIlEstMidiMessage = true;
+      discordGuildConfigCoreService.shouldSendNoonMessage = true;
     });
 
-    it(`should return the Discord guild config send il est midi message state`, (): void => {
+    it(`should return the Discord guild config send noon message state`, (): void => {
       expect.assertions(1);
 
-      const result = service.shouldSendIlEstMidiMessage();
+      const result = service.shouldSendNoonMessage();
 
       expect(result).toStrictEqual(true);
     });

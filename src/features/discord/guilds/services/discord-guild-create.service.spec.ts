@@ -412,6 +412,9 @@ describe(`DiscordGuildCreateService`, (): void => {
         describe(`when the primary guild channel is writable`, (): void => {
           beforeEach((): void => {
             primaryGuildChannel = createMock<TextChannel>({
+              isText(): true {
+                return true;
+              },
               send: guildChannelSendMock,
               type: `text`,
             });

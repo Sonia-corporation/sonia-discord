@@ -10,7 +10,7 @@ import { DiscordGuildSoniaService } from "../guilds/services/discord-guild-sonia
 import { DiscordGuildService } from "../guilds/services/discord-guild.service";
 import { DiscordLoggerService } from "../logger/services/discord-logger.service";
 import { DiscordMessageService } from "../messages/services/discord-message.service";
-import { DiscordMessageScheduleIlEstMidiService } from "../messages/services/schedule/discord-message-schedule-il-est-midi.service";
+import { DiscordMessageScheduleNoonService } from "../messages/services/schedule/discord-message-schedule-noon.service";
 import { DiscordSoniaService } from "../users/services/discord-sonia.service";
 
 export class DiscordService extends AbstractService {
@@ -36,7 +36,7 @@ export class DiscordService extends AbstractService {
     DiscordGuildCreateService.getInstance().init();
     DiscordMessageService.getInstance().init();
     void DiscordAuthenticationService.getInstance().init();
-    DiscordMessageScheduleIlEstMidiService.getInstance().init();
+    DiscordMessageScheduleNoonService.getInstance().init();
     DiscordGuildSoniaService.getInstance().init();
     void DiscordActivitySoniaService.getInstance().init();
     DiscordSoniaEmotionalStateService.getInstance().init();

@@ -250,6 +250,7 @@ rules:
     - error
   '@typescript-eslint/prefer-literal-enum-member': off
   '@typescript-eslint/unified-signatures': error
+  '@typescript-eslint/ban-ts-comment': error
   no-undef-init:
     - error
   no-magic-numbers:
@@ -345,3 +346,5 @@ overrides:
             - PascalCase
           suffix:
             - Enum
+      '@typescript-eslint/no-explicit-any': off
+      '@typescript-eslint/ban-ts-comment': off

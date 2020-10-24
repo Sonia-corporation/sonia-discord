@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { createMock } from "ts-auto-mock";
 import { isDiscordGuildChannelWritable } from "./is-discord-guild-channel-writable";
 import {
@@ -14,7 +15,11 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
 
   describe(`when the given guild channel is a text channel`, (): void => {
     beforeEach((): void => {
-      guildChannel = createMock<TextChannel>();
+      guildChannel = createMock<TextChannel>({
+        isText(): boolean {
+          return _.includes([`text`, `news`], guildChannel.type);
+        },
+      });
     });
 
     it(`should return true`, (): void => {
@@ -28,7 +33,11 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
 
   describe(`when the given guild channel is a voice channel`, (): void => {
     beforeEach((): void => {
-      guildChannel = createMock<VoiceChannel>();
+      guildChannel = createMock<VoiceChannel>({
+        isText(): boolean {
+          return _.includes([`text`, `news`], guildChannel.type);
+        },
+      });
     });
 
     it(`should return false`, (): void => {
@@ -42,7 +51,11 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
 
   describe(`when the given guild channel is a category channel`, (): void => {
     beforeEach((): void => {
-      guildChannel = createMock<CategoryChannel>();
+      guildChannel = createMock<CategoryChannel>({
+        isText(): boolean {
+          return _.includes([`text`, `news`], guildChannel.type);
+        },
+      });
     });
 
     it(`should return false`, (): void => {
@@ -56,21 +69,29 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
 
   describe(`when the given guild channel is a news channel`, (): void => {
     beforeEach((): void => {
-      guildChannel = createMock<NewsChannel>();
+      guildChannel = createMock<NewsChannel>({
+        isText(): boolean {
+          return _.includes([`text`, `news`], guildChannel.type);
+        },
+      });
     });
 
-    it(`should return false`, (): void => {
+    it(`should return true`, (): void => {
       expect.assertions(1);
 
       const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toStrictEqual(true);
     });
   });
 
   describe(`when the given guild channel is a store channel`, (): void => {
     beforeEach((): void => {
-      guildChannel = createMock<StoreChannel>();
+      guildChannel = createMock<StoreChannel>({
+        isText(): boolean {
+          return _.includes([`text`, `news`], guildChannel.type);
+        },
+      });
     });
 
     it(`should return false`, (): void => {
