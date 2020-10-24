@@ -137,19 +137,27 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
 
     if (isDiscordGuildChannelWritable(guildChannel)) {
-      this._logSendingMessagesForNoon();
+      this._logSendingMessagesForNoon(guildChannel);
 
       return guildChannel
         .send(messageResponse.response, messageResponse.options)
-        .then((): void => {
-          this._logNoonMessageSent();
-        })
-        .catch((error: Readonly<string>): void => {
-          this._onMessageError(error);
-        });
+        .then(
+          (message: Message): Promise<Message> => {
+            this._logNoonMessageSent(guildChannel);
+
+            return Promise.resolve(message);
+          }
+        )
+        .catch(
+          (error: Readonly<string>): Promise<void> => {
+            this._onMessageError(error, guildChannel);
+
+            return Promise.reject(error);
+          }
+        );
     }
 
-    this._logGuildChannelNotWritable();
+    this._logGuildChannelNotWritable(guildChannel);
 
     return Promise.reject(new Error(`Guild channel not writable`));
   }
@@ -374,38 +382,58 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     return _.isEqual(moment().tz(TimezoneEnum.PARIS).get(`hour`), NOON_HOUR);
   }
 
-  private _logSendingMessagesForNoon(): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(`sending message for noon...`),
-    });
-  }
-
-  private _logNoonMessageSent(): void {
-    LoggerService.getInstance().log({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(`noon message sent`),
-    });
-  }
-
-  private _logGuildChannelNotWritable(): void {
+  private _logSendingMessagesForNoon({ id }: Readonly<GuildChannel>): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `the guild channel is not writable`
+        `sending message for noon for guild channel ${ChalkService.getInstance().value(
+          id
+        )}...`
       ),
     });
   }
 
-  private _onMessageError(error: Readonly<string>): void {
-    this._messageErrorLog(error);
+  private _logNoonMessageSent({ id }: Readonly<GuildChannel>): void {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(
+        `noon message sent for guild channel ${ChalkService.getInstance().value(
+          id
+        )}`
+      ),
+    });
+  }
+
+  private _logGuildChannelNotWritable({ id }: Readonly<GuildChannel>): void {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(
+        `the guild channel ${ChalkService.getInstance().value(
+          id
+        )} is not writable`
+      ),
+    });
+  }
+
+  private _onMessageError(
+    error: Readonly<string>,
+    guildChannel: Readonly<GuildChannel>
+  ): void {
+    this._messageErrorLog(error, guildChannel);
     this._sendMessageToSoniaDiscord(error);
   }
 
-  private _messageErrorLog(error: Readonly<string>): void {
+  private _messageErrorLog(
+    error: Readonly<string>,
+    { id }: Readonly<GuildChannel>
+  ): void {
     LoggerService.getInstance().error({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(`noon message sending failed`),
+      message: ChalkService.getInstance().text(
+        `noon message sending failed for guild channel ${ChalkService.getInstance().value(
+          id
+        )}`
+      ),
     });
     LoggerService.getInstance().error({
       context: this._serviceName,

@@ -2,6 +2,7 @@ import {
   Guild,
   GuildChannel,
   Message,
+  NewsChannel,
   Snowflake,
   TextChannel,
 } from "discord.js";
@@ -294,7 +295,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   }
 
   private _sendNewReleaseNotesFromDiscordChannel(
-    textChannel: Readonly<TextChannel>,
+    textChannel: Readonly<TextChannel | NewsChannel>,
     guildId: Readonly<Snowflake>
   ): Promise<Message | void> {
     return DiscordMessageCommandReleaseNotesService.getInstance()
