@@ -121,14 +121,28 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     return Promise.reject(new Error(`Noon state disabled`));
   }
 
-  public handleMessages(): void {
+  public handleMessages(): Promise<((Message | void)[] | void)[] | void> {
     if (this._canSendMessage()) {
+      const messagePromises: Promise<(Message | void)[] | void>[] = [];
+
       DiscordClientService.getInstance()
         .getClient()
         .guilds.cache.forEach((guild: Readonly<Guild>): void => {
-          void this.sendMessage(guild);
+          messagePromises.push(
+            this.sendMessage(guild).catch(
+              (): Promise<void> => {
+                this._logNoMessageSentForFirebaseGuild(guild);
+
+                return Promise.resolve();
+              }
+            )
+          );
         });
+
+      return Promise.all(messagePromises);
     }
+
+    return Promise.reject(new Error(`Can not send message`));
   }
 
   public sendMessageResponse(
@@ -224,7 +238,9 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
 
   private _executeJob(): void {
     this._logJobTriggered();
-    this.handleMessages();
+    this.handleMessages().catch((): void => {
+      this._logCouldNotHandleMessages();
+    });
     this._logNextJobDate();
   }
 
@@ -232,6 +248,13 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(`job triggered`),
+    });
+  }
+
+  private _logCouldNotHandleMessages(): void {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(`could not handle the messages`),
     });
   }
 
@@ -267,6 +290,17 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
       context: this._serviceName,
       message: ChalkService.getInstance().text(
         `Firebase guild ${ChalkService.getInstance().value(id)} is invalid`
+      ),
+    });
+  }
+
+  private _logNoMessageSentForFirebaseGuild({ id }: Readonly<Guild>): void {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(
+        `no message sent for Firebase guild ${ChalkService.getInstance().value(
+          id
+        )}`
       ),
     });
   }

@@ -16,25 +16,25 @@ import { IDiscordCommandFlagSuccess } from "../../../../../../interfaces/command
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
 import { DiscordMessageCommandFeatureNoonEnabledSuccessFlagService } from "../services/discord-message-command-feature-noon-enabled-success-flag.service";
 
-export class DiscordMessageCommandFeatureNoonEnabled
+export class DiscordMessageCommandFeatureNoonDisabled
   implements DiscordCommandFlagAction {
   private readonly _serviceName =
-    ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED;
+    ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_DISABLED;
 
   public execute(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     value?: Readonly<string | null | undefined>
   ): Promise<IDiscordCommandFlagSuccess> {
-    const shouldEnable: boolean = toBoolean(value, true);
+    const shouldDisable: boolean = toBoolean(value, true);
 
     this._logExecuteAction(anyDiscordMessage.id);
-    this._logNewState(anyDiscordMessage.id, shouldEnable);
+    this._logNewState(anyDiscordMessage.id, shouldDisable);
 
-    return this.isEnabled(anyDiscordMessage).then(
+    return this.isDisabled(anyDiscordMessage).then(
       (
-        isEnabled: Readonly<boolean | undefined>
+        isDisabled: Readonly<boolean | undefined>
       ): Promise<IDiscordCommandFlagSuccess> => {
-        this._logCurrentState(anyDiscordMessage.id, isEnabled);
+        this._logCurrentState(anyDiscordMessage.id, isDisabled);
 
         if (!_.isNil(anyDiscordMessage.guild)) {
           if (
@@ -43,8 +43,8 @@ export class DiscordMessageCommandFeatureNoonEnabled
             )
           ) {
             return this.updateDatabase(
-              shouldEnable,
-              isEnabled,
+              shouldDisable,
+              isDisabled,
               anyDiscordMessage.guild,
               anyDiscordMessage.channel
             );
@@ -58,7 +58,7 @@ export class DiscordMessageCommandFeatureNoonEnabled
     );
   }
 
-  public isEnabled(
+  public isDisabled(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<boolean | undefined> {
     if (_.isNil(anyDiscordMessage.guild)) {
@@ -79,23 +79,23 @@ export class DiscordMessageCommandFeatureNoonEnabled
     }
 
     return Promise.resolve(
-      this._isNoonEnabled(firebaseGuild, anyDiscordMessage.channel.id)
+      this._isNoonDisabled(firebaseGuild, anyDiscordMessage.channel.id)
     );
   }
 
   public updateDatabase(
-    shouldEnable: Readonly<boolean>,
-    isEnabled: Readonly<boolean | undefined>,
+    shouldDisable: Readonly<boolean>,
+    isDisabled: Readonly<boolean | undefined>,
     { id }: Readonly<IFirebaseGuild>,
     discordChannel: Readonly<IAnyDiscordChannel>
   ): Promise<IDiscordCommandFlagSuccess> {
     if (!_.isNil(id)) {
       return FirebaseGuildsChannelsFeaturesNoonEnabledService.getInstance()
-        .updateStateByGuildId(id, discordChannel.id, shouldEnable)
+        .updateStateByGuildId(id, discordChannel.id, shouldDisable)
         .then(
           (): Promise<IDiscordCommandFlagSuccess> =>
             Promise.resolve(
-              this._getCommandFlagSuccess(shouldEnable, isEnabled)
+              this._getCommandFlagSuccess(shouldDisable, isDisabled)
             )
         );
     }
@@ -103,7 +103,7 @@ export class DiscordMessageCommandFeatureNoonEnabled
     return Promise.reject(new Error(`Firebase guild id invalid`));
   }
 
-  private _isNoonEnabled(
+  private _isNoonDisabled(
     firebaseGuild: Readonly<IFirebaseGuild>,
     channelId: Readonly<Snowflake>
   ): boolean | undefined {
@@ -115,7 +115,7 @@ export class DiscordMessageCommandFeatureNoonEnabled
       return undefined;
     }
 
-    return this._getFirebaseEnabledState(firebaseGuildChannel);
+    return this._getFirebaseDisabledState(firebaseGuildChannel);
   }
 
   private _getFirebaseGuildChannel(
@@ -129,10 +129,21 @@ export class DiscordMessageCommandFeatureNoonEnabled
     return undefined;
   }
 
-  private _getFirebaseEnabledState(
+  private _getFirebaseDisabledState(
     firebaseGuildChannel: Readonly<IFirebaseGuildChannel>
   ): boolean | undefined {
-    return firebaseGuildChannel.features?.noon?.isEnabled;
+    const isEnabled: boolean | undefined =
+      firebaseGuildChannel.features?.noon?.isEnabled;
+
+    /**
+     * @description
+     * Reverse the enabled state since there is no disabled state in the model
+     */
+    if (_.isBoolean(isEnabled)) {
+      return !isEnabled;
+    }
+
+    return undefined;
   }
 
   private _getNoGuildMessageError(
@@ -178,28 +189,28 @@ export class DiscordMessageCommandFeatureNoonEnabled
       hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         discordMessageId,
-        `executing ${ChalkService.getInstance().value(`enabled`)} action`
+        `executing ${ChalkService.getInstance().value(`disabled`)} action`
       ),
     });
   }
 
   private _logNewState(
     discordMessageId: Readonly<Snowflake>,
-    isEnabled: Readonly<boolean>
+    isDisabled: Readonly<boolean>
   ): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         discordMessageId,
-        `new state: ${ChalkService.getInstance().value(isEnabled)}`
+        `new state: ${ChalkService.getInstance().value(isDisabled)}`
       ),
     });
   }
 
   private _logCurrentState(
     discordMessageId: Readonly<Snowflake>,
-    isEnabled: Readonly<boolean | undefined>
+    isDisabled: Readonly<boolean | undefined>
   ): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
@@ -207,19 +218,19 @@ export class DiscordMessageCommandFeatureNoonEnabled
       message: LoggerService.getInstance().getSnowflakeContext(
         discordMessageId,
         `current state: ${ChalkService.getInstance().value(
-          _.isNil(isEnabled) ? `undefined` : isEnabled
+          _.isNil(isDisabled) ? `undefined` : isDisabled
         )}`
       ),
     });
   }
 
   private _getCommandFlagSuccess(
-    shouldEnable: Readonly<boolean>,
-    isEnabled: Readonly<boolean | undefined>
+    shouldDisable: Readonly<boolean>,
+    isDisabled: Readonly<boolean | undefined>
   ): IDiscordCommandFlagSuccess {
     return DiscordMessageCommandFeatureNoonEnabledSuccessFlagService.getInstance().getFlag(
-      shouldEnable,
-      isEnabled
+      !shouldDisable,
+      _.isBoolean(isDisabled) ? !isDisabled : undefined
     );
   }
 }

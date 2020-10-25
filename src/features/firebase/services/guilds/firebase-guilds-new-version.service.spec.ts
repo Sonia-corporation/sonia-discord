@@ -196,6 +196,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       service = new FirebaseGuildsNewVersionService();
       isReady$ = new BehaviorSubject<[true]>([true]);
       firebaseGuild = createMock<IFirebaseGuildVFinal>({
+        id: `dummy-id`,
         lastReleaseNotesVersion: `1.0.0`,
         version: FirebaseGuildVersionEnum.V4,
       });
@@ -642,6 +643,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           describe(`when there is one Firebase guild on v1`, (): void => {
             beforeEach((): void => {
               firebaseGuild = createMock<IFirebaseGuildV1>({
+                id: `dummy-id`,
                 version: FirebaseGuildVersionEnum.V1,
               });
               queryDocumentSnapshot = createMock<
@@ -883,10 +885,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   ).toHaveBeenCalledWith(firebaseGuild);
                 });
 
-                /**
-                 * @todo fix the damn test alright
-                 */
-                describe.skip(`when the release notes message sending failed for the guild`, (): void => {
+                describe(`when the release notes message sending failed for the guild`, (): void => {
                   beforeEach((): void => {
                     sendNewReleaseNotesFromFirebaseGuildSpy.mockRejectedValue(
                       new Error(`sendNewReleaseNotesFromFirebaseGuild error`)
@@ -1080,10 +1079,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   ).toHaveBeenCalledWith(firebaseGuild);
                 });
 
-                /**
-                 * @todo fix the damn test alright
-                 */
-                describe.skip(`when the release notes message sending failed for the guilds`, (): void => {
+                describe(`when the release notes message sending failed for the guilds`, (): void => {
                   beforeEach((): void => {
                     sendNewReleaseNotesFromFirebaseGuildSpy.mockRejectedValue(
                       new Error(`sendNewReleaseNotesFromFirebaseGuild error`)
