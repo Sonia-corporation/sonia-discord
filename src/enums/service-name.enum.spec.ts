@@ -299,6 +299,16 @@ describe(`ServiceNameEnum`, (): void => {
     ).toStrictEqual(`DiscordMessageCommandFeatureNoonService`);
   });
 
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SUCCESS_FLAG_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SUCCESS_FLAG_SERVICE
+    ).toStrictEqual(
+      `DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`
+    );
+  });
+
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_SERVICE"`, (): void => {
     expect.assertions(1);
 
