@@ -12,10 +12,9 @@ import { LoggerService } from "../../../../../../../../logger/services/logger.se
 import { DiscordChannelService } from "../../../../../../../channels/services/discord-channel.service";
 import { IAnyDiscordChannel } from "../../../../../../../channels/types/any-discord-channel";
 import { DiscordCommandFlagAction } from "../../../../../../classes/commands/flags/discord-command-flag-action";
-import { DiscordCommandFlagSuccessDescriptionEnum } from "../../../../../../enums/commands/flags/discord-command-flag-success-description.enum";
-import { DiscordCommandFlagSuccessTitleEnum } from "../../../../../../enums/commands/flags/discord-command-flag-success-title.enum";
 import { IDiscordCommandFlagSuccess } from "../../../../../../interfaces/commands/flags/discord-command-flag-success";
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
+import { DiscordMessageCommandFeatureNoonEnabledSuccessFlagService } from "../services/discord-message-command-feature-noon-enabled-success-flag.service";
 
 export class DiscordMessageCommandFeatureNoonEnabled
   implements DiscordCommandFlagAction {
@@ -218,66 +217,9 @@ export class DiscordMessageCommandFeatureNoonEnabled
     shouldEnable: Readonly<boolean>,
     isEnabled: Readonly<boolean | undefined>
   ): IDiscordCommandFlagSuccess {
-    if (_.isNil(isEnabled)) {
-      return this._getCommandFlagSuccessWhenNotConfigured(shouldEnable);
-    } else if (_.isEqual(isEnabled, true)) {
-      return this._getCommandFlagSuccessWhenEnabled(shouldEnable);
-    }
-
-    return this._getCommandFlagSuccessWhenDisabled(shouldEnable);
-  }
-
-  private _getCommandFlagSuccessWhenNotConfigured(
-    shouldEnable: Readonly<boolean>
-  ): IDiscordCommandFlagSuccess {
-    if (_.isEqual(shouldEnable, true)) {
-      return {
-        description:
-          DiscordCommandFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_ENABLED,
-        name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
-      };
-    }
-
-    return {
-      description:
-        DiscordCommandFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_DISABLED,
-      name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
-    };
-  }
-
-  private _getCommandFlagSuccessWhenEnabled(
-    shouldEnable: Readonly<boolean>
-  ): IDiscordCommandFlagSuccess {
-    if (_.isEqual(shouldEnable, true)) {
-      return {
-        description:
-          DiscordCommandFlagSuccessDescriptionEnum.ENABLED_AND_ENABLED,
-        name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
-      };
-    }
-
-    return {
-      description:
-        DiscordCommandFlagSuccessDescriptionEnum.ENABLED_AND_DISABLED,
-      name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
-    };
-  }
-
-  private _getCommandFlagSuccessWhenDisabled(
-    shouldEnable: Readonly<boolean>
-  ): IDiscordCommandFlagSuccess {
-    if (_.isEqual(shouldEnable, true)) {
-      return {
-        description:
-          DiscordCommandFlagSuccessDescriptionEnum.DISABLED_AND_ENABLED,
-        name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
-      };
-    }
-
-    return {
-      description:
-        DiscordCommandFlagSuccessDescriptionEnum.DISABLED_AND_DISABLED,
-      name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
-    };
+    return DiscordMessageCommandFeatureNoonEnabledSuccessFlagService.getInstance().getFlag(
+      shouldEnable,
+      isEnabled
+    );
   }
 }
