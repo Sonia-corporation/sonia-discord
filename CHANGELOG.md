@@ -1,5 +1,17 @@
 # Semantic Versioning Changelog
 
+# [1.81.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.80.1...1.81.0) (2020-10-25)
+
+
+### :bug: Bug Fixes
+
+* **noon:** try to send the noon messages even when guilds no longer exists ([07367db](https://github.com/Sonia-corporation/sonia-discord/commit/07367dbed0750aafaae5ec44353c6989f8a68b0e)), closes [#1061](https://github.com/Sonia-corporation/sonia-discord/issues/1061)
+
+
+### :rocket: Features
+
+* **noon-command:** add the disabled flag (--disabled or -d) ([53e767b](https://github.com/Sonia-corporation/sonia-discord/commit/53e767babb6c6d15b45ac90df3c801011426de2a))
+
 ## [1.80.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.80.0...1.80.1) (2020-10-24)
 
 
