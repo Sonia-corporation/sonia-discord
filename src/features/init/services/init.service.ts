@@ -1,5 +1,6 @@
 import appRootPath from "app-root-path";
 import axios, { AxiosResponse } from "axios";
+import admin from "firebase-admin";
 import fs from "fs-extra";
 import _ from "lodash";
 import { BehaviorSubject, Observable } from "rxjs";
@@ -30,6 +31,7 @@ import { LoggerService } from "../../logger/services/logger.service";
 import { ProfileConfigMutatorService } from "../../profile/services/config/profile-config-mutator.service";
 import { ServerConfigMutatorService } from "../../server/services/config/server-config-mutator.service";
 import { ServerService } from "../../server/services/server.service";
+import WriteResult = admin.firestore.WriteResult;
 
 export class InitService extends AbstractService {
   private static _instance: InitService;
@@ -79,13 +81,17 @@ export class InitService extends AbstractService {
     this._isAppConfigured$.next(true);
   }
 
-  public readEnvironment(): Promise<true | void> {
+  public readEnvironment(): Promise<
+    [true, [number | void, WriteResult[] | void]] | void
+  > {
     return fs
       .readJson(
         `${_.toString(appRootPath)}/src/environment/secret-environment.json`
       )
       .then(
-        (environment: Readonly<IEnvironment>): Promise<true> =>
+        (
+          environment: Readonly<IEnvironment>
+        ): Promise<[true, [number | void, WriteResult[] | void]]> =>
           this._startApp(this._mergeEnvironments(ENVIRONMENT, environment))
       )
       .catch(
@@ -111,12 +117,13 @@ export class InitService extends AbstractService {
     return _.merge({}, environmentA, environmentB);
   }
 
-  private _runApp(): Promise<true> {
-    void DiscordService.getInstance().init();
+  private _runApp(): Promise<[true, [number | void, WriteResult[] | void]]> {
     ServerService.getInstance().initializeApp();
-    void FirebaseService.getInstance().init();
 
-    return Promise.resolve(true);
+    return Promise.all([
+      DiscordService.getInstance().init(),
+      FirebaseService.getInstance().init(),
+    ]);
   }
 
   private _configureApp(
@@ -265,9 +272,12 @@ export class InitService extends AbstractService {
       );
   }
 
-  private _startApp(environment: Readonly<IEnvironment>): Promise<true> {
+  private _startApp(
+    environment: Readonly<IEnvironment>
+  ): Promise<[true, [number | void, WriteResult[] | void]]> {
     return this._configureApp(environment).then(
-      (): Promise<true> => this._runApp()
+      (): Promise<[true, [number | void, WriteResult[] | void]]> =>
+        this._runApp()
     );
   }
 }
