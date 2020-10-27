@@ -115,109 +115,90 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
     return false;
   }
 
-  private _logInvalidChannelId({ id }: Readonly<IFirebaseGuildVFinal>): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `Firebase guild ${ChalkService.getInstance().value(
-          id
-        )} channel ${ChalkService.getInstance().value(
-          `unknown`
-        )} has an invalid id`
-      ),
-    });
+  private _logInvalidChannelId(
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
+  ): void {
+    this._log(`unknown`, firebaseGuild, `has an invalid id`);
   }
 
   private _logChannelNotUpToDate(
     channelId: Readonly<IAnyDiscordChannel["id"]>,
-    { id }: Readonly<IFirebaseGuildVFinal>
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `Firebase guild ${ChalkService.getInstance().value(
-          id
-        )} channel ${ChalkService.getInstance().value(
-          channelId
-        )} not up-to-date`
-      ),
-    });
+    this._logNotUpToDate(channelId, firebaseGuild, `channel`);
   }
 
   private _logChannelNotSet(
     channelId: Readonly<IAnyDiscordChannel["id"]>,
-    { id }: Readonly<IFirebaseGuildVFinal>
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `Firebase guild ${ChalkService.getInstance().value(
-          id
-        )} channel ${ChalkService.getInstance().value(channelId)} not set`
-      ),
-    });
+    this._logNotSet(channelId, firebaseGuild, `channel`);
   }
 
   private _logFeaturesNotUpToDate(
     channelId: Readonly<IAnyDiscordChannel["id"]>,
-    { id }: Readonly<IFirebaseGuildVFinal>
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `Firebase guild ${ChalkService.getInstance().value(
-          id
-        )} channel ${ChalkService.getInstance().value(
-          channelId
-        )} features not up-to-date`
-      ),
-    });
+    this._logNotUpToDate(channelId, firebaseGuild, `features`);
   }
 
   private _logFeaturesNotSet(
     channelId: Readonly<IAnyDiscordChannel["id"]>,
-    { id }: Readonly<IFirebaseGuildVFinal>
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `Firebase guild ${ChalkService.getInstance().value(
-          id
-        )} channel ${ChalkService.getInstance().value(
-          channelId
-        )} features not set`
-      ),
-    });
+    this._logNotSet(channelId, firebaseGuild, `features`);
   }
 
   private _logNoonNotUpToDate(
     channelId: Readonly<IAnyDiscordChannel["id"]>,
-    { id }: Readonly<IFirebaseGuildVFinal>
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `Firebase guild ${ChalkService.getInstance().value(
-          id
-        )} channel ${ChalkService.getInstance().value(
-          channelId
-        )} noon feature not up-to-date`
-      ),
-    });
+    this._logNotUpToDate(channelId, firebaseGuild, `noon feature`);
   }
 
   private _logNoonNotSet(
     channelId: Readonly<IAnyDiscordChannel["id"]>,
-    { id }: Readonly<IFirebaseGuildVFinal>
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>
+  ): void {
+    this._logNotSet(channelId, firebaseGuild, `noon feature`);
+  }
+
+  private _logNotUpToDate(
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>,
+    entity: Readonly<string>
+  ): void {
+    this._logNot(channelId, firebaseGuild, entity, `up-to-date`);
+  }
+
+  private _logNotSet(
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>,
+    entity: Readonly<string>
+  ): void {
+    this._logNot(channelId, firebaseGuild, entity, `set`);
+  }
+
+  private _logNot(
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    firebaseGuild: Readonly<IFirebaseGuildVFinal>,
+    entity: Readonly<string>,
+    type: Readonly<string>
+  ): void {
+    this._log(channelId, firebaseGuild, `${entity} not ${type}`);
+  }
+
+  private _log(
+    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    { id }: Readonly<IFirebaseGuildVFinal>,
+    message: Readonly<string>
   ): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
         `Firebase guild ${ChalkService.getInstance().value(
           id
-        )} channel ${ChalkService.getInstance().value(
-          channelId
-        )} noon feature not set`
+        )} channel ${ChalkService.getInstance().value(channelId)} ${message}`
       ),
     });
   }
