@@ -64,6 +64,7 @@ export enum ServiceNameEnum {
   FIREBASE_APP_SERVICE = `FirebaseAppService`,
   FIREBASE_GUILDS_BREAKING_CHANGE_SERVICE = `FirebaseGuildsBreakingChangeService`,
   FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_SERVICE = `FirebaseGuildsChannelsFeaturesNoonEnabledService`,
+  FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_STATE_SERVICE = `FirebaseGuildsChannelsFeaturesNoonEnabledStateService`,
   FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_SERVICE = `FirebaseGuildsChannelsFeaturesNoonService`,
   FIREBASE_GUILDS_CHANNELS_FEATURES_SERVICE = `FirebaseGuildsChannelsFeaturesService`,
   FIREBASE_GUILDS_CHANNELS_SERVICE = `FirebaseGuildsChannelsService`,
