@@ -28,7 +28,7 @@ export class FirebaseGuildsChannelsService extends FirebaseUpdateCoreService<
   }
 
   public isUpToDate(
-    channel: Readonly<IFirebaseGuildChannel>
+    channel: Readonly<IFirebaseGuildChannel | IFirebaseGuildChannelVFinal>
   ): channel is IFirebaseGuildChannelVFinal {
     return _.isEqual(channel.version, FIREBASE_GUILD_CHANNEL_CURRENT_VERSION);
   }
