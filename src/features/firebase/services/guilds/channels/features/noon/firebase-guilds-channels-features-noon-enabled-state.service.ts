@@ -125,14 +125,14 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
     channelId: Readonly<IAnyDiscordChannel["id"]>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): void {
-    this._logNotUpToDate(channelId, firebaseGuild, `channel`);
+    this._logNotUpToDate(channelId, firebaseGuild);
   }
 
   private _logChannelNotSet(
     channelId: Readonly<IAnyDiscordChannel["id"]>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): void {
-    this._logNotSet(channelId, firebaseGuild, `channel`);
+    this._logNotSet(channelId, firebaseGuild);
   }
 
   private _logFeaturesNotUpToDate(
@@ -166,7 +166,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
   private _logNotUpToDate(
     channelId: Readonly<IAnyDiscordChannel["id"]>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>,
-    entity: Readonly<string>
+    entity?: Readonly<string | undefined>
   ): void {
     this._logNot(channelId, firebaseGuild, entity, `up-to-date`);
   }
@@ -174,7 +174,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
   private _logNotSet(
     channelId: Readonly<IAnyDiscordChannel["id"]>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>,
-    entity: Readonly<string>
+    entity?: Readonly<string | undefined>
   ): void {
     this._logNot(channelId, firebaseGuild, entity, `set`);
   }
@@ -182,10 +182,16 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
   private _logNot(
     channelId: Readonly<IAnyDiscordChannel["id"]>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>,
-    entity: Readonly<string>,
+    entity: Readonly<string | undefined>,
     type: Readonly<string>
   ): void {
-    this._log(channelId, firebaseGuild, `${entity} not ${type}`);
+    let message = `not ${type}`;
+
+    if (!_.isNil(entity)) {
+      message = `${entity} ${message}`;
+    }
+
+    this._log(channelId, firebaseGuild, message);
   }
 
   private _log(
