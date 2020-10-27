@@ -515,6 +515,14 @@ describe(`ServiceNameEnum`, (): void => {
     ).toStrictEqual(`FirebaseGuildsChannelsFeaturesNoonEnabledService`);
   });
 
+  it(`should have a member "FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_STATE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_STATE_SERVICE
+    ).toStrictEqual(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`);
+  });
+
   it(`should have a member "FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_SERVICE"`, (): void => {
     expect.assertions(1);
 
