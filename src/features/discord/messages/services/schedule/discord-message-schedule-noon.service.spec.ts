@@ -35,6 +35,7 @@ import { DiscordGuildSoniaService } from "../../../guilds/services/discord-guild
 import { DiscordLoggerErrorService } from "../../../logger/services/discord-logger-error.service";
 import { DiscordClientService } from "../../../services/discord-client.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
+import { DiscordMessageScheduleNoonCountService } from "./discord-message-schedule-noon-count.service";
 import { DiscordMessageScheduleNoonService } from "./discord-message-schedule-noon.service";
 
 let time: number = new Date(`2020-01-02T02:00:00Z`).getTime();
@@ -60,6 +61,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
   let discordGuildSoniaService: DiscordGuildSoniaService;
   let discordLoggerErrorService: DiscordLoggerErrorService;
   let firebaseGuildsChannelsFeaturesNoonEnabledStateService: FirebaseGuildsChannelsFeaturesNoonEnabledStateService;
+  let discordMessageScheduleNoonCountService: DiscordMessageScheduleNoonCountService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -70,6 +72,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
     discordGuildSoniaService = DiscordGuildSoniaService.getInstance();
     discordLoggerErrorService = DiscordLoggerErrorService.getInstance();
     firebaseGuildsChannelsFeaturesNoonEnabledStateService = FirebaseGuildsChannelsFeaturesNoonEnabledStateService.getInstance();
+    discordMessageScheduleNoonCountService = DiscordMessageScheduleNoonCountService.getInstance();
   });
 
   describe(`moment-timezone mock`, (): void => {
@@ -156,6 +159,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
     let loggerServiceDebugSpy: jest.SpyInstance;
     let getEveryHourScheduleRuleSpy: jest.SpyInstance;
     let handleMessagesSpy: jest.SpyInstance;
+    let discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy: jest.SpyInstance;
     let jobRescheduleMock: jest.Mock;
 
     beforeEach((): void => {
@@ -183,6 +187,9 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       handleMessagesSpy = jest
         .spyOn(service, `handleMessages`)
         .mockRejectedValue(new Error(`handleMessages error`));
+      discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy = jest
+        .spyOn(discordMessageScheduleNoonCountService, `countChannelsAndGuilds`)
+        .mockImplementation();
     });
 
     it(`should create a schedule`, (): void => {
@@ -292,6 +299,47 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         expect(handleMessagesSpy).toHaveBeenCalledTimes(1);
         expect(handleMessagesSpy).toHaveBeenCalledWith();
+      });
+
+      // @todo find a way to wait this async code
+      describe.skip(`when the handle of the messages failed`, (): void => {
+        beforeEach((): void => {
+          handleMessagesSpy.mockRejectedValue(
+            new Error(`handleMessages error`)
+          );
+        });
+
+        it(`should log that the messages could not have been handled`, (): void => {
+          expect.assertions(2);
+
+          service.startSchedule();
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+            context: `DiscordMessageScheduleNoonService`,
+            message: `text-could not handle the messages`,
+          } as ILoggerLog);
+        });
+      });
+
+      // @todo find a way to wait this async code
+      describe.skip(`when the handle of the messages was successful`, (): void => {
+        beforeEach((): void => {
+          handleMessagesSpy.mockResolvedValue([]);
+        });
+
+        it(`should count the channels and guilds`, (): void => {
+          expect.assertions(2);
+
+          service.startSchedule();
+
+          expect(
+            discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy
+          ).toHaveBeenCalledWith();
+        });
       });
 
       it(`should log the next job date`, (): void => {

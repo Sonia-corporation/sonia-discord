@@ -23,6 +23,7 @@ import { DiscordGuildSoniaService } from "../../../guilds/services/discord-guild
 import { DiscordLoggerErrorService } from "../../../logger/services/discord-logger-error.service";
 import { DiscordClientService } from "../../../services/discord-client.service";
 import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
+import { DiscordMessageScheduleNoonCountService } from "./discord-message-schedule-noon-count.service";
 
 const NOON_HOUR = 12;
 
@@ -196,9 +197,16 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
 
   private _executeJob(): void {
     this._logJobTriggered();
-    this.handleMessages().catch((): void => {
-      this._logCouldNotHandleMessages();
-    });
+
+    this.handleMessages()
+      .then((guildMessages: ((Message | void)[] | void)[] | void): void => {
+        DiscordMessageScheduleNoonCountService.getInstance().countChannelsAndGuilds(
+          guildMessages
+        );
+      })
+      .catch((): void => {
+        this._logCouldNotHandleMessages();
+      });
     this._logNextJobDate();
   }
 
