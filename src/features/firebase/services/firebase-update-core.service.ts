@@ -30,11 +30,17 @@ export abstract class FirebaseUpdateCoreService<
    * @description
    * Check if the given object exists
    *
-   * @param {Readonly<TEntity | undefined>} entity The object to check
+   * @param {Readonly<TEntity | TFinalEntity | undefined>} entity The object to check
    *
    * @return {boolean} true when not undefined
    */
-  public isSet(entity: Readonly<TEntity | undefined>): entity is TEntity {
+  public isSet(
+    entity: Readonly<TFinalEntity | undefined>
+  ): entity is TFinalEntity;
+  public isSet(entity: Readonly<TEntity | undefined>): entity is TEntity;
+  public isSet(
+    entity: Readonly<TEntity | TFinalEntity | undefined>
+  ): entity is TEntity | TFinalEntity {
     return !_.isNil(entity);
   }
 
@@ -70,11 +76,13 @@ export abstract class FirebaseUpdateCoreService<
    * @description
    * Check if the given object is already into the latest version
    *
-   * @param {Readonly<TEntity>} entity The object to check
+   * @param {Readonly<TEntity | TFinalEntity>} entity The object to check
    *
    * @return {boolean} true when the given object is on the latest version
    */
-  public abstract isUpToDate(entity: Readonly<TEntity>): entity is TFinalEntity;
+  public abstract isUpToDate(
+    entity: Readonly<TEntity | TFinalEntity>
+  ): entity is TFinalEntity;
 
   /**
    * @description
