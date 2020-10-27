@@ -19,6 +19,7 @@ import { FirebaseGuildChannelFeatureVersionEnum } from "../../../../firebase/enu
 import { FirebaseGuildChannelVersionEnum } from "../../../../firebase/enums/guilds/channels/firebase-guild-channel-version.enum";
 import { FirebaseGuildVersionEnum } from "../../../../firebase/enums/guilds/firebase-guild-version.enum";
 import { IFirebaseGuildV3 } from "../../../../firebase/interfaces/guilds/firebase-guild-v3";
+import { FirebaseGuildsChannelsFeaturesNoonEnabledStateService } from "../../../../firebase/services/guilds/channels/features/noon/firebase-guilds-channels-features-noon-enabled-state.service";
 import { FirebaseGuildsService } from "../../../../firebase/services/guilds/firebase-guilds.service";
 import { IFirebaseGuildChannel } from "../../../../firebase/types/guilds/channels/firebase-guild-channel";
 import { IFirebaseGuildChannelVFinal } from "../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final";
@@ -58,6 +59,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
   let discordGuildConfigService: DiscordGuildConfigService;
   let discordGuildSoniaService: DiscordGuildSoniaService;
   let discordLoggerErrorService: DiscordLoggerErrorService;
+  let firebaseGuildsChannelsFeaturesNoonEnabledStateService: FirebaseGuildsChannelsFeaturesNoonEnabledStateService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -67,6 +69,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
     discordGuildConfigService = DiscordGuildConfigService.getInstance();
     discordGuildSoniaService = DiscordGuildSoniaService.getInstance();
     discordLoggerErrorService = DiscordLoggerErrorService.getInstance();
+    firebaseGuildsChannelsFeaturesNoonEnabledStateService = FirebaseGuildsChannelsFeaturesNoonEnabledStateService.getInstance();
   });
 
   describe(`moment-timezone mock`, (): void => {
@@ -691,6 +694,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let sendMessageResponseSpy: jest.SpyInstance;
+    let firebaseGuildsChannelsFeaturesNoonEnabledStateServiceIsEnabledSpy: jest.SpyInstance;
     let guildChannelsGetMock: jest.Mock;
 
     beforeEach((): void => {
@@ -713,6 +717,12 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       sendMessageResponseSpy = jest
         .spyOn(service, `sendMessageResponse`)
         .mockRejectedValue(new Error(`sendMessageResponse error`));
+      firebaseGuildsChannelsFeaturesNoonEnabledStateServiceIsEnabledSpy = jest
+        .spyOn(
+          firebaseGuildsChannelsFeaturesNoonEnabledStateService,
+          `isEnabled`
+        )
+        .mockImplementation();
     });
 
     describe(`when the given Firebase guild channel id is undefined`, (): void => {
@@ -746,41 +756,6 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         });
       });
 
-      describe(`when the given Firebase guild has not a valid noon feature`, (): void => {
-        beforeEach((): void => {
-          firebaseGuild = createMock<IFirebaseGuildVFinal>({
-            channels: {
-              "dummy-channel-id": {
-                features: {
-                  noon: {
-                    version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
-                  },
-                  version: FirebaseGuildChannelFeatureVersionEnum.V1,
-                },
-                version: FirebaseGuildChannelVersionEnum.V1,
-              },
-            },
-            version: FirebaseGuildVersionEnum.V4,
-          });
-        });
-
-        it(`should log about the Firebase guild channel having a disabled noon feature`, async (): Promise<
-          void
-        > => {
-          expect.assertions(3);
-
-          await expect(
-            service.sendMessageByChannel(channel, firebaseGuild, guild)
-          ).rejects.toThrow(new Error(`Noon state disabled`));
-
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-          expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-            context: `DiscordMessageScheduleNoonService`,
-            message: `text-Firebase guild value-dummy-guild-id channel value-dummy-channel-id noon feature is disabled`,
-          } as ILoggerLog);
-        });
-      });
-
       describe(`when the given Firebase guild has a valid noon feature`, (): void => {
         describe(`when the given Firebase guild has a valid noon feature disabled`, (): void => {
           beforeEach((): void => {
@@ -799,6 +774,10 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               },
               version: FirebaseGuildVersionEnum.V4,
             });
+
+            firebaseGuildsChannelsFeaturesNoonEnabledStateServiceIsEnabledSpy.mockReturnValue(
+              false
+            );
           });
 
           it(`should log about the Firebase guild channel having a disabled noon feature`, async (): Promise<
@@ -835,6 +814,10 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               },
               version: FirebaseGuildVersionEnum.V4,
             });
+
+            firebaseGuildsChannelsFeaturesNoonEnabledStateServiceIsEnabledSpy.mockReturnValue(
+              true
+            );
           });
 
           it(`should log about the Firebase guild channel having an enabled noon feature`, async (): Promise<

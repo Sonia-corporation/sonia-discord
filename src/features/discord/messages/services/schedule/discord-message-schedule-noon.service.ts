@@ -6,9 +6,7 @@ import { AbstractService } from "../../../../../classes/services/abstract.servic
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { getEveryHourScheduleRule } from "../../../../../functions/schedule/get-every-hour-schedule-rule";
 import { isUpToDateFirebaseGuild } from "../../../../firebase/functions/guilds/is-up-to-date-firebase-guild";
-import { FirebaseGuildsChannelsFeaturesService } from "../../../../firebase/services/guilds/channels/features/firebase-guilds-channels-features.service";
-import { FirebaseGuildsChannelsFeaturesNoonService } from "../../../../firebase/services/guilds/channels/features/noon/firebase-guilds-channels-features-noon.service";
-import { FirebaseGuildsChannelsService } from "../../../../firebase/services/guilds/channels/firebase-guilds-channels.service";
+import { FirebaseGuildsChannelsFeaturesNoonEnabledStateService } from "../../../../firebase/services/guilds/channels/features/noon/firebase-guilds-channels-features-noon-enabled-state.service";
 import { FirebaseGuildsService } from "../../../../firebase/services/guilds/firebase-guilds.service";
 import { IFirebaseGuildChannel } from "../../../../firebase/types/guilds/channels/firebase-guild-channel";
 import { IFirebaseGuild } from "../../../../firebase/types/guilds/firebase-guild";
@@ -19,7 +17,6 @@ import { getNextJobDate } from "../../../../schedules/functions/get-next-job-dat
 import { getNextJobDateHumanized } from "../../../../schedules/functions/get-next-job-date-humanized";
 import { TimezoneEnum } from "../../../../time/enums/timezone.enum";
 import { isDiscordGuildChannelWritable } from "../../../channels/functions/types/is-discord-guild-channel-writable";
-import { IAnyDiscordChannel } from "../../../channels/types/any-discord-channel";
 import { DiscordGuildSoniaChannelNameEnum } from "../../../guilds/enums/discord-guild-sonia-channel-name.enum";
 import { DiscordGuildConfigService } from "../../../guilds/services/config/discord-guild-config.service";
 import { DiscordGuildSoniaService } from "../../../guilds/services/discord-guild-sonia.service";
@@ -98,7 +95,12 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     firebaseGuild: Readonly<IFirebaseGuildVFinal>,
     guild: Readonly<Guild>
   ): Promise<Message | void> {
-    if (this._isNoonEnabled(channel, firebaseGuild)) {
+    if (
+      FirebaseGuildsChannelsFeaturesNoonEnabledStateService.getInstance().isEnabled(
+        channel,
+        firebaseGuild
+      )
+    ) {
       this._logFirebaseGuildChannelNoonEnabled(guild, channel);
 
       const guildChannel: GuildChannel | undefined = guild.channels.cache.get(
@@ -174,50 +176,6 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     this._logGuildChannelNotWritable(guildChannel);
 
     return Promise.reject(new Error(`Guild channel not writable`));
-  }
-
-  private _isNoonEnabled(
-    { id }: Readonly<IFirebaseGuildChannel>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): boolean {
-    if (!_.isNil(id) && this._isValidChannel(id, firebaseGuild)) {
-      if (this._isValidFeature(id, firebaseGuild)) {
-        if (this._isValidNoonFeature(id, firebaseGuild)) {
-          return (
-            firebaseGuild.channels?.[id]?.features?.noon?.isEnabled ?? false
-          );
-        }
-      }
-    }
-
-    return false;
-  }
-
-  private _isValidChannel(
-    channelId: Readonly<IAnyDiscordChannel["id"]>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): boolean {
-    return FirebaseGuildsChannelsService.getInstance().isValid(
-      firebaseGuild.channels && firebaseGuild.channels[channelId]
-    );
-  }
-
-  private _isValidFeature(
-    channelId: Readonly<IAnyDiscordChannel["id"]>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): boolean {
-    return FirebaseGuildsChannelsFeaturesService.getInstance().isValid(
-      firebaseGuild.channels && firebaseGuild.channels[channelId].features
-    );
-  }
-
-  private _isValidNoonFeature(
-    channelId: Readonly<IAnyDiscordChannel["id"]>,
-    firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): boolean {
-    return FirebaseGuildsChannelsFeaturesNoonService.getInstance().isValid(
-      firebaseGuild.channels && firebaseGuild.channels[channelId].features?.noon
-    );
   }
 
   private _isValidGuild(
