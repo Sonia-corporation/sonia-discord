@@ -421,6 +421,14 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_SERVICE
+    ).toStrictEqual(`DiscordMessageScheduleNoonCountService`);
+  });
+
   it(`should have a member "DISCORD_MESSAGE_SCHEDULE_NOON_SERVICE"`, (): void => {
     expect.assertions(1);
 
