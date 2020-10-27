@@ -734,7 +734,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonService`,
-          message: `text-Firebase guild value-dummy-guild-id noon feature is disabled`,
+          message: `text-Firebase guild value-dummy-guild-id channel value-unknown noon feature is disabled`,
         } as ILoggerLog);
       });
     });
@@ -776,7 +776,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
             context: `DiscordMessageScheduleNoonService`,
-            message: `text-Firebase guild value-dummy-guild-id noon feature is disabled`,
+            message: `text-Firebase guild value-dummy-guild-id channel value-dummy-channel-id noon feature is disabled`,
           } as ILoggerLog);
         });
       });
@@ -813,7 +813,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `DiscordMessageScheduleNoonService`,
-              message: `text-Firebase guild value-dummy-guild-id noon feature is disabled`,
+              message: `text-Firebase guild value-dummy-guild-id channel value-dummy-channel-id noon feature is disabled`,
             } as ILoggerLog);
           });
         });

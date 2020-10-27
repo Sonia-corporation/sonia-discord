@@ -116,7 +116,7 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
       return Promise.reject(new Error(`Guild channel not found`));
     }
 
-    this._logFirebaseGuildChannelNoonDisabled(guild);
+    this._logFirebaseGuildChannelNoonDisabled(guild, channel);
 
     return Promise.reject(new Error(`Noon state disabled`));
   }
@@ -321,12 +321,17 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     });
   }
 
-  private _logFirebaseGuildChannelNoonDisabled({ id }: Readonly<Guild>): void {
+  private _logFirebaseGuildChannelNoonDisabled(
+    { id }: Readonly<Guild>,
+    guildChannel: Readonly<IFirebaseGuildChannel>
+  ): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
         `Firebase guild ${ChalkService.getInstance().value(
           id
+        )} channel ${ChalkService.getInstance().value(
+          guildChannel.id ?? `unknown`
         )} noon feature is disabled`
       ),
     });
