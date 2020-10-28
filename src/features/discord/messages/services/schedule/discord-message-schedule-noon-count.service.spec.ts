@@ -4,6 +4,10 @@ import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { CoreEventService } from "../../../../core/services/core-event.service";
 import { ILoggerLog } from "../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../logger/services/logger.service";
+import { IDiscordGuildSoniaSendMessageToChannel } from "../../../guilds/interfaces/discord-guild-sonia-send-message-to-channel";
+import { DiscordGuildSoniaService } from "../../../guilds/services/discord-guild-sonia.service";
+import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
+import { DiscordMessageScheduleNoonCountMessageResponseService } from "./discord-message-schedule-noon-count-message-response.service";
 import { DiscordMessageScheduleNoonCountService } from "./discord-message-schedule-noon-count.service";
 
 jest.mock(`../../../../logger/services/chalk/chalk.service`);
@@ -12,10 +16,14 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
   let service: DiscordMessageScheduleNoonCountService;
   let coreEventService: CoreEventService;
   let loggerService: LoggerService;
+  let discordGuildSoniaService: DiscordGuildSoniaService;
+  let discordMessageScheduleNoonCountMessageResponseService: DiscordMessageScheduleNoonCountMessageResponseService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     loggerService = LoggerService.getInstance();
+    discordGuildSoniaService = DiscordGuildSoniaService.getInstance();
+    discordMessageScheduleNoonCountMessageResponseService = DiscordMessageScheduleNoonCountMessageResponseService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -61,15 +69,28 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
   describe(`countChannelsAndGuilds()`, (): void => {
     let guildMessages: ((Message | void)[] | void)[] | void;
+    let discordMessageResponse: IDiscordMessageResponse;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
+    let discordGuildSoniaServiceSendMessageToChannelSpy: jest.SpyInstance;
+    let discordMessageScheduleNoonCountMessageResponseServiceGetMessageResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageScheduleNoonCountService();
+      discordMessageResponse = createMock<IDiscordMessageResponse>();
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
         .mockImplementation();
+      discordGuildSoniaServiceSendMessageToChannelSpy = jest
+        .spyOn(discordGuildSoniaService, `sendMessageToChannel`)
+        .mockImplementation();
+      discordMessageScheduleNoonCountMessageResponseServiceGetMessageResponseSpy = jest
+        .spyOn(
+          discordMessageScheduleNoonCountMessageResponseService,
+          `getMessageResponse`
+        )
+        .mockReturnValue(discordMessageResponse);
     });
 
     describe(`when the given guild messages is undefined`, (): void => {
@@ -275,6 +296,51 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
           message: `text-value-4 noon messages sent over value-3 guilds of value-6`,
         } as ILoggerLog);
       });
+    });
+
+    it(`should get a message response about the count`, (): void => {
+      expect.assertions(2);
+      guildMessages = [
+        [],
+        [undefined],
+        [createMock<Message>()],
+        [undefined, undefined],
+        [createMock<Message>(), undefined],
+        [createMock<Message>(), createMock<Message>()],
+      ];
+
+      service.countChannelsAndGuilds(guildMessages);
+
+      expect(
+        discordMessageScheduleNoonCountMessageResponseServiceGetMessageResponseSpy
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        discordMessageScheduleNoonCountMessageResponseServiceGetMessageResponseSpy
+      ).toHaveBeenCalledWith(6, 3, 4);
+    });
+
+    it(`should send the message response about the count into the Sonia logs channel`, (): void => {
+      expect.assertions(2);
+      guildMessages = [
+        [],
+        [undefined],
+        [createMock<Message>()],
+        [undefined, undefined],
+        [createMock<Message>(), undefined],
+        [createMock<Message>(), createMock<Message>()],
+      ];
+
+      service.countChannelsAndGuilds(guildMessages);
+
+      expect(
+        discordGuildSoniaServiceSendMessageToChannelSpy
+      ).toHaveBeenCalledTimes(1);
+      expect(
+        discordGuildSoniaServiceSendMessageToChannelSpy
+      ).toHaveBeenCalledWith({
+        channelName: `logs`,
+        messageResponse: discordMessageResponse,
+      } as IDiscordGuildSoniaSendMessageToChannel);
     });
   });
 });

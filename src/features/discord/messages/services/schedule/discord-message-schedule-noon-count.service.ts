@@ -4,12 +4,15 @@ import { AbstractService } from "../../../../../classes/services/abstract.servic
 import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
 import { ChalkService } from "../../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../../logger/services/logger.service";
+import { DiscordGuildSoniaChannelNameEnum } from "../../../guilds/enums/discord-guild-sonia-channel-name.enum";
+import { DiscordGuildSoniaService } from "../../../guilds/services/discord-guild-sonia.service";
+import { DiscordMessageScheduleNoonCountHumanizedService } from "./discord-message-schedule-noon-count-humanized.service";
+import { DiscordMessageScheduleNoonCountMessageResponseService } from "./discord-message-schedule-noon-count-message-response.service";
 
 const DEFAULT_GUILD_COUNT = 0;
 const ONE_GUILD = 1;
 const DEFAULT_CHANNEL_COUNT = 0;
 const ONE_CHANNEL = 1;
-const NO_GUILD = 0;
 
 export class DiscordMessageScheduleNoonCountService extends AbstractService {
   private static _instance: DiscordMessageScheduleNoonCountService;
@@ -72,6 +75,15 @@ export class DiscordMessageScheduleNoonCountService extends AbstractService {
     }
 
     this._logGuildAndChannelCount(totalGuildCount, guildCount, channelCount);
+
+    DiscordGuildSoniaService.getInstance().sendMessageToChannel({
+      channelName: DiscordGuildSoniaChannelNameEnum.LOGS,
+      messageResponse: DiscordMessageScheduleNoonCountMessageResponseService.getInstance().getMessageResponse(
+        totalGuildCount,
+        guildCount,
+        channelCount
+      ),
+    });
   }
 
   private _logGuildAndChannelCount(
@@ -79,23 +91,11 @@ export class DiscordMessageScheduleNoonCountService extends AbstractService {
     guildCount: Readonly<number>,
     channelCount: Readonly<number>
   ): void {
-    let message = `${ChalkService.getInstance().value(
+    const message: string = DiscordMessageScheduleNoonCountHumanizedService.getInstance().getHumanizedCountForLogs(
+      totalGuildCount,
+      guildCount,
       channelCount
-    )} noon message${
-      _.gt(channelCount, ONE_CHANNEL) ? `s` : ``
-    } sent over ${ChalkService.getInstance().value(guildCount)} guild${
-      _.gt(guildCount, ONE_GUILD) ? `s` : ``
-    } of ${ChalkService.getInstance().value(totalGuildCount)}`;
-
-    if (_.isEqual(channelCount, NO_GUILD)) {
-      message = `no noon message sent for the ${ChalkService.getInstance().value(
-        totalGuildCount
-      )} guild${_.gt(totalGuildCount, ONE_GUILD) ? `s` : ``}`;
-    }
-
-    if (_.isEqual(totalGuildCount, NO_GUILD)) {
-      message = `no noon message sent`;
-    }
+    );
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
