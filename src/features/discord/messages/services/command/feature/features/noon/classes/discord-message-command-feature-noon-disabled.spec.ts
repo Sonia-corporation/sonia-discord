@@ -1427,26 +1427,60 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
         firebaseGuild.id = `dummy-id`;
       });
 
-      it(`should update the disable state for the feature command in the Firebase guilds`, async (): Promise<
-        void
-      > => {
-        expect.assertions(3);
+      describe(`when the new state is not disabled`, (): void => {
+        beforeEach((): void => {
+          shouldDisable = false;
+        });
 
-        await expect(
-          service.updateDatabase(
-            shouldDisable,
-            isDisabled,
-            firebaseGuild,
-            channel
-          )
-        ).rejects.toThrow(new Error(`updateState error`));
+        it(`should update the enable state to enabled for the feature command in the Firebase guilds`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
 
-        expect(
-          firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy
-        ).toHaveBeenCalledTimes(1);
-        expect(
-          firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy
-        ).toHaveBeenCalledWith(`dummy-id`, `dummy-channel-id`, false);
+          await expect(
+            service.updateDatabase(
+              shouldDisable,
+              isDisabled,
+              firebaseGuild,
+              channel
+            )
+          ).rejects.toThrow(new Error(`updateState error`));
+
+          expect(
+            firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy
+          ).toHaveBeenCalledWith(`dummy-id`, `dummy-channel-id`, true);
+        });
+      });
+
+      describe(`when the new state is disabled`, (): void => {
+        beforeEach((): void => {
+          shouldDisable = true;
+        });
+
+        it(`should update the enable state to not enabled for the feature command in the Firebase guilds`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          await expect(
+            service.updateDatabase(
+              shouldDisable,
+              isDisabled,
+              firebaseGuild,
+              channel
+            )
+          ).rejects.toThrow(new Error(`updateState error`));
+
+          expect(
+            firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy
+          ).toHaveBeenCalledWith(`dummy-id`, `dummy-channel-id`, false);
+        });
       });
 
       describe(`when the disable state for the feature command in the Firebase guilds was not successfully updated`, (): void => {
