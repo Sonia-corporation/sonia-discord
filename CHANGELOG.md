@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+# [1.83.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.82.0...1.83.0) (2020-10-31)
+
+
+### :rocket: Features
+
+* **sonia:** add a typing indicator when responding to messages ([82c1687](https://github.com/Sonia-corporation/sonia-discord/commit/82c16870064bb19c24575fbc05fa41761b02e881))
+* **empty-flag-error:** enhance the error message ([cea9cd6](https://github.com/Sonia-corporation/sonia-discord/commit/cea9cd6879fb9ec65f8da7689f0cf824bc35ed80))
+
 # [1.82.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.81.0...1.82.0) (2020-10-31)
 
 
