@@ -421,6 +421,30 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_HUMANIZED_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_HUMANIZED_SERVICE
+    ).toStrictEqual(`DiscordMessageScheduleNoonCountHumanizedService`);
+  });
+
+  it(`should have a member "DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_MESSAGE_RESPONSE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_MESSAGE_RESPONSE_SERVICE
+    ).toStrictEqual(`DiscordMessageScheduleNoonCountMessageResponseService`);
+  });
+
+  it(`should have a member "DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_SERVICE
+    ).toStrictEqual(`DiscordMessageScheduleNoonCountService`);
+  });
+
   it(`should have a member "DISCORD_MESSAGE_SCHEDULE_NOON_SERVICE"`, (): void => {
     expect.assertions(1);
 
