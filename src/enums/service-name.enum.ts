@@ -13,6 +13,7 @@ export enum ServiceNameEnum {
   DISCORD_AUTHOR_SERVICE = `DiscordAuthorService`,
   DISCORD_CHANNEL_GUILD_SERVICE = `DiscordChannelGuildService`,
   DISCORD_CHANNEL_SERVICE = `DiscordChannelService`,
+  DISCORD_CHANNEL_TYPING_SERVICE = `DiscordChannelTypingService`,
   DISCORD_CLIENT_SERVICE = `DiscordClientService`,
   DISCORD_GUILD_CONFIG_CORE_SERVICE = `DiscordGuildConfigCoreService`,
   DISCORD_GUILD_CONFIG_MUTATOR_SERVICE = `DiscordGuildConfigMutatorService`,

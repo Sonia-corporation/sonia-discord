@@ -107,6 +107,14 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "DISCORD_CHANNEL_TYPING_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_CHANNEL_TYPING_SERVICE).toStrictEqual(
+      `DiscordChannelTypingService`
+    );
+  });
+
   it(`should have a member "DISCORD_CLIENT_SERVICE"`, (): void => {
     expect.assertions(1);
 

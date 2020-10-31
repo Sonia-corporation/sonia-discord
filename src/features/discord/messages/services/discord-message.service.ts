@@ -4,6 +4,7 @@ import { ServiceNameEnum } from "../../../../enums/service-name.enum";
 import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
 import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
+import { DiscordChannelTypingService } from "../../channels/services/discord-channel-typing.service";
 import { DiscordChannelService } from "../../channels/services/discord-channel.service";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordAuthorService } from "../../users/services/discord-author.service";
@@ -76,11 +77,51 @@ export class DiscordMessageService extends AbstractService {
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<void> {
     if (DiscordChannelService.getInstance().isDm(anyDiscordMessage.channel)) {
-      return this._dmMessage(anyDiscordMessage);
+      void DiscordChannelTypingService.getInstance().addOneIndicator(
+        anyDiscordMessage.channel
+      );
+
+      return this._dmMessage(anyDiscordMessage)
+        .then(
+          (): Promise<void> => {
+            DiscordChannelTypingService.getInstance().removeOneIndicator(
+              anyDiscordMessage.channel
+            );
+            return Promise.resolve();
+          }
+        )
+        .catch(
+          (error: Error): Promise<void> => {
+            DiscordChannelTypingService.getInstance().removeOneIndicator(
+              anyDiscordMessage.channel
+            );
+            return Promise.reject(error);
+          }
+        );
     } else if (
       DiscordChannelService.getInstance().isText(anyDiscordMessage.channel)
     ) {
-      return this._textMessage(anyDiscordMessage);
+      void DiscordChannelTypingService.getInstance().addOneIndicator(
+        anyDiscordMessage.channel
+      );
+
+      return this._textMessage(anyDiscordMessage)
+        .then(
+          (): Promise<void> => {
+            DiscordChannelTypingService.getInstance().removeOneIndicator(
+              anyDiscordMessage.channel
+            );
+            return Promise.resolve();
+          }
+        )
+        .catch(
+          (error: Error): Promise<void> => {
+            DiscordChannelTypingService.getInstance().removeOneIndicator(
+              anyDiscordMessage.channel
+            );
+            return Promise.reject(error);
+          }
+        );
     }
 
     return Promise.reject(

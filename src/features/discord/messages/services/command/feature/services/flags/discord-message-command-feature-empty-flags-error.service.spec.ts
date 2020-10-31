@@ -200,7 +200,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       expect(result.options.embed?.fields?.[0]).toStrictEqual({
         name: `No flags specified`,
-        value: `You did not specify a flag to configure the \`noon\` feature.\nI will not guess what you wish to configure so please try again with a flag!\nAnd because I am kind and generous here is the list of all the flags you can configure for the \`noon\` feature with an example.`,
+        value: `You did not specify a flag to configure the \`noon\` feature.\nI will not guess what you wish to configure so please try again with a flag!\nAnd because I am kind and generous here is the list of all the flags available for the \`noon\` feature with an example.`,
       } as EmbedFieldData);
     });
 
