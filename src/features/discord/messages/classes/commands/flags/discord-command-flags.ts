@@ -100,7 +100,7 @@ export class DiscordCommandFlags<T extends string> {
   public getAllFlagsNameWithShortcutsExample(): string {
     return _.trimEnd(
       _.reduce(
-        this.getFlags(),
+        this.getOrderedFlags(),
         (
           value: Readonly<string>,
           flag: Readonly<DiscordCommandFlag<T>>
@@ -114,7 +114,7 @@ export class DiscordCommandFlags<T extends string> {
 
   public getAllFlagsLowerCaseName(): string[] {
     return _.map(
-      this.getFlags(),
+      this.getOrderedFlags(),
       (flag: Readonly<DiscordCommandFlag<T>>): string => flag.getLowerCaseName()
     );
   }
@@ -122,7 +122,7 @@ export class DiscordCommandFlags<T extends string> {
   public getAllFlagsLowerCaseNameWithShortcuts(): string[] {
     return _.flatten(
       _.map(
-        this.getFlags(),
+        this.getOrderedFlags(),
         (flag: Readonly<DiscordCommandFlag<T>>): string[] =>
           _.compact(
             _.flatten([flag.getLowerCaseName(), flag.getLowerCaseShortcuts()])
@@ -417,7 +417,7 @@ export class DiscordCommandFlags<T extends string> {
             duplicatedMessagesFlagByName
           )} are duplicated.`,
           name: `${_.toString(
-            _.head(duplicatedMessagesFlagByName)?.name
+            _.head(duplicatedMessagesFlagByName)?.name ?? `unknown`
           )} flag duplicated`,
         };
       }

@@ -2,11 +2,8 @@ import { createMock } from "ts-auto-mock";
 import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
-import { DiscordCommandFlagSuccessTitleEnum } from "../../../enums/commands/flags/discord-command-flag-success-title.enum";
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
-import { DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON } from "../../../services/command/feature/constants/discord-message-command-feature-name-noon";
-import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordCommandFlagsDuplicated } from "../../../types/commands/flags/discord-command-flags-duplicated";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
@@ -20,29 +17,33 @@ import { DiscordCommandFlags } from "./discord-command-flags";
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
 enum DummyFirstArgumentEnum {
-  ALPHA = `alpha`,
+  ALPHA = `alpha-argument`,
+  BETA = `beta-argument`,
 }
 
 enum DummyFlagEnum {
-  BETA = `beta`,
-  CHARLIE = `charlie`,
-}
-
-class DummyAction implements DiscordCommandFlagAction {
-  public execute(): Promise<IDiscordCommandFlagSuccess> {
-    return Promise.resolve({
-      description: ``,
-      name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
-    });
-  }
+  ALPHA = `alpha-flag`,
+  BETA = `beta-flag`,
+  CHARLIE = `charlie-flag`,
+  DELTA = `delta-flag`,
+  ECHO = `echo-flag`,
+  FOXTROT = `foxtrot-flag`,
 }
 
 describe(`DiscordCommandFlags`, (): void => {
+  let alphaArgument: DiscordCommandFirstArgument<DummyFirstArgumentEnum>;
+
   let discordCommandFlags: DiscordCommandFlags<string>;
   let loggerService: LoggerService;
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
+
+    alphaArgument = new DiscordCommandFirstArgument<DummyFirstArgumentEnum>({
+      description: ``,
+      name: DummyFirstArgumentEnum.ALPHA,
+      shortcuts: [DummyFirstArgumentEnum.BETA],
+    });
   });
 
   describe(`constructor()`, (): void => {
@@ -50,34 +51,22 @@ describe(`DiscordCommandFlags`, (): void => {
       it(`should update the command inside the class`, (): void => {
         expect.assertions(1);
 
-        discordCommandFlags = new DiscordCommandFlags<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >({
-          command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
-          flags: createMock<
-            DiscordCommandBooleanFlag<
-              DiscordMessageCommandFeatureNoonFlagEnum
-            >[]
-          >(),
+        discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+          command: alphaArgument,
+          flags: createMock<DiscordCommandBooleanFlag<DummyFlagEnum>[]>(),
         });
 
-        expect(discordCommandFlags.getCommand()).toStrictEqual(
-          DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON
-        );
+        expect(discordCommandFlags.getCommand()).toStrictEqual(alphaArgument);
       });
     });
 
     describe(`when the class is created with some flags`, (): void => {
       it(`should update the flags inside the class`, (): void => {
         expect.assertions(1);
-        const flags = createMock<
-          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >();
+        const flags = createMock<DiscordCommandBooleanFlag<DummyFlagEnum>[]>();
 
-        discordCommandFlags = new DiscordCommandFlags<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >({
-          command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+          command: alphaArgument,
           flags,
         });
 
@@ -88,72 +77,63 @@ describe(`DiscordCommandFlags`, (): void => {
 
   describe(`getCommand()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlags = new DiscordCommandFlags<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >({
-        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
-        flags: createMock<
-          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >(),
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: alphaArgument,
+        flags: createMock<DiscordCommandBooleanFlag<DummyFlagEnum>[]>(),
       });
     });
 
     it(`should return the command`, (): void => {
       expect.assertions(1);
-      discordCommandFlags.setCommand(DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON);
+      discordCommandFlags.setCommand(alphaArgument);
 
       const result = discordCommandFlags.getCommand();
 
-      expect(result).toStrictEqual(DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON);
+      expect(result).toStrictEqual(alphaArgument);
     });
   });
 
   describe(`setCommand()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlags = new DiscordCommandFlags<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >({
-        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
-        flags: createMock<
-          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >(),
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: alphaArgument,
+        flags: createMock<DiscordCommandBooleanFlag<DummyFlagEnum>[]>(),
       });
     });
 
     it(`should update the command with the given ones`, (): void => {
       expect.assertions(1);
 
-      discordCommandFlags.setCommand(DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON);
+      discordCommandFlags.setCommand(alphaArgument);
 
-      expect(discordCommandFlags.getCommand()).toStrictEqual(
-        DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON
-      );
+      expect(discordCommandFlags.getCommand()).toStrictEqual(alphaArgument);
     });
   });
 
   describe(`getFlags()`, (): void => {
-    let firstArgument: DiscordCommandFirstArgument<DummyFirstArgumentEnum>;
+    let alphaFlag: DiscordCommandFlag<DummyFlagEnum>;
     let betaFlag: DiscordCommandFlag<DummyFlagEnum>;
-    let charlieFlag: DiscordCommandFlag<DummyFlagEnum>;
 
     beforeEach((): void => {
-      firstArgument = new DiscordCommandFirstArgument<DummyFirstArgumentEnum>({
+      alphaFlag = new DiscordCommandBooleanFlag({
+        action: createMock<DiscordCommandFlagAction>({
+          execute: (): Promise<IDiscordCommandFlagSuccess> =>
+            Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+        }),
         description: ``,
-        name: DummyFirstArgumentEnum.ALPHA,
+        name: DummyFlagEnum.ALPHA,
       });
       betaFlag = new DiscordCommandBooleanFlag({
-        action: new DummyAction(),
+        action: createMock<DiscordCommandFlagAction>({
+          execute: (): Promise<IDiscordCommandFlagSuccess> =>
+            Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+        }),
         description: ``,
         name: DummyFlagEnum.BETA,
       });
-      charlieFlag = new DiscordCommandBooleanFlag({
-        action: new DummyAction(),
-        description: ``,
-        name: DummyFlagEnum.CHARLIE,
-      });
       discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
-        command: firstArgument,
-        flags: [charlieFlag, betaFlag],
+        command: alphaArgument,
+        flags: [betaFlag, alphaFlag],
       });
     });
 
@@ -162,33 +142,39 @@ describe(`DiscordCommandFlags`, (): void => {
 
       const result = discordCommandFlags.getFlags();
 
-      expect(result).toStrictEqual([charlieFlag, betaFlag]);
+      expect(result).toStrictEqual([betaFlag, alphaFlag]);
     });
   });
 
   describe(`getOrderedFlags()`, (): void => {
-    let firstArgument: DiscordCommandFirstArgument<DummyFirstArgumentEnum>;
+    let alphaArgument: DiscordCommandFirstArgument<DummyFirstArgumentEnum>;
+    let alphaFlag: DiscordCommandFlag<DummyFlagEnum>;
     let betaFlag: DiscordCommandFlag<DummyFlagEnum>;
-    let charlieFlag: DiscordCommandFlag<DummyFlagEnum>;
 
     beforeEach((): void => {
-      firstArgument = new DiscordCommandFirstArgument<DummyFirstArgumentEnum>({
+      alphaArgument = new DiscordCommandFirstArgument<DummyFirstArgumentEnum>({
         description: ``,
         name: DummyFirstArgumentEnum.ALPHA,
       });
+      alphaFlag = new DiscordCommandBooleanFlag({
+        action: createMock<DiscordCommandFlagAction>({
+          execute: (): Promise<IDiscordCommandFlagSuccess> =>
+            Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+        }),
+        description: ``,
+        name: DummyFlagEnum.ALPHA,
+      });
       betaFlag = new DiscordCommandBooleanFlag({
-        action: new DummyAction(),
+        action: createMock<DiscordCommandFlagAction>({
+          execute: (): Promise<IDiscordCommandFlagSuccess> =>
+            Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+        }),
         description: ``,
         name: DummyFlagEnum.BETA,
       });
-      charlieFlag = new DiscordCommandBooleanFlag({
-        action: new DummyAction(),
-        description: ``,
-        name: DummyFlagEnum.CHARLIE,
-      });
       discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
-        command: firstArgument,
-        flags: [charlieFlag, betaFlag],
+        command: alphaArgument,
+        flags: [betaFlag, alphaFlag],
       });
     });
 
@@ -197,26 +183,22 @@ describe(`DiscordCommandFlags`, (): void => {
 
       const result = discordCommandFlags.getOrderedFlags();
 
-      expect(result).toStrictEqual([betaFlag, charlieFlag]);
+      expect(result).toStrictEqual([alphaFlag, betaFlag]);
     });
   });
 
   describe(`setFlags()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlags = new DiscordCommandFlags<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >({
-        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
-        flags: createMock<
-          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >(),
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: alphaArgument,
+        flags: createMock<DiscordCommandBooleanFlag<DummyFlagEnum>[]>(),
       });
     });
 
     it(`should update the flags with the given ones`, (): void => {
       expect.assertions(1);
       const flags = createMock<
-        DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
+        DiscordCommandBooleanFlag<DummyFirstArgumentEnum>[]
       >();
 
       discordCommandFlags.setFlags(flags);
@@ -227,13 +209,9 @@ describe(`DiscordCommandFlags`, (): void => {
 
   describe(`getRandomFlag()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlags = new DiscordCommandFlags<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >({
-        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
-        flags: createMock<
-          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >(),
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: alphaArgument,
+        flags: createMock<DiscordCommandBooleanFlag<DummyFlagEnum>[]>(),
       });
     });
 
@@ -252,12 +230,10 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is one flag`, (): void => {
-      let flag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag: DiscordCommandBooleanFlag<DummyFlagEnum>;
 
       beforeEach((): void => {
-        flag = createMock<
-          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-        >();
+        flag = createMock<DiscordCommandBooleanFlag<DummyFlagEnum>>();
         discordCommandFlags.setFlags([flag]);
       });
 
@@ -271,16 +247,12 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is multiple flags`, (): void => {
-      let flag1: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
-      let flag2: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag1: DiscordCommandBooleanFlag<DummyFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DummyFlagEnum>;
 
       beforeEach((): void => {
-        flag1 = createMock<
-          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-        >();
-        flag2 = createMock<
-          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-        >();
+        flag1 = createMock<DiscordCommandBooleanFlag<DummyFlagEnum>>();
+        flag2 = createMock<DiscordCommandBooleanFlag<DummyFlagEnum>>();
         discordCommandFlags.setFlags([flag1, flag2]);
       });
 
@@ -296,13 +268,9 @@ describe(`DiscordCommandFlags`, (): void => {
 
   describe(`getRandomFlagUsageExample()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlags = new DiscordCommandFlags<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >({
-        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
-        flags: createMock<
-          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >(),
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: alphaArgument,
+        flags: createMock<DiscordCommandBooleanFlag<DummyFlagEnum>[]>(),
       });
     });
 
@@ -321,15 +289,11 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is one flag`, (): void => {
-      let flag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag: DiscordCommandBooleanFlag<DummyFlagEnum>;
 
       beforeEach((): void => {
-        flag = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >()
+        flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>()
         );
         discordCommandFlags.setFlags([flag]);
       });
@@ -337,7 +301,7 @@ describe(`DiscordCommandFlags`, (): void => {
       describe(`when the flag type is boolean`, (): void => {
         beforeEach((): void => {
           flag.setType(DiscordCommandFlagTypeEnum.BOOLEAN);
-          flag.setName(DiscordMessageCommandFeatureNoonFlagEnum.ENABLED);
+          flag.setName(DummyFlagEnum.ALPHA);
         });
 
         it(`should return the flag name on lower case with "--" as prefix and a random boolean as value`, (): void => {
@@ -345,7 +309,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           const result = discordCommandFlags.getRandomFlagUsageExample();
 
-          expect(result).toBeOneOf([`--enabled=true`, `--enabled=false`]);
+          expect(result).toBeOneOf([`--alpha-flag=true`, `--alpha-flag=false`]);
         });
       });
     });
@@ -353,13 +317,9 @@ describe(`DiscordCommandFlags`, (): void => {
 
   describe(`getAllFlagsNameExample()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlags = new DiscordCommandFlags<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >({
-        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
-        flags: createMock<
-          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >(),
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: alphaArgument,
+        flags: createMock<DiscordCommandBooleanFlag<DummyFlagEnum>[]>(),
       });
     });
 
@@ -378,16 +338,12 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is one flag`, (): void => {
-      let flag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag: DiscordCommandBooleanFlag<DummyFlagEnum>;
 
       beforeEach((): void => {
-        flag = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+        flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.ALPHA,
           })
         );
         discordCommandFlags.setFlags([flag]);
@@ -398,31 +354,23 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameExample();
 
-        expect(result).toStrictEqual(`\`--enabled\``);
+        expect(result).toStrictEqual(`\`--alpha-flag\``);
       });
     });
 
     describe(`when there is two flags`, (): void => {
-      let flag1: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
-      let flag2: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag1: DiscordCommandBooleanFlag<DummyFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DummyFlagEnum>;
 
       beforeEach((): void => {
-        flag1 = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+        flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.ALPHA,
           })
         );
-        flag2 = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.E,
+        flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.BETA,
           })
         );
         discordCommandFlags.setFlags([flag1, flag2]);
@@ -433,20 +381,16 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameExample();
 
-        expect(result).toStrictEqual(`\`--enabled\`, \`--e\``);
+        expect(result).toStrictEqual(`\`--alpha-flag\`, \`--beta-flag\``);
       });
     });
   });
 
   describe(`getAllFlagsNameWithShortcutsExample()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlags = new DiscordCommandFlags<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >({
-        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
-        flags: createMock<
-          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >(),
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: alphaArgument,
+        flags: createMock<DiscordCommandBooleanFlag<DummyFlagEnum>[]>(),
       });
     });
 
@@ -465,16 +409,12 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is one flag`, (): void => {
-      let flag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag: DiscordCommandBooleanFlag<DummyFlagEnum>;
 
       beforeEach((): void => {
-        flag = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+        flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.ALPHA,
           })
         );
         discordCommandFlags.setFlags([flag]);
@@ -485,25 +425,18 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(`\`--enabled\``);
+        expect(result).toStrictEqual(`\`--alpha-flag\``);
       });
     });
 
     describe(`when there is one flag with two shortcuts`, (): void => {
-      let flag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag: DiscordCommandBooleanFlag<DummyFlagEnum>;
 
       beforeEach((): void => {
-        flag = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
-            shortcuts: [
-              DiscordMessageCommandFeatureNoonFlagEnum.E,
-              DiscordMessageCommandFeatureNoonFlagEnum.E,
-            ],
+        flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.ALPHA,
+            shortcuts: [DummyFlagEnum.BETA, DummyFlagEnum.CHARLIE],
           })
         );
         discordCommandFlags.setFlags([flag]);
@@ -514,31 +447,25 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(`\`--enabled (or -e, -e)\``);
+        expect(result).toStrictEqual(
+          `\`--alpha-flag (or -beta-flag, -charlie-flag)\``
+        );
       });
     });
 
     describe(`when there is two flags`, (): void => {
-      let flag1: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
-      let flag2: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag1: DiscordCommandBooleanFlag<DummyFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DummyFlagEnum>;
 
       beforeEach((): void => {
-        flag1 = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+        flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.ALPHA,
           })
         );
-        flag2 = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.E,
+        flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.BETA,
           })
         );
         discordCommandFlags.setFlags([flag1, flag2]);
@@ -549,39 +476,25 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(`\`--enabled\`, \`--e\``);
+        expect(result).toStrictEqual(`\`--alpha-flag\`, \`--beta-flag\``);
       });
     });
 
     describe(`when there is two flags with two shortcuts`, (): void => {
-      let flag1: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
-      let flag2: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag1: DiscordCommandBooleanFlag<DummyFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DummyFlagEnum>;
 
       beforeEach((): void => {
-        flag1 = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
-            shortcuts: [
-              DiscordMessageCommandFeatureNoonFlagEnum.E,
-              DiscordMessageCommandFeatureNoonFlagEnum.E,
-            ],
+        flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.ALPHA,
+            shortcuts: [DummyFlagEnum.BETA, DummyFlagEnum.CHARLIE],
           })
         );
-        flag2 = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.E,
-            shortcuts: [
-              DiscordMessageCommandFeatureNoonFlagEnum.E,
-              DiscordMessageCommandFeatureNoonFlagEnum.E,
-            ],
+        flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.DELTA,
+            shortcuts: [DummyFlagEnum.ECHO, DummyFlagEnum.FOXTROT],
           })
         );
         discordCommandFlags.setFlags([flag1, flag2]);
@@ -593,7 +506,7 @@ describe(`DiscordCommandFlags`, (): void => {
         const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
 
         expect(result).toStrictEqual(
-          `\`--enabled (or -e, -e)\`, \`--e (or -e, -e)\``
+          `\`--alpha-flag (or -beta-flag, -charlie-flag)\`, \`--delta-flag (or -echo-flag, -foxtrot-flag)\``
         );
       });
     });
@@ -601,13 +514,9 @@ describe(`DiscordCommandFlags`, (): void => {
 
   describe(`getAllFlagsLowerCaseName()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlags = new DiscordCommandFlags<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >({
-        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
-        flags: createMock<
-          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >(),
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: alphaArgument,
+        flags: createMock<DiscordCommandBooleanFlag<DummyFlagEnum>[]>(),
       });
     });
 
@@ -626,16 +535,12 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is one flag`, (): void => {
-      let flag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag: DiscordCommandBooleanFlag<DummyFlagEnum>;
 
       beforeEach((): void => {
-        flag = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+        flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.ALPHA,
           })
         );
         discordCommandFlags.setFlags([flag]);
@@ -646,31 +551,23 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsLowerCaseName();
 
-        expect(result).toStrictEqual([`enabled`]);
+        expect(result).toStrictEqual([`alpha-flag`]);
       });
     });
 
     describe(`when there is two flags`, (): void => {
-      let flag1: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
-      let flag2: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag1: DiscordCommandBooleanFlag<DummyFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DummyFlagEnum>;
 
       beforeEach((): void => {
-        flag1 = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+        flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.ALPHA,
           })
         );
-        flag2 = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.E,
+        flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.BETA,
           })
         );
         discordCommandFlags.setFlags([flag1, flag2]);
@@ -681,20 +578,16 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsLowerCaseName();
 
-        expect(result).toStrictEqual([`enabled`, `e`]);
+        expect(result).toStrictEqual([`alpha-flag`, `beta-flag`]);
       });
     });
   });
 
   describe(`getAllFlagsLowerCaseNameWithShortcuts()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlags = new DiscordCommandFlags<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >({
-        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
-        flags: createMock<
-          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >(),
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: alphaArgument,
+        flags: createMock<DiscordCommandBooleanFlag<DummyFlagEnum>[]>(),
       });
     });
 
@@ -713,16 +606,12 @@ describe(`DiscordCommandFlags`, (): void => {
     });
 
     describe(`when there is one flag`, (): void => {
-      let flag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag: DiscordCommandBooleanFlag<DummyFlagEnum>;
 
       beforeEach((): void => {
-        flag = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+        flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.ALPHA,
           })
         );
         discordCommandFlags.setFlags([flag]);
@@ -733,76 +622,25 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsLowerCaseNameWithShortcuts();
 
-        expect(result).toStrictEqual([`enabled`]);
+        expect(result).toStrictEqual([`alpha-flag`]);
       });
     });
 
     describe(`when there is two flags with one shortcut each`, (): void => {
-      let flag1: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
-      let flag2: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+      let flag1: DiscordCommandBooleanFlag<DummyFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DummyFlagEnum>;
 
       beforeEach((): void => {
-        flag1 = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
-            shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
+        flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.ALPHA,
+            shortcuts: [DummyFlagEnum.BETA],
           })
         );
-        flag2 = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.E,
-            shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.ENABLED],
-          })
-        );
-        discordCommandFlags.setFlags([flag1, flag2]);
-      });
-
-      it(`should return an array containing the names of the flags and the shortcuts`, (): void => {
-        expect.assertions(1);
-
-        const result = discordCommandFlags.getAllFlagsLowerCaseNameWithShortcuts();
-
-        expect(result).toStrictEqual([`enabled`, `e`, `e`, `enabled`]);
-      });
-    });
-
-    describe(`when there is two flags with two shortcuts each`, (): void => {
-      let flag1: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
-      let flag2: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
-
-      beforeEach((): void => {
-        flag1 = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
-            shortcuts: [
-              DiscordMessageCommandFeatureNoonFlagEnum.E,
-              DiscordMessageCommandFeatureNoonFlagEnum.E,
-            ],
-          })
-        );
-        flag2 = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
-          createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
-          >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.E,
-            shortcuts: [
-              DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
-              DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
-            ],
+        flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.CHARLIE,
+            shortcuts: [DummyFlagEnum.DELTA],
           })
         );
         discordCommandFlags.setFlags([flag1, flag2]);
@@ -814,12 +652,46 @@ describe(`DiscordCommandFlags`, (): void => {
         const result = discordCommandFlags.getAllFlagsLowerCaseNameWithShortcuts();
 
         expect(result).toStrictEqual([
-          `enabled`,
-          `e`,
-          `e`,
-          `e`,
-          `enabled`,
-          `enabled`,
+          `alpha-flag`,
+          `beta-flag`,
+          `charlie-flag`,
+          `delta-flag`,
+        ]);
+      });
+    });
+
+    describe(`when there is two flags with two shortcuts each`, (): void => {
+      let flag1: DiscordCommandBooleanFlag<DummyFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DummyFlagEnum>;
+
+      beforeEach((): void => {
+        flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.ALPHA,
+            shortcuts: [DummyFlagEnum.BETA, DummyFlagEnum.CHARLIE],
+          })
+        );
+        flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<IDiscordCommandFlag<DummyFlagEnum>>({
+            name: DummyFlagEnum.DELTA,
+            shortcuts: [DummyFlagEnum.ECHO, DummyFlagEnum.FOXTROT],
+          })
+        );
+        discordCommandFlags.setFlags([flag1, flag2]);
+      });
+
+      it(`should return an array containing the names of the flags and the shortcuts`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getAllFlagsLowerCaseNameWithShortcuts();
+
+        expect(result).toStrictEqual([
+          `alpha-flag`,
+          `beta-flag`,
+          `charlie-flag`,
+          `delta-flag`,
+          `echo-flag`,
+          `foxtrot-flag`,
         ]);
       });
     });
@@ -829,21 +701,17 @@ describe(`DiscordCommandFlags`, (): void => {
     let message: string;
 
     beforeEach((): void => {
-      discordCommandFlags = new DiscordCommandFlags<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >({
-        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: alphaArgument,
         flags: [
-          new DiscordCommandBooleanFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum
-          >({
+          new DiscordCommandBooleanFlag<DummyFlagEnum>({
             action: createMock<DiscordCommandFlagAction>({
               execute: (): Promise<IDiscordCommandFlagSuccess> =>
                 Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
             }),
             description: ``,
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
-            shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
+            name: DummyFlagEnum.ALPHA,
+            shortcuts: [DummyFlagEnum.BETA],
           }),
         ],
       });
@@ -875,7 +743,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`flag\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`flag\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -895,7 +763,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`FLAG\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`FLAG\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -915,7 +783,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`flag\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`flag\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -935,7 +803,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`FLAG\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`FLAG\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -955,7 +823,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -975,7 +843,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -995,7 +863,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1015,7 +883,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1035,7 +903,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1055,7 +923,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1065,12 +933,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains an existing boolean flag`, (): void => {
       beforeEach((): void => {
-        message = `--enabled`;
+        message = `--alpha-flag`;
       });
 
       describe(`when the flag does not have a value at all`, (): void => {
         beforeEach((): void => {
-          message = `--enabled`;
+          message = `--alpha-flag`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -1080,7 +948,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`enabled\` does not have a value. Specify either \`true\` or \`false\`.`,
+              description: `The flag \`alpha-flag\` does not have a value. Specify either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
@@ -1090,7 +958,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag does not have a value`, (): void => {
         beforeEach((): void => {
-          message = `--enabled=`;
+          message = `--alpha-flag=`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -1100,7 +968,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`enabled\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+              description: `The flag \`alpha-flag\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
@@ -1110,7 +978,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has an invalid value`, (): void => {
         beforeEach((): void => {
-          message = `--enabled=bad`;
+          message = `--alpha-flag=bad`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -1120,7 +988,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`enabled\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+              description: `The flag \`alpha-flag\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
@@ -1130,7 +998,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has true as value`, (): void => {
         beforeEach((): void => {
-          message = `--enabled=true`;
+          message = `--alpha-flag=true`;
         });
 
         it(`should return null`, (): void => {
@@ -1144,7 +1012,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has false as value`, (): void => {
         beforeEach((): void => {
-          message = `--enabled=false`;
+          message = `--alpha-flag=false`;
         });
 
         it(`should return null`, (): void => {
@@ -1159,12 +1027,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains an existing boolean uppercase flag`, (): void => {
       beforeEach((): void => {
-        message = `--ENABLED`;
+        message = `--ALPHA-FLAG`;
       });
 
       describe(`when the flag does not have a value at all`, (): void => {
         beforeEach((): void => {
-          message = `--ENABLED`;
+          message = `--ALPHA-FLAG`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -1174,7 +1042,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`ENABLED\` does not have a value. Specify either \`true\` or \`false\`.`,
+              description: `The flag \`ALPHA-FLAG\` does not have a value. Specify either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
@@ -1184,7 +1052,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag does not have a value`, (): void => {
         beforeEach((): void => {
-          message = `--ENABLED=`;
+          message = `--ALPHA-FLAG=`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -1194,7 +1062,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`ENABLED\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+              description: `The flag \`ALPHA-FLAG\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
@@ -1204,7 +1072,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has an invalid value`, (): void => {
         beforeEach((): void => {
-          message = `--ENABLED=BAD`;
+          message = `--ALPHA-FLAG=BAD`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -1214,7 +1082,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`ENABLED\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+              description: `The flag \`ALPHA-FLAG\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
@@ -1224,7 +1092,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has true as value`, (): void => {
         beforeEach((): void => {
-          message = `--ENABLED=TRUE`;
+          message = `--ALPHA-FLAG=TRUE`;
         });
 
         it(`should return null`, (): void => {
@@ -1238,7 +1106,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has false as value`, (): void => {
         beforeEach((): void => {
-          message = `--ENABLED=FALSE`;
+          message = `--ALPHA-FLAG=FALSE`;
         });
 
         it(`should return null`, (): void => {
@@ -1253,12 +1121,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains an existing shortcut flag`, (): void => {
       beforeEach((): void => {
-        message = `-e`;
+        message = `-beta-flag`;
       });
 
       describe(`when the flag does not have a value at all`, (): void => {
         beforeEach((): void => {
-          message = `-e`;
+          message = `-beta-flag`;
         });
 
         it(`should return null`, (): void => {
@@ -1272,7 +1140,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag does not have a value`, (): void => {
         beforeEach((): void => {
-          message = `-e=`;
+          message = `-beta-flag=`;
         });
 
         it(`should return null`, (): void => {
@@ -1286,7 +1154,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has an invalid value`, (): void => {
         beforeEach((): void => {
-          message = `-e=bad`;
+          message = `-beta-flag=bad`;
         });
 
         it(`should return null`, (): void => {
@@ -1301,12 +1169,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains an existing shortcut uppercase flag`, (): void => {
       beforeEach((): void => {
-        message = `-E`;
+        message = `-BETA-FLAG`;
       });
 
       describe(`when the flag does not have a value at all`, (): void => {
         beforeEach((): void => {
-          message = `-E`;
+          message = `-BETA-FLAG`;
         });
 
         it(`should return null`, (): void => {
@@ -1320,7 +1188,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag does not have a value`, (): void => {
         beforeEach((): void => {
-          message = `-E=`;
+          message = `-BETA-FLAG=`;
         });
 
         it(`should return null`, (): void => {
@@ -1334,7 +1202,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has a value`, (): void => {
         beforeEach((): void => {
-          message = `-E=BAD`;
+          message = `-BETA-FLAG=BAD`;
         });
 
         it(`should return null`, (): void => {
@@ -1349,7 +1217,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains a valid boolean flag and an unknown invalid flag`, (): void => {
       beforeEach((): void => {
-        message = `--enabled=true --flag`;
+        message = `--alpha-flag=true --flag`;
       });
 
       it(`should return a list with one error about the unknown flag`, (): void => {
@@ -1359,7 +1227,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`flag\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`flag\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1369,7 +1237,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains a valid boolean flag and an unknown invalid uppercase flag`, (): void => {
       beforeEach((): void => {
-        message = `--ENABLED=TRUE --FLAG`;
+        message = `--ALPHA-FLAG=TRUE --FLAG`;
       });
 
       it(`should return a list with one error about the unknown flag`, (): void => {
@@ -1379,7 +1247,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`FLAG\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`FLAG\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1389,7 +1257,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains a valid boolean flag and an unknown flag`, (): void => {
       beforeEach((): void => {
-        message = `--enabled=true --flag=true`;
+        message = `--alpha-flag=true --flag=true`;
       });
 
       it(`should return a list with one error about the unknown flag`, (): void => {
@@ -1399,7 +1267,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`flag\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`flag\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1409,7 +1277,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains a valid boolean flag and an unknown uppercase flag`, (): void => {
       beforeEach((): void => {
-        message = `--ENABLED=TRUE --FLAG=TRUE`;
+        message = `--ALPHA-FLAG=TRUE --FLAG=TRUE`;
       });
 
       it(`should return a list with one error about the unknown flag`, (): void => {
@@ -1419,7 +1287,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`FLAG\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`FLAG\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1429,7 +1297,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains a valid boolean flag and an unknown invalid shortcut flag`, (): void => {
       beforeEach((): void => {
-        message = `--enabled=true -f`;
+        message = `--alpha-flag=true -f`;
       });
 
       it(`should return a list with one error about the unknown flag`, (): void => {
@@ -1439,7 +1307,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1449,7 +1317,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains a valid boolean flag and an unknown invalid shortcut uppercase flag`, (): void => {
       beforeEach((): void => {
-        message = `--ENABLED=TRUE -F`;
+        message = `--ALPHA-FLAG=TRUE -F`;
       });
 
       it(`should return a list with one error about the unknown flag`, (): void => {
@@ -1459,7 +1327,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1469,7 +1337,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains a valid boolean flag and an unknown shortcut flag`, (): void => {
       beforeEach((): void => {
-        message = `--enabled=true -f=true`;
+        message = `--alpha-flag=true -f=true`;
       });
 
       it(`should return a list with one error about the unknown flag`, (): void => {
@@ -1479,7 +1347,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1489,7 +1357,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains a valid boolean flag and an unknown shortcut uppercase flag`, (): void => {
       beforeEach((): void => {
-        message = `--ENABLED=TRUE -F=TRUE`;
+        message = `--ALPHA-FLAG=TRUE -F=TRUE`;
       });
 
       it(`should return a list with one error about the unknown flag`, (): void => {
@@ -1499,7 +1367,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1509,12 +1377,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains a valid boolean flag and an existing boolean flag`, (): void => {
       beforeEach((): void => {
-        message = `--enabled=true --enabled`;
+        message = `--alpha-flag=true --alpha-flag`;
       });
 
       describe(`when the flag does not have a value at all`, (): void => {
         beforeEach((): void => {
-          message = `--enabled=true --enabled`;
+          message = `--alpha-flag=true --alpha-flag`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -1524,7 +1392,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`enabled\` does not have a value. Specify either \`true\` or \`false\`.`,
+              description: `The flag \`alpha-flag\` does not have a value. Specify either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
@@ -1534,7 +1402,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag does not have a value`, (): void => {
         beforeEach((): void => {
-          message = `--enabled=true --enabled=`;
+          message = `--alpha-flag=true --alpha-flag=`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -1544,7 +1412,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`enabled\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+              description: `The flag \`alpha-flag\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
@@ -1554,7 +1422,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has an invalid value`, (): void => {
         beforeEach((): void => {
-          message = `--enabled=true --enabled=bad`;
+          message = `--alpha-flag=true --alpha-flag=bad`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -1564,7 +1432,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`enabled\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+              description: `The flag \`alpha-flag\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
@@ -1574,7 +1442,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has true as value`, (): void => {
         beforeEach((): void => {
-          message = `--enabled=true --enabled=true`;
+          message = `--alpha-flag=true --alpha-flag=true`;
         });
 
         it(`should return null`, (): void => {
@@ -1588,7 +1456,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has false as value`, (): void => {
         beforeEach((): void => {
-          message = `--enabled=true --enabled=false`;
+          message = `--alpha-flag=true --alpha-flag=false`;
         });
 
         it(`should return null`, (): void => {
@@ -1603,12 +1471,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains a valid boolean flag and an existing boolean uppercase flag`, (): void => {
       beforeEach((): void => {
-        message = `--ENABLED=TRUE --ENABLED`;
+        message = `--ALPHA-FLAG=TRUE --ALPHA-FLAG`;
       });
 
       describe(`when the flag does not have a value at all`, (): void => {
         beforeEach((): void => {
-          message = `--ENABLED=TRUE --ENABLED`;
+          message = `--ALPHA-FLAG=TRUE --ALPHA-FLAG`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -1618,7 +1486,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`ENABLED\` does not have a value. Specify either \`true\` or \`false\`.`,
+              description: `The flag \`ALPHA-FLAG\` does not have a value. Specify either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
@@ -1628,7 +1496,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag does not have a value`, (): void => {
         beforeEach((): void => {
-          message = `--ENABLED=TRUE --ENABLED=`;
+          message = `--ALPHA-FLAG=TRUE --ALPHA-FLAG=`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -1638,7 +1506,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`ENABLED\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+              description: `The flag \`ALPHA-FLAG\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
@@ -1648,7 +1516,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has an invalid value`, (): void => {
         beforeEach((): void => {
-          message = `--ENABLED=TRUE --ENABLED=BAD`;
+          message = `--ALPHA-FLAG=TRUE --ALPHA-FLAG=BAD`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -1658,7 +1526,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`ENABLED\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+              description: `The flag \`ALPHA-FLAG\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
@@ -1668,7 +1536,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has true as value`, (): void => {
         beforeEach((): void => {
-          message = `--ENABLED=TRUE --ENABLED=TRUE`;
+          message = `--ALPHA-FLAG=TRUE --ALPHA-FLAG=TRUE`;
         });
 
         it(`should return null`, (): void => {
@@ -1682,7 +1550,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has false as value`, (): void => {
         beforeEach((): void => {
-          message = `--ENABLED=TRUE --ENABLED=FALSE`;
+          message = `--ALPHA-FLAG=TRUE --ALPHA-FLAG=FALSE`;
         });
 
         it(`should return null`, (): void => {
@@ -1707,12 +1575,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`flag\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`flag\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`other-flag\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`other-flag\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1732,12 +1600,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`FLAG\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`FLAG\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`OTHER-FLAG\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`OTHER-FLAG\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1757,12 +1625,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`flag\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`flag\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`other-flag\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`other-flag\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1782,12 +1650,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`FLAG\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`FLAG\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`OTHER-FLAG\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`OTHER-FLAG\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1807,12 +1675,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`d\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`d\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1832,12 +1700,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`D\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`D\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1857,12 +1725,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`d\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`d\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1882,12 +1750,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`D\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`D\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1907,12 +1775,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`d\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`d\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1932,12 +1800,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`D\` is unknown to the \`noon\` feature.`,
+            description: `The flag \`D\` is unknown to the \`alpha-argument\` feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1947,12 +1815,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains two existing boolean flags`, (): void => {
       beforeEach((): void => {
-        message = `--enabled --other-flag`;
+        message = `--alpha-flag --other-flag`;
       });
 
       describe(`when the flags does not have a value at all`, (): void => {
         beforeEach((): void => {
-          message = `--enabled --other-flag`;
+          message = `--alpha-flag --other-flag`;
         });
 
         it(`should return a list with two errors about the invalid flag`, (): void => {
@@ -1962,12 +1830,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`enabled\` does not have a value. Specify either \`true\` or \`false\`.`,
+              description: `The flag \`alpha-flag\` does not have a value. Specify either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
             {
-              description: `The flag \`other-flag\` is unknown to the \`noon\` feature.`,
+              description: `The flag \`other-flag\` is unknown to the \`alpha-argument\` feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -1977,7 +1845,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flags does not have a value`, (): void => {
         beforeEach((): void => {
-          message = `--enabled= --other-flag=`;
+          message = `--alpha-flag= --other-flag=`;
         });
 
         it(`should return a list with two errors about the invalid flag`, (): void => {
@@ -1987,12 +1855,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`enabled\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+              description: `The flag \`alpha-flag\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
             {
-              description: `The flag \`other-flag\` is unknown to the \`noon\` feature.`,
+              description: `The flag \`other-flag\` is unknown to the \`alpha-argument\` feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2002,7 +1870,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flags has an invalid value`, (): void => {
         beforeEach((): void => {
-          message = `--enabled=bad --other-flag=bad`;
+          message = `--alpha-flag=bad --other-flag=bad`;
         });
 
         it(`should return a list with two errors about the invalid flag`, (): void => {
@@ -2012,12 +1880,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`enabled\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+              description: `The flag \`alpha-flag\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
             {
-              description: `The flag \`other-flag\` is unknown to the \`noon\` feature.`,
+              description: `The flag \`other-flag\` is unknown to the \`alpha-argument\` feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2027,7 +1895,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has true as value`, (): void => {
         beforeEach((): void => {
-          message = `--enabled=true --other-flag=bad`;
+          message = `--alpha-flag=true --other-flag=bad`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -2037,7 +1905,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`other-flag\` is unknown to the \`noon\` feature.`,
+              description: `The flag \`other-flag\` is unknown to the \`alpha-argument\` feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2047,7 +1915,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has false as value`, (): void => {
         beforeEach((): void => {
-          message = `--enabled=false --other-flag=bad`;
+          message = `--alpha-flag=false --other-flag=bad`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -2057,7 +1925,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`other-flag\` is unknown to the \`noon\` feature.`,
+              description: `The flag \`other-flag\` is unknown to the \`alpha-argument\` feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2068,12 +1936,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains two existing boolean uppercase flags`, (): void => {
       beforeEach((): void => {
-        message = `--ENABLED --OTHER-FLAG`;
+        message = `--ALPHA-FLAG --OTHER-FLAG`;
       });
 
       describe(`when the flags does not have a value at all`, (): void => {
         beforeEach((): void => {
-          message = `--ENABLED --OTHER-FLAG`;
+          message = `--ALPHA-FLAG --OTHER-FLAG`;
         });
 
         it(`should return a list with two errors about the invalid flag`, (): void => {
@@ -2083,12 +1951,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`ENABLED\` does not have a value. Specify either \`true\` or \`false\`.`,
+              description: `The flag \`ALPHA-FLAG\` does not have a value. Specify either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
             {
-              description: `The flag \`OTHER-FLAG\` is unknown to the \`noon\` feature.`,
+              description: `The flag \`OTHER-FLAG\` is unknown to the \`alpha-argument\` feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2098,7 +1966,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flags does not have a value`, (): void => {
         beforeEach((): void => {
-          message = `--ENABLED= --OTHER-FLAG=`;
+          message = `--ALPHA-FLAG= --OTHER-FLAG=`;
         });
 
         it(`should return a list with two errors about the invalid flag`, (): void => {
@@ -2108,12 +1976,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`ENABLED\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+              description: `The flag \`ALPHA-FLAG\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
             {
-              description: `The flag \`OTHER-FLAG\` is unknown to the \`noon\` feature.`,
+              description: `The flag \`OTHER-FLAG\` is unknown to the \`alpha-argument\` feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2123,7 +1991,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flags has an invalid value`, (): void => {
         beforeEach((): void => {
-          message = `--ENABLED=BAD --OTHER-FLAG=BAD`;
+          message = `--ALPHA-FLAG=BAD --OTHER-FLAG=BAD`;
         });
 
         it(`should return a list with two errors about the invalid flag`, (): void => {
@@ -2133,12 +2001,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`ENABLED\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+              description: `The flag \`ALPHA-FLAG\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
               isUnknown: false,
               name: `Invalid boolean flag`,
             },
             {
-              description: `The flag \`OTHER-FLAG\` is unknown to the \`noon\` feature.`,
+              description: `The flag \`OTHER-FLAG\` is unknown to the \`alpha-argument\` feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2148,7 +2016,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has true as value`, (): void => {
         beforeEach((): void => {
-          message = `--ENABLED=TRUE --OTHER-FLAG=BAD`;
+          message = `--ALPHA-FLAG=TRUE --OTHER-FLAG=BAD`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -2158,7 +2026,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`OTHER-FLAG\` is unknown to the \`noon\` feature.`,
+              description: `The flag \`OTHER-FLAG\` is unknown to the \`alpha-argument\` feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2168,7 +2036,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the flag has false as value`, (): void => {
         beforeEach((): void => {
-          message = `--ENABLED=FALSE --OTHER-FLAG=BAD`;
+          message = `--ALPHA-FLAG=FALSE --OTHER-FLAG=BAD`;
         });
 
         it(`should return a list with one error about the invalid flag`, (): void => {
@@ -2178,7 +2046,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`OTHER-FLAG\` is unknown to the \`noon\` feature.`,
+              description: `The flag \`OTHER-FLAG\` is unknown to the \`alpha-argument\` feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2193,7 +2061,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     beforeEach((): void => {
       discordCommandFlags = new DiscordCommandFlags<string>({
-        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+        command: alphaArgument,
         flags: [
           new DiscordCommandBooleanFlag<string>({
             action: createMock<DiscordCommandFlagAction>({
@@ -2201,8 +2069,8 @@ describe(`DiscordCommandFlags`, (): void => {
                 Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
             }),
             description: ``,
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
-            shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
+            name: DummyFlagEnum.ALPHA,
+            shortcuts: [DummyFlagEnum.BETA],
           }),
           new DiscordCommandBooleanFlag<string>({
             action: createMock<DiscordCommandFlagAction>({
@@ -2249,7 +2117,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains a boolean flag`, (): void => {
       beforeEach((): void => {
-        message = `--enabled=true`;
+        message = `--alpha-flag=true`;
       });
 
       it(`should return null`, (): void => {
@@ -2263,7 +2131,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains a boolean uppercase flag`, (): void => {
       beforeEach((): void => {
-        message = `--ENABLED=TRUE`;
+        message = `--ALPHA-FLAG=TRUE`;
       });
 
       it(`should return null`, (): void => {
@@ -2277,7 +2145,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains a shortcut flag`, (): void => {
       beforeEach((): void => {
-        message = `-e`;
+        message = `-beta-flag`;
       });
 
       it(`should return null`, (): void => {
@@ -2291,7 +2159,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains a shortcut uppercase flag`, (): void => {
       beforeEach((): void => {
-        message = `-E`;
+        message = `-ALPHA-FLAG`;
       });
 
       it(`should return null`, (): void => {
@@ -2305,7 +2173,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains two duplicated boolean flags`, (): void => {
       beforeEach((): void => {
-        message = `--enabled=true --enabled=true`;
+        message = `--alpha-flag=true --alpha-flag=true`;
       });
 
       it(`should return a list with one error about the duplicated flag`, (): void => {
@@ -2315,8 +2183,8 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flags \`--enabled=true\` and \`--enabled=true\` are duplicated.`,
-            name: `Enabled flag duplicated`,
+            description: `The flags \`--alpha-flag=true\` and \`--alpha-flag=true\` are duplicated.`,
+            name: `Alpha-flag flag duplicated`,
           },
         ] as IDiscordCommandFlagsDuplicated);
       });
@@ -2324,7 +2192,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains two duplicated boolean uppercase flags`, (): void => {
       beforeEach((): void => {
-        message = `--ENABLED=TRUE --ENABLED=TRUE`;
+        message = `--ALPHA-FLAG=TRUE --ALPHA-FLAG=TRUE`;
       });
 
       it(`should return a list with one error about the duplicated flag`, (): void => {
@@ -2334,8 +2202,8 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flags \`--ENABLED=TRUE\` and \`--ENABLED=TRUE\` are duplicated.`,
-            name: `Enabled flag duplicated`,
+            description: `The flags \`--ALPHA-FLAG=TRUE\` and \`--ALPHA-FLAG=TRUE\` are duplicated.`,
+            name: `Alpha-flag flag duplicated`,
           },
         ] as IDiscordCommandFlagsDuplicated);
       });
@@ -2343,7 +2211,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message contains three duplicated boolean flags`, (): void => {
       beforeEach((): void => {
-        message = `--enabled=true -e --EnAbLeD=FaLsE`;
+        message = `--alpha-flag=true -beta-flag --AlPhA-fLaG=FaLsE`;
       });
 
       it(`should return a list with one error about the duplicated flag`, (): void => {
@@ -2353,8 +2221,8 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flags \`--enabled=true\`, \`-e\` and \`--EnAbLeD=FaLsE\` are duplicated.`,
-            name: `Enabled flag duplicated`,
+            description: `The flags \`--alpha-flag=true\`, \`-beta-flag\` and \`--AlPhA-fLaG=FaLsE\` are duplicated.`,
+            name: `Alpha-flag flag duplicated`,
           },
         ] as IDiscordCommandFlagsDuplicated);
       });
@@ -2389,27 +2257,23 @@ describe(`DiscordCommandFlags`, (): void => {
       actionMock = jest
         .fn<Promise<IDiscordCommandFlagSuccess>, unknown[]>()
         .mockResolvedValue(discordCommandFlagSuccess);
-      discordCommandFlags = new DiscordCommandFlags<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >({
-        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: alphaArgument,
         flags: [
-          new DiscordCommandBooleanFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum
-          >({
+          new DiscordCommandBooleanFlag<DummyFlagEnum>({
             action: createMock<DiscordCommandFlagAction>({
               execute: actionMock,
             }),
             description: ``,
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
-            shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
+            name: DummyFlagEnum.ALPHA,
+            shortcuts: [DummyFlagEnum.BETA],
           }),
         ],
       });
       anyDiscordMessage = createMock<IAnyDiscordMessage>({
         id: `dummy-id`,
       });
-      messageFlags = `--enabled=true`;
+      messageFlags = `--alpha-flag=true`;
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
@@ -2434,7 +2298,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message flags contains a flag with a value`, (): void => {
       beforeEach((): void => {
-        messageFlags = `--enabled=true`;
+        messageFlags = `--alpha-flag=true`;
       });
 
       describe(`when the given message flags contains an unknown flag with a value`, (): void => {
@@ -2508,7 +2372,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the given message flags contains a valid flag with a value`, (): void => {
         beforeEach((): void => {
-          messageFlags = `--enabled=true`;
+          messageFlags = `--alpha-flag=true`;
         });
 
         it(`should log about handling the given flag`, async (): Promise<
@@ -2522,7 +2386,7 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
             context: `DiscordCommandFlags`,
             hasExtendedContext: true,
-            message: `context-[dummy-id] text-handling value-enabled flag...`,
+            message: `context-[dummy-id] text-handling value-alpha-flag flag...`,
           } as ILoggerLog);
         });
 
@@ -2562,7 +2426,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message flags contains a shortcut flag with a value`, (): void => {
       beforeEach((): void => {
-        messageFlags = `-e`;
+        messageFlags = `-beta-flag`;
       });
 
       describe(`when the given message flags contains an unknown shortcut flag with a value`, (): void => {
@@ -2636,7 +2500,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the given message flags contains a valid shortcut flag with a value`, (): void => {
         beforeEach((): void => {
-          messageFlags = `-e`;
+          messageFlags = `-beta-flag`;
         });
 
         it(`should log about handling the given shortcut flag`, async (): Promise<
@@ -2650,7 +2514,7 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
             context: `DiscordCommandFlags`,
             hasExtendedContext: true,
-            message: `context-[dummy-id] text-handling value-e flag...`,
+            message: `context-[dummy-id] text-handling value-beta-flag flag...`,
           } as ILoggerLog);
         });
 
@@ -2690,7 +2554,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message flags contains two flags with a value`, (): void => {
       beforeEach((): void => {
-        messageFlags = `--enabled=true --enabled=true`;
+        messageFlags = `--alpha-flag=true --alpha-flag=true`;
       });
 
       describe(`when the given message flags contains two unknown flags with a value`, (): void => {
@@ -2769,7 +2633,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the given message flags contains two valid flags with a value`, (): void => {
         beforeEach((): void => {
-          messageFlags = `--enabled=true --enabled=true`;
+          messageFlags = `--alpha-flag=true --alpha-flag=true`;
         });
 
         it(`should log about handling the given flags`, async (): Promise<
@@ -2783,12 +2647,12 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
             context: `DiscordCommandFlags`,
             hasExtendedContext: true,
-            message: `context-[dummy-id] text-handling value-enabled flag...`,
+            message: `context-[dummy-id] text-handling value-alpha-flag flag...`,
           } as ILoggerLog);
           expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
             context: `DiscordCommandFlags`,
             hasExtendedContext: true,
-            message: `context-[dummy-id] text-handling value-enabled flag...`,
+            message: `context-[dummy-id] text-handling value-alpha-flag flag...`,
           } as ILoggerLog);
         });
 
@@ -2834,7 +2698,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message flags contains two shortcut flags with a value`, (): void => {
       beforeEach((): void => {
-        messageFlags = `-e -e`;
+        messageFlags = `-beta-flag -beta-flag`;
       });
 
       describe(`when the given message flags contains two unknown shortcuts flag with a value`, (): void => {
@@ -2913,7 +2777,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the given message flags contains two valid shortcuts flag with a value`, (): void => {
         beforeEach((): void => {
-          messageFlags = `-e -e`;
+          messageFlags = `-beta-flag -beta-flag`;
         });
 
         it(`should log about handling the given shortcut flags`, async (): Promise<
@@ -2927,12 +2791,12 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
             context: `DiscordCommandFlags`,
             hasExtendedContext: true,
-            message: `context-[dummy-id] text-handling value-e flag...`,
+            message: `context-[dummy-id] text-handling value-beta-flag flag...`,
           } as ILoggerLog);
           expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
             context: `DiscordCommandFlags`,
             hasExtendedContext: true,
-            message: `context-[dummy-id] text-handling value-e flag...`,
+            message: `context-[dummy-id] text-handling value-beta-flag flag...`,
           } as ILoggerLog);
         });
 
@@ -2990,27 +2854,23 @@ describe(`DiscordCommandFlags`, (): void => {
       actionMock = jest
         .fn<Promise<IDiscordCommandFlagSuccess>, unknown[]>()
         .mockResolvedValue(discordCommandFlagSuccess);
-      discordCommandFlags = new DiscordCommandFlags<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >({
-        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: alphaArgument,
         flags: [
-          new DiscordCommandBooleanFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum
-          >({
+          new DiscordCommandBooleanFlag<DummyFlagEnum>({
             action: createMock<DiscordCommandFlagAction>({
               execute: actionMock,
             }),
             description: ``,
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
-            shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
+            name: DummyFlagEnum.ALPHA,
+            shortcuts: [DummyFlagEnum.BETA],
           }),
         ],
       });
       anyDiscordMessage = createMock<IAnyDiscordMessage>({
         id: `dummy-id`,
       });
-      messageFlag = `--enabled=true`;
+      messageFlag = `--alpha-flag=true`;
 
       loggerServiceDebugSpy = jest
         .spyOn(loggerService, `debug`)
@@ -3026,13 +2886,13 @@ describe(`DiscordCommandFlags`, (): void => {
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordCommandFlags`,
         hasExtendedContext: true,
-        message: `context-[dummy-id] text-handling value-enabled flag...`,
+        message: `context-[dummy-id] text-handling value-alpha-flag flag...`,
       } as ILoggerLog);
     });
 
     describe(`when the given message flag is a flag with a value`, (): void => {
       beforeEach((): void => {
-        messageFlag = `--enabled=true`;
+        messageFlag = `--alpha-flag=true`;
       });
 
       describe(`when the given message flag is an unknown flag`, (): void => {
@@ -3069,7 +2929,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the given message flag is a valid flag`, (): void => {
         beforeEach((): void => {
-          messageFlag = `--enabled=true`;
+          messageFlag = `--alpha-flag=true`;
         });
 
         it(`should execute the flag action`, async (): Promise<void> => {
@@ -3089,7 +2949,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
     describe(`when the given message flag is a shortcut flag`, (): void => {
       beforeEach((): void => {
-        messageFlag = `-e`;
+        messageFlag = `-beta-flag`;
       });
 
       describe(`when the given message shortcut flag is an unknown flag`, (): void => {
@@ -3126,7 +2986,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       describe(`when the given message shortcut flag is a valid flag`, (): void => {
         beforeEach((): void => {
-          messageFlag = `-e`;
+          messageFlag = `-beta-flag`;
         });
 
         it(`should execute the flag action`, async (): Promise<void> => {
