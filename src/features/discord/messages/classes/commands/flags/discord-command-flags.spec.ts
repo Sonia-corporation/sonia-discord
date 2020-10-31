@@ -2,6 +2,7 @@ import { createMock } from "ts-auto-mock";
 import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
+import { DiscordCommandFlagSuccessTitleEnum } from "../../../enums/commands/flags/discord-command-flag-success-title.enum";
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON } from "../../../services/command/feature/constants/discord-message-command-feature-name-noon";
@@ -10,11 +11,31 @@ import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordCommandFlagsDuplicated } from "../../../types/commands/flags/discord-command-flags-duplicated";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
+import { DiscordCommandFirstArgument } from "../arguments/discord-command-first-argument";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
+import { DiscordCommandFlag } from "./discord-command-flag";
 import { DiscordCommandFlagAction } from "./discord-command-flag-action";
 import { DiscordCommandFlags } from "./discord-command-flags";
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
+
+enum DummyFirstArgumentEnum {
+  ALPHA = `alpha`,
+}
+
+enum DummyFlagEnum {
+  BETA = `beta`,
+  CHARLIE = `charlie`,
+}
+
+class DummyAction implements DiscordCommandFlagAction {
+  public execute(): Promise<IDiscordCommandFlagSuccess> {
+    return Promise.resolve({
+      description: ``,
+      name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
+    });
+  }
+}
 
 describe(`DiscordCommandFlags`, (): void => {
   let discordCommandFlags: DiscordCommandFlags<string>;
@@ -111,27 +132,72 @@ describe(`DiscordCommandFlags`, (): void => {
   });
 
   describe(`getFlags()`, (): void => {
+    let firstArgument: DiscordCommandFirstArgument<DummyFirstArgumentEnum>;
+    let betaFlag: DiscordCommandFlag<DummyFlagEnum>;
+    let charlieFlag: DiscordCommandFlag<DummyFlagEnum>;
+
     beforeEach((): void => {
-      discordCommandFlags = new DiscordCommandFlags<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >({
-        command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
-        flags: createMock<
-          DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-        >(),
+      firstArgument = new DiscordCommandFirstArgument<DummyFirstArgumentEnum>({
+        description: ``,
+        name: DummyFirstArgumentEnum.ALPHA,
+      });
+      betaFlag = new DiscordCommandBooleanFlag({
+        action: new DummyAction(),
+        description: ``,
+        name: DummyFlagEnum.BETA,
+      });
+      charlieFlag = new DiscordCommandBooleanFlag({
+        action: new DummyAction(),
+        description: ``,
+        name: DummyFlagEnum.CHARLIE,
+      });
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: firstArgument,
+        flags: [charlieFlag, betaFlag],
       });
     });
 
     it(`should return the flags`, (): void => {
       expect.assertions(1);
-      const flags = createMock<
-        DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>[]
-      >();
-      discordCommandFlags.setFlags(flags);
 
       const result = discordCommandFlags.getFlags();
 
-      expect(result).toStrictEqual(flags);
+      expect(result).toStrictEqual([charlieFlag, betaFlag]);
+    });
+  });
+
+  describe(`getOrderedFlags()`, (): void => {
+    let firstArgument: DiscordCommandFirstArgument<DummyFirstArgumentEnum>;
+    let betaFlag: DiscordCommandFlag<DummyFlagEnum>;
+    let charlieFlag: DiscordCommandFlag<DummyFlagEnum>;
+
+    beforeEach((): void => {
+      firstArgument = new DiscordCommandFirstArgument<DummyFirstArgumentEnum>({
+        description: ``,
+        name: DummyFirstArgumentEnum.ALPHA,
+      });
+      betaFlag = new DiscordCommandBooleanFlag({
+        action: new DummyAction(),
+        description: ``,
+        name: DummyFlagEnum.BETA,
+      });
+      charlieFlag = new DiscordCommandBooleanFlag({
+        action: new DummyAction(),
+        description: ``,
+        name: DummyFlagEnum.CHARLIE,
+      });
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: firstArgument,
+        flags: [charlieFlag, betaFlag],
+      });
+    });
+
+    it(`should return the flags ordered alphabetically by flag name`, (): void => {
+      expect.assertions(1);
+
+      const result = discordCommandFlags.getOrderedFlags();
+
+      expect(result).toStrictEqual([betaFlag, charlieFlag]);
     });
   });
 

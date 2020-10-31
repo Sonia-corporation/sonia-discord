@@ -51,6 +51,14 @@ export class DiscordCommandFlags<T extends string> {
     return this._flags;
   }
 
+  public getOrderedFlags(): DiscordCommandFlag<T>[] {
+    return _.orderBy(
+      this.getFlags(),
+      (flag: Readonly<DiscordCommandFlag<T>>): T => flag.getName(),
+      `asc`
+    );
+  }
+
   public setFlags(flags: DiscordCommandFlag<T>[]): void {
     this._flags = flags;
   }
