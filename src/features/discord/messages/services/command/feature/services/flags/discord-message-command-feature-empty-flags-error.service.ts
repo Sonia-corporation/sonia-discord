@@ -90,7 +90,7 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
       name: `No flags specified`,
       value: `You did not specify a flag to configure the \`${_.lowerCase(
         featureName
-      )}\` feature.\nI will not guess what you wish to configure so please try again with a flag!\nAnd because I am kind and generous here is the list of all the flags you can configure for the \`${_.lowerCase(
+      )}\` feature.\nI will not guess what you wish to configure so please try again with a flag!\nAnd because I am kind and generous here is the list of all the flags available for the \`${_.lowerCase(
         featureName
       )}\` feature with an example.`,
     };
