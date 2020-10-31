@@ -1,5 +1,17 @@
 # Semantic Versioning Changelog
 
+# [1.82.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.81.0...1.82.0) (2020-10-31)
+
+
+### :bug: Bug Fixes
+
+* **noon:** the disabled flag will works as expected ([cfc68f9](https://github.com/Sonia-corporation/sonia-discord/commit/cfc68f9bd014607cd0c08c4dd7d51be64075b268))
+
+
+### :rocket: Features
+
+* **flags:** sort alphabetically the list of flags when display on messages ([88baf21](https://github.com/Sonia-corporation/sonia-discord/commit/88baf210a7d6a4e70e9ed464aec8c4cf21d74a8d))
+
 # [1.81.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.80.1...1.81.0) (2020-10-25)
 
 
