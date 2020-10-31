@@ -217,7 +217,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       expect(result.options.embed?.fields?.[1]).toStrictEqual({
         name: `All flags`,
-        value: `\`--enabled (or -e)\`, \`--disabled (or -d)\``,
+        value: `\`--disabled (or -d)\`, \`--enabled (or -e)\``,
       } as EmbedFieldData);
     });
 
