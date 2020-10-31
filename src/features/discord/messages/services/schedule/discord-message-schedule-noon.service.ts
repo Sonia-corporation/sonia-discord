@@ -179,6 +179,21 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     return Promise.reject(new Error(`Guild channel not writable`));
   }
 
+  public executeJob(): Promise<((Message | void)[] | void)[] | void> {
+    this._logJobTriggered();
+    this._logNextJobDate();
+
+    return this.handleMessages()
+      .then((guildMessages: ((Message | void)[] | void)[] | void): void => {
+        DiscordMessageScheduleNoonCountService.getInstance().countChannelsAndGuilds(
+          guildMessages
+        );
+      })
+      .catch((): void => {
+        this._logCouldNotHandleMessages();
+      });
+  }
+
   private _isValidGuild(
     firebaseGuild: Readonly<IFirebaseGuild | null | undefined>
   ): firebaseGuild is IFirebaseGuildVFinal {
@@ -189,24 +204,9 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     this._logJobRule(this._rule, `job`);
 
     this._job = scheduleJob(this._rule, (): void => {
-      this._executeJob();
+      void this.executeJob();
     });
 
-    this._logNextJobDate();
-  }
-
-  private _executeJob(): void {
-    this._logJobTriggered();
-
-    this.handleMessages()
-      .then((guildMessages: ((Message | void)[] | void)[] | void): void => {
-        DiscordMessageScheduleNoonCountService.getInstance().countChannelsAndGuilds(
-          guildMessages
-        );
-      })
-      .catch((): void => {
-        this._logCouldNotHandleMessages();
-      });
     this._logNextJobDate();
   }
 

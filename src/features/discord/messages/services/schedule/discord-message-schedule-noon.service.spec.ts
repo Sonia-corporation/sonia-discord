@@ -46,6 +46,10 @@ jest.mock(`moment-timezone`, (): any => (): any => {
   const moment = jest.requireActual(`moment-timezone`);
 
   moment.tz.setDefault(`Europe/Paris`);
+  moment.toDate = (): Date => new Date();
+  moment.format = (): string => `dummy-formatted-date`;
+  moment.toISOString = (): string => `dummy-iso-string-date`;
+  moment.fromNow = (): string => `dummy-from-now-date`;
   Date.now = (): number => time;
 
   return moment;
@@ -159,7 +163,6 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
     let loggerServiceDebugSpy: jest.SpyInstance;
     let getEveryHourScheduleRuleSpy: jest.SpyInstance;
     let handleMessagesSpy: jest.SpyInstance;
-    let discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy: jest.SpyInstance;
     let jobRescheduleMock: jest.Mock;
 
     beforeEach((): void => {
@@ -187,9 +190,6 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       handleMessagesSpy = jest
         .spyOn(service, `handleMessages`)
         .mockRejectedValue(new Error(`handleMessages error`));
-      discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy = jest
-        .spyOn(discordMessageScheduleNoonCountService, `countChannelsAndGuilds`)
-        .mockImplementation();
     });
 
     it(`should create a schedule`, (): void => {
@@ -299,47 +299,6 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         expect(handleMessagesSpy).toHaveBeenCalledTimes(1);
         expect(handleMessagesSpy).toHaveBeenCalledWith();
-      });
-
-      // @todo find a way to wait this async code
-      describe.skip(`when the handle of the messages failed`, (): void => {
-        beforeEach((): void => {
-          handleMessagesSpy.mockRejectedValue(
-            new Error(`handleMessages error`)
-          );
-        });
-
-        it(`should log that the messages could not have been handled`, (): void => {
-          expect.assertions(2);
-
-          service.startSchedule();
-
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
-          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
-            context: `DiscordMessageScheduleNoonService`,
-            message: `text-could not handle the messages`,
-          } as ILoggerLog);
-        });
-      });
-
-      // @todo find a way to wait this async code
-      describe.skip(`when the handle of the messages was successful`, (): void => {
-        beforeEach((): void => {
-          handleMessagesSpy.mockResolvedValue([]);
-        });
-
-        it(`should count the channels and guilds`, (): void => {
-          expect.assertions(2);
-
-          service.startSchedule();
-
-          expect(
-            discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy
-          ).toHaveBeenCalledTimes(1);
-          expect(
-            discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy
-          ).toHaveBeenCalledWith();
-        });
       });
 
       it(`should log the next job date`, (): void => {
@@ -1572,6 +1531,126 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
             discordGuildSoniaServiceSendMessageToChannelSpy
           ).not.toHaveBeenCalled();
         });
+      });
+    });
+  });
+
+  describe(`executeJob()`, (): void => {
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let handleMessagesSpy: jest.SpyInstance;
+    let discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageScheduleNoonService();
+      (service as any)._job = createMock<Job>({
+        nextInvocation(): Date {
+          return moment().toDate();
+        },
+        reschedule: jest.fn(),
+      });
+
+      loggerServiceDebugSpy = jest
+        .spyOn(loggerService, `debug`)
+        .mockImplementation();
+      handleMessagesSpy = jest
+        .spyOn(service, `handleMessages`)
+        .mockRejectedValue(new Error(`handleMessages error`));
+      discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy = jest
+        .spyOn(discordMessageScheduleNoonCountService, `countChannelsAndGuilds`)
+        .mockImplementation();
+    });
+
+    it(`should log about the triggered job`, async (): Promise<void> => {
+      expect.assertions(2);
+
+      await service.executeJob();
+
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+      expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+        context: `DiscordMessageScheduleNoonService`,
+        message: `text-job triggered`,
+      } as ILoggerLog);
+    });
+
+    it(`should log the next job date`, async (): Promise<void> => {
+      expect.assertions(2);
+
+      await service.executeJob();
+
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+      expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+        context: `DiscordMessageScheduleNoonService`,
+        message: `text-next job: value-dummy-from-now-date hint-(dummy-formatted-date)`,
+      } as ILoggerLog);
+    });
+
+    it(`should handle the messages`, async (): Promise<void> => {
+      expect.assertions(2);
+
+      await service.executeJob();
+
+      expect(handleMessagesSpy).toHaveBeenCalledTimes(1);
+      expect(handleMessagesSpy).toHaveBeenCalledWith();
+    });
+
+    describe(`when the handle of the messages failed`, (): void => {
+      beforeEach((): void => {
+        handleMessagesSpy.mockRejectedValue(new Error(`handleMessages error`));
+      });
+
+      it(`should log that the messages could not have been handled`, async (): Promise<
+        void
+      > => {
+        expect.assertions(2);
+
+        await service.executeJob();
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
+          context: `DiscordMessageScheduleNoonService`,
+          message: `text-could not handle the messages`,
+        } as ILoggerLog);
+      });
+
+      it(`should not count the channels and guilds`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+
+        await service.executeJob();
+
+        expect(
+          discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy
+        ).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the handle of the messages was successful`, (): void => {
+      beforeEach((): void => {
+        handleMessagesSpy.mockResolvedValue([]);
+      });
+
+      it(`should count the channels and guilds`, async (): Promise<void> => {
+        expect.assertions(2);
+
+        await service.executeJob();
+
+        expect(
+          discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy
+        ).toHaveBeenCalledTimes(1);
+        expect(
+          discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy
+        ).toHaveBeenCalledWith([]);
+      });
+
+      it(`should not log that the messages could not have been handled`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+
+        await service.executeJob();
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
       });
     });
   });
