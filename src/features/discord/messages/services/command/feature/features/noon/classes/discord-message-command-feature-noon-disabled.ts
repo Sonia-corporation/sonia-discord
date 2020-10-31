@@ -91,7 +91,7 @@ export class DiscordMessageCommandFeatureNoonDisabled
   ): Promise<IDiscordCommandFlagSuccess> {
     if (!_.isNil(id)) {
       return FirebaseGuildsChannelsFeaturesNoonEnabledService.getInstance()
-        .updateStateByGuildId(id, discordChannel.id, shouldDisable)
+        .updateStateByGuildId(id, discordChannel.id, !shouldDisable)
         .then(
           (): Promise<IDiscordCommandFlagSuccess> =>
             Promise.resolve(
