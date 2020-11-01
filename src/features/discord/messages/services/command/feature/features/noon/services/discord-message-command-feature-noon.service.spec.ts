@@ -12,13 +12,17 @@ import { ServiceNameEnum } from "../../../../../../../../../enums/service-name.e
 import { CoreEventService } from "../../../../../../../../core/services/core-event.service";
 import { DiscordSoniaService } from "../../../../../../../users/services/discord-sonia.service";
 import { IDiscordCommandFlagSuccess } from "../../../../../../interfaces/commands/flags/discord-command-flag-success";
+import { IDiscordMessageResponse } from "../../../../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
+import { IDiscordCommandFlagResponse } from "../../../../../../types/commands/flags/discord-command-flag-response";
+import { IDiscordCommandFlagsResponse } from "../../../../../../types/commands/flags/discord-command-flags-response";
 import { IDiscordCommandFlagsSuccess } from "../../../../../../types/commands/flags/discord-command-flags-success";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NAMES } from "../../../constants/discord-message-command-feature-names";
 import { DiscordMessageCommandFeatureNameEnum } from "../../../enums/discord-message-command-feature-name.enum";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../constants/discord-message-command-feature-noon-flags";
 import { DiscordMessageCommandFeatureNoonConfigService } from "./config/discord-message-command-feature-noon-config.service";
 import { DiscordMessageCommandFeatureNoonService } from "./discord-message-command-feature-noon.service";
+import _ = require("lodash");
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 
@@ -128,7 +132,6 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
   describe(`getMessageResponse()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let messageFlags: string;
-    let discordCommandFlagsSuccess: IDiscordCommandFlagsSuccess;
 
     let executeAllSpy: jest.SpyInstance;
     let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
@@ -140,11 +143,10 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
       service = new DiscordMessageCommandFeatureNoonService();
       anyDiscordMessage = createMock<IAnyDiscordMessage>();
       messageFlags = `--enabled=true -e`;
-      discordCommandFlagsSuccess = createMock<IDiscordCommandFlagsSuccess>();
 
       executeAllSpy = jest
         .spyOn(DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS, `executeAll`)
-        .mockResolvedValue(discordCommandFlagsSuccess);
+        .mockRejectedValue(new Error(`executeAll error`));
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy = jest.spyOn(
         discordSoniaService,
         `getCorporationMessageEmbedAuthor`
@@ -172,9 +174,11 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
     it(`should execute all actions in the given message`, async (): Promise<
       void
     > => {
-      expect.assertions(2);
+      expect.assertions(3);
 
-      await service.getMessageResponse(anyDiscordMessage, messageFlags);
+      await expect(
+        service.getMessageResponse(anyDiscordMessage, messageFlags)
+      ).rejects.toThrow(new Error(`executeAll error`));
 
       expect(executeAllSpy).toHaveBeenCalledTimes(1);
       expect(executeAllSpy).toHaveBeenCalledWith(
@@ -183,298 +187,821 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
       );
     });
 
-    it(`should return a Discord message response embed with an author`, async (): Promise<
-      void
-    > => {
-      expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<
-        MessageEmbedAuthor
-      >();
-      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(
-        messageEmbedAuthor
-      );
-
-      const result = await service.getMessageResponse(
-        anyDiscordMessage,
-        messageFlags
-      );
-
-      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
-    });
-
-    it(`should return a Discord message response embed with a color`, async (): Promise<
-      void
-    > => {
-      expect.assertions(1);
-      discordMessageCommandFeatureNoonConfigServiceGetNoonConfigImageColor.mockReturnValue(
-        ColorEnum.DESERT
-      );
-
-      const result = await service.getMessageResponse(
-        anyDiscordMessage,
-        messageFlags
-      );
-
-      expect(result.options.embed?.color).toStrictEqual(ColorEnum.DESERT);
-    });
-
-    describe(`when there is one given success flag`, (): void => {
+    describe(`when the execution of all actions failed`, (): void => {
       beforeEach((): void => {
-        discordCommandFlagsSuccess = [createMock<IDiscordCommandFlagSuccess>()];
-
-        executeAllSpy.mockResolvedValue(discordCommandFlagsSuccess);
+        executeAllSpy.mockRejectedValue(new Error(`executeAll error`));
       });
 
-      it(`should return a Discord message response embed with a description indicating that one flag was successful`, async (): Promise<
-        void
-      > => {
+      it(`should throw an error`, async (): Promise<void> => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse(
-          anyDiscordMessage,
-          messageFlags
-        );
-
-        expect(result.options.embed?.description).toStrictEqual(
-          `**1** noon feature option updated.`
-        );
-      });
-
-      it(`should return a Discord message response embed with 1 field`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse(
-          anyDiscordMessage,
-          messageFlags
-        );
-
-        expect(result.options.embed?.fields).toHaveLength(1);
-      });
-
-      it(`should return a Discord message response embed with the fields containing the flags success`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse(
-          anyDiscordMessage,
-          messageFlags
-        );
-
-        expect(result.options.embed?.fields?.[0]).toStrictEqual({
-          inline: true,
-          name: discordCommandFlagsSuccess[0].name,
-          value: discordCommandFlagsSuccess[0].description,
-        } as EmbedFieldData);
+        await expect(
+          service.getMessageResponse(anyDiscordMessage, messageFlags)
+        ).rejects.toThrow(new Error(`executeAll error`));
       });
     });
 
-    describe(`when there is three given success flags`, (): void => {
+    describe(`when the execution of all actions was successful`, (): void => {
+      let discordCommandFlagsResponse: IDiscordCommandFlagsResponse;
+
       beforeEach((): void => {
-        discordCommandFlagsSuccess = [
-          createMock<IDiscordCommandFlagSuccess>(),
-          createMock<IDiscordCommandFlagSuccess>(),
-          createMock<IDiscordCommandFlagSuccess>(),
-        ];
+        discordCommandFlagsResponse = createMock<
+          IDiscordCommandFlagsResponse
+        >();
 
-        executeAllSpy.mockResolvedValue(discordCommandFlagsSuccess);
+        executeAllSpy.mockResolvedValue(discordCommandFlagsResponse);
       });
 
-      it(`should return a Discord message response embed with a description indicating that three errors have been found`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
+      describe(`when there is one given success flag`, (): void => {
+        let discordCommandFlagsSuccess: IDiscordCommandFlagsSuccess;
 
-        const result = await service.getMessageResponse(
-          anyDiscordMessage,
-          messageFlags
-        );
+        beforeEach((): void => {
+          discordCommandFlagsSuccess = [
+            createMock<IDiscordCommandFlagSuccess>(),
+          ];
+          discordCommandFlagsResponse = discordCommandFlagsSuccess;
 
-        expect(result.options.embed?.description).toStrictEqual(
-          `**3** noon feature options updated.`
-        );
+          executeAllSpy.mockResolvedValue(discordCommandFlagsResponse);
+        });
+
+        it(`should return one Discord message response`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result).toHaveLength(1);
+        });
+
+        it(`should return a Discord message response embed with an author`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+          const messageEmbedAuthor: MessageEmbedAuthor = createMock<
+            MessageEmbedAuthor
+          >();
+          discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(
+            messageEmbedAuthor
+          );
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.author).toStrictEqual(
+            messageEmbedAuthor
+          );
+        });
+
+        it(`should return a Discord message response embed with a color`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+          discordMessageCommandFeatureNoonConfigServiceGetNoonConfigImageColor.mockReturnValue(
+            ColorEnum.DESERT
+          );
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.color).toStrictEqual(
+            ColorEnum.DESERT
+          );
+        });
+
+        it(`should return a Discord message response embed with a description indicating that one flag was successful`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.description).toStrictEqual(
+            `**1** noon feature option updated.`
+          );
+        });
+
+        it(`should return a Discord message response embed with 1 field`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.fields).toHaveLength(1);
+        });
+
+        it(`should return a Discord message response embed with the fields containing the flags success`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.fields?.[0]).toStrictEqual({
+            inline: true,
+            name: discordCommandFlagsSuccess[0].name,
+            value: discordCommandFlagsSuccess[0].description,
+          } as EmbedFieldData);
+        });
+
+        it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+          discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.footer).toStrictEqual({
+            iconURL: `dummy-image-url`,
+            text: `Noon feature successfully updated`,
+          } as MessageEmbedFooter);
+        });
+
+        describe(`when the Sonia image url is null`, (): void => {
+          beforeEach((): void => {
+            discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
+          });
+
+          it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
+            void
+          > => {
+            expect.assertions(1);
+
+            const result = await service.getMessageResponse(
+              anyDiscordMessage,
+              messageFlags
+            );
+
+            expect(result[0].options.embed?.footer).toStrictEqual({
+              iconURL: undefined,
+              text: `Noon feature successfully updated`,
+            } as MessageEmbedFooter);
+          });
+        });
+
+        describe(`when the Sonia image url is "image-url"`, (): void => {
+          beforeEach((): void => {
+            discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
+          });
+
+          it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
+            void
+          > => {
+            expect.assertions(1);
+
+            const result = await service.getMessageResponse(
+              anyDiscordMessage,
+              messageFlags
+            );
+
+            expect(result[0].options.embed?.footer).toStrictEqual({
+              iconURL: `image-url`,
+              text: `Noon feature successfully updated`,
+            } as MessageEmbedFooter);
+          });
+        });
+
+        it(`should return a Discord message response embed with a thumbnail`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+          discordMessageCommandFeatureNoonConfigServiceGetNoonConfigImageUrlSpy.mockReturnValue(
+            IconEnum.ALARM
+          );
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.thumbnail).toStrictEqual({
+            url: IconEnum.ALARM,
+          } as MessageEmbedThumbnail);
+        });
+
+        it(`should return a Discord message response embed with a timestamp`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(
+            moment(result[0].options.embed?.timestamp).isValid()
+          ).toStrictEqual(true);
+
+          expect(
+            moment(result[0].options.embed?.timestamp).fromNow()
+          ).toStrictEqual(`a few seconds ago`);
+        });
+
+        it(`should return a Discord message response embed with a title`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.title).toStrictEqual(
+            `Noon feature updated`
+          );
+        });
+
+        it(`should return a Discord message response not split`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.split).toStrictEqual(false);
+        });
+
+        it(`should return a Discord message response without a response text`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].response).toStrictEqual(``);
+        });
       });
 
-      it(`should return a Discord message response embed with 3 fields`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
+      describe(`when there is three given success flags`, (): void => {
+        let discordCommandFlagsSuccess: IDiscordCommandFlagsSuccess;
 
-        const result = await service.getMessageResponse(
-          anyDiscordMessage,
-          messageFlags
-        );
+        beforeEach((): void => {
+          discordCommandFlagsSuccess = [
+            createMock<IDiscordCommandFlagSuccess>(),
+            createMock<IDiscordCommandFlagSuccess>(),
+            createMock<IDiscordCommandFlagSuccess>(),
+          ];
+          discordCommandFlagsResponse = discordCommandFlagsSuccess;
 
-        expect(result.options.embed?.fields).toHaveLength(3);
+          executeAllSpy.mockResolvedValue(discordCommandFlagsResponse);
+        });
+
+        it(`should return one Discord message response`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result).toHaveLength(1);
+        });
+
+        it(`should return a Discord message response embed with a description indicating that three errors have been found`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.description).toStrictEqual(
+            `**3** noon feature options updated.`
+          );
+        });
+
+        it(`should return a Discord message response embed with 3 fields`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.fields).toHaveLength(3);
+        });
+
+        it(`should return a Discord message response embed with the fields containing the flags success`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.fields?.[0]).toStrictEqual({
+            inline: true,
+            name: discordCommandFlagsSuccess[0].name,
+            value: discordCommandFlagsSuccess[0].description,
+          } as EmbedFieldData);
+
+          expect(result[0].options.embed?.fields?.[1]).toStrictEqual({
+            inline: true,
+            name: discordCommandFlagsSuccess[1].name,
+            value: discordCommandFlagsSuccess[1].description,
+          } as EmbedFieldData);
+
+          expect(result[0].options.embed?.fields?.[2]).toStrictEqual({
+            inline: true,
+            name: discordCommandFlagsSuccess[2].name,
+            value: discordCommandFlagsSuccess[2].description,
+          } as EmbedFieldData);
+        });
+
+        it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+          discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.footer).toStrictEqual({
+            iconURL: `dummy-image-url`,
+            text: `Noon feature successfully updated`,
+          } as MessageEmbedFooter);
+        });
+
+        describe(`when the Sonia image url is null`, (): void => {
+          beforeEach((): void => {
+            discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
+          });
+
+          it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
+            void
+          > => {
+            expect.assertions(1);
+
+            const result = await service.getMessageResponse(
+              anyDiscordMessage,
+              messageFlags
+            );
+
+            expect(result[0].options.embed?.footer).toStrictEqual({
+              iconURL: undefined,
+              text: `Noon feature successfully updated`,
+            } as MessageEmbedFooter);
+          });
+        });
+
+        describe(`when the Sonia image url is "image-url"`, (): void => {
+          beforeEach((): void => {
+            discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
+          });
+
+          it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
+            void
+          > => {
+            expect.assertions(1);
+
+            const result = await service.getMessageResponse(
+              anyDiscordMessage,
+              messageFlags
+            );
+
+            expect(result[0].options.embed?.footer).toStrictEqual({
+              iconURL: `image-url`,
+              text: `Noon feature successfully updated`,
+            } as MessageEmbedFooter);
+          });
+        });
+
+        it(`should return a Discord message response embed with a thumbnail`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+          discordMessageCommandFeatureNoonConfigServiceGetNoonConfigImageUrlSpy.mockReturnValue(
+            IconEnum.ALARM
+          );
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.thumbnail).toStrictEqual({
+            url: IconEnum.ALARM,
+          } as MessageEmbedThumbnail);
+        });
+
+        it(`should return a Discord message response embed with a timestamp`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(
+            moment(result[0].options.embed?.timestamp).isValid()
+          ).toStrictEqual(true);
+
+          expect(
+            moment(result[0].options.embed?.timestamp).fromNow()
+          ).toStrictEqual(`a few seconds ago`);
+        });
+
+        it(`should return a Discord message response embed with a title`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.title).toStrictEqual(
+            `Noon feature updated`
+          );
+        });
+
+        it(`should return a Discord message response not split`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.split).toStrictEqual(false);
+        });
+
+        it(`should return a Discord message response without a response text`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].response).toStrictEqual(``);
+        });
       });
 
-      it(`should return a Discord message response embed with the fields containing the flags success`, async (): Promise<
-        void
-      > => {
-        expect.assertions(3);
+      describe(`when there is one given Discord message response`, (): void => {
+        let discordMessageResponse: IDiscordMessageResponse;
+        let discordMessageResponses: IDiscordMessageResponse[];
 
-        const result = await service.getMessageResponse(
-          anyDiscordMessage,
-          messageFlags
-        );
+        beforeEach((): void => {
+          discordMessageResponse = createMock<IDiscordMessageResponse>();
+          discordMessageResponses = [discordMessageResponse];
+          discordCommandFlagsResponse = discordMessageResponses;
 
-        expect(result.options.embed?.fields?.[0]).toStrictEqual({
-          inline: true,
-          name: discordCommandFlagsSuccess[0].name,
-          value: discordCommandFlagsSuccess[0].description,
-        } as EmbedFieldData);
+          executeAllSpy.mockResolvedValue(discordCommandFlagsResponse);
+        });
 
-        expect(result.options.embed?.fields?.[1]).toStrictEqual({
-          inline: true,
-          name: discordCommandFlagsSuccess[1].name,
-          value: discordCommandFlagsSuccess[1].description,
-        } as EmbedFieldData);
+        it(`should return one Discord message response`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
 
-        expect(result.options.embed?.fields?.[2]).toStrictEqual({
-          inline: true,
-          name: discordCommandFlagsSuccess[2].name,
-          value: discordCommandFlagsSuccess[2].description,
-        } as EmbedFieldData);
-      });
-    });
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
 
-    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-      void
-    > => {
-      expect.assertions(1);
-      discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
-
-      const result = await service.getMessageResponse(
-        anyDiscordMessage,
-        messageFlags
-      );
-
-      expect(result.options.embed?.footer).toStrictEqual({
-        iconURL: `dummy-image-url`,
-        text: `Noon feature successfully updated`,
-      } as MessageEmbedFooter);
-    });
-
-    describe(`when the Sonia image url is null`, (): void => {
-      beforeEach((): void => {
-        discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
+          expect(result).toHaveLength(1);
+          expect(result[0]).toStrictEqual(discordMessageResponse);
+        });
       });
 
-      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
+      describe(`when there is three given Discord message response`, (): void => {
+        let discordMessageResponseA: IDiscordMessageResponse;
+        let discordMessageResponseB: IDiscordMessageResponse;
+        let discordMessageResponseC: IDiscordMessageResponse;
+        let discordMessageResponses: IDiscordMessageResponse[];
 
-        const result = await service.getMessageResponse(
-          anyDiscordMessage,
-          messageFlags
-        );
+        beforeEach((): void => {
+          discordMessageResponseA = createMock<IDiscordMessageResponse>({
+            response: `dummy-response-a`,
+          });
+          discordMessageResponseB = createMock<IDiscordMessageResponse>({
+            response: `dummy-response-b`,
+          });
+          discordMessageResponseC = createMock<IDiscordMessageResponse>({
+            response: `dummy-response-c`,
+          });
+          discordMessageResponses = [
+            discordMessageResponseA,
+            discordMessageResponseB,
+            discordMessageResponseC,
+          ];
+          discordCommandFlagsResponse = discordMessageResponses;
 
-        expect(result.options.embed?.footer).toStrictEqual({
-          iconURL: undefined,
-          text: `Noon feature successfully updated`,
-        } as MessageEmbedFooter);
+          executeAllSpy.mockResolvedValue(discordCommandFlagsResponse);
+        });
+
+        it(`should return three Discord message response`, async (): Promise<
+          void
+        > => {
+          expect.assertions(4);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result).toHaveLength(3);
+          expect(result[0]).toStrictEqual(discordMessageResponseA);
+          expect(result[1]).toStrictEqual(discordMessageResponseB);
+          expect(result[2]).toStrictEqual(discordMessageResponseC);
+        });
       });
-    });
 
-    describe(`when the Sonia image url is "image-url"`, (): void => {
-      beforeEach((): void => {
-        discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
+      describe(`when there is three given success flags and three given Discord message response`, (): void => {
+        let discordCommandFlagsSuccess: IDiscordCommandFlagsSuccess;
+        let discordMessageResponseA: IDiscordMessageResponse;
+        let discordMessageResponseB: IDiscordMessageResponse;
+        let discordMessageResponseC: IDiscordMessageResponse;
+        let discordMessageResponses: IDiscordMessageResponse[];
+
+        beforeEach((): void => {
+          discordCommandFlagsSuccess = [
+            createMock<IDiscordCommandFlagSuccess>(),
+            createMock<IDiscordCommandFlagSuccess>(),
+            createMock<IDiscordCommandFlagSuccess>(),
+          ];
+          discordMessageResponseA = createMock<IDiscordMessageResponse>({
+            response: `dummy-response-a`,
+          });
+          discordMessageResponseB = createMock<IDiscordMessageResponse>({
+            response: `dummy-response-b`,
+          });
+          discordMessageResponseC = createMock<IDiscordMessageResponse>({
+            response: `dummy-response-c`,
+          });
+          discordMessageResponses = [
+            discordMessageResponseA,
+            discordMessageResponseB,
+            discordMessageResponseC,
+          ];
+          discordCommandFlagsResponse = _.concat<IDiscordCommandFlagResponse>(
+            discordMessageResponses,
+            discordCommandFlagsSuccess
+          );
+
+          executeAllSpy.mockResolvedValue(discordCommandFlagsResponse);
+        });
+
+        it(`should return four Discord message response wth the flag success in first`, async (): Promise<
+          void
+        > => {
+          expect.assertions(4);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result).toHaveLength(4);
+          expect(result[1]).toStrictEqual(discordMessageResponseA);
+          expect(result[2]).toStrictEqual(discordMessageResponseB);
+          expect(result[3]).toStrictEqual(discordMessageResponseC);
+        });
+
+        it(`should return a Discord message response embed with a description indicating that three errors have been found`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.description).toStrictEqual(
+            `**3** noon feature options updated.`
+          );
+        });
+
+        it(`should return a Discord message response embed with 3 fields`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.fields).toHaveLength(3);
+        });
+
+        it(`should return a Discord message response embed with the fields containing the flags success`, async (): Promise<
+          void
+        > => {
+          expect.assertions(3);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.fields?.[0]).toStrictEqual({
+            inline: true,
+            name: discordCommandFlagsSuccess[0].name,
+            value: discordCommandFlagsSuccess[0].description,
+          } as EmbedFieldData);
+
+          expect(result[0].options.embed?.fields?.[1]).toStrictEqual({
+            inline: true,
+            name: discordCommandFlagsSuccess[1].name,
+            value: discordCommandFlagsSuccess[1].description,
+          } as EmbedFieldData);
+
+          expect(result[0].options.embed?.fields?.[2]).toStrictEqual({
+            inline: true,
+            name: discordCommandFlagsSuccess[2].name,
+            value: discordCommandFlagsSuccess[2].description,
+          } as EmbedFieldData);
+        });
+
+        it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+          discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.footer).toStrictEqual({
+            iconURL: `dummy-image-url`,
+            text: `Noon feature successfully updated`,
+          } as MessageEmbedFooter);
+        });
+
+        describe(`when the Sonia image url is null`, (): void => {
+          beforeEach((): void => {
+            discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
+          });
+
+          it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
+            void
+          > => {
+            expect.assertions(1);
+
+            const result = await service.getMessageResponse(
+              anyDiscordMessage,
+              messageFlags
+            );
+
+            expect(result[0].options.embed?.footer).toStrictEqual({
+              iconURL: undefined,
+              text: `Noon feature successfully updated`,
+            } as MessageEmbedFooter);
+          });
+        });
+
+        describe(`when the Sonia image url is "image-url"`, (): void => {
+          beforeEach((): void => {
+            discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
+          });
+
+          it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
+            void
+          > => {
+            expect.assertions(1);
+
+            const result = await service.getMessageResponse(
+              anyDiscordMessage,
+              messageFlags
+            );
+
+            expect(result[0].options.embed?.footer).toStrictEqual({
+              iconURL: `image-url`,
+              text: `Noon feature successfully updated`,
+            } as MessageEmbedFooter);
+          });
+        });
+
+        it(`should return a Discord message response embed with a thumbnail`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+          discordMessageCommandFeatureNoonConfigServiceGetNoonConfigImageUrlSpy.mockReturnValue(
+            IconEnum.ALARM
+          );
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.thumbnail).toStrictEqual({
+            url: IconEnum.ALARM,
+          } as MessageEmbedThumbnail);
+        });
+
+        it(`should return a Discord message response embed with a timestamp`, async (): Promise<
+          void
+        > => {
+          expect.assertions(2);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(
+            moment(result[0].options.embed?.timestamp).isValid()
+          ).toStrictEqual(true);
+
+          expect(
+            moment(result[0].options.embed?.timestamp).fromNow()
+          ).toStrictEqual(`a few seconds ago`);
+        });
+
+        it(`should return a Discord message response embed with a title`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.embed?.title).toStrictEqual(
+            `Noon feature updated`
+          );
+        });
+
+        it(`should return a Discord message response not split`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].options.split).toStrictEqual(false);
+        });
+
+        it(`should return a Discord message response without a response text`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(
+            anyDiscordMessage,
+            messageFlags
+          );
+
+          expect(result[0].response).toStrictEqual(``);
+        });
       });
-
-      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse(
-          anyDiscordMessage,
-          messageFlags
-        );
-
-        expect(result.options.embed?.footer).toStrictEqual({
-          iconURL: `image-url`,
-          text: `Noon feature successfully updated`,
-        } as MessageEmbedFooter);
-      });
-    });
-
-    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<
-      void
-    > => {
-      expect.assertions(1);
-      discordMessageCommandFeatureNoonConfigServiceGetNoonConfigImageUrlSpy.mockReturnValue(
-        IconEnum.ALARM
-      );
-
-      const result = await service.getMessageResponse(
-        anyDiscordMessage,
-        messageFlags
-      );
-
-      expect(result.options.embed?.thumbnail).toStrictEqual({
-        url: IconEnum.ALARM,
-      } as MessageEmbedThumbnail);
-    });
-
-    it(`should return a Discord message response embed with a timestamp`, async (): Promise<
-      void
-    > => {
-      expect.assertions(2);
-
-      const result = await service.getMessageResponse(
-        anyDiscordMessage,
-        messageFlags
-      );
-
-      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(
-        true
-      );
-
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(
-        `a few seconds ago`
-      );
-    });
-
-    it(`should return a Discord message response embed with a title`, async (): Promise<
-      void
-    > => {
-      expect.assertions(1);
-
-      const result = await service.getMessageResponse(
-        anyDiscordMessage,
-        messageFlags
-      );
-
-      expect(result.options.embed?.title).toStrictEqual(`Noon feature updated`);
-    });
-
-    it(`should return a Discord message response not split`, async (): Promise<
-      void
-    > => {
-      expect.assertions(1);
-
-      const result = await service.getMessageResponse(
-        anyDiscordMessage,
-        messageFlags
-      );
-
-      expect(result.options.split).toStrictEqual(false);
-    });
-
-    it(`should return a Discord message response without a response text`, async (): Promise<
-      void
-    > => {
-      expect.assertions(1);
-
-      const result = await service.getMessageResponse(
-        anyDiscordMessage,
-        messageFlags
-      );
-
-      expect(result.response).toStrictEqual(``);
     });
   });
 });
