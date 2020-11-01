@@ -12,9 +12,12 @@ import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-messa
  * Common flag class
  * Contains all basic properties and methods for the flags
  */
-export abstract class DiscordCommandFlag<T extends string> {
+export abstract class DiscordCommandFlag<
+  T extends string,
+  TAction extends IDiscordCommandFlagAction
+> {
   protected abstract _type: DiscordCommandFlagTypeEnum;
-  protected _action: IDiscordCommandFlagAction;
+  protected _action: TAction;
   protected _description: string;
   protected _name: T;
   protected _shortcuts: T[] | undefined;
@@ -27,18 +30,18 @@ export abstract class DiscordCommandFlag<T extends string> {
     description,
     name,
     shortcuts,
-  }: Readonly<IDiscordCommandFlag<T>>) {
+  }: Readonly<IDiscordCommandFlag<T, TAction>>) {
     this._action = action;
     this._description = description;
     this._name = name;
     this._shortcuts = shortcuts;
   }
 
-  public getAction(): IDiscordCommandFlagAction {
+  public getAction(): TAction {
     return this._action;
   }
 
-  public setAction(action: IDiscordCommandFlagAction): void {
+  public setAction(action: TAction): void {
     this._action = action;
   }
 

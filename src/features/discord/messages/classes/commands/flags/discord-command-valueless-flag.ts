@@ -6,19 +6,24 @@ import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandFlag } from "./discord-command-flag";
+import { DiscordCommandFlagActionValueless } from "./discord-command-flag-action-valueless";
 
 const ONE_WORD = 1;
 
 export class DiscordCommandValuelessFlag<
   T extends string
-> extends DiscordCommandFlag<T> {
+> extends DiscordCommandFlag<T, DiscordCommandFlagActionValueless> {
   protected _type: DiscordCommandFlagTypeEnum.VALUELESS =
     DiscordCommandFlagTypeEnum.VALUELESS;
 
   /**
    * @param {Readonly<IDiscordCommandFlag>} discordCommandFlag Default values
    */
-  public constructor(discordCommandFlag: Readonly<IDiscordCommandFlag<T>>) {
+  public constructor(
+    discordCommandFlag: Readonly<
+      IDiscordCommandFlag<T, DiscordCommandFlagActionValueless>
+    >
+  ) {
     super(discordCommandFlag);
   }
 

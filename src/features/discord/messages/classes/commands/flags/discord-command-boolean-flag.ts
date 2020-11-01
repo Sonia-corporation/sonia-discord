@@ -6,19 +6,24 @@ import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandFlag } from "./discord-command-flag";
+import { DiscordCommandFlagActionBoolean } from "./discord-command-flag-action-boolean";
 
 const SPLITTED_FLAG_LENGTH = 2;
 
 export class DiscordCommandBooleanFlag<
   T extends string
-> extends DiscordCommandFlag<T> {
+> extends DiscordCommandFlag<T, DiscordCommandFlagActionBoolean> {
   protected _type: DiscordCommandFlagTypeEnum.BOOLEAN =
     DiscordCommandFlagTypeEnum.BOOLEAN;
 
   /**
    * @param {Readonly<IDiscordCommandFlag>} discordCommandFlag Default values
    */
-  public constructor(discordCommandFlag: Readonly<IDiscordCommandFlag<T>>) {
+  public constructor(
+    discordCommandFlag: Readonly<
+      IDiscordCommandFlag<T, DiscordCommandFlagActionBoolean>
+    >
+  ) {
     super(discordCommandFlag);
   }
 

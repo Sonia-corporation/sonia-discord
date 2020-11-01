@@ -7,7 +7,7 @@ import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/comm
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
-import { DiscordCommandFlagActionValueless } from "./discord-command-flag-action-valueless";
+import { DiscordCommandFlagActionBoolean } from "./discord-command-flag-action-boolean";
 
 describe(`DiscordCommandBooleanFlag`, (): void => {
   let discordCommandFlag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
@@ -16,7 +16,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
     describe(`when the class is created with an action`, (): void => {
       it(`should update the action inside the class`, (): void => {
         expect.assertions(1);
-        const action = createMock<DiscordCommandFlagActionValueless>({
+        const action = createMock<DiscordCommandFlagActionBoolean>({
           execute: (): Promise<IDiscordCommandFlagSuccess> =>
             Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
         });
@@ -25,7 +25,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+            IDiscordCommandFlag<
+              DiscordMessageCommandFeatureNoonFlagEnum,
+              DiscordCommandFlagActionBoolean
+            >
           >({
             action,
           })
@@ -43,7 +46,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+            IDiscordCommandFlag<
+              DiscordMessageCommandFeatureNoonFlagEnum,
+              DiscordCommandFlagActionBoolean
+            >
           >({
             description: `dummy-description`,
           })
@@ -63,7 +69,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
           DiscordMessageCommandFeatureNoonFlagEnum
         >(
           createMock<
-            IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+            IDiscordCommandFlag<
+              DiscordMessageCommandFeatureNoonFlagEnum,
+              DiscordCommandFlagActionBoolean
+            >
           >({
             name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
           })
@@ -84,7 +93,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
             DiscordMessageCommandFeatureNoonFlagEnum
           >(
             createMock<
-              IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+              IDiscordCommandFlag<
+                DiscordMessageCommandFeatureNoonFlagEnum,
+                DiscordCommandFlagActionBoolean
+              >
             >({
               shortcuts: undefined,
             })
@@ -102,7 +114,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
             DiscordMessageCommandFeatureNoonFlagEnum
           >(
             createMock<
-              IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+              IDiscordCommandFlag<
+                DiscordMessageCommandFeatureNoonFlagEnum,
+                DiscordCommandFlagActionBoolean
+              >
             >({
               shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
             })
@@ -122,14 +137,17 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >()
       );
     });
 
     it(`should return the action`, (): void => {
       expect.assertions(1);
-      const action = createMock<DiscordCommandFlagActionValueless>({
+      const action = createMock<DiscordCommandFlagActionBoolean>({
         execute: (): Promise<IDiscordCommandFlagSuccess> =>
           Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
       });
@@ -147,14 +165,17 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >()
       );
     });
 
     it(`should update the action with the given one`, (): void => {
       expect.assertions(1);
-      const action = createMock<DiscordCommandFlagActionValueless>({
+      const action = createMock<DiscordCommandFlagActionBoolean>({
         execute: (): Promise<IDiscordCommandFlagSuccess> =>
           Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
       });
@@ -171,7 +192,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >()
       );
     });
@@ -192,7 +216,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >()
       );
     });
@@ -214,7 +241,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >()
       );
     });
@@ -239,7 +269,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >()
       );
     });
@@ -262,7 +295,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >()
       );
     });
@@ -285,7 +321,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >()
       );
     });
@@ -309,7 +348,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >()
       );
     });
@@ -334,7 +376,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >()
       );
     });
@@ -358,7 +403,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >()
       );
     });
@@ -382,7 +430,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >()
       );
     });
@@ -403,7 +454,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >()
       );
     });
@@ -425,7 +479,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >({
           name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
         })
@@ -502,7 +559,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >({
           name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
         })
@@ -602,7 +662,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >({
           name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
         })
@@ -802,7 +865,10 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         DiscordMessageCommandFeatureNoonFlagEnum
       >(
         createMock<
-          IDiscordCommandFlag<DiscordMessageCommandFeatureNoonFlagEnum>
+          IDiscordCommandFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum,
+            DiscordCommandFlagActionBoolean
+          >
         >()
       );
       anyDiscordMessage = createMock<IAnyDiscordMessage>();
@@ -812,7 +878,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
     it(`should execute the action`, async (): Promise<void> => {
       expect.assertions(1);
-      const action = createMock<DiscordCommandFlagActionValueless>({
+      const action = createMock<DiscordCommandFlagActionBoolean>({
         execute: (): Promise<IDiscordCommandFlagSuccess> =>
           Promise.resolve(discordCommandFlagSuccess),
       });

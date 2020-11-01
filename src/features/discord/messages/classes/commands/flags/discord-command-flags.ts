@@ -1,3 +1,4 @@
+import { EmbedFieldData } from "discord.js";
 import _, { Dictionary } from "lodash";
 import { getLastSequenceRegexp } from "../../../../../../functions/formatters/get-last-sequence-regexp";
 import { getRandomBoolean } from "../../../../../../functions/randoms/get-random-boolean";
@@ -16,18 +17,18 @@ import { IDiscordCommandFlags } from "../../../interfaces/commands/flags/discord
 import { IDiscordCommandMessageFlagWithName } from "../../../interfaces/commands/flags/discord-command-message-flag-with-name";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordCommandFlagResponse } from "../../../types/commands/flags/discord-command-flag-response";
+import { IDiscordCommandFlagTypes } from "../../../types/commands/flags/discord-command-flag-types";
 import { IDiscordCommandFlagsDuplicated } from "../../../types/commands/flags/discord-command-flags-duplicated";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
 import { IDiscordCommandFlagsResponse } from "../../../types/commands/flags/discord-command-flags-response";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandFirstArgument } from "../arguments/discord-command-first-argument";
-import { DiscordCommandFlag } from "./discord-command-flag";
 
 const ONE_FLAG = 1;
 
 export class DiscordCommandFlags<T extends string> {
   private _command: DiscordCommandFirstArgument<string>;
-  private _flags: DiscordCommandFlag<T>[] = [];
+  private _flags: IDiscordCommandFlagTypes<T>[] = [];
   private readonly _className = `DiscordCommandFlags`;
 
   /**
@@ -47,28 +48,41 @@ export class DiscordCommandFlags<T extends string> {
     this._command = command;
   }
 
-  public getFlags(): DiscordCommandFlag<T>[] {
+  public getFlags(): IDiscordCommandFlagTypes<T>[] {
     return this._flags;
   }
 
-  public getOrderedFlags(): DiscordCommandFlag<T>[] {
+  public getOrderedFlags(): IDiscordCommandFlagTypes<T>[] {
     return _.orderBy(
       this.getFlags(),
-      (flag: Readonly<DiscordCommandFlag<T>>): T => flag.getName(),
+      (flag: Readonly<IDiscordCommandFlagTypes<T>>): T => flag.getName(),
       `asc`
     );
   }
 
-  public setFlags(flags: DiscordCommandFlag<T>[]): void {
+  public setFlags(flags: IDiscordCommandFlagTypes<T>[]): void {
     this._flags = flags;
   }
 
-  public getRandomFlag(): DiscordCommandFlag<T> | undefined {
+  public getRandomFlag(): IDiscordCommandFlagTypes<T> | undefined {
     return _.sample(this.getFlags());
   }
 
+  /**
+   * @description
+   * Return a flag usage example at the most simply way
+   * Include the prefix
+   *
+   * @example
+   * => --alpha-flag=true
+   * => -e
+   *
+   * @return {string | undefined} An example or undefined
+   */
   public getRandomFlagUsageExample(): string | undefined {
-    const randomFlag: DiscordCommandFlag<T> | undefined = this.getRandomFlag();
+    const randomFlag:
+      | IDiscordCommandFlagTypes<T>
+      | undefined = this.getRandomFlag();
 
     if (!_.isNil(randomFlag)) {
       const flagName: string = randomFlag.getLowerCaseName();
@@ -85,6 +99,18 @@ export class DiscordCommandFlags<T extends string> {
     return undefined;
   }
 
+  /**
+   * @description
+   * Return all the flags name as example
+   * This is only the flag names without the shortcuts and without value
+   * Include the prefix
+   *
+   * @example
+   * => `--alpha-flag`
+   * => `--alpha-flag`, `--beta-flag`
+   *
+   * @return {string} The list of all the flags name as example
+   */
   public getAllFlagsNameExample(): string {
     return _.trimEnd(
       _.reduce(
@@ -97,13 +123,26 @@ export class DiscordCommandFlags<T extends string> {
     );
   }
 
+  /**
+   * @description
+   * Return all the flags name as example
+   * This is the flag names with the shortcuts and without values
+   * Include the prefix
+   *
+   * @example
+   * => `--alpha-flag`
+   * => `--alpha-flag (or -e)`
+   * => `--alpha-flag (or -e, -d)`, `--beta-flag (or -f, -g)`
+   *
+   * @return {string} The list of all the flags name as example with their shortcuts
+   */
   public getAllFlagsNameWithShortcutsExample(): string {
     return _.trimEnd(
       _.reduce(
         this.getOrderedFlags(),
         (
           value: Readonly<string>,
-          flag: Readonly<DiscordCommandFlag<T>>
+          flag: Readonly<IDiscordCommandFlagTypes<T>>
         ): string =>
           `${value}\`${flag.getLowerCaseNameAndShortcutsExample()}\`, `,
         ``
@@ -112,18 +151,40 @@ export class DiscordCommandFlags<T extends string> {
     );
   }
 
+  /**
+   * @description
+   * Return a list of all the flag names lowered
+   *
+   * @example
+   * => [alpha-flag]
+   * => [alpha-flag, beta-flag]
+   *
+   * @return {string[]} The list of all the flags name lowered
+   */
   public getAllFlagsLowerCaseName(): string[] {
     return _.map(
       this.getOrderedFlags(),
-      (flag: Readonly<DiscordCommandFlag<T>>): string => flag.getLowerCaseName()
+      (flag: Readonly<IDiscordCommandFlagTypes<T>>): string =>
+        flag.getLowerCaseName()
     );
   }
 
+  /**
+   * @description
+   * Return a list of all the flag names lowered
+   * Contains also their shortcuts
+   *
+   * @example
+   * => [alpha-flag]
+   * => [alpha-flag, beta-flag]
+   *
+   * @return {string[]} The list of all the flags name lowered and their shortcuts
+   */
   public getAllFlagsLowerCaseNameWithShortcuts(): string[] {
     return _.flatten(
       _.map(
         this.getOrderedFlags(),
-        (flag: Readonly<DiscordCommandFlag<T>>): string[] =>
+        (flag: Readonly<IDiscordCommandFlagTypes<T>>): string[] =>
           _.compact(
             _.flatten([flag.getLowerCaseName(), flag.getLowerCaseShortcuts()])
           )
@@ -264,7 +325,7 @@ export class DiscordCommandFlags<T extends string> {
 
     if (discordCommandIsMessageFlag(messageFlag)) {
       const flag:
-        | DiscordCommandFlag<T>
+        | IDiscordCommandFlagTypes<T>
         | undefined = this._getFlagFromMessageFlag(messageFlag);
 
       if (this._isFlag(flag)) {
@@ -280,7 +341,7 @@ export class DiscordCommandFlags<T extends string> {
     }
 
     const shortcutFlag:
-      | DiscordCommandFlag<T>
+      | IDiscordCommandFlagTypes<T>
       | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
 
     if (this._isFlag(shortcutFlag)) {
@@ -291,6 +352,18 @@ export class DiscordCommandFlags<T extends string> {
       new Error(
         `The shortcut flag does not exists. Could not perform the execution`
       )
+    );
+  }
+
+  public getAllFlagsAsEmbedFields(): EmbedFieldData[] {
+    return _.map(
+      this.getOrderedFlags(),
+      (flag: Readonly<IDiscordCommandFlagTypes<T>>): EmbedFieldData => {
+        return {
+          name: flag.getLowerCaseNameAndShortcutsExample(),
+          value: flag.getDescription(),
+        };
+      }
     );
   }
 
@@ -322,7 +395,7 @@ export class DiscordCommandFlags<T extends string> {
   ): IDiscordCommandFlagError | null {
     if (discordCommandIsMessageFlag(messageFlag)) {
       const flag:
-        | DiscordCommandFlag<T>
+        | IDiscordCommandFlagTypes<T>
         | undefined = this._getFlagFromMessageFlag(messageFlag);
 
       if (this._isFlag(flag)) {
@@ -335,7 +408,7 @@ export class DiscordCommandFlags<T extends string> {
     }
 
     const shortcutFlag:
-      | DiscordCommandFlag<T>
+      | IDiscordCommandFlagTypes<T>
       | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
 
     if (this._isFlag(shortcutFlag)) {
@@ -346,17 +419,17 @@ export class DiscordCommandFlags<T extends string> {
   }
 
   private _isFlag(
-    flag: DiscordCommandFlag<T> | null | undefined
-  ): flag is DiscordCommandFlag<T> {
+    flag: IDiscordCommandFlagTypes<T> | null | undefined
+  ): flag is IDiscordCommandFlagTypes<T> {
     return !_.isNil(flag);
   }
 
   private _getFlagFromMessageFlag(
     messageFlag: Readonly<IDiscordMessageFlag>
-  ): DiscordCommandFlag<T> | undefined {
+  ): IDiscordCommandFlagTypes<T> | undefined {
     return _.find(
       this.getFlags(),
-      (flag: Readonly<DiscordCommandFlag<T>>): boolean =>
+      (flag: Readonly<IDiscordCommandFlagTypes<T>>): boolean =>
         _.isEqual(
           flag.getLowerCaseName(),
           discordCommandGetFlagName(messageFlag, true)
@@ -366,10 +439,10 @@ export class DiscordCommandFlags<T extends string> {
 
   private _getShortcutFlagFromMessageFlag(
     messageFlag: Readonly<IDiscordMessageFlag>
-  ): DiscordCommandFlag<T> | undefined {
+  ): IDiscordCommandFlagTypes<T> | undefined {
     return _.find(
       this.getFlags(),
-      (flag: Readonly<DiscordCommandFlag<T>>): boolean =>
+      (flag: Readonly<IDiscordCommandFlagTypes<T>>): boolean =>
         !_.isNil(
           _.find(
             flag.getLowerCaseShortcuts(),
@@ -463,14 +536,14 @@ export class DiscordCommandFlags<T extends string> {
   ): string | undefined {
     if (discordCommandIsMessageFlag(messageFlag)) {
       const flag:
-        | DiscordCommandFlag<T>
+        | IDiscordCommandFlagTypes<T>
         | undefined = this._getFlagFromMessageFlag(messageFlag);
 
       return flag?.getHumanizedName();
     }
 
     const shortcutFlag:
-      | DiscordCommandFlag<T>
+      | IDiscordCommandFlagTypes<T>
       | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
 
     return shortcutFlag?.getHumanizedName();
