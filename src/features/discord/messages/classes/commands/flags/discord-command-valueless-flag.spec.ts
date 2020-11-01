@@ -5,7 +5,7 @@ import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/dis
 import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
-import { DiscordCommandFlagAction } from "./discord-command-flag-action";
+import { DiscordCommandFlagActionValueless } from "./discord-command-flag-action-valueless";
 import { DiscordCommandValuelessFlag } from "./discord-command-valueless-flag";
 
 enum DummyFlagEnum {
@@ -21,7 +21,7 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     describe(`when the class is created with an action`, (): void => {
       it(`should update the action inside the class`, (): void => {
         expect.assertions(1);
-        const action = createMock<DiscordCommandFlagAction>({
+        const action = createMock<DiscordCommandFlagActionValueless>({
           execute: (): Promise<IDiscordCommandFlagSuccess> =>
             Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
         });
@@ -108,7 +108,7 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
 
     it(`should return the action`, (): void => {
       expect.assertions(1);
-      const action = createMock<DiscordCommandFlagAction>({
+      const action = createMock<DiscordCommandFlagActionValueless>({
         execute: (): Promise<IDiscordCommandFlagSuccess> =>
           Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
       });
@@ -129,7 +129,7 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
 
     it(`should update the action with the given one`, (): void => {
       expect.assertions(1);
-      const action = createMock<DiscordCommandFlagAction>({
+      const action = createMock<DiscordCommandFlagActionValueless>({
         execute: (): Promise<IDiscordCommandFlagSuccess> =>
           Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
       });
@@ -717,7 +717,7 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
 
     it(`should execute the action`, async (): Promise<void> => {
       expect.assertions(1);
-      const action = createMock<DiscordCommandFlagAction>({
+      const action = createMock<DiscordCommandFlagActionValueless>({
         execute: (): Promise<IDiscordCommandFlagSuccess> =>
           Promise.resolve(discordCommandFlagSuccess),
       });

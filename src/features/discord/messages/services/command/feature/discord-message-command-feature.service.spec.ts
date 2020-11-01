@@ -17,7 +17,7 @@ import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from "./serv
 import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from "./services/flags/discord-message-command-feature-duplicated-flags-error.service";
 import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from "./services/flags/discord-message-command-feature-empty-flags-error.service";
 import { DiscordMessageCommandFeatureWrongFlagsErrorService } from "./services/flags/discord-message-command-feature-wrong-flags-error.service";
-import _ = require("lodash");
+import _ from "lodash";
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 

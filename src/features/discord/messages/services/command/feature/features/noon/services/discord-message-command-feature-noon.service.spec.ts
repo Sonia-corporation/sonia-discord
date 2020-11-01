@@ -22,7 +22,7 @@ import { DiscordMessageCommandFeatureNameEnum } from "../../../enums/discord-mes
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../constants/discord-message-command-feature-noon-flags";
 import { DiscordMessageCommandFeatureNoonConfigService } from "./config/discord-message-command-feature-noon-config.service";
 import { DiscordMessageCommandFeatureNoonService } from "./discord-message-command-feature-noon.service";
-import _ = require("lodash");
+import _ from "lodash";
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 

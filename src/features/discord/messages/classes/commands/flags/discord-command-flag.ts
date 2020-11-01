@@ -3,9 +3,9 @@ import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-comm
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
+import { IDiscordCommandFlagAction } from "../../../types/commands/flags/discord-command-flag-action";
 import { IDiscordCommandFlagResponse } from "../../../types/commands/flags/discord-command-flag-response";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
-import { DiscordCommandFlagAction } from "./discord-command-flag-action";
 
 /**
  * @description
@@ -14,7 +14,7 @@ import { DiscordCommandFlagAction } from "./discord-command-flag-action";
  */
 export abstract class DiscordCommandFlag<T extends string> {
   protected abstract _type: DiscordCommandFlagTypeEnum;
-  protected _action: DiscordCommandFlagAction;
+  protected _action: IDiscordCommandFlagAction;
   protected _description: string;
   protected _name: T;
   protected _shortcuts: T[] | undefined;
@@ -34,11 +34,11 @@ export abstract class DiscordCommandFlag<T extends string> {
     this._shortcuts = shortcuts;
   }
 
-  public getAction(): DiscordCommandFlagAction {
+  public getAction(): IDiscordCommandFlagAction {
     return this._action;
   }
 
-  public setAction(action: DiscordCommandFlagAction): void {
+  public setAction(action: IDiscordCommandFlagAction): void {
     this._action = action;
   }
 
@@ -88,6 +88,19 @@ export abstract class DiscordCommandFlag<T extends string> {
     this._type = type;
   }
 
+  /**
+   * @description
+   * Return the flag name as example
+   * This is the flag name with his shortcuts and without a value
+   * Include the prefix
+   *
+   * @example
+   * => `--alpha-flag`
+   * => `--alpha-flag (or -e)`
+   * => `--alpha-flag (or -e, -d)`
+   *
+   * @return {string} The flag name as example with his shortcuts
+   */
   public getLowerCaseNameAndShortcutsExample(): string {
     const shortcuts: string[] | undefined = this.getLowerCaseShortcuts();
     let example = `--${this.getLowerCaseName()}`;
