@@ -110,6 +110,8 @@ rules:
   import/first: error
   import/exports-last: error
   import/no-duplicates: error
+  import/no-commonjs: error
+  import/no-dynamic-require: error
   indent: off
   new-cap:
     - error
@@ -260,6 +262,11 @@ rules:
   require-await:
     - error
 overrides:
+  - files:
+      - '*.js'
+    rules:
+      '@typescript-eslint/explicit-module-boundary-types': off
+      import/no-commonjs: off
   - files:
       - '*.ts'
     rules:
