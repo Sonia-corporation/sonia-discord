@@ -124,6 +124,12 @@ export class DiscordMessageCommandService extends AbstractService {
       )
     ) {
       if (
+        DiscordMessageCommandFeatureService.getInstance().hasCommand(
+          anyDiscordMessage.content
+        )
+      ) {
+        return this.handleFeatureCommand(anyDiscordMessage);
+      } else if (
         DiscordMessageCommandVersionService.getInstance().hasCommand(
           anyDiscordMessage.content
         )
@@ -159,12 +165,6 @@ export class DiscordMessageCommandService extends AbstractService {
         )
       ) {
         return this.handleReleaseNotesCommand(anyDiscordMessage);
-      } else if (
-        DiscordMessageCommandFeatureService.getInstance().hasCommand(
-          anyDiscordMessage.content
-        )
-      ) {
-        return this.handleFeatureCommand(anyDiscordMessage);
       }
     }
 

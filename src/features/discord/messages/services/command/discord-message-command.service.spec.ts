@@ -922,6 +922,60 @@ describe(`DiscordMessageCommandService`, (): void => {
         });
       });
 
+      describe(`when the message contains the shortcut help command`, (): void => {
+        beforeEach((): void => {
+          anyDiscordMessage.content = `-h`;
+        });
+
+        it(`should handle the help command`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandHelpServiceHandleResponseSpy
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            discordMessageCommandHelpServiceHandleResponseSpy
+          ).toHaveBeenCalledWith(anyDiscordMessage);
+        });
+
+        it(`should not handle the other commands`, async (): Promise<void> => {
+          expect.assertions(6);
+
+          await service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandVersionServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandErrorServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandCookieServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandLunchServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandReleaseNotesServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandFeatureServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should return the Discord message response for the help command`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.handleCommands(anyDiscordMessage);
+
+          expect(result).toStrictEqual(discordMessageResponse);
+        });
+      });
+
       describe(`when the message contains the cookie command`, (): void => {
         beforeEach((): void => {
           anyDiscordMessage.content = `-cookie`;
@@ -1089,6 +1143,114 @@ describe(`DiscordMessageCommandService`, (): void => {
       describe(`when the message contains the feature command`, (): void => {
         beforeEach((): void => {
           anyDiscordMessage.content = `-feature`;
+        });
+
+        it(`should handle the feature command`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandFeatureServiceHandleResponseSpy
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            discordMessageCommandFeatureServiceHandleResponseSpy
+          ).toHaveBeenCalledWith(anyDiscordMessage);
+        });
+
+        it(`should not handle the other commands`, async (): Promise<void> => {
+          expect.assertions(6);
+
+          await service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandVersionServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandErrorServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandHelpServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandCookieServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandLunchServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandReleaseNotesServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should return the Discord message response for the feature command`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.handleCommands(anyDiscordMessage);
+
+          expect(result).toStrictEqual(discordMessageResponse);
+        });
+      });
+
+      describe(`when the message contains the feature command with the help shortcut flag`, (): void => {
+        beforeEach((): void => {
+          anyDiscordMessage.content = `-feature n -h`;
+        });
+
+        it(`should handle the feature command`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandFeatureServiceHandleResponseSpy
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            discordMessageCommandFeatureServiceHandleResponseSpy
+          ).toHaveBeenCalledWith(anyDiscordMessage);
+        });
+
+        it(`should not handle the other commands`, async (): Promise<void> => {
+          expect.assertions(6);
+
+          await service.handleCommands(anyDiscordMessage);
+
+          expect(
+            discordMessageCommandVersionServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandErrorServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandHelpServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandCookieServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandLunchServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+          expect(
+            discordMessageCommandReleaseNotesServiceHandleResponseSpy
+          ).not.toHaveBeenCalled();
+        });
+
+        it(`should return the Discord message response for the feature command`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+
+          const result = await service.handleCommands(anyDiscordMessage);
+
+          expect(result).toStrictEqual(discordMessageResponse);
+        });
+      });
+
+      describe(`when the message contains the feature command with the help shortcut flag and the help command`, (): void => {
+        beforeEach((): void => {
+          anyDiscordMessage.content = `-feature n -h -help`;
         });
 
         it(`should handle the feature command`, async (): Promise<void> => {
