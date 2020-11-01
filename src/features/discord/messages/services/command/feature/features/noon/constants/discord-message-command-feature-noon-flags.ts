@@ -1,9 +1,11 @@
 import { TimezoneEnum } from "../../../../../../../../time/enums/timezone.enum";
 import { DiscordCommandBooleanFlag } from "../../../../../../classes/commands/flags/discord-command-boolean-flag";
 import { DiscordCommandFlags } from "../../../../../../classes/commands/flags/discord-command-flags";
+import { DiscordCommandValuelessFlag } from "../../../../../../classes/commands/flags/discord-command-valueless-flag";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON } from "../../../constants/discord-message-command-feature-name-noon";
 import { DiscordMessageCommandFeatureNoonDisabled } from "../classes/discord-message-command-feature-noon-disabled";
 import { DiscordMessageCommandFeatureNoonEnabled } from "../classes/discord-message-command-feature-noon-enabled";
+import { DiscordMessageCommandFeatureNoonHelp } from "../classes/discord-message-command-feature-noon-help";
 import { DiscordMessageCommandFeatureNoonFlagEnum } from "../enums/discord-message-command-feature-noon-flag.enum";
 
 export const DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS: DiscordCommandFlags<DiscordMessageCommandFeatureNoonFlagEnum> = new DiscordCommandFlags(
@@ -21,6 +23,12 @@ export const DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS: DiscordCommandFlags<Dis
         description: `Disable the noon message on this channel.`,
         name: DiscordMessageCommandFeatureNoonFlagEnum.DISABLED,
         shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.D],
+      }),
+      new DiscordCommandValuelessFlag({
+        action: new DiscordMessageCommandFeatureNoonHelp(),
+        description: `Get some help for the noon command. Display all available flags.`,
+        name: DiscordMessageCommandFeatureNoonFlagEnum.HELP,
+        shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.H],
       }),
     ],
   }

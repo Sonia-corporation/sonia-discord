@@ -28,4 +28,16 @@ describe(`DiscordMessageCommandFeatureNoonFlagEnum`, (): void => {
       `enabled`
     );
   });
+
+  it(`should have a member "H"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandFeatureNoonFlagEnum.H).toStrictEqual(`h`);
+  });
+
+  it(`should have a member "HELP"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandFeatureNoonFlagEnum.HELP).toStrictEqual(`help`);
+  });
 });
