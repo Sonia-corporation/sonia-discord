@@ -1,0 +1,96 @@
+import { createMock } from "ts-auto-mock";
+import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
+import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
+import { IDiscordCommandFlagsResponse } from "../../../types/commands/flags/discord-command-flags-response";
+import { discordCommandSplitFlagsResponse } from "./discord-command-split-flags-response";
+
+describe(`discordCommandSplitFlagsResponse()`, (): void => {
+  let discordCommandFlagsResponse: IDiscordCommandFlagsResponse;
+
+  describe(`when the given Discord command flags response contains one command flag success`, (): void => {
+    let discordCommandFlagSuccess: IDiscordCommandFlagSuccess;
+
+    beforeEach((): void => {
+      discordCommandFlagSuccess = createMock<IDiscordCommandFlagSuccess>();
+      discordCommandFlagsResponse = [discordCommandFlagSuccess];
+    });
+
+    it(`should return a splitted list of flags response`, (): void => {
+      expect.assertions(2);
+
+      const result = discordCommandSplitFlagsResponse(
+        discordCommandFlagsResponse
+      );
+
+      expect(result.commandFlagsSuccess).toStrictEqual([
+        discordCommandFlagSuccess,
+      ]);
+      expect(result.messageResponses).toStrictEqual([]);
+    });
+  });
+
+  describe(`when the given Discord command flags response contains two command flag success`, (): void => {
+    let discordCommandFlagSuccessA: IDiscordCommandFlagSuccess;
+    let discordCommandFlagSuccessB: IDiscordCommandFlagSuccess;
+
+    beforeEach((): void => {
+      discordCommandFlagSuccessA = createMock<IDiscordCommandFlagSuccess>();
+      discordCommandFlagSuccessB = createMock<IDiscordCommandFlagSuccess>();
+      discordCommandFlagsResponse = [
+        discordCommandFlagSuccessA,
+        discordCommandFlagSuccessB,
+      ];
+    });
+
+    it(`should return a splitted list of flags response`, (): void => {
+      expect.assertions(2);
+
+      const result = discordCommandSplitFlagsResponse(
+        discordCommandFlagsResponse
+      );
+
+      expect(result.commandFlagsSuccess).toStrictEqual([
+        discordCommandFlagSuccessA,
+        discordCommandFlagSuccessB,
+      ]);
+      expect(result.messageResponses).toStrictEqual([]);
+    });
+  });
+
+  describe(`when the given Discord command flags response contains two command flag success and two message responses`, (): void => {
+    let discordCommandFlagSuccessA: IDiscordCommandFlagSuccess;
+    let discordCommandFlagSuccessB: IDiscordCommandFlagSuccess;
+    let discordMessageResponseA: IDiscordMessageResponse;
+    let discordMessageResponseB: IDiscordMessageResponse;
+
+    beforeEach((): void => {
+      discordCommandFlagSuccessA = createMock<IDiscordCommandFlagSuccess>();
+      discordCommandFlagSuccessB = createMock<IDiscordCommandFlagSuccess>();
+      discordMessageResponseA = createMock<IDiscordMessageResponse>();
+      discordMessageResponseB = createMock<IDiscordMessageResponse>();
+      discordCommandFlagsResponse = [
+        discordCommandFlagSuccessA,
+        discordCommandFlagSuccessB,
+        discordMessageResponseA,
+        discordMessageResponseB,
+      ];
+    });
+
+    it(`should return a splitted list of flags response`, (): void => {
+      expect.assertions(2);
+
+      const result = discordCommandSplitFlagsResponse(
+        discordCommandFlagsResponse
+      );
+
+      expect(result.commandFlagsSuccess).toStrictEqual([
+        discordCommandFlagSuccessA,
+        discordCommandFlagSuccessB,
+      ]);
+      expect(result.messageResponses).toStrictEqual([
+        discordMessageResponseA,
+        discordMessageResponseB,
+      ]);
+    });
+  });
+});
