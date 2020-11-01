@@ -1,21 +1,14 @@
-import {
-  EmbedFieldData,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedOptions,
-  MessageEmbedThumbnail,
-} from "discord.js";
+import { EmbedFieldData, MessageEmbedOptions } from "discord.js";
 import _ from "lodash";
-import moment from "moment-timezone";
 import { AbstractService } from "../../../../../../classes/services/abstract.service";
 import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
 import { LoggerService } from "../../../../../logger/services/logger.service";
-import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
 import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
 import { discordHasThisCommand } from "../../../functions/commands/checks/discord-has-this-command";
 import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
+import { DiscordMessageHelpService } from "../../discord-message-help.service";
 
 export class DiscordMessageCommandHelpService extends AbstractService {
   private static _instance: DiscordMessageCommandHelpService;
@@ -48,13 +41,22 @@ export class DiscordMessageCommandHelpService extends AbstractService {
   }
 
   public getMessageResponse(): Promise<IDiscordMessageResponse> {
-    return Promise.resolve({
-      options: {
-        embed: this._getMessageEmbed(),
-        split: false,
-      },
-      response: ``,
-    });
+    return DiscordMessageHelpService.getInstance()
+      .getMessageResponse()
+      .then(
+        (
+          helpDiscordMessageResponse: Readonly<IDiscordMessageResponse>
+        ): Promise<IDiscordMessageResponse> =>
+          Promise.resolve(
+            _.merge({}, helpDiscordMessageResponse, {
+              options: {
+                embed: this._getMessageEmbed(),
+                split: false,
+              },
+              response: ``,
+            })
+          )
+      );
   }
 
   public hasCommand(message: Readonly<string>): boolean {
@@ -67,28 +69,14 @@ export class DiscordMessageCommandHelpService extends AbstractService {
 
   private _getMessageEmbed(): MessageEmbedOptions {
     return {
-      author: this._getMessageEmbedAuthor(),
-      color: this._getMessageEmbedColor(),
       description: this._getMessageDescription(),
       fields: this._getMessageEmbedFields(),
-      footer: this._getMessageEmbedFooter(),
-      thumbnail: this._getMessageEmbedThumbnail(),
-      timestamp: this._getMessageEmbedTimestamp(),
       title: this._getMessageEmbedTitle(),
     };
   }
 
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
-    return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
-  }
-
-  private _getMessageEmbedColor(): number {
-    return DiscordMessageConfigService.getInstance().getMessageCommandHelpImageColor();
-  }
-
   private _getMessageDescription(): string {
-    return `Below is the complete list of commands.
-    You can either use *-*, *!* or *$* as prefix to run a command.`;
+    return `Below is the complete list of commands.\nYou can either use \`-\`, \`!\` or \`$\` as prefix to run a command.`;
   }
 
   private _getMessageEmbedFields(): EmbedFieldData[] {
@@ -159,27 +147,6 @@ export class DiscordMessageCommandHelpService extends AbstractService {
       value: `You can also checkout the [readme](https://github.com/Sonia-corporation/sonia-discord/blob/master/README.md).
       It contains more information about how I work.`,
     };
-  }
-
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
-    const soniaImageUrl:
-      | string
-      | null = DiscordSoniaService.getInstance().getImageUrl();
-
-    return {
-      iconURL: soniaImageUrl ?? undefined,
-      text: `At your service`,
-    };
-  }
-
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
-    return {
-      url: DiscordMessageConfigService.getInstance().getMessageCommandHelpImageUrl(),
-    };
-  }
-
-  private _getMessageEmbedTimestamp(): Date {
-    return moment().toDate();
   }
 
   private _getMessageEmbedTitle(): string {
