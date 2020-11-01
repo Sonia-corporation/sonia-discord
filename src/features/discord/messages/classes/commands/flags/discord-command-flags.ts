@@ -12,13 +12,13 @@ import { discordCommandRemoveFlagPrefix } from "../../../functions/commands/flag
 import { discordCommandSplitMessageFlags } from "../../../functions/commands/flags/discord-command-split-message-flags";
 import { IDiscordCommandFlagDuplicated } from "../../../interfaces/commands/flags/discord-command-flag-duplicated";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
-import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
 import { IDiscordCommandFlags } from "../../../interfaces/commands/flags/discord-command-flags";
 import { IDiscordCommandMessageFlagWithName } from "../../../interfaces/commands/flags/discord-command-message-flag-with-name";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
+import { IDiscordCommandFlagResponse } from "../../../types/commands/flags/discord-command-flag-response";
 import { IDiscordCommandFlagsDuplicated } from "../../../types/commands/flags/discord-command-flags-duplicated";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
-import { IDiscordCommandFlagsSuccess } from "../../../types/commands/flags/discord-command-flags-success";
+import { IDiscordCommandFlagsResponse } from "../../../types/commands/flags/discord-command-flags-response";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandFirstArgument } from "../arguments/discord-command-first-argument";
 import { DiscordCommandFlag } from "./discord-command-flag";
@@ -198,7 +198,7 @@ export class DiscordCommandFlags<T extends string> {
   public executeAll(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     messageFlags: Readonly<string>
-  ): Promise<IDiscordCommandFlagsSuccess> {
+  ): Promise<IDiscordCommandFlagsResponse> {
     LoggerService.getInstance().debug({
       context: this._className,
       hasExtendedContext: true,
@@ -217,13 +217,13 @@ export class DiscordCommandFlags<T extends string> {
         discordMessageFlags,
         (
           discordMessageFlag: Readonly<IDiscordMessageFlag>
-        ): Promise<IDiscordCommandFlagSuccess> =>
+        ): Promise<IDiscordCommandFlagResponse> =>
           this.execute(anyDiscordMessage, discordMessageFlag)
       )
     ).then(
       (
-        discordCommandFlagsSuccess: IDiscordCommandFlagsSuccess
-      ): Promise<IDiscordCommandFlagsSuccess> => {
+        discordCommandFlagsSuccess: IDiscordCommandFlagsResponse
+      ): Promise<IDiscordCommandFlagsResponse> => {
         LoggerService.getInstance().success({
           context: this._className,
           hasExtendedContext: true,
@@ -250,7 +250,7 @@ export class DiscordCommandFlags<T extends string> {
   public execute(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     messageFlag: Readonly<IDiscordMessageFlag>
-  ): Promise<IDiscordCommandFlagSuccess | never> {
+  ): Promise<IDiscordCommandFlagResponse | never> {
     LoggerService.getInstance().debug({
       context: this._className,
       hasExtendedContext: true,

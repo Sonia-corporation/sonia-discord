@@ -109,7 +109,7 @@ export class DiscordMessageCommandService extends AbstractService {
 
   public handleFeatureCommand(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandFeatureService.getInstance().handleResponse(
       anyDiscordMessage
     );
@@ -117,7 +117,7 @@ export class DiscordMessageCommandService extends AbstractService {
 
   public handleCommands(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (
       DiscordMessageContentService.getInstance().hasContent(
         anyDiscordMessage.content
