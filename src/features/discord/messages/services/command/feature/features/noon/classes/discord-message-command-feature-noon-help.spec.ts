@@ -122,7 +122,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
       );
 
       expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
-      expect(getMessageResponseSpy).toHaveBeenCalledWith();
+      expect(getMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
     });
 
     describe(`when the message response for the noon help flag failed to be fetched`, (): void => {
@@ -157,6 +157,8 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
   });
 
   describe(`getMessageResponse()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+
     let discordMessageHelpServiceGetMessageResponseSpy: jest.SpyInstance;
     let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandHelpImageColorSpy: jest.SpyInstance;
@@ -165,6 +167,9 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonHelp();
+      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+        id: `dummy-id`,
+      });
 
       discordMessageHelpServiceGetMessageResponseSpy = jest.spyOn(
         discordMessageHelpService,
@@ -196,9 +201,9 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         new Error(`getMessageResponse help error`)
       );
 
-      await expect(service.getMessageResponse()).rejects.toThrow(
-        new Error(`getMessageResponse help error`)
-      );
+      await expect(
+        service.getMessageResponse(anyDiscordMessage)
+      ).rejects.toThrow(new Error(`getMessageResponse help error`));
 
       expect(
         discordMessageHelpServiceGetMessageResponseSpy
@@ -218,9 +223,9 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
       it(`should throw an error`, async (): Promise<void> => {
         expect.assertions(1);
 
-        await expect(service.getMessageResponse()).rejects.toThrow(
-          new Error(`getMessageResponse help error`)
-        );
+        await expect(
+          service.getMessageResponse(anyDiscordMessage)
+        ).rejects.toThrow(new Error(`getMessageResponse help error`));
       });
     });
 
@@ -236,7 +241,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
           messageEmbedAuthor
         );
 
-        const result = await service.getMessageResponse();
+        const result = await service.getMessageResponse(anyDiscordMessage);
 
         expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
       });
@@ -249,7 +254,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
           ColorEnum.CANDY
         );
 
-        const result = await service.getMessageResponse();
+        const result = await service.getMessageResponse(anyDiscordMessage);
 
         expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
       });
@@ -259,29 +264,29 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
       > => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse();
+        const result = await service.getMessageResponse(anyDiscordMessage);
 
         expect(result.options.embed?.description).toStrictEqual(
           `Below is the complete list of all flags available for the \`noon\` feature. You can even combine them!`
         );
       });
 
-      it(`should return a Discord message response embed with 2 fields`, async (): Promise<
+      it(`should return a Discord message response embed with 3 fields`, async (): Promise<
         void
       > => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse();
+        const result = await service.getMessageResponse(anyDiscordMessage);
 
-        expect(result.options.embed?.fields).toHaveLength(2);
+        expect(result.options.embed?.fields).toHaveLength(3);
       });
 
-      it(`should return a Discord message response embed with a cookie field`, async (): Promise<
+      it(`should return a Discord message response embed with a disabled flag field documentation`, async (): Promise<
         void
       > => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse();
+        const result = await service.getMessageResponse(anyDiscordMessage);
 
         expect(result.options.embed?.fields?.[0]).toStrictEqual({
           name: `--disabled (or -d)`,
@@ -289,17 +294,89 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         } as EmbedFieldData);
       });
 
-      it(`should return a Discord message response embed with an error field`, async (): Promise<
+      it(`should return a Discord message response embed with an enabled flag field documentation`, async (): Promise<
         void
       > => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse();
+        const result = await service.getMessageResponse(anyDiscordMessage);
 
         expect(result.options.embed?.fields?.[1]).toStrictEqual({
           name: `--enabled (or -e)`,
           value: `Enable the noon message on this channel. The message will be sent on the Europe/Paris timezone.`,
         } as EmbedFieldData);
+      });
+
+      it(`should return a Discord message response embed with a field to show an example of the command with a random valid flag`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+        anyDiscordMessage.content = `dummy message !feature noon`;
+
+        const result = await service.getMessageResponse(anyDiscordMessage);
+
+        expect(result.options.embed?.fields?.[2]).toBeOneOf([
+          {
+            name: `Example`,
+            value: `\`!feature noon --disabled=true\``,
+          } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!feature noon --disabled=false\``,
+          } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!feature noon -d\``,
+          } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!feature noon --enabled=true\``,
+          } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!feature noon --enabled=false\``,
+          } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!feature noon -e\``,
+          } as EmbedFieldData,
+        ]);
+      });
+
+      it(`should return a Discord message response embed with a field to show an example of shortcut the command with a random valid flag`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+        anyDiscordMessage.content = `dummy message !f n`;
+
+        const result = await service.getMessageResponse(anyDiscordMessage);
+
+        expect(result.options.embed?.fields?.[2]).toBeOneOf([
+          {
+            name: `Example`,
+            value: `\`!f n --disabled=true\``,
+          } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!f n --disabled=false\``,
+          } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!f n -d\``,
+          } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!f n --enabled=true\``,
+          } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!f n --enabled=false\``,
+          } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!f n -e\``,
+          } as EmbedFieldData,
+        ]);
       });
 
       it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
@@ -308,7 +385,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         expect.assertions(1);
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
 
-        const result = await service.getMessageResponse();
+        const result = await service.getMessageResponse(anyDiscordMessage);
 
         expect(result.options.embed?.footer).toStrictEqual({
           iconURL: `dummy-image-url`,
@@ -326,7 +403,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         > => {
           expect.assertions(1);
 
-          const result = await service.getMessageResponse();
+          const result = await service.getMessageResponse(anyDiscordMessage);
 
           expect(result.options.embed?.footer).toStrictEqual({
             iconURL: undefined,
@@ -345,7 +422,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         > => {
           expect.assertions(1);
 
-          const result = await service.getMessageResponse();
+          const result = await service.getMessageResponse(anyDiscordMessage);
 
           expect(result.options.embed?.footer).toStrictEqual({
             iconURL: `image-url`,
@@ -362,7 +439,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
           IconEnum.ARTIFICIAL_INTELLIGENCE
         );
 
-        const result = await service.getMessageResponse();
+        const result = await service.getMessageResponse(anyDiscordMessage);
 
         expect(result.options.embed?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
@@ -374,7 +451,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
       > => {
         expect.assertions(2);
 
-        const result = await service.getMessageResponse();
+        const result = await service.getMessageResponse(anyDiscordMessage);
 
         expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(
           true
@@ -390,7 +467,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
       > => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse();
+        const result = await service.getMessageResponse(anyDiscordMessage);
 
         expect(result.options.embed?.title).toStrictEqual(
           `So, you need my help with the \`noon\` feature? Cool.`
@@ -402,7 +479,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
       > => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse();
+        const result = await service.getMessageResponse(anyDiscordMessage);
 
         expect(result.options.split).toStrictEqual(false);
       });
@@ -412,7 +489,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
       > => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse();
+        const result = await service.getMessageResponse(anyDiscordMessage);
 
         expect(result.response).toStrictEqual(``);
       });
