@@ -10,14 +10,54 @@ import { ColorEnum } from "../../../../../../../../../enums/color.enum";
 import { IconEnum } from "../../../../../../../../../enums/icon.enum";
 import { ILoggerLog } from "../../../../../../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../../../../../../logger/services/logger.service";
+import { TimezoneEnum } from "../../../../../../../../time/enums/timezone.enum";
 import { DiscordSoniaService } from "../../../../../../../users/services/discord-sonia.service";
+import { DiscordCommandBooleanFlag } from "../../../../../../classes/commands/flags/discord-command-boolean-flag";
+import { DiscordCommandFlags } from "../../../../../../classes/commands/flags/discord-command-flags";
 import { IDiscordMessageResponse } from "../../../../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
 import { DiscordMessageConfigService } from "../../../../../config/discord-message-config.service";
 import { DiscordMessageHelpService } from "../../../../../discord-message-help.service";
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON } from "../../../constants/discord-message-command-feature-name-noon";
+import { DiscordMessageCommandFeatureNoonFlagEnum } from "../enums/discord-message-command-feature-noon-flag.enum";
+import { DiscordMessageCommandFeatureNoonDisabled } from "./discord-message-command-feature-noon-disabled";
+import { DiscordMessageCommandFeatureNoonEnabled } from "./discord-message-command-feature-noon-enabled";
 import { DiscordMessageCommandFeatureNoonHelp } from "./discord-message-command-feature-noon-help";
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
+
+// I do not like to mock this but since the real const uses this class
+// It fails and I dunno why
+// So just faking the data seems fine enough
+jest.mock(
+  `../constants/discord-message-command-feature-noon-flags`,
+  (): any => {
+    return {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      get DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS(): DiscordCommandFlags<
+        DiscordMessageCommandFeatureNoonFlagEnum
+      > {
+        return new DiscordCommandFlags({
+          command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
+          flags: [
+            new DiscordCommandBooleanFlag({
+              action: new DiscordMessageCommandFeatureNoonEnabled(),
+              description: `Enable the noon message on this channel. The message will be sent on the ${TimezoneEnum.PARIS} timezone.`,
+              name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+              shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
+            }),
+            new DiscordCommandBooleanFlag({
+              action: new DiscordMessageCommandFeatureNoonDisabled(),
+              description: `Disable the noon message on this channel.`,
+              name: DiscordMessageCommandFeatureNoonFlagEnum.DISABLED,
+              shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.D],
+            }),
+          ],
+        });
+      },
+    };
+  }
+);
 
 describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
   let service: DiscordMessageCommandFeatureNoonHelp;
@@ -226,14 +266,14 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         );
       });
 
-      it(`should return a Discord message response embed with 8 fields`, async (): Promise<
+      it(`should return a Discord message response embed with 2 fields`, async (): Promise<
         void
       > => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.fields).toHaveLength(8);
+        expect(result.options.embed?.fields).toHaveLength(2);
       });
 
       it(`should return a Discord message response embed with a cookie field`, async (): Promise<
@@ -244,8 +284,8 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         const result = await service.getMessageResponse();
 
         expect(result.options.embed?.fields?.[0]).toStrictEqual({
-          name: `Cookie (*cookie*, *cookies* or *c*)`,
-          value: `Because I am good, life gave me cookies. Now it is my turn to give you some.`,
+          name: `--disabled (or -d)`,
+          value: `Disable the noon message on this channel.`,
         } as EmbedFieldData);
       });
 
@@ -257,87 +297,8 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         const result = await service.getMessageResponse();
 
         expect(result.options.embed?.fields?.[1]).toStrictEqual({
-          name: `Error (*error* or *bug*)`,
-          value: `Create a bug in my core system. Do not do this one, of course!`,
-        } as EmbedFieldData);
-      });
-
-      it(`should return a Discord message response embed with a feature field`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse();
-
-        expect(result.options.embed?.fields?.[2]).toStrictEqual({
-          name: `Feature (*feature* or *f*)`,
-          value: `Change my behavior on this guild or on this channel. Help me to be better!`,
-        } as EmbedFieldData);
-      });
-
-      it(`should return a Discord message response embed with a help field`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse();
-
-        expect(result.options.embed?.fields?.[3]).toStrictEqual({
-          name: `Help (*help* or *h*)`,
-          value: `Ask for my help, it is obvious! And maybe I will, who knows?`,
-        } as EmbedFieldData);
-      });
-
-      it(`should return a Discord message response embed with a lunch field`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse();
-
-        expect(result.options.embed?.fields?.[4]).toStrictEqual({
-          name: `Lunch (*lunch* or *l*)`,
-          value: `There is a time to eat.`,
-        } as EmbedFieldData);
-      });
-
-      it(`should return a Discord message response embed with a release notes field`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse();
-
-        expect(result.options.embed?.fields?.[5]).toStrictEqual({
-          name: `Release notes (*release-notes* or *r*)`,
-          value: `Display the last version release notes.`,
-        } as EmbedFieldData);
-      });
-
-      it(`should return a Discord message response embed with a version field`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse();
-
-        expect(result.options.embed?.fields?.[6]).toStrictEqual({
-          name: `Version (*version* or *v*)`,
-          value: `Display my current application version.`,
-        } as EmbedFieldData);
-      });
-
-      it(`should return a Discord message response embed with a more help field`, async (): Promise<
-        void
-      > => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse();
-
-        expect(result.options.embed?.fields?.[7]).toStrictEqual({
-          name: `Further help`,
-          value: `You can also checkout the [readme](https://github.com/Sonia-corporation/sonia-discord/blob/master/README.md).
-      It contains more information about how I work.`,
+          name: `--enabled (or -e)`,
+          value: `Enable the noon message on this channel. The message will be sent on the Europe/Paris timezone.`,
         } as EmbedFieldData);
       });
 

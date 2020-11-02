@@ -31,7 +31,7 @@ describe(`DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS`, (): void => {
           }),
           new DiscordCommandValuelessFlag({
             action: new DiscordMessageCommandFeatureNoonHelp(),
-            description: `Get some help for the noon command. Display all the available flags.`,
+            description: `Get some help with the noon command. Display all the available flags.`,
             name: DiscordMessageCommandFeatureNoonFlagEnum.HELP,
             shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.H],
           }),
