@@ -6,6 +6,7 @@ import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordCommandFlagAction } from "../../../types/commands/flags/discord-command-flag-action";
 import { IDiscordCommandFlagResponse } from "../../../types/commands/flags/discord-command-flag-response";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
+import { DiscordCommandFlags } from "./discord-command-flags";
 
 /**
  * @description
@@ -14,7 +15,7 @@ import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-messa
  */
 export abstract class DiscordCommandFlag<
   T extends string,
-  TAction extends IDiscordCommandFlagAction
+  TAction extends IDiscordCommandFlagAction<T>
 > {
   protected abstract _type: DiscordCommandFlagTypeEnum;
   protected _action: TAction;
@@ -125,9 +126,10 @@ export abstract class DiscordCommandFlag<
 
   public executeAction(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    value?: Readonly<string | null | undefined>
+    value: Readonly<string | null | undefined>,
+    discordCommandFlags: Readonly<DiscordCommandFlags<T>>
   ): Promise<IDiscordCommandFlagResponse> {
-    return this._action.execute(anyDiscordMessage, value);
+    return this._action.execute(anyDiscordMessage, value, discordCommandFlags);
   }
 
   public abstract isValid(messageFlag: Readonly<IDiscordMessageFlag>): boolean;

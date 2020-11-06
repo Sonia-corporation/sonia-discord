@@ -3,31 +3,37 @@ import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-comm
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
-import { DiscordMessageCommandFeatureNoonFlagEnum } from "../../../services/command/feature/features/noon/enums/discord-message-command-feature-noon-flag.enum";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
 import { DiscordCommandFlagActionBoolean } from "./discord-command-flag-action-boolean";
+import { DiscordCommandFlags } from "./discord-command-flags";
+
+enum DummyFlagEnum {
+  ALPHA = `alpha-flag`,
+  BETA = `beta-flag`,
+  CHARLIE = `charlie-flag`,
+}
 
 describe(`DiscordCommandBooleanFlag`, (): void => {
-  let discordCommandFlag: DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>;
+  let discordCommandFlag: DiscordCommandBooleanFlag<DummyFlagEnum>;
 
   describe(`constructor()`, (): void => {
     describe(`when the class is created with an action`, (): void => {
       it(`should update the action inside the class`, (): void => {
         expect.assertions(1);
-        const action = createMock<DiscordCommandFlagActionBoolean>({
+        const action = createMock<
+          DiscordCommandFlagActionBoolean<DummyFlagEnum>
+        >({
           execute: (): Promise<IDiscordCommandFlagSuccess> =>
             Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
         });
 
-        discordCommandFlag = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
+        discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
             IDiscordCommandFlag<
-              DiscordMessageCommandFeatureNoonFlagEnum,
-              DiscordCommandFlagActionBoolean
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
             >
           >({
             action,
@@ -42,13 +48,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       it(`should update the description inside the class`, (): void => {
         expect.assertions(1);
 
-        discordCommandFlag = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
+        discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
             IDiscordCommandFlag<
-              DiscordMessageCommandFeatureNoonFlagEnum,
-              DiscordCommandFlagActionBoolean
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
             >
           >({
             description: `dummy-description`,
@@ -65,22 +69,18 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       it(`should update the name inside the class`, (): void => {
         expect.assertions(1);
 
-        discordCommandFlag = new DiscordCommandBooleanFlag<
-          DiscordMessageCommandFeatureNoonFlagEnum
-        >(
+        discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
             IDiscordCommandFlag<
-              DiscordMessageCommandFeatureNoonFlagEnum,
-              DiscordCommandFlagActionBoolean
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
             >
           >({
-            name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+            name: DummyFlagEnum.ALPHA,
           })
         );
 
-        expect(discordCommandFlag.getName()).toStrictEqual(
-          DiscordMessageCommandFeatureNoonFlagEnum.ENABLED
-        );
+        expect(discordCommandFlag.getName()).toStrictEqual(DummyFlagEnum.ALPHA);
       });
     });
 
@@ -89,13 +89,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         it(`should remove the shortcuts inside the class`, (): void => {
           expect.assertions(1);
 
-          discordCommandFlag = new DiscordCommandBooleanFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum
-          >(
+          discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
             createMock<
               IDiscordCommandFlag<
-                DiscordMessageCommandFeatureNoonFlagEnum,
-                DiscordCommandFlagActionBoolean
+                DummyFlagEnum,
+                DiscordCommandFlagActionBoolean<DummyFlagEnum>
               >
             >({
               shortcuts: undefined,
@@ -110,21 +108,19 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         it(`should update the shortcuts inside the class`, (): void => {
           expect.assertions(1);
 
-          discordCommandFlag = new DiscordCommandBooleanFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum
-          >(
+          discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
             createMock<
               IDiscordCommandFlag<
-                DiscordMessageCommandFeatureNoonFlagEnum,
-                DiscordCommandFlagActionBoolean
+                DummyFlagEnum,
+                DiscordCommandFlagActionBoolean<DummyFlagEnum>
               >
             >({
-              shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
+              shortcuts: [DummyFlagEnum.BETA],
             })
           );
 
           expect(discordCommandFlag.getShortcuts()).toStrictEqual([
-            DiscordMessageCommandFeatureNoonFlagEnum.E,
+            DummyFlagEnum.BETA,
           ]);
         });
       });
@@ -133,13 +129,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`getAction()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >()
       );
@@ -147,10 +141,12 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
     it(`should return the action`, (): void => {
       expect.assertions(1);
-      const action = createMock<DiscordCommandFlagActionBoolean>({
-        execute: (): Promise<IDiscordCommandFlagSuccess> =>
-          Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
-      });
+      const action = createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>(
+        {
+          execute: (): Promise<IDiscordCommandFlagSuccess> =>
+            Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+        }
+      );
       discordCommandFlag.setAction(action);
 
       const result = discordCommandFlag.getAction();
@@ -161,13 +157,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`setAction()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >()
       );
@@ -175,10 +169,12 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
     it(`should update the action with the given one`, (): void => {
       expect.assertions(1);
-      const action = createMock<DiscordCommandFlagActionBoolean>({
-        execute: (): Promise<IDiscordCommandFlagSuccess> =>
-          Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
-      });
+      const action = createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>(
+        {
+          execute: (): Promise<IDiscordCommandFlagSuccess> =>
+            Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+        }
+      );
 
       discordCommandFlag.setAction(action);
 
@@ -188,13 +184,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`getDescription()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >()
       );
@@ -212,13 +206,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`setDescription()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >()
       );
@@ -237,13 +229,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`getName()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >()
       );
@@ -251,27 +241,21 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
     it(`should return the name`, (): void => {
       expect.assertions(1);
-      discordCommandFlag.setName(
-        DiscordMessageCommandFeatureNoonFlagEnum.ENABLED
-      );
+      discordCommandFlag.setName(DummyFlagEnum.ALPHA);
 
       const result = discordCommandFlag.getName();
 
-      expect(result).toStrictEqual(
-        DiscordMessageCommandFeatureNoonFlagEnum.ENABLED
-      );
+      expect(result).toStrictEqual(DummyFlagEnum.ALPHA);
     });
   });
 
   describe(`getLowerCaseName()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >()
       );
@@ -279,25 +263,21 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
     it(`should return the lower case name`, (): void => {
       expect.assertions(1);
-      discordCommandFlag.setName(
-        DiscordMessageCommandFeatureNoonFlagEnum.ENABLED
-      );
+      discordCommandFlag.setName(DummyFlagEnum.ALPHA);
 
       const result = discordCommandFlag.getLowerCaseName();
 
-      expect(result).toStrictEqual(`enabled`);
+      expect(result).toStrictEqual(`alpha-flag`);
     });
   });
 
   describe(`getHumanizedName()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >()
       );
@@ -305,25 +285,21 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
     it(`should return the capitalized case name`, (): void => {
       expect.assertions(1);
-      discordCommandFlag.setName(
-        DiscordMessageCommandFeatureNoonFlagEnum.ENABLED
-      );
+      discordCommandFlag.setName(DummyFlagEnum.ALPHA);
 
       const result = discordCommandFlag.getHumanizedName();
 
-      expect(result).toStrictEqual(`Enabled`);
+      expect(result).toStrictEqual(`Alpha-flag`);
     });
   });
 
   describe(`setName()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >()
       );
@@ -332,25 +308,19 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
     it(`should update the name with the given one`, (): void => {
       expect.assertions(1);
 
-      discordCommandFlag.setName(
-        DiscordMessageCommandFeatureNoonFlagEnum.ENABLED
-      );
+      discordCommandFlag.setName(DummyFlagEnum.ALPHA);
 
-      expect(discordCommandFlag.getName()).toStrictEqual(
-        DiscordMessageCommandFeatureNoonFlagEnum.ENABLED
-      );
+      expect(discordCommandFlag.getName()).toStrictEqual(DummyFlagEnum.ALPHA);
     });
   });
 
   describe(`getShortcuts()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >()
       );
@@ -358,27 +328,21 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
     it(`should return the shortcuts`, (): void => {
       expect.assertions(1);
-      discordCommandFlag.setShortcuts([
-        DiscordMessageCommandFeatureNoonFlagEnum.E,
-      ]);
+      discordCommandFlag.setShortcuts([DummyFlagEnum.BETA]);
 
       const result = discordCommandFlag.getShortcuts();
 
-      expect(result).toStrictEqual([
-        DiscordMessageCommandFeatureNoonFlagEnum.E,
-      ]);
+      expect(result).toStrictEqual([DummyFlagEnum.BETA]);
     });
   });
 
   describe(`getLowerCaseShortcuts()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >()
       );
@@ -387,25 +351,23 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
     it(`should return the shortcuts as lower case`, (): void => {
       expect.assertions(1);
       discordCommandFlag.setShortcuts([
-        DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
-        DiscordMessageCommandFeatureNoonFlagEnum.E,
+        DummyFlagEnum.ALPHA,
+        DummyFlagEnum.BETA,
       ]);
 
       const result = discordCommandFlag.getShortcuts();
 
-      expect(result).toStrictEqual([`enabled`, `e`]);
+      expect(result).toStrictEqual([`alpha-flag`, `beta-flag`]);
     });
   });
 
   describe(`setShortcuts()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >()
       );
@@ -414,25 +376,21 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
     it(`should update the shortcuts with the given one`, (): void => {
       expect.assertions(1);
 
-      discordCommandFlag.setShortcuts([
-        DiscordMessageCommandFeatureNoonFlagEnum.E,
-      ]);
+      discordCommandFlag.setShortcuts([DummyFlagEnum.BETA]);
 
       expect(discordCommandFlag.getShortcuts()).toStrictEqual([
-        DiscordMessageCommandFeatureNoonFlagEnum.E,
+        DummyFlagEnum.BETA,
       ]);
     });
   });
 
   describe(`getType()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >()
       );
@@ -450,13 +408,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`setType()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >()
       );
@@ -475,16 +431,14 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`getLowerCaseNameAndShortcutsExample()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >({
-          name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+          name: DummyFlagEnum.ALPHA,
         })
       );
     });
@@ -499,7 +453,7 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`--enabled`);
+        expect(result).toStrictEqual(`--alpha-flag`);
       });
     });
 
@@ -513,15 +467,13 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`--enabled`);
+        expect(result).toStrictEqual(`--alpha-flag`);
       });
     });
 
     describe(`when there is one shortcut`, (): void => {
       beforeEach((): void => {
-        discordCommandFlag.setShortcuts([
-          DiscordMessageCommandFeatureNoonFlagEnum.E,
-        ]);
+        discordCommandFlag.setShortcuts([DummyFlagEnum.BETA]);
       });
 
       it(`should return the lower case name and the shortcut wrapped in parentheses`, (): void => {
@@ -529,15 +481,15 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`--enabled (or -e)`);
+        expect(result).toStrictEqual(`--alpha-flag (or -beta-flag)`);
       });
     });
 
     describe(`when there is two shortcuts`, (): void => {
       beforeEach((): void => {
         discordCommandFlag.setShortcuts([
-          DiscordMessageCommandFeatureNoonFlagEnum.E,
-          DiscordMessageCommandFeatureNoonFlagEnum.E,
+          DummyFlagEnum.BETA,
+          DummyFlagEnum.CHARLIE,
         ]);
       });
 
@@ -546,7 +498,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
         const result = discordCommandFlag.getLowerCaseNameAndShortcutsExample();
 
-        expect(result).toStrictEqual(`--enabled (or -e, -e)`);
+        expect(result).toStrictEqual(
+          `--alpha-flag (or -beta-flag, -charlie-flag)`
+        );
       });
     });
   });
@@ -555,16 +509,14 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
     let messageFlag: IDiscordMessageFlag;
 
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >({
-          name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+          name: DummyFlagEnum.ALPHA,
         })
       );
     });
@@ -583,9 +535,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       });
     });
 
-    describe(`when the given flag is "enabled"`, (): void => {
+    describe(`when the given flag is "alpha-flag"`, (): void => {
       beforeEach((): void => {
-        messageFlag = `enabled`;
+        messageFlag = `alpha-flag`;
       });
 
       it(`should return false`, (): void => {
@@ -597,9 +549,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       });
     });
 
-    describe(`when the given flag is "enabled="`, (): void => {
+    describe(`when the given flag is "alpha-flag="`, (): void => {
       beforeEach((): void => {
-        messageFlag = `enabled=`;
+        messageFlag = `alpha-flag=`;
       });
 
       it(`should return false`, (): void => {
@@ -611,9 +563,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       });
     });
 
-    describe(`when the given flag is "enabled=dummy"`, (): void => {
+    describe(`when the given flag is "alpha-flag=dummy"`, (): void => {
       beforeEach((): void => {
-        messageFlag = `enabled=dummy`;
+        messageFlag = `alpha-flag=dummy`;
       });
 
       it(`should return false`, (): void => {
@@ -625,9 +577,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       });
     });
 
-    describe(`when the given flag is "enabled=true"`, (): void => {
+    describe(`when the given flag is "alpha-flag=true"`, (): void => {
       beforeEach((): void => {
-        messageFlag = `enabled=true`;
+        messageFlag = `alpha-flag=true`;
       });
 
       it(`should return true`, (): void => {
@@ -639,9 +591,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       });
     });
 
-    describe(`when the given flag is "enabled=false"`, (): void => {
+    describe(`when the given flag is "alpha-flag=false"`, (): void => {
       beforeEach((): void => {
-        messageFlag = `enabled=false`;
+        messageFlag = `alpha-flag=false`;
       });
 
       it(`should return true`, (): void => {
@@ -658,16 +610,14 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
     let messageFlag: IDiscordMessageFlag;
 
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >({
-          name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+          name: DummyFlagEnum.ALPHA,
         })
       );
     });
@@ -690,9 +640,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       });
     });
 
-    describe(`when the given flag is "enabled"`, (): void => {
+    describe(`when the given flag is "alpha-flag"`, (): void => {
       beforeEach((): void => {
-        messageFlag = `enabled`;
+        messageFlag = `alpha-flag`;
       });
 
       it(`should return an error about not having specified a value`, (): void => {
@@ -701,16 +651,16 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
         expect(result).toStrictEqual({
-          description: `The flag \`enabled\` does not have a value. Specify either \`true\` or \`false\`.`,
+          description: `The flag \`alpha-flag\` does not have a value. Specify either \`true\` or \`false\`.`,
           isUnknown: false,
           name: `Invalid boolean flag`,
         } as IDiscordCommandFlagError);
       });
     });
 
-    describe(`when the given flag is "ENABLED"`, (): void => {
+    describe(`when the given flag is "ALPHA-FLAG"`, (): void => {
       beforeEach((): void => {
-        messageFlag = `ENABLED`;
+        messageFlag = `ALPHA-FLAG`;
       });
 
       it(`should return an error about not having specified a value`, (): void => {
@@ -719,16 +669,16 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
         expect(result).toStrictEqual({
-          description: `The flag \`ENABLED\` does not have a value. Specify either \`true\` or \`false\`.`,
+          description: `The flag \`ALPHA-FLAG\` does not have a value. Specify either \`true\` or \`false\`.`,
           isUnknown: false,
           name: `Invalid boolean flag`,
         } as IDiscordCommandFlagError);
       });
     });
 
-    describe(`when the given flag is "enabled="`, (): void => {
+    describe(`when the given flag is "alpha-flag="`, (): void => {
       beforeEach((): void => {
-        messageFlag = `enabled=`;
+        messageFlag = `alpha-flag=`;
       });
 
       it(`should return an error about not having specified a valid value`, (): void => {
@@ -737,16 +687,16 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
         expect(result).toStrictEqual({
-          description: `The flag \`enabled\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+          description: `The flag \`alpha-flag\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
           isUnknown: false,
           name: `Invalid boolean flag`,
         } as IDiscordCommandFlagError);
       });
     });
 
-    describe(`when the given flag is "ENABLED="`, (): void => {
+    describe(`when the given flag is "ALPHA-FLAG="`, (): void => {
       beforeEach((): void => {
-        messageFlag = `ENABLED=`;
+        messageFlag = `ALPHA-FLAG=`;
       });
 
       it(`should return an error about not having specified a valid value`, (): void => {
@@ -755,16 +705,16 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
         expect(result).toStrictEqual({
-          description: `The flag \`ENABLED\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+          description: `The flag \`ALPHA-FLAG\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
           isUnknown: false,
           name: `Invalid boolean flag`,
         } as IDiscordCommandFlagError);
       });
     });
 
-    describe(`when the given flag is "enabled=dummy"`, (): void => {
+    describe(`when the given flag is "alpha-flag=dummy"`, (): void => {
       beforeEach((): void => {
-        messageFlag = `enabled=dummy`;
+        messageFlag = `alpha-flag=dummy`;
       });
 
       it(`should return an error about not having specified a valid value`, (): void => {
@@ -773,16 +723,16 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
         expect(result).toStrictEqual({
-          description: `The flag \`enabled\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+          description: `The flag \`alpha-flag\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
           isUnknown: false,
           name: `Invalid boolean flag`,
         } as IDiscordCommandFlagError);
       });
     });
 
-    describe(`when the given flag is "ENABLED=DUMMY"`, (): void => {
+    describe(`when the given flag is "ALPHA-FLAG=DUMMY"`, (): void => {
       beforeEach((): void => {
-        messageFlag = `ENABLED=DUMMY`;
+        messageFlag = `ALPHA-FLAG=DUMMY`;
       });
 
       it(`should return an error about not having specified a valid value`, (): void => {
@@ -791,16 +741,16 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
         expect(result).toStrictEqual({
-          description: `The flag \`ENABLED\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+          description: `The flag \`ALPHA-FLAG\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
           isUnknown: false,
           name: `Invalid boolean flag`,
         } as IDiscordCommandFlagError);
       });
     });
 
-    describe(`when the given flag is "enabled=true"`, (): void => {
+    describe(`when the given flag is "alpha-flag=true"`, (): void => {
       beforeEach((): void => {
-        messageFlag = `enabled=true`;
+        messageFlag = `alpha-flag=true`;
       });
 
       it(`should return null`, (): void => {
@@ -812,9 +762,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       });
     });
 
-    describe(`when the given flag is "ENABLED=TRUE"`, (): void => {
+    describe(`when the given flag is "ALPHA-FLAG=TRUE"`, (): void => {
       beforeEach((): void => {
-        messageFlag = `ENABLED=TRUE`;
+        messageFlag = `ALPHA-FLAG=TRUE`;
       });
 
       it(`should return null`, (): void => {
@@ -826,9 +776,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       });
     });
 
-    describe(`when the given flag is "enabled=false"`, (): void => {
+    describe(`when the given flag is "alpha-flag=false"`, (): void => {
       beforeEach((): void => {
-        messageFlag = `enabled=false`;
+        messageFlag = `alpha-flag=false`;
       });
 
       it(`should return null`, (): void => {
@@ -840,9 +790,9 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       });
     });
 
-    describe(`when the given flag is "ENABLED=FALSE"`, (): void => {
+    describe(`when the given flag is "ALPHA-FLAG=FALSE"`, (): void => {
       beforeEach((): void => {
-        messageFlag = `ENABLED=FALSE`;
+        messageFlag = `ALPHA-FLAG=FALSE`;
       });
 
       it(`should return null`, (): void => {
@@ -858,35 +808,38 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
   describe(`executeAction()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let messageFlag: IDiscordMessageFlag;
+    let discordCommandFlags: DiscordCommandFlags<DummyFlagEnum>;
     let discordCommandFlagSuccess: IDiscordCommandFlagSuccess;
 
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<
-        DiscordMessageCommandFeatureNoonFlagEnum
-      >(
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
-            DiscordMessageCommandFeatureNoonFlagEnum,
-            DiscordCommandFlagActionBoolean
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
           >
         >()
       );
       anyDiscordMessage = createMock<IAnyDiscordMessage>();
-      messageFlag = `--enabled=true`;
+      messageFlag = `--alpha-flag=true`;
+      discordCommandFlags = createMock<DiscordCommandFlags<DummyFlagEnum>>();
       discordCommandFlagSuccess = createMock<IDiscordCommandFlagSuccess>();
     });
 
     it(`should execute the action`, async (): Promise<void> => {
       expect.assertions(1);
-      const action = createMock<DiscordCommandFlagActionBoolean>({
-        execute: (): Promise<IDiscordCommandFlagSuccess> =>
-          Promise.resolve(discordCommandFlagSuccess),
-      });
+      const action = createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>(
+        {
+          execute: (): Promise<IDiscordCommandFlagSuccess> =>
+            Promise.resolve(discordCommandFlagSuccess),
+        }
+      );
       discordCommandFlag.setAction(action);
 
       const result = await discordCommandFlag.executeAction(
         anyDiscordMessage,
-        messageFlag
+        messageFlag,
+        discordCommandFlags
       );
 
       expect(result).toStrictEqual(discordCommandFlagSuccess);

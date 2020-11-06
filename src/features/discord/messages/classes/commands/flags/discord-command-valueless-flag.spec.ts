@@ -6,6 +6,7 @@ import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/d
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandFlagActionValueless } from "./discord-command-flag-action-valueless";
+import { DiscordCommandFlags } from "./discord-command-flags";
 import { DiscordCommandValuelessFlag } from "./discord-command-valueless-flag";
 
 enum DummyFlagEnum {
@@ -21,7 +22,9 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     describe(`when the class is created with an action`, (): void => {
       it(`should update the action inside the class`, (): void => {
         expect.assertions(1);
-        const action = createMock<DiscordCommandFlagActionValueless>({
+        const action = createMock<
+          DiscordCommandFlagActionValueless<DummyFlagEnum>
+        >({
           execute: (): Promise<IDiscordCommandFlagSuccess> =>
             Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
         });
@@ -30,7 +33,7 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
           createMock<
             IDiscordCommandFlag<
               DummyFlagEnum,
-              DiscordCommandFlagActionValueless
+              DiscordCommandFlagActionValueless<DummyFlagEnum>
             >
           >({
             action,
@@ -49,7 +52,7 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
           createMock<
             IDiscordCommandFlag<
               DummyFlagEnum,
-              DiscordCommandFlagActionValueless
+              DiscordCommandFlagActionValueless<DummyFlagEnum>
             >
           >({
             description: `dummy-description`,
@@ -70,7 +73,7 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
           createMock<
             IDiscordCommandFlag<
               DummyFlagEnum,
-              DiscordCommandFlagActionValueless
+              DiscordCommandFlagActionValueless<DummyFlagEnum>
             >
           >({
             name: DummyFlagEnum.ALPHA,
@@ -90,7 +93,7 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
             createMock<
               IDiscordCommandFlag<
                 DummyFlagEnum,
-                DiscordCommandFlagActionValueless
+                DiscordCommandFlagActionValueless<DummyFlagEnum>
               >
             >({
               shortcuts: undefined,
@@ -109,7 +112,7 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
             createMock<
               IDiscordCommandFlag<
                 DummyFlagEnum,
-                DiscordCommandFlagActionValueless
+                DiscordCommandFlagActionValueless<DummyFlagEnum>
               >
             >({
               shortcuts: [DummyFlagEnum.BETA],
@@ -128,14 +131,19 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >()
       );
     });
 
     it(`should return the action`, (): void => {
       expect.assertions(1);
-      const action = createMock<DiscordCommandFlagActionValueless>({
+      const action = createMock<
+        DiscordCommandFlagActionValueless<DummyFlagEnum>
+      >({
         execute: (): Promise<IDiscordCommandFlagSuccess> =>
           Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
       });
@@ -151,14 +159,19 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >()
       );
     });
 
     it(`should update the action with the given one`, (): void => {
       expect.assertions(1);
-      const action = createMock<DiscordCommandFlagActionValueless>({
+      const action = createMock<
+        DiscordCommandFlagActionValueless<DummyFlagEnum>
+      >({
         execute: (): Promise<IDiscordCommandFlagSuccess> =>
           Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
       });
@@ -173,7 +186,10 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >()
       );
     });
@@ -192,7 +208,10 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >()
       );
     });
@@ -212,7 +231,10 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >()
       );
     });
@@ -231,7 +253,10 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >()
       );
     });
@@ -250,7 +275,10 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >()
       );
     });
@@ -269,7 +297,10 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >()
       );
     });
@@ -287,7 +318,10 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >()
       );
     });
@@ -306,7 +340,10 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >()
       );
     });
@@ -328,7 +365,10 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >()
       );
     });
@@ -348,7 +388,10 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >()
       );
     });
@@ -367,7 +410,10 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >()
       );
     });
@@ -387,7 +433,10 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >({
           name: DummyFlagEnum.ALPHA,
         })
@@ -462,7 +511,10 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >({
           name: DummyFlagEnum.ALPHA,
         })
@@ -560,7 +612,10 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >({
           name: DummyFlagEnum.ALPHA,
         })
@@ -761,22 +816,29 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
   describe(`executeAction()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
     let messageFlag: IDiscordMessageFlag;
+    let discordCommandFlags: DiscordCommandFlags<DummyFlagEnum>;
     let discordCommandFlagSuccess: IDiscordCommandFlagSuccess;
 
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
-          IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionValueless>
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
+          >
         >()
       );
       anyDiscordMessage = createMock<IAnyDiscordMessage>();
       messageFlag = `--alpha-flag`;
+      discordCommandFlags = createMock<DiscordCommandFlags<DummyFlagEnum>>();
       discordCommandFlagSuccess = createMock<IDiscordCommandFlagSuccess>();
     });
 
     it(`should execute the action`, async (): Promise<void> => {
       expect.assertions(1);
-      const action = createMock<DiscordCommandFlagActionValueless>({
+      const action = createMock<
+        DiscordCommandFlagActionValueless<DummyFlagEnum>
+      >({
         execute: (): Promise<IDiscordCommandFlagSuccess> =>
           Promise.resolve(discordCommandFlagSuccess),
       });
@@ -784,7 +846,8 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
 
       const result = await discordCommandFlag.executeAction(
         anyDiscordMessage,
-        messageFlag
+        messageFlag,
+        discordCommandFlags
       );
 
       expect(result).toStrictEqual(discordCommandFlagSuccess);

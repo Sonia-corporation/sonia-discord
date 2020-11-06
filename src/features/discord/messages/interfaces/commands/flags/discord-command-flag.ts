@@ -2,7 +2,7 @@ import { IDiscordCommandFlagAction } from "../../../types/commands/flags/discord
 
 export interface IDiscordCommandFlag<
   T extends string,
-  TAction extends IDiscordCommandFlagAction
+  TAction extends IDiscordCommandFlagAction<T>
 > {
   action: TAction;
   description: string;

@@ -12,7 +12,7 @@ const ONE_WORD = 1;
 
 export class DiscordCommandValuelessFlag<
   T extends string
-> extends DiscordCommandFlag<T, DiscordCommandFlagActionValueless> {
+> extends DiscordCommandFlag<T, DiscordCommandFlagActionValueless<T>> {
   protected _type: DiscordCommandFlagTypeEnum.VALUELESS =
     DiscordCommandFlagTypeEnum.VALUELESS;
 
@@ -21,7 +21,7 @@ export class DiscordCommandValuelessFlag<
    */
   public constructor(
     discordCommandFlag: Readonly<
-      IDiscordCommandFlag<T, DiscordCommandFlagActionValueless>
+      IDiscordCommandFlag<T, DiscordCommandFlagActionValueless<T>>
     >
   ) {
     super(discordCommandFlag);

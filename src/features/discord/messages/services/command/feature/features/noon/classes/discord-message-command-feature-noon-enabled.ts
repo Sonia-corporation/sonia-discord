@@ -16,8 +16,8 @@ import { IDiscordCommandFlagSuccess } from "../../../../../../interfaces/command
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
 import { DiscordMessageCommandFeatureNoonEnabledSuccessFlagService } from "../services/discord-message-command-feature-noon-enabled-success-flag.service";
 
-export class DiscordMessageCommandFeatureNoonEnabled
-  implements DiscordCommandFlagActionBoolean {
+export class DiscordMessageCommandFeatureNoonEnabled<T extends string>
+  implements DiscordCommandFlagActionBoolean<T> {
   private readonly _serviceName =
     ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED;
 

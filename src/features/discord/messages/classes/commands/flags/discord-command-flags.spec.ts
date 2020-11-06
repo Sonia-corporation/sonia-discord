@@ -143,7 +143,7 @@ describe(`DiscordCommandFlags`, (): void => {
         shortcuts: [DummyFirstArgumentEnum.BETA],
       });
       alphaFlag = new DiscordCommandBooleanFlag({
-        action: createMock<DiscordCommandFlagActionBoolean>({
+        action: createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>({
           execute: (): Promise<IDiscordCommandFlagSuccess> =>
             Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
         }),
@@ -151,7 +151,7 @@ describe(`DiscordCommandFlags`, (): void => {
         name: DummyFlagEnum.ALPHA,
       });
       betaFlag = new DiscordCommandBooleanFlag({
-        action: createMock<DiscordCommandFlagActionBoolean>({
+        action: createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>({
           execute: (): Promise<IDiscordCommandFlagSuccess> =>
             Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
         }),
@@ -185,7 +185,7 @@ describe(`DiscordCommandFlags`, (): void => {
         name: DummyFirstArgumentEnum.ALPHA,
       });
       alphaFlag = new DiscordCommandBooleanFlag({
-        action: createMock<DiscordCommandFlagActionBoolean>({
+        action: createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>({
           execute: (): Promise<IDiscordCommandFlagSuccess> =>
             Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
         }),
@@ -193,7 +193,7 @@ describe(`DiscordCommandFlags`, (): void => {
         name: DummyFlagEnum.ALPHA,
       });
       betaFlag = new DiscordCommandBooleanFlag({
-        action: createMock<DiscordCommandFlagActionBoolean>({
+        action: createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>({
           execute: (): Promise<IDiscordCommandFlagSuccess> =>
             Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
         }),
@@ -344,7 +344,10 @@ describe(`DiscordCommandFlags`, (): void => {
       beforeEach((): void => {
         flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >()
         );
         discordCommandFlags.setFlags([flag]);
@@ -403,7 +406,10 @@ describe(`DiscordCommandFlags`, (): void => {
       beforeEach((): void => {
         flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.ALPHA,
           })
@@ -427,14 +433,20 @@ describe(`DiscordCommandFlags`, (): void => {
       beforeEach((): void => {
         flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.ALPHA,
           })
         );
         flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.BETA,
           })
@@ -488,7 +500,10 @@ describe(`DiscordCommandFlags`, (): void => {
       beforeEach((): void => {
         flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.ALPHA,
           })
@@ -511,7 +526,10 @@ describe(`DiscordCommandFlags`, (): void => {
       beforeEach((): void => {
         flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.ALPHA,
             shortcuts: [DummyFlagEnum.BETA, DummyFlagEnum.CHARLIE],
@@ -538,14 +556,20 @@ describe(`DiscordCommandFlags`, (): void => {
       beforeEach((): void => {
         flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.ALPHA,
           })
         );
         flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.BETA,
           })
@@ -569,7 +593,10 @@ describe(`DiscordCommandFlags`, (): void => {
       beforeEach((): void => {
         flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.ALPHA,
             shortcuts: [DummyFlagEnum.BETA, DummyFlagEnum.CHARLIE],
@@ -577,7 +604,10 @@ describe(`DiscordCommandFlags`, (): void => {
         );
         flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.DELTA,
             shortcuts: [DummyFlagEnum.ECHO, DummyFlagEnum.FOXTROT],
@@ -634,7 +664,10 @@ describe(`DiscordCommandFlags`, (): void => {
       beforeEach((): void => {
         flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.ALPHA,
           })
@@ -658,14 +691,20 @@ describe(`DiscordCommandFlags`, (): void => {
       beforeEach((): void => {
         flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.ALPHA,
           })
         );
         flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.BETA,
           })
@@ -719,7 +758,10 @@ describe(`DiscordCommandFlags`, (): void => {
       beforeEach((): void => {
         flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.ALPHA,
           })
@@ -743,7 +785,10 @@ describe(`DiscordCommandFlags`, (): void => {
       beforeEach((): void => {
         flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.ALPHA,
             shortcuts: [DummyFlagEnum.BETA],
@@ -751,7 +796,10 @@ describe(`DiscordCommandFlags`, (): void => {
         );
         flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.CHARLIE,
             shortcuts: [DummyFlagEnum.DELTA],
@@ -781,7 +829,10 @@ describe(`DiscordCommandFlags`, (): void => {
       beforeEach((): void => {
         flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.ALPHA,
             shortcuts: [DummyFlagEnum.BETA, DummyFlagEnum.CHARLIE],
@@ -789,7 +840,10 @@ describe(`DiscordCommandFlags`, (): void => {
         );
         flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
           createMock<
-            IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean>
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
           >({
             name: DummyFlagEnum.DELTA,
             shortcuts: [DummyFlagEnum.ECHO, DummyFlagEnum.FOXTROT],
@@ -830,7 +884,7 @@ describe(`DiscordCommandFlags`, (): void => {
         command: alphaArgument,
         flags: [
           new DiscordCommandBooleanFlag<DummyFlagEnum>({
-            action: createMock<DiscordCommandFlagActionBoolean>({
+            action: createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>({
               execute: (): Promise<IDiscordCommandFlagSuccess> =>
                 Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
             }),
@@ -2196,7 +2250,7 @@ describe(`DiscordCommandFlags`, (): void => {
         command: alphaArgument,
         flags: [
           new DiscordCommandBooleanFlag<string>({
-            action: createMock<DiscordCommandFlagActionBoolean>({
+            action: createMock<DiscordCommandFlagActionBoolean<string>>({
               execute: (): Promise<IDiscordCommandFlagSuccess> =>
                 Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
             }),
@@ -2205,7 +2259,7 @@ describe(`DiscordCommandFlags`, (): void => {
             shortcuts: [DummyFlagEnum.BETA],
           }),
           new DiscordCommandBooleanFlag<string>({
-            action: createMock<DiscordCommandFlagActionBoolean>({
+            action: createMock<DiscordCommandFlagActionBoolean<string>>({
               execute: (): Promise<IDiscordCommandFlagSuccess> =>
                 Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
             }),
@@ -2213,7 +2267,7 @@ describe(`DiscordCommandFlags`, (): void => {
             name: `dummy`,
           }),
           new DiscordCommandBooleanFlag<string>({
-            action: createMock<DiscordCommandFlagActionBoolean>({
+            action: createMock<DiscordCommandFlagActionBoolean<string>>({
               execute: (): Promise<IDiscordCommandFlagSuccess> =>
                 Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
             }),
@@ -2222,7 +2276,7 @@ describe(`DiscordCommandFlags`, (): void => {
             shortcuts: [`t`],
           }),
           new DiscordCommandBooleanFlag<string>({
-            action: createMock<DiscordCommandFlagActionBoolean>({
+            action: createMock<DiscordCommandFlagActionBoolean<string>>({
               execute: (): Promise<IDiscordCommandFlagSuccess> =>
                 Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
             }),
@@ -2401,7 +2455,7 @@ describe(`DiscordCommandFlags`, (): void => {
         command: alphaArgument,
         flags: [
           new DiscordCommandBooleanFlag<DummyFlagEnum>({
-            action: createMock<DiscordCommandFlagActionBoolean>({
+            action: createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>({
               execute: actionMock,
             }),
             description: ``,
@@ -2531,7 +2585,7 @@ describe(`DiscordCommandFlags`, (): void => {
         });
 
         it(`should execute the flag action`, async (): Promise<void> => {
-          expect.assertions(3);
+          expect.assertions(5);
 
           const result = await discordCommandFlags.executeAll(
             anyDiscordMessage,
@@ -2540,7 +2594,9 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(actionMock).toHaveBeenCalledTimes(1);
-          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage, `true`);
+          expect(actionMock.mock.calls[0][0]).toStrictEqual(anyDiscordMessage);
+          expect(actionMock.mock.calls[0][1]).toStrictEqual(`true`);
+          expect(actionMock.mock.calls[0][2]).toBeDefined();
         });
 
         it(`should log about successfully handled the given flags`, async (): Promise<
@@ -2659,7 +2715,7 @@ describe(`DiscordCommandFlags`, (): void => {
         });
 
         it(`should execute the flag action`, async (): Promise<void> => {
-          expect.assertions(3);
+          expect.assertions(5);
 
           const result = await discordCommandFlags.executeAll(
             anyDiscordMessage,
@@ -2668,7 +2724,9 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(actionMock).toHaveBeenCalledTimes(1);
-          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage, undefined);
+          expect(actionMock.mock.calls[0][0]).toStrictEqual(anyDiscordMessage);
+          expect(actionMock.mock.calls[0][1]).toBeUndefined();
+          expect(actionMock.mock.calls[0][2]).toBeDefined();
         });
 
         it(`should log about successfully handled the given flags`, async (): Promise<
@@ -2797,7 +2855,7 @@ describe(`DiscordCommandFlags`, (): void => {
         });
 
         it(`should execute the flags action`, async (): Promise<void> => {
-          expect.assertions(3);
+          expect.assertions(8);
 
           const result = await discordCommandFlags.executeAll(
             anyDiscordMessage,
@@ -2809,7 +2867,12 @@ describe(`DiscordCommandFlags`, (): void => {
             discordCommandFlagSuccess,
           ]);
           expect(actionMock).toHaveBeenCalledTimes(2);
-          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage, `true`);
+          expect(actionMock.mock.calls[0][0]).toStrictEqual(anyDiscordMessage);
+          expect(actionMock.mock.calls[0][1]).toStrictEqual(`true`);
+          expect(actionMock.mock.calls[0][2]).toBeDefined();
+          expect(actionMock.mock.calls[1][0]).toStrictEqual(anyDiscordMessage);
+          expect(actionMock.mock.calls[1][1]).toStrictEqual(`true`);
+          expect(actionMock.mock.calls[1][2]).toBeDefined();
         });
 
         it(`should log about successfully handled the given flags`, async (): Promise<
@@ -2941,7 +3004,7 @@ describe(`DiscordCommandFlags`, (): void => {
         });
 
         it(`should execute the flag actions`, async (): Promise<void> => {
-          expect.assertions(3);
+          expect.assertions(8);
 
           const result = await discordCommandFlags.executeAll(
             anyDiscordMessage,
@@ -2953,7 +3016,12 @@ describe(`DiscordCommandFlags`, (): void => {
             discordCommandFlagSuccess,
           ]);
           expect(actionMock).toHaveBeenCalledTimes(2);
-          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage, undefined);
+          expect(actionMock.mock.calls[0][0]).toStrictEqual(anyDiscordMessage);
+          expect(actionMock.mock.calls[0][1]).toBeUndefined();
+          expect(actionMock.mock.calls[0][2]).toBeDefined();
+          expect(actionMock.mock.calls[1][0]).toStrictEqual(anyDiscordMessage);
+          expect(actionMock.mock.calls[1][1]).toBeUndefined();
+          expect(actionMock.mock.calls[1][2]).toBeDefined();
         });
 
         it(`should log about successfully handled the given shortcut flags`, async (): Promise<
@@ -3005,7 +3073,7 @@ describe(`DiscordCommandFlags`, (): void => {
         command: alphaArgument,
         flags: [
           new DiscordCommandBooleanFlag<DummyFlagEnum>({
-            action: createMock<DiscordCommandFlagActionBoolean>({
+            action: createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>({
               execute: actionMock,
             }),
             description: ``,
@@ -3080,7 +3148,7 @@ describe(`DiscordCommandFlags`, (): void => {
         });
 
         it(`should execute the flag action`, async (): Promise<void> => {
-          expect.assertions(3);
+          expect.assertions(4);
 
           const result = await discordCommandFlags.execute(
             anyDiscordMessage,
@@ -3088,8 +3156,9 @@ describe(`DiscordCommandFlags`, (): void => {
           );
 
           expect(result).toStrictEqual(discordCommandFlagSuccess);
-          expect(actionMock).toHaveBeenCalledTimes(1);
-          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage, `true`);
+          expect(actionMock.mock.calls[0][0]).toStrictEqual(anyDiscordMessage);
+          expect(actionMock.mock.calls[0][1]).toStrictEqual(`true`);
+          expect(actionMock.mock.calls[0][2]).toBeDefined();
         });
       });
     });
@@ -3137,7 +3206,7 @@ describe(`DiscordCommandFlags`, (): void => {
         });
 
         it(`should execute the flag action`, async (): Promise<void> => {
-          expect.assertions(3);
+          expect.assertions(5);
 
           const result = await discordCommandFlags.execute(
             anyDiscordMessage,
@@ -3146,7 +3215,9 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual(discordCommandFlagSuccess);
           expect(actionMock).toHaveBeenCalledTimes(1);
-          expect(actionMock).toHaveBeenCalledWith(anyDiscordMessage, undefined);
+          expect(actionMock.mock.calls[0][0]).toStrictEqual(anyDiscordMessage);
+          expect(actionMock.mock.calls[0][1]).toBeUndefined();
+          expect(actionMock.mock.calls[0][2]).toBeDefined();
         });
       });
     });

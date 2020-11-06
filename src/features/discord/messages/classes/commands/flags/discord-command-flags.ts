@@ -331,7 +331,8 @@ export class DiscordCommandFlags<T extends string> {
       if (this._isFlag(flag)) {
         return flag.executeAction(
           anyDiscordMessage,
-          discordCommandGetFlagValue(messageFlag)
+          discordCommandGetFlagValue(messageFlag),
+          this
         );
       }
 
@@ -345,7 +346,7 @@ export class DiscordCommandFlags<T extends string> {
       | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
 
     if (this._isFlag(shortcutFlag)) {
-      return shortcutFlag.executeAction(anyDiscordMessage);
+      return shortcutFlag.executeAction(anyDiscordMessage, undefined, this);
     }
 
     return Promise.reject(

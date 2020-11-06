@@ -12,7 +12,7 @@ const SPLITTED_FLAG_LENGTH = 2;
 
 export class DiscordCommandBooleanFlag<
   T extends string
-> extends DiscordCommandFlag<T, DiscordCommandFlagActionBoolean> {
+> extends DiscordCommandFlag<T, DiscordCommandFlagActionBoolean<T>> {
   protected _type: DiscordCommandFlagTypeEnum.BOOLEAN =
     DiscordCommandFlagTypeEnum.BOOLEAN;
 
@@ -21,7 +21,7 @@ export class DiscordCommandBooleanFlag<
    */
   public constructor(
     discordCommandFlag: Readonly<
-      IDiscordCommandFlag<T, DiscordCommandFlagActionBoolean>
+      IDiscordCommandFlag<T, DiscordCommandFlagActionBoolean<T>>
     >
   ) {
     super(discordCommandFlag);

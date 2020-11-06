@@ -17,21 +17,27 @@ describe(`DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS`, (): void => {
       new DiscordCommandFlags({
         command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
         flags: [
-          new DiscordCommandBooleanFlag({
+          new DiscordCommandBooleanFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum
+          >({
             action: new DiscordMessageCommandFeatureNoonEnabled(),
             description: `Enable the noon message on this channel. The message will be sent on the ${TimezoneEnum.PARIS} timezone.`,
             name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
             shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
           }),
-          new DiscordCommandBooleanFlag({
+          new DiscordCommandBooleanFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum
+          >({
             action: new DiscordMessageCommandFeatureNoonDisabled(),
             description: `Disable the noon message on this channel.`,
             name: DiscordMessageCommandFeatureNoonFlagEnum.DISABLED,
             shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.D],
           }),
-          new DiscordCommandValuelessFlag({
+          new DiscordCommandValuelessFlag<
+            DiscordMessageCommandFeatureNoonFlagEnum
+          >({
             action: new DiscordMessageCommandFeatureNoonHelp(),
-            description: `Get some help with the noon command. Display all the available flags.`,
+            description: `Get some help with the noon command. Display the all available flags.`,
             name: DiscordMessageCommandFeatureNoonFlagEnum.HELP,
             shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.H],
           }),
