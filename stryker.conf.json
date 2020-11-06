@@ -8,7 +8,7 @@
     "html"
   ],
   "testRunner": "jest",
-  "coverageAnalysis": "off",
+  "coverageAnalysis": "all",
   "tsconfigFile": "tsconfig.json",
   "mutate": [
     "src/**/*.ts",
