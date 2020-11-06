@@ -27,7 +27,7 @@ export const DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS: DiscordCommandFlags<Dis
       new DiscordCommandValuelessFlag<DiscordMessageCommandFeatureNoonFlagEnum>(
         {
           action: new DiscordMessageCommandFeatureNoonHelp(),
-          description: `Get some help with the noon command. Display the all available flags.`,
+          description: `Get some help with the noon command. Display all the flags with an example.`,
           name: DiscordMessageCommandFeatureNoonFlagEnum.HELP,
           shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.H],
         }
