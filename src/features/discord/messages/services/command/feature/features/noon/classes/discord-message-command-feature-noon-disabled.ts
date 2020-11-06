@@ -11,13 +11,13 @@ import { ChalkService } from "../../../../../../../../logger/services/chalk/chal
 import { LoggerService } from "../../../../../../../../logger/services/logger.service";
 import { DiscordChannelService } from "../../../../../../../channels/services/discord-channel.service";
 import { IAnyDiscordChannel } from "../../../../../../../channels/types/any-discord-channel";
-import { DiscordCommandFlagAction } from "../../../../../../classes/commands/flags/discord-command-flag-action";
+import { DiscordCommandFlagActionBoolean } from "../../../../../../classes/commands/flags/discord-command-flag-action-boolean";
 import { IDiscordCommandFlagSuccess } from "../../../../../../interfaces/commands/flags/discord-command-flag-success";
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
 import { DiscordMessageCommandFeatureNoonEnabledSuccessFlagService } from "../services/discord-message-command-feature-noon-enabled-success-flag.service";
 
-export class DiscordMessageCommandFeatureNoonDisabled
-  implements DiscordCommandFlagAction {
+export class DiscordMessageCommandFeatureNoonDisabled<T extends string>
+  implements DiscordCommandFlagActionBoolean<T> {
   private readonly _serviceName =
     ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_DISABLED;
 

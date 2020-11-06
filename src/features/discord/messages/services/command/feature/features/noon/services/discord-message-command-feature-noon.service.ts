@@ -11,9 +11,12 @@ import { AbstractService } from "../../../../../../../../../classes/services/abs
 import { ServiceNameEnum } from "../../../../../../../../../enums/service-name.enum";
 import { wrapInBold } from "../../../../../../../../../functions/formatters/wrap-in-bold";
 import { DiscordSoniaService } from "../../../../../../../users/services/discord-sonia.service";
+import { IDiscordCommandSplittedFlagsResponse } from "../../../../../../classes/commands/flags/discord-command-splitted-flags-response";
+import { discordCommandSplitFlagsResponse } from "../../../../../../functions/commands/flags/discord-command-split-flags-response";
 import { IDiscordCommandFlagSuccess } from "../../../../../../interfaces/commands/flags/discord-command-flag-success";
 import { IDiscordMessageResponse } from "../../../../../../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
+import { IDiscordCommandFlagsResponse } from "../../../../../../types/commands/flags/discord-command-flags-response";
 import { IDiscordCommandFlagsSuccess } from "../../../../../../types/commands/flags/discord-command-flags-success";
 import { DiscordMessageCommandFeatureNameEnum } from "../../../enums/discord-message-command-feature-name.enum";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../constants/discord-message-command-feature-noon-flags";
@@ -57,26 +60,49 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
    * @param {Readonly<IAnyDiscordMessage>} anyDiscordMessage Original message
    * @param {Readonly<string>} messageFlags A partial message containing only a string with flags
    *
-   * @return {Promise<IDiscordMessageResponse>} The embed message to respond
+   * @return {Promise<IDiscordMessageResponse[]>} Some embed message to respond
    */
   public getMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     messageFlags: Readonly<string>
-  ): Promise<IDiscordMessageResponse> {
+  ): Promise<IDiscordMessageResponse[]> {
     return DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.executeAll(
       anyDiscordMessage,
       messageFlags
     ).then(
       (
-        flagsSuccess: Readonly<IDiscordCommandFlagsSuccess>
-      ): Promise<IDiscordMessageResponse> =>
-        Promise.resolve({
-          options: {
-            embed: this._getMessageEmbed(flagsSuccess),
-            split: false,
-          },
-          response: ``,
-        })
+        discordCommandFlagsResponse: Readonly<IDiscordCommandFlagsResponse>
+      ): Promise<IDiscordMessageResponse[]> => {
+        const discordCommandSplittedFlagsResponse: IDiscordCommandSplittedFlagsResponse = discordCommandSplitFlagsResponse(
+          discordCommandFlagsResponse
+        );
+        const discordMessageResponses: IDiscordMessageResponse[] =
+          discordCommandSplittedFlagsResponse.messageResponses;
+
+        if (
+          !_.isEmpty(discordCommandSplittedFlagsResponse.commandFlagsSuccess)
+        ) {
+          discordMessageResponses.unshift({
+            options: {
+              embed: this._getMessageEmbed(
+                discordCommandSplittedFlagsResponse.commandFlagsSuccess
+              ),
+              split: false,
+            },
+            response: ``,
+          });
+        }
+
+        return Promise.all(
+          _.map(
+            discordMessageResponses,
+            (
+              discordMessageResponse: IDiscordMessageResponse
+            ): Promise<IDiscordMessageResponse> =>
+              Promise.resolve(discordMessageResponse)
+          )
+        );
+      }
     );
   }
 

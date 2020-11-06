@@ -153,7 +153,7 @@
     "@sonia-corporation/conventional-changelog": "1.0.1",
     "@stryker-mutator/core": "4.1.2",
     "@stryker-mutator/jest-runner": "4.1.2",
-    "@stryker-mutator/typescript": "4.0.0",
+    "@stryker-mutator/typescript-checker": "4.1.2",
     "@types/app-root-path": "1.2.4",
     "@types/express": "4.17.8",
     "@types/fs-extra": "9.0.3",

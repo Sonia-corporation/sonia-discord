@@ -26,7 +26,7 @@ export class DiscordMessageDmService extends AbstractService {
 
   public getMessage(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
       return this._getMessageResponse(anyDiscordMessage);
     }
@@ -36,7 +36,7 @@ export class DiscordMessageDmService extends AbstractService {
 
   private _getMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (
       DiscordMessageContentService.getInstance().hasContent(
         anyDiscordMessage.content
@@ -56,7 +56,7 @@ export class DiscordMessageDmService extends AbstractService {
 
   private _getCommandMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,

@@ -53,6 +53,7 @@ export enum ServiceNameEnum {
   DISCORD_MESSAGE_CONTENT_SERVICE = `DiscordMessageContentService`,
   DISCORD_MESSAGE_DM_SERVICE = `DiscordMessageDmService`,
   DISCORD_MESSAGE_ERROR_SERVICE = `DiscordMessageErrorService`,
+  DISCORD_MESSAGE_HELP_SERVICE = `DiscordMessageHelpService`,
   DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_HUMANIZED_SERVICE = `DiscordMessageScheduleNoonCountHumanizedService`,
   DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_MESSAGE_RESPONSE_SERVICE = `DiscordMessageScheduleNoonCountMessageResponseService`,
   DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_SERVICE = `DiscordMessageScheduleNoonCountService`,

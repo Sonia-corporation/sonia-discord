@@ -29,7 +29,7 @@ jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
  * Only for this method...
  */
 describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
-  let service: DiscordMessageCommandFeatureNoonDisabled;
+  let service: DiscordMessageCommandFeatureNoonDisabled<string>;
   let loggerService: LoggerService;
   let firebaseGuildsStoreQuery: FirebaseGuildsStoreQuery;
   let firebaseGuildsChannelsFeaturesNoonEnabledService: FirebaseGuildsChannelsFeaturesNoonEnabledService;

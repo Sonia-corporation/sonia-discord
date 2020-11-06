@@ -169,7 +169,7 @@ export class DiscordMessageService extends AbstractService {
 
   private _dmMessage(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<void> {
+  ): Promise<void | void[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -183,9 +183,19 @@ export class DiscordMessageService extends AbstractService {
       .getMessage(anyDiscordMessage)
       .then(
         (
-          discordMessageResponse: Readonly<IDiscordMessageResponse>
-        ): Promise<void> =>
-          this._sendMessage(anyDiscordMessage, discordMessageResponse)
+          discordMessageResponses:
+            | IDiscordMessageResponse
+            | IDiscordMessageResponse[]
+        ): Promise<void | void[]> => {
+          if (!_.isArray(discordMessageResponses)) {
+            return this._sendMessage(
+              anyDiscordMessage,
+              discordMessageResponses
+            );
+          }
+
+          return this._sendMessages(anyDiscordMessage, discordMessageResponses);
+        }
       )
       .catch(
         (error: Readonly<Error>): Promise<void> => {
@@ -205,7 +215,7 @@ export class DiscordMessageService extends AbstractService {
 
   private _textMessage(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<void> {
+  ): Promise<void | void[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -219,9 +229,19 @@ export class DiscordMessageService extends AbstractService {
       .getMessage(anyDiscordMessage)
       .then(
         (
-          discordMessageResponse: Readonly<IDiscordMessageResponse>
-        ): Promise<void> =>
-          this._sendMessage(anyDiscordMessage, discordMessageResponse)
+          discordMessageResponses:
+            | IDiscordMessageResponse
+            | IDiscordMessageResponse[]
+        ): Promise<void | void[]> => {
+          if (!_.isArray(discordMessageResponses)) {
+            return this._sendMessage(
+              anyDiscordMessage,
+              discordMessageResponses
+            );
+          }
+
+          return this._sendMessages(anyDiscordMessage, discordMessageResponses);
+        }
       )
       .catch(
         (error: Readonly<Error>): Promise<void> => {
@@ -284,5 +304,20 @@ export class DiscordMessageService extends AbstractService {
     }
 
     return Promise.reject(new Error(`Discord message channel not valid`));
+  }
+
+  private _sendMessages(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>,
+    discordMessageResponses: Readonly<IDiscordMessageResponse[]>
+  ): Promise<void[]> {
+    return Promise.all(
+      _.map(
+        discordMessageResponses,
+        (
+          discordMessageResponse: Readonly<IDiscordMessageResponse>
+        ): Promise<void> =>
+          this._sendMessage(anyDiscordMessage, discordMessageResponse)
+      )
+    );
   }
 }
