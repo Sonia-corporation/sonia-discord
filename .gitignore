@@ -57,6 +57,7 @@ src/environment/secret-environment.json
 
 # stryker temp files
 stryker-tmp
+stryker.log
 
 # Firebase
 src/environment/firebase-service-account-file.json

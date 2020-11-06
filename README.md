@@ -100,8 +100,9 @@ __Features (first and only argument followed by optional flags):__
 Configure the message sent at noon on the given channel.  
 The default timezone is Europe/Paris and this will be configurable later.
 
-- enabled (or e): enable the noon message on the channel
 - disabled (or d): disable the noon message on the channel
+- enabled (or e): enable the noon message on the channel
+- help (or h): get some help with this command
 
 This is a special command used to configure Sonia only for the current Guild or channel.  
 There are multiples option to customize Sonia (some will change her behavior on the whole Guild and other only for the current channel).

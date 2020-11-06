@@ -6,22 +6,22 @@ import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandFlag } from "./discord-command-flag";
-import { DiscordCommandFlagActionBoolean } from "./discord-command-flag-action-boolean";
+import { DiscordCommandFlagActionValueless } from "./discord-command-flag-action-valueless";
 
-const SPLITTED_FLAG_LENGTH = 2;
+const ONE_WORD = 1;
 
-export class DiscordCommandBooleanFlag<
+export class DiscordCommandValuelessFlag<
   T extends string
-> extends DiscordCommandFlag<T, DiscordCommandFlagActionBoolean<T>> {
-  protected _type: DiscordCommandFlagTypeEnum.BOOLEAN =
-    DiscordCommandFlagTypeEnum.BOOLEAN;
+> extends DiscordCommandFlag<T, DiscordCommandFlagActionValueless<T>> {
+  protected _type: DiscordCommandFlagTypeEnum.VALUELESS =
+    DiscordCommandFlagTypeEnum.VALUELESS;
 
   /**
    * @param {Readonly<IDiscordCommandFlag>} discordCommandFlag Default values
    */
   public constructor(
     discordCommandFlag: Readonly<
-      IDiscordCommandFlag<T, DiscordCommandFlagActionBoolean<T>>
+      IDiscordCommandFlag<T, DiscordCommandFlagActionValueless<T>>
     >
   ) {
     super(discordCommandFlag);
@@ -29,14 +29,14 @@ export class DiscordCommandBooleanFlag<
 
   /**
    * @description
-   * Check if the flag value is a boolean
+   * Check if the flag is valueless
    *
    * @example
-   * isValid('enabled')       => false
-   * isValid('enabled=')      => false
-   * isValid('enabled=dummy') => false
-   * isValid('enabled=true')  => true
-   * isValid('enabled=false') => true
+   * isValid('help')       => true
+   * isValid('help=')      => false
+   * isValid('help=dummy') => false
+   * isValid('help=true')  => false
+   * isValid('help=false') => false
    *
    * @param {Readonly<IDiscordMessageFlag>} messageFlag A flag as a message
    *
@@ -46,13 +46,9 @@ export class DiscordCommandBooleanFlag<
     const splittedFlag: string[] = _.split(messageFlag, `=`);
     const splittedFlagSize: number = _.size(splittedFlag);
 
-    if (_.lt(splittedFlagSize, SPLITTED_FLAG_LENGTH)) {
-      return false;
-    }
-
-    const value: string | undefined = _.last(splittedFlag);
-
-    return _.includes([`true`, `false`], value);
+    return (
+      !_.gt(splittedFlagSize, ONE_WORD) && !_.isEmpty(_.head(splittedFlag))
+    );
   }
 
   public getInvalidFlagError(
@@ -61,26 +57,19 @@ export class DiscordCommandBooleanFlag<
     const splittedFlag: string[] = _.split(messageFlag, `=`);
     const splittedFlagSize: number = _.size(splittedFlag);
 
-    if (_.lt(splittedFlagSize, SPLITTED_FLAG_LENGTH)) {
+    if (_.isEmpty(_.head(splittedFlag))) {
       return {
-        description: `The flag \`${_.toString(
-          discordCommandGetFlagName(messageFlag)
-        )}\` does not have a value. Specify either \`true\` or \`false\`.`,
+        description: `The flag is empty.`,
         isUnknown: false,
-        name: DiscordCommandFlagErrorTitleEnum.INVALID_BOOLEAN_FLAG,
+        name: DiscordCommandFlagErrorTitleEnum.INVALID_VALUELESS_FLAG,
       };
-    }
-
-    const value: string = _.toLower(_.last(splittedFlag));
-    const isValid: boolean = _.includes([`true`, `false`], value);
-
-    if (_.isEqual(isValid, false)) {
+    } else if (_.gt(splittedFlagSize, ONE_WORD)) {
       return {
         description: `The flag \`${_.toString(
           discordCommandGetFlagName(messageFlag)
-        )}\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+        )}\` has a value. Remove it since the flag should be valueless.`,
         isUnknown: false,
-        name: DiscordCommandFlagErrorTitleEnum.INVALID_BOOLEAN_FLAG,
+        name: DiscordCommandFlagErrorTitleEnum.INVALID_VALUELESS_FLAG,
       };
     }
 

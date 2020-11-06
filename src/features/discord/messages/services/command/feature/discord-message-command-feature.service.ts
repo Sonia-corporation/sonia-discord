@@ -44,7 +44,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
 
   public handleResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -59,7 +59,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
 
   public getMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (_.isString(anyDiscordMessage.content)) {
       const featureName: string | null = this._getFeatureName(
         anyDiscordMessage.content

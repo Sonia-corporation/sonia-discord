@@ -2,19 +2,23 @@ import _ from "lodash";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
-import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
+import { IDiscordCommandFlagAction } from "../../../types/commands/flags/discord-command-flag-action";
+import { IDiscordCommandFlagResponse } from "../../../types/commands/flags/discord-command-flag-response";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
-import { DiscordCommandFlagAction } from "./discord-command-flag-action";
+import { DiscordCommandFlags } from "./discord-command-flags";
 
 /**
  * @description
  * Common flag class
  * Contains all basic properties and methods for the flags
  */
-export abstract class DiscordCommandFlag<T extends string> {
+export abstract class DiscordCommandFlag<
+  T extends string,
+  TAction extends IDiscordCommandFlagAction<T>
+> {
   protected abstract _type: DiscordCommandFlagTypeEnum;
-  protected _action: DiscordCommandFlagAction;
+  protected _action: TAction;
   protected _description: string;
   protected _name: T;
   protected _shortcuts: T[] | undefined;
@@ -27,18 +31,18 @@ export abstract class DiscordCommandFlag<T extends string> {
     description,
     name,
     shortcuts,
-  }: Readonly<IDiscordCommandFlag<T>>) {
+  }: Readonly<IDiscordCommandFlag<T, TAction>>) {
     this._action = action;
     this._description = description;
     this._name = name;
     this._shortcuts = shortcuts;
   }
 
-  public getAction(): DiscordCommandFlagAction {
+  public getAction(): TAction {
     return this._action;
   }
 
-  public setAction(action: DiscordCommandFlagAction): void {
+  public setAction(action: TAction): void {
     this._action = action;
   }
 
@@ -88,6 +92,19 @@ export abstract class DiscordCommandFlag<T extends string> {
     this._type = type;
   }
 
+  /**
+   * @description
+   * Return the flag name as example
+   * This is the flag name with his shortcuts and without a value
+   * Include the prefix
+   *
+   * @example
+   * => `--alpha-flag`
+   * => `--alpha-flag (or -e)`
+   * => `--alpha-flag (or -e, -d)`
+   *
+   * @return {string} The flag name as example with his shortcuts
+   */
   public getLowerCaseNameAndShortcutsExample(): string {
     const shortcuts: string[] | undefined = this.getLowerCaseShortcuts();
     let example = `--${this.getLowerCaseName()}`;
@@ -109,9 +126,10 @@ export abstract class DiscordCommandFlag<T extends string> {
 
   public executeAction(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    value?: Readonly<string | null | undefined>
-  ): Promise<IDiscordCommandFlagSuccess> {
-    return this._action.execute(anyDiscordMessage, value);
+    value: Readonly<string | null | undefined>,
+    discordCommandFlags: Readonly<DiscordCommandFlags<T>>
+  ): Promise<IDiscordCommandFlagResponse> {
+    return this._action.execute(anyDiscordMessage, value, discordCommandFlags);
   }
 
   public abstract isValid(messageFlag: Readonly<IDiscordMessageFlag>): boolean;

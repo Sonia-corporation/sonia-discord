@@ -5,9 +5,9 @@ import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/dis
 import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
-import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
-import { DiscordCommandFlagActionBoolean } from "./discord-command-flag-action-boolean";
+import { DiscordCommandFlagActionValueless } from "./discord-command-flag-action-valueless";
 import { DiscordCommandFlags } from "./discord-command-flags";
+import { DiscordCommandValuelessFlag } from "./discord-command-valueless-flag";
 
 enum DummyFlagEnum {
   ALPHA = `alpha-flag`,
@@ -15,25 +15,25 @@ enum DummyFlagEnum {
   CHARLIE = `charlie-flag`,
 }
 
-describe(`DiscordCommandBooleanFlag`, (): void => {
-  let discordCommandFlag: DiscordCommandBooleanFlag<DummyFlagEnum>;
+describe(`DiscordCommandValuelessFlag`, (): void => {
+  let discordCommandFlag: DiscordCommandValuelessFlag<DummyFlagEnum>;
 
   describe(`constructor()`, (): void => {
     describe(`when the class is created with an action`, (): void => {
       it(`should update the action inside the class`, (): void => {
         expect.assertions(1);
         const action = createMock<
-          DiscordCommandFlagActionBoolean<DummyFlagEnum>
+          DiscordCommandFlagActionValueless<DummyFlagEnum>
         >({
           execute: (): Promise<IDiscordCommandFlagSuccess> =>
             Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
         });
 
-        discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+        discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
           createMock<
             IDiscordCommandFlag<
               DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+              DiscordCommandFlagActionValueless<DummyFlagEnum>
             >
           >({
             action,
@@ -48,11 +48,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       it(`should update the description inside the class`, (): void => {
         expect.assertions(1);
 
-        discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+        discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
           createMock<
             IDiscordCommandFlag<
               DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+              DiscordCommandFlagActionValueless<DummyFlagEnum>
             >
           >({
             description: `dummy-description`,
@@ -69,11 +69,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
       it(`should update the name inside the class`, (): void => {
         expect.assertions(1);
 
-        discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+        discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
           createMock<
             IDiscordCommandFlag<
               DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+              DiscordCommandFlagActionValueless<DummyFlagEnum>
             >
           >({
             name: DummyFlagEnum.ALPHA,
@@ -89,11 +89,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         it(`should remove the shortcuts inside the class`, (): void => {
           expect.assertions(1);
 
-          discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
             createMock<
               IDiscordCommandFlag<
                 DummyFlagEnum,
-                DiscordCommandFlagActionBoolean<DummyFlagEnum>
+                DiscordCommandFlagActionValueless<DummyFlagEnum>
               >
             >({
               shortcuts: undefined,
@@ -108,11 +108,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         it(`should update the shortcuts inside the class`, (): void => {
           expect.assertions(1);
 
-          discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
             createMock<
               IDiscordCommandFlag<
                 DummyFlagEnum,
-                DiscordCommandFlagActionBoolean<DummyFlagEnum>
+                DiscordCommandFlagActionValueless<DummyFlagEnum>
               >
             >({
               shortcuts: [DummyFlagEnum.BETA],
@@ -129,11 +129,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`getAction()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >()
       );
@@ -141,12 +141,12 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
     it(`should return the action`, (): void => {
       expect.assertions(1);
-      const action = createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>(
-        {
-          execute: (): Promise<IDiscordCommandFlagSuccess> =>
-            Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
-        }
-      );
+      const action = createMock<
+        DiscordCommandFlagActionValueless<DummyFlagEnum>
+      >({
+        execute: (): Promise<IDiscordCommandFlagSuccess> =>
+          Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+      });
       discordCommandFlag.setAction(action);
 
       const result = discordCommandFlag.getAction();
@@ -157,11 +157,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`setAction()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >()
       );
@@ -169,12 +169,12 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
     it(`should update the action with the given one`, (): void => {
       expect.assertions(1);
-      const action = createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>(
-        {
-          execute: (): Promise<IDiscordCommandFlagSuccess> =>
-            Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
-        }
-      );
+      const action = createMock<
+        DiscordCommandFlagActionValueless<DummyFlagEnum>
+      >({
+        execute: (): Promise<IDiscordCommandFlagSuccess> =>
+          Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+      });
 
       discordCommandFlag.setAction(action);
 
@@ -184,11 +184,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`getDescription()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >()
       );
@@ -206,11 +206,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`setDescription()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >()
       );
@@ -229,11 +229,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`getName()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >()
       );
@@ -251,11 +251,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`getLowerCaseName()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >()
       );
@@ -273,11 +273,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`getHumanizedName()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >()
       );
@@ -295,11 +295,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`setName()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >()
       );
@@ -316,11 +316,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`getShortcuts()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >()
       );
@@ -338,11 +338,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`getLowerCaseShortcuts()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >()
       );
@@ -351,23 +351,23 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
     it(`should return the shortcuts as lower case`, (): void => {
       expect.assertions(1);
       discordCommandFlag.setShortcuts([
-        DummyFlagEnum.ALPHA,
         DummyFlagEnum.BETA,
+        DummyFlagEnum.CHARLIE,
       ]);
 
       const result = discordCommandFlag.getShortcuts();
 
-      expect(result).toStrictEqual([`alpha-flag`, `beta-flag`]);
+      expect(result).toStrictEqual([`beta-flag`, `charlie-flag`]);
     });
   });
 
   describe(`setShortcuts()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >()
       );
@@ -386,11 +386,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
   describe(`getType()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >()
       );
@@ -398,21 +398,21 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
 
     it(`should return the type`, (): void => {
       expect.assertions(1);
-      discordCommandFlag.setType(DiscordCommandFlagTypeEnum.BOOLEAN);
+      discordCommandFlag.setType(DiscordCommandFlagTypeEnum.VALUELESS);
 
       const result = discordCommandFlag.getType();
 
-      expect(result).toStrictEqual(DiscordCommandFlagTypeEnum.BOOLEAN);
+      expect(result).toStrictEqual(DiscordCommandFlagTypeEnum.VALUELESS);
     });
   });
 
   describe(`setType()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >()
       );
@@ -421,21 +421,21 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
     it(`should update the type with the given one`, (): void => {
       expect.assertions(1);
 
-      discordCommandFlag.setType(DiscordCommandFlagTypeEnum.BOOLEAN);
+      discordCommandFlag.setType(DiscordCommandFlagTypeEnum.VALUELESS);
 
       expect(discordCommandFlag.getType()).toStrictEqual(
-        DiscordCommandFlagTypeEnum.BOOLEAN
+        DiscordCommandFlagTypeEnum.VALUELESS
       );
     });
   });
 
   describe(`getLowerCaseNameAndShortcutsExample()`, (): void => {
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >({
           name: DummyFlagEnum.ALPHA,
@@ -509,11 +509,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
     let messageFlag: IDiscordMessageFlag;
 
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >({
           name: DummyFlagEnum.ALPHA,
@@ -540,12 +540,12 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         messageFlag = `alpha-flag`;
       });
 
-      it(`should return false`, (): void => {
+      it(`should return true`, (): void => {
         expect.assertions(1);
 
         const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toStrictEqual(true);
       });
     });
 
@@ -582,12 +582,12 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         messageFlag = `alpha-flag=true`;
       });
 
-      it(`should return true`, (): void => {
+      it(`should return false`, (): void => {
         expect.assertions(1);
 
         const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toStrictEqual(false);
       });
     });
 
@@ -596,12 +596,12 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         messageFlag = `alpha-flag=false`;
       });
 
-      it(`should return true`, (): void => {
+      it(`should return false`, (): void => {
         expect.assertions(1);
 
         const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toStrictEqual(false);
       });
     });
   });
@@ -610,11 +610,11 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
     let messageFlag: IDiscordMessageFlag;
 
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >({
           name: DummyFlagEnum.ALPHA,
@@ -627,15 +627,15 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         messageFlag = ``;
       });
 
-      it(`should return an error about not having specified a value`, (): void => {
+      it(`should return an error about having an empty flag`, (): void => {
         expect.assertions(1);
 
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
         expect(result).toStrictEqual({
-          description: `The flag \`\` does not have a value. Specify either \`true\` or \`false\`.`,
+          description: `The flag is empty.`,
           isUnknown: false,
-          name: `Invalid boolean flag`,
+          name: `Invalid valueless flag`,
         } as IDiscordCommandFlagError);
       });
     });
@@ -645,16 +645,12 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         messageFlag = `alpha-flag`;
       });
 
-      it(`should return an error about not having specified a value`, (): void => {
+      it(`should return null`, (): void => {
         expect.assertions(1);
 
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
-        expect(result).toStrictEqual({
-          description: `The flag \`alpha-flag\` does not have a value. Specify either \`true\` or \`false\`.`,
-          isUnknown: false,
-          name: `Invalid boolean flag`,
-        } as IDiscordCommandFlagError);
+        expect(result).toBeNull();
       });
     });
 
@@ -663,16 +659,12 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         messageFlag = `ALPHA-FLAG`;
       });
 
-      it(`should return an error about not having specified a value`, (): void => {
+      it(`should return null`, (): void => {
         expect.assertions(1);
 
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
-        expect(result).toStrictEqual({
-          description: `The flag \`ALPHA-FLAG\` does not have a value. Specify either \`true\` or \`false\`.`,
-          isUnknown: false,
-          name: `Invalid boolean flag`,
-        } as IDiscordCommandFlagError);
+        expect(result).toBeNull();
       });
     });
 
@@ -681,15 +673,15 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         messageFlag = `alpha-flag=`;
       });
 
-      it(`should return an error about not having specified a valid value`, (): void => {
+      it(`should return an error about having a specified value`, (): void => {
         expect.assertions(1);
 
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
         expect(result).toStrictEqual({
-          description: `The flag \`alpha-flag\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+          description: `The flag \`alpha-flag\` has a value. Remove it since the flag should be valueless.`,
           isUnknown: false,
-          name: `Invalid boolean flag`,
+          name: `Invalid valueless flag`,
         } as IDiscordCommandFlagError);
       });
     });
@@ -699,15 +691,15 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         messageFlag = `ALPHA-FLAG=`;
       });
 
-      it(`should return an error about not having specified a valid value`, (): void => {
+      it(`should return an error about having a specified value`, (): void => {
         expect.assertions(1);
 
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
         expect(result).toStrictEqual({
-          description: `The flag \`ALPHA-FLAG\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+          description: `The flag \`ALPHA-FLAG\` has a value. Remove it since the flag should be valueless.`,
           isUnknown: false,
-          name: `Invalid boolean flag`,
+          name: `Invalid valueless flag`,
         } as IDiscordCommandFlagError);
       });
     });
@@ -717,15 +709,15 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         messageFlag = `alpha-flag=dummy`;
       });
 
-      it(`should return an error about not having specified a valid value`, (): void => {
+      it(`should return an error about having a specified value`, (): void => {
         expect.assertions(1);
 
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
         expect(result).toStrictEqual({
-          description: `The flag \`alpha-flag\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+          description: `The flag \`alpha-flag\` has a value. Remove it since the flag should be valueless.`,
           isUnknown: false,
-          name: `Invalid boolean flag`,
+          name: `Invalid valueless flag`,
         } as IDiscordCommandFlagError);
       });
     });
@@ -735,15 +727,15 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         messageFlag = `ALPHA-FLAG=DUMMY`;
       });
 
-      it(`should return an error about not having specified a valid value`, (): void => {
+      it(`should return an error about having a specified value`, (): void => {
         expect.assertions(1);
 
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
         expect(result).toStrictEqual({
-          description: `The flag \`ALPHA-FLAG\` does not have a valid value. Use it with either \`true\` or \`false\`.`,
+          description: `The flag \`ALPHA-FLAG\` has a value. Remove it since the flag should be valueless.`,
           isUnknown: false,
-          name: `Invalid boolean flag`,
+          name: `Invalid valueless flag`,
         } as IDiscordCommandFlagError);
       });
     });
@@ -753,12 +745,16 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         messageFlag = `alpha-flag=true`;
       });
 
-      it(`should return null`, (): void => {
+      it(`should return an error about having a specified value`, (): void => {
         expect.assertions(1);
 
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
-        expect(result).toBeNull();
+        expect(result).toStrictEqual({
+          description: `The flag \`alpha-flag\` has a value. Remove it since the flag should be valueless.`,
+          isUnknown: false,
+          name: `Invalid valueless flag`,
+        } as IDiscordCommandFlagError);
       });
     });
 
@@ -767,12 +763,16 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         messageFlag = `ALPHA-FLAG=TRUE`;
       });
 
-      it(`should return null`, (): void => {
+      it(`should return an error about having a specified value`, (): void => {
         expect.assertions(1);
 
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
-        expect(result).toBeNull();
+        expect(result).toStrictEqual({
+          description: `The flag \`ALPHA-FLAG\` has a value. Remove it since the flag should be valueless.`,
+          isUnknown: false,
+          name: `Invalid valueless flag`,
+        } as IDiscordCommandFlagError);
       });
     });
 
@@ -781,12 +781,16 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         messageFlag = `alpha-flag=false`;
       });
 
-      it(`should return null`, (): void => {
+      it(`should return an error about having a specified value`, (): void => {
         expect.assertions(1);
 
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
-        expect(result).toBeNull();
+        expect(result).toStrictEqual({
+          description: `The flag \`alpha-flag\` has a value. Remove it since the flag should be valueless.`,
+          isUnknown: false,
+          name: `Invalid valueless flag`,
+        } as IDiscordCommandFlagError);
       });
     });
 
@@ -795,12 +799,16 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
         messageFlag = `ALPHA-FLAG=FALSE`;
       });
 
-      it(`should return null`, (): void => {
+      it(`should return an error about having a specified value`, (): void => {
         expect.assertions(1);
 
         const result = discordCommandFlag.getInvalidFlagError(messageFlag);
 
-        expect(result).toBeNull();
+        expect(result).toStrictEqual({
+          description: `The flag \`ALPHA-FLAG\` has a value. Remove it since the flag should be valueless.`,
+          isUnknown: false,
+          name: `Invalid valueless flag`,
+        } as IDiscordCommandFlagError);
       });
     });
   });
@@ -812,28 +820,28 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
     let discordCommandFlagSuccess: IDiscordCommandFlagSuccess;
 
     beforeEach((): void => {
-      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+      discordCommandFlag = new DiscordCommandValuelessFlag<DummyFlagEnum>(
         createMock<
           IDiscordCommandFlag<
             DummyFlagEnum,
-            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            DiscordCommandFlagActionValueless<DummyFlagEnum>
           >
         >()
       );
       anyDiscordMessage = createMock<IAnyDiscordMessage>();
-      messageFlag = `--alpha-flag=true`;
+      messageFlag = `--alpha-flag`;
       discordCommandFlags = createMock<DiscordCommandFlags<DummyFlagEnum>>();
       discordCommandFlagSuccess = createMock<IDiscordCommandFlagSuccess>();
     });
 
     it(`should execute the action`, async (): Promise<void> => {
       expect.assertions(1);
-      const action = createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>(
-        {
-          execute: (): Promise<IDiscordCommandFlagSuccess> =>
-            Promise.resolve(discordCommandFlagSuccess),
-        }
-      );
+      const action = createMock<
+        DiscordCommandFlagActionValueless<DummyFlagEnum>
+      >({
+        execute: (): Promise<IDiscordCommandFlagSuccess> =>
+          Promise.resolve(discordCommandFlagSuccess),
+      });
       discordCommandFlag.setAction(action);
 
       const result = await discordCommandFlag.executeAction(

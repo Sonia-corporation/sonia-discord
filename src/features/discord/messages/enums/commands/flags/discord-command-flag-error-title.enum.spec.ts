@@ -9,6 +9,14 @@ describe(`DiscordCommandFlagErrorTitleEnum`, (): void => {
     );
   });
 
+  it(`should have a member "INVALID_VALUELESS_FLAG"`, (): void => {
+    expect.assertions(1);
+
+    expect(
+      DiscordCommandFlagErrorTitleEnum.INVALID_VALUELESS_FLAG
+    ).toStrictEqual(`Invalid valueless flag`);
+  });
+
   it(`should have a member "UNKNOWN_FLAG"`, (): void => {
     expect.assertions(1);
 

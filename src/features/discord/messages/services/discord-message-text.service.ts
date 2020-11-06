@@ -34,7 +34,7 @@ export class DiscordMessageTextService extends AbstractService {
 
   public getMessage(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
       if (
         DiscordMentionService.getInstance().isValid(anyDiscordMessage.mentions)
@@ -50,7 +50,7 @@ export class DiscordMessageTextService extends AbstractService {
 
   private _getAnyDiscordMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -69,7 +69,7 @@ export class DiscordMessageTextService extends AbstractService {
 
   private _getDiscordMessageResponse(
     discordMessage: Readonly<IDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (
       DiscordMentionService.getInstance().isForEveryone(discordMessage.mentions)
     ) {
@@ -133,7 +133,7 @@ export class DiscordMessageTextService extends AbstractService {
 
   private _getSoniaMentionMessageResponse(
     discordMessage: Readonly<IDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,

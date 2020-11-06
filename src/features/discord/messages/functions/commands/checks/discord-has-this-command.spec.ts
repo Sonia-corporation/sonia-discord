@@ -1309,4 +1309,73 @@ describe(`hasThisCommand()`, (): void => {
       });
     });
   });
+
+  describe(`when the message contains the feature noon with the shortcut help flag`, (): void => {
+    beforeEach((): void => {
+      data.message = `simple message with -feature noon -h command`;
+    });
+
+    describe(`when the command is help`, (): void => {
+      beforeEach((): void => {
+        data.commands = DiscordMessageCommandEnum.HELP;
+      });
+
+      describe(`when the prefix is -`, (): void => {
+        beforeEach((): void => {
+          data.prefixes = [`-`];
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = discordHasThisCommand(data);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+    });
+
+    describe(`when the command is feature`, (): void => {
+      beforeEach((): void => {
+        data.commands = DiscordMessageCommandEnum.FEATURE;
+      });
+
+      describe(`when the prefix is -`, (): void => {
+        beforeEach((): void => {
+          data.prefixes = `-`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = discordHasThisCommand(data);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+    });
+
+    describe(`when the command is help and feature`, (): void => {
+      beforeEach((): void => {
+        data.commands = [
+          DiscordMessageCommandEnum.HELP,
+          DiscordMessageCommandEnum.FEATURE,
+        ];
+      });
+
+      describe(`when the prefix is -`, (): void => {
+        beforeEach((): void => {
+          data.prefixes = `-`;
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = discordHasThisCommand(data);
+
+          expect(result).toStrictEqual(true);
+        });
+      });
+    });
+  });
 });

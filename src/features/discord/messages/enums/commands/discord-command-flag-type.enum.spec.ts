@@ -6,4 +6,10 @@ describe(`DiscordCommandFlagTypeEnum`, (): void => {
 
     expect(DiscordCommandFlagTypeEnum.BOOLEAN).toStrictEqual(`boolean`);
   });
+
+  it(`should have a member "VALUELESS"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordCommandFlagTypeEnum.VALUELESS).toStrictEqual(`valueless`);
+  });
 });

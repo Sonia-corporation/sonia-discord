@@ -9,4 +9,9 @@ export enum DiscordMessageCommandFeatureNoonFlagEnum {
    */
   E = `e`,
   ENABLED = `enabled`,
+  /**
+   * Shortcut for {@link HELP}
+   */
+  H = `h`,
+  HELP = `help`,
 }

@@ -109,7 +109,7 @@ export class DiscordMessageCommandService extends AbstractService {
 
   public handleFeatureCommand(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     return DiscordMessageCommandFeatureService.getInstance().handleResponse(
       anyDiscordMessage
     );
@@ -117,13 +117,19 @@ export class DiscordMessageCommandService extends AbstractService {
 
   public handleCommands(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse> {
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (
       DiscordMessageContentService.getInstance().hasContent(
         anyDiscordMessage.content
       )
     ) {
       if (
+        DiscordMessageCommandFeatureService.getInstance().hasCommand(
+          anyDiscordMessage.content
+        )
+      ) {
+        return this.handleFeatureCommand(anyDiscordMessage);
+      } else if (
         DiscordMessageCommandVersionService.getInstance().hasCommand(
           anyDiscordMessage.content
         )
@@ -159,12 +165,6 @@ export class DiscordMessageCommandService extends AbstractService {
         )
       ) {
         return this.handleReleaseNotesCommand(anyDiscordMessage);
-      } else if (
-        DiscordMessageCommandFeatureService.getInstance().hasCommand(
-          anyDiscordMessage.content
-        )
-      ) {
-        return this.handleFeatureCommand(anyDiscordMessage);
       }
     }
 

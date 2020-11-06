@@ -1,7 +1,7 @@
 import { createMock } from "ts-auto-mock";
 import { ServiceNameEnum } from "../../../enums/service-name.enum";
 import { FirebaseUpdateCoreService } from "./firebase-update-core.service";
-import _ = require("lodash");
+import _ from "lodash";
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 

@@ -1,7 +1,7 @@
 import { DiscordCommandFirstArgument } from "../../../classes/commands/arguments/discord-command-first-argument";
-import { DiscordCommandFlag } from "../../../classes/commands/flags/discord-command-flag";
+import { IDiscordCommandFlagTypes } from "../../../types/commands/flags/discord-command-flag-types";
 
 export interface IDiscordCommandFlags<T extends string> {
   command: DiscordCommandFirstArgument<string>;
-  flags: DiscordCommandFlag<T>[];
+  flags: IDiscordCommandFlagTypes<T>[];
 }
