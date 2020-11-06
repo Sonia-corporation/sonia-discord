@@ -29,5 +29,8 @@
   "timeoutMS": 5000,
   "plugins": [
     "@stryker-mutator/*"
+  ],
+  "checkers": [
+    "typescript"
   ]
 }
