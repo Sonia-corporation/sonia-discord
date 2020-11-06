@@ -313,7 +313,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
 
         expect(result.options.embed?.fields?.[2]).toStrictEqual({
           name: `--help (or -h)`,
-          value: `Get some help with the noon command. Display the all available flags.`,
+          value: `Get some help with the noon command. Display all the flags with an example.`,
         } as EmbedFieldData);
       });
 
