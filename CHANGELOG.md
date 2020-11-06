@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+# [1.84.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.83.0...1.84.0) (2020-11-06)
+
+
+### :rocket: Features
+
+* **noon:** add help flag ([4529eab](https://github.com/Sonia-corporation/sonia-discord/commit/4529eabded4c5fa684bd83264b4242a2a8fb1e85))
+* **commands:** prioritize the feature command before the help command ([c5eaee0](https://github.com/Sonia-corporation/sonia-discord/commit/c5eaee07206ec5e2a5edb9bc5fb7049976963ac6))
+
 # [1.83.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.82.0...1.83.0) (2020-10-31)
 
 
