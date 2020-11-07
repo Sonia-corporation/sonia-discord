@@ -37,40 +37,38 @@ export class DiscordMessageService extends AbstractService {
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<void> {
     if (
-      _.isString(anyDiscordMessage.content) &&
-      !_.isEmpty(anyDiscordMessage.content)
+      !_.isString(anyDiscordMessage.content) ||
+      _.isEmpty(anyDiscordMessage.content)
     ) {
-      LoggerService.getInstance().log({
-        context: this._serviceName,
-        hasExtendedContext: true,
-        message: LoggerService.getInstance().getSnowflakeContext(
-          anyDiscordMessage.id,
-          anyDiscordMessage.content
-        ),
-      });
-
-      if (
-        DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)
-      ) {
-        if (
-          DiscordAuthorService.getInstance().isBot(anyDiscordMessage.author)
-        ) {
-          return Promise.reject(new Error(`Discord message author is a Bot`));
-        }
-      }
-
-      if (
-        DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)
-      ) {
-        return this.handleChannelMessage(anyDiscordMessage);
-      }
-
-      return Promise.reject(new Error(`Discord message channel is not valid`));
+      return Promise.reject(
+        new Error(`Discord message content is invalid or empty`)
+      );
     }
 
-    return Promise.reject(
-      new Error(`Discord message content is invalid or empty`)
-    );
+    LoggerService.getInstance().log({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        anyDiscordMessage.id,
+        anyDiscordMessage.content
+      ),
+    });
+
+    if (!DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
+      return Promise.reject(new Error(`Invalid author`));
+    }
+
+    if (DiscordAuthorService.getInstance().isBot(anyDiscordMessage.author)) {
+      return Promise.reject(new Error(`Discord message author is a Bot`));
+    }
+
+    if (
+      DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)
+    ) {
+      return this.handleChannelMessage(anyDiscordMessage);
+    }
+
+    return Promise.reject(new Error(`Discord message channel is not valid`));
   }
 
   public handleChannelMessage(
@@ -264,46 +262,46 @@ export class DiscordMessageService extends AbstractService {
     { response, options }: Readonly<IDiscordMessageResponse>
   ): Promise<void> {
     if (
-      DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)
+      !DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)
     ) {
-      LoggerService.getInstance().debug({
-        context: this._serviceName,
-        hasExtendedContext: true,
-        message: LoggerService.getInstance().getSnowflakeContext(
-          anyDiscordMessage.id,
-          `sending message...`
-        ),
-      });
-
-      return anyDiscordMessage.channel
-        .send(response, options)
-        .then(
-          (): Promise<void> => {
-            LoggerService.getInstance().log({
-              context: this._serviceName,
-              hasExtendedContext: true,
-              message: LoggerService.getInstance().getSnowflakeContext(
-                anyDiscordMessage.id,
-                `message sent`
-              ),
-            });
-
-            return Promise.resolve();
-          }
-        )
-        .catch(
-          (error: unknown): Promise<void> => {
-            DiscordMessageErrorService.getInstance().handleError(
-              error,
-              anyDiscordMessage
-            );
-
-            return Promise.reject(error);
-          }
-        );
+      return Promise.reject(new Error(`Discord message channel not valid`));
     }
 
-    return Promise.reject(new Error(`Discord message channel not valid`));
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        anyDiscordMessage.id,
+        `sending message...`
+      ),
+    });
+
+    return anyDiscordMessage.channel
+      .send(response, options)
+      .then(
+        (): Promise<void> => {
+          LoggerService.getInstance().log({
+            context: this._serviceName,
+            hasExtendedContext: true,
+            message: LoggerService.getInstance().getSnowflakeContext(
+              anyDiscordMessage.id,
+              `message sent`
+            ),
+          });
+
+          return Promise.resolve();
+        }
+      )
+      .catch(
+        (error: unknown): Promise<void> => {
+          DiscordMessageErrorService.getInstance().handleError(
+            error,
+            anyDiscordMessage
+          );
+
+          return Promise.reject(error);
+        }
+      );
   }
 
   private _sendMessages(

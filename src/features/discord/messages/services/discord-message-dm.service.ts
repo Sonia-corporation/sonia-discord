@@ -27,11 +27,11 @@ export class DiscordMessageDmService extends AbstractService {
   public getMessage(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
-    if (DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
-      return this._getMessageResponse(anyDiscordMessage);
+    if (!DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
+      return Promise.reject(new Error(`Invalid author`));
     }
 
-    return Promise.reject(new Error(`Invalid author`));
+    return this._getMessageResponse(anyDiscordMessage);
   }
 
   private _getMessageResponse(
@@ -40,15 +40,12 @@ export class DiscordMessageDmService extends AbstractService {
     if (
       DiscordMessageContentService.getInstance().hasContent(
         anyDiscordMessage.content
+      ) &&
+      DiscordMessageCommandService.getInstance().hasCommand(
+        anyDiscordMessage.content
       )
     ) {
-      if (
-        DiscordMessageCommandService.getInstance().hasCommand(
-          anyDiscordMessage.content
-        )
-      ) {
-        return this._getCommandMessageResponse(anyDiscordMessage);
-      }
+      return this._getCommandMessageResponse(anyDiscordMessage);
     }
 
     return DiscordMessageAuthorService.getInstance().reply(anyDiscordMessage);

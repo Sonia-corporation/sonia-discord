@@ -97,16 +97,7 @@ export class DiscordAuthenticationService extends AbstractService {
   private _logWhenReady(): void {
     const client: Client = DiscordClientService.getInstance().getClient();
 
-    if (!_.isNil(client.user)) {
-      LoggerService.getInstance().log({
-        context: this._serviceName,
-        message: ChalkService.getInstance().text(
-          `authenticated as: ${ChalkService.getInstance().value(
-            wrapInQuotes(client.user.tag)
-          )}`
-        ),
-      });
-    } else {
+    if (_.isNil(client.user)) {
       LoggerService.getInstance().log({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
@@ -115,7 +106,18 @@ export class DiscordAuthenticationService extends AbstractService {
           )}`
         ),
       });
+
+      return;
     }
+
+    LoggerService.getInstance().log({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(
+        `authenticated as: ${ChalkService.getInstance().value(
+          wrapInQuotes(client.user.tag)
+        )}`
+      ),
+    });
   }
 
   private _updateReadyState(): void {

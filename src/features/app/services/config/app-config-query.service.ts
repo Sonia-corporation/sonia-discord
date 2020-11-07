@@ -53,11 +53,11 @@ export class AppConfigQueryService extends AbstractService {
   public getReleaseDateHumanized(): string {
     const releaseDate: string = AppConfigService.getInstance().getReleaseDate();
 
-    if (isValidDate(releaseDate)) {
-      return TimeService.getInstance().fromNow(releaseDate);
+    if (!isValidDate(releaseDate)) {
+      return releaseDate;
     }
 
-    return releaseDate;
+    return TimeService.getInstance().fromNow(releaseDate);
   }
 
   public getTotalReleaseCountHumanized(

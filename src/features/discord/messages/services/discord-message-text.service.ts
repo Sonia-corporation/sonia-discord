@@ -35,17 +35,17 @@ export class DiscordMessageTextService extends AbstractService {
   public getMessage(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
-    if (DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
-      if (
-        DiscordMentionService.getInstance().isValid(anyDiscordMessage.mentions)
-      ) {
-        return this._getAnyDiscordMessageResponse(anyDiscordMessage);
-      }
+    if (!DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
+      return Promise.reject(new Error(`Invalid author`));
+    }
 
+    if (
+      !DiscordMentionService.getInstance().isValid(anyDiscordMessage.mentions)
+    ) {
       return Promise.reject(new Error(`Invalid mention`));
     }
 
-    return Promise.reject(new Error(`Invalid author`));
+    return this._getAnyDiscordMessageResponse(anyDiscordMessage);
   }
 
   private _getAnyDiscordMessageResponse(
@@ -60,11 +60,11 @@ export class DiscordMessageTextService extends AbstractService {
       ),
     });
 
-    if (isDiscordMessage(anyDiscordMessage)) {
-      return this._getDiscordMessageResponse(anyDiscordMessage);
+    if (!isDiscordMessage(anyDiscordMessage)) {
+      return Promise.reject(new Error(`Invalid Discord message`));
     }
 
-    return Promise.reject(new Error(`Invalid Discord message`));
+    return this._getDiscordMessageResponse(anyDiscordMessage);
   }
 
   private _getDiscordMessageResponse(
@@ -78,20 +78,20 @@ export class DiscordMessageTextService extends AbstractService {
 
     const sonia: ISonia | null = DiscordSoniaService.getInstance().getSonia();
 
-    if (DiscordSoniaService.getInstance().isValid(sonia)) {
-      if (
-        DiscordMentionService.getInstance().isUserMentioned(
-          discordMessage.mentions,
-          sonia
-        )
-      ) {
-        return this._getSoniaMentionMessageResponse(discordMessage);
-      }
+    if (!DiscordSoniaService.getInstance().isValid(sonia)) {
+      return Promise.reject(new Error(`Invalid Sonia`));
+    }
 
+    if (
+      !DiscordMentionService.getInstance().isUserMentioned(
+        discordMessage.mentions,
+        sonia
+      )
+    ) {
       return Promise.reject(new Error(`Invalid user mention`));
     }
 
-    return Promise.reject(new Error(`Invalid Sonia`));
+    return this._getSoniaMentionMessageResponse(discordMessage);
   }
 
   private _getEveryoneMentionMessageResponse({
@@ -146,17 +146,14 @@ export class DiscordMessageTextService extends AbstractService {
     if (
       DiscordMessageContentService.getInstance().hasContent(
         discordMessage.content
+      ) &&
+      DiscordMessageCommandService.getInstance().hasCommand(
+        discordMessage.content
       )
     ) {
-      if (
-        DiscordMessageCommandService.getInstance().hasCommand(
-          discordMessage.content
-        )
-      ) {
-        return DiscordMessageCommandService.getInstance().handleCommands(
-          discordMessage
-        );
-      }
+      return DiscordMessageCommandService.getInstance().handleCommands(
+        discordMessage
+      );
     }
 
     return DiscordMessageAuthorService.getInstance().reply(discordMessage);

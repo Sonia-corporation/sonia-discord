@@ -66,27 +66,25 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
         ): Promise<(Message | void)[]> => {
           this._logFirebaseGuildFetched(guild);
 
-          if (this._isValidGuild(firebaseGuild)) {
-            this._logValidFirebaseGuild(guild);
+          if (!this._isValidGuild(firebaseGuild)) {
+            this._logInvalidFirebaseGuild(guild);
 
-            return Promise.all(
-              _.map(
-                firebaseGuild.channels,
-                (
-                  channel: Readonly<IFirebaseGuildChannel>
-                ): Promise<Message | void> =>
-                  this.sendMessageByChannel(
-                    channel,
-                    firebaseGuild,
-                    guild
-                  ).catch((): Promise<void> => Promise.resolve())
-              )
-            );
+            return Promise.reject(new Error(`Invalid guild`));
           }
 
-          this._logInvalidFirebaseGuild(guild);
+          this._logValidFirebaseGuild(guild);
 
-          return Promise.reject(new Error(`Invalid guild`));
+          return Promise.all(
+            _.map(
+              firebaseGuild.channels,
+              (
+                channel: Readonly<IFirebaseGuildChannel>
+              ): Promise<Message | void> =>
+                this.sendMessageByChannel(channel, firebaseGuild, guild).catch(
+                  (): Promise<void> => Promise.resolve()
+                )
+            )
+          );
         }
       );
   }
@@ -97,55 +95,55 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     guild: Readonly<Guild>
   ): Promise<Message | void> {
     if (
-      FirebaseGuildsChannelsFeaturesNoonEnabledStateService.getInstance().isEnabled(
+      !FirebaseGuildsChannelsFeaturesNoonEnabledStateService.getInstance().isEnabled(
         channel,
         firebaseGuild
       )
     ) {
-      this._logFirebaseGuildChannelNoonEnabled(guild, channel);
+      this._logFirebaseGuildChannelNoonDisabled(guild, channel);
 
-      const guildChannel: GuildChannel | undefined = guild.channels.cache.get(
-        channel.id as string
-      );
+      return Promise.reject(new Error(`Noon state disabled`));
+    }
 
-      if (!_.isNil(guildChannel)) {
-        this._logValidDiscordGuildChannel(guild, channel);
+    this._logFirebaseGuildChannelNoonEnabled(guild, channel);
 
-        return this.sendMessageResponse(guildChannel);
-      }
+    const guildChannel: GuildChannel | undefined = guild.channels.cache.get(
+      channel.id as string
+    );
 
+    if (_.isNil(guildChannel)) {
       this._logInValidDiscordGuildChannel(guild, channel);
 
       return Promise.reject(new Error(`Guild channel not found`));
     }
 
-    this._logFirebaseGuildChannelNoonDisabled(guild, channel);
+    this._logValidDiscordGuildChannel(guild, channel);
 
-    return Promise.reject(new Error(`Noon state disabled`));
+    return this.sendMessageResponse(guildChannel);
   }
 
   public handleMessages(): Promise<((Message | void)[] | void)[] | void> {
-    if (this._canSendMessage()) {
-      const messagePromises: Promise<(Message | void)[] | void>[] = [];
-
-      DiscordClientService.getInstance()
-        .getClient()
-        .guilds.cache.forEach((guild: Readonly<Guild>): void => {
-          messagePromises.push(
-            this.sendMessage(guild).catch(
-              (): Promise<void> => {
-                this._logNoMessageSentForFirebaseGuild(guild);
-
-                return Promise.resolve();
-              }
-            )
-          );
-        });
-
-      return Promise.all(messagePromises);
+    if (!this._canSendMessage()) {
+      return Promise.reject(new Error(`Can not send message`));
     }
 
-    return Promise.reject(new Error(`Can not send message`));
+    const messagePromises: Promise<(Message | void)[] | void>[] = [];
+
+    DiscordClientService.getInstance()
+      .getClient()
+      .guilds.cache.forEach((guild: Readonly<Guild>): void => {
+        messagePromises.push(
+          this.sendMessage(guild).catch(
+            (): Promise<void> => {
+              this._logNoMessageSentForFirebaseGuild(guild);
+
+              return Promise.resolve();
+            }
+          )
+        );
+      });
+
+    return Promise.all(messagePromises);
   }
 
   public sendMessageResponse(
@@ -153,30 +151,30 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
   ): Promise<Message | void> {
     const messageResponse: IDiscordMessageResponse = this._getMessageResponse();
 
-    if (isDiscordGuildChannelWritable(guildChannel)) {
-      this._logSendingMessagesForNoon(guildChannel);
+    if (!isDiscordGuildChannelWritable(guildChannel)) {
+      this._logGuildChannelNotWritable(guildChannel);
 
-      return guildChannel
-        .send(messageResponse.response, messageResponse.options)
-        .then(
-          (message: Message): Promise<Message> => {
-            this._logNoonMessageSent(guildChannel);
-
-            return Promise.resolve(message);
-          }
-        )
-        .catch(
-          (error: Readonly<string>): Promise<void> => {
-            this._onMessageError(error, guildChannel);
-
-            return Promise.reject(error);
-          }
-        );
+      return Promise.reject(new Error(`Guild channel not writable`));
     }
 
-    this._logGuildChannelNotWritable(guildChannel);
+    this._logSendingMessagesForNoon(guildChannel);
 
-    return Promise.reject(new Error(`Guild channel not writable`));
+    return guildChannel
+      .send(messageResponse.response, messageResponse.options)
+      .then(
+        (message: Message): Promise<Message> => {
+          this._logNoonMessageSent(guildChannel);
+
+          return Promise.resolve(message);
+        }
+      )
+      .catch(
+        (error: Readonly<string>): Promise<void> => {
+          this._onMessageError(error, guildChannel);
+
+          return Promise.reject(error);
+        }
+      );
   }
 
   public executeJob(): Promise<((Message | void)[] | void)[] | void> {
@@ -356,17 +354,19 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
   }
 
   private _canSendMessage(): boolean {
-    if (DiscordGuildConfigService.getInstance().shouldSendNoonMessage()) {
-      if (this._isNoonInParis()) {
-        return true;
-      }
-
-      this._logNotNoonInParis();
-    } else {
+    if (!DiscordGuildConfigService.getInstance().shouldSendNoonMessage()) {
       this._logNoonMessageSendingDisabled();
+
+      return false;
     }
 
-    return false;
+    if (!this._isNoonInParis()) {
+      this._logNotNoonInParis();
+
+      return false;
+    }
+
+    return true;
   }
 
   private _logNotNoonInParis(): void {

@@ -34,47 +34,45 @@ export class ConfigService {
   public getUpdatedString(
     configUpdateString: Readonly<IConfigUpdateString>
   ): string {
-    if (_.isString(configUpdateString.newValue)) {
-      let message = `${configUpdateString.valueName} updated`;
-
-      if (_.isEqual(configUpdateString.isValueHidden, true)) {
-        message = LoggerService.getInstance().getHiddenValueUpdate(
-          `${message} to: `,
-          true
-        );
-      } else {
-        if (!_.isEqual(configUpdateString.isValueDisplay, false)) {
-          message = `${message} to: ${wrapInQuotes(
-            configUpdateString.newValue
-          )}`;
-        }
-      }
-
-      LoggerService.getInstance().log({
-        context: configUpdateString.context,
-        message,
-      });
-
-      return configUpdateString.newValue;
+    if (!_.isString(configUpdateString.newValue)) {
+      return configUpdateString.oldValue;
     }
 
-    return configUpdateString.oldValue;
+    let message = `${configUpdateString.valueName} updated`;
+
+    if (_.isEqual(configUpdateString.isValueHidden, true)) {
+      message = LoggerService.getInstance().getHiddenValueUpdate(
+        `${message} to: `,
+        true
+      );
+    } else {
+      if (!_.isEqual(configUpdateString.isValueDisplay, false)) {
+        message = `${message} to: ${wrapInQuotes(configUpdateString.newValue)}`;
+      }
+    }
+
+    LoggerService.getInstance().log({
+      context: configUpdateString.context,
+      message,
+    });
+
+    return configUpdateString.newValue;
   }
 
   public getUpdatedBoolean(
     configUpdateString: Readonly<IConfigUpdateBoolean>
   ): boolean {
-    if (_.isBoolean(configUpdateString.newValue)) {
-      LoggerService.getInstance().log({
-        context: configUpdateString.context,
-        message: `${configUpdateString.valueName} updated to: ${_.toString(
-          configUpdateString.newValue
-        )}`,
-      });
-
-      return configUpdateString.newValue;
+    if (!_.isBoolean(configUpdateString.newValue)) {
+      return configUpdateString.oldValue;
     }
 
-    return configUpdateString.oldValue;
+    LoggerService.getInstance().log({
+      context: configUpdateString.context,
+      message: `${configUpdateString.valueName} updated to: ${_.toString(
+        configUpdateString.newValue
+      )}`,
+    });
+
+    return configUpdateString.newValue;
   }
 }

@@ -7,16 +7,18 @@ const ONE_ARGUMENT_INDEX = 1;
 export function getNodeArgumentByIndex(
   argumentIndex: Readonly<number>
 ): unknown | null {
-  if (isValidArgumentIndex(argumentIndex)) {
-    const originArgumentValueIndex: number = _.add(
-      argumentIndex,
-      ONE_ARGUMENT_INDEX
-    );
-
-    if (isExistingArgument(originArgumentValueIndex)) {
-      return process.argv[originArgumentValueIndex];
-    }
+  if (!isValidArgumentIndex(argumentIndex)) {
+    return null;
   }
 
-  return null;
+  const originArgumentValueIndex: number = _.add(
+    argumentIndex,
+    ONE_ARGUMENT_INDEX
+  );
+
+  if (!isExistingArgument(originArgumentValueIndex)) {
+    return null;
+  }
+
+  return process.argv[originArgumentValueIndex];
 }

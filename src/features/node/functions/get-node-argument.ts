@@ -3,11 +3,11 @@ import { getNodeArgumentByIndex } from "./get-node-argument-by-index";
 import { hasCommandLineArguments } from "./has-command-line-arguments";
 
 export function getNodeArgument(name: Readonly<string>): unknown | null {
-  if (hasCommandLineArguments()) {
-    const argumentIndex: number = getArgumentIndex(name);
-
-    return getNodeArgumentByIndex(argumentIndex);
+  if (!hasCommandLineArguments()) {
+    return null;
   }
 
-  return null;
+  const argumentIndex: number = getArgumentIndex(name);
+
+  return getNodeArgumentByIndex(argumentIndex);
 }

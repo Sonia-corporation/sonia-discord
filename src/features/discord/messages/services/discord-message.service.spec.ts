@@ -267,7 +267,7 @@ describe(`DiscordMessageService`, (): void => {
         expect.assertions(3);
 
         await expect(service.sendMessage(anyDiscordMessage)).rejects.toThrow(
-          new Error(`Discord message channel is not valid`)
+          new Error(`Invalid author`)
         );
 
         expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
@@ -363,9 +363,7 @@ describe(`DiscordMessageService`, (): void => {
 
             await expect(
               service.sendMessage(anyDiscordMessage)
-            ).rejects.toThrow(
-              new Error(`Discord message channel is not valid`)
-            );
+            ).rejects.toThrow(new Error(`Invalid author`));
 
             expect(handleChannelMessageSpy).not.toHaveBeenCalled();
           });
@@ -376,16 +374,16 @@ describe(`DiscordMessageService`, (): void => {
             discordChannelServiceIsValidSpy.mockReturnValue(true);
           });
 
-          it(`should handle the channel message`, async (): Promise<void> => {
-            expect.assertions(3);
+          it(`should not handle the channel message`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
 
-            const result = await service.sendMessage(anyDiscordMessage);
+            await expect(
+              service.sendMessage(anyDiscordMessage)
+            ).rejects.toThrow(new Error(`Invalid author`));
 
-            expect(result).toBeUndefined();
-            expect(handleChannelMessageSpy).toHaveBeenCalledTimes(1);
-            expect(handleChannelMessageSpy).toHaveBeenCalledWith(
-              anyDiscordMessage
-            );
+            expect(handleChannelMessageSpy).not.toHaveBeenCalled();
           });
         });
       });

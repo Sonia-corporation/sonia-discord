@@ -84,19 +84,19 @@ export class DiscordCommandFlags<T extends string> {
       | IDiscordCommandFlagTypes<T>
       | undefined = this.getRandomFlag();
 
-    if (!_.isNil(randomFlag)) {
-      const flagName: string = randomFlag.getLowerCaseName();
-      const flagType: DiscordCommandFlagTypeEnum = randomFlag.getType();
-      let usageExample = `--${flagName}`;
-
-      if (flagType === DiscordCommandFlagTypeEnum.BOOLEAN) {
-        usageExample += `=${_.toString(getRandomBoolean())}`;
-      }
-
-      return usageExample;
+    if (_.isNil(randomFlag)) {
+      return undefined;
     }
 
-    return undefined;
+    const flagName: string = randomFlag.getLowerCaseName();
+    const flagType: DiscordCommandFlagTypeEnum = randomFlag.getType();
+    let usageExample = `--${flagName}`;
+
+    if (flagType === DiscordCommandFlagTypeEnum.BOOLEAN) {
+      usageExample += `=${_.toString(getRandomBoolean())}`;
+    }
+
+    return usageExample;
   }
 
   /**
@@ -345,15 +345,15 @@ export class DiscordCommandFlags<T extends string> {
       | IDiscordCommandFlagTypes<T>
       | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
 
-    if (this._isFlag(shortcutFlag)) {
-      return shortcutFlag.executeAction(anyDiscordMessage, undefined, this);
+    if (!this._isFlag(shortcutFlag)) {
+      return Promise.reject(
+        new Error(
+          `The shortcut flag does not exists. Could not perform the execution`
+        )
+      );
     }
 
-    return Promise.reject(
-      new Error(
-        `The shortcut flag does not exists. Could not perform the execution`
-      )
-    );
+    return shortcutFlag.executeAction(anyDiscordMessage, undefined, this);
   }
 
   public getAllFlagsAsEmbedFields(): EmbedFieldData[] {

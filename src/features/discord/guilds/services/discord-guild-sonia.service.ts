@@ -37,50 +37,54 @@ export class DiscordGuildSoniaService extends AbstractService {
   public sendMessageToChannel(
     sendMessageToChannel: Readonly<IDiscordGuildSoniaSendMessageToChannel>
   ): void {
-    if (!_.isNil(this._soniaGuild)) {
-      const guildChannel:
-        | GuildChannel
-        | null
-        | undefined = this.getSoniaGuildChannelByName(
-        sendMessageToChannel.channelName
-      );
-
-      if (!_.isNil(guildChannel) && guildChannel.isText()) {
-        this._sendMessageToChannel(sendMessageToChannel, guildChannel);
-      } else {
-        LoggerService.getInstance().warning({
-          context: this._serviceName,
-          message: ChalkService.getInstance().text(
-            `Could not find channel with name: ${ChalkService.getInstance().value(
-              sendMessageToChannel.channelName
-            )}`
-          ),
-        });
-      }
-    } else {
+    if (_.isNil(this._soniaGuild)) {
       LoggerService.getInstance().warning({
         context: this._serviceName,
         message: ChalkService.getInstance().text(`Sonia guild does not exists`),
       });
+
+      return;
     }
+
+    const guildChannel:
+      | GuildChannel
+      | null
+      | undefined = this.getSoniaGuildChannelByName(
+      sendMessageToChannel.channelName
+    );
+
+    if (_.isNil(guildChannel) || !guildChannel.isText()) {
+      LoggerService.getInstance().warning({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `Could not find channel with name: ${ChalkService.getInstance().value(
+            sendMessageToChannel.channelName
+          )}`
+        ),
+      });
+
+      return;
+    }
+
+    this._sendMessageToChannel(sendMessageToChannel, guildChannel);
   }
 
   public getSoniaGuildChannelByName(
     channelName: Readonly<DiscordGuildSoniaChannelNameEnum>
   ): GuildChannel | null | undefined {
-    if (!_.isNil(this._soniaGuild)) {
-      return this._soniaGuild.channels.cache.find(
-        ({ name }: Readonly<GuildChannel>): boolean =>
-          _.isEqual(_.toLower(_.deburr(name)), _.toLower(channelName))
-      );
+    if (_.isNil(this._soniaGuild)) {
+      LoggerService.getInstance().warning({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(`Sonia guild does not exists`),
+      });
+
+      return null;
     }
 
-    LoggerService.getInstance().warning({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(`Sonia guild does not exists`),
-    });
-
-    return null;
+    return this._soniaGuild.channels.cache.find(
+      ({ name }: Readonly<GuildChannel>): boolean =>
+        _.isEqual(_.toLower(_.deburr(name)), _.toLower(channelName))
+    );
   }
 
   public setSoniaGuild(): void {
@@ -91,12 +95,14 @@ export class DiscordGuildSoniaService extends AbstractService {
         context: this._serviceName,
         message: ChalkService.getInstance().text(`Sonia guild not found`),
       });
-    } else {
-      LoggerService.getInstance().debug({
-        context: this._serviceName,
-        message: ChalkService.getInstance().text(`Sonia guild found`),
-      });
+
+      return;
     }
+
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(`Sonia guild found`),
+    });
   }
 
   private _sendMessageToChannel(

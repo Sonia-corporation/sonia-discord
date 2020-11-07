@@ -36,24 +36,24 @@ export class DiscordMessageCommandFeatureNoonEnabled<T extends string>
       ): Promise<IDiscordCommandFlagSuccess> => {
         this._logCurrentState(anyDiscordMessage.id, isEnabled);
 
-        if (!_.isNil(anyDiscordMessage.guild)) {
-          if (
-            DiscordChannelService.getInstance().isValid(
-              anyDiscordMessage.channel
-            )
-          ) {
-            return this.updateDatabase(
-              shouldEnable,
-              isEnabled,
-              anyDiscordMessage.guild,
-              anyDiscordMessage.channel
-            );
-          }
+        if (_.isNil(anyDiscordMessage.guild)) {
+          return Promise.reject(new Error(`Firebase guild invalid`));
+        }
 
+        if (
+          !DiscordChannelService.getInstance().isValid(
+            anyDiscordMessage.channel
+          )
+        ) {
           return Promise.reject(new Error(`Firebase channel invalid`));
         }
 
-        return Promise.reject(new Error(`Firebase guild invalid`));
+        return this.updateDatabase(
+          shouldEnable,
+          isEnabled,
+          anyDiscordMessage.guild,
+          anyDiscordMessage.channel
+        );
       }
     );
   }
@@ -89,18 +89,16 @@ export class DiscordMessageCommandFeatureNoonEnabled<T extends string>
     { id }: Readonly<IFirebaseGuild>,
     discordChannel: Readonly<IAnyDiscordChannel>
   ): Promise<IDiscordCommandFlagSuccess> {
-    if (!_.isNil(id)) {
-      return FirebaseGuildsChannelsFeaturesNoonEnabledService.getInstance()
-        .updateStateByGuildId(id, discordChannel.id, shouldEnable)
-        .then(
-          (): Promise<IDiscordCommandFlagSuccess> =>
-            Promise.resolve(
-              this._getCommandFlagSuccess(shouldEnable, isEnabled)
-            )
-        );
+    if (_.isNil(id)) {
+      return Promise.reject(new Error(`Firebase guild id invalid`));
     }
 
-    return Promise.reject(new Error(`Firebase guild id invalid`));
+    return FirebaseGuildsChannelsFeaturesNoonEnabledService.getInstance()
+      .updateStateByGuildId(id, discordChannel.id, shouldEnable)
+      .then(
+        (): Promise<IDiscordCommandFlagSuccess> =>
+          Promise.resolve(this._getCommandFlagSuccess(shouldEnable, isEnabled))
+      );
   }
 
   private _isNoonEnabled(
@@ -122,11 +120,11 @@ export class DiscordMessageCommandFeatureNoonEnabled<T extends string>
     firebaseGuild: Readonly<IFirebaseGuild>,
     channelId: Readonly<Snowflake>
   ): IFirebaseGuildChannel | undefined {
-    if (hasFirebaseGuildChannels(firebaseGuild)) {
-      return _.get(firebaseGuild.channels, channelId);
+    if (!hasFirebaseGuildChannels(firebaseGuild)) {
+      return undefined;
     }
 
-    return undefined;
+    return _.get(firebaseGuild.channels, channelId);
   }
 
   private _getFirebaseEnabledState(

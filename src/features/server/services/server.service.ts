@@ -42,23 +42,27 @@ export class ServerService extends AbstractService {
   private _listen(): void {
     const port: number = ServerConfigService.getInstance().getPort();
 
-    if (!_.isNil(this._app)) {
-      this._app.listen(port, (): void => {
-        LoggerService.getInstance().log({
-          context: this._serviceName,
-          message: ChalkService.getInstance().text(
-            `listening on port: ${ChalkService.getInstance().value(port)}`
-          ),
-        });
-      });
+    if (_.isNil(this._app)) {
+      return;
     }
+
+    this._app.listen(port, (): void => {
+      LoggerService.getInstance().log({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `listening on port: ${ChalkService.getInstance().value(port)}`
+        ),
+      });
+    });
   }
 
   private _setScoutMiddleware(): void {
-    if (!_.isNil(this._app)) {
-      if (AppConfigService.getInstance().isProduction()) {
-        this._app.use(scout.expressMiddleware());
-      }
+    if (_.isNil(this._app)) {
+      return;
+    }
+
+    if (AppConfigService.getInstance().isProduction()) {
+      this._app.use(scout.expressMiddleware());
     }
   }
 

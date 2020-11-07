@@ -60,76 +60,15 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
   public getMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
-    if (_.isString(anyDiscordMessage.content)) {
-      const featureName: string | null = this._getFeatureName(
-        anyDiscordMessage.content
-      );
+    if (!_.isString(anyDiscordMessage.content)) {
+      return DiscordMessageCommandFeatureEmptyContentErrorService.getInstance().getMessageResponse();
+    }
 
-      if (!_.isNil(featureName)) {
-        if (
-          DiscordMessageCommandFeatureNoonService.getInstance().isNoonFeature(
-            featureName
-          )
-        ) {
-          const messageFlags: string | null = this.getFlags(
-            anyDiscordMessage.content
-          );
+    const featureName: string | null = this._getFeatureName(
+      anyDiscordMessage.content
+    );
 
-          if (!_.isNil(messageFlags)) {
-            const flagsErrors: IDiscordCommandFlagsErrors | null = DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getErrors(
-              messageFlags
-            );
-
-            if (_.isNil(flagsErrors)) {
-              const flagsDuplicated: IDiscordCommandFlagsDuplicated | null = DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getDuplicated(
-                messageFlags
-              );
-
-              if (_.isNil(flagsDuplicated)) {
-                return DiscordMessageCommandFeatureNoonService.getInstance().getMessageResponse(
-                  anyDiscordMessage,
-                  messageFlags
-                );
-              }
-
-              return this._getDuplicatedFlagsErrorMessageResponse(
-                anyDiscordMessage,
-                DiscordMessageCommandFeatureNameEnum.NOON,
-                flagsDuplicated
-              );
-            }
-
-            return this._getWrongFlagsErrorMessageResponse(
-              anyDiscordMessage,
-              DiscordMessageCommandFeatureNameEnum.NOON,
-              flagsErrors
-            );
-          }
-
-          return this._getEmptyFlagsErrorMessageResponse(
-            anyDiscordMessage,
-            DiscordMessageCommandFeatureNameEnum.NOON
-          );
-        }
-
-        LoggerService.getInstance().debug({
-          context: this._serviceName,
-          hasExtendedContext: true,
-          message: LoggerService.getInstance().getSnowflakeContext(
-            anyDiscordMessage.id,
-            `feature name ${ChalkService.getInstance().value(
-              featureName
-            )} not matching an existing feature`
-          ),
-        });
-
-        return DiscordMessageCommandFeatureWrongFeatureNameErrorService.getInstance().getMessageResponse(
-          anyDiscordMessage,
-          this._commands,
-          featureName
-        );
-      }
-
+    if (_.isNil(featureName)) {
       LoggerService.getInstance().debug({
         context: this._serviceName,
         hasExtendedContext: true,
@@ -145,7 +84,68 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       );
     }
 
-    return DiscordMessageCommandFeatureEmptyContentErrorService.getInstance().getMessageResponse();
+    if (
+      !DiscordMessageCommandFeatureNoonService.getInstance().isNoonFeature(
+        featureName
+      )
+    ) {
+      LoggerService.getInstance().debug({
+        context: this._serviceName,
+        hasExtendedContext: true,
+        message: LoggerService.getInstance().getSnowflakeContext(
+          anyDiscordMessage.id,
+          `feature name ${ChalkService.getInstance().value(
+            featureName
+          )} not matching an existing feature`
+        ),
+      });
+
+      return DiscordMessageCommandFeatureWrongFeatureNameErrorService.getInstance().getMessageResponse(
+        anyDiscordMessage,
+        this._commands,
+        featureName
+      );
+    }
+
+    const messageFlags: string | null = this.getFlags(
+      anyDiscordMessage.content
+    );
+
+    if (_.isNil(messageFlags)) {
+      return this._getEmptyFlagsErrorMessageResponse(
+        anyDiscordMessage,
+        DiscordMessageCommandFeatureNameEnum.NOON
+      );
+    }
+
+    const flagsErrors: IDiscordCommandFlagsErrors | null = DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getErrors(
+      messageFlags
+    );
+
+    if (!_.isNil(flagsErrors)) {
+      return this._getWrongFlagsErrorMessageResponse(
+        anyDiscordMessage,
+        DiscordMessageCommandFeatureNameEnum.NOON,
+        flagsErrors
+      );
+    }
+
+    const flagsDuplicated: IDiscordCommandFlagsDuplicated | null = DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getDuplicated(
+      messageFlags
+    );
+
+    if (!_.isNil(flagsDuplicated)) {
+      return this._getDuplicatedFlagsErrorMessageResponse(
+        anyDiscordMessage,
+        DiscordMessageCommandFeatureNameEnum.NOON,
+        flagsDuplicated
+      );
+    }
+
+    return DiscordMessageCommandFeatureNoonService.getInstance().getMessageResponse(
+      anyDiscordMessage,
+      messageFlags
+    );
   }
 
   public hasCommand(message: Readonly<string>): boolean {

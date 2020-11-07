@@ -222,7 +222,14 @@ export class InitService extends AbstractService {
             ),
           });
 
-          if (!_.isNil(data.data.repository.release)) {
+          if (_.isNil(data.data.repository.release)) {
+            LoggerService.getInstance().error({
+              context: this._serviceName,
+              message: ChalkService.getInstance().text(
+                `Failed to find a release with the given tag name from GitHub API`
+              ),
+            });
+          } else {
             AppConfigMutatorService.getInstance().updateReleaseDate(
               data.data.repository.release.updatedAt
             );
@@ -234,13 +241,6 @@ export class InitService extends AbstractService {
               context: this._serviceName,
               message: ChalkService.getInstance().text(
                 `Release notes updated from GitHub API`
-              ),
-            });
-          } else {
-            LoggerService.getInstance().error({
-              context: this._serviceName,
-              message: ChalkService.getInstance().text(
-                `Failed to find a release with the given tag name from GitHub API`
               ),
             });
           }
