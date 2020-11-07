@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.84.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.84.0...1.84.1) (2020-11-06)
+
+
+### :bug: Bug Fixes
+
+* **noon-help:** fix a wording issue in the description ([4718c40](https://github.com/Sonia-corporation/sonia-discord/commit/4718c403ab665f7653e169aa4affbd6726b3dae1))
+
 # [1.84.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.83.0...1.84.0) (2020-11-06)
 
 
