@@ -45,35 +45,35 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
       | CollectionReference<IFirebaseGuild>
       | undefined = FirebaseGuildsService.getInstance().getCollectionReference();
 
-    if (!_.isNil(collectionReference)) {
-      this._logUpdatingStateStart();
+    if (_.isNil(collectionReference)) {
+      return Promise.reject(new Error(`Collection not available`));
+    }
 
-      return FirebaseGuildsService.getInstance()
-        .getGuild(id)
-        .then(
-          (
-            firebaseGuild: Readonly<IFirebaseGuild | null | undefined>
-          ): Promise<WriteResult> => {
-            if (this._isValidGuild(firebaseGuild)) {
-              return this.updateState(
-                collectionReference,
-                id,
-                channelId,
-                isEnabled,
-                firebaseGuild
-              );
-            }
+    this._logUpdatingStateStart();
 
+    return FirebaseGuildsService.getInstance()
+      .getGuild(id)
+      .then(
+        (
+          firebaseGuild: Readonly<IFirebaseGuild | null | undefined>
+        ): Promise<WriteResult> => {
+          if (!this._isValidGuild(firebaseGuild)) {
             this._logInvalidFirebaseGuild(id);
 
             return Promise.reject(
               new Error(`Firebase guild does not exists or is not up-to-date`)
             );
           }
-        );
-    }
 
-    return Promise.reject(new Error(`Collection not available`));
+          return this.updateState(
+            collectionReference,
+            id,
+            channelId,
+            isEnabled,
+            firebaseGuild
+          );
+        }
+      );
   }
 
   /**
@@ -90,15 +90,15 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
     isEnabled: Readonly<boolean>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): IObject {
-    if (this._isGuildFullyUpToDate(channelId, firebaseGuild)) {
-      this._logFullyUpToDateFirebaseGuild(firebaseGuild.id);
+    if (!this._isGuildFullyUpToDate(channelId, firebaseGuild)) {
+      this._logNotUpToDateFirebaseGuild(firebaseGuild.id);
 
-      return this._getUpdatedGuildWithPathOnly(channelId, isEnabled);
+      return this._getUpdatedGuild(channelId, isEnabled, firebaseGuild);
     }
 
-    this._logNotUpToDateFirebaseGuild(firebaseGuild.id);
+    this._logFullyUpToDateFirebaseGuild(firebaseGuild.id);
 
-    return this._getUpdatedGuild(channelId, isEnabled, firebaseGuild);
+    return this._getUpdatedGuildWithPathOnly(channelId, isEnabled);
   }
 
   public updateState(

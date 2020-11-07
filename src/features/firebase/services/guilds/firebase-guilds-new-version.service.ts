@@ -71,15 +71,20 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   public sendNewReleaseNotesFromFirebaseGuild({
     id,
   }: Readonly<IFirebaseGuild>): Promise<Message | void> {
-    if (!_.isNil(id)) {
-      const guild:
-        | Guild
-        | undefined = DiscordGuildService.getInstance().getGuildById(id);
+    if (_.isNil(id)) {
+      LoggerService.getInstance().error({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(`Firebase guild id nil`),
+      });
 
-      if (!_.isNil(guild)) {
-        return this._sendNewReleaseNotesFromDiscordGuild(guild);
-      }
+      return Promise.reject(new Error(`Firebase guild id nil`));
+    }
 
+    const guild:
+      | Guild
+      | undefined = DiscordGuildService.getInstance().getGuildById(id);
+
+    if (_.isNil(guild)) {
       LoggerService.getInstance().error({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
@@ -92,12 +97,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       return Promise.reject(new Error(`Discord guild not found`));
     }
 
-    LoggerService.getInstance().error({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(`Firebase guild id nil`),
-    });
-
-    return Promise.reject(new Error(`Firebase guild id nil`));
+    return this._sendNewReleaseNotesFromDiscordGuild(guild);
   }
 
   private _sendNewReleaseNotesToEachGuild$(): Observable<true> {
@@ -178,81 +178,77 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       | WriteBatch
       | undefined = FirebaseGuildsService.getInstance().getBatch();
 
-    if (!_.isNil(batch)) {
-      const firebaseGuilds: IFirebaseGuild[] = [];
-      let countFirebaseGuildsUpdated = NO_GUILD;
-      let countFirebaseGuilds = NO_GUILD;
-
-      querySnapshot.forEach(
-        (
-          queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>
-        ): void => {
-          if (_.isEqual(queryDocumentSnapshot.exists, true)) {
-            countFirebaseGuilds = _.add(countFirebaseGuilds, ONE_GUILD);
-            const firebaseGuild: IFirebaseGuild = queryDocumentSnapshot.data();
-
-            if (
-              this._shouldSendNewReleaseNotesFromFirebaseGuild(firebaseGuild)
-            ) {
-              countFirebaseGuildsUpdated = _.add(
-                countFirebaseGuildsUpdated,
-                ONE_GUILD
-              );
-
-              batch.update(
-                queryDocumentSnapshot.ref,
-                getUpdatedFirebaseGuildLastReleaseNotesVersion(
-                  AppConfigService.getInstance().getVersion()
-                )
-              );
-              firebaseGuilds.push(firebaseGuild);
-            }
-          }
-        }
-      );
-
-      if (_.gte(countFirebaseGuildsUpdated, ONE_GUILD)) {
-        LoggerService.getInstance().log({
-          context: this._serviceName,
-          message: ChalkService.getInstance().text(
-            `updating ${ChalkService.getInstance().value(
-              countFirebaseGuildsUpdated
-            )} Firebase guild${
-              _.gt(countFirebaseGuildsUpdated, ONE_GUILD) ? `s` : ``
-            }...`
-          ),
-        });
-
-        return batch
-          .commit()
-          .then(
-            (): Promise<IFirebaseGuild[]> => Promise.resolve(firebaseGuilds)
-          )
-          .catch((error: Error): Promise<void> => Promise.reject(error));
-      }
-
-      LoggerService.getInstance().log({
+    if (_.isNil(batch)) {
+      LoggerService.getInstance().error({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
-          `all Firebase guild${
-            _.gt(countFirebaseGuilds, ONE_GUILD) ? `s` : ``
-          } ${ChalkService.getInstance().hint(
-            `(${countFirebaseGuilds})`
-          )} release notes already sent`
+          `Firebase guilds batch not available`
         ),
       });
 
-      return Promise.resolve();
+      return Promise.reject(new Error(`Firebase guilds batch not available`));
     }
 
-    LoggerService.getInstance().error({
+    const firebaseGuilds: IFirebaseGuild[] = [];
+    let countFirebaseGuildsUpdated = NO_GUILD;
+    let countFirebaseGuilds = NO_GUILD;
+
+    querySnapshot.forEach(
+      (queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>): void => {
+        if (!_.isEqual(queryDocumentSnapshot.exists, true)) {
+          return;
+        }
+
+        countFirebaseGuilds = _.add(countFirebaseGuilds, ONE_GUILD);
+        const firebaseGuild: IFirebaseGuild = queryDocumentSnapshot.data();
+
+        if (this._shouldSendNewReleaseNotesFromFirebaseGuild(firebaseGuild)) {
+          countFirebaseGuildsUpdated = _.add(
+            countFirebaseGuildsUpdated,
+            ONE_GUILD
+          );
+
+          batch.update(
+            queryDocumentSnapshot.ref,
+            getUpdatedFirebaseGuildLastReleaseNotesVersion(
+              AppConfigService.getInstance().getVersion()
+            )
+          );
+          firebaseGuilds.push(firebaseGuild);
+        }
+      }
+    );
+
+    if (_.gte(countFirebaseGuildsUpdated, ONE_GUILD)) {
+      LoggerService.getInstance().log({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `updating ${ChalkService.getInstance().value(
+            countFirebaseGuildsUpdated
+          )} Firebase guild${
+            _.gt(countFirebaseGuildsUpdated, ONE_GUILD) ? `s` : ``
+          }...`
+        ),
+      });
+
+      return batch
+        .commit()
+        .then((): Promise<IFirebaseGuild[]> => Promise.resolve(firebaseGuilds))
+        .catch((error: Error): Promise<void> => Promise.reject(error));
+    }
+
+    LoggerService.getInstance().log({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `Firebase guilds batch not available`
+        `all Firebase guild${
+          _.gt(countFirebaseGuilds, ONE_GUILD) ? `s` : ``
+        } ${ChalkService.getInstance().hint(
+          `(${countFirebaseGuilds})`
+        )} release notes already sent`
       ),
     });
 
-    return Promise.reject(new Error(`Firebase guilds batch not available`));
+    return Promise.resolve();
   }
 
   private _sendNewReleaseNotesFromDiscordGuild(
@@ -262,14 +258,20 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       guild
     );
 
-    if (!_.isNil(guildChannel)) {
-      if (isDiscordGuildChannelWritable(guildChannel)) {
-        return this._sendNewReleaseNotesFromDiscordChannel(
-          guildChannel,
-          guild.id
-        );
-      }
+    if (_.isNil(guildChannel)) {
+      LoggerService.getInstance().debug({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `guild ${ChalkService.getInstance().value(
+            guild.id
+          )} does not have a primary channel`
+        ),
+      });
 
+      return Promise.reject(new Error(`Primary channel not found`));
+    }
+
+    if (!isDiscordGuildChannelWritable(guildChannel)) {
       LoggerService.getInstance().debug({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
@@ -282,16 +284,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       return Promise.reject(new Error(`Primary channel not writable`));
     }
 
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `guild ${ChalkService.getInstance().value(
-          guild.id
-        )} does not have a primary channel`
-      ),
-    });
-
-    return Promise.reject(new Error(`Primary channel not found`));
+    return this._sendNewReleaseNotesFromDiscordChannel(guildChannel, guild.id);
   }
 
   private _sendNewReleaseNotesFromDiscordChannel(

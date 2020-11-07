@@ -31,11 +31,11 @@ export class DiscordCommandFirstArguments<T extends string> {
       | DiscordCommandFirstArgument<T>
       | undefined = this.getRandomArgument();
 
-    if (!_.isNil(randomArgument)) {
-      return randomArgument.getLowerCaseName();
+    if (_.isNil(randomArgument)) {
+      return undefined;
     }
 
-    return undefined;
+    return randomArgument.getLowerCaseName();
   }
 
   public getAllArgumentsNameExample(): string {

@@ -25,18 +25,20 @@ export class DiscordChannelGuildService extends AbstractService {
   }
 
   public getPrimary(guild: Readonly<Guild>): GuildChannel | null {
-    if (isDiscordGuild(guild)) {
-      const primaryChannel:
-        | GuildChannel
-        | undefined = guild.channels.cache.find(
-        (channel: Readonly<GuildChannel>): boolean => this.isGeneral(channel)
-      );
-
-      if (isDiscordGuildChannel(primaryChannel)) {
-        return primaryChannel;
-      }
+    if (!isDiscordGuild(guild)) {
+      return null;
     }
 
-    return null;
+    const primaryChannel:
+      | GuildChannel
+      | undefined = guild.channels.cache.find(
+      (channel: Readonly<GuildChannel>): boolean => this.isGeneral(channel)
+    );
+
+    if (!isDiscordGuildChannel(primaryChannel)) {
+      return null;
+    }
+
+    return primaryChannel;
   }
 }

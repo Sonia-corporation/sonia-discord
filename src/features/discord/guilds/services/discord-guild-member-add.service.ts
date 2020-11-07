@@ -96,52 +96,54 @@ export class DiscordGuildMemberAddService extends AbstractService {
       member
     );
 
-    if (isDiscordGuildChannelWritable(guildChannel)) {
-      LoggerService.getInstance().debug({
-        context: this._serviceName,
-        message: ChalkService.getInstance().text(
-          `sending message for the new guild member...`
-        ),
-      });
-
-      guildChannel
-        .send(messageResponse.response, messageResponse.options)
-        .then((): void => {
-          // @todo add coverage
-          LoggerService.getInstance().log({
-            context: this._serviceName,
-            message: ChalkService.getInstance().text(
-              `welcome message for the new guild sent`
-            ),
-          });
-        })
-        .catch((error: Readonly<Error | string>): void => {
-          // @todo add coverage
-          LoggerService.getInstance().error({
-            context: this._serviceName,
-            message: ChalkService.getInstance().text(
-              `message sending for the new guild member failed`
-            ),
-          });
-          LoggerService.getInstance().error({
-            context: this._serviceName,
-            message: ChalkService.getInstance().error(error),
-          });
-          DiscordGuildSoniaService.getInstance().sendMessageToChannel({
-            channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-            messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
-              error
-            ),
-          });
-        });
-    } else {
+    if (!isDiscordGuildChannelWritable(guildChannel)) {
       LoggerService.getInstance().debug({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
           `the guild channel is not writable`
         ),
       });
+
+      return;
     }
+
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(
+        `sending message for the new guild member...`
+      ),
+    });
+
+    guildChannel
+      .send(messageResponse.response, messageResponse.options)
+      .then((): void => {
+        // @todo add coverage
+        LoggerService.getInstance().log({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(
+            `welcome message for the new guild sent`
+          ),
+        });
+      })
+      .catch((error: Readonly<Error | string>): void => {
+        // @todo add coverage
+        LoggerService.getInstance().error({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(
+            `message sending for the new guild member failed`
+          ),
+        });
+        LoggerService.getInstance().error({
+          context: this._serviceName,
+          message: ChalkService.getInstance().error(error),
+        });
+        DiscordGuildSoniaService.getInstance().sendMessageToChannel({
+          channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
+          messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
+            error
+          ),
+        });
+      });
   }
 
   private _getMessageResponse({

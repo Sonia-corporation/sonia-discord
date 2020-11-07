@@ -89,18 +89,18 @@ export class DiscordMessageCommandFeatureNoonDisabled<T extends string>
     { id }: Readonly<IFirebaseGuild>,
     discordChannel: Readonly<IAnyDiscordChannel>
   ): Promise<IDiscordCommandFlagSuccess> {
-    if (!_.isNil(id)) {
-      return FirebaseGuildsChannelsFeaturesNoonEnabledService.getInstance()
-        .updateStateByGuildId(id, discordChannel.id, !shouldDisable)
-        .then(
-          (): Promise<IDiscordCommandFlagSuccess> =>
-            Promise.resolve(
-              this._getCommandFlagSuccess(shouldDisable, isDisabled)
-            )
-        );
+    if (_.isNil(id)) {
+      return Promise.reject(new Error(`Firebase guild id invalid`));
     }
 
-    return Promise.reject(new Error(`Firebase guild id invalid`));
+    return FirebaseGuildsChannelsFeaturesNoonEnabledService.getInstance()
+      .updateStateByGuildId(id, discordChannel.id, !shouldDisable)
+      .then(
+        (): Promise<IDiscordCommandFlagSuccess> =>
+          Promise.resolve(
+            this._getCommandFlagSuccess(shouldDisable, isDisabled)
+          )
+      );
   }
 
   private _isNoonDisabled(
@@ -122,11 +122,11 @@ export class DiscordMessageCommandFeatureNoonDisabled<T extends string>
     firebaseGuild: Readonly<IFirebaseGuild>,
     channelId: Readonly<Snowflake>
   ): IFirebaseGuildChannel | undefined {
-    if (hasFirebaseGuildChannels(firebaseGuild)) {
-      return _.get(firebaseGuild.channels, channelId);
+    if (!hasFirebaseGuildChannels(firebaseGuild)) {
+      return undefined;
     }
 
-    return undefined;
+    return _.get(firebaseGuild.channels, channelId);
   }
 
   private _getFirebaseDisabledState(
@@ -135,15 +135,15 @@ export class DiscordMessageCommandFeatureNoonDisabled<T extends string>
     const isEnabled: boolean | undefined =
       firebaseGuildChannel.features?.noon?.isEnabled;
 
+    if (!_.isBoolean(isEnabled)) {
+      return undefined;
+    }
+
     /**
      * @description
      * Reverse the enabled state since there is no disabled state in the model
      */
-    if (_.isBoolean(isEnabled)) {
-      return !isEnabled;
-    }
-
-    return undefined;
+    return !isEnabled;
   }
 
   private _getNoGuildMessageError(

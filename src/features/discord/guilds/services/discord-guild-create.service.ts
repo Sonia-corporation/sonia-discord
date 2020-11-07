@@ -108,19 +108,19 @@ export class DiscordGuildCreateService extends AbstractService {
   }
 
   private _sendCookieMessage(guild: Readonly<Guild>): Promise<Message | void> {
-    if (this._canSendCookiesMessage()) {
-      const primaryGuildChannel: GuildChannel | null = DiscordChannelGuildService.getInstance().getPrimary(
-        guild
-      );
+    if (!this._canSendCookiesMessage()) {
+      return Promise.reject(new Error(`Can not send cookies message`));
+    }
 
-      if (!_.isNil(primaryGuildChannel)) {
-        return this._sendCookieMessageToChannel(primaryGuildChannel);
-      }
+    const primaryGuildChannel: GuildChannel | null = DiscordChannelGuildService.getInstance().getPrimary(
+      guild
+    );
 
+    if (_.isNil(primaryGuildChannel)) {
       return Promise.reject(new Error(`No primary guild channel found`));
     }
 
-    return Promise.reject(new Error(`Can not send cookies message`));
+    return this._sendCookieMessageToChannel(primaryGuildChannel);
   }
 
   private _listen(): void {
@@ -164,71 +164,71 @@ export class DiscordGuildCreateService extends AbstractService {
   private _sendCookieMessageToChannel(
     guildChannel: Readonly<GuildChannel>
   ): Promise<Message | void> {
-    if (isDiscordGuildChannelWritable(guildChannel)) {
+    if (!isDiscordGuildChannelWritable(guildChannel)) {
       LoggerService.getInstance().debug({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
-          `sending message for the guild create...`
+          `primary guild channel not writable`
         ),
       });
 
-      return this._getMessageResponse()
-        .then(
-          ({
-            response,
-            options,
-          }: Readonly<IDiscordMessageResponse>): Promise<Message | void> =>
-            guildChannel
-              .send(response, options)
-              .then(
-                (message: Message): Promise<Message> => {
-                  LoggerService.getInstance().log({
-                    context: this._serviceName,
-                    message: ChalkService.getInstance().text(
-                      `cookies message for the create guild sent`
-                    ),
-                  });
-
-                  return Promise.resolve(message);
-                }
-              )
-              .catch(
-                (error: Readonly<Error | string>): Promise<void> => {
-                  LoggerService.getInstance().error({
-                    context: this._serviceName,
-                    message: ChalkService.getInstance().text(
-                      `cookies message sending for the create guild failed`
-                    ),
-                  });
-                  LoggerService.getInstance().error({
-                    context: this._serviceName,
-                    message: ChalkService.getInstance().error(error),
-                  });
-                  DiscordGuildSoniaService.getInstance().sendMessageToChannel({
-                    channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-                    messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
-                      error
-                    ),
-                  });
-
-                  return Promise.reject(error);
-                }
-              )
-        )
-        .catch(
-          (error: Readonly<Error | string>): Promise<void> =>
-            Promise.reject(error)
-        );
+      return Promise.reject(new Error(`Primary guild channel not writable`));
     }
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `primary guild channel not writable`
+        `sending message for the guild create...`
       ),
     });
 
-    return Promise.reject(new Error(`Primary guild channel not writable`));
+    return this._getMessageResponse()
+      .then(
+        ({
+          response,
+          options,
+        }: Readonly<IDiscordMessageResponse>): Promise<Message | void> =>
+          guildChannel
+            .send(response, options)
+            .then(
+              (message: Message): Promise<Message> => {
+                LoggerService.getInstance().log({
+                  context: this._serviceName,
+                  message: ChalkService.getInstance().text(
+                    `cookies message for the create guild sent`
+                  ),
+                });
+
+                return Promise.resolve(message);
+              }
+            )
+            .catch(
+              (error: Readonly<Error | string>): Promise<void> => {
+                LoggerService.getInstance().error({
+                  context: this._serviceName,
+                  message: ChalkService.getInstance().text(
+                    `cookies message sending for the create guild failed`
+                  ),
+                });
+                LoggerService.getInstance().error({
+                  context: this._serviceName,
+                  message: ChalkService.getInstance().error(error),
+                });
+                DiscordGuildSoniaService.getInstance().sendMessageToChannel({
+                  channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
+                  messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
+                    error
+                  ),
+                });
+
+                return Promise.reject(error);
+              }
+            )
+      )
+      .catch(
+        (error: Readonly<Error | string>): Promise<void> =>
+          Promise.reject(error)
+      );
   }
 
   private _getMessageResponse(): Promise<IDiscordMessageResponse> {
