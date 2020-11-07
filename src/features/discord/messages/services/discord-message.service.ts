@@ -6,8 +6,11 @@ import { ChalkService } from "../../../logger/services/chalk/chalk.service";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordChannelTypingService } from "../../channels/services/discord-channel-typing.service";
 import { DiscordChannelService } from "../../channels/services/discord-channel.service";
+import { DiscordMentionService } from "../../mentions/services/discord-mention.service";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordAuthorService } from "../../users/services/discord-author.service";
+import { DiscordSoniaService } from "../../users/services/discord-sonia.service";
+import { ISonia } from "../../users/types/sonia";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../types/any-discord-message";
 import { DiscordMessageDmService } from "./discord-message-dm.service";
@@ -99,9 +102,34 @@ export class DiscordMessageService extends AbstractService {
     } else if (
       DiscordChannelService.getInstance().isText(anyDiscordMessage.channel)
     ) {
-      void DiscordChannelTypingService.getInstance().addOneIndicator(
-        anyDiscordMessage.channel
-      );
+      if (
+        DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author) &&
+        DiscordMentionService.getInstance().isValid(anyDiscordMessage.mentions)
+      ) {
+        if (
+          DiscordMentionService.getInstance().isForEveryone(
+            anyDiscordMessage.mentions
+          )
+        ) {
+          void DiscordChannelTypingService.getInstance().addOneIndicator(
+            anyDiscordMessage.channel
+          );
+        } else {
+          const sonia: ISonia | null = DiscordSoniaService.getInstance().getSonia();
+
+          if (
+            DiscordSoniaService.getInstance().isValid(sonia) &&
+            DiscordMentionService.getInstance().isUserMentioned(
+              anyDiscordMessage.mentions,
+              sonia
+            )
+          ) {
+            void DiscordChannelTypingService.getInstance().addOneIndicator(
+              anyDiscordMessage.channel
+            );
+          }
+        }
+      }
 
       return this._textMessage(anyDiscordMessage)
         .then(
