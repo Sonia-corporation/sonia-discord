@@ -79,7 +79,7 @@ export class DiscordMessageCommandFeatureWrongFlagsErrorService extends DiscordM
         description,
       }: Readonly<IDiscordCommandFlagError>): EmbedFieldData => {
         return {
-          inline: true,
+          inline: false,
           name,
           value: description,
         };
