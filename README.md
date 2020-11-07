@@ -33,6 +33,11 @@ __Statistics:__
 ![GitHub repo size](https://img.shields.io/github/repo-size/sonia-corporation/sonia-discord?style=flat-square)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/sonia-corporation/sonia-discord?style=flat-square)
 ![GitHub](https://img.shields.io/github/license/sonia-corporation/sonia-discord?style=flat-square)
+[![](https://tokei.rs/b1/github/sonia-corporation/sonia-discord?category=files&style=flat-square)](https://github.com/sonia-corporation/sonia-discord)
+[![](https://tokei.rs/b1/github/sonia-corporation/sonia-discord?category=lines&style=flat-square)](https://github.com/sonia-corporation/sonia-discord)
+[![](https://tokei.rs/b1/github/sonia-corporation/sonia-discord?category=code&style=flat-square)](https://github.com/sonia-corporation/sonia-discord)
+[![](https://tokei.rs/b1/github/sonia-corporation/sonia-discord?category=comments&style=flat-square)](https://github.com/sonia-corporation/sonia-discord)
+[![](https://tokei.rs/b1/github/sonia-corporation/sonia-discord?category=blanks&style=flat-square)](https://github.com/sonia-corporation/sonia-discord)
 
 ## Sonia bot
 
