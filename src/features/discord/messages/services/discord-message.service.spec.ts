@@ -6,8 +6,11 @@ import { ILoggerLog } from "../../../logger/interfaces/logger-log";
 import { LoggerService } from "../../../logger/services/logger.service";
 import { DiscordChannelTypingService } from "../../channels/services/discord-channel-typing.service";
 import { DiscordChannelService } from "../../channels/services/discord-channel.service";
+import { DiscordMentionService } from "../../mentions/services/discord-mention.service";
 import { DiscordClientService } from "../../services/discord-client.service";
 import { DiscordAuthorService } from "../../users/services/discord-author.service";
+import { DiscordSoniaService } from "../../users/services/discord-sonia.service";
+import { ISonia } from "../../users/types/sonia";
 import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
 import { IAnyDiscordMessage } from "../types/any-discord-message";
 import { DiscordMessageDmService } from "./discord-message-dm.service";
@@ -28,6 +31,8 @@ describe(`DiscordMessageService`, (): void => {
   let discordMessageDmService: DiscordMessageDmService;
   let discordMessageTextService: DiscordMessageTextService;
   let discordChannelTypingService: DiscordChannelTypingService;
+  let discordMentionService: DiscordMentionService;
+  let discordSoniaService: DiscordSoniaService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -39,6 +44,8 @@ describe(`DiscordMessageService`, (): void => {
     discordMessageDmService = DiscordMessageDmService.getInstance();
     discordMessageTextService = DiscordMessageTextService.getInstance();
     discordChannelTypingService = DiscordChannelTypingService.getInstance();
+    discordMentionService = DiscordMentionService.getInstance();
+    discordSoniaService = DiscordSoniaService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -406,6 +413,11 @@ describe(`DiscordMessageService`, (): void => {
     let discordChannelServiceIsValidSpy: jest.SpyInstance;
     let discordChannelTypingServiceAddOneIndicatorSpy: jest.SpyInstance;
     let discordChannelTypingServiceRemoveOneIndicatorSpy: jest.SpyInstance;
+    let discordAuthorServiceIsValidSpy: jest.SpyInstance;
+    let discordMentionServiceIsValidSpy: jest.SpyInstance;
+    let discordMentionServiceIsForEveryone: jest.SpyInstance;
+    let discordSoniaServiceIsValidSpy: jest.SpyInstance;
+    let discordMentionServiceIsUserMentionedSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageService();
@@ -459,6 +471,24 @@ describe(`DiscordMessageService`, (): void => {
       discordChannelTypingServiceRemoveOneIndicatorSpy = jest
         .spyOn(discordChannelTypingService, `removeOneIndicator`)
         .mockImplementation();
+      discordAuthorServiceIsValidSpy = jest
+        .spyOn(discordAuthorService, `isValid`)
+        .mockImplementation();
+      discordMentionServiceIsValidSpy = jest
+        .spyOn(discordMentionService, `isValid`)
+        .mockImplementation();
+      discordMentionServiceIsForEveryone = jest
+        .spyOn(discordMentionService, `isForEveryone`)
+        .mockImplementation();
+      jest
+        .spyOn(discordSoniaService, `getSonia`)
+        .mockReturnValue(createMock<ISonia>());
+      discordSoniaServiceIsValidSpy = jest
+        .spyOn(discordSoniaService, `isValid`)
+        .mockImplementation();
+      discordMentionServiceIsUserMentionedSpy = jest
+        .spyOn(discordMentionService, `isUserMentioned`)
+        .mockImplementation();
     });
 
     describe(`when the given discord message is not DM message`, (): void => {
@@ -501,19 +531,154 @@ describe(`DiscordMessageService`, (): void => {
           discordChannelServiceIsTextSpy.mockReturnValue(true);
         });
 
-        it(`should display one typing indicator`, async (): Promise<void> => {
-          expect.assertions(3);
+        describe(`when the author is invalid`, (): void => {
+          beforeEach((): void => {
+            discordAuthorServiceIsValidSpy.mockReturnValue(false);
+          });
 
-          await expect(
-            service.handleChannelMessage(anyDiscordMessage)
-          ).rejects.toThrow(new Error(`getMessage error`));
+          it(`should not show the typing indicator`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
 
-          expect(
-            discordChannelTypingServiceAddOneIndicatorSpy
-          ).toHaveBeenCalledTimes(1);
-          expect(
-            discordChannelTypingServiceAddOneIndicatorSpy
-          ).toHaveBeenCalledWith(anyDiscordMessage.channel);
+            await expect(
+              service.handleChannelMessage(anyDiscordMessage)
+            ).rejects.toThrow(new Error(`getMessage error`));
+
+            expect(
+              discordChannelTypingServiceAddOneIndicatorSpy
+            ).not.toHaveBeenCalled();
+          });
+        });
+
+        describe(`when the mention is invalid`, (): void => {
+          beforeEach((): void => {
+            discordAuthorServiceIsValidSpy.mockReturnValue(true);
+            discordMentionServiceIsValidSpy.mockReturnValue(false);
+          });
+
+          it(`should not show the typing indicator`, async (): Promise<
+            void
+          > => {
+            expect.assertions(2);
+
+            await expect(
+              service.handleChannelMessage(anyDiscordMessage)
+            ).rejects.toThrow(new Error(`getMessage error`));
+
+            expect(
+              discordChannelTypingServiceAddOneIndicatorSpy
+            ).not.toHaveBeenCalled();
+          });
+        });
+
+        describe(`when the mention is not for everyone`, (): void => {
+          beforeEach((): void => {
+            discordAuthorServiceIsValidSpy.mockReturnValue(true);
+            discordMentionServiceIsValidSpy.mockReturnValue(true);
+            discordMentionServiceIsForEveryone.mockReturnValue(false);
+          });
+
+          describe(`when Sonia is invalid`, (): void => {
+            beforeEach((): void => {
+              discordSoniaServiceIsValidSpy.mockReturnValue(false);
+            });
+
+            it(`should not show the typing indicator`, async (): Promise<
+              void
+            > => {
+              expect.assertions(2);
+
+              await expect(
+                service.handleChannelMessage(anyDiscordMessage)
+              ).rejects.toThrow(new Error(`getMessage error`));
+
+              expect(
+                discordChannelTypingServiceAddOneIndicatorSpy
+              ).not.toHaveBeenCalled();
+            });
+          });
+
+          describe(`when Sonia is not mentioned`, (): void => {
+            beforeEach((): void => {
+              discordSoniaServiceIsValidSpy.mockReturnValue(true);
+              discordMentionServiceIsUserMentionedSpy.mockReturnValue(false);
+            });
+
+            it(`should not show the typing indicator`, async (): Promise<
+              void
+            > => {
+              expect.assertions(2);
+
+              await expect(
+                service.handleChannelMessage(anyDiscordMessage)
+              ).rejects.toThrow(new Error(`getMessage error`));
+
+              expect(
+                discordChannelTypingServiceAddOneIndicatorSpy
+              ).not.toHaveBeenCalled();
+            });
+          });
+        });
+
+        describe(`when the author and the mention are valid`, (): void => {
+          beforeEach((): void => {
+            discordAuthorServiceIsValidSpy.mockReturnValue(true);
+            discordMentionServiceIsValidSpy.mockReturnValue(true);
+          });
+
+          describe(`when the mention is not for everyone`, (): void => {
+            beforeEach((): void => {
+              discordMentionServiceIsForEveryone.mockReturnValue(false);
+            });
+
+            describe(`when Sonia is valid and mentioned`, (): void => {
+              beforeEach((): void => {
+                discordSoniaServiceIsValidSpy.mockReturnValue(true);
+                discordMentionServiceIsUserMentionedSpy.mockReturnValue(true);
+              });
+
+              it(`should display one typing indicator`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.handleChannelMessage(anyDiscordMessage)
+                ).rejects.toThrow(new Error(`getMessage error`));
+
+                expect(
+                  discordChannelTypingServiceAddOneIndicatorSpy
+                ).toHaveBeenCalledTimes(1);
+                expect(
+                  discordChannelTypingServiceAddOneIndicatorSpy
+                ).toHaveBeenCalledWith(anyDiscordMessage.channel);
+              });
+            });
+          });
+
+          describe(`when the mention is for everyone`, (): void => {
+            beforeEach((): void => {
+              discordMentionServiceIsForEveryone.mockReturnValue(true);
+            });
+
+            it(`should display one typing indicator`, async (): Promise<
+              void
+            > => {
+              expect.assertions(3);
+
+              await expect(
+                service.handleChannelMessage(anyDiscordMessage)
+              ).rejects.toThrow(new Error(`getMessage error`));
+
+              expect(
+                discordChannelTypingServiceAddOneIndicatorSpy
+              ).toHaveBeenCalledTimes(1);
+              expect(
+                discordChannelTypingServiceAddOneIndicatorSpy
+              ).toHaveBeenCalledWith(anyDiscordMessage.channel);
+            });
+          });
         });
 
         it(`should log about the text message`, async (): Promise<void> => {

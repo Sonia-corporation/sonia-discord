@@ -153,7 +153,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
 
   private _getMessageEmbedFieldReleaseDate(): EmbedFieldData {
     return {
-      inline: true,
+      inline: false,
       name: `My last birthday`,
       value: AppConfigQueryService.getInstance().getReleaseDateHumanized(),
     };
@@ -161,7 +161,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
 
   private _getMessageEmbedFieldInitializationDate(): EmbedFieldData {
     return {
-      inline: true,
+      inline: false,
       name: `The last time I woken up`,
       value: AppConfigQueryService.getInstance().getInitializationDateHumanized(),
     };
@@ -183,7 +183,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
     const appProductionStateHumanized: AppProductionStateEnum = AppConfigQueryService.getInstance().getProductionStateHumanized();
 
     return {
-      inline: true,
+      inline: false,
       name: `My location`,
       value: `Running in ${appProductionStateHumanized}`,
     };
@@ -195,7 +195,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
       | undefined = DiscordSoniaEmotionalStateService.getInstance().getEmotionalState();
 
     return {
-      inline: true,
+      inline: false,
       name: `My emotional state`,
       value: _.capitalize(soniaEmotionalState),
     };

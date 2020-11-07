@@ -191,7 +191,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
         const result = await service.getMessageResponse(flagsDuplicated);
 
         expect(result.options.embed?.fields?.[0]).toStrictEqual({
-          inline: true,
+          inline: false,
           name: flagsDuplicated[0].name,
           value: flagsDuplicated[0].description,
         } as EmbedFieldData);
@@ -250,19 +250,19 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
         const result = await service.getMessageResponse(flagsDuplicated);
 
         expect(result.options.embed?.fields?.[0]).toStrictEqual({
-          inline: true,
+          inline: false,
           name: flagsDuplicated[0].name,
           value: flagsDuplicated[0].description,
         } as EmbedFieldData);
 
         expect(result.options.embed?.fields?.[1]).toStrictEqual({
-          inline: true,
+          inline: false,
           name: flagsDuplicated[1].name,
           value: flagsDuplicated[1].description,
         } as EmbedFieldData);
 
         expect(result.options.embed?.fields?.[2]).toStrictEqual({
-          inline: true,
+          inline: false,
           name: flagsDuplicated[2].name,
           value: flagsDuplicated[2].description,
         } as EmbedFieldData);

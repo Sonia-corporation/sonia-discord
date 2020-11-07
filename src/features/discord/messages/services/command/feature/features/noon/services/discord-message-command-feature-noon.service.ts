@@ -155,7 +155,7 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
         description,
       }: Readonly<IDiscordCommandFlagSuccess>): EmbedFieldData => {
         return {
-          inline: true,
+          inline: false,
           name,
           value: description,
         };
