@@ -1,5 +1,17 @@
 # Semantic Versioning Changelog
 
+# [1.85.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.84.1...1.85.0) (2020-11-07)
+
+
+### :bug: Bug Fixes
+
+* **typing:** stop displaying the typing indicator on basic messages ([1d11633](https://github.com/Sonia-corporation/sonia-discord/commit/1d1163343d09fb2d139062f10b8f89711b07522e))
+
+
+### :rocket: Features
+
+* **messages:** display all embed messages fields as one column ([e5a52a8](https://github.com/Sonia-corporation/sonia-discord/commit/e5a52a8c197a7e32627b803fe476ebf41feec59a)), closes [#1124](https://github.com/Sonia-corporation/sonia-discord/issues/1124)
+
 ## [1.84.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.84.0...1.84.1) (2020-11-06)
 
 
