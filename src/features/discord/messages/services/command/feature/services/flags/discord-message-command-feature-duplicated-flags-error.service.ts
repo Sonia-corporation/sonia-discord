@@ -90,7 +90,7 @@ export class DiscordMessageCommandFeatureDuplicatedFlagsErrorService extends Dis
           description,
         }: Readonly<IDiscordCommandFlagDuplicated>): EmbedFieldData => {
           return {
-            inline: true,
+            inline: false,
             name,
             value: description,
           };

@@ -315,7 +315,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           );
 
           expect(result[0].options.embed?.fields?.[0]).toStrictEqual({
-            inline: true,
+            inline: false,
             name: discordCommandFlagsSuccess[0].name,
             value: discordCommandFlagsSuccess[0].description,
           } as EmbedFieldData);
@@ -527,19 +527,19 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           );
 
           expect(result[0].options.embed?.fields?.[0]).toStrictEqual({
-            inline: true,
+            inline: false,
             name: discordCommandFlagsSuccess[0].name,
             value: discordCommandFlagsSuccess[0].description,
           } as EmbedFieldData);
 
           expect(result[0].options.embed?.fields?.[1]).toStrictEqual({
-            inline: true,
+            inline: false,
             name: discordCommandFlagsSuccess[1].name,
             value: discordCommandFlagsSuccess[1].description,
           } as EmbedFieldData);
 
           expect(result[0].options.embed?.fields?.[2]).toStrictEqual({
-            inline: true,
+            inline: false,
             name: discordCommandFlagsSuccess[2].name,
             value: discordCommandFlagsSuccess[2].description,
           } as EmbedFieldData);
@@ -845,19 +845,19 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           );
 
           expect(result[0].options.embed?.fields?.[0]).toStrictEqual({
-            inline: true,
+            inline: false,
             name: discordCommandFlagsSuccess[0].name,
             value: discordCommandFlagsSuccess[0].description,
           } as EmbedFieldData);
 
           expect(result[0].options.embed?.fields?.[1]).toStrictEqual({
-            inline: true,
+            inline: false,
             name: discordCommandFlagsSuccess[1].name,
             value: discordCommandFlagsSuccess[1].description,
           } as EmbedFieldData);
 
           expect(result[0].options.embed?.fields?.[2]).toStrictEqual({
-            inline: true,
+            inline: false,
             name: discordCommandFlagsSuccess[2].name,
             value: discordCommandFlagsSuccess[2].description,
           } as EmbedFieldData);

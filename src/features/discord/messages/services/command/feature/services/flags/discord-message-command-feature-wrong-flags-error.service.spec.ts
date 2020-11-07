@@ -191,7 +191,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
         const result = await service.getMessageResponse(flagsErrors);
 
         expect(result.options.embed?.fields?.[0]).toStrictEqual({
-          inline: true,
+          inline: false,
           name: flagsErrors[0].name,
           value: flagsErrors[0].description,
         } as EmbedFieldData);
@@ -237,19 +237,19 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
         const result = await service.getMessageResponse(flagsErrors);
 
         expect(result.options.embed?.fields?.[0]).toStrictEqual({
-          inline: true,
+          inline: false,
           name: flagsErrors[0].name,
           value: flagsErrors[0].description,
         } as EmbedFieldData);
 
         expect(result.options.embed?.fields?.[1]).toStrictEqual({
-          inline: true,
+          inline: false,
           name: flagsErrors[1].name,
           value: flagsErrors[1].description,
         } as EmbedFieldData);
 
         expect(result.options.embed?.fields?.[2]).toStrictEqual({
-          inline: true,
+          inline: false,
           name: flagsErrors[2].name,
           value: flagsErrors[2].description,
         } as EmbedFieldData);

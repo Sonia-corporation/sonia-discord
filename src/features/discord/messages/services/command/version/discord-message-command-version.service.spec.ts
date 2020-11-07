@@ -272,7 +272,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       const result = await service.getMessageResponse();
 
       expect(result.options.embed?.fields?.[1]).toStrictEqual({
-        inline: true,
+        inline: false,
         name: `My last birthday`,
         value: `dummy-release-date-humanized`,
       } as EmbedFieldData);
@@ -289,7 +289,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       const result = await service.getMessageResponse();
 
       expect(result.options.embed?.fields?.[2]).toStrictEqual({
-        inline: true,
+        inline: false,
         name: `The last time I woken up`,
         value: `dummy-initialization-date-humanized`,
       } as EmbedFieldData);
@@ -320,7 +320,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       const result = await service.getMessageResponse();
 
       expect(result.options.embed?.fields?.[4]).toStrictEqual({
-        inline: true,
+        inline: false,
         name: `My location`,
         value: `Running in development`,
       } as EmbedFieldData);
@@ -337,7 +337,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       const result = await service.getMessageResponse();
 
       expect(result.options.embed?.fields?.[5]).toStrictEqual({
-        inline: true,
+        inline: false,
         name: `My emotional state`,
         value: `Agitated`,
       } as EmbedFieldData);
