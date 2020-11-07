@@ -36,21 +36,25 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
     { id }: Readonly<IFirebaseGuildChannel>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): boolean {
-    if (!_.isNil(id)) {
-      if (this._isValidChannel(id, firebaseGuild)) {
-        if (this._isValidFeature(id, firebaseGuild)) {
-          if (this._isValidNoonFeature(id, firebaseGuild)) {
-            return (
-              firebaseGuild.channels?.[id]?.features?.noon?.isEnabled ?? false
-            );
-          }
-        }
-      }
-    } else {
+    if (_.isNil(id)) {
       this._logInvalidChannelId(firebaseGuild);
+
+      return false;
     }
 
-    return false;
+    if (!this._isValidChannel(id, firebaseGuild)) {
+      return false;
+    }
+
+    if (!this._isValidFeature(id, firebaseGuild)) {
+      return false;
+    }
+
+    if (!this._isValidNoonFeature(id, firebaseGuild)) {
+      return false;
+    }
+
+    return firebaseGuild.channels?.[id]?.features?.noon?.isEnabled ?? false;
   }
 
   private _isValidChannel(
@@ -60,16 +64,19 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
     const channel: IFirebaseGuildChannelVFinal | undefined =
       firebaseGuild.channels && firebaseGuild.channels[channelId];
 
-    if (FirebaseGuildsChannelsService.getInstance().isSet(channel)) {
-      if (FirebaseGuildsChannelsService.getInstance().isUpToDate(channel)) {
-        return true;
-      }
-      this._logChannelNotUpToDate(channelId, firebaseGuild);
-    } else {
+    if (!FirebaseGuildsChannelsService.getInstance().isSet(channel)) {
       this._logChannelNotSet(channelId, firebaseGuild);
+
+      return false;
     }
 
-    return false;
+    if (!FirebaseGuildsChannelsService.getInstance().isUpToDate(channel)) {
+      this._logChannelNotUpToDate(channelId, firebaseGuild);
+
+      return false;
+    }
+
+    return true;
   }
 
   private _isValidFeature(
@@ -79,18 +86,21 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
     const features: IFirebaseGuildChannelFeatureVFinal | undefined =
       firebaseGuild.channels && firebaseGuild.channels[channelId].features;
 
-    if (FirebaseGuildsChannelsFeaturesService.getInstance().isSet(features)) {
-      if (
-        FirebaseGuildsChannelsFeaturesService.getInstance().isUpToDate(features)
-      ) {
-        return true;
-      }
-      this._logFeaturesNotUpToDate(channelId, firebaseGuild);
-    } else {
+    if (!FirebaseGuildsChannelsFeaturesService.getInstance().isSet(features)) {
       this._logFeaturesNotSet(channelId, firebaseGuild);
+
+      return false;
     }
 
-    return false;
+    if (
+      !FirebaseGuildsChannelsFeaturesService.getInstance().isUpToDate(features)
+    ) {
+      this._logFeaturesNotUpToDate(channelId, firebaseGuild);
+
+      return false;
+    }
+
+    return true;
   }
 
   private _isValidNoonFeature(
@@ -101,18 +111,21 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
       firebaseGuild.channels &&
       firebaseGuild.channels[channelId].features?.noon;
 
-    if (FirebaseGuildsChannelsFeaturesNoonService.getInstance().isSet(noon)) {
-      if (
-        FirebaseGuildsChannelsFeaturesNoonService.getInstance().isUpToDate(noon)
-      ) {
-        return true;
-      }
-      this._logNoonNotUpToDate(channelId, firebaseGuild);
-    } else {
+    if (!FirebaseGuildsChannelsFeaturesNoonService.getInstance().isSet(noon)) {
       this._logNoonNotSet(channelId, firebaseGuild);
+
+      return false;
     }
 
-    return false;
+    if (
+      !FirebaseGuildsChannelsFeaturesNoonService.getInstance().isUpToDate(noon)
+    ) {
+      this._logNoonNotUpToDate(channelId, firebaseGuild);
+
+      return false;
+    }
+
+    return true;
   }
 
   private _logInvalidChannelId(

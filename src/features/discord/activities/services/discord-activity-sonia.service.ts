@@ -61,56 +61,56 @@ export class DiscordActivitySoniaService extends AbstractService {
     const clientUser: ClientUser | null = DiscordClientService.getInstance().getClient()
       .user;
 
-    if (!_.isNil(clientUser)) {
-      return clientUser
-        .setPresence({
-          activity: presenceActivity,
-          afk: false,
-          status: `online`,
-        })
-        .then(
-          (presence: Readonly<Presence>): Promise<Presence> => {
-            LoggerService.getInstance().debug({
-              context: this._serviceName,
-              message: ChalkService.getInstance().text(
-                `Sonia presence updated to: ${ChalkService.getInstance().value(
-                  _.head(presence.activities)?.type
-                )} ${ChalkService.getInstance().text(
-                  `x`
-                )} ${ChalkService.getInstance().value(
-                  _.head(presence.activities)?.name
-                )}`
-              ),
-            });
-
-            return Promise.resolve(presence);
-          }
-        )
-        .catch(
-          (error: Readonly<Error | string>): Promise<never> => {
-            LoggerService.getInstance().error({
-              context: this._serviceName,
-              message: ChalkService.getInstance().text(
-                `could not set the Sonia presence`
-              ),
-            });
-            LoggerService.getInstance().error({
-              context: this._serviceName,
-              message: ChalkService.getInstance().error(error),
-            });
-            DiscordGuildSoniaService.getInstance().sendMessageToChannel({
-              channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-              messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
-                error
-              ),
-            });
-
-            return Promise.reject(error);
-          }
-        );
+    if (_.isNil(clientUser)) {
+      return Promise.reject(new Error(`Client user is not valid`));
     }
 
-    return Promise.reject(new Error(`Client user is not valid`));
+    return clientUser
+      .setPresence({
+        activity: presenceActivity,
+        afk: false,
+        status: `online`,
+      })
+      .then(
+        (presence: Readonly<Presence>): Promise<Presence> => {
+          LoggerService.getInstance().debug({
+            context: this._serviceName,
+            message: ChalkService.getInstance().text(
+              `Sonia presence updated to: ${ChalkService.getInstance().value(
+                _.head(presence.activities)?.type
+              )} ${ChalkService.getInstance().text(
+                `x`
+              )} ${ChalkService.getInstance().value(
+                _.head(presence.activities)?.name
+              )}`
+            ),
+          });
+
+          return Promise.resolve(presence);
+        }
+      )
+      .catch(
+        (error: Readonly<Error | string>): Promise<never> => {
+          LoggerService.getInstance().error({
+            context: this._serviceName,
+            message: ChalkService.getInstance().text(
+              `could not set the Sonia presence`
+            ),
+          });
+          LoggerService.getInstance().error({
+            context: this._serviceName,
+            message: ChalkService.getInstance().error(error),
+          });
+          DiscordGuildSoniaService.getInstance().sendMessageToChannel({
+            channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
+            messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
+              error
+            ),
+          });
+
+          return Promise.reject(error);
+        }
+      );
   }
 
   public setRandomPresence(): Promise<Presence> {
@@ -118,11 +118,11 @@ export class DiscordActivitySoniaService extends AbstractService {
       DISCORD_PRESENCE_ACTIVITY
     );
 
-    if (!_.isNil(presenceActivity)) {
-      return this.setPresence(presenceActivity);
+    if (_.isNil(presenceActivity)) {
+      return Promise.reject(new Error(`No presence activity`));
     }
 
-    return Promise.reject(new Error(`No presence activity`));
+    return this.setPresence(presenceActivity);
   }
 
   private _createUpdaterSchedule(): void {

@@ -48,17 +48,21 @@ function hasValue(splittedFlag: Readonly<string>[]): boolean {
 export function discordCommandGetFlagValue(
   messageFlag: Readonly<IDiscordMessageFlag>
 ): string | null {
-  if (isFlag(messageFlag)) {
-    const splittedFlag: string[] = separateFlagNameFromValue(messageFlag);
-
-    if (hasValue(splittedFlag)) {
-      const flagValue: string | undefined = getFlagValue(splittedFlag);
-
-      if (isValidValue(flagValue)) {
-        return flagValue;
-      }
-    }
+  if (!isFlag(messageFlag)) {
+    return null;
   }
 
-  return null;
+  const splittedFlag: string[] = separateFlagNameFromValue(messageFlag);
+
+  if (!hasValue(splittedFlag)) {
+    return null;
+  }
+
+  const flagValue: string | undefined = getFlagValue(splittedFlag);
+
+  if (!isValidValue(flagValue)) {
+    return null;
+  }
+
+  return flagValue;
 }

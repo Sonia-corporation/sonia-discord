@@ -24,13 +24,7 @@ export class DiscordChannelService extends AbstractService {
   public isValid(
     channel: Readonly<TextChannel | DMChannel | NewsChannel | null | undefined>
   ): channel is IAnyDiscordChannel {
-    if (this.isText(channel)) {
-      return true;
-    } else if (this.isDm(channel)) {
-      return true;
-    }
-
-    return false;
+    return !!(this.isText(channel) || this.isDm(channel));
   }
 
   public isText(

@@ -80,10 +80,10 @@ export class DiscordSoniaService extends AbstractService {
   public getImageUrl(): string | null {
     const sonia: ISonia | null = this.getSonia();
 
-    if (!_.isNil(sonia)) {
-      return sonia.displayAvatarURL();
+    if (_.isNil(sonia)) {
+      return null;
     }
 
-    return null;
+    return sonia.displayAvatarURL();
   }
 }

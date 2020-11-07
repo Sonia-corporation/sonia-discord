@@ -114,69 +114,67 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
       | WriteBatch
       | undefined = FirebaseGuildsService.getInstance().getBatch();
 
-    if (!_.isNil(batch)) {
-      let countFirebaseGuildsUpdated = NO_GUILD;
-      let countFirebaseGuilds = NO_GUILD;
-
-      querySnapshot.forEach(
-        (
-          queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>
-        ): void => {
-          if (_.isEqual(queryDocumentSnapshot.exists, true)) {
-            countFirebaseGuilds = _.add(countFirebaseGuilds, ONE_GUILD);
-
-            if (!isUpToDateFirebaseGuild(queryDocumentSnapshot.data())) {
-              countFirebaseGuildsUpdated = _.add(
-                countFirebaseGuildsUpdated,
-                ONE_GUILD
-              );
-              batch.update(
-                queryDocumentSnapshot.ref,
-                handleFirebaseGuildBreakingChange(queryDocumentSnapshot.data())
-              );
-            }
-          }
-        }
-      );
-
-      if (_.gte(countFirebaseGuildsUpdated, ONE_GUILD)) {
-        LoggerService.getInstance().log({
-          context: this._serviceName,
-          message: ChalkService.getInstance().text(
-            `updating ${ChalkService.getInstance().value(
-              countFirebaseGuildsUpdated
-            )} Firebase guild${
-              _.gt(countFirebaseGuildsUpdated, ONE_GUILD) ? `s` : ``
-            }...`
-          ),
-        });
-
-        return batch.commit();
-      }
-
-      LoggerService.getInstance().log({
+    if (_.isNil(batch)) {
+      LoggerService.getInstance().error({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
-          `all Firebase guild${
-            _.gt(countFirebaseGuilds, ONE_GUILD) ? `s` : ``
-          } ${ChalkService.getInstance().hint(
-            `(${countFirebaseGuilds})`
-          )} up-to-date ${ChalkService.getInstance().hint(
-            `(v${FIREBASE_GUILD_CURRENT_VERSION})`
-          )}`
+          `Firebase guilds batch not available`
         ),
       });
 
-      return Promise.resolve();
+      return Promise.reject(new Error(`Firebase guilds batch not available`));
     }
 
-    LoggerService.getInstance().error({
+    let countFirebaseGuildsUpdated = NO_GUILD;
+    let countFirebaseGuilds = NO_GUILD;
+
+    querySnapshot.forEach(
+      (queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>): void => {
+        if (_.isEqual(queryDocumentSnapshot.exists, true)) {
+          countFirebaseGuilds = _.add(countFirebaseGuilds, ONE_GUILD);
+
+          if (!isUpToDateFirebaseGuild(queryDocumentSnapshot.data())) {
+            countFirebaseGuildsUpdated = _.add(
+              countFirebaseGuildsUpdated,
+              ONE_GUILD
+            );
+            batch.update(
+              queryDocumentSnapshot.ref,
+              handleFirebaseGuildBreakingChange(queryDocumentSnapshot.data())
+            );
+          }
+        }
+      }
+    );
+
+    if (_.gte(countFirebaseGuildsUpdated, ONE_GUILD)) {
+      LoggerService.getInstance().log({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `updating ${ChalkService.getInstance().value(
+            countFirebaseGuildsUpdated
+          )} Firebase guild${
+            _.gt(countFirebaseGuildsUpdated, ONE_GUILD) ? `s` : ``
+          }...`
+        ),
+      });
+
+      return batch.commit();
+    }
+
+    LoggerService.getInstance().log({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `Firebase guilds batch not available`
+        `all Firebase guild${
+          _.gt(countFirebaseGuilds, ONE_GUILD) ? `s` : ``
+        } ${ChalkService.getInstance().hint(
+          `(${countFirebaseGuilds})`
+        )} up-to-date ${ChalkService.getInstance().hint(
+          `(v${FIREBASE_GUILD_CURRENT_VERSION})`
+        )}`
       ),
     });
 
-    return Promise.reject(new Error(`Firebase guilds batch not available`));
+    return Promise.resolve();
   }
 }
