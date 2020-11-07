@@ -50,13 +50,13 @@ export class DiscordMessageService extends AbstractService {
       });
 
       if (
-        DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)
+        !DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)
       ) {
-        if (
-          DiscordAuthorService.getInstance().isBot(anyDiscordMessage.author)
-        ) {
-          return Promise.reject(new Error(`Discord message author is a Bot`));
-        }
+        return Promise.reject(new Error(`Invalid author`));
+      }
+
+      if (DiscordAuthorService.getInstance().isBot(anyDiscordMessage.author)) {
+        return Promise.reject(new Error(`Discord message author is a Bot`));
       }
 
       if (
