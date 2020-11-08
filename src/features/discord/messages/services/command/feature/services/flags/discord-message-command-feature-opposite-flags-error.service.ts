@@ -68,7 +68,7 @@ export class DiscordMessageCommandFeatureOppositeFlagsErrorService extends Disco
       oppositeFlags
     );
 
-    return `${wrapInBold(oppositeFlagsCount)} opposite flag${
+    return `${wrapInBold(oppositeFlagsCount)} opposite flag error${
       _.gt(oppositeFlagsCount, ONE_FLAG) ? `s` : ``
     } found.`;
   }

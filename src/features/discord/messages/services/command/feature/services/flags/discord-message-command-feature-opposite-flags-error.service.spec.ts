@@ -169,7 +169,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
         const result = await service.getMessageResponse(oppositeFlags);
 
         expect(result.options.embed?.description).toStrictEqual(
-          `**1** opposite flag found.`
+          `**1** opposite flag error found.`
         );
       });
 
@@ -228,7 +228,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
         const result = await service.getMessageResponse(oppositeFlags);
 
         expect(result.options.embed?.description).toStrictEqual(
-          `**3** opposite flags found.`
+          `**3** opposite flag errors found.`
         );
       });
 
