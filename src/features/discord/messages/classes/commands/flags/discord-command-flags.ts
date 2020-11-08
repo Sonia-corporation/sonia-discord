@@ -635,6 +635,27 @@ export class DiscordCommandFlags<T extends string> {
     );
   }
 
+  /**
+   * @private
+   *
+   * @description
+   * When I comment some code it means that the following code is cringe as fuck
+   * You were warned
+   *
+   * @summary
+   * Convert all the message flags to real flags
+   * List all the flags by name
+   * Loop the flags
+   * If a flag as opposite flags
+   * Loop the opposite flags
+   * If the opposite flag match one of flag by name
+   * Add them both to the list of opposite flags
+   * If there are not inside it yet (to avoid A opposite of B and B opposite of A stuff)
+   *
+   * @param {Readonly<string>[]} messageFlags The list of message flags
+   *
+   * @return {unknown} A list of list of flags considered not compatibles
+   */
   private _getOppositeMessagesFlags(
     messageFlags: Readonly<string>[]
   ): IDiscordCommandMessageFlag<T>[][] {
