@@ -648,9 +648,9 @@ export class DiscordCommandFlags<T extends string> {
    * Loop the flags
    * If a flag as opposite flags
    * Loop the opposite flags
-   * If the opposite flag match one of flag by name
-   * Add them both to the list of opposite flags
-   * If there are not inside it yet (to avoid A opposite of B and B opposite of A stuff)
+   * If the opposite flag match one of the flag by name (from the list)
+   * If the flag and his opposite are not inside the list of opposite flags (to avoid A opposite of B and B opposite of A stuff)
+   * Add the flag and his opposite to the list of opposite flags (array inside the global array)
    *
    * @param {Readonly<string>[]} messageFlags The list of message flags
    *
