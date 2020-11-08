@@ -21,6 +21,7 @@ export abstract class DiscordCommandFlag<
   protected _action: TAction;
   protected _description: string;
   protected _name: T;
+  protected _opposites: T[] | undefined;
   protected _shortcuts: T[] | undefined;
 
   /**
@@ -30,11 +31,13 @@ export abstract class DiscordCommandFlag<
     action,
     description,
     name,
+    opposites,
     shortcuts,
   }: Readonly<IDiscordCommandFlag<T, TAction>>) {
     this._action = action;
     this._description = description;
     this._name = name;
+    this._opposites = opposites;
     this._shortcuts = shortcuts;
   }
 
@@ -68,6 +71,14 @@ export abstract class DiscordCommandFlag<
 
   public setName(name: Readonly<T>): void {
     this._name = name;
+  }
+
+  public getOpposites(): T[] | undefined {
+    return this._opposites;
+  }
+
+  public setOpposites(opposites: Readonly<T>[] | Readonly<undefined>): void {
+    this._opposites = opposites;
   }
 
   public getShortcuts(): T[] | undefined {

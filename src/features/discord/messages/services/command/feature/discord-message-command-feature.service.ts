@@ -11,6 +11,7 @@ import { IDiscordMessageResponse } from "../../../interfaces/discord-message-res
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordCommandFlagsDuplicated } from "../../../types/commands/flags/discord-command-flags-duplicated";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
+import { IDiscordCommandFlagsOpposite } from "../../../types/commands/flags/discord-command-flags-opposite";
 import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
 import { DiscordMessageCommandFeatureNameEnum } from "./enums/discord-message-command-feature-name.enum";
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "./features/noon/constants/discord-message-command-feature-noon-flags";
@@ -20,6 +21,7 @@ import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from "./servi
 import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from "./services/flags/discord-message-command-feature-empty-flags-error.service";
 import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from "./services/feature-names/discord-message-command-feature-wrong-feature-name-error.service";
 import { DiscordMessageCommandFeatureNoonService } from "./features/noon/services/discord-message-command-feature-noon.service";
+import { DiscordMessageCommandFeatureOppositeFlagsErrorService } from "./services/flags/discord-message-command-feature-opposite-flags-error.service";
 import { DiscordMessageCommandFeatureWrongFlagsErrorService } from "./services/flags/discord-message-command-feature-wrong-flags-error.service";
 
 export class DiscordMessageCommandFeatureService extends AbstractService {
@@ -142,6 +144,18 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       );
     }
 
+    const oppositeFlags: IDiscordCommandFlagsOpposite | null = DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getOpposites(
+      messageFlags
+    );
+
+    if (!_.isNil(oppositeFlags)) {
+      return this._getOppositeFlagsErrorMessageResponse(
+        anyDiscordMessage,
+        DiscordMessageCommandFeatureNameEnum.NOON,
+        oppositeFlags
+      );
+    }
+
     return DiscordMessageCommandFeatureNoonService.getInstance().getMessageResponse(
       anyDiscordMessage,
       messageFlags
@@ -239,6 +253,27 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
 
     return DiscordMessageCommandFeatureDuplicatedFlagsErrorService.getInstance().getMessageResponse(
       flagsDuplicated
+    );
+  }
+
+  private _getOppositeFlagsErrorMessageResponse(
+    { id }: Readonly<IAnyDiscordMessage>,
+    featureName: Readonly<DiscordMessageCommandFeatureNameEnum>,
+    oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>
+  ): Promise<IDiscordMessageResponse> {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        id,
+        `feature name ${ChalkService.getInstance().value(
+          _.capitalize(featureName)
+        )} has opposite flags`
+      ),
+    });
+
+    return DiscordMessageCommandFeatureOppositeFlagsErrorService.getInstance().getMessageResponse(
+      oppositeFlags
     );
   }
 }

@@ -16,6 +16,7 @@ import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from "./serv
 import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from "./services/feature-names/discord-message-command-feature-wrong-feature-name-error.service";
 import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from "./services/flags/discord-message-command-feature-duplicated-flags-error.service";
 import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from "./services/flags/discord-message-command-feature-empty-flags-error.service";
+import { DiscordMessageCommandFeatureOppositeFlagsErrorService } from "./services/flags/discord-message-command-feature-opposite-flags-error.service";
 import { DiscordMessageCommandFeatureWrongFlagsErrorService } from "./services/flags/discord-message-command-feature-wrong-flags-error.service";
 import _ from "lodash";
 
@@ -33,6 +34,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
   let discordMessageCommandFeatureEmptyFlagsErrorService: DiscordMessageCommandFeatureEmptyFlagsErrorService;
   let discordMessageCommandFeatureWrongFlagsErrorService: DiscordMessageCommandFeatureWrongFlagsErrorService;
   let discordMessageCommandFeatureDuplicatedFlagsErrorService: DiscordMessageCommandFeatureDuplicatedFlagsErrorService;
+  let discordMessageCommandFeatureOppositeFlagsErrorService: DiscordMessageCommandFeatureOppositeFlagsErrorService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -45,6 +47,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
     discordMessageCommandFeatureEmptyFlagsErrorService = DiscordMessageCommandFeatureEmptyFlagsErrorService.getInstance();
     discordMessageCommandFeatureWrongFlagsErrorService = DiscordMessageCommandFeatureWrongFlagsErrorService.getInstance();
     discordMessageCommandFeatureDuplicatedFlagsErrorService = DiscordMessageCommandFeatureDuplicatedFlagsErrorService.getInstance();
+    discordMessageCommandFeatureOppositeFlagsErrorService = DiscordMessageCommandFeatureOppositeFlagsErrorService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -157,6 +160,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
     let discordMessageCommandFeatureEmptyFlagsErrorServiceGetMessageResponseSpy: jest.SpyInstance;
     let discordMessageCommandFeatureWrongFlagsErrorServiceGetMessageResponseSpy: jest.SpyInstance;
     let discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy: jest.SpyInstance;
+    let discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureService();
@@ -265,6 +269,16 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         .mockRejectedValue(
           new Error(
             `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
+          )
+        );
+      discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy = jest
+        .spyOn(
+          discordMessageCommandFeatureOppositeFlagsErrorService,
+          `getMessageResponse`
+        )
+        .mockRejectedValue(
+          new Error(
+            `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
           )
         );
     });
@@ -1376,6 +1390,200 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
                   message: `context-[dummy-id] text-feature name value-Noon has duplicated flags`,
+                } as ILoggerLog);
+              });
+            });
+
+            describe(`when the given message feature has 2 flags which are known and valid but opposites`, (): void => {
+              beforeEach((): void => {
+                anyDiscordMessage.content = `message !feature Noon --enabled=true --disabled=true`;
+              });
+
+              it(`should get the opposite flags error message response`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.getMessageResponse(anyDiscordMessage)
+                ).rejects.toThrow(
+                  new Error(
+                    `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
+                  )
+                );
+
+                expect(
+                  discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy
+                ).toHaveBeenCalledTimes(1);
+                expect(
+                  discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy
+                ).toHaveBeenCalledWith([
+                  {
+                    description: `The flags \`--enabled=true\` and \`--disabled=true\` are opposites.`,
+                    name: `Enabled and Disabled flags can not be combined`,
+                  } as IDiscordCommandFlagDuplicated,
+                ]);
+              });
+
+              describe(`when the fetch of the opposite flags error message response failed`, (): void => {
+                beforeEach((): void => {
+                  discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy.mockRejectedValue(
+                    new Error(
+                      `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
+                    )
+                  );
+                });
+
+                it(`should throw an error`, async (): Promise<void> => {
+                  expect.assertions(1);
+
+                  await expect(
+                    service.getMessageResponse(anyDiscordMessage)
+                  ).rejects.toThrow(
+                    new Error(
+                      `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
+                    )
+                  );
+                });
+              });
+
+              describe(`when the fetch of the opposite flags error message response succeeded`, (): void => {
+                beforeEach((): void => {
+                  discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy.mockResolvedValue(
+                    getDuplicatedFlagsErrorMessageResponse
+                  );
+                });
+
+                it(`should return the opposite flags error message response`, async (): Promise<
+                  void
+                > => {
+                  expect.assertions(1);
+
+                  const result = await service.getMessageResponse(
+                    anyDiscordMessage
+                  );
+
+                  expect(result).toStrictEqual(
+                    getDuplicatedFlagsErrorMessageResponse
+                  );
+                });
+              });
+
+              it(`should log about the fact that at least one flag is opposite`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.getMessageResponse(anyDiscordMessage)
+                ).rejects.toThrow(
+                  new Error(
+                    `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
+                  )
+                );
+
+                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+                  context: `DiscordMessageCommandFeatureService`,
+                  hasExtendedContext: true,
+                  message: `context-[dummy-id] text-feature name value-Noon has opposite flags`,
+                } as ILoggerLog);
+              });
+            });
+
+            describe(`when the given message feature has 2 shortcut flags which are known and valid but opposites`, (): void => {
+              beforeEach((): void => {
+                anyDiscordMessage.content = `message !feature Noon -e -d`;
+              });
+
+              it(`should get the opposite flags error message response`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.getMessageResponse(anyDiscordMessage)
+                ).rejects.toThrow(
+                  new Error(
+                    `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
+                  )
+                );
+
+                expect(
+                  discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy
+                ).toHaveBeenCalledTimes(1);
+                expect(
+                  discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy
+                ).toHaveBeenCalledWith([
+                  {
+                    description: `The flags \`-e\` and \`-d\` are opposites.`,
+                    name: `Enabled and Disabled flags can not be combined`,
+                  } as IDiscordCommandFlagDuplicated,
+                ]);
+              });
+
+              describe(`when the fetch of the opposite flags error message response failed`, (): void => {
+                beforeEach((): void => {
+                  discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy.mockRejectedValue(
+                    new Error(
+                      `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
+                    )
+                  );
+                });
+
+                it(`should throw an error`, async (): Promise<void> => {
+                  expect.assertions(1);
+
+                  await expect(
+                    service.getMessageResponse(anyDiscordMessage)
+                  ).rejects.toThrow(
+                    new Error(
+                      `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
+                    )
+                  );
+                });
+              });
+
+              describe(`when the fetch of the opposite flags error message response succeeded`, (): void => {
+                beforeEach((): void => {
+                  discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy.mockResolvedValue(
+                    getDuplicatedFlagsErrorMessageResponse
+                  );
+                });
+
+                it(`should return the opposite flags error message response`, async (): Promise<
+                  void
+                > => {
+                  expect.assertions(1);
+
+                  const result = await service.getMessageResponse(
+                    anyDiscordMessage
+                  );
+
+                  expect(result).toStrictEqual(
+                    getDuplicatedFlagsErrorMessageResponse
+                  );
+                });
+              });
+
+              it(`should log about the fact that at least one flag is opposite`, async (): Promise<
+                void
+              > => {
+                expect.assertions(3);
+
+                await expect(
+                  service.getMessageResponse(anyDiscordMessage)
+                ).rejects.toThrow(
+                  new Error(
+                    `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
+                  )
+                );
+
+                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+                  context: `DiscordMessageCommandFeatureService`,
+                  hasExtendedContext: true,
+                  message: `context-[dummy-id] text-feature name value-Noon has opposite flags`,
                 } as ILoggerLog);
               });
             });
