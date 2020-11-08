@@ -23,6 +23,7 @@ describe(`DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS`, (): void => {
             action: new DiscordMessageCommandFeatureNoonEnabled(),
             description: `Enable the noon message on this channel. The message will be sent on the ${TimezoneEnum.PARIS} timezone.`,
             name: DiscordMessageCommandFeatureNoonFlagEnum.ENABLED,
+            opposites: [DiscordMessageCommandFeatureNoonFlagEnum.DISABLED],
             shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.E],
           }),
           new DiscordCommandBooleanFlag<
@@ -31,6 +32,7 @@ describe(`DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS`, (): void => {
             action: new DiscordMessageCommandFeatureNoonDisabled(),
             description: `Disable the noon message on this channel.`,
             name: DiscordMessageCommandFeatureNoonFlagEnum.DISABLED,
+            opposites: [DiscordMessageCommandFeatureNoonFlagEnum.ENABLED],
             shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.D],
           }),
           new DiscordCommandValuelessFlag<
