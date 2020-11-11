@@ -4,6 +4,7 @@ import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
+import { IDiscordCommandMessageFlag } from "../../../interfaces/commands/flags/discord-command-message-flag";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordCommandFlagsDuplicated } from "../../../types/commands/flags/discord-command-flags-duplicated";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
@@ -367,6 +368,140 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toBeOneOf([`--alpha-flag=true`, `--alpha-flag=false`]);
         });
+      });
+    });
+  });
+
+  describe(`getDiscordCommandMessageFlagNames()`, (): void => {
+    let discordCommandMessageFlags: IDiscordCommandMessageFlag<DummyFlagEnum>[];
+    let discordCommandFlags: DiscordCommandFlags<DummyFlagEnum>;
+    let alphaArgument: DiscordCommandFirstArgument<DummyFirstArgumentEnum>;
+
+    beforeEach((): void => {
+      alphaArgument = new DiscordCommandFirstArgument<DummyFirstArgumentEnum>({
+        description: ``,
+        name: DummyFirstArgumentEnum.ALPHA,
+        shortcuts: [DummyFirstArgumentEnum.BETA],
+      });
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: alphaArgument,
+        flags: createMock<DiscordCommandBooleanFlag<DummyFlagEnum>[]>(),
+      });
+    });
+
+    describe(`when the given Discord command flags has no flags`, (): void => {
+      beforeEach((): void => {
+        discordCommandMessageFlags = [];
+      });
+
+      it(`should return an empty array`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getDiscordCommandMessageFlagNames(
+          discordCommandMessageFlags
+        );
+
+        expect(result).toStrictEqual([]);
+      });
+    });
+
+    describe(`when the given Discord command flags has one flag`, (): void => {
+      let flag: DiscordCommandBooleanFlag<DummyFlagEnum>;
+
+      beforeEach((): void => {
+        flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
+          >({
+            name: DummyFlagEnum.ALPHA,
+          })
+        );
+        discordCommandMessageFlags = [
+          {
+            flag,
+            messageFlag: `dummy-message-flag`,
+          },
+        ];
+      });
+
+      it(`should return a array containing the flag name`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getDiscordCommandMessageFlagNames(
+          discordCommandMessageFlags
+        );
+
+        expect(result).toStrictEqual([DummyFlagEnum.ALPHA]);
+      });
+    });
+
+    describe(`when the given Discord command flags has three flags`, (): void => {
+      let flag1: DiscordCommandBooleanFlag<DummyFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DummyFlagEnum>;
+      let flag3: DiscordCommandBooleanFlag<DummyFlagEnum>;
+
+      beforeEach((): void => {
+        flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
+          >({
+            name: DummyFlagEnum.ALPHA,
+          })
+        );
+        flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
+          >({
+            name: DummyFlagEnum.BETA,
+          })
+        );
+        flag3 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
+          >({
+            name: DummyFlagEnum.CHARLIE,
+          })
+        );
+        discordCommandMessageFlags = [
+          {
+            flag: flag1,
+            messageFlag: `dummy-message-flag`,
+          },
+          {
+            flag: flag2,
+            messageFlag: `dummy-message-flag`,
+          },
+          {
+            flag: flag3,
+            messageFlag: `dummy-message-flag`,
+          },
+        ];
+      });
+
+      it(`should return a array containing the flag name`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getDiscordCommandMessageFlagNames(
+          discordCommandMessageFlags
+        );
+
+        expect(result).toStrictEqual([
+          DummyFlagEnum.ALPHA,
+          DummyFlagEnum.BETA,
+          DummyFlagEnum.CHARLIE,
+        ]);
       });
     });
   });
