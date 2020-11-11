@@ -1,5 +1,5 @@
-import xregexp from "xregexp";
-import { getInterpolationRegexp } from "./get-interpolation-regexp";
+import { getInterpolationRegexp } from './get-interpolation-regexp';
+import xregexp from 'xregexp';
 
 describe(`getInterpolationRegexp()`, (): void => {
   let value: string;

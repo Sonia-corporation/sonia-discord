@@ -1,9 +1,9 @@
-import { createMock } from "ts-auto-mock";
-import { DiscordCommandFlagSuccessTitleEnum } from "../../../enums/commands/flags/discord-command-flag-success-title.enum";
-import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
-import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
-import { IDiscordCommandFlagResponse } from "../../../types/commands/flags/discord-command-flag-response";
-import { discordCommandIsFlagSuccess } from "./discord-command-is-flag-success";
+import { discordCommandIsFlagSuccess } from './discord-command-is-flag-success';
+import { DiscordCommandFlagSuccessTitleEnum } from '../../../enums/commands/flags/discord-command-flag-success-title.enum';
+import { IDiscordCommandFlagSuccess } from '../../../interfaces/commands/flags/discord-command-flag-success';
+import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
+import { IDiscordCommandFlagResponse } from '../../../types/commands/flags/discord-command-flag-response';
+import { createMock } from 'ts-auto-mock';
 
 describe(`discordCommandIsFlagSuccess()`, (): void => {
   let value: IDiscordCommandFlagResponse;

@@ -1,21 +1,21 @@
-import { Guild } from "discord.js";
-import admin from "firebase-admin";
-import _ from "lodash";
-import { AbstractService } from "../../../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { flattenObject } from "../../../../../../../functions/formatters/flatten-object";
-import { IObject } from "../../../../../../../types/object";
-import { IAnyDiscordChannel } from "../../../../../../discord/channels/types/any-discord-channel";
-import { ChalkService } from "../../../../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../../../../logger/services/logger.service";
-import { isUpToDateFirebaseGuild } from "../../../../../functions/guilds/is-up-to-date-firebase-guild";
-import { IFirebaseGuildChannelVFinal } from "../../../../../types/guilds/channels/firebase-guild-channel-v-final";
-import { IFirebaseGuild } from "../../../../../types/guilds/firebase-guild";
-import { IFirebaseGuildVFinal } from "../../../../../types/guilds/firebase-guild-v-final";
-import { FirebaseGuildsService } from "../../../firebase-guilds.service";
-import { FirebaseGuildsChannelsService } from "../../firebase-guilds-channels.service";
-import { FirebaseGuildsChannelsFeaturesService } from "../firebase-guilds-channels-features.service";
-import { FirebaseGuildsChannelsFeaturesNoonService } from "./firebase-guilds-channels-features-noon.service";
+import { FirebaseGuildsChannelsFeaturesNoonService } from './firebase-guilds-channels-features-noon.service';
+import { AbstractService } from '../../../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../../../enums/service-name.enum';
+import { flattenObject } from '../../../../../../../functions/formatters/flatten-object';
+import { IObject } from '../../../../../../../types/object';
+import { IAnyDiscordChannel } from '../../../../../../discord/channels/types/any-discord-channel';
+import { ChalkService } from '../../../../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../../../../logger/services/logger.service';
+import { isUpToDateFirebaseGuild } from '../../../../../functions/guilds/is-up-to-date-firebase-guild';
+import { IFirebaseGuildChannelVFinal } from '../../../../../types/guilds/channels/firebase-guild-channel-v-final';
+import { IFirebaseGuild } from '../../../../../types/guilds/firebase-guild';
+import { IFirebaseGuildVFinal } from '../../../../../types/guilds/firebase-guild-v-final';
+import { FirebaseGuildsService } from '../../../firebase-guilds.service';
+import { FirebaseGuildsChannelsService } from '../../firebase-guilds-channels.service';
+import { FirebaseGuildsChannelsFeaturesService } from '../firebase-guilds-channels-features.service';
+import { Guild } from 'discord.js';
+import admin from 'firebase-admin';
+import _ from 'lodash';
 import CollectionReference = admin.firestore.CollectionReference;
 import WriteResult = admin.firestore.WriteResult;
 
@@ -31,14 +31,12 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
   }
 
   public constructor() {
-    super(
-      ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_SERVICE
-    );
+    super(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_SERVICE);
   }
 
   public updateStateByGuildId(
-    id: Readonly<Guild["id"]>,
-    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    id: Readonly<Guild['id']>,
+    channelId: Readonly<IAnyDiscordChannel['id']>,
     isEnabled: Readonly<boolean>
   ): Promise<WriteResult | void> {
     const collectionReference:
@@ -54,24 +52,14 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
     return FirebaseGuildsService.getInstance()
       .getGuild(id)
       .then(
-        (
-          firebaseGuild: Readonly<IFirebaseGuild | null | undefined>
-        ): Promise<WriteResult> => {
+        (firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<WriteResult> => {
           if (!this._isValidGuild(firebaseGuild)) {
             this._logInvalidFirebaseGuild(id);
 
-            return Promise.reject(
-              new Error(`Firebase guild does not exists or is not up-to-date`)
-            );
+            return Promise.reject(new Error(`Firebase guild does not exists or is not up-to-date`));
           }
 
-          return this.updateState(
-            collectionReference,
-            id,
-            channelId,
-            isEnabled,
-            firebaseGuild
-          );
+          return this.updateState(collectionReference, id, channelId, isEnabled, firebaseGuild);
         }
       );
   }
@@ -86,7 +74,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
    * @return {IObject} A flatten object updating only the enabled state or a more complete object to also up-to-date the models
    */
   public getUpdatedGuild(
-    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    channelId: Readonly<IAnyDiscordChannel['id']>,
     isEnabled: Readonly<boolean>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): IObject {
@@ -103,8 +91,8 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
 
   public updateState(
     collectionReference: Readonly<CollectionReference<IFirebaseGuild>>,
-    id: Readonly<Guild["id"]>,
-    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    id: Readonly<Guild['id']>,
+    channelId: Readonly<IAnyDiscordChannel['id']>,
     isEnabled: Readonly<boolean>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): Promise<WriteResult> {
@@ -121,7 +109,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
   }
 
   private _isGuildFullyUpToDate(
-    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    channelId: Readonly<IAnyDiscordChannel['id']>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): boolean {
     return (
@@ -132,7 +120,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
   }
 
   private _isValidChannel(
-    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    channelId: Readonly<IAnyDiscordChannel['id']>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): boolean {
     return FirebaseGuildsChannelsService.getInstance().isValid(
@@ -141,7 +129,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
   }
 
   private _isValidFeature(
-    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    channelId: Readonly<IAnyDiscordChannel['id']>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): boolean {
     return FirebaseGuildsChannelsFeaturesService.getInstance().isValid(
@@ -150,7 +138,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
   }
 
   private _isValidNoonFeature(
-    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    channelId: Readonly<IAnyDiscordChannel['id']>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): boolean {
     return FirebaseGuildsChannelsFeaturesNoonService.getInstance().isValid(
@@ -159,7 +147,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
   }
 
   private _getUpdatedGuild(
-    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    channelId: Readonly<IAnyDiscordChannel['id']>,
     isEnabled: Readonly<boolean>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
   ): IObject {
@@ -174,12 +162,8 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
       },
     };
 
-    if (
-      !_.isNil(updatedFirebaseGuild.channels) &&
-      !_.isNil(updatedFirebaseGuild.channels[channelId])
-    ) {
-      const firebaseGuildChannel: IFirebaseGuildChannelVFinal =
-        updatedFirebaseGuild.channels[channelId];
+    if (!_.isNil(updatedFirebaseGuild.channels) && !_.isNil(updatedFirebaseGuild.channels[channelId])) {
+      const firebaseGuildChannel: IFirebaseGuildChannelVFinal = updatedFirebaseGuild.channels[channelId];
 
       firebaseGuildChannel.features = FirebaseGuildsChannelsFeaturesService.getInstance().getUpToDate(
         firebaseGuildChannel.features
@@ -210,16 +194,12 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
    * @return {IObject} A flatten object updating only the enabled state
    */
   private _getUpdatedGuildWithPathOnly(
-    channelId: Readonly<IAnyDiscordChannel["id"]>,
+    channelId: Readonly<IAnyDiscordChannel['id']>,
     isEnabled: Readonly<boolean>
   ): IObject {
     const flattenFirebaseGuild: IObject = {};
 
-    _.set(
-      flattenFirebaseGuild,
-      `channels.${channelId}.features.noon.isEnabled`,
-      isEnabled
-    );
+    _.set(flattenFirebaseGuild, `channels.${channelId}.features.noon.isEnabled`, isEnabled);
 
     return flattenObject(flattenFirebaseGuild);
   }
@@ -227,9 +207,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
   private _logUpdatingStateStart(): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `updating Firebase guild noon feature enabled state...`
-      ),
+      message: ChalkService.getInstance().text(`updating Firebase guild noon feature enabled state...`),
     });
   }
 
@@ -239,52 +217,37 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
     return !_.isNil(firebaseGuild) && isUpToDateFirebaseGuild(firebaseGuild);
   }
 
-  private _logUpdateStateSuccess(
-    id: Readonly<Guild["id"]>,
-    isEnabled: Readonly<boolean>
-  ): void {
+  private _logUpdateStateSuccess(id: Readonly<Guild['id']>, isEnabled: Readonly<boolean>): void {
     LoggerService.getInstance().success({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
         `Firebase guild ${ChalkService.getInstance().value(
           id
-        )} noon feature enabled state updated to ${ChalkService.getInstance().value(
-          isEnabled
-        )}`
+        )} noon feature enabled state updated to ${ChalkService.getInstance().value(isEnabled)}`
       ),
     });
   }
 
-  private _logInvalidFirebaseGuild(id: Readonly<Guild["id"]>): void {
+  private _logInvalidFirebaseGuild(id: Readonly<Guild['id']>): void {
     LoggerService.getInstance().error({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `the Firebase guild ${ChalkService.getInstance().value(
-          id
-        )} is not valid or up-to-date`
+        `the Firebase guild ${ChalkService.getInstance().value(id)} is not valid or up-to-date`
       ),
     });
   }
 
-  private _logFullyUpToDateFirebaseGuild(
-    id: Readonly<Guild["id"] | undefined>
-  ): void {
+  private _logFullyUpToDateFirebaseGuild(id: Readonly<Guild['id'] | undefined>): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `Firebase guild ${_.toString(id)} is up-to-date`
-      ),
+      message: ChalkService.getInstance().text(`Firebase guild ${_.toString(id)} is up-to-date`),
     });
   }
 
-  private _logNotUpToDateFirebaseGuild(
-    id: Readonly<Guild["id"] | undefined>
-  ): void {
+  private _logNotUpToDateFirebaseGuild(id: Readonly<Guild['id'] | undefined>): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `Firebase guild ${_.toString(id)} is not up-to-date`
-      ),
+      message: ChalkService.getInstance().text(`Firebase guild ${_.toString(id)} is not up-to-date`),
     });
   }
 }

@@ -1,22 +1,19 @@
-import _ from "lodash";
-import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
-import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
-import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
-import { IAnyDiscordMessage } from "../../../types/any-discord-message";
-import { IDiscordCommandFlagAction } from "../../../types/commands/flags/discord-command-flag-action";
-import { IDiscordCommandFlagResponse } from "../../../types/commands/flags/discord-command-flag-response";
-import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
-import { DiscordCommandFlags } from "./discord-command-flags";
+import { DiscordCommandFlags } from './discord-command-flags';
+import { DiscordCommandFlagTypeEnum } from '../../../enums/commands/discord-command-flag-type.enum';
+import { IDiscordCommandFlag } from '../../../interfaces/commands/flags/discord-command-flag';
+import { IDiscordCommandFlagError } from '../../../interfaces/commands/flags/discord-command-flag-error';
+import { IAnyDiscordMessage } from '../../../types/any-discord-message';
+import { IDiscordCommandFlagAction } from '../../../types/commands/flags/discord-command-flag-action';
+import { IDiscordCommandFlagResponse } from '../../../types/commands/flags/discord-command-flag-response';
+import { IDiscordMessageFlag } from '../../../types/commands/flags/discord-message-flag';
+import _ from 'lodash';
 
 /**
  * @description
  * Common flag class
  * Contains all basic properties and methods for the flags
  */
-export abstract class DiscordCommandFlag<
-  T extends string,
-  TAction extends IDiscordCommandFlagAction<T>
-> {
+export abstract class DiscordCommandFlag<T extends string, TAction extends IDiscordCommandFlagAction<T>> {
   protected abstract _type: DiscordCommandFlagTypeEnum;
   protected _action: TAction;
   protected _description: string;
@@ -86,9 +83,7 @@ export abstract class DiscordCommandFlag<
   }
 
   public getLowerCaseShortcuts(): string[] | undefined {
-    return _.map(this.getShortcuts(), (shortcut: Readonly<T>): string =>
-      _.toLower(_.toString(shortcut))
-    );
+    return _.map(this.getShortcuts(), (shortcut: Readonly<T>): string => _.toLower(_.toString(shortcut)));
   }
 
   public setShortcuts(shortcuts: Readonly<T>[] | Readonly<undefined>): void {
@@ -124,8 +119,7 @@ export abstract class DiscordCommandFlag<
       example += ` (or ${_.trimEnd(
         _.reduce(
           shortcuts,
-          (value: Readonly<string>, shortcut: Readonly<string>): string =>
-            `${value}-${shortcut}, `,
+          (value: Readonly<string>, shortcut: Readonly<string>): string => `${value}-${shortcut}, `,
           ``
         ),
         `, `
@@ -145,7 +139,5 @@ export abstract class DiscordCommandFlag<
 
   public abstract isValid(messageFlag: Readonly<IDiscordMessageFlag>): boolean;
 
-  public abstract getInvalidFlagError(
-    messageFlag: Readonly<IDiscordMessageFlag>
-  ): IDiscordCommandFlagError | null;
+  public abstract getInvalidFlagError(messageFlag: Readonly<IDiscordMessageFlag>): IDiscordCommandFlagError | null;
 }

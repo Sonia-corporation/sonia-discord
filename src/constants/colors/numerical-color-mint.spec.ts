@@ -1,4 +1,4 @@
-import { NUMERICAL_COLOR_MINT } from "./numerical-color-mint";
+import { NUMERICAL_COLOR_MINT } from './numerical-color-mint';
 
 describe(`NUMERICAL_COLOR_MINT`, (): void => {
   it(`should be 7522991`, (): void => {

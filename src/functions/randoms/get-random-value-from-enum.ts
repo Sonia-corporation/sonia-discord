@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _ from 'lodash';
 
 /**
  * @description
@@ -9,8 +9,6 @@ import _ from "lodash";
  *
  * @return {TValue | undefined} A random value from the enum
  */
-export function getRandomValueFromEnum<TValue>(
-  enumeration: Record<string, TValue>
-): TValue | undefined {
+export function getRandomValueFromEnum<TValue>(enumeration: Record<string, TValue>): TValue | undefined {
   return _.sample(_.values(enumeration)) as TValue;
 }

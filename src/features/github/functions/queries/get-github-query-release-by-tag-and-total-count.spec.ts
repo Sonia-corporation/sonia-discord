@@ -1,4 +1,4 @@
-import { getGithubQueryReleaseByTagAndTotalCount } from "./get-github-query-release-by-tag-and-total-count";
+import { getGithubQueryReleaseByTagAndTotalCount } from './get-github-query-release-by-tag-and-total-count';
 
 describe(`getGithubQueryReleaseByTagAndTotalCount()`, (): void => {
   let tagName: string;
@@ -13,8 +13,7 @@ describe(`getGithubQueryReleaseByTagAndTotalCount()`, (): void => {
 
       const result = getGithubQueryReleaseByTagAndTotalCount(tagName);
 
-      expect(result)
-        .toStrictEqual(`{repository(owner: "Sonia-corporation", name: "sonia-discord") {
+      expect(result).toStrictEqual(`{repository(owner: "Sonia-corporation", name: "sonia-discord") {
    release(tagName: "1.0.0") {
       description
       updatedAt

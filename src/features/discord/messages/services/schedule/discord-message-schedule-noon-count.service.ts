@@ -1,13 +1,13 @@
-import { Message } from "discord.js";
-import _ from "lodash";
-import { AbstractService } from "../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { ChalkService } from "../../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../../logger/services/logger.service";
-import { DiscordGuildSoniaChannelNameEnum } from "../../../guilds/enums/discord-guild-sonia-channel-name.enum";
-import { DiscordGuildSoniaService } from "../../../guilds/services/discord-guild-sonia.service";
-import { DiscordMessageScheduleNoonCountHumanizedService } from "./discord-message-schedule-noon-count-humanized.service";
-import { DiscordMessageScheduleNoonCountMessageResponseService } from "./discord-message-schedule-noon-count-message-response.service";
+import { DiscordMessageScheduleNoonCountHumanizedService } from './discord-message-schedule-noon-count-humanized.service';
+import { DiscordMessageScheduleNoonCountMessageResponseService } from './discord-message-schedule-noon-count-message-response.service';
+import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { ChalkService } from '../../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../../logger/services/logger.service';
+import { DiscordGuildSoniaChannelNameEnum } from '../../../guilds/enums/discord-guild-sonia-channel-name.enum';
+import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild-sonia.service';
+import { Message } from 'discord.js';
+import _ from 'lodash';
 
 const DEFAULT_GUILD_COUNT = 0;
 const ONE_GUILD = 1;
@@ -40,38 +40,30 @@ export class DiscordMessageScheduleNoonCountService extends AbstractService {
    *
    * @param {Readonly<((Message | void)[] | void)[] | void>} guildMessages The list received as a response when sending noon messages to all Discord guilds
    */
-  public countChannelsAndGuilds(
-    guildMessages: Readonly<((Message | void)[] | void)[] | void>
-  ): void {
+  public countChannelsAndGuilds(guildMessages: Readonly<((Message | void)[] | void)[] | void>): void {
     let totalGuildCount = DEFAULT_GUILD_COUNT;
     let guildCount = DEFAULT_GUILD_COUNT;
     let channelCount = DEFAULT_CHANNEL_COUNT;
 
     if (_.isArray(guildMessages)) {
-      _.forEach(
-        guildMessages,
-        (guildMessage: Readonly<(Message | void)[] | void>): void => {
-          totalGuildCount = _.add(totalGuildCount, ONE_GUILD);
+      _.forEach(guildMessages, (guildMessage: Readonly<(Message | void)[] | void>): void => {
+        totalGuildCount = _.add(totalGuildCount, ONE_GUILD);
 
-          if (_.isArray(guildMessage)) {
-            let hasCountThisGuild = false;
+        if (_.isArray(guildMessage)) {
+          let hasCountThisGuild = false;
 
-            _.forEach(
-              guildMessage,
-              (message: Readonly<Message | void>): void => {
-                if (!_.isNil(message)) {
-                  channelCount = _.add(channelCount, ONE_CHANNEL);
+          _.forEach(guildMessage, (message: Readonly<Message | void>): void => {
+            if (!_.isNil(message)) {
+              channelCount = _.add(channelCount, ONE_CHANNEL);
 
-                  if (_.isEqual(hasCountThisGuild, false)) {
-                    guildCount = _.add(guildCount, ONE_GUILD);
-                    hasCountThisGuild = true;
-                  }
-                }
+              if (_.isEqual(hasCountThisGuild, false)) {
+                guildCount = _.add(guildCount, ONE_GUILD);
+                hasCountThisGuild = true;
               }
-            );
-          }
+            }
+          });
         }
-      );
+      });
     }
 
     this._logGuildAndChannelCount(totalGuildCount, guildCount, channelCount);

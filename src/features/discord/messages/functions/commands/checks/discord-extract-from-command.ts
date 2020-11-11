@@ -1,24 +1,20 @@
-import _ from "lodash";
-import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
-import { IDiscordExtractFromCommandData } from "../../../interfaces/commands/checks/discord-extract-from-command-data";
-import { IDiscordExtractFromCommandWithMultipleCommandsData } from "../../../interfaces/commands/checks/discord-extract-from-command-with-multiple-commands-data";
-import { IDiscordExtractFromCommandWithMultiplePrefixesAndCommandsData } from "../../../interfaces/commands/checks/discord-extract-from-command-with-multiple-prefixes-and-commands-data";
-import { IDiscordExtractFromCommandWithMultiplePrefixesData } from "../../../interfaces/commands/checks/discord-extract-from-command-with-multiple-prefixes-data";
-import { discordGetFormattedMessage } from "../formatters/discord-get-formatted-message";
+import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
+import { IDiscordExtractFromCommandData } from '../../../interfaces/commands/checks/discord-extract-from-command-data';
+import { IDiscordExtractFromCommandWithMultipleCommandsData } from '../../../interfaces/commands/checks/discord-extract-from-command-with-multiple-commands-data';
+import { IDiscordExtractFromCommandWithMultiplePrefixesAndCommandsData } from '../../../interfaces/commands/checks/discord-extract-from-command-with-multiple-prefixes-and-commands-data';
+import { IDiscordExtractFromCommandWithMultiplePrefixesData } from '../../../interfaces/commands/checks/discord-extract-from-command-with-multiple-prefixes-data';
+import { discordGetFormattedMessage } from '../formatters/discord-get-formatted-message';
+import _ from 'lodash';
 
 function extractFromCommandWithMultipleCommands({
   commands,
   finder,
   message,
   prefix,
-}: Readonly<IDiscordExtractFromCommandWithMultipleCommandsData>):
-  | string
-  | null {
+}: Readonly<IDiscordExtractFromCommandWithMultipleCommandsData>): string | null {
   let firstArgument: string | null = null;
 
-  _.forEach(commands, (command: Readonly<DiscordMessageCommandEnum>):
-    | false
-    | void => {
+  _.forEach(commands, (command: Readonly<DiscordMessageCommandEnum>): false | void => {
     firstArgument = finder({
       command,
       message,
@@ -38,9 +34,7 @@ function extractFromCommandWithMultiplePrefixes({
   finder,
   message,
   prefixes,
-}: Readonly<IDiscordExtractFromCommandWithMultiplePrefixesData>):
-  | string
-  | null {
+}: Readonly<IDiscordExtractFromCommandWithMultiplePrefixesData>): string | null {
   let firstArgument: string | null = null;
 
   _.forEach(prefixes, (prefix: Readonly<string>): false | void => {
@@ -63,15 +57,11 @@ function extractFromCommandWithMultiplePrefixesAndCommands({
   finder,
   message,
   prefixes,
-}: Readonly<IDiscordExtractFromCommandWithMultiplePrefixesAndCommandsData>):
-  | string
-  | null {
+}: Readonly<IDiscordExtractFromCommandWithMultiplePrefixesAndCommandsData>): string | null {
   let firstArgument: string | null = null;
 
   _.forEach(prefixes, (prefix: Readonly<string>): false | void => {
-    _.forEach(commands, (command: Readonly<DiscordMessageCommandEnum>):
-      | false
-      | void => {
+    _.forEach(commands, (command: Readonly<DiscordMessageCommandEnum>): false | void => {
       if (_.isNil(firstArgument)) {
         firstArgument = finder({
           command,

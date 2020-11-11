@@ -1,14 +1,7 @@
-import _ from "lodash";
-import { createMock } from "ts-auto-mock";
-import { isDiscordGuildChannelWritable } from "./is-discord-guild-channel-writable";
-import {
-  GuildChannel,
-  TextChannel,
-  CategoryChannel,
-  VoiceChannel,
-  NewsChannel,
-  StoreChannel,
-} from "discord.js";
+import { isDiscordGuildChannelWritable } from './is-discord-guild-channel-writable';
+import { CategoryChannel, GuildChannel, NewsChannel, StoreChannel, TextChannel, VoiceChannel } from 'discord.js';
+import _ from 'lodash';
+import { createMock } from 'ts-auto-mock';
 
 describe(`isDiscordGuildChannelWritable()`, (): void => {
   let guildChannel: GuildChannel;

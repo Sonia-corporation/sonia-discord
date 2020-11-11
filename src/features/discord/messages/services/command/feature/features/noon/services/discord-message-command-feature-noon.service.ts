@@ -1,27 +1,27 @@
+import { DiscordMessageCommandFeatureNoonConfigService } from './config/discord-message-command-feature-noon-config.service';
+import { AbstractService } from '../../../../../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../../../../../enums/service-name.enum';
+import { wrapInBold } from '../../../../../../../../../functions/formatters/wrap-in-bold';
+import { DiscordSoniaService } from '../../../../../../../users/services/discord-sonia.service';
+import { IDiscordCommandSplittedFlagsResponse } from '../../../../../../classes/commands/flags/discord-command-splitted-flags-response';
+import { discordCommandSplitFlagsResponse } from '../../../../../../functions/commands/flags/discord-command-split-flags-response';
+import { IDiscordCommandFlagSuccess } from '../../../../../../interfaces/commands/flags/discord-command-flag-success';
+import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
+import { IDiscordCommandFlagsResponse } from '../../../../../../types/commands/flags/discord-command-flags-response';
+import { IDiscordCommandFlagsSuccess } from '../../../../../../types/commands/flags/discord-command-flags-success';
+import { DiscordMessageCommandFeatureNameEnum } from '../../../enums/discord-message-command-feature-name.enum';
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../constants/discord-message-command-feature-noon-flags';
+import { IDiscordMessageCommandFeatureNameNoon } from '../types/discord-message-command-feature-name-noon';
 import {
   EmbedFieldData,
   MessageEmbedAuthor,
   MessageEmbedFooter,
   MessageEmbedOptions,
   MessageEmbedThumbnail,
-} from "discord.js";
-import _ from "lodash";
-import moment from "moment-timezone";
-import { AbstractService } from "../../../../../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../../../../../enums/service-name.enum";
-import { wrapInBold } from "../../../../../../../../../functions/formatters/wrap-in-bold";
-import { DiscordSoniaService } from "../../../../../../../users/services/discord-sonia.service";
-import { IDiscordCommandSplittedFlagsResponse } from "../../../../../../classes/commands/flags/discord-command-splitted-flags-response";
-import { discordCommandSplitFlagsResponse } from "../../../../../../functions/commands/flags/discord-command-split-flags-response";
-import { IDiscordCommandFlagSuccess } from "../../../../../../interfaces/commands/flags/discord-command-flag-success";
-import { IDiscordMessageResponse } from "../../../../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
-import { IDiscordCommandFlagsResponse } from "../../../../../../types/commands/flags/discord-command-flags-response";
-import { IDiscordCommandFlagsSuccess } from "../../../../../../types/commands/flags/discord-command-flags-success";
-import { DiscordMessageCommandFeatureNameEnum } from "../../../enums/discord-message-command-feature-name.enum";
-import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../constants/discord-message-command-feature-noon-flags";
-import { IDiscordMessageCommandFeatureNameNoon } from "../types/discord-message-command-feature-name-noon";
-import { DiscordMessageCommandFeatureNoonConfigService } from "./config/discord-message-command-feature-noon-config.service";
+} from 'discord.js';
+import _ from 'lodash';
+import moment from 'moment-timezone';
 
 const ONE_FLAG_SUCCESS = 1;
 
@@ -66,27 +66,17 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     messageFlags: Readonly<string>
   ): Promise<IDiscordMessageResponse[]> {
-    return DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.executeAll(
-      anyDiscordMessage,
-      messageFlags
-    ).then(
-      (
-        discordCommandFlagsResponse: Readonly<IDiscordCommandFlagsResponse>
-      ): Promise<IDiscordMessageResponse[]> => {
+    return DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.executeAll(anyDiscordMessage, messageFlags).then(
+      (discordCommandFlagsResponse: Readonly<IDiscordCommandFlagsResponse>): Promise<IDiscordMessageResponse[]> => {
         const discordCommandSplittedFlagsResponse: IDiscordCommandSplittedFlagsResponse = discordCommandSplitFlagsResponse(
           discordCommandFlagsResponse
         );
-        const discordMessageResponses: IDiscordMessageResponse[] =
-          discordCommandSplittedFlagsResponse.messageResponses;
+        const discordMessageResponses: IDiscordMessageResponse[] = discordCommandSplittedFlagsResponse.messageResponses;
 
-        if (
-          !_.isEmpty(discordCommandSplittedFlagsResponse.commandFlagsSuccess)
-        ) {
+        if (!_.isEmpty(discordCommandSplittedFlagsResponse.commandFlagsSuccess)) {
           discordMessageResponses.unshift({
             options: {
-              embed: this._getMessageEmbed(
-                discordCommandSplittedFlagsResponse.commandFlagsSuccess
-              ),
+              embed: this._getMessageEmbed(discordCommandSplittedFlagsResponse.commandFlagsSuccess),
               split: false,
             },
             response: ``,
@@ -96,9 +86,7 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
         return Promise.all(
           _.map(
             discordMessageResponses,
-            (
-              discordMessageResponse: IDiscordMessageResponse
-            ): Promise<IDiscordMessageResponse> =>
+            (discordMessageResponse: IDiscordMessageResponse): Promise<IDiscordMessageResponse> =>
               Promise.resolve(discordMessageResponse)
           )
         );
@@ -106,9 +94,7 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
     );
   }
 
-  private _getMessageEmbed(
-    flagsSuccess: Readonly<IDiscordCommandFlagsSuccess>
-  ): MessageEmbedOptions {
+  private _getMessageEmbed(flagsSuccess: Readonly<IDiscordCommandFlagsSuccess>): MessageEmbedOptions {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -129,9 +115,7 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
     return DiscordMessageCommandFeatureNoonConfigService.getInstance().getNoonConfigImageColor();
   }
 
-  private _getMessageEmbedDescription(
-    flagsSuccess: Readonly<IDiscordCommandFlagsSuccess>
-  ): string {
+  private _getMessageEmbedDescription(flagsSuccess: Readonly<IDiscordCommandFlagsSuccess>): string {
     const flagsSuccessCount: number = this._getFlagsSuccessCount(flagsSuccess);
 
     return `${wrapInBold(flagsSuccessCount)} noon feature option${
@@ -139,21 +123,14 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
     } updated.`;
   }
 
-  private _getFlagsSuccessCount(
-    flagsSuccess: Readonly<IDiscordCommandFlagsSuccess>
-  ): number {
+  private _getFlagsSuccessCount(flagsSuccess: Readonly<IDiscordCommandFlagsSuccess>): number {
     return _.size(flagsSuccess);
   }
 
-  private _getMessageEmbedFields(
-    flagsSuccess: Readonly<IDiscordCommandFlagsSuccess>
-  ): EmbedFieldData[] {
+  private _getMessageEmbedFields(flagsSuccess: Readonly<IDiscordCommandFlagsSuccess>): EmbedFieldData[] {
     return _.map(
       flagsSuccess,
-      ({
-        name,
-        description,
-      }: Readonly<IDiscordCommandFlagSuccess>): EmbedFieldData => {
+      ({ name, description }: Readonly<IDiscordCommandFlagSuccess>): EmbedFieldData => {
         return {
           inline: false,
           name,
@@ -164,9 +141,7 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
-    const soniaImageUrl:
-      | string
-      | null = DiscordSoniaService.getInstance().getImageUrl();
+    const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
       iconURL: soniaImageUrl ?? undefined,

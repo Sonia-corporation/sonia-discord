@@ -1,4 +1,4 @@
-import { isUnknown } from "./is-unknown";
+import { isUnknown } from './is-unknown';
 
 describe(`isUnknown()`, (): void => {
   let value: string;

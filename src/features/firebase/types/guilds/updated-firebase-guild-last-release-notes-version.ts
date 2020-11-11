@@ -1,6 +1,3 @@
-import { IFirebaseGuildVFinal } from "./firebase-guild-v-final";
+import { IFirebaseGuildVFinal } from './firebase-guild-v-final';
 
-export type IUpdatedFirebaseGuildLastReleaseNotesVersion = Pick<
-  IFirebaseGuildVFinal,
-  "lastReleaseNotesVersion"
->;
+export type IUpdatedFirebaseGuildLastReleaseNotesVersion = Pick<IFirebaseGuildVFinal, 'lastReleaseNotesVersion'>;

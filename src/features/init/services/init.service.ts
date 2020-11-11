@@ -1,36 +1,36 @@
-import appRootPath from "app-root-path";
-import axios, { AxiosResponse } from "axios";
-import admin from "firebase-admin";
-import fs from "fs-extra";
-import _ from "lodash";
-import { BehaviorSubject, Observable } from "rxjs";
-import { filter, map, take } from "rxjs/operators";
-import { AbstractService } from "../../../classes/services/abstract.service";
-import { ONE_EMITTER } from "../../../constants/one-emitter";
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { ENVIRONMENT } from "../../../environment/constants/environment";
-import { IEnvironment } from "../../../environment/interfaces/environment";
-import { getBearer } from "../../../functions/formatters/get-bearer";
-import { IPackage } from "../../../interfaces/package";
-import { AppConfigMutatorService } from "../../app/services/config/app-config-mutator.service";
-import { AppConfigService } from "../../app/services/config/app-config.service";
-import { DiscordMessageConfigMutatorService } from "../../discord/messages/services/config/discord-message-config-mutator.service";
-import { DiscordService } from "../../discord/services/discord.service";
-import { DiscordSoniaConfigMutatorService } from "../../discord/users/services/config/discord-sonia-config-mutator.service";
-import { FirebaseService } from "../../firebase/services/firebase.service";
-import { GITHUB_API_URL } from "../../github/constants/github-api-url";
-import { getHumanizedReleaseNotes } from "../../github/functions/get-humanized-release-notes";
-import { getGithubQueryReleaseByTagAndTotalCount } from "../../github/functions/queries/get-github-query-release-by-tag-and-total-count";
-import { IGithubReleaseAndTotalCount } from "../../github/interfaces/github-release-and-total-count";
-import { GithubConfigMutatorService } from "../../github/services/config/github-config-mutator.service";
-import { GithubConfigService } from "../../github/services/config/github-config.service";
-import { ChalkColorService } from "../../logger/services/chalk/chalk-color.service";
-import { ChalkService } from "../../logger/services/chalk/chalk.service";
-import { LoggerConfigMutatorService } from "../../logger/services/config/logger-config-mutator.service";
-import { LoggerService } from "../../logger/services/logger.service";
-import { ProfileConfigMutatorService } from "../../profile/services/config/profile-config-mutator.service";
-import { ServerConfigMutatorService } from "../../server/services/config/server-config-mutator.service";
-import { ServerService } from "../../server/services/server.service";
+import { AbstractService } from '../../../classes/services/abstract.service';
+import { ONE_EMITTER } from '../../../constants/one-emitter';
+import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import { ENVIRONMENT } from '../../../environment/constants/environment';
+import { IEnvironment } from '../../../environment/interfaces/environment';
+import { getBearer } from '../../../functions/formatters/get-bearer';
+import { IPackage } from '../../../interfaces/package';
+import { AppConfigMutatorService } from '../../app/services/config/app-config-mutator.service';
+import { AppConfigService } from '../../app/services/config/app-config.service';
+import { DiscordMessageConfigMutatorService } from '../../discord/messages/services/config/discord-message-config-mutator.service';
+import { DiscordService } from '../../discord/services/discord.service';
+import { DiscordSoniaConfigMutatorService } from '../../discord/users/services/config/discord-sonia-config-mutator.service';
+import { FirebaseService } from '../../firebase/services/firebase.service';
+import { GITHUB_API_URL } from '../../github/constants/github-api-url';
+import { getHumanizedReleaseNotes } from '../../github/functions/get-humanized-release-notes';
+import { getGithubQueryReleaseByTagAndTotalCount } from '../../github/functions/queries/get-github-query-release-by-tag-and-total-count';
+import { IGithubReleaseAndTotalCount } from '../../github/interfaces/github-release-and-total-count';
+import { GithubConfigMutatorService } from '../../github/services/config/github-config-mutator.service';
+import { GithubConfigService } from '../../github/services/config/github-config.service';
+import { ChalkColorService } from '../../logger/services/chalk/chalk-color.service';
+import { ChalkService } from '../../logger/services/chalk/chalk.service';
+import { LoggerConfigMutatorService } from '../../logger/services/config/logger-config-mutator.service';
+import { LoggerService } from '../../logger/services/logger.service';
+import { ProfileConfigMutatorService } from '../../profile/services/config/profile-config-mutator.service';
+import { ServerConfigMutatorService } from '../../server/services/config/server-config-mutator.service';
+import { ServerService } from '../../server/services/server.service';
+import appRootPath from 'app-root-path';
+import axios, { AxiosResponse } from 'axios';
+import admin from 'firebase-admin';
+import fs from 'fs-extra';
+import _ from 'lodash';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter, map, take } from 'rxjs/operators';
 import WriteResult = admin.firestore.WriteResult;
 
 export class InitService extends AbstractService {
@@ -44,9 +44,7 @@ export class InitService extends AbstractService {
     return InitService._instance;
   }
 
-  private readonly _isAppConfigured$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  private readonly _isAppConfigured$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   public constructor() {
     super(ServiceNameEnum.INIT_SERVICE);
@@ -68,9 +66,7 @@ export class InitService extends AbstractService {
   public isAppConfigured(): Promise<true> {
     return this.isAppConfigured$()
       .pipe(
-        filter((isAppConfigured: Readonly<boolean>): boolean =>
-          _.isEqual(isAppConfigured, true)
-        ),
+        filter((isAppConfigured: Readonly<boolean>): boolean => _.isEqual(isAppConfigured, true)),
         take(ONE_EMITTER),
         map((): true => true)
       )
@@ -81,26 +77,18 @@ export class InitService extends AbstractService {
     this._isAppConfigured$.next(true);
   }
 
-  public readEnvironment(): Promise<
-    [true, [number | void, WriteResult[] | void]] | void
-  > {
+  public readEnvironment(): Promise<[true, [number | void, WriteResult[] | void]] | void> {
     return fs
-      .readJson(
-        `${_.toString(appRootPath)}/src/environment/secret-environment.json`
-      )
+      .readJson(`${_.toString(appRootPath)}/src/environment/secret-environment.json`)
       .then(
-        (
-          environment: Readonly<IEnvironment>
-        ): Promise<[true, [number | void, WriteResult[] | void]]> =>
+        (environment: Readonly<IEnvironment>): Promise<[true, [number | void, WriteResult[] | void]]> =>
           this._startApp(this._mergeEnvironments(ENVIRONMENT, environment))
       )
       .catch(
         (error: unknown): Promise<never> => {
           console.error(`Failed to read the secret environment file`);
           console.error(error);
-          console.debug(
-            `Follow the instructions about the secret environment to fix this:`
-          );
+          console.debug(`Follow the instructions about the secret environment to fix this:`);
           console.debug(
             `https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
           );
@@ -110,40 +98,25 @@ export class InitService extends AbstractService {
       );
   }
 
-  private _mergeEnvironments(
-    environmentA: Readonly<IEnvironment>,
-    environmentB: Readonly<IEnvironment>
-  ): IEnvironment {
+  private _mergeEnvironments(environmentA: Readonly<IEnvironment>, environmentB: Readonly<IEnvironment>): IEnvironment {
     return _.merge({}, environmentA, environmentB);
   }
 
   private _runApp(): Promise<[true, [number | void, WriteResult[] | void]]> {
     ServerService.getInstance().initializeApp();
 
-    return Promise.all([
-      DiscordService.getInstance().init(),
-      FirebaseService.getInstance().init(),
-    ]);
+    return Promise.all([DiscordService.getInstance().init(), FirebaseService.getInstance().init()]);
   }
 
-  private _configureApp(
-    environment: Readonly<IEnvironment>
-  ): Promise<IGithubReleaseAndTotalCount> {
+  private _configureApp(environment: Readonly<IEnvironment>): Promise<IGithubReleaseAndTotalCount> {
     this._configureAppFromEnvironment(environment);
 
     return this._configureAppFromPackage().then(
-      (): Promise<IGithubReleaseAndTotalCount> =>
-        this._configureAppFromGitHubReleases()
+      (): Promise<IGithubReleaseAndTotalCount> => this._configureAppFromGitHubReleases()
     );
   }
 
-  private _configureAppFromEnvironment({
-    logger,
-    github,
-    discord,
-    profile,
-    app,
-  }: Readonly<IEnvironment>): void {
+  private _configureAppFromEnvironment({ logger, github, discord, profile, app }: Readonly<IEnvironment>): void {
     LoggerConfigMutatorService.getInstance().updateConfig(logger);
     GithubConfigMutatorService.getInstance().updateConfig(github);
     DiscordSoniaConfigMutatorService.getInstance().updateConfig(discord);
@@ -167,9 +140,7 @@ export class InitService extends AbstractService {
         (error: unknown): Promise<never> => {
           LoggerService.getInstance().error({
             context: this._serviceName,
-            message: ChalkService.getInstance().text(
-              `failed to read the package file`
-            ),
+            message: ChalkService.getInstance().text(`failed to read the package file`),
           });
           LoggerService.getInstance().error({
             context: this._serviceName,
@@ -181,16 +152,12 @@ export class InitService extends AbstractService {
       );
   }
 
-  private _configureAppFromGitHubReleases(): Promise<
-    IGithubReleaseAndTotalCount
-  > {
+  private _configureAppFromGitHubReleases(): Promise<IGithubReleaseAndTotalCount> {
     const appVersion: string = AppConfigService.getInstance().getVersion();
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `app version: ${ChalkService.getInstance().value(appVersion)}`
-      ),
+      message: ChalkService.getInstance().text(`app version: ${ChalkService.getInstance().value(appVersion)}`),
     });
 
     return axios({
@@ -198,28 +165,18 @@ export class InitService extends AbstractService {
         query: getGithubQueryReleaseByTagAndTotalCount(appVersion),
       },
       headers: {
-        authorization: getBearer(
-          GithubConfigService.getInstance().getPersonalAccessToken()
-        ),
+        authorization: getBearer(GithubConfigService.getInstance().getPersonalAccessToken()),
       },
       method: `post`,
       url: GITHUB_API_URL,
     })
       .then(
-        ({
-          data,
-        }: Readonly<AxiosResponse<IGithubReleaseAndTotalCount>>): Promise<
-          IGithubReleaseAndTotalCount
-        > => {
-          AppConfigMutatorService.getInstance().updateTotalReleaseCount(
-            data.data.repository.releases.totalCount
-          );
+        ({ data }: Readonly<AxiosResponse<IGithubReleaseAndTotalCount>>): Promise<IGithubReleaseAndTotalCount> => {
+          AppConfigMutatorService.getInstance().updateTotalReleaseCount(data.data.repository.releases.totalCount);
 
           LoggerService.getInstance().success({
             context: this._serviceName,
-            message: ChalkService.getInstance().text(
-              `Total release count updated from GitHub API`
-            ),
+            message: ChalkService.getInstance().text(`Total release count updated from GitHub API`),
           });
 
           if (_.isNil(data.data.repository.release)) {
@@ -230,18 +187,14 @@ export class InitService extends AbstractService {
               ),
             });
           } else {
-            AppConfigMutatorService.getInstance().updateReleaseDate(
-              data.data.repository.release.updatedAt
-            );
+            AppConfigMutatorService.getInstance().updateReleaseDate(data.data.repository.release.updatedAt);
             AppConfigMutatorService.getInstance().updateReleaseNotes(
               getHumanizedReleaseNotes(data.data.repository.release.description)
             );
 
             LoggerService.getInstance().success({
               context: this._serviceName,
-              message: ChalkService.getInstance().text(
-                `Release notes updated from GitHub API`
-              ),
+              message: ChalkService.getInstance().text(`Release notes updated from GitHub API`),
             });
           }
 
@@ -252,9 +205,7 @@ export class InitService extends AbstractService {
         (error: unknown): Promise<never> => {
           LoggerService.getInstance().error({
             context: this._serviceName,
-            message: ChalkService.getInstance().text(
-              `Failed to get the total release count from GitHub API`
-            ),
+            message: ChalkService.getInstance().text(`Failed to get the total release count from GitHub API`),
           });
           LoggerService.getInstance().error({
             context: this._serviceName,
@@ -272,12 +223,9 @@ export class InitService extends AbstractService {
       );
   }
 
-  private _startApp(
-    environment: Readonly<IEnvironment>
-  ): Promise<[true, [number | void, WriteResult[] | void]]> {
+  private _startApp(environment: Readonly<IEnvironment>): Promise<[true, [number | void, WriteResult[] | void]]> {
     return this._configureApp(environment).then(
-      (): Promise<[true, [number | void, WriteResult[] | void]]> =>
-        this._runApp()
+      (): Promise<[true, [number | void, WriteResult[] | void]]> => this._runApp()
     );
   }
 }

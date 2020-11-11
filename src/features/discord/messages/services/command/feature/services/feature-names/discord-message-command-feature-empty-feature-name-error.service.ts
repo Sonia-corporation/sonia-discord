@@ -1,21 +1,17 @@
-import { EmbedFieldData, MessageEmbedOptions } from "discord.js";
-import _ from "lodash";
-import { ServiceNameEnum } from "../../../../../../../../enums/service-name.enum";
-import { DiscordMessageCommandEnum } from "../../../../../enums/commands/discord-message-command.enum";
-import { IDiscordMessageResponse } from "../../../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../../../types/any-discord-message";
-import { DiscordMessageCommandCliErrorService } from "../../../discord-message-command-cli-error.service";
-import { DiscordMessageCommandFeatureErrorCoreService } from "../discord-message-command-feature-error-core.service";
+import { ServiceNameEnum } from '../../../../../../../../enums/service-name.enum';
+import { DiscordMessageCommandEnum } from '../../../../../enums/commands/discord-message-command.enum';
+import { IDiscordMessageResponse } from '../../../../../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../../../../../types/any-discord-message';
+import { DiscordMessageCommandCliErrorService } from '../../../discord-message-command-cli-error.service';
+import { DiscordMessageCommandFeatureErrorCoreService } from '../discord-message-command-feature-error-core.service';
+import { EmbedFieldData, MessageEmbedOptions } from 'discord.js';
+import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends DiscordMessageCommandFeatureErrorCoreService {
   private static _instance: DiscordMessageCommandFeatureEmptyFeatureNameErrorService;
 
   public static getInstance(): DiscordMessageCommandFeatureEmptyFeatureNameErrorService {
-    if (
-      _.isNil(
-        DiscordMessageCommandFeatureEmptyFeatureNameErrorService._instance
-      )
-    ) {
+    if (_.isNil(DiscordMessageCommandFeatureEmptyFeatureNameErrorService._instance)) {
       DiscordMessageCommandFeatureEmptyFeatureNameErrorService._instance = new DiscordMessageCommandFeatureEmptyFeatureNameErrorService();
     }
 
@@ -23,9 +19,7 @@ export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends Di
   }
 
   public constructor() {
-    super(
-      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_FEATURE_NAME_ERROR_SERVICE
-    );
+    super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_FEATURE_NAME_ERROR_SERVICE);
   }
 
   public getMessageResponse(
@@ -35,9 +29,7 @@ export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends Di
     return DiscordMessageCommandCliErrorService.getInstance()
       .getCliErrorMessageResponse()
       .then(
-        (
-          cliErrorMessageResponse: Readonly<IDiscordMessageResponse>
-        ): Promise<IDiscordMessageResponse> =>
+        (cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> =>
           Promise.resolve(
             _.merge(cliErrorMessageResponse, {
               options: {

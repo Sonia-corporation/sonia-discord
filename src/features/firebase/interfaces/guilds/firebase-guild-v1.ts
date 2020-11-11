@@ -1,5 +1,5 @@
-import { Snowflake } from "discord.js";
-import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-version.enum";
+import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
+import { Snowflake } from 'discord.js';
 
 export interface IFirebaseGuildV1 {
   /**

@@ -1,12 +1,12 @@
-import { createMock } from "ts-auto-mock";
-import { IObject } from "../../../../types/object";
-import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-version.enum";
-import { IFirebaseGuildChannelV1 } from "../../interfaces/guilds/channels/firebase-guild-channel-v1";
-import { IFirebaseGuildV1 } from "../../interfaces/guilds/firebase-guild-v1";
-import { IFirebaseGuildV2 } from "../../interfaces/guilds/firebase-guild-v2";
-import { IFirebaseGuildV3 } from "../../interfaces/guilds/firebase-guild-v3";
-import { IFirebaseGuildV4 } from "../../interfaces/guilds/firebase-guild-v4";
-import { handleFirebaseGuildBreakingChange } from "./handle-firebase-guild-breaking-change";
+import { handleFirebaseGuildBreakingChange } from './handle-firebase-guild-breaking-change';
+import { IObject } from '../../../../types/object';
+import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
+import { IFirebaseGuildChannelV1 } from '../../interfaces/guilds/channels/firebase-guild-channel-v1';
+import { IFirebaseGuildV1 } from '../../interfaces/guilds/firebase-guild-v1';
+import { IFirebaseGuildV2 } from '../../interfaces/guilds/firebase-guild-v2';
+import { IFirebaseGuildV3 } from '../../interfaces/guilds/firebase-guild-v3';
+import { IFirebaseGuildV4 } from '../../interfaces/guilds/firebase-guild-v4';
+import { createMock } from 'ts-auto-mock';
 
 describe(`handleFirebaseGuildBreakingChange()`, (): void => {
   describe(`when the given Firebase guild has no version`, (): void => {
@@ -92,9 +92,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
 
       const result = handleFirebaseGuildBreakingChange(firebaseGuild);
 
-      expect(result.lastReleaseNotesVersion).toStrictEqual(
-        `dummy-last-release-notes-version`
-      );
+      expect(result.lastReleaseNotesVersion).toStrictEqual(`dummy-last-release-notes-version`);
     });
 
     it(`should return a v4 version`, (): void => {
@@ -139,9 +137,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
 
       const result = handleFirebaseGuildBreakingChange(firebaseGuild);
 
-      expect(result.lastReleaseNotesVersion).toStrictEqual(
-        `dummy-last-release-notes-version`
-      );
+      expect(result.lastReleaseNotesVersion).toStrictEqual(`dummy-last-release-notes-version`);
     });
 
     it(`should return a v4 version`, (): void => {

@@ -1,4 +1,4 @@
-import { FirebaseCollectionEnum } from "./firebase-collection.enum";
+import { FirebaseCollectionEnum } from './firebase-collection.enum';
 
 describe(`FirebaseCollectionEnum`, (): void => {
   it(`should have a member "GUILDS"`, (): void => {

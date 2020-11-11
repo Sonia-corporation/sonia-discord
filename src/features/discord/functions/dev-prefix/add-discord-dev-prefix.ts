@@ -1,5 +1,5 @@
-import { IAddDiscordDevPrefix } from "../../interfaces/dev-prefix/add-discord-dev-prefix";
-import { getDiscordDevPrefix } from "./get-discord-dev-prefix";
+import { getDiscordDevPrefix } from './get-discord-dev-prefix';
+import { IAddDiscordDevPrefix } from '../../interfaces/dev-prefix/add-discord-dev-prefix';
 
 /**
  * @param {Readonly<IAddDiscordDevPrefix>} config The configuration object

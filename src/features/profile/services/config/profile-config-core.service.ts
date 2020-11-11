@@ -1,11 +1,9 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { IProfileConfig } from "../../interfaces/profile-config";
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { IProfileConfig } from '../../interfaces/profile-config';
+import _ from 'lodash';
 
-export class ProfileConfigCoreService
-  extends AbstractService
-  implements IProfileConfig {
+export class ProfileConfigCoreService extends AbstractService implements IProfileConfig {
   private static _instance: ProfileConfigCoreService;
 
   public static getInstance(): ProfileConfigCoreService {

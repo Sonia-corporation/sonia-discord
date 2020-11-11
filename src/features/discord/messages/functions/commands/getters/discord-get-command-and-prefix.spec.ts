@@ -1,7 +1,7 @@
-import { createMock } from "ts-auto-mock";
-import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
-import { IDiscordGetCommandAndPrefixData } from "../../../interfaces/commands/getters/discord-get-command-and-prefix-data";
-import { discordGetCommandAndPrefix } from "./discord-get-command-and-prefix";
+import { discordGetCommandAndPrefix } from './discord-get-command-and-prefix';
+import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
+import { IDiscordGetCommandAndPrefixData } from '../../../interfaces/commands/getters/discord-get-command-and-prefix-data';
+import { createMock } from 'ts-auto-mock';
 
 describe(`discordGetCommandAndPrefix()`, (): void => {
   let data: IDiscordGetCommandAndPrefixData;
@@ -191,10 +191,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
     describe(`when the given commands are feature and cookie`, (): void => {
       beforeEach((): void => {
-        data.commands = [
-          DiscordMessageCommandEnum.FEATURE,
-          DiscordMessageCommandEnum.COOKIE,
-        ];
+        data.commands = [DiscordMessageCommandEnum.FEATURE, DiscordMessageCommandEnum.COOKIE];
       });
 
       describe(`when the given message is empty`, (): void => {
@@ -660,10 +657,7 @@ describe(`discordGetCommandAndPrefix()`, (): void => {
 
     describe(`when the given commands are feature and cookie`, (): void => {
       beforeEach((): void => {
-        data.commands = [
-          DiscordMessageCommandEnum.FEATURE,
-          DiscordMessageCommandEnum.COOKIE,
-        ];
+        data.commands = [DiscordMessageCommandEnum.FEATURE, DiscordMessageCommandEnum.COOKIE];
       });
 
       describe(`when the given message is empty`, (): void => {

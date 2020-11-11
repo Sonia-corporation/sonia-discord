@@ -1,7 +1,7 @@
-import { createMock } from "ts-auto-mock";
-import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
-import { IDiscordContainsThisCommandWithOneOfThesePrefixesData } from "../../../interfaces/commands/checks/discord-contains-this-command-with-one-of-these-prefixes-data";
-import { discordContainsThisCommandWithOneOfThesePrefixes } from "./discord-contains-this-command-with-one-of-these-prefixes";
+import { discordContainsThisCommandWithOneOfThesePrefixes } from './discord-contains-this-command-with-one-of-these-prefixes';
+import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
+import { IDiscordContainsThisCommandWithOneOfThesePrefixesData } from '../../../interfaces/commands/checks/discord-contains-this-command-with-one-of-these-prefixes-data';
+import { createMock } from 'ts-auto-mock';
 
 describe(`containsThisCommandWithOneOfThesePrefixes()`, (): void => {
   let data: IDiscordContainsThisCommandWithOneOfThesePrefixesData;
@@ -141,10 +141,7 @@ describe(`containsThisCommandWithOneOfThesePrefixes()`, (): void => {
 
     describe(`when the command is help and cookie`, (): void => {
       beforeEach((): void => {
-        data.commands = [
-          DiscordMessageCommandEnum.HELP,
-          DiscordMessageCommandEnum.COOKIE,
-        ];
+        data.commands = [DiscordMessageCommandEnum.HELP, DiscordMessageCommandEnum.COOKIE];
       });
 
       describe(`when the prefix is $`, (): void => {
@@ -206,10 +203,7 @@ describe(`containsThisCommandWithOneOfThesePrefixes()`, (): void => {
 
     describe(`when the command is bug and cookie`, (): void => {
       beforeEach((): void => {
-        data.commands = [
-          DiscordMessageCommandEnum.BUG,
-          DiscordMessageCommandEnum.COOKIE,
-        ];
+        data.commands = [DiscordMessageCommandEnum.BUG, DiscordMessageCommandEnum.COOKIE];
       });
 
       describe(`when the prefix is $`, (): void => {
@@ -401,10 +395,7 @@ describe(`containsThisCommandWithOneOfThesePrefixes()`, (): void => {
 
     describe(`when the command is help and cookie`, (): void => {
       beforeEach((): void => {
-        data.commands = [
-          DiscordMessageCommandEnum.HELP,
-          DiscordMessageCommandEnum.COOKIE,
-        ];
+        data.commands = [DiscordMessageCommandEnum.HELP, DiscordMessageCommandEnum.COOKIE];
       });
 
       describe(`when the prefix is $`, (): void => {
@@ -466,10 +457,7 @@ describe(`containsThisCommandWithOneOfThesePrefixes()`, (): void => {
 
     describe(`when the command is bug and cookie`, (): void => {
       beforeEach((): void => {
-        data.commands = [
-          DiscordMessageCommandEnum.BUG,
-          DiscordMessageCommandEnum.COOKIE,
-        ];
+        data.commands = [DiscordMessageCommandEnum.BUG, DiscordMessageCommandEnum.COOKIE];
       });
 
       describe(`when the prefix is $`, (): void => {
@@ -661,10 +649,7 @@ describe(`containsThisCommandWithOneOfThesePrefixes()`, (): void => {
 
     describe(`when the command is help and cookie`, (): void => {
       beforeEach((): void => {
-        data.commands = [
-          DiscordMessageCommandEnum.HELP,
-          DiscordMessageCommandEnum.COOKIE,
-        ];
+        data.commands = [DiscordMessageCommandEnum.HELP, DiscordMessageCommandEnum.COOKIE];
       });
 
       describe(`when the prefix is $`, (): void => {
@@ -726,10 +711,7 @@ describe(`containsThisCommandWithOneOfThesePrefixes()`, (): void => {
 
     describe(`when the command is bug and cookie`, (): void => {
       beforeEach((): void => {
-        data.commands = [
-          DiscordMessageCommandEnum.BUG,
-          DiscordMessageCommandEnum.COOKIE,
-        ];
+        data.commands = [DiscordMessageCommandEnum.BUG, DiscordMessageCommandEnum.COOKIE];
       });
 
       describe(`when the prefix is $`, (): void => {
@@ -921,10 +903,7 @@ describe(`containsThisCommandWithOneOfThesePrefixes()`, (): void => {
 
     describe(`when the command is help and cookie`, (): void => {
       beforeEach((): void => {
-        data.commands = [
-          DiscordMessageCommandEnum.HELP,
-          DiscordMessageCommandEnum.COOKIE,
-        ];
+        data.commands = [DiscordMessageCommandEnum.HELP, DiscordMessageCommandEnum.COOKIE];
       });
 
       describe(`when the prefix is $`, (): void => {
@@ -986,10 +965,7 @@ describe(`containsThisCommandWithOneOfThesePrefixes()`, (): void => {
 
     describe(`when the command is bug and cookie`, (): void => {
       beforeEach((): void => {
-        data.commands = [
-          DiscordMessageCommandEnum.BUG,
-          DiscordMessageCommandEnum.COOKIE,
-        ];
+        data.commands = [DiscordMessageCommandEnum.BUG, DiscordMessageCommandEnum.COOKIE];
       });
 
       describe(`when the prefix is $`, (): void => {
@@ -1181,10 +1157,7 @@ describe(`containsThisCommandWithOneOfThesePrefixes()`, (): void => {
 
     describe(`when the command is help and cookie`, (): void => {
       beforeEach((): void => {
-        data.commands = [
-          DiscordMessageCommandEnum.HELP,
-          DiscordMessageCommandEnum.COOKIE,
-        ];
+        data.commands = [DiscordMessageCommandEnum.HELP, DiscordMessageCommandEnum.COOKIE];
       });
 
       describe(`when the prefix is $`, (): void => {
@@ -1246,10 +1219,7 @@ describe(`containsThisCommandWithOneOfThesePrefixes()`, (): void => {
 
     describe(`when the command is bug and cookie`, (): void => {
       beforeEach((): void => {
-        data.commands = [
-          DiscordMessageCommandEnum.BUG,
-          DiscordMessageCommandEnum.COOKIE,
-        ];
+        data.commands = [DiscordMessageCommandEnum.BUG, DiscordMessageCommandEnum.COOKIE];
       });
 
       describe(`when the prefix is $`, (): void => {

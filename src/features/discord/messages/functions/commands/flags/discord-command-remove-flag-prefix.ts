@@ -1,5 +1,5 @@
-import _ from "lodash";
-import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
+import { IDiscordMessageFlag } from '../../../types/commands/flags/discord-message-flag';
+import _ from 'lodash';
 
 /**
  * @description
@@ -15,8 +15,6 @@ import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-messa
  *
  * @return {string} The flag message without the flag prefix "-" or "--"
  */
-export function discordCommandRemoveFlagPrefix(
-  messageFlag: Readonly<IDiscordMessageFlag>
-): string {
+export function discordCommandRemoveFlagPrefix(messageFlag: Readonly<IDiscordMessageFlag>): string {
   return _.trimStart(messageFlag, `--`);
 }

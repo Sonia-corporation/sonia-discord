@@ -1,11 +1,9 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { IDiscordGuildConfig } from "../../../interfaces/discord-guild-config";
+import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { IDiscordGuildConfig } from '../../../interfaces/discord-guild-config';
+import _ from 'lodash';
 
-export class DiscordGuildConfigCoreService
-  extends AbstractService
-  implements IDiscordGuildConfig {
+export class DiscordGuildConfigCoreService extends AbstractService implements IDiscordGuildConfig {
   private static _instance: DiscordGuildConfigCoreService;
 
   public static getInstance(): DiscordGuildConfigCoreService {

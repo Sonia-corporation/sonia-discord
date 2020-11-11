@@ -1,4 +1,4 @@
-import { TimezoneEnum } from "./timezone.enum";
+import { TimezoneEnum } from './timezone.enum';
 
 describe(`TimezoneEnum`, (): void => {
   it(`should have a member "PARIS"`, (): void => {

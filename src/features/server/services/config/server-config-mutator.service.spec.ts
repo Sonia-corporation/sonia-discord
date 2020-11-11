@@ -1,14 +1,14 @@
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { IPartialNested } from "../../../../types/partial-nested";
-import { IConfigUpdateNumber } from "../../../config/interfaces/config-update-number";
-import { ConfigService } from "../../../config/services/config.service";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { LoggerService } from "../../../logger/services/logger.service";
-import * as GetEnvironmentPortModule from "../../../node/functions/get-environment-port";
-import { IServerConfig } from "../../interfaces/server-config";
-import { ServerConfigCoreService } from "./server-config-core.service";
-import { ServerConfigMutatorService } from "./server-config-mutator.service";
-import { ServerConfigService } from "./server-config.service";
+import { ServerConfigCoreService } from './server-config-core.service';
+import { ServerConfigMutatorService } from './server-config-mutator.service';
+import { ServerConfigService } from './server-config.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { IPartialNested } from '../../../../types/partial-nested';
+import { IConfigUpdateNumber } from '../../../config/interfaces/config-update-number';
+import { ConfigService } from '../../../config/services/config.service';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import * as GetEnvironmentPortModule from '../../../node/functions/get-environment-port';
+import { IServerConfig } from '../../interfaces/server-config';
 
 jest.mock(`../../../time/services/time.service`);
 jest.mock(`../../../logger/services/chalk/chalk.service`);
@@ -112,10 +112,7 @@ describe(`ServerConfigMutatorService`, (): void => {
     beforeEach((): void => {
       service = ServerConfigMutatorService.getInstance();
 
-      getEnvironmentPortSpy = jest.spyOn(
-        GetEnvironmentPortModule,
-        `getEnvironmentPort`
-      );
+      getEnvironmentPortSpy = jest.spyOn(GetEnvironmentPortModule, `getEnvironmentPort`);
     });
 
     describe(`when the app has a specific port on the command line`, (): void => {
@@ -168,14 +165,8 @@ describe(`ServerConfigMutatorService`, (): void => {
       service = ServerConfigMutatorService.getInstance();
 
       loggerServiceGetInstanceSpy = jest.spyOn(LoggerService, `getInstance`);
-      serverConfigCoreServiceGetInstanceSpy = jest.spyOn(
-        ServerConfigCoreService,
-        `getInstance`
-      );
-      serverConfigServiceGetInstanceSpy = jest.spyOn(
-        ServerConfigService,
-        `getInstance`
-      );
+      serverConfigCoreServiceGetInstanceSpy = jest.spyOn(ServerConfigCoreService, `getInstance`);
+      serverConfigServiceGetInstanceSpy = jest.spyOn(ServerConfigService, `getInstance`);
     });
 
     it(`should create the Logger service instance`, (): void => {
@@ -294,9 +285,7 @@ describe(`ServerConfigMutatorService`, (): void => {
       port = 1234;
       serverConfigCoreService.port = 8888;
 
-      configServiceGetUpdatedNumberSpy = jest
-        .spyOn(configService, `getUpdatedNumber`)
-        .mockReturnValue(1234);
+      configServiceGetUpdatedNumberSpy = jest.spyOn(configService, `getUpdatedNumber`).mockReturnValue(1234);
     });
 
     it(`should get the updated number`, (): void => {

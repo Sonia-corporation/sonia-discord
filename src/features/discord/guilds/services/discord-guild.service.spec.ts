@@ -1,11 +1,11 @@
-import { Client, Guild, Snowflake } from "discord.js";
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { DiscordClientService } from "../../services/discord-client.service";
-import { DiscordGuildService } from "./discord-guild.service";
+import { DiscordGuildService } from './discord-guild.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { ILoggerLog } from '../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { Client, Guild, Snowflake } from 'discord.js';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -54,9 +54,7 @@ describe(`DiscordGuildService`, (): void => {
       service = new DiscordGuildService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_GUILD_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_GUILD_SERVICE);
     });
   });
 
@@ -67,17 +65,11 @@ describe(`DiscordGuildService`, (): void => {
     beforeEach((): void => {
       service = new DiscordGuildService();
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      discordClientServiceIsReadySpy = jest
-        .spyOn(discordClientService, `isReady`)
-        .mockResolvedValue(true);
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      discordClientServiceIsReadySpy = jest.spyOn(discordClientService, `isReady`).mockResolvedValue(true);
     });
 
-    it(`should log about listening the Discord client ready state`, async (): Promise<
-      void
-    > => {
+    it(`should log about listening the Discord client ready state`, async (): Promise<void> => {
       expect.assertions(2);
 
       await service.init();
@@ -89,9 +81,7 @@ describe(`DiscordGuildService`, (): void => {
       } as ILoggerLog);
     });
 
-    it(`should check if the Discord client is ready`, async (): Promise<
-      void
-    > => {
+    it(`should check if the Discord client is ready`, async (): Promise<void> => {
       expect.assertions(2);
 
       await service.init();
@@ -125,17 +115,15 @@ describe(`DiscordGuildService`, (): void => {
 
       arrayMock = jest.fn().mockReturnValue(guilds);
       // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-      discordClientServiceGetClientSpy = jest
-        .spyOn(discordClientService, `getClient`)
-        .mockReturnValue(
-          createMock<Client>({
-            guilds: {
-              cache: ({
-                array: arrayMock,
-              } as unknown) as undefined,
-            },
-          })
-        );
+      discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
+        createMock<Client>({
+          guilds: {
+            cache: ({
+              array: arrayMock,
+            } as unknown) as undefined,
+          },
+        })
+      );
     });
 
     it(`should get the Discord client`, (): void => {
@@ -177,17 +165,15 @@ describe(`DiscordGuildService`, (): void => {
         }
       );
       // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
-      discordClientServiceGetClientSpy = jest
-        .spyOn(discordClientService, `getClient`)
-        .mockReturnValue(
-          createMock<Client>({
-            guilds: {
-              cache: ({
-                find: findMock,
-              } as unknown) as undefined,
-            },
-          })
-        );
+      discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
+        createMock<Client>({
+          guilds: {
+            cache: ({
+              find: findMock,
+            } as unknown) as undefined,
+          },
+        })
+      );
     });
 
     it(`should get the Discord client`, (): void => {

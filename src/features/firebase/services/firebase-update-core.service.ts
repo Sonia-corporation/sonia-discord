@@ -1,5 +1,5 @@
-import _ from "lodash";
-import { AbstractService } from "../../../classes/services/abstract.service";
+import { AbstractService } from '../../../classes/services/abstract.service';
+import _ from 'lodash';
 
 /**
  * @todo
@@ -20,9 +20,7 @@ export abstract class FirebaseUpdateCoreService<
    *
    * @return {boolean} true when not undefined and on the latest version
    */
-  public isValid(
-    entity: Readonly<TEntity | undefined>
-  ): entity is TFinalEntity {
+  public isValid(entity: Readonly<TEntity | undefined>): entity is TFinalEntity {
     return this.isSet(entity) && this.isUpToDate(entity);
   }
 
@@ -34,13 +32,9 @@ export abstract class FirebaseUpdateCoreService<
    *
    * @return {boolean} true when not undefined
    */
-  public isSet(
-    entity: Readonly<TFinalEntity | undefined>
-  ): entity is TFinalEntity;
+  public isSet(entity: Readonly<TFinalEntity | undefined>): entity is TFinalEntity;
   public isSet(entity: Readonly<TEntity | undefined>): entity is TEntity;
-  public isSet(
-    entity: Readonly<TEntity | TFinalEntity | undefined>
-  ): entity is TEntity | TFinalEntity {
+  public isSet(entity: Readonly<TEntity | TFinalEntity | undefined>): entity is TEntity | TFinalEntity {
     return !_.isNil(entity);
   }
 
@@ -80,9 +74,7 @@ export abstract class FirebaseUpdateCoreService<
    *
    * @return {boolean} true when the given object is on the latest version
    */
-  public abstract isUpToDate(
-    entity: Readonly<TEntity | TFinalEntity>
-  ): entity is TFinalEntity;
+  public abstract isUpToDate(entity: Readonly<TEntity | TFinalEntity>): entity is TFinalEntity;
 
   /**
    * @description
@@ -93,9 +85,7 @@ export abstract class FirebaseUpdateCoreService<
    *
    * @return {TNewEntity} An object with explicit set value (basically no choices like "string | undefined")
    */
-  public abstract create(
-    createEntity?: Readonly<TCreateEntity | undefined>
-  ): TNewEntity;
+  public abstract create(createEntity?: Readonly<TCreateEntity | undefined>): TNewEntity;
 
   /**
    * @description

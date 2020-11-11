@@ -1,4 +1,4 @@
-import { NUMERICAL_COLOR_SKY } from "./numerical-color-sky";
+import { NUMERICAL_COLOR_SKY } from './numerical-color-sky';
 
 describe(`NUMERICAL_COLOR_SKY`, (): void => {
   it(`should be 11912416`, (): void => {

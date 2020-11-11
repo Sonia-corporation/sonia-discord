@@ -1,12 +1,12 @@
-import { EmbedFieldData, MessageEmbedOptions } from "discord.js";
-import _ from "lodash";
-import { ServiceNameEnum } from "../../../../../../../../enums/service-name.enum";
-import { wrapInBold } from "../../../../../../../../functions/formatters/wrap-in-bold";
-import { IDiscordCommandFlagOpposite } from "../../../../../interfaces/commands/flags/discord-command-flag-opposite";
-import { IDiscordMessageResponse } from "../../../../../interfaces/discord-message-response";
-import { IDiscordCommandFlagsOpposite } from "../../../../../types/commands/flags/discord-command-flags-opposite";
-import { DiscordMessageCommandCliErrorService } from "../../../discord-message-command-cli-error.service";
-import { DiscordMessageCommandFeatureErrorCoreService } from "../discord-message-command-feature-error-core.service";
+import { ServiceNameEnum } from '../../../../../../../../enums/service-name.enum';
+import { wrapInBold } from '../../../../../../../../functions/formatters/wrap-in-bold';
+import { IDiscordCommandFlagOpposite } from '../../../../../interfaces/commands/flags/discord-command-flag-opposite';
+import { IDiscordMessageResponse } from '../../../../../interfaces/discord-message-response';
+import { IDiscordCommandFlagsOpposite } from '../../../../../types/commands/flags/discord-command-flags-opposite';
+import { DiscordMessageCommandCliErrorService } from '../../../discord-message-command-cli-error.service';
+import { DiscordMessageCommandFeatureErrorCoreService } from '../discord-message-command-feature-error-core.service';
+import { EmbedFieldData, MessageEmbedOptions } from 'discord.js';
+import _ from 'lodash';
 
 const ONE_FLAG = 1;
 
@@ -14,9 +14,7 @@ export class DiscordMessageCommandFeatureOppositeFlagsErrorService extends Disco
   private static _instance: DiscordMessageCommandFeatureOppositeFlagsErrorService;
 
   public static getInstance(): DiscordMessageCommandFeatureOppositeFlagsErrorService {
-    if (
-      _.isNil(DiscordMessageCommandFeatureOppositeFlagsErrorService._instance)
-    ) {
+    if (_.isNil(DiscordMessageCommandFeatureOppositeFlagsErrorService._instance)) {
       DiscordMessageCommandFeatureOppositeFlagsErrorService._instance = new DiscordMessageCommandFeatureOppositeFlagsErrorService();
     }
 
@@ -24,20 +22,14 @@ export class DiscordMessageCommandFeatureOppositeFlagsErrorService extends Disco
   }
 
   public constructor() {
-    super(
-      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_OPPOSITE_FLAGS_ERROR_SERVICE
-    );
+    super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_OPPOSITE_FLAGS_ERROR_SERVICE);
   }
 
-  public getMessageResponse(
-    oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>
-  ): Promise<IDiscordMessageResponse> {
+  public getMessageResponse(oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>): Promise<IDiscordMessageResponse> {
     return DiscordMessageCommandCliErrorService.getInstance()
       .getCliErrorMessageResponse()
       .then(
-        (
-          cliErrorMessageResponse: Readonly<IDiscordMessageResponse>
-        ): Promise<IDiscordMessageResponse> =>
+        (cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> =>
           Promise.resolve(
             _.merge(cliErrorMessageResponse, {
               options: {
@@ -50,9 +42,7 @@ export class DiscordMessageCommandFeatureOppositeFlagsErrorService extends Disco
       );
   }
 
-  private _getMessageEmbed(
-    oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>
-  ): MessageEmbedOptions {
+  private _getMessageEmbed(oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>): MessageEmbedOptions {
     return {
       description: this._getMessageEmbedDescription(oppositeFlags),
       fields: this._getMessageEmbedFields(oppositeFlags),
@@ -61,34 +51,23 @@ export class DiscordMessageCommandFeatureOppositeFlagsErrorService extends Disco
     };
   }
 
-  private _getMessageEmbedDescription(
-    oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>
-  ): string {
-    const oppositeFlagsCount: number = this._getOppositeFlagsCount(
-      oppositeFlags
-    );
+  private _getMessageEmbedDescription(oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>): string {
+    const oppositeFlagsCount: number = this._getOppositeFlagsCount(oppositeFlags);
 
     return `${wrapInBold(oppositeFlagsCount)} opposite flag error${
       _.gt(oppositeFlagsCount, ONE_FLAG) ? `s` : ``
     } found.`;
   }
 
-  private _getOppositeFlagsCount(
-    oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>
-  ): number {
+  private _getOppositeFlagsCount(oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>): number {
     return _.size(oppositeFlags);
   }
 
-  private _getMessageEmbedFields(
-    oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>
-  ): EmbedFieldData[] {
+  private _getMessageEmbedFields(oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>): EmbedFieldData[] {
     return _.concat(
       _.map(
         oppositeFlags,
-        ({
-          name,
-          description,
-        }: Readonly<IDiscordCommandFlagOpposite>): EmbedFieldData => {
+        ({ name, description }: Readonly<IDiscordCommandFlagOpposite>): EmbedFieldData => {
           return {
             inline: false,
             name,

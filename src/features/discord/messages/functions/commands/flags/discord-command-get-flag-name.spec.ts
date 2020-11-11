@@ -1,5 +1,5 @@
-import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
-import { discordCommandGetFlagName } from "./discord-command-get-flag-name";
+import { discordCommandGetFlagName } from './discord-command-get-flag-name';
+import { IDiscordMessageFlag } from '../../../types/commands/flags/discord-message-flag';
 
 describe(`discordCommandGetFlagName()`, (): void => {
   let messageFlag: IDiscordMessageFlag;

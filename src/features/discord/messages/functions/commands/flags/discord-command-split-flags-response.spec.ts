@@ -1,8 +1,8 @@
-import { createMock } from "ts-auto-mock";
-import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
-import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
-import { IDiscordCommandFlagsResponse } from "../../../types/commands/flags/discord-command-flags-response";
-import { discordCommandSplitFlagsResponse } from "./discord-command-split-flags-response";
+import { discordCommandSplitFlagsResponse } from './discord-command-split-flags-response';
+import { IDiscordCommandFlagSuccess } from '../../../interfaces/commands/flags/discord-command-flag-success';
+import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
+import { IDiscordCommandFlagsResponse } from '../../../types/commands/flags/discord-command-flags-response';
+import { createMock } from 'ts-auto-mock';
 
 describe(`discordCommandSplitFlagsResponse()`, (): void => {
   let discordCommandFlagsResponse: IDiscordCommandFlagsResponse;
@@ -18,13 +18,9 @@ describe(`discordCommandSplitFlagsResponse()`, (): void => {
     it(`should return a splitted list of flags response`, (): void => {
       expect.assertions(2);
 
-      const result = discordCommandSplitFlagsResponse(
-        discordCommandFlagsResponse
-      );
+      const result = discordCommandSplitFlagsResponse(discordCommandFlagsResponse);
 
-      expect(result.commandFlagsSuccess).toStrictEqual([
-        discordCommandFlagSuccess,
-      ]);
+      expect(result.commandFlagsSuccess).toStrictEqual([discordCommandFlagSuccess]);
       expect(result.messageResponses).toStrictEqual([]);
     });
   });
@@ -36,23 +32,15 @@ describe(`discordCommandSplitFlagsResponse()`, (): void => {
     beforeEach((): void => {
       discordCommandFlagSuccessA = createMock<IDiscordCommandFlagSuccess>();
       discordCommandFlagSuccessB = createMock<IDiscordCommandFlagSuccess>();
-      discordCommandFlagsResponse = [
-        discordCommandFlagSuccessA,
-        discordCommandFlagSuccessB,
-      ];
+      discordCommandFlagsResponse = [discordCommandFlagSuccessA, discordCommandFlagSuccessB];
     });
 
     it(`should return a splitted list of flags response`, (): void => {
       expect.assertions(2);
 
-      const result = discordCommandSplitFlagsResponse(
-        discordCommandFlagsResponse
-      );
+      const result = discordCommandSplitFlagsResponse(discordCommandFlagsResponse);
 
-      expect(result.commandFlagsSuccess).toStrictEqual([
-        discordCommandFlagSuccessA,
-        discordCommandFlagSuccessB,
-      ]);
+      expect(result.commandFlagsSuccess).toStrictEqual([discordCommandFlagSuccessA, discordCommandFlagSuccessB]);
       expect(result.messageResponses).toStrictEqual([]);
     });
   });
@@ -79,18 +67,10 @@ describe(`discordCommandSplitFlagsResponse()`, (): void => {
     it(`should return a splitted list of flags response`, (): void => {
       expect.assertions(2);
 
-      const result = discordCommandSplitFlagsResponse(
-        discordCommandFlagsResponse
-      );
+      const result = discordCommandSplitFlagsResponse(discordCommandFlagsResponse);
 
-      expect(result.commandFlagsSuccess).toStrictEqual([
-        discordCommandFlagSuccessA,
-        discordCommandFlagSuccessB,
-      ]);
-      expect(result.messageResponses).toStrictEqual([
-        discordMessageResponseA,
-        discordMessageResponseB,
-      ]);
+      expect(result.commandFlagsSuccess).toStrictEqual([discordCommandFlagSuccessA, discordCommandFlagSuccessB]);
+      expect(result.messageResponses).toStrictEqual([discordMessageResponseA, discordMessageResponseB]);
     });
   });
 });

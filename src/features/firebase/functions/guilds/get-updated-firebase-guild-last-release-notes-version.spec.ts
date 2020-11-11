@@ -1,5 +1,5 @@
-import { IUpdatedFirebaseGuildLastReleaseNotesVersion } from "../../types/guilds/updated-firebase-guild-last-release-notes-version";
-import { getUpdatedFirebaseGuildLastReleaseNotesVersion } from "./get-updated-firebase-guild-last-release-notes-version";
+import { getUpdatedFirebaseGuildLastReleaseNotesVersion } from './get-updated-firebase-guild-last-release-notes-version';
+import { IUpdatedFirebaseGuildLastReleaseNotesVersion } from '../../types/guilds/updated-firebase-guild-last-release-notes-version';
 
 describe(`getUpdatedFirebaseGuildLastReleaseNotesVersion()`, (): void => {
   let version: string;

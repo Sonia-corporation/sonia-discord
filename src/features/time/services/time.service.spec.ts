@@ -1,7 +1,7 @@
-import moment from "moment-timezone";
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { CoreEventService } from "../../core/services/core-event.service";
-import { TimeService } from "./time.service";
+import { TimeService } from './time.service';
+import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import { CoreEventService } from '../../core/services/core-event.service';
+import moment from 'moment-timezone';
 
 describe(`TimeService`, (): void => {
   let service: TimeService;
@@ -44,9 +44,7 @@ describe(`TimeService`, (): void => {
       service = new TimeService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.TIME_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.TIME_SERVICE);
     });
   });
 

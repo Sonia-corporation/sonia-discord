@@ -1,11 +1,11 @@
-import { Client } from "discord.js";
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { DiscordClientService } from "../../services/discord-client.service";
-import { DiscordGuildMemberAddService } from "./discord-guild-member-add.service";
+import { DiscordGuildMemberAddService } from './discord-guild-member-add.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { ILoggerLog } from '../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { Client } from 'discord.js';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -75,12 +75,8 @@ describe(`DiscordGuildMemberAddService`, (): void => {
         on: discordClientServiceGetClientOnMock,
       });
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      discordClientServiceGetClientSpy = jest
-        .spyOn(discordClientService, `getClient`)
-        .mockReturnValue(client);
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(client);
       sendMessageSpy = jest.spyOn(service, `sendMessage`).mockImplementation();
     });
 
@@ -99,19 +95,14 @@ describe(`DiscordGuildMemberAddService`, (): void => {
       service.init();
 
       expect(discordClientServiceGetClientOnMock).toHaveBeenCalledTimes(1);
-      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(
-        `guildMemberAdd`,
-        expect.any(Function)
-      );
+      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(`guildMemberAdd`, expect.any(Function));
     });
 
     describe(`when the Discord client guildMemberAdd event is triggered`, (): void => {
       beforeEach((): void => {
-        discordClientServiceGetClientOnMock = jest.fn(
-          (_event: string, listener: () => void): void => {
-            listener();
-          }
-        );
+        discordClientServiceGetClientOnMock = jest.fn((_event: string, listener: () => void): void => {
+          listener();
+        });
         client = createMock<Client>({
           on: discordClientServiceGetClientOnMock,
         });

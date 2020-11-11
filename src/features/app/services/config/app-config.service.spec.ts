@@ -1,8 +1,8 @@
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { IAppConfig } from "../../interfaces/app-config";
-import { AppConfigCoreService } from "./app-config-core.service";
-import { AppConfigService } from "./app-config.service";
+import { AppConfigCoreService } from './app-config-core.service';
+import { AppConfigService } from './app-config.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { IAppConfig } from '../../interfaces/app-config';
 
 describe(`AppConfigService`, (): void => {
   let service: AppConfigService;
@@ -47,9 +47,7 @@ describe(`AppConfigService`, (): void => {
       service = new AppConfigService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.APP_CONFIG_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.APP_CONFIG_SERVICE);
     });
   });
 

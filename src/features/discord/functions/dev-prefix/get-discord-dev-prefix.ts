@@ -1,6 +1,6 @@
-import _ from "lodash";
-import { IGetDiscordDevPrefix } from "../../interfaces/dev-prefix/get-discord-dev-prefix";
-import { wrapUserIdIntoMention } from "../../mentions/functions/wrap-user-id-into-mention";
+import { IGetDiscordDevPrefix } from '../../interfaces/dev-prefix/get-discord-dev-prefix';
+import { wrapUserIdIntoMention } from '../../mentions/functions/wrap-user-id-into-mention';
+import _ from 'lodash';
 
 /**
  * @param {Readonly<IGetDiscordDevPrefix>} config The configuration object
@@ -17,11 +17,7 @@ export function getDiscordDevPrefix({
 }: Readonly<IGetDiscordDevPrefix>): string {
   let discordDevPrefix = `[dev]`;
 
-  if (
-    _.isEqual(asMention, true) &&
-    _.isString(discordId) &&
-    !_.isEmpty(discordId)
-  ) {
+  if (_.isEqual(asMention, true) && _.isString(discordId) && !_.isEmpty(discordId)) {
     discordDevPrefix = `[dev - ${wrapUserIdIntoMention(discordId)}]`;
   } else {
     if (_.isString(nickname) && !_.isEmpty(nickname)) {

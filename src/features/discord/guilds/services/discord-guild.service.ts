@@ -1,11 +1,11 @@
-import { Guild, Snowflake } from "discord.js";
-import _ from "lodash";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
-import { ChalkService } from "../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { DiscordClientService } from "../../services/discord-client.service";
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
+import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { Guild, Snowflake } from 'discord.js';
+import _ from 'lodash';
 
 export class DiscordGuildService extends AbstractService {
   private static _instance: DiscordGuildService;
@@ -33,17 +33,13 @@ export class DiscordGuildService extends AbstractService {
   public getGuildById(guildId: Readonly<Snowflake>): Guild | undefined {
     return DiscordClientService.getInstance()
       .getClient()
-      .guilds.cache.find((guild: Readonly<Guild>): boolean =>
-        _.isEqual(guild.id, guildId)
-      );
+      .guilds.cache.find((guild: Readonly<Guild>): boolean => _.isEqual(guild.id, guildId));
   }
 
   private _listen(): Promise<void> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `listen ${wrapInQuotes(`ready`)} Discord client state`
-      ),
+      message: ChalkService.getInstance().text(`listen ${wrapInQuotes(`ready`)} Discord client state`),
     });
 
     return DiscordClientService.getInstance().isReady().then();

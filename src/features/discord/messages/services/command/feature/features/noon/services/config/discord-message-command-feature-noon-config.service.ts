@@ -1,11 +1,11 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../../../../../../../classes/services/abstract.service";
-import { ColorEnum } from "../../../../../../../../../../enums/color.enum";
-import { IconEnum } from "../../../../../../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../../../../../../enums/service-name.enum";
-import { IDiscordMessageCommandFeatureConfig } from "../../interfaces/discord-message-command-feature-config";
-import { IDiscordMessageCommandFeatureNoonConfig } from "../../interfaces/discord-message-command-feature-noon-config";
-import { DiscordMessageCommandFeatureNoonConfigCoreService } from "./discord-message-command-feature-noon-config-core.service";
+import { DiscordMessageCommandFeatureNoonConfigCoreService } from './discord-message-command-feature-noon-config-core.service';
+import { AbstractService } from '../../../../../../../../../../classes/services/abstract.service';
+import { ColorEnum } from '../../../../../../../../../../enums/color.enum';
+import { IconEnum } from '../../../../../../../../../../enums/icon.enum';
+import { ServiceNameEnum } from '../../../../../../../../../../enums/service-name.enum';
+import { IDiscordMessageCommandFeatureConfig } from '../../interfaces/discord-message-command-feature-config';
+import { IDiscordMessageCommandFeatureNoonConfig } from '../../interfaces/discord-message-command-feature-noon-config';
+import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureNoonConfigService extends AbstractService {
   private static _instance: DiscordMessageCommandFeatureNoonConfigService;
@@ -33,12 +33,10 @@ export class DiscordMessageCommandFeatureNoonConfigService extends AbstractServi
   }
 
   public getNoonConfigImageColor(): ColorEnum {
-    return DiscordMessageCommandFeatureNoonConfigCoreService.getInstance().noon
-      .imageColor;
+    return DiscordMessageCommandFeatureNoonConfigCoreService.getInstance().noon.imageColor;
   }
 
   public getNoonConfigImageUrl(): IconEnum {
-    return DiscordMessageCommandFeatureNoonConfigCoreService.getInstance().noon
-      .imageUrl;
+    return DiscordMessageCommandFeatureNoonConfigCoreService.getInstance().noon.imageUrl;
   }
 }

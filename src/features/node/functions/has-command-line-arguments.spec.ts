@@ -1,4 +1,4 @@
-import { hasCommandLineArguments } from "./has-command-line-arguments";
+import { hasCommandLineArguments } from './has-command-line-arguments';
 
 describe(`hasCommandLineArguments()`, (): void => {
   describe(`when process is valid`, (): void => {

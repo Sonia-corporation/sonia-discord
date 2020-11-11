@@ -1,4 +1,4 @@
-import { NUMERICAL_COLOR_CANDY } from "./numerical-color-candy";
+import { NUMERICAL_COLOR_CANDY } from './numerical-color-candy';
 
 describe(`NUMERICAL_COLOR_CANDY`, (): void => {
   it(`should be 15562905`, (): void => {

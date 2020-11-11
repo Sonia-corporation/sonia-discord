@@ -1,13 +1,11 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { IAppConfig } from "../../interfaces/app-config";
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { IAppConfig } from '../../interfaces/app-config';
+import _ from 'lodash';
 
 const INITIAL_TOTAL_RELEASE_COUNT = 0;
 
-export class AppConfigCoreService
-  extends AbstractService
-  implements IAppConfig {
+export class AppConfigCoreService extends AbstractService implements IAppConfig {
   private static _instance: AppConfigCoreService;
 
   public static getInstance(): AppConfigCoreService {

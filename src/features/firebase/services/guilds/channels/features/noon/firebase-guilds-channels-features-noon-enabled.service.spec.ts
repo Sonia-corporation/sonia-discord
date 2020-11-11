@@ -1,21 +1,21 @@
-import { Guild } from "discord.js";
-import * as admin from "firebase-admin";
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { IObject } from "../../../../../../../types/object";
-import { CoreEventService } from "../../../../../../core/services/core-event.service";
-import { IAnyDiscordChannel } from "../../../../../../discord/channels/types/any-discord-channel";
-import { ILoggerLog } from "../../../../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../../../../logger/services/logger.service";
-import { FirebaseGuildChannelFeatureNoonVersionEnum } from "../../../../../enums/guilds/channels/features/firebase-guild-channel-feature-noon-version.enum";
-import { FirebaseGuildChannelFeatureVersionEnum } from "../../../../../enums/guilds/channels/features/firebase-guild-channel-feature-version.enum";
-import { FirebaseGuildChannelVersionEnum } from "../../../../../enums/guilds/channels/firebase-guild-channel-version.enum";
-import { FirebaseGuildVersionEnum } from "../../../../../enums/guilds/firebase-guild-version.enum";
-import { IFirebaseGuildV1 } from "../../../../../interfaces/guilds/firebase-guild-v1";
-import { IFirebaseGuild } from "../../../../../types/guilds/firebase-guild";
-import { IFirebaseGuildVFinal } from "../../../../../types/guilds/firebase-guild-v-final";
-import { FirebaseGuildsService } from "../../../firebase-guilds.service";
-import { FirebaseGuildsChannelsFeaturesNoonEnabledService } from "./firebase-guilds-channels-features-noon-enabled.service";
+import { FirebaseGuildsChannelsFeaturesNoonEnabledService } from './firebase-guilds-channels-features-noon-enabled.service';
+import { ServiceNameEnum } from '../../../../../../../enums/service-name.enum';
+import { IObject } from '../../../../../../../types/object';
+import { CoreEventService } from '../../../../../../core/services/core-event.service';
+import { IAnyDiscordChannel } from '../../../../../../discord/channels/types/any-discord-channel';
+import { ILoggerLog } from '../../../../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../../../../logger/services/logger.service';
+import { FirebaseGuildChannelFeatureNoonVersionEnum } from '../../../../../enums/guilds/channels/features/firebase-guild-channel-feature-noon-version.enum';
+import { FirebaseGuildChannelFeatureVersionEnum } from '../../../../../enums/guilds/channels/features/firebase-guild-channel-feature-version.enum';
+import { FirebaseGuildChannelVersionEnum } from '../../../../../enums/guilds/channels/firebase-guild-channel-version.enum';
+import { FirebaseGuildVersionEnum } from '../../../../../enums/guilds/firebase-guild-version.enum';
+import { IFirebaseGuildV1 } from '../../../../../interfaces/guilds/firebase-guild-v1';
+import { IFirebaseGuild } from '../../../../../types/guilds/firebase-guild';
+import { IFirebaseGuildVFinal } from '../../../../../types/guilds/firebase-guild-v-final';
+import { FirebaseGuildsService } from '../../../firebase-guilds.service';
+import { Guild } from 'discord.js';
+import * as admin from 'firebase-admin';
+import { createMock } from 'ts-auto-mock';
 import CollectionReference = admin.firestore.CollectionReference;
 import WriteResult = admin.firestore.WriteResult;
 
@@ -39,9 +39,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
 
       service = FirebaseGuildsChannelsFeaturesNoonEnabledService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(FirebaseGuildsChannelsFeaturesNoonEnabledService)
-      );
+      expect(service).toStrictEqual(expect.any(FirebaseGuildsChannelsFeaturesNoonEnabledService));
     });
 
     it(`should return the created FirebaseGuildsChannelsFeaturesNoonEnabled service`, (): void => {
@@ -75,8 +73,8 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
   });
 
   describe(`updateStateByGuildId()`, (): void => {
-    let id: Guild["id"];
-    let channelId: IAnyDiscordChannel["id"];
+    let id: Guild['id'];
+    let channelId: IAnyDiscordChannel['id'];
     let isEnabled: boolean;
     let collectionReference: CollectionReference<IFirebaseGuild> | undefined;
     let firebaseGuild: IFirebaseGuild | null | undefined;
@@ -97,33 +95,23 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
       firebaseGuildsServiceGetCollectionReferenceSpy = jest
         .spyOn(firebaseGuildsService, `getCollectionReference`)
         .mockImplementation();
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      loggerServiceErrorSpy = jest
-        .spyOn(loggerService, `error`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
       firebaseGuildsServiceGetGuildSpy = jest
         .spyOn(firebaseGuildsService, `getGuild`)
         .mockRejectedValue(new Error(`getGuild error`));
-      updateStateSpy = jest
-        .spyOn(service, `updateState`)
-        .mockRejectedValue(new Error(`updateState error`));
+      updateStateSpy = jest.spyOn(service, `updateState`).mockRejectedValue(new Error(`updateState error`));
     });
 
     it(`should get the Firebase guilds collection`, async (): Promise<void> => {
       expect.assertions(3);
 
-      await expect(
-        service.updateStateByGuildId(id, channelId, isEnabled)
-      ).rejects.toThrow(new Error(`Collection not available`));
+      await expect(service.updateStateByGuildId(id, channelId, isEnabled)).rejects.toThrow(
+        new Error(`Collection not available`)
+      );
 
-      expect(
-        firebaseGuildsServiceGetCollectionReferenceSpy
-      ).toHaveBeenCalledTimes(1);
-      expect(
-        firebaseGuildsServiceGetCollectionReferenceSpy
-      ).toHaveBeenCalledWith();
+      expect(firebaseGuildsServiceGetCollectionReferenceSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsServiceGetCollectionReferenceSpy).toHaveBeenCalledWith();
     });
 
     describe(`when the Firebase guilds collection is undefined`, (): void => {
@@ -131,14 +119,12 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
         firebaseGuildsServiceGetCollectionReferenceSpy.mockImplementation();
       });
 
-      it(`should throw an error about the collection not available`, async (): Promise<
-        void
-      > => {
+      it(`should throw an error about the collection not available`, async (): Promise<void> => {
         expect.assertions(1);
 
-        await expect(
-          service.updateStateByGuildId(id, channelId, isEnabled)
-        ).rejects.toThrow(new Error(`Collection not available`));
+        await expect(service.updateStateByGuildId(id, channelId, isEnabled)).rejects.toThrow(
+          new Error(`Collection not available`)
+        );
       });
     });
 
@@ -146,19 +132,15 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
       beforeEach((): void => {
         collectionReference = createMock<CollectionReference<IFirebaseGuild>>();
 
-        firebaseGuildsServiceGetCollectionReferenceSpy.mockReturnValue(
-          collectionReference
-        );
+        firebaseGuildsServiceGetCollectionReferenceSpy.mockReturnValue(collectionReference);
       });
 
-      it(`should log about the start of the update state`, async (): Promise<
-        void
-      > => {
+      it(`should log about the start of the update state`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(
-          service.updateStateByGuildId(id, channelId, isEnabled)
-        ).rejects.toThrow(new Error(`getGuild error`));
+        await expect(service.updateStateByGuildId(id, channelId, isEnabled)).rejects.toThrow(
+          new Error(`getGuild error`)
+        );
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -167,34 +149,28 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
         } as ILoggerLog);
       });
 
-      it(`should fetch the Firebase guild with the given id`, async (): Promise<
-        void
-      > => {
+      it(`should fetch the Firebase guild with the given id`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(
-          service.updateStateByGuildId(id, channelId, isEnabled)
-        ).rejects.toThrow(new Error(`getGuild error`));
+        await expect(service.updateStateByGuildId(id, channelId, isEnabled)).rejects.toThrow(
+          new Error(`getGuild error`)
+        );
 
         expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledTimes(1);
-        expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledWith(
-          `dummy-id`
-        );
+        expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledWith(`dummy-id`);
       });
 
       describe(`when the Firebase guild does not exists`, (): void => {
         beforeEach((): void => {
-          firebaseGuildsServiceGetGuildSpy.mockRejectedValue(
-            new Error(`getGuild error`)
-          );
+          firebaseGuildsServiceGetGuildSpy.mockRejectedValue(new Error(`getGuild error`));
         });
 
         it(`should throw an error`, async (): Promise<void> => {
           expect.assertions(1);
 
-          await expect(
-            service.updateStateByGuildId(id, channelId, isEnabled)
-          ).rejects.toThrow(new Error(`getGuild error`));
+          await expect(service.updateStateByGuildId(id, channelId, isEnabled)).rejects.toThrow(
+            new Error(`getGuild error`)
+          );
         });
       });
 
@@ -215,21 +191,15 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
           it(`should throw an error`, async (): Promise<void> => {
             expect.assertions(1);
 
-            await expect(
-              service.updateStateByGuildId(id, channelId, isEnabled)
-            ).rejects.toThrow(
+            await expect(service.updateStateByGuildId(id, channelId, isEnabled)).rejects.toThrow(
               new Error(`Firebase guild does not exists or is not up-to-date`)
             );
           });
 
-          it(`should log about not finding a valid Firebase guild`, async (): Promise<
-            void
-          > => {
+          it(`should log about not finding a valid Firebase guild`, async (): Promise<void> => {
             expect.assertions(3);
 
-            await expect(
-              service.updateStateByGuildId(id, channelId, isEnabled)
-            ).rejects.toThrow(
+            await expect(service.updateStateByGuildId(id, channelId, isEnabled)).rejects.toThrow(
               new Error(`Firebase guild does not exists or is not up-to-date`)
             );
 
@@ -251,21 +221,15 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
           it(`should throw an error`, async (): Promise<void> => {
             expect.assertions(1);
 
-            await expect(
-              service.updateStateByGuildId(id, channelId, isEnabled)
-            ).rejects.toThrow(
+            await expect(service.updateStateByGuildId(id, channelId, isEnabled)).rejects.toThrow(
               new Error(`Firebase guild does not exists or is not up-to-date`)
             );
           });
 
-          it(`should log about not finding a valid Firebase guild`, async (): Promise<
-            void
-          > => {
+          it(`should log about not finding a valid Firebase guild`, async (): Promise<void> => {
             expect.assertions(3);
 
-            await expect(
-              service.updateStateByGuildId(id, channelId, isEnabled)
-            ).rejects.toThrow(
+            await expect(service.updateStateByGuildId(id, channelId, isEnabled)).rejects.toThrow(
               new Error(`Firebase guild does not exists or is not up-to-date`)
             );
 
@@ -296,21 +260,15 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
             it(`should throw an error`, async (): Promise<void> => {
               expect.assertions(1);
 
-              await expect(
-                service.updateStateByGuildId(id, channelId, isEnabled)
-              ).rejects.toThrow(
+              await expect(service.updateStateByGuildId(id, channelId, isEnabled)).rejects.toThrow(
                 new Error(`Firebase guild does not exists or is not up-to-date`)
               );
             });
 
-            it(`should log about not finding a valid Firebase guild`, async (): Promise<
-              void
-            > => {
+            it(`should log about not finding a valid Firebase guild`, async (): Promise<void> => {
               expect.assertions(3);
 
-              await expect(
-                service.updateStateByGuildId(id, channelId, isEnabled)
-              ).rejects.toThrow(
+              await expect(service.updateStateByGuildId(id, channelId, isEnabled)).rejects.toThrow(
                 new Error(`Firebase guild does not exists or is not up-to-date`)
               );
 
@@ -332,16 +290,10 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
               updateStateSpy.mockResolvedValue(writeResult);
             });
 
-            it(`should update the enabled state for this Firebase guild`, async (): Promise<
-              void
-            > => {
+            it(`should update the enabled state for this Firebase guild`, async (): Promise<void> => {
               expect.assertions(3);
 
-              const result = await service.updateStateByGuildId(
-                id,
-                channelId,
-                isEnabled
-              );
+              const result = await service.updateStateByGuildId(id, channelId, isEnabled);
 
               expect(result).toStrictEqual(writeResult);
               expect(updateStateSpy).toHaveBeenCalledTimes(1);
@@ -360,7 +312,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
   });
 
   describe(`getUpdatedGuild()`, (): void => {
-    let id: IAnyDiscordChannel["id"];
+    let id: IAnyDiscordChannel['id'];
     let isEnabled: boolean;
     let firebaseGuild: IFirebaseGuildVFinal;
 
@@ -374,7 +326,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
       beforeEach((): void => {
         firebaseGuild = createMock<IFirebaseGuildVFinal>({
           channels: {
-            "dummy-id": {
+            'dummy-id': {
               features: {
                 noon: {
                   version: 1,
@@ -399,7 +351,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
           const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
 
           expect(result).toStrictEqual({
-            "channels.dummy-id.features.noon.isEnabled": false,
+            'channels.dummy-id.features.noon.isEnabled': false,
           });
         });
       });
@@ -415,7 +367,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
           const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
 
           expect(result).toStrictEqual({
-            "channels.dummy-id.features.noon.isEnabled": true,
+            'channels.dummy-id.features.noon.isEnabled': true,
           });
         });
       });
@@ -430,7 +382,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
         beforeEach((): void => {
           firebaseGuild = createMock<IFirebaseGuildVFinal>({
             channels: {
-              "other-id": {
+              'other-id': {
                 id: `other-id`,
                 version: FirebaseGuildChannelVersionEnum.V1,
               },
@@ -446,18 +398,14 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
           it(`should return an object with a multiple paths updating the enable state to true`, (): void => {
             expect.assertions(1);
 
-            const result = service.getUpdatedGuild(
-              id,
-              isEnabled,
-              firebaseGuild
-            );
+            const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
 
             expect(result).toStrictEqual({
-              "channels.dummy-id.features.noon.isEnabled": false,
-              "channels.dummy-id.features.noon.version": 1,
-              "channels.dummy-id.features.version": 1,
-              "channels.dummy-id.id": `dummy-id`,
-              "channels.dummy-id.version": 1,
+              'channels.dummy-id.features.noon.isEnabled': false,
+              'channels.dummy-id.features.noon.version': 1,
+              'channels.dummy-id.features.version': 1,
+              'channels.dummy-id.id': `dummy-id`,
+              'channels.dummy-id.version': 1,
             });
           });
         });
@@ -470,18 +418,14 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
           it(`should return an object with a multiple paths updating the enable state to false`, (): void => {
             expect.assertions(1);
 
-            const result = service.getUpdatedGuild(
-              id,
-              isEnabled,
-              firebaseGuild
-            );
+            const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
 
             expect(result).toStrictEqual({
-              "channels.dummy-id.features.noon.isEnabled": true,
-              "channels.dummy-id.features.noon.version": 1,
-              "channels.dummy-id.features.version": 1,
-              "channels.dummy-id.id": `dummy-id`,
-              "channels.dummy-id.version": 1,
+              'channels.dummy-id.features.noon.isEnabled': true,
+              'channels.dummy-id.features.noon.version': 1,
+              'channels.dummy-id.features.version': 1,
+              'channels.dummy-id.id': `dummy-id`,
+              'channels.dummy-id.version': 1,
             });
           });
         });
@@ -491,11 +435,11 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
         beforeEach((): void => {
           firebaseGuild = createMock<IFirebaseGuildVFinal>({
             channels: {
-              "dummy-id": {
+              'dummy-id': {
                 id: `dummy-id`,
                 version: FirebaseGuildChannelVersionEnum.V1,
               },
-              "other-id": {
+              'other-id': {
                 id: `other-id`,
                 version: FirebaseGuildChannelVersionEnum.V1,
               },
@@ -511,18 +455,14 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
           it(`should return an object with a multiple paths updating the enable state to true`, (): void => {
             expect.assertions(1);
 
-            const result = service.getUpdatedGuild(
-              id,
-              isEnabled,
-              firebaseGuild
-            );
+            const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
 
             expect(result).toStrictEqual({
-              "channels.dummy-id.features.noon.isEnabled": false,
-              "channels.dummy-id.features.noon.version": 1,
-              "channels.dummy-id.features.version": 1,
-              "channels.dummy-id.id": `dummy-id`,
-              "channels.dummy-id.version": 1,
+              'channels.dummy-id.features.noon.isEnabled': false,
+              'channels.dummy-id.features.noon.version': 1,
+              'channels.dummy-id.features.version': 1,
+              'channels.dummy-id.id': `dummy-id`,
+              'channels.dummy-id.version': 1,
             });
           });
         });
@@ -535,18 +475,14 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
           it(`should return an object with a multiple paths updating the enable state to false`, (): void => {
             expect.assertions(1);
 
-            const result = service.getUpdatedGuild(
-              id,
-              isEnabled,
-              firebaseGuild
-            );
+            const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
 
             expect(result).toStrictEqual({
-              "channels.dummy-id.features.noon.isEnabled": true,
-              "channels.dummy-id.features.noon.version": 1,
-              "channels.dummy-id.features.version": 1,
-              "channels.dummy-id.id": `dummy-id`,
-              "channels.dummy-id.version": 1,
+              'channels.dummy-id.features.noon.isEnabled': true,
+              'channels.dummy-id.features.noon.version': 1,
+              'channels.dummy-id.features.version': 1,
+              'channels.dummy-id.id': `dummy-id`,
+              'channels.dummy-id.version': 1,
             });
           });
         });
@@ -556,14 +492,14 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
         beforeEach((): void => {
           firebaseGuild = createMock<IFirebaseGuildVFinal>({
             channels: {
-              "dummy-id": {
+              'dummy-id': {
                 features: {
                   version: FirebaseGuildChannelFeatureVersionEnum.V1,
                 },
                 id: `dummy-id`,
                 version: FirebaseGuildChannelVersionEnum.V1,
               },
-              "other-id": {
+              'other-id': {
                 id: `other-id`,
                 version: FirebaseGuildChannelVersionEnum.V1,
               },
@@ -579,18 +515,14 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
           it(`should return an object with a multiple paths updating the enable state to true`, (): void => {
             expect.assertions(1);
 
-            const result = service.getUpdatedGuild(
-              id,
-              isEnabled,
-              firebaseGuild
-            );
+            const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
 
             expect(result).toStrictEqual({
-              "channels.dummy-id.features.noon.isEnabled": false,
-              "channels.dummy-id.features.noon.version": 1,
-              "channels.dummy-id.features.version": 1,
-              "channels.dummy-id.id": `dummy-id`,
-              "channels.dummy-id.version": 1,
+              'channels.dummy-id.features.noon.isEnabled': false,
+              'channels.dummy-id.features.noon.version': 1,
+              'channels.dummy-id.features.version': 1,
+              'channels.dummy-id.id': `dummy-id`,
+              'channels.dummy-id.version': 1,
             });
           });
         });
@@ -603,18 +535,14 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
           it(`should return an object with a multiple paths updating the enable state to false`, (): void => {
             expect.assertions(1);
 
-            const result = service.getUpdatedGuild(
-              id,
-              isEnabled,
-              firebaseGuild
-            );
+            const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
 
             expect(result).toStrictEqual({
-              "channels.dummy-id.features.noon.isEnabled": true,
-              "channels.dummy-id.features.noon.version": 1,
-              "channels.dummy-id.features.version": 1,
-              "channels.dummy-id.id": `dummy-id`,
-              "channels.dummy-id.version": 1,
+              'channels.dummy-id.features.noon.isEnabled': true,
+              'channels.dummy-id.features.noon.version': 1,
+              'channels.dummy-id.features.version': 1,
+              'channels.dummy-id.id': `dummy-id`,
+              'channels.dummy-id.version': 1,
             });
           });
         });
@@ -624,7 +552,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
         beforeEach((): void => {
           firebaseGuild = createMock<IFirebaseGuildVFinal>({
             channels: {
-              "dummy-id": {
+              'dummy-id': {
                 features: {
                   noon: {
                     version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
@@ -634,7 +562,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
                 id: `dummy-id`,
                 version: FirebaseGuildChannelVersionEnum.V1,
               },
-              "other-id": {
+              'other-id': {
                 id: `other-id`,
                 version: FirebaseGuildChannelVersionEnum.V1,
               },
@@ -650,14 +578,10 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
           it(`should return an object with a multiple paths updating the enable state to true`, (): void => {
             expect.assertions(1);
 
-            const result = service.getUpdatedGuild(
-              id,
-              isEnabled,
-              firebaseGuild
-            );
+            const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
 
             expect(result).toStrictEqual({
-              "channels.dummy-id.features.noon.isEnabled": false,
+              'channels.dummy-id.features.noon.isEnabled': false,
             });
           });
         });
@@ -670,14 +594,10 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
           it(`should return an object with a multiple paths updating the enable state to false`, (): void => {
             expect.assertions(1);
 
-            const result = service.getUpdatedGuild(
-              id,
-              isEnabled,
-              firebaseGuild
-            );
+            const result = service.getUpdatedGuild(id, isEnabled, firebaseGuild);
 
             expect(result).toStrictEqual({
-              "channels.dummy-id.features.noon.isEnabled": true,
+              'channels.dummy-id.features.noon.isEnabled': true,
             });
           });
         });
@@ -687,8 +607,8 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
 
   describe(`updateState()`, (): void => {
     let collectionReference: CollectionReference<IFirebaseGuild>;
-    let id: Guild["id"];
-    let channelId: IAnyDiscordChannel["id"];
+    let id: Guild['id'];
+    let channelId: IAnyDiscordChannel['id'];
     let isEnabled: boolean;
     let firebaseGuild: IFirebaseGuildVFinal;
     let updatedFirebaseGuild: IObject;
@@ -714,28 +634,16 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
       collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
         doc: docMock,
       });
-      getUpdatedGuildSpy = jest
-        .spyOn(service, `getUpdatedGuild`)
-        .mockReturnValue(updatedFirebaseGuild);
-      loggerServiceSuccessSpy = jest
-        .spyOn(loggerService, `success`)
-        .mockImplementation();
+      getUpdatedGuildSpy = jest.spyOn(service, `getUpdatedGuild`).mockReturnValue(updatedFirebaseGuild);
+      loggerServiceSuccessSpy = jest.spyOn(loggerService, `success`).mockImplementation();
     });
 
-    it(`should get the Firebase guild with the given id from the guilds`, async (): Promise<
-      void
-    > => {
+    it(`should get the Firebase guild with the given id from the guilds`, async (): Promise<void> => {
       expect.assertions(3);
 
-      await expect(
-        service.updateState(
-          collectionReference,
-          id,
-          channelId,
-          isEnabled,
-          firebaseGuild
-        )
-      ).rejects.toThrow(new Error(`update error`));
+      await expect(service.updateState(collectionReference, id, channelId, isEnabled, firebaseGuild)).rejects.toThrow(
+        new Error(`update error`)
+      );
 
       expect(docMock).toHaveBeenCalledTimes(1);
       expect(docMock).toHaveBeenCalledWith(`dummy-id`);
@@ -744,36 +652,20 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
     it(`should get the updated Firebase guild`, async (): Promise<void> => {
       expect.assertions(3);
 
-      await expect(
-        service.updateState(
-          collectionReference,
-          id,
-          channelId,
-          isEnabled,
-          firebaseGuild
-        )
-      ).rejects.toThrow(new Error(`update error`));
+      await expect(service.updateState(collectionReference, id, channelId, isEnabled, firebaseGuild)).rejects.toThrow(
+        new Error(`update error`)
+      );
 
       expect(getUpdatedGuildSpy).toHaveBeenCalledTimes(1);
-      expect(getUpdatedGuildSpy).toHaveBeenCalledWith(
-        `dummy-channel-id`,
-        true,
-        firebaseGuild
-      );
+      expect(getUpdatedGuildSpy).toHaveBeenCalledWith(`dummy-channel-id`, true, firebaseGuild);
     });
 
     it(`should update the Firebase guild`, async (): Promise<void> => {
       expect.assertions(3);
 
-      await expect(
-        service.updateState(
-          collectionReference,
-          id,
-          channelId,
-          isEnabled,
-          firebaseGuild
-        )
-      ).rejects.toThrow(new Error(`update error`));
+      await expect(service.updateState(collectionReference, id, channelId, isEnabled, firebaseGuild)).rejects.toThrow(
+        new Error(`update error`)
+      );
 
       expect(updateMock).toHaveBeenCalledTimes(1);
       expect(updateMock).toHaveBeenCalledWith(updatedFirebaseGuild);
@@ -793,15 +685,9 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
       it(`should throw an error`, async (): Promise<void> => {
         expect.assertions(1);
 
-        await expect(
-          service.updateState(
-            collectionReference,
-            id,
-            channelId,
-            isEnabled,
-            firebaseGuild
-          )
-        ).rejects.toThrow(new Error(`update error`));
+        await expect(service.updateState(collectionReference, id, channelId, isEnabled, firebaseGuild)).rejects.toThrow(
+          new Error(`update error`)
+        );
       });
     });
 
@@ -818,18 +704,10 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
         });
       });
 
-      it(`should log about the Firebase guild updated`, async (): Promise<
-        void
-      > => {
+      it(`should log about the Firebase guild updated`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await service.updateState(
-          collectionReference,
-          id,
-          channelId,
-          isEnabled,
-          firebaseGuild
-        );
+        await service.updateState(collectionReference, id, channelId, isEnabled, firebaseGuild);
 
         expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
@@ -841,13 +719,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
       it(`should return the result`, async (): Promise<void> => {
         expect.assertions(1);
 
-        const result = await service.updateState(
-          collectionReference,
-          id,
-          channelId,
-          isEnabled,
-          firebaseGuild
-        );
+        const result = await service.updateState(collectionReference, id, channelId, isEnabled, firebaseGuild);
 
         expect(result).toStrictEqual(writeResult);
       });

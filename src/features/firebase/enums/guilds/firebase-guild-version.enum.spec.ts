@@ -1,4 +1,4 @@
-import { FirebaseGuildVersionEnum } from "./firebase-guild-version.enum";
+import { FirebaseGuildVersionEnum } from './firebase-guild-version.enum';
 
 describe(`FirebaseGuildVersionEnum`, (): void => {
   it(`should have a member "V1"`, (): void => {

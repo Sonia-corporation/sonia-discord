@@ -1,10 +1,10 @@
-import { EntityState, StoreConfig } from "@datorama/akita";
-import _ from "lodash";
-import { ServiceNameEnum } from "../../enums/service-name.enum";
-import { StoreNameEnum } from "../../enums/store-name.enum";
-import { CoreEventService } from "../../features/core/services/core-event.service";
-import { AbstractEntityStoreService } from "./abstract-entity-store.service";
-import { AbstractQueryEntityService } from "./abstract-query-entity.service";
+import { AbstractEntityStoreService } from './abstract-entity-store.service';
+import { AbstractQueryEntityService } from './abstract-query-entity.service';
+import { ServiceNameEnum } from '../../enums/service-name.enum';
+import { StoreNameEnum } from '../../enums/store-name.enum';
+import { CoreEventService } from '../../features/core/services/core-event.service';
+import { EntityState, StoreConfig } from '@datorama/akita';
+import _ from 'lodash';
 
 interface IDummy {
   name: string;
@@ -52,9 +52,7 @@ describe(`AbstractQueryEntityService`, (): void => {
     coreEventService = CoreEventService.getInstance();
     dummyStore = DummyStore.getInstance();
 
-    coreEventServiceNotifyServiceCreatedSpy = jest
-      .spyOn(coreEventService, `notifyServiceCreated`)
-      .mockImplementation();
+    coreEventServiceNotifyServiceCreatedSpy = jest.spyOn(coreEventService, `notifyServiceCreated`).mockImplementation();
   });
 
   describe(`when the service is created with the name ServiceNameEnum.APP_CONFIG_SERVICE`, (): void => {
@@ -68,9 +66,7 @@ describe(`AbstractQueryEntityService`, (): void => {
       new DummyQuery(serviceName, dummyStore);
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.APP_CONFIG_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.APP_CONFIG_SERVICE);
     });
   });
 
@@ -85,9 +81,7 @@ describe(`AbstractQueryEntityService`, (): void => {
       new DummyQuery(serviceName, dummyStore);
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.APP_CONFIG_CORE_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.APP_CONFIG_CORE_SERVICE);
     });
   });
 });

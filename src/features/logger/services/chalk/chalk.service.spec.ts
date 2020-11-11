@@ -1,7 +1,7 @@
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { CHALK_INSTANCE } from "../../constants/chalk/chalk-instance";
-import { ChalkService } from "./chalk.service";
+import { ChalkService } from './chalk.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { CHALK_INSTANCE } from '../../constants/chalk/chalk-instance';
 
 describe(`ChalkService`, (): void => {
   let service: ChalkService;
@@ -44,9 +44,7 @@ describe(`ChalkService`, (): void => {
       service = new ChalkService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.CHALK_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.CHALK_SERVICE);
     });
   });
 

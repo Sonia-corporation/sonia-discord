@@ -1,10 +1,10 @@
-import admin, { initializeApp } from "firebase-admin";
-import _ from "lodash";
-import { AbstractService } from "../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { ChalkService } from "../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../logger/services/logger.service";
-import { FirebaseAppEnum } from "../enums/firebase-app.enum";
+import { AbstractService } from '../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import { ChalkService } from '../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../logger/services/logger.service';
+import { FirebaseAppEnum } from '../enums/firebase-app.enum';
+import admin, { initializeApp } from 'firebase-admin';
+import _ from 'lodash';
 import App = admin.app.App;
 import applicationDefault = admin.credential.applicationDefault;
 

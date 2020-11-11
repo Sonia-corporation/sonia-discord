@@ -1,4 +1,4 @@
-import { isBoolean } from "./is-boolean";
+import { isBoolean } from './is-boolean';
 
 describe(`isBoolean()`, (): void => {
   let value: boolean | string | null | undefined;

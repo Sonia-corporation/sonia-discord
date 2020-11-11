@@ -1,6 +1,6 @@
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { CoreEventService } from "../../core/services/core-event.service";
-import { ServerService } from "./server.service";
+import { ServerService } from './server.service';
+import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import { CoreEventService } from '../../core/services/core-event.service';
 
 describe(`ServerService`, (): void => {
   let service: ServerService;
@@ -43,9 +43,7 @@ describe(`ServerService`, (): void => {
       service = new ServerService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.SERVER_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.SERVER_SERVICE);
     });
   });
 });

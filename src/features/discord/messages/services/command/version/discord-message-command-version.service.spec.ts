@@ -1,27 +1,22 @@
-import {
-  EmbedFieldData,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
-} from "discord.js";
-import moment from "moment-timezone";
-import { createMock } from "ts-auto-mock";
-import { ColorEnum } from "../../../../../../enums/color.enum";
-import { IconEnum } from "../../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
-import { AppProductionStateEnum } from "../../../../../app/enums/app-production-state.enum";
-import { AppConfigQueryService } from "../../../../../app/services/config/app-config-query.service";
-import { AppConfigService } from "../../../../../app/services/config/app-config.service";
-import { CoreEventService } from "../../../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../../../logger/services/logger.service";
-import { DiscordSoniaEmotionalStateEnum } from "../../../../emotional-states/enums/discord-sonia-emotional-state.enum";
-import { DiscordSoniaEmotionalStateService } from "../../../../emotional-states/services/discord-sonia-emotional-state.service";
-import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
-import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
-import { DiscordMessageCommandVersionService } from "./discord-message-command-version.service";
+import { DiscordMessageCommandVersionService } from './discord-message-command-version.service';
+import { ColorEnum } from '../../../../../../enums/color.enum';
+import { IconEnum } from '../../../../../../enums/icon.enum';
+import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
+import { AppProductionStateEnum } from '../../../../../app/enums/app-production-state.enum';
+import { AppConfigQueryService } from '../../../../../app/services/config/app-config-query.service';
+import { AppConfigService } from '../../../../../app/services/config/app-config.service';
+import { CoreEventService } from '../../../../../core/services/core-event.service';
+import { ILoggerLog } from '../../../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../../../logger/services/logger.service';
+import { DiscordSoniaEmotionalStateEnum } from '../../../../emotional-states/enums/discord-sonia-emotional-state.enum';
+import { DiscordSoniaEmotionalStateService } from '../../../../emotional-states/services/discord-sonia-emotional-state.service';
+import { DiscordSoniaService } from '../../../../users/services/discord-sonia.service';
+import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../../../types/any-discord-message';
+import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
+import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import moment from 'moment-timezone';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
@@ -51,9 +46,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       service = DiscordMessageCommandVersionService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(DiscordMessageCommandVersionService)
-      );
+      expect(service).toStrictEqual(expect.any(DiscordMessageCommandVersionService));
     });
 
     it(`should return the created DiscordMessageCommandVersion service`, (): void => {
@@ -100,9 +93,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       });
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
-      getMessageResponseSpy = jest
-        .spyOn(service, `getMessageResponse`)
-        .mockResolvedValue(discordMessageResponse);
+      getMessageResponseSpy = jest.spyOn(service, `getMessageResponse`).mockResolvedValue(discordMessageResponse);
     });
 
     it(`should log about the command`, async (): Promise<void> => {
@@ -162,10 +153,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         discordMessageConfigService,
         `getMessageCommandVersionImageColor`
       );
-      discordSoniaServiceGetImageUrlSpy = jest.spyOn(
-        discordSoniaService,
-        `getImageUrl`
-      );
+      discordSoniaServiceGetImageUrlSpy = jest.spyOn(discordSoniaService, `getImageUrl`);
       appConfigQueryServiceGetTotalReleaseCountHumanizedSpy = jest.spyOn(
         appConfigQueryService,
         `getTotalReleaseCountHumanized`
@@ -178,26 +166,14 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         discordMessageConfigService,
         `getMessageCommandVersionImageUrl`
       );
-      discordSoniaServiceGetFullNameSpy = jest.spyOn(
-        discordSoniaService,
-        `getFullName`
-      );
-      appConfigServiceGetVersionSpy = jest.spyOn(
-        appConfigService,
-        `getVersion`
-      );
-      appConfigQueryServiceGetReleaseDateHumanizedSpy = jest.spyOn(
-        appConfigQueryService,
-        `getReleaseDateHumanized`
-      );
+      discordSoniaServiceGetFullNameSpy = jest.spyOn(discordSoniaService, `getFullName`);
+      appConfigServiceGetVersionSpy = jest.spyOn(appConfigService, `getVersion`);
+      appConfigQueryServiceGetReleaseDateHumanizedSpy = jest.spyOn(appConfigQueryService, `getReleaseDateHumanized`);
       appConfigQueryServiceGetInitializationDateHumanizedSpy = jest.spyOn(
         appConfigQueryService,
         `getInitializationDateHumanized`
       );
-      appConfigServiceGetReleaseNotesSpy = jest.spyOn(
-        appConfigService,
-        `getReleaseNotes`
-      );
+      appConfigServiceGetReleaseNotesSpy = jest.spyOn(appConfigService, `getReleaseNotes`);
       appConfigQueryServiceGetProductionStateHumanizedSpy = jest.spyOn(
         appConfigQueryService,
         `getProductionStateHumanized`
@@ -208,38 +184,26 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       );
     });
 
-    it(`should return a Discord message response embed with an author`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<
-        MessageEmbedAuthor
-      >();
-      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(
-        messageEmbedAuthor
-      );
+      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse();
 
       expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
-    it(`should return a Discord message response embed with a color`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandVersionImageColorSpy.mockReturnValue(
-        ColorEnum.CANDY
-      );
+      discordMessageConfigServiceGetMessageCommandVersionImageColorSpy.mockReturnValue(ColorEnum.CANDY);
 
       const result = await service.getMessageResponse();
 
       expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
-    it(`should return a Discord message response embed with 6 fields`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with 6 fields`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse();
@@ -247,9 +211,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       expect(result.options.embed?.fields).toHaveLength(6);
     });
 
-    it(`should return a Discord message response embed with an application version field`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with an application version field`, async (): Promise<void> => {
       expect.assertions(1);
       appConfigServiceGetVersionSpy.mockReturnValue(`8`);
 
@@ -261,13 +223,9 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a release date field`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a release date field`, async (): Promise<void> => {
       expect.assertions(1);
-      appConfigQueryServiceGetReleaseDateHumanizedSpy.mockReturnValue(
-        `dummy-release-date-humanized`
-      );
+      appConfigQueryServiceGetReleaseDateHumanizedSpy.mockReturnValue(`dummy-release-date-humanized`);
 
       const result = await service.getMessageResponse();
 
@@ -278,13 +236,9 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a initialization date field`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a initialization date field`, async (): Promise<void> => {
       expect.assertions(1);
-      appConfigQueryServiceGetInitializationDateHumanizedSpy.mockReturnValue(
-        `dummy-initialization-date-humanized`
-      );
+      appConfigQueryServiceGetInitializationDateHumanizedSpy.mockReturnValue(`dummy-initialization-date-humanized`);
 
       const result = await service.getMessageResponse();
 
@@ -295,9 +249,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a release notes field`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a release notes field`, async (): Promise<void> => {
       expect.assertions(1);
       appConfigServiceGetReleaseNotesSpy.mockReturnValue(`dummy-release-notes`);
 
@@ -309,13 +261,9 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a status field`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a status field`, async (): Promise<void> => {
       expect.assertions(1);
-      appConfigQueryServiceGetProductionStateHumanizedSpy.mockReturnValue(
-        AppProductionStateEnum.DEVELOPMENT
-      );
+      appConfigQueryServiceGetProductionStateHumanizedSpy.mockReturnValue(AppProductionStateEnum.DEVELOPMENT);
 
       const result = await service.getMessageResponse();
 
@@ -326,13 +274,9 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with an emotional state field`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with an emotional state field`, async (): Promise<void> => {
       expect.assertions(1);
-      discordSoniaEmotionalStateServiceGetEmotionalStateSpy.mockReturnValue(
-        DiscordSoniaEmotionalStateEnum.AGITATED
-      );
+      discordSoniaEmotionalStateServiceGetEmotionalStateSpy.mockReturnValue(DiscordSoniaEmotionalStateEnum.AGITATED);
 
       const result = await service.getMessageResponse();
 
@@ -348,12 +292,8 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     > => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
-      appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
-        `8 birthdays`
-      );
-      appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(
-        `the 24th March 2020`
-      );
+      appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(`8 birthdays`);
+      appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(`the 24th March 2020`);
 
       const result = await service.getMessageResponse();
 
@@ -366,12 +306,8 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     describe(`when the Sonia image url is null`, (): void => {
       beforeEach((): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
-        appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
-          `8 birthdays`
-        );
-        appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(
-          `the 24th March 2020`
-        );
+        appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(`8 birthdays`);
+        appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(`the 24th March 2020`);
       });
 
       it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
@@ -391,12 +327,8 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
     describe(`when the Sonia image url is "image-url"`, (): void => {
       beforeEach((): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
-        appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(
-          `8 birthdays`
-        );
-        appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(
-          `the 24th March 2020`
-        );
+        appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(`8 birthdays`);
+        appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(`the 24th March 2020`);
       });
 
       it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
@@ -413,13 +345,9 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       });
     });
 
-    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<void> => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandVersionImageUrlSpy.mockReturnValue(
-        IconEnum.ARTIFICIAL_INTELLIGENCE
-      );
+      discordMessageConfigServiceGetMessageCommandVersionImageUrlSpy.mockReturnValue(IconEnum.ARTIFICIAL_INTELLIGENCE);
 
       const result = await service.getMessageResponse();
 
@@ -428,38 +356,26 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       } as MessageEmbedThumbnail);
     });
 
-    it(`should return a Discord message response embed with a timestamp`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
       expect.assertions(2);
 
       const result = await service.getMessageResponse();
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(
-        true
-      );
+      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
 
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(
-        `a few seconds ago`
-      );
+      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
     });
 
-    it(`should return a Discord message response embed with a title`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
       expect.assertions(1);
       discordSoniaServiceGetFullNameSpy.mockReturnValue(`dummy-full-name`);
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.title).toStrictEqual(
-        `dummy-full-name version`
-      );
+      expect(result.options.embed?.title).toStrictEqual(`dummy-full-name version`);
     });
 
-    it(`should return a Discord message response not split`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response not split`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse();
@@ -467,9 +383,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       expect(result.options.split).toStrictEqual(false);
     });
 
-    it(`should return a Discord message response without a response text`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response without a response text`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse();
@@ -494,9 +408,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
     describe(`when the message command prefix is "@"`, (): void => {
       beforeEach((): void => {
-        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
-          `@`
-        );
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(`@`);
       });
 
       describe(`when the given message is an empty string`, (): void => {
@@ -992,10 +904,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
     describe(`when the message command prefix is "-" or "!"`, (): void => {
       beforeEach((): void => {
-        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
-          `-`,
-          `!`,
-        ]);
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([`-`, `!`]);
       });
 
       describe(`when the given message is an empty string`, (): void => {

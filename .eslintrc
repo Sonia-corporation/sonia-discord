@@ -66,7 +66,6 @@ rules:
         - public-abstract-method
         - protected-abstract-method
         - private-abstract-method
-  prettier/prettier: error
   jest/lowercase-name:
     - error
     - ignore:
@@ -112,7 +111,23 @@ rules:
   import/no-duplicates: error
   import/no-commonjs: error
   import/no-dynamic-require: error
+  import/order:
+    - error
+    - groups:
+        - index
+        - sibling
+        - parent
+        - internal
+        - external
+        - builtin
+        - object
+      newlines-between: never
+      alphabetize:
+          order: asc
+          caseInsensitive: false
   indent: off
+  no-duplicate-imports: error
+  sort-imports: off
   new-cap:
     - error
     - capIsNewExceptions:
@@ -261,6 +276,10 @@ rules:
       detectObjects: false
   require-await:
     - error
+  prettier/prettier:
+    - error
+    - singleQuote: true
+      printWidth: 120
 overrides:
   - files:
       - '*.js'

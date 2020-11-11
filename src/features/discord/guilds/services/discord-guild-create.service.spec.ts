@@ -1,30 +1,28 @@
-import { Client, Guild, GuildChannel, Message, TextChannel } from "discord.js";
-import * as admin from "firebase-admin";
-import { of, throwError } from "rxjs";
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { FirebaseGuildsService } from "../../../firebase/services/guilds/firebase-guilds.service";
-import { ILoggerLog } from "../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
-import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-error.service";
-import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
-import { DiscordMessageCommandCookieService } from "../../messages/services/command/cookie/services/discord-message-command-cookie.service";
-import { DiscordClientService } from "../../services/discord-client.service";
-import { DiscordGuildSoniaChannelNameEnum } from "../enums/discord-guild-sonia-channel-name.enum";
-import { IDiscordGuildSoniaSendMessageToChannel } from "../interfaces/discord-guild-sonia-send-message-to-channel";
-import { DiscordGuildConfigService } from "./config/discord-guild-config.service";
-import { DiscordGuildCreateService } from "./discord-guild-create.service";
-import { DiscordGuildSoniaService } from "./discord-guild-sonia.service";
+import { DiscordGuildConfigService } from './config/discord-guild-config.service';
+import { DiscordGuildCreateService } from './discord-guild-create.service';
+import { DiscordGuildSoniaService } from './discord-guild-sonia.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { FirebaseGuildsService } from '../../../firebase/services/guilds/firebase-guilds.service';
+import { ILoggerLog } from '../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { DiscordChannelGuildService } from '../../channels/services/discord-channel-guild.service';
+import { DiscordLoggerErrorService } from '../../logger/services/discord-logger-error.service';
+import { IDiscordMessageResponse } from '../../messages/interfaces/discord-message-response';
+import { DiscordMessageCommandCookieService } from '../../messages/services/command/cookie/services/discord-message-command-cookie.service';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
+import { IDiscordGuildSoniaSendMessageToChannel } from '../interfaces/discord-guild-sonia-send-message-to-channel';
+import { Client, Guild, GuildChannel, Message, TextChannel } from 'discord.js';
+import * as admin from 'firebase-admin';
+import { of, throwError } from 'rxjs';
+import { createMock } from 'ts-auto-mock';
 import WriteResult = admin.firestore.WriteResult;
 
 jest.mock(`./discord-guild-sonia.service`);
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 jest.mock(`../../logger/services/discord-logger-error.service`);
-jest.mock(
-  `../../messages/services/command/cookie/services/discord-message-command-cookie.service`
-);
+jest.mock(`../../messages/services/command/cookie/services/discord-message-command-cookie.service`);
 
 describe(`DiscordGuildCreateService`, (): void => {
   let service: DiscordGuildCreateService;
@@ -107,16 +105,10 @@ describe(`DiscordGuildCreateService`, (): void => {
       });
       guild = createMock<Guild>();
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      discordClientServiceGetClientSpy = jest
-        .spyOn(discordClientService, `getClient`)
-        .mockReturnValue(client);
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(client);
       sendMessageSpy = jest.spyOn(service, `sendMessage`).mockImplementation();
-      addFirebaseGuildSpy = jest
-        .spyOn(service, `addFirebaseGuild`)
-        .mockImplementation();
+      addFirebaseGuildSpy = jest.spyOn(service, `addFirebaseGuild`).mockImplementation();
     });
 
     it(`should get the Discord client`, (): void => {
@@ -134,19 +126,14 @@ describe(`DiscordGuildCreateService`, (): void => {
       service.init();
 
       expect(discordClientServiceGetClientOnMock).toHaveBeenCalledTimes(1);
-      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(
-        `guildCreate`,
-        expect.any(Function)
-      );
+      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(`guildCreate`, expect.any(Function));
     });
 
     describe(`when the Discord client guildCreate event is triggered`, (): void => {
       beforeEach((): void => {
-        discordClientServiceGetClientOnMock = jest.fn(
-          (_event: string, listener: (guild: Guild) => void): void => {
-            listener(guild);
-          }
-        );
+        discordClientServiceGetClientOnMock = jest.fn((_event: string, listener: (guild: Guild) => void): void => {
+          listener(guild);
+        });
         client = createMock<Client>({
           on: discordClientServiceGetClientOnMock,
         });
@@ -229,15 +216,9 @@ describe(`DiscordGuildCreateService`, (): void => {
       discordChannelGuildServiceGetPrimarySpy = jest
         .spyOn(discordChannelGuildService, `getPrimary`)
         .mockReturnValue(primaryGuildChannel);
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      loggerServiceLogSpy = jest
-        .spyOn(loggerService, `log`)
-        .mockImplementation();
-      loggerServiceErrorSpy = jest
-        .spyOn(loggerService, `error`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
+      loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
       discordMessageCommandCookieServiceGetMessageResponseSpy = jest
         .spyOn(discordMessageCommandCookieService, `getMessageResponse`)
         .mockResolvedValue(discordMessageResponse);
@@ -252,19 +233,13 @@ describe(`DiscordGuildCreateService`, (): void => {
 
     describe(`when Sonia is not allowed to send cookies message as welcome message`, (): void => {
       beforeEach((): void => {
-        discordGuildConfigServiceShouldSendCookiesOnCreateSpy.mockReturnValue(
-          false
-        );
+        discordGuildConfigServiceShouldSendCookiesOnCreateSpy.mockReturnValue(false);
       });
 
-      it(`should log about Sonia not being allowed to send cookies message`, async (): Promise<
-        void
-      > => {
+      it(`should log about Sonia not being allowed to send cookies message`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(service.sendMessage(guild)).rejects.toThrow(
-          new Error(`Can not send cookies message`)
-        );
+        await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Can not send cookies message`));
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -273,88 +248,56 @@ describe(`DiscordGuildCreateService`, (): void => {
         } as ILoggerLog);
       });
 
-      it(`should not get the primary guild channel from the given guild`, async (): Promise<
-        void
-      > => {
+      it(`should not get the primary guild channel from the given guild`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.sendMessage(guild)).rejects.toThrow(
-          new Error(`Can not send cookies message`)
-        );
+        await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Can not send cookies message`));
 
         expect(discordChannelGuildServiceGetPrimarySpy).not.toHaveBeenCalled();
       });
 
-      it(`should not get the cookie message response`, async (): Promise<
-        void
-      > => {
+      it(`should not get the cookie message response`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.sendMessage(guild)).rejects.toThrow(
-          new Error(`Can not send cookies message`)
-        );
+        await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Can not send cookies message`));
 
-        expect(
-          discordMessageCommandCookieServiceGetMessageResponseSpy
-        ).not.toHaveBeenCalled();
+        expect(discordMessageCommandCookieServiceGetMessageResponseSpy).not.toHaveBeenCalled();
       });
     });
 
     describe(`when Sonia is allowed to send cookies message as welcome message`, (): void => {
       beforeEach((): void => {
-        discordGuildConfigServiceShouldSendCookiesOnCreateSpy.mockReturnValue(
-          true
-        );
+        discordGuildConfigServiceShouldSendCookiesOnCreateSpy.mockReturnValue(true);
       });
 
-      it(`should get the primary guild channel from the given guild`, async (): Promise<
-        void
-      > => {
+      it(`should get the primary guild channel from the given guild`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(service.sendMessage(guild)).rejects.toThrow(
-          new Error(`Primary guild channel not writable`)
-        );
+        await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Primary guild channel not writable`));
 
-        expect(discordChannelGuildServiceGetPrimarySpy).toHaveBeenCalledTimes(
-          1
-        );
-        expect(discordChannelGuildServiceGetPrimarySpy).toHaveBeenCalledWith(
-          guild
-        );
+        expect(discordChannelGuildServiceGetPrimarySpy).toHaveBeenCalledTimes(1);
+        expect(discordChannelGuildServiceGetPrimarySpy).toHaveBeenCalledWith(guild);
       });
 
       describe(`when the primary guild channel does not exists`, (): void => {
         beforeEach((): void => {
           primaryGuildChannel = null;
 
-          discordChannelGuildServiceGetPrimarySpy.mockReturnValue(
-            primaryGuildChannel
-          );
+          discordChannelGuildServiceGetPrimarySpy.mockReturnValue(primaryGuildChannel);
         });
 
-        it(`should throw an error about the primary guild channel not found`, async (): Promise<
-          void
-        > => {
+        it(`should throw an error about the primary guild channel not found`, async (): Promise<void> => {
           expect.assertions(1);
 
-          await expect(service.sendMessage(guild)).rejects.toThrow(
-            new Error(`No primary guild channel found`)
-          );
+          await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`No primary guild channel found`));
         });
 
-        it(`should not get the cookie message response`, async (): Promise<
-          void
-        > => {
+        it(`should not get the cookie message response`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.sendMessage(guild)).rejects.toThrow(
-            new Error(`No primary guild channel found`)
-          );
+          await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`No primary guild channel found`));
 
-          expect(
-            discordMessageCommandCookieServiceGetMessageResponseSpy
-          ).not.toHaveBeenCalled();
+          expect(discordMessageCommandCookieServiceGetMessageResponseSpy).not.toHaveBeenCalled();
         });
       });
 
@@ -362,9 +305,7 @@ describe(`DiscordGuildCreateService`, (): void => {
         beforeEach((): void => {
           primaryGuildChannel = createMock<TextChannel>();
 
-          discordChannelGuildServiceGetPrimarySpy.mockReturnValue(
-            primaryGuildChannel
-          );
+          discordChannelGuildServiceGetPrimarySpy.mockReturnValue(primaryGuildChannel);
         });
 
         describe(`when the primary guild channel is not writable`, (): void => {
@@ -373,19 +314,13 @@ describe(`DiscordGuildCreateService`, (): void => {
               type: `voice`,
             });
 
-            discordChannelGuildServiceGetPrimarySpy.mockReturnValue(
-              primaryGuildChannel
-            );
+            discordChannelGuildServiceGetPrimarySpy.mockReturnValue(primaryGuildChannel);
           });
 
-          it(`should log about the primary guild channel not being writable`, async (): Promise<
-            void
-          > => {
+          it(`should log about the primary guild channel not being writable`, async (): Promise<void> => {
             expect.assertions(3);
 
-            await expect(service.sendMessage(guild)).rejects.toThrow(
-              new Error(`Primary guild channel not writable`)
-            );
+            await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Primary guild channel not writable`));
 
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -394,18 +329,12 @@ describe(`DiscordGuildCreateService`, (): void => {
             } as ILoggerLog);
           });
 
-          it(`should not get the cookie message response`, async (): Promise<
-            void
-          > => {
+          it(`should not get the cookie message response`, async (): Promise<void> => {
             expect.assertions(2);
 
-            await expect(service.sendMessage(guild)).rejects.toThrow(
-              new Error(`Primary guild channel not writable`)
-            );
+            await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Primary guild channel not writable`));
 
-            expect(
-              discordMessageCommandCookieServiceGetMessageResponseSpy
-            ).not.toHaveBeenCalled();
+            expect(discordMessageCommandCookieServiceGetMessageResponseSpy).not.toHaveBeenCalled();
           });
         });
 
@@ -419,36 +348,22 @@ describe(`DiscordGuildCreateService`, (): void => {
               type: `text`,
             });
 
-            discordChannelGuildServiceGetPrimarySpy.mockReturnValue(
-              primaryGuildChannel
-            );
+            discordChannelGuildServiceGetPrimarySpy.mockReturnValue(primaryGuildChannel);
           });
 
-          it(`should get the cookie message response`, async (): Promise<
-            void
-          > => {
+          it(`should get the cookie message response`, async (): Promise<void> => {
             expect.assertions(3);
 
-            await expect(service.sendMessage(guild)).rejects.toThrow(
-              new Error(`error`)
-            );
+            await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
 
-            expect(
-              discordMessageCommandCookieServiceGetMessageResponseSpy
-            ).toHaveBeenCalledTimes(1);
-            expect(
-              discordMessageCommandCookieServiceGetMessageResponseSpy
-            ).toHaveBeenCalledWith();
+            expect(discordMessageCommandCookieServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+            expect(discordMessageCommandCookieServiceGetMessageResponseSpy).toHaveBeenCalledWith();
           });
 
-          it(`should log about Sonia sending a message about the guild creation`, async (): Promise<
-            void
-          > => {
+          it(`should log about Sonia sending a message about the guild creation`, async (): Promise<void> => {
             expect.assertions(3);
 
-            await expect(service.sendMessage(guild)).rejects.toThrow(
-              new Error(`error`)
-            );
+            await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
 
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -457,14 +372,10 @@ describe(`DiscordGuildCreateService`, (): void => {
             } as ILoggerLog);
           });
 
-          it(`should send the cookies message on the primary guild channel`, async (): Promise<
-            void
-          > => {
+          it(`should send the cookies message on the primary guild channel`, async (): Promise<void> => {
             expect.assertions(3);
 
-            await expect(service.sendMessage(guild)).rejects.toThrow(
-              new Error(`error`)
-            );
+            await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
 
             expect(guildChannelSendMock).toHaveBeenCalledTimes(1);
             expect(guildChannelSendMock).toHaveBeenCalledWith(
@@ -483,9 +394,7 @@ describe(`DiscordGuildCreateService`, (): void => {
             > => {
               expect.assertions(3);
 
-              await expect(service.sendMessage(guild)).rejects.toThrow(
-                new Error(`error`)
-              );
+              await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
 
               expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
               expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(1, {
@@ -497,9 +406,7 @@ describe(`DiscordGuildCreateService`, (): void => {
             it(`should log the error`, async (): Promise<void> => {
               expect.assertions(3);
 
-              await expect(service.sendMessage(guild)).rejects.toThrow(
-                new Error(`error`)
-              );
+              await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
 
               expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
               expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(2, {
@@ -508,38 +415,22 @@ describe(`DiscordGuildCreateService`, (): void => {
               } as ILoggerLog);
             });
 
-            it(`should get the formatted error response`, async (): Promise<
-              void
-            > => {
+            it(`should get the formatted error response`, async (): Promise<void> => {
               expect.assertions(3);
 
-              await expect(service.sendMessage(guild)).rejects.toThrow(
-                new Error(`error`)
-              );
+              await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
 
-              expect(
-                discordLoggerErrorServiceGetErrorMessageResponseSpy
-              ).toHaveBeenCalledTimes(1);
-              expect(
-                discordLoggerErrorServiceGetErrorMessageResponseSpy
-              ).toHaveBeenCalledWith(new Error(`error`));
+              expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).toHaveBeenCalledTimes(1);
+              expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).toHaveBeenCalledWith(new Error(`error`));
             });
 
-            it(`should send the error message response to the Sonia errors channel`, async (): Promise<
-              void
-            > => {
+            it(`should send the error message response to the Sonia errors channel`, async (): Promise<void> => {
               expect.assertions(3);
 
-              await expect(service.sendMessage(guild)).rejects.toThrow(
-                new Error(`error`)
-              );
+              await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
 
-              expect(
-                discordGuildSoniaServiceSendMessageToChannelSpy
-              ).toHaveBeenCalledTimes(1);
-              expect(
-                discordGuildSoniaServiceSendMessageToChannelSpy
-              ).toHaveBeenCalledWith({
+              expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+              expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
                 channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
                 messageResponse: discordMessageErrorResponse,
               } as IDiscordGuildSoniaSendMessageToChannel);
@@ -588,31 +479,21 @@ describe(`DiscordGuildCreateService`, (): void => {
       });
       writeResult = createMock<WriteResult>();
 
-      firebaseGuildsServiceIsReady$Spy = jest
-        .spyOn(firebaseGuildsService, `isReady$`)
-        .mockReturnValue(of(true));
+      firebaseGuildsServiceIsReady$Spy = jest.spyOn(firebaseGuildsService, `isReady$`).mockReturnValue(of(true));
       firebaseGuildsServiceHasGuildSpy = jest
         .spyOn(firebaseGuildsService, `hasGuild`)
         .mockRejectedValue(new Error(`error`));
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      loggerServiceSuccessSpy = jest
-        .spyOn(loggerService, `success`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      loggerServiceSuccessSpy = jest.spyOn(loggerService, `success`).mockImplementation();
       firebaseGuildsServiceAddGuildSpy = jest
         .spyOn(firebaseGuildsService, `addGuild`)
         .mockRejectedValue(new Error(`error`));
     });
 
-    it(`should wait for the Firebase app to be ready`, async (): Promise<
-      void
-    > => {
+    it(`should wait for the Firebase app to be ready`, async (): Promise<void> => {
       expect.assertions(3);
 
-      await expect(service.addFirebaseGuild(guild)).rejects.toThrow(
-        new Error(`error`)
-      );
+      await expect(service.addFirebaseGuild(guild)).rejects.toThrow(new Error(`error`));
 
       expect(firebaseGuildsServiceIsReady$Spy).toHaveBeenCalledTimes(1);
       expect(firebaseGuildsServiceIsReady$Spy).toHaveBeenCalledWith();
@@ -620,19 +501,13 @@ describe(`DiscordGuildCreateService`, (): void => {
 
     describe(`when the Firebase app failed to be ready`, (): void => {
       beforeEach((): void => {
-        firebaseGuildsServiceIsReady$Spy.mockReturnValue(
-          throwError(new Error(`error`))
-        );
+        firebaseGuildsServiceIsReady$Spy.mockReturnValue(throwError(new Error(`error`)));
       });
 
-      it(`should not check if the Firebase app has the given guild`, async (): Promise<
-        void
-      > => {
+      it(`should not check if the Firebase app has the given guild`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.addFirebaseGuild(guild)).rejects.toThrow(
-          new Error(`error`)
-        );
+        await expect(service.addFirebaseGuild(guild)).rejects.toThrow(new Error(`error`));
 
         expect(firebaseGuildsServiceHasGuildSpy).not.toHaveBeenCalled();
       });
@@ -643,36 +518,24 @@ describe(`DiscordGuildCreateService`, (): void => {
         firebaseGuildsServiceIsReady$Spy.mockReturnValue(of(true));
       });
 
-      it(`should check if the Firebase app has the given guild`, async (): Promise<
-        void
-      > => {
+      it(`should check if the Firebase app has the given guild`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(service.addFirebaseGuild(guild)).rejects.toThrow(
-          new Error(`error`)
-        );
+        await expect(service.addFirebaseGuild(guild)).rejects.toThrow(new Error(`error`));
 
         expect(firebaseGuildsServiceHasGuildSpy).toHaveBeenCalledTimes(1);
-        expect(firebaseGuildsServiceHasGuildSpy).toHaveBeenCalledWith(
-          `dummy-id`
-        );
+        expect(firebaseGuildsServiceHasGuildSpy).toHaveBeenCalledWith(`dummy-id`);
       });
 
       describe(`when the check for the Firebase guild has failed`, (): void => {
         beforeEach((): void => {
-          firebaseGuildsServiceHasGuildSpy.mockRejectedValue(
-            new Error(`error`)
-          );
+          firebaseGuildsServiceHasGuildSpy.mockRejectedValue(new Error(`error`));
         });
 
-        it(`should not add the guild into Firebase`, async (): Promise<
-          void
-        > => {
+        it(`should not add the guild into Firebase`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.addFirebaseGuild(guild)).rejects.toThrow(
-            new Error(`error`)
-          );
+          await expect(service.addFirebaseGuild(guild)).rejects.toThrow(new Error(`error`));
 
           expect(firebaseGuildsServiceAddGuildSpy).not.toHaveBeenCalled();
         });
@@ -684,9 +547,7 @@ describe(`DiscordGuildCreateService`, (): void => {
             firebaseGuildsServiceHasGuildSpy.mockResolvedValue(true);
           });
 
-          it(`should log that the guild was already created`, async (): Promise<
-            void
-          > => {
+          it(`should log that the guild was already created`, async (): Promise<void> => {
             expect.assertions(3);
 
             const result = await service.addFirebaseGuild(guild);
@@ -699,9 +560,7 @@ describe(`DiscordGuildCreateService`, (): void => {
             } as ILoggerLog);
           });
 
-          it(`should not add the guild into Firebase`, async (): Promise<
-            void
-          > => {
+          it(`should not add the guild into Firebase`, async (): Promise<void> => {
             expect.assertions(2);
 
             const result = await service.addFirebaseGuild(guild);
@@ -716,9 +575,7 @@ describe(`DiscordGuildCreateService`, (): void => {
             firebaseGuildsServiceHasGuildSpy.mockResolvedValue(false);
           });
 
-          it(`should log that the guild was not already created`, async (): Promise<
-            void
-          > => {
+          it(`should log that the guild was not already created`, async (): Promise<void> => {
             expect.assertions(3);
 
             const result = await service.addFirebaseGuild(guild);
@@ -738,21 +595,15 @@ describe(`DiscordGuildCreateService`, (): void => {
 
             expect(result).toBeUndefined();
             expect(firebaseGuildsServiceAddGuildSpy).toHaveBeenCalledTimes(1);
-            expect(firebaseGuildsServiceAddGuildSpy).toHaveBeenCalledWith(
-              guild
-            );
+            expect(firebaseGuildsServiceAddGuildSpy).toHaveBeenCalledWith(guild);
           });
 
           describe(`when the guild was not successfully added into Firebase`, (): void => {
             beforeEach((): void => {
-              firebaseGuildsServiceAddGuildSpy.mockRejectedValue(
-                new Error(`error`)
-              );
+              firebaseGuildsServiceAddGuildSpy.mockRejectedValue(new Error(`error`));
             });
 
-            it(`should log that the guild could not be added to Firestore`, async (): Promise<
-              void
-            > => {
+            it(`should log that the guild could not be added to Firestore`, async (): Promise<void> => {
               expect.assertions(3);
 
               const result = await service.addFirebaseGuild(guild);
@@ -771,9 +622,7 @@ describe(`DiscordGuildCreateService`, (): void => {
               firebaseGuildsServiceAddGuildSpy.mockResolvedValue(writeResult);
             });
 
-            it(`should log about the success of adding the guild into Firebase`, async (): Promise<
-              void
-            > => {
+            it(`should log about the success of adding the guild into Firebase`, async (): Promise<void> => {
               expect.assertions(3);
 
               const result = await service.addFirebaseGuild(guild);

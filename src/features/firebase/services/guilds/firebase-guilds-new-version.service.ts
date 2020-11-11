@@ -1,37 +1,30 @@
-import {
-  Guild,
-  GuildChannel,
-  Message,
-  NewsChannel,
-  Snowflake,
-  TextChannel,
-} from "discord.js";
-import admin from "firebase-admin";
-import _ from "lodash";
-import { forkJoin, Observable, of } from "rxjs";
-import { mapTo, mergeMap, take } from "rxjs/operators";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ONE_EMITTER } from "../../../../constants/one-emitter";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { AppConfigService } from "../../../app/services/config/app-config.service";
-import { isDiscordGuildChannelWritable } from "../../../discord/channels/functions/types/is-discord-guild-channel-writable";
-import { DiscordChannelGuildService } from "../../../discord/channels/services/discord-channel-guild.service";
-import { DiscordGuildSoniaChannelNameEnum } from "../../../discord/guilds/enums/discord-guild-sonia-channel-name.enum";
-import { DiscordGuildSoniaService } from "../../../discord/guilds/services/discord-guild-sonia.service";
-import { DiscordGuildService } from "../../../discord/guilds/services/discord-guild.service";
-import { DiscordLoggerErrorService } from "../../../discord/logger/services/discord-logger-error.service";
-import { wrapUserIdIntoMention } from "../../../discord/mentions/functions/wrap-user-id-into-mention";
-import { IDiscordMessageResponse } from "../../../discord/messages/interfaces/discord-message-response";
-import { DiscordMessageCommandReleaseNotesService } from "../../../discord/messages/services/command/release-notes/discord-message-command-release-notes.service";
-import { DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES } from "../../../discord/users/constants/discord-github-contributors-id-messages";
-import { ChalkService } from "../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES } from "../../constants/guilds/firebase-guild-new-version-response-messages";
-import { getUpdatedFirebaseGuildLastReleaseNotesVersion } from "../../functions/guilds/get-updated-firebase-guild-last-release-notes-version";
-import { hasFirebaseGuildLastReleaseNotesVersion } from "../../functions/guilds/checks/has-firebase-guild-last-release-notes-version";
-import { IFirebaseGuild } from "../../types/guilds/firebase-guild";
-import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
-import { FirebaseGuildsService } from "./firebase-guilds.service";
+import { FirebaseGuildsBreakingChangeService } from './firebase-guilds-breaking-change.service';
+import { FirebaseGuildsService } from './firebase-guilds.service';
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ONE_EMITTER } from '../../../../constants/one-emitter';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { AppConfigService } from '../../../app/services/config/app-config.service';
+import { isDiscordGuildChannelWritable } from '../../../discord/channels/functions/types/is-discord-guild-channel-writable';
+import { DiscordChannelGuildService } from '../../../discord/channels/services/discord-channel-guild.service';
+import { DiscordGuildSoniaChannelNameEnum } from '../../../discord/guilds/enums/discord-guild-sonia-channel-name.enum';
+import { DiscordGuildSoniaService } from '../../../discord/guilds/services/discord-guild-sonia.service';
+import { DiscordGuildService } from '../../../discord/guilds/services/discord-guild.service';
+import { DiscordLoggerErrorService } from '../../../discord/logger/services/discord-logger-error.service';
+import { wrapUserIdIntoMention } from '../../../discord/mentions/functions/wrap-user-id-into-mention';
+import { IDiscordMessageResponse } from '../../../discord/messages/interfaces/discord-message-response';
+import { DiscordMessageCommandReleaseNotesService } from '../../../discord/messages/services/command/release-notes/discord-message-command-release-notes.service';
+import { DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES } from '../../../discord/users/constants/discord-github-contributors-id-messages';
+import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES } from '../../constants/guilds/firebase-guild-new-version-response-messages';
+import { hasFirebaseGuildLastReleaseNotesVersion } from '../../functions/guilds/checks/has-firebase-guild-last-release-notes-version';
+import { getUpdatedFirebaseGuildLastReleaseNotesVersion } from '../../functions/guilds/get-updated-firebase-guild-last-release-notes-version';
+import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
+import { Guild, GuildChannel, Message, NewsChannel, Snowflake, TextChannel } from 'discord.js';
+import admin from 'firebase-admin';
+import _ from 'lodash';
+import { Observable, forkJoin, of } from 'rxjs';
+import { mapTo, mergeMap, take } from 'rxjs/operators';
 import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
 import WriteBatch = admin.firestore.WriteBatch;
@@ -59,18 +52,14 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   }
 
   public isReady$(): Observable<[true]> {
-    return forkJoin([
-      FirebaseGuildsBreakingChangeService.getInstance().hasFinished(),
-    ]);
+    return forkJoin([FirebaseGuildsBreakingChangeService.getInstance().hasFinished()]);
   }
 
   public sendNewReleaseNotesToEachGuild$(): Observable<true> {
     return this._sendNewReleaseNotesToEachGuild$();
   }
 
-  public sendNewReleaseNotesFromFirebaseGuild({
-    id,
-  }: Readonly<IFirebaseGuild>): Promise<Message | void> {
+  public sendNewReleaseNotesFromFirebaseGuild({ id }: Readonly<IFirebaseGuild>): Promise<Message | void> {
     if (_.isNil(id)) {
       LoggerService.getInstance().error({
         context: this._serviceName,
@@ -80,17 +69,13 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       return Promise.reject(new Error(`Firebase guild id nil`));
     }
 
-    const guild:
-      | Guild
-      | undefined = DiscordGuildService.getInstance().getGuildById(id);
+    const guild: Guild | undefined = DiscordGuildService.getInstance().getGuildById(id);
 
     if (_.isNil(guild)) {
       LoggerService.getInstance().error({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
-          `Discord guild ${ChalkService.getInstance().value(
-            id
-          )} does not exists`
+          `Discord guild ${ChalkService.getInstance().value(id)} does not exists`
         ),
       });
 
@@ -107,18 +92,14 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
         (): Promise<QuerySnapshot<IFirebaseGuild>> => {
           LoggerService.getInstance().debug({
             context: this._serviceName,
-            message: ChalkService.getInstance().text(
-              `processing the sending of release notes to each guild...`
-            ),
+            message: ChalkService.getInstance().text(`processing the sending of release notes to each guild...`),
           });
 
           return FirebaseGuildsService.getInstance().getGuilds();
         }
       ),
       mergeMap(
-        (
-          querySnapshot: QuerySnapshot<IFirebaseGuild>
-        ): Promise<IFirebaseGuild[] | void> => {
+        (querySnapshot: QuerySnapshot<IFirebaseGuild>): Promise<IFirebaseGuild[] | void> => {
           LoggerService.getInstance().debug({
             context: this._serviceName,
             message: ChalkService.getInstance().text(`guilds fetched`),
@@ -128,25 +109,17 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
         }
       ),
       mergeMap(
-        (
-          firebaseGuilds: IFirebaseGuild[] | void
-        ): Observable<[Message | void] | false> => {
+        (firebaseGuilds: IFirebaseGuild[] | void): Observable<[Message | void] | false> => {
           if (_.isArray(firebaseGuilds)) {
             LoggerService.getInstance().debug({
               context: this._serviceName,
-              message: ChalkService.getInstance().text(
-                `sending release notes messages to each guild...`
-              ),
+              message: ChalkService.getInstance().text(`sending release notes messages to each guild...`),
             });
 
             return forkJoin(
               ...firebaseGuilds.map(
-                (
-                  firebaseGuild: Readonly<IFirebaseGuild>
-                ): Promise<Message | void> =>
-                  this.sendNewReleaseNotesFromFirebaseGuild(
-                    firebaseGuild
-                  ).catch(
+                (firebaseGuild: Readonly<IFirebaseGuild>): Promise<Message | void> =>
+                  this.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild).catch(
                     (): Promise<void> => {
                       LoggerService.getInstance().error({
                         context: this._serviceName,
@@ -174,16 +147,12 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   private _sendNewReleaseNotesToEachGuild(
     querySnapshot: QuerySnapshot<IFirebaseGuild>
   ): Promise<IFirebaseGuild[] | void> {
-    const batch:
-      | WriteBatch
-      | undefined = FirebaseGuildsService.getInstance().getBatch();
+    const batch: WriteBatch | undefined = FirebaseGuildsService.getInstance().getBatch();
 
     if (_.isNil(batch)) {
       LoggerService.getInstance().error({
         context: this._serviceName,
-        message: ChalkService.getInstance().text(
-          `Firebase guilds batch not available`
-        ),
+        message: ChalkService.getInstance().text(`Firebase guilds batch not available`),
       });
 
       return Promise.reject(new Error(`Firebase guilds batch not available`));
@@ -193,39 +162,30 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     let countFirebaseGuildsUpdated = NO_GUILD;
     let countFirebaseGuilds = NO_GUILD;
 
-    querySnapshot.forEach(
-      (queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>): void => {
-        if (!_.isEqual(queryDocumentSnapshot.exists, true)) {
-          return;
-        }
-
-        countFirebaseGuilds = _.add(countFirebaseGuilds, ONE_GUILD);
-        const firebaseGuild: IFirebaseGuild = queryDocumentSnapshot.data();
-
-        if (this._shouldSendNewReleaseNotesFromFirebaseGuild(firebaseGuild)) {
-          countFirebaseGuildsUpdated = _.add(
-            countFirebaseGuildsUpdated,
-            ONE_GUILD
-          );
-
-          batch.update(
-            queryDocumentSnapshot.ref,
-            getUpdatedFirebaseGuildLastReleaseNotesVersion(
-              AppConfigService.getInstance().getVersion()
-            )
-          );
-          firebaseGuilds.push(firebaseGuild);
-        }
+    querySnapshot.forEach((queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>): void => {
+      if (!_.isEqual(queryDocumentSnapshot.exists, true)) {
+        return;
       }
-    );
+
+      countFirebaseGuilds = _.add(countFirebaseGuilds, ONE_GUILD);
+      const firebaseGuild: IFirebaseGuild = queryDocumentSnapshot.data();
+
+      if (this._shouldSendNewReleaseNotesFromFirebaseGuild(firebaseGuild)) {
+        countFirebaseGuildsUpdated = _.add(countFirebaseGuildsUpdated, ONE_GUILD);
+
+        batch.update(
+          queryDocumentSnapshot.ref,
+          getUpdatedFirebaseGuildLastReleaseNotesVersion(AppConfigService.getInstance().getVersion())
+        );
+        firebaseGuilds.push(firebaseGuild);
+      }
+    });
 
     if (_.gte(countFirebaseGuildsUpdated, ONE_GUILD)) {
       LoggerService.getInstance().log({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
-          `updating ${ChalkService.getInstance().value(
-            countFirebaseGuildsUpdated
-          )} Firebase guild${
+          `updating ${ChalkService.getInstance().value(countFirebaseGuildsUpdated)} Firebase guild${
             _.gt(countFirebaseGuildsUpdated, ONE_GUILD) ? `s` : ``
           }...`
         ),
@@ -240,9 +200,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     LoggerService.getInstance().log({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `all Firebase guild${
-          _.gt(countFirebaseGuilds, ONE_GUILD) ? `s` : ``
-        } ${ChalkService.getInstance().hint(
+        `all Firebase guild${_.gt(countFirebaseGuilds, ONE_GUILD) ? `s` : ``} ${ChalkService.getInstance().hint(
           `(${countFirebaseGuilds})`
         )} release notes already sent`
       ),
@@ -251,20 +209,14 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     return Promise.resolve();
   }
 
-  private _sendNewReleaseNotesFromDiscordGuild(
-    guild: Readonly<Guild>
-  ): Promise<Message | void> {
-    const guildChannel: GuildChannel | null = DiscordChannelGuildService.getInstance().getPrimary(
-      guild
-    );
+  private _sendNewReleaseNotesFromDiscordGuild(guild: Readonly<Guild>): Promise<Message | void> {
+    const guildChannel: GuildChannel | null = DiscordChannelGuildService.getInstance().getPrimary(guild);
 
     if (_.isNil(guildChannel)) {
       LoggerService.getInstance().debug({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
-          `guild ${ChalkService.getInstance().value(
-            guild.id
-          )} does not have a primary channel`
+          `guild ${ChalkService.getInstance().value(guild.id)} does not have a primary channel`
         ),
       });
 
@@ -275,9 +227,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       LoggerService.getInstance().debug({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
-          `guild ${ChalkService.getInstance().value(
-            guild.id
-          )} primary channel is not writable`
+          `guild ${ChalkService.getInstance().value(guild.id)} primary channel is not writable`
         ),
       });
 
@@ -294,34 +244,21 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     return DiscordMessageCommandReleaseNotesService.getInstance()
       .getMessageResponse()
       .then(
-        (
-          messageResponse: Readonly<IDiscordMessageResponse>
-        ): Promise<Message | void> => {
-          const enhanceMessageResponse: IDiscordMessageResponse = _.cloneDeep(
-            messageResponse
-          );
-          enhanceMessageResponse.response = FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage(
-            {
-              userId: wrapUserIdIntoMention(
-                DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()
-              ),
-            }
-          );
+        (messageResponse: Readonly<IDiscordMessageResponse>): Promise<Message | void> => {
+          const enhanceMessageResponse: IDiscordMessageResponse = _.cloneDeep(messageResponse);
+          enhanceMessageResponse.response = FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
+            userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
+          });
 
           LoggerService.getInstance().debug({
             context: this._serviceName,
             message: ChalkService.getInstance().text(
-              `sending release notes message for guild ${ChalkService.getInstance().value(
-                guildId
-              )} on general channel`
+              `sending release notes message for guild ${ChalkService.getInstance().value(guildId)} on general channel`
             ),
           });
 
           return textChannel
-            .send(
-              enhanceMessageResponse.response,
-              enhanceMessageResponse.options
-            )
+            .send(enhanceMessageResponse.response, enhanceMessageResponse.options)
             .then(
               (message: Message): Promise<Message> => {
                 LoggerService.getInstance().log({
@@ -352,9 +289,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
                 });
                 DiscordGuildSoniaService.getInstance().sendMessageToChannel({
                   channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-                  messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
-                    error
-                  ),
+                  messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(error),
                 });
 
                 return Promise.reject(error);
@@ -364,9 +299,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       );
   }
 
-  private _shouldSendNewReleaseNotesFromFirebaseGuild(
-    firebaseGuild: Readonly<IFirebaseGuild>
-  ): boolean {
+  private _shouldSendNewReleaseNotesFromFirebaseGuild(firebaseGuild: Readonly<IFirebaseGuild>): boolean {
     const appVersion: string = AppConfigService.getInstance().getVersion();
 
     if (hasFirebaseGuildLastReleaseNotesVersion(firebaseGuild)) {

@@ -1,6 +1,6 @@
-import { createMock } from "ts-auto-mock";
-import { ICreateFirebaseGuild } from "../../interfaces/guilds/create-firebase-guild";
-import { createFirebaseGuild } from "./create-firebase-guild";
+import { createFirebaseGuild } from './create-firebase-guild';
+import { ICreateFirebaseGuild } from '../../interfaces/guilds/create-firebase-guild';
+import { createMock } from 'ts-auto-mock';
 
 describe(`createFirebaseGuild()`, (): void => {
   let data: ICreateFirebaseGuild;

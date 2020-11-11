@@ -1,21 +1,21 @@
-import _ from "lodash";
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { wrapInQuotes } from "../../../functions/formatters/wrap-in-quotes";
-import { CoreEventService } from "../../core/services/core-event.service";
-import { TimeService } from "../../time/services/time.service";
-import { LOGGER_DEBUG_LEVEL } from "../constants/levels/logger-debug-level";
-import { LOGGER_ERROR_LEVEL } from "../constants/levels/logger-error-level";
-import { LOGGER_LOG_LEVEL } from "../constants/levels/logger-log-level";
-import { LOGGER_SUCCESS_LEVEL } from "../constants/levels/logger-success-level";
-import { LOGGER_WARNING_LEVEL } from "../constants/levels/logger-warning-level";
-import { LoggerConfigLevelValueEnum } from "../enums/logger-config-level-value.enum";
-import { LoggerConfigLevelEnum } from "../enums/logger-config-level.enum";
-import { IJobDateLog } from "../interfaces/job-date-log";
-import { ILoggerLog } from "../interfaces/logger-log";
-import { ILoggerLogInternal } from "../interfaces/logger-log-internal";
-import { ILoggerServiceCreated } from "../interfaces/logger-service-created";
-import { ChalkService } from "./chalk/chalk.service";
-import { LoggerConfigService } from "./config/logger-config.service";
+import { ChalkService } from './chalk/chalk.service';
+import { LoggerConfigService } from './config/logger-config.service';
+import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import { wrapInQuotes } from '../../../functions/formatters/wrap-in-quotes';
+import { CoreEventService } from '../../core/services/core-event.service';
+import { TimeService } from '../../time/services/time.service';
+import { LOGGER_DEBUG_LEVEL } from '../constants/levels/logger-debug-level';
+import { LOGGER_ERROR_LEVEL } from '../constants/levels/logger-error-level';
+import { LOGGER_LOG_LEVEL } from '../constants/levels/logger-log-level';
+import { LOGGER_SUCCESS_LEVEL } from '../constants/levels/logger-success-level';
+import { LOGGER_WARNING_LEVEL } from '../constants/levels/logger-warning-level';
+import { LoggerConfigLevelValueEnum } from '../enums/logger-config-level-value.enum';
+import { LoggerConfigLevelEnum } from '../enums/logger-config-level.enum';
+import { IJobDateLog } from '../interfaces/job-date-log';
+import { ILoggerLog } from '../interfaces/logger-log';
+import { ILoggerLogInternal } from '../interfaces/logger-log-internal';
+import { ILoggerServiceCreated } from '../interfaces/logger-service-created';
+import _ from 'lodash';
 
 export class LoggerService {
   private static _instance: LoggerService;
@@ -29,8 +29,7 @@ export class LoggerService {
   }
 
   private readonly _logPrefix = `● `;
-  private readonly _serviceName: ServiceNameEnum =
-    ServiceNameEnum.LOGGER_SERVICE;
+  private readonly _serviceName: ServiceNameEnum = ServiceNameEnum.LOGGER_SERVICE;
 
   public init(): void {
     this._handleServiceCreatedEvent();
@@ -98,22 +97,13 @@ export class LoggerService {
     )} ]`;
   }
 
-  public getValueUpdateWithHint(
-    text: Readonly<string>,
-    value: Readonly<string>,
-    hint: Readonly<string>
-  ): string {
-    return `${ChalkService.getInstance().text(
-      text
-    )}${ChalkService.getInstance().value(
+  public getValueUpdateWithHint(text: Readonly<string>, value: Readonly<string>, hint: Readonly<string>): string {
+    return `${ChalkService.getInstance().text(text)}${ChalkService.getInstance().value(
       value
     )}${ChalkService.getInstance().hint(hint)}`;
   }
 
-  public getHiddenValueUpdate(
-    text: Readonly<string>,
-    isStringValue = false
-  ): string {
+  public getHiddenValueUpdate(text: Readonly<string>, isStringValue = false): string {
     let value = `********`;
 
     if (_.isEqual(isStringValue, true)) {
@@ -123,10 +113,7 @@ export class LoggerService {
     return this.getValueUpdateWithHint(text, value, ` (hidden)`);
   }
 
-  public getHiddenValueArrayUpdate(
-    text: Readonly<string>,
-    isStringValue = false
-  ): string {
+  public getHiddenValueArrayUpdate(text: Readonly<string>, isStringValue = false): string {
     let value = `********`;
 
     if (_.isEqual(isStringValue, true)) {
@@ -142,59 +129,36 @@ export class LoggerService {
     context: Readonly<string>,
     message: Readonly<string | null | undefined> | unknown
   ): string {
-    return `${ChalkService.getInstance().context(
-      `[${context}] `
-    )}${ChalkService.getInstance().text(message)}`;
+    return `${ChalkService.getInstance().context(`[${context}] `)}${ChalkService.getInstance().text(message)}`;
   }
 
-  public logJobDate({
-    context,
-    jobName,
-    jobDateHumanized,
-    jobDate,
-  }: Readonly<IJobDateLog>): void {
+  public logJobDate({ context, jobName, jobDateHumanized, jobDate }: Readonly<IJobDateLog>): void {
     this.debug({
       context,
       message: ChalkService.getInstance().text(
-        `${jobName} job: ${ChalkService.getInstance().value(
-          jobDateHumanized
-        )} ${ChalkService.getInstance().hint(`(${jobDate})`)}`
+        `${jobName} job: ${ChalkService.getInstance().value(jobDateHumanized)} ${ChalkService.getInstance().hint(
+          `(${jobDate})`
+        )}`
       ),
     });
   }
 
-  private _log({
-    loggerLogType,
-    context,
-    hasExtendedContext,
-    message,
-  }: Readonly<ILoggerLogInternal>): void {
+  private _log({ loggerLogType, context, hasExtendedContext, message }: Readonly<ILoggerLogInternal>): void {
     if (_.isEqual(LoggerConfigService.getInstance().isEnabled(), true)) {
       const logTypePrefix: string = this._getLogTypePrefix(loggerLogType);
 
       if (_.isString(context) && !_.isEmpty(context)) {
-        console.log(
-          `${logTypePrefix}${this._context(
-            context,
-            hasExtendedContext
-          )}${_.toString(message)}`
-        );
+        console.log(`${logTypePrefix}${this._context(context, hasExtendedContext)}${_.toString(message)}`);
       } else {
         console.log(`${logTypePrefix}${_.toString(message)}`);
       }
     }
   }
 
-  private _context(
-    name: Readonly<string>,
-    hasExtendedContext: Readonly<boolean> = false
-  ): string {
+  private _context(name: Readonly<string>, hasExtendedContext: Readonly<boolean> = false): string {
     let message = `[${name}][${TimeService.getInstance().now(`HH:mm:ss:SSS`)}]`;
 
-    if (
-      _.isEqual(hasExtendedContext, false) ||
-      !_.isBoolean(hasExtendedContext)
-    ) {
+    if (_.isEqual(hasExtendedContext, false) || !_.isBoolean(hasExtendedContext)) {
       message = `${message} `;
     }
 
@@ -206,38 +170,23 @@ export class LoggerService {
   }
 
   private _isErrorEnabled(): boolean {
-    return _.gte(
-      LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()],
-      LOGGER_ERROR_LEVEL
-    );
+    return _.gte(LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()], LOGGER_ERROR_LEVEL);
   }
 
   private _isWarningEnabled(): boolean {
-    return _.gte(
-      LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()],
-      LOGGER_WARNING_LEVEL
-    );
+    return _.gte(LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()], LOGGER_WARNING_LEVEL);
   }
 
   private _isSuccessEnabled(): boolean {
-    return _.gte(
-      LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()],
-      LOGGER_SUCCESS_LEVEL
-    );
+    return _.gte(LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()], LOGGER_SUCCESS_LEVEL);
   }
 
   private _isLogEnabled(): boolean {
-    return _.gte(
-      LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()],
-      LOGGER_LOG_LEVEL
-    );
+    return _.gte(LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()], LOGGER_LOG_LEVEL);
   }
 
   private _isDebugEnabled(): boolean {
-    return _.gte(
-      LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()],
-      LOGGER_DEBUG_LEVEL
-    );
+    return _.gte(LoggerConfigLevelValueEnum[LoggerConfigService.getInstance().getLevel()], LOGGER_DEBUG_LEVEL);
   }
 
   private _handleServiceCreatedEvent(): void {
@@ -248,14 +197,11 @@ export class LoggerService {
   private _logAlreadyCreatedServices(): void {
     const createdServices: ServiceNameEnum[] = CoreEventService.getInstance().getCreatedServices();
 
-    _.forEach(
-      createdServices,
-      (createdService: Readonly<ServiceNameEnum>): void => {
-        this.serviceCreated({
-          service: createdService,
-        });
-      }
-    );
+    _.forEach(createdServices, (createdService: Readonly<ServiceNameEnum>): void => {
+      this.serviceCreated({
+        service: createdService,
+      });
+    });
   }
 
   private _listenServiceCreatedEvent(): void {

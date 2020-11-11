@@ -1,6 +1,6 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import _ from 'lodash';
 
 export class TimeService extends AbstractService {
   private static _instance: TimeService;

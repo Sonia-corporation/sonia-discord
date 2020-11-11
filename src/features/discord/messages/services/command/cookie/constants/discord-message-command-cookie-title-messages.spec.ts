@@ -1,6 +1,6 @@
-import { Messages } from "../../../../classes/messages";
-import { DiscordMessageCommandCookieTitleEnum } from "../../../../enums/commands/cookie/discord-message-command-cookie-title.enum";
-import { DISCORD_MESSAGE_COMMAND_COOKIE_TITLE_MESSAGES } from "./discord-message-command-cookie-title-messages";
+import { DISCORD_MESSAGE_COMMAND_COOKIE_TITLE_MESSAGES } from './discord-message-command-cookie-title-messages';
+import { Messages } from '../../../../classes/messages';
+import { DiscordMessageCommandCookieTitleEnum } from '../../../../enums/commands/cookie/discord-message-command-cookie-title.enum';
 
 describe(`DISCORD_MESSAGE_COMMAND_COOKIE_TITLE_MESSAGES`, (): void => {
   it(`should be the Discord message command cookie titles`, (): void => {

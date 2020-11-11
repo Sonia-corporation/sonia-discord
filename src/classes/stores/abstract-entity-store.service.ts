@@ -1,21 +1,16 @@
-import { EntityState, EntityStore } from "@datorama/akita";
-import { ServiceNameEnum } from "../../enums/service-name.enum";
-import { CoreEventService } from "../../features/core/services/core-event.service";
+import { ServiceNameEnum } from '../../enums/service-name.enum';
+import { CoreEventService } from '../../features/core/services/core-event.service';
+import { EntityState, EntityStore } from '@datorama/akita';
 
 /**
  * @description
  * Log the creation of the service
  * Used for Entity Store only
  */
-export abstract class AbstractEntityStoreService<
-  T extends EntityState
-> extends EntityStore<T> {
+export abstract class AbstractEntityStoreService<T extends EntityState> extends EntityStore<T> {
   protected readonly _serviceName: ServiceNameEnum;
 
-  protected constructor(
-    serviceName: Readonly<ServiceNameEnum>,
-    storeState?: Readonly<T | undefined>
-  ) {
+  protected constructor(serviceName: Readonly<ServiceNameEnum>, storeState?: Readonly<T | undefined>) {
     super(storeState);
     this._serviceName = serviceName;
 

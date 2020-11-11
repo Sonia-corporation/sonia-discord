@@ -1,6 +1,6 @@
-import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-version.enum";
-import { IFirebaseGuildV2 } from "../../interfaces/guilds/firebase-guild-v2";
-import { IFirebaseGuildV3 } from "../../interfaces/guilds/firebase-guild-v3";
+import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
+import { IFirebaseGuildV2 } from '../../interfaces/guilds/firebase-guild-v2';
+import { IFirebaseGuildV3 } from '../../interfaces/guilds/firebase-guild-v3';
 
 export function upgradeFirebaseGuildToV3({
   id,

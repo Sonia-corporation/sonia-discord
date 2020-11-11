@@ -1,4 +1,4 @@
-import { wrapInQuotes } from "./wrap-in-quotes";
+import { wrapInQuotes } from './wrap-in-quotes';
 
 describe(`wrapInQuotes()`, (): void => {
   let value: string;

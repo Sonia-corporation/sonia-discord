@@ -1,6 +1,6 @@
-import chalk from "chalk";
-import _ from "lodash";
-import { CHALK_INSTANCE } from "../../../constants/chalk/chalk-instance";
+import { CHALK_INSTANCE } from '../../../constants/chalk/chalk-instance';
+import chalk from 'chalk';
+import _ from 'lodash';
 
 export class ChalkService {
   private static _instance: ChalkService;

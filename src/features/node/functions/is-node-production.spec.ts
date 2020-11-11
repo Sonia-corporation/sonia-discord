@@ -1,4 +1,4 @@
-import { isNodeProduction } from "./is-node-production";
+import { isNodeProduction } from './is-node-production';
 
 describe(`isNodeProduction()`, (): void => {
   describe(`when the command line has no arguments`, (): void => {

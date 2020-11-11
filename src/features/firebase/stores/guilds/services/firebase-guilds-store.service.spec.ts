@@ -1,11 +1,11 @@
-import { Subject } from "rxjs";
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../core/services/core-event.service";
-import { IFirebaseGuild } from "../../../types/guilds/firebase-guild";
-import { FirebaseGuildsService } from "../../../services/guilds/firebase-guilds.service";
-import { FirebaseGuildsStore } from "../firebase-guilds-store";
-import { FirebaseGuildsStoreService } from "./firebase-guilds-store.service";
+import { FirebaseGuildsStoreService } from './firebase-guilds-store.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../core/services/core-event.service';
+import { FirebaseGuildsService } from '../../../services/guilds/firebase-guilds.service';
+import { IFirebaseGuild } from '../../../types/guilds/firebase-guild';
+import { FirebaseGuildsStore } from '../firebase-guilds-store';
+import { Subject } from 'rxjs';
+import { createMock } from 'ts-auto-mock';
 
 describe(`FirebaseGuildsStoreService`, (): void => {
   let service: FirebaseGuildsStoreService;
@@ -75,9 +75,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
       firebaseGuildsServiceOnGuildsChange$Spy = jest
         .spyOn(firebaseGuildsService, `onGuildsChange$`)
         .mockReturnValue(onGuildsChange$);
-      removeAllEntitiesSpy = jest
-        .spyOn(service, `removeAllEntities`)
-        .mockImplementation();
+      removeAllEntitiesSpy = jest.spyOn(service, `removeAllEntities`).mockImplementation();
       addEntitiesSpy = jest.spyOn(service, `addEntities`).mockImplementation();
       stopLoadingSpy = jest.spyOn(service, `stopLoading`).mockImplementation();
     });
@@ -99,9 +97,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
         service.init();
         onGuildsChange$.error(new Error(`error`));
 
-        expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledTimes(
-          1
-        );
+        expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledTimes(1);
         expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledWith();
       });
 
@@ -175,9 +171,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
       service = new FirebaseGuildsStoreService();
       firebaseGuilds = createMock<IFirebaseGuild[]>();
 
-      firebaseGuildsStoreUpsertManySpy = jest
-        .spyOn(firebaseGuildsStore, `upsertMany`)
-        .mockImplementation();
+      firebaseGuildsStoreUpsertManySpy = jest.spyOn(firebaseGuildsStore, `upsertMany`).mockImplementation();
     });
 
     it(`should update or add the given Firebase guilds into the store`, (): void => {
@@ -186,9 +180,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
       service.addOrUpdateEntities(firebaseGuilds);
 
       expect(firebaseGuildsStoreUpsertManySpy).toHaveBeenCalledTimes(1);
-      expect(firebaseGuildsStoreUpsertManySpy).toHaveBeenCalledWith(
-        firebaseGuilds
-      );
+      expect(firebaseGuildsStoreUpsertManySpy).toHaveBeenCalledWith(firebaseGuilds);
     });
   });
 
@@ -201,9 +193,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
       service = new FirebaseGuildsStoreService();
       firebaseGuilds = createMock<IFirebaseGuild[]>();
 
-      firebaseGuildsStoreAddSpy = jest
-        .spyOn(firebaseGuildsStore, `add`)
-        .mockImplementation();
+      firebaseGuildsStoreAddSpy = jest.spyOn(firebaseGuildsStore, `add`).mockImplementation();
     });
 
     it(`should add the given Firebase guilds into the store`, (): void => {
@@ -222,9 +212,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
     beforeEach((): void => {
       service = new FirebaseGuildsStoreService();
 
-      firebaseGuildsStoreRemoveSpy = jest
-        .spyOn(firebaseGuildsStore, `remove`)
-        .mockImplementation();
+      firebaseGuildsStoreRemoveSpy = jest.spyOn(firebaseGuildsStore, `remove`).mockImplementation();
     });
 
     it(`should remove all the Firebase guilds in the store`, (): void => {
@@ -243,9 +231,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
     beforeEach((): void => {
       service = new FirebaseGuildsStoreService();
 
-      firebaseGuildsStoreSetLoadingSpy = jest
-        .spyOn(firebaseGuildsStore, `setLoading`)
-        .mockImplementation();
+      firebaseGuildsStoreSetLoadingSpy = jest.spyOn(firebaseGuildsStore, `setLoading`).mockImplementation();
     });
 
     it(`should stop the loading state of the store`, (): void => {

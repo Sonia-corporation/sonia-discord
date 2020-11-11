@@ -1,18 +1,18 @@
-import * as admin from "firebase-admin";
-import { of, throwError } from "rxjs";
-import { take } from "rxjs/operators";
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { DiscordClientService } from "../../../discord/services/discord-client.service";
-import { ILoggerLog } from "../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-version.enum";
-import { IFirebaseGuildV1 } from "../../interfaces/guilds/firebase-guild-v1";
-import { IFirebaseGuild } from "../../types/guilds/firebase-guild";
-import { IFirebaseGuildVFinal } from "../../types/guilds/firebase-guild-v-final";
-import { FirebaseGuildsBreakingChangeService } from "./firebase-guilds-breaking-change.service";
-import { FirebaseGuildsService } from "./firebase-guilds.service";
+import { FirebaseGuildsBreakingChangeService } from './firebase-guilds-breaking-change.service';
+import { FirebaseGuildsService } from './firebase-guilds.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { DiscordClientService } from '../../../discord/services/discord-client.service';
+import { ILoggerLog } from '../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
+import { IFirebaseGuildV1 } from '../../interfaces/guilds/firebase-guild-v1';
+import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
+import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
+import * as admin from 'firebase-admin';
+import { of, throwError } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { createMock } from 'ts-auto-mock';
 import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
 import QuerySnapshot = admin.firestore.QuerySnapshot;
 import WriteBatch = admin.firestore.WriteBatch;
@@ -40,9 +40,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
       service = FirebaseGuildsBreakingChangeService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(FirebaseGuildsBreakingChangeService)
-      );
+      expect(service).toStrictEqual(expect.any(FirebaseGuildsBreakingChangeService));
     });
 
     it(`should return the created FirebaseGuildsBreakingChange service`, (): void => {
@@ -94,18 +92,12 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsBreakingChangeService();
-      queryDocumentSnapshot = createMock<
-        QueryDocumentSnapshot<IFirebaseGuild>
-      >();
+      queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuild>>();
       forEachMock = jest
         .fn()
-        .mockImplementation(
-          (
-            callback: (result: QueryDocumentSnapshot<IFirebaseGuild>) => void
-          ): void => {
-            callback(queryDocumentSnapshot);
-          }
-        );
+        .mockImplementation((callback: (result: QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
+          callback(queryDocumentSnapshot);
+        });
       querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>({
         forEach: forEachMock,
       });
@@ -117,27 +109,15 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
         update: updateMock,
       });
 
-      notifyHasFinishedSpy = jest
-        .spyOn(service, `notifyHasFinished`)
-        .mockImplementation();
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      loggerServiceErrorSpy = jest
-        .spyOn(loggerService, `error`)
-        .mockImplementation();
-      loggerServiceLogSpy = jest
-        .spyOn(loggerService, `log`)
-        .mockImplementation();
-      isReady$Spy = jest
-        .spyOn(service, `isReady$`)
-        .mockReturnValue(throwError(new Error(`isReady$ error`)));
+      notifyHasFinishedSpy = jest.spyOn(service, `notifyHasFinished`).mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
+      loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
+      isReady$Spy = jest.spyOn(service, `isReady$`).mockReturnValue(throwError(new Error(`isReady$ error`)));
       firebaseGuildsServiceGetGuildsSpy = jest
         .spyOn(firebaseGuildsService, `getGuilds`)
         .mockRejectedValue(new Error(`getGuilds error`));
-      firebaseGuildsServiceGetBatchSpy = jest
-        .spyOn(firebaseGuildsService, `getBatch`)
-        .mockImplementation();
+      firebaseGuildsServiceGetBatchSpy = jest.spyOn(firebaseGuildsService, `getBatch`).mockImplementation();
     });
 
     it(`should wait for everything to be ready`, async (): Promise<void> => {
@@ -154,14 +134,10 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
         isReady$Spy.mockReturnValue(throwError(new Error(`isReady$ error`)));
       });
 
-      it(`should not get a batch for the Firebase guilds`, async (): Promise<
-        void
-      > => {
+      it(`should not get a batch for the Firebase guilds`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.init()).rejects.toThrow(
-          new Error(`isReady$ error`)
-        );
+        await expect(service.init()).rejects.toThrow(new Error(`isReady$ error`));
 
         expect(firebaseGuildsServiceGetBatchSpy).not.toHaveBeenCalled();
       });
@@ -169,9 +145,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
       it(`should not update the batch`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.init()).rejects.toThrow(
-          new Error(`isReady$ error`)
-        );
+        await expect(service.init()).rejects.toThrow(new Error(`isReady$ error`));
 
         expect(updateMock).not.toHaveBeenCalled();
       });
@@ -179,21 +153,15 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
       it(`should not commit the batch`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.init()).rejects.toThrow(
-          new Error(`isReady$ error`)
-        );
+        await expect(service.init()).rejects.toThrow(new Error(`isReady$ error`));
 
         expect(commitMock).not.toHaveBeenCalled();
       });
 
-      it(`should not notify that the Firebase guilds breaking changes are finished`, async (): Promise<
-        void
-      > => {
+      it(`should not notify that the Firebase guilds breaking changes are finished`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.init()).rejects.toThrow(
-          new Error(`isReady$ error`)
-        );
+        await expect(service.init()).rejects.toThrow(new Error(`isReady$ error`));
 
         expect(notifyHasFinishedSpy).not.toHaveBeenCalled();
       });
@@ -204,14 +172,10 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
         isReady$Spy.mockReturnValue(of([true, true]));
       });
 
-      it(`should log about handling the breaking changes of the Firebase guilds`, async (): Promise<
-        void
-      > => {
+      it(`should log about handling the breaking changes of the Firebase guilds`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(service.init()).rejects.toThrow(
-          new Error(`getGuilds error`)
-        );
+        await expect(service.init()).rejects.toThrow(new Error(`getGuilds error`));
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -223,9 +187,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
       it(`should get the Firebase guilds`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(service.init()).rejects.toThrow(
-          new Error(`getGuilds error`)
-        );
+        await expect(service.init()).rejects.toThrow(new Error(`getGuilds error`));
 
         expect(firebaseGuildsServiceGetGuildsSpy).toHaveBeenCalledTimes(1);
         expect(firebaseGuildsServiceGetGuildsSpy).toHaveBeenCalledWith();
@@ -233,19 +195,13 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
       describe(`when the Firebase guilds failed to be fetched`, (): void => {
         beforeEach((): void => {
-          firebaseGuildsServiceGetGuildsSpy.mockRejectedValue(
-            new Error(`getGuilds error`)
-          );
+          firebaseGuildsServiceGetGuildsSpy.mockRejectedValue(new Error(`getGuilds error`));
         });
 
-        it(`should not get a batch for the Firebase guilds`, async (): Promise<
-          void
-        > => {
+        it(`should not get a batch for the Firebase guilds`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.init()).rejects.toThrow(
-            new Error(`getGuilds error`)
-          );
+          await expect(service.init()).rejects.toThrow(new Error(`getGuilds error`));
 
           expect(firebaseGuildsServiceGetBatchSpy).not.toHaveBeenCalled();
         });
@@ -253,9 +209,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
         it(`should not update the batch`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.init()).rejects.toThrow(
-            new Error(`getGuilds error`)
-          );
+          await expect(service.init()).rejects.toThrow(new Error(`getGuilds error`));
 
           expect(updateMock).not.toHaveBeenCalled();
         });
@@ -263,21 +217,15 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
         it(`should not commit the batch`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.init()).rejects.toThrow(
-            new Error(`getGuilds error`)
-          );
+          await expect(service.init()).rejects.toThrow(new Error(`getGuilds error`));
 
           expect(commitMock).not.toHaveBeenCalled();
         });
 
-        it(`should not notify that the Firebase guilds breaking changes are finished`, async (): Promise<
-          void
-        > => {
+        it(`should not notify that the Firebase guilds breaking changes are finished`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.init()).rejects.toThrow(
-            new Error(`getGuilds error`)
-          );
+          await expect(service.init()).rejects.toThrow(new Error(`getGuilds error`));
 
           expect(notifyHasFinishedSpy).not.toHaveBeenCalled();
         });
@@ -288,14 +236,10 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
           firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(querySnapshot);
         });
 
-        it(`should log that the Firebase guilds were fetched`, async (): Promise<
-          void
-        > => {
+        it(`should log that the Firebase guilds were fetched`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(service.init()).rejects.toThrow(
-            new Error(`Firebase guilds batch not available`)
-          );
+          await expect(service.init()).rejects.toThrow(new Error(`Firebase guilds batch not available`));
 
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
           expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
@@ -304,14 +248,10 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
           } as ILoggerLog);
         });
 
-        it(`should get a batch for the Firebase guilds`, async (): Promise<
-          void
-        > => {
+        it(`should get a batch for the Firebase guilds`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(service.init()).rejects.toThrow(
-            new Error(`Firebase guilds batch not available`)
-          );
+          await expect(service.init()).rejects.toThrow(new Error(`Firebase guilds batch not available`));
 
           expect(firebaseGuildsServiceGetBatchSpy).toHaveBeenCalledTimes(1);
           expect(firebaseGuildsServiceGetBatchSpy).toHaveBeenCalledWith();
@@ -322,14 +262,10 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
             firebaseGuildsServiceGetBatchSpy.mockReturnValue(undefined);
           });
 
-          it(`should log an error about no batch available`, async (): Promise<
-            void
-          > => {
+          it(`should log an error about no batch available`, async (): Promise<void> => {
             expect.assertions(3);
 
-            await expect(service.init()).rejects.toThrow(
-              new Error(`Firebase guilds batch not available`)
-            );
+            await expect(service.init()).rejects.toThrow(new Error(`Firebase guilds batch not available`));
 
             expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
@@ -341,9 +277,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
           it(`should not update the batch`, async (): Promise<void> => {
             expect.assertions(2);
 
-            await expect(service.init()).rejects.toThrow(
-              new Error(`Firebase guilds batch not available`)
-            );
+            await expect(service.init()).rejects.toThrow(new Error(`Firebase guilds batch not available`));
 
             expect(updateMock).not.toHaveBeenCalled();
           });
@@ -351,21 +285,15 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
           it(`should not commit the batch`, async (): Promise<void> => {
             expect.assertions(2);
 
-            await expect(service.init()).rejects.toThrow(
-              new Error(`Firebase guilds batch not available`)
-            );
+            await expect(service.init()).rejects.toThrow(new Error(`Firebase guilds batch not available`));
 
             expect(commitMock).not.toHaveBeenCalled();
           });
 
-          it(`should not notify that the Firebase guilds breaking changes are finished`, async (): Promise<
-            void
-          > => {
+          it(`should not notify that the Firebase guilds breaking changes are finished`, async (): Promise<void> => {
             expect.assertions(2);
 
-            await expect(service.init()).rejects.toThrow(
-              new Error(`Firebase guilds batch not available`)
-            );
+            await expect(service.init()).rejects.toThrow(new Error(`Firebase guilds batch not available`));
 
             expect(notifyHasFinishedSpy).not.toHaveBeenCalled();
           });
@@ -378,29 +306,19 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
           describe(`when there is no Firebase guild`, (): void => {
             beforeEach((): void => {
-              queryDocumentSnapshot = createMock<
-                QueryDocumentSnapshot<IFirebaseGuild>
-              >({
+              queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuild>>({
                 exists: false,
               });
               forEachMock = jest
                 .fn()
-                .mockImplementation(
-                  (
-                    callback: (
-                      result: QueryDocumentSnapshot<IFirebaseGuild>
-                    ) => void
-                  ): void => {
-                    callback(queryDocumentSnapshot);
-                  }
-                );
+                .mockImplementation((callback: (result: QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
+                  callback(queryDocumentSnapshot);
+                });
               querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>({
                 forEach: forEachMock,
               });
 
-              firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(
-                querySnapshot
-              );
+              firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(querySnapshot);
             });
 
             it(`should not update the batch`, async (): Promise<void> => {
@@ -422,9 +340,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
           describe(`when there is a Firebase guild but on latest version`, (): void => {
             beforeEach((): void => {
-              queryDocumentSnapshot = createMock<
-                QueryDocumentSnapshot<IFirebaseGuildVFinal>
-              >({
+              queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuildVFinal>>({
                 data: (): IFirebaseGuildVFinal =>
                   createMock<IFirebaseGuildVFinal>({
                     version: FirebaseGuildVersionEnum.V4,
@@ -433,22 +349,14 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               });
               forEachMock = jest
                 .fn()
-                .mockImplementation(
-                  (
-                    callback: (
-                      result: QueryDocumentSnapshot<IFirebaseGuild>
-                    ) => void
-                  ): void => {
-                    callback(queryDocumentSnapshot);
-                  }
-                );
+                .mockImplementation((callback: (result: QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
+                  callback(queryDocumentSnapshot);
+                });
               querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>({
                 forEach: forEachMock,
               });
 
-              firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(
-                querySnapshot
-              );
+              firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(querySnapshot);
             });
 
             it(`should not update the batch`, async (): Promise<void> => {
@@ -467,9 +375,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               expect(commitMock).not.toHaveBeenCalled();
             });
 
-            it(`should log that one guild is already up-to-date`, async (): Promise<
-              void
-            > => {
+            it(`should log that one guild is already up-to-date`, async (): Promise<void> => {
               expect.assertions(2);
 
               await service.init();
@@ -484,9 +390,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
           describe(`when there is two Firebase guilds but on latest version`, (): void => {
             beforeEach((): void => {
-              queryDocumentSnapshot = createMock<
-                QueryDocumentSnapshot<IFirebaseGuildVFinal>
-              >({
+              queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuildVFinal>>({
                 data: (): IFirebaseGuildVFinal =>
                   createMock<IFirebaseGuildVFinal>({
                     version: FirebaseGuildVersionEnum.V4,
@@ -495,23 +399,15 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               });
               forEachMock = jest
                 .fn()
-                .mockImplementation(
-                  (
-                    callback: (
-                      result: QueryDocumentSnapshot<IFirebaseGuild>
-                    ) => void
-                  ): void => {
-                    callback(queryDocumentSnapshot);
-                    callback(queryDocumentSnapshot);
-                  }
-                );
+                .mockImplementation((callback: (result: QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
+                  callback(queryDocumentSnapshot);
+                  callback(queryDocumentSnapshot);
+                });
               querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>({
                 forEach: forEachMock,
               });
 
-              firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(
-                querySnapshot
-              );
+              firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(querySnapshot);
             });
 
             it(`should not update the batch`, async (): Promise<void> => {
@@ -530,9 +426,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               expect(commitMock).not.toHaveBeenCalled();
             });
 
-            it(`should log that two guilds are already up-to-date`, async (): Promise<
-              void
-            > => {
+            it(`should log that two guilds are already up-to-date`, async (): Promise<void> => {
               expect.assertions(2);
 
               await service.init();
@@ -553,30 +447,20 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
                 id: `dummy-id`,
                 version: FirebaseGuildVersionEnum.V1,
               });
-              queryDocumentSnapshot = createMock<
-                QueryDocumentSnapshot<IFirebaseGuild>
-              >({
+              queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuild>>({
                 data: (): IFirebaseGuildV1 => firebaseGuildV1,
                 exists: true,
               });
               forEachMock = jest
                 .fn()
-                .mockImplementation(
-                  (
-                    callback: (
-                      result: QueryDocumentSnapshot<IFirebaseGuild>
-                    ) => void
-                  ): void => {
-                    callback(queryDocumentSnapshot);
-                  }
-                );
+                .mockImplementation((callback: (result: QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
+                  callback(queryDocumentSnapshot);
+                });
               querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>({
                 forEach: forEachMock,
               });
 
-              firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(
-                querySnapshot
-              );
+              firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(querySnapshot);
             });
 
             it(`should update the batch to update the guild to the latest version available`, async (): Promise<
@@ -587,15 +471,12 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               await service.init();
 
               expect(updateMock).toHaveBeenCalledTimes(1);
-              expect(updateMock).toHaveBeenCalledWith(
-                queryDocumentSnapshot.ref,
-                {
-                  channels: {},
-                  id: `dummy-id`,
-                  lastReleaseNotesVersion: `0.0.0`,
-                  version: FirebaseGuildVersionEnum.V4,
-                } as IFirebaseGuildVFinal
-              );
+              expect(updateMock).toHaveBeenCalledWith(queryDocumentSnapshot.ref, {
+                channels: {},
+                id: `dummy-id`,
+                lastReleaseNotesVersion: `0.0.0`,
+                version: FirebaseGuildVersionEnum.V4,
+              } as IFirebaseGuildVFinal);
             });
 
             it(`should commit the batch`, async (): Promise<void> => {
@@ -607,9 +488,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               expect(commitMock).toHaveBeenCalledWith();
             });
 
-            it(`should log that one Firebase guild is updating`, async (): Promise<
-              void
-            > => {
+            it(`should log that one Firebase guild is updating`, async (): Promise<void> => {
               expect.assertions(2);
 
               await service.init();
@@ -630,31 +509,21 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
                 id: `dummy-id`,
                 version: FirebaseGuildVersionEnum.V1,
               });
-              queryDocumentSnapshot = createMock<
-                QueryDocumentSnapshot<IFirebaseGuild>
-              >({
+              queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuild>>({
                 data: (): IFirebaseGuildV1 => firebaseGuildV1,
                 exists: true,
               });
               forEachMock = jest
                 .fn()
-                .mockImplementation(
-                  (
-                    callback: (
-                      result: QueryDocumentSnapshot<IFirebaseGuild>
-                    ) => void
-                  ): void => {
-                    callback(queryDocumentSnapshot);
-                    callback(queryDocumentSnapshot);
-                  }
-                );
+                .mockImplementation((callback: (result: QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
+                  callback(queryDocumentSnapshot);
+                  callback(queryDocumentSnapshot);
+                });
               querySnapshot = createMock<QuerySnapshot<IFirebaseGuild>>({
                 forEach: forEachMock,
               });
 
-              firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(
-                querySnapshot
-              );
+              firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(querySnapshot);
             });
 
             it(`should update the batch to update the two guilds to the latest version available`, async (): Promise<
@@ -665,15 +534,12 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               await service.init();
 
               expect(updateMock).toHaveBeenCalledTimes(2);
-              expect(updateMock).toHaveBeenCalledWith(
-                queryDocumentSnapshot.ref,
-                {
-                  channels: {},
-                  id: `dummy-id`,
-                  lastReleaseNotesVersion: `0.0.0`,
-                  version: FirebaseGuildVersionEnum.V4,
-                } as IFirebaseGuildVFinal
-              );
+              expect(updateMock).toHaveBeenCalledWith(queryDocumentSnapshot.ref, {
+                channels: {},
+                id: `dummy-id`,
+                lastReleaseNotesVersion: `0.0.0`,
+                version: FirebaseGuildVersionEnum.V4,
+              } as IFirebaseGuildVFinal);
             });
 
             it(`should commit the batch`, async (): Promise<void> => {
@@ -685,9 +551,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               expect(commitMock).toHaveBeenCalledWith();
             });
 
-            it(`should log that two Firebase guilds is updating`, async (): Promise<
-              void
-            > => {
+            it(`should log that two Firebase guilds is updating`, async (): Promise<void> => {
               expect.assertions(2);
 
               await service.init();
@@ -700,9 +564,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
             });
           });
 
-          it(`should notify that the Firebase guilds breaking changes are finished`, async (): Promise<
-            void
-          > => {
+          it(`should notify that the Firebase guilds breaking changes are finished`, async (): Promise<void> => {
             expect.assertions(2);
 
             await service.init();
@@ -766,9 +628,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
       service = new FirebaseGuildsBreakingChangeService();
     });
 
-    it(`should notify that the Firebase guilds breaking changes were handled`, async (): Promise<
-      void
-    > => {
+    it(`should notify that the Firebase guilds breaking changes were handled`, async (): Promise<void> => {
       expect.assertions(1);
       service.notifyHasFinished();
 
@@ -784,12 +644,8 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsBreakingChangeService();
-      discordClientServiceIsReadySpy = jest
-        .spyOn(discordClientService, `isReady`)
-        .mockResolvedValue(true);
-      firebaseGuildsServiceIsReadySpy = jest
-        .spyOn(firebaseGuildsService, `isReady`)
-        .mockResolvedValue(true);
+      discordClientServiceIsReadySpy = jest.spyOn(discordClientService, `isReady`).mockResolvedValue(true);
+      firebaseGuildsServiceIsReadySpy = jest.spyOn(firebaseGuildsService, `isReady`).mockResolvedValue(true);
     });
 
     describe(`when the Firebase guilds ready check failed`, (): void => {
@@ -797,14 +653,10 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
         discordClientServiceIsReadySpy.mockRejectedValue(new Error(`error`));
       });
 
-      it(`should consider that the service is not ready`, async (): Promise<
-        void
-      > => {
+      it(`should consider that the service is not ready`, async (): Promise<void> => {
         expect.assertions(1);
 
-        await expect(
-          service.isReady$().pipe(take(1)).toPromise()
-        ).rejects.toThrow(new Error(`error`));
+        await expect(service.isReady$().pipe(take(1)).toPromise()).rejects.toThrow(new Error(`error`));
       });
     });
 
@@ -818,14 +670,10 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
           firebaseGuildsServiceIsReadySpy.mockRejectedValue(new Error(`error`));
         });
 
-        it(`should consider that the service is not ready`, async (): Promise<
-          void
-        > => {
+        it(`should consider that the service is not ready`, async (): Promise<void> => {
           expect.assertions(1);
 
-          await expect(
-            service.isReady$().pipe(take(1)).toPromise()
-          ).rejects.toThrow(new Error(`error`));
+          await expect(service.isReady$().pipe(take(1)).toPromise()).rejects.toThrow(new Error(`error`));
         });
       });
 
@@ -834,9 +682,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
           firebaseGuildsServiceIsReadySpy.mockResolvedValue(true);
         });
 
-        it(`should consider that the service is ready`, async (): Promise<
-          void
-        > => {
+        it(`should consider that the service is ready`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.isReady$().pipe(take(1)).toPromise();

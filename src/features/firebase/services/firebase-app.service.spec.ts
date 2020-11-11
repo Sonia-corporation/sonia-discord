@@ -1,11 +1,11 @@
-import * as admin from "firebase-admin";
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { CoreEventService } from "../../core/services/core-event.service";
-import { ILoggerLog } from "../../logger/interfaces/logger-log";
-import { LoggerService } from "../../logger/services/logger.service";
-import { FirebaseAppEnum } from "../enums/firebase-app.enum";
-import { FirebaseAppService } from "./firebase-app.service";
+import { FirebaseAppService } from './firebase-app.service';
+import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import { CoreEventService } from '../../core/services/core-event.service';
+import { ILoggerLog } from '../../logger/interfaces/logger-log';
+import { LoggerService } from '../../logger/services/logger.service';
+import { FirebaseAppEnum } from '../enums/firebase-app.enum';
+import * as admin from 'firebase-admin';
+import { createMock } from 'ts-auto-mock';
 import App = admin.app.App;
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
@@ -54,9 +54,7 @@ describe(`FirebaseAppService`, (): void => {
       service = new FirebaseAppService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.FIREBASE_APP_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.FIREBASE_APP_SERVICE);
     });
   });
 
@@ -71,18 +69,10 @@ describe(`FirebaseAppService`, (): void => {
       service = new FirebaseAppService();
 
       credential = createMock<admin.credential.Credential>();
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      loggerServiceErrorSpy = jest
-        .spyOn(loggerService, `error`)
-        .mockImplementation();
-      initializeAppSpy = jest
-        .spyOn(admin, `initializeApp`)
-        .mockImplementation();
-      jest
-        .spyOn(admin.credential, `applicationDefault`)
-        .mockReturnValue(credential);
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
+      initializeAppSpy = jest.spyOn(admin, `initializeApp`).mockImplementation();
+      jest.spyOn(admin.credential, `applicationDefault`).mockReturnValue(credential);
     });
 
     /**
@@ -98,9 +88,7 @@ describe(`FirebaseAppService`, (): void => {
 
         expect((): void => {
           service.init();
-        }).toThrow(
-          new Error(`GOOGLE_APPLICATION_CREDENTIALS env is undefined`)
-        );
+        }).toThrow(new Error(`GOOGLE_APPLICATION_CREDENTIALS env is undefined`));
 
         expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({

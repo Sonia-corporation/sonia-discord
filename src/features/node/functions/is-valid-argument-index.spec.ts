@@ -1,4 +1,4 @@
-import { isValidArgumentIndex } from "./is-valid-argument-index";
+import { isValidArgumentIndex } from './is-valid-argument-index';
 
 describe(`isValidArgumentIndex()`, (): void => {
   let argumentIndex: number;

@@ -1,7 +1,7 @@
-import { createMock } from "ts-auto-mock";
-import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-version.enum";
-import { IFirebaseGuildV2 } from "../../interfaces/guilds/firebase-guild-v2";
-import { upgradeFirebaseGuildToV3 } from "./upgrade-firebase-guild-to-v3";
+import { upgradeFirebaseGuildToV3 } from './upgrade-firebase-guild-to-v3';
+import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
+import { IFirebaseGuildV2 } from '../../interfaces/guilds/firebase-guild-v2';
+import { createMock } from 'ts-auto-mock';
 
 describe(`upgradeFirebaseGuildToV3()`, (): void => {
   let firebaseGuild: IFirebaseGuildV2;
@@ -31,9 +31,7 @@ describe(`upgradeFirebaseGuildToV3()`, (): void => {
 
     const result = upgradeFirebaseGuildToV3(firebaseGuild);
 
-    expect(result.lastReleaseNotesVersion).toStrictEqual(
-      firebaseGuild.lastReleaseNotesVersion
-    );
+    expect(result.lastReleaseNotesVersion).toStrictEqual(firebaseGuild.lastReleaseNotesVersion);
   });
 
   it(`should return a v3 version`, (): void => {

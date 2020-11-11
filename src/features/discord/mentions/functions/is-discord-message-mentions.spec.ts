@@ -1,6 +1,6 @@
-import { MessageMentions } from "discord.js";
-import { createMock } from "ts-auto-mock";
-import { isDiscordMessageMentions } from "./is-discord-message-mentions";
+import { isDiscordMessageMentions } from './is-discord-message-mentions';
+import { MessageMentions } from 'discord.js';
+import { createMock } from 'ts-auto-mock';
 
 describe(`isDiscordMessageMentions()`, (): void => {
   let mention: unknown;

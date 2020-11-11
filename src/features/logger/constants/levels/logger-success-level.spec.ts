@@ -1,4 +1,4 @@
-import { LOGGER_SUCCESS_LEVEL } from "./logger-success-level";
+import { LOGGER_SUCCESS_LEVEL } from './logger-success-level';
 
 describe(`LOGGER_SUCCESS_LEVEL`, (): void => {
   it(`should be 2`, (): void => {

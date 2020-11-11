@@ -1,10 +1,10 @@
-import _ from "lodash";
-import moment from "moment-timezone";
-import { Job, scheduleJob } from "node-schedule";
-import { getEveryHourScheduleRule } from "../../../functions/schedule/get-every-hour-schedule-rule";
-import { getEveryMinuteScheduleRule } from "../../../functions/schedule/get-every-minute-schedule-rule";
-import { getNoonScheduleRule } from "../../../functions/schedule/get-noon-schedule-rule";
-import { getNextJobDate } from "./get-next-job-date";
+import { getNextJobDate } from './get-next-job-date';
+import { getEveryHourScheduleRule } from '../../../functions/schedule/get-every-hour-schedule-rule';
+import { getEveryMinuteScheduleRule } from '../../../functions/schedule/get-every-minute-schedule-rule';
+import { getNoonScheduleRule } from '../../../functions/schedule/get-noon-schedule-rule';
+import _ from 'lodash';
+import moment from 'moment-timezone';
+import { Job, scheduleJob } from 'node-schedule';
 
 describe(`getNextJobDate()`, (): void => {
   let job: Job;
@@ -19,9 +19,7 @@ describe(`getNextJobDate()`, (): void => {
 
       const result = getNextJobDate(job);
 
-      expect(result).toStrictEqual(
-        `${moment().add(1, `hour`).format(`HH`)}:00:00`
-      );
+      expect(result).toStrictEqual(`${moment().add(1, `hour`).format(`HH`)}:00:00`);
     });
   });
 

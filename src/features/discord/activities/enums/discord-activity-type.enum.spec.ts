@@ -1,12 +1,10 @@
-import { DiscordActivityTypeEnum } from "./discord-activity-type.enum";
+import { DiscordActivityTypeEnum } from './discord-activity-type.enum';
 
 describe(`DiscordActivityTypeEnum`, (): void => {
   it(`should have a member "CUSTOM_STATUS"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordActivityTypeEnum.CUSTOM_STATUS).toStrictEqual(
-      `CUSTOM_STATUS`
-    );
+    expect(DiscordActivityTypeEnum.CUSTOM_STATUS).toStrictEqual(`CUSTOM_STATUS`);
   });
 
   it(`should have a member "LISTENING"`, (): void => {

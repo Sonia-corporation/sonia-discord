@@ -1,9 +1,9 @@
-import { enableAkitaProdMode } from "@datorama/akita";
-import { config, DotenvConfigOutput } from "dotenv";
-import _ from "lodash";
-import xregexp from "xregexp";
-import { CoreService } from "./features/core/services/core.service";
-import { InitService } from "./features/init/services/init.service";
+import { CoreService } from './features/core/services/core.service';
+import { InitService } from './features/init/services/init.service';
+import { enableAkitaProdMode } from '@datorama/akita';
+import { DotenvConfigOutput, config } from 'dotenv';
+import _ from 'lodash';
+import xregexp from 'xregexp';
 
 console.debug(`Node env: ${_.toString(process.env.NODE_ENV)}`);
 

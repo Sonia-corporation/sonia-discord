@@ -1,42 +1,34 @@
-import {
-  Client,
-  Collection,
-  Guild,
-  GuildChannel,
-  Message,
-  TextChannel,
-} from "discord.js";
-import _ from "lodash";
-import moment from "moment-timezone";
-import * as NodeScheduleModule from "node-schedule";
-import { Job } from "node-schedule";
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import * as GetEveryHourScheduleRuleModule from "../../../../../functions/schedule/get-every-hour-schedule-rule";
-import { CoreEventService } from "../../../../core/services/core-event.service";
-import { FirebaseGuildChannelFeatureNoonVersionEnum } from "../../../../firebase/enums/guilds/channels/features/firebase-guild-channel-feature-noon-version.enum";
-import { FirebaseGuildChannelFeatureVersionEnum } from "../../../../firebase/enums/guilds/channels/features/firebase-guild-channel-feature-version.enum";
-import { FirebaseGuildChannelVersionEnum } from "../../../../firebase/enums/guilds/channels/firebase-guild-channel-version.enum";
-import { FirebaseGuildVersionEnum } from "../../../../firebase/enums/guilds/firebase-guild-version.enum";
-import { IFirebaseGuildV3 } from "../../../../firebase/interfaces/guilds/firebase-guild-v3";
-import { FirebaseGuildsChannelsFeaturesNoonEnabledStateService } from "../../../../firebase/services/guilds/channels/features/noon/firebase-guilds-channels-features-noon-enabled-state.service";
-import { FirebaseGuildsService } from "../../../../firebase/services/guilds/firebase-guilds.service";
-import { IFirebaseGuildChannel } from "../../../../firebase/types/guilds/channels/firebase-guild-channel";
-import { IFirebaseGuildChannelVFinal } from "../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final";
-import { IFirebaseGuild } from "../../../../firebase/types/guilds/firebase-guild";
-import { IFirebaseGuildVFinal } from "../../../../firebase/types/guilds/firebase-guild-v-final";
-import { ILoggerLog } from "../../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../../logger/services/logger.service";
-import * as GetNextJobDateModule from "../../../../schedules/functions/get-next-job-date";
-import * as GetNextJobDateHumanizedModule from "../../../../schedules/functions/get-next-job-date-humanized";
-import { IDiscordGuildSoniaSendMessageToChannel } from "../../../guilds/interfaces/discord-guild-sonia-send-message-to-channel";
-import { DiscordGuildConfigService } from "../../../guilds/services/config/discord-guild-config.service";
-import { DiscordGuildSoniaService } from "../../../guilds/services/discord-guild-sonia.service";
-import { DiscordLoggerErrorService } from "../../../logger/services/discord-logger-error.service";
-import { DiscordClientService } from "../../../services/discord-client.service";
-import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
-import { DiscordMessageScheduleNoonCountService } from "./discord-message-schedule-noon-count.service";
-import { DiscordMessageScheduleNoonService } from "./discord-message-schedule-noon.service";
+import { DiscordMessageScheduleNoonCountService } from './discord-message-schedule-noon-count.service';
+import { DiscordMessageScheduleNoonService } from './discord-message-schedule-noon.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import * as GetEveryHourScheduleRuleModule from '../../../../../functions/schedule/get-every-hour-schedule-rule';
+import { CoreEventService } from '../../../../core/services/core-event.service';
+import { FirebaseGuildChannelFeatureNoonVersionEnum } from '../../../../firebase/enums/guilds/channels/features/firebase-guild-channel-feature-noon-version.enum';
+import { FirebaseGuildChannelFeatureVersionEnum } from '../../../../firebase/enums/guilds/channels/features/firebase-guild-channel-feature-version.enum';
+import { FirebaseGuildChannelVersionEnum } from '../../../../firebase/enums/guilds/channels/firebase-guild-channel-version.enum';
+import { FirebaseGuildVersionEnum } from '../../../../firebase/enums/guilds/firebase-guild-version.enum';
+import { IFirebaseGuildV3 } from '../../../../firebase/interfaces/guilds/firebase-guild-v3';
+import { FirebaseGuildsChannelsFeaturesNoonEnabledStateService } from '../../../../firebase/services/guilds/channels/features/noon/firebase-guilds-channels-features-noon-enabled-state.service';
+import { FirebaseGuildsService } from '../../../../firebase/services/guilds/firebase-guilds.service';
+import { IFirebaseGuildChannel } from '../../../../firebase/types/guilds/channels/firebase-guild-channel';
+import { IFirebaseGuildChannelVFinal } from '../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final';
+import { IFirebaseGuild } from '../../../../firebase/types/guilds/firebase-guild';
+import { IFirebaseGuildVFinal } from '../../../../firebase/types/guilds/firebase-guild-v-final';
+import { ILoggerLog } from '../../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../../logger/services/logger.service';
+import * as GetNextJobDateModule from '../../../../schedules/functions/get-next-job-date';
+import * as GetNextJobDateHumanizedModule from '../../../../schedules/functions/get-next-job-date-humanized';
+import { IDiscordGuildSoniaSendMessageToChannel } from '../../../guilds/interfaces/discord-guild-sonia-send-message-to-channel';
+import { DiscordGuildConfigService } from '../../../guilds/services/config/discord-guild-config.service';
+import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild-sonia.service';
+import { DiscordLoggerErrorService } from '../../../logger/services/discord-logger-error.service';
+import { DiscordClientService } from '../../../services/discord-client.service';
+import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
+import { Client, Collection, Guild, GuildChannel, Message, TextChannel } from 'discord.js';
+import _ from 'lodash';
+import moment from 'moment-timezone';
+import * as NodeScheduleModule from 'node-schedule';
+import { createMock } from 'ts-auto-mock';
 
 let time: number = new Date(`2020-01-02T02:00:00Z`).getTime();
 
@@ -100,9 +92,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
       service = DiscordMessageScheduleNoonService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(DiscordMessageScheduleNoonService)
-      );
+      expect(service).toStrictEqual(expect.any(DiscordMessageScheduleNoonService));
     });
 
     it(`should return the created DiscordMessageScheduleNoon service`, (): void => {
@@ -141,9 +131,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageScheduleNoonService();
 
-      startScheduleSpy = jest
-        .spyOn(service, `startSchedule`)
-        .mockImplementation();
+      startScheduleSpy = jest.spyOn(service, `startSchedule`).mockImplementation();
     });
 
     it(`should start the schedule`, (): void => {
@@ -157,7 +145,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
   });
 
   describe(`startSchedule()`, (): void => {
-    let job: Job;
+    let job: NodeScheduleModule.Job;
 
     let scheduleJobSpy: jest.SpyInstance;
     let loggerServiceDebugSpy: jest.SpyInstance;
@@ -171,25 +159,17 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         .spyOn(GetEveryHourScheduleRuleModule, `getEveryHourScheduleRule`)
         .mockReturnValue(`dummy-schedule`);
       service = new DiscordMessageScheduleNoonService();
-      job = createMock<Job>({
+      job = createMock<NodeScheduleModule.Job>({
         reschedule: jobRescheduleMock,
       });
 
-      scheduleJobSpy = jest
-        .spyOn(NodeScheduleModule, `scheduleJob`)
-        .mockReturnValue(job);
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      scheduleJobSpy = jest.spyOn(NodeScheduleModule, `scheduleJob`).mockReturnValue(job);
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       jest
         .spyOn(GetNextJobDateHumanizedModule, `getNextJobDateHumanized`)
         .mockReturnValue(`dummy-next-job-date-humanized`);
-      jest
-        .spyOn(GetNextJobDateModule, `getNextJobDate`)
-        .mockReturnValue(`dummy-next-job-date`);
-      handleMessagesSpy = jest
-        .spyOn(service, `handleMessages`)
-        .mockRejectedValue(new Error(`handleMessages error`));
+      jest.spyOn(GetNextJobDateModule, `getNextJobDate`).mockReturnValue(`dummy-next-job-date`);
+      handleMessagesSpy = jest.spyOn(service, `handleMessages`).mockRejectedValue(new Error(`handleMessages error`));
     });
 
     it(`should create a schedule`, (): void => {
@@ -207,10 +187,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       service.startSchedule();
 
       expect(scheduleJobSpy).toHaveBeenCalledTimes(1);
-      expect(scheduleJobSpy).toHaveBeenCalledWith(
-        `dummy-schedule`,
-        expect.any(Function)
-      );
+      expect(scheduleJobSpy).toHaveBeenCalledWith(`dummy-schedule`, expect.any(Function));
     });
 
     describe(`when the job is undefined`, (): void => {
@@ -260,7 +237,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
     describe(`once the scheduled job is triggered`, (): void => {
       beforeEach((): void => {
         scheduleJobSpy.mockImplementation(
-          (_rule: string, callback: () => void): Job => {
+          (_rule: string, callback: () => void): NodeScheduleModule.Job => {
             callback();
 
             return job;
@@ -332,22 +309,16 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       firebaseGuildsServiceGetGuildSpy = jest
         .spyOn(firebaseGuildsService, `getGuild`)
         .mockRejectedValue(new Error(`getGuild error`));
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       sendMessageByChannelSpy = jest
         .spyOn(service, `sendMessageByChannel`)
         .mockRejectedValue(new Error(`sendMessageByChannel error`));
     });
 
-    it(`should log about fetching the Firebase guild`, async (): Promise<
-      void
-    > => {
+    it(`should log about fetching the Firebase guild`, async (): Promise<void> => {
       expect.assertions(3);
 
-      await expect(service.sendMessage(guild)).rejects.toThrow(
-        new Error(`getGuild error`)
-      );
+      await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`getGuild error`));
 
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -359,29 +330,21 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
     it(`should get the Firebase guild`, async (): Promise<void> => {
       expect.assertions(3);
 
-      await expect(service.sendMessage(guild)).rejects.toThrow(
-        new Error(`getGuild error`)
-      );
+      await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`getGuild error`));
 
       expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledTimes(1);
-      expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledWith(
-        `dummy-guild-id`
-      );
+      expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledWith(`dummy-guild-id`);
     });
 
     describe(`when the Firebase guild was not successfully fetched`, (): void => {
       beforeEach((): void => {
-        firebaseGuildsServiceGetGuildSpy.mockRejectedValue(
-          new Error(`getGuild error`)
-        );
+        firebaseGuildsServiceGetGuildSpy.mockRejectedValue(new Error(`getGuild error`));
       });
 
       it(`should not send a message`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.sendMessage(guild)).rejects.toThrow(
-          new Error(`getGuild error`)
-        );
+        await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`getGuild error`));
 
         expect(sendMessageByChannelSpy).not.toHaveBeenCalled();
       });
@@ -394,14 +357,10 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         firebaseGuildsServiceGetGuildSpy.mockResolvedValue(firebaseGuild);
       });
 
-      it(`should log about the Firebase guild fetch`, async (): Promise<
-        void
-      > => {
+      it(`should log about the Firebase guild fetch`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(service.sendMessage(guild)).rejects.toThrow(
-          new Error(`Invalid guild`)
-        );
+        await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Invalid guild`));
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
@@ -417,14 +376,10 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           firebaseGuildsServiceGetGuildSpy.mockResolvedValue(firebaseGuild);
         });
 
-        it(`should log about the invalid Firebase guild`, async (): Promise<
-          void
-        > => {
+        it(`should log about the invalid Firebase guild`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(service.sendMessage(guild)).rejects.toThrow(
-            new Error(`Invalid guild`)
-          );
+          await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Invalid guild`));
 
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
           expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
@@ -436,9 +391,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         it(`should not send a message`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.sendMessage(guild)).rejects.toThrow(
-            new Error(`Invalid guild`)
-          );
+          await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Invalid guild`));
 
           expect(sendMessageByChannelSpy).not.toHaveBeenCalled();
         });
@@ -451,14 +404,10 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           firebaseGuildsServiceGetGuildSpy.mockResolvedValue(firebaseGuild);
         });
 
-        it(`should log about the invalid Firebase guild`, async (): Promise<
-          void
-        > => {
+        it(`should log about the invalid Firebase guild`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(service.sendMessage(guild)).rejects.toThrow(
-            new Error(`Invalid guild`)
-          );
+          await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Invalid guild`));
 
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
           expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
@@ -470,9 +419,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         it(`should not send a message`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.sendMessage(guild)).rejects.toThrow(
-            new Error(`Invalid guild`)
-          );
+          await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Invalid guild`));
 
           expect(sendMessageByChannelSpy).not.toHaveBeenCalled();
         });
@@ -487,14 +434,10 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           firebaseGuildsServiceGetGuildSpy.mockResolvedValue(firebaseGuild);
         });
 
-        it(`should log about the invalid Firebase guild`, async (): Promise<
-          void
-        > => {
+        it(`should log about the invalid Firebase guild`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(service.sendMessage(guild)).rejects.toThrow(
-            new Error(`Invalid guild`)
-          );
+          await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Invalid guild`));
 
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
           expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
@@ -506,9 +449,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         it(`should not send a message`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.sendMessage(guild)).rejects.toThrow(
-            new Error(`Invalid guild`)
-          );
+          await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Invalid guild`));
 
           expect(sendMessageByChannelSpy).not.toHaveBeenCalled();
         });
@@ -524,9 +465,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           firebaseGuildsServiceGetGuildSpy.mockResolvedValue(firebaseGuild);
         });
 
-        it(`should log about the valid Firebase guild`, async (): Promise<
-          void
-        > => {
+        it(`should log about the valid Firebase guild`, async (): Promise<void> => {
           expect.assertions(2);
 
           await service.sendMessage(guild);
@@ -574,19 +513,13 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
             firebaseGuildsServiceGetGuildSpy.mockResolvedValue(firebaseGuild);
           });
 
-          it(`should send a message for this channel`, async (): Promise<
-            void
-          > => {
+          it(`should send a message for this channel`, async (): Promise<void> => {
             expect.assertions(2);
 
             await service.sendMessage(guild);
 
             expect(sendMessageByChannelSpy).toHaveBeenCalledTimes(1);
-            expect(sendMessageByChannelSpy).toHaveBeenCalledWith(
-              channel,
-              firebaseGuild,
-              guild
-            );
+            expect(sendMessageByChannelSpy).toHaveBeenCalledWith(channel, firebaseGuild, guild);
           });
         });
 
@@ -614,31 +547,17 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
           describe(`when the messages failed to be sent to the channels`, (): void => {
             beforeEach((): void => {
-              sendMessageByChannelSpy.mockRejectedValue(
-                new Error(`sendMessageByChannel error`)
-              );
+              sendMessageByChannelSpy.mockRejectedValue(new Error(`sendMessageByChannel error`));
             });
 
-            it(`should send a message for the two channels`, async (): Promise<
-              void
-            > => {
+            it(`should send a message for the two channels`, async (): Promise<void> => {
               expect.assertions(3);
 
               await service.sendMessage(guild);
 
               expect(sendMessageByChannelSpy).toHaveBeenCalledTimes(2);
-              expect(sendMessageByChannelSpy).toHaveBeenNthCalledWith(
-                1,
-                channel1,
-                firebaseGuild,
-                guild
-              );
-              expect(sendMessageByChannelSpy).toHaveBeenNthCalledWith(
-                2,
-                channel2,
-                firebaseGuild,
-                guild
-              );
+              expect(sendMessageByChannelSpy).toHaveBeenNthCalledWith(1, channel1, firebaseGuild, guild);
+              expect(sendMessageByChannelSpy).toHaveBeenNthCalledWith(2, channel2, firebaseGuild, guild);
             });
 
             it(`should not throw an error`, async (): Promise<void> => {
@@ -659,26 +578,14 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               sendMessageByChannelSpy.mockResolvedValue(message);
             });
 
-            it(`should send a message for the two channels`, async (): Promise<
-              void
-            > => {
+            it(`should send a message for the two channels`, async (): Promise<void> => {
               expect.assertions(3);
 
               await service.sendMessage(guild);
 
               expect(sendMessageByChannelSpy).toHaveBeenCalledTimes(2);
-              expect(sendMessageByChannelSpy).toHaveBeenNthCalledWith(
-                1,
-                channel1,
-                firebaseGuild,
-                guild
-              );
-              expect(sendMessageByChannelSpy).toHaveBeenNthCalledWith(
-                2,
-                channel2,
-                firebaseGuild,
-                guild
-              );
+              expect(sendMessageByChannelSpy).toHaveBeenNthCalledWith(1, channel1, firebaseGuild, guild);
+              expect(sendMessageByChannelSpy).toHaveBeenNthCalledWith(2, channel2, firebaseGuild, guild);
             });
 
             it(`should not throw an error`, async (): Promise<void> => {
@@ -718,17 +625,12 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         id: `dummy-guild-id`,
       });
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       sendMessageResponseSpy = jest
         .spyOn(service, `sendMessageResponse`)
         .mockRejectedValue(new Error(`sendMessageResponse error`));
       firebaseGuildsChannelsFeaturesNoonEnabledStateServiceIsEnabledSpy = jest
-        .spyOn(
-          firebaseGuildsChannelsFeaturesNoonEnabledStateService,
-          `isEnabled`
-        )
+        .spyOn(firebaseGuildsChannelsFeaturesNoonEnabledStateService, `isEnabled`)
         .mockImplementation();
     });
 
@@ -739,14 +641,12 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         });
       });
 
-      it(`should log about the Firebase guild channel having a disabled noon feature`, async (): Promise<
-        void
-      > => {
+      it(`should log about the Firebase guild channel having a disabled noon feature`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(
-          service.sendMessageByChannel(channel, firebaseGuild, guild)
-        ).rejects.toThrow(new Error(`Noon state disabled`));
+        await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+          new Error(`Noon state disabled`)
+        );
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -768,7 +668,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           beforeEach((): void => {
             firebaseGuild = createMock<IFirebaseGuildVFinal>({
               channels: {
-                "dummy-channel-id": {
+                'dummy-channel-id': {
                   features: {
                     noon: {
                       isEnabled: false,
@@ -782,19 +682,15 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               version: FirebaseGuildVersionEnum.V4,
             });
 
-            firebaseGuildsChannelsFeaturesNoonEnabledStateServiceIsEnabledSpy.mockReturnValue(
-              false
-            );
+            firebaseGuildsChannelsFeaturesNoonEnabledStateServiceIsEnabledSpy.mockReturnValue(false);
           });
 
-          it(`should log about the Firebase guild channel having a disabled noon feature`, async (): Promise<
-            void
-          > => {
+          it(`should log about the Firebase guild channel having a disabled noon feature`, async (): Promise<void> => {
             expect.assertions(3);
 
-            await expect(
-              service.sendMessageByChannel(channel, firebaseGuild, guild)
-            ).rejects.toThrow(new Error(`Noon state disabled`));
+            await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+              new Error(`Noon state disabled`)
+            );
 
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -808,7 +704,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           beforeEach((): void => {
             firebaseGuild = createMock<IFirebaseGuildVFinal>({
               channels: {
-                "dummy-channel-id": {
+                'dummy-channel-id': {
                   features: {
                     noon: {
                       isEnabled: true,
@@ -822,19 +718,15 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               version: FirebaseGuildVersionEnum.V4,
             });
 
-            firebaseGuildsChannelsFeaturesNoonEnabledStateServiceIsEnabledSpy.mockReturnValue(
-              true
-            );
+            firebaseGuildsChannelsFeaturesNoonEnabledStateServiceIsEnabledSpy.mockReturnValue(true);
           });
 
-          it(`should log about the Firebase guild channel having an enabled noon feature`, async (): Promise<
-            void
-          > => {
+          it(`should log about the Firebase guild channel having an enabled noon feature`, async (): Promise<void> => {
             expect.assertions(3);
 
-            await expect(
-              service.sendMessageByChannel(channel, firebaseGuild, guild)
-            ).rejects.toThrow(new Error(`Guild channel not found`));
+            await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+              new Error(`Guild channel not found`)
+            );
 
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
             expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
@@ -843,19 +735,15 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
             } as ILoggerLog);
           });
 
-          it(`should get the Discord guild channel`, async (): Promise<
-            void
-          > => {
+          it(`should get the Discord guild channel`, async (): Promise<void> => {
             expect.assertions(3);
 
-            await expect(
-              service.sendMessageByChannel(channel, firebaseGuild, guild)
-            ).rejects.toThrow(new Error(`Guild channel not found`));
+            await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+              new Error(`Guild channel not found`)
+            );
 
             expect(guildChannelsGetMock).toHaveBeenCalledTimes(1);
-            expect(guildChannelsGetMock).toHaveBeenCalledWith(
-              `dummy-channel-id`
-            );
+            expect(guildChannelsGetMock).toHaveBeenCalledWith(`dummy-channel-id`);
           });
 
           describe(`when the Discord guild channel is undefined`, (): void => {
@@ -863,14 +751,12 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               guildChannelsGetMock.mockReturnValue(undefined);
             });
 
-            it(`should log about the Discord guild channel not found`, async (): Promise<
-              void
-            > => {
+            it(`should log about the Discord guild channel not found`, async (): Promise<void> => {
               expect.assertions(3);
 
-              await expect(
-                service.sendMessageByChannel(channel, firebaseGuild, guild)
-              ).rejects.toThrow(new Error(`Guild channel not found`));
+              await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+                new Error(`Guild channel not found`)
+              );
 
               expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
               expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
@@ -891,14 +777,12 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               guildChannelsGetMock.mockReturnValue(guildChannel);
             });
 
-            it(`should log about the Discord guild channel being valid`, async (): Promise<
-              void
-            > => {
+            it(`should log about the Discord guild channel being valid`, async (): Promise<void> => {
               expect.assertions(3);
 
-              await expect(
-                service.sendMessageByChannel(channel, firebaseGuild, guild)
-              ).rejects.toThrow(new Error(`sendMessageResponse error`));
+              await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+                new Error(`sendMessageResponse error`)
+              );
 
               expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
               expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
@@ -910,9 +794,9 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
             it(`should send a message response`, async (): Promise<void> => {
               expect.assertions(3);
 
-              await expect(
-                service.sendMessageByChannel(channel, firebaseGuild, guild)
-              ).rejects.toThrow(new Error(`sendMessageResponse error`));
+              await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+                new Error(`sendMessageResponse error`)
+              );
 
               expect(sendMessageResponseSpy).toHaveBeenCalledTimes(1);
               expect(sendMessageResponseSpy).toHaveBeenCalledWith(guildChannel);
@@ -920,17 +804,15 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
             describe(`when the message response is invalid`, (): void => {
               beforeEach((): void => {
-                sendMessageResponseSpy.mockRejectedValue(
-                  new Error(`sendMessageResponse error`)
-                );
+                sendMessageResponseSpy.mockRejectedValue(new Error(`sendMessageResponse error`));
               });
 
               it(`should throw an error`, async (): Promise<void> => {
                 expect.assertions(1);
 
-                await expect(
-                  service.sendMessageByChannel(channel, firebaseGuild, guild)
-                ).rejects.toThrow(new Error(`sendMessageResponse error`));
+                await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+                  new Error(`sendMessageResponse error`)
+                );
               });
             });
 
@@ -946,11 +828,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               it(`should return a message`, async (): Promise<void> => {
                 expect.assertions(1);
 
-                const result = await service.sendMessageByChannel(
-                  channel,
-                  firebaseGuild,
-                  guild
-                );
+                const result = await service.sendMessageByChannel(channel, firebaseGuild, guild);
 
                 expect(result).toStrictEqual(message);
               });
@@ -970,43 +848,31 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageScheduleNoonService();
 
-      discordClientServiceGetClientSpy = jest
-        .spyOn(discordClientService, `getClient`)
-        .mockReturnValue(
-          createMock<Client>({
-            guilds: {
-              cache: {
-                forEach: _.noop,
-              } as Collection<string, Guild>,
-            },
-          })
-        );
+      discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
+        createMock<Client>({
+          guilds: {
+            cache: {
+              forEach: _.noop,
+            } as Collection<string, Guild>,
+          },
+        })
+      );
       discordGuildConfigServiceShouldSendNoonMessageSpy = jest
         .spyOn(discordGuildConfigService, `shouldSendNoonMessage`)
         .mockImplementation();
-      sendMessageSpy = jest
-        .spyOn(service, `sendMessage`)
-        .mockRejectedValue(new Error(`sendMessage error`));
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      sendMessageSpy = jest.spyOn(service, `sendMessage`).mockRejectedValue(new Error(`sendMessage error`));
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
     });
 
     describe(`when the noon message is disabled`, (): void => {
       beforeEach((): void => {
-        discordGuildConfigServiceShouldSendNoonMessageSpy.mockReturnValue(
-          false
-        );
+        discordGuildConfigServiceShouldSendNoonMessageSpy.mockReturnValue(false);
       });
 
-      it(`should log about the noon message being disabled`, async (): Promise<
-        void
-      > => {
+      it(`should log about the noon message being disabled`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(service.handleMessages()).rejects.toThrow(
-          new Error(`Can not send message`)
-        );
+        await expect(service.handleMessages()).rejects.toThrow(new Error(`Can not send message`));
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -1018,9 +884,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       it(`should not get the Discord client`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.handleMessages()).rejects.toThrow(
-          new Error(`Can not send message`)
-        );
+        await expect(service.handleMessages()).rejects.toThrow(new Error(`Can not send message`));
 
         expect(discordClientServiceGetClientSpy).not.toHaveBeenCalled();
       });
@@ -1028,9 +892,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       it(`should not send a message`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.handleMessages()).rejects.toThrow(
-          new Error(`Can not send message`)
-        );
+        await expect(service.handleMessages()).rejects.toThrow(new Error(`Can not send message`));
 
         expect(sendMessageSpy).not.toHaveBeenCalled();
       });
@@ -1053,14 +915,10 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toStrictEqual(8);
         });
 
-        it(`should log about not being noon in Paris`, async (): Promise<
-          void
-        > => {
+        it(`should log about not being noon in Paris`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(service.handleMessages()).rejects.toThrow(
-            new Error(`Can not send message`)
-          );
+          await expect(service.handleMessages()).rejects.toThrow(new Error(`Can not send message`));
 
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -1072,9 +930,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         it(`should not get the Discord client`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.handleMessages()).rejects.toThrow(
-            new Error(`Can not send message`)
-          );
+          await expect(service.handleMessages()).rejects.toThrow(new Error(`Can not send message`));
 
           expect(discordClientServiceGetClientSpy).not.toHaveBeenCalled();
         });
@@ -1082,9 +938,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         it(`should not send a message`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.handleMessages()).rejects.toThrow(
-            new Error(`Can not send message`)
-          );
+          await expect(service.handleMessages()).rejects.toThrow(new Error(`Can not send message`));
 
           expect(sendMessageSpy).not.toHaveBeenCalled();
         });
@@ -1114,17 +968,15 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         describe(`when there is no guild`, (): void => {
           beforeEach((): void => {
-            discordClientServiceGetClientSpy = jest
-              .spyOn(discordClientService, `getClient`)
-              .mockReturnValue(
-                createMock<Client>({
-                  guilds: {
-                    cache: {
-                      forEach: _.noop,
-                    } as Collection<string, Guild>,
-                  },
-                })
-              );
+            discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
+              createMock<Client>({
+                guilds: {
+                  cache: {
+                    forEach: _.noop,
+                  } as Collection<string, Guild>,
+                },
+              })
+            );
           });
 
           it(`should not send a message`, async (): Promise<void> => {
@@ -1146,18 +998,15 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               id: `dummy-guild-id`,
             });
 
-            discordClientServiceGetClientSpy = jest
-              .spyOn(discordClientService, `getClient`)
-              .mockReturnValue(
-                createMock<Client>({
-                  guilds: {
-                    cache: {
-                      forEach: (callback): void =>
-                        callback(guild, `key`, new Map()),
-                    } as Collection<string, Guild>,
-                  },
-                })
-              );
+            discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
+              createMock<Client>({
+                guilds: {
+                  cache: {
+                    forEach: (callback): void => callback(guild, `key`, new Map()),
+                  } as Collection<string, Guild>,
+                },
+              })
+            );
           });
 
           it(`should send a message for the guild`, async (): Promise<void> => {
@@ -1176,9 +1025,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               sendMessageSpy.mockRejectedValue(new Error(`sendMessage error`));
             });
 
-            it(`should log about the sending message failing`, async (): Promise<
-              void
-            > => {
+            it(`should log about the sending message failing`, async (): Promise<void> => {
               expect.assertions(3);
 
               const result = await service.handleMessages();
@@ -1202,9 +1049,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               sendMessageSpy.mockResolvedValue(messages);
             });
 
-            it(`should not log about the sending message failing`, async (): Promise<
-              void
-            > => {
+            it(`should not log about the sending message failing`, async (): Promise<void> => {
               expect.assertions(2);
 
               const result = await service.handleMessages();
@@ -1227,20 +1072,18 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               id: `dummy-guild-id-2`,
             });
 
-            discordClientServiceGetClientSpy = jest
-              .spyOn(discordClientService, `getClient`)
-              .mockReturnValue(
-                createMock<Client>({
-                  guilds: {
-                    cache: {
-                      forEach(callback): void {
-                        callback(guild1, `key`, new Map());
-                        callback(guild2, `key`, new Map());
-                      },
-                    } as Collection<string, Guild>,
-                  },
-                })
-              );
+            discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
+              createMock<Client>({
+                guilds: {
+                  cache: {
+                    forEach(callback): void {
+                      callback(guild1, `key`, new Map());
+                      callback(guild2, `key`, new Map());
+                    },
+                  } as Collection<string, Guild>,
+                },
+              })
+            );
           });
 
           it(`should send a message for the guild`, async (): Promise<void> => {
@@ -1260,9 +1103,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               sendMessageSpy.mockRejectedValue(new Error(`sendMessage error`));
             });
 
-            it(`should log about the sending message failing`, async (): Promise<
-              void
-            > => {
+            it(`should log about the sending message failing`, async (): Promise<void> => {
               expect.assertions(4);
 
               const result = await service.handleMessages();
@@ -1290,9 +1131,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               sendMessageSpy.mockResolvedValue(messages);
             });
 
-            it(`should not log about the sending message failing`, async (): Promise<
-              void
-            > => {
+            it(`should not log about the sending message failing`, async (): Promise<void> => {
               expect.assertions(2);
 
               const result = await service.handleMessages();
@@ -1322,12 +1161,8 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       });
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      loggerServiceErrorSpy = jest
-        .spyOn(loggerService, `error`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
       discordGuildSoniaServiceSendMessageToChannelSpy = jest
         .spyOn(discordGuildSoniaService, `sendMessageToChannel`)
         .mockImplementation();
@@ -1346,9 +1181,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         });
       });
 
-      it(`should log about the guild channel being not writable`, async (): Promise<
-        void
-      > => {
+      it(`should log about the guild channel being not writable`, async (): Promise<void> => {
         expect.assertions(3);
 
         await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(
@@ -1380,9 +1213,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       it(`should log about sending a noon message`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(
-          new Error(`send error`)
-        );
+        await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
         expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
@@ -1394,9 +1225,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       it(`should send the noon message`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(
-          new Error(`send error`)
-        );
+        await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
         expect(sendMock).toHaveBeenCalledTimes(1);
         expect(sendMock).toHaveBeenCalledWith(`Il est midi!`, {
@@ -1409,14 +1238,10 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           sendMock.mockRejectedValue(new Error(`send error`));
         });
 
-        it(`should log about failing to send the message`, async (): Promise<
-          void
-        > => {
+        it(`should log about failing to send the message`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(
-            service.sendMessageResponse(guildChannel)
-          ).rejects.toThrow(new Error(`send error`));
+          await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
           expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
           expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(1, {
@@ -1428,9 +1253,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         it(`should log the error`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(
-            service.sendMessageResponse(guildChannel)
-          ).rejects.toThrow(new Error(`send error`));
+          await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
           expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
           expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(2, {
@@ -1439,38 +1262,22 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           } as ILoggerLog);
         });
 
-        it(`should get an humanized error message response`, async (): Promise<
-          void
-        > => {
+        it(`should get an humanized error message response`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(
-            service.sendMessageResponse(guildChannel)
-          ).rejects.toThrow(new Error(`send error`));
+          await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
-          expect(
-            discordLoggerErrorServiceGetErrorMessageResponseSpy
-          ).toHaveBeenCalledTimes(1);
-          expect(
-            discordLoggerErrorServiceGetErrorMessageResponseSpy
-          ).toHaveBeenCalledWith(new Error(`send error`));
+          expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).toHaveBeenCalledTimes(1);
+          expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).toHaveBeenCalledWith(new Error(`send error`));
         });
 
-        it(`should send the error to the Sonia discord errors channel`, async (): Promise<
-          void
-        > => {
+        it(`should send the error to the Sonia discord errors channel`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(
-            service.sendMessageResponse(guildChannel)
-          ).rejects.toThrow(new Error(`send error`));
+          await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
-          expect(
-            discordGuildSoniaServiceSendMessageToChannelSpy
-          ).toHaveBeenCalledTimes(1);
-          expect(
-            discordGuildSoniaServiceSendMessageToChannelSpy
-          ).toHaveBeenCalledWith({
+          expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+          expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
             channelName: `errors`,
             messageResponse: discordMessageResponse,
           } as IDiscordGuildSoniaSendMessageToChannel);
@@ -1486,9 +1293,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           sendMock.mockResolvedValue(message);
         });
 
-        it(`should log about the success of the noon message sending`, async (): Promise<
-          void
-        > => {
+        it(`should log about the success of the noon message sending`, async (): Promise<void> => {
           expect.assertions(2);
 
           await service.sendMessageResponse(guildChannel);
@@ -1508,28 +1313,20 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           expect(result).toStrictEqual(message);
         });
 
-        it(`should not get an humanized error message response`, async (): Promise<
-          void
-        > => {
+        it(`should not get an humanized error message response`, async (): Promise<void> => {
           expect.assertions(1);
 
           await service.sendMessageResponse(guildChannel);
 
-          expect(
-            discordLoggerErrorServiceGetErrorMessageResponseSpy
-          ).not.toHaveBeenCalled();
+          expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).not.toHaveBeenCalled();
         });
 
-        it(`should not send the error to the Sonia discord errors channel`, async (): Promise<
-          void
-        > => {
+        it(`should not send the error to the Sonia discord errors channel`, async (): Promise<void> => {
           expect.assertions(1);
 
           await service.sendMessageResponse(guildChannel);
 
-          expect(
-            discordGuildSoniaServiceSendMessageToChannelSpy
-          ).not.toHaveBeenCalled();
+          expect(discordGuildSoniaServiceSendMessageToChannelSpy).not.toHaveBeenCalled();
         });
       });
     });
@@ -1549,12 +1346,8 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         reschedule: jest.fn(),
       });
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      handleMessagesSpy = jest
-        .spyOn(service, `handleMessages`)
-        .mockRejectedValue(new Error(`handleMessages error`));
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      handleMessagesSpy = jest.spyOn(service, `handleMessages`).mockRejectedValue(new Error(`handleMessages error`));
       discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy = jest
         .spyOn(discordMessageScheduleNoonCountService, `countChannelsAndGuilds`)
         .mockImplementation();
@@ -1598,9 +1391,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         handleMessagesSpy.mockRejectedValue(new Error(`handleMessages error`));
       });
 
-      it(`should log that the messages could not have been handled`, async (): Promise<
-        void
-      > => {
+      it(`should log that the messages could not have been handled`, async (): Promise<void> => {
         expect.assertions(2);
 
         await service.executeJob();
@@ -1612,16 +1403,12 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         } as ILoggerLog);
       });
 
-      it(`should not count the channels and guilds`, async (): Promise<
-        void
-      > => {
+      it(`should not count the channels and guilds`, async (): Promise<void> => {
         expect.assertions(1);
 
         await service.executeJob();
 
-        expect(
-          discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy
-        ).not.toHaveBeenCalled();
+        expect(discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy).not.toHaveBeenCalled();
       });
     });
 
@@ -1635,17 +1422,11 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         await service.executeJob();
 
-        expect(
-          discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy
-        ).toHaveBeenCalledTimes(1);
-        expect(
-          discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy
-        ).toHaveBeenCalledWith([]);
+        expect(discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy).toHaveBeenCalledTimes(1);
+        expect(discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy).toHaveBeenCalledWith([]);
       });
 
-      it(`should not log that the messages could not have been handled`, async (): Promise<
-        void
-      > => {
+      it(`should not log that the messages could not have been handled`, async (): Promise<void> => {
         expect.assertions(1);
 
         await service.executeJob();

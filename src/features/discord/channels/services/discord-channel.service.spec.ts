@@ -1,6 +1,6 @@
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { DiscordChannelService } from "./discord-channel.service";
+import { DiscordChannelService } from './discord-channel.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
 
 describe(`DiscordChannelService`, (): void => {
   let service: DiscordChannelService;
@@ -43,9 +43,7 @@ describe(`DiscordChannelService`, (): void => {
       service = new DiscordChannelService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_CHANNEL_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_CHANNEL_SERVICE);
     });
   });
 });

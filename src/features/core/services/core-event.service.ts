@@ -1,6 +1,6 @@
-import _ from "lodash";
-import { Observable, Subject } from "rxjs";
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import _ from 'lodash';
+import { Observable, Subject } from 'rxjs';
 
 export class CoreEventService {
   private static _instance: CoreEventService;
@@ -13,9 +13,7 @@ export class CoreEventService {
     return CoreEventService._instance;
   }
 
-  private readonly _serviceCreated$: Subject<ServiceNameEnum> = new Subject<
-    ServiceNameEnum
-  >();
+  private readonly _serviceCreated$: Subject<ServiceNameEnum> = new Subject<ServiceNameEnum>();
   private readonly _createdServices: ServiceNameEnum[] = [
     ServiceNameEnum.CORE_SERVICE,
     ServiceNameEnum.CORE_EVENT_SERVICE,

@@ -1,6 +1,6 @@
-import _ from "lodash";
-import { EMPTY, Observable } from "rxjs";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import _ from 'lodash';
+import { EMPTY, Observable } from 'rxjs';
 
 export class CoreEventService {
   private static _instance: CoreEventService;

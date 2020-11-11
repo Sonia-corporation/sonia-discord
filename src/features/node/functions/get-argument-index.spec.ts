@@ -1,4 +1,4 @@
-import { getArgumentIndex } from "./get-argument-index";
+import { getArgumentIndex } from './get-argument-index';
 
 describe(`getArgumentIndex()`, (): void => {
   let name: string;

@@ -1,25 +1,21 @@
-import {
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
-} from "discord.js";
-import moment from "moment-timezone";
-import { createMock } from "ts-auto-mock";
-import { ColorEnum } from "../../../../../../../enums/color.enum";
-import { IconEnum } from "../../../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../../../../logger/services/logger.service";
-import { DiscordSoniaService } from "../../../../../users/services/discord-sonia.service";
-import { DiscordMessageCommandLunchDescriptionEnum } from "../../../../enums/commands/lunch/discord-message-command-lunch-description.enum";
-import { DiscordMessageCommandLunchTitleEnum } from "../../../../enums/commands/lunch/discord-message-command-lunch-title.enum";
-import { IDiscordMessageResponse } from "../../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";
-import { DISCORD_MESSAGE_COMMAND_LUNCH_DESCRIPTION_MESSAGES } from "../constants/discord-message-command-lunch-description-messages";
-import { DISCORD_MESSAGE_COMMAND_LUNCH_TITLE_MESSAGES } from "../constants/discord-message-command-lunch-title-messages";
-import { DiscordMessageCommandLunchService } from "./discord-message-command-lunch.service";
+import { DiscordMessageCommandLunchService } from './discord-message-command-lunch.service';
+import { ColorEnum } from '../../../../../../../enums/color.enum';
+import { IconEnum } from '../../../../../../../enums/icon.enum';
+import { ServiceNameEnum } from '../../../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../../../core/services/core-event.service';
+import { ILoggerLog } from '../../../../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../../../../logger/services/logger.service';
+import { DiscordSoniaService } from '../../../../../users/services/discord-sonia.service';
+import { DiscordMessageCommandLunchDescriptionEnum } from '../../../../enums/commands/lunch/discord-message-command-lunch-description.enum';
+import { DiscordMessageCommandLunchTitleEnum } from '../../../../enums/commands/lunch/discord-message-command-lunch-title.enum';
+import { IDiscordMessageResponse } from '../../../../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../../../../types/any-discord-message';
+import { DiscordMessageConfigService } from '../../../config/discord-message-config.service';
+import { DISCORD_MESSAGE_COMMAND_LUNCH_DESCRIPTION_MESSAGES } from '../constants/discord-message-command-lunch-description-messages';
+import { DISCORD_MESSAGE_COMMAND_LUNCH_TITLE_MESSAGES } from '../constants/discord-message-command-lunch-title-messages';
+import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import moment from 'moment-timezone';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../logger/services/chalk/chalk.service`);
 
@@ -43,9 +39,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       service = DiscordMessageCommandLunchService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(DiscordMessageCommandLunchService)
-      );
+      expect(service).toStrictEqual(expect.any(DiscordMessageCommandLunchService));
     });
 
     it(`should return the created DiscordMessageCommandLunch service`, (): void => {
@@ -92,9 +86,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
       });
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
-      getMessageResponseSpy = jest
-        .spyOn(service, `getMessageResponse`)
-        .mockResolvedValue(discordMessageResponse);
+      getMessageResponseSpy = jest.spyOn(service, `getMessageResponse`).mockResolvedValue(discordMessageResponse);
     });
 
     it(`should log about the command`, async (): Promise<void> => {
@@ -145,66 +137,44 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         discordMessageConfigService,
         `getMessageCommandLunchImageColor`
       );
-      discordSoniaServiceGetImageUrlSpy = jest.spyOn(
-        discordSoniaService,
-        `getImageUrl`
-      );
+      discordSoniaServiceGetImageUrlSpy = jest.spyOn(discordSoniaService, `getImageUrl`);
       discordMessageConfigServiceGetMessageCommandLunchImageUrlSpy = jest.spyOn(
         discordMessageConfigService,
         `getMessageCommandLunchImageUrl`
       );
       jest
-        .spyOn(
-          DISCORD_MESSAGE_COMMAND_LUNCH_DESCRIPTION_MESSAGES,
-          `getRandomMessage`
-        )
-        .mockReturnValue(
-          DiscordMessageCommandLunchDescriptionEnum.I_WAS_STARVING
-        );
+        .spyOn(DISCORD_MESSAGE_COMMAND_LUNCH_DESCRIPTION_MESSAGES, `getRandomMessage`)
+        .mockReturnValue(DiscordMessageCommandLunchDescriptionEnum.I_WAS_STARVING);
       jest
         .spyOn(DISCORD_MESSAGE_COMMAND_LUNCH_TITLE_MESSAGES, `getRandomMessage`)
         .mockReturnValue(DiscordMessageCommandLunchTitleEnum.TIME_TO_EAT);
     });
 
-    it(`should return a Discord message response embed with an author`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<
-        MessageEmbedAuthor
-      >();
-      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(
-        messageEmbedAuthor
-      );
+      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse();
 
       expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
-    it(`should return a Discord message response embed with a color`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandLunchImageColorSpy.mockReturnValue(
-        ColorEnum.CANDY
-      );
+      discordMessageConfigServiceGetMessageCommandLunchImageColorSpy.mockReturnValue(ColorEnum.CANDY);
 
       const result = await service.getMessageResponse();
 
       expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
-    it(`should return a Discord message response embed with a description`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a description`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.description).toStrictEqual(
-        `I was starving.`
-      );
+      expect(result.options.embed?.description).toStrictEqual(`I was starving.`);
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
@@ -259,13 +229,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
       });
     });
 
-    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<void> => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandLunchImageUrlSpy.mockReturnValue(
-        IconEnum.ARTIFICIAL_INTELLIGENCE
-      );
+      discordMessageConfigServiceGetMessageCommandLunchImageUrlSpy.mockReturnValue(IconEnum.ARTIFICIAL_INTELLIGENCE);
 
       const result = await service.getMessageResponse();
 
@@ -274,25 +240,17 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
       } as MessageEmbedThumbnail);
     });
 
-    it(`should return a Discord message response embed with a timestamp`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
       expect.assertions(2);
 
       const result = await service.getMessageResponse();
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(
-        true
-      );
+      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
 
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(
-        `a few seconds ago`
-      );
+      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
     });
 
-    it(`should return a Discord message response embed with a title`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse();
@@ -300,9 +258,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
       expect(result.options.embed?.title).toStrictEqual(`Time to eat!`);
     });
 
-    it(`should return a Discord message response not split`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response not split`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse();
@@ -310,9 +266,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
       expect(result.options.split).toStrictEqual(false);
     });
 
-    it(`should return a Discord message response without a response text`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response without a response text`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse();
@@ -337,9 +291,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
     describe(`when the message command prefix is "@"`, (): void => {
       beforeEach((): void => {
-        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
-          `@`
-        );
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(`@`);
       });
 
       describe(`when the given message is an empty string`, (): void => {
@@ -835,10 +787,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
     describe(`when the message command prefix is "-" or "!"`, (): void => {
       beforeEach((): void => {
-        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
-          `-`,
-          `!`,
-        ]);
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([`-`, `!`]);
       });
 
       describe(`when the given message is an empty string`, (): void => {

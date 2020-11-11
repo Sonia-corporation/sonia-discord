@@ -1,5 +1,5 @@
-import _ from "lodash";
-import { CoreEventService } from "./core-event.service";
+import { CoreEventService } from './core-event.service';
+import _ from 'lodash';
 
 export class CoreService {
   private static _instance: CoreService;

@@ -1,8 +1,8 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { IDiscordGuildConfig } from "../../../interfaces/discord-guild-config";
-import { DiscordGuildConfigCoreService } from "./discord-guild-config-core.service";
+import { DiscordGuildConfigCoreService } from './discord-guild-config-core.service';
+import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { IDiscordGuildConfig } from '../../../interfaces/discord-guild-config';
+import _ from 'lodash';
 
 export class DiscordGuildConfigService extends AbstractService {
   private static _instance: DiscordGuildConfigService;
@@ -30,8 +30,7 @@ export class DiscordGuildConfigService extends AbstractService {
   }
 
   public shouldSendCookiesOnCreate(): boolean {
-    return DiscordGuildConfigCoreService.getInstance()
-      .shouldSendCookiesOnCreate;
+    return DiscordGuildConfigCoreService.getInstance().shouldSendCookiesOnCreate;
   }
 
   public shouldSendNoonMessage(): boolean {
@@ -47,7 +46,6 @@ export class DiscordGuildConfigService extends AbstractService {
   }
 
   public getSoniaPermanentGuildInviteUrl(): string {
-    return DiscordGuildConfigCoreService.getInstance()
-      .soniaPermanentGuildInviteUrl;
+    return DiscordGuildConfigCoreService.getInstance().soniaPermanentGuildInviteUrl;
   }
 }

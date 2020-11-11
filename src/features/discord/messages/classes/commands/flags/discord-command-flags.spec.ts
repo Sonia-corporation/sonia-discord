@@ -1,19 +1,19 @@
-import { createMock } from "ts-auto-mock";
-import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../../../logger/services/logger.service";
-import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
-import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
-import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
-import { IDiscordCommandMessageFlag } from "../../../interfaces/commands/flags/discord-command-message-flag";
-import { IAnyDiscordMessage } from "../../../types/any-discord-message";
-import { IDiscordCommandFlagsDuplicated } from "../../../types/commands/flags/discord-command-flags-duplicated";
-import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
-import { IDiscordCommandFlagsOpposite } from "../../../types/commands/flags/discord-command-flags-opposite";
-import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
-import { DiscordCommandFirstArgument } from "../arguments/discord-command-first-argument";
-import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
-import { DiscordCommandFlagActionBoolean } from "./discord-command-flag-action-boolean";
-import { DiscordCommandFlags } from "./discord-command-flags";
+import { DiscordCommandBooleanFlag } from './discord-command-boolean-flag';
+import { DiscordCommandFlagActionBoolean } from './discord-command-flag-action-boolean';
+import { DiscordCommandFlags } from './discord-command-flags';
+import { ILoggerLog } from '../../../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../../../logger/services/logger.service';
+import { DiscordCommandFlagTypeEnum } from '../../../enums/commands/discord-command-flag-type.enum';
+import { IDiscordCommandFlag } from '../../../interfaces/commands/flags/discord-command-flag';
+import { IDiscordCommandFlagSuccess } from '../../../interfaces/commands/flags/discord-command-flag-success';
+import { IDiscordCommandMessageFlag } from '../../../interfaces/commands/flags/discord-command-message-flag';
+import { IAnyDiscordMessage } from '../../../types/any-discord-message';
+import { IDiscordCommandFlagsDuplicated } from '../../../types/commands/flags/discord-command-flags-duplicated';
+import { IDiscordCommandFlagsErrors } from '../../../types/commands/flags/discord-command-flags-errors';
+import { IDiscordCommandFlagsOpposite } from '../../../types/commands/flags/discord-command-flags-opposite';
+import { IDiscordMessageFlag } from '../../../types/commands/flags/discord-message-flag';
+import { DiscordCommandFirstArgument } from '../arguments/discord-command-first-argument';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
@@ -146,16 +146,14 @@ describe(`DiscordCommandFlags`, (): void => {
       });
       alphaFlag = new DiscordCommandBooleanFlag({
         action: createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>({
-          execute: (): Promise<IDiscordCommandFlagSuccess> =>
-            Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+          execute: (): Promise<IDiscordCommandFlagSuccess> => Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
         }),
         description: ``,
         name: DummyFlagEnum.ALPHA,
       });
       betaFlag = new DiscordCommandBooleanFlag({
         action: createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>({
-          execute: (): Promise<IDiscordCommandFlagSuccess> =>
-            Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+          execute: (): Promise<IDiscordCommandFlagSuccess> => Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
         }),
         description: ``,
         name: DummyFlagEnum.BETA,
@@ -188,16 +186,14 @@ describe(`DiscordCommandFlags`, (): void => {
       });
       alphaFlag = new DiscordCommandBooleanFlag({
         action: createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>({
-          execute: (): Promise<IDiscordCommandFlagSuccess> =>
-            Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+          execute: (): Promise<IDiscordCommandFlagSuccess> => Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
         }),
         description: ``,
         name: DummyFlagEnum.ALPHA,
       });
       betaFlag = new DiscordCommandBooleanFlag({
         action: createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>({
-          execute: (): Promise<IDiscordCommandFlagSuccess> =>
-            Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+          execute: (): Promise<IDiscordCommandFlagSuccess> => Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
         }),
         description: ``,
         name: DummyFlagEnum.BETA,
@@ -345,12 +341,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       beforeEach((): void => {
         flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >()
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>()
         );
         discordCommandFlags.setFlags([flag]);
       });
@@ -397,9 +388,7 @@ describe(`DiscordCommandFlags`, (): void => {
       it(`should return an empty array`, (): void => {
         expect.assertions(1);
 
-        const result = discordCommandFlags.getDiscordCommandMessageFlagNames(
-          discordCommandMessageFlags
-        );
+        const result = discordCommandFlags.getDiscordCommandMessageFlagNames(discordCommandMessageFlags);
 
         expect(result).toStrictEqual([]);
       });
@@ -410,12 +399,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       beforeEach((): void => {
         flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.ALPHA,
           })
         );
@@ -430,9 +414,7 @@ describe(`DiscordCommandFlags`, (): void => {
       it(`should return a array containing the flag name`, (): void => {
         expect.assertions(1);
 
-        const result = discordCommandFlags.getDiscordCommandMessageFlagNames(
-          discordCommandMessageFlags
-        );
+        const result = discordCommandFlags.getDiscordCommandMessageFlagNames(discordCommandMessageFlags);
 
         expect(result).toStrictEqual([DummyFlagEnum.ALPHA]);
       });
@@ -445,32 +427,17 @@ describe(`DiscordCommandFlags`, (): void => {
 
       beforeEach((): void => {
         flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.ALPHA,
           })
         );
         flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.BETA,
           })
         );
         flag3 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.CHARLIE,
           })
         );
@@ -493,15 +460,9 @@ describe(`DiscordCommandFlags`, (): void => {
       it(`should return a array containing the flag name`, (): void => {
         expect.assertions(1);
 
-        const result = discordCommandFlags.getDiscordCommandMessageFlagNames(
-          discordCommandMessageFlags
-        );
+        const result = discordCommandFlags.getDiscordCommandMessageFlagNames(discordCommandMessageFlags);
 
-        expect(result).toStrictEqual([
-          DummyFlagEnum.ALPHA,
-          DummyFlagEnum.BETA,
-          DummyFlagEnum.CHARLIE,
-        ]);
+        expect(result).toStrictEqual([DummyFlagEnum.ALPHA, DummyFlagEnum.BETA, DummyFlagEnum.CHARLIE]);
       });
     });
   });
@@ -541,12 +502,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       beforeEach((): void => {
         flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.ALPHA,
           })
         );
@@ -568,22 +524,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
       beforeEach((): void => {
         flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.ALPHA,
           })
         );
         flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.BETA,
           })
         );
@@ -635,12 +581,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       beforeEach((): void => {
         flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.ALPHA,
           })
         );
@@ -661,12 +602,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       beforeEach((): void => {
         flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.ALPHA,
             shortcuts: [DummyFlagEnum.BETA, DummyFlagEnum.CHARLIE],
           })
@@ -679,9 +615,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(
-          `\`--alpha-flag (or -beta-flag, -charlie-flag)\``
-        );
+        expect(result).toStrictEqual(`\`--alpha-flag (or -beta-flag, -charlie-flag)\``);
       });
     });
 
@@ -691,22 +625,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
       beforeEach((): void => {
         flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.ALPHA,
           })
         );
         flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.BETA,
           })
         );
@@ -728,23 +652,13 @@ describe(`DiscordCommandFlags`, (): void => {
 
       beforeEach((): void => {
         flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.ALPHA,
             shortcuts: [DummyFlagEnum.BETA, DummyFlagEnum.CHARLIE],
           })
         );
         flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.DELTA,
             shortcuts: [DummyFlagEnum.ECHO, DummyFlagEnum.FOXTROT],
           })
@@ -799,12 +713,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       beforeEach((): void => {
         flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.ALPHA,
           })
         );
@@ -826,22 +735,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
       beforeEach((): void => {
         flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.ALPHA,
           })
         );
         flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.BETA,
           })
         );
@@ -893,12 +792,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       beforeEach((): void => {
         flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.ALPHA,
           })
         );
@@ -920,23 +814,13 @@ describe(`DiscordCommandFlags`, (): void => {
 
       beforeEach((): void => {
         flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.ALPHA,
             shortcuts: [DummyFlagEnum.BETA],
           })
         );
         flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.CHARLIE,
             shortcuts: [DummyFlagEnum.DELTA],
           })
@@ -949,12 +833,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsLowerCaseNameWithShortcuts();
 
-        expect(result).toStrictEqual([
-          `alpha-flag`,
-          `beta-flag`,
-          `charlie-flag`,
-          `delta-flag`,
-        ]);
+        expect(result).toStrictEqual([`alpha-flag`, `beta-flag`, `charlie-flag`, `delta-flag`]);
       });
     });
 
@@ -964,23 +843,13 @@ describe(`DiscordCommandFlags`, (): void => {
 
       beforeEach((): void => {
         flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.ALPHA,
             shortcuts: [DummyFlagEnum.BETA, DummyFlagEnum.CHARLIE],
           })
         );
         flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
-          createMock<
-            IDiscordCommandFlag<
-              DummyFlagEnum,
-              DiscordCommandFlagActionBoolean<DummyFlagEnum>
-            >
-          >({
+          createMock<IDiscordCommandFlag<DummyFlagEnum, DiscordCommandFlagActionBoolean<DummyFlagEnum>>>({
             name: DummyFlagEnum.DELTA,
             shortcuts: [DummyFlagEnum.ECHO, DummyFlagEnum.FOXTROT],
           })
@@ -2790,12 +2659,8 @@ describe(`DiscordCommandFlags`, (): void => {
       });
       messageFlags = `--alpha-flag=true`;
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      loggerServiceSuccessSpy = jest
-        .spyOn(loggerService, `success`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      loggerServiceSuccessSpy = jest.spyOn(loggerService, `success`).mockImplementation();
     });
 
     it(`should log about handling the given flags`, async (): Promise<void> => {
@@ -2821,17 +2686,11 @@ describe(`DiscordCommandFlags`, (): void => {
           messageFlags = `--dummy=true`;
         });
 
-        it(`should log about handling the given flag`, async (): Promise<
-          void
-        > => {
+        it(`should log about handling the given flag`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The flag does not exists. Could not perform the execution`)
           );
 
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
@@ -2845,40 +2704,26 @@ describe(`DiscordCommandFlags`, (): void => {
         it(`should throw an error`, async (): Promise<void> => {
           expect.assertions(1);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The flag does not exists. Could not perform the execution`)
           );
         });
 
         it(`should not execute the flag action`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The flag does not exists. Could not perform the execution`)
           );
 
           expect(actionMock).not.toHaveBeenCalled();
         });
 
-        it(`should not log about successfully handled the given flags`, async (): Promise<
-          void
-        > => {
+        it(`should not log about successfully handled the given flags`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The flag does not exists. Could not perform the execution`)
           );
 
           expect(loggerServiceSuccessSpy).not.toHaveBeenCalled();
@@ -2890,9 +2735,7 @@ describe(`DiscordCommandFlags`, (): void => {
           messageFlags = `--alpha-flag=true`;
         });
 
-        it(`should log about handling the given flag`, async (): Promise<
-          void
-        > => {
+        it(`should log about handling the given flag`, async (): Promise<void> => {
           expect.assertions(2);
 
           await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
@@ -2908,10 +2751,7 @@ describe(`DiscordCommandFlags`, (): void => {
         it(`should execute the flag action`, async (): Promise<void> => {
           expect.assertions(5);
 
-          const result = await discordCommandFlags.executeAll(
-            anyDiscordMessage,
-            messageFlags
-          );
+          const result = await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
 
           expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(actionMock).toHaveBeenCalledTimes(1);
@@ -2920,15 +2760,10 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(actionMock.mock.calls[0][2]).toBeDefined();
         });
 
-        it(`should log about successfully handled the given flags`, async (): Promise<
-          void
-        > => {
+        it(`should log about successfully handled the given flags`, async (): Promise<void> => {
           expect.assertions(3);
 
-          const result = await discordCommandFlags.executeAll(
-            anyDiscordMessage,
-            messageFlags
-          );
+          const result = await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
 
           expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
@@ -2951,17 +2786,11 @@ describe(`DiscordCommandFlags`, (): void => {
           messageFlags = `-d`;
         });
 
-        it(`should log about handling the given shortcut flag`, async (): Promise<
-          void
-        > => {
+        it(`should log about handling the given shortcut flag`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The shortcut flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The shortcut flag does not exists. Could not perform the execution`)
           );
 
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
@@ -2975,40 +2804,26 @@ describe(`DiscordCommandFlags`, (): void => {
         it(`should throw an error`, async (): Promise<void> => {
           expect.assertions(1);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The shortcut flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The shortcut flag does not exists. Could not perform the execution`)
           );
         });
 
         it(`should not execute the flag action`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The shortcut flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The shortcut flag does not exists. Could not perform the execution`)
           );
 
           expect(actionMock).not.toHaveBeenCalled();
         });
 
-        it(`should not log about successfully handled the given shortcut flag`, async (): Promise<
-          void
-        > => {
+        it(`should not log about successfully handled the given shortcut flag`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The shortcut flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The shortcut flag does not exists. Could not perform the execution`)
           );
 
           expect(loggerServiceSuccessSpy).not.toHaveBeenCalled();
@@ -3020,9 +2835,7 @@ describe(`DiscordCommandFlags`, (): void => {
           messageFlags = `-beta-flag`;
         });
 
-        it(`should log about handling the given shortcut flag`, async (): Promise<
-          void
-        > => {
+        it(`should log about handling the given shortcut flag`, async (): Promise<void> => {
           expect.assertions(2);
 
           await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
@@ -3038,10 +2851,7 @@ describe(`DiscordCommandFlags`, (): void => {
         it(`should execute the flag action`, async (): Promise<void> => {
           expect.assertions(5);
 
-          const result = await discordCommandFlags.executeAll(
-            anyDiscordMessage,
-            messageFlags
-          );
+          const result = await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
 
           expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(actionMock).toHaveBeenCalledTimes(1);
@@ -3050,15 +2860,10 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(actionMock.mock.calls[0][2]).toBeDefined();
         });
 
-        it(`should log about successfully handled the given flags`, async (): Promise<
-          void
-        > => {
+        it(`should log about successfully handled the given flags`, async (): Promise<void> => {
           expect.assertions(3);
 
-          const result = await discordCommandFlags.executeAll(
-            anyDiscordMessage,
-            messageFlags
-          );
+          const result = await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
 
           expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
@@ -3081,17 +2886,11 @@ describe(`DiscordCommandFlags`, (): void => {
           messageFlags = `--dummy=true --dummy=true`;
         });
 
-        it(`should log about handling the given flags`, async (): Promise<
-          void
-        > => {
+        it(`should log about handling the given flags`, async (): Promise<void> => {
           expect.assertions(4);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The flag does not exists. Could not perform the execution`)
           );
 
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
@@ -3110,40 +2909,26 @@ describe(`DiscordCommandFlags`, (): void => {
         it(`should throw an error`, async (): Promise<void> => {
           expect.assertions(1);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The flag does not exists. Could not perform the execution`)
           );
         });
 
         it(`should not execute the flag action`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The flag does not exists. Could not perform the execution`)
           );
 
           expect(actionMock).not.toHaveBeenCalled();
         });
 
-        it(`should not log about successfully handled the given flags`, async (): Promise<
-          void
-        > => {
+        it(`should not log about successfully handled the given flags`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The flag does not exists. Could not perform the execution`)
           );
 
           expect(loggerServiceSuccessSpy).not.toHaveBeenCalled();
@@ -3155,9 +2940,7 @@ describe(`DiscordCommandFlags`, (): void => {
           messageFlags = `--alpha-flag=true --alpha-flag=true`;
         });
 
-        it(`should log about handling the given flags`, async (): Promise<
-          void
-        > => {
+        it(`should log about handling the given flags`, async (): Promise<void> => {
           expect.assertions(3);
 
           await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
@@ -3178,15 +2961,9 @@ describe(`DiscordCommandFlags`, (): void => {
         it(`should execute the flags action`, async (): Promise<void> => {
           expect.assertions(8);
 
-          const result = await discordCommandFlags.executeAll(
-            anyDiscordMessage,
-            messageFlags
-          );
+          const result = await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
 
-          expect(result).toStrictEqual([
-            discordCommandFlagSuccess,
-            discordCommandFlagSuccess,
-          ]);
+          expect(result).toStrictEqual([discordCommandFlagSuccess, discordCommandFlagSuccess]);
           expect(actionMock).toHaveBeenCalledTimes(2);
           expect(actionMock.mock.calls[0][0]).toStrictEqual(anyDiscordMessage);
           expect(actionMock.mock.calls[0][1]).toStrictEqual(`true`);
@@ -3196,20 +2973,12 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(actionMock.mock.calls[1][2]).toBeDefined();
         });
 
-        it(`should log about successfully handled the given flags`, async (): Promise<
-          void
-        > => {
+        it(`should log about successfully handled the given flags`, async (): Promise<void> => {
           expect.assertions(3);
 
-          const result = await discordCommandFlags.executeAll(
-            anyDiscordMessage,
-            messageFlags
-          );
+          const result = await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
 
-          expect(result).toStrictEqual([
-            discordCommandFlagSuccess,
-            discordCommandFlagSuccess,
-          ]);
+          expect(result).toStrictEqual([discordCommandFlagSuccess, discordCommandFlagSuccess]);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
             context: `DiscordCommandFlags`,
@@ -3230,17 +2999,11 @@ describe(`DiscordCommandFlags`, (): void => {
           messageFlags = `-d -d`;
         });
 
-        it(`should log about handling the given shortcut flag`, async (): Promise<
-          void
-        > => {
+        it(`should log about handling the given shortcut flag`, async (): Promise<void> => {
           expect.assertions(4);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The shortcut flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The shortcut flag does not exists. Could not perform the execution`)
           );
 
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
@@ -3259,40 +3022,26 @@ describe(`DiscordCommandFlags`, (): void => {
         it(`should throw an error`, async (): Promise<void> => {
           expect.assertions(1);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The shortcut flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The shortcut flag does not exists. Could not perform the execution`)
           );
         });
 
         it(`should not execute the flag action`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The shortcut flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The shortcut flag does not exists. Could not perform the execution`)
           );
 
           expect(actionMock).not.toHaveBeenCalled();
         });
 
-        it(`should not log about successfully handled the given shortcut flags`, async (): Promise<
-          void
-        > => {
+        it(`should not log about successfully handled the given shortcut flags`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(
-            discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)
-          ).rejects.toThrow(
-            new Error(
-              `The shortcut flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.executeAll(anyDiscordMessage, messageFlags)).rejects.toThrow(
+            new Error(`The shortcut flag does not exists. Could not perform the execution`)
           );
 
           expect(loggerServiceSuccessSpy).not.toHaveBeenCalled();
@@ -3304,9 +3053,7 @@ describe(`DiscordCommandFlags`, (): void => {
           messageFlags = `-beta-flag -beta-flag`;
         });
 
-        it(`should log about handling the given shortcut flags`, async (): Promise<
-          void
-        > => {
+        it(`should log about handling the given shortcut flags`, async (): Promise<void> => {
           expect.assertions(3);
 
           await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
@@ -3327,15 +3074,9 @@ describe(`DiscordCommandFlags`, (): void => {
         it(`should execute the flag actions`, async (): Promise<void> => {
           expect.assertions(8);
 
-          const result = await discordCommandFlags.executeAll(
-            anyDiscordMessage,
-            messageFlags
-          );
+          const result = await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
 
-          expect(result).toStrictEqual([
-            discordCommandFlagSuccess,
-            discordCommandFlagSuccess,
-          ]);
+          expect(result).toStrictEqual([discordCommandFlagSuccess, discordCommandFlagSuccess]);
           expect(actionMock).toHaveBeenCalledTimes(2);
           expect(actionMock.mock.calls[0][0]).toStrictEqual(anyDiscordMessage);
           expect(actionMock.mock.calls[0][1]).toBeUndefined();
@@ -3345,20 +3086,12 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(actionMock.mock.calls[1][2]).toBeDefined();
         });
 
-        it(`should log about successfully handled the given shortcut flags`, async (): Promise<
-          void
-        > => {
+        it(`should log about successfully handled the given shortcut flags`, async (): Promise<void> => {
           expect.assertions(3);
 
-          const result = await discordCommandFlags.executeAll(
-            anyDiscordMessage,
-            messageFlags
-          );
+          const result = await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
 
-          expect(result).toStrictEqual([
-            discordCommandFlagSuccess,
-            discordCommandFlagSuccess,
-          ]);
+          expect(result).toStrictEqual([discordCommandFlagSuccess, discordCommandFlagSuccess]);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
           expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
             context: `DiscordCommandFlags`,
@@ -3408,9 +3141,7 @@ describe(`DiscordCommandFlags`, (): void => {
       });
       messageFlag = `--alpha-flag=true`;
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
     });
 
     it(`should log about handling the given flag`, async (): Promise<void> => {
@@ -3439,24 +3170,16 @@ describe(`DiscordCommandFlags`, (): void => {
         it(`should throw an error`, async (): Promise<void> => {
           expect.assertions(1);
 
-          await expect(
-            discordCommandFlags.execute(anyDiscordMessage, messageFlag)
-          ).rejects.toThrow(
-            new Error(
-              `The flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.execute(anyDiscordMessage, messageFlag)).rejects.toThrow(
+            new Error(`The flag does not exists. Could not perform the execution`)
           );
         });
 
         it(`should not execute the flag action`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(
-            discordCommandFlags.execute(anyDiscordMessage, messageFlag)
-          ).rejects.toThrow(
-            new Error(
-              `The flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.execute(anyDiscordMessage, messageFlag)).rejects.toThrow(
+            new Error(`The flag does not exists. Could not perform the execution`)
           );
 
           expect(actionMock).not.toHaveBeenCalled();
@@ -3471,10 +3194,7 @@ describe(`DiscordCommandFlags`, (): void => {
         it(`should execute the flag action`, async (): Promise<void> => {
           expect.assertions(4);
 
-          const result = await discordCommandFlags.execute(
-            anyDiscordMessage,
-            messageFlag
-          );
+          const result = await discordCommandFlags.execute(anyDiscordMessage, messageFlag);
 
           expect(result).toStrictEqual(discordCommandFlagSuccess);
           expect(actionMock.mock.calls[0][0]).toStrictEqual(anyDiscordMessage);
@@ -3497,24 +3217,16 @@ describe(`DiscordCommandFlags`, (): void => {
         it(`should throw an error`, async (): Promise<void> => {
           expect.assertions(1);
 
-          await expect(
-            discordCommandFlags.execute(anyDiscordMessage, messageFlag)
-          ).rejects.toThrow(
-            new Error(
-              `The shortcut flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.execute(anyDiscordMessage, messageFlag)).rejects.toThrow(
+            new Error(`The shortcut flag does not exists. Could not perform the execution`)
           );
         });
 
         it(`should not execute the flag action`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(
-            discordCommandFlags.execute(anyDiscordMessage, messageFlag)
-          ).rejects.toThrow(
-            new Error(
-              `The shortcut flag does not exists. Could not perform the execution`
-            )
+          await expect(discordCommandFlags.execute(anyDiscordMessage, messageFlag)).rejects.toThrow(
+            new Error(`The shortcut flag does not exists. Could not perform the execution`)
           );
 
           expect(actionMock).not.toHaveBeenCalled();
@@ -3529,10 +3241,7 @@ describe(`DiscordCommandFlags`, (): void => {
         it(`should execute the flag action`, async (): Promise<void> => {
           expect.assertions(5);
 
-          const result = await discordCommandFlags.execute(
-            anyDiscordMessage,
-            messageFlag
-          );
+          const result = await discordCommandFlags.execute(anyDiscordMessage, messageFlag);
 
           expect(result).toStrictEqual(discordCommandFlagSuccess);
           expect(actionMock).toHaveBeenCalledTimes(1);

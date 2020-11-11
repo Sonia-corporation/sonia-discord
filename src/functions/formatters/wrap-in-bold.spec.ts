@@ -1,4 +1,4 @@
-import { wrapInBold } from "./wrap-in-bold";
+import { wrapInBold } from './wrap-in-bold';
 
 describe(`wrapInBold()`, (): void => {
   let value: string;

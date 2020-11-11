@@ -1,29 +1,25 @@
-import _ from "lodash";
-import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
-import { DiscordCommandFlagErrorTitleEnum } from "../../../enums/commands/flags/discord-command-flag-error-title.enum";
-import { discordCommandGetFlagName } from "../../../functions/commands/flags/discord-command-get-flag-name";
-import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
-import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
-import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
-import { DiscordCommandFlag } from "./discord-command-flag";
-import { DiscordCommandFlagActionBoolean } from "./discord-command-flag-action-boolean";
+import { DiscordCommandFlag } from './discord-command-flag';
+import { DiscordCommandFlagActionBoolean } from './discord-command-flag-action-boolean';
+import { DiscordCommandFlagTypeEnum } from '../../../enums/commands/discord-command-flag-type.enum';
+import { DiscordCommandFlagErrorTitleEnum } from '../../../enums/commands/flags/discord-command-flag-error-title.enum';
+import { discordCommandGetFlagName } from '../../../functions/commands/flags/discord-command-get-flag-name';
+import { IDiscordCommandFlag } from '../../../interfaces/commands/flags/discord-command-flag';
+import { IDiscordCommandFlagError } from '../../../interfaces/commands/flags/discord-command-flag-error';
+import { IDiscordMessageFlag } from '../../../types/commands/flags/discord-message-flag';
+import _ from 'lodash';
 
 const SPLITTED_FLAG_LENGTH = 2;
 
-export class DiscordCommandBooleanFlag<
-  T extends string
-> extends DiscordCommandFlag<T, DiscordCommandFlagActionBoolean<T>> {
-  protected _type: DiscordCommandFlagTypeEnum.BOOLEAN =
-    DiscordCommandFlagTypeEnum.BOOLEAN;
+export class DiscordCommandBooleanFlag<T extends string> extends DiscordCommandFlag<
+  T,
+  DiscordCommandFlagActionBoolean<T>
+> {
+  protected _type: DiscordCommandFlagTypeEnum.BOOLEAN = DiscordCommandFlagTypeEnum.BOOLEAN;
 
   /**
    * @param {Readonly<IDiscordCommandFlag>} discordCommandFlag Default values
    */
-  public constructor(
-    discordCommandFlag: Readonly<
-      IDiscordCommandFlag<T, DiscordCommandFlagActionBoolean<T>>
-    >
-  ) {
+  public constructor(discordCommandFlag: Readonly<IDiscordCommandFlag<T, DiscordCommandFlagActionBoolean<T>>>) {
     super(discordCommandFlag);
   }
 
@@ -55,9 +51,7 @@ export class DiscordCommandBooleanFlag<
     return _.includes([`true`, `false`], value);
   }
 
-  public getInvalidFlagError(
-    messageFlag: Readonly<IDiscordMessageFlag>
-  ): IDiscordCommandFlagError | null {
+  public getInvalidFlagError(messageFlag: Readonly<IDiscordMessageFlag>): IDiscordCommandFlagError | null {
     const splittedFlag: string[] = _.split(messageFlag, `=`);
     const splittedFlagSize: number = _.size(splittedFlag);
 

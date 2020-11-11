@@ -1,4 +1,4 @@
-import { DiscordCommandFlagSuccessTitleEnum } from "../../../enums/commands/flags/discord-command-flag-success-title.enum";
+import { DiscordCommandFlagSuccessTitleEnum } from '../../../enums/commands/flags/discord-command-flag-success-title.enum';
 
 export interface IDiscordCommandFlagSuccess {
   /**

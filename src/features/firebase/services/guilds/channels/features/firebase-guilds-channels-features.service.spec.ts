@@ -1,11 +1,11 @@
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../../core/services/core-event.service";
-import { FirebaseGuildChannelFeatureVersionEnum } from "../../../../enums/guilds/channels/features/firebase-guild-channel-feature-version.enum";
-import { IFirebaseGuildChannelFeatureV1 } from "../../../../interfaces/guilds/channels/features/firebase-guild-channel-feature-v1";
-import { IFirebaseGuildChannelFeature } from "../../../../types/guilds/channels/features/firebase-guild-channel-feature";
-import { IFirebaseGuildChannelFeatureVFinal } from "../../../../types/guilds/channels/features/firebase-guild-channel-feature-v-final";
-import { FirebaseGuildsChannelsFeaturesService } from "./firebase-guilds-channels-features.service";
+import { FirebaseGuildsChannelsFeaturesService } from './firebase-guilds-channels-features.service';
+import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../../core/services/core-event.service';
+import { FirebaseGuildChannelFeatureVersionEnum } from '../../../../enums/guilds/channels/features/firebase-guild-channel-feature-version.enum';
+import { IFirebaseGuildChannelFeatureV1 } from '../../../../interfaces/guilds/channels/features/firebase-guild-channel-feature-v1';
+import { IFirebaseGuildChannelFeature } from '../../../../types/guilds/channels/features/firebase-guild-channel-feature';
+import { IFirebaseGuildChannelFeatureVFinal } from '../../../../types/guilds/channels/features/firebase-guild-channel-feature-v-final';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
@@ -23,9 +23,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
       service = FirebaseGuildsChannelsFeaturesService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(FirebaseGuildsChannelsFeaturesService)
-      );
+      expect(service).toStrictEqual(expect.any(FirebaseGuildsChannelsFeaturesService));
     });
 
     it(`should return the created FirebaseGuildsChannelsFeatures service`, (): void => {

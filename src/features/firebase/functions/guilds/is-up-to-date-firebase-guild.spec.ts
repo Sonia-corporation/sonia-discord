@@ -1,10 +1,10 @@
-import { createMock } from "ts-auto-mock";
-import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-version.enum";
-import { IFirebaseGuildV1 } from "../../interfaces/guilds/firebase-guild-v1";
-import { IFirebaseGuildV2 } from "../../interfaces/guilds/firebase-guild-v2";
-import { IFirebaseGuildV3 } from "../../interfaces/guilds/firebase-guild-v3";
-import { IFirebaseGuildV4 } from "../../interfaces/guilds/firebase-guild-v4";
-import { isUpToDateFirebaseGuild } from "./is-up-to-date-firebase-guild";
+import { isUpToDateFirebaseGuild } from './is-up-to-date-firebase-guild';
+import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
+import { IFirebaseGuildV1 } from '../../interfaces/guilds/firebase-guild-v1';
+import { IFirebaseGuildV2 } from '../../interfaces/guilds/firebase-guild-v2';
+import { IFirebaseGuildV3 } from '../../interfaces/guilds/firebase-guild-v3';
+import { IFirebaseGuildV4 } from '../../interfaces/guilds/firebase-guild-v4';
+import { createMock } from 'ts-auto-mock';
 
 describe(`isUpToDateFirebaseGuild()`, (): void => {
   describe(`when the given Firebase guild is a v1`, (): void => {

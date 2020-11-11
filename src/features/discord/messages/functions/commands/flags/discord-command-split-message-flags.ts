@@ -1,5 +1,5 @@
-import _ from "lodash";
-import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
+import { IDiscordMessageFlag } from '../../../types/commands/flags/discord-message-flag';
+import _ from 'lodash';
 
 /**
  * @description
@@ -9,8 +9,6 @@ import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-messa
  *
  * @return {IDiscordMessageFlag[]} An array of Discord message flag
  */
-export function discordCommandSplitMessageFlags(
-  messageFlags: Readonly<string>
-): IDiscordMessageFlag[] {
+export function discordCommandSplitMessageFlags(messageFlags: Readonly<string>): IDiscordMessageFlag[] {
   return _.isEmpty(messageFlags) ? [] : _.split(messageFlags, ` `);
 }
