@@ -114,24 +114,24 @@ rules:
   import/order:
     - error
     - groups:
-        - index
-        - sibling
-        - parent
-        - internal
-        - external
-        - builtin
-        - object
+      - index
+      - sibling
+      - parent
+      - internal
+      - external
+      - builtin
+      - object
       newlines-between: never
       alphabetize:
-          order: asc
-          caseInsensitive: false
+        order: asc
+        caseInsensitive: false
   indent: off
   no-duplicate-imports: error
   sort-imports: off
   new-cap:
     - error
     - capIsNewExceptions:
-        - StoreConfig
+      - StoreConfig
   '@typescript-eslint/naming-convention':
     - error
     - selector: default
