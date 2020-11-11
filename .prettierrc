@@ -1,0 +1,11 @@
+printWidth: 80
+useTabs: false
+semi: true
+singleQuote: true
+quoteProps: consistent
+trailingComma: es5
+bracketSpacing: false
+arrowParens: always
+endOfLine: lf
+tabWidth: 2
+
