@@ -1339,7 +1339,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageScheduleNoonService();
-      (service as any)._job = createMock<Job>({
+      (service as any)._job = createMock<NodeScheduleModule.Job>({
         nextInvocation(): Date {
           return moment().toDate();
         },
