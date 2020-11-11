@@ -7,5 +7,12 @@ export interface IDiscordCommandFlag<
   action: TAction;
   description: string;
   name: T;
+
+  /**
+   * @description
+   * Using the name is enough
+   * No need to list the shortcuts as well
+   */
+  opposites?: T[] | undefined;
   shortcuts?: T[] | undefined;
 }
