@@ -13,13 +13,16 @@ import { discordCommandRemoveFlagPrefix } from "../../../functions/commands/flag
 import { discordCommandSplitMessageFlags } from "../../../functions/commands/flags/discord-command-split-message-flags";
 import { IDiscordCommandFlagDuplicated } from "../../../interfaces/commands/flags/discord-command-flag-duplicated";
 import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
+import { IDiscordCommandFlagOpposite } from "../../../interfaces/commands/flags/discord-command-flag-opposite";
 import { IDiscordCommandFlags } from "../../../interfaces/commands/flags/discord-command-flags";
+import { IDiscordCommandMessageFlag } from "../../../interfaces/commands/flags/discord-command-message-flag";
 import { IDiscordCommandMessageFlagWithName } from "../../../interfaces/commands/flags/discord-command-message-flag-with-name";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordCommandFlagResponse } from "../../../types/commands/flags/discord-command-flag-response";
 import { IDiscordCommandFlagTypes } from "../../../types/commands/flags/discord-command-flag-types";
 import { IDiscordCommandFlagsDuplicated } from "../../../types/commands/flags/discord-command-flags-duplicated";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
+import { IDiscordCommandFlagsOpposite } from "../../../types/commands/flags/discord-command-flags-opposite";
 import { IDiscordCommandFlagsResponse } from "../../../types/commands/flags/discord-command-flags-response";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandFirstArgument } from "../arguments/discord-command-first-argument";
@@ -97,6 +100,19 @@ export class DiscordCommandFlags<T extends string> {
     }
 
     return usageExample;
+  }
+
+  public getDiscordCommandMessageFlagNames(
+    discordCommandMessageFlags: IDiscordCommandMessageFlag<T>[]
+  ): T[] {
+    return _.compact(
+      _.map(
+        discordCommandMessageFlags,
+        (
+          discordCommandMessageFlag: Readonly<IDiscordCommandMessageFlag<T>>
+        ): T | undefined => discordCommandMessageFlag.flag.getName()
+      )
+    );
   }
 
   /**
@@ -254,6 +270,38 @@ export class DiscordCommandFlags<T extends string> {
     );
 
     return _.isEmpty(flagsDuplicated) ? null : flagsDuplicated;
+  }
+
+  /**
+   * @description
+   * Search inside the given message for all the opposite flags
+   *
+   * Throw an error if the given message is empty
+   *
+   * @example
+   * getOpposites('--enabled=true')
+   * getOpposites('--enabled=wrong-value')
+   * getOpposites('-e')
+   *
+   * @param {Readonly<string>} messageFlags A partial message containing only a string with flags
+   *
+   * @return {IDiscordCommandFlagsOpposite | null} A list of opposite flags or null
+   */
+  public getOpposites(
+    messageFlags: Readonly<string>
+  ): IDiscordCommandFlagsOpposite | null | never {
+    if (_.isEmpty(messageFlags)) {
+      throw new Error(`The message should not be empty`);
+    }
+
+    const splittedMessageFlags: IDiscordMessageFlag[] = discordCommandSplitMessageFlags(
+      messageFlags
+    );
+    const oppositeFlags: IDiscordCommandFlagsOpposite = this._getOppositeFlags(
+      splittedMessageFlags
+    );
+
+    return _.isEmpty(oppositeFlags) ? null : oppositeFlags;
   }
 
   public executeAll(
@@ -498,12 +546,55 @@ export class DiscordCommandFlags<T extends string> {
     );
   }
 
+  private _getOppositeFlags(
+    messageFlags: Readonly<string>[]
+  ): IDiscordCommandFlagsOpposite {
+    const commandMessageFlagsWithOpposite: IDiscordCommandMessageFlag<
+      T
+    >[][] = this._getOppositeMessagesFlags(messageFlags);
+
+    return _.map(
+      commandMessageFlagsWithOpposite,
+      (
+        commandMessageFlagWithOpposite: Readonly<
+          IDiscordCommandMessageFlag<T>
+        >[]
+      ): IDiscordCommandFlagOpposite => {
+        return {
+          description: `The flags ${this._getOppositeFlagsList(
+            commandMessageFlagWithOpposite
+          )} are opposites.`,
+          name: `${this._getHumanizedOppositeFlagsList(
+            commandMessageFlagWithOpposite
+          )} flags can not be combined`,
+        };
+      }
+    );
+  }
+
   private _getMessageFlagWithName(
     messageFlag: Readonly<IDiscordMessageFlag>
   ): IDiscordCommandMessageFlagWithName {
     return {
       messageFlag,
       name: this._getHumanizedFlagName(messageFlag),
+    };
+  }
+
+  private _getMessageFlag(
+    messageFlag: Readonly<IDiscordMessageFlag>
+  ): IDiscordCommandMessageFlag<T> | null {
+    const flag: IDiscordCommandFlagTypes<T> | undefined = this._getFlag(
+      messageFlag
+    );
+
+    if (_.isNil(flag)) {
+      return null;
+    }
+
+    return {
+      flag,
+      messageFlag,
     };
   }
 
@@ -514,6 +605,18 @@ export class DiscordCommandFlags<T extends string> {
       messageFlags,
       (messageFlag: Readonly<string>): IDiscordCommandMessageFlagWithName =>
         this._getMessageFlagWithName(messageFlag)
+    );
+  }
+
+  private _getMessageFlags(
+    messageFlags: Readonly<string>[]
+  ): IDiscordCommandMessageFlag<T>[] {
+    return _.compact(
+      _.map(
+        messageFlags,
+        (messageFlag: Readonly<string>): IDiscordCommandMessageFlag<T> | null =>
+          this._getMessageFlag(messageFlag)
+      )
     );
   }
 
@@ -532,22 +635,103 @@ export class DiscordCommandFlags<T extends string> {
     );
   }
 
+  /**
+   * @private
+   *
+   * @description
+   * When I comment some code it means that the following code is cringe as fuck
+   * You were warned
+   *
+   * @summary
+   * Convert all the message flags to real flags
+   * List all the flags by name
+   * Loop the flags
+   * If a flag as opposite flags
+   * Loop the opposite flags
+   * If the opposite flag match one of the flag by name (from the list)
+   * If the flag and his opposite are not inside the list of opposite flags (to avoid A opposite of B and B opposite of A stuff)
+   * Add the flag and his opposite to the list of opposite flags (array inside the global array)
+   *
+   * @param {Readonly<string>[]} messageFlags The list of message flags
+   *
+   * @return {unknown} A list of list of flags considered not compatibles
+   */
+  private _getOppositeMessagesFlags(
+    messageFlags: Readonly<string>[]
+  ): IDiscordCommandMessageFlag<T>[][] {
+    const commandMessageFlags: IDiscordCommandMessageFlag<
+      T
+    >[] = this._getMessageFlags(messageFlags);
+    const commandMessageFlagNames: T[] = this.getDiscordCommandMessageFlagNames(
+      commandMessageFlags
+    );
+    const commandMessageFlagNamesFound: T[] = [];
+    const commandMessageFlagsWithOpposite: IDiscordCommandMessageFlag<
+      T
+    >[][] = [];
+
+    _.forEach(
+      commandMessageFlags,
+      (commandMessageFlag: IDiscordCommandMessageFlag<T>): void => {
+        const opposites:
+          | T[]
+          | undefined = commandMessageFlag.flag.getOpposites();
+
+        if (!_.isEmpty(opposites)) {
+          _.forEach(opposites, (opposite: Readonly<T>): void => {
+            if (_.includes(commandMessageFlagNames, opposite)) {
+              const oppositeCommandMessageFlag:
+                | IDiscordCommandMessageFlag<T>
+                | undefined = _.find(
+                commandMessageFlags,
+                (commandMessageFlag): boolean =>
+                  _.isEqual(commandMessageFlag.flag.getName(), opposite)
+              );
+
+              if (!_.isNil(oppositeCommandMessageFlag)) {
+                if (
+                  !_.includes(
+                    commandMessageFlagNamesFound,
+                    commandMessageFlag.flag.getName()
+                  ) &&
+                  !_.includes(
+                    commandMessageFlagNamesFound,
+                    oppositeCommandMessageFlag.flag.getName()
+                  )
+                ) {
+                  commandMessageFlagsWithOpposite.push([
+                    commandMessageFlag,
+                    oppositeCommandMessageFlag,
+                  ]);
+                  commandMessageFlagNamesFound.push(
+                    commandMessageFlag.flag.getName(),
+                    oppositeCommandMessageFlag.flag.getName()
+                  );
+                }
+              }
+            }
+          });
+        }
+      }
+    );
+
+    return commandMessageFlagsWithOpposite;
+  }
+
+  private _getFlag(
+    messageFlag: Readonly<IDiscordMessageFlag>
+  ): IDiscordCommandFlagTypes<T> | undefined {
+    if (discordCommandIsMessageFlag(messageFlag)) {
+      return this._getFlagFromMessageFlag(messageFlag);
+    }
+
+    return this._getShortcutFlagFromMessageFlag(messageFlag);
+  }
+
   private _getHumanizedFlagName(
     messageFlag: Readonly<IDiscordMessageFlag>
   ): string | undefined {
-    if (discordCommandIsMessageFlag(messageFlag)) {
-      const flag:
-        | IDiscordCommandFlagTypes<T>
-        | undefined = this._getFlagFromMessageFlag(messageFlag);
-
-      return flag?.getHumanizedName();
-    }
-
-    const shortcutFlag:
-      | IDiscordCommandFlagTypes<T>
-      | undefined = this._getShortcutFlagFromMessageFlag(messageFlag);
-
-    return shortcutFlag?.getHumanizedName();
+    return this._getFlag(messageFlag)?.getHumanizedName();
   }
 
   private _getDuplicatedFlagsList(
@@ -564,6 +748,49 @@ export class DiscordCommandFlags<T extends string> {
             >
           ): string =>
             `${value}\`${duplicatedMessagesFlagByName.messageFlag}\`, `,
+          ``
+        ),
+        `, `
+      ),
+      getLastSequenceRegexp(`, `),
+      ` and `
+    );
+  }
+
+  private _getOppositeFlagsList(
+    oppositeMessagesFlag: Readonly<IDiscordCommandMessageFlag<T>>[]
+  ): string {
+    return _.replace(
+      _.trimEnd(
+        _.reduce(
+          oppositeMessagesFlag,
+          (
+            value: Readonly<string>,
+            duplicatedMessagesFlag: Readonly<IDiscordCommandMessageFlag<T>>
+          ): string => `${value}\`${duplicatedMessagesFlag.messageFlag}\`, `,
+          ``
+        ),
+        `, `
+      ),
+      getLastSequenceRegexp(`, `),
+      ` and `
+    );
+  }
+
+  private _getHumanizedOppositeFlagsList(
+    oppositeMessagesFlag: Readonly<IDiscordCommandMessageFlag<T>>[]
+  ): string {
+    return _.replace(
+      _.trimEnd(
+        _.reduce(
+          oppositeMessagesFlag,
+          (
+            value: Readonly<string>,
+            duplicatedMessagesFlag: Readonly<IDiscordCommandMessageFlag<T>>
+          ): string =>
+            `${value}${
+              duplicatedMessagesFlag.flag.getHumanizedName() ?? `unknown`
+            }, `,
           ``
         ),
         `, `

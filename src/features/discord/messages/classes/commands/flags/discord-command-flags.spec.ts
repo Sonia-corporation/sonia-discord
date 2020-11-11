@@ -4,9 +4,11 @@ import { LoggerService } from "../../../../../logger/services/logger.service";
 import { DiscordCommandFlagTypeEnum } from "../../../enums/commands/discord-command-flag-type.enum";
 import { IDiscordCommandFlag } from "../../../interfaces/commands/flags/discord-command-flag";
 import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
+import { IDiscordCommandMessageFlag } from "../../../interfaces/commands/flags/discord-command-message-flag";
 import { IAnyDiscordMessage } from "../../../types/any-discord-message";
 import { IDiscordCommandFlagsDuplicated } from "../../../types/commands/flags/discord-command-flags-duplicated";
 import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
+import { IDiscordCommandFlagsOpposite } from "../../../types/commands/flags/discord-command-flags-opposite";
 import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
 import { DiscordCommandFirstArgument } from "../arguments/discord-command-first-argument";
 import { DiscordCommandBooleanFlag } from "./discord-command-boolean-flag";
@@ -366,6 +368,140 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toBeOneOf([`--alpha-flag=true`, `--alpha-flag=false`]);
         });
+      });
+    });
+  });
+
+  describe(`getDiscordCommandMessageFlagNames()`, (): void => {
+    let discordCommandMessageFlags: IDiscordCommandMessageFlag<DummyFlagEnum>[];
+    let discordCommandFlags: DiscordCommandFlags<DummyFlagEnum>;
+    let alphaArgument: DiscordCommandFirstArgument<DummyFirstArgumentEnum>;
+
+    beforeEach((): void => {
+      alphaArgument = new DiscordCommandFirstArgument<DummyFirstArgumentEnum>({
+        description: ``,
+        name: DummyFirstArgumentEnum.ALPHA,
+        shortcuts: [DummyFirstArgumentEnum.BETA],
+      });
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: alphaArgument,
+        flags: createMock<DiscordCommandBooleanFlag<DummyFlagEnum>[]>(),
+      });
+    });
+
+    describe(`when the given Discord command flags has no flags`, (): void => {
+      beforeEach((): void => {
+        discordCommandMessageFlags = [];
+      });
+
+      it(`should return an empty array`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getDiscordCommandMessageFlagNames(
+          discordCommandMessageFlags
+        );
+
+        expect(result).toStrictEqual([]);
+      });
+    });
+
+    describe(`when the given Discord command flags has one flag`, (): void => {
+      let flag: DiscordCommandBooleanFlag<DummyFlagEnum>;
+
+      beforeEach((): void => {
+        flag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
+          >({
+            name: DummyFlagEnum.ALPHA,
+          })
+        );
+        discordCommandMessageFlags = [
+          {
+            flag,
+            messageFlag: `dummy-message-flag`,
+          },
+        ];
+      });
+
+      it(`should return a array containing the flag name`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getDiscordCommandMessageFlagNames(
+          discordCommandMessageFlags
+        );
+
+        expect(result).toStrictEqual([DummyFlagEnum.ALPHA]);
+      });
+    });
+
+    describe(`when the given Discord command flags has three flags`, (): void => {
+      let flag1: DiscordCommandBooleanFlag<DummyFlagEnum>;
+      let flag2: DiscordCommandBooleanFlag<DummyFlagEnum>;
+      let flag3: DiscordCommandBooleanFlag<DummyFlagEnum>;
+
+      beforeEach((): void => {
+        flag1 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
+          >({
+            name: DummyFlagEnum.ALPHA,
+          })
+        );
+        flag2 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
+          >({
+            name: DummyFlagEnum.BETA,
+          })
+        );
+        flag3 = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+          createMock<
+            IDiscordCommandFlag<
+              DummyFlagEnum,
+              DiscordCommandFlagActionBoolean<DummyFlagEnum>
+            >
+          >({
+            name: DummyFlagEnum.CHARLIE,
+          })
+        );
+        discordCommandMessageFlags = [
+          {
+            flag: flag1,
+            messageFlag: `dummy-message-flag`,
+          },
+          {
+            flag: flag2,
+            messageFlag: `dummy-message-flag`,
+          },
+          {
+            flag: flag3,
+            messageFlag: `dummy-message-flag`,
+          },
+        ];
+      });
+
+      it(`should return a array containing the flag name`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getDiscordCommandMessageFlagNames(
+          discordCommandMessageFlags
+        );
+
+        expect(result).toStrictEqual([
+          DummyFlagEnum.ALPHA,
+          DummyFlagEnum.BETA,
+          DummyFlagEnum.CHARLIE,
+        ]);
       });
     });
   });
@@ -2425,6 +2561,191 @@ describe(`DiscordCommandFlags`, (): void => {
         const result = discordCommandFlags.getDuplicated(message);
 
         expect(result).toBeNull();
+      });
+    });
+  });
+
+  describe(`getOpposites()`, (): void => {
+    let discordCommandFlags: DiscordCommandFlags<DummyFlagEnum>;
+    let alphaArgument: DiscordCommandFirstArgument<DummyFirstArgumentEnum>;
+    let message: string;
+
+    beforeEach((): void => {
+      alphaArgument = new DiscordCommandFirstArgument<DummyFirstArgumentEnum>({
+        description: ``,
+        name: DummyFirstArgumentEnum.ALPHA,
+        shortcuts: [DummyFirstArgumentEnum.BETA],
+      });
+      discordCommandFlags = new DiscordCommandFlags<DummyFlagEnum>({
+        command: alphaArgument,
+        flags: [
+          new DiscordCommandBooleanFlag<DummyFlagEnum>({
+            action: createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>({
+              execute: (): Promise<IDiscordCommandFlagSuccess> =>
+                Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+            }),
+            description: ``,
+            name: DummyFlagEnum.ALPHA,
+            opposites: [DummyFlagEnum.CHARLIE],
+            shortcuts: [DummyFlagEnum.BETA],
+          }),
+          new DiscordCommandBooleanFlag<DummyFlagEnum>({
+            action: createMock<DiscordCommandFlagActionBoolean<DummyFlagEnum>>({
+              execute: (): Promise<IDiscordCommandFlagSuccess> =>
+                Promise.resolve(createMock<IDiscordCommandFlagSuccess>()),
+            }),
+            description: ``,
+            name: DummyFlagEnum.CHARLIE,
+            opposites: [DummyFlagEnum.ALPHA],
+            shortcuts: [DummyFlagEnum.DELTA],
+          }),
+        ],
+      });
+    });
+
+    describe(`when the given message is empty`, (): void => {
+      beforeEach((): void => {
+        message = ``;
+      });
+
+      it(`should throw an error`, (): void => {
+        expect.assertions(1);
+
+        expect((): void => {
+          discordCommandFlags.getOpposites(message);
+        }).toThrow(new Error(`The message should not be empty`));
+      });
+    });
+
+    describe(`when the given message contains a boolean flag`, (): void => {
+      beforeEach((): void => {
+        message = `--alpha-flag=true`;
+      });
+
+      it(`should return null`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getOpposites(message);
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe(`when the given message contains a boolean uppercase flag`, (): void => {
+      beforeEach((): void => {
+        message = `--ALPHA-FLAG=TRUE`;
+      });
+
+      it(`should return null`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getOpposites(message);
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe(`when the given message contains a shortcut flag`, (): void => {
+      beforeEach((): void => {
+        message = `-beta-flag`;
+      });
+
+      it(`should return null`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getOpposites(message);
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe(`when the given message contains a shortcut uppercase flag`, (): void => {
+      beforeEach((): void => {
+        message = `-ALPHA-FLAG`;
+      });
+
+      it(`should return null`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getOpposites(message);
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe(`when the given message contains two opposite boolean flags`, (): void => {
+      beforeEach((): void => {
+        message = `--alpha-flag=true --charlie-flag=true`;
+      });
+
+      it(`should return a list with one error about the opposite flags`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getOpposites(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flags \`--alpha-flag=true\` and \`--charlie-flag=true\` are opposites.`,
+            name: `Alpha-flag and Charlie-flag flags can not be combined`,
+          },
+        ] as IDiscordCommandFlagsOpposite);
+      });
+    });
+
+    describe(`when the given message contains two opposite boolean uppercase flags`, (): void => {
+      beforeEach((): void => {
+        message = `--ALPHA-FLAG=TRUE --CHARLIE-FLAG=TRUE`;
+      });
+
+      it(`should return a list with one error about the opposite flags`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getOpposites(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flags \`--ALPHA-FLAG=TRUE\` and \`--CHARLIE-FLAG=TRUE\` are opposites.`,
+            name: `Alpha-flag and Charlie-flag flags can not be combined`,
+          },
+        ] as IDiscordCommandFlagsOpposite);
+      });
+    });
+
+    describe(`when the given message contains two opposite boolean shortcut flags`, (): void => {
+      beforeEach((): void => {
+        message = `-beta-flag -delta-flag`;
+      });
+
+      it(`should return a list with one error about the opposite flags`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getOpposites(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flags \`-beta-flag\` and \`-delta-flag\` are opposites.`,
+            name: `Alpha-flag and Charlie-flag flags can not be combined`,
+          },
+        ] as IDiscordCommandFlagsOpposite);
+      });
+    });
+
+    describe(`when the given message contains two opposite boolean uppercase shortcut flags`, (): void => {
+      beforeEach((): void => {
+        message = `-BETA-FLAG -DELTA-FLAG`;
+      });
+
+      it(`should return a list with one error about the opposite flags`, (): void => {
+        expect.assertions(1);
+
+        const result = discordCommandFlags.getOpposites(message);
+
+        expect(result).toStrictEqual([
+          {
+            description: `The flags \`-BETA-FLAG\` and \`-DELTA-FLAG\` are opposites.`,
+            name: `Alpha-flag and Charlie-flag flags can not be combined`,
+          },
+        ] as IDiscordCommandFlagsOpposite);
       });
     });
   });

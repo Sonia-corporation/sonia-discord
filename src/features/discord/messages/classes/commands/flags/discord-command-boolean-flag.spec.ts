@@ -314,6 +314,51 @@ describe(`DiscordCommandBooleanFlag`, (): void => {
     });
   });
 
+  describe(`getOpposites()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+        createMock<
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+          >
+        >()
+      );
+    });
+
+    it(`should return the opposites`, (): void => {
+      expect.assertions(1);
+      discordCommandFlag.setOpposites([DummyFlagEnum.BETA]);
+
+      const result = discordCommandFlag.getOpposites();
+
+      expect(result).toStrictEqual([DummyFlagEnum.BETA]);
+    });
+  });
+
+  describe(`setOpposites()`, (): void => {
+    beforeEach((): void => {
+      discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(
+        createMock<
+          IDiscordCommandFlag<
+            DummyFlagEnum,
+            DiscordCommandFlagActionBoolean<DummyFlagEnum>
+          >
+        >()
+      );
+    });
+
+    it(`should update the opposites with the given one`, (): void => {
+      expect.assertions(1);
+
+      discordCommandFlag.setOpposites([DummyFlagEnum.BETA]);
+
+      expect(discordCommandFlag.getOpposites()).toStrictEqual([
+        DummyFlagEnum.BETA,
+      ]);
+    });
+  });
+
   describe(`getShortcuts()`, (): void => {
     beforeEach((): void => {
       discordCommandFlag = new DiscordCommandBooleanFlag<DummyFlagEnum>(

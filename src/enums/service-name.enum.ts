@@ -39,6 +39,7 @@ export enum ServiceNameEnum {
   DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_SERVICE = `DiscordMessageCommandFeatureNoonConfigService`,
   DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SUCCESS_FLAG_SERVICE = `DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`,
   DISCORD_MESSAGE_COMMAND_FEATURE_NOON_SERVICE = `DiscordMessageCommandFeatureNoonService`,
+  DISCORD_MESSAGE_COMMAND_FEATURE_OPPOSITE_FLAGS_ERROR_SERVICE = `DiscordMessageCommandFeatureOppositeFlagsErrorService`,
   DISCORD_MESSAGE_COMMAND_FEATURE_SERVICE = `DiscordMessageCommandFeatureService`,
   DISCORD_MESSAGE_COMMAND_FEATURE_WRONG_FEATURE_NAME_ERROR_SERVICE = `DiscordMessageCommandFeatureWrongFeatureNameErrorService`,
   DISCORD_MESSAGE_COMMAND_FEATURE_WRONG_FLAGS_ERROR_SERVICE = `DiscordMessageCommandFeatureWrongFlagsErrorService`,
