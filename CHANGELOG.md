@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.86.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.85.0...1.86.0) (2020-11-11)
+
+
+### :rocket: Features
+
+* **noon:** forbid to combine enabled and disabled flags ([9579462](https://github.com/Sonia-corporation/sonia-discord/commit/9579462289a1fe910e8ae78e3d4e4e39419883b2))
+
 # [1.85.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.84.1...1.85.0) (2020-11-07)
 
 
