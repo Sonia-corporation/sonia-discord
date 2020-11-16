@@ -164,7 +164,7 @@
     "@types/ws": "7.4.0",
     "@types/xregexp": "4.3.0",
     "@typescript-eslint/eslint-plugin": "4.8.0",
-    "@typescript-eslint/parser": "4.7.0",
+    "@typescript-eslint/parser": "4.8.0",
     "all-contributors-cli": "6.19.0",
     "app-root-path": "3.0.0",
     "chalk": "4.1.0",
