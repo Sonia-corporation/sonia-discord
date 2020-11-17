@@ -44,7 +44,6 @@
     "discord-bot",
     "sonia",
     "node",
-    "express",
     "heroku"
   ],
   "repository": {
