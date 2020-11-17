@@ -160,7 +160,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       expect(result.options.embed?.fields?.[1]).toStrictEqual({
         name: `All flags`,
-        value: `\`--disabled (or -d)\`, \`--enabled (or -e)\`, \`--help (or -h)\``,
+        value: `\`--disabled (or -d)\`, \`--enabled (or -e)\`, \`--help (or -h)\`, \`--humanize (or -hu)\``,
       } as EmbedFieldData);
     });
 
@@ -256,7 +256,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
 
-      expect(result.options.embed?.title).toStrictEqual(`I can not handle your request`);
+      expect(result.options.embed?.title).toStrictEqual(`I can not handle your request.`);
     });
 
     it(`should return a Discord message response not split`, async (): Promise<void> => {

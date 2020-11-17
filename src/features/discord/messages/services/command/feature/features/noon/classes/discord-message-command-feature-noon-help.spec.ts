@@ -199,12 +199,12 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         );
       });
 
-      it(`should return a Discord message response embed with 4 fields`, async (): Promise<void> => {
+      it(`should return a Discord message response embed with 5 fields`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
-        expect(result.options.embed?.fields).toHaveLength(4);
+        expect(result.options.embed?.fields).toHaveLength(5);
       });
 
       it(`should return a Discord message response embed with a disabled flag field documentation`, async (): Promise<
@@ -246,6 +246,19 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         } as EmbedFieldData);
       });
 
+      it(`should return a Discord message response embed with a humanize flag field documentation`, async (): Promise<
+        void
+      > => {
+        expect.assertions(1);
+
+        const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
+
+        expect(result.options.embed?.fields?.[3]).toStrictEqual({
+          name: `--humanize (or -hu)`,
+          value: `Display the current noon configuration for this channel.`,
+        } as EmbedFieldData);
+      });
+
       it(`should return a Discord message response embed with a field to show an example of the command with a random valid flag`, async (): Promise<
         void
       > => {
@@ -254,7 +267,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
-        expect(result.options.embed?.fields?.[3]).toBeOneOf([
+        expect(result.options.embed?.fields?.[4]).toBeOneOf([
           {
             name: `Example`,
             value: `\`!feature noon --disabled=true\``,
@@ -287,6 +300,14 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
             name: `Example`,
             value: `\`!feature noon -h\``,
           } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!feature noon --humanize\``,
+          } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!feature noon -hu\``,
+          } as EmbedFieldData,
         ]);
       });
 
@@ -298,7 +319,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
-        expect(result.options.embed?.fields?.[3]).toBeOneOf([
+        expect(result.options.embed?.fields?.[4]).toBeOneOf([
           {
             name: `Example`,
             value: `\`!f n --disabled=true\``,
@@ -330,6 +351,14 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
           {
             name: `Example`,
             value: `\`!f n -h\``,
+          } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!f n --humanize\``,
+          } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!f n -hu\``,
           } as EmbedFieldData,
         ]);
       });

@@ -160,6 +160,6 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
   }
 
   private _getMessageEmbedTitle(): string {
-    return `Noon feature updated`;
+    return `Noon feature updated.`;
   }
 }

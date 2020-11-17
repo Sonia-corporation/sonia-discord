@@ -6,6 +6,7 @@ import { DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON } from '../../../constants/di
 import { DiscordMessageCommandFeatureNoonDisabled } from '../classes/discord-message-command-feature-noon-disabled';
 import { DiscordMessageCommandFeatureNoonEnabled } from '../classes/discord-message-command-feature-noon-enabled';
 import { DiscordMessageCommandFeatureNoonHelp } from '../classes/discord-message-command-feature-noon-help';
+import { DiscordMessageCommandFeatureNoonHumanize } from '../classes/discord-message-command-feature-noon-humanize';
 import { DiscordMessageCommandFeatureNoonFlagEnum } from '../enums/discord-message-command-feature-noon-flag.enum';
 
 export const DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS: DiscordCommandFlags<DiscordMessageCommandFeatureNoonFlagEnum> = new DiscordCommandFlags(
@@ -31,6 +32,12 @@ export const DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS: DiscordCommandFlags<Dis
         description: `Get some help with the noon command. Display all the flags with an example.`,
         name: DiscordMessageCommandFeatureNoonFlagEnum.HELP,
         shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.H],
+      }),
+      new DiscordCommandValuelessFlag<DiscordMessageCommandFeatureNoonFlagEnum>({
+        action: new DiscordMessageCommandFeatureNoonHumanize(),
+        description: `Display the current noon configuration for this channel.`,
+        name: DiscordMessageCommandFeatureNoonFlagEnum.HUMANIZE,
+        shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.HU],
       }),
     ],
   }
