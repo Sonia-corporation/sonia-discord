@@ -1,6 +1,6 @@
-import _ from "lodash";
-import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
-import { IDiscordMessageNormalFlag } from "../../../types/commands/flags/discord-message-normal-flag";
+import { IDiscordMessageFlag } from '../../../types/commands/flags/discord-message-flag';
+import { IDiscordMessageNormalFlag } from '../../../types/commands/flags/discord-message-normal-flag';
+import _ from 'lodash';
 
 /**
  * @description

@@ -1,9 +1,11 @@
-node_modules
-dist
-dist-local-dev
-coverage
-.github
 .cache
 .cache-jest
+.git
+.github
+dist
+dist-local-dev
+node_modules
+coverage
 reports
 stryker-tmp
+test.ts

@@ -1,6 +1,6 @@
-import { Messages } from "../../../../classes/messages";
-import { DiscordMessageCommandLunchDescriptionEnum } from "../../../../enums/commands/lunch/discord-message-command-lunch-description.enum";
-import { DISCORD_MESSAGE_COMMAND_LUNCH_DESCRIPTION_MESSAGES } from "./discord-message-command-lunch-description-messages";
+import { DISCORD_MESSAGE_COMMAND_LUNCH_DESCRIPTION_MESSAGES } from './discord-message-command-lunch-description-messages';
+import { Messages } from '../../../../classes/messages';
+import { DiscordMessageCommandLunchDescriptionEnum } from '../../../../enums/commands/lunch/discord-message-command-lunch-description.enum';
 
 describe(`DISCORD_MESSAGE_COMMAND_LUNCH_DESCRIPTION_MESSAGES`, (): void => {
   it(`should be a Discord message command lunch descriptions`, (): void => {

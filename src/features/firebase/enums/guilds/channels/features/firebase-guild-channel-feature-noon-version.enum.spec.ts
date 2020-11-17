@@ -1,4 +1,4 @@
-import { FirebaseGuildChannelFeatureNoonVersionEnum } from "./firebase-guild-channel-feature-noon-version.enum";
+import { FirebaseGuildChannelFeatureNoonVersionEnum } from './firebase-guild-channel-feature-noon-version.enum';
 
 describe(`FirebaseGuildChannelFeatureNoonVersionEnum`, (): void => {
   it(`should have a member "V1"`, (): void => {

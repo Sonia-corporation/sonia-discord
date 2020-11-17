@@ -1,28 +1,28 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
-import { ChalkService } from "../../../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../../../logger/services/logger.service";
-import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
-import { discordGetCommandFirstArgument } from "../../../functions/commands/getters/discord-get-command-first-argument";
-import { discordGetCommandFlags } from "../../../functions/commands/getters/discord-get-command-flags";
-import { discordHasThisCommand } from "../../../functions/commands/checks/discord-has-this-command";
-import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../types/any-discord-message";
-import { IDiscordCommandFlagsDuplicated } from "../../../types/commands/flags/discord-command-flags-duplicated";
-import { IDiscordCommandFlagsErrors } from "../../../types/commands/flags/discord-command-flags-errors";
-import { IDiscordCommandFlagsOpposite } from "../../../types/commands/flags/discord-command-flags-opposite";
-import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
-import { DiscordMessageCommandFeatureNameEnum } from "./enums/discord-message-command-feature-name.enum";
-import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "./features/noon/constants/discord-message-command-feature-noon-flags";
-import { DiscordMessageCommandFeatureEmptyContentErrorService } from "./services/discord-message-command-feature-empty-content-error.service";
-import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from "./services/feature-names/discord-message-command-feature-empty-feature-name-error.service";
-import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from "./services/flags/discord-message-command-feature-duplicated-flags-error.service";
-import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from "./services/flags/discord-message-command-feature-empty-flags-error.service";
-import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from "./services/feature-names/discord-message-command-feature-wrong-feature-name-error.service";
-import { DiscordMessageCommandFeatureNoonService } from "./features/noon/services/discord-message-command-feature-noon.service";
-import { DiscordMessageCommandFeatureOppositeFlagsErrorService } from "./services/flags/discord-message-command-feature-opposite-flags-error.service";
-import { DiscordMessageCommandFeatureWrongFlagsErrorService } from "./services/flags/discord-message-command-feature-wrong-flags-error.service";
+import { DiscordMessageCommandFeatureNameEnum } from './enums/discord-message-command-feature-name.enum';
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from './features/noon/constants/discord-message-command-feature-noon-flags';
+import { DiscordMessageCommandFeatureNoonService } from './features/noon/services/discord-message-command-feature-noon.service';
+import { DiscordMessageCommandFeatureEmptyContentErrorService } from './services/discord-message-command-feature-empty-content-error.service';
+import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from './services/feature-names/discord-message-command-feature-empty-feature-name-error.service';
+import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from './services/feature-names/discord-message-command-feature-wrong-feature-name-error.service';
+import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from './services/flags/discord-message-command-feature-duplicated-flags-error.service';
+import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from './services/flags/discord-message-command-feature-empty-flags-error.service';
+import { DiscordMessageCommandFeatureOppositeFlagsErrorService } from './services/flags/discord-message-command-feature-opposite-flags-error.service';
+import { DiscordMessageCommandFeatureWrongFlagsErrorService } from './services/flags/discord-message-command-feature-wrong-flags-error.service';
+import { AbstractService } from '../../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
+import { ChalkService } from '../../../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../../../logger/services/logger.service';
+import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
+import { discordHasThisCommand } from '../../../functions/commands/checks/discord-has-this-command';
+import { discordGetCommandFirstArgument } from '../../../functions/commands/getters/discord-get-command-first-argument';
+import { discordGetCommandFlags } from '../../../functions/commands/getters/discord-get-command-flags';
+import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../../../types/any-discord-message';
+import { IDiscordCommandFlagsDuplicated } from '../../../types/commands/flags/discord-command-flags-duplicated';
+import { IDiscordCommandFlagsErrors } from '../../../types/commands/flags/discord-command-flags-errors';
+import { IDiscordCommandFlagsOpposite } from '../../../types/commands/flags/discord-command-flags-opposite';
+import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
+import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureService extends AbstractService {
   private static _instance: DiscordMessageCommandFeatureService;
@@ -50,10 +50,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        anyDiscordMessage.id,
-        `feature command detected`
-      ),
+      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `feature command detected`),
     });
 
     return this.getMessageResponse(anyDiscordMessage);
@@ -66,18 +63,13 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       return DiscordMessageCommandFeatureEmptyContentErrorService.getInstance().getMessageResponse();
     }
 
-    const featureName: string | null = this._getFeatureName(
-      anyDiscordMessage.content
-    );
+    const featureName: string | null = this._getFeatureName(anyDiscordMessage.content);
 
     if (_.isNil(featureName)) {
       LoggerService.getInstance().debug({
         context: this._serviceName,
         hasExtendedContext: true,
-        message: LoggerService.getInstance().getSnowflakeContext(
-          anyDiscordMessage.id,
-          `feature name not specified`
-        ),
+        message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `feature name not specified`),
       });
 
       return DiscordMessageCommandFeatureEmptyFeatureNameErrorService.getInstance().getMessageResponse(
@@ -86,19 +78,13 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       );
     }
 
-    if (
-      !DiscordMessageCommandFeatureNoonService.getInstance().isNoonFeature(
-        featureName
-      )
-    ) {
+    if (!DiscordMessageCommandFeatureNoonService.getInstance().isNoonFeature(featureName)) {
       LoggerService.getInstance().debug({
         context: this._serviceName,
         hasExtendedContext: true,
         message: LoggerService.getInstance().getSnowflakeContext(
           anyDiscordMessage.id,
-          `feature name ${ChalkService.getInstance().value(
-            featureName
-          )} not matching an existing feature`
+          `feature name ${ChalkService.getInstance().value(featureName)} not matching an existing feature`
         ),
       });
 
@@ -109,15 +95,10 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       );
     }
 
-    const messageFlags: string | null = this.getFlags(
-      anyDiscordMessage.content
-    );
+    const messageFlags: string | null = this.getFlags(anyDiscordMessage.content);
 
     if (_.isNil(messageFlags)) {
-      return this._getEmptyFlagsErrorMessageResponse(
-        anyDiscordMessage,
-        DiscordMessageCommandFeatureNameEnum.NOON
-      );
+      return this._getEmptyFlagsErrorMessageResponse(anyDiscordMessage, DiscordMessageCommandFeatureNameEnum.NOON);
     }
 
     const flagsErrors: IDiscordCommandFlagsErrors | null = DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getErrors(
@@ -156,10 +137,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       );
     }
 
-    return DiscordMessageCommandFeatureNoonService.getInstance().getMessageResponse(
-      anyDiscordMessage,
-      messageFlags
-    );
+    return DiscordMessageCommandFeatureNoonService.getInstance().getMessageResponse(anyDiscordMessage, messageFlags);
   }
 
   public hasCommand(message: Readonly<string>): boolean {
@@ -201,9 +179,7 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         anyDiscordMessage.id,
-        `feature name ${ChalkService.getInstance().value(
-          _.capitalize(featureName)
-        )} not having any flags`
+        `feature name ${ChalkService.getInstance().value(_.capitalize(featureName))} not having any flags`
       ),
     });
 
@@ -224,15 +200,11 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         id,
-        `feature name ${ChalkService.getInstance().value(
-          _.capitalize(featureName)
-        )} not having all valid flags`
+        `feature name ${ChalkService.getInstance().value(_.capitalize(featureName))} not having all valid flags`
       ),
     });
 
-    return DiscordMessageCommandFeatureWrongFlagsErrorService.getInstance().getMessageResponse(
-      flagsErrors
-    );
+    return DiscordMessageCommandFeatureWrongFlagsErrorService.getInstance().getMessageResponse(flagsErrors);
   }
 
   private _getDuplicatedFlagsErrorMessageResponse(
@@ -245,15 +217,11 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         id,
-        `feature name ${ChalkService.getInstance().value(
-          _.capitalize(featureName)
-        )} has duplicated flags`
+        `feature name ${ChalkService.getInstance().value(_.capitalize(featureName))} has duplicated flags`
       ),
     });
 
-    return DiscordMessageCommandFeatureDuplicatedFlagsErrorService.getInstance().getMessageResponse(
-      flagsDuplicated
-    );
+    return DiscordMessageCommandFeatureDuplicatedFlagsErrorService.getInstance().getMessageResponse(flagsDuplicated);
   }
 
   private _getOppositeFlagsErrorMessageResponse(
@@ -266,14 +234,10 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         id,
-        `feature name ${ChalkService.getInstance().value(
-          _.capitalize(featureName)
-        )} has opposite flags`
+        `feature name ${ChalkService.getInstance().value(_.capitalize(featureName))} has opposite flags`
       ),
     });
 
-    return DiscordMessageCommandFeatureOppositeFlagsErrorService.getInstance().getMessageResponse(
-      oppositeFlags
-    );
+    return DiscordMessageCommandFeatureOppositeFlagsErrorService.getInstance().getMessageResponse(oppositeFlags);
   }
 }

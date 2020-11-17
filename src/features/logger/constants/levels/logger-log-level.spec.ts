@@ -1,4 +1,4 @@
-import { LOGGER_LOG_LEVEL } from "./logger-log-level";
+import { LOGGER_LOG_LEVEL } from './logger-log-level';
 
 describe(`LOGGER_LOG_LEVEL`, (): void => {
   it(`should be 3`, (): void => {

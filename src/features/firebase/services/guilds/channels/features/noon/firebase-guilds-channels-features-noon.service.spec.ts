@@ -1,11 +1,11 @@
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../../../core/services/core-event.service";
-import { FirebaseGuildChannelFeatureNoonVersionEnum } from "../../../../../enums/guilds/channels/features/firebase-guild-channel-feature-noon-version.enum";
-import { IFirebaseGuildChannelFeatureNoonV1 } from "../../../../../interfaces/guilds/channels/features/firebase-guild-channel-feature-noon-v1";
-import { IFirebaseGuildChannelFeatureNoon } from "../../../../../types/guilds/channels/features/firebase-guild-channel-feature-noon";
-import { IFirebaseGuildChannelFeatureNoonVFinal } from "../../../../../types/guilds/channels/features/firebase-guild-channel-feature-noon-v-final";
-import { FirebaseGuildsChannelsFeaturesNoonService } from "./firebase-guilds-channels-features-noon.service";
+import { FirebaseGuildsChannelsFeaturesNoonService } from './firebase-guilds-channels-features-noon.service';
+import { ServiceNameEnum } from '../../../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../../../core/services/core-event.service';
+import { FirebaseGuildChannelFeatureNoonVersionEnum } from '../../../../../enums/guilds/channels/features/firebase-guild-channel-feature-noon-version.enum';
+import { IFirebaseGuildChannelFeatureNoonV1 } from '../../../../../interfaces/guilds/channels/features/firebase-guild-channel-feature-noon-v1';
+import { IFirebaseGuildChannelFeatureNoon } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-noon';
+import { IFirebaseGuildChannelFeatureNoonVFinal } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-noon-v-final';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../logger/services/chalk/chalk.service`);
 
@@ -23,9 +23,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
 
       service = FirebaseGuildsChannelsFeaturesNoonService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(FirebaseGuildsChannelsFeaturesNoonService)
-      );
+      expect(service).toStrictEqual(expect.any(FirebaseGuildsChannelsFeaturesNoonService));
     });
 
     it(`should return the created FirebaseGuildsChannelsFeaturesNoon service`, (): void => {

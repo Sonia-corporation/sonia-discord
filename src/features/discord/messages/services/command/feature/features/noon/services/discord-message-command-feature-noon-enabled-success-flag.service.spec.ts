@@ -1,7 +1,7 @@
-import { ServiceNameEnum } from "../../../../../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../../../../../core/services/core-event.service";
-import { IDiscordCommandFlagSuccess } from "../../../../../../interfaces/commands/flags/discord-command-flag-success";
-import { DiscordMessageCommandFeatureNoonEnabledSuccessFlagService } from "./discord-message-command-feature-noon-enabled-success-flag.service";
+import { DiscordMessageCommandFeatureNoonEnabledSuccessFlagService } from './discord-message-command-feature-noon-enabled-success-flag.service';
+import { ServiceNameEnum } from '../../../../../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../../../../../core/services/core-event.service';
+import { IDiscordCommandFlagSuccess } from '../../../../../../interfaces/commands/flags/discord-command-flag-success';
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 
@@ -19,9 +19,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`, (): void =
 
       service = DiscordMessageCommandFeatureNoonEnabledSuccessFlagService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(DiscordMessageCommandFeatureNoonEnabledSuccessFlagService)
-      );
+      expect(service).toStrictEqual(expect.any(DiscordMessageCommandFeatureNoonEnabledSuccessFlagService));
     });
 
     it(`should return the created DiscordMessageCommandFeatureNoonEnabledSuccessFlag service`, (): void => {

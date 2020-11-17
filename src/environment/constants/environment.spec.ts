@@ -1,15 +1,11 @@
-import { LoggerConfigLevelEnum } from "../../features/logger/enums/logger-config-level.enum";
-import { ENVIRONMENT } from "./environment";
+import { ENVIRONMENT } from './environment';
+import { LoggerConfigLevelEnum } from '../../features/logger/enums/logger-config-level.enum';
 
 describe(`ENVIRONMENT`, (): void => {
   it(`should have some prefixes for the Discord messages command interpreter`, (): void => {
     expect.assertions(1);
 
-    expect(ENVIRONMENT.discord.message.command?.prefix).toStrictEqual([
-      `-`,
-      `!`,
-      `$`,
-    ]);
+    expect(ENVIRONMENT.discord.message.command?.prefix).toStrictEqual([`-`, `!`, `$`]);
   });
 
   it(`should have a Discord application id for Sonia`, (): void => {
@@ -43,8 +39,6 @@ describe(`ENVIRONMENT`, (): void => {
   it(`should log with the debug level`, (): void => {
     expect.assertions(1);
 
-    expect(ENVIRONMENT.logger?.level).toStrictEqual(
-      LoggerConfigLevelEnum.DEBUG
-    );
+    expect(ENVIRONMENT.logger?.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
   });
 });

@@ -1,15 +1,15 @@
-import { MessageEmbedAuthor } from "discord.js";
-import _ from "lodash";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { AppConfigService } from "../../../app/services/config/app-config.service";
-import { ProfileConfigService } from "../../../profile/services/config/profile-config.service";
-import { addDiscordDevPrefix } from "../../functions/dev-prefix/add-discord-dev-prefix";
-import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../interfaces/discord-sonia-corporation-message-embed-author-config";
-import { DiscordClientService } from "../../services/discord-client.service";
-import { isDiscordClientUser } from "../functions/is-discord-client-user";
-import { ISonia } from "../types/sonia";
-import { DiscordSoniaConfigService } from "./config/discord-sonia-config.service";
+import { DiscordSoniaConfigService } from './config/discord-sonia-config.service';
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { AppConfigService } from '../../../app/services/config/app-config.service';
+import { ProfileConfigService } from '../../../profile/services/config/profile-config.service';
+import { addDiscordDevPrefix } from '../../functions/dev-prefix/add-discord-dev-prefix';
+import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from '../../interfaces/discord-sonia-corporation-message-embed-author-config';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { isDiscordClientUser } from '../functions/is-discord-client-user';
+import { ISonia } from '../types/sonia';
+import { MessageEmbedAuthor } from 'discord.js';
+import _ from 'lodash';
 
 export class DiscordSoniaService extends AbstractService {
   private static _instance: DiscordSoniaService;

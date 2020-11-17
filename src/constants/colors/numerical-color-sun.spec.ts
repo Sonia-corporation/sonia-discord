@@ -1,4 +1,4 @@
-import { NUMERICAL_COLOR_SUN } from "./numerical-color-sun";
+import { NUMERICAL_COLOR_SUN } from './numerical-color-sun';
 
 describe(`NUMERICAL_COLOR_SUN`, (): void => {
   it(`should be 16376750`, (): void => {

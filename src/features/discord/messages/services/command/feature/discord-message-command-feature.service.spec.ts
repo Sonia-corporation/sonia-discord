@@ -1,24 +1,24 @@
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../../../logger/services/logger.service";
-import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
-import { IDiscordCommandFlagDuplicated } from "../../../interfaces/commands/flags/discord-command-flag-duplicated";
-import { IDiscordCommandFlagError } from "../../../interfaces/commands/flags/discord-command-flag-error";
-import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
-import { DiscordMessageCommandFeatureService } from "./discord-message-command-feature.service";
-import { DiscordMessageCommandFeatureNoonService } from "./features/noon/services/discord-message-command-feature-noon.service";
-import { DiscordMessageCommandFeatureEmptyContentErrorService } from "./services/discord-message-command-feature-empty-content-error.service";
-import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from "./services/feature-names/discord-message-command-feature-empty-feature-name-error.service";
-import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from "./services/feature-names/discord-message-command-feature-wrong-feature-name-error.service";
-import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from "./services/flags/discord-message-command-feature-duplicated-flags-error.service";
-import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from "./services/flags/discord-message-command-feature-empty-flags-error.service";
-import { DiscordMessageCommandFeatureOppositeFlagsErrorService } from "./services/flags/discord-message-command-feature-opposite-flags-error.service";
-import { DiscordMessageCommandFeatureWrongFlagsErrorService } from "./services/flags/discord-message-command-feature-wrong-flags-error.service";
-import _ from "lodash";
+import { DiscordMessageCommandFeatureService } from './discord-message-command-feature.service';
+import { DiscordMessageCommandFeatureNoonService } from './features/noon/services/discord-message-command-feature-noon.service';
+import { DiscordMessageCommandFeatureEmptyContentErrorService } from './services/discord-message-command-feature-empty-content-error.service';
+import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from './services/feature-names/discord-message-command-feature-empty-feature-name-error.service';
+import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from './services/feature-names/discord-message-command-feature-wrong-feature-name-error.service';
+import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from './services/flags/discord-message-command-feature-duplicated-flags-error.service';
+import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from './services/flags/discord-message-command-feature-empty-flags-error.service';
+import { DiscordMessageCommandFeatureOppositeFlagsErrorService } from './services/flags/discord-message-command-feature-opposite-flags-error.service';
+import { DiscordMessageCommandFeatureWrongFlagsErrorService } from './services/flags/discord-message-command-feature-wrong-flags-error.service';
+import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../../core/services/core-event.service';
+import { ILoggerLog } from '../../../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../../../logger/services/logger.service';
+import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
+import { IDiscordCommandFlagDuplicated } from '../../../interfaces/commands/flags/discord-command-flag-duplicated';
+import { IDiscordCommandFlagError } from '../../../interfaces/commands/flags/discord-command-flag-error';
+import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../../../types/any-discord-message';
+import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
+import _ from 'lodash';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
@@ -56,9 +56,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
       service = DiscordMessageCommandFeatureService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(DiscordMessageCommandFeatureService)
-      );
+      expect(service).toStrictEqual(expect.any(DiscordMessageCommandFeatureService));
     });
 
     it(`should return the created DiscordMessageCommandFeature service`, (): void => {
@@ -105,9 +103,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       });
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
-      getMessageResponseSpy = jest
-        .spyOn(service, `getMessageResponse`)
-        .mockResolvedValue(discordMessageResponse);
+      getMessageResponseSpy = jest.spyOn(service, `getMessageResponse`).mockResolvedValue(discordMessageResponse);
     });
 
     it(`should log about the command`, async (): Promise<void> => {
@@ -171,19 +167,13 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       discordMessageResponse = createMock<IDiscordMessageResponse>({
         response: `discordMessageResponse`,
       });
-      getEmptyContentErrorMessageResponse = createMock<IDiscordMessageResponse>(
-        {
-          response: `getEmptyContentErrorMessageResponse`,
-        }
-      );
-      getEmptyFeatureNameErrorMessageResponse = createMock<
-        IDiscordMessageResponse
-      >({
+      getEmptyContentErrorMessageResponse = createMock<IDiscordMessageResponse>({
+        response: `getEmptyContentErrorMessageResponse`,
+      });
+      getEmptyFeatureNameErrorMessageResponse = createMock<IDiscordMessageResponse>({
         response: `getEmptyFeatureNameErrorMessageResponse`,
       });
-      getWrongFeatureNameErrorMessageResponse = createMock<
-        IDiscordMessageResponse
-      >({
+      getWrongFeatureNameErrorMessageResponse = createMock<IDiscordMessageResponse>({
         response: `getWrongFeatureNameErrorMessageResponse`,
       });
       getEmptyFlagsErrorMessageResponse = createMock<IDiscordMessageResponse>({
@@ -192,95 +182,44 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
       getWrongFlagsErrorMessageResponse = createMock<IDiscordMessageResponse>({
         response: `getWrongFlagsErrorMessageResponse`,
       });
-      getDuplicatedFlagsErrorMessageResponse = createMock<
-        IDiscordMessageResponse
-      >({
+      getDuplicatedFlagsErrorMessageResponse = createMock<IDiscordMessageResponse>({
         response: `getDuplicatedFlagsErrorMessageResponse`,
       });
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       discordMessageCommandFeatureNoonServiceIsNoonFeatureSpy = jest
         .spyOn(discordMessageCommandFeatureNoonService, `isNoonFeature`)
         .mockImplementation();
       discordMessageCommandFeatureNoonServiceGetMessageResponseSpy = jest
         .spyOn(discordMessageCommandFeatureNoonService, `getMessageResponse`)
-        .mockRejectedValue(
-          new Error(
-            `discordMessageCommandFeatureNoonService getMessageResponse error`
-          )
-        );
+        .mockRejectedValue(new Error(`discordMessageCommandFeatureNoonService getMessageResponse error`));
       discordMessageCommandFeatureEmptyContentErrorServiceGetMessageResponseSpy = jest
-        .spyOn(
-          discordMessageCommandFeatureEmptyContentErrorService,
-          `getMessageResponse`
-        )
-        .mockRejectedValue(
-          new Error(
-            `discordMessageCommandFeatureEmptyContentErrorService getMessageResponse error`
-          )
-        );
+        .spyOn(discordMessageCommandFeatureEmptyContentErrorService, `getMessageResponse`)
+        .mockRejectedValue(new Error(`discordMessageCommandFeatureEmptyContentErrorService getMessageResponse error`));
       discordMessageCommandFeatureEmptyFeatureNameErrorServiceGetMessageResponseSpy = jest
-        .spyOn(
-          discordMessageCommandFeatureEmptyFeatureNameErrorService,
-          `getMessageResponse`
-        )
+        .spyOn(discordMessageCommandFeatureEmptyFeatureNameErrorService, `getMessageResponse`)
         .mockRejectedValue(
-          new Error(
-            `discordMessageCommandFeatureEmptyFeatureNameErrorService getMessageResponse error`
-          )
+          new Error(`discordMessageCommandFeatureEmptyFeatureNameErrorService getMessageResponse error`)
         );
       discordMessageCommandFeatureWrongFeatureNameErrorServiceGetMessageResponseSpy = jest
-        .spyOn(
-          discordMessageCommandFeatureWrongFeatureNameErrorService,
-          `getMessageResponse`
-        )
+        .spyOn(discordMessageCommandFeatureWrongFeatureNameErrorService, `getMessageResponse`)
         .mockRejectedValue(
-          new Error(
-            `discordMessageCommandFeatureWrongFeatureNameErrorService getMessageResponse error`
-          )
+          new Error(`discordMessageCommandFeatureWrongFeatureNameErrorService getMessageResponse error`)
         );
       discordMessageCommandFeatureEmptyFlagsErrorServiceGetMessageResponseSpy = jest
-        .spyOn(
-          discordMessageCommandFeatureEmptyFlagsErrorService,
-          `getMessageResponse`
-        )
-        .mockRejectedValue(
-          new Error(
-            `discordMessageCommandFeatureEmptyFlagsErrorService getMessageResponse error`
-          )
-        );
+        .spyOn(discordMessageCommandFeatureEmptyFlagsErrorService, `getMessageResponse`)
+        .mockRejectedValue(new Error(`discordMessageCommandFeatureEmptyFlagsErrorService getMessageResponse error`));
       discordMessageCommandFeatureWrongFlagsErrorServiceGetMessageResponseSpy = jest
-        .spyOn(
-          discordMessageCommandFeatureWrongFlagsErrorService,
-          `getMessageResponse`
-        )
-        .mockRejectedValue(
-          new Error(
-            `discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`
-          )
-        );
+        .spyOn(discordMessageCommandFeatureWrongFlagsErrorService, `getMessageResponse`)
+        .mockRejectedValue(new Error(`discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`));
       discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy = jest
-        .spyOn(
-          discordMessageCommandFeatureDuplicatedFlagsErrorService,
-          `getMessageResponse`
-        )
+        .spyOn(discordMessageCommandFeatureDuplicatedFlagsErrorService, `getMessageResponse`)
         .mockRejectedValue(
-          new Error(
-            `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-          )
+          new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
         );
       discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy = jest
-        .spyOn(
-          discordMessageCommandFeatureOppositeFlagsErrorService,
-          `getMessageResponse`
-        )
-        .mockRejectedValue(
-          new Error(
-            `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
-          )
-        );
+        .spyOn(discordMessageCommandFeatureOppositeFlagsErrorService, `getMessageResponse`)
+        .mockRejectedValue(new Error(`discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`));
     });
 
     describe(`when the given message content is null`, (): void => {
@@ -288,45 +227,29 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         anyDiscordMessage.content = null;
       });
 
-      it(`should get the empty content error message response`, async (): Promise<
-        void
-      > => {
+      it(`should get the empty content error message response`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(
-          service.getMessageResponse(anyDiscordMessage)
-        ).rejects.toThrow(
-          new Error(
-            `discordMessageCommandFeatureEmptyContentErrorService getMessageResponse error`
-          )
+        await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+          new Error(`discordMessageCommandFeatureEmptyContentErrorService getMessageResponse error`)
         );
 
-        expect(
-          discordMessageCommandFeatureEmptyContentErrorServiceGetMessageResponseSpy
-        ).toHaveBeenCalledTimes(1);
-        expect(
-          discordMessageCommandFeatureEmptyContentErrorServiceGetMessageResponseSpy
-        ).toHaveBeenCalledWith();
+        expect(discordMessageCommandFeatureEmptyContentErrorServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(discordMessageCommandFeatureEmptyContentErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith();
       });
 
       describe(`when the fetch of the empty content error message response failed`, (): void => {
         beforeEach((): void => {
           discordMessageCommandFeatureEmptyContentErrorServiceGetMessageResponseSpy.mockRejectedValue(
-            new Error(
-              `discordMessageCommandFeatureEmptyContentErrorService getMessageResponse error`
-            )
+            new Error(`discordMessageCommandFeatureEmptyContentErrorService getMessageResponse error`)
           );
         });
 
         it(`should throw an error`, async (): Promise<void> => {
           expect.assertions(1);
 
-          await expect(
-            service.getMessageResponse(anyDiscordMessage)
-          ).rejects.toThrow(
-            new Error(
-              `discordMessageCommandFeatureEmptyContentErrorService getMessageResponse error`
-            )
+          await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+            new Error(`discordMessageCommandFeatureEmptyContentErrorService getMessageResponse error`)
           );
         });
       });
@@ -338,9 +261,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           );
         });
 
-        it(`should return the empty content error message response`, async (): Promise<
-          void
-        > => {
+        it(`should return the empty content error message response`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.getMessageResponse(anyDiscordMessage);
@@ -349,22 +270,14 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         });
       });
 
-      it(`should not get a message response for the noon feature`, async (): Promise<
-        void
-      > => {
+      it(`should not get a message response for the noon feature`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(
-          service.getMessageResponse(anyDiscordMessage)
-        ).rejects.toThrow(
-          new Error(
-            `discordMessageCommandFeatureEmptyContentErrorService getMessageResponse error`
-          )
+        await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+          new Error(`discordMessageCommandFeatureEmptyContentErrorService getMessageResponse error`)
         );
 
-        expect(
-          discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
-        ).not.toHaveBeenCalled();
+        expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).not.toHaveBeenCalled();
       });
     });
 
@@ -378,48 +291,33 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           anyDiscordMessage.content = `message !feature`;
         });
 
-        it(`should get the empty feature name error message response`, async (): Promise<
-          void
-        > => {
+        it(`should get the empty feature name error message response`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(
-            service.getMessageResponse(anyDiscordMessage)
-          ).rejects.toThrow(
-            new Error(
-              `discordMessageCommandFeatureEmptyFeatureNameErrorService getMessageResponse error`
-            )
+          await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+            new Error(`discordMessageCommandFeatureEmptyFeatureNameErrorService getMessageResponse error`)
           );
 
+          expect(discordMessageCommandFeatureEmptyFeatureNameErrorServiceGetMessageResponseSpy).toHaveBeenCalledTimes(
+            1
+          );
           expect(
             discordMessageCommandFeatureEmptyFeatureNameErrorServiceGetMessageResponseSpy
-          ).toHaveBeenCalledTimes(1);
-          expect(
-            discordMessageCommandFeatureEmptyFeatureNameErrorServiceGetMessageResponseSpy
-          ).toHaveBeenCalledWith(anyDiscordMessage, [
-            DiscordMessageCommandEnum.FEATURE,
-            DiscordMessageCommandEnum.F,
-          ]);
+          ).toHaveBeenCalledWith(anyDiscordMessage, [DiscordMessageCommandEnum.FEATURE, DiscordMessageCommandEnum.F]);
         });
 
         describe(`when the fetch of the empty feature name error message response failed`, (): void => {
           beforeEach((): void => {
             discordMessageCommandFeatureEmptyFeatureNameErrorServiceGetMessageResponseSpy.mockRejectedValue(
-              new Error(
-                `discordMessageCommandFeatureEmptyFeatureNameErrorService getMessageResponse error`
-              )
+              new Error(`discordMessageCommandFeatureEmptyFeatureNameErrorService getMessageResponse error`)
             );
           });
 
           it(`should throw an error`, async (): Promise<void> => {
             expect.assertions(1);
 
-            await expect(
-              service.getMessageResponse(anyDiscordMessage)
-            ).rejects.toThrow(
-              new Error(
-                `discordMessageCommandFeatureEmptyFeatureNameErrorService getMessageResponse error`
-              )
+            await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+              new Error(`discordMessageCommandFeatureEmptyFeatureNameErrorService getMessageResponse error`)
             );
           });
         });
@@ -431,30 +329,20 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
             );
           });
 
-          it(`should return the empty feature name error message response`, async (): Promise<
-            void
-          > => {
+          it(`should return the empty feature name error message response`, async (): Promise<void> => {
             expect.assertions(1);
 
             const result = await service.getMessageResponse(anyDiscordMessage);
 
-            expect(result).toStrictEqual(
-              getEmptyFeatureNameErrorMessageResponse
-            );
+            expect(result).toStrictEqual(getEmptyFeatureNameErrorMessageResponse);
           });
         });
 
-        it(`should log about not having a feature name`, async (): Promise<
-          void
-        > => {
+        it(`should log about not having a feature name`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(
-            service.getMessageResponse(anyDiscordMessage)
-          ).rejects.toThrow(
-            new Error(
-              `discordMessageCommandFeatureEmptyFeatureNameErrorService getMessageResponse error`
-            )
+          await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+            new Error(`discordMessageCommandFeatureEmptyFeatureNameErrorService getMessageResponse error`)
           );
 
           expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -465,22 +353,14 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           } as ILoggerLog);
         });
 
-        it(`should not get a message response for the noon feature`, async (): Promise<
-          void
-        > => {
+        it(`should not get a message response for the noon feature`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(
-            service.getMessageResponse(anyDiscordMessage)
-          ).rejects.toThrow(
-            new Error(
-              `discordMessageCommandFeatureEmptyFeatureNameErrorService getMessageResponse error`
-            )
+          await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+            new Error(`discordMessageCommandFeatureEmptyFeatureNameErrorService getMessageResponse error`)
           );
 
-          expect(
-            discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
-          ).not.toHaveBeenCalled();
+          expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).not.toHaveBeenCalled();
         });
       });
 
@@ -491,30 +371,20 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
         describe(`when the given message feature is not an existing feature`, (): void => {
           beforeEach((): void => {
-            discordMessageCommandFeatureNoonServiceIsNoonFeatureSpy.mockReturnValue(
-              false
-            );
+            discordMessageCommandFeatureNoonServiceIsNoonFeatureSpy.mockReturnValue(false);
           });
 
-          it(`should get the wrong feature name error message response`, async (): Promise<
-            void
-          > => {
+          it(`should get the wrong feature name error message response`, async (): Promise<void> => {
             expect.assertions(3);
 
-            await expect(
-              service.getMessageResponse(anyDiscordMessage)
-            ).rejects.toThrow(
-              new Error(
-                `discordMessageCommandFeatureWrongFeatureNameErrorService getMessageResponse error`
-              )
+            await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+              new Error(`discordMessageCommandFeatureWrongFeatureNameErrorService getMessageResponse error`)
             );
 
-            expect(
-              discordMessageCommandFeatureWrongFeatureNameErrorServiceGetMessageResponseSpy
-            ).toHaveBeenCalledTimes(1);
-            expect(
-              discordMessageCommandFeatureWrongFeatureNameErrorServiceGetMessageResponseSpy
-            ).toHaveBeenCalledWith(
+            expect(discordMessageCommandFeatureWrongFeatureNameErrorServiceGetMessageResponseSpy).toHaveBeenCalledTimes(
+              1
+            );
+            expect(discordMessageCommandFeatureWrongFeatureNameErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith(
               anyDiscordMessage,
               [DiscordMessageCommandEnum.FEATURE, DiscordMessageCommandEnum.F],
               `dummy`
@@ -524,21 +394,15 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           describe(`when the fetch of the wrong feature name error message response failed`, (): void => {
             beforeEach((): void => {
               discordMessageCommandFeatureWrongFeatureNameErrorServiceGetMessageResponseSpy.mockRejectedValue(
-                new Error(
-                  `discordMessageCommandFeatureWrongFeatureNameErrorService getMessageResponse error`
-                )
+                new Error(`discordMessageCommandFeatureWrongFeatureNameErrorService getMessageResponse error`)
               );
             });
 
             it(`should throw an error`, async (): Promise<void> => {
               expect.assertions(1);
 
-              await expect(
-                service.getMessageResponse(anyDiscordMessage)
-              ).rejects.toThrow(
-                new Error(
-                  `discordMessageCommandFeatureWrongFeatureNameErrorService getMessageResponse error`
-                )
+              await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                new Error(`discordMessageCommandFeatureWrongFeatureNameErrorService getMessageResponse error`)
               );
             });
           });
@@ -550,32 +414,20 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
               );
             });
 
-            it(`should return the wrong feature name error message response`, async (): Promise<
-              void
-            > => {
+            it(`should return the wrong feature name error message response`, async (): Promise<void> => {
               expect.assertions(1);
 
-              const result = await service.getMessageResponse(
-                anyDiscordMessage
-              );
+              const result = await service.getMessageResponse(anyDiscordMessage);
 
-              expect(result).toStrictEqual(
-                getWrongFeatureNameErrorMessageResponse
-              );
+              expect(result).toStrictEqual(getWrongFeatureNameErrorMessageResponse);
             });
           });
 
-          it(`should log about the fact that the feature does not exist`, async (): Promise<
-            void
-          > => {
+          it(`should log about the fact that the feature does not exist`, async (): Promise<void> => {
             expect.assertions(3);
 
-            await expect(
-              service.getMessageResponse(anyDiscordMessage)
-            ).rejects.toThrow(
-              new Error(
-                `discordMessageCommandFeatureWrongFeatureNameErrorService getMessageResponse error`
-              )
+            await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+              new Error(`discordMessageCommandFeatureWrongFeatureNameErrorService getMessageResponse error`)
             );
 
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -586,30 +438,20 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
             } as ILoggerLog);
           });
 
-          it(`should not get a message response for the noon feature`, async (): Promise<
-            void
-          > => {
+          it(`should not get a message response for the noon feature`, async (): Promise<void> => {
             expect.assertions(2);
 
-            await expect(
-              service.getMessageResponse(anyDiscordMessage)
-            ).rejects.toThrow(
-              new Error(
-                `discordMessageCommandFeatureWrongFeatureNameErrorService getMessageResponse error`
-              )
+            await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+              new Error(`discordMessageCommandFeatureWrongFeatureNameErrorService getMessageResponse error`)
             );
 
-            expect(
-              discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
-            ).not.toHaveBeenCalled();
+            expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).not.toHaveBeenCalled();
           });
         });
 
         describe(`when the given message feature is the noon feature`, (): void => {
           beforeEach((): void => {
-            discordMessageCommandFeatureNoonServiceIsNoonFeatureSpy.mockReturnValue(
-              true
-            );
+            discordMessageCommandFeatureNoonServiceIsNoonFeatureSpy.mockReturnValue(true);
           });
 
           describe(`when the given message feature does not contain a flag`, (): void => {
@@ -617,30 +459,17 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
               anyDiscordMessage.content = `message !feature Noon`;
             });
 
-            it(`should get the empty flags error message response`, async (): Promise<
-              void
-            > => {
+            it(`should get the empty flags error message response`, async (): Promise<void> => {
               expect.assertions(3);
 
-              await expect(
-                service.getMessageResponse(anyDiscordMessage)
-              ).rejects.toThrow(
-                new Error(
-                  `discordMessageCommandFeatureEmptyFlagsErrorService getMessageResponse error`
-                )
+              await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                new Error(`discordMessageCommandFeatureEmptyFlagsErrorService getMessageResponse error`)
               );
 
-              expect(
-                discordMessageCommandFeatureEmptyFlagsErrorServiceGetMessageResponseSpy
-              ).toHaveBeenCalledTimes(1);
-              expect(
-                discordMessageCommandFeatureEmptyFlagsErrorServiceGetMessageResponseSpy
-              ).toHaveBeenCalledWith(
+              expect(discordMessageCommandFeatureEmptyFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+              expect(discordMessageCommandFeatureEmptyFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith(
                 anyDiscordMessage,
-                [
-                  DiscordMessageCommandEnum.FEATURE,
-                  DiscordMessageCommandEnum.F,
-                ],
+                [DiscordMessageCommandEnum.FEATURE, DiscordMessageCommandEnum.F],
                 `noon`
               );
             });
@@ -648,21 +477,15 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
             describe(`when the fetch of the empty flags error message response failed`, (): void => {
               beforeEach((): void => {
                 discordMessageCommandFeatureEmptyFlagsErrorServiceGetMessageResponseSpy.mockRejectedValue(
-                  new Error(
-                    `discordMessageCommandFeatureEmptyFlagsErrorService getMessageResponse error`
-                  )
+                  new Error(`discordMessageCommandFeatureEmptyFlagsErrorService getMessageResponse error`)
                 );
               });
 
               it(`should throw an error`, async (): Promise<void> => {
                 expect.assertions(1);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureEmptyFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureEmptyFlagsErrorService getMessageResponse error`)
                 );
               });
             });
@@ -674,30 +497,20 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 );
               });
 
-              it(`should return the empty flags error message response`, async (): Promise<
-                void
-              > => {
+              it(`should return the empty flags error message response`, async (): Promise<void> => {
                 expect.assertions(1);
 
-                const result = await service.getMessageResponse(
-                  anyDiscordMessage
-                );
+                const result = await service.getMessageResponse(anyDiscordMessage);
 
                 expect(result).toStrictEqual(getEmptyFlagsErrorMessageResponse);
               });
             });
 
-            it(`should log about the fact that no flags was specified`, async (): Promise<
-              void
-            > => {
+            it(`should log about the fact that no flags was specified`, async (): Promise<void> => {
               expect.assertions(3);
 
-              await expect(
-                service.getMessageResponse(anyDiscordMessage)
-              ).rejects.toThrow(
-                new Error(
-                  `discordMessageCommandFeatureEmptyFlagsErrorService getMessageResponse error`
-                )
+              await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                new Error(`discordMessageCommandFeatureEmptyFlagsErrorService getMessageResponse error`)
               );
 
               expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -719,25 +532,17 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 anyDiscordMessage.content = `message !feature Noon --yo`;
               });
 
-              it(`should get the wrong flag error message response`, async (): Promise<
-                void
-              > => {
+              it(`should get the wrong flag error message response`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(
-                  discordMessageCommandFeatureWrongFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
-                expect(
-                  discordMessageCommandFeatureWrongFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledWith([
+                expect(discordMessageCommandFeatureWrongFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledTimes(
+                  1
+                );
+                expect(discordMessageCommandFeatureWrongFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith([
                   {
                     description: `The flag \`yo\` is unknown to the \`noon\` feature.`,
                     isUnknown: true,
@@ -749,21 +554,15 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
               describe(`when the fetch of the wrong flag error message response failed`, (): void => {
                 beforeEach((): void => {
                   discordMessageCommandFeatureWrongFlagsErrorServiceGetMessageResponseSpy.mockRejectedValue(
-                    new Error(
-                      `discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`
-                    )
+                    new Error(`discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`)
                   );
                 });
 
                 it(`should throw an error`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  await expect(
-                    service.getMessageResponse(anyDiscordMessage)
-                  ).rejects.toThrow(
-                    new Error(
-                      `discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`
-                    )
+                  await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                    new Error(`discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`)
                   );
                 });
               });
@@ -775,32 +574,20 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   );
                 });
 
-                it(`should return the wrong flags error message response`, async (): Promise<
-                  void
-                > => {
+                it(`should return the wrong flags error message response`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  const result = await service.getMessageResponse(
-                    anyDiscordMessage
-                  );
+                  const result = await service.getMessageResponse(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(
-                    getWrongFlagsErrorMessageResponse
-                  );
+                  expect(result).toStrictEqual(getWrongFlagsErrorMessageResponse);
                 });
               });
 
-              it(`should log about the fact that at least one flag is wrong`, async (): Promise<
-                void
-              > => {
+              it(`should log about the fact that at least one flag is wrong`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -817,17 +604,11 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 anyDiscordMessage.content = `message !feature Noon --enabled=true -e`;
               });
 
-              it(`should get the duplicated flag error message response`, async (): Promise<
-                void
-              > => {
+              it(`should get the duplicated flag error message response`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(
@@ -846,21 +627,15 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
               describe(`when the fetch of the duplicated flag error message response failed`, (): void => {
                 beforeEach((): void => {
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy.mockRejectedValue(
-                    new Error(
-                      `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                    )
+                    new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                   );
                 });
 
                 it(`should throw an error`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  await expect(
-                    service.getMessageResponse(anyDiscordMessage)
-                  ).rejects.toThrow(
-                    new Error(
-                      `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                    )
+                  await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                    new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                   );
                 });
               });
@@ -872,32 +647,20 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   );
                 });
 
-                it(`should return the duplicated flags error message response`, async (): Promise<
-                  void
-                > => {
+                it(`should return the duplicated flags error message response`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  const result = await service.getMessageResponse(
-                    anyDiscordMessage
-                  );
+                  const result = await service.getMessageResponse(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(
-                    getDuplicatedFlagsErrorMessageResponse
-                  );
+                  expect(result).toStrictEqual(getDuplicatedFlagsErrorMessageResponse);
                 });
               });
 
-              it(`should log about the fact that at least one flag is duplicated`, async (): Promise<
-                void
-              > => {
+              it(`should log about the fact that at least one flag is duplicated`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -914,17 +677,11 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 anyDiscordMessage.content = `message !feature Noon --disabled=true -d`;
               });
 
-              it(`should get the duplicated flag error message response`, async (): Promise<
-                void
-              > => {
+              it(`should get the duplicated flag error message response`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(
@@ -943,21 +700,15 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
               describe(`when the fetch of the duplicated flag error message response failed`, (): void => {
                 beforeEach((): void => {
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy.mockRejectedValue(
-                    new Error(
-                      `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                    )
+                    new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                   );
                 });
 
                 it(`should throw an error`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  await expect(
-                    service.getMessageResponse(anyDiscordMessage)
-                  ).rejects.toThrow(
-                    new Error(
-                      `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                    )
+                  await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                    new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                   );
                 });
               });
@@ -969,32 +720,20 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   );
                 });
 
-                it(`should return the duplicated flags error message response`, async (): Promise<
-                  void
-                > => {
+                it(`should return the duplicated flags error message response`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  const result = await service.getMessageResponse(
-                    anyDiscordMessage
-                  );
+                  const result = await service.getMessageResponse(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(
-                    getDuplicatedFlagsErrorMessageResponse
-                  );
+                  expect(result).toStrictEqual(getDuplicatedFlagsErrorMessageResponse);
                 });
               });
 
-              it(`should log about the fact that at least one flag is duplicated`, async (): Promise<
-                void
-              > => {
+              it(`should log about the fact that at least one flag is duplicated`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -1011,17 +750,11 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 anyDiscordMessage.content = `message !feature Noon --help -h`;
               });
 
-              it(`should get the duplicated flag error message response`, async (): Promise<
-                void
-              > => {
+              it(`should get the duplicated flag error message response`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(
@@ -1040,21 +773,15 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
               describe(`when the fetch of the duplicated flag error message response failed`, (): void => {
                 beforeEach((): void => {
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy.mockRejectedValue(
-                    new Error(
-                      `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                    )
+                    new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                   );
                 });
 
                 it(`should throw an error`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  await expect(
-                    service.getMessageResponse(anyDiscordMessage)
-                  ).rejects.toThrow(
-                    new Error(
-                      `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                    )
+                  await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                    new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                   );
                 });
               });
@@ -1066,32 +793,20 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   );
                 });
 
-                it(`should return the duplicated flags error message response`, async (): Promise<
-                  void
-                > => {
+                it(`should return the duplicated flags error message response`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  const result = await service.getMessageResponse(
-                    anyDiscordMessage
-                  );
+                  const result = await service.getMessageResponse(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(
-                    getDuplicatedFlagsErrorMessageResponse
-                  );
+                  expect(result).toStrictEqual(getDuplicatedFlagsErrorMessageResponse);
                 });
               });
 
-              it(`should log about the fact that at least one flag is duplicated`, async (): Promise<
-                void
-              > => {
+              it(`should log about the fact that at least one flag is duplicated`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -1108,17 +823,11 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 anyDiscordMessage.content = `message !feature Noon --enabled=true -e --enabled=false`;
               });
 
-              it(`should get the duplicated flag error message response`, async (): Promise<
-                void
-              > => {
+              it(`should get the duplicated flag error message response`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(
@@ -1137,21 +846,15 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
               describe(`when the fetch of the duplicated flag error message response failed`, (): void => {
                 beforeEach((): void => {
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy.mockRejectedValue(
-                    new Error(
-                      `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                    )
+                    new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                   );
                 });
 
                 it(`should throw an error`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  await expect(
-                    service.getMessageResponse(anyDiscordMessage)
-                  ).rejects.toThrow(
-                    new Error(
-                      `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                    )
+                  await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                    new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                   );
                 });
               });
@@ -1163,32 +866,20 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   );
                 });
 
-                it(`should return the duplicated flags error message response`, async (): Promise<
-                  void
-                > => {
+                it(`should return the duplicated flags error message response`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  const result = await service.getMessageResponse(
-                    anyDiscordMessage
-                  );
+                  const result = await service.getMessageResponse(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(
-                    getDuplicatedFlagsErrorMessageResponse
-                  );
+                  expect(result).toStrictEqual(getDuplicatedFlagsErrorMessageResponse);
                 });
               });
 
-              it(`should log about the fact that at least one flag is duplicated`, async (): Promise<
-                void
-              > => {
+              it(`should log about the fact that at least one flag is duplicated`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -1205,17 +896,11 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 anyDiscordMessage.content = `message !feature Noon --disabled=true -d --disabled=false`;
               });
 
-              it(`should get the duplicated flag error message response`, async (): Promise<
-                void
-              > => {
+              it(`should get the duplicated flag error message response`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(
@@ -1234,21 +919,15 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
               describe(`when the fetch of the duplicated flag error message response failed`, (): void => {
                 beforeEach((): void => {
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy.mockRejectedValue(
-                    new Error(
-                      `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                    )
+                    new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                   );
                 });
 
                 it(`should throw an error`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  await expect(
-                    service.getMessageResponse(anyDiscordMessage)
-                  ).rejects.toThrow(
-                    new Error(
-                      `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                    )
+                  await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                    new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                   );
                 });
               });
@@ -1260,32 +939,20 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   );
                 });
 
-                it(`should return the duplicated flags error message response`, async (): Promise<
-                  void
-                > => {
+                it(`should return the duplicated flags error message response`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  const result = await service.getMessageResponse(
-                    anyDiscordMessage
-                  );
+                  const result = await service.getMessageResponse(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(
-                    getDuplicatedFlagsErrorMessageResponse
-                  );
+                  expect(result).toStrictEqual(getDuplicatedFlagsErrorMessageResponse);
                 });
               });
 
-              it(`should log about the fact that at least one flag is duplicated`, async (): Promise<
-                void
-              > => {
+              it(`should log about the fact that at least one flag is duplicated`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -1302,17 +969,11 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 anyDiscordMessage.content = `message !feature Noon --help -h --help`;
               });
 
-              it(`should get the duplicated flag error message response`, async (): Promise<
-                void
-              > => {
+              it(`should get the duplicated flag error message response`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(
@@ -1331,21 +992,15 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
               describe(`when the fetch of the duplicated flag error message response failed`, (): void => {
                 beforeEach((): void => {
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy.mockRejectedValue(
-                    new Error(
-                      `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                    )
+                    new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                   );
                 });
 
                 it(`should throw an error`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  await expect(
-                    service.getMessageResponse(anyDiscordMessage)
-                  ).rejects.toThrow(
-                    new Error(
-                      `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                    )
+                  await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                    new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                   );
                 });
               });
@@ -1357,32 +1012,20 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   );
                 });
 
-                it(`should return the duplicated flags error message response`, async (): Promise<
-                  void
-                > => {
+                it(`should return the duplicated flags error message response`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  const result = await service.getMessageResponse(
-                    anyDiscordMessage
-                  );
+                  const result = await service.getMessageResponse(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(
-                    getDuplicatedFlagsErrorMessageResponse
-                  );
+                  expect(result).toStrictEqual(getDuplicatedFlagsErrorMessageResponse);
                 });
               });
 
-              it(`should log about the fact that at least one flag is duplicated`, async (): Promise<
-                void
-              > => {
+              it(`should log about the fact that at least one flag is duplicated`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -1399,50 +1042,38 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 anyDiscordMessage.content = `message !feature Noon --enabled=true --disabled=true`;
               });
 
-              it(`should get the opposite flags error message response`, async (): Promise<
-                void
-              > => {
+              it(`should get the opposite flags error message response`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(
                   discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledTimes(1);
-                expect(
-                  discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledWith([
-                  {
-                    description: `The flags \`--enabled=true\` and \`--disabled=true\` are opposites.`,
-                    name: `Enabled and Disabled flags can not be combined`,
-                  } as IDiscordCommandFlagDuplicated,
-                ]);
+                expect(discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith(
+                  [
+                    {
+                      description: `The flags \`--enabled=true\` and \`--disabled=true\` are opposites.`,
+                      name: `Enabled and Disabled flags can not be combined`,
+                    } as IDiscordCommandFlagDuplicated,
+                  ]
+                );
               });
 
               describe(`when the fetch of the opposite flags error message response failed`, (): void => {
                 beforeEach((): void => {
                   discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy.mockRejectedValue(
-                    new Error(
-                      `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
-                    )
+                    new Error(`discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`)
                   );
                 });
 
                 it(`should throw an error`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  await expect(
-                    service.getMessageResponse(anyDiscordMessage)
-                  ).rejects.toThrow(
-                    new Error(
-                      `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
-                    )
+                  await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                    new Error(`discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`)
                   );
                 });
               });
@@ -1454,32 +1085,20 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   );
                 });
 
-                it(`should return the opposite flags error message response`, async (): Promise<
-                  void
-                > => {
+                it(`should return the opposite flags error message response`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  const result = await service.getMessageResponse(
-                    anyDiscordMessage
-                  );
+                  const result = await service.getMessageResponse(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(
-                    getDuplicatedFlagsErrorMessageResponse
-                  );
+                  expect(result).toStrictEqual(getDuplicatedFlagsErrorMessageResponse);
                 });
               });
 
-              it(`should log about the fact that at least one flag is opposite`, async (): Promise<
-                void
-              > => {
+              it(`should log about the fact that at least one flag is opposite`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -1496,50 +1115,38 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 anyDiscordMessage.content = `message !feature Noon -e -d`;
               });
 
-              it(`should get the opposite flags error message response`, async (): Promise<
-                void
-              > => {
+              it(`should get the opposite flags error message response`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(
                   discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledTimes(1);
-                expect(
-                  discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledWith([
-                  {
-                    description: `The flags \`-e\` and \`-d\` are opposites.`,
-                    name: `Enabled and Disabled flags can not be combined`,
-                  } as IDiscordCommandFlagDuplicated,
-                ]);
+                expect(discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith(
+                  [
+                    {
+                      description: `The flags \`-e\` and \`-d\` are opposites.`,
+                      name: `Enabled and Disabled flags can not be combined`,
+                    } as IDiscordCommandFlagDuplicated,
+                  ]
+                );
               });
 
               describe(`when the fetch of the opposite flags error message response failed`, (): void => {
                 beforeEach((): void => {
                   discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy.mockRejectedValue(
-                    new Error(
-                      `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
-                    )
+                    new Error(`discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`)
                   );
                 });
 
                 it(`should throw an error`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  await expect(
-                    service.getMessageResponse(anyDiscordMessage)
-                  ).rejects.toThrow(
-                    new Error(
-                      `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
-                    )
+                  await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                    new Error(`discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`)
                   );
                 });
               });
@@ -1551,32 +1158,20 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   );
                 });
 
-                it(`should return the opposite flags error message response`, async (): Promise<
-                  void
-                > => {
+                it(`should return the opposite flags error message response`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  const result = await service.getMessageResponse(
-                    anyDiscordMessage
-                  );
+                  const result = await service.getMessageResponse(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(
-                    getDuplicatedFlagsErrorMessageResponse
-                  );
+                  expect(result).toStrictEqual(getDuplicatedFlagsErrorMessageResponse);
                 });
               });
 
-              it(`should log about the fact that at least one flag is opposite`, async (): Promise<
-                void
-              > => {
+              it(`should log about the fact that at least one flag is opposite`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`)
                 );
 
                 expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
@@ -1593,47 +1188,32 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 anyDiscordMessage.content = `message !feature Noon --enabled=true`;
               });
 
-              it(`should get a message response for the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should get a message response for the noon feature`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureNoonService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureNoonService getMessageResponse error`)
                 );
 
-                expect(
-                  discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
-                expect(
-                  discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
-                ).toHaveBeenCalledWith(anyDiscordMessage, `--enabled=true`);
+                expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+                expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).toHaveBeenCalledWith(
+                  anyDiscordMessage,
+                  `--enabled=true`
+                );
               });
 
               describe(`when the message response for the noon feature failed to be fetched`, (): void => {
                 beforeEach((): void => {
                   discordMessageCommandFeatureNoonServiceGetMessageResponseSpy.mockRejectedValue(
-                    new Error(
-                      `discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`
-                    )
+                    new Error(`discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`)
                   );
                 });
 
-                it(`should return the message response error for the noon feature`, async (): Promise<
-                  void
-                > => {
+                it(`should return the message response error for the noon feature`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  await expect(
-                    service.getMessageResponse(anyDiscordMessage)
-                  ).rejects.toThrow(
-                    new Error(
-                      `discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`
-                    )
+                  await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                    new Error(`discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`)
                   );
                 });
               });
@@ -1645,14 +1225,10 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   );
                 });
 
-                it(`should return a Discord message response for the noon feature`, async (): Promise<
-                  void
-                > => {
+                it(`should return a Discord message response for the noon feature`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  const result = await service.getMessageResponse(
-                    anyDiscordMessage
-                  );
+                  const result = await service.getMessageResponse(anyDiscordMessage);
 
                   expect(result).toStrictEqual(discordMessageResponse);
                 });
@@ -1664,47 +1240,32 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 anyDiscordMessage.content = `message !feature Noon --disabled=true`;
               });
 
-              it(`should get a message response for the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should get a message response for the noon feature`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureNoonService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureNoonService getMessageResponse error`)
                 );
 
-                expect(
-                  discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
-                expect(
-                  discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
-                ).toHaveBeenCalledWith(anyDiscordMessage, `--disabled=true`);
+                expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+                expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).toHaveBeenCalledWith(
+                  anyDiscordMessage,
+                  `--disabled=true`
+                );
               });
 
               describe(`when the message response for the noon feature failed to be fetched`, (): void => {
                 beforeEach((): void => {
                   discordMessageCommandFeatureNoonServiceGetMessageResponseSpy.mockRejectedValue(
-                    new Error(
-                      `discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`
-                    )
+                    new Error(`discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`)
                   );
                 });
 
-                it(`should return the message response error for the noon feature`, async (): Promise<
-                  void
-                > => {
+                it(`should return the message response error for the noon feature`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  await expect(
-                    service.getMessageResponse(anyDiscordMessage)
-                  ).rejects.toThrow(
-                    new Error(
-                      `discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`
-                    )
+                  await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                    new Error(`discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`)
                   );
                 });
               });
@@ -1716,14 +1277,10 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   );
                 });
 
-                it(`should return a Discord message response for the noon feature`, async (): Promise<
-                  void
-                > => {
+                it(`should return a Discord message response for the noon feature`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  const result = await service.getMessageResponse(
-                    anyDiscordMessage
-                  );
+                  const result = await service.getMessageResponse(anyDiscordMessage);
 
                   expect(result).toStrictEqual(discordMessageResponse);
                 });
@@ -1735,47 +1292,32 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 anyDiscordMessage.content = `message !feature Noon --help`;
               });
 
-              it(`should get a message response for the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should get a message response for the noon feature`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(
-                  service.getMessageResponse(anyDiscordMessage)
-                ).rejects.toThrow(
-                  new Error(
-                    `discordMessageCommandFeatureNoonService getMessageResponse error`
-                  )
+                await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`discordMessageCommandFeatureNoonService getMessageResponse error`)
                 );
 
-                expect(
-                  discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
-                expect(
-                  discordMessageCommandFeatureNoonServiceGetMessageResponseSpy
-                ).toHaveBeenCalledWith(anyDiscordMessage, `--help`);
+                expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+                expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).toHaveBeenCalledWith(
+                  anyDiscordMessage,
+                  `--help`
+                );
               });
 
               describe(`when the message response for the noon feature failed to be fetched`, (): void => {
                 beforeEach((): void => {
                   discordMessageCommandFeatureNoonServiceGetMessageResponseSpy.mockRejectedValue(
-                    new Error(
-                      `discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`
-                    )
+                    new Error(`discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`)
                   );
                 });
 
-                it(`should return the message response error for the noon feature`, async (): Promise<
-                  void
-                > => {
+                it(`should return the message response error for the noon feature`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  await expect(
-                    service.getMessageResponse(anyDiscordMessage)
-                  ).rejects.toThrow(
-                    new Error(
-                      `discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`
-                    )
+                  await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                    new Error(`discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`)
                   );
                 });
               });
@@ -1787,14 +1329,10 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   );
                 });
 
-                it(`should return a Discord message response for the noon feature`, async (): Promise<
-                  void
-                > => {
+                it(`should return a Discord message response for the noon feature`, async (): Promise<void> => {
                   expect.assertions(1);
 
-                  const result = await service.getMessageResponse(
-                    anyDiscordMessage
-                  );
+                  const result = await service.getMessageResponse(anyDiscordMessage);
 
                   expect(result).toStrictEqual(discordMessageResponse);
                 });
@@ -1822,9 +1360,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
     describe(`when the message command prefix is "@"`, (): void => {
       beforeEach((): void => {
-        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
-          `@`
-        );
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(`@`);
       });
 
       describe(`when the given message is an empty string`, (): void => {
@@ -2320,10 +1856,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
     describe(`when the message command prefix is "-" or "!"`, (): void => {
       beforeEach((): void => {
-        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
-          `-`,
-          `!`,
-        ]);
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([`-`, `!`]);
       });
 
       describe(`when the given message is an empty string`, (): void => {

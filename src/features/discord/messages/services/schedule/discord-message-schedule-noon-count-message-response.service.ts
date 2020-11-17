@@ -1,25 +1,18 @@
-import {
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedOptions,
-  MessageEmbedThumbnail,
-} from "discord.js";
-import _ from "lodash";
-import moment from "moment-timezone";
-import { AbstractService } from "../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { DiscordSoniaService } from "../../../users/services/discord-sonia.service";
-import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
-import { DiscordMessageCommandFeatureNoonConfigService } from "../command/feature/features/noon/services/config/discord-message-command-feature-noon-config.service";
-import { DiscordMessageScheduleNoonCountHumanizedService } from "./discord-message-schedule-noon-count-humanized.service";
+import { DiscordMessageScheduleNoonCountHumanizedService } from './discord-message-schedule-noon-count-humanized.service';
+import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
+import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
+import { DiscordMessageCommandFeatureNoonConfigService } from '../command/feature/features/noon/services/config/discord-message-command-feature-noon-config.service';
+import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import _ from 'lodash';
+import moment from 'moment-timezone';
 
 export class DiscordMessageScheduleNoonCountMessageResponseService extends AbstractService {
   private static _instance: DiscordMessageScheduleNoonCountMessageResponseService;
 
   public static getInstance(): DiscordMessageScheduleNoonCountMessageResponseService {
-    if (
-      _.isNil(DiscordMessageScheduleNoonCountMessageResponseService._instance)
-    ) {
+    if (_.isNil(DiscordMessageScheduleNoonCountMessageResponseService._instance)) {
       DiscordMessageScheduleNoonCountMessageResponseService._instance = new DiscordMessageScheduleNoonCountMessageResponseService();
     }
 
@@ -27,9 +20,7 @@ export class DiscordMessageScheduleNoonCountMessageResponseService extends Abstr
   }
 
   public constructor() {
-    super(
-      ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_MESSAGE_RESPONSE_SERVICE
-    );
+    super(ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_MESSAGE_RESPONSE_SERVICE);
   }
 
   public getMessageResponse(
@@ -54,11 +45,7 @@ export class DiscordMessageScheduleNoonCountMessageResponseService extends Abstr
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
-      description: this._getMessageEmbedDescription(
-        totalGuildCount,
-        guildCount,
-        channelCount
-      ),
+      description: this._getMessageEmbedDescription(totalGuildCount, guildCount, channelCount),
       footer: this._getMessageEmbedFooter(),
       thumbnail: this._getMessageEmbedThumbnail(),
       timestamp: this._getMessageEmbedTimestamp(),
@@ -87,9 +74,7 @@ export class DiscordMessageScheduleNoonCountMessageResponseService extends Abstr
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
-    const soniaImageUrl:
-      | string
-      | null = DiscordSoniaService.getInstance().getImageUrl();
+    const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
       iconURL: soniaImageUrl ?? undefined,

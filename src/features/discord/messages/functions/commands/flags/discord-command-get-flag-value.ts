@@ -1,6 +1,6 @@
-import _ from "lodash";
-import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
-import { discordCommandIsMessageFlag } from "./discord-command-is-message-flag";
+import { discordCommandIsMessageFlag } from './discord-command-is-message-flag';
+import { IDiscordMessageFlag } from '../../../types/commands/flags/discord-message-flag';
+import _ from 'lodash';
 
 const FLAG_SIZE = 2;
 
@@ -16,9 +16,7 @@ function isFlag(messageFlag: Readonly<IDiscordMessageFlag>): boolean {
   return discordCommandIsMessageFlag(messageFlag);
 }
 
-function separateFlagNameFromValue(
-  messageFlag: Readonly<IDiscordMessageFlag>
-): string[] {
+function separateFlagNameFromValue(messageFlag: Readonly<IDiscordMessageFlag>): string[] {
   return _.split(messageFlag, `=`);
 }
 
@@ -45,9 +43,7 @@ function hasValue(splittedFlag: Readonly<string>[]): boolean {
  *
  * @return {string | null} A string when the flag value exists else null
  */
-export function discordCommandGetFlagValue(
-  messageFlag: Readonly<IDiscordMessageFlag>
-): string | null {
+export function discordCommandGetFlagValue(messageFlag: Readonly<IDiscordMessageFlag>): string | null {
   if (!isFlag(messageFlag)) {
     return null;
   }

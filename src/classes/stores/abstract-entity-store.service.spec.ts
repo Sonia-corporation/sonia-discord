@@ -1,7 +1,7 @@
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../enums/service-name.enum";
-import { CoreEventService } from "../../features/core/services/core-event.service";
-import { AbstractEntityStoreService } from "./abstract-entity-store.service";
+import { AbstractEntityStoreService } from './abstract-entity-store.service';
+import { ServiceNameEnum } from '../../enums/service-name.enum';
+import { CoreEventService } from '../../features/core/services/core-event.service';
+import { createMock } from 'ts-auto-mock';
 
 interface IDummy {
   name: string;
@@ -23,9 +23,7 @@ describe(`AbstractEntityStoreService`, (): void => {
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
 
-    coreEventServiceNotifyServiceCreatedSpy = jest
-      .spyOn(coreEventService, `notifyServiceCreated`)
-      .mockImplementation();
+    coreEventServiceNotifyServiceCreatedSpy = jest.spyOn(coreEventService, `notifyServiceCreated`).mockImplementation();
   });
 
   describe(`when the service is created with the name ServiceNameEnum.APP_CONFIG_SERVICE`, (): void => {
@@ -39,9 +37,7 @@ describe(`AbstractEntityStoreService`, (): void => {
       new DummyService(serviceName);
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.APP_CONFIG_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.APP_CONFIG_SERVICE);
     });
   });
 
@@ -56,9 +52,7 @@ describe(`AbstractEntityStoreService`, (): void => {
       new DummyService(serviceName);
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.APP_CONFIG_CORE_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.APP_CONFIG_CORE_SERVICE);
     });
   });
 });

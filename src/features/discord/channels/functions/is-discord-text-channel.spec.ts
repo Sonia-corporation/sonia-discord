@@ -1,6 +1,6 @@
-import { DMChannel, NewsChannel, TextChannel } from "discord.js";
-import { createMock } from "ts-auto-mock";
-import { isDiscordTextChannel } from "./is-discord-text-channel";
+import { isDiscordTextChannel } from './is-discord-text-channel';
+import { DMChannel, NewsChannel, TextChannel } from 'discord.js';
+import { createMock } from 'ts-auto-mock';
 
 describe(`isDiscordTextChannel()`, (): void => {
   let channel: TextChannel | DMChannel | NewsChannel | null | undefined;

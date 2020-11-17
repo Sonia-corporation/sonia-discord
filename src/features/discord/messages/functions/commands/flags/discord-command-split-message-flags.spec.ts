@@ -1,4 +1,4 @@
-import { discordCommandSplitMessageFlags } from "./discord-command-split-message-flags";
+import { discordCommandSplitMessageFlags } from './discord-command-split-message-flags';
 
 describe(`discordCommandSplitMessageFlags()`, (): void => {
   let message: string;

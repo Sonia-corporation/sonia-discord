@@ -1,8 +1,8 @@
-import { createMock } from "ts-auto-mock";
-import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
-import { IDiscordGetCommandRegexpData } from "../../../interfaces/commands/getters/discord-get-command-regexp-data";
-import { discordGetCommandRegexp } from "./discord-get-command-regexp";
-import xregexp from "xregexp";
+import { discordGetCommandRegexp } from './discord-get-command-regexp';
+import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
+import { IDiscordGetCommandRegexpData } from '../../../interfaces/commands/getters/discord-get-command-regexp-data';
+import { createMock } from 'ts-auto-mock';
+import xregexp from 'xregexp';
 
 describe(`discordGetCommandRegexp()`, (): void => {
   let data: IDiscordGetCommandRegexpData;
@@ -41,9 +41,7 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(
-            `!`
-          );
+          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(`!`);
         });
 
         it(`should find "help" as command`, (): void => {
@@ -51,9 +49,7 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(
-            `help`
-          );
+          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(`help`);
         });
       });
 
@@ -126,9 +122,7 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(
-            `!`
-          );
+          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(`!`);
         });
 
         it(`should find "cookie" as command`, (): void => {
@@ -136,9 +130,7 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(
-            `cookie`
-          );
+          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(`cookie`);
         });
       });
 
@@ -217,9 +209,7 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(
-            `-`
-          );
+          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(`-`);
         });
 
         it(`should find "help" as command`, (): void => {
@@ -227,9 +217,7 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(
-            `help`
-          );
+          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(`help`);
         });
       });
 
@@ -302,9 +290,7 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(
-            `-`
-          );
+          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(`-`);
         });
 
         it(`should find "cookie" as command`, (): void => {
@@ -312,9 +298,7 @@ describe(`discordGetCommandRegexp()`, (): void => {
 
           const result = discordGetCommandRegexp(data);
 
-          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(
-            `cookie`
-          );
+          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(`cookie`);
         });
       });
 

@@ -1,14 +1,14 @@
-import { EmbedFieldData, MessageEmbedOptions } from "discord.js";
-import _ from "lodash";
-import { AbstractService } from "../../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
-import { LoggerService } from "../../../../../logger/services/logger.service";
-import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
-import { discordHasThisCommand } from "../../../functions/commands/checks/discord-has-this-command";
-import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
-import { DiscordMessageHelpService } from "../../discord-message-help.service";
+import { AbstractService } from '../../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
+import { LoggerService } from '../../../../../logger/services/logger.service';
+import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
+import { discordHasThisCommand } from '../../../functions/commands/checks/discord-has-this-command';
+import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../../../types/any-discord-message';
+import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
+import { DiscordMessageHelpService } from '../../discord-message-help.service';
+import { EmbedFieldData, MessageEmbedOptions } from 'discord.js';
+import _ from 'lodash';
 
 export class DiscordMessageCommandHelpService extends AbstractService {
   private static _instance: DiscordMessageCommandHelpService;
@@ -25,16 +25,11 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_HELP_SERVICE);
   }
 
-  public handleResponse({
-    id,
-  }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleResponse({ id }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        id,
-        `help command detected`
-      ),
+      message: LoggerService.getInstance().getSnowflakeContext(id, `help command detected`),
     });
 
     return this.getMessageResponse();
@@ -44,9 +39,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     return DiscordMessageHelpService.getInstance()
       .getMessageResponse()
       .then(
-        (
-          helpDiscordMessageResponse: Readonly<IDiscordMessageResponse>
-        ): Promise<IDiscordMessageResponse> =>
+        (helpDiscordMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> =>
           Promise.resolve(
             _.merge({}, helpDiscordMessageResponse, {
               options: {

@@ -1,4 +1,4 @@
-import { getRandomRangeMinuteScheduleRule } from "./get-random-range-minute-schedule-rule";
+import { getRandomRangeMinuteScheduleRule } from './get-random-range-minute-schedule-rule';
 
 describe(`getRandomRangeMinuteScheduleRule()`, (): void => {
   let minimumInterval: number;
@@ -80,9 +80,7 @@ describe(`getRandomRangeMinuteScheduleRule()`, (): void => {
 
         expect((): void => {
           getRandomRangeMinuteScheduleRule(minimumInterval, maximumInterval);
-        }).toThrow(
-          new Error(`Maximum interval should be greater than minimum interval`)
-        );
+        }).toThrow(new Error(`Maximum interval should be greater than minimum interval`));
       });
     });
 
@@ -94,10 +92,7 @@ describe(`getRandomRangeMinuteScheduleRule()`, (): void => {
       it(`should return the schedule for each minute from 0 to 59`, (): void => {
         expect.assertions(1);
 
-        const result = getRandomRangeMinuteScheduleRule(
-          minimumInterval,
-          maximumInterval
-        );
+        const result = getRandomRangeMinuteScheduleRule(minimumInterval, maximumInterval);
 
         expect(result).toBeOneOf([
           `0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59 * * * *`,

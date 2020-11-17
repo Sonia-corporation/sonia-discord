@@ -1,4 +1,4 @@
-import { getNodeArgument } from "./get-node-argument";
+import { getNodeArgument } from './get-node-argument';
 
 describe(`getNodeArgument()`, (): void => {
   let name: string;

@@ -1,7 +1,7 @@
-import { DiscordActivityNameEnum } from "../enums/discord-activity-name.enum";
-import { DiscordActivityTypeEnum } from "../enums/discord-activity-type.enum";
-import { IDiscordPresenceActivity } from "../interfaces/discord-presence-activity";
-import { DISCORD_PRESENCE_ACTIVITY_WATCHING } from "./discord-presence-activity-watching";
+import { DISCORD_PRESENCE_ACTIVITY_WATCHING } from './discord-presence-activity-watching';
+import { DiscordActivityNameEnum } from '../enums/discord-activity-name.enum';
+import { DiscordActivityTypeEnum } from '../enums/discord-activity-type.enum';
+import { IDiscordPresenceActivity } from '../interfaces/discord-presence-activity';
 
 describe(`DISCORD_PRESENCE_ACTIVITY_WATCHING`, (): void => {
   it(`should contains a list of watching activities`, (): void => {

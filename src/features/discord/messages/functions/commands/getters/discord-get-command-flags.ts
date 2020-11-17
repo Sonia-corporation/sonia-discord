@@ -1,16 +1,12 @@
-import _ from "lodash";
-import xregexp, { ExecArray } from "xregexp";
-import { IDiscordExtractFromCommandCallbackData } from "../../../interfaces/commands/checks/discord-extract-from-command-callback-data";
-import { IDiscordGetCommandFlagsData } from "../../../interfaces/commands/getters/discord-get-command-flags-data";
-import { discordExtractFromCommand } from "../checks/discord-extract-from-command";
-import { discordGetCommandWithFirstArgumentAndFlagsRegexp } from "../regexp/discord-get-command-with-first-argument-and-flags-regexp";
-import { discordGetFormattedMessage } from "../formatters/discord-get-formatted-message";
+import { IDiscordExtractFromCommandCallbackData } from '../../../interfaces/commands/checks/discord-extract-from-command-callback-data';
+import { IDiscordGetCommandFlagsData } from '../../../interfaces/commands/getters/discord-get-command-flags-data';
+import { discordExtractFromCommand } from '../checks/discord-extract-from-command';
+import { discordGetFormattedMessage } from '../formatters/discord-get-formatted-message';
+import { discordGetCommandWithFirstArgumentAndFlagsRegexp } from '../regexp/discord-get-command-with-first-argument-and-flags-regexp';
+import _ from 'lodash';
+import xregexp, { ExecArray } from 'xregexp';
 
-function getFlags({
-  command,
-  message,
-  prefix,
-}: Readonly<IDiscordExtractFromCommandCallbackData>): string | null {
+function getFlags({ command, message, prefix }: Readonly<IDiscordExtractFromCommandCallbackData>): string | null {
   const execArray: ExecArray | null = xregexp.exec(
     message,
     discordGetCommandWithFirstArgumentAndFlagsRegexp({

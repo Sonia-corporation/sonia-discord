@@ -1,4 +1,4 @@
-import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-version.enum";
+import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
 
 /**
  * @description
@@ -11,5 +11,4 @@ import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-vers
  *
  * @see [sonia-link-001]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-001}
  */
-export const FIREBASE_GUILD_CURRENT_VERSION: FirebaseGuildVersionEnum.V4 =
-  FirebaseGuildVersionEnum.V4;
+export const FIREBASE_GUILD_CURRENT_VERSION: FirebaseGuildVersionEnum.V4 = FirebaseGuildVersionEnum.V4;

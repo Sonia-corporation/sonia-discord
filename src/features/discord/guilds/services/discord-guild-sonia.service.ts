@@ -1,17 +1,17 @@
-import { Guild, GuildChannel, NewsChannel, TextChannel } from "discord.js";
-import _ from "lodash";
-import { filter, take } from "rxjs/operators";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ONE_EMITTER } from "../../../../constants/one-emitter";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
-import { ChalkService } from "../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { DiscordClientService } from "../../services/discord-client.service";
-import { DiscordGuildSoniaChannelNameEnum } from "../enums/discord-guild-sonia-channel-name.enum";
-import { IDiscordGuildSoniaSendMessageToChannel } from "../interfaces/discord-guild-sonia-send-message-to-channel";
-import { DiscordGuildConfigService } from "./config/discord-guild-config.service";
-import { DiscordGuildService } from "./discord-guild.service";
+import { DiscordGuildConfigService } from './config/discord-guild-config.service';
+import { DiscordGuildService } from './discord-guild.service';
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ONE_EMITTER } from '../../../../constants/one-emitter';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
+import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
+import { IDiscordGuildSoniaSendMessageToChannel } from '../interfaces/discord-guild-sonia-send-message-to-channel';
+import { Guild, GuildChannel, NewsChannel, TextChannel } from 'discord.js';
+import _ from 'lodash';
+import { filter, take } from 'rxjs/operators';
 
 export class DiscordGuildSoniaService extends AbstractService {
   private static _instance: DiscordGuildSoniaService;
@@ -34,9 +34,7 @@ export class DiscordGuildSoniaService extends AbstractService {
     this._listen();
   }
 
-  public sendMessageToChannel(
-    sendMessageToChannel: Readonly<IDiscordGuildSoniaSendMessageToChannel>
-  ): void {
+  public sendMessageToChannel(sendMessageToChannel: Readonly<IDiscordGuildSoniaSendMessageToChannel>): void {
     if (_.isNil(this._soniaGuild)) {
       LoggerService.getInstance().warning({
         context: this._serviceName,
@@ -46,10 +44,7 @@ export class DiscordGuildSoniaService extends AbstractService {
       return;
     }
 
-    const guildChannel:
-      | GuildChannel
-      | null
-      | undefined = this.getSoniaGuildChannelByName(
+    const guildChannel: GuildChannel | null | undefined = this.getSoniaGuildChannelByName(
       sendMessageToChannel.channelName
     );
 
@@ -57,9 +52,7 @@ export class DiscordGuildSoniaService extends AbstractService {
       LoggerService.getInstance().warning({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
-          `Could not find channel with name: ${ChalkService.getInstance().value(
-            sendMessageToChannel.channelName
-          )}`
+          `Could not find channel with name: ${ChalkService.getInstance().value(sendMessageToChannel.channelName)}`
         ),
       });
 
@@ -81,9 +74,8 @@ export class DiscordGuildSoniaService extends AbstractService {
       return null;
     }
 
-    return this._soniaGuild.channels.cache.find(
-      ({ name }: Readonly<GuildChannel>): boolean =>
-        _.isEqual(_.toLower(_.deburr(name)), _.toLower(channelName))
+    return this._soniaGuild.channels.cache.find(({ name }: Readonly<GuildChannel>): boolean =>
+      _.isEqual(_.toLower(_.deburr(name)), _.toLower(channelName))
     );
   }
 
@@ -120,9 +112,7 @@ export class DiscordGuildSoniaService extends AbstractService {
       .catch((error: unknown): void => {
         LoggerService.getInstance().error({
           context: this._serviceName,
-          message: ChalkService.getInstance().text(
-            `channel message sending failed`
-          ),
+          message: ChalkService.getInstance().text(`channel message sending failed`),
         });
         LoggerService.getInstance().error({
           context: this._serviceName,
@@ -132,18 +122,14 @@ export class DiscordGuildSoniaService extends AbstractService {
   }
 
   private _getSoniaGuild(): Guild | undefined {
-    return DiscordGuildService.getInstance().getGuildById(
-      DiscordGuildConfigService.getInstance().getSoniaGuildId()
-    );
+    return DiscordGuildService.getInstance().getGuildById(DiscordGuildConfigService.getInstance().getSoniaGuildId());
   }
 
   private _listen(): void {
     DiscordClientService.getInstance()
       .isReady$()
       .pipe(
-        filter((isReady: Readonly<boolean>): boolean =>
-          _.isEqual(isReady, true)
-        ),
+        filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
         take(ONE_EMITTER)
       )
       .subscribe({
@@ -154,9 +140,7 @@ export class DiscordGuildSoniaService extends AbstractService {
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `listen ${wrapInQuotes(`ready`)} Discord client state`
-      ),
+      message: ChalkService.getInstance().text(`listen ${wrapInQuotes(`ready`)} Discord client state`),
     });
   }
 }

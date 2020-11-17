@@ -1,5 +1,5 @@
-import _ from "lodash";
-import { IDiscordCommandFirstArgument } from "../../../interfaces/commands/discord-command-first-argument";
+import { IDiscordCommandFirstArgument } from '../../../interfaces/commands/discord-command-first-argument';
+import _ from 'lodash';
 
 export class DiscordCommandFirstArgument<T extends string> {
   private _description;
@@ -9,11 +9,7 @@ export class DiscordCommandFirstArgument<T extends string> {
   /**
    * @param {Readonly<DiscordCommandFirstArgument>} discordCommandFirstArgument Default values
    */
-  public constructor({
-    description,
-    name,
-    shortcuts,
-  }: Readonly<IDiscordCommandFirstArgument<T>>) {
+  public constructor({ description, name, shortcuts }: Readonly<IDiscordCommandFirstArgument<T>>) {
     this._description = description;
     this._name = name;
     this._shortcuts = shortcuts;
@@ -44,9 +40,7 @@ export class DiscordCommandFirstArgument<T extends string> {
   }
 
   public getLowerCaseShortcuts(): string[] | undefined {
-    return _.map(this.getShortcuts(), (shortcut: Readonly<T>): string =>
-      _.toLower(_.toString(shortcut))
-    );
+    return _.map(this.getShortcuts(), (shortcut: Readonly<T>): string => _.toLower(_.toString(shortcut)));
   }
 
   public setShortcuts(shortcuts: Readonly<T>[] | Readonly<undefined>): void {
@@ -61,8 +55,7 @@ export class DiscordCommandFirstArgument<T extends string> {
       example += ` (or ${_.trimEnd(
         _.reduce(
           shortcuts,
-          (value: Readonly<string>, shortcut: Readonly<string>): string =>
-            `${value}${shortcut}, `,
+          (value: Readonly<string>, shortcut: Readonly<string>): string => `${value}${shortcut}, `,
           ``
         ),
         `, `

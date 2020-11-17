@@ -1,24 +1,24 @@
-import { ClientUser, Presence } from "discord.js";
-import _ from "lodash";
-import { Job, scheduleJob } from "node-schedule";
-import { Observable } from "rxjs";
-import { filter, mergeMap, take, tap } from "rxjs/operators";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ONE_EMITTER } from "../../../../constants/one-emitter";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
-import { getEveryHourScheduleRule } from "../../../../functions/schedule/get-every-hour-schedule-rule";
-import { getRandomRangeMinuteScheduleRule } from "../../../../functions/schedule/get-random-range-minute-schedule-rule";
-import { ChalkService } from "../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { getNextJobDate } from "../../../schedules/functions/get-next-job-date";
-import { getNextJobDateHumanized } from "../../../schedules/functions/get-next-job-date-humanized";
-import { DiscordGuildSoniaChannelNameEnum } from "../../guilds/enums/discord-guild-sonia-channel-name.enum";
-import { DiscordGuildSoniaService } from "../../guilds/services/discord-guild-sonia.service";
-import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-error.service";
-import { DiscordClientService } from "../../services/discord-client.service";
-import { DISCORD_PRESENCE_ACTIVITY } from "../constants/discord-presence-activity";
-import { IDiscordPresenceActivity } from "../interfaces/discord-presence-activity";
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ONE_EMITTER } from '../../../../constants/one-emitter';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
+import { getEveryHourScheduleRule } from '../../../../functions/schedule/get-every-hour-schedule-rule';
+import { getRandomRangeMinuteScheduleRule } from '../../../../functions/schedule/get-random-range-minute-schedule-rule';
+import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { getNextJobDate } from '../../../schedules/functions/get-next-job-date';
+import { getNextJobDateHumanized } from '../../../schedules/functions/get-next-job-date-humanized';
+import { DiscordGuildSoniaChannelNameEnum } from '../../guilds/enums/discord-guild-sonia-channel-name.enum';
+import { DiscordGuildSoniaService } from '../../guilds/services/discord-guild-sonia.service';
+import { DiscordLoggerErrorService } from '../../logger/services/discord-logger-error.service';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { DISCORD_PRESENCE_ACTIVITY } from '../constants/discord-presence-activity';
+import { IDiscordPresenceActivity } from '../interfaces/discord-presence-activity';
+import { ClientUser, Presence } from 'discord.js';
+import _ from 'lodash';
+import { Job, scheduleJob } from 'node-schedule';
+import { Observable } from 'rxjs';
+import { filter, mergeMap, take, tap } from 'rxjs/operators';
 
 const MINIMAL_RANGE_MINUTES = 5;
 const MAXIMUM_RANGE_MINUTES = 15;
@@ -35,10 +35,7 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   private readonly _updaterRule: string = getEveryHourScheduleRule();
-  private _rule: string = getRandomRangeMinuteScheduleRule(
-    MINIMAL_RANGE_MINUTES,
-    MAXIMUM_RANGE_MINUTES
-  );
+  private _rule: string = getRandomRangeMinuteScheduleRule(MINIMAL_RANGE_MINUTES, MAXIMUM_RANGE_MINUTES);
   private _updaterJob: Job | undefined = undefined;
   private _job: Job | undefined = undefined;
 
@@ -55,11 +52,8 @@ export class DiscordActivitySoniaService extends AbstractService {
     this._createSchedule();
   }
 
-  public setPresence(
-    presenceActivity: Readonly<IDiscordPresenceActivity>
-  ): Promise<Presence> {
-    const clientUser: ClientUser | null = DiscordClientService.getInstance().getClient()
-      .user;
+  public setPresence(presenceActivity: Readonly<IDiscordPresenceActivity>): Promise<Presence> {
+    const clientUser: ClientUser | null = DiscordClientService.getInstance().getClient().user;
 
     if (_.isNil(clientUser)) {
       return Promise.reject(new Error(`Client user is not valid`));
@@ -78,9 +72,7 @@ export class DiscordActivitySoniaService extends AbstractService {
             message: ChalkService.getInstance().text(
               `Sonia presence updated to: ${ChalkService.getInstance().value(
                 _.head(presence.activities)?.type
-              )} ${ChalkService.getInstance().text(
-                `x`
-              )} ${ChalkService.getInstance().value(
+              )} ${ChalkService.getInstance().text(`x`)} ${ChalkService.getInstance().value(
                 _.head(presence.activities)?.name
               )}`
             ),
@@ -93,9 +85,7 @@ export class DiscordActivitySoniaService extends AbstractService {
         (error: Readonly<Error | string>): Promise<never> => {
           LoggerService.getInstance().error({
             context: this._serviceName,
-            message: ChalkService.getInstance().text(
-              `could not set the Sonia presence`
-            ),
+            message: ChalkService.getInstance().text(`could not set the Sonia presence`),
           });
           LoggerService.getInstance().error({
             context: this._serviceName,
@@ -103,9 +93,7 @@ export class DiscordActivitySoniaService extends AbstractService {
           });
           DiscordGuildSoniaService.getInstance().sendMessageToChannel({
             channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-            messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
-              error
-            ),
+            messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(error),
           });
 
           return Promise.reject(error);
@@ -114,9 +102,7 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   public setRandomPresence(): Promise<Presence> {
-    const presenceActivity: IDiscordPresenceActivity | undefined = _.sample(
-      DISCORD_PRESENCE_ACTIVITY
-    );
+    const presenceActivity: IDiscordPresenceActivity | undefined = _.sample(DISCORD_PRESENCE_ACTIVITY);
 
     if (_.isNil(presenceActivity)) {
       return Promise.reject(new Error(`No presence activity`));
@@ -148,9 +134,7 @@ export class DiscordActivitySoniaService extends AbstractService {
   private _logJobRule(rule: Readonly<string>, jobName: Readonly<string>): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `${jobName} rule: ${ChalkService.getInstance().value(rule)}`
-      ),
+      message: ChalkService.getInstance().text(`${jobName} rule: ${ChalkService.getInstance().value(rule)}`),
     });
   }
 
@@ -160,16 +144,11 @@ export class DiscordActivitySoniaService extends AbstractService {
       message: ChalkService.getInstance().text(`updater job triggered`),
     });
 
-    this._rule = getRandomRangeMinuteScheduleRule(
-      MINIMAL_RANGE_MINUTES,
-      MAXIMUM_RANGE_MINUTES
-    );
+    this._rule = getRandomRangeMinuteScheduleRule(MINIMAL_RANGE_MINUTES, MAXIMUM_RANGE_MINUTES);
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `job rule updated to: ${ChalkService.getInstance().value(this._rule)}`
-      ),
+      message: ChalkService.getInstance().text(`job rule updated to: ${ChalkService.getInstance().value(this._rule)}`),
     });
 
     if (!_.isNil(this._job)) {
@@ -203,10 +182,7 @@ export class DiscordActivitySoniaService extends AbstractService {
     this._logJobDate(this._job, `next`);
   }
 
-  private _logJobDate(
-    job: Readonly<Job | undefined>,
-    jobName: Readonly<string>
-  ): void {
+  private _logJobDate(job: Readonly<Job | undefined>, jobName: Readonly<string>): void {
     if (!_.isNil(job)) {
       LoggerService.getInstance().logJobDate({
         context: this._serviceName,
@@ -220,17 +196,13 @@ export class DiscordActivitySoniaService extends AbstractService {
   private _listen(): Observable<Presence> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `listen ${wrapInQuotes(`ready`)} Discord client state`
-      ),
+      message: ChalkService.getInstance().text(`listen ${wrapInQuotes(`ready`)} Discord client state`),
     });
 
     return DiscordClientService.getInstance()
       .isReady$()
       .pipe(
-        filter((isReady: Readonly<boolean>): boolean =>
-          _.isEqual(isReady, true)
-        ),
+        filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
         mergeMap((): Promise<Presence> => this.setRandomPresence()),
         take(ONE_EMITTER),
         tap({

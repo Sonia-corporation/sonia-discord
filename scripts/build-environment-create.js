@@ -9,14 +9,8 @@ LOGGER.debug(CONTEXT, CHALK.text(`Create environment file into dist...`));
 
 FS.createFile(`${APP_ROOT_PATH.path}/dist/environment.json`)
   .then(() => {
-    LOGGER.success(
-      CONTEXT,
-      CHALK.text(`Environment file successfully created into dist`)
-    );
-    LOGGER.debug(
-      CONTEXT,
-      CHALK.text(`Rewrite environment file content into dist...`)
-    );
+    LOGGER.success(CONTEXT, CHALK.text(`Environment file successfully created into dist`));
+    LOGGER.debug(CONTEXT, CHALK.text(`Rewrite environment file content into dist...`));
 
     FS.writeJson(`${APP_ROOT_PATH.path}/dist/environment.json`, {
       discord: {
@@ -25,30 +19,18 @@ FS.createFile(`${APP_ROOT_PATH.path}/dist/environment.json`)
         },
       },
       github: {
-        personalAccessToken:
-          process.env.GITHUB_PERSONAL_ACCESS_TOKEN || `unknown`,
+        personalAccessToken: process.env.GITHUB_PERSONAL_ACCESS_TOKEN || `unknown`,
       },
     })
       .then(() => {
-        LOGGER.success(
-          CONTEXT,
-          CHALK.text(
-            `Environment file content successfully rewritten into dist`
-          )
-        );
+        LOGGER.success(CONTEXT, CHALK.text(`Environment file content successfully rewritten into dist`));
       })
       .catch((error) => {
-        LOGGER.error(
-          CONTEXT,
-          CHALK.text(`Failed to rewrite environment file content into dist`)
-        );
+        LOGGER.error(CONTEXT, CHALK.text(`Failed to rewrite environment file content into dist`));
         LOGGER.error(CONTEXT, CHALK.text(error));
       });
   })
   .catch((error) => {
-    LOGGER.error(
-      CONTEXT,
-      CHALK.text(`Failed to create environment file into dist`)
-    );
+    LOGGER.error(CONTEXT, CHALK.text(`Failed to create environment file into dist`));
     LOGGER.error(CONTEXT, CHALK.text(error));
   });

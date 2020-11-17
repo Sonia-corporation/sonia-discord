@@ -1,8 +1,8 @@
-import _ from "lodash";
-import { Job, scheduleJob } from "node-schedule";
-import { getNoonScheduleRule } from "../../../functions/schedule/get-noon-schedule-rule";
-import * as FromNowModule from "../../time/functions/from-now";
-import { getNextJobDateHumanized } from "./get-next-job-date-humanized";
+import { getNextJobDateHumanized } from './get-next-job-date-humanized';
+import { getNoonScheduleRule } from '../../../functions/schedule/get-noon-schedule-rule';
+import * as FromNowModule from '../../time/functions/from-now';
+import _ from 'lodash';
+import { Job, scheduleJob } from 'node-schedule';
 
 describe(`getNextJobDateHumanized()`, (): void => {
   let job: Job;
@@ -10,9 +10,7 @@ describe(`getNextJobDateHumanized()`, (): void => {
   let fromNowSpy: jest.SpyInstance;
 
   beforeEach((): void => {
-    fromNowSpy = jest
-      .spyOn(FromNowModule, `fromNow`)
-      .mockReturnValue(`humanized-date`);
+    fromNowSpy = jest.spyOn(FromNowModule, `fromNow`).mockReturnValue(`humanized-date`);
   });
 
   describe(`when the given job is at noon`, (): void => {

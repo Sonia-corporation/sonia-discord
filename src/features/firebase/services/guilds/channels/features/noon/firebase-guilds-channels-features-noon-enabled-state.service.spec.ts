@@ -1,14 +1,14 @@
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../../../../logger/services/logger.service";
-import { FirebaseGuildChannelFeatureNoonVersionEnum } from "../../../../../enums/guilds/channels/features/firebase-guild-channel-feature-noon-version.enum";
-import { FirebaseGuildChannelFeatureVersionEnum } from "../../../../../enums/guilds/channels/features/firebase-guild-channel-feature-version.enum";
-import { FirebaseGuildChannelVersionEnum } from "../../../../../enums/guilds/channels/firebase-guild-channel-version.enum";
-import { IFirebaseGuildChannel } from "../../../../../types/guilds/channels/firebase-guild-channel";
-import { IFirebaseGuildVFinal } from "../../../../../types/guilds/firebase-guild-v-final";
-import { FirebaseGuildsChannelsFeaturesNoonEnabledStateService } from "./firebase-guilds-channels-features-noon-enabled-state.service";
+import { FirebaseGuildsChannelsFeaturesNoonEnabledStateService } from './firebase-guilds-channels-features-noon-enabled-state.service';
+import { ServiceNameEnum } from '../../../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../../../core/services/core-event.service';
+import { ILoggerLog } from '../../../../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../../../../logger/services/logger.service';
+import { FirebaseGuildChannelFeatureNoonVersionEnum } from '../../../../../enums/guilds/channels/features/firebase-guild-channel-feature-noon-version.enum';
+import { FirebaseGuildChannelFeatureVersionEnum } from '../../../../../enums/guilds/channels/features/firebase-guild-channel-feature-version.enum';
+import { FirebaseGuildChannelVersionEnum } from '../../../../../enums/guilds/channels/firebase-guild-channel-version.enum';
+import { IFirebaseGuildChannel } from '../../../../../types/guilds/channels/firebase-guild-channel';
+import { IFirebaseGuildVFinal } from '../../../../../types/guilds/firebase-guild-v-final';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../logger/services/chalk/chalk.service`);
 
@@ -28,9 +28,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
       service = FirebaseGuildsChannelsFeaturesNoonEnabledStateService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(FirebaseGuildsChannelsFeaturesNoonEnabledStateService)
-      );
+      expect(service).toStrictEqual(expect.any(FirebaseGuildsChannelsFeaturesNoonEnabledStateService));
     });
 
     it(`should return the created FirebaseGuildsChannelsFeaturesNoonEnabledState service`, (): void => {
@@ -76,9 +74,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
         id: `dummy-guild-id`,
       });
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
     });
 
     describe(`when the given Firebase guild channel id is undefined`, (): void => {
@@ -141,7 +137,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
       describe(`when the channel is not up-to-date`, (): void => {
         beforeEach((): void => {
           firebaseGuild.channels = {
-            "dummy-channel-id": {
+            'dummy-channel-id': {
               version: undefined,
             },
           };
@@ -171,7 +167,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
       describe(`when the channel is up-to-date`, (): void => {
         beforeEach((): void => {
           firebaseGuild.channels = {
-            "dummy-channel-id": {
+            'dummy-channel-id': {
               version: FirebaseGuildChannelVersionEnum.V1,
             },
           };
@@ -180,7 +176,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
         describe(`when the channel features are not set`, (): void => {
           beforeEach((): void => {
             firebaseGuild.channels = {
-              "dummy-channel-id": {
+              'dummy-channel-id': {
                 features: undefined,
                 version: FirebaseGuildChannelVersionEnum.V1,
               },
@@ -211,7 +207,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
         describe(`when the channel features are set`, (): void => {
           beforeEach((): void => {
             firebaseGuild.channels = {
-              "dummy-channel-id": {
+              'dummy-channel-id': {
                 features: {},
                 version: FirebaseGuildChannelVersionEnum.V1,
               },
@@ -221,7 +217,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
           describe(`when the features are not up-to-date`, (): void => {
             beforeEach((): void => {
               firebaseGuild.channels = {
-                "dummy-channel-id": {
+                'dummy-channel-id': {
                   features: {
                     version: undefined,
                   },
@@ -254,7 +250,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
           describe(`when the features are up-to-date`, (): void => {
             beforeEach((): void => {
               firebaseGuild.channels = {
-                "dummy-channel-id": {
+                'dummy-channel-id': {
                   features: {
                     version: FirebaseGuildChannelFeatureVersionEnum.V1,
                   },
@@ -266,7 +262,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
             describe(`when the feature noon is not set`, (): void => {
               beforeEach((): void => {
                 firebaseGuild.channels = {
-                  "dummy-channel-id": {
+                  'dummy-channel-id': {
                     features: {
                       noon: undefined,
                       version: FirebaseGuildChannelFeatureVersionEnum.V1,
@@ -300,7 +296,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
             describe(`when the feature noon is set`, (): void => {
               beforeEach((): void => {
                 firebaseGuild.channels = {
-                  "dummy-channel-id": {
+                  'dummy-channel-id': {
                     features: {
                       noon: {},
                       version: FirebaseGuildChannelFeatureVersionEnum.V1,
@@ -313,7 +309,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
               describe(`when the feature noon is not up-to-date`, (): void => {
                 beforeEach((): void => {
                   firebaseGuild.channels = {
-                    "dummy-channel-id": {
+                    'dummy-channel-id': {
                       features: {
                         noon: {
                           version: undefined,
@@ -349,11 +345,10 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
               describe(`when the feature noon is up-to-date`, (): void => {
                 beforeEach((): void => {
                   firebaseGuild.channels = {
-                    "dummy-channel-id": {
+                    'dummy-channel-id': {
                       features: {
                         noon: {
-                          version:
-                            FirebaseGuildChannelFeatureNoonVersionEnum.V1,
+                          version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
                         },
                         version: FirebaseGuildChannelFeatureVersionEnum.V1,
                       },
@@ -365,12 +360,11 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
                 describe(`when the feature noon enabled state is undefined`, (): void => {
                   beforeEach((): void => {
                     firebaseGuild.channels = {
-                      "dummy-channel-id": {
+                      'dummy-channel-id': {
                         features: {
                           noon: {
                             isEnabled: undefined,
-                            version:
-                              FirebaseGuildChannelFeatureNoonVersionEnum.V1,
+                            version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
                           },
                           version: FirebaseGuildChannelFeatureVersionEnum.V1,
                         },
@@ -399,12 +393,11 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
                 describe(`when the feature noon enabled state is false`, (): void => {
                   beforeEach((): void => {
                     firebaseGuild.channels = {
-                      "dummy-channel-id": {
+                      'dummy-channel-id': {
                         features: {
                           noon: {
                             isEnabled: false,
-                            version:
-                              FirebaseGuildChannelFeatureNoonVersionEnum.V1,
+                            version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
                           },
                           version: FirebaseGuildChannelFeatureVersionEnum.V1,
                         },
@@ -433,12 +426,11 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
                 describe(`when the feature noon enabled state is true`, (): void => {
                   beforeEach((): void => {
                     firebaseGuild.channels = {
-                      "dummy-channel-id": {
+                      'dummy-channel-id': {
                         features: {
                           noon: {
                             isEnabled: true,
-                            version:
-                              FirebaseGuildChannelFeatureNoonVersionEnum.V1,
+                            version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
                           },
                           version: FirebaseGuildChannelFeatureVersionEnum.V1,
                         },

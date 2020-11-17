@@ -1,7 +1,7 @@
-import { createMock } from "ts-auto-mock";
-import { IDiscordCommandFirstArgument } from "../../../interfaces/commands/discord-command-first-argument";
-import { DiscordMessageCommandFeatureNameEnum } from "../../../services/command/feature/enums/discord-message-command-feature-name.enum";
-import { DiscordCommandFirstArgument } from "./discord-command-first-argument";
+import { DiscordCommandFirstArgument } from './discord-command-first-argument';
+import { IDiscordCommandFirstArgument } from '../../../interfaces/commands/discord-command-first-argument';
+import { DiscordMessageCommandFeatureNameEnum } from '../../../services/command/feature/enums/discord-message-command-feature-name.enum';
+import { createMock } from 'ts-auto-mock';
 
 describe(`DiscordCommandFirstArgument`, (): void => {
   let discordCommandFirstArgument: DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>;
@@ -11,19 +11,13 @@ describe(`DiscordCommandFirstArgument`, (): void => {
       it(`should update the description inside the class`, (): void => {
         expect.assertions(1);
 
-        discordCommandFirstArgument = new DiscordCommandFirstArgument<
-          DiscordMessageCommandFeatureNameEnum
-        >(
-          createMock<
-            IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>
-          >({
+        discordCommandFirstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
+          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             description: `dummy-description`,
           })
         );
 
-        expect(discordCommandFirstArgument.getDescription()).toStrictEqual(
-          `dummy-description`
-        );
+        expect(discordCommandFirstArgument.getDescription()).toStrictEqual(`dummy-description`);
       });
     });
 
@@ -31,19 +25,13 @@ describe(`DiscordCommandFirstArgument`, (): void => {
       it(`should update the name inside the class`, (): void => {
         expect.assertions(1);
 
-        discordCommandFirstArgument = new DiscordCommandFirstArgument<
-          DiscordMessageCommandFeatureNameEnum
-        >(
-          createMock<
-            IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>
-          >({
+        discordCommandFirstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
+          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.NOON,
           })
         );
 
-        expect(discordCommandFirstArgument.getName()).toStrictEqual(
-          DiscordMessageCommandFeatureNameEnum.NOON
-        );
+        expect(discordCommandFirstArgument.getName()).toStrictEqual(DiscordMessageCommandFeatureNameEnum.NOON);
       });
     });
 
@@ -52,12 +40,8 @@ describe(`DiscordCommandFirstArgument`, (): void => {
         it(`should remove the shortcuts inside the class`, (): void => {
           expect.assertions(1);
 
-          discordCommandFirstArgument = new DiscordCommandFirstArgument<
-            DiscordMessageCommandFeatureNameEnum
-          >(
-            createMock<
-              IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>
-            >({
+          discordCommandFirstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
+            createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
               shortcuts: undefined,
             })
           );
@@ -70,19 +54,13 @@ describe(`DiscordCommandFirstArgument`, (): void => {
         it(`should update the shortcuts inside the class`, (): void => {
           expect.assertions(1);
 
-          discordCommandFirstArgument = new DiscordCommandFirstArgument<
-            DiscordMessageCommandFeatureNameEnum
-          >(
-            createMock<
-              IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>
-            >({
+          discordCommandFirstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
+            createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
               shortcuts: [DiscordMessageCommandFeatureNameEnum.N],
             })
           );
 
-          expect(discordCommandFirstArgument.getShortcuts()).toStrictEqual([
-            DiscordMessageCommandFeatureNameEnum.N,
-          ]);
+          expect(discordCommandFirstArgument.getShortcuts()).toStrictEqual([DiscordMessageCommandFeatureNameEnum.N]);
         });
       });
     });
@@ -90,12 +68,8 @@ describe(`DiscordCommandFirstArgument`, (): void => {
 
   describe(`getDescription()`, (): void => {
     beforeEach((): void => {
-      discordCommandFirstArgument = new DiscordCommandFirstArgument<
-        DiscordMessageCommandFeatureNameEnum
-      >(
-        createMock<
-          IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>
-        >()
+      discordCommandFirstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
+        createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>()
       );
     });
 
@@ -111,12 +85,8 @@ describe(`DiscordCommandFirstArgument`, (): void => {
 
   describe(`setDescription()`, (): void => {
     beforeEach((): void => {
-      discordCommandFirstArgument = new DiscordCommandFirstArgument<
-        DiscordMessageCommandFeatureNameEnum
-      >(
-        createMock<
-          IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>
-        >()
+      discordCommandFirstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
+        createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>()
       );
     });
 
@@ -125,28 +95,20 @@ describe(`DiscordCommandFirstArgument`, (): void => {
 
       discordCommandFirstArgument.setDescription(`dummy-description`);
 
-      expect(discordCommandFirstArgument.getDescription()).toStrictEqual(
-        `dummy-description`
-      );
+      expect(discordCommandFirstArgument.getDescription()).toStrictEqual(`dummy-description`);
     });
   });
 
   describe(`getName()`, (): void => {
     beforeEach((): void => {
-      discordCommandFirstArgument = new DiscordCommandFirstArgument<
-        DiscordMessageCommandFeatureNameEnum
-      >(
-        createMock<
-          IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>
-        >()
+      discordCommandFirstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
+        createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>()
       );
     });
 
     it(`should return the name`, (): void => {
       expect.assertions(1);
-      discordCommandFirstArgument.setName(
-        DiscordMessageCommandFeatureNameEnum.NOON
-      );
+      discordCommandFirstArgument.setName(DiscordMessageCommandFeatureNameEnum.NOON);
 
       const result = discordCommandFirstArgument.getName();
 
@@ -156,20 +118,14 @@ describe(`DiscordCommandFirstArgument`, (): void => {
 
   describe(`getLowerCaseName()`, (): void => {
     beforeEach((): void => {
-      discordCommandFirstArgument = new DiscordCommandFirstArgument<
-        DiscordMessageCommandFeatureNameEnum
-      >(
-        createMock<
-          IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>
-        >()
+      discordCommandFirstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
+        createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>()
       );
     });
 
     it(`should return the lower case name`, (): void => {
       expect.assertions(1);
-      discordCommandFirstArgument.setName(
-        DiscordMessageCommandFeatureNameEnum.NOON
-      );
+      discordCommandFirstArgument.setName(DiscordMessageCommandFeatureNameEnum.NOON);
 
       const result = discordCommandFirstArgument.getLowerCaseName();
 
@@ -179,44 +135,30 @@ describe(`DiscordCommandFirstArgument`, (): void => {
 
   describe(`setName()`, (): void => {
     beforeEach((): void => {
-      discordCommandFirstArgument = new DiscordCommandFirstArgument<
-        DiscordMessageCommandFeatureNameEnum
-      >(
-        createMock<
-          IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>
-        >()
+      discordCommandFirstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
+        createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>()
       );
     });
 
     it(`should update the name with the given one`, (): void => {
       expect.assertions(1);
 
-      discordCommandFirstArgument.setName(
-        DiscordMessageCommandFeatureNameEnum.NOON
-      );
+      discordCommandFirstArgument.setName(DiscordMessageCommandFeatureNameEnum.NOON);
 
-      expect(discordCommandFirstArgument.getName()).toStrictEqual(
-        DiscordMessageCommandFeatureNameEnum.NOON
-      );
+      expect(discordCommandFirstArgument.getName()).toStrictEqual(DiscordMessageCommandFeatureNameEnum.NOON);
     });
   });
 
   describe(`getShortcuts()`, (): void => {
     beforeEach((): void => {
-      discordCommandFirstArgument = new DiscordCommandFirstArgument<
-        DiscordMessageCommandFeatureNameEnum
-      >(
-        createMock<
-          IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>
-        >()
+      discordCommandFirstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
+        createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>()
       );
     });
 
     it(`should return the shortcuts`, (): void => {
       expect.assertions(1);
-      discordCommandFirstArgument.setShortcuts([
-        DiscordMessageCommandFeatureNameEnum.N,
-      ]);
+      discordCommandFirstArgument.setShortcuts([DiscordMessageCommandFeatureNameEnum.N]);
 
       const result = discordCommandFirstArgument.getShortcuts();
 
@@ -226,12 +168,8 @@ describe(`DiscordCommandFirstArgument`, (): void => {
 
   describe(`getLowerCaseShortcuts()`, (): void => {
     beforeEach((): void => {
-      discordCommandFirstArgument = new DiscordCommandFirstArgument<
-        DiscordMessageCommandFeatureNameEnum
-      >(
-        createMock<
-          IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>
-        >()
+      discordCommandFirstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
+        createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>()
       );
     });
 
@@ -250,36 +188,24 @@ describe(`DiscordCommandFirstArgument`, (): void => {
 
   describe(`setShortcuts()`, (): void => {
     beforeEach((): void => {
-      discordCommandFirstArgument = new DiscordCommandFirstArgument<
-        DiscordMessageCommandFeatureNameEnum
-      >(
-        createMock<
-          IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>
-        >()
+      discordCommandFirstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
+        createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>()
       );
     });
 
     it(`should update the shortcuts with the given one`, (): void => {
       expect.assertions(1);
 
-      discordCommandFirstArgument.setShortcuts([
-        DiscordMessageCommandFeatureNameEnum.N,
-      ]);
+      discordCommandFirstArgument.setShortcuts([DiscordMessageCommandFeatureNameEnum.N]);
 
-      expect(discordCommandFirstArgument.getShortcuts()).toStrictEqual([
-        DiscordMessageCommandFeatureNameEnum.N,
-      ]);
+      expect(discordCommandFirstArgument.getShortcuts()).toStrictEqual([DiscordMessageCommandFeatureNameEnum.N]);
     });
   });
 
   describe(`getLowerCaseNameAndShortcutsExample()`, (): void => {
     beforeEach((): void => {
-      discordCommandFirstArgument = new DiscordCommandFirstArgument<
-        DiscordMessageCommandFeatureNameEnum
-      >(
-        createMock<
-          IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>
-        >({
+      discordCommandFirstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
+        createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
           name: DiscordMessageCommandFeatureNameEnum.NOON,
         })
       );
@@ -315,9 +241,7 @@ describe(`DiscordCommandFirstArgument`, (): void => {
 
     describe(`when there is one shortcut`, (): void => {
       beforeEach((): void => {
-        discordCommandFirstArgument.setShortcuts([
-          DiscordMessageCommandFeatureNameEnum.N,
-        ]);
+        discordCommandFirstArgument.setShortcuts([DiscordMessageCommandFeatureNameEnum.N]);
       });
 
       it(`should return the lower case name and the shortcut wrapped in parentheses`, (): void => {

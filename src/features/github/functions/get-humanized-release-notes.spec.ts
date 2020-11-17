@@ -1,4 +1,4 @@
-import { getHumanizedReleaseNotes } from "./get-humanized-release-notes";
+import { getHumanizedReleaseNotes } from './get-humanized-release-notes';
 
 describe(`getHumanizedReleaseNotes()`, (): void => {
   let releaseNotes: string;

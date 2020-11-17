@@ -5,6 +5,7 @@ ISSUES MISSING IMPORTANT INFORMATION MAY BE CLOSED WITHOUT INVESTIGATION.
 -->
 
 ## I'm submitting a...
+
 <!-- Check one of the following options with "x" -->
 <pre><code>
 [ ] Regression (a behavior that used to work and stopped working in a new release)
@@ -17,21 +18,21 @@ ISSUES MISSING IMPORTANT INFORMATION MAY BE CLOSED WITHOUT INVESTIGATION.
 </code></pre>
 
 ## Current behavior
+
 <!-- Describe how the issue manifests. -->
 
-
 ## Expected behavior
+
 <!-- Describe what the desired behavior would be. -->
 
-
 ## Minimal reproduction of the problem with instructions
-For bug reports please provide the *STEPS TO REPRODUCE* and if possible a *MINIMAL DEMO* of the problem via
+
+For bug reports please provide the _STEPS TO REPRODUCE_ and if possible a _MINIMAL DEMO_ of the problem via
 https://stackblitz.com or similar.
 
-
 ## What is the motivation / use case for changing the behavior?
-<!-- Describe the motivation or the concrete use case. -->
 
+<!-- Describe the motivation or the concrete use case. -->
 
 ## Environment
 

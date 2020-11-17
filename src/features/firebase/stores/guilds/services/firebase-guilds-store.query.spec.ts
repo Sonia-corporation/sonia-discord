@@ -1,8 +1,8 @@
-import { of } from "rxjs";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../core/services/core-event.service";
-import { FirebaseGuildsStore } from "../firebase-guilds-store";
-import { FirebaseGuildsStoreQuery } from "./firebase-guilds-store.query";
+import { FirebaseGuildsStoreQuery } from './firebase-guilds-store.query';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../core/services/core-event.service';
+import { FirebaseGuildsStore } from '../firebase-guilds-store';
+import { of } from 'rxjs';
 
 describe(`FirebaseGuildsStoreQuery`, (): void => {
   let service: FirebaseGuildsStoreQuery;
@@ -47,9 +47,7 @@ describe(`FirebaseGuildsStoreQuery`, (): void => {
       service = new FirebaseGuildsStoreQuery(firebaseGuildsStore);
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.FIREBASE_GUILDS_STORE_QUERY
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.FIREBASE_GUILDS_STORE_QUERY);
     });
   });
 

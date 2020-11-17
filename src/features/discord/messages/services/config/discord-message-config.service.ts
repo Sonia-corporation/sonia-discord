@@ -1,19 +1,19 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../../classes/services/abstract.service";
-import { ColorEnum } from "../../../../../enums/color.enum";
-import { IconEnum } from "../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { IDiscordMessageCommandCliErrorConfig } from "../../../interfaces/discord-message-command-cli-error-config";
-import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
-import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
-import { IDiscordMessageCommandHelpConfig } from "../../../interfaces/discord-message-command-help-config";
-import { IDiscordMessageCommandLunchConfig } from "../../../interfaces/discord-message-command-lunch-config";
-import { IDiscordMessageCommandReleaseNotesConfig } from "../../../interfaces/discord-message-command-release-notes-config";
-import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
-import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
-import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
-import { IDiscordMessageWarningConfig } from "../../../interfaces/discord-message-warning-config";
-import { DiscordMessageConfigCoreService } from "./discord-message-config-core.service";
+import { DiscordMessageConfigCoreService } from './discord-message-config-core.service';
+import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { ColorEnum } from '../../../../../enums/color.enum';
+import { IconEnum } from '../../../../../enums/icon.enum';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { IDiscordMessageCommandCliErrorConfig } from '../../../interfaces/discord-message-command-cli-error-config';
+import { IDiscordMessageCommandConfig } from '../../../interfaces/discord-message-command-config';
+import { IDiscordMessageCommandCookieConfig } from '../../../interfaces/discord-message-command-cookie-config';
+import { IDiscordMessageCommandHelpConfig } from '../../../interfaces/discord-message-command-help-config';
+import { IDiscordMessageCommandLunchConfig } from '../../../interfaces/discord-message-command-lunch-config';
+import { IDiscordMessageCommandReleaseNotesConfig } from '../../../interfaces/discord-message-command-release-notes-config';
+import { IDiscordMessageCommandVersionConfig } from '../../../interfaces/discord-message-command-version-config';
+import { IDiscordMessageConfig } from '../../../interfaces/discord-message-config';
+import { IDiscordMessageErrorConfig } from '../../../interfaces/discord-message-error-config';
+import { IDiscordMessageWarningConfig } from '../../../interfaces/discord-message-warning-config';
+import _ from 'lodash';
 
 export class DiscordMessageConfigService extends AbstractService {
   private static _instance: DiscordMessageConfigService;
@@ -47,13 +47,11 @@ export class DiscordMessageConfigService extends AbstractService {
   }
 
   public getMessageCommandCliErrorImageColor(): ColorEnum {
-    return DiscordMessageConfigCoreService.getInstance().command.cliError
-      .imageColor;
+    return DiscordMessageConfigCoreService.getInstance().command.cliError.imageColor;
   }
 
   public getMessageCommandCliErrorImageUrl(): IconEnum {
-    return DiscordMessageConfigCoreService.getInstance().command.cliError
-      .imageUrl;
+    return DiscordMessageConfigCoreService.getInstance().command.cliError.imageUrl;
   }
 
   public getMessageCommandCookie(): IDiscordMessageCommandCookieConfig {
@@ -61,13 +59,11 @@ export class DiscordMessageConfigService extends AbstractService {
   }
 
   public getMessageCommandCookieImageColor(): ColorEnum {
-    return DiscordMessageConfigCoreService.getInstance().command.cookie
-      .imageColor;
+    return DiscordMessageConfigCoreService.getInstance().command.cookie.imageColor;
   }
 
   public getMessageCommandCookieImageUrl(): IconEnum {
-    return DiscordMessageConfigCoreService.getInstance().command.cookie
-      .imageUrl;
+    return DiscordMessageConfigCoreService.getInstance().command.cookie.imageUrl;
   }
 
   public getMessageCommandError(): IDiscordMessageCommandCookieConfig {
@@ -75,8 +71,7 @@ export class DiscordMessageConfigService extends AbstractService {
   }
 
   public getMessageCommandErrorImageColor(): ColorEnum {
-    return DiscordMessageConfigCoreService.getInstance().command.error
-      .imageColor;
+    return DiscordMessageConfigCoreService.getInstance().command.error.imageColor;
   }
 
   public getMessageCommandErrorImageUrl(): IconEnum {
@@ -88,8 +83,7 @@ export class DiscordMessageConfigService extends AbstractService {
   }
 
   public getMessageCommandHelpImageColor(): ColorEnum {
-    return DiscordMessageConfigCoreService.getInstance().command.help
-      .imageColor;
+    return DiscordMessageConfigCoreService.getInstance().command.help.imageColor;
   }
 
   public getMessageCommandHelpImageUrl(): IconEnum {
@@ -101,8 +95,7 @@ export class DiscordMessageConfigService extends AbstractService {
   }
 
   public getMessageCommandLunchImageColor(): ColorEnum {
-    return DiscordMessageConfigCoreService.getInstance().command.lunch
-      .imageColor;
+    return DiscordMessageConfigCoreService.getInstance().command.lunch.imageColor;
   }
 
   public getMessageCommandLunchImageUrl(): IconEnum {
@@ -118,13 +111,11 @@ export class DiscordMessageConfigService extends AbstractService {
   }
 
   public getMessageCommandReleaseNotesImageColor(): ColorEnum {
-    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes
-      .imageColor;
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.imageColor;
   }
 
   public getMessageCommandReleaseNotesImageUrl(): IconEnum {
-    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes
-      .imageUrl;
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.imageUrl;
   }
 
   public getMessageCommandVersion(): IDiscordMessageCommandVersionConfig {
@@ -132,13 +123,11 @@ export class DiscordMessageConfigService extends AbstractService {
   }
 
   public getMessageCommandVersionImageColor(): ColorEnum {
-    return DiscordMessageConfigCoreService.getInstance().command.version
-      .imageColor;
+    return DiscordMessageConfigCoreService.getInstance().command.version.imageColor;
   }
 
   public getMessageCommandVersionImageUrl(): IconEnum {
-    return DiscordMessageConfigCoreService.getInstance().command.version
-      .imageUrl;
+    return DiscordMessageConfigCoreService.getInstance().command.version.imageUrl;
   }
 
   public getMessageError(): IDiscordMessageErrorConfig {

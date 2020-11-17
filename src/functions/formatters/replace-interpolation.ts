@@ -1,18 +1,11 @@
-import _ from "lodash";
-import { IObject } from "../../types/object";
-import { getInterpolationRegexp } from "./get-interpolation-regexp";
+import { getInterpolationRegexp } from './get-interpolation-regexp';
+import { IObject } from '../../types/object';
+import _ from 'lodash';
 
-export function replaceInterpolation(
-  text: Readonly<string>,
-  replacement: Readonly<IObject>
-): string {
+export function replaceInterpolation(text: Readonly<string>, replacement: Readonly<IObject>): string {
   return _.reduce(
     replacement,
-    (
-      updatedText: Readonly<string>,
-      value: unknown,
-      key: Readonly<string>
-    ): string =>
+    (updatedText: Readonly<string>, value: unknown, key: Readonly<string>): string =>
       _.replace(updatedText, getInterpolationRegexp(key), _.toString(value)),
     text
   );

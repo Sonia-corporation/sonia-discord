@@ -1,20 +1,15 @@
-import _ from "lodash";
-import { isExistingArgument } from "./is-existing-argument";
-import { isValidArgumentIndex } from "./is-valid-argument-index";
+import { isExistingArgument } from './is-existing-argument';
+import { isValidArgumentIndex } from './is-valid-argument-index';
+import _ from 'lodash';
 
 const ONE_ARGUMENT_INDEX = 1;
 
-export function getNodeArgumentByIndex(
-  argumentIndex: Readonly<number>
-): unknown | null {
+export function getNodeArgumentByIndex(argumentIndex: Readonly<number>): unknown | null {
   if (!isValidArgumentIndex(argumentIndex)) {
     return null;
   }
 
-  const originArgumentValueIndex: number = _.add(
-    argumentIndex,
-    ONE_ARGUMENT_INDEX
-  );
+  const originArgumentValueIndex: number = _.add(argumentIndex, ONE_ARGUMENT_INDEX);
 
   if (!isExistingArgument(originArgumentValueIndex)) {
     return null;

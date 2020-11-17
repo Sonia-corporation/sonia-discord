@@ -1,6 +1,6 @@
-import _ from "lodash";
-import { IDiscordCommandFlagSuccess } from "../../../interfaces/commands/flags/discord-command-flag-success";
-import { IDiscordCommandFlagResponse } from "../../../types/commands/flags/discord-command-flag-response";
+import { IDiscordCommandFlagSuccess } from '../../../interfaces/commands/flags/discord-command-flag-success';
+import { IDiscordCommandFlagResponse } from '../../../types/commands/flags/discord-command-flag-response';
+import _ from 'lodash';
 
 /**
  * @description

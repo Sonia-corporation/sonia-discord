@@ -1,8 +1,8 @@
-import moment from "moment-timezone";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { AppConfigCoreService } from "./app-config-core.service";
-import { AppConfigQueryService } from "./app-config-query.service";
+import { AppConfigCoreService } from './app-config-core.service';
+import { AppConfigQueryService } from './app-config-query.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import moment from 'moment-timezone';
 
 describe(`AppConfigQueryService`, (): void => {
   let service: AppConfigQueryService;
@@ -47,9 +47,7 @@ describe(`AppConfigQueryService`, (): void => {
       service = new AppConfigQueryService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.APP_CONFIG_QUERY_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.APP_CONFIG_QUERY_SERVICE);
     });
   });
 
@@ -84,9 +82,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getFirstReleaseDateFormatted();
 
-        expect(result).toStrictEqual(
-          moment(`2020-03-24T00:00:00.000Z`).format(format)
-        );
+        expect(result).toStrictEqual(moment(`2020-03-24T00:00:00.000Z`).format(format));
       });
     });
 
@@ -182,9 +178,7 @@ describe(`AppConfigQueryService`, (): void => {
 
     describe(`when the app config initialization date is a date as one hour`, (): void => {
       beforeEach((): void => {
-        appConfigCoreService.initializationDate = moment()
-          .subtract(1, `hour`)
-          .format();
+        appConfigCoreService.initializationDate = moment().subtract(1, `hour`).format();
       });
 
       it(`should return the app config initialization date capitalized and humanized to an hour`, (): void => {
@@ -198,9 +192,7 @@ describe(`AppConfigQueryService`, (): void => {
 
     describe(`when the app config initialization date is a date as two hours`, (): void => {
       beforeEach((): void => {
-        appConfigCoreService.initializationDate = moment()
-          .subtract(2, `hour`)
-          .format();
+        appConfigCoreService.initializationDate = moment().subtract(2, `hour`).format();
       });
 
       it(`should return the app config initialization date capitalized and humanized to two hours`, (): void => {
@@ -298,9 +290,7 @@ describe(`AppConfigQueryService`, (): void => {
 
     describe(`when the app config release date is a date as one hour`, (): void => {
       beforeEach((): void => {
-        appConfigCoreService.releaseDate = moment()
-          .subtract(1, `hour`)
-          .format();
+        appConfigCoreService.releaseDate = moment().subtract(1, `hour`).format();
       });
 
       it(`should return the app config release date capitalized and humanized to an hour`, (): void => {
@@ -314,9 +304,7 @@ describe(`AppConfigQueryService`, (): void => {
 
     describe(`when the app config release date is a date as two hours`, (): void => {
       beforeEach((): void => {
-        appConfigCoreService.releaseDate = moment()
-          .subtract(2, `hour`)
-          .format();
+        appConfigCoreService.releaseDate = moment().subtract(2, `hour`).format();
       });
 
       it(`should return the app config release date capitalized and humanized to two hours`, (): void => {

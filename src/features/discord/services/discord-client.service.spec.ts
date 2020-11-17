@@ -1,9 +1,9 @@
-import { Client } from "discord.js";
-import { take } from "rxjs/operators";
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { CoreEventService } from "../../core/services/core-event.service";
-import { DiscordClientService } from "./discord-client.service";
+import { DiscordClientService } from './discord-client.service';
+import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import { CoreEventService } from '../../core/services/core-event.service';
+import { Client } from 'discord.js';
+import { take } from 'rxjs/operators';
+import { createMock } from 'ts-auto-mock';
 
 describe(`DiscordClientService`, (): void => {
   let service: DiscordClientService;
@@ -46,9 +46,7 @@ describe(`DiscordClientService`, (): void => {
       service = new DiscordClientService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_CLIENT_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_CLIENT_SERVICE);
     });
   });
 
@@ -78,9 +76,7 @@ describe(`DiscordClientService`, (): void => {
 
     describe(`when the Client does not exist`, (): void => {
       beforeEach((): void => {
-        createClientSpy = jest
-          .spyOn(service, `createClient`)
-          .mockReturnValue(client);
+        createClientSpy = jest.spyOn(service, `createClient`).mockReturnValue(client);
       });
 
       it(`should create a Client`, (): void => {

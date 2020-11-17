@@ -1,4 +1,4 @@
-version: "2"
+version: '2'
 checks:
   argument-count:
     config:
@@ -27,23 +27,23 @@ checks:
 plugins:
   eslint:
     enabled: true
-    channel: "eslint-6"
+    channel: 'eslint-6'
     exclude_patterns:
-      - ".cache/"
-      - ".cache-jest/"
-      - "coverage/"
-      - "node_modules/"
-      - ".eslintcache"
-      - "!src/**/*.ts"
-      - "!src/**/*.js"
-      - "!scripts/**/*.ts"
-      - "!scripts/**/*.js"
+      - '.cache/'
+      - '.cache-jest/'
+      - 'coverage/'
+      - 'node_modules/'
+      - '.eslintcache'
+      - '!src/**/*.ts'
+      - '!src/**/*.js'
+      - '!scripts/**/*.ts'
+      - '!scripts/**/*.js'
 exclude_patterns:
-  - ".cache/"
-  - ".cache-jest/"
-  - "coverage/"
-  - "node_modules/"
-  - ".eslintcache"
-  - "**/*.spec.ts"
-  - "**/__mocks__/*.ts"
-  - "**/__mocks__/"
+  - '.cache/'
+  - '.cache-jest/'
+  - 'coverage/'
+  - 'node_modules/'
+  - '.eslintcache'
+  - '**/*.spec.ts'
+  - '**/__mocks__/*.ts'
+  - '**/__mocks__/'

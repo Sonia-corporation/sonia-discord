@@ -1,7 +1,7 @@
-import { Snowflake } from "discord.js";
-import { IObject } from "../../../../types/object";
-import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-version.enum";
-import { IFirebaseGuildChannelV1 } from "./channels/firebase-guild-channel-v1";
+import { IFirebaseGuildChannelV1 } from './channels/firebase-guild-channel-v1';
+import { IObject } from '../../../../types/object';
+import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
+import { Snowflake } from 'discord.js';
 
 export interface IFirebaseGuildV4 {
   /**

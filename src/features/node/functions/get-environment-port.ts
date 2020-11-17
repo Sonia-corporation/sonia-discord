@@ -1,5 +1,5 @@
-import _ from "lodash";
-import { isValidPort } from "./is-valid-port";
+import { isValidPort } from './is-valid-port';
+import _ from 'lodash';
 
 const RADIX = 10;
 

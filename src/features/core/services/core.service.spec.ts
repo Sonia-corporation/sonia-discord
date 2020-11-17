@@ -1,5 +1,5 @@
-import { CoreEventService } from "./core-event.service";
-import { CoreService } from "./core.service";
+import { CoreEventService } from './core-event.service';
+import { CoreService } from './core.service';
 
 describe(`CoreService`, (): void => {
   let service: CoreService;
@@ -28,10 +28,7 @@ describe(`CoreService`, (): void => {
     beforeEach((): void => {
       service = CoreService.getInstance();
 
-      coreEventServiceGetInstanceSy = jest.spyOn(
-        CoreEventService,
-        `getInstance`
-      );
+      coreEventServiceGetInstanceSy = jest.spyOn(CoreEventService, `getInstance`);
     });
 
     it(`should create the CoreEvent service`, (): void => {

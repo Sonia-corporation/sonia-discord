@@ -1,5 +1,5 @@
-import { IObject } from "../../types/object";
-import { replaceInterpolation } from "./replace-interpolation";
+import { replaceInterpolation } from './replace-interpolation';
+import { IObject } from '../../types/object';
 
 describe(`replaceInterpolation()`, (): void => {
   let text: string;
@@ -56,9 +56,7 @@ describe(`replaceInterpolation()`, (): void => {
 
         const result = replaceInterpolation(text, replacement);
 
-        expect(result).toStrictEqual(
-          `this is a simple text without interpolation`
-        );
+        expect(result).toStrictEqual(`this is a simple text without interpolation`);
       });
     });
 
@@ -74,9 +72,7 @@ describe(`replaceInterpolation()`, (): void => {
 
         const result = replaceInterpolation(text, replacement);
 
-        expect(result).toStrictEqual(
-          `this is a simple text without interpolation`
-        );
+        expect(result).toStrictEqual(`this is a simple text without interpolation`);
       });
     });
   });
@@ -96,9 +92,7 @@ describe(`replaceInterpolation()`, (): void => {
 
         const result = replaceInterpolation(text, replacement);
 
-        expect(result).toStrictEqual(
-          `this is a simple text with an interpolation for a {{ date }}`
-        );
+        expect(result).toStrictEqual(`this is a simple text with an interpolation for a {{ date }}`);
       });
     });
 
@@ -114,9 +108,7 @@ describe(`replaceInterpolation()`, (): void => {
 
         const result = replaceInterpolation(text, replacement);
 
-        expect(result).toStrictEqual(
-          `this is a simple text with an interpolation for a {{ date }}`
-        );
+        expect(result).toStrictEqual(`this is a simple text with an interpolation for a {{ date }}`);
       });
     });
   });
@@ -136,9 +128,7 @@ describe(`replaceInterpolation()`, (): void => {
 
         const result = replaceInterpolation(text, replacement);
 
-        expect(result).toStrictEqual(
-          `this is a simple text with an interpolation for a {{ userId }}`
-        );
+        expect(result).toStrictEqual(`this is a simple text with an interpolation for a {{ userId }}`);
       });
     });
 
@@ -154,9 +144,7 @@ describe(`replaceInterpolation()`, (): void => {
 
         const result = replaceInterpolation(text, replacement);
 
-        expect(result).toStrictEqual(
-          `this is a simple text with an interpolation for a dummy-user-id`
-        );
+        expect(result).toStrictEqual(`this is a simple text with an interpolation for a dummy-user-id`);
       });
     });
   });
@@ -176,9 +164,7 @@ describe(`replaceInterpolation()`, (): void => {
 
         const result = replaceInterpolation(text, replacement);
 
-        expect(result).toStrictEqual(
-          `this is a simple text with an interpolation for a {{userId}}`
-        );
+        expect(result).toStrictEqual(`this is a simple text with an interpolation for a {{userId}}`);
       });
     });
 
@@ -194,9 +180,7 @@ describe(`replaceInterpolation()`, (): void => {
 
         const result = replaceInterpolation(text, replacement);
 
-        expect(result).toStrictEqual(
-          `this is a simple text with an interpolation for a dummy-user-id`
-        );
+        expect(result).toStrictEqual(`this is a simple text with an interpolation for a dummy-user-id`);
       });
     });
   });

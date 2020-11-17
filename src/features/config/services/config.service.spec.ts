@@ -1,12 +1,12 @@
-import moment from "moment-timezone";
-import { ILoggerLog } from "../../logger/interfaces/logger-log";
-import { LoggerService } from "../../logger/services/logger.service";
-import { IConfigUpdateBoolean } from "../interfaces/config-update-boolean";
-import { IConfigUpdateDate } from "../interfaces/config-update-date";
-import { IConfigUpdateNumber } from "../interfaces/config-update-number";
-import { IConfigUpdateString } from "../interfaces/config-update-string";
-import { IConfigUpdateStringOrArray } from "../interfaces/config-update-string-or-array";
-import { ConfigService } from "./config.service";
+import { ConfigService } from './config.service';
+import { ILoggerLog } from '../../logger/interfaces/logger-log';
+import { LoggerService } from '../../logger/services/logger.service';
+import { IConfigUpdateBoolean } from '../interfaces/config-update-boolean';
+import { IConfigUpdateDate } from '../interfaces/config-update-date';
+import { IConfigUpdateNumber } from '../interfaces/config-update-number';
+import { IConfigUpdateString } from '../interfaces/config-update-string';
+import { IConfigUpdateStringOrArray } from '../interfaces/config-update-string-or-array';
+import moment from 'moment-timezone';
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 jest.mock(`../../logger/services/logger.service`);
@@ -33,9 +33,7 @@ describe(`ConfigService`, (): void => {
         valueName: `dummy-value-name`,
       };
 
-      loggerServiceLogSpy = jest
-        .spyOn(loggerService, `log`)
-        .mockImplementation();
+      loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
     });
 
     describe(`when the given config update number new value is undefined`, (): void => {
@@ -126,9 +124,7 @@ describe(`ConfigService`, (): void => {
         valueName: `dummy-value-name`,
       };
 
-      loggerServiceLogSpy = jest
-        .spyOn(loggerService, `log`)
-        .mockImplementation();
+      loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
     });
 
     describe(`when the given config update string new value is undefined`, (): void => {
@@ -587,9 +583,7 @@ describe(`ConfigService`, (): void => {
         valueName: `dummy-value-name`,
       };
 
-      loggerServiceLogSpy = jest
-        .spyOn(loggerService, `log`)
-        .mockImplementation();
+      loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
     });
 
     describe(`when the given config update string or array new value is undefined`, (): void => {
@@ -608,9 +602,7 @@ describe(`ConfigService`, (): void => {
       it(`should return the old value`, (): void => {
         expect.assertions(1);
 
-        const result = service.getUpdatedStringOrArray(
-          configUpdateStringOrArray
-        );
+        const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
         expect(result).toStrictEqual(`dummy-old-value`);
       });
@@ -683,9 +675,7 @@ describe(`ConfigService`, (): void => {
         it(`should return the new value`, (): void => {
           expect.assertions(1);
 
-          const result = service.getUpdatedStringOrArray(
-            configUpdateStringOrArray
-          );
+          const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
           expect(result).toStrictEqual(`new-value`);
         });
@@ -753,9 +743,7 @@ describe(`ConfigService`, (): void => {
         it(`should return the new value`, (): void => {
           expect.assertions(1);
 
-          const result = service.getUpdatedStringOrArray(
-            configUpdateStringOrArray
-          );
+          const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
           expect(result).toStrictEqual(`new-value`);
         });
@@ -823,9 +811,7 @@ describe(`ConfigService`, (): void => {
         it(`should return the new value`, (): void => {
           expect.assertions(1);
 
-          const result = service.getUpdatedStringOrArray(
-            configUpdateStringOrArray
-          );
+          const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
           expect(result).toStrictEqual(`new-value`);
         });
@@ -899,9 +885,7 @@ describe(`ConfigService`, (): void => {
         it(`should return the new value`, (): void => {
           expect.assertions(1);
 
-          const result = service.getUpdatedStringOrArray(
-            configUpdateStringOrArray
-          );
+          const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
           expect(result).toStrictEqual(`marco-polo`);
         });
@@ -969,9 +953,7 @@ describe(`ConfigService`, (): void => {
         it(`should return the new value`, (): void => {
           expect.assertions(1);
 
-          const result = service.getUpdatedStringOrArray(
-            configUpdateStringOrArray
-          );
+          const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
           expect(result).toStrictEqual(`marco-polo`);
         });
@@ -1039,9 +1021,7 @@ describe(`ConfigService`, (): void => {
         it(`should return the new value`, (): void => {
           expect.assertions(1);
 
-          const result = service.getUpdatedStringOrArray(
-            configUpdateStringOrArray
-          );
+          const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
           expect(result).toStrictEqual(`marco-polo`);
         });
@@ -1115,9 +1095,7 @@ describe(`ConfigService`, (): void => {
         it(`should return the new value`, (): void => {
           expect.assertions(1);
 
-          const result = service.getUpdatedStringOrArray(
-            configUpdateStringOrArray
-          );
+          const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
           expect(result).toStrictEqual([`new-value`, `marco-polo`]);
         });
@@ -1185,9 +1163,7 @@ describe(`ConfigService`, (): void => {
         it(`should return the new value`, (): void => {
           expect.assertions(1);
 
-          const result = service.getUpdatedStringOrArray(
-            configUpdateStringOrArray
-          );
+          const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
           expect(result).toStrictEqual([`new-value`, `marco-polo`]);
         });
@@ -1255,9 +1231,7 @@ describe(`ConfigService`, (): void => {
         it(`should return the new value`, (): void => {
           expect.assertions(1);
 
-          const result = service.getUpdatedStringOrArray(
-            configUpdateStringOrArray
-          );
+          const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
           expect(result).toStrictEqual([`new-value`, `marco-polo`]);
         });
@@ -1279,9 +1253,7 @@ describe(`ConfigService`, (): void => {
         valueName: `dummy-value-name`,
       };
 
-      loggerServiceLogSpy = jest
-        .spyOn(loggerService, `log`)
-        .mockImplementation();
+      loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
     });
 
     describe(`when the given config update date new value is undefined`, (): void => {
@@ -1531,9 +1503,7 @@ describe(`ConfigService`, (): void => {
         valueName: `dummy-value-name`,
       };
 
-      loggerServiceLogSpy = jest
-        .spyOn(loggerService, `log`)
-        .mockImplementation();
+      loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
     });
 
     describe(`when the given config update boolean new value is undefined`, (): void => {

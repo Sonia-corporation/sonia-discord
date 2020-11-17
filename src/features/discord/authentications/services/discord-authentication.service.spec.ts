@@ -1,13 +1,13 @@
-import { Client } from "discord.js";
-import { take } from "rxjs/operators";
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { DiscordClientService } from "../../services/discord-client.service";
-import { DiscordSoniaConfigService } from "../../users/services/config/discord-sonia-config.service";
-import { DiscordAuthenticationService } from "./discord-authentication.service";
+import { DiscordAuthenticationService } from './discord-authentication.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { ILoggerLog } from '../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { DiscordSoniaConfigService } from '../../users/services/config/discord-sonia-config.service';
+import { Client } from 'discord.js';
+import { take } from 'rxjs/operators';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -81,19 +81,11 @@ describe(`DiscordAuthenticationService`, (): void => {
         on: discordClientServiceGetClientOnMock,
       });
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      loggerServiceLogSpy = jest
-        .spyOn(loggerService, `log`)
-        .mockImplementation();
-      discordClientServiceGetClientSpy = jest
-        .spyOn(discordClientService, `getClient`)
-        .mockReturnValue(client);
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
+      discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(client);
       loginSpy = jest.spyOn(service, `login`).mockImplementation();
-      discordClientServiceNotifyIsReadySpy = jest
-        .spyOn(discordClientService, `notifyIsReady`)
-        .mockImplementation();
+      discordClientServiceNotifyIsReadySpy = jest.spyOn(discordClientService, `notifyIsReady`).mockImplementation();
     });
 
     it(`should get the Discord client`, async (): Promise<void> => {
@@ -105,27 +97,20 @@ describe(`DiscordAuthenticationService`, (): void => {
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
     });
 
-    it(`should listen for the Discord client ready event`, async (): Promise<
-      void
-    > => {
+    it(`should listen for the Discord client ready event`, async (): Promise<void> => {
       expect.assertions(2);
 
       await service.init();
 
       expect(discordClientServiceGetClientOnMock).toHaveBeenCalledTimes(1);
-      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(
-        `ready`,
-        expect.any(Function)
-      );
+      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(`ready`, expect.any(Function));
     });
 
     describe(`when the Discord client ready event is triggered`, (): void => {
       beforeEach((): void => {
-        discordClientServiceGetClientOnMock = jest.fn(
-          (_event: string, listener: () => void): void => {
-            listener();
-          }
-        );
+        discordClientServiceGetClientOnMock = jest.fn((_event: string, listener: () => void): void => {
+          listener();
+        });
         client = createMock<Client>({
           on: discordClientServiceGetClientOnMock,
         });
@@ -152,9 +137,7 @@ describe(`DiscordAuthenticationService`, (): void => {
           discordClientServiceGetClientSpy.mockReturnValue(client);
         });
 
-        it(`should log about the unknown user authentication`, async (): Promise<
-          void
-        > => {
+        it(`should log about the unknown user authentication`, async (): Promise<void> => {
           expect.assertions(2);
 
           await service.init();
@@ -182,9 +165,7 @@ describe(`DiscordAuthenticationService`, (): void => {
           discordClientServiceGetClientSpy.mockReturnValue(client);
         });
 
-        it(`should log about the unknown user authentication`, async (): Promise<
-          void
-        > => {
+        it(`should log about the unknown user authentication`, async (): Promise<void> => {
           expect.assertions(2);
 
           await service.init();
@@ -197,9 +178,7 @@ describe(`DiscordAuthenticationService`, (): void => {
         });
       });
 
-      it(`should notify that the Discord client is ready`, async (): Promise<
-        void
-      > => {
+      it(`should notify that the Discord client is ready`, async (): Promise<void> => {
         expect.assertions(2);
 
         await service.init();
@@ -209,9 +188,7 @@ describe(`DiscordAuthenticationService`, (): void => {
       });
     });
 
-    it(`should log about listening Discord ready event`, async (): Promise<
-      void
-    > => {
+    it(`should log about listening Discord ready event`, async (): Promise<void> => {
       expect.assertions(2);
 
       await service.init();
@@ -250,24 +227,14 @@ describe(`DiscordAuthenticationService`, (): void => {
         login: loginMock,
       });
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      loggerServiceSuccessSpy = jest
-        .spyOn(loggerService, `success`)
-        .mockImplementation();
-      loggerServiceErrorSpy = jest
-        .spyOn(loggerService, `error`)
-        .mockImplementation();
-      discordClientServiceGetClientSpy = jest
-        .spyOn(discordClientService, `getClient`)
-        .mockReturnValue(client);
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      loggerServiceSuccessSpy = jest.spyOn(loggerService, `success`).mockImplementation();
+      loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
+      discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(client);
       discordSoniaConfigServiceGetSecretTokenSpy = jest
         .spyOn(discordSoniaConfigService, `getSecretToken`)
         .mockImplementation();
-      notifyIsAuthenticatedSpy = jest
-        .spyOn(service, `notifyIsAuthenticated`)
-        .mockImplementation();
+      notifyIsAuthenticatedSpy = jest.spyOn(service, `notifyIsAuthenticated`).mockImplementation();
     });
 
     it(`should log about the authentication`, async (): Promise<void> => {
@@ -296,9 +263,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       await service.login();
 
-      expect(discordSoniaConfigServiceGetSecretTokenSpy).toHaveBeenCalledTimes(
-        1
-      );
+      expect(discordSoniaConfigServiceGetSecretTokenSpy).toHaveBeenCalledTimes(1);
       expect(discordSoniaConfigServiceGetSecretTokenSpy).toHaveBeenCalledWith();
     });
 
@@ -320,9 +285,7 @@ describe(`DiscordAuthenticationService`, (): void => {
         discordClientServiceGetClientSpy.mockReturnValue(client);
       });
 
-      it(`should log about the authentication error`, async (): Promise<
-        void
-      > => {
+      it(`should log about the authentication error`, async (): Promise<void> => {
         expect.assertions(3);
 
         await expect(service.login()).rejects.toThrow(new Error(`error`));
@@ -346,9 +309,7 @@ describe(`DiscordAuthenticationService`, (): void => {
         } as ILoggerLog);
       });
 
-      it(`should not log about the authentication success`, async (): Promise<
-        void
-      > => {
+      it(`should not log about the authentication success`, async (): Promise<void> => {
         expect.assertions(2);
 
         await expect(service.login()).rejects.toThrow(new Error(`error`));
@@ -356,9 +317,7 @@ describe(`DiscordAuthenticationService`, (): void => {
         expect(loggerServiceSuccessSpy).not.toHaveBeenCalled();
       });
 
-      it(`should not notify that the authentication was successful`, async (): Promise<
-        void
-      > => {
+      it(`should not notify that the authentication was successful`, async (): Promise<void> => {
         expect.assertions(2);
 
         await expect(service.login()).rejects.toThrow(new Error(`error`));
@@ -377,9 +336,7 @@ describe(`DiscordAuthenticationService`, (): void => {
         discordClientServiceGetClientSpy.mockReturnValue(client);
       });
 
-      it(`should log about the authentication success`, async (): Promise<
-        void
-      > => {
+      it(`should log about the authentication success`, async (): Promise<void> => {
         expect.assertions(2);
 
         await service.login();
@@ -391,9 +348,7 @@ describe(`DiscordAuthenticationService`, (): void => {
         } as ILoggerLog);
       });
 
-      it(`should notify that the authentication was successful`, async (): Promise<
-        void
-      > => {
+      it(`should notify that the authentication was successful`, async (): Promise<void> => {
         expect.assertions(2);
 
         await service.login();
@@ -402,9 +357,7 @@ describe(`DiscordAuthenticationService`, (): void => {
         expect(notifyIsAuthenticatedSpy).toHaveBeenCalledWith();
       });
 
-      it(`should not log about the authentication error`, async (): Promise<
-        void
-      > => {
+      it(`should not log about the authentication error`, async (): Promise<void> => {
         expect.assertions(1);
 
         await service.login();
@@ -440,10 +393,7 @@ describe(`DiscordAuthenticationService`, (): void => {
         expect.assertions(1);
         service.notifyIsAuthenticated();
 
-        const result = await service
-          .isAuthenticated$()
-          .pipe(take(1))
-          .toPromise();
+        const result = await service.isAuthenticated$().pipe(take(1)).toPromise();
 
         expect(result).toStrictEqual(true);
       });
@@ -455,9 +405,7 @@ describe(`DiscordAuthenticationService`, (): void => {
       service = new DiscordAuthenticationService();
     });
 
-    it(`should notify that the client is authenticated`, async (): Promise<
-      void
-    > => {
+    it(`should notify that the client is authenticated`, async (): Promise<void> => {
       expect.assertions(1);
       service.notifyIsAuthenticated();
 

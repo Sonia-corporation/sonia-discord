@@ -1,8 +1,6 @@
-import _ from "lodash";
+import _ from 'lodash';
 
-export function isBoolean(
-  value: Readonly<boolean | string | null | undefined>
-): boolean {
+export function isBoolean(value: Readonly<boolean | string | null | undefined>): boolean {
   if (_.isString(value)) {
     if (_.isEqual(_.toLower(value), `true`)) {
       return true;

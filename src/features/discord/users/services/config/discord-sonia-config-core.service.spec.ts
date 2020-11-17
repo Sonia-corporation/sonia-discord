@@ -1,6 +1,6 @@
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../core/services/core-event.service";
-import { DiscordSoniaConfigCoreService } from "./discord-sonia-config-core.service";
+import { DiscordSoniaConfigCoreService } from './discord-sonia-config-core.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../core/services/core-event.service';
 
 describe(`DiscordSoniaConfigCoreService`, (): void => {
   let service: DiscordSoniaConfigCoreService;
@@ -54,9 +54,7 @@ describe(`DiscordSoniaConfigCoreService`, (): void => {
 
     service = DiscordSoniaConfigCoreService.getInstance();
 
-    expect(service.corporationImageUrl).toStrictEqual(
-      `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`
-    );
+    expect(service.corporationImageUrl).toStrictEqual(`https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`);
   });
 
   it(`should have a corporation message embed author icon url`, (): void => {
@@ -82,9 +80,7 @@ describe(`DiscordSoniaConfigCoreService`, (): void => {
 
     service = DiscordSoniaConfigCoreService.getInstance();
 
-    expect(service.corporationMessageEmbedAuthor.url).toStrictEqual(
-      `https://github.com/Sonia-corporation?type=source`
-    );
+    expect(service.corporationMessageEmbedAuthor.url).toStrictEqual(`https://github.com/Sonia-corporation?type=source`);
   });
 
   it(`should have an unknown id`, (): void => {

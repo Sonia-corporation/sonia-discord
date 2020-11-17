@@ -1,10 +1,10 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { wrapInBold } from "../../../../../functions/formatters/wrap-in-bold";
-import { ChalkService } from "../../../../logger/services/chalk/chalk.service";
-import { wrapUserIdIntoMention } from "../../../mentions/functions/wrap-user-id-into-mention";
-import { DiscordSoniaConfigService } from "../../../users/services/config/discord-sonia-config.service";
+import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { wrapInBold } from '../../../../../functions/formatters/wrap-in-bold';
+import { ChalkService } from '../../../../logger/services/chalk/chalk.service';
+import { wrapUserIdIntoMention } from '../../../mentions/functions/wrap-user-id-into-mention';
+import { DiscordSoniaConfigService } from '../../../users/services/config/discord-sonia-config.service';
+import _ from 'lodash';
 
 const ONE_GUILD = 1;
 const ONE_CHANNEL = 1;
@@ -22,9 +22,7 @@ export class DiscordMessageScheduleNoonCountHumanizedService extends AbstractSer
   }
 
   public constructor() {
-    super(
-      ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_HUMANIZED_SERVICE
-    );
+    super(ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_HUMANIZED_SERVICE);
   }
 
   public getHumanizedCount(
@@ -64,13 +62,9 @@ export class DiscordMessageScheduleNoonCountHumanizedService extends AbstractSer
   }
 
   private _getNoGuildCount(totalGuildCount: Readonly<number>): string {
-    return `No noon messages were sent today for the ${wrapInBold(
-      totalGuildCount
-    )} guild${
+    return `No noon messages were sent today for the ${wrapInBold(totalGuildCount)} guild${
       _.gt(totalGuildCount, ONE_GUILD) ? `s` : ``
-    } using ${wrapUserIdIntoMention(
-      DiscordSoniaConfigService.getInstance().getId()
-    )}.`;
+    } using ${wrapUserIdIntoMention(DiscordSoniaConfigService.getInstance().getId())}.`;
   }
 
   private _getCount(
@@ -80,13 +74,9 @@ export class DiscordMessageScheduleNoonCountHumanizedService extends AbstractSer
   ): string {
     return `${wrapInBold(channelCount)} noon message${
       _.gt(channelCount, ONE_CHANNEL) ? `s were` : ` was`
-    } sent over ${wrapInBold(guildCount)} of ${wrapInBold(
-      totalGuildCount
-    )} guild${
+    } sent over ${wrapInBold(guildCount)} of ${wrapInBold(totalGuildCount)} guild${
       _.gt(guildCount, ONE_GUILD) ? `s` : ``
-    } using ${wrapUserIdIntoMention(
-      DiscordSoniaConfigService.getInstance().getId()
-    )}.`;
+    } using ${wrapUserIdIntoMention(DiscordSoniaConfigService.getInstance().getId())}.`;
   }
 
   private _getNoTotalGuildCountForLogs(): string {
@@ -94,9 +84,9 @@ export class DiscordMessageScheduleNoonCountHumanizedService extends AbstractSer
   }
 
   private _getNoGuildCountForLogs(totalGuildCount: Readonly<number>): string {
-    return `no noon message sent for the ${ChalkService.getInstance().value(
-      totalGuildCount
-    )} guild${_.gt(totalGuildCount, ONE_GUILD) ? `s` : ``}`;
+    return `no noon message sent for the ${ChalkService.getInstance().value(totalGuildCount)} guild${
+      _.gt(totalGuildCount, ONE_GUILD) ? `s` : ``
+    }`;
   }
 
   private _getCountForLogs(

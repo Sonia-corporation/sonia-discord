@@ -1,16 +1,11 @@
-import {
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedOptions,
-  MessageEmbedThumbnail,
-} from "discord.js";
-import _ from "lodash";
-import moment from "moment-timezone";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { DiscordSoniaService } from "../../users/services/discord-sonia.service";
-import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
-import { DiscordMessageConfigService } from "./config/discord-message-config.service";
+import { DiscordMessageConfigService } from './config/discord-message-config.service';
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { DiscordSoniaService } from '../../users/services/discord-sonia.service';
+import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
+import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import _ from 'lodash';
+import moment from 'moment-timezone';
 
 export class DiscordMessageHelpService extends AbstractService {
   private static _instance: DiscordMessageHelpService;
@@ -56,9 +51,7 @@ export class DiscordMessageHelpService extends AbstractService {
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
-    const soniaImageUrl:
-      | string
-      | null = DiscordSoniaService.getInstance().getImageUrl();
+    const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
       iconURL: soniaImageUrl ?? undefined,

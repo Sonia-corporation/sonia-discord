@@ -1,8 +1,8 @@
 # Sonia Discord
 
-> *The Sonia application for Discord*
+> _The Sonia application for Discord_
 
-__Quality:__  
+**Quality:**  
 ![GitHub last commit](https://img.shields.io/github/last-commit/sonia-corporation/sonia-discord?style=flat-square)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a15731adba332ed97275/maintainability?style=flat-square)](https://codeclimate.com/github/Sonia-corporation/sonia-discord/maintainability)
 [![CodeFactor](https://www.codefactor.io/repository/github/sonia-corporation/sonia-discord/badge)](https://www.codefactor.io/repository/github/sonia-corporation/sonia-discord)
@@ -19,15 +19,19 @@ __Quality:__
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
-__Community:__  
+**Community:**
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 [![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]()
 ![Discord](https://img.shields.io/discord/689833865279307782?style=flat-square)
 
-__Statistics:__  
+**Statistics:**  
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/sonia-corporation/sonia-discord?style=flat-square)
 ![GitHub top language](https://img.shields.io/github/languages/top/sonia-corporation/sonia-discord?style=flat-square)
 ![GitHub repo size](https://img.shields.io/github/repo-size/sonia-corporation/sonia-discord?style=flat-square)
@@ -49,35 +53,35 @@ Sonia will treat one command at a time.
 You can use either `-`, `!` or `$` as prefix for the commands.  
 There is no case sensitivity.
 
-__Example:__
+**Example:**
 
-- `@Sonia -version`  
-- `@Sonia !VERSION`  
-- `@Sonia $v`  
+- `@Sonia -version`
+- `@Sonia !VERSION`
+- `@Sonia $v`
 
 #### Cookie
 
-__Commands:__
+**Commands:**
 
 - cookie
-- cookies *(alias)*
-- c *(shortcut)*
+- cookies _(alias)_
+- c _(shortcut)_
 
 Sonia will send you a message containing:
 
 - A cookie (a tasty one).
 
-__Example:__
+**Example:**
 
 - `@Sonia !cookie`
 - `@Sonia !C`
 
 #### Error
 
-__Commands:__
+**Commands:**
 
 - error
-- bug *(alias)*
+- bug _(alias)_
 
 Sonia will send you a message containing:
 
@@ -86,21 +90,21 @@ Sonia will send you a message containing:
 - This is a useless feature, please, continue.
 - We are very sorry about that. We think.
 
-__Example:__
+**Example:**
 
 - `@Sonia !error`
 - `@Sonia !BUG`
 
 #### Feature
 
-__Commands:__
+**Commands:**
 
 - feature
-- f *(shortcut)*
+- f _(shortcut)_
 
-__Features (first and only argument followed by optional flags):__
+**Features (first and only argument followed by optional flags):**
 
-1. noon 
+1. noon
 
 Configure the message sent at noon on the given channel.  
 The default timezone is Europe/Paris and this will be configurable later.
@@ -115,50 +119,50 @@ There are multiples option to customize Sonia (some will change her behavior on 
 Sonia will send you a message containing information about the changes you just made.  
 Basically she will try to help you if you fill bad information and just inform you if the changes were successful.
 
-__Example:__
+**Example:**
 
 - `@Sonia !feature noon`
 - `@Sonia !F`
 
 #### Help
 
-__Commands:__
+**Commands:**
 
 - help
-- h *(shortcut)*
+- h _(shortcut)_
 
 Sonia will send you a message containing:
 
 - A list of all the commands available.
 - The application [readme](README.md) link.
 
-__Example:__
+**Example:**
 
 - `@Sonia !help`
 - `@Sonia !H`
 
 #### Lunch
 
-__Commands:__
+**Commands:**
 
 - lunch
-- l *(shortcut)*
+- l _(shortcut)_
 
 Sonia will send you a message containing:
 
 - A reminder that this is lunch-time for you.
 
-__Example:__
+**Example:**
 
 - `@Sonia !lunch`
 - `@Sonia !L`
 
 #### Release notes
 
-__Commands:__
+**Commands:**
 
 - release-notes
-- r *(shortcut)*
+- r _(shortcut)_
 
 Sonia will send you a message containing:
 
@@ -168,17 +172,17 @@ Sonia will send you a message containing:
 - The application [changelog](CHANGELOG.md) link.
 - The total release count.
 
-__Example:__
+**Example:**
 
 - `@Sonia !release-notes`
 - `@Sonia !r`
 
 #### Version
 
-__Commands:__
+**Commands:**
 
 - version
-- v *(shortcut)*
+- v _(shortcut)_
 
 Sonia will send you a message containing:
 
@@ -191,7 +195,7 @@ Sonia will send you a message containing:
 - Her emotional state.
 - The total release count.
 
-__Example:__
+**Example:**
 
 - `@Sonia !version`
 - `@Sonia !VERSION`
@@ -207,9 +211,9 @@ Sonia has nothing to hide and thus she displays her current activity.
 #### In a private channel (also known as DM)
 
 Sonia will respond to each of your messages.  
-Special commands will be handled as a priority.  
+Special commands will be handled as a priority.
 
-When your message is very basic, Sonia will tell you that it is noon, as usual (even if it is untrue).  
+When your message is very basic, Sonia will tell you that it is noon, as usual (even if it is untrue).
 
 #### In a public text channel (also known as text)
 
@@ -220,9 +224,9 @@ This dev is a bit more complicated because Sonia will have to store which channe
 
 When a message on the channel is sent, Sonia will only respond if she is mentioned personally.  
 This counts as a DM response for Sonia, so prepare to have a friendly message dedicated to you.  
-Special commands will be handled as a priority.  
+Special commands will be handled as a priority.
 
-__Example:__  
+**Example:**
 
 `@Sonia yo`
 
@@ -230,37 +234,38 @@ On global mentions like `@here` and `@everyone`, Sonia will send a message to te
 
 To use a command, you must ask her personally.
 
-__Example:__
+**Example:**
 
 `@Sonia !version`
 
-__Guild new member welcome message:__
+**Guild new member welcome message:**
 
 When a newcomer joins the channel, Sonia will send a friendly message to welcome them.  
 For now, the only channel receiving welcome messages will be the `general`.  
-It will also work if accents are used such as `général`.  
+It will also work if accents are used such as `général`.
 
-__Sonia new guild message:__
+**Sonia new guild message:**
 
 When Sonia joins a new guild, she will send a cookie to the `general` channel.
 
-__New guild member:__
+**New guild member:**
 
 When a new member joins your guild, she will send a message on the `general` channel to welcome him.
 
-__New release notes:__
+**New release notes:**
 
 When a new version of Sonia is available, she will send a message on the `general` channel containing basically the `release-notes` command.
 
-___Note:___
+**_Note:_**
 
 Works with Firebase. See the [Firebase section](#firebase) to learn more about it.
 
 ### Errors
 
-If Sonia receives a Discord error after sending a message she will send a new message containing this error to help you to debug it.  
+If Sonia receives a Discord error after sending a message she will send a new message containing this error to help you to debug it.
 
 Nevertheless, sometimes the error is purely developmental and this is why Sonia will provide:
+
 - A link to create a new [GitHub issue](https://github.com/Sonia-corporation/sonia-discord/issues/new?assignees=&labels=bug&template=bug_report.md&title=&projects=sonia-corporation/sonia-discord/1).
 - A link to reach us in [Discord](https://discord.gg/PW4JSkv).
 
@@ -294,7 +299,7 @@ Check out the [contributing](CONTRIBUTING.md) file before helping us.
 
 This project is licensed under the MIT License - see the [license](LICENSE) for details.
 
-## Contributors 
+## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
@@ -323,4 +328,3 @@ Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification.  
 Contributions of any kind are welcome!
-

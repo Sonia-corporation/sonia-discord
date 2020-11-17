@@ -1,4 +1,4 @@
-import { NUMERICAL_COLOR_SILK } from "./numerical-color-silk";
+import { NUMERICAL_COLOR_SILK } from './numerical-color-silk';
 
 describe(`NUMERICAL_COLOR_SILK`, (): void => {
   it(`should be 14082034`, (): void => {

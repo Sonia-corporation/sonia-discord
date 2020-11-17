@@ -1,21 +1,11 @@
 {
   "$schema": "https://raw.githubusercontent.com/stryker-mutator/stryker/master/packages/api/schema/stryker-core.json",
   "packageManager": "npm",
-  "reporters": [
-    "clear-text",
-    "progress",
-    "dots",
-    "html"
-  ],
+  "reporters": ["clear-text", "progress", "dots", "html"],
   "testRunner": "jest",
   "coverageAnalysis": "all",
   "tsconfigFile": "tsconfig.json",
-  "mutate": [
-    "src/**/*.ts",
-    "!src/**/*.spec.ts",
-    "!src/**/__mocks__/*.spec.ts",
-    "!src/**/__mocks__/"
-  ],
+  "mutate": ["src/**/*.ts", "!src/**/*.spec.ts", "!src/**/__mocks__/*.spec.ts", "!src/**/__mocks__/"],
   "allowConsoleColors": true,
   "dashboard": {
     "baseUrl": "https://dashboard.stryker-mutator.io/api/reports",
@@ -27,10 +17,6 @@
   "tempDirName": "stryker-tmp",
   "timeoutFactor": 2,
   "timeoutMS": 5000,
-  "plugins": [
-    "@stryker-mutator/*"
-  ],
-  "checkers": [
-    "typescript"
-  ]
+  "plugins": ["@stryker-mutator/*"],
+  "checkers": ["typescript"]
 }

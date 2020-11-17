@@ -1,15 +1,15 @@
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { IPartialNested } from "../../../../../types/partial-nested";
-import { IConfigUpdateBoolean } from "../../../../config/interfaces/config-update-boolean";
-import { IConfigUpdateString } from "../../../../config/interfaces/config-update-string";
-import { ConfigService } from "../../../../config/services/config.service";
-import { CoreEventService } from "../../../../core/services/core-event.service";
-import { LoggerService } from "../../../../logger/services/logger.service";
-import { IDiscordConfig } from "../../../interfaces/discord-config";
-import { IDiscordGuildConfig } from "../../../interfaces/discord-guild-config";
-import { DiscordGuildConfigCoreService } from "./discord-guild-config-core.service";
-import { DiscordGuildConfigMutatorService } from "./discord-guild-config-mutator.service";
-import { DiscordGuildConfigService } from "./discord-guild-config.service";
+import { DiscordGuildConfigCoreService } from './discord-guild-config-core.service';
+import { DiscordGuildConfigMutatorService } from './discord-guild-config-mutator.service';
+import { DiscordGuildConfigService } from './discord-guild-config.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { IPartialNested } from '../../../../../types/partial-nested';
+import { IConfigUpdateBoolean } from '../../../../config/interfaces/config-update-boolean';
+import { IConfigUpdateString } from '../../../../config/interfaces/config-update-string';
+import { ConfigService } from '../../../../config/services/config.service';
+import { CoreEventService } from '../../../../core/services/core-event.service';
+import { LoggerService } from '../../../../logger/services/logger.service';
+import { IDiscordConfig } from '../../../interfaces/discord-config';
+import { IDiscordGuildConfig } from '../../../interfaces/discord-guild-config';
 
 jest.mock(`../../../../time/services/time.service`);
 jest.mock(`../../../../logger/services/chalk/chalk.service`);
@@ -46,9 +46,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service = DiscordGuildConfigMutatorService.getInstance(config);
 
-      expect(service).toStrictEqual(
-        expect.any(DiscordGuildConfigMutatorService)
-      );
+      expect(service).toStrictEqual(expect.any(DiscordGuildConfigMutatorService));
     });
 
     it(`should return the created DiscordGuildConfigMutator service`, (): void => {
@@ -93,9 +91,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(
-          discordGuildConfigCoreService.shouldSendCookiesOnCreate
-        ).toStrictEqual(true);
+        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toStrictEqual(true);
       });
 
       it(`should not update the current send noon message state`, (): void => {
@@ -104,9 +100,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(
-          discordGuildConfigCoreService.shouldSendNoonMessage
-        ).toStrictEqual(true);
+        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toStrictEqual(true);
       });
 
       it(`should not update the current welcome new members state`, (): void => {
@@ -115,9 +109,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(
-          discordGuildConfigCoreService.shouldWelcomeNewMembers
-        ).toStrictEqual(true);
+        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toStrictEqual(true);
       });
 
       it(`should not update the current sonia guild id`, (): void => {
@@ -126,9 +118,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(
-          `soniaGuildId`
-        );
+        expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(`soniaGuildId`);
       });
 
       it(`should not update the current sonia permanent guild invite url`, (): void => {
@@ -137,9 +127,9 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(
-          discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
-        ).toStrictEqual(`soniaPermanentGuildInviteUrl`);
+        expect(discordGuildConfigCoreService.soniaPermanentGuildInviteUrl).toStrictEqual(
+          `soniaPermanentGuildInviteUrl`
+        );
       });
     });
 
@@ -162,9 +152,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(
-          discordGuildConfigCoreService.shouldSendCookiesOnCreate
-        ).toStrictEqual(true);
+        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toStrictEqual(true);
       });
 
       it(`should override the send noon message state`, (): void => {
@@ -173,9 +161,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(
-          discordGuildConfigCoreService.shouldSendNoonMessage
-        ).toStrictEqual(true);
+        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toStrictEqual(true);
       });
 
       it(`should override the welcome new members state`, (): void => {
@@ -184,9 +170,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(
-          discordGuildConfigCoreService.shouldWelcomeNewMembers
-        ).toStrictEqual(true);
+        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toStrictEqual(true);
       });
 
       it(`should override the send sonia guild id`, (): void => {
@@ -195,9 +179,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(
-          `dummy-sonia-guild-id`
-        );
+        expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(`dummy-sonia-guild-id`);
       });
 
       it(`should override the sonia permanent guild invite url`, (): void => {
@@ -206,9 +188,9 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(
-          discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
-        ).toStrictEqual(`dummy-sonia-permanent-guild-invite-url`);
+        expect(discordGuildConfigCoreService.soniaPermanentGuildInviteUrl).toStrictEqual(
+          `dummy-sonia-permanent-guild-invite-url`
+        );
       });
     });
   });
@@ -222,14 +204,8 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
       service = DiscordGuildConfigMutatorService.getInstance();
 
       loggerServiceGetInstanceSpy = jest.spyOn(LoggerService, `getInstance`);
-      discordGuildConfigCoreServiceGetInstanceSpy = jest.spyOn(
-        DiscordGuildConfigCoreService,
-        `getInstance`
-      );
-      discordGuildConfigServiceGetInstanceSpy = jest.spyOn(
-        DiscordGuildConfigService,
-        `getInstance`
-      );
+      discordGuildConfigCoreServiceGetInstanceSpy = jest.spyOn(DiscordGuildConfigCoreService, `getInstance`);
+      discordGuildConfigServiceGetInstanceSpy = jest.spyOn(DiscordGuildConfigService, `getInstance`);
     });
 
     it(`should create the Logger service instance`, (): void => {
@@ -246,12 +222,8 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(discordGuildConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(
-        1
-      );
-      expect(
-        discordGuildConfigCoreServiceGetInstanceSpy
-      ).toHaveBeenCalledWith();
+      expect(discordGuildConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(discordGuildConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
     it(`should create the DiscordGuildConfig service instance`, (): void => {
@@ -285,21 +257,13 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.updateConfig();
 
-      expect(
-        discordGuildConfigCoreService.shouldSendCookiesOnCreate
-      ).toStrictEqual(true);
-      expect(discordGuildConfigCoreService.shouldSendNoonMessage).toStrictEqual(
-        true
+      expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toStrictEqual(true);
+      expect(discordGuildConfigCoreService.shouldSendNoonMessage).toStrictEqual(true);
+      expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toStrictEqual(true);
+      expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(`dummy-sonia-guild-id`);
+      expect(discordGuildConfigCoreService.soniaPermanentGuildInviteUrl).toStrictEqual(
+        `dummy-sonia-permanent-guild-invite-url`
       );
-      expect(
-        discordGuildConfigCoreService.shouldWelcomeNewMembers
-      ).toStrictEqual(true);
-      expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(
-        `dummy-sonia-guild-id`
-      );
-      expect(
-        discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
-      ).toStrictEqual(`dummy-sonia-permanent-guild-invite-url`);
     });
 
     it(`should not log about the config update`, (): void => {
@@ -320,21 +284,13 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(
-          discordGuildConfigCoreService.shouldSendCookiesOnCreate
-        ).toStrictEqual(true);
-        expect(
-          discordGuildConfigCoreService.shouldSendNoonMessage
-        ).toStrictEqual(true);
-        expect(
-          discordGuildConfigCoreService.shouldWelcomeNewMembers
-        ).toStrictEqual(true);
-        expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(
-          `dummy-sonia-guild-id`
+        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toStrictEqual(true);
+        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toStrictEqual(true);
+        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toStrictEqual(true);
+        expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(`dummy-sonia-guild-id`);
+        expect(discordGuildConfigCoreService.soniaPermanentGuildInviteUrl).toStrictEqual(
+          `dummy-sonia-permanent-guild-invite-url`
         );
-        expect(
-          discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
-        ).toStrictEqual(`dummy-sonia-permanent-guild-invite-url`);
       });
 
       it(`should not log about the config update`, (): void => {
@@ -360,9 +316,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(
-          discordGuildConfigCoreService.shouldSendCookiesOnCreate
-        ).toStrictEqual(false);
+        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toStrictEqual(false);
       });
 
       it(`should log about the config update`, (): void => {
@@ -391,9 +345,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(
-          discordGuildConfigCoreService.shouldSendNoonMessage
-        ).toStrictEqual(false);
+        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toStrictEqual(false);
       });
 
       it(`should log about the config update`, (): void => {
@@ -422,9 +374,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(
-          discordGuildConfigCoreService.shouldWelcomeNewMembers
-        ).toStrictEqual(false);
+        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toStrictEqual(false);
       });
 
       it(`should log about the config update`, (): void => {
@@ -453,9 +403,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(
-          `sonia-guild-id`
-        );
+        expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(`sonia-guild-id`);
       });
 
       it(`should log about the config update`, (): void => {
@@ -484,9 +432,9 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(
-          discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
-        ).toStrictEqual(`sonia-permanent-guild-invite-url`);
+        expect(discordGuildConfigCoreService.soniaPermanentGuildInviteUrl).toStrictEqual(
+          `sonia-permanent-guild-invite-url`
+        );
       });
 
       it(`should log about the config update`, (): void => {
@@ -524,21 +472,13 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateGuild(config);
 
-        expect(
-          discordGuildConfigCoreService.shouldSendCookiesOnCreate
-        ).toStrictEqual(true);
-        expect(
-          discordGuildConfigCoreService.shouldSendNoonMessage
-        ).toStrictEqual(true);
-        expect(
-          discordGuildConfigCoreService.shouldWelcomeNewMembers
-        ).toStrictEqual(true);
-        expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(
-          `dummy-sonia-guild-id`
+        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toStrictEqual(true);
+        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toStrictEqual(true);
+        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toStrictEqual(true);
+        expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(`dummy-sonia-guild-id`);
+        expect(discordGuildConfigCoreService.soniaPermanentGuildInviteUrl).toStrictEqual(
+          `dummy-sonia-permanent-guild-invite-url`
         );
-        expect(
-          discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
-        ).toStrictEqual(`dummy-sonia-permanent-guild-invite-url`);
       });
     });
 
@@ -554,9 +494,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateGuild(config);
 
-        expect(
-          discordGuildConfigCoreService.shouldSendCookiesOnCreate
-        ).toStrictEqual(false);
+        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toStrictEqual(false);
       });
     });
 
@@ -572,9 +510,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateGuild(config);
 
-        expect(
-          discordGuildConfigCoreService.shouldSendNoonMessage
-        ).toStrictEqual(false);
+        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toStrictEqual(false);
       });
     });
 
@@ -590,9 +526,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateGuild(config);
 
-        expect(
-          discordGuildConfigCoreService.shouldWelcomeNewMembers
-        ).toStrictEqual(false);
+        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toStrictEqual(false);
       });
     });
 
@@ -608,9 +542,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateGuild(config);
 
-        expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(
-          `sonia-guild-id`
-        );
+        expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(`sonia-guild-id`);
       });
     });
 
@@ -626,9 +558,9 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateGuild(config);
 
-        expect(
-          discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
-        ).toStrictEqual(`sonia-permanent-guild-invite-url`);
+        expect(discordGuildConfigCoreService.soniaPermanentGuildInviteUrl).toStrictEqual(
+          `sonia-permanent-guild-invite-url`
+        );
       });
     });
   });
@@ -643,9 +575,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
       shouldSendCookiesOnCreate = true;
       discordGuildConfigCoreService.shouldSendCookiesOnCreate = false;
 
-      configServiceGetUpdatedBooleanSpy = jest
-        .spyOn(configService, `getUpdatedBoolean`)
-        .mockReturnValue(true);
+      configServiceGetUpdatedBooleanSpy = jest.spyOn(configService, `getUpdatedBoolean`).mockReturnValue(true);
     });
 
     it(`should get the updated boolean`, (): void => {
@@ -667,9 +597,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.updateSendCookiesOnCreateState(shouldSendCookiesOnCreate);
 
-      expect(
-        discordGuildConfigCoreService.shouldSendCookiesOnCreate
-      ).toStrictEqual(true);
+      expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toStrictEqual(true);
     });
   });
 
@@ -683,9 +611,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
       shouldSendNoonMessage = true;
       discordGuildConfigCoreService.shouldSendNoonMessage = false;
 
-      configServiceGetUpdatedBooleanSpy = jest
-        .spyOn(configService, `getUpdatedBoolean`)
-        .mockReturnValue(true);
+      configServiceGetUpdatedBooleanSpy = jest.spyOn(configService, `getUpdatedBoolean`).mockReturnValue(true);
     });
 
     it(`should get the updated boolean`, (): void => {
@@ -707,9 +633,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.updateSendNoonMessageState(shouldSendNoonMessage);
 
-      expect(discordGuildConfigCoreService.shouldSendNoonMessage).toStrictEqual(
-        true
-      );
+      expect(discordGuildConfigCoreService.shouldSendNoonMessage).toStrictEqual(true);
     });
   });
 
@@ -723,9 +647,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
       shouldWelcomeNewMembers = true;
       discordGuildConfigCoreService.shouldWelcomeNewMembers = false;
 
-      configServiceGetUpdatedBooleanSpy = jest
-        .spyOn(configService, `getUpdatedBoolean`)
-        .mockReturnValue(true);
+      configServiceGetUpdatedBooleanSpy = jest.spyOn(configService, `getUpdatedBoolean`).mockReturnValue(true);
     });
 
     it(`should get the updated boolean`, (): void => {
@@ -747,9 +669,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.updateWelcomeNewMembersState(shouldWelcomeNewMembers);
 
-      expect(
-        discordGuildConfigCoreService.shouldWelcomeNewMembers
-      ).toStrictEqual(true);
+      expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toStrictEqual(true);
     });
   });
 
@@ -787,9 +707,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.updateSoniaGuildId(soniaGuildId);
 
-      expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(
-        `dummy-sonia-guild-id`
-      );
+      expect(discordGuildConfigCoreService.soniaGuildId).toStrictEqual(`dummy-sonia-guild-id`);
     });
   });
 
@@ -827,9 +745,9 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.updateSoniaPermanentGuildInviteUrl(soniaPermanentGuildInviteUrl);
 
-      expect(
-        discordGuildConfigCoreService.soniaPermanentGuildInviteUrl
-      ).toStrictEqual(`dummy-sonia-permanent-guild-invite-url`);
+      expect(discordGuildConfigCoreService.soniaPermanentGuildInviteUrl).toStrictEqual(
+        `dummy-sonia-permanent-guild-invite-url`
+      );
     });
   });
 });

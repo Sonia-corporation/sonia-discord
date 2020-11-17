@@ -1,11 +1,11 @@
-import _ from "lodash";
-import moment from "moment-timezone";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { isValidDate } from "../../../../functions/checks/is-valid-date";
-import { TimeService } from "../../../time/services/time.service";
-import { AppProductionStateEnum } from "../../enums/app-production-state.enum";
-import { AppConfigService } from "./app-config.service";
+import { AppConfigService } from './app-config.service';
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { isValidDate } from '../../../../functions/checks/is-valid-date';
+import { TimeService } from '../../../time/services/time.service';
+import { AppProductionStateEnum } from '../../enums/app-production-state.enum';
+import _ from 'lodash';
+import moment from 'moment-timezone';
 
 const ONE_RELEASE = 1;
 
@@ -60,9 +60,7 @@ export class AppConfigQueryService extends AbstractService {
     return TimeService.getInstance().fromNow(releaseDate);
   }
 
-  public getTotalReleaseCountHumanized(
-    releaseWord: Readonly<string> = `version`
-  ): string {
+  public getTotalReleaseCountHumanized(releaseWord: Readonly<string> = `version`): string {
     const totalReleaseCount: number = AppConfigService.getInstance().getTotalReleaseCount();
     let sentence = `${totalReleaseCount} ${releaseWord}`;
 

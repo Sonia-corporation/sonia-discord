@@ -1,6 +1,5 @@
-import { IConfigUpdateString } from "./config-update-string";
+import { IConfigUpdateString } from './config-update-string';
 
-export interface IConfigUpdateStringInternal<T = string>
-  extends IConfigUpdateString<T> {
+export interface IConfigUpdateStringInternal<T = string> extends IConfigUpdateString<T> {
   newValue: T;
 }

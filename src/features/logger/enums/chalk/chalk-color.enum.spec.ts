@@ -1,4 +1,4 @@
-import { ChalkColorEnum } from "./chalk-color.enum";
+import { ChalkColorEnum } from './chalk-color.enum';
 
 describe(`ChalkColorEnum`, (): void => {
   it(`should have a member "AURORA_GREEN"`, (): void => {

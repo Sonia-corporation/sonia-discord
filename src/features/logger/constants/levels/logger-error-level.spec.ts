@@ -1,4 +1,4 @@
-import { LOGGER_ERROR_LEVEL } from "./logger-error-level";
+import { LOGGER_ERROR_LEVEL } from './logger-error-level';
 
 describe(`LOGGER_ERROR_LEVEL`, (): void => {
   it(`should be 0`, (): void => {

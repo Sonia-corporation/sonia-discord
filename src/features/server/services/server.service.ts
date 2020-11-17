@@ -1,13 +1,13 @@
-import scout from "@scout_apm/scout-apm";
-import { path } from "app-root-path";
-import express, { Express } from "express";
-import _ from "lodash";
-import { AbstractService } from "../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { AppConfigService } from "../../app/services/config/app-config.service";
-import { ChalkService } from "../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../logger/services/logger.service";
-import { ServerConfigService } from "./config/server-config.service";
+import { ServerConfigService } from './config/server-config.service';
+import { AbstractService } from '../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import { AppConfigService } from '../../app/services/config/app-config.service';
+import { ChalkService } from '../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../logger/services/logger.service';
+import scout from '@scout_apm/scout-apm';
+import { path } from 'app-root-path';
+import express, { Express } from 'express';
+import _ from 'lodash';
 
 export class ServerService extends AbstractService {
   private static _instance: ServerService;
@@ -49,9 +49,7 @@ export class ServerService extends AbstractService {
     this._app.listen(port, (): void => {
       LoggerService.getInstance().log({
         context: this._serviceName,
-        message: ChalkService.getInstance().text(
-          `listening on port: ${ChalkService.getInstance().value(port)}`
-        ),
+        message: ChalkService.getInstance().text(`listening on port: ${ChalkService.getInstance().value(port)}`),
       });
     });
   }

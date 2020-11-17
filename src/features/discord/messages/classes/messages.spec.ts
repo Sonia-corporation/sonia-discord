@@ -1,8 +1,8 @@
-import _ from "lodash";
-import { createMock } from "ts-auto-mock";
-import { DiscordSoniaEmotionalStateEnum } from "../../emotional-states/enums/discord-sonia-emotional-state.enum";
-import { IMessageConfig } from "../interfaces/message-config";
-import { Messages } from "./messages";
+import { Messages } from './messages';
+import { DiscordSoniaEmotionalStateEnum } from '../../emotional-states/enums/discord-sonia-emotional-state.enum';
+import { IMessageConfig } from '../interfaces/message-config';
+import _ from 'lodash';
+import { createMock } from 'ts-auto-mock';
 
 enum DummyEnum {
   WITH_VAR = `dummy message with {{ variable }}`,
@@ -22,9 +22,7 @@ describe(`Messages`, (): void => {
           })
         );
 
-        expect(messages.getDefaultMessage()).toStrictEqual(
-          DiscordSoniaEmotionalStateEnum.CRAZY
-        );
+        expect(messages.getDefaultMessage()).toStrictEqual(DiscordSoniaEmotionalStateEnum.CRAZY);
       });
     });
 
@@ -38,9 +36,7 @@ describe(`Messages`, (): void => {
           })
         );
 
-        expect(messages.getMessages()).toStrictEqual(
-          DiscordSoniaEmotionalStateEnum
-        );
+        expect(messages.getMessages()).toStrictEqual(DiscordSoniaEmotionalStateEnum);
       });
     });
 
@@ -92,9 +88,7 @@ describe(`Messages`, (): void => {
 
       messages.setDefaultMessage(DiscordSoniaEmotionalStateEnum.CRAZY);
 
-      expect(messages.getDefaultMessage()).toStrictEqual(
-        DiscordSoniaEmotionalStateEnum.CRAZY
-      );
+      expect(messages.getDefaultMessage()).toStrictEqual(DiscordSoniaEmotionalStateEnum.CRAZY);
     });
   });
 
@@ -127,9 +121,7 @@ describe(`Messages`, (): void => {
 
       messages.setMessages(DiscordSoniaEmotionalStateEnum);
 
-      expect(messages.getMessages()).toStrictEqual(
-        DiscordSoniaEmotionalStateEnum
-      );
+      expect(messages.getMessages()).toStrictEqual(DiscordSoniaEmotionalStateEnum);
     });
   });
 
@@ -207,9 +199,7 @@ describe(`Messages`, (): void => {
 
         const result = messages.getRandomMessage();
 
-        expect(result).toBeOneOf(
-          _.flatten(_.values(DiscordSoniaEmotionalStateEnum))
-        );
+        expect(result).toBeOneOf(_.flatten(_.values(DiscordSoniaEmotionalStateEnum)));
       });
     });
   });
@@ -265,9 +255,7 @@ describe(`Messages`, (): void => {
               variable: `replacement argument`,
             });
 
-            expect(result).toStrictEqual(
-              `dummy message with replacement argument`
-            );
+            expect(result).toStrictEqual(`dummy message with replacement argument`);
           });
         });
       });
@@ -309,9 +297,7 @@ describe(`Messages`, (): void => {
               variable: `replacement argument`,
             });
 
-            expect(result).toStrictEqual(
-              `dummy message with replacement argument`
-            );
+            expect(result).toStrictEqual(`dummy message with replacement argument`);
           });
         });
       });
@@ -353,9 +339,7 @@ describe(`Messages`, (): void => {
               variable: `replacement argument`,
             });
 
-            expect(result).toStrictEqual(
-              `dummy message with replacement argument`
-            );
+            expect(result).toStrictEqual(`dummy message with replacement argument`);
           });
         });
       });

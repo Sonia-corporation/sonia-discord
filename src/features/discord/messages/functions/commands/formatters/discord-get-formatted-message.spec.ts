@@ -1,4 +1,4 @@
-import { discordGetFormattedMessage } from "./discord-get-formatted-message";
+import { discordGetFormattedMessage } from './discord-get-formatted-message';
 
 describe(`discordGetFormattedMessage()`, (): void => {
   let message: string;

@@ -1,18 +1,14 @@
-import _ from "lodash";
-import { replaceInterpolation } from "../../../../functions/formatters/replace-interpolation";
-import { IObject } from "../../../../types/object";
-import { IMessageConfig } from "../interfaces/message-config";
+import { replaceInterpolation } from '../../../../functions/formatters/replace-interpolation';
+import { IObject } from '../../../../types/object';
+import { IMessageConfig } from '../interfaces/message-config';
+import _ from 'lodash';
 
 export class Messages<T extends string> {
   private _defaultMessage: T;
   private _messages: IObject<T>;
   private _params: IObject | undefined;
 
-  public constructor({
-    defaultMessage,
-    messages,
-    params,
-  }: Readonly<IMessageConfig<T>>) {
+  public constructor({ defaultMessage, messages, params }: Readonly<IMessageConfig<T>>) {
     this._defaultMessage = defaultMessage;
     this._messages = messages;
     this._params = params;
@@ -74,12 +70,7 @@ export class Messages<T extends string> {
    *
    * @return {string} The humanized and parsed message
    */
-  public getHumanizedRandomMessage(
-    params: Readonly<IObject | undefined> = this.getParams()
-  ): string {
-    return replaceInterpolation(
-      this.getRandomMessage(),
-      params ?? _.stubObject()
-    );
+  public getHumanizedRandomMessage(params: Readonly<IObject | undefined> = this.getParams()): string {
+    return replaceInterpolation(this.getRandomMessage(), params ?? _.stubObject());
   }
 }

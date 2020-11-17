@@ -1,17 +1,17 @@
-import _ from "lodash";
-import { AbstractService } from "../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { DiscordActivitySoniaService } from "../activities/services/discord-activity-sonia.service";
-import { DiscordAuthenticationService } from "../authentications/services/discord-authentication.service";
-import { DiscordSoniaEmotionalStateService } from "../emotional-states/services/discord-sonia-emotional-state.service";
-import { DiscordGuildCreateService } from "../guilds/services/discord-guild-create.service";
-import { DiscordGuildMemberAddService } from "../guilds/services/discord-guild-member-add.service";
-import { DiscordGuildSoniaService } from "../guilds/services/discord-guild-sonia.service";
-import { DiscordGuildService } from "../guilds/services/discord-guild.service";
-import { DiscordLoggerService } from "../logger/services/discord-logger.service";
-import { DiscordMessageService } from "../messages/services/discord-message.service";
-import { DiscordMessageScheduleNoonService } from "../messages/services/schedule/discord-message-schedule-noon.service";
-import { DiscordSoniaService } from "../users/services/discord-sonia.service";
+import { AbstractService } from '../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import { DiscordActivitySoniaService } from '../activities/services/discord-activity-sonia.service';
+import { DiscordAuthenticationService } from '../authentications/services/discord-authentication.service';
+import { DiscordSoniaEmotionalStateService } from '../emotional-states/services/discord-sonia-emotional-state.service';
+import { DiscordGuildCreateService } from '../guilds/services/discord-guild-create.service';
+import { DiscordGuildMemberAddService } from '../guilds/services/discord-guild-member-add.service';
+import { DiscordGuildSoniaService } from '../guilds/services/discord-guild-sonia.service';
+import { DiscordGuildService } from '../guilds/services/discord-guild.service';
+import { DiscordLoggerService } from '../logger/services/discord-logger.service';
+import { DiscordMessageService } from '../messages/services/discord-message.service';
+import { DiscordMessageScheduleNoonService } from '../messages/services/schedule/discord-message-schedule-noon.service';
+import { DiscordSoniaService } from '../users/services/discord-sonia.service';
+import _ from 'lodash';
 
 export class DiscordService extends AbstractService {
   private static _instance: DiscordService;

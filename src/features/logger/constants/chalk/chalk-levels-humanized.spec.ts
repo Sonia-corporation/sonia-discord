@@ -1,4 +1,4 @@
-import { CHALK_LEVELS_HUMANIZED } from "./chalk-levels-humanized";
+import { CHALK_LEVELS_HUMANIZED } from './chalk-levels-humanized';
 
 describe(`CHALK_LEVELS_HUMANIZED`, (): void => {
   it(`should return a list of levels humanized`, (): void => {

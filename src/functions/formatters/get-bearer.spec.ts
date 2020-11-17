@@ -1,4 +1,4 @@
-import { getBearer } from "./get-bearer";
+import { getBearer } from './get-bearer';
 
 describe(`getBearer()`, (): void => {
   let token: string;

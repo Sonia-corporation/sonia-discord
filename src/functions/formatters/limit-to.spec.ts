@@ -1,4 +1,4 @@
-import { limitTo } from "./limit-to";
+import { limitTo } from './limit-to';
 
 describe(`limitTo()`, (): void => {
   let value: string;

@@ -1,4 +1,4 @@
-import { getNodeArgumentByIndex } from "./get-node-argument-by-index";
+import { getNodeArgumentByIndex } from './get-node-argument-by-index';
 
 describe(`getNodeArgumentByIndex()`, (): void => {
   let argumentIndex: number;

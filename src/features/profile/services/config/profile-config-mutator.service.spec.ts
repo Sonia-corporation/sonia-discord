@@ -1,13 +1,13 @@
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { IPartialNested } from "../../../../types/partial-nested";
-import { IConfigUpdateString } from "../../../config/interfaces/config-update-string";
-import { ConfigService } from "../../../config/services/config.service";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { IProfileConfig } from "../../interfaces/profile-config";
-import { ProfileConfigCoreService } from "./profile-config-core.service";
-import { ProfileConfigMutatorService } from "./profile-config-mutator.service";
-import { ProfileConfigService } from "./profile-config.service";
+import { ProfileConfigCoreService } from './profile-config-core.service';
+import { ProfileConfigMutatorService } from './profile-config-mutator.service';
+import { ProfileConfigService } from './profile-config.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { IPartialNested } from '../../../../types/partial-nested';
+import { IConfigUpdateString } from '../../../config/interfaces/config-update-string';
+import { ConfigService } from '../../../config/services/config.service';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { IProfileConfig } from '../../interfaces/profile-config';
 
 jest.mock(`../../../time/services/time.service`);
 jest.mock(`../../../logger/services/chalk/chalk.service`);
@@ -110,9 +110,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
         service = new ProfileConfigMutatorService(config);
 
-        expect(profileConfigCoreService.discordId).toStrictEqual(
-          `dummy-discord-id`
-        );
+        expect(profileConfigCoreService.discordId).toStrictEqual(`dummy-discord-id`);
       });
 
       it(`should override the nickname`, (): void => {
@@ -121,9 +119,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
         service = new ProfileConfigMutatorService(config);
 
-        expect(profileConfigCoreService.nickname).toStrictEqual(
-          `dummy-nickname`
-        );
+        expect(profileConfigCoreService.nickname).toStrictEqual(`dummy-nickname`);
       });
     });
   });
@@ -137,14 +133,8 @@ describe(`ProfileConfigMutatorService`, (): void => {
       service = ProfileConfigMutatorService.getInstance();
 
       loggerServiceGetInstanceSpy = jest.spyOn(LoggerService, `getInstance`);
-      profileConfigCoreServiceGetInstanceSpy = jest.spyOn(
-        ProfileConfigCoreService,
-        `getInstance`
-      );
-      profileConfigServiceGetInstanceSpy = jest.spyOn(
-        ProfileConfigService,
-        `getInstance`
-      );
+      profileConfigCoreServiceGetInstanceSpy = jest.spyOn(ProfileConfigCoreService, `getInstance`);
+      profileConfigServiceGetInstanceSpy = jest.spyOn(ProfileConfigService, `getInstance`);
     });
 
     it(`should create the Logger service instance`, (): void => {
@@ -193,9 +183,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
       service.updateConfig();
 
-      expect(profileConfigCoreService.discordId).toStrictEqual(
-        `dummy-discord-id`
-      );
+      expect(profileConfigCoreService.discordId).toStrictEqual(`dummy-discord-id`);
       expect(profileConfigCoreService.nickname).toStrictEqual(`dummy-nickname`);
     });
 
@@ -217,12 +205,8 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(profileConfigCoreService.discordId).toStrictEqual(
-          `dummy-discord-id`
-        );
-        expect(profileConfigCoreService.nickname).toStrictEqual(
-          `dummy-nickname`
-        );
+        expect(profileConfigCoreService.discordId).toStrictEqual(`dummy-discord-id`);
+        expect(profileConfigCoreService.nickname).toStrictEqual(`dummy-nickname`);
       });
 
       it(`should not log about the config update`, (): void => {
@@ -299,9 +283,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
       discordId = `discord-id`;
       profileConfigCoreService.discordId = `dummy-discord-id`;
 
-      configServiceGetUpdatedStringSpy = jest
-        .spyOn(configService, `getUpdatedString`)
-        .mockReturnValue(`discord-id`);
+      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(`discord-id`);
     });
 
     it(`should get the updated string`, (): void => {
@@ -337,9 +319,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
       nickname = `nickname`;
       profileConfigCoreService.nickname = `dummy-nickname`;
 
-      configServiceGetUpdatedStringSpy = jest
-        .spyOn(configService, `getUpdatedString`)
-        .mockReturnValue(`nickname`);
+      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(`nickname`);
     });
 
     it(`should get the updated string`, (): void => {

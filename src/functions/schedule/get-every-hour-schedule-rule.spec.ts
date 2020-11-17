@@ -1,4 +1,4 @@
-import { getEveryHourScheduleRule } from "./get-every-hour-schedule-rule";
+import { getEveryHourScheduleRule } from './get-every-hour-schedule-rule';
 
 describe(`getEveryHourScheduleRule()`, (): void => {
   it(`should return the schedule for every hour`, (): void => {

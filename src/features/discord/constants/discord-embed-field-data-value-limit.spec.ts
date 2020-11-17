@@ -1,4 +1,4 @@
-import { DISCORD_EMBED_FIELD_DATA_VALUE_LIMIT } from "./discord-embed-field-data-value-limit";
+import { DISCORD_EMBED_FIELD_DATA_VALUE_LIMIT } from './discord-embed-field-data-value-limit';
 
 describe(`DISCORD_EMBED_FIELD_DATA_VALUE_LIMIT`, (): void => {
   it(`should be 1024`, (): void => {

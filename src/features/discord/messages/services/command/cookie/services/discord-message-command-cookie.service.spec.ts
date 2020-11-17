@@ -1,25 +1,21 @@
-import {
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
-} from "discord.js";
-import moment from "moment-timezone";
-import { createMock } from "ts-auto-mock";
-import { ColorEnum } from "../../../../../../../enums/color.enum";
-import { IconEnum } from "../../../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../../../../logger/services/logger.service";
-import { DiscordSoniaService } from "../../../../../users/services/discord-sonia.service";
-import { DiscordMessageCommandCookieDescriptionEnum } from "../../../../enums/commands/cookie/discord-message-command-cookie-description.enum";
-import { DiscordMessageCommandCookieTitleEnum } from "../../../../enums/commands/cookie/discord-message-command-cookie-title.enum";
-import { IDiscordMessageResponse } from "../../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../../../config/discord-message-config.service";
-import { DISCORD_MESSAGE_COMMAND_COOKIE_DESCRIPTION_MESSAGES } from "../constants/discord-message-command-cookie-description-messages";
-import { DISCORD_MESSAGE_COMMAND_COOKIE_TITLE_MESSAGES } from "../constants/discord-message-command-cookie-title-messages";
-import { DiscordMessageCommandCookieService } from "./discord-message-command-cookie.service";
+import { DiscordMessageCommandCookieService } from './discord-message-command-cookie.service';
+import { ColorEnum } from '../../../../../../../enums/color.enum';
+import { IconEnum } from '../../../../../../../enums/icon.enum';
+import { ServiceNameEnum } from '../../../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../../../core/services/core-event.service';
+import { ILoggerLog } from '../../../../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../../../../logger/services/logger.service';
+import { DiscordSoniaService } from '../../../../../users/services/discord-sonia.service';
+import { DiscordMessageCommandCookieDescriptionEnum } from '../../../../enums/commands/cookie/discord-message-command-cookie-description.enum';
+import { DiscordMessageCommandCookieTitleEnum } from '../../../../enums/commands/cookie/discord-message-command-cookie-title.enum';
+import { IDiscordMessageResponse } from '../../../../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../../../../types/any-discord-message';
+import { DiscordMessageConfigService } from '../../../config/discord-message-config.service';
+import { DISCORD_MESSAGE_COMMAND_COOKIE_DESCRIPTION_MESSAGES } from '../constants/discord-message-command-cookie-description-messages';
+import { DISCORD_MESSAGE_COMMAND_COOKIE_TITLE_MESSAGES } from '../constants/discord-message-command-cookie-title-messages';
+import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import moment from 'moment-timezone';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../logger/services/chalk/chalk.service`);
 
@@ -43,9 +39,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       service = DiscordMessageCommandCookieService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(DiscordMessageCommandCookieService)
-      );
+      expect(service).toStrictEqual(expect.any(DiscordMessageCommandCookieService));
     });
 
     it(`should return the created DiscordMessageCommandCookie service`, (): void => {
@@ -92,9 +86,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       });
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
-      getMessageResponseSpy = jest
-        .spyOn(service, `getMessageResponse`)
-        .mockResolvedValue(discordMessageResponse);
+      getMessageResponseSpy = jest.spyOn(service, `getMessageResponse`).mockResolvedValue(discordMessageResponse);
     });
 
     it(`should log about the command`, async (): Promise<void> => {
@@ -150,69 +142,44 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
         discordMessageConfigService,
         `getMessageCommandCookieImageColor`
       );
-      discordSoniaServiceGetImageUrlSpy = jest.spyOn(
-        discordSoniaService,
-        `getImageUrl`
-      );
+      discordSoniaServiceGetImageUrlSpy = jest.spyOn(discordSoniaService, `getImageUrl`);
       discordMessageConfigServiceGetMessageCommandCookieImageUrlSpy = jest.spyOn(
         discordMessageConfigService,
         `getMessageCommandCookieImageUrl`
       );
       jest
-        .spyOn(
-          DISCORD_MESSAGE_COMMAND_COOKIE_DESCRIPTION_MESSAGES,
-          `getRandomMessage`
-        )
-        .mockReturnValue(
-          DiscordMessageCommandCookieDescriptionEnum.CHUCK_NORRIS_CAN_NOT_BEAT_ME
-        );
+        .spyOn(DISCORD_MESSAGE_COMMAND_COOKIE_DESCRIPTION_MESSAGES, `getRandomMessage`)
+        .mockReturnValue(DiscordMessageCommandCookieDescriptionEnum.CHUCK_NORRIS_CAN_NOT_BEAT_ME);
       jest
-        .spyOn(
-          DISCORD_MESSAGE_COMMAND_COOKIE_TITLE_MESSAGES,
-          `getRandomMessage`
-        )
+        .spyOn(DISCORD_MESSAGE_COMMAND_COOKIE_TITLE_MESSAGES, `getRandomMessage`)
         .mockReturnValue(DiscordMessageCommandCookieTitleEnum.COOKIE_DELIVERY);
     });
 
-    it(`should return a Discord message response embed with an author`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<
-        MessageEmbedAuthor
-      >();
-      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(
-        messageEmbedAuthor
-      );
+      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse();
 
       expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
-    it(`should return a Discord message response embed with a color`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandCookieImageColorSpy.mockReturnValue(
-        ColorEnum.CANDY
-      );
+      discordMessageConfigServiceGetMessageCommandCookieImageColorSpy.mockReturnValue(ColorEnum.CANDY);
 
       const result = await service.getMessageResponse();
 
       expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
-    it(`should return a Discord message response embed with a description`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a description`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.description).toStrictEqual(
-        `Chuck Norris can't beat me.`
-      );
+      expect(result.options.embed?.description).toStrictEqual(`Chuck Norris can't beat me.`);
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
@@ -267,13 +234,9 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       });
     });
 
-    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<void> => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandCookieImageUrlSpy.mockReturnValue(
-        IconEnum.ARTIFICIAL_INTELLIGENCE
-      );
+      discordMessageConfigServiceGetMessageCommandCookieImageUrlSpy.mockReturnValue(IconEnum.ARTIFICIAL_INTELLIGENCE);
 
       const result = await service.getMessageResponse();
 
@@ -282,25 +245,17 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       } as MessageEmbedThumbnail);
     });
 
-    it(`should return a Discord message response embed with a timestamp`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
       expect.assertions(2);
 
       const result = await service.getMessageResponse();
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(
-        true
-      );
+      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
 
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(
-        `a few seconds ago`
-      );
+      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
     });
 
-    it(`should return a Discord message response embed with a title`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse();
@@ -308,9 +263,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       expect(result.options.embed?.title).toStrictEqual(`Cookie delivery!`);
     });
 
-    it(`should return a Discord message response not split`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response not split`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse();
@@ -318,9 +271,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       expect(result.options.split).toStrictEqual(false);
     });
 
-    it(`should return a Discord message response without a response text`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response without a response text`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.handleResponse(anyDiscordMessage);
@@ -345,9 +296,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
     describe(`when the message command prefix is "@"`, (): void => {
       beforeEach((): void => {
-        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(
-          `@`
-        );
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(`@`);
       });
 
       describe(`when the given message is an empty string`, (): void => {
@@ -1011,10 +960,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
     describe(`when the message command prefix is "-" or "!"`, (): void => {
       beforeEach((): void => {
-        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([
-          `-`,
-          `!`,
-        ]);
+        discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([`-`, `!`]);
       });
 
       describe(`when the given message is an empty string`, (): void => {

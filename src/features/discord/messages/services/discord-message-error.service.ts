@@ -1,25 +1,25 @@
+import { DiscordMessageConfigService } from './config/discord-message-config.service';
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { ellipsis } from '../../../../functions/formatters/ellipsis';
+import { GithubConfigService } from '../../../github/services/config/github-config.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { DiscordChannelService } from '../../channels/services/discord-channel.service';
+import { DiscordGuildSoniaChannelNameEnum } from '../../guilds/enums/discord-guild-sonia-channel-name.enum';
+import { DiscordGuildConfigService } from '../../guilds/services/config/discord-guild-config.service';
+import { DiscordGuildSoniaService } from '../../guilds/services/discord-guild-sonia.service';
+import { DiscordSoniaService } from '../../users/services/discord-sonia.service';
+import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../types/any-discord-message';
 import {
   EmbedFieldData,
   MessageEmbedAuthor,
   MessageEmbedFooter,
   MessageEmbedOptions,
   MessageEmbedThumbnail,
-} from "discord.js";
-import _ from "lodash";
-import moment from "moment-timezone";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { ellipsis } from "../../../../functions/formatters/ellipsis";
-import { GithubConfigService } from "../../../github/services/config/github-config.service";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { DiscordChannelService } from "../../channels/services/discord-channel.service";
-import { DiscordGuildSoniaChannelNameEnum } from "../../guilds/enums/discord-guild-sonia-channel-name.enum";
-import { DiscordGuildConfigService } from "../../guilds/services/config/discord-guild-config.service";
-import { DiscordGuildSoniaService } from "../../guilds/services/discord-guild-sonia.service";
-import { DiscordSoniaService } from "../../users/services/discord-sonia.service";
-import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../types/any-discord-message";
-import { DiscordMessageConfigService } from "./config/discord-message-config.service";
+} from 'discord.js';
+import _ from 'lodash';
+import moment from 'moment-timezone';
 
 export class DiscordMessageErrorService extends AbstractService {
   private static _instance: DiscordMessageErrorService;
@@ -36,22 +36,13 @@ export class DiscordMessageErrorService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_ERROR_SERVICE);
   }
 
-  public handleError(
-    error: unknown,
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): void {
+  public handleError(error: unknown, anyDiscordMessage: Readonly<IAnyDiscordMessage>): void {
     this._logOnError(error, anyDiscordMessage);
     this._sendMessage(error, anyDiscordMessage);
   }
 
-  private _sendMessage(
-    error: unknown,
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): void {
-    const messageResponse: IDiscordMessageResponse = this._getMessageResponse(
-      error,
-      anyDiscordMessage
-    );
+  private _sendMessage(error: unknown, anyDiscordMessage: Readonly<IAnyDiscordMessage>): void {
+    const messageResponse: IDiscordMessageResponse = this._getMessageResponse(error, anyDiscordMessage);
 
     this._sendMessageToOriginalChannel(anyDiscordMessage, messageResponse);
     this._sendMessageToSoniaDiscord(messageResponse);
@@ -61,19 +52,14 @@ export class DiscordMessageErrorService extends AbstractService {
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     { response, options }: Readonly<IDiscordMessageResponse>
   ): void {
-    if (
-      DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)
-    ) {
+    if (DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
       anyDiscordMessage.channel
         .send(response, options)
         .then((): void => {
           LoggerService.getInstance().log({
             context: this._serviceName,
             hasExtendedContext: true,
-            message: LoggerService.getInstance().getSnowflakeContext(
-              anyDiscordMessage.id,
-              `message sent`
-            ),
+            message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message sent`),
           });
         })
         .catch((error: unknown): void => {
@@ -82,26 +68,18 @@ export class DiscordMessageErrorService extends AbstractService {
     }
   }
 
-  private _sendMessageToSoniaDiscord(
-    messageResponse: Readonly<IDiscordMessageResponse>
-  ): void {
+  private _sendMessageToSoniaDiscord(messageResponse: Readonly<IDiscordMessageResponse>): void {
     DiscordGuildSoniaService.getInstance().sendMessageToChannel({
       channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
       messageResponse,
     });
   }
 
-  private _logOnError(
-    error: unknown,
-    { id }: Readonly<IAnyDiscordMessage>
-  ): void {
+  private _logOnError(error: unknown, { id }: Readonly<IAnyDiscordMessage>): void {
     LoggerService.getInstance().error({
       context: this._serviceName,
       hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        id,
-        `message sending failed`
-      ),
+      message: LoggerService.getInstance().getSnowflakeContext(id, `message sending failed`),
     });
     LoggerService.getInstance().error({
       context: this._serviceName,
@@ -130,10 +108,7 @@ export class DiscordMessageErrorService extends AbstractService {
     };
   }
 
-  private _getMessageEmbed(
-    error: unknown,
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): MessageEmbedOptions {
+  private _getMessageEmbed(error: unknown, anyDiscordMessage: Readonly<IAnyDiscordMessage>): MessageEmbedOptions {
     return {
       author: this._getMessageEmbedAuthor(),
       color: this._getMessageEmbedColor(),
@@ -153,10 +128,7 @@ export class DiscordMessageErrorService extends AbstractService {
     return DiscordMessageConfigService.getInstance().getMessageCommandErrorImageColor();
   }
 
-  private _getMessageEmbedFields(
-    error: unknown,
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): EmbedFieldData[] {
+  private _getMessageEmbedFields(error: unknown, anyDiscordMessage: Readonly<IAnyDiscordMessage>): EmbedFieldData[] {
     return [
       this._getMessageEmbedFieldMessageId(anyDiscordMessage),
       this._getMessageEmbedFieldError(error),
@@ -164,9 +136,7 @@ export class DiscordMessageErrorService extends AbstractService {
     ];
   }
 
-  private _getMessageEmbedFieldMessageId({
-    id,
-  }: Readonly<IAnyDiscordMessage>): EmbedFieldData {
+  private _getMessageEmbedFieldMessageId({ id }: Readonly<IAnyDiscordMessage>): EmbedFieldData {
     return {
       name: `The message's id that killed me`,
       value: id,
@@ -191,9 +161,7 @@ export class DiscordMessageErrorService extends AbstractService {
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
-    const soniaImageUrl:
-      | string
-      | null = DiscordSoniaService.getInstance().getImageUrl();
+    const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
       iconURL: soniaImageUrl ?? undefined,

@@ -1,22 +1,21 @@
-import { Activity, Client, Presence, PresenceData } from "discord.js";
-import _ from "lodash";
-import * as NodeScheduleModule from "node-schedule";
-import { Job } from "node-schedule";
-import { BehaviorSubject } from "rxjs";
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import * as GetEveryHourScheduleRuleModule from "../../../../functions/schedule/get-every-hour-schedule-rule";
-import * as GetRandomRangeMinuteScheduleRuleModule from "../../../../functions/schedule/get-random-range-minute-schedule-rule";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../logger/services/logger.service";
-import * as GetNextJobDateModule from "../../../schedules/functions/get-next-job-date";
-import * as GetNextJobDateHumanizedModule from "../../../schedules/functions/get-next-job-date-humanized";
-import { DiscordClientService } from "../../services/discord-client.service";
-import { DISCORD_PRESENCE_ACTIVITY } from "../constants/discord-presence-activity";
-import { DiscordActivityNameEnum } from "../enums/discord-activity-name.enum";
-import { IDiscordPresenceActivity } from "../interfaces/discord-presence-activity";
-import { DiscordActivitySoniaService } from "./discord-activity-sonia.service";
+import { DiscordActivitySoniaService } from './discord-activity-sonia.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import * as GetEveryHourScheduleRuleModule from '../../../../functions/schedule/get-every-hour-schedule-rule';
+import * as GetRandomRangeMinuteScheduleRuleModule from '../../../../functions/schedule/get-random-range-minute-schedule-rule';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { ILoggerLog } from '../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../logger/services/logger.service';
+import * as GetNextJobDateModule from '../../../schedules/functions/get-next-job-date';
+import * as GetNextJobDateHumanizedModule from '../../../schedules/functions/get-next-job-date-humanized';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { DISCORD_PRESENCE_ACTIVITY } from '../constants/discord-presence-activity';
+import { DiscordActivityNameEnum } from '../enums/discord-activity-name.enum';
+import { IDiscordPresenceActivity } from '../interfaces/discord-presence-activity';
+import { Activity, Client, Presence, PresenceData } from 'discord.js';
+import _ from 'lodash';
+import * as NodeScheduleModule from 'node-schedule';
+import { BehaviorSubject } from 'rxjs';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 jest.mock(`node-schedule`);
@@ -85,23 +84,13 @@ describe(`DiscordActivitySoniaService`, (): void => {
       service = new DiscordActivitySoniaService();
       presence = createMock<Presence>();
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      discordClientServiceGetClientSpy = jest
-        .spyOn(discordClientService, `isReady$`)
-        .mockReturnValue(isReady$);
-      setRandomPresenceSpy = jest
-        .spyOn(service, `setRandomPresence`)
-        .mockResolvedValue(presence);
-      startScheduleSpy = jest
-        .spyOn(service, `startSchedule`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `isReady$`).mockReturnValue(isReady$);
+      setRandomPresenceSpy = jest.spyOn(service, `setRandomPresence`).mockResolvedValue(presence);
+      startScheduleSpy = jest.spyOn(service, `startSchedule`).mockImplementation();
     });
 
-    it(`should log about listening Discord client ready state`, async (): Promise<
-      void
-    > => {
+    it(`should log about listening Discord client ready state`, async (): Promise<void> => {
       expect.assertions(2);
       isReady$ = new BehaviorSubject<boolean>(true);
       discordClientServiceGetClientSpy.mockReturnValue(isReady$);
@@ -115,9 +104,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
       } as ILoggerLog);
     });
 
-    it(`should check if the Discord client is ready`, async (): Promise<
-      void
-    > => {
+    it(`should check if the Discord client is ready`, async (): Promise<void> => {
       expect.assertions(2);
       isReady$ = new BehaviorSubject<boolean>(true);
       discordClientServiceGetClientSpy.mockReturnValue(isReady$);
@@ -142,9 +129,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       describe(`when the random presence for Sonia failed to be set`, (): void => {
         beforeEach((): void => {
-          setRandomPresenceSpy.mockRejectedValue(
-            new Error(`setRandomPresence error`)
-          );
+          setRandomPresenceSpy.mockRejectedValue(new Error(`setRandomPresence error`));
         });
 
         it(`should not start the schedule`, async (): Promise<void> => {
@@ -152,9 +137,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
           isReady$ = new BehaviorSubject<boolean>(true);
           discordClientServiceGetClientSpy.mockReturnValue(isReady$);
 
-          await expect(service.init()).rejects.toThrow(
-            new Error(`setRandomPresence error`)
-          );
+          await expect(service.init()).rejects.toThrow(new Error(`setRandomPresence error`));
 
           expect(startScheduleSpy).not.toHaveBeenCalled();
         });
@@ -179,9 +162,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
     });
 
     describe(`when the Discord client ready state throw error`, (): void => {
-      it(`should not set a random presence for Sonia`, async (): Promise<
-        void
-      > => {
+      it(`should not set a random presence for Sonia`, async (): Promise<void> => {
         expect.assertions(2);
         isReady$ = new BehaviorSubject<boolean>(true);
         isReady$.error(new Error(`error`));
@@ -206,7 +187,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
   });
 
   describe(`startSchedule()`, (): void => {
-    let job: Job;
+    let job: NodeScheduleModule.Job;
 
     let scheduleJobSpy: jest.SpyInstance;
     let loggerServiceDebugSpy: jest.SpyInstance;
@@ -221,32 +202,21 @@ describe(`DiscordActivitySoniaService`, (): void => {
         .spyOn(GetEveryHourScheduleRuleModule, `getEveryHourScheduleRule`)
         .mockReturnValue(`dummy-updater-schedule`);
       getRandomRangeMinuteScheduleRuleSpy = jest
-        .spyOn(
-          GetRandomRangeMinuteScheduleRuleModule,
-          `getRandomRangeMinuteScheduleRule`
-        )
+        .spyOn(GetRandomRangeMinuteScheduleRuleModule, `getRandomRangeMinuteScheduleRule`)
         .mockReturnValueOnce(`dummy-schedule`)
         .mockReturnValueOnce(`dummy-new-schedule`);
       service = new DiscordActivitySoniaService();
-      job = createMock<Job>({
+      job = createMock<NodeScheduleModule.Job>({
         reschedule: jobRescheduleMock,
       });
 
-      scheduleJobSpy = jest
-        .spyOn(NodeScheduleModule, `scheduleJob`)
-        .mockReturnValue(job);
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      scheduleJobSpy = jest.spyOn(NodeScheduleModule, `scheduleJob`).mockReturnValue(job);
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       jest
         .spyOn(GetNextJobDateHumanizedModule, `getNextJobDateHumanized`)
         .mockReturnValue(`dummy-next-job-date-humanized`);
-      jest
-        .spyOn(GetNextJobDateModule, `getNextJobDate`)
-        .mockReturnValue(`dummy-next-job-date`);
-      setRandomPresenceSpy = jest
-        .spyOn(service, `setRandomPresence`)
-        .mockImplementation();
+      jest.spyOn(GetNextJobDateModule, `getNextJobDate`).mockReturnValue(`dummy-next-job-date`);
+      setRandomPresenceSpy = jest.spyOn(service, `setRandomPresence`).mockImplementation();
     });
 
     it(`should create an updater schedule`, (): void => {
@@ -273,16 +243,8 @@ describe(`DiscordActivitySoniaService`, (): void => {
       service.startSchedule();
 
       expect(scheduleJobSpy).toHaveBeenCalledTimes(2);
-      expect(scheduleJobSpy).toHaveBeenNthCalledWith(
-        1,
-        `dummy-updater-schedule`,
-        expect.any(Function)
-      );
-      expect(scheduleJobSpy).toHaveBeenNthCalledWith(
-        2,
-        `dummy-schedule`,
-        expect.any(Function)
-      );
+      expect(scheduleJobSpy).toHaveBeenNthCalledWith(1, `dummy-updater-schedule`, expect.any(Function));
+      expect(scheduleJobSpy).toHaveBeenNthCalledWith(2, `dummy-schedule`, expect.any(Function));
     });
 
     describe(`when the updater job is undefined`, (): void => {
@@ -344,7 +306,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
     describe(`once the scheduled updater job is triggered`, (): void => {
       beforeEach((): void => {
         scheduleJobSpy.mockImplementation().mockImplementationOnce(
-          (_rule: string, callback: () => void): Job => {
+          (_rule: string, callback: () => void): NodeScheduleModule.Job => {
             callback();
 
             return job;
@@ -382,11 +344,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
         service.startSchedule();
 
         expect(getRandomRangeMinuteScheduleRuleSpy).toHaveBeenCalledTimes(2);
-        expect(getRandomRangeMinuteScheduleRuleSpy).toHaveBeenNthCalledWith(
-          2,
-          5,
-          15
-        );
+        expect(getRandomRangeMinuteScheduleRuleSpy).toHaveBeenNthCalledWith(2, 5, 15);
       });
 
       it(`should log about the new updated job rule`, (): void => {
@@ -428,7 +386,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
       describe(`when the job is not valid`, (): void => {
         beforeEach((): void => {
           scheduleJobSpy.mockImplementation().mockImplementationOnce(
-            (_rule: string, callback: () => void): Job => {
+            (_rule: string, callback: () => void): NodeScheduleModule.Job => {
               callback();
 
               return job;
@@ -448,7 +406,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
       describe(`when the job is valid`, (): void => {
         beforeEach((): void => {
           scheduleJobSpy.mockImplementation(
-            (_rule: string, callback: () => void): Job => {
+            (_rule: string, callback: () => void): NodeScheduleModule.Job => {
               callback();
 
               return job;
@@ -530,7 +488,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
       beforeEach((): void => {
         scheduleJobSpy
           .mockImplementation(
-            (_rule: string, callback: () => void): Job => {
+            (_rule: string, callback: () => void): NodeScheduleModule.Job => {
               callback();
 
               return job;
@@ -618,9 +576,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
           } as Activity,
         ],
       });
-      setPresenceMock = jest
-        .fn<Promise<Presence>, unknown[]>()
-        .mockRejectedValue(new Error(`setPresence: error`));
+      setPresenceMock = jest.fn<Promise<Presence>, unknown[]>().mockRejectedValue(new Error(`setPresence: error`));
       presenceActivity = createMock<IDiscordPresenceActivity>({
         name: DiscordActivityNameEnum.APOLLO,
         type: `PLAYING`,
@@ -632,20 +588,14 @@ describe(`DiscordActivitySoniaService`, (): void => {
         },
       });
 
-      discordClientServiceGetClientSpy = jest
-        .spyOn(discordClientService, `getClient`)
-        .mockReturnValue(client);
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(client);
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
     });
 
     it(`should get the Discord client`, async (): Promise<void> => {
       expect.assertions(3);
 
-      await expect(service.setPresence(presenceActivity)).rejects.toThrow(
-        new Error(`setPresence: error`)
-      );
+      await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`setPresence: error`));
 
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(2);
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
@@ -659,21 +609,15 @@ describe(`DiscordActivitySoniaService`, (): void => {
       it(`should not set the presence`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.setPresence(presenceActivity)).rejects.toThrow(
-          new Error(`Client user is not valid`)
-        );
+        await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`Client user is not valid`));
 
         expect(setPresenceMock).not.toHaveBeenCalled();
       });
 
-      it(`should not log about the update of the presence`, async (): Promise<
-        void
-      > => {
+      it(`should not log about the update of the presence`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.setPresence(presenceActivity)).rejects.toThrow(
-          new Error(`Client user is not valid`)
-        );
+        await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`Client user is not valid`));
 
         expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
       });
@@ -683,9 +627,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
       it(`should set the presence`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(service.setPresence(presenceActivity)).rejects.toThrow(
-          new Error(`setPresence: error`)
-        );
+        await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`setPresence: error`));
 
         expect(setPresenceMock).toHaveBeenCalledTimes(1);
         expect(setPresenceMock).toHaveBeenCalledWith({
@@ -700,14 +642,10 @@ describe(`DiscordActivitySoniaService`, (): void => {
       });
 
       describe(`when the presence was not successfully set`, (): void => {
-        it(`should not log about the update of the presence`, async (): Promise<
-          void
-        > => {
+        it(`should not log about the update of the presence`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.setPresence(presenceActivity)).rejects.toThrow(
-            new Error(`setPresence: error`)
-          );
+          await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`setPresence: error`));
 
           expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
         });
@@ -718,9 +656,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
           setPresenceMock.mockResolvedValue(presence);
         });
 
-        it(`should log about the update of the presence`, async (): Promise<
-          void
-        > => {
+        it(`should log about the update of the presence`, async (): Promise<void> => {
           expect.assertions(3);
 
           const result = await service.setPresence(presenceActivity);
@@ -747,14 +683,10 @@ describe(`DiscordActivitySoniaService`, (): void => {
       setPresenceSpy = jest.spyOn(service, `setPresence`).mockImplementation();
     });
 
-    it(`should get a random Discord presence activity`, async (): Promise<
-      void
-    > => {
+    it(`should get a random Discord presence activity`, async (): Promise<void> => {
       expect.assertions(3);
 
-      await expect(service.setRandomPresence()).rejects.toThrow(
-        new Error(`No presence activity`)
-      );
+      await expect(service.setRandomPresence()).rejects.toThrow(new Error(`No presence activity`));
 
       expect(sampleSpy).toHaveBeenCalledTimes(1);
       expect(sampleSpy).toHaveBeenCalledWith(DISCORD_PRESENCE_ACTIVITY);
@@ -765,14 +697,10 @@ describe(`DiscordActivitySoniaService`, (): void => {
         sampleSpy.mockReturnValue(undefined);
       });
 
-      it(`should not set the Discord presence activity`, async (): Promise<
-        void
-      > => {
+      it(`should not set the Discord presence activity`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.setRandomPresence()).rejects.toThrow(
-          new Error(`No presence activity`)
-        );
+        await expect(service.setRandomPresence()).rejects.toThrow(new Error(`No presence activity`));
 
         expect(setPresenceSpy).not.toHaveBeenCalled();
       });
@@ -783,17 +711,13 @@ describe(`DiscordActivitySoniaService`, (): void => {
         sampleSpy.mockReturnValue(DISCORD_PRESENCE_ACTIVITY[0]);
       });
 
-      it(`should set the Discord presence activity`, async (): Promise<
-        void
-      > => {
+      it(`should set the Discord presence activity`, async (): Promise<void> => {
         expect.assertions(2);
 
         await service.setRandomPresence();
 
         expect(setPresenceSpy).toHaveBeenCalledTimes(1);
-        expect(setPresenceSpy).toHaveBeenCalledWith(
-          DISCORD_PRESENCE_ACTIVITY[0]
-        );
+        expect(setPresenceSpy).toHaveBeenCalledWith(DISCORD_PRESENCE_ACTIVITY[0]);
       });
     });
   });

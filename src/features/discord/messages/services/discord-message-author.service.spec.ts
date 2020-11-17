@@ -1,6 +1,6 @@
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { DiscordMessageAuthorService } from "./discord-message-author.service";
+import { DiscordMessageAuthorService } from './discord-message-author.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
 
 describe(`DiscordMessageAuthorService`, (): void => {
   let service: DiscordMessageAuthorService;

@@ -1,5 +1,5 @@
-import { IGetDiscordDevPrefix } from "../../interfaces/dev-prefix/get-discord-dev-prefix";
-import { getDiscordDevPrefix } from "./get-discord-dev-prefix";
+import { getDiscordDevPrefix } from './get-discord-dev-prefix';
+import { IGetDiscordDevPrefix } from '../../interfaces/dev-prefix/get-discord-dev-prefix';
 
 describe(`getDiscordDevPrefix()`, (): void => {
   let config: IGetDiscordDevPrefix;

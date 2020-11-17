@@ -1,11 +1,9 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { IGithubConfig } from "../../interfaces/github-config";
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { IGithubConfig } from '../../interfaces/github-config';
+import _ from 'lodash';
 
-export class GithubConfigCoreService
-  extends AbstractService
-  implements IGithubConfig {
+export class GithubConfigCoreService extends AbstractService implements IGithubConfig {
   private static _instance: GithubConfigCoreService;
 
   public static getInstance(): GithubConfigCoreService {

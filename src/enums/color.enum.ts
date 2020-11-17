@@ -1,9 +1,9 @@
-import { NUMERICAL_COLOR_CANDY } from "../constants/colors/numerical-color-candy";
-import { NUMERICAL_COLOR_DESERT } from "../constants/colors/numerical-color-desert";
-import { NUMERICAL_COLOR_MINT } from "../constants/colors/numerical-color-mint";
-import { NUMERICAL_COLOR_SILK } from "../constants/colors/numerical-color-silk";
-import { NUMERICAL_COLOR_SKY } from "../constants/colors/numerical-color-sky";
-import { NUMERICAL_COLOR_SUN } from "../constants/colors/numerical-color-sun";
+import { NUMERICAL_COLOR_CANDY } from '../constants/colors/numerical-color-candy';
+import { NUMERICAL_COLOR_DESERT } from '../constants/colors/numerical-color-desert';
+import { NUMERICAL_COLOR_MINT } from '../constants/colors/numerical-color-mint';
+import { NUMERICAL_COLOR_SILK } from '../constants/colors/numerical-color-silk';
+import { NUMERICAL_COLOR_SKY } from '../constants/colors/numerical-color-sky';
+import { NUMERICAL_COLOR_SUN } from '../constants/colors/numerical-color-sun';
 
 export enum ColorEnum {
   CANDY = NUMERICAL_COLOR_CANDY, // #ED7899

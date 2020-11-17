@@ -1,4 +1,4 @@
-import { LoggerConfigValueNameEnum } from "./logger-config-value-name.enum";
+import { LoggerConfigValueNameEnum } from './logger-config-value-name.enum';
 
 describe(`LoggerConfigValueNameEnum`, (): void => {
   it(`should have a member "IS_ENABLED"`, (): void => {

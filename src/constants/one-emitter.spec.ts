@@ -1,4 +1,4 @@
-import { ONE_EMITTER } from "./one-emitter";
+import { ONE_EMITTER } from './one-emitter';
 
 describe(`ONE_EMITTER`, (): void => {
   it(`should be 1`, (): void => {

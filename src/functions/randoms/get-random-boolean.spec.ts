@@ -1,4 +1,4 @@
-import { getRandomBoolean } from "./get-random-boolean";
+import { getRandomBoolean } from './get-random-boolean';
 
 describe(`getRandomBoolean()`, (): void => {
   it(`should return true or false`, (): void => {

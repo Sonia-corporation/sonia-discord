@@ -1,8 +1,8 @@
-import admin from "firebase-admin";
-import _ from "lodash";
-import { AbstractService } from "../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { IFirebaseGuild } from "../../../types/guilds/firebase-guild";
+import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { IFirebaseGuild } from '../../../types/guilds/firebase-guild';
+import admin from 'firebase-admin';
+import _ from 'lodash';
 import CollectionReference = admin.firestore.CollectionReference;
 
 export class FirebaseGuildsService extends AbstractService {
@@ -23,9 +23,7 @@ export class FirebaseGuildsService extends AbstractService {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   public init(): void {}
 
-  public getCollectionReference():
-    | CollectionReference<IFirebaseGuild>
-    | undefined {
+  public getCollectionReference(): CollectionReference<IFirebaseGuild> | undefined {
     return undefined;
   }
 }

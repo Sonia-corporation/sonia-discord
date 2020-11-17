@@ -1,4 +1,4 @@
-import { toBoolean } from "./to-boolean";
+import { toBoolean } from './to-boolean';
 
 describe(`toBoolean()`, (): void => {
   let value: boolean | string | null | undefined;

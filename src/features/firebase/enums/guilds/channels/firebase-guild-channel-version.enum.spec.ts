@@ -1,4 +1,4 @@
-import { FirebaseGuildChannelVersionEnum } from "./firebase-guild-channel-version.enum";
+import { FirebaseGuildChannelVersionEnum } from './firebase-guild-channel-version.enum';
 
 describe(`FirebaseGuildChannelVersionEnum`, (): void => {
   it(`should have a member "V1"`, (): void => {

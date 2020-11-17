@@ -1,10 +1,10 @@
-import _ from "lodash";
-import { ServiceNameEnum } from "../../../../../../../enums/service-name.enum";
-import { FIREBASE_GUILD_CHANNEL_FEATURE_NOON_CURRENT_VERSION } from "../../../../../constants/guilds/channels/features/firebase-guild-channel-feature-noon-current-version";
-import { INewFirebaseGuildChannelFeatureNoon } from "../../../../../interfaces/guilds/channels/features/new-firebase-guild-channel-feature-noon";
-import { IFirebaseGuildChannelFeatureNoon } from "../../../../../types/guilds/channels/features/firebase-guild-channel-feature-noon";
-import { IFirebaseGuildChannelFeatureNoonVFinal } from "../../../../../types/guilds/channels/features/firebase-guild-channel-feature-noon-v-final";
-import { FirebaseUpdateCoreService } from "../../../../firebase-update-core.service";
+import { ServiceNameEnum } from '../../../../../../../enums/service-name.enum';
+import { FIREBASE_GUILD_CHANNEL_FEATURE_NOON_CURRENT_VERSION } from '../../../../../constants/guilds/channels/features/firebase-guild-channel-feature-noon-current-version';
+import { INewFirebaseGuildChannelFeatureNoon } from '../../../../../interfaces/guilds/channels/features/new-firebase-guild-channel-feature-noon';
+import { IFirebaseGuildChannelFeatureNoon } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-noon';
+import { IFirebaseGuildChannelFeatureNoonVFinal } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-noon-v-final';
+import { FirebaseUpdateCoreService } from '../../../../firebase-update-core.service';
+import _ from 'lodash';
 
 export class FirebaseGuildsChannelsFeaturesNoonService extends FirebaseUpdateCoreService<
   IFirebaseGuildChannelFeatureNoon,
@@ -26,13 +26,8 @@ export class FirebaseGuildsChannelsFeaturesNoonService extends FirebaseUpdateCor
     super(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_SERVICE);
   }
 
-  public isUpToDate(
-    noon: Readonly<IFirebaseGuildChannelFeatureNoon>
-  ): noon is IFirebaseGuildChannelFeatureNoonVFinal {
-    return _.isEqual(
-      noon.version,
-      FIREBASE_GUILD_CHANNEL_FEATURE_NOON_CURRENT_VERSION
-    );
+  public isUpToDate(noon: Readonly<IFirebaseGuildChannelFeatureNoon>): noon is IFirebaseGuildChannelFeatureNoonVFinal {
+    return _.isEqual(noon.version, FIREBASE_GUILD_CHANNEL_FEATURE_NOON_CURRENT_VERSION);
   }
 
   public create(): INewFirebaseGuildChannelFeatureNoon {
@@ -41,9 +36,7 @@ export class FirebaseGuildsChannelsFeaturesNoonService extends FirebaseUpdateCor
     };
   }
 
-  public upgrade(
-    noon: Readonly<IFirebaseGuildChannelFeatureNoon>
-  ): IFirebaseGuildChannelFeatureNoonVFinal {
+  public upgrade(noon: Readonly<IFirebaseGuildChannelFeatureNoon>): IFirebaseGuildChannelFeatureNoonVFinal {
     return noon;
   }
 }

@@ -1,4 +1,4 @@
-import { LOGGER_WARNING_LEVEL } from "./logger-warning-level";
+import { LOGGER_WARNING_LEVEL } from './logger-warning-level';
 
 describe(`LOGGER_WARNING_LEVEL`, (): void => {
   it(`should be 1`, (): void => {

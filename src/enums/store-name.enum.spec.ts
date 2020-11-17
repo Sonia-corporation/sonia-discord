@@ -1,4 +1,4 @@
-import { StoreNameEnum } from "./store-name.enum";
+import { StoreNameEnum } from './store-name.enum';
 
 describe(`StoreNameEnum`, (): void => {
   it(`should have a member "GUILDS"`, (): void => {

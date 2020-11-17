@@ -1,4 +1,4 @@
-import { FIREBASE_GUILD_CHANNEL_FEATURE_CURRENT_VERSION } from "./firebase-guild-channel-feature-current-version";
+import { FIREBASE_GUILD_CHANNEL_FEATURE_CURRENT_VERSION } from './firebase-guild-channel-feature-current-version';
 
 describe(`FIREBASE_GUILD_CHANNEL_FEATURE_CURRENT_VERSION`, (): void => {
   it(`should be V1`, (): void => {

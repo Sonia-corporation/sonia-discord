@@ -1,12 +1,10 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
-import { ILoggerConfig } from "../../interfaces/logger-config";
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { LoggerConfigLevelEnum } from '../../enums/logger-config-level.enum';
+import { ILoggerConfig } from '../../interfaces/logger-config';
+import _ from 'lodash';
 
-export class LoggerConfigCoreService
-  extends AbstractService
-  implements ILoggerConfig {
+export class LoggerConfigCoreService extends AbstractService implements ILoggerConfig {
   private static _instance: LoggerConfigCoreService;
 
   public static getInstance(): LoggerConfigCoreService {

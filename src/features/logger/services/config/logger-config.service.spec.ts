@@ -1,9 +1,9 @@
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
-import { ILoggerConfig } from "../../interfaces/logger-config";
-import { LoggerConfigCoreService } from "./logger-config-core.service";
-import { LoggerConfigService } from "./logger-config.service";
+import { LoggerConfigCoreService } from './logger-config-core.service';
+import { LoggerConfigService } from './logger-config.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { LoggerConfigLevelEnum } from '../../enums/logger-config-level.enum';
+import { ILoggerConfig } from '../../interfaces/logger-config';
 
 describe(`LoggerConfigService`, (): void => {
   let service: LoggerConfigService;
@@ -48,9 +48,7 @@ describe(`LoggerConfigService`, (): void => {
       service = new LoggerConfigService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.LOGGER_CONFIG_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.LOGGER_CONFIG_SERVICE);
     });
   });
 
