@@ -28,6 +28,7 @@ plugins:
   - typescript-sort-keys
   - jest
   - prettier
+  - progress
 settings:
   import/extensions:
     - .js
@@ -38,8 +39,8 @@ settings:
   import/cache:
     lifetime: Infinity
 rules:
-  jest/no-done-callback:
-    - error
+  progress/activate: 1
+  jest/no-done-callback: error
   jest/no-disabled-tests: off
   '@typescript-eslint/member-ordering':
     - error
@@ -236,19 +237,14 @@ rules:
     - error
     - as-needed
     - requireReturnForObjectLiteral: true
-  no-dupe-else-if:
-    - error
-  no-unmodified-loop-condition:
-    - error
-  no-eval:
-    - error
-  no-extra-label:
-    - error
+  no-dupe-else-if: error
+  no-unmodified-loop-condition: error
+  no-eval: error
+  no-extra-label: error
   curly:
     - error
     - all
-  no-await-in-loop:
-    - error
+  no-await-in-loop: error
   prefer-destructuring:
     - error
     - VariableDeclarator:
@@ -263,23 +259,17 @@ rules:
   '@typescript-eslint/no-unsafe-member-access': off
   '@typescript-eslint/no-unsafe-return': off
   '@typescript-eslint/no-unsafe-assignment': off
-  '@typescript-eslint/prefer-enum-initializers':
-    - error
+  '@typescript-eslint/prefer-enum-initializers': error
   '@typescript-eslint/prefer-literal-enum-member': off
   '@typescript-eslint/unified-signatures': error
   '@typescript-eslint/ban-ts-comment': error
-  no-undef-init:
-    - error
+  no-undef-init: error
   no-magic-numbers:
     - error
     - enforceConst: true
       detectObjects: false
-  require-await:
-    - error
-  prettier/prettier:
-    - error
-    - singleQuote: true
-      printWidth: 120
+  require-await: error
+  prettier/prettier: error
 overrides:
   - files:
       - '*.js'
@@ -294,8 +284,7 @@ overrides:
         - allowExpressions: false
           allowTypedFunctionExpressions: false
           allowHigherOrderFunctions: false
-      '@typescript-eslint/no-var-requires':
-        - error
+      '@typescript-eslint/no-var-requires': error
   - files:
       - '*.spec.ts'
     rules:
