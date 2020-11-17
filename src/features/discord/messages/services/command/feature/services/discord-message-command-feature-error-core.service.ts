@@ -29,7 +29,7 @@ export abstract class DiscordMessageCommandFeatureErrorCoreService extends Abstr
   }
 
   protected _getMessageEmbedTitle(): string {
-    return `I can not handle your request`;
+    return `I can not handle your request.`;
   }
 
   protected _getMessageEmbedFieldAllFeatures(): EmbedFieldData {
