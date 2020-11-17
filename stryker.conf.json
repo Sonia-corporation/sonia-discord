@@ -5,12 +5,7 @@
   "testRunner": "jest",
   "coverageAnalysis": "all",
   "tsconfigFile": "tsconfig.json",
-  "mutate": [
-    "src/**/*.ts",
-    "!src/**/*.spec.ts",
-    "!src/**/__mocks__/*.spec.ts",
-    "!src/**/__mocks__/"
-  ],
+  "mutate": ["src/**/*.ts", "!src/**/*.spec.ts", "!src/**/__mocks__/*.spec.ts", "!src/**/__mocks__/"],
   "allowConsoleColors": true,
   "dashboard": {
     "baseUrl": "https://dashboard.stryker-mutator.io/api/reports",
