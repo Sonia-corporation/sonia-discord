@@ -24,4 +24,12 @@ describe(`ClassNameEnum`, (): void => {
       `DiscordMessageCommandFeatureNoonHelp`
     );
   });
+
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE).toStrictEqual(
+      `DiscordMessageCommandFeatureNoonHumanize`
+    );
+  });
 });

@@ -299,7 +299,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(result.options.embed?.title).toStrictEqual(`I can not handle your request`);
+      expect(result.options.embed?.title).toStrictEqual(`I can not handle your request.`);
     });
 
     it(`should return a Discord message response not split`, async (): Promise<void> => {
