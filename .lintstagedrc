@@ -1,8 +1,8 @@
 {
   "*.{ts,js}": [
-    "npm run lint"
+    "npm run lint:hook"
   ],
   "*.{md,json,yml}": [
-    "prettier --write"
+    "npm run prettier:hook"
   ]
 }
