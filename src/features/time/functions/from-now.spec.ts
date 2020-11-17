@@ -1,5 +1,5 @@
-import moment from "moment-timezone";
-import { fromNow } from "./from-now";
+import { fromNow } from './from-now';
+import moment from 'moment-timezone';
 
 describe(`fromNow()`, (): void => {
   let date: string;

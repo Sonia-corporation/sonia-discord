@@ -1,7 +1,7 @@
-import { createMock } from "ts-auto-mock";
-import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
-import { IDiscordGetCommandFlagsData } from "../../../interfaces/commands/getters/discord-get-command-flags-data";
-import { discordGetCommandFlags } from "./discord-get-command-flags";
+import { discordGetCommandFlags } from './discord-get-command-flags';
+import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
+import { IDiscordGetCommandFlagsData } from '../../../interfaces/commands/getters/discord-get-command-flags-data';
+import { createMock } from 'ts-auto-mock';
 
 describe(`discordGetCommandFlags()`, (): void => {
   let data: IDiscordGetCommandFlagsData;
@@ -267,10 +267,7 @@ describe(`discordGetCommandFlags()`, (): void => {
 
     describe(`when the given command is feature and f`, (): void => {
       beforeEach((): void => {
-        data.commands = [
-          DiscordMessageCommandEnum.FEATURE,
-          DiscordMessageCommandEnum.F,
-        ];
+        data.commands = [DiscordMessageCommandEnum.FEATURE, DiscordMessageCommandEnum.F];
       });
 
       describe(`when the given message is empty`, (): void => {

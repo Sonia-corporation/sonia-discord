@@ -1,4 +1,4 @@
-import { isValidPort } from "./is-valid-port";
+import { isValidPort } from './is-valid-port';
 
 describe(`isValidPort()`, (): void => {
   let port: unknown;

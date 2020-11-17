@@ -1,10 +1,10 @@
-import { IconEnum } from "../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../core/services/core-event.service";
-import { IDiscordSoniaConfig } from "../../../interfaces/discord-sonia-config";
-import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../../interfaces/discord-sonia-corporation-message-embed-author-config";
-import { DiscordSoniaConfigCoreService } from "./discord-sonia-config-core.service";
-import { DiscordSoniaConfigService } from "./discord-sonia-config.service";
+import { DiscordSoniaConfigCoreService } from './discord-sonia-config-core.service';
+import { DiscordSoniaConfigService } from './discord-sonia-config.service';
+import { IconEnum } from '../../../../../enums/icon.enum';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../core/services/core-event.service';
+import { IDiscordSoniaConfig } from '../../../interfaces/discord-sonia-config';
+import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from '../../../interfaces/discord-sonia-corporation-message-embed-author-config';
 
 describe(`DiscordSoniaConfigService`, (): void => {
   let service: DiscordSoniaConfigService;

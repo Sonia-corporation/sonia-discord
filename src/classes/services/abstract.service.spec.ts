@@ -1,6 +1,6 @@
-import { ServiceNameEnum } from "../../enums/service-name.enum";
-import { CoreEventService } from "../../features/core/services/core-event.service";
-import { AbstractService } from "./abstract.service";
+import { AbstractService } from './abstract.service';
+import { ServiceNameEnum } from '../../enums/service-name.enum';
+import { CoreEventService } from '../../features/core/services/core-event.service';
 
 class DummyService extends AbstractService {
   public constructor(serviceName: ServiceNameEnum) {
@@ -18,9 +18,7 @@ describe(`AbstractService`, (): void => {
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
 
-    coreEventServiceNotifyServiceCreatedSpy = jest
-      .spyOn(coreEventService, `notifyServiceCreated`)
-      .mockImplementation();
+    coreEventServiceNotifyServiceCreatedSpy = jest.spyOn(coreEventService, `notifyServiceCreated`).mockImplementation();
   });
 
   describe(`when the service is created with the name ServiceNameEnum.APP_CONFIG_SERVICE`, (): void => {
@@ -34,9 +32,7 @@ describe(`AbstractService`, (): void => {
       new DummyService(serviceName);
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.APP_CONFIG_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.APP_CONFIG_SERVICE);
     });
   });
 
@@ -51,9 +47,7 @@ describe(`AbstractService`, (): void => {
       new DummyService(serviceName);
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.APP_CONFIG_CORE_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.APP_CONFIG_CORE_SERVICE);
     });
   });
 });

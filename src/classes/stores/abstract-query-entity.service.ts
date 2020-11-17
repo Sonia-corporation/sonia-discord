@@ -1,16 +1,15 @@
-import { EntityStore, QueryEntity } from "@datorama/akita";
-import { ServiceNameEnum } from "../../enums/service-name.enum";
-import { CoreEventService } from "../../features/core/services/core-event.service";
+import { ServiceNameEnum } from '../../enums/service-name.enum';
+import { CoreEventService } from '../../features/core/services/core-event.service';
+import { EntityStore, QueryEntity } from '@datorama/akita';
 
 /**
  * @description
  * Log the creation of the service
  * Used for Query Entity only
  */
-export abstract class AbstractQueryEntityService<
-  T extends EntityStore<TStoreState>,
+export abstract class AbstractQueryEntityService<T extends EntityStore<TStoreState>, TStoreState> extends QueryEntity<
   TStoreState
-> extends QueryEntity<TStoreState> {
+> {
   protected readonly _serviceName: ServiceNameEnum;
 
   protected constructor(serviceName: Readonly<ServiceNameEnum>, store: T) {

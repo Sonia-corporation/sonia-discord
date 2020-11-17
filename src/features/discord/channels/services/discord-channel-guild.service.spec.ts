@@ -1,6 +1,6 @@
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { DiscordChannelGuildService } from "./discord-channel-guild.service";
+import { DiscordChannelGuildService } from './discord-channel-guild.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
 
 describe(`DiscordChannelGuildService`, (): void => {
   let service: DiscordChannelGuildService;

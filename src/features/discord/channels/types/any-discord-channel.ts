@@ -1,3 +1,3 @@
-import { DMChannel, TextChannel } from "discord.js";
+import { DMChannel, TextChannel } from 'discord.js';
 
 export type IAnyDiscordChannel = DMChannel | TextChannel;

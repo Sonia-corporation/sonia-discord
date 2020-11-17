@@ -1,5 +1,5 @@
-import { IDiscordMessageNormalFlag } from "./discord-message-normal-flag";
-import { IDiscordMessageShortcutFlag } from "./discord-message-shortcut-flag";
+import { IDiscordMessageNormalFlag } from './discord-message-normal-flag';
+import { IDiscordMessageShortcutFlag } from './discord-message-shortcut-flag';
 
 /**
  * @description
@@ -11,6 +11,4 @@ import { IDiscordMessageShortcutFlag } from "./discord-message-shortcut-flag";
  * -e
  * --enabled=true
  */
-export type IDiscordMessageFlag =
-  | IDiscordMessageNormalFlag
-  | IDiscordMessageShortcutFlag;
+export type IDiscordMessageFlag = IDiscordMessageNormalFlag | IDiscordMessageShortcutFlag;

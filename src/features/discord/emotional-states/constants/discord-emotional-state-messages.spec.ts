@@ -1,6 +1,6 @@
-import { Messages } from "../../messages/classes/messages";
-import { DiscordSoniaEmotionalStateEnum } from "../enums/discord-sonia-emotional-state.enum";
-import { DISCORD_EMOTIONAL_STATE_MESSAGES } from "./discord-emotional-state-messages";
+import { DISCORD_EMOTIONAL_STATE_MESSAGES } from './discord-emotional-state-messages';
+import { Messages } from '../../messages/classes/messages';
+import { DiscordSoniaEmotionalStateEnum } from '../enums/discord-sonia-emotional-state.enum';
 
 describe(`DISCORD_EMOTIONAL_STATE_MESSAGES`, (): void => {
   it(`should be a messages of Discord Sonia emotional states`, (): void => {

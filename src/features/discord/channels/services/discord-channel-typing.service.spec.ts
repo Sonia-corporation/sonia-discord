@@ -1,10 +1,10 @@
-import { DMChannel, NewsChannel, TextChannel } from "discord.js";
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { DiscordChannelTypingService } from "./discord-channel-typing.service";
+import { DiscordChannelTypingService } from './discord-channel-typing.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { ILoggerLog } from '../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { DMChannel, NewsChannel, TextChannel } from 'discord.js';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -66,20 +66,14 @@ describe(`DiscordChannelTypingService`, (): void => {
     beforeEach((): void => {
       service = new DiscordChannelTypingService();
 
-      startTypingMock = jest
-        .fn()
-        .mockRejectedValue(new Error(`startTyping error`));
+      startTypingMock = jest.fn().mockRejectedValue(new Error(`startTyping error`));
       channel = createMock<TextChannel>({
         startTyping: startTypingMock,
       });
-      loggerServiceErrorSpy = jest
-        .spyOn(loggerService, `error`)
-        .mockImplementation();
+      loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
     });
 
-    it(`should add and show one typing indicator for the given channel`, async (): Promise<
-      void
-    > => {
+    it(`should add and show one typing indicator for the given channel`, async (): Promise<void> => {
       expect.assertions(2);
 
       await service.addOneIndicator(channel);

@@ -1,8 +1,8 @@
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { IProfileConfig } from "../../interfaces/profile-config";
-import { ProfileConfigCoreService } from "./profile-config-core.service";
-import { ProfileConfigService } from "./profile-config.service";
+import { ProfileConfigCoreService } from './profile-config-core.service';
+import { ProfileConfigService } from './profile-config.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { IProfileConfig } from '../../interfaces/profile-config';
 
 describe(`ProfileConfigService`, (): void => {
   let service: ProfileConfigService;
@@ -47,9 +47,7 @@ describe(`ProfileConfigService`, (): void => {
       service = new ProfileConfigService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.PROFILE_CONFIG_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.PROFILE_CONFIG_SERVICE);
     });
   });
 

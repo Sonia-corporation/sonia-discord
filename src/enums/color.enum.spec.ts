@@ -1,4 +1,4 @@
-import { ColorEnum } from "./color.enum";
+import { ColorEnum } from './color.enum';
 
 describe(`ColorEnum`, (): void => {
   it(`should have a member "CANDY"`, (): void => {

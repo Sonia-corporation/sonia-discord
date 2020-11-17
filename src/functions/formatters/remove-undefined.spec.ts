@@ -1,4 +1,4 @@
-import { removeUndefined } from "./remove-undefined";
+import { removeUndefined } from './remove-undefined';
 
 describe(`removeUndefined()`, (): void => {
   let array: unknown[];

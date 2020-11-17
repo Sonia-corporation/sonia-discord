@@ -1,4 +1,4 @@
-import { getNoonScheduleRule } from "./get-noon-schedule-rule";
+import { getNoonScheduleRule } from './get-noon-schedule-rule';
 
 describe(`getNoonScheduleRule()`, (): void => {
   it(`should return the schedule for every hour`, (): void => {

@@ -1,6 +1,6 @@
-import { Guild } from "discord.js";
-import { createMock } from "ts-auto-mock";
-import { isDiscordGuild } from "./is-discord-guild";
+import { isDiscordGuild } from './is-discord-guild';
+import { Guild } from 'discord.js';
+import { createMock } from 'ts-auto-mock';
 
 describe(`isDiscordGuild()`, (): void => {
   let guild: unknown;

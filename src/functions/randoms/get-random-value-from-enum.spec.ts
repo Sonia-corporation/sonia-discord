@@ -1,4 +1,4 @@
-import { getRandomValueFromEnum } from "./get-random-value-from-enum";
+import { getRandomValueFromEnum } from './get-random-value-from-enum';
 
 enum DummyEmptyEnum {}
 

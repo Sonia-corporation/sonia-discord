@@ -1,4 +1,4 @@
-import { DiscordMessageCommandFeatureNameEnum } from "./discord-message-command-feature-name.enum";
+import { DiscordMessageCommandFeatureNameEnum } from './discord-message-command-feature-name.enum';
 
 describe(`DiscordMessageCommandFeatureNameEnum`, (): void => {
   it(`should have a member "NOON"`, (): void => {

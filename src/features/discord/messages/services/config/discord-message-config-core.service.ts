@@ -1,16 +1,14 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../../classes/services/abstract.service";
-import { ColorEnum } from "../../../../../enums/color.enum";
-import { IconEnum } from "../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
-import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
-import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
-import { IDiscordMessageWarningConfig } from "../../../interfaces/discord-message-warning-config";
+import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { ColorEnum } from '../../../../../enums/color.enum';
+import { IconEnum } from '../../../../../enums/icon.enum';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { IDiscordMessageCommandConfig } from '../../../interfaces/discord-message-command-config';
+import { IDiscordMessageConfig } from '../../../interfaces/discord-message-config';
+import { IDiscordMessageErrorConfig } from '../../../interfaces/discord-message-error-config';
+import { IDiscordMessageWarningConfig } from '../../../interfaces/discord-message-warning-config';
+import _ from 'lodash';
 
-export class DiscordMessageConfigCoreService
-  extends AbstractService
-  implements IDiscordMessageConfig {
+export class DiscordMessageConfigCoreService extends AbstractService implements IDiscordMessageConfig {
   private static _instance: DiscordMessageConfigCoreService;
 
   public static getInstance(): DiscordMessageConfigCoreService {

@@ -1,22 +1,17 @@
-import {
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedOptions,
-  MessageEmbedThumbnail,
-} from "discord.js";
-import _ from "lodash";
-import moment from "moment-timezone";
-import { AbstractService } from "../../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
-import { AppConfigQueryService } from "../../../../../app/services/config/app-config-query.service";
-import { AppConfigService } from "../../../../../app/services/config/app-config.service";
-import { LoggerService } from "../../../../../logger/services/logger.service";
-import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
-import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
-import { discordHasThisCommand } from "../../../functions/commands/checks/discord-has-this-command";
-import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
+import { AbstractService } from '../../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
+import { AppConfigQueryService } from '../../../../../app/services/config/app-config-query.service';
+import { AppConfigService } from '../../../../../app/services/config/app-config.service';
+import { LoggerService } from '../../../../../logger/services/logger.service';
+import { DiscordSoniaService } from '../../../../users/services/discord-sonia.service';
+import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
+import { discordHasThisCommand } from '../../../functions/commands/checks/discord-has-this-command';
+import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../../../types/any-discord-message';
+import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
+import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import _ from 'lodash';
+import moment from 'moment-timezone';
 
 export class DiscordMessageCommandReleaseNotesService extends AbstractService {
   private static _instance: DiscordMessageCommandReleaseNotesService;
@@ -33,16 +28,11 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_RELEASE_NOTES_SERVICE);
   }
 
-  public handleResponse({
-    id,
-  }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleResponse({ id }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        id,
-        `release notes command detected`
-      ),
+      message: LoggerService.getInstance().getSnowflakeContext(id, `release notes command detected`),
     });
 
     return this.getMessageResponse();
@@ -60,10 +50,7 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
 
   public hasCommand(message: Readonly<string>): boolean {
     return discordHasThisCommand({
-      commands: [
-        DiscordMessageCommandEnum.RELEASE_NOTES,
-        DiscordMessageCommandEnum.R,
-      ],
+      commands: [DiscordMessageCommandEnum.RELEASE_NOTES, DiscordMessageCommandEnum.R],
       message,
       prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
     });
@@ -92,9 +79,7 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
-    const soniaImageUrl:
-      | string
-      | null = DiscordSoniaService.getInstance().getImageUrl();
+    const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
     const totalReleaseCountHumanized: string = AppConfigQueryService.getInstance().getTotalReleaseCountHumanized();
     const firstReleaseDate: string = AppConfigQueryService.getInstance().getFirstReleaseDateFormatted(
       `[the ]Do MMMM YYYY`

@@ -1,4 +1,4 @@
-import { isExistingArgument } from "./is-existing-argument";
+import { isExistingArgument } from './is-existing-argument';
 
 describe(`isExistingArgument()`, (): void => {
   let argumentIndex: number;

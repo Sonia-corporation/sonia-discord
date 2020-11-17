@@ -1,27 +1,27 @@
+import { AbstractService } from '../../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
+import { ellipsis } from '../../../../../../functions/formatters/ellipsis';
+import { AppProductionStateEnum } from '../../../../../app/enums/app-production-state.enum';
+import { AppConfigQueryService } from '../../../../../app/services/config/app-config-query.service';
+import { AppConfigService } from '../../../../../app/services/config/app-config.service';
+import { LoggerService } from '../../../../../logger/services/logger.service';
+import { DiscordSoniaEmotionalStateEnum } from '../../../../emotional-states/enums/discord-sonia-emotional-state.enum';
+import { DiscordSoniaEmotionalStateService } from '../../../../emotional-states/services/discord-sonia-emotional-state.service';
+import { DiscordSoniaService } from '../../../../users/services/discord-sonia.service';
+import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
+import { discordHasThisCommand } from '../../../functions/commands/checks/discord-has-this-command';
+import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../../../types/any-discord-message';
+import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
 import {
   EmbedFieldData,
   MessageEmbedAuthor,
   MessageEmbedFooter,
   MessageEmbedOptions,
   MessageEmbedThumbnail,
-} from "discord.js";
-import _ from "lodash";
-import moment from "moment-timezone";
-import { AbstractService } from "../../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../../enums/service-name.enum";
-import { ellipsis } from "../../../../../../functions/formatters/ellipsis";
-import { AppProductionStateEnum } from "../../../../../app/enums/app-production-state.enum";
-import { AppConfigQueryService } from "../../../../../app/services/config/app-config-query.service";
-import { AppConfigService } from "../../../../../app/services/config/app-config.service";
-import { LoggerService } from "../../../../../logger/services/logger.service";
-import { DiscordSoniaEmotionalStateEnum } from "../../../../emotional-states/enums/discord-sonia-emotional-state.enum";
-import { DiscordSoniaEmotionalStateService } from "../../../../emotional-states/services/discord-sonia-emotional-state.service";
-import { DiscordSoniaService } from "../../../../users/services/discord-sonia.service";
-import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
-import { discordHasThisCommand } from "../../../functions/commands/checks/discord-has-this-command";
-import { IDiscordMessageResponse } from "../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../../config/discord-message-config.service";
+} from 'discord.js';
+import _ from 'lodash';
+import moment from 'moment-timezone';
 
 const BIRTHDAY_CARD_VALUE_LIMIT = 900;
 
@@ -40,16 +40,11 @@ export class DiscordMessageCommandVersionService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERSION_SERVICE);
   }
 
-  public handleResponse({
-    id,
-  }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleResponse({ id }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        id,
-        `version command detected`
-      ),
+      message: LoggerService.getInstance().getSnowflakeContext(id, `version command detected`),
     });
 
     return this.getMessageResponse();
@@ -67,10 +62,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
 
   public hasCommand(message: Readonly<string>): boolean {
     return discordHasThisCommand({
-      commands: [
-        DiscordMessageCommandEnum.VERSION,
-        DiscordMessageCommandEnum.V,
-      ],
+      commands: [DiscordMessageCommandEnum.VERSION, DiscordMessageCommandEnum.V],
       message,
       prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
     });
@@ -99,9 +91,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
-    const soniaImageUrl:
-      | string
-      | null = DiscordSoniaService.getInstance().getImageUrl();
+    const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
     const totalReleaseCountHumanized: string = AppConfigQueryService.getInstance().getTotalReleaseCountHumanized(
       `birthday`
     );
@@ -124,9 +114,7 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   }
 
   private _getMessageEmbedTitle(): string {
-    const soniaFullName:
-      | string
-      | null = DiscordSoniaService.getInstance().getFullName();
+    const soniaFullName: string | null = DiscordSoniaService.getInstance().getFullName();
 
     return `${_.toString(soniaFullName)} version`;
   }

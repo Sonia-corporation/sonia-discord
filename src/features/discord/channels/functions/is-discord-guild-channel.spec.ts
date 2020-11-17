@@ -1,6 +1,6 @@
-import { GuildChannel } from "discord.js";
-import { createMock } from "ts-auto-mock";
-import { isDiscordGuildChannel } from "./is-discord-guild-channel";
+import { isDiscordGuildChannel } from './is-discord-guild-channel';
+import { GuildChannel } from 'discord.js';
+import { createMock } from 'ts-auto-mock';
 
 describe(`isDiscordGuildChannel()`, (): void => {
   let channel: unknown;

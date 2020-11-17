@@ -1,6 +1,6 @@
-import { ServiceNameEnum } from "../../../../../../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../../../../../../core/services/core-event.service";
-import { DiscordMessageCommandFeatureNoonConfigCoreService } from "./discord-message-command-feature-noon-config-core.service";
+import { DiscordMessageCommandFeatureNoonConfigCoreService } from './discord-message-command-feature-noon-config-core.service';
+import { ServiceNameEnum } from '../../../../../../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../../../../../../core/services/core-event.service';
 
 describe(`DiscordMessageCommandFeatureNoonConfigCoreService`, (): void => {
   let service: DiscordMessageCommandFeatureNoonConfigCoreService;
@@ -16,9 +16,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigCoreService`, (): void => {
 
       service = DiscordMessageCommandFeatureNoonConfigCoreService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(DiscordMessageCommandFeatureNoonConfigCoreService)
-      );
+      expect(service).toStrictEqual(expect.any(DiscordMessageCommandFeatureNoonConfigCoreService));
     });
 
     it(`should return the created DiscordMessageCommandFeatureNoonConfigCore service`, (): void => {
@@ -64,8 +62,6 @@ describe(`DiscordMessageCommandFeatureNoonConfigCoreService`, (): void => {
 
     service = DiscordMessageCommandFeatureNoonConfigCoreService.getInstance();
 
-    expect(service.noon.imageUrl).toStrictEqual(
-      `https://i.ibb.co/S7BxtDh/icons8-alarm-512.png`
-    );
+    expect(service.noon.imageUrl).toStrictEqual(`https://i.ibb.co/S7BxtDh/icons8-alarm-512.png`);
   });
 });

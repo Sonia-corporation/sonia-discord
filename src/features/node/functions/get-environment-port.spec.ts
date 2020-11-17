@@ -1,4 +1,4 @@
-import { getEnvironmentPort } from "./get-environment-port";
+import { getEnvironmentPort } from './get-environment-port';
 
 describe(`getEnvironmentPort()`, (): void => {
   // @todo fix it

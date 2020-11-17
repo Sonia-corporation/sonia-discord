@@ -1,20 +1,15 @@
-import {
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedOptions,
-  MessageEmbedThumbnail,
-} from "discord.js";
-import _ from "lodash";
-import moment from "moment-timezone";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { ChalkService } from "../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { DiscordGuildSoniaChannelNameEnum } from "../../guilds/enums/discord-guild-sonia-channel-name.enum";
-import { DiscordGuildSoniaService } from "../../guilds/services/discord-guild-sonia.service";
-import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
-import { DiscordMessageConfigService } from "../../messages/services/config/discord-message-config.service";
-import { DiscordSoniaService } from "../../users/services/discord-sonia.service";
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { DiscordGuildSoniaChannelNameEnum } from '../../guilds/enums/discord-guild-sonia-channel-name.enum';
+import { DiscordGuildSoniaService } from '../../guilds/services/discord-guild-sonia.service';
+import { IDiscordMessageResponse } from '../../messages/interfaces/discord-message-response';
+import { DiscordMessageConfigService } from '../../messages/services/config/discord-message-config.service';
+import { DiscordSoniaService } from '../../users/services/discord-sonia.service';
+import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import _ from 'lodash';
+import moment from 'moment-timezone';
 
 export class DiscordLoggerWarningService extends AbstractService {
   private static _instance: DiscordLoggerWarningService;
@@ -38,9 +33,7 @@ export class DiscordLoggerWarningService extends AbstractService {
     });
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `send message to Sonia Discord warnings channel`
-      ),
+      message: ChalkService.getInstance().text(`send message to Sonia Discord warnings channel`),
     });
 
     DiscordGuildSoniaService.getInstance().sendMessageToChannel({
@@ -49,9 +42,7 @@ export class DiscordLoggerWarningService extends AbstractService {
     });
   }
 
-  public getWarningMessageResponse(
-    warning: Readonly<string>
-  ): IDiscordMessageResponse {
+  public getWarningMessageResponse(warning: Readonly<string>): IDiscordMessageResponse {
     return {
       options: {
         embed: this._getMessageEmbed(warning),
@@ -84,9 +75,7 @@ export class DiscordLoggerWarningService extends AbstractService {
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
-    const soniaImageUrl:
-      | string
-      | null = DiscordSoniaService.getInstance().getImageUrl();
+    const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
 
     return {
       iconURL: soniaImageUrl ?? undefined,

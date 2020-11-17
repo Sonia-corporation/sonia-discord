@@ -1,12 +1,12 @@
-import { applyTransaction } from "@datorama/akita";
-import _ from "lodash";
-import { Observable } from "rxjs";
-import { tap } from "rxjs/operators";
-import { AbstractService } from "../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { IFirebaseGuild } from "../../../types/guilds/firebase-guild";
-import { FirebaseGuildsService } from "../../../services/guilds/firebase-guilds.service";
-import { FirebaseGuildsStore } from "../firebase-guilds-store";
+import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { FirebaseGuildsService } from '../../../services/guilds/firebase-guilds.service';
+import { IFirebaseGuild } from '../../../types/guilds/firebase-guild';
+import { FirebaseGuildsStore } from '../firebase-guilds-store';
+import { applyTransaction } from '@datorama/akita';
+import _ from 'lodash';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 export class FirebaseGuildsStoreService extends AbstractService {
   private static _instance: FirebaseGuildsStoreService;

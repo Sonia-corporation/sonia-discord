@@ -1,6 +1,6 @@
-import { Message } from "discord.js";
-import { createMock } from "ts-auto-mock";
-import { isDiscordMessage } from "./is-discord-message";
+import { isDiscordMessage } from './is-discord-message';
+import { Message } from 'discord.js';
+import { createMock } from 'ts-auto-mock';
 
 describe(`isDiscordMessage()`, (): void => {
   let message: unknown;

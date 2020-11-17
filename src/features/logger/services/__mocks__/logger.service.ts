@@ -1,9 +1,9 @@
-import _ from "lodash";
-import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
-import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
-import { ILoggerLog } from "../../interfaces/logger-log";
-import { ILoggerLogInternal } from "../../interfaces/logger-log-internal";
-import { ILoggerServiceCreated } from "../../interfaces/logger-service-created";
+import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
+import { LoggerConfigLevelEnum } from '../../enums/logger-config-level.enum';
+import { ILoggerLog } from '../../interfaces/logger-log';
+import { ILoggerLogInternal } from '../../interfaces/logger-log-internal';
+import { ILoggerServiceCreated } from '../../interfaces/logger-service-created';
+import _ from 'lodash';
 
 export class LoggerService {
   private static _instance: LoggerService;
@@ -53,9 +53,7 @@ export class LoggerService {
     });
   }
 
-  public serviceCreated(
-    loggerServiceCreated: Readonly<ILoggerServiceCreated>
-  ): void {
+  public serviceCreated(loggerServiceCreated: Readonly<ILoggerServiceCreated>): void {
     this.debug({
       context: loggerServiceCreated.service,
       message: `created`,
@@ -69,18 +67,11 @@ export class LoggerService {
     )} ]`;
   }
 
-  public getValueUpdateWithHint(
-    text: Readonly<string>,
-    value: Readonly<string>,
-    hint: Readonly<string>
-  ): string {
+  public getValueUpdateWithHint(text: Readonly<string>, value: Readonly<string>, hint: Readonly<string>): string {
     return `${text}${value}${hint}`;
   }
 
-  public getHiddenValueUpdate(
-    text: Readonly<string>,
-    isStringValue = false
-  ): string {
+  public getHiddenValueUpdate(text: Readonly<string>, isStringValue = false): string {
     let value = `********`;
 
     if (_.isEqual(isStringValue, true)) {
@@ -90,10 +81,7 @@ export class LoggerService {
     return this.getValueUpdateWithHint(text, value, ` (hidden)`);
   }
 
-  public getHiddenValueArrayUpdate(
-    text: Readonly<string>,
-    isStringValue = false
-  ): string {
+  public getHiddenValueArrayUpdate(text: Readonly<string>, isStringValue = false): string {
     let value = `********`;
 
     if (_.isEqual(isStringValue, true)) {
@@ -115,31 +103,21 @@ export class LoggerService {
   private _log(loggerLogInternal: Readonly<ILoggerLogInternal>): void {
     const logTypePrefix: string = this._getLogTypePrefix();
 
-    if (
-      _.isString(loggerLogInternal.context) &&
-      !_.isEmpty(loggerLogInternal.context)
-    ) {
+    if (_.isString(loggerLogInternal.context) && !_.isEmpty(loggerLogInternal.context)) {
       console.log(
-        `${logTypePrefix}${this._context(
-          loggerLogInternal.context,
-          loggerLogInternal.hasExtendedContext
-        )}${_.toString(loggerLogInternal.message)}`
+        `${logTypePrefix}${this._context(loggerLogInternal.context, loggerLogInternal.hasExtendedContext)}${_.toString(
+          loggerLogInternal.message
+        )}`
       );
     } else {
       console.log(`${logTypePrefix}${_.toString(loggerLogInternal.message)}`);
     }
   }
 
-  private _context(
-    name: Readonly<string>,
-    hasExtendedContext: Readonly<boolean> = false
-  ): string {
+  private _context(name: Readonly<string>, hasExtendedContext: Readonly<boolean> = false): string {
     let message = `[${name}][now-format]`;
 
-    if (
-      _.isEqual(hasExtendedContext, false) ||
-      !_.isBoolean(hasExtendedContext)
-    ) {
+    if (_.isEqual(hasExtendedContext, false) || !_.isBoolean(hasExtendedContext)) {
       message = `${message} `;
     }
 

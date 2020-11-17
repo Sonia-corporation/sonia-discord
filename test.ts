@@ -1,4 +1,4 @@
-import xregexp from "xregexp";
+import xregexp from 'xregexp';
 
 /**
  * @description

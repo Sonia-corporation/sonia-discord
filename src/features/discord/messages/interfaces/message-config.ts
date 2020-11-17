@@ -1,4 +1,4 @@
-import { IObject } from "../../../../types/object";
+import { IObject } from '../../../../types/object';
 
 export interface IMessageConfig<T extends string> {
   defaultMessage: T;

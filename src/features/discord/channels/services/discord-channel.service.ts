@@ -1,10 +1,10 @@
-import { DMChannel, NewsChannel, TextChannel } from "discord.js";
-import _ from "lodash";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { isDiscordDmChannel } from "../functions/is-discord-dm-channel";
-import { isDiscordTextChannel } from "../functions/is-discord-text-channel";
-import { IAnyDiscordChannel } from "../types/any-discord-channel";
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { isDiscordDmChannel } from '../functions/is-discord-dm-channel';
+import { isDiscordTextChannel } from '../functions/is-discord-text-channel';
+import { IAnyDiscordChannel } from '../types/any-discord-channel';
+import { DMChannel, NewsChannel, TextChannel } from 'discord.js';
+import _ from 'lodash';
 
 export class DiscordChannelService extends AbstractService {
   private static _instance: DiscordChannelService;
@@ -27,15 +27,11 @@ export class DiscordChannelService extends AbstractService {
     return !!(this.isText(channel) || this.isDm(channel));
   }
 
-  public isText(
-    channel: Readonly<TextChannel | DMChannel | NewsChannel | null | undefined>
-  ): channel is TextChannel {
+  public isText(channel: Readonly<TextChannel | DMChannel | NewsChannel | null | undefined>): channel is TextChannel {
     return isDiscordTextChannel(channel);
   }
 
-  public isDm(
-    channel: Readonly<TextChannel | DMChannel | NewsChannel | null | undefined>
-  ): channel is DMChannel {
+  public isDm(channel: Readonly<TextChannel | DMChannel | NewsChannel | null | undefined>): channel is DMChannel {
     return isDiscordDmChannel(channel);
   }
 }

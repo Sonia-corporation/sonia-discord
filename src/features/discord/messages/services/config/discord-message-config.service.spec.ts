@@ -1,20 +1,20 @@
-import { ColorEnum } from "../../../../../enums/color.enum";
-import { IconEnum } from "../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../core/services/core-event.service";
-import { IDiscordMessageCommandCliErrorConfig } from "../../../interfaces/discord-message-command-cli-error-config";
-import { IDiscordMessageCommandConfig } from "../../../interfaces/discord-message-command-config";
-import { IDiscordMessageCommandCookieConfig } from "../../../interfaces/discord-message-command-cookie-config";
-import { IDiscordMessageCommandErrorConfig } from "../../../interfaces/discord-message-command-error-config";
-import { IDiscordMessageCommandHelpConfig } from "../../../interfaces/discord-message-command-help-config";
-import { IDiscordMessageCommandLunchConfig } from "../../../interfaces/discord-message-command-lunch-config";
-import { IDiscordMessageCommandReleaseNotesConfig } from "../../../interfaces/discord-message-command-release-notes-config";
-import { IDiscordMessageCommandVersionConfig } from "../../../interfaces/discord-message-command-version-config";
-import { IDiscordMessageConfig } from "../../../interfaces/discord-message-config";
-import { IDiscordMessageErrorConfig } from "../../../interfaces/discord-message-error-config";
-import { IDiscordMessageWarningConfig } from "../../../interfaces/discord-message-warning-config";
-import { DiscordMessageConfigCoreService } from "./discord-message-config-core.service";
-import { DiscordMessageConfigService } from "./discord-message-config.service";
+import { DiscordMessageConfigCoreService } from './discord-message-config-core.service';
+import { DiscordMessageConfigService } from './discord-message-config.service';
+import { ColorEnum } from '../../../../../enums/color.enum';
+import { IconEnum } from '../../../../../enums/icon.enum';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../core/services/core-event.service';
+import { IDiscordMessageCommandCliErrorConfig } from '../../../interfaces/discord-message-command-cli-error-config';
+import { IDiscordMessageCommandConfig } from '../../../interfaces/discord-message-command-config';
+import { IDiscordMessageCommandCookieConfig } from '../../../interfaces/discord-message-command-cookie-config';
+import { IDiscordMessageCommandErrorConfig } from '../../../interfaces/discord-message-command-error-config';
+import { IDiscordMessageCommandHelpConfig } from '../../../interfaces/discord-message-command-help-config';
+import { IDiscordMessageCommandLunchConfig } from '../../../interfaces/discord-message-command-lunch-config';
+import { IDiscordMessageCommandReleaseNotesConfig } from '../../../interfaces/discord-message-command-release-notes-config';
+import { IDiscordMessageCommandVersionConfig } from '../../../interfaces/discord-message-command-version-config';
+import { IDiscordMessageConfig } from '../../../interfaces/discord-message-config';
+import { IDiscordMessageErrorConfig } from '../../../interfaces/discord-message-error-config';
+import { IDiscordMessageWarningConfig } from '../../../interfaces/discord-message-warning-config';
 
 describe(`DiscordMessageConfigService`, (): void => {
   let service: DiscordMessageConfigService;
@@ -257,8 +257,7 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommandCliErrorImageColor()`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageConfigService();
-      discordMessageConfigCoreService.command.cliError.imageColor =
-        ColorEnum.CANDY;
+      discordMessageConfigCoreService.command.cliError.imageColor = ColorEnum.CANDY;
     });
 
     it(`should return the Discord message config command CLI error image color`, (): void => {
@@ -273,8 +272,7 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommandCliErrorImageUrl()`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageConfigService();
-      discordMessageConfigCoreService.command.cliError.imageUrl =
-        IconEnum.WARNING_SHIELD;
+      discordMessageConfigCoreService.command.cliError.imageUrl = IconEnum.WARNING_SHIELD;
     });
 
     it(`should return the Discord message config command CLI error image url`, (): void => {
@@ -310,8 +308,7 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommandCookieImageColor()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.cookie.imageColor =
-        ColorEnum.CANDY;
+      discordMessageConfigCoreService.command.cookie.imageColor = ColorEnum.CANDY;
     });
 
     it(`should return the Discord message config command cookie image color`, (): void => {
@@ -326,8 +323,7 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommandCookieImageUrl()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.cookie.imageUrl =
-        IconEnum.WARNING_SHIELD;
+      discordMessageConfigCoreService.command.cookie.imageUrl = IconEnum.WARNING_SHIELD;
     });
 
     it(`should return the Discord message config command cookie image url`, (): void => {
@@ -363,8 +359,7 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommandErrorImageColor()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.error.imageColor =
-        ColorEnum.CANDY;
+      discordMessageConfigCoreService.command.error.imageColor = ColorEnum.CANDY;
     });
 
     it(`should return the Discord message config command error image color`, (): void => {
@@ -379,8 +374,7 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommandErrorImageUrl()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.error.imageUrl =
-        IconEnum.WARNING_SHIELD;
+      discordMessageConfigCoreService.command.error.imageUrl = IconEnum.WARNING_SHIELD;
     });
 
     it(`should return the Discord message config command error image url`, (): void => {
@@ -431,8 +425,7 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommandHelpImageUrl()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.help.imageUrl =
-        IconEnum.WARNING_SHIELD;
+      discordMessageConfigCoreService.command.help.imageUrl = IconEnum.WARNING_SHIELD;
     });
 
     it(`should return the Discord message config command help image url`, (): void => {
@@ -468,8 +461,7 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommandLunchImageColor()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.lunch.imageColor =
-        ColorEnum.CANDY;
+      discordMessageConfigCoreService.command.lunch.imageColor = ColorEnum.CANDY;
     });
 
     it(`should return the Discord message config command lunch image color`, (): void => {
@@ -484,8 +476,7 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommandLunchImageUrl()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.lunch.imageUrl =
-        IconEnum.WARNING_SHIELD;
+      discordMessageConfigCoreService.command.lunch.imageUrl = IconEnum.WARNING_SHIELD;
     });
 
     it(`should return the Discord message config command lunch image url`, (): void => {
@@ -536,8 +527,7 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommandReleaseNotesImageColor()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.releaseNotes.imageColor =
-        ColorEnum.CANDY;
+      discordMessageConfigCoreService.command.releaseNotes.imageColor = ColorEnum.CANDY;
     });
 
     it(`should return the Discord message config command release notes image color`, (): void => {
@@ -552,8 +542,7 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommandReleaseNotesImageUrl()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.releaseNotes.imageUrl =
-        IconEnum.WARNING_SHIELD;
+      discordMessageConfigCoreService.command.releaseNotes.imageUrl = IconEnum.WARNING_SHIELD;
     });
 
     it(`should return the Discord message config command release notes image url`, (): void => {
@@ -589,8 +578,7 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommandVersionImageColor()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.version.imageColor =
-        ColorEnum.CANDY;
+      discordMessageConfigCoreService.command.version.imageColor = ColorEnum.CANDY;
     });
 
     it(`should return the Discord message config command version image color`, (): void => {
@@ -605,8 +593,7 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageCommandVersionImageUrl()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.version.imageUrl =
-        IconEnum.WARNING_SHIELD;
+      discordMessageConfigCoreService.command.version.imageUrl = IconEnum.WARNING_SHIELD;
     });
 
     it(`should return the Discord message config command version image url`, (): void => {
@@ -708,8 +695,7 @@ describe(`DiscordMessageConfigService`, (): void => {
   describe(`getMessageWarningImageUrl()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.warning.imageUrl =
-        IconEnum.WARNING_SHIELD;
+      discordMessageConfigCoreService.warning.imageUrl = IconEnum.WARNING_SHIELD;
     });
 
     it(`should return the Discord message config warning image url`, (): void => {

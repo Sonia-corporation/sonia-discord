@@ -1,9 +1,9 @@
-import { take } from "rxjs/operators";
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { CoreEventService } from "../../core/services/core-event.service";
-import { ChalkColorService } from "../../logger/services/chalk/chalk-color.service";
-import { LoggerService } from "../../logger/services/logger.service";
-import { InitService } from "./init.service";
+import { InitService } from './init.service';
+import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import { CoreEventService } from '../../core/services/core-event.service';
+import { ChalkColorService } from '../../logger/services/chalk/chalk-color.service';
+import { LoggerService } from '../../logger/services/logger.service';
+import { take } from 'rxjs/operators';
 
 describe(`InitService`, (): void => {
   let service: InitService;
@@ -50,9 +50,7 @@ describe(`InitService`, (): void => {
       service = new InitService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.INIT_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.INIT_SERVICE);
     });
   });
 
@@ -67,12 +65,8 @@ describe(`InitService`, (): void => {
 
       loggerServiceInitSpy = jest.spyOn(loggerService, `init`);
       chalkColorServiceInitSpy = jest.spyOn(chalkColorService, `init`);
-      readEnvironmentSpy = jest
-        .spyOn(service, `readEnvironment`)
-        .mockResolvedValue();
-      notifyIsAppConfiguredSpy = jest
-        .spyOn(service, `notifyIsAppConfigured`)
-        .mockImplementation();
+      readEnvironmentSpy = jest.spyOn(service, `readEnvironment`).mockResolvedValue();
+      notifyIsAppConfiguredSpy = jest.spyOn(service, `notifyIsAppConfigured`).mockImplementation();
     });
 
     it(`should initialize the logger service`, async (): Promise<void> => {
@@ -104,19 +98,13 @@ describe(`InitService`, (): void => {
 
     describe(`when the environment failed to be read`, (): void => {
       beforeEach((): void => {
-        readEnvironmentSpy.mockRejectedValue(
-          new Error(`readEnvironment error`)
-        );
+        readEnvironmentSpy.mockRejectedValue(new Error(`readEnvironment error`));
       });
 
-      it(`should not notify that the app was configured`, async (): Promise<
-        void
-      > => {
+      it(`should not notify that the app was configured`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.init()).rejects.toThrow(
-          new Error(`readEnvironment error`)
-        );
+        await expect(service.init()).rejects.toThrow(new Error(`readEnvironment error`));
 
         expect(notifyIsAppConfiguredSpy).not.toHaveBeenCalled();
       });
@@ -127,9 +115,7 @@ describe(`InitService`, (): void => {
         readEnvironmentSpy.mockResolvedValue(true);
       });
 
-      it(`should notify that the app was configured`, async (): Promise<
-        void
-      > => {
+      it(`should notify that the app was configured`, async (): Promise<void> => {
         expect.assertions(2);
 
         await service.init();
@@ -158,10 +144,7 @@ describe(`InitService`, (): void => {
         expect.assertions(1);
         service.notifyIsAppConfigured();
 
-        const result = await service
-          .isAppConfigured$()
-          .pipe(take(1))
-          .toPromise();
+        const result = await service.isAppConfigured$().pipe(take(1)).toPromise();
 
         expect(result).toStrictEqual(true);
       });

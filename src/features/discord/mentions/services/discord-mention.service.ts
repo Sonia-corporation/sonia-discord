@@ -1,9 +1,9 @@
-import { GuildChannel, GuildMember, Role, User } from "discord.js";
-import _ from "lodash";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { isDiscordMessageMentions } from "../functions/is-discord-message-mentions";
-import { IAnyDiscordMessageMentions } from "../types/any-discord-message-mentions";
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { isDiscordMessageMentions } from '../functions/is-discord-message-mentions';
+import { IAnyDiscordMessageMentions } from '../types/any-discord-message-mentions';
+import { GuildChannel, GuildMember, Role, User } from 'discord.js';
+import _ from 'lodash';
 
 export class DiscordMentionService extends AbstractService {
   private static _instance: DiscordMentionService;

@@ -1,9 +1,9 @@
-import { MessageEmbed } from "discord.js";
-import _ from "lodash";
-import { createMock } from "ts-auto-mock";
-import { AbstractService } from "../../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { IDiscordMessageResponse } from "../../../messages/interfaces/discord-message-response";
+import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { IDiscordMessageResponse } from '../../../messages/interfaces/discord-message-response';
+import { MessageEmbed } from 'discord.js';
+import _ from 'lodash';
+import { createMock } from 'ts-auto-mock';
 
 export class DiscordLoggerErrorService extends AbstractService {
   private static _instance: DiscordLoggerErrorService;

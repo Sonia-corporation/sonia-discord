@@ -1,8 +1,8 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { isDiscordUser } from "../functions/is-discord-user";
-import { IAnyDiscordAuthor } from "../types/any-discord-author";
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { isDiscordUser } from '../functions/is-discord-user';
+import { IAnyDiscordAuthor } from '../types/any-discord-author';
+import _ from 'lodash';
 
 export class DiscordAuthorService extends AbstractService {
   private static _instance: DiscordAuthorService;

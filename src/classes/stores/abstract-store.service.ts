@@ -1,7 +1,7 @@
-import { Store } from "@datorama/akita";
-import { ServiceNameEnum } from "../../enums/service-name.enum";
-import { CoreEventService } from "../../features/core/services/core-event.service";
-import { IObject } from "../../types/object";
+import { ServiceNameEnum } from '../../enums/service-name.enum';
+import { CoreEventService } from '../../features/core/services/core-event.service';
+import { IObject } from '../../types/object';
+import { Store } from '@datorama/akita';
 
 /**
  * @description
@@ -11,10 +11,7 @@ import { IObject } from "../../types/object";
 export abstract class AbstractStoreService<T = IObject> extends Store<T> {
   protected readonly _serviceName: ServiceNameEnum;
 
-  protected constructor(
-    serviceName: Readonly<ServiceNameEnum>,
-    storeState: Readonly<T>
-  ) {
+  protected constructor(serviceName: Readonly<ServiceNameEnum>, storeState: Readonly<T>) {
     super(storeState);
     this._serviceName = serviceName;
 

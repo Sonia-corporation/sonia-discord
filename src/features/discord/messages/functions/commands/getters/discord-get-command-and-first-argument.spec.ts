@@ -1,7 +1,7 @@
-import { createMock } from "ts-auto-mock";
-import { DiscordMessageCommandEnum } from "../../../enums/commands/discord-message-command.enum";
-import { IDiscordGetCommandAndFirstArgumentData } from "../../../interfaces/commands/getters/discord-get-command-and-first-argument-data";
-import { discordGetCommandAndFirstArgument } from "./discord-get-command-and-first-argument";
+import { discordGetCommandAndFirstArgument } from './discord-get-command-and-first-argument';
+import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
+import { IDiscordGetCommandAndFirstArgumentData } from '../../../interfaces/commands/getters/discord-get-command-and-first-argument-data';
+import { createMock } from 'ts-auto-mock';
 
 describe(`discordGetCommandAndFirstArgument()`, (): void => {
   let data: IDiscordGetCommandAndFirstArgumentData;
@@ -275,10 +275,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
     describe(`when the given commands are feature and cookie`, (): void => {
       beforeEach((): void => {
-        data.commands = [
-          DiscordMessageCommandEnum.FEATURE,
-          DiscordMessageCommandEnum.COOKIE,
-        ];
+        data.commands = [DiscordMessageCommandEnum.FEATURE, DiscordMessageCommandEnum.COOKIE];
       });
 
       describe(`when the given message is empty`, (): void => {
@@ -996,10 +993,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
     describe(`when the given commands are feature and cookie`, (): void => {
       beforeEach((): void => {
-        data.commands = [
-          DiscordMessageCommandEnum.FEATURE,
-          DiscordMessageCommandEnum.COOKIE,
-        ];
+        data.commands = [DiscordMessageCommandEnum.FEATURE, DiscordMessageCommandEnum.COOKIE];
       });
 
       describe(`when the given message is empty`, (): void => {

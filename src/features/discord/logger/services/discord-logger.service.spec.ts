@@ -1,13 +1,13 @@
-import { Client } from "discord.js";
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { DiscordClientService } from "../../services/discord-client.service";
-import { DiscordLoggerErrorService } from "./discord-logger-error.service";
-import { DiscordLoggerWarningService } from "./discord-logger-warning.service";
-import { DiscordLoggerService } from "./discord-logger.service";
+import { DiscordLoggerErrorService } from './discord-logger-error.service';
+import { DiscordLoggerWarningService } from './discord-logger-warning.service';
+import { DiscordLoggerService } from './discord-logger.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { ILoggerLog } from '../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { Client } from 'discord.js';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -60,9 +60,7 @@ describe(`DiscordLoggerService`, (): void => {
       service = new DiscordLoggerService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_LOGGER_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_LOGGER_SERVICE);
     });
   });
 
@@ -82,12 +80,8 @@ describe(`DiscordLoggerService`, (): void => {
         on: discordClientServiceGetClientOnMock,
       });
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      discordClientServiceGetClientSpy = jest
-        .spyOn(discordClientService, `getClient`)
-        .mockReturnValue(client);
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(client);
       discordLoggerWarningServiceHandleWarningSpy = jest
         .spyOn(discordLoggerWarningService, `handleWarning`)
         .mockImplementation();
@@ -112,20 +106,14 @@ describe(`DiscordLoggerService`, (): void => {
       service.init();
 
       expect(discordClientServiceGetClientOnMock).toHaveBeenCalledTimes(2);
-      expect(discordClientServiceGetClientOnMock).toHaveBeenNthCalledWith(
-        1,
-        `warn`,
-        expect.any(Function)
-      );
+      expect(discordClientServiceGetClientOnMock).toHaveBeenNthCalledWith(1, `warn`, expect.any(Function));
     });
 
     describe(`when the Discord client warn event is triggered`, (): void => {
       beforeEach((): void => {
-        discordClientServiceGetClientOnMock = jest.fn(
-          (_event: string, listener: () => void): void => {
-            listener();
-          }
-        );
+        discordClientServiceGetClientOnMock = jest.fn((_event: string, listener: () => void): void => {
+          listener();
+        });
         client = createMock<Client>({
           on: discordClientServiceGetClientOnMock,
         });
@@ -138,12 +126,8 @@ describe(`DiscordLoggerService`, (): void => {
 
         service.init();
 
-        expect(
-          discordLoggerWarningServiceHandleWarningSpy
-        ).toHaveBeenCalledTimes(1);
-        expect(
-          discordLoggerWarningServiceHandleWarningSpy
-        ).toHaveBeenCalledWith(undefined);
+        expect(discordLoggerWarningServiceHandleWarningSpy).toHaveBeenCalledTimes(1);
+        expect(discordLoggerWarningServiceHandleWarningSpy).toHaveBeenCalledWith(undefined);
       });
     });
 
@@ -165,20 +149,14 @@ describe(`DiscordLoggerService`, (): void => {
       service.init();
 
       expect(discordClientServiceGetClientOnMock).toHaveBeenCalledTimes(2);
-      expect(discordClientServiceGetClientOnMock).toHaveBeenNthCalledWith(
-        2,
-        `error`,
-        expect.any(Function)
-      );
+      expect(discordClientServiceGetClientOnMock).toHaveBeenNthCalledWith(2, `error`, expect.any(Function));
     });
 
     describe(`when the Discord client error event is triggered`, (): void => {
       beforeEach((): void => {
-        discordClientServiceGetClientOnMock = jest.fn(
-          (_event: string, listener: () => void): void => {
-            listener();
-          }
-        );
+        discordClientServiceGetClientOnMock = jest.fn((_event: string, listener: () => void): void => {
+          listener();
+        });
         client = createMock<Client>({
           on: discordClientServiceGetClientOnMock,
         });
@@ -191,12 +169,8 @@ describe(`DiscordLoggerService`, (): void => {
 
         service.init();
 
-        expect(discordLoggerErrorServiceHandleErrorSpy).toHaveBeenCalledTimes(
-          1
-        );
-        expect(discordLoggerErrorServiceHandleErrorSpy).toHaveBeenCalledWith(
-          undefined
-        );
+        expect(discordLoggerErrorServiceHandleErrorSpy).toHaveBeenCalledTimes(1);
+        expect(discordLoggerErrorServiceHandleErrorSpy).toHaveBeenCalledWith(undefined);
       });
     });
 

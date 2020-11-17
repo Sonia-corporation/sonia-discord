@@ -1,24 +1,24 @@
-import { GuildChannel } from "discord.js";
-import _ from "lodash";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
-import { AppConfigService } from "../../../app/services/config/app-config.service";
-import { ChalkService } from "../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { ProfileConfigService } from "../../../profile/services/config/profile-config.service";
-import { isDiscordGuildChannel } from "../../channels/functions/is-discord-guild-channel";
-import { isDiscordGuildChannelWritable } from "../../channels/functions/types/is-discord-guild-channel-writable";
-import { DiscordChannelGuildService } from "../../channels/services/discord-channel-guild.service";
-import { addDiscordDevPrefix } from "../../functions/dev-prefix/add-discord-dev-prefix";
-import { DiscordLoggerErrorService } from "../../logger/services/discord-logger-error.service";
-import { wrapUserIdIntoMention } from "../../mentions/functions/wrap-user-id-into-mention";
-import { IDiscordMessageResponse } from "../../messages/interfaces/discord-message-response";
-import { DiscordClientService } from "../../services/discord-client.service";
-import { DiscordGuildSoniaChannelNameEnum } from "../enums/discord-guild-sonia-channel-name.enum";
-import { IAnyGuildMember } from "../types/any-guild-member";
-import { DiscordGuildConfigService } from "./config/discord-guild-config.service";
-import { DiscordGuildSoniaService } from "./discord-guild-sonia.service";
+import { DiscordGuildConfigService } from './config/discord-guild-config.service';
+import { DiscordGuildSoniaService } from './discord-guild-sonia.service';
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
+import { AppConfigService } from '../../../app/services/config/app-config.service';
+import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { ProfileConfigService } from '../../../profile/services/config/profile-config.service';
+import { isDiscordGuildChannel } from '../../channels/functions/is-discord-guild-channel';
+import { isDiscordGuildChannelWritable } from '../../channels/functions/types/is-discord-guild-channel-writable';
+import { DiscordChannelGuildService } from '../../channels/services/discord-channel-guild.service';
+import { addDiscordDevPrefix } from '../../functions/dev-prefix/add-discord-dev-prefix';
+import { DiscordLoggerErrorService } from '../../logger/services/discord-logger-error.service';
+import { wrapUserIdIntoMention } from '../../mentions/functions/wrap-user-id-into-mention';
+import { IDiscordMessageResponse } from '../../messages/interfaces/discord-message-response';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
+import { IAnyGuildMember } from '../types/any-guild-member';
+import { GuildChannel } from 'discord.js';
+import _ from 'lodash';
 
 export class DiscordGuildMemberAddService extends AbstractService {
   private static _instance: DiscordGuildMemberAddService;
@@ -41,9 +41,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
 
   public sendMessage(member: Readonly<IAnyGuildMember>): void {
     if (this._canSendMessage()) {
-      const primaryChannel: GuildChannel | null = DiscordChannelGuildService.getInstance().getPrimary(
-        member.guild
-      );
+      const primaryChannel: GuildChannel | null = DiscordChannelGuildService.getInstance().getPrimary(member.guild);
 
       if (isDiscordGuildChannel(primaryChannel)) {
         this._sendMessage(primaryChannel, member);
@@ -57,9 +55,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
       .on(`guildMemberAdd`, (member: Readonly<IAnyGuildMember>): void => {
         LoggerService.getInstance().debug({
           context: this._serviceName,
-          message: ChalkService.getInstance().text(
-            `${wrapInQuotes(`guildMemberAdd`)} event triggered`
-          ),
+          message: ChalkService.getInstance().text(`${wrapInQuotes(`guildMemberAdd`)} event triggered`),
         });
 
         this.sendMessage(member);
@@ -67,9 +63,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `listen ${wrapInQuotes(`guildMemberAdd`)} event`
-      ),
+      message: ChalkService.getInstance().text(`listen ${wrapInQuotes(`guildMemberAdd`)} event`),
     });
   }
 
@@ -80,28 +74,19 @@ export class DiscordGuildMemberAddService extends AbstractService {
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `welcome new members message sending disabled`
-      ),
+      message: ChalkService.getInstance().text(`welcome new members message sending disabled`),
     });
 
     return false;
   }
 
-  private _sendMessage(
-    guildChannel: Readonly<GuildChannel>,
-    member: Readonly<IAnyGuildMember>
-  ): void {
-    const messageResponse: IDiscordMessageResponse = this._getMessageResponse(
-      member
-    );
+  private _sendMessage(guildChannel: Readonly<GuildChannel>, member: Readonly<IAnyGuildMember>): void {
+    const messageResponse: IDiscordMessageResponse = this._getMessageResponse(member);
 
     if (!isDiscordGuildChannelWritable(guildChannel)) {
       LoggerService.getInstance().debug({
         context: this._serviceName,
-        message: ChalkService.getInstance().text(
-          `the guild channel is not writable`
-        ),
+        message: ChalkService.getInstance().text(`the guild channel is not writable`),
       });
 
       return;
@@ -109,9 +94,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `sending message for the new guild member...`
-      ),
+      message: ChalkService.getInstance().text(`sending message for the new guild member...`),
     });
 
     guildChannel
@@ -120,18 +103,14 @@ export class DiscordGuildMemberAddService extends AbstractService {
         // @todo add coverage
         LoggerService.getInstance().log({
           context: this._serviceName,
-          message: ChalkService.getInstance().text(
-            `welcome message for the new guild sent`
-          ),
+          message: ChalkService.getInstance().text(`welcome message for the new guild sent`),
         });
       })
       .catch((error: Readonly<Error | string>): void => {
         // @todo add coverage
         LoggerService.getInstance().error({
           context: this._serviceName,
-          message: ChalkService.getInstance().text(
-            `message sending for the new guild member failed`
-          ),
+          message: ChalkService.getInstance().text(`message sending for the new guild member failed`),
         });
         LoggerService.getInstance().error({
           context: this._serviceName,
@@ -139,23 +118,17 @@ export class DiscordGuildMemberAddService extends AbstractService {
         });
         DiscordGuildSoniaService.getInstance().sendMessageToChannel({
           channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-          messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(
-            error
-          ),
+          messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(error),
         });
       });
   }
 
-  private _getMessageResponse({
-    id,
-  }: Readonly<IAnyGuildMember>): IDiscordMessageResponse {
+  private _getMessageResponse({ id }: Readonly<IAnyGuildMember>): IDiscordMessageResponse {
     return {
       options: {
         split: false,
       },
-      response: this._getMessageResponseWithEnvPrefix(
-        `Welcome ${wrapUserIdIntoMention(id)}! il est midi!`
-      ),
+      response: this._getMessageResponseWithEnvPrefix(`Welcome ${wrapUserIdIntoMention(id)}! il est midi!`),
     };
   }
 

@@ -1,6 +1,6 @@
-import { User } from "discord.js";
-import { createMock } from "ts-auto-mock";
-import { isDiscordUser } from "./is-discord-user";
+import { isDiscordUser } from './is-discord-user';
+import { User } from 'discord.js';
+import { createMock } from 'ts-auto-mock';
 
 describe(`isDiscordUser()`, (): void => {
   let user: unknown;

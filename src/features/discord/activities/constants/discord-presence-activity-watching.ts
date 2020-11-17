@@ -1,6 +1,6 @@
-import { DiscordActivityNameEnum } from "../enums/discord-activity-name.enum";
-import { DiscordActivityTypeEnum } from "../enums/discord-activity-type.enum";
-import { IDiscordPresenceActivity } from "../interfaces/discord-presence-activity";
+import { DiscordActivityNameEnum } from '../enums/discord-activity-name.enum';
+import { DiscordActivityTypeEnum } from '../enums/discord-activity-type.enum';
+import { IDiscordPresenceActivity } from '../interfaces/discord-presence-activity';
 
 export const DISCORD_PRESENCE_ACTIVITY_WATCHING: IDiscordPresenceActivity[] = [
   {

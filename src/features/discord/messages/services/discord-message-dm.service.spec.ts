@@ -1,6 +1,6 @@
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { DiscordMessageDmService } from "./discord-message-dm.service";
+import { DiscordMessageDmService } from './discord-message-dm.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
 
 describe(`DiscordMessageDmService`, (): void => {
   let service: DiscordMessageDmService;
@@ -43,9 +43,7 @@ describe(`DiscordMessageDmService`, (): void => {
       service = new DiscordMessageDmService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_MESSAGE_DM_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_MESSAGE_DM_SERVICE);
     });
   });
 });

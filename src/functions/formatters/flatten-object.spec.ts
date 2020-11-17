@@ -1,5 +1,5 @@
-import { IObject } from "../../types/object";
-import { flattenObject } from "./flatten-object";
+import { flattenObject } from './flatten-object';
+import { IObject } from '../../types/object';
 
 describe(`flattenObject()`, (): void => {
   let object: IObject;
@@ -141,7 +141,7 @@ describe(`flattenObject()`, (): void => {
       const result = flattenObject(object);
 
       expect(result).toStrictEqual({
-        "object1.key": undefined,
+        'object1.key': undefined,
       });
     });
   });
@@ -161,7 +161,7 @@ describe(`flattenObject()`, (): void => {
       const result = flattenObject(object);
 
       expect(result).toStrictEqual({
-        "object1.key": null,
+        'object1.key': null,
       });
     });
   });
@@ -181,7 +181,7 @@ describe(`flattenObject()`, (): void => {
       const result = flattenObject(object);
 
       expect(result).toStrictEqual({
-        "object1.key": `value`,
+        'object1.key': `value`,
       });
     });
   });
@@ -201,7 +201,7 @@ describe(`flattenObject()`, (): void => {
       const result = flattenObject(object);
 
       expect(result).toStrictEqual({
-        "object1.key": 8,
+        'object1.key': 8,
       });
     });
   });
@@ -221,7 +221,7 @@ describe(`flattenObject()`, (): void => {
       const result = flattenObject(object);
 
       expect(result).toStrictEqual({
-        "object1.key": true,
+        'object1.key': true,
       });
     });
   });
@@ -241,7 +241,7 @@ describe(`flattenObject()`, (): void => {
       const result = flattenObject(object);
 
       expect(result).toStrictEqual({
-        "object1.key": false,
+        'object1.key': false,
       });
     });
   });

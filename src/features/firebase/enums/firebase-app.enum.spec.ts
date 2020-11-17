@@ -1,4 +1,4 @@
-import { FirebaseAppEnum } from "./firebase-app.enum";
+import { FirebaseAppEnum } from './firebase-app.enum';
 
 describe(`FirebaseAppEnum`, (): void => {
   it(`should have a member "SONIA_DISCORD"`, (): void => {

@@ -1,8 +1,8 @@
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../core/services/core-event.service";
-import { IDiscordGuildConfig } from "../../../interfaces/discord-guild-config";
-import { DiscordGuildConfigCoreService } from "./discord-guild-config-core.service";
-import { DiscordGuildConfigService } from "./discord-guild-config.service";
+import { DiscordGuildConfigCoreService } from './discord-guild-config-core.service';
+import { DiscordGuildConfigService } from './discord-guild-config.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../core/services/core-event.service';
+import { IDiscordGuildConfig } from '../../../interfaces/discord-guild-config';
 
 describe(`DiscordGuildConfigService`, (): void => {
   let service: DiscordGuildConfigService;

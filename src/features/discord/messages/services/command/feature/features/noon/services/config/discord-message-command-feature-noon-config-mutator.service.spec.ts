@@ -1,17 +1,17 @@
-import { ColorEnum } from "../../../../../../../../../../enums/color.enum";
-import { IconEnum } from "../../../../../../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../../../../../../enums/service-name.enum";
-import { IPartialNested } from "../../../../../../../../../../types/partial-nested";
-import { IConfigUpdateNumber } from "../../../../../../../../../config/interfaces/config-update-number";
-import { IConfigUpdateString } from "../../../../../../../../../config/interfaces/config-update-string";
-import { ConfigService } from "../../../../../../../../../config/services/config.service";
-import { CoreEventService } from "../../../../../../../../../core/services/core-event.service";
-import { LoggerService } from "../../../../../../../../../logger/services/logger.service";
-import { IDiscordMessageCommandFeatureConfig } from "../../interfaces/discord-message-command-feature-config";
-import { IDiscordMessageCommandFeatureNoonConfig } from "../../interfaces/discord-message-command-feature-noon-config";
-import { DiscordMessageCommandFeatureNoonConfigCoreService } from "./discord-message-command-feature-noon-config-core.service";
-import { DiscordMessageCommandFeatureNoonConfigMutatorService } from "./discord-message-command-feature-noon-config-mutator.service";
-import { DiscordMessageCommandFeatureNoonConfigService } from "./discord-message-command-feature-noon-config.service";
+import { DiscordMessageCommandFeatureNoonConfigCoreService } from './discord-message-command-feature-noon-config-core.service';
+import { DiscordMessageCommandFeatureNoonConfigMutatorService } from './discord-message-command-feature-noon-config-mutator.service';
+import { DiscordMessageCommandFeatureNoonConfigService } from './discord-message-command-feature-noon-config.service';
+import { ColorEnum } from '../../../../../../../../../../enums/color.enum';
+import { IconEnum } from '../../../../../../../../../../enums/icon.enum';
+import { ServiceNameEnum } from '../../../../../../../../../../enums/service-name.enum';
+import { IPartialNested } from '../../../../../../../../../../types/partial-nested';
+import { IConfigUpdateNumber } from '../../../../../../../../../config/interfaces/config-update-number';
+import { IConfigUpdateString } from '../../../../../../../../../config/interfaces/config-update-string';
+import { ConfigService } from '../../../../../../../../../config/services/config.service';
+import { CoreEventService } from '../../../../../../../../../core/services/core-event.service';
+import { LoggerService } from '../../../../../../../../../logger/services/logger.service';
+import { IDiscordMessageCommandFeatureConfig } from '../../interfaces/discord-message-command-feature-config';
+import { IDiscordMessageCommandFeatureNoonConfig } from '../../interfaces/discord-message-command-feature-noon-config';
 
 jest.mock(`../../../../../../../../../time/services/time.service`);
 jest.mock(`../../../../../../../../../logger/services/chalk/chalk.service`);
@@ -43,13 +43,9 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
     it(`should create a DiscordMessageCommandFeatureNoonConfigMutator service`, (): void => {
       expect.assertions(1);
 
-      service = DiscordMessageCommandFeatureNoonConfigMutatorService.getInstance(
-        config
-      );
+      service = DiscordMessageCommandFeatureNoonConfigMutatorService.getInstance(config);
 
-      expect(service).toStrictEqual(
-        expect.any(DiscordMessageCommandFeatureNoonConfigMutatorService)
-      );
+      expect(service).toStrictEqual(expect.any(DiscordMessageCommandFeatureNoonConfigMutatorService));
     });
 
     it(`should return the created DiscordMessageCommandFeatureNoonConfigMutator service`, (): void => {
@@ -90,30 +86,20 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
       it(`should not update the current command feature noon image color`, (): void => {
         expect.assertions(1);
-        discordMessageCommandFeatureNoonConfigCoreService.noon.imageColor =
-          ColorEnum.DESERT;
+        discordMessageCommandFeatureNoonConfigCoreService.noon.imageColor = ColorEnum.DESERT;
 
-        service = new DiscordMessageCommandFeatureNoonConfigMutatorService(
-          config
-        );
+        service = new DiscordMessageCommandFeatureNoonConfigMutatorService(config);
 
-        expect(
-          discordMessageCommandFeatureNoonConfigCoreService.noon.imageColor
-        ).toStrictEqual(ColorEnum.DESERT);
+        expect(discordMessageCommandFeatureNoonConfigCoreService.noon.imageColor).toStrictEqual(ColorEnum.DESERT);
       });
 
       it(`should not update the current command feature noon image url`, (): void => {
         expect.assertions(1);
-        discordMessageCommandFeatureNoonConfigCoreService.noon.imageUrl =
-          IconEnum.ALARM;
+        discordMessageCommandFeatureNoonConfigCoreService.noon.imageUrl = IconEnum.ALARM;
 
-        service = new DiscordMessageCommandFeatureNoonConfigMutatorService(
-          config
-        );
+        service = new DiscordMessageCommandFeatureNoonConfigMutatorService(config);
 
-        expect(
-          discordMessageCommandFeatureNoonConfigCoreService.noon.imageUrl
-        ).toStrictEqual(IconEnum.ALARM);
+        expect(discordMessageCommandFeatureNoonConfigCoreService.noon.imageUrl).toStrictEqual(IconEnum.ALARM);
       });
     });
 
@@ -129,30 +115,20 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
       it(`should override the command feature noon image color`, (): void => {
         expect.assertions(1);
-        discordMessageCommandFeatureNoonConfigCoreService.noon.imageColor =
-          ColorEnum.MINT;
+        discordMessageCommandFeatureNoonConfigCoreService.noon.imageColor = ColorEnum.MINT;
 
-        service = new DiscordMessageCommandFeatureNoonConfigMutatorService(
-          config
-        );
+        service = new DiscordMessageCommandFeatureNoonConfigMutatorService(config);
 
-        expect(
-          discordMessageCommandFeatureNoonConfigCoreService.noon.imageColor
-        ).toStrictEqual(ColorEnum.DESERT);
+        expect(discordMessageCommandFeatureNoonConfigCoreService.noon.imageColor).toStrictEqual(ColorEnum.DESERT);
       });
 
       it(`should override the command feature noon image url`, (): void => {
         expect.assertions(1);
-        discordMessageCommandFeatureNoonConfigCoreService.noon.imageUrl =
-          IconEnum.WARNING_SHIELD;
+        discordMessageCommandFeatureNoonConfigCoreService.noon.imageUrl = IconEnum.WARNING_SHIELD;
 
-        service = new DiscordMessageCommandFeatureNoonConfigMutatorService(
-          config
-        );
+        service = new DiscordMessageCommandFeatureNoonConfigMutatorService(config);
 
-        expect(
-          discordMessageCommandFeatureNoonConfigCoreService.noon.imageUrl
-        ).toStrictEqual(IconEnum.ALARM);
+        expect(discordMessageCommandFeatureNoonConfigCoreService.noon.imageUrl).toStrictEqual(IconEnum.ALARM);
       });
     });
   });
@@ -190,12 +166,8 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(
-        discordMessageCommandFeatureNoonConfigCoreServiceGetInstanceSpy
-      ).toHaveBeenCalledTimes(1);
-      expect(
-        discordMessageCommandFeatureNoonConfigCoreServiceGetInstanceSpy
-      ).toHaveBeenCalledWith();
+      expect(discordMessageCommandFeatureNoonConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageCommandFeatureNoonConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
     it(`should create the DiscordMessageCommandFeatureNoonConfig service instance`, (): void => {
@@ -203,12 +175,8 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(
-        discordMessageCommandFeatureNoonConfigServiceGetInstanceSpy
-      ).toHaveBeenCalledTimes(1);
-      expect(
-        discordMessageCommandFeatureNoonConfigServiceGetInstanceSpy
-      ).toHaveBeenCalledWith();
+      expect(discordMessageCommandFeatureNoonConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageCommandFeatureNoonConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
   });
 
@@ -232,9 +200,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
       service.updateConfig();
 
-      expect(
-        discordMessageCommandFeatureNoonConfigCoreService.noon
-      ).toStrictEqual({
+      expect(discordMessageCommandFeatureNoonConfigCoreService.noon).toStrictEqual({
         imageColor: ColorEnum.DESERT,
         imageUrl: IconEnum.ALARM,
       } as IDiscordMessageCommandFeatureNoonConfig);
@@ -258,9 +224,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
         service.updateConfig();
 
-        expect(
-          discordMessageCommandFeatureNoonConfigCoreService.noon
-        ).toStrictEqual({
+        expect(discordMessageCommandFeatureNoonConfigCoreService.noon).toStrictEqual({
           imageColor: ColorEnum.DESERT,
           imageUrl: IconEnum.ALARM,
         } as IDiscordMessageCommandFeatureNoonConfig);
@@ -290,9 +254,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(
-          discordMessageCommandFeatureNoonConfigCoreService.noon
-        ).toStrictEqual({
+        expect(discordMessageCommandFeatureNoonConfigCoreService.noon).toStrictEqual({
           imageColor: ColorEnum.DESERT,
           imageUrl: IconEnum.ALARM,
         } as IDiscordMessageCommandFeatureNoonConfig);
@@ -312,9 +274,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
   });
 
   describe(`updateNoon()`, (): void => {
-    let config:
-      | IPartialNested<IDiscordMessageCommandFeatureNoonConfig>
-      | undefined;
+    let config: IPartialNested<IDiscordMessageCommandFeatureNoonConfig> | undefined;
 
     beforeEach((): void => {
       service = DiscordMessageCommandFeatureNoonConfigMutatorService.getInstance();
@@ -334,9 +294,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
         service.updateNoon(config);
 
-        expect(
-          discordMessageCommandFeatureNoonConfigCoreService.noon
-        ).toStrictEqual({
+        expect(discordMessageCommandFeatureNoonConfigCoreService.noon).toStrictEqual({
           imageColor: ColorEnum.DESERT,
           imageUrl: IconEnum.ALARM,
         } as IDiscordMessageCommandFeatureNoonConfig);
@@ -355,9 +313,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
         service.updateNoon(config);
 
-        expect(
-          discordMessageCommandFeatureNoonConfigCoreService.noon.imageColor
-        ).toStrictEqual(ColorEnum.MINT);
+        expect(discordMessageCommandFeatureNoonConfigCoreService.noon.imageColor).toStrictEqual(ColorEnum.MINT);
       });
     });
 
@@ -373,9 +329,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
         service.updateNoon(config);
 
-        expect(
-          discordMessageCommandFeatureNoonConfigCoreService.noon.imageUrl
-        ).toStrictEqual(IconEnum.INFORMATION);
+        expect(discordMessageCommandFeatureNoonConfigCoreService.noon.imageUrl).toStrictEqual(IconEnum.INFORMATION);
       });
     });
   });
@@ -388,12 +342,9 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageCommandFeatureNoonConfigMutatorService.getInstance();
       imageColor = ColorEnum.SUN;
-      discordMessageCommandFeatureNoonConfigCoreService.noon.imageColor =
-        ColorEnum.CANDY;
+      discordMessageCommandFeatureNoonConfigCoreService.noon.imageColor = ColorEnum.CANDY;
 
-      configServiceGetUpdatedNumberSpy = jest
-        .spyOn(configService, `getUpdatedNumber`)
-        .mockReturnValue(ColorEnum.SUN);
+      configServiceGetUpdatedNumberSpy = jest.spyOn(configService, `getUpdatedNumber`).mockReturnValue(ColorEnum.SUN);
     });
 
     it(`should get the updated number`, (): void => {
@@ -415,9 +366,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
       service.updateNoonImageColor(imageColor);
 
-      expect(
-        discordMessageCommandFeatureNoonConfigCoreService.noon.imageColor
-      ).toStrictEqual(ColorEnum.SUN);
+      expect(discordMessageCommandFeatureNoonConfigCoreService.noon.imageColor).toStrictEqual(ColorEnum.SUN);
     });
   });
 
@@ -429,12 +378,9 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageCommandFeatureNoonConfigMutatorService.getInstance();
       imageUrl = IconEnum.GIRL;
-      discordMessageCommandFeatureNoonConfigCoreService.noon.imageUrl =
-        IconEnum.INFORMATION;
+      discordMessageCommandFeatureNoonConfigCoreService.noon.imageUrl = IconEnum.INFORMATION;
 
-      configServiceGetUpdatedStringSpy = jest
-        .spyOn(configService, `getUpdatedString`)
-        .mockReturnValue(IconEnum.GIRL);
+      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedString`).mockReturnValue(IconEnum.GIRL);
     });
 
     it(`should get the updated string`, (): void => {
@@ -456,9 +402,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
       service.updateNoonImageUrl(imageUrl);
 
-      expect(
-        discordMessageCommandFeatureNoonConfigCoreService.noon.imageUrl
-      ).toStrictEqual(IconEnum.GIRL);
+      expect(discordMessageCommandFeatureNoonConfigCoreService.noon.imageUrl).toStrictEqual(IconEnum.GIRL);
     });
   });
 });

@@ -1,5 +1,5 @@
-import _ from "lodash";
-import { DISCORD_EMBED_FIELD_DATA_VALUE_LIMIT } from "../../features/discord/constants/discord-embed-field-data-value-limit";
+import { DISCORD_EMBED_FIELD_DATA_VALUE_LIMIT } from '../../features/discord/constants/discord-embed-field-data-value-limit';
+import _ from 'lodash';
 
 export function ellipsis(
   value: Readonly<string>,

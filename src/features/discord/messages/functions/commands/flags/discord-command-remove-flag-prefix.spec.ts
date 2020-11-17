@@ -1,5 +1,5 @@
-import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
-import { discordCommandRemoveFlagPrefix } from "./discord-command-remove-flag-prefix";
+import { discordCommandRemoveFlagPrefix } from './discord-command-remove-flag-prefix';
+import { IDiscordMessageFlag } from '../../../types/commands/flags/discord-message-flag';
 
 describe(`discordCommandRemoveFlagPrefix()`, (): void => {
   let messageFlag: IDiscordMessageFlag;

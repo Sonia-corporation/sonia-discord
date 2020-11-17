@@ -1,5 +1,5 @@
-import moment from "moment-timezone";
-import { isValidDate } from "./is-valid-date";
+import { isValidDate } from './is-valid-date';
+import moment from 'moment-timezone';
 
 describe(`isValidDate()`, (): void => {
   let date: string;

@@ -1,30 +1,24 @@
-import _ from "lodash";
-import { AbstractConfigService } from "../../../../../classes/services/abstract-config.service";
-import { IconEnum } from "../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { IPartialNested } from "../../../../../types/partial-nested";
-import { ConfigService } from "../../../../config/services/config.service";
-import { ChalkService } from "../../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../../logger/services/logger.service";
-import { IDiscordConfig } from "../../../interfaces/discord-config";
-import { IDiscordSoniaConfig } from "../../../interfaces/discord-sonia-config";
-import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../../interfaces/discord-sonia-corporation-message-embed-author-config";
-import { DiscordSoniaConfigValueNameEnum } from "../../enums/discord-sonia-config-value-name.enum";
-import { DiscordSoniaConfigCoreService } from "./discord-sonia-config-core.service";
-import { DiscordSoniaConfigService } from "./discord-sonia-config.service";
+import { DiscordSoniaConfigCoreService } from './discord-sonia-config-core.service';
+import { DiscordSoniaConfigService } from './discord-sonia-config.service';
+import { AbstractConfigService } from '../../../../../classes/services/abstract-config.service';
+import { IconEnum } from '../../../../../enums/icon.enum';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { IPartialNested } from '../../../../../types/partial-nested';
+import { ConfigService } from '../../../../config/services/config.service';
+import { ChalkService } from '../../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../../logger/services/logger.service';
+import { IDiscordConfig } from '../../../interfaces/discord-config';
+import { IDiscordSoniaConfig } from '../../../interfaces/discord-sonia-config';
+import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from '../../../interfaces/discord-sonia-corporation-message-embed-author-config';
+import { DiscordSoniaConfigValueNameEnum } from '../../enums/discord-sonia-config-value-name.enum';
+import _ from 'lodash';
 
-export class DiscordSoniaConfigMutatorService extends AbstractConfigService<
-  IDiscordConfig
-> {
+export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDiscordConfig> {
   private static _instance: DiscordSoniaConfigMutatorService;
 
-  public static getInstance(
-    config?: Readonly<IPartialNested<IDiscordConfig>>
-  ): DiscordSoniaConfigMutatorService {
+  public static getInstance(config?: Readonly<IPartialNested<IDiscordConfig>>): DiscordSoniaConfigMutatorService {
     if (_.isNil(DiscordSoniaConfigMutatorService._instance)) {
-      DiscordSoniaConfigMutatorService._instance = new DiscordSoniaConfigMutatorService(
-        config
-      );
+      DiscordSoniaConfigMutatorService._instance = new DiscordSoniaConfigMutatorService(config);
     }
 
     return DiscordSoniaConfigMutatorService._instance;
@@ -51,74 +45,52 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<
     }
   }
 
-  public updateSonia(
-    sonia?: Readonly<IPartialNested<IDiscordSoniaConfig>>
-  ): void {
+  public updateSonia(sonia?: Readonly<IPartialNested<IDiscordSoniaConfig>>): void {
     if (!_.isNil(sonia)) {
       this.updateCorporationImageUrl(sonia.corporationImageUrl);
-      this.updateCorporationMessageEmbedAuthor(
-        sonia.corporationMessageEmbedAuthor
-      );
+      this.updateCorporationMessageEmbedAuthor(sonia.corporationMessageEmbedAuthor);
       this.updateId(sonia.id);
       this.updateSecretToken(sonia.secretToken);
     }
   }
 
-  public updateCorporationImageUrl(
-    corporationImageUrl?: Readonly<IconEnum>
-  ): void {
-    DiscordSoniaConfigCoreService.getInstance().corporationImageUrl = ConfigService.getInstance().getUpdatedString(
-      {
-        context: this._serviceName,
-        newValue: corporationImageUrl,
-        oldValue: DiscordSoniaConfigService.getInstance().getCorporationImageUrl(),
-        valueName: DiscordSoniaConfigValueNameEnum.CORPORATION_IMAGE_URL,
-      }
-    );
+  public updateCorporationImageUrl(corporationImageUrl?: Readonly<IconEnum>): void {
+    DiscordSoniaConfigCoreService.getInstance().corporationImageUrl = ConfigService.getInstance().getUpdatedString({
+      context: this._serviceName,
+      newValue: corporationImageUrl,
+      oldValue: DiscordSoniaConfigService.getInstance().getCorporationImageUrl(),
+      valueName: DiscordSoniaConfigValueNameEnum.CORPORATION_IMAGE_URL,
+    });
   }
 
   public updateCorporationMessageEmbedAuthor(
-    corporationMessageEmbedAuthor?: Readonly<
-      IPartialNested<IDiscordSoniaCorporationMessageEmbedAuthorConfig>
-    >
+    corporationMessageEmbedAuthor?: Readonly<IPartialNested<IDiscordSoniaCorporationMessageEmbedAuthorConfig>>
   ): void {
     if (!_.isNil(corporationMessageEmbedAuthor)) {
-      this.updateCorporationMessageEmbedAuthorIconUrl(
-        corporationMessageEmbedAuthor.iconURL
-      );
-      this.updateCorporationMessageEmbedAuthorName(
-        corporationMessageEmbedAuthor.name
-      );
-      this.updateCorporationMessageEmbedAuthorUrl(
-        corporationMessageEmbedAuthor.url
-      );
+      this.updateCorporationMessageEmbedAuthorIconUrl(corporationMessageEmbedAuthor.iconURL);
+      this.updateCorporationMessageEmbedAuthorName(corporationMessageEmbedAuthor.name);
+      this.updateCorporationMessageEmbedAuthorUrl(corporationMessageEmbedAuthor.url);
     }
   }
 
-  public updateCorporationMessageEmbedAuthorIconUrl(
-    iconUrl?: Readonly<string>
-  ): void {
+  public updateCorporationMessageEmbedAuthorIconUrl(iconUrl?: Readonly<string>): void {
     DiscordSoniaConfigCoreService.getInstance().corporationMessageEmbedAuthor.iconURL = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: iconUrl,
         oldValue: DiscordSoniaConfigService.getInstance().getCorporationMessageEmbedAuthorIconUrl(),
-        valueName:
-          DiscordSoniaConfigValueNameEnum.CORPORATION_MESSAGE_EMBED_AUTHOR_ICON_URL,
+        valueName: DiscordSoniaConfigValueNameEnum.CORPORATION_MESSAGE_EMBED_AUTHOR_ICON_URL,
       }
     );
   }
 
-  public updateCorporationMessageEmbedAuthorName(
-    name?: Readonly<string>
-  ): void {
+  public updateCorporationMessageEmbedAuthorName(name?: Readonly<string>): void {
     DiscordSoniaConfigCoreService.getInstance().corporationMessageEmbedAuthor.name = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: name,
         oldValue: DiscordSoniaConfigService.getInstance().getCorporationMessageEmbedAuthorName(),
-        valueName:
-          DiscordSoniaConfigValueNameEnum.CORPORATION_MESSAGE_EMBED_AUTHOR_NAME,
+        valueName: DiscordSoniaConfigValueNameEnum.CORPORATION_MESSAGE_EMBED_AUTHOR_NAME,
       }
     );
   }
@@ -129,33 +101,28 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<
         context: this._serviceName,
         newValue: url,
         oldValue: DiscordSoniaConfigService.getInstance().getCorporationMessageEmbedAuthorUrl(),
-        valueName:
-          DiscordSoniaConfigValueNameEnum.CORPORATION_MESSAGE_EMBED_AUTHOR_URL,
+        valueName: DiscordSoniaConfigValueNameEnum.CORPORATION_MESSAGE_EMBED_AUTHOR_URL,
       }
     );
   }
 
   public updateId(id?: Readonly<string>): void {
-    DiscordSoniaConfigCoreService.getInstance().id = ConfigService.getInstance().getUpdatedString(
-      {
-        context: this._serviceName,
-        isValueHidden: true,
-        newValue: id,
-        oldValue: DiscordSoniaConfigService.getInstance().getId(),
-        valueName: DiscordSoniaConfigValueNameEnum.ID,
-      }
-    );
+    DiscordSoniaConfigCoreService.getInstance().id = ConfigService.getInstance().getUpdatedString({
+      context: this._serviceName,
+      isValueHidden: true,
+      newValue: id,
+      oldValue: DiscordSoniaConfigService.getInstance().getId(),
+      valueName: DiscordSoniaConfigValueNameEnum.ID,
+    });
   }
 
   public updateSecretToken(secretToken?: Readonly<string>): void {
-    DiscordSoniaConfigCoreService.getInstance().secretToken = ConfigService.getInstance().getUpdatedString(
-      {
-        context: this._serviceName,
-        isValueHidden: true,
-        newValue: secretToken,
-        oldValue: DiscordSoniaConfigService.getInstance().getSecretToken(),
-        valueName: DiscordSoniaConfigValueNameEnum.SECRET_TOKEN,
-      }
-    );
+    DiscordSoniaConfigCoreService.getInstance().secretToken = ConfigService.getInstance().getUpdatedString({
+      context: this._serviceName,
+      isValueHidden: true,
+      newValue: secretToken,
+      oldValue: DiscordSoniaConfigService.getInstance().getSecretToken(),
+      valueName: DiscordSoniaConfigValueNameEnum.SECRET_TOKEN,
+    });
   }
 }

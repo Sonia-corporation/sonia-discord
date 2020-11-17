@@ -1,7 +1,7 @@
-import { createMock } from "ts-auto-mock";
-import { FirebaseGuildVersionEnum } from "../../enums/guilds/firebase-guild-version.enum";
-import { IFirebaseGuildV1 } from "../../interfaces/guilds/firebase-guild-v1";
-import { upgradeFirebaseGuildToV2 } from "./upgrade-firebase-guild-to-v2";
+import { upgradeFirebaseGuildToV2 } from './upgrade-firebase-guild-to-v2';
+import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
+import { IFirebaseGuildV1 } from '../../interfaces/guilds/firebase-guild-v1';
+import { createMock } from 'ts-auto-mock';
 
 describe(`upgradeFirebaseGuildToV2()`, (): void => {
   let firebaseGuild: IFirebaseGuildV1;

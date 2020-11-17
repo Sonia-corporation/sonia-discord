@@ -1,4 +1,4 @@
-import { ServerConfigValueNameEnum } from "./server-config-value-name.enum";
+import { ServerConfigValueNameEnum } from './server-config-value-name.enum';
 
 describe(`ServerConfigValueNameEnum`, (): void => {
   it(`should have a member "PORT"`, (): void => {

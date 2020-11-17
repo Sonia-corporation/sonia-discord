@@ -1,16 +1,16 @@
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { IPartialNested } from "../../../../types/partial-nested";
-import { IConfigUpdateBoolean } from "../../../config/interfaces/config-update-boolean";
-import { IConfigUpdateString } from "../../../config/interfaces/config-update-string";
-import { ConfigService } from "../../../config/services/config.service";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { LoggerConfigLevelEnum } from "../../enums/logger-config-level.enum";
-import { ILoggerConfig } from "../../interfaces/logger-config";
-import { ILoggerLog } from "../../interfaces/logger-log";
-import { LoggerService } from "../logger.service";
-import { LoggerConfigCoreService } from "./logger-config-core.service";
-import { LoggerConfigMutatorService } from "./logger-config-mutator.service";
-import { LoggerConfigService } from "./logger-config.service";
+import { LoggerConfigCoreService } from './logger-config-core.service';
+import { LoggerConfigMutatorService } from './logger-config-mutator.service';
+import { LoggerConfigService } from './logger-config.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { IPartialNested } from '../../../../types/partial-nested';
+import { IConfigUpdateBoolean } from '../../../config/interfaces/config-update-boolean';
+import { IConfigUpdateString } from '../../../config/interfaces/config-update-string';
+import { ConfigService } from '../../../config/services/config.service';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { LoggerConfigLevelEnum } from '../../enums/logger-config-level.enum';
+import { ILoggerConfig } from '../../interfaces/logger-config';
+import { ILoggerLog } from '../../interfaces/logger-log';
+import { LoggerService } from '../logger.service';
 
 jest.mock(`../../../time/services/time.service`);
 jest.mock(`../chalk/chalk.service`);
@@ -98,9 +98,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service = new LoggerConfigMutatorService(config);
 
-        expect(loggerConfigCoreService.level).toStrictEqual(
-          LoggerConfigLevelEnum.DEBUG
-        );
+        expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
       });
     });
 
@@ -127,9 +125,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service = new LoggerConfigMutatorService(config);
 
-        expect(loggerConfigCoreService.level).toStrictEqual(
-          LoggerConfigLevelEnum.DEBUG
-        );
+        expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
       });
     });
   });
@@ -143,14 +139,8 @@ describe(`LoggerConfigMutatorService`, (): void => {
       service = LoggerConfigMutatorService.getInstance();
 
       loggerServiceGetInstanceSpy = jest.spyOn(LoggerService, `getInstance`);
-      loggerConfigCoreServiceGetInstanceSpy = jest.spyOn(
-        LoggerConfigCoreService,
-        `getInstance`
-      );
-      loggerConfigServiceGetInstanceSpy = jest.spyOn(
-        LoggerConfigService,
-        `getInstance`
-      );
+      loggerConfigCoreServiceGetInstanceSpy = jest.spyOn(LoggerConfigCoreService, `getInstance`);
+      loggerConfigServiceGetInstanceSpy = jest.spyOn(LoggerConfigService, `getInstance`);
     });
 
     it(`should create the Logger service instance`, (): void => {
@@ -191,9 +181,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
       loggerConfigCoreService.isEnabled = true;
       loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
     });
 
     it(`should not update the config`, (): void => {
@@ -202,9 +190,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
       service.updateConfig();
 
       expect(loggerConfigCoreService.isEnabled).toStrictEqual(true);
-      expect(loggerConfigCoreService.level).toStrictEqual(
-        LoggerConfigLevelEnum.DEBUG
-      );
+      expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
     });
 
     it(`should not log about the config update`, (): void => {
@@ -226,9 +212,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(loggerConfigCoreService.isEnabled).toStrictEqual(true);
-        expect(loggerConfigCoreService.level).toStrictEqual(
-          LoggerConfigLevelEnum.DEBUG
-        );
+        expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
       });
 
       it(`should not log about the config update`, (): void => {
@@ -280,9 +264,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerConfigCoreService.level).toStrictEqual(
-          LoggerConfigLevelEnum.SUCCESS
-        );
+        expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.SUCCESS);
       });
 
       it(`should log about the config update`, (): void => {
@@ -309,9 +291,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
       isEnabled = true;
       loggerConfigCoreService.isEnabled = false;
 
-      configServiceGetUpdatedStringSpy = jest
-        .spyOn(configService, `getUpdatedBoolean`)
-        .mockReturnValue(true);
+      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedBoolean`).mockReturnValue(true);
     });
 
     it(`should get the updated boolean`, (): void => {
@@ -371,9 +351,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
       service.updateLevel(level);
 
-      expect(loggerConfigCoreService.level).toStrictEqual(
-        LoggerConfigLevelEnum.DEBUG
-      );
+      expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
     });
   });
 });

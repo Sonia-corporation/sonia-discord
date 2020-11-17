@@ -1,10 +1,10 @@
-import * as chalk from "chalk";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { ILoggerLog } from "../../interfaces/logger-log";
-import { LoggerService } from "../logger.service";
-import { ChalkColorService } from "./chalk-color.service";
-import { ChalkService } from "./chalk.service";
+import { ChalkColorService } from './chalk-color.service';
+import { ChalkService } from './chalk.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { ILoggerLog } from '../../interfaces/logger-log';
+import { LoggerService } from '../logger.service';
+import * as chalk from 'chalk';
 
 jest.mock(`./chalk.service`);
 
@@ -53,9 +53,7 @@ describe(`ChalkColorService`, (): void => {
       service = new ChalkColorService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.CHALK_COLOR_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.CHALK_COLOR_SERVICE);
     });
   });
 
@@ -69,9 +67,7 @@ describe(`ChalkColorService`, (): void => {
       service = new ChalkColorService();
 
       chalkServiceGetLevelSpy = jest.spyOn(chalkService, `getLevel`);
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
     });
 
     it(`should get the chalk level`, (): void => {

@@ -1,4 +1,4 @@
-import { DiscordMessageCommandFeatureNoonFlagEnum } from "./discord-message-command-feature-noon-flag.enum";
+import { DiscordMessageCommandFeatureNoonFlagEnum } from './discord-message-command-feature-noon-flag.enum';
 
 describe(`DiscordMessageCommandFeatureNoonFlagEnum`, (): void => {
   it(`should have a member "D"`, (): void => {
@@ -10,9 +10,7 @@ describe(`DiscordMessageCommandFeatureNoonFlagEnum`, (): void => {
   it(`should have a member "DISABLED"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureNoonFlagEnum.DISABLED).toStrictEqual(
-      `disabled`
-    );
+    expect(DiscordMessageCommandFeatureNoonFlagEnum.DISABLED).toStrictEqual(`disabled`);
   });
 
   it(`should have a member "E"`, (): void => {
@@ -24,9 +22,7 @@ describe(`DiscordMessageCommandFeatureNoonFlagEnum`, (): void => {
   it(`should have a member "ENABLED"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureNoonFlagEnum.ENABLED).toStrictEqual(
-      `enabled`
-    );
+    expect(DiscordMessageCommandFeatureNoonFlagEnum.ENABLED).toStrictEqual(`enabled`);
   });
 
   it(`should have a member "H"`, (): void => {

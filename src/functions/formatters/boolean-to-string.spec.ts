@@ -1,4 +1,4 @@
-import { booleanToString } from "./boolean-to-string";
+import { booleanToString } from './boolean-to-string';
 
 describe(`booleanToString()`, (): void => {
   let isDummy: boolean;

@@ -1,9 +1,9 @@
-import { Guild, GuildChannel } from "discord.js";
-import _ from "lodash";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { isDiscordGuild } from "../../guilds/functions/is-discord-guild";
-import { isDiscordGuildChannel } from "../functions/is-discord-guild-channel";
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { isDiscordGuild } from '../../guilds/functions/is-discord-guild';
+import { isDiscordGuildChannel } from '../functions/is-discord-guild-channel';
+import { Guild, GuildChannel } from 'discord.js';
+import _ from 'lodash';
 
 export class DiscordChannelGuildService extends AbstractService {
   private static _instance: DiscordChannelGuildService;
@@ -31,9 +31,7 @@ export class DiscordChannelGuildService extends AbstractService {
 
     const primaryChannel:
       | GuildChannel
-      | undefined = guild.channels.cache.find(
-      (channel: Readonly<GuildChannel>): boolean => this.isGeneral(channel)
-    );
+      | undefined = guild.channels.cache.find((channel: Readonly<GuildChannel>): boolean => this.isGeneral(channel));
 
     if (!isDiscordGuildChannel(primaryChannel)) {
       return null;

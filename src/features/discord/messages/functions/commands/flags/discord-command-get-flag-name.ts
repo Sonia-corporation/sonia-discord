@@ -1,6 +1,6 @@
-import _ from "lodash";
-import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
-import { discordCommandRemoveFlagPrefix } from "./discord-command-remove-flag-prefix";
+import { discordCommandRemoveFlagPrefix } from './discord-command-remove-flag-prefix';
+import { IDiscordMessageFlag } from '../../../types/commands/flags/discord-message-flag';
+import _ from 'lodash';
 
 /**
  * @description
@@ -24,9 +24,7 @@ export function discordCommandGetFlagName(
   messageFlag: Readonly<IDiscordMessageFlag>,
   toLowerCase: Readonly<boolean> = false
 ): string | null {
-  const flagName: string | undefined = _.head(
-    _.split(discordCommandRemoveFlagPrefix(messageFlag), `=`)
-  );
+  const flagName: string | undefined = _.head(_.split(discordCommandRemoveFlagPrefix(messageFlag), `=`));
 
   return _.isNil(flagName) || _.isEmpty(flagName)
     ? null

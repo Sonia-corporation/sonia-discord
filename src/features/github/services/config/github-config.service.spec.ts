@@ -1,8 +1,8 @@
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { IGithubConfig } from "../../interfaces/github-config";
-import { GithubConfigCoreService } from "./github-config-core.service";
-import { GithubConfigService } from "./github-config.service";
+import { GithubConfigCoreService } from './github-config-core.service';
+import { GithubConfigService } from './github-config.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { IGithubConfig } from '../../interfaces/github-config';
 
 describe(`GithubConfigService`, (): void => {
   let service: GithubConfigService;
@@ -47,9 +47,7 @@ describe(`GithubConfigService`, (): void => {
       service = new GithubConfigService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.GITHUB_CONFIG_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.GITHUB_CONFIG_SERVICE);
     });
   });
 

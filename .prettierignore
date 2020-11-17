@@ -1,0 +1,11 @@
+CHANGELOG.md
+.cache
+.cache-jest
+dist
+dist-local-dev
+node_modules
+stryker-tmp
+.eslintcache
+stryker.log
+package-lock.json
+coverage

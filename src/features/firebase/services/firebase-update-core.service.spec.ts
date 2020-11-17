@@ -1,7 +1,7 @@
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { FirebaseUpdateCoreService } from "./firebase-update-core.service";
-import _ from "lodash";
+import { FirebaseUpdateCoreService } from './firebase-update-core.service';
+import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import _ from 'lodash';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 
@@ -9,12 +9,7 @@ interface IDummy {
   id: string;
 }
 
-class DummyService extends FirebaseUpdateCoreService<
-  IDummy,
-  IDummy,
-  IDummy,
-  IDummy
-> {
+class DummyService extends FirebaseUpdateCoreService<IDummy, IDummy, IDummy, IDummy> {
   public constructor() {
     super(ServiceNameEnum.APP_CONFIG_CORE_SERVICE);
   }

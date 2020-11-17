@@ -1,18 +1,17 @@
-import * as NodeScheduleModule from "node-schedule";
-import { Job } from "node-schedule";
-import { Subject } from "rxjs";
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import * as GetEveryHourScheduleRuleModule from "../../../../functions/schedule/get-every-hour-schedule-rule";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../logger/services/logger.service";
-import * as GetNextJobDateModule from "../../../schedules/functions/get-next-job-date";
-import * as GetNextJobDateHumanizedModule from "../../../schedules/functions/get-next-job-date-humanized";
-import { DiscordClientService } from "../../services/discord-client.service";
-import { DISCORD_EMOTIONAL_STATE_MESSAGES } from "../constants/discord-emotional-state-messages";
-import { DiscordSoniaEmotionalStateEnum } from "../enums/discord-sonia-emotional-state.enum";
-import { DiscordSoniaEmotionalStateService } from "./discord-sonia-emotional-state.service";
+import { DiscordSoniaEmotionalStateService } from './discord-sonia-emotional-state.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import * as GetEveryHourScheduleRuleModule from '../../../../functions/schedule/get-every-hour-schedule-rule';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { ILoggerLog } from '../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../logger/services/logger.service';
+import * as GetNextJobDateModule from '../../../schedules/functions/get-next-job-date';
+import * as GetNextJobDateHumanizedModule from '../../../schedules/functions/get-next-job-date-humanized';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { DISCORD_EMOTIONAL_STATE_MESSAGES } from '../constants/discord-emotional-state-messages';
+import { DiscordSoniaEmotionalStateEnum } from '../enums/discord-sonia-emotional-state.enum';
+import * as NodeScheduleModule from 'node-schedule';
+import { Subject } from 'rxjs';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 jest.mock(`node-schedule`);
@@ -35,9 +34,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
       service = DiscordSoniaEmotionalStateService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(DiscordSoniaEmotionalStateService)
-      );
+      expect(service).toStrictEqual(expect.any(DiscordSoniaEmotionalStateService));
     });
 
     it(`should return the created DiscordSoniaEmotionalState service`, (): void => {
@@ -82,18 +79,12 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
       service = new DiscordSoniaEmotionalStateService();
       isReady$ = new Subject<boolean>();
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       discordClientServiceGetClientSpy = jest
         .spyOn(discordClientService, `isReady$`)
         .mockReturnValue(isReady$.asObservable());
-      setRandomEmotionalStateSpy = jest
-        .spyOn(service, `setRandomEmotionalState`)
-        .mockImplementation();
-      startScheduleSpy = jest
-        .spyOn(service, `startSchedule`)
-        .mockImplementation();
+      setRandomEmotionalStateSpy = jest.spyOn(service, `setRandomEmotionalState`).mockImplementation();
+      startScheduleSpy = jest.spyOn(service, `startSchedule`).mockImplementation();
     });
 
     it(`should check if the Discord client is ready`, (): void => {
@@ -181,7 +172,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
   });
 
   describe(`startSchedule()`, (): void => {
-    let job: Job;
+    let job: NodeScheduleModule.Job;
 
     let scheduleJobSpy: jest.SpyInstance;
     let loggerServiceDebugSpy: jest.SpyInstance;
@@ -193,23 +184,15 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
         .spyOn(GetEveryHourScheduleRuleModule, `getEveryHourScheduleRule`)
         .mockReturnValue(`dummy-schedule`);
       service = new DiscordSoniaEmotionalStateService();
-      job = createMock<Job>();
+      job = createMock<NodeScheduleModule.Job>();
 
-      scheduleJobSpy = jest
-        .spyOn(NodeScheduleModule, `scheduleJob`)
-        .mockReturnValue(job);
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      scheduleJobSpy = jest.spyOn(NodeScheduleModule, `scheduleJob`).mockReturnValue(job);
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       jest
         .spyOn(GetNextJobDateHumanizedModule, `getNextJobDateHumanized`)
         .mockReturnValue(`dummy-next-job-date-humanized`);
-      jest
-        .spyOn(GetNextJobDateModule, `getNextJobDate`)
-        .mockReturnValue(`dummy-next-job-date`);
-      setRandomEmotionalStateSpy = jest
-        .spyOn(service, `setRandomEmotionalState`)
-        .mockImplementation();
+      jest.spyOn(GetNextJobDateModule, `getNextJobDate`).mockReturnValue(`dummy-next-job-date`);
+      setRandomEmotionalStateSpy = jest.spyOn(service, `setRandomEmotionalState`).mockImplementation();
     });
 
     it(`should create a schedule`, (): void => {
@@ -227,10 +210,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
       service.startSchedule();
 
       expect(scheduleJobSpy).toHaveBeenCalledTimes(1);
-      expect(scheduleJobSpy).toHaveBeenCalledWith(
-        `dummy-schedule`,
-        expect.any(Function)
-      );
+      expect(scheduleJobSpy).toHaveBeenCalledWith(`dummy-schedule`, expect.any(Function));
     });
 
     describe(`when the job is undefined`, (): void => {
@@ -268,7 +248,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
     describe(`once the scheduled job is triggered`, (): void => {
       beforeEach((): void => {
         scheduleJobSpy.mockImplementation(
-          (_rule: string, callback: () => void): Job => {
+          (_rule: string, callback: () => void): NodeScheduleModule.Job => {
             callback();
 
             return job;
@@ -320,9 +300,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
       service = new DiscordSoniaEmotionalStateService();
       emotionalState = DiscordSoniaEmotionalStateEnum.ANNOYED;
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
     });
 
     it(`should update the emotional state with the given one`, (): void => {
@@ -356,9 +334,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
       getRandomEmotionalStateSpy = jest
         .spyOn(service, `getRandomEmotionalState`)
         .mockReturnValue(DiscordSoniaEmotionalStateEnum.COMFORTABLE);
-      setEmotionalStateSpy = jest
-        .spyOn(service, `setEmotionalState`)
-        .mockImplementation();
+      setEmotionalStateSpy = jest.spyOn(service, `setEmotionalState`).mockImplementation();
     });
 
     it(`should get a random emotional state`, (): void => {

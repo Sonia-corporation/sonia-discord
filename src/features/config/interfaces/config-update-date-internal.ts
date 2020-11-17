@@ -1,6 +1,5 @@
-import { IConfigUpdateDate } from "./config-update-date";
+import { IConfigUpdateDate } from './config-update-date';
 
-export interface IConfigUpdateDateInternal<T = string>
-  extends IConfigUpdateDate<T> {
+export interface IConfigUpdateDateInternal<T = string> extends IConfigUpdateDate<T> {
   newValue: T;
 }

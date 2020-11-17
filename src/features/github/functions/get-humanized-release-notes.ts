@@ -1,8 +1,6 @@
-import _ from "lodash";
+import _ from 'lodash';
 
-export function getHumanizedReleaseNotes(
-  releaseNotes: Readonly<string>
-): string {
+export function getHumanizedReleaseNotes(releaseNotes: Readonly<string>): string {
   let updatedReleaseNotes: string = _.clone(releaseNotes);
 
   // Remove the tag
@@ -11,32 +9,24 @@ export function getHumanizedReleaseNotes(
 
   // Remove the closes special annotation
   // Like ", closes [#776](https://github.com/Sonia-corporation/sonia-discord/issues/776)"
-  updatedReleaseNotes = _.replace(
-    updatedReleaseNotes,
-    /,\scloses\s\[#\d+\]\(.+\)/gim,
-    ``
-  );
+  updatedReleaseNotes = _.replace(updatedReleaseNotes, /,\scloses\s\[#\d+\]\(.+\)/gim, ``);
 
   // Change the h3
   // Like "* **logs:**"
-  updatedReleaseNotes = _.replace(
-    updatedReleaseNotes,
-    /###\s.+?\n/gim,
-    (h3: Readonly<string>): string => {
-      let updatedH3: string = _.clone(h3);
+  updatedReleaseNotes = _.replace(updatedReleaseNotes, /###\s.+?\n/gim, (h3: Readonly<string>): string => {
+    let updatedH3: string = _.clone(h3);
 
-      // Replace the "### :???: " by "### "
-      updatedH3 = _.replace(updatedH3, /(###\s:{1}.+:{1}\s)/i, `### `);
+    // Replace the "### :???: " by "### "
+    updatedH3 = _.replace(updatedH3, /(###\s:{1}.+:{1}\s)/i, `### `);
 
-      // Replace the "### " by "**__"
-      updatedH3 = _.replace(updatedH3, /###\s/i, `**__`);
+    // Replace the "### " by "**__"
+    updatedH3 = _.replace(updatedH3, /###\s/i, `**__`);
 
-      // Replace "\n" by ":__**"
-      updatedH3 = _.replace(updatedH3, /\n/i, `:__**`);
+    // Replace "\n" by ":__**"
+    updatedH3 = _.replace(updatedH3, /\n/i, `:__**`);
 
-      return updatedH3;
-    }
-  );
+    return updatedH3;
+  });
 
   // Change the title bullet
   // Like "* **logs:**"
@@ -54,11 +44,7 @@ export function getHumanizedReleaseNotes(
   );
 
   // Remove the links
-  updatedReleaseNotes = _.replace(
-    updatedReleaseNotes,
-    /(\(.+?\)|\[.+?]|\))/gim,
-    ``
-  );
+  updatedReleaseNotes = _.replace(updatedReleaseNotes, /(\(.+?\)|\[.+?]|\))/gim, ``);
 
   // Remove the special fixes annotation
   updatedReleaseNotes = _.replace(updatedReleaseNotes, /\sfixes\s#\d+/gim, ``);

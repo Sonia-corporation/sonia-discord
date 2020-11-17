@@ -1,7 +1,7 @@
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../core/services/core-event.service";
-import { DiscordSoniaConfigService } from "../../../users/services/config/discord-sonia-config.service";
-import { DiscordMessageScheduleNoonCountHumanizedService } from "./discord-message-schedule-noon-count-humanized.service";
+import { DiscordMessageScheduleNoonCountHumanizedService } from './discord-message-schedule-noon-count-humanized.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../core/services/core-event.service';
+import { DiscordSoniaConfigService } from '../../../users/services/config/discord-sonia-config.service';
 
 jest.mock(`../../../../logger/services/chalk/chalk.service`);
 
@@ -21,9 +21,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
 
       service = DiscordMessageScheduleNoonCountHumanizedService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(DiscordMessageScheduleNoonCountHumanizedService)
-      );
+      expect(service).toStrictEqual(expect.any(DiscordMessageScheduleNoonCountHumanizedService));
     });
 
     it(`should return the created DiscordMessageScheduleNoonCountHumanized service`, (): void => {
@@ -85,11 +83,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`No noon messages were sent today.`);
           });
@@ -103,11 +97,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`No noon messages were sent today.`);
           });
@@ -121,11 +111,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`No noon messages were sent today.`);
           });
@@ -145,11 +131,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`No noon messages were sent today.`);
           });
@@ -163,11 +145,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`No noon messages were sent today.`);
           });
@@ -181,11 +159,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`No noon messages were sent today.`);
           });
@@ -205,11 +179,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`No noon messages were sent today.`);
           });
@@ -223,11 +193,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`No noon messages were sent today.`);
           });
@@ -241,11 +207,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`No noon messages were sent today.`);
           });
@@ -271,15 +233,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `No noon messages were sent today for the **1** guild using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`No noon messages were sent today for the **1** guild using <@!1234>.`);
           });
         });
 
@@ -291,15 +247,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**1** noon message was sent over **0** of **1** guild using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`**1** noon message was sent over **0** of **1** guild using <@!1234>.`);
           });
         });
 
@@ -311,15 +261,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**2** noon messages were sent over **0** of **1** guild using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`**2** noon messages were sent over **0** of **1** guild using <@!1234>.`);
           });
         });
       });
@@ -337,15 +281,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `No noon messages were sent today for the **1** guild using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`No noon messages were sent today for the **1** guild using <@!1234>.`);
           });
         });
 
@@ -357,15 +295,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**1** noon message was sent over **1** of **1** guild using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`**1** noon message was sent over **1** of **1** guild using <@!1234>.`);
           });
         });
 
@@ -377,15 +309,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**2** noon messages were sent over **1** of **1** guild using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`**2** noon messages were sent over **1** of **1** guild using <@!1234>.`);
           });
         });
       });
@@ -403,15 +329,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `No noon messages were sent today for the **1** guild using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`No noon messages were sent today for the **1** guild using <@!1234>.`);
           });
         });
 
@@ -423,15 +343,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**1** noon message was sent over **2** of **1** guilds using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`**1** noon message was sent over **2** of **1** guilds using <@!1234>.`);
           });
         });
 
@@ -443,15 +357,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**2** noon messages were sent over **2** of **1** guilds using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`**2** noon messages were sent over **2** of **1** guilds using <@!1234>.`);
           });
         });
       });
@@ -475,15 +383,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `No noon messages were sent today for the **2** guilds using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`No noon messages were sent today for the **2** guilds using <@!1234>.`);
           });
         });
 
@@ -495,15 +397,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**1** noon message was sent over **0** of **2** guild using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`**1** noon message was sent over **0** of **2** guild using <@!1234>.`);
           });
         });
 
@@ -515,15 +411,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**2** noon messages were sent over **0** of **2** guild using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`**2** noon messages were sent over **0** of **2** guild using <@!1234>.`);
           });
         });
       });
@@ -541,15 +431,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `No noon messages were sent today for the **2** guilds using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`No noon messages were sent today for the **2** guilds using <@!1234>.`);
           });
         });
 
@@ -561,15 +445,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**1** noon message was sent over **1** of **2** guild using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`**1** noon message was sent over **1** of **2** guild using <@!1234>.`);
           });
         });
 
@@ -581,15 +459,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**2** noon messages were sent over **1** of **2** guild using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`**2** noon messages were sent over **1** of **2** guild using <@!1234>.`);
           });
         });
       });
@@ -607,15 +479,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `No noon messages were sent today for the **2** guilds using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`No noon messages were sent today for the **2** guilds using <@!1234>.`);
           });
         });
 
@@ -627,15 +493,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**1** noon message was sent over **2** of **2** guilds using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`**1** noon message was sent over **2** of **2** guilds using <@!1234>.`);
           });
         });
 
@@ -647,15 +507,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCount(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**2** noon messages were sent over **2** of **2** guilds using <@!1234>.`
-            );
+            expect(result).toStrictEqual(`**2** noon messages were sent over **2** of **2** guilds using <@!1234>.`);
           });
         });
       });
@@ -689,11 +543,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`no noon message sent`);
           });
@@ -707,11 +557,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`no noon message sent`);
           });
@@ -725,11 +571,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`no noon message sent`);
           });
@@ -749,11 +591,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`no noon message sent`);
           });
@@ -767,11 +605,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`no noon message sent`);
           });
@@ -785,11 +619,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`no noon message sent`);
           });
@@ -809,11 +639,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`no noon message sent`);
           });
@@ -827,11 +653,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`no noon message sent`);
           });
@@ -845,11 +667,7 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
             expect(result).toStrictEqual(`no noon message sent`);
           });
@@ -875,15 +693,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `no noon message sent for the value-1 guild`
-            );
+            expect(result).toStrictEqual(`no noon message sent for the value-1 guild`);
           });
         });
 
@@ -895,15 +707,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `value-1 noon message sent over value-0 guild of value-1`
-            );
+            expect(result).toStrictEqual(`value-1 noon message sent over value-0 guild of value-1`);
           });
         });
 
@@ -915,15 +721,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `value-2 noon messages sent over value-0 guild of value-1`
-            );
+            expect(result).toStrictEqual(`value-2 noon messages sent over value-0 guild of value-1`);
           });
         });
       });
@@ -941,15 +741,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `no noon message sent for the value-1 guild`
-            );
+            expect(result).toStrictEqual(`no noon message sent for the value-1 guild`);
           });
         });
 
@@ -961,15 +755,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `value-1 noon message sent over value-1 guild of value-1`
-            );
+            expect(result).toStrictEqual(`value-1 noon message sent over value-1 guild of value-1`);
           });
         });
 
@@ -981,15 +769,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `value-2 noon messages sent over value-1 guild of value-1`
-            );
+            expect(result).toStrictEqual(`value-2 noon messages sent over value-1 guild of value-1`);
           });
         });
       });
@@ -1007,15 +789,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `no noon message sent for the value-1 guild`
-            );
+            expect(result).toStrictEqual(`no noon message sent for the value-1 guild`);
           });
         });
 
@@ -1027,15 +803,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `value-1 noon message sent over value-2 guilds of value-1`
-            );
+            expect(result).toStrictEqual(`value-1 noon message sent over value-2 guilds of value-1`);
           });
         });
 
@@ -1047,15 +817,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `value-2 noon messages sent over value-2 guilds of value-1`
-            );
+            expect(result).toStrictEqual(`value-2 noon messages sent over value-2 guilds of value-1`);
           });
         });
       });
@@ -1079,15 +843,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `no noon message sent for the value-2 guilds`
-            );
+            expect(result).toStrictEqual(`no noon message sent for the value-2 guilds`);
           });
         });
 
@@ -1099,15 +857,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `value-1 noon message sent over value-0 guild of value-2`
-            );
+            expect(result).toStrictEqual(`value-1 noon message sent over value-0 guild of value-2`);
           });
         });
 
@@ -1119,15 +871,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `value-2 noon messages sent over value-0 guild of value-2`
-            );
+            expect(result).toStrictEqual(`value-2 noon messages sent over value-0 guild of value-2`);
           });
         });
       });
@@ -1145,15 +891,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `no noon message sent for the value-2 guilds`
-            );
+            expect(result).toStrictEqual(`no noon message sent for the value-2 guilds`);
           });
         });
 
@@ -1165,15 +905,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `value-1 noon message sent over value-1 guild of value-2`
-            );
+            expect(result).toStrictEqual(`value-1 noon message sent over value-1 guild of value-2`);
           });
         });
 
@@ -1185,15 +919,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `value-2 noon messages sent over value-1 guild of value-2`
-            );
+            expect(result).toStrictEqual(`value-2 noon messages sent over value-1 guild of value-2`);
           });
         });
       });
@@ -1211,15 +939,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `no noon message sent for the value-2 guilds`
-            );
+            expect(result).toStrictEqual(`no noon message sent for the value-2 guilds`);
           });
         });
 
@@ -1231,15 +953,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `value-1 noon message sent over value-2 guilds of value-2`
-            );
+            expect(result).toStrictEqual(`value-1 noon message sent over value-2 guilds of value-2`);
           });
         });
 
@@ -1251,15 +967,9 @@ describe(`DiscordMessageScheduleNoonCountHumanizedService`, (): void => {
           it(`should return that no noon message was sent`, (): void => {
             expect.assertions(1);
 
-            const result = service.getHumanizedCountForLogs(
-              totalGuildCount,
-              guildCount,
-              channelCount
-            );
+            const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `value-2 noon messages sent over value-2 guilds of value-2`
-            );
+            expect(result).toStrictEqual(`value-2 noon messages sent over value-2 guilds of value-2`);
           });
         });
       });

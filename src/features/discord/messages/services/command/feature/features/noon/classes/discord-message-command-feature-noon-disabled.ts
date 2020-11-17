@@ -1,25 +1,23 @@
-import { Snowflake } from "discord.js";
-import _ from "lodash";
-import { ClassNameEnum } from "../../../../../../../../../enums/class-name.enum";
-import { toBoolean } from "../../../../../../../../../functions/formatters/to-boolean";
-import { hasFirebaseGuildChannels } from "../../../../../../../../firebase/functions/guilds/checks/has-firebase-guild-channels";
-import { FirebaseGuildsChannelsFeaturesNoonEnabledService } from "../../../../../../../../firebase/services/guilds/channels/features/noon/firebase-guilds-channels-features-noon-enabled.service";
-import { FirebaseGuildsStoreQuery } from "../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query";
-import { IFirebaseGuildChannel } from "../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel";
-import { IFirebaseGuild } from "../../../../../../../../firebase/types/guilds/firebase-guild";
-import { ChalkService } from "../../../../../../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../../../../../../logger/services/logger.service";
-import { DiscordChannelService } from "../../../../../../../channels/services/discord-channel.service";
-import { IAnyDiscordChannel } from "../../../../../../../channels/types/any-discord-channel";
-import { DiscordCommandFlagActionBoolean } from "../../../../../../classes/commands/flags/discord-command-flag-action-boolean";
-import { IDiscordCommandFlagSuccess } from "../../../../../../interfaces/commands/flags/discord-command-flag-success";
-import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
-import { DiscordMessageCommandFeatureNoonEnabledSuccessFlagService } from "../services/discord-message-command-feature-noon-enabled-success-flag.service";
+import { ClassNameEnum } from '../../../../../../../../../enums/class-name.enum';
+import { toBoolean } from '../../../../../../../../../functions/formatters/to-boolean';
+import { hasFirebaseGuildChannels } from '../../../../../../../../firebase/functions/guilds/checks/has-firebase-guild-channels';
+import { FirebaseGuildsChannelsFeaturesNoonEnabledService } from '../../../../../../../../firebase/services/guilds/channels/features/noon/firebase-guilds-channels-features-noon-enabled.service';
+import { FirebaseGuildsStoreQuery } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query';
+import { IFirebaseGuildChannel } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel';
+import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/firebase-guild';
+import { ChalkService } from '../../../../../../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../../../../../../logger/services/logger.service';
+import { DiscordChannelService } from '../../../../../../../channels/services/discord-channel.service';
+import { IAnyDiscordChannel } from '../../../../../../../channels/types/any-discord-channel';
+import { DiscordCommandFlagActionBoolean } from '../../../../../../classes/commands/flags/discord-command-flag-action-boolean';
+import { IDiscordCommandFlagSuccess } from '../../../../../../interfaces/commands/flags/discord-command-flag-success';
+import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
+import { DiscordMessageCommandFeatureNoonEnabledSuccessFlagService } from '../services/discord-message-command-feature-noon-enabled-success-flag.service';
+import { Snowflake } from 'discord.js';
+import _ from 'lodash';
 
-export class DiscordMessageCommandFeatureNoonDisabled<T extends string>
-  implements DiscordCommandFlagActionBoolean<T> {
-  private readonly _serviceName =
-    ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_DISABLED;
+export class DiscordMessageCommandFeatureNoonDisabled<T extends string> implements DiscordCommandFlagActionBoolean<T> {
+  private readonly _serviceName = ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_DISABLED;
 
   public execute(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
@@ -31,23 +29,12 @@ export class DiscordMessageCommandFeatureNoonDisabled<T extends string>
     this._logNewState(anyDiscordMessage.id, shouldDisable);
 
     return this.isDisabled(anyDiscordMessage).then(
-      (
-        isDisabled: Readonly<boolean | undefined>
-      ): Promise<IDiscordCommandFlagSuccess> => {
+      (isDisabled: Readonly<boolean | undefined>): Promise<IDiscordCommandFlagSuccess> => {
         this._logCurrentState(anyDiscordMessage.id, isDisabled);
 
         if (!_.isNil(anyDiscordMessage.guild)) {
-          if (
-            DiscordChannelService.getInstance().isValid(
-              anyDiscordMessage.channel
-            )
-          ) {
-            return this.updateDatabase(
-              shouldDisable,
-              isDisabled,
-              anyDiscordMessage.guild,
-              anyDiscordMessage.channel
-            );
+          if (DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
+            return this.updateDatabase(shouldDisable, isDisabled, anyDiscordMessage.guild, anyDiscordMessage.channel);
           }
 
           return Promise.reject(new Error(`Firebase channel invalid`));
@@ -58,29 +45,20 @@ export class DiscordMessageCommandFeatureNoonDisabled<T extends string>
     );
   }
 
-  public isDisabled(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<boolean | undefined> {
+  public isDisabled(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<boolean | undefined> {
     if (_.isNil(anyDiscordMessage.guild)) {
       return this._getNoGuildMessageError(anyDiscordMessage.id);
     }
 
-    const firebaseGuild:
-      | IFirebaseGuild
-      | undefined = FirebaseGuildsStoreQuery.getInstance().getEntity(
+    const firebaseGuild: IFirebaseGuild | undefined = FirebaseGuildsStoreQuery.getInstance().getEntity(
       anyDiscordMessage.guild.id
     );
 
     if (_.isNil(firebaseGuild)) {
-      return this._getNoFirebaseGuildError(
-        anyDiscordMessage.id,
-        anyDiscordMessage.guild.id
-      );
+      return this._getNoFirebaseGuildError(anyDiscordMessage.id, anyDiscordMessage.guild.id);
     }
 
-    return Promise.resolve(
-      this._isNoonDisabled(firebaseGuild, anyDiscordMessage.channel.id)
-    );
+    return Promise.resolve(this._isNoonDisabled(firebaseGuild, anyDiscordMessage.channel.id));
   }
 
   public updateDatabase(
@@ -97,9 +75,7 @@ export class DiscordMessageCommandFeatureNoonDisabled<T extends string>
       .updateStateByGuildId(id, discordChannel.id, !shouldDisable)
       .then(
         (): Promise<IDiscordCommandFlagSuccess> =>
-          Promise.resolve(
-            this._getCommandFlagSuccess(shouldDisable, isDisabled)
-          )
+          Promise.resolve(this._getCommandFlagSuccess(shouldDisable, isDisabled))
       );
   }
 
@@ -107,9 +83,10 @@ export class DiscordMessageCommandFeatureNoonDisabled<T extends string>
     firebaseGuild: Readonly<IFirebaseGuild>,
     channelId: Readonly<Snowflake>
   ): boolean | undefined {
-    const firebaseGuildChannel:
-      | IFirebaseGuildChannel
-      | undefined = this._getFirebaseGuildChannel(firebaseGuild, channelId);
+    const firebaseGuildChannel: IFirebaseGuildChannel | undefined = this._getFirebaseGuildChannel(
+      firebaseGuild,
+      channelId
+    );
 
     if (_.isNil(firebaseGuildChannel)) {
       return undefined;
@@ -129,11 +106,8 @@ export class DiscordMessageCommandFeatureNoonDisabled<T extends string>
     return _.get(firebaseGuild.channels, channelId);
   }
 
-  private _getFirebaseDisabledState(
-    firebaseGuildChannel: Readonly<IFirebaseGuildChannel>
-  ): boolean | undefined {
-    const isEnabled: boolean | undefined =
-      firebaseGuildChannel.features?.noon?.isEnabled;
+  private _getFirebaseDisabledState(firebaseGuildChannel: Readonly<IFirebaseGuildChannel>): boolean | undefined {
+    const isEnabled: boolean | undefined = firebaseGuildChannel.features?.noon?.isEnabled;
 
     if (!_.isBoolean(isEnabled)) {
       return undefined;
@@ -146,9 +120,7 @@ export class DiscordMessageCommandFeatureNoonDisabled<T extends string>
     return !isEnabled;
   }
 
-  private _getNoGuildMessageError(
-    discordMessageId: Readonly<Snowflake>
-  ): Promise<never> {
+  private _getNoGuildMessageError(discordMessageId: Readonly<Snowflake>): Promise<never> {
     LoggerService.getInstance().error({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -158,9 +130,7 @@ export class DiscordMessageCommandFeatureNoonDisabled<T extends string>
       ),
     });
 
-    return Promise.reject(
-      new Error(`Could not get the guild from the message`)
-    );
+    return Promise.reject(new Error(`Could not get the guild from the message`));
   }
 
   private _getNoFirebaseGuildError(
@@ -172,15 +142,11 @@ export class DiscordMessageCommandFeatureNoonDisabled<T extends string>
       hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         discordMessageId,
-        `could not find the guild ${ChalkService.getInstance().value(
-          guildId
-        )} in Firebase`
+        `could not find the guild ${ChalkService.getInstance().value(guildId)} in Firebase`
       ),
     });
 
-    return Promise.reject(
-      new Error(`Could not find the guild ${guildId} in Firebase`)
-    );
+    return Promise.reject(new Error(`Could not find the guild ${guildId} in Firebase`));
   }
 
   private _logExecuteAction(discordMessageId: Readonly<Snowflake>): void {
@@ -194,10 +160,7 @@ export class DiscordMessageCommandFeatureNoonDisabled<T extends string>
     });
   }
 
-  private _logNewState(
-    discordMessageId: Readonly<Snowflake>,
-    isDisabled: Readonly<boolean>
-  ): void {
+  private _logNewState(discordMessageId: Readonly<Snowflake>, isDisabled: Readonly<boolean>): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -208,18 +171,13 @@ export class DiscordMessageCommandFeatureNoonDisabled<T extends string>
     });
   }
 
-  private _logCurrentState(
-    discordMessageId: Readonly<Snowflake>,
-    isDisabled: Readonly<boolean | undefined>
-  ): void {
+  private _logCurrentState(discordMessageId: Readonly<Snowflake>, isDisabled: Readonly<boolean | undefined>): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
       message: LoggerService.getInstance().getSnowflakeContext(
         discordMessageId,
-        `current state: ${ChalkService.getInstance().value(
-          _.isNil(isDisabled) ? `undefined` : isDisabled
-        )}`
+        `current state: ${ChalkService.getInstance().value(_.isNil(isDisabled) ? `undefined` : isDisabled)}`
       ),
     });
   }

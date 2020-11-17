@@ -1,18 +1,18 @@
-import _ from "lodash";
-import { AbstractService } from "../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { wrapInQuotes } from "../../../functions/formatters/wrap-in-quotes";
-import { ChalkService } from "../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../logger/services/logger.service";
-import { TimeService } from "../../time/services/time.service";
-import { IConfigUpdateBoolean } from "../interfaces/config-update-boolean";
-import { IConfigUpdateDate } from "../interfaces/config-update-date";
-import { IConfigUpdateDateInternal } from "../interfaces/config-update-date-internal";
-import { IConfigUpdateNumber } from "../interfaces/config-update-number";
-import { IConfigUpdateString } from "../interfaces/config-update-string";
-import { IConfigUpdateStringInternal } from "../interfaces/config-update-string-internal";
-import { IConfigUpdateStringOrArray } from "../interfaces/config-update-string-or-array";
-import { IConfigUpdateStringOrArrayInternal } from "../interfaces/config-update-string-or-array-internal";
+import { AbstractService } from '../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import { wrapInQuotes } from '../../../functions/formatters/wrap-in-quotes';
+import { ChalkService } from '../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../logger/services/logger.service';
+import { TimeService } from '../../time/services/time.service';
+import { IConfigUpdateBoolean } from '../interfaces/config-update-boolean';
+import { IConfigUpdateDate } from '../interfaces/config-update-date';
+import { IConfigUpdateDateInternal } from '../interfaces/config-update-date-internal';
+import { IConfigUpdateNumber } from '../interfaces/config-update-number';
+import { IConfigUpdateString } from '../interfaces/config-update-string';
+import { IConfigUpdateStringInternal } from '../interfaces/config-update-string-internal';
+import { IConfigUpdateStringOrArray } from '../interfaces/config-update-string-or-array';
+import { IConfigUpdateStringOrArrayInternal } from '../interfaces/config-update-string-or-array-internal';
+import _ from 'lodash';
 
 export class ConfigService extends AbstractService {
   private static _instance: ConfigService;
@@ -29,19 +29,12 @@ export class ConfigService extends AbstractService {
     super(ServiceNameEnum.CONFIG_SERVICE);
   }
 
-  public getUpdatedNumber({
-    context,
-    newValue,
-    oldValue,
-    valueName,
-  }: Readonly<IConfigUpdateNumber>): number {
+  public getUpdatedNumber({ context, newValue, oldValue, valueName }: Readonly<IConfigUpdateNumber>): number {
     if (_.isNumber(newValue)) {
       LoggerService.getInstance().log({
         context,
         message: ChalkService.getInstance().text(
-          `${valueName} updated to: ${ChalkService.getInstance().value(
-            newValue
-          )}`
+          `${valueName} updated to: ${ChalkService.getInstance().value(newValue)}`
         ),
       });
 
@@ -51,9 +44,7 @@ export class ConfigService extends AbstractService {
     return oldValue;
   }
 
-  public getUpdatedString<T = string>(
-    configUpdateString: Readonly<IConfigUpdateString<T>>
-  ): T {
+  public getUpdatedString<T = string>(configUpdateString: Readonly<IConfigUpdateString<T>>): T {
     if (_.isString(configUpdateString.newValue)) {
       LoggerService.getInstance().log({
         context: configUpdateString.context,
@@ -66,9 +57,7 @@ export class ConfigService extends AbstractService {
     return configUpdateString.oldValue;
   }
 
-  public getUpdatedDate<T = string>(
-    configUpdateDate: Readonly<IConfigUpdateDate<T>>
-  ): T {
+  public getUpdatedDate<T = string>(configUpdateDate: Readonly<IConfigUpdateDate<T>>): T {
     if (_.isString(configUpdateDate.newValue)) {
       LoggerService.getInstance().log({
         context: configUpdateDate.context,
@@ -81,9 +70,7 @@ export class ConfigService extends AbstractService {
     return configUpdateDate.oldValue;
   }
 
-  public getUpdatedStringOrArray<T = string>(
-    configUpdateStringOrArray: Readonly<IConfigUpdateStringOrArray<T>>
-  ): T {
+  public getUpdatedStringOrArray<T = string>(configUpdateStringOrArray: Readonly<IConfigUpdateStringOrArray<T>>): T {
     if (_.isString(configUpdateStringOrArray.newValue)) {
       LoggerService.getInstance().log({
         context: configUpdateStringOrArray.context,
@@ -94,9 +81,7 @@ export class ConfigService extends AbstractService {
     } else if (_.isArray(configUpdateStringOrArray.newValue)) {
       LoggerService.getInstance().log({
         context: configUpdateStringOrArray.context,
-        message: this._getUpdatedStringOrArrayMessage(
-          configUpdateStringOrArray
-        ),
+        message: this._getUpdatedStringOrArrayMessage(configUpdateStringOrArray),
       });
 
       return configUpdateStringOrArray.newValue;
@@ -117,9 +102,7 @@ export class ConfigService extends AbstractService {
       LoggerService.getInstance().log({
         context,
         message: ChalkService.getInstance().text(
-          `${valueName} updated to: ${ChalkService.getInstance().value(
-            newValue
-          )}`
+          `${valueName} updated to: ${ChalkService.getInstance().value(newValue)}`
         ),
       });
 
@@ -138,16 +121,11 @@ export class ConfigService extends AbstractService {
     let message = `${valueName} updated`;
 
     if (_.isEqual(isValueHidden, true)) {
-      message = LoggerService.getInstance().getHiddenValueUpdate(
-        `${message} to: `,
-        true
-      );
+      message = LoggerService.getInstance().getHiddenValueUpdate(`${message} to: `, true);
     } else {
       if (!_.isEqual(isValueDisplay, false)) {
         message = ChalkService.getInstance().text(
-          `${message} to: ${ChalkService.getInstance().value(
-            wrapInQuotes<T>(newValue)
-          )}`
+          `${message} to: ${ChalkService.getInstance().value(wrapInQuotes<T>(newValue))}`
         );
       } else {
         message = ChalkService.getInstance().text(message);
@@ -166,16 +144,11 @@ export class ConfigService extends AbstractService {
     let message = `${valueName} updated`;
 
     if (_.isEqual(isValueHidden, true)) {
-      message = LoggerService.getInstance().getHiddenValueArrayUpdate(
-        `${message} to: `,
-        true
-      );
+      message = LoggerService.getInstance().getHiddenValueArrayUpdate(`${message} to: `, true);
     } else {
       if (!_.isEqual(isValueDisplay, false) && _.isArray(newValue)) {
         message = ChalkService.getInstance().text(
-          `${message} to: ${ChalkService.getInstance().value(
-            LoggerService.getInstance().getStringArray<T>(newValue)
-          )}`
+          `${message} to: ${ChalkService.getInstance().value(LoggerService.getInstance().getStringArray<T>(newValue))}`
         );
       } else {
         message = ChalkService.getInstance().text(message);
@@ -194,18 +167,13 @@ export class ConfigService extends AbstractService {
     let message = `${valueName} updated`;
 
     if (_.isEqual(isValueHidden, true)) {
-      message = LoggerService.getInstance().getHiddenValueUpdate(
-        `${message} to: `,
-        true
-      );
+      message = LoggerService.getInstance().getHiddenValueUpdate(`${message} to: `, true);
     } else {
       if (!_.isEqual(isValueDisplay, false)) {
         message = ChalkService.getInstance().text(
           `${message} to: ${ChalkService.getInstance().value(
             wrapInQuotes<T>(newValue)
-          )} ${ChalkService.getInstance().hint(
-            `(${TimeService.getInstance().fromNow<T>(newValue, false)})`
-          )}`
+          )} ${ChalkService.getInstance().hint(`(${TimeService.getInstance().fromNow<T>(newValue, false)})`)}`
         );
       } else {
         message = ChalkService.getInstance().text(message);

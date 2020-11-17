@@ -1,4 +1,4 @@
-import { removeNull } from "./remove-null";
+import { removeNull } from './remove-null';
 
 describe(`removeNull()`, (): void => {
   let array: unknown[];

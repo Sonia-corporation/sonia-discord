@@ -1,18 +1,18 @@
-import _ from "lodash";
-import { Job, scheduleJob } from "node-schedule";
-import { filter, take } from "rxjs/operators";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ONE_EMITTER } from "../../../../constants/one-emitter";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
-import { getEveryHourScheduleRule } from "../../../../functions/schedule/get-every-hour-schedule-rule";
-import { ChalkService } from "../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { getNextJobDate } from "../../../schedules/functions/get-next-job-date";
-import { getNextJobDateHumanized } from "../../../schedules/functions/get-next-job-date-humanized";
-import { DiscordClientService } from "../../services/discord-client.service";
-import { DISCORD_EMOTIONAL_STATE_MESSAGES } from "../constants/discord-emotional-state-messages";
-import { DiscordSoniaEmotionalStateEnum } from "../enums/discord-sonia-emotional-state.enum";
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ONE_EMITTER } from '../../../../constants/one-emitter';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
+import { getEveryHourScheduleRule } from '../../../../functions/schedule/get-every-hour-schedule-rule';
+import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { getNextJobDate } from '../../../schedules/functions/get-next-job-date';
+import { getNextJobDateHumanized } from '../../../schedules/functions/get-next-job-date-humanized';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { DISCORD_EMOTIONAL_STATE_MESSAGES } from '../constants/discord-emotional-state-messages';
+import { DiscordSoniaEmotionalStateEnum } from '../enums/discord-sonia-emotional-state.enum';
+import _ from 'lodash';
+import { Job, scheduleJob } from 'node-schedule';
+import { filter, take } from 'rxjs/operators';
 
 export class DiscordSoniaEmotionalStateService extends AbstractService {
   private static _instance: DiscordSoniaEmotionalStateService;
@@ -27,8 +27,7 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
 
   private readonly _rule: string = getEveryHourScheduleRule();
   private _job: Job | undefined = undefined;
-  private _emotionalState: DiscordSoniaEmotionalStateEnum =
-    DiscordSoniaEmotionalStateEnum.ANNOYED;
+  private _emotionalState: DiscordSoniaEmotionalStateEnum = DiscordSoniaEmotionalStateEnum.ANNOYED;
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_SONIA_EMOTIONAL_STATE_SERVICE);
@@ -42,17 +41,13 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
     this._createSchedule();
   }
 
-  public setEmotionalState(
-    emotionalState: Readonly<DiscordSoniaEmotionalStateEnum>
-  ): void {
+  public setEmotionalState(emotionalState: Readonly<DiscordSoniaEmotionalStateEnum>): void {
     this._emotionalState = emotionalState;
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `Sonia emotional state updated to: ${ChalkService.getInstance().value(
-          this._emotionalState
-        )}`
+        `Sonia emotional state updated to: ${ChalkService.getInstance().value(this._emotionalState)}`
       ),
     });
   }
@@ -102,9 +97,7 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
     DiscordClientService.getInstance()
       .isReady$()
       .pipe(
-        filter((isReady: Readonly<boolean>): boolean =>
-          _.isEqual(isReady, true)
-        ),
+        filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
         take(ONE_EMITTER)
       )
       .subscribe({
@@ -116,9 +109,7 @@ export class DiscordSoniaEmotionalStateService extends AbstractService {
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `listen ${wrapInQuotes(`ready`)} Discord client state`
-      ),
+      message: ChalkService.getInstance().text(`listen ${wrapInQuotes(`ready`)} Discord client state`),
     });
   }
 }

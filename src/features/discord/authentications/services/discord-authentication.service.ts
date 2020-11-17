@@ -1,13 +1,13 @@
-import { Client } from "discord.js";
-import _ from "lodash";
-import { BehaviorSubject, Observable } from "rxjs";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
-import { ChalkService } from "../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { DiscordClientService } from "../../services/discord-client.service";
-import { DiscordSoniaConfigService } from "../../users/services/config/discord-sonia-config.service";
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
+import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { DiscordSoniaConfigService } from '../../users/services/config/discord-sonia-config.service';
+import { Client } from 'discord.js';
+import _ from 'lodash';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 export class DiscordAuthenticationService extends AbstractService {
   private static _instance: DiscordAuthenticationService;
@@ -20,9 +20,7 @@ export class DiscordAuthenticationService extends AbstractService {
     return DiscordAuthenticationService._instance;
   }
 
-  private readonly _isAuthenticated$: BehaviorSubject<
-    boolean
-  > = new BehaviorSubject<boolean>(false);
+  private readonly _isAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_AUTHENTICATION_SERVICE);
@@ -83,9 +81,7 @@ export class DiscordAuthenticationService extends AbstractService {
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `listen ${wrapInQuotes(`ready`)} event`
-      ),
+      message: ChalkService.getInstance().text(`listen ${wrapInQuotes(`ready`)} event`),
     });
   }
 
@@ -101,9 +97,7 @@ export class DiscordAuthenticationService extends AbstractService {
       LoggerService.getInstance().log({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
-          `authenticated as: ${ChalkService.getInstance().value(
-            `unknown user`
-          )}`
+          `authenticated as: ${ChalkService.getInstance().value(`unknown user`)}`
         ),
       });
 
@@ -113,9 +107,7 @@ export class DiscordAuthenticationService extends AbstractService {
     LoggerService.getInstance().log({
       context: this._serviceName,
       message: ChalkService.getInstance().text(
-        `authenticated as: ${ChalkService.getInstance().value(
-          wrapInQuotes(client.user.tag)
-        )}`
+        `authenticated as: ${ChalkService.getInstance().value(wrapInQuotes(client.user.tag))}`
       ),
     });
   }

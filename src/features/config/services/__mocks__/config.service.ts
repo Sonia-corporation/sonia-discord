@@ -1,9 +1,9 @@
-import _ from "lodash";
-import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { IConfigUpdateBoolean } from "../../interfaces/config-update-boolean";
-import { IConfigUpdateNumber } from "../../interfaces/config-update-number";
-import { IConfigUpdateString } from "../../interfaces/config-update-string";
+import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { IConfigUpdateBoolean } from '../../interfaces/config-update-boolean';
+import { IConfigUpdateNumber } from '../../interfaces/config-update-number';
+import { IConfigUpdateString } from '../../interfaces/config-update-string';
+import _ from 'lodash';
 
 export class ConfigService {
   private static _instance: ConfigService;
@@ -16,9 +16,7 @@ export class ConfigService {
     return ConfigService._instance;
   }
 
-  public getUpdatedNumber(
-    configUpdateNumber: Readonly<IConfigUpdateNumber>
-  ): number {
+  public getUpdatedNumber(configUpdateNumber: Readonly<IConfigUpdateNumber>): number {
     if (_.isNumber(configUpdateNumber.newValue)) {
       LoggerService.getInstance().log({
         context: configUpdateNumber.context,
@@ -31,9 +29,7 @@ export class ConfigService {
     return configUpdateNumber.oldValue;
   }
 
-  public getUpdatedString(
-    configUpdateString: Readonly<IConfigUpdateString>
-  ): string {
+  public getUpdatedString(configUpdateString: Readonly<IConfigUpdateString>): string {
     if (!_.isString(configUpdateString.newValue)) {
       return configUpdateString.oldValue;
     }
@@ -41,10 +37,7 @@ export class ConfigService {
     let message = `${configUpdateString.valueName} updated`;
 
     if (_.isEqual(configUpdateString.isValueHidden, true)) {
-      message = LoggerService.getInstance().getHiddenValueUpdate(
-        `${message} to: `,
-        true
-      );
+      message = LoggerService.getInstance().getHiddenValueUpdate(`${message} to: `, true);
     } else {
       if (!_.isEqual(configUpdateString.isValueDisplay, false)) {
         message = `${message} to: ${wrapInQuotes(configUpdateString.newValue)}`;
@@ -59,18 +52,14 @@ export class ConfigService {
     return configUpdateString.newValue;
   }
 
-  public getUpdatedBoolean(
-    configUpdateString: Readonly<IConfigUpdateBoolean>
-  ): boolean {
+  public getUpdatedBoolean(configUpdateString: Readonly<IConfigUpdateBoolean>): boolean {
     if (!_.isBoolean(configUpdateString.newValue)) {
       return configUpdateString.oldValue;
     }
 
     LoggerService.getInstance().log({
       context: configUpdateString.context,
-      message: `${configUpdateString.valueName} updated to: ${_.toString(
-        configUpdateString.newValue
-      )}`,
+      message: `${configUpdateString.valueName} updated to: ${_.toString(configUpdateString.newValue)}`,
     });
 
     return configUpdateString.newValue;

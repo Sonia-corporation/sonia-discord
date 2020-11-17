@@ -1,22 +1,17 @@
-import {
-  EmbedFieldData,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
-} from "discord.js";
-import moment from "moment-timezone";
-import { createMock } from "ts-auto-mock";
-import { ColorEnum } from "../../../../../../../../enums/color.enum";
-import { IconEnum } from "../../../../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../../../../core/services/core-event.service";
-import { DiscordSoniaService } from "../../../../../../users/services/discord-sonia.service";
-import { IDiscordCommandFlagDuplicated } from "../../../../../interfaces/commands/flags/discord-command-flag-duplicated";
-import { IDiscordCommandFlagsDuplicated } from "../../../../../types/commands/flags/discord-command-flags-duplicated";
-import { DiscordMessageConfigService } from "../../../../config/discord-message-config.service";
-import { DiscordMessageCommandCliErrorService } from "../../../discord-message-command-cli-error.service";
-import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../../features/noon/constants/discord-message-command-feature-noon-flags";
-import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from "./discord-message-command-feature-duplicated-flags-error.service";
+import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from './discord-message-command-feature-duplicated-flags-error.service';
+import { ColorEnum } from '../../../../../../../../enums/color.enum';
+import { IconEnum } from '../../../../../../../../enums/icon.enum';
+import { ServiceNameEnum } from '../../../../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../../../../core/services/core-event.service';
+import { DiscordSoniaService } from '../../../../../../users/services/discord-sonia.service';
+import { IDiscordCommandFlagDuplicated } from '../../../../../interfaces/commands/flags/discord-command-flag-duplicated';
+import { IDiscordCommandFlagsDuplicated } from '../../../../../types/commands/flags/discord-command-flags-duplicated';
+import { DiscordMessageConfigService } from '../../../../config/discord-message-config.service';
+import { DiscordMessageCommandCliErrorService } from '../../../discord-message-command-cli-error.service';
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../../features/noon/constants/discord-message-command-feature-noon-flags';
+import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import moment from 'moment-timezone';
+import { createMock } from 'ts-auto-mock';
 
 describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => {
   let service: DiscordMessageCommandFeatureDuplicatedFlagsErrorService;
@@ -38,9 +33,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
       service = DiscordMessageCommandFeatureDuplicatedFlagsErrorService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(DiscordMessageCommandFeatureDuplicatedFlagsErrorService)
-      );
+      expect(service).toStrictEqual(expect.any(DiscordMessageCommandFeatureDuplicatedFlagsErrorService));
     });
 
     it(`should return the created DiscordMessageCommandFeatureDuplicatedFlagsError service`, (): void => {
@@ -98,19 +91,13 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
         discordMessageConfigService,
         `getMessageCommandCliErrorImageColor`
       );
-      discordSoniaServiceGetImageUrlSpy = jest.spyOn(
-        discordSoniaService,
-        `getImageUrl`
-      );
+      discordSoniaServiceGetImageUrlSpy = jest.spyOn(discordSoniaService, `getImageUrl`);
       discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy = jest.spyOn(
         discordMessageConfigService,
         `getMessageCommandCliErrorImageUrl`
       );
       jest
-        .spyOn(
-          DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS,
-          `getRandomFlagUsageExample`
-        )
+        .spyOn(DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS, `getRandomFlagUsageExample`)
         .mockReturnValue(`--dummy-flag=dummy-value`);
     });
 
@@ -119,37 +106,23 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
       await service.getMessageResponse(flagsDuplicated);
 
-      expect(
-        discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy
-      ).toHaveBeenCalledTimes(1);
-      expect(
-        discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy
-      ).toHaveBeenCalledWith();
+      expect(discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy).toHaveBeenCalledWith();
     });
 
-    it(`should return a Discord message response embed with an author`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<
-        MessageEmbedAuthor
-      >();
-      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(
-        messageEmbedAuthor
-      );
+      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse(flagsDuplicated);
 
       expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
-    it(`should return a Discord message response embed with a color`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandCliErrorImageColorSpy.mockReturnValue(
-        ColorEnum.CANDY
-      );
+      discordMessageConfigServiceGetMessageCommandCliErrorImageColorSpy.mockReturnValue(ColorEnum.CANDY);
 
       const result = await service.getMessageResponse(flagsDuplicated);
 
@@ -168,14 +141,10 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
-        expect(result.options.embed?.description).toStrictEqual(
-          `**1** duplicated flag found.`
-        );
+        expect(result.options.embed?.description).toStrictEqual(`**1** duplicated flag found.`);
       });
 
-      it(`should return a Discord message response embed with 2 fields`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with 2 fields`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(flagsDuplicated);
@@ -227,14 +196,10 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
-        expect(result.options.embed?.description).toStrictEqual(
-          `**3** duplicated flags found.`
-        );
+        expect(result.options.embed?.description).toStrictEqual(`**3** duplicated flags found.`);
       });
 
-      it(`should return a Discord message response embed with 4 fields`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with 4 fields`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(flagsDuplicated);
@@ -334,13 +299,9 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
       });
     });
 
-    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<void> => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy.mockReturnValue(
-        IconEnum.ARTIFICIAL_INTELLIGENCE
-      );
+      discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy.mockReturnValue(IconEnum.ARTIFICIAL_INTELLIGENCE);
 
       const result = await service.getMessageResponse(flagsDuplicated);
 
@@ -349,37 +310,25 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
       } as MessageEmbedThumbnail);
     });
 
-    it(`should return a Discord message response embed with a timestamp`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
       expect.assertions(2);
 
       const result = await service.getMessageResponse(flagsDuplicated);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(
-        true
-      );
+      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
 
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(
-        `a few seconds ago`
-      );
+      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
     });
 
-    it(`should return a Discord message response embed with a title`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse(flagsDuplicated);
 
-      expect(result.options.embed?.title).toStrictEqual(
-        `I can not handle your request`
-      );
+      expect(result.options.embed?.title).toStrictEqual(`I can not handle your request`);
     });
 
-    it(`should return a Discord message response not split`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response not split`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse(flagsDuplicated);
@@ -387,9 +336,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
       expect(result.options.split).toStrictEqual(false);
     });
 
-    it(`should return a Discord message response without a response text`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response without a response text`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse(flagsDuplicated);

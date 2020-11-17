@@ -1,5 +1,5 @@
-import _ from "lodash";
-import { IObject } from "../../types/object";
+import { IObject } from '../../types/object';
+import _ from 'lodash';
 
 function flatten(
   object: Readonly<IObject> | Readonly<string>[] | Readonly<unknown>,
@@ -11,11 +11,8 @@ function flatten(
 
   return _.reduce(
     object,
-    (
-      cum: Readonly<IObject>,
-      next: Readonly<unknown>,
-      key: Readonly<string>
-    ): IObject => _.merge(cum, flatten(next, [...path, key])),
+    (cum: Readonly<IObject>, next: Readonly<unknown>, key: Readonly<string>): IObject =>
+      _.merge(cum, flatten(next, [...path, key])),
     {}
   );
 }

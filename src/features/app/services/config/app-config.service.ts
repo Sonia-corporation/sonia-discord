@@ -1,8 +1,8 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { IAppConfig } from "../../interfaces/app-config";
-import { AppConfigCoreService } from "./app-config-core.service";
+import { AppConfigCoreService } from './app-config-core.service';
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { IAppConfig } from '../../interfaces/app-config';
+import _ from 'lodash';
 
 export class AppConfigService extends AbstractService {
   private static _instance: AppConfigService;

@@ -1,5 +1,5 @@
-import xregexp from "xregexp";
-import { IDiscordGetCommandWithFirstArgumentRegexpData } from "../../../interfaces/commands/getters/discord-get-command-with-first-argument-regexp-data";
+import { IDiscordGetCommandWithFirstArgumentRegexpData } from '../../../interfaces/commands/getters/discord-get-command-with-first-argument-regexp-data';
+import xregexp from 'xregexp';
 
 /**
  * @param {Readonly<IDiscordGetCommandWithFirstArgumentRegexpData>} data The data used as a command

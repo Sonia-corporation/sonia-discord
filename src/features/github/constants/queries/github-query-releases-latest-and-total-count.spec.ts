@@ -1,4 +1,4 @@
-import { GITHUB_QUERY_RELEASES_LATEST_AND_TOTAL_COUNT } from "./github-query-releases-latest-and-total-count";
+import { GITHUB_QUERY_RELEASES_LATEST_AND_TOTAL_COUNT } from './github-query-releases-latest-and-total-count';
 
 describe(`GITHUB_QUERY_RELEASES_LATEST_AND_TOTAL_COUNT`, (): void => {
   it(`should contains the query to fetch the GitHub total release count and the latest release`, (): void => {

@@ -1,4 +1,4 @@
-import { IDiscordMessageCommandFeatureNoonConfig } from "./discord-message-command-feature-noon-config";
+import { IDiscordMessageCommandFeatureNoonConfig } from './discord-message-command-feature-noon-config';
 
 export interface IDiscordMessageCommandFeatureConfig {
   noon: IDiscordMessageCommandFeatureNoonConfig;

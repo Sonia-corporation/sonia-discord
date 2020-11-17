@@ -1,21 +1,19 @@
-import { EmbedFieldData, MessageEmbedOptions, Snowflake } from "discord.js";
-import _ from "lodash";
-import { ClassNameEnum } from "../../../../../../../../../enums/class-name.enum";
-import { ChalkService } from "../../../../../../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../../../../../../logger/services/logger.service";
-import { DiscordCommandFlagActionValueless } from "../../../../../../classes/commands/flags/discord-command-flag-action-valueless";
-import { DiscordCommandFlags } from "../../../../../../classes/commands/flags/discord-command-flags";
-import { DiscordMessageCommandEnum } from "../../../../../../enums/commands/discord-message-command.enum";
-import { discordGetCommandAndFirstArgument } from "../../../../../../functions/commands/getters/discord-get-command-and-first-argument";
-import { IDiscordMessageResponse } from "../../../../../../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
-import { DiscordMessageConfigService } from "../../../../../config/discord-message-config.service";
-import { DiscordMessageHelpService } from "../../../../../discord-message-help.service";
+import { ClassNameEnum } from '../../../../../../../../../enums/class-name.enum';
+import { ChalkService } from '../../../../../../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../../../../../../logger/services/logger.service';
+import { DiscordCommandFlagActionValueless } from '../../../../../../classes/commands/flags/discord-command-flag-action-valueless';
+import { DiscordCommandFlags } from '../../../../../../classes/commands/flags/discord-command-flags';
+import { DiscordMessageCommandEnum } from '../../../../../../enums/commands/discord-message-command.enum';
+import { discordGetCommandAndFirstArgument } from '../../../../../../functions/commands/getters/discord-get-command-and-first-argument';
+import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
+import { DiscordMessageConfigService } from '../../../../../config/discord-message-config.service';
+import { DiscordMessageHelpService } from '../../../../../discord-message-help.service';
+import { EmbedFieldData, MessageEmbedOptions, Snowflake } from 'discord.js';
+import _ from 'lodash';
 
-export class DiscordMessageCommandFeatureNoonHelp<T extends string>
-  implements DiscordCommandFlagActionValueless<T> {
-  private readonly _serviceName =
-    ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HELP;
+export class DiscordMessageCommandFeatureNoonHelp<T extends string> implements DiscordCommandFlagActionValueless<T> {
+  private readonly _serviceName = ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HELP;
 
   public execute(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
@@ -34,16 +32,11 @@ export class DiscordMessageCommandFeatureNoonHelp<T extends string>
     return DiscordMessageHelpService.getInstance()
       .getMessageResponse()
       .then(
-        (
-          helpMessageResponse: Readonly<IDiscordMessageResponse>
-        ): Promise<IDiscordMessageResponse> =>
+        (helpMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> =>
           Promise.resolve(
             _.merge({}, helpMessageResponse, {
               options: {
-                embed: this._getMessageEmbed(
-                  anyDiscordMessage,
-                  discordCommandFlags
-                ),
+                embed: this._getMessageEmbed(anyDiscordMessage, discordCommandFlags),
                 split: false,
               },
               response: ``,
@@ -69,10 +62,7 @@ export class DiscordMessageCommandFeatureNoonHelp<T extends string>
   ): MessageEmbedOptions {
     return {
       description: this._getMessageDescription(),
-      fields: this._getMessageEmbedFields(
-        anyDiscordMessage,
-        discordCommandFlags
-      ),
+      fields: this._getMessageEmbedFields(anyDiscordMessage, discordCommandFlags),
       title: this._getMessageEmbedTitle(),
     };
   }
@@ -95,14 +85,9 @@ export class DiscordMessageCommandFeatureNoonHelp<T extends string>
     { content }: Readonly<IAnyDiscordMessage>,
     discordCommandFlags: Readonly<DiscordCommandFlags<T>>
   ): EmbedFieldData {
-    const randomFlag:
-      | string
-      | undefined = discordCommandFlags.getRandomFlagUsageExample();
+    const randomFlag: string | undefined = discordCommandFlags.getRandomFlagUsageExample();
     let userCommand: string | null = discordGetCommandAndFirstArgument({
-      commands: [
-        DiscordMessageCommandEnum.F,
-        DiscordMessageCommandEnum.FEATURE,
-      ],
+      commands: [DiscordMessageCommandEnum.F, DiscordMessageCommandEnum.FEATURE],
       message: _.isNil(content) ? `` : content,
       prefixes: DiscordMessageConfigService.getInstance().getMessageCommandPrefix(),
     });

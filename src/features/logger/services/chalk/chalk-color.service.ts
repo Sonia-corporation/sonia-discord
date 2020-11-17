@@ -1,10 +1,10 @@
-import chalk from "chalk";
-import _ from "lodash";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CHALK_LEVELS_HUMANIZED } from "../../constants/chalk/chalk-levels-humanized";
-import { LoggerService } from "../logger.service";
-import { ChalkService } from "./chalk.service";
+import { ChalkService } from './chalk.service';
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CHALK_LEVELS_HUMANIZED } from '../../constants/chalk/chalk-levels-humanized';
+import { LoggerService } from '../logger.service';
+import chalk from 'chalk';
+import _ from 'lodash';
 
 const MINIMUM_CHALK_LEVEL = 0;
 const MAXIMUM_CHALK_LEVEL = 3;
@@ -41,13 +41,8 @@ export class ChalkColorService extends AbstractService {
     });
   }
 
-  private _getHumanizedColorLevel(
-    chalkLevel: Readonly<chalk.Level>
-  ): string | never {
-    if (
-      _.gte(chalkLevel, MINIMUM_CHALK_LEVEL) &&
-      _.lte(chalkLevel, MAXIMUM_CHALK_LEVEL)
-    ) {
+  private _getHumanizedColorLevel(chalkLevel: Readonly<chalk.Level>): string | never {
+    if (_.gte(chalkLevel, MINIMUM_CHALK_LEVEL) && _.lte(chalkLevel, MAXIMUM_CHALK_LEVEL)) {
       return CHALK_LEVELS_HUMANIZED[chalkLevel];
     }
 

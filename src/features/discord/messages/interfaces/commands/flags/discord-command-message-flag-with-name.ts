@@ -1,4 +1,4 @@
-import { IDiscordMessageFlag } from "../../../types/commands/flags/discord-message-flag";
+import { IDiscordMessageFlag } from '../../../types/commands/flags/discord-message-flag';
 
 export interface IDiscordCommandMessageFlagWithName {
   messageFlag: IDiscordMessageFlag;

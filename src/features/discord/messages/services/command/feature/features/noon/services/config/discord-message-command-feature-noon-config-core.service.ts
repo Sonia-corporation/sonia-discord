@@ -1,10 +1,10 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../../../../../../../classes/services/abstract.service";
-import { ColorEnum } from "../../../../../../../../../../enums/color.enum";
-import { IconEnum } from "../../../../../../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../../../../../../enums/service-name.enum";
-import { IDiscordMessageCommandFeatureConfig } from "../../interfaces/discord-message-command-feature-config";
-import { IDiscordMessageCommandFeatureNoonConfig } from "../../interfaces/discord-message-command-feature-noon-config";
+import { AbstractService } from '../../../../../../../../../../classes/services/abstract.service';
+import { ColorEnum } from '../../../../../../../../../../enums/color.enum';
+import { IconEnum } from '../../../../../../../../../../enums/icon.enum';
+import { ServiceNameEnum } from '../../../../../../../../../../enums/service-name.enum';
+import { IDiscordMessageCommandFeatureConfig } from '../../interfaces/discord-message-command-feature-config';
+import { IDiscordMessageCommandFeatureNoonConfig } from '../../interfaces/discord-message-command-feature-noon-config';
+import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureNoonConfigCoreService
   extends AbstractService
@@ -25,8 +25,6 @@ export class DiscordMessageCommandFeatureNoonConfigCoreService
   };
 
   public constructor() {
-    super(
-      ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_CORE_SERVICE
-    );
+    super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_CORE_SERVICE);
   }
 }

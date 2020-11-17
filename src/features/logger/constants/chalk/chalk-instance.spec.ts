@@ -1,4 +1,4 @@
-import { CHALK_INSTANCE } from "./chalk-instance";
+import { CHALK_INSTANCE } from './chalk-instance';
 
 describe(`CHALK_INSTANCE`, (): void => {
   it(`should be a "Chalk" object`, (): void => {

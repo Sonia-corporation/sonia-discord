@@ -1,27 +1,21 @@
-import _ from "lodash";
-import { AbstractConfigService } from "../../../../classes/services/abstract-config.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { IPartialNested } from "../../../../types/partial-nested";
-import { ConfigService } from "../../../config/services/config.service";
-import { ChalkService } from "../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { GithubConfigValueNameEnum } from "../../enums/github-config-value-name.enum";
-import { IGithubConfig } from "../../interfaces/github-config";
-import { GithubConfigCoreService } from "./github-config-core.service";
-import { GithubConfigService } from "./github-config.service";
+import { GithubConfigCoreService } from './github-config-core.service';
+import { GithubConfigService } from './github-config.service';
+import { AbstractConfigService } from '../../../../classes/services/abstract-config.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { IPartialNested } from '../../../../types/partial-nested';
+import { ConfigService } from '../../../config/services/config.service';
+import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { GithubConfigValueNameEnum } from '../../enums/github-config-value-name.enum';
+import { IGithubConfig } from '../../interfaces/github-config';
+import _ from 'lodash';
 
-export class GithubConfigMutatorService extends AbstractConfigService<
-  IGithubConfig
-> {
+export class GithubConfigMutatorService extends AbstractConfigService<IGithubConfig> {
   private static _instance: GithubConfigMutatorService;
 
-  public static getInstance(
-    config?: Readonly<IPartialNested<IGithubConfig>>
-  ): GithubConfigMutatorService {
+  public static getInstance(config?: Readonly<IPartialNested<IGithubConfig>>): GithubConfigMutatorService {
     if (_.isNil(GithubConfigMutatorService._instance)) {
-      GithubConfigMutatorService._instance = new GithubConfigMutatorService(
-        config
-      );
+      GithubConfigMutatorService._instance = new GithubConfigMutatorService(config);
     }
 
     return GithubConfigMutatorService._instance;
@@ -50,27 +44,21 @@ export class GithubConfigMutatorService extends AbstractConfigService<
   }
 
   public updateBugReportUrl(bugReportUrl?: Readonly<string>): void {
-    GithubConfigCoreService.getInstance().bugReportUrl = ConfigService.getInstance().getUpdatedString(
-      {
-        context: this._serviceName,
-        newValue: bugReportUrl,
-        oldValue: GithubConfigService.getInstance().getBugReportUrl(),
-        valueName: GithubConfigValueNameEnum.BUG_REPORT_URL,
-      }
-    );
+    GithubConfigCoreService.getInstance().bugReportUrl = ConfigService.getInstance().getUpdatedString({
+      context: this._serviceName,
+      newValue: bugReportUrl,
+      oldValue: GithubConfigService.getInstance().getBugReportUrl(),
+      valueName: GithubConfigValueNameEnum.BUG_REPORT_URL,
+    });
   }
 
-  public updatePersonalAccessToken(
-    personalAccessToken?: Readonly<string>
-  ): void {
-    GithubConfigCoreService.getInstance().personalAccessToken = ConfigService.getInstance().getUpdatedString(
-      {
-        context: this._serviceName,
-        isValueHidden: true,
-        newValue: personalAccessToken,
-        oldValue: GithubConfigService.getInstance().getPersonalAccessToken(),
-        valueName: GithubConfigValueNameEnum.PERSONAL_ACCESS_TOKEN,
-      }
-    );
+  public updatePersonalAccessToken(personalAccessToken?: Readonly<string>): void {
+    GithubConfigCoreService.getInstance().personalAccessToken = ConfigService.getInstance().getUpdatedString({
+      context: this._serviceName,
+      isValueHidden: true,
+      newValue: personalAccessToken,
+      oldValue: GithubConfigService.getInstance().getPersonalAccessToken(),
+      valueName: GithubConfigValueNameEnum.PERSONAL_ACCESS_TOKEN,
+    });
   }
 }

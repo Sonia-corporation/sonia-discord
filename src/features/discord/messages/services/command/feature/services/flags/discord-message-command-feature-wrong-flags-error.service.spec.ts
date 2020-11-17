@@ -1,22 +1,17 @@
-import {
-  EmbedFieldData,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedThumbnail,
-} from "discord.js";
-import moment from "moment-timezone";
-import { createMock } from "ts-auto-mock";
-import { ColorEnum } from "../../../../../../../../enums/color.enum";
-import { IconEnum } from "../../../../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../../../../core/services/core-event.service";
-import { DiscordSoniaService } from "../../../../../../users/services/discord-sonia.service";
-import { IDiscordCommandFlagError } from "../../../../../interfaces/commands/flags/discord-command-flag-error";
-import { IDiscordCommandFlagsErrors } from "../../../../../types/commands/flags/discord-command-flags-errors";
-import { DiscordMessageConfigService } from "../../../../config/discord-message-config.service";
-import { DiscordMessageCommandCliErrorService } from "../../../discord-message-command-cli-error.service";
-import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from "../../features/noon/constants/discord-message-command-feature-noon-flags";
-import { DiscordMessageCommandFeatureWrongFlagsErrorService } from "./discord-message-command-feature-wrong-flags-error.service";
+import { DiscordMessageCommandFeatureWrongFlagsErrorService } from './discord-message-command-feature-wrong-flags-error.service';
+import { ColorEnum } from '../../../../../../../../enums/color.enum';
+import { IconEnum } from '../../../../../../../../enums/icon.enum';
+import { ServiceNameEnum } from '../../../../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../../../../core/services/core-event.service';
+import { DiscordSoniaService } from '../../../../../../users/services/discord-sonia.service';
+import { IDiscordCommandFlagError } from '../../../../../interfaces/commands/flags/discord-command-flag-error';
+import { IDiscordCommandFlagsErrors } from '../../../../../types/commands/flags/discord-command-flags-errors';
+import { DiscordMessageConfigService } from '../../../../config/discord-message-config.service';
+import { DiscordMessageCommandCliErrorService } from '../../../discord-message-command-cli-error.service';
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../../features/noon/constants/discord-message-command-feature-noon-flags';
+import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
+import moment from 'moment-timezone';
+import { createMock } from 'ts-auto-mock';
 
 describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
   let service: DiscordMessageCommandFeatureWrongFlagsErrorService;
@@ -38,9 +33,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       service = DiscordMessageCommandFeatureWrongFlagsErrorService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(DiscordMessageCommandFeatureWrongFlagsErrorService)
-      );
+      expect(service).toStrictEqual(expect.any(DiscordMessageCommandFeatureWrongFlagsErrorService));
     });
 
     it(`should return the created DiscordMessageCommandFeatureWrongFlagsError service`, (): void => {
@@ -98,19 +91,13 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
         discordMessageConfigService,
         `getMessageCommandCliErrorImageColor`
       );
-      discordSoniaServiceGetImageUrlSpy = jest.spyOn(
-        discordSoniaService,
-        `getImageUrl`
-      );
+      discordSoniaServiceGetImageUrlSpy = jest.spyOn(discordSoniaService, `getImageUrl`);
       discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy = jest.spyOn(
         discordMessageConfigService,
         `getMessageCommandCliErrorImageUrl`
       );
       jest
-        .spyOn(
-          DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS,
-          `getRandomFlagUsageExample`
-        )
+        .spyOn(DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS, `getRandomFlagUsageExample`)
         .mockReturnValue(`--dummy-flag=dummy-value`);
     });
 
@@ -119,37 +106,23 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       await service.getMessageResponse(flagsErrors);
 
-      expect(
-        discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy
-      ).toHaveBeenCalledTimes(1);
-      expect(
-        discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy
-      ).toHaveBeenCalledWith();
+      expect(discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy).toHaveBeenCalledWith();
     });
 
-    it(`should return a Discord message response embed with an author`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<
-        MessageEmbedAuthor
-      >();
-      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(
-        messageEmbedAuthor
-      );
+      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse(flagsErrors);
 
       expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
     });
 
-    it(`should return a Discord message response embed with a color`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandCliErrorImageColorSpy.mockReturnValue(
-        ColorEnum.CANDY
-      );
+      discordMessageConfigServiceGetMessageCommandCliErrorImageColorSpy.mockReturnValue(ColorEnum.CANDY);
 
       const result = await service.getMessageResponse(flagsErrors);
 
@@ -168,14 +141,10 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embed?.description).toStrictEqual(
-          `**1** error found.`
-        );
+        expect(result.options.embed?.description).toStrictEqual(`**1** error found.`);
       });
 
-      it(`should return a Discord message response embed with 1 field`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with 1 field`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(flagsErrors);
@@ -214,14 +183,10 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embed?.description).toStrictEqual(
-          `**3** errors found.`
-        );
+        expect(result.options.embed?.description).toStrictEqual(`**3** errors found.`);
       });
 
-      it(`should return a Discord message response embed with 3 fields`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with 3 fields`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(flagsErrors);
@@ -308,13 +273,9 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
       });
     });
 
-    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<void> => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy.mockReturnValue(
-        IconEnum.ARTIFICIAL_INTELLIGENCE
-      );
+      discordMessageConfigServiceGetMessageCommandCliErrorImageUrlSpy.mockReturnValue(IconEnum.ARTIFICIAL_INTELLIGENCE);
 
       const result = await service.getMessageResponse(flagsErrors);
 
@@ -323,37 +284,25 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
       } as MessageEmbedThumbnail);
     });
 
-    it(`should return a Discord message response embed with a timestamp`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
       expect.assertions(2);
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(
-        true
-      );
+      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
 
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(
-        `a few seconds ago`
-      );
+      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
     });
 
-    it(`should return a Discord message response embed with a title`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(result.options.embed?.title).toStrictEqual(
-        `I can not handle your request`
-      );
+      expect(result.options.embed?.title).toStrictEqual(`I can not handle your request`);
     });
 
-    it(`should return a Discord message response not split`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response not split`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse(flagsErrors);
@@ -361,9 +310,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
       expect(result.options.split).toStrictEqual(false);
     });
 
-    it(`should return a Discord message response without a response text`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response without a response text`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse(flagsErrors);

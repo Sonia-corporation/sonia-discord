@@ -61,7 +61,7 @@ module.exports = {
 
   // A set of global variables that need to be available in all test environments
   globals: {
-    "ts-jest": {
+    'ts-jest': {
       compiler: `ttypescript`,
     },
   },
@@ -189,7 +189,7 @@ module.exports = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    ".ts": `ts-jest`,
+    '.ts': `ts-jest`,
   },
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode

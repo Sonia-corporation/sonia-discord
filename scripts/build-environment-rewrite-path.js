@@ -8,11 +8,7 @@ const APP_ROOT_PATH = require(`app-root-path`);
 const CONTEXT = `build-environment-rewrite-path`;
 
 function updateEnvironmentPath(index) {
-  const updatedIndex = _.replace(
-    index,
-    `/src/environment/secret-environment.json`,
-    `/dist/environment.json`
-  );
+  const updatedIndex = _.replace(index, `/src/environment/secret-environment.json`, `/dist/environment.json`);
 
   if (_.isEqual(_.toString(index), _.toString(updatedIndex))) {
     LOGGER.warning(CONTEXT, CHALK.text(`Index file from dist was not updated`));
@@ -31,16 +27,10 @@ FS.readFile(`${APP_ROOT_PATH.path}/dist/index.js`)
 
     FS.writeFile(`${APP_ROOT_PATH.path}/dist/index.js`, updatedIndex)
       .then(() => {
-        LOGGER.success(
-          CONTEXT,
-          CHALK.text(`Index file successfully updated from dist`)
-        );
+        LOGGER.success(CONTEXT, CHALK.text(`Index file successfully updated from dist`));
       })
       .catch((error) => {
-        LOGGER.error(
-          CONTEXT,
-          CHALK.text(`Failed to update index file from dist`)
-        );
+        LOGGER.error(CONTEXT, CHALK.text(`Failed to update index file from dist`));
         LOGGER.error(CONTEXT, CHALK.text(error));
       });
   })

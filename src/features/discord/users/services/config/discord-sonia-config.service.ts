@@ -1,10 +1,10 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../../classes/services/abstract.service";
-import { IconEnum } from "../../../../../enums/icon.enum";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { IDiscordSoniaConfig } from "../../../interfaces/discord-sonia-config";
-import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from "../../../interfaces/discord-sonia-corporation-message-embed-author-config";
-import { DiscordSoniaConfigCoreService } from "./discord-sonia-config-core.service";
+import { DiscordSoniaConfigCoreService } from './discord-sonia-config-core.service';
+import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { IconEnum } from '../../../../../enums/icon.enum';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { IDiscordSoniaConfig } from '../../../interfaces/discord-sonia-config';
+import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from '../../../interfaces/discord-sonia-corporation-message-embed-author-config';
+import _ from 'lodash';
 
 export class DiscordSoniaConfigService extends AbstractService {
   private static _instance: DiscordSoniaConfigService;
@@ -35,23 +35,19 @@ export class DiscordSoniaConfigService extends AbstractService {
   }
 
   public getCorporationMessageEmbedAuthor(): IDiscordSoniaCorporationMessageEmbedAuthorConfig {
-    return DiscordSoniaConfigCoreService.getInstance()
-      .corporationMessageEmbedAuthor;
+    return DiscordSoniaConfigCoreService.getInstance().corporationMessageEmbedAuthor;
   }
 
   public getCorporationMessageEmbedAuthorIconUrl(): string {
-    return DiscordSoniaConfigCoreService.getInstance()
-      .corporationMessageEmbedAuthor.iconURL;
+    return DiscordSoniaConfigCoreService.getInstance().corporationMessageEmbedAuthor.iconURL;
   }
 
   public getCorporationMessageEmbedAuthorName(): string {
-    return DiscordSoniaConfigCoreService.getInstance()
-      .corporationMessageEmbedAuthor.name;
+    return DiscordSoniaConfigCoreService.getInstance().corporationMessageEmbedAuthor.name;
   }
 
   public getCorporationMessageEmbedAuthorUrl(): string {
-    return DiscordSoniaConfigCoreService.getInstance()
-      .corporationMessageEmbedAuthor.url;
+    return DiscordSoniaConfigCoreService.getInstance().corporationMessageEmbedAuthor.url;
   }
 
   public getId(): string {

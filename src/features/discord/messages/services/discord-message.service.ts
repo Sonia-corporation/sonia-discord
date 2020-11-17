@@ -1,21 +1,21 @@
-import _ from "lodash";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { wrapInQuotes } from "../../../../functions/formatters/wrap-in-quotes";
-import { ChalkService } from "../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { DiscordChannelTypingService } from "../../channels/services/discord-channel-typing.service";
-import { DiscordChannelService } from "../../channels/services/discord-channel.service";
-import { DiscordMentionService } from "../../mentions/services/discord-mention.service";
-import { DiscordClientService } from "../../services/discord-client.service";
-import { DiscordAuthorService } from "../../users/services/discord-author.service";
-import { DiscordSoniaService } from "../../users/services/discord-sonia.service";
-import { ISonia } from "../../users/types/sonia";
-import { IDiscordMessageResponse } from "../interfaces/discord-message-response";
-import { IAnyDiscordMessage } from "../types/any-discord-message";
-import { DiscordMessageDmService } from "./discord-message-dm.service";
-import { DiscordMessageErrorService } from "./discord-message-error.service";
-import { DiscordMessageTextService } from "./discord-message-text.service";
+import { DiscordMessageDmService } from './discord-message-dm.service';
+import { DiscordMessageErrorService } from './discord-message-error.service';
+import { DiscordMessageTextService } from './discord-message-text.service';
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
+import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { DiscordChannelTypingService } from '../../channels/services/discord-channel-typing.service';
+import { DiscordChannelService } from '../../channels/services/discord-channel.service';
+import { DiscordMentionService } from '../../mentions/services/discord-mention.service';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { DiscordAuthorService } from '../../users/services/discord-author.service';
+import { DiscordSoniaService } from '../../users/services/discord-sonia.service';
+import { ISonia } from '../../users/types/sonia';
+import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../types/any-discord-message';
+import _ from 'lodash';
 
 export class DiscordMessageService extends AbstractService {
   private static _instance: DiscordMessageService;
@@ -36,25 +36,15 @@ export class DiscordMessageService extends AbstractService {
     this._listen();
   }
 
-  public sendMessage(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<void> {
-    if (
-      !_.isString(anyDiscordMessage.content) ||
-      _.isEmpty(anyDiscordMessage.content)
-    ) {
-      return Promise.reject(
-        new Error(`Discord message content is invalid or empty`)
-      );
+  public sendMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void> {
+    if (!_.isString(anyDiscordMessage.content) || _.isEmpty(anyDiscordMessage.content)) {
+      return Promise.reject(new Error(`Discord message content is invalid or empty`));
     }
 
     LoggerService.getInstance().log({
       context: this._serviceName,
       hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        anyDiscordMessage.id,
-        anyDiscordMessage.content
-      ),
+      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, anyDiscordMessage.content),
     });
 
     if (!DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author)) {
@@ -65,68 +55,45 @@ export class DiscordMessageService extends AbstractService {
       return Promise.reject(new Error(`Discord message author is a Bot`));
     }
 
-    if (
-      DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)
-    ) {
+    if (DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
       return this.handleChannelMessage(anyDiscordMessage);
     }
 
     return Promise.reject(new Error(`Discord message channel is not valid`));
   }
 
-  public handleChannelMessage(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<void> {
+  public handleChannelMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void> {
     if (DiscordChannelService.getInstance().isDm(anyDiscordMessage.channel)) {
-      void DiscordChannelTypingService.getInstance().addOneIndicator(
-        anyDiscordMessage.channel
-      );
+      void DiscordChannelTypingService.getInstance().addOneIndicator(anyDiscordMessage.channel);
 
       return this._dmMessage(anyDiscordMessage)
         .then(
           (): Promise<void> => {
-            DiscordChannelTypingService.getInstance().removeOneIndicator(
-              anyDiscordMessage.channel
-            );
+            DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
             return Promise.resolve();
           }
         )
         .catch(
           (error: Error): Promise<void> => {
-            DiscordChannelTypingService.getInstance().removeOneIndicator(
-              anyDiscordMessage.channel
-            );
+            DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
             return Promise.reject(error);
           }
         );
-    } else if (
-      DiscordChannelService.getInstance().isText(anyDiscordMessage.channel)
-    ) {
+    } else if (DiscordChannelService.getInstance().isText(anyDiscordMessage.channel)) {
       if (
         DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author) &&
         DiscordMentionService.getInstance().isValid(anyDiscordMessage.mentions)
       ) {
-        if (
-          DiscordMentionService.getInstance().isForEveryone(
-            anyDiscordMessage.mentions
-          )
-        ) {
-          void DiscordChannelTypingService.getInstance().addOneIndicator(
-            anyDiscordMessage.channel
-          );
+        if (DiscordMentionService.getInstance().isForEveryone(anyDiscordMessage.mentions)) {
+          void DiscordChannelTypingService.getInstance().addOneIndicator(anyDiscordMessage.channel);
         } else {
           const sonia: ISonia | null = DiscordSoniaService.getInstance().getSonia();
 
           if (
             DiscordSoniaService.getInstance().isValid(sonia) &&
-            DiscordMentionService.getInstance().isUserMentioned(
-              anyDiscordMessage.mentions,
-              sonia
-            )
+            DiscordMentionService.getInstance().isUserMentioned(anyDiscordMessage.mentions, sonia)
           ) {
-            void DiscordChannelTypingService.getInstance().addOneIndicator(
-              anyDiscordMessage.channel
-            );
+            void DiscordChannelTypingService.getInstance().addOneIndicator(anyDiscordMessage.channel);
           }
         }
       }
@@ -134,90 +101,59 @@ export class DiscordMessageService extends AbstractService {
       return this._textMessage(anyDiscordMessage)
         .then(
           (): Promise<void> => {
-            DiscordChannelTypingService.getInstance().removeOneIndicator(
-              anyDiscordMessage.channel
-            );
+            DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
             return Promise.resolve();
           }
         )
         .catch(
           (error: Error): Promise<void> => {
-            DiscordChannelTypingService.getInstance().removeOneIndicator(
-              anyDiscordMessage.channel
-            );
+            DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
             return Promise.reject(error);
           }
         );
     }
 
-    return Promise.reject(
-      new Error(`Discord message is not a DM channel nor a text channel`)
-    );
+    return Promise.reject(new Error(`Discord message is not a DM channel nor a text channel`));
   }
 
   private _listen(): void {
     DiscordClientService.getInstance()
       .getClient()
-      .on(
-        `message`,
-        (anyDiscordMessage: Readonly<IAnyDiscordMessage>): void => {
-          this.sendMessage(anyDiscordMessage).catch(
-            (error: Readonly<Error>): void => {
-              // @todo add coverage
-              LoggerService.getInstance().debug({
-                context: this._serviceName,
-                hasExtendedContext: true,
-                message: LoggerService.getInstance().getSnowflakeContext(
-                  anyDiscordMessage.id,
-                  `message ignored`
-                ),
-              });
-              LoggerService.getInstance().warning({
-                context: this._serviceName,
-                hasExtendedContext: true,
-                message: LoggerService.getInstance().getSnowflakeContext(
-                  anyDiscordMessage.id,
-                  error
-                ),
-              });
-            }
-          );
-        }
-      );
+      .on(`message`, (anyDiscordMessage: Readonly<IAnyDiscordMessage>): void => {
+        this.sendMessage(anyDiscordMessage).catch((error: Readonly<Error>): void => {
+          // @todo add coverage
+          LoggerService.getInstance().debug({
+            context: this._serviceName,
+            hasExtendedContext: true,
+            message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message ignored`),
+          });
+          LoggerService.getInstance().warning({
+            context: this._serviceName,
+            hasExtendedContext: true,
+            message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, error),
+          });
+        });
+      });
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `listen ${wrapInQuotes(`message`)} event`
-      ),
+      message: ChalkService.getInstance().text(`listen ${wrapInQuotes(`message`)} event`),
     });
   }
 
-  private _dmMessage(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<void | void[]> {
+  private _dmMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void | void[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        anyDiscordMessage.id,
-        `dm message`
-      ),
+      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `dm message`),
     });
 
     return DiscordMessageDmService.getInstance()
       .getMessage(anyDiscordMessage)
       .then(
-        (
-          discordMessageResponses:
-            | IDiscordMessageResponse
-            | IDiscordMessageResponse[]
-        ): Promise<void | void[]> => {
+        (discordMessageResponses: IDiscordMessageResponse | IDiscordMessageResponse[]): Promise<void | void[]> => {
           if (!_.isArray(discordMessageResponses)) {
-            return this._sendMessage(
-              anyDiscordMessage,
-              discordMessageResponses
-            );
+            return this._sendMessage(anyDiscordMessage, discordMessageResponses);
           }
 
           return this._sendMessages(anyDiscordMessage, discordMessageResponses);
@@ -239,31 +175,19 @@ export class DiscordMessageService extends AbstractService {
       );
   }
 
-  private _textMessage(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<void | void[]> {
+  private _textMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void | void[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        anyDiscordMessage.id,
-        `text message`
-      ),
+      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `text message`),
     });
 
     return DiscordMessageTextService.getInstance()
       .getMessage(anyDiscordMessage)
       .then(
-        (
-          discordMessageResponses:
-            | IDiscordMessageResponse
-            | IDiscordMessageResponse[]
-        ): Promise<void | void[]> => {
+        (discordMessageResponses: IDiscordMessageResponse | IDiscordMessageResponse[]): Promise<void | void[]> => {
           if (!_.isArray(discordMessageResponses)) {
-            return this._sendMessage(
-              anyDiscordMessage,
-              discordMessageResponses
-            );
+            return this._sendMessage(anyDiscordMessage, discordMessageResponses);
           }
 
           return this._sendMessages(anyDiscordMessage, discordMessageResponses);
@@ -289,19 +213,14 @@ export class DiscordMessageService extends AbstractService {
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
     { response, options }: Readonly<IDiscordMessageResponse>
   ): Promise<void> {
-    if (
-      !DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)
-    ) {
+    if (!DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
       return Promise.reject(new Error(`Discord message channel not valid`));
     }
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(
-        anyDiscordMessage.id,
-        `sending message...`
-      ),
+      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `sending message...`),
     });
 
     return anyDiscordMessage.channel
@@ -311,10 +230,7 @@ export class DiscordMessageService extends AbstractService {
           LoggerService.getInstance().log({
             context: this._serviceName,
             hasExtendedContext: true,
-            message: LoggerService.getInstance().getSnowflakeContext(
-              anyDiscordMessage.id,
-              `message sent`
-            ),
+            message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message sent`),
           });
 
           return Promise.resolve();
@@ -322,10 +238,7 @@ export class DiscordMessageService extends AbstractService {
       )
       .catch(
         (error: unknown): Promise<void> => {
-          DiscordMessageErrorService.getInstance().handleError(
-            error,
-            anyDiscordMessage
-          );
+          DiscordMessageErrorService.getInstance().handleError(error, anyDiscordMessage);
 
           return Promise.reject(error);
         }
@@ -339,9 +252,7 @@ export class DiscordMessageService extends AbstractService {
     return Promise.all(
       _.map(
         discordMessageResponses,
-        (
-          discordMessageResponse: Readonly<IDiscordMessageResponse>
-        ): Promise<void> =>
+        (discordMessageResponse: Readonly<IDiscordMessageResponse>): Promise<void> =>
           this._sendMessage(anyDiscordMessage, discordMessageResponse)
       )
     );

@@ -1,9 +1,9 @@
-import _ from "lodash";
-import { FirebaseGuildVersionEnum } from "../../../enums/guilds/firebase-guild-version.enum";
-import { IFirebaseGuildV2 } from "../../../interfaces/guilds/firebase-guild-v2";
-import { IFirebaseGuildV3 } from "../../../interfaces/guilds/firebase-guild-v3";
-import { IFirebaseGuildV4 } from "../../../interfaces/guilds/firebase-guild-v4";
-import { IFirebaseGuild } from "../../../types/guilds/firebase-guild";
+import { FirebaseGuildVersionEnum } from '../../../enums/guilds/firebase-guild-version.enum';
+import { IFirebaseGuildV2 } from '../../../interfaces/guilds/firebase-guild-v2';
+import { IFirebaseGuildV3 } from '../../../interfaces/guilds/firebase-guild-v3';
+import { IFirebaseGuildV4 } from '../../../interfaces/guilds/firebase-guild-v4';
+import { IFirebaseGuild } from '../../../types/guilds/firebase-guild';
+import _ from 'lodash';
 
 /**
  * @description
@@ -19,11 +19,7 @@ export function hasFirebaseGuildLastReleaseNotesVersion(
   firebaseGuild: Readonly<IFirebaseGuild>
 ): firebaseGuild is IFirebaseGuildV2 | IFirebaseGuildV3 | IFirebaseGuildV4 {
   return _.includes(
-    [
-      FirebaseGuildVersionEnum.V2,
-      FirebaseGuildVersionEnum.V3,
-      FirebaseGuildVersionEnum.V4,
-    ],
+    [FirebaseGuildVersionEnum.V2, FirebaseGuildVersionEnum.V3, FirebaseGuildVersionEnum.V4],
     firebaseGuild.version
   );
 }

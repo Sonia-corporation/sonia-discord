@@ -1,20 +1,20 @@
-import { Message } from "discord.js";
-import admin from "firebase-admin";
-import { createMock } from "ts-auto-mock";
-import { FirebaseGuildVersionEnum } from "../../../../../../../../firebase/enums/guilds/firebase-guild-version.enum";
-import { IFirebaseGuildV1 } from "../../../../../../../../firebase/interfaces/guilds/firebase-guild-v1";
-import { IFirebaseGuildV2 } from "../../../../../../../../firebase/interfaces/guilds/firebase-guild-v2";
-import { FirebaseGuildsChannelsFeaturesNoonEnabledService } from "../../../../../../../../firebase/services/guilds/channels/features/noon/firebase-guilds-channels-features-noon-enabled.service";
-import { FirebaseGuildsStoreQuery } from "../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query";
-import { IFirebaseGuildChannelVFinal } from "../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final";
-import { IFirebaseGuild } from "../../../../../../../../firebase/types/guilds/firebase-guild";
-import { IFirebaseGuildVFinal } from "../../../../../../../../firebase/types/guilds/firebase-guild-v-final";
-import { ILoggerLog } from "../../../../../../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../../../../../../logger/services/logger.service";
-import { IAnyDiscordChannel } from "../../../../../../../channels/types/any-discord-channel";
-import { IDiscordCommandFlagSuccess } from "../../../../../../interfaces/commands/flags/discord-command-flag-success";
-import { IAnyDiscordMessage } from "../../../../../../types/any-discord-message";
-import { DiscordMessageCommandFeatureNoonEnabled } from "./discord-message-command-feature-noon-enabled";
+import { DiscordMessageCommandFeatureNoonEnabled } from './discord-message-command-feature-noon-enabled';
+import { FirebaseGuildVersionEnum } from '../../../../../../../../firebase/enums/guilds/firebase-guild-version.enum';
+import { IFirebaseGuildV1 } from '../../../../../../../../firebase/interfaces/guilds/firebase-guild-v1';
+import { IFirebaseGuildV2 } from '../../../../../../../../firebase/interfaces/guilds/firebase-guild-v2';
+import { FirebaseGuildsChannelsFeaturesNoonEnabledService } from '../../../../../../../../firebase/services/guilds/channels/features/noon/firebase-guilds-channels-features-noon-enabled.service';
+import { FirebaseGuildsStoreQuery } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query';
+import { IFirebaseGuildChannelVFinal } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final';
+import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/firebase-guild';
+import { IFirebaseGuildVFinal } from '../../../../../../../../firebase/types/guilds/firebase-guild-v-final';
+import { ILoggerLog } from '../../../../../../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../../../../../../logger/services/logger.service';
+import { IAnyDiscordChannel } from '../../../../../../../channels/types/any-discord-channel';
+import { IDiscordCommandFlagSuccess } from '../../../../../../interfaces/commands/flags/discord-command-flag-success';
+import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
+import { Message } from 'discord.js';
+import admin from 'firebase-admin';
+import { createMock } from 'ts-auto-mock';
 import WriteResult = admin.firestore.WriteResult;
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
@@ -55,25 +55,15 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
       });
       value = undefined;
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
-      isEnabledSpy = jest
-        .spyOn(service, `isEnabled`)
-        .mockRejectedValue(new Error(`isEnabled error`));
-      updateDatabaseSpy = jest
-        .spyOn(service, `updateDatabase`)
-        .mockRejectedValue(new Error(`updateDatabase error`));
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      isEnabledSpy = jest.spyOn(service, `isEnabled`).mockRejectedValue(new Error(`isEnabled error`));
+      updateDatabaseSpy = jest.spyOn(service, `updateDatabase`).mockRejectedValue(new Error(`updateDatabase error`));
     });
 
-    it(`should log about executing the enabled action`, async (): Promise<
-      void
-    > => {
+    it(`should log about executing the enabled action`, async (): Promise<void> => {
       expect.assertions(3);
 
-      await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
-        new Error(`isEnabled error`)
-      );
+      await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(new Error(`isEnabled error`));
 
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
       expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
@@ -86,9 +76,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
     it(`should log the new enabled value`, async (): Promise<void> => {
       expect.assertions(3);
 
-      await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
-        new Error(`isEnabled error`)
-      );
+      await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(new Error(`isEnabled error`));
 
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
       expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
@@ -101,9 +89,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
     it(`should get the current enabled state`, async (): Promise<void> => {
       expect.assertions(3);
 
-      await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
-        new Error(`isEnabled error`)
-      );
+      await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(new Error(`isEnabled error`));
 
       expect(isEnabledSpy).toHaveBeenCalledTimes(1);
       expect(isEnabledSpy).toHaveBeenCalledWith(anyDiscordMessage);
@@ -117,9 +103,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
       it(`should throw an error`, async (): Promise<void> => {
         expect.assertions(1);
 
-        await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
-          new Error(`isEnabled error`)
-        );
+        await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(new Error(`isEnabled error`));
       });
     });
 
@@ -136,26 +120,18 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           });
         });
 
-        it(`should not update the database to enable the noon feature`, async (): Promise<
-          void
-        > => {
+        it(`should not update the database to enable the noon feature`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(
-            service.execute(anyDiscordMessage, value)
-          ).rejects.toThrow(new Error(`Firebase guild invalid`));
+          await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(new Error(`Firebase guild invalid`));
 
           expect(updateDatabaseSpy).not.toHaveBeenCalled();
         });
 
-        it(`should throw an error about the Firebase guild being invalid`, async (): Promise<
-          void
-        > => {
+        it(`should throw an error about the Firebase guild being invalid`, async (): Promise<void> => {
           expect.assertions(1);
 
-          await expect(
-            service.execute(anyDiscordMessage, value)
-          ).rejects.toThrow(new Error(`Firebase guild invalid`));
+          await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(new Error(`Firebase guild invalid`));
         });
       });
 
@@ -181,26 +157,22 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             });
           });
 
-          it(`should not update the database to enable the noon feature`, async (): Promise<
-            void
-          > => {
+          it(`should not update the database to enable the noon feature`, async (): Promise<void> => {
             expect.assertions(2);
 
-            await expect(
-              service.execute(anyDiscordMessage, value)
-            ).rejects.toThrow(new Error(`Firebase channel invalid`));
+            await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+              new Error(`Firebase channel invalid`)
+            );
 
             expect(updateDatabaseSpy).not.toHaveBeenCalled();
           });
 
-          it(`should throw an error about the Firebase channel being invalid`, async (): Promise<
-            void
-          > => {
+          it(`should throw an error about the Firebase channel being invalid`, async (): Promise<void> => {
             expect.assertions(1);
 
-            await expect(
-              service.execute(anyDiscordMessage, value)
-            ).rejects.toThrow(new Error(`Firebase channel invalid`));
+            await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+              new Error(`Firebase channel invalid`)
+            );
           });
         });
 
@@ -226,9 +198,9 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             it(`should log the current state`, async (): Promise<void> => {
               expect.assertions(3);
 
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
+              await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                new Error(`updateDatabase error`)
+              );
 
               expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
               expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
@@ -243,14 +215,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `true`;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -261,14 +231,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `TRUE`;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -279,14 +247,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `false`;
               });
 
-              it(`should update the database to disable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to disable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -297,14 +263,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `FALSE`;
               });
 
-              it(`should update the database to disable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to disable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -315,14 +279,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = null;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -333,14 +295,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = undefined;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -355,9 +315,9 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             it(`should log the current state`, async (): Promise<void> => {
               expect.assertions(3);
 
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
+              await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                new Error(`updateDatabase error`)
+              );
 
               expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
               expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
@@ -372,14 +332,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `true`;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -390,14 +348,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `TRUE`;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -408,14 +364,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `false`;
               });
 
-              it(`should update the database to disable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to disable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -426,14 +380,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `FALSE`;
               });
 
-              it(`should update the database to disable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to disable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -444,14 +396,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = null;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -462,14 +412,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = undefined;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -484,9 +432,9 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             it(`should log the current state`, async (): Promise<void> => {
               expect.assertions(3);
 
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
+              await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                new Error(`updateDatabase error`)
+              );
 
               expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
               expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
@@ -501,14 +449,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `true`;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -519,14 +465,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `TRUE`;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -537,14 +481,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `false`;
               });
 
-              it(`should update the database to disable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to disable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -555,14 +497,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `FALSE`;
               });
 
-              it(`should update the database to disable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to disable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -573,14 +513,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = null;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -591,14 +529,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = undefined;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -628,9 +564,9 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             it(`should log the current state`, async (): Promise<void> => {
               expect.assertions(3);
 
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
+              await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                new Error(`updateDatabase error`)
+              );
 
               expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
               expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
@@ -645,14 +581,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `true`;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -663,14 +597,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `TRUE`;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -681,14 +613,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `false`;
               });
 
-              it(`should update the database to disable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to disable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -699,14 +629,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `FALSE`;
               });
 
-              it(`should update the database to disable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to disable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -717,14 +645,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = null;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -735,14 +661,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = undefined;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -757,9 +681,9 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             it(`should log the current state`, async (): Promise<void> => {
               expect.assertions(3);
 
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
+              await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                new Error(`updateDatabase error`)
+              );
 
               expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
               expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
@@ -774,14 +698,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `true`;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -792,14 +714,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `TRUE`;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -810,14 +730,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `false`;
               });
 
-              it(`should update the database to disable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to disable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -828,14 +746,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `FALSE`;
               });
 
-              it(`should update the database to disable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to disable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -846,14 +762,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = null;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -864,14 +778,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = undefined;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -886,9 +798,9 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             it(`should log the current state`, async (): Promise<void> => {
               expect.assertions(3);
 
-              await expect(
-                service.execute(anyDiscordMessage, value)
-              ).rejects.toThrow(new Error(`updateDatabase error`));
+              await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                new Error(`updateDatabase error`)
+              );
 
               expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
               expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
@@ -903,14 +815,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `true`;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -921,14 +831,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `TRUE`;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -939,14 +847,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `false`;
               });
 
-              it(`should update the database to disable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to disable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -957,14 +863,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = `FALSE`;
               });
 
-              it(`should update the database to disable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to disable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -975,14 +879,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = null;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -993,14 +895,12 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 value = undefined;
               });
 
-              it(`should update the database to enable the noon feature`, async (): Promise<
-                void
-              > => {
+              it(`should update the database to enable the noon feature`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await expect(
-                  service.execute(anyDiscordMessage, value)
-                ).rejects.toThrow(new Error(`updateDatabase error`));
+                await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(
+                  new Error(`updateDatabase error`)
+                );
 
                 expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
               });
@@ -1023,9 +923,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
       anyDiscordMessage = createMock<IAnyDiscordMessage>();
       firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>();
 
-      loggerServiceErrorSpy = jest
-        .spyOn(loggerService, `error`)
-        .mockImplementation();
+      loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
       firebaseGuildsStoreQueryGetEntitySpy = jest
         .spyOn(firebaseGuildsStoreQuery, `getEntity`)
         .mockReturnValue(undefined);
@@ -1076,9 +974,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         });
       });
 
-      it(`should get the Discord message guild from the Firebase guilds store`, async (): Promise<
-        void
-      > => {
+      it(`should get the Discord message guild from the Firebase guilds store`, async (): Promise<void> => {
         expect.assertions(3);
 
         await expect(service.isEnabled(anyDiscordMessage)).rejects.toThrow(
@@ -1086,9 +982,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         );
 
         expect(firebaseGuildsStoreQueryGetEntitySpy).toHaveBeenCalledTimes(1);
-        expect(firebaseGuildsStoreQueryGetEntitySpy).toHaveBeenCalledWith(
-          `dummy-guild-id`
-        );
+        expect(firebaseGuildsStoreQueryGetEntitySpy).toHaveBeenCalledWith(`dummy-guild-id`);
       });
 
       describe(`when the given Discord message guild does not exist in the Firebase guilds store`, (): void => {
@@ -1096,9 +990,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(undefined);
         });
 
-        it(`should log about the empty guild in Firebase`, async (): Promise<
-          void
-        > => {
+        it(`should log about the empty guild in Firebase`, async (): Promise<void> => {
           expect.assertions(3);
 
           await expect(service.isEnabled(anyDiscordMessage)).rejects.toThrow(
@@ -1124,9 +1016,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
 
       describe(`when the given Discord message guild exist in the Firebase guilds store`, (): void => {
         beforeEach((): void => {
-          firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
-            firebaseGuildVFinal
-          );
+          firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
         });
 
         describe(`when the Firebase guilds store channels are empty`, (): void => {
@@ -1136,9 +1026,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               version: FirebaseGuildVersionEnum.V4,
             });
 
-            firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
-              firebaseGuildVFinal
-            );
+            firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
           });
 
           it(`should return undefined`, async (): Promise<void> => {
@@ -1156,9 +1044,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               version: FirebaseGuildVersionEnum.V1,
             });
 
-            firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
-              firebaseGuildVFinal
-            );
+            firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
           });
 
           it(`should return undefined`, async (): Promise<void> => {
@@ -1176,9 +1062,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               version: FirebaseGuildVersionEnum.V2,
             });
 
-            firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
-              firebaseGuildVFinal
-            );
+            firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
           });
 
           it(`should return undefined`, async (): Promise<void> => {
@@ -1194,18 +1078,14 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           beforeEach((): void => {
             firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
               channels: {
-                "bad-dummy-channel-id": createMock<IFirebaseGuildChannelVFinal>(
-                  {
-                    id: `bad-dummy-channel-id`,
-                  }
-                ),
+                'bad-dummy-channel-id': createMock<IFirebaseGuildChannelVFinal>({
+                  id: `bad-dummy-channel-id`,
+                }),
               },
               version: FirebaseGuildVersionEnum.V4,
             });
 
-            firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
-              firebaseGuildVFinal
-            );
+            firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
           });
 
           it(`should return undefined`, async (): Promise<void> => {
@@ -1221,23 +1101,21 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
           beforeEach((): void => {
             firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
               channels: {
-                "dummy-channel-id": createMock<IFirebaseGuildChannelVFinal>({
+                'dummy-channel-id': createMock<IFirebaseGuildChannelVFinal>({
                   id: `dummy-channel-id`,
                 }),
               },
               version: FirebaseGuildVersionEnum.V4,
             });
 
-            firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
-              firebaseGuildVFinal
-            );
+            firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
           });
 
           describe(`when the channel does not have the noon feature configured yet`, (): void => {
             beforeEach((): void => {
               firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
                 channels: {
-                  "dummy-channel-id": createMock<IFirebaseGuildChannelVFinal>({
+                  'dummy-channel-id': createMock<IFirebaseGuildChannelVFinal>({
                     features: {
                       noon: undefined,
                     },
@@ -1247,9 +1125,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 version: FirebaseGuildVersionEnum.V4,
               });
 
-              firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
-                firebaseGuildVFinal
-              );
+              firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
             });
 
             it(`should return undefined`, async (): Promise<void> => {
@@ -1265,7 +1141,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             beforeEach((): void => {
               firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
                 channels: {
-                  "dummy-channel-id": createMock<IFirebaseGuildChannelVFinal>({
+                  'dummy-channel-id': createMock<IFirebaseGuildChannelVFinal>({
                     features: {
                       noon: {
                         isEnabled: undefined,
@@ -1277,9 +1153,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 version: FirebaseGuildVersionEnum.V4,
               });
 
-              firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
-                firebaseGuildVFinal
-              );
+              firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
             });
 
             it(`should return undefined`, async (): Promise<void> => {
@@ -1295,7 +1169,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             beforeEach((): void => {
               firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
                 channels: {
-                  "dummy-channel-id": createMock<IFirebaseGuildChannelVFinal>({
+                  'dummy-channel-id': createMock<IFirebaseGuildChannelVFinal>({
                     features: {
                       noon: {
                         isEnabled: true,
@@ -1307,9 +1181,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 version: FirebaseGuildVersionEnum.V4,
               });
 
-              firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
-                firebaseGuildVFinal
-              );
+              firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
             });
 
             it(`should return true`, async (): Promise<void> => {
@@ -1325,7 +1197,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             beforeEach((): void => {
               firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
                 channels: {
-                  "dummy-channel-id": createMock<IFirebaseGuildChannelVFinal>({
+                  'dummy-channel-id': createMock<IFirebaseGuildChannelVFinal>({
                     features: {
                       noon: {
                         isEnabled: false,
@@ -1337,9 +1209,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
                 version: FirebaseGuildVersionEnum.V4,
               });
 
-              firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(
-                firebaseGuildVFinal
-              );
+              firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
             });
 
             it(`should return false`, async (): Promise<void> => {
@@ -1375,10 +1245,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
       writeResult = createMock<WriteResult>();
 
       firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy = jest
-        .spyOn(
-          firebaseGuildsChannelsFeaturesNoonEnabledService,
-          `updateStateByGuildId`
-        )
+        .spyOn(firebaseGuildsChannelsFeaturesNoonEnabledService, `updateStateByGuildId`)
         .mockRejectedValue(new Error(`updateState error`));
     });
 
@@ -1392,33 +1259,19 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
       > => {
         expect.assertions(2);
 
-        await expect(
-          service.updateDatabase(
-            shouldEnable,
-            isEnabled,
-            firebaseGuild,
-            channel
-          )
-        ).rejects.toThrow(new Error(`Firebase guild id invalid`));
+        await expect(service.updateDatabase(shouldEnable, isEnabled, firebaseGuild, channel)).rejects.toThrow(
+          new Error(`Firebase guild id invalid`)
+        );
 
-        expect(
-          firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy
-        ).not.toHaveBeenCalled();
+        expect(firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy).not.toHaveBeenCalled();
       });
 
-      it(`should throw an error about the Firebase guild id being invalid`, async (): Promise<
-        void
-      > => {
+      it(`should throw an error about the Firebase guild id being invalid`, async (): Promise<void> => {
         expect.assertions(1);
 
-        await expect(
-          service.updateDatabase(
-            shouldEnable,
-            isEnabled,
-            firebaseGuild,
-            channel
-          )
-        ).rejects.toThrow(new Error(`Firebase guild id invalid`));
+        await expect(service.updateDatabase(shouldEnable, isEnabled, firebaseGuild, channel)).rejects.toThrow(
+          new Error(`Firebase guild id invalid`)
+        );
       });
     });
 
@@ -1437,21 +1290,16 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         > => {
           expect.assertions(3);
 
-          await expect(
-            service.updateDatabase(
-              shouldEnable,
-              isEnabled,
-              firebaseGuild,
-              channel
-            )
-          ).rejects.toThrow(new Error(`updateState error`));
+          await expect(service.updateDatabase(shouldEnable, isEnabled, firebaseGuild, channel)).rejects.toThrow(
+            new Error(`updateState error`)
+          );
 
-          expect(
-            firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy
-          ).toHaveBeenCalledTimes(1);
-          expect(
-            firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy
-          ).toHaveBeenCalledWith(`dummy-id`, `dummy-channel-id`, false);
+          expect(firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy).toHaveBeenCalledTimes(1);
+          expect(firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy).toHaveBeenCalledWith(
+            `dummy-id`,
+            `dummy-channel-id`,
+            false
+          );
         });
       });
 
@@ -1465,21 +1313,16 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         > => {
           expect.assertions(3);
 
-          await expect(
-            service.updateDatabase(
-              shouldEnable,
-              isEnabled,
-              firebaseGuild,
-              channel
-            )
-          ).rejects.toThrow(new Error(`updateState error`));
+          await expect(service.updateDatabase(shouldEnable, isEnabled, firebaseGuild, channel)).rejects.toThrow(
+            new Error(`updateState error`)
+          );
 
-          expect(
-            firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy
-          ).toHaveBeenCalledTimes(1);
-          expect(
-            firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy
-          ).toHaveBeenCalledWith(`dummy-id`, `dummy-channel-id`, true);
+          expect(firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy).toHaveBeenCalledTimes(1);
+          expect(firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy).toHaveBeenCalledWith(
+            `dummy-id`,
+            `dummy-channel-id`,
+            true
+          );
         });
       });
 
@@ -1495,22 +1338,15 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
         > => {
           expect.assertions(1);
 
-          await expect(
-            service.updateDatabase(
-              shouldEnable,
-              isEnabled,
-              firebaseGuild,
-              channel
-            )
-          ).rejects.toThrow(new Error(`updateState error`));
+          await expect(service.updateDatabase(shouldEnable, isEnabled, firebaseGuild, channel)).rejects.toThrow(
+            new Error(`updateState error`)
+          );
         });
       });
 
       describe(`when the enable state for the feature command in the Firebase guilds was successfully updated`, (): void => {
         beforeEach((): void => {
-          firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy.mockResolvedValue(
-            writeResult
-          );
+          firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy.mockResolvedValue(writeResult);
         });
 
         describe(`when the current noon feature is not configured`, (): void => {
@@ -1528,12 +1364,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             > => {
               expect.assertions(1);
 
-              const result = await service.updateDatabase(
-                shouldEnable,
-                isEnabled,
-                firebaseGuild,
-                channel
-              );
+              const result = await service.updateDatabase(shouldEnable, isEnabled, firebaseGuild, channel);
 
               expect(result).toStrictEqual({
                 description: `The \`noon\` feature was not configured yet and is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
@@ -1552,12 +1383,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             > => {
               expect.assertions(1);
 
-              const result = await service.updateDatabase(
-                shouldEnable,
-                isEnabled,
-                firebaseGuild,
-                channel
-              );
+              const result = await service.updateDatabase(shouldEnable, isEnabled, firebaseGuild, channel);
 
               expect(result).toStrictEqual({
                 description: `The \`noon\` feature was not configured yet and is now disabled on this channel.`,
@@ -1577,17 +1403,10 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               shouldEnable = true;
             });
 
-            it(`should return a flag success about the noon feature being already enabled`, async (): Promise<
-              void
-            > => {
+            it(`should return a flag success about the noon feature being already enabled`, async (): Promise<void> => {
               expect.assertions(1);
 
-              const result = await service.updateDatabase(
-                shouldEnable,
-                isEnabled,
-                firebaseGuild,
-                channel
-              );
+              const result = await service.updateDatabase(shouldEnable, isEnabled, firebaseGuild, channel);
 
               expect(result).toStrictEqual({
                 description: `The \`noon\` feature was already enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
@@ -1606,12 +1425,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             > => {
               expect.assertions(1);
 
-              const result = await service.updateDatabase(
-                shouldEnable,
-                isEnabled,
-                firebaseGuild,
-                channel
-              );
+              const result = await service.updateDatabase(shouldEnable, isEnabled, firebaseGuild, channel);
 
               expect(result).toStrictEqual({
                 description: `The \`noon\` feature is now disabled on this channel.`,
@@ -1636,12 +1450,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             > => {
               expect.assertions(1);
 
-              const result = await service.updateDatabase(
-                shouldEnable,
-                isEnabled,
-                firebaseGuild,
-                channel
-              );
+              const result = await service.updateDatabase(shouldEnable, isEnabled, firebaseGuild, channel);
 
               expect(result).toStrictEqual({
                 description: `The \`noon\` feature is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
@@ -1660,12 +1469,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             > => {
               expect.assertions(1);
 
-              const result = await service.updateDatabase(
-                shouldEnable,
-                isEnabled,
-                firebaseGuild,
-                channel
-              );
+              const result = await service.updateDatabase(shouldEnable, isEnabled, firebaseGuild, channel);
 
               expect(result).toStrictEqual({
                 description: `The \`noon\` feature was already disabled on this channel.`,

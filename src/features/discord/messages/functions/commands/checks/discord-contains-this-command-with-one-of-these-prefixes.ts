@@ -1,6 +1,6 @@
-import _ from "lodash";
-import { IDiscordContainsThisCommandWithOneOfThesePrefixesData } from "../../../interfaces/commands/checks/discord-contains-this-command-with-one-of-these-prefixes-data";
-import { discordContainsThisCommandWithPrefix } from "./discord-contains-this-command-with-prefix";
+import { discordContainsThisCommandWithPrefix } from './discord-contains-this-command-with-prefix';
+import { IDiscordContainsThisCommandWithOneOfThesePrefixesData } from '../../../interfaces/commands/checks/discord-contains-this-command-with-one-of-these-prefixes-data';
+import _ from 'lodash';
 
 export function discordContainsThisCommandWithOneOfThesePrefixes({
   prefixes,

@@ -1,6 +1,6 @@
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../core/services/core-event.service";
-import { DiscordGuildConfigCoreService } from "./discord-guild-config-core.service";
+import { DiscordGuildConfigCoreService } from './discord-guild-config-core.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../core/services/core-event.service';
 
 describe(`DiscordGuildConfigCoreService`, (): void => {
   let service: DiscordGuildConfigCoreService;
@@ -86,8 +86,6 @@ describe(`DiscordGuildConfigCoreService`, (): void => {
 
     service = DiscordGuildConfigCoreService.getInstance();
 
-    expect(service.soniaPermanentGuildInviteUrl).toStrictEqual(
-      `https://discord.gg/PW4JSkv`
-    );
+    expect(service.soniaPermanentGuildInviteUrl).toStrictEqual(`https://discord.gg/PW4JSkv`);
   });
 });

@@ -1,6 +1,6 @@
-import { take } from "rxjs/operators";
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
-import { CoreEventService } from "./core-event.service";
+import { CoreEventService } from './core-event.service';
+import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import { take } from 'rxjs/operators';
 
 describe(`CoreEventService`, (): void => {
   let service: CoreEventService;
@@ -17,9 +17,7 @@ describe(`CoreEventService`, (): void => {
     it(`should return the created CoreEvent service`, (): void => {
       expect.assertions(1);
 
-      service.notifyServiceCreated(
-        ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE
-      );
+      service.notifyServiceCreated(ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE);
       const result = CoreEventService.getInstance();
 
       expect(result).toStrictEqual(service);
@@ -34,9 +32,7 @@ describe(`CoreEventService`, (): void => {
     it(`should listen to server created event and push every created service in the created services list`, (): void => {
       expect.assertions(1);
       service.init();
-      service.notifyServiceCreated(
-        ServiceNameEnum.DISCORD_MESSAGE_CONFIG_SERVICE
-      );
+      service.notifyServiceCreated(ServiceNameEnum.DISCORD_MESSAGE_CONFIG_SERVICE);
       service.notifyServiceCreated(ServiceNameEnum.SERVER_SERVICE);
 
       const result = service.getCreatedServices();
@@ -90,9 +86,7 @@ describe(`CoreEventService`, (): void => {
           .pipe(take(1))
           .subscribe({
             next(serviceName: ServiceNameEnum): void {
-              expect(serviceName).toStrictEqual(
-                ServiceNameEnum.APP_CONFIG_QUERY_SERVICE
-              );
+              expect(serviceName).toStrictEqual(ServiceNameEnum.APP_CONFIG_QUERY_SERVICE);
             },
           });
         service.notifyServiceCreated(serviceName);
@@ -117,9 +111,7 @@ describe(`CoreEventService`, (): void => {
           .pipe(take(1))
           .subscribe({
             next(serviceName: ServiceNameEnum): void {
-              expect(serviceName).toStrictEqual(
-                ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE
-              );
+              expect(serviceName).toStrictEqual(ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE);
             },
           });
         service.notifyServiceCreated(serviceName);

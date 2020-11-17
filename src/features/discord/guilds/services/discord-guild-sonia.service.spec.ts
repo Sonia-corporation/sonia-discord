@@ -1,10 +1,10 @@
-import { Subject } from "rxjs";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { DiscordClientService } from "../../services/discord-client.service";
-import { DiscordGuildSoniaService } from "./discord-guild-sonia.service";
+import { DiscordGuildSoniaService } from './discord-guild-sonia.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { ILoggerLog } from '../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { DiscordClientService } from '../../services/discord-client.service';
+import { Subject } from 'rxjs';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -53,9 +53,7 @@ describe(`DiscordGuildSoniaService`, (): void => {
       service = new DiscordGuildSoniaService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_GUILD_SONIA_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_GUILD_SONIA_SERVICE);
     });
   });
 
@@ -70,15 +68,11 @@ describe(`DiscordGuildSoniaService`, (): void => {
       service = new DiscordGuildSoniaService();
       isReady$ = new Subject<boolean>();
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       discordClientServiceGetClientSpy = jest
         .spyOn(discordClientService, `isReady$`)
         .mockReturnValue(isReady$.asObservable());
-      setSoniaGuildSpy = jest
-        .spyOn(service, `setSoniaGuild`)
-        .mockImplementation();
+      setSoniaGuildSpy = jest.spyOn(service, `setSoniaGuild`).mockImplementation();
     });
 
     it(`should check if the Discord client is ready`, (): void => {

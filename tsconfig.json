@@ -22,19 +22,9 @@
     "resolveJsonModule": true,
     "strict": true,
     "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types",
-      "node_modules/@types/",
-      "types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
-    "types": [
-      "node",
-      "jest"
-    ],
+    "typeRoots": ["node_modules/@types", "node_modules/@types/", "types"],
+    "lib": ["es2018", "dom"],
+    "types": ["node", "jest"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "plugins": [
@@ -45,14 +35,6 @@
       }
     ]
   },
-  "include": [
-    "./src/**/*.ts",
-    "./scripts/**/*.js",
-    "./config.ts",
-    "./jest.config.js"
-  ],
-  "exclude": [
-    "./src/**.*.spec.ts",
-    "./test.ts"
-  ]
+  "include": ["./src/**/*.ts", "./scripts/**/*.js", "./config.ts", "./jest.config.js"],
+  "exclude": ["./src/**.*.spec.ts", "./test.ts"]
 }

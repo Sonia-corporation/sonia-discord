@@ -1,4 +1,4 @@
-import { GuildChannel, NewsChannel, TextChannel } from "discord.js";
+import { GuildChannel, NewsChannel, TextChannel } from 'discord.js';
 
 export function isDiscordGuildChannelWritable(
   guildChannel: Readonly<GuildChannel>

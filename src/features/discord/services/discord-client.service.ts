@@ -1,10 +1,10 @@
-import { Client } from "discord.js";
-import _ from "lodash";
-import { BehaviorSubject, Observable } from "rxjs";
-import { filter, map, take } from "rxjs/operators";
-import { AbstractService } from "../../../classes/services/abstract.service";
-import { ONE_EMITTER } from "../../../constants/one-emitter";
-import { ServiceNameEnum } from "../../../enums/service-name.enum";
+import { AbstractService } from '../../../classes/services/abstract.service';
+import { ONE_EMITTER } from '../../../constants/one-emitter';
+import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import { Client } from 'discord.js';
+import _ from 'lodash';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter, map, take } from 'rxjs/operators';
 
 export class DiscordClientService extends AbstractService {
   private static _instance: DiscordClientService;
@@ -18,9 +18,7 @@ export class DiscordClientService extends AbstractService {
   }
 
   private _client: Client | undefined = undefined;
-  private readonly _isReady$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
+  private readonly _isReady$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_CLIENT_SERVICE);
@@ -47,9 +45,7 @@ export class DiscordClientService extends AbstractService {
   public isReady(): Promise<true> {
     return this.isReady$()
       .pipe(
-        filter((isReady: Readonly<boolean>): boolean =>
-          _.isEqual(isReady, true)
-        ),
+        filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
         take(ONE_EMITTER),
         map((): true => true)
       )

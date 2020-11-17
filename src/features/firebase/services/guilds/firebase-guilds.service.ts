@@ -1,18 +1,18 @@
-import { Guild, Snowflake } from "discord.js";
-import admin, { firestore } from "firebase-admin";
-import _ from "lodash";
-import { BehaviorSubject, Observable } from "rxjs";
-import { filter, map, take } from "rxjs/operators";
-import { AbstractService } from "../../../../classes/services/abstract.service";
-import { ONE_EMITTER } from "../../../../constants/one-emitter";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { DiscordClientService } from "../../../discord/services/discord-client.service";
-import { ChalkService } from "../../../logger/services/chalk/chalk.service";
-import { LoggerService } from "../../../logger/services/logger.service";
-import { FirebaseCollectionEnum } from "../../enums/firebase-collection.enum";
-import { createFirebaseGuild } from "../../functions/guilds/create-firebase-guild";
-import { IFirebaseGuild } from "../../types/guilds/firebase-guild";
-import { FirebaseAppService } from "../firebase-app.service";
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ONE_EMITTER } from '../../../../constants/one-emitter';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { DiscordClientService } from '../../../discord/services/discord-client.service';
+import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { FirebaseCollectionEnum } from '../../enums/firebase-collection.enum';
+import { createFirebaseGuild } from '../../functions/guilds/create-firebase-guild';
+import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
+import { FirebaseAppService } from '../firebase-app.service';
+import { Guild, Snowflake } from 'discord.js';
+import admin, { firestore } from 'firebase-admin';
+import _ from 'lodash';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter, map, take } from 'rxjs/operators';
 import CollectionReference = admin.firestore.CollectionReference;
 import DocumentSnapshot = admin.firestore.DocumentSnapshot;
 import Firestore = admin.firestore.Firestore;
@@ -34,12 +34,8 @@ export class FirebaseGuildsService extends AbstractService {
     return FirebaseGuildsService._instance;
   }
 
-  private readonly _isReady$: BehaviorSubject<boolean> = new BehaviorSubject<
-    boolean
-  >(false);
-  private readonly _onGuildsChange$: BehaviorSubject<
-    IFirebaseGuild[]
-  > = new BehaviorSubject<IFirebaseGuild[]>([]);
+  private readonly _isReady$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private readonly _onGuildsChange$: BehaviorSubject<IFirebaseGuild[]> = new BehaviorSubject<IFirebaseGuild[]>([]);
   private _store: Firestore | undefined = undefined;
 
   public constructor() {
@@ -50,9 +46,7 @@ export class FirebaseGuildsService extends AbstractService {
     return this._setStore().then((): Promise<number> => this._logGuildCount());
   }
 
-  public getCollectionReference():
-    | CollectionReference<IFirebaseGuild>
-    | undefined {
+  public getCollectionReference(): CollectionReference<IFirebaseGuild> | undefined {
     if (_.isNil(this._store)) {
       LoggerService.getInstance().warning({
         context: this._serviceName,
@@ -66,9 +60,7 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   public getGuilds(): Promise<QuerySnapshot<IFirebaseGuild>> {
-    const collectionReference:
-      | CollectionReference<IFirebaseGuild>
-      | undefined = this.getCollectionReference();
+    const collectionReference: CollectionReference<IFirebaseGuild> | undefined = this.getCollectionReference();
 
     if (_.isNil(collectionReference)) {
       return Promise.reject(new Error(`Collection not available`));
@@ -78,15 +70,11 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   public getGuildsCount(): Promise<number> {
-    return this.getGuilds().then(
-      ({ size }: Readonly<QuerySnapshot<IFirebaseGuild>>): number => size
-    );
+    return this.getGuilds().then(({ size }: Readonly<QuerySnapshot<IFirebaseGuild>>): number => size);
   }
 
   public hasGuild(guildId: Readonly<Snowflake>): Promise<boolean> {
-    const collectionReference:
-      | CollectionReference<IFirebaseGuild>
-      | undefined = this.getCollectionReference();
+    const collectionReference: CollectionReference<IFirebaseGuild> | undefined = this.getCollectionReference();
 
     if (_.isNil(collectionReference)) {
       return Promise.reject(new Error(`Collection not available`));
@@ -99,17 +87,14 @@ export class FirebaseGuildsService extends AbstractService {
         ({
           // eslint-disable-next-line @typescript-eslint/naming-convention
           exists,
-        }: Readonly<DocumentSnapshot<IFirebaseGuild>>): Promise<boolean> =>
-          Promise.resolve(exists)
+        }: Readonly<DocumentSnapshot<IFirebaseGuild>>): Promise<boolean> => Promise.resolve(exists)
       )
       .catch(
         (): Promise<boolean> => {
           LoggerService.getInstance().error({
             context: this._serviceName,
             message: ChalkService.getInstance().text(
-              `failed to check if Firebase has ${ChalkService.getInstance().value(
-                guildId
-              )} guild`
+              `failed to check if Firebase has ${ChalkService.getInstance().value(guildId)} guild`
             ),
           });
 
@@ -118,12 +103,8 @@ export class FirebaseGuildsService extends AbstractService {
       );
   }
 
-  public getGuild(
-    guildId: Readonly<Snowflake>
-  ): Promise<IFirebaseGuild | null | undefined> {
-    const collectionReference:
-      | CollectionReference<IFirebaseGuild>
-      | undefined = this.getCollectionReference();
+  public getGuild(guildId: Readonly<Snowflake>): Promise<IFirebaseGuild | null | undefined> {
+    const collectionReference: CollectionReference<IFirebaseGuild> | undefined = this.getCollectionReference();
 
     if (_.isNil(collectionReference)) {
       return Promise.reject(new Error(`Collection not available`));
@@ -133,9 +114,7 @@ export class FirebaseGuildsService extends AbstractService {
       .doc(guildId)
       .get()
       .then(
-        (
-          documentSnapshot: Readonly<DocumentSnapshot<IFirebaseGuild>>
-        ): Promise<IFirebaseGuild | null | undefined> => {
+        (documentSnapshot: Readonly<DocumentSnapshot<IFirebaseGuild>>): Promise<IFirebaseGuild | null | undefined> => {
           if (!_.isEqual(documentSnapshot.exists, true)) {
             return Promise.resolve(null);
           }
@@ -148,9 +127,7 @@ export class FirebaseGuildsService extends AbstractService {
           LoggerService.getInstance().error({
             context: this._serviceName,
             message: ChalkService.getInstance().text(
-              `failed to get the ${ChalkService.getInstance().value(
-                guildId
-              )} guild from Firebase`
+              `failed to get the ${ChalkService.getInstance().value(guildId)} guild from Firebase`
             ),
           });
 
@@ -160,9 +137,7 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   public addGuild({ id }: Readonly<Guild>): Promise<WriteResult> {
-    const collectionReference:
-      | CollectionReference<IFirebaseGuild>
-      | undefined = this.getCollectionReference();
+    const collectionReference: CollectionReference<IFirebaseGuild> | undefined = this.getCollectionReference();
 
     if (_.isNil(collectionReference)) {
       return Promise.reject(new Error(`Collection not available`));
@@ -184,9 +159,7 @@ export class FirebaseGuildsService extends AbstractService {
         (writeResult: Readonly<WriteResult>): Promise<WriteResult> => {
           LoggerService.getInstance().success({
             context: this._serviceName,
-            message: ChalkService.getInstance().text(
-              `Firebase guild ${ChalkService.getInstance().value(id)} created`
-            ),
+            message: ChalkService.getInstance().text(`Firebase guild ${ChalkService.getInstance().value(id)} created`),
           });
 
           return Promise.resolve(writeResult);
@@ -201,9 +174,7 @@ export class FirebaseGuildsService extends AbstractService {
   public isReady(): Promise<true> {
     return this.isReady$()
       .pipe(
-        filter((isReady: Readonly<boolean>): boolean =>
-          _.isEqual(isReady, true)
-        ),
+        filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
         take(ONE_EMITTER),
         map((): true => true)
       )
@@ -231,9 +202,7 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   public watchGuilds(): void {
-    const collectionReference:
-      | CollectionReference<IFirebaseGuild>
-      | undefined = this.getCollectionReference();
+    const collectionReference: CollectionReference<IFirebaseGuild> | undefined = this.getCollectionReference();
 
     if (_.isNil(collectionReference)) {
       throw new Error(`Collection not available`);
@@ -250,9 +219,7 @@ export class FirebaseGuildsService extends AbstractService {
 
         querySnapshot.forEach(
           // eslint-disable-next-line @typescript-eslint/naming-convention
-          (
-            queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>
-          ): void => {
+          (queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>): void => {
             if (_.isEqual(queryDocumentSnapshot.exists, true)) {
               firebaseGuilds.push(queryDocumentSnapshot.data());
             }
@@ -264,9 +231,7 @@ export class FirebaseGuildsService extends AbstractService {
       (error: Readonly<Error>): void => {
         LoggerService.getInstance().error({
           context: this._serviceName,
-          message: ChalkService.getInstance().text(
-            `Firebase guilds watcher catch an error`
-          ),
+          message: ChalkService.getInstance().text(`Firebase guilds watcher catch an error`),
         });
         LoggerService.getInstance().error({
           context: this._serviceName,
@@ -299,9 +264,7 @@ export class FirebaseGuildsService extends AbstractService {
         LoggerService.getInstance().debug({
           context: this._serviceName,
           message: ChalkService.getInstance().text(
-            `${ChalkService.getInstance().value(count)} guild${
-              _.gt(count, ONE_GUILD) ? `s` : ``
-            } found`
+            `${ChalkService.getInstance().value(count)} guild${_.gt(count, ONE_GUILD) ? `s` : ``} found`
           ),
         });
 

@@ -1,12 +1,12 @@
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../core/services/core-event.service";
-import { FirebaseGuildChannelVersionEnum } from "../../../enums/guilds/channels/firebase-guild-channel-version.enum";
-import { ICreateFirebaseGuildChannel } from "../../../interfaces/guilds/channels/create-firebase-guild-channel";
-import { IFirebaseGuildChannelV1 } from "../../../interfaces/guilds/channels/firebase-guild-channel-v1";
-import { IFirebaseGuildChannel } from "../../../types/guilds/channels/firebase-guild-channel";
-import { IFirebaseGuildChannelVFinal } from "../../../types/guilds/channels/firebase-guild-channel-v-final";
-import { FirebaseGuildsChannelsService } from "./firebase-guilds-channels.service";
+import { FirebaseGuildsChannelsService } from './firebase-guilds-channels.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../core/services/core-event.service';
+import { FirebaseGuildChannelVersionEnum } from '../../../enums/guilds/channels/firebase-guild-channel-version.enum';
+import { ICreateFirebaseGuildChannel } from '../../../interfaces/guilds/channels/create-firebase-guild-channel';
+import { IFirebaseGuildChannelV1 } from '../../../interfaces/guilds/channels/firebase-guild-channel-v1';
+import { IFirebaseGuildChannel } from '../../../types/guilds/channels/firebase-guild-channel';
+import { IFirebaseGuildChannelVFinal } from '../../../types/guilds/channels/firebase-guild-channel-v-final';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../logger/services/chalk/chalk.service`);
 

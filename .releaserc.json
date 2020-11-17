@@ -1,7 +1,5 @@
 {
-  "branches": [
-    "master"
-  ],
+  "branches": ["master"],
   "plugins": [
     [
       "@semantic-release/commit-analyzer",
@@ -22,11 +20,7 @@
           }
         ],
         "parserOpts": {
-          "noteKeywords": [
-            "BREAKING CHANGE",
-            "BREAKING CHANGES",
-            "BREAKING"
-          ]
+          "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
         }
       }
     ],
@@ -35,17 +29,10 @@
       {
         "config": "@sonia-corporation/conventional-changelog",
         "parserOpts": {
-          "noteKeywords": [
-            "BREAKING CHANGE",
-            "BREAKING CHANGES",
-            "BREAKING"
-          ]
+          "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
         },
         "writerOpts": {
-          "commitsSort": [
-            "subject",
-            "scope"
-          ],
+          "commitsSort": ["subject", "scope"],
           "owner": "C0ZEN"
         },
         "linkCompare": true,
@@ -70,11 +57,7 @@
     [
       "@semantic-release/git",
       {
-        "assets": [
-          "package.json",
-          "package-lock.json",
-          "CHANGELOG.md"
-        ],
+        "assets": ["package.json", "package-lock.json", "CHANGELOG.md"],
         "message": "build(release): new version ${nextRelease.version}"
       }
     ],

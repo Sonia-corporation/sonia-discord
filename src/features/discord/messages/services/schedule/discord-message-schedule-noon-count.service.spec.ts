@@ -1,14 +1,14 @@
-import { Message } from "discord.js";
-import { createMock } from "ts-auto-mock";
-import { ServiceNameEnum } from "../../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../../core/services/core-event.service";
-import { ILoggerLog } from "../../../../logger/interfaces/logger-log";
-import { LoggerService } from "../../../../logger/services/logger.service";
-import { IDiscordGuildSoniaSendMessageToChannel } from "../../../guilds/interfaces/discord-guild-sonia-send-message-to-channel";
-import { DiscordGuildSoniaService } from "../../../guilds/services/discord-guild-sonia.service";
-import { IDiscordMessageResponse } from "../../interfaces/discord-message-response";
-import { DiscordMessageScheduleNoonCountMessageResponseService } from "./discord-message-schedule-noon-count-message-response.service";
-import { DiscordMessageScheduleNoonCountService } from "./discord-message-schedule-noon-count.service";
+import { DiscordMessageScheduleNoonCountMessageResponseService } from './discord-message-schedule-noon-count-message-response.service';
+import { DiscordMessageScheduleNoonCountService } from './discord-message-schedule-noon-count.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../core/services/core-event.service';
+import { ILoggerLog } from '../../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../../logger/services/logger.service';
+import { IDiscordGuildSoniaSendMessageToChannel } from '../../../guilds/interfaces/discord-guild-sonia-send-message-to-channel';
+import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild-sonia.service';
+import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
+import { Message } from 'discord.js';
+import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../logger/services/chalk/chalk.service`);
 
@@ -32,9 +32,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
       service = DiscordMessageScheduleNoonCountService.getInstance();
 
-      expect(service).toStrictEqual(
-        expect.any(DiscordMessageScheduleNoonCountService)
-      );
+      expect(service).toStrictEqual(expect.any(DiscordMessageScheduleNoonCountService));
     });
 
     it(`should return the created DiscordMessageScheduleNoonCount service`, (): void => {
@@ -79,17 +77,12 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
       service = new DiscordMessageScheduleNoonCountService();
       discordMessageResponse = createMock<IDiscordMessageResponse>();
 
-      loggerServiceDebugSpy = jest
-        .spyOn(loggerService, `debug`)
-        .mockImplementation();
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       discordGuildSoniaServiceSendMessageToChannelSpy = jest
         .spyOn(discordGuildSoniaService, `sendMessageToChannel`)
         .mockImplementation();
       discordMessageScheduleNoonCountMessageResponseServiceGetMessageResponseSpy = jest
-        .spyOn(
-          discordMessageScheduleNoonCountMessageResponseService,
-          `getMessageResponse`
-        )
+        .spyOn(discordMessageScheduleNoonCountMessageResponseService, `getMessageResponse`)
         .mockReturnValue(discordMessageResponse);
     });
 
@@ -311,12 +304,8 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
       service.countChannelsAndGuilds(guildMessages);
 
-      expect(
-        discordMessageScheduleNoonCountMessageResponseServiceGetMessageResponseSpy
-      ).toHaveBeenCalledTimes(1);
-      expect(
-        discordMessageScheduleNoonCountMessageResponseServiceGetMessageResponseSpy
-      ).toHaveBeenCalledWith(6, 3, 4);
+      expect(discordMessageScheduleNoonCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageScheduleNoonCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledWith(6, 3, 4);
     });
 
     it(`should send the message response about the count into the Sonia logs channel`, (): void => {
@@ -332,12 +321,8 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
       service.countChannelsAndGuilds(guildMessages);
 
-      expect(
-        discordGuildSoniaServiceSendMessageToChannelSpy
-      ).toHaveBeenCalledTimes(1);
-      expect(
-        discordGuildSoniaServiceSendMessageToChannelSpy
-      ).toHaveBeenCalledWith({
+      expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+      expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
         channelName: `logs`,
         messageResponse: discordMessageResponse,
       } as IDiscordGuildSoniaSendMessageToChannel);

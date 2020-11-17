@@ -1,6 +1,6 @@
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { CoreEventService } from "../../../core/services/core-event.service";
-import { DiscordAuthorService } from "./discord-author.service";
+import { DiscordAuthorService } from './discord-author.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
 
 describe(`DiscordAuthorService`, (): void => {
   let service: DiscordAuthorService;
@@ -43,9 +43,7 @@ describe(`DiscordAuthorService`, (): void => {
       service = new DiscordAuthorService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_AUTHOR_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_AUTHOR_SERVICE);
     });
   });
 });

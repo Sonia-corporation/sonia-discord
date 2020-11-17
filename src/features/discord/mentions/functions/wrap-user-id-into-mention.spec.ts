@@ -1,5 +1,5 @@
-import { Snowflake } from "discord.js";
-import { wrapUserIdIntoMention } from "./wrap-user-id-into-mention";
+import { wrapUserIdIntoMention } from './wrap-user-id-into-mention';
+import { Snowflake } from 'discord.js';
 
 describe(`wrapUserIdIntoMention()`, (): void => {
   let userId: Snowflake;

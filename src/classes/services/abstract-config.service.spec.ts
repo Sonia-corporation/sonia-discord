@@ -1,7 +1,7 @@
-import { ServiceNameEnum } from "../../enums/service-name.enum";
-import { CoreEventService } from "../../features/core/services/core-event.service";
-import { IPartialNested } from "../../types/partial-nested";
-import { AbstractConfigService } from "./abstract-config.service";
+import { AbstractConfigService } from './abstract-config.service';
+import { ServiceNameEnum } from '../../enums/service-name.enum';
+import { CoreEventService } from '../../features/core/services/core-event.service';
+import { IPartialNested } from '../../types/partial-nested';
 
 jest.mock(`../../features/logger/services/logger.service`);
 jest.mock(`../../features/logger/services/chalk/chalk.service`);
@@ -12,10 +12,7 @@ interface IDummy {
 }
 
 class DummyService extends AbstractConfigService<IDummy> {
-  public constructor(
-    serviceName: ServiceNameEnum,
-    config?: IPartialNested<IDummy>
-  ) {
+  public constructor(serviceName: ServiceNameEnum, config?: IPartialNested<IDummy>) {
     super(serviceName, config);
   }
 
@@ -35,9 +32,7 @@ describe(`AbstractConfigService`, (): void => {
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
 
-    coreEventServiceNotifyServiceCreatedSpy = jest
-      .spyOn(coreEventService, `notifyServiceCreated`)
-      .mockImplementation();
+    coreEventServiceNotifyServiceCreatedSpy = jest.spyOn(coreEventService, `notifyServiceCreated`).mockImplementation();
   });
 
   describe(`when the service is created with the name ServiceNameEnum.APP_CONFIG_SERVICE`, (): void => {
@@ -51,9 +46,7 @@ describe(`AbstractConfigService`, (): void => {
       service = new DummyService(serviceName);
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.APP_CONFIG_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.APP_CONFIG_SERVICE);
     });
   });
 
@@ -68,9 +61,7 @@ describe(`AbstractConfigService`, (): void => {
       service = new DummyService(serviceName);
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.APP_CONFIG_CORE_SERVICE
-      );
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.APP_CONFIG_CORE_SERVICE);
     });
   });
 

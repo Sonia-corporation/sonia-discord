@@ -1,4 +1,4 @@
-import { DiscordMessageCommandEnum } from "./discord-message-command.enum";
+import { DiscordMessageCommandEnum } from './discord-message-command.enum';
 
 describe(`DiscordMessageCommandEnum`, (): void => {
   it(`should have a member "VERSION"`, (): void => {
@@ -70,9 +70,7 @@ describe(`DiscordMessageCommandEnum`, (): void => {
   it(`should have a member "RELEASE_NOTES"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.RELEASE_NOTES).toStrictEqual(
-      `release-notes`
-    );
+    expect(DiscordMessageCommandEnum.RELEASE_NOTES).toStrictEqual(`release-notes`);
   });
 
   it(`should have a member "R"`, (): void => {

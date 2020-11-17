@@ -1,17 +1,15 @@
-import { StoreConfig } from "@datorama/akita";
-import _ from "lodash";
-import { AbstractEntityStoreService } from "../../../../classes/stores/abstract-entity-store.service";
-import { ServiceNameEnum } from "../../../../enums/service-name.enum";
-import { StoreNameEnum } from "../../../../enums/store-name.enum";
-import { IFirebaseGuildState } from "./types/firebase-guild-state";
+import { IFirebaseGuildState } from './types/firebase-guild-state';
+import { AbstractEntityStoreService } from '../../../../classes/stores/abstract-entity-store.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { StoreNameEnum } from '../../../../enums/store-name.enum';
+import { StoreConfig } from '@datorama/akita';
+import _ from 'lodash';
 
 @StoreConfig({
   idKey: `id`,
   name: StoreNameEnum.GUILDS,
 })
-export class FirebaseGuildsStore extends AbstractEntityStoreService<
-  IFirebaseGuildState
-> {
+export class FirebaseGuildsStore extends AbstractEntityStoreService<IFirebaseGuildState> {
   private static _instance: FirebaseGuildsStore;
 
   public static getInstance(): FirebaseGuildsStore {
