@@ -14,4 +14,9 @@ export enum DiscordMessageCommandFeatureNoonFlagEnum {
    */
   H = `h`,
   HELP = `help`,
+  /**
+   * Shortcut for {@link HUMANIZE}
+   */
+  HU = `hu`,
+  HUMANIZE = `humanize`,
 }

@@ -36,4 +36,16 @@ describe(`DiscordMessageCommandFeatureNoonFlagEnum`, (): void => {
 
     expect(DiscordMessageCommandFeatureNoonFlagEnum.HELP).toStrictEqual(`help`);
   });
+
+  it(`should have a member "HU"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandFeatureNoonFlagEnum.HU).toStrictEqual(`hu`);
+  });
+
+  it(`should have a member "HUMANIZE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandFeatureNoonFlagEnum.HUMANIZE).toStrictEqual(`humanize`);
+  });
 });
