@@ -1,5 +1,18 @@
 # Semantic Versioning Changelog
 
+# [1.87.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.86.0...1.87.0) (2020-11-17)
+
+
+### :bug: Bug Fixes
+
+* **typography:** add missing dot for the flag error messages title ([009c615](https://github.com/Sonia-corporation/sonia-discord/commit/009c615f540be7cd54585ba23601cba348e0519f))
+* **typography:** add missing dot for the noon feature success messages title ([b8abd3f](https://github.com/Sonia-corporation/sonia-discord/commit/b8abd3fbe8204253500f6690e5c23c49b00a3dc1))
+
+
+### :rocket: Features
+
+* **noon:** add humanize flag to display the current state of the feature ([6e39f2e](https://github.com/Sonia-corporation/sonia-discord/commit/6e39f2ef353581d0aeceb7f4e77bc061e501a22d))
+
 # [1.86.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.85.0...1.86.0) (2020-11-11)
 
 
