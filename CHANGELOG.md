@@ -1,5 +1,13 @@
 # Semantic Versioning Changelog
 
+# [1.88.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.87.0...1.88.0) (2020-11-18)
+
+
+### :rocket: Features
+
+* **noon:** add more message variation for the humanize flag ([8eab245](https://github.com/Sonia-corporation/sonia-discord/commit/8eab245c262d617acd7bfb8baeace8e68f464637))
+* **noon:** don't display the noon feature in backticks in the messages ([9c765fd](https://github.com/Sonia-corporation/sonia-discord/commit/9c765fd7f99d0e200f58f2fa74b9fab380f7f225))
+
 # [1.87.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.86.0...1.87.0) (2020-11-17)
 
 
