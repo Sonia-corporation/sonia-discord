@@ -195,7 +195,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
         expect(result.options.embed?.description).toStrictEqual(
-          `Below is the complete list of all flags available for the \`noon\` feature. You can even combine them!`
+          `Below is the complete list of all flags available for the noon feature. You can even combine them!`
         );
       });
 
@@ -441,7 +441,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
-        expect(result.options.embed?.title).toStrictEqual(`So, you need my help with the \`noon\` feature? Cool.`);
+        expect(result.options.embed?.title).toStrictEqual(`So, you need my help with the noon feature? Cool.`);
       });
 
       it(`should return a Discord message response not split`, async (): Promise<void> => {

@@ -653,7 +653,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           const result = await service.getMessageResponse(state);
 
           expect(result.options.embed?.description).toStrictEqual(
-            `The \`noon\` feature was not configured yet on this channel.`
+            `The noon feature was not configured yet on this channel.`
           );
         });
       });
@@ -670,7 +670,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.description).toStrictEqual(`The \`noon\` feature is disabled on this channel.`);
+          expect(result.options.embed?.description).toStrictEqual(`The noon feature is disabled on this channel.`);
         });
       });
 
@@ -771,7 +771,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
         const result = await service.getMessageResponse(state);
 
         expect(result.options.embed?.title).toStrictEqual(
-          `Let me tell you all you need to know about the \`noon\` feature!`
+          `Let me tell you all you need to know about the noon feature!`
         );
       });
 

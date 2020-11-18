@@ -73,12 +73,12 @@ export class DiscordMessageCommandFeatureNoonHumanize<T extends string>
 
   public getMessageDescription(state: Readonly<IFirebaseGuildChannelFeatureNoonState>): string {
     if (_.isNil(state.isEnabled)) {
-      return `The \`noon\` feature was not configured yet on this channel.`;
+      return `The noon feature was not configured yet on this channel.`;
     } else if (_.isEqual(state.isEnabled, true)) {
       return `A message will be sent each day at noon (12 A.M) on Paris timezone on this channel.`;
     }
 
-    return `The \`noon\` feature is disabled on this channel.`;
+    return `The noon feature is disabled on this channel.`;
   }
 
   private _isNoonEnabled(firebaseGuild: Readonly<IFirebaseGuild>, channelId: Readonly<Snowflake>): boolean | undefined {
@@ -157,6 +157,6 @@ export class DiscordMessageCommandFeatureNoonHumanize<T extends string>
   }
 
   private _getMessageEmbedTitle(): string {
-    return `Let me tell you all you need to know about the \`noon\` feature!`;
+    return `Let me tell you all you need to know about the noon feature!`;
   }
 }

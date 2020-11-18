@@ -418,7 +418,7 @@ export class DiscordCommandFlags<T extends string> {
     return {
       description: `The flag \`${_.toString(
         discordCommandGetFlagName(messageFlag)
-      )}\` is unknown to the \`${this.getCommand().getLowerCaseName()}\` feature.`,
+      )}\` is unknown to the ${this.getCommand().getLowerCaseName()} feature.`,
       isUnknown: true,
       name: DiscordCommandFlagErrorTitleEnum.UNKNOWN_FLAG,
     };
