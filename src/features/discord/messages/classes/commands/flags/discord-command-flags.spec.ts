@@ -927,7 +927,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`flag\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`flag\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -947,7 +947,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`FLAG\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`FLAG\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -967,7 +967,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`flag\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`flag\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -987,7 +987,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`FLAG\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`FLAG\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1007,7 +1007,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`f\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1027,7 +1027,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`F\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1047,7 +1047,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`f\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1067,7 +1067,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`F\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1087,7 +1087,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`f\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1107,7 +1107,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`F\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1411,7 +1411,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`flag\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`flag\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1431,7 +1431,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`FLAG\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`FLAG\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1451,7 +1451,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`flag\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`flag\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1471,7 +1471,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`FLAG\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`FLAG\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1491,7 +1491,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`f\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1511,7 +1511,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`F\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1531,7 +1531,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`f\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1551,7 +1551,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`F\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1759,12 +1759,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`flag\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`flag\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`other-flag\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`other-flag\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1784,12 +1784,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`FLAG\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`FLAG\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`OTHER-FLAG\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`OTHER-FLAG\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1809,12 +1809,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`flag\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`flag\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`other-flag\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`other-flag\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1834,12 +1834,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`FLAG\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`FLAG\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`OTHER-FLAG\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`OTHER-FLAG\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1859,12 +1859,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`f\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`d\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`d\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1884,12 +1884,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`F\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`D\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`D\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1909,12 +1909,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`f\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`d\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`d\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1934,12 +1934,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`F\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`D\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`D\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1959,12 +1959,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`f\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`f\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`d\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`d\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -1984,12 +1984,12 @@ describe(`DiscordCommandFlags`, (): void => {
 
         expect(result).toStrictEqual([
           {
-            description: `The flag \`F\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`F\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
           {
-            description: `The flag \`D\` is unknown to the \`alpha-argument\` feature.`,
+            description: `The flag \`D\` is unknown to the alpha-argument feature.`,
             isUnknown: true,
             name: `Unknown flag`,
           },
@@ -2019,7 +2019,7 @@ describe(`DiscordCommandFlags`, (): void => {
               name: `Invalid boolean flag`,
             },
             {
-              description: `The flag \`other-flag\` is unknown to the \`alpha-argument\` feature.`,
+              description: `The flag \`other-flag\` is unknown to the alpha-argument feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2044,7 +2044,7 @@ describe(`DiscordCommandFlags`, (): void => {
               name: `Invalid boolean flag`,
             },
             {
-              description: `The flag \`other-flag\` is unknown to the \`alpha-argument\` feature.`,
+              description: `The flag \`other-flag\` is unknown to the alpha-argument feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2069,7 +2069,7 @@ describe(`DiscordCommandFlags`, (): void => {
               name: `Invalid boolean flag`,
             },
             {
-              description: `The flag \`other-flag\` is unknown to the \`alpha-argument\` feature.`,
+              description: `The flag \`other-flag\` is unknown to the alpha-argument feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2089,7 +2089,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`other-flag\` is unknown to the \`alpha-argument\` feature.`,
+              description: `The flag \`other-flag\` is unknown to the alpha-argument feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2109,7 +2109,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`other-flag\` is unknown to the \`alpha-argument\` feature.`,
+              description: `The flag \`other-flag\` is unknown to the alpha-argument feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2140,7 +2140,7 @@ describe(`DiscordCommandFlags`, (): void => {
               name: `Invalid boolean flag`,
             },
             {
-              description: `The flag \`OTHER-FLAG\` is unknown to the \`alpha-argument\` feature.`,
+              description: `The flag \`OTHER-FLAG\` is unknown to the alpha-argument feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2165,7 +2165,7 @@ describe(`DiscordCommandFlags`, (): void => {
               name: `Invalid boolean flag`,
             },
             {
-              description: `The flag \`OTHER-FLAG\` is unknown to the \`alpha-argument\` feature.`,
+              description: `The flag \`OTHER-FLAG\` is unknown to the alpha-argument feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2190,7 +2190,7 @@ describe(`DiscordCommandFlags`, (): void => {
               name: `Invalid boolean flag`,
             },
             {
-              description: `The flag \`OTHER-FLAG\` is unknown to the \`alpha-argument\` feature.`,
+              description: `The flag \`OTHER-FLAG\` is unknown to the alpha-argument feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2210,7 +2210,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`OTHER-FLAG\` is unknown to the \`alpha-argument\` feature.`,
+              description: `The flag \`OTHER-FLAG\` is unknown to the alpha-argument feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
@@ -2230,7 +2230,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual([
             {
-              description: `The flag \`OTHER-FLAG\` is unknown to the \`alpha-argument\` feature.`,
+              description: `The flag \`OTHER-FLAG\` is unknown to the alpha-argument feature.`,
               isUnknown: true,
               name: `Unknown flag`,
             },
