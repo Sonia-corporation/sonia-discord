@@ -76,7 +76,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`, (): void =
           const result = service.getFlag(shouldEnable, isEnabled);
 
           expect(result).toStrictEqual({
-            description: `The \`noon\` feature was not configured yet and is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
+            description: `The noon feature was not configured yet and is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
             name: `Noon feature enabled`,
           } as IDiscordCommandFlagSuccess);
         });
@@ -93,7 +93,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`, (): void =
           const result = service.getFlag(shouldEnable, isEnabled);
 
           expect(result).toStrictEqual({
-            description: `The \`noon\` feature was not configured yet and is now disabled on this channel.`,
+            description: `The noon feature was not configured yet and is now disabled on this channel.`,
             name: `Noon feature disabled`,
           } as IDiscordCommandFlagSuccess);
         });
@@ -116,7 +116,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`, (): void =
           const result = service.getFlag(shouldEnable, isEnabled);
 
           expect(result).toStrictEqual({
-            description: `The \`noon\` feature was already enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
+            description: `The noon feature was already enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
             name: `Noon feature enabled`,
           } as IDiscordCommandFlagSuccess);
         });
@@ -133,7 +133,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`, (): void =
           const result = service.getFlag(shouldEnable, isEnabled);
 
           expect(result).toStrictEqual({
-            description: `The \`noon\` feature is now disabled on this channel.`,
+            description: `The noon feature is now disabled on this channel.`,
             name: `Noon feature disabled`,
           } as IDiscordCommandFlagSuccess);
         });
@@ -156,7 +156,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`, (): void =
           const result = service.getFlag(shouldEnable, isEnabled);
 
           expect(result).toStrictEqual({
-            description: `The \`noon\` feature is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
+            description: `The noon feature is now enabled on this channel. A message will be sent each day at noon (12 A.M) on Paris timezone.`,
             name: `Noon feature enabled`,
           } as IDiscordCommandFlagSuccess);
         });
@@ -173,7 +173,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`, (): void =
           const result = service.getFlag(shouldEnable, isEnabled);
 
           expect(result).toStrictEqual({
-            description: `The \`noon\` feature was already disabled on this channel.`,
+            description: `The noon feature was already disabled on this channel.`,
             name: `Noon feature disabled`,
           } as IDiscordCommandFlagSuccess);
         });

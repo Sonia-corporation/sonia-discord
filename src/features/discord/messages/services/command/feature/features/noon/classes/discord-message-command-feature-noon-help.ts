@@ -68,7 +68,7 @@ export class DiscordMessageCommandFeatureNoonHelp<T extends string> implements D
   }
 
   private _getMessageDescription(): string {
-    return `Below is the complete list of all flags available for the \`noon\` feature. You can even combine them!`;
+    return `Below is the complete list of all flags available for the noon feature. You can even combine them!`;
   }
 
   private _getMessageEmbedFields(
@@ -103,6 +103,6 @@ export class DiscordMessageCommandFeatureNoonHelp<T extends string> implements D
   }
 
   private _getMessageEmbedTitle(): string {
-    return `So, you need my help with the \`noon\` feature? Cool.`;
+    return `So, you need my help with the noon feature? Cool.`;
   }
 }

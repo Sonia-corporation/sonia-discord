@@ -544,7 +544,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 );
                 expect(discordMessageCommandFeatureWrongFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith([
                   {
-                    description: `The flag \`yo\` is unknown to the \`noon\` feature.`,
+                    description: `The flag \`yo\` is unknown to the noon feature.`,
                     isUnknown: true,
                     name: `Unknown flag`,
                   } as IDiscordCommandFlagError,

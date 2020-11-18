@@ -11,6 +11,8 @@ import { DiscordCommandFlagActionValueless } from '../../../../../../classes/com
 import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
 import { DiscordMessageHelpService } from '../../../../../discord-message-help.service';
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE_DISABLED_MESSAGES } from '../constants/discord-message-command-feature-noon-humanize-disabled-messages';
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE_ENABLED_MESSAGES } from '../constants/discord-message-command-feature-noon-humanize-enabled-messages';
 import { MessageEmbedOptions, Snowflake } from 'discord.js';
 import _ from 'lodash';
 
@@ -69,16 +71,6 @@ export class DiscordMessageCommandFeatureNoonHumanize<T extends string>
             })
           )
       );
-  }
-
-  public getMessageDescription(state: Readonly<IFirebaseGuildChannelFeatureNoonState>): string {
-    if (_.isNil(state.isEnabled)) {
-      return `The \`noon\` feature was not configured yet on this channel.`;
-    } else if (_.isEqual(state.isEnabled, true)) {
-      return `A message will be sent each day at noon (12 A.M) on Paris timezone on this channel.`;
-    }
-
-    return `The \`noon\` feature is disabled on this channel.`;
   }
 
   private _isNoonEnabled(firebaseGuild: Readonly<IFirebaseGuild>, channelId: Readonly<Snowflake>): boolean | undefined {
@@ -151,12 +143,26 @@ export class DiscordMessageCommandFeatureNoonHumanize<T extends string>
 
   private _getMessageEmbed(state: Readonly<IFirebaseGuildChannelFeatureNoonState>): MessageEmbedOptions {
     return {
-      description: this.getMessageDescription(state),
-      title: this._getMessageEmbedTitle(),
+      description: this._getMessageDescription(state),
+      title: this._getMessageEmbedTitle(state),
     };
   }
 
-  private _getMessageEmbedTitle(): string {
-    return `Let me tell you all you need to know about the \`noon\` feature!`;
+  private _getMessageDescription(state: Readonly<IFirebaseGuildChannelFeatureNoonState>): string {
+    if (_.isNil(state.isEnabled)) {
+      return `I will not send a message at noon since it was never enabled on this channel.`;
+    } else if (_.isEqual(state.isEnabled, true)) {
+      return `I will send a message each day at noon (12 A.M) on Paris timezone on this channel.`;
+    }
+
+    return `I will not send a message at noon since it was disabled on this channel.`;
+  }
+
+  private _getMessageEmbedTitle(state: Readonly<IFirebaseGuildChannelFeatureNoonState>): string {
+    if (_.isNil(state.isEnabled) || _.isEqual(state.isEnabled, false)) {
+      return DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE_DISABLED_MESSAGES.getRandomMessage();
+    }
+
+    return DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE_ENABLED_MESSAGES.getRandomMessage();
   }
 }
