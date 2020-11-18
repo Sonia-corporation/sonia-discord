@@ -16,7 +16,11 @@ import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-me
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../../../../config/discord-message-config.service';
 import { DiscordMessageHelpService } from '../../../../../discord-message-help.service';
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE_DISABLED_MESSAGES } from '../constants/discord-message-command-feature-noon-humanize-disabled-messages';
+import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE_ENABLED_MESSAGES } from '../constants/discord-message-command-feature-noon-humanize-enabled-messages';
 import { DiscordMessageCommandFeatureNoonFlagEnum } from '../enums/discord-message-command-feature-noon-flag.enum';
+import { DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum } from '../enums/discord-message-command-feature-noon-humanize-disabled-messages.enum';
+import { DiscordMessageCommandFeatureNoonHumanizeEnabledMessagesEnum } from '../enums/discord-message-command-feature-noon-humanize-enabled-messages.enum';
 import { Message, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
@@ -575,6 +579,8 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
     let discordMessageConfigServiceGetMessageCommandHelpImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandHelpImageUrlSpy: jest.SpyInstance;
+    let discordMessageCommandFeatureNoonHumanizeDisabledMessagesGetRandomMessageSpy: jest.SpyInstance;
+    let discordMessageCommandFeatureNoonHumanizeEnabledMessagesGetRandomMessageSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonHumanize();
@@ -596,6 +602,12 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
         discordMessageConfigService,
         `getMessageCommandHelpImageUrl`
       );
+      discordMessageCommandFeatureNoonHumanizeDisabledMessagesGetRandomMessageSpy = jest
+        .spyOn(DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE_DISABLED_MESSAGES, `getRandomMessage`)
+        .mockImplementation();
+      discordMessageCommandFeatureNoonHumanizeEnabledMessagesGetRandomMessageSpy = jest
+        .spyOn(DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE_ENABLED_MESSAGES, `getRandomMessage`)
+        .mockImplementation();
     });
 
     it(`should get the message response for the help`, async (): Promise<void> => {
@@ -645,6 +657,21 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           state.isEnabled = undefined;
         });
 
+        it(`should return a Discord message response embed with a title about the disabled state`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+          discordMessageCommandFeatureNoonHumanizeDisabledMessagesGetRandomMessageSpy.mockReturnValue(
+            DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU
+          );
+
+          const result = await service.getMessageResponse(state);
+
+          expect(result.options.embed?.title).toStrictEqual(
+            DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU
+          );
+        });
+
         it(`should return a Discord message response embed with a description about the noon feature not being configured yet`, async (): Promise<
           void
         > => {
@@ -653,7 +680,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           const result = await service.getMessageResponse(state);
 
           expect(result.options.embed?.description).toStrictEqual(
-            `The noon feature was not configured yet on this channel.`
+            `I will not send a message at noon since it was never enabled on this channel.`
           );
         });
       });
@@ -663,6 +690,21 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           state.isEnabled = false;
         });
 
+        it(`should return a Discord message response embed with a title about the disabled state`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+          discordMessageCommandFeatureNoonHumanizeDisabledMessagesGetRandomMessageSpy.mockReturnValue(
+            DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU
+          );
+
+          const result = await service.getMessageResponse(state);
+
+          expect(result.options.embed?.title).toStrictEqual(
+            DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU
+          );
+        });
+
         it(`should return a Discord message response embed with a description about the noon feature being disabled`, async (): Promise<
           void
         > => {
@@ -670,13 +712,30 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.description).toStrictEqual(`The noon feature is disabled on this channel.`);
+          expect(result.options.embed?.description).toStrictEqual(
+            `I will not send a message at noon since it was disabled on this channel.`
+          );
         });
       });
 
       describe(`when the enabled state is true`, (): void => {
         beforeEach((): void => {
           state.isEnabled = true;
+        });
+
+        it(`should return a Discord message response embed with a title about the enabled state`, async (): Promise<
+          void
+        > => {
+          expect.assertions(1);
+          discordMessageCommandFeatureNoonHumanizeEnabledMessagesGetRandomMessageSpy.mockReturnValue(
+            DiscordMessageCommandFeatureNoonHumanizeEnabledMessagesEnum.I_LOVE_YOU
+          );
+
+          const result = await service.getMessageResponse(state);
+
+          expect(result.options.embed?.title).toStrictEqual(
+            DiscordMessageCommandFeatureNoonHumanizeEnabledMessagesEnum.I_LOVE_YOU
+          );
         });
 
         it(`should return a Discord message response embed with a description about the noon feature being enabled`, async (): Promise<
@@ -687,7 +746,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           const result = await service.getMessageResponse(state);
 
           expect(result.options.embed?.description).toStrictEqual(
-            `A message will be sent each day at noon (12 A.M) on Paris timezone on this channel.`
+            `I will send a message each day at noon (12 A.M) on Paris timezone on this channel.`
           );
         });
       });
@@ -763,16 +822,6 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
         expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
 
         expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
-      });
-
-      it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse(state);
-
-        expect(result.options.embed?.title).toStrictEqual(
-          `Let me tell you all you need to know about the noon feature!`
-        );
       });
 
       it(`should return a Discord message response not split`, async (): Promise<void> => {
