@@ -3,6 +3,7 @@ import { ServiceNameEnum } from '../../../enums/service-name.enum';
 import { CoreEventService } from '../../core/services/core-event.service';
 import { DiscordActivitySoniaService } from '../activities/services/discord-activity-sonia.service';
 import { DiscordAuthenticationService } from '../authentications/services/discord-authentication.service';
+import { DiscordSoniaEmotionalStateEnum } from '../emotional-states/enums/discord-sonia-emotional-state.enum';
 import { DiscordSoniaEmotionalStateService } from '../emotional-states/services/discord-sonia-emotional-state.service';
 import { DiscordGuildCreateService } from '../guilds/services/discord-guild-create.service';
 import { DiscordGuildMemberAddService } from '../guilds/services/discord-guild-member-add.service';
@@ -92,7 +93,7 @@ describe(`DiscordService`, (): void => {
     let discordActivitySoniaServiceGetInstanceSpy: jest.SpyInstance;
     let discordActivitySoniaServiceInitSpy: jest.SpyInstance<Promise<Presence>>;
     let discordSoniaEmotionalStateServiceGetInstanceSpy: jest.SpyInstance;
-    let discordSoniaEmotionalStateServiceInitSpy: jest.SpyInstance;
+    let discordSoniaEmotionalStateServiceInitSpy: jest.SpyInstance<Promise<DiscordSoniaEmotionalStateEnum>>;
 
     beforeEach((): void => {
       service = new DiscordService();
@@ -151,7 +152,9 @@ describe(`DiscordService`, (): void => {
       discordSoniaEmotionalStateServiceGetInstanceSpy = jest
         .spyOn(DiscordSoniaEmotionalStateService, `getInstance`)
         .mockReturnValue(discordSoniaEmotionalStateService);
-      discordSoniaEmotionalStateServiceInitSpy = jest.spyOn(discordSoniaEmotionalStateService, `init`);
+      discordSoniaEmotionalStateServiceInitSpy = jest
+        .spyOn(discordSoniaEmotionalStateService, `init`)
+        .mockResolvedValue(DiscordSoniaEmotionalStateEnum.AGITATED);
     });
 
     it(`should create the DiscordSonia service`, async (): Promise<void> => {
