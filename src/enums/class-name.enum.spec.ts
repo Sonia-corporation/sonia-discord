@@ -32,4 +32,12 @@ describe(`ClassNameEnum`, (): void => {
       `DiscordMessageCommandFeatureNoonHumanize`
     );
   });
+
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_STATUS"`, (): void => {
+    expect.assertions(1);
+
+    expect(ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_STATUS).toStrictEqual(
+      `DiscordMessageCommandFeatureNoonStatus`
+    );
+  });
 });

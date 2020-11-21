@@ -19,4 +19,9 @@ export enum DiscordMessageCommandFeatureNoonFlagEnum {
    */
   HU = `hu`,
   HUMANIZE = `humanize`,
+  /**
+   * Shortcut for {@link STATUS}
+   */
+  S = `s`,
+  STATUS = `status`,
 }
