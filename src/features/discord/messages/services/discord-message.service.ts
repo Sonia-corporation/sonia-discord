@@ -64,11 +64,29 @@ export class DiscordMessageService extends AbstractService {
   }
 
   public handleChannelMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void> {
-    if (
-      DiscordChannelService.getInstance().isDm(anyDiscordMessage.channel) &&
-      !_.isNil(anyDiscordMessage.guild) &&
-      DiscordMessageRightsService.getInstance().isSoniaAuthorizedForThisGuild(anyDiscordMessage.guild)
-    ) {
+    if (DiscordChannelService.getInstance().isDm(anyDiscordMessage.channel)) {
+      if (
+        _.isNil(anyDiscordMessage.guild) ||
+        !DiscordMessageRightsService.getInstance().isSoniaAuthorizedForThisGuild(anyDiscordMessage.guild)
+      ) {
+        LoggerService.getInstance().warning({
+          context: this._serviceName,
+          hasExtendedContext: true,
+          message: LoggerService.getInstance().getSnowflakeContext(
+            anyDiscordMessage.id,
+            `Sonia is not authorized to send messages to this guild in local environment`
+          ),
+        });
+        LoggerService.getInstance().debug({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(
+            `add the guild id to your secret environment under 'discord.sonia.devGuildIdWhitelist' to allow Sonia to interact with it`
+          ),
+        });
+
+        return Promise.reject(new Error(`Sonia is not authorized for this guild`));
+      }
+
       void DiscordChannelTypingService.getInstance().addOneIndicator(anyDiscordMessage.channel);
 
       return this._dmMessage(anyDiscordMessage)

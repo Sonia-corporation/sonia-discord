@@ -366,6 +366,7 @@ describe(`DiscordMessageService`, (): void => {
     let loggerServiceDebugSpy: jest.SpyInstance;
     let loggerServiceLogSpy: jest.SpyInstance;
     let loggerServiceErrorSpy: jest.SpyInstance;
+    let loggerServiceWarningSpy: jest.SpyInstance;
     let discordMessageDmServiceGetMessageSpy: jest.SpyInstance;
     let discordMessageTextServiceGetMessageSpy: jest.SpyInstance;
     let discordMessageErrorServiceHandleErrorSpy: jest.SpyInstance;
@@ -402,6 +403,7 @@ describe(`DiscordMessageService`, (): void => {
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
       loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
+      loggerServiceWarningSpy = jest.spyOn(loggerService, `warning`).mockImplementation();
       discordMessageDmServiceGetMessageSpy = jest
         .spyOn(discordMessageDmService, `getMessage`)
         .mockRejectedValue(new Error(`getMessage error`));
@@ -1055,16 +1057,44 @@ describe(`DiscordMessageService`, (): void => {
           discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy.mockReturnValue(false);
         });
 
-        it(`should do nothing`, async (): Promise<void> => {
-          expect.assertions(8);
+        it(`should log about not being able to send local messages to this guild`, async (): Promise<void> => {
+          expect.assertions(3);
 
           await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-            new Error(`Discord message is not a DM channel nor a text channel`)
+            new Error(`Sonia is not authorized for this guild`)
+          );
+
+          expect(loggerServiceWarningSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceWarningSpy).toHaveBeenCalledWith({
+            context: `DiscordMessageService`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-Sonia is not authorized to send messages to this guild in local environment`,
+          } as ILoggerLog);
+        });
+
+        it(`should log a hint for the dev to add the guild id inside the secret environment`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
+            new Error(`Sonia is not authorized for this guild`)
+          );
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+            context: `DiscordMessageService`,
+            message: `text-add the guild id to your secret environment under 'discord.sonia.devGuildIdWhitelist' to allow Sonia to interact with it`,
+          } as ILoggerLog);
+        });
+
+        it(`should do nothing`, async (): Promise<void> => {
+          expect.assertions(7);
+
+          await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
+            new Error(`Sonia is not authorized for this guild`)
           );
 
           expect(discordChannelTypingServiceAddOneIndicatorSpy).not.toHaveBeenCalled();
           expect(discordChannelTypingServiceRemoveOneIndicatorSpy).not.toHaveBeenCalled();
-          expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
           expect(anyDiscordMessageChannelSendMock).not.toHaveBeenCalled();
           expect(discordChannelServiceIsValidSpy).not.toHaveBeenCalled();
           expect(loggerServiceLogSpy).not.toHaveBeenCalled();
