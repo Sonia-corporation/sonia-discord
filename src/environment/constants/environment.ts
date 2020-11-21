@@ -9,6 +9,7 @@ export const ENVIRONMENT: IEnvironment = {
       },
     },
     sonia: {
+      devGuildIdWhitelist: [`689829775317139460`],
       id: `689829775317139460`,
       secretToken: `TO_DEFINE_BY_ASKING_IT_AND_ADD_IT_IN_SECRET_ENVIRONMENT_JSON_FILE`,
     },
