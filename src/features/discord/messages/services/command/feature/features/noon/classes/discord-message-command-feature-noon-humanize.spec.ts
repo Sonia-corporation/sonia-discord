@@ -657,9 +657,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           state.isEnabled = undefined;
         });
 
-        it(`should return a Discord message response embed with a title about the disabled state`, async (): Promise<
-          void
-        > => {
+        it(`should return a Discord message response embed with a title about the disabled state`, async (): Promise<void> => {
           expect.assertions(1);
           discordMessageCommandFeatureNoonHumanizeDisabledMessagesGetRandomMessageSpy.mockReturnValue(
             DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU
@@ -672,9 +670,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           );
         });
 
-        it(`should return a Discord message response embed with a description about the noon feature not being configured yet`, async (): Promise<
-          void
-        > => {
+        it(`should return a Discord message response embed with a description about the noon feature not being configured yet`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.getMessageResponse(state);
@@ -690,9 +686,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           state.isEnabled = false;
         });
 
-        it(`should return a Discord message response embed with a title about the disabled state`, async (): Promise<
-          void
-        > => {
+        it(`should return a Discord message response embed with a title about the disabled state`, async (): Promise<void> => {
           expect.assertions(1);
           discordMessageCommandFeatureNoonHumanizeDisabledMessagesGetRandomMessageSpy.mockReturnValue(
             DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU
@@ -705,9 +699,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           );
         });
 
-        it(`should return a Discord message response embed with a description about the noon feature being disabled`, async (): Promise<
-          void
-        > => {
+        it(`should return a Discord message response embed with a description about the noon feature being disabled`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.getMessageResponse(state);
@@ -723,9 +715,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           state.isEnabled = true;
         });
 
-        it(`should return a Discord message response embed with a title about the enabled state`, async (): Promise<
-          void
-        > => {
+        it(`should return a Discord message response embed with a title about the enabled state`, async (): Promise<void> => {
           expect.assertions(1);
           discordMessageCommandFeatureNoonHumanizeEnabledMessagesGetRandomMessageSpy.mockReturnValue(
             DiscordMessageCommandFeatureNoonHumanizeEnabledMessagesEnum.I_LOVE_YOU
@@ -738,9 +728,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           );
         });
 
-        it(`should return a Discord message response embed with a description about the noon feature being enabled`, async (): Promise<
-          void
-        > => {
+        it(`should return a Discord message response embed with a description about the noon feature being enabled`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.getMessageResponse(state);
@@ -751,9 +739,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
         });
       });
 
-      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
         expect.assertions(1);
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
 
@@ -770,9 +756,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
         });
 
-        it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
-          void
-        > => {
+        it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.getMessageResponse(state);
@@ -789,9 +773,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
         });
 
-        it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-          void
-        > => {
+        it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.getMessageResponse(state);

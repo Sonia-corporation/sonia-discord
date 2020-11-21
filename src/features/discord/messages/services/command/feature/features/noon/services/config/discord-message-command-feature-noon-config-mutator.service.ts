@@ -13,9 +13,7 @@ import { IDiscordMessageCommandFeatureConfig } from '../../interfaces/discord-me
 import { IDiscordMessageCommandFeatureNoonConfig } from '../../interfaces/discord-message-command-feature-noon-config';
 import _ from 'lodash';
 
-export class DiscordMessageCommandFeatureNoonConfigMutatorService extends AbstractConfigService<
-  IDiscordMessageCommandFeatureConfig
-> {
+export class DiscordMessageCommandFeatureNoonConfigMutatorService extends AbstractConfigService<IDiscordMessageCommandFeatureConfig> {
   private static _instance: DiscordMessageCommandFeatureNoonConfigMutatorService;
 
   public static getInstance(

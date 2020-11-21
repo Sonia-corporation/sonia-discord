@@ -103,9 +103,7 @@ describe(`DiscordMessageCommandCliErrorService`, (): void => {
       expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
-    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
 
@@ -122,9 +120,7 @@ describe(`DiscordMessageCommandCliErrorService`, (): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
       });
 
-      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getCliErrorMessageResponse();
@@ -141,9 +137,7 @@ describe(`DiscordMessageCommandCliErrorService`, (): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
       });
 
-      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getCliErrorMessageResponse();

@@ -575,9 +575,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
         isEnabled = undefined;
       });
 
-      it(`should return a Discord message response with a response telling that the noon feature is disabled`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response with a response telling that the noon feature is disabled`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(isEnabled);
@@ -591,9 +589,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
         isEnabled = false;
       });
 
-      it(`should return a Discord message response with a response telling that the noon feature is disabled`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response with a response telling that the noon feature is disabled`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(isEnabled);
@@ -607,9 +603,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
         isEnabled = true;
       });
 
-      it(`should return a Discord message response with a response telling that the noon feature is enabled`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response with a response telling that the noon feature is enabled`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(isEnabled);

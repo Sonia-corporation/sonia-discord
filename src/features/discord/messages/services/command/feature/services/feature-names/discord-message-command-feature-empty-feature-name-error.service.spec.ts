@@ -153,9 +153,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a field to display all feature names separated with a comma and a space`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a field to display all feature names separated with a comma and a space`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands);
@@ -171,9 +169,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         anyDiscordMessage.content = null;
       });
 
-      it(`should return a Discord message response embed with a field to show an example of the command with a feature name and the "!feature" command`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a field to show an example of the command with a feature name and the "!feature" command`, async (): Promise<void> => {
         expect.assertions(1);
         discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([`-`]);
 
@@ -191,9 +187,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         anyDiscordMessage.content = `dummy message without a command`;
       });
 
-      it(`should return a Discord message response embed with a field to show an example of the command with a feature name and the "!feature" command`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a field to show an example of the command with a feature name and the "!feature" command`, async (): Promise<void> => {
         expect.assertions(1);
         discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([`-`]);
 
@@ -217,9 +211,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
           discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([`!`]);
         });
 
-        it(`should return a Discord message response embed with a field to show an example of the command with a feature name by taking the prefix and command`, async (): Promise<
-          void
-        > => {
+        it(`should return a Discord message response embed with a field to show an example of the command with a feature name by taking the prefix and command`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.getMessageResponse(anyDiscordMessage, commands);
@@ -236,9 +228,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
           discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([`-`]);
         });
 
-        it(`should return a Discord message response embed with a field to show an example of the command with a feature name and the "!feature" command`, async (): Promise<
-          void
-        > => {
+        it(`should return a Discord message response embed with a field to show an example of the command with a feature name and the "!feature" command`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.getMessageResponse(anyDiscordMessage, commands);
@@ -262,9 +252,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
           discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([`!`]);
         });
 
-        it(`should return a Discord message response embed with a field to show an example of the command with a feature name and the "!feature" command`, async (): Promise<
-          void
-        > => {
+        it(`should return a Discord message response embed with a field to show an example of the command with a feature name and the "!feature" command`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.getMessageResponse(anyDiscordMessage, commands);
@@ -281,9 +269,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
           discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue([`-`]);
         });
 
-        it(`should return a Discord message response embed with a field to show an example of the command with a feature name by taking the prefix and command`, async (): Promise<
-          void
-        > => {
+        it(`should return a Discord message response embed with a field to show an example of the command with a feature name by taking the prefix and command`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.getMessageResponse(anyDiscordMessage, commands);
@@ -296,9 +282,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
       });
     });
 
-    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
 
@@ -315,9 +299,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
       });
 
-      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(anyDiscordMessage, commands);
@@ -334,9 +316,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
       });
 
-      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(anyDiscordMessage, commands);
