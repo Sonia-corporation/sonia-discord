@@ -8,6 +8,12 @@ describe(`ENVIRONMENT`, (): void => {
     expect(ENVIRONMENT.discord.message.command?.prefix).toStrictEqual([`-`, `!`, `$`]);
   });
 
+  it(`should have a Discord dev guild id whitelist containing the Sonia's guild`, (): void => {
+    expect.assertions(1);
+
+    expect(ENVIRONMENT.discord.sonia?.devGuildIdWhitelist).toStrictEqual([`689829775317139460`]);
+  });
+
   it(`should have a Discord application id for Sonia`, (): void => {
     expect.assertions(1);
 

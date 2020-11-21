@@ -1,6 +1,8 @@
 import { LoggerConfigLevelEnum } from '../../features/logger/enums/logger-config-level.enum';
 import { IEnvironment } from '../interfaces/environment';
 
+const SONIA_GUILD_ID = `689829775317139460`;
+
 export const ENVIRONMENT: IEnvironment = {
   discord: {
     message: {
@@ -9,8 +11,8 @@ export const ENVIRONMENT: IEnvironment = {
       },
     },
     sonia: {
-      devGuildIdWhitelist: [`689829775317139460`],
-      id: `689829775317139460`,
+      devGuildIdWhitelist: [SONIA_GUILD_ID],
+      id: SONIA_GUILD_ID,
       secretToken: `TO_DEFINE_BY_ASKING_IT_AND_ADD_IT_IN_SECRET_ENVIRONMENT_JSON_FILE`,
     },
   },
