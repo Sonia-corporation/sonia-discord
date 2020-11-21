@@ -11,7 +11,7 @@ describe(`ENVIRONMENT`, (): void => {
   it(`should have a Discord dev guild id whitelist containing the Sonia's guild`, (): void => {
     expect.assertions(1);
 
-    expect(ENVIRONMENT.discord.sonia?.devGuildIdWhitelist).toStrictEqual([`689829775317139460`]);
+    expect(ENVIRONMENT.discord.sonia?.devGuildIdWhitelist).toStrictEqual([`689833865279307782`]);
   });
 
   it(`should have a Discord application id for Sonia`, (): void => {

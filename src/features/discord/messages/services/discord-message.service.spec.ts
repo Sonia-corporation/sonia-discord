@@ -490,7 +490,7 @@ describe(`DiscordMessageService`, (): void => {
             expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `DiscordMessageService`,
-              message: `text-add the guild id to your secret environment under 'discord.sonia.devGuildIdWhitelist' to allow Sonia to interact with it`,
+              message: `text-add the guild id value-dummy-id to your secret environment under 'discord.sonia.devGuildIdWhitelist' to allow Sonia to interact with it`,
             } as ILoggerLog);
           });
 

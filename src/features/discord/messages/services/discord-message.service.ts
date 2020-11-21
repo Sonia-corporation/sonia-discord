@@ -96,7 +96,9 @@ export class DiscordMessageService extends AbstractService {
         LoggerService.getInstance().debug({
           context: this._serviceName,
           message: ChalkService.getInstance().text(
-            `add the guild id to your secret environment under 'discord.sonia.devGuildIdWhitelist' to allow Sonia to interact with it`
+            `add the guild id ${ChalkService.getInstance().value(
+              anyDiscordMessage.guild?.id
+            )} to your secret environment under 'discord.sonia.devGuildIdWhitelist' to allow Sonia to interact with it`
           ),
         });
 
