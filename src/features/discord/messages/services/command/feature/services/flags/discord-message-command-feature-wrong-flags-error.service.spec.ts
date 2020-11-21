@@ -134,9 +134,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
         flagsErrors = [createMock<IDiscordCommandFlagError>()];
       });
 
-      it(`should return a Discord message response embed with a description indicating that one error has been found`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a description indicating that one error has been found`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(flagsErrors);
@@ -152,9 +150,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
         expect(result.options.embed?.fields).toHaveLength(1);
       });
 
-      it(`should return a Discord message response embed with the fields containing the flags errors`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with the fields containing the flags errors`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(flagsErrors);
@@ -176,9 +172,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
         ];
       });
 
-      it(`should return a Discord message response embed with a description indicating that three errors have been found`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a description indicating that three errors have been found`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(flagsErrors);
@@ -194,9 +188,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
         expect(result.options.embed?.fields).toHaveLength(3);
       });
 
-      it(`should return a Discord message response embed with the fields containing the flags errors`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with the fields containing the flags errors`, async (): Promise<void> => {
         expect.assertions(3);
 
         const result = await service.getMessageResponse(flagsErrors);
@@ -221,9 +213,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
       });
     });
 
-    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
 
@@ -240,9 +230,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
       });
 
-      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(flagsErrors);
@@ -259,9 +247,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
       });
 
-      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(flagsErrors);

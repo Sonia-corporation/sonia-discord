@@ -198,9 +198,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
 
@@ -217,9 +215,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
       });
 
-      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse();
@@ -236,9 +232,7 @@ describe(`DiscordMessageCommandErrorService`, (): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
       });
 
-      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse();

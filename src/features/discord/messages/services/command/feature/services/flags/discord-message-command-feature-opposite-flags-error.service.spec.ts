@@ -134,9 +134,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
         oppositeFlags = [createMock<IDiscordCommandFlagOpposite>()];
       });
 
-      it(`should return a Discord message response embed with a description indicating that one opposite flag has been found`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a description indicating that one opposite flag has been found`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(oppositeFlags);
@@ -152,9 +150,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
         expect(result.options.embed?.fields).toHaveLength(2);
       });
 
-      it(`should return a Discord message response embed with the fields containing the opposite flags`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with the fields containing the opposite flags`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(oppositeFlags);
@@ -166,9 +162,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
         } as EmbedFieldData);
       });
 
-      it(`should return a Discord message response embed field containing a hint to solve this error`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed field containing a hint to solve this error`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(oppositeFlags);
@@ -189,9 +183,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
         ];
       });
 
-      it(`should return a Discord message response embed with a description indicating that three opposite flags have been found`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a description indicating that three opposite flags have been found`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(oppositeFlags);
@@ -207,9 +199,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
         expect(result.options.embed?.fields).toHaveLength(4);
       });
 
-      it(`should return a Discord message response embed with the fields containing the opposite flags`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with the fields containing the opposite flags`, async (): Promise<void> => {
         expect.assertions(3);
 
         const result = await service.getMessageResponse(oppositeFlags);
@@ -233,9 +223,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
         } as EmbedFieldData);
       });
 
-      it(`should return a Discord message response embed field containing a hint to solve this error`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed field containing a hint to solve this error`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(oppositeFlags);
@@ -247,9 +235,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
       });
     });
 
-    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
 
@@ -266,9 +252,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
       });
 
-      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(oppositeFlags);
@@ -285,9 +269,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
       });
 
-      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(oppositeFlags);

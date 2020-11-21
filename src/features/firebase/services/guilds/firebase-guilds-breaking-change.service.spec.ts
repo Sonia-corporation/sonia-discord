@@ -463,9 +463,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(querySnapshot);
             });
 
-            it(`should update the batch to update the guild to the latest version available`, async (): Promise<
-              void
-            > => {
+            it(`should update the batch to update the guild to the latest version available`, async (): Promise<void> => {
               expect.assertions(2);
 
               await service.init();
@@ -526,9 +524,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               firebaseGuildsServiceGetGuildsSpy.mockResolvedValue(querySnapshot);
             });
 
-            it(`should update the batch to update the two guilds to the latest version available`, async (): Promise<
-              void
-            > => {
+            it(`should update the batch to update the two guilds to the latest version available`, async (): Promise<void> => {
               expect.assertions(2);
 
               await service.init();
