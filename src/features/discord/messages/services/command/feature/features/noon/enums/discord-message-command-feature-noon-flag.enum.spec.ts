@@ -48,4 +48,16 @@ describe(`DiscordMessageCommandFeatureNoonFlagEnum`, (): void => {
 
     expect(DiscordMessageCommandFeatureNoonFlagEnum.HUMANIZE).toStrictEqual(`humanize`);
   });
+
+  it(`should have a member "S"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandFeatureNoonFlagEnum.S).toStrictEqual(`s`);
+  });
+
+  it(`should have a member "STATUS"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandFeatureNoonFlagEnum.STATUS).toStrictEqual(`status`);
+  });
 });

@@ -389,9 +389,7 @@ describe(`DiscordGuildCreateService`, (): void => {
               guildChannelSendMock.mockRejectedValue(new Error(`error`));
             });
 
-            it(`should log about failing to send the cookies message to the primary guild channel`, async (): Promise<
-              void
-            > => {
+            it(`should log about failing to send the cookies message to the primary guild channel`, async (): Promise<void> => {
               expect.assertions(3);
 
               await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
@@ -442,9 +440,7 @@ describe(`DiscordGuildCreateService`, (): void => {
               guildChannelSendMock.mockResolvedValue(message);
             });
 
-            it(`should log about the success of the cookies message sending on the primary guild channel`, async (): Promise<
-              void
-            > => {
+            it(`should log about the success of the cookies message sending on the primary guild channel`, async (): Promise<void> => {
               expect.assertions(3);
 
               const result = await service.sendMessage(guild);

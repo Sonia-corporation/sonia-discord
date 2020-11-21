@@ -1254,9 +1254,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
         firebaseGuild.id = undefined;
       });
 
-      it(`should not update the disable state for the feature command in the Firebase guilds`, async (): Promise<
-        void
-      > => {
+      it(`should not update the disable state for the feature command in the Firebase guilds`, async (): Promise<void> => {
         expect.assertions(2);
 
         await expect(service.updateDatabase(shouldDisable, isDisabled, firebaseGuild, channel)).rejects.toThrow(
@@ -1285,9 +1283,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
           shouldDisable = false;
         });
 
-        it(`should update the enable state to enabled for the feature command in the Firebase guilds`, async (): Promise<
-          void
-        > => {
+        it(`should update the enable state to enabled for the feature command in the Firebase guilds`, async (): Promise<void> => {
           expect.assertions(3);
 
           await expect(service.updateDatabase(shouldDisable, isDisabled, firebaseGuild, channel)).rejects.toThrow(
@@ -1308,9 +1304,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
           shouldDisable = true;
         });
 
-        it(`should update the enable state to not enabled for the feature command in the Firebase guilds`, async (): Promise<
-          void
-        > => {
+        it(`should update the enable state to not enabled for the feature command in the Firebase guilds`, async (): Promise<void> => {
           expect.assertions(3);
 
           await expect(service.updateDatabase(shouldDisable, isDisabled, firebaseGuild, channel)).rejects.toThrow(
@@ -1333,9 +1327,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
           );
         });
 
-        it(`should throw an error about the disable state for the feature command in the Firebase guilds not being successfully updated`, async (): Promise<
-          void
-        > => {
+        it(`should throw an error about the disable state for the feature command in the Firebase guilds not being successfully updated`, async (): Promise<void> => {
           expect.assertions(1);
 
           await expect(service.updateDatabase(shouldDisable, isDisabled, firebaseGuild, channel)).rejects.toThrow(
@@ -1359,9 +1351,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
               shouldDisable = true;
             });
 
-            it(`should return a flag success about the noon feature not configured yet but disabled`, async (): Promise<
-              void
-            > => {
+            it(`should return a flag success about the noon feature not configured yet but disabled`, async (): Promise<void> => {
               expect.assertions(1);
 
               const result = await service.updateDatabase(shouldDisable, isDisabled, firebaseGuild, channel);
@@ -1378,9 +1368,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
               shouldDisable = false;
             });
 
-            it(`should return a flag success about the noon feature not configured yet but enabled`, async (): Promise<
-              void
-            > => {
+            it(`should return a flag success about the noon feature not configured yet but enabled`, async (): Promise<void> => {
               expect.assertions(1);
 
               const result = await service.updateDatabase(shouldDisable, isDisabled, firebaseGuild, channel);
@@ -1403,9 +1391,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
               shouldDisable = true;
             });
 
-            it(`should return a flag success about the noon feature being already disabled`, async (): Promise<
-              void
-            > => {
+            it(`should return a flag success about the noon feature being already disabled`, async (): Promise<void> => {
               expect.assertions(1);
 
               const result = await service.updateDatabase(shouldDisable, isDisabled, firebaseGuild, channel);
@@ -1422,9 +1408,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
               shouldDisable = false;
             });
 
-            it(`should return a flag success about the noon feature being disabled but now enabled`, async (): Promise<
-              void
-            > => {
+            it(`should return a flag success about the noon feature being disabled but now enabled`, async (): Promise<void> => {
               expect.assertions(1);
 
               const result = await service.updateDatabase(shouldDisable, isDisabled, firebaseGuild, channel);
@@ -1447,9 +1431,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
               shouldDisable = true;
             });
 
-            it(`should return a flag success about the noon feature being enabled but now disabled`, async (): Promise<
-              void
-            > => {
+            it(`should return a flag success about the noon feature being enabled but now disabled`, async (): Promise<void> => {
               expect.assertions(1);
 
               const result = await service.updateDatabase(shouldDisable, isDisabled, firebaseGuild, channel);

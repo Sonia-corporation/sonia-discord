@@ -664,9 +664,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 appConfigServiceGetVersionSpy.mockReturnValue(`2.0.0`);
               });
 
-              it(`should update the Firebase guild last release notes version in the batch`, async (): Promise<
-                void
-              > => {
+              it(`should update the Firebase guild last release notes version in the batch`, async (): Promise<void> => {
                 expect.assertions(3);
 
                 await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
@@ -823,9 +821,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 appConfigServiceGetVersionSpy.mockReturnValue(`2.0.0`);
               });
 
-              it(`should update the Firebase guilds last release notes version in the batch`, async (): Promise<
-                void
-              > => {
+              it(`should update the Firebase guilds last release notes version in the batch`, async (): Promise<void> => {
                 expect.assertions(3);
 
                 await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
@@ -1620,9 +1616,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 );
               });
 
-              it(`should send the message on the Discord guild primary channel with the random response, replace the userId with the found one and wrap it as a mention`, async (): Promise<
-                void
-              > => {
+              it(`should send the message on the Discord guild primary channel with the random response, replace the userId with the found one and wrap it as a mention`, async (): Promise<void> => {
                 expect.assertions(5);
 
                 await expect(service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild)).rejects.toThrow(

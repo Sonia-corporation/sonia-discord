@@ -199,17 +199,15 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         );
       });
 
-      it(`should return a Discord message response embed with 5 fields`, async (): Promise<void> => {
+      it(`should return a Discord message response embed with 6 fields`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
-        expect(result.options.embed?.fields).toHaveLength(5);
+        expect(result.options.embed?.fields).toHaveLength(6);
       });
 
-      it(`should return a Discord message response embed with a disabled flag field documentation`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a disabled flag field documentation`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
@@ -220,9 +218,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         } as EmbedFieldData);
       });
 
-      it(`should return a Discord message response embed with an enabled flag field documentation`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with an enabled flag field documentation`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
@@ -233,9 +229,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         } as EmbedFieldData);
       });
 
-      it(`should return a Discord message response embed with an help flag field documentation`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with an help flag field documentation`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
@@ -246,9 +240,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         } as EmbedFieldData);
       });
 
-      it(`should return a Discord message response embed with a humanize flag field documentation`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a humanize flag field documentation`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
@@ -259,15 +251,24 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
         } as EmbedFieldData);
       });
 
-      it(`should return a Discord message response embed with a field to show an example of the command with a random valid flag`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a status flag field documentation`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
+
+        expect(result.options.embed?.fields?.[4]).toStrictEqual({
+          name: `--status (or -s)`,
+          value: `Display either or not the feature is enabled.`,
+        } as EmbedFieldData);
+      });
+
+      it(`should return a Discord message response embed with a field to show an example of the command with a random valid flag`, async (): Promise<void> => {
         expect.assertions(1);
         anyDiscordMessage.content = `dummy message !feature noon`;
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
-        expect(result.options.embed?.fields?.[4]).toBeOneOf([
+        expect(result.options.embed?.fields?.[5]).toBeOneOf([
           {
             name: `Example`,
             value: `\`!feature noon --disabled=true\``,
@@ -308,18 +309,24 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
             name: `Example`,
             value: `\`!feature noon -hu\``,
           } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!feature noon --status\``,
+          } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!feature noon -s\``,
+          } as EmbedFieldData,
         ]);
       });
 
-      it(`should return a Discord message response embed with a field to show an example of shortcut the command with a random valid flag`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a field to show an example of shortcut the command with a random valid flag`, async (): Promise<void> => {
         expect.assertions(1);
         anyDiscordMessage.content = `dummy message !f n`;
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
-        expect(result.options.embed?.fields?.[4]).toBeOneOf([
+        expect(result.options.embed?.fields?.[5]).toBeOneOf([
           {
             name: `Example`,
             value: `\`!f n --disabled=true\``,
@@ -360,12 +367,18 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
             name: `Example`,
             value: `\`!f n -hu\``,
           } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!f n --status\``,
+          } as EmbedFieldData,
+          {
+            name: `Example`,
+            value: `\`!f n -s\``,
+          } as EmbedFieldData,
         ]);
       });
 
-      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
         expect.assertions(1);
         discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
 
@@ -382,9 +395,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
           discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
         });
 
-        it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
-          void
-        > => {
+        it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
@@ -401,9 +412,7 @@ describe(`DiscordMessageCommandFeatureNoonHelp`, (): void => {
           discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
         });
 
-        it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-          void
-        > => {
+        it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);

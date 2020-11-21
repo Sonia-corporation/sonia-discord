@@ -287,9 +287,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       } as EmbedFieldData);
     });
 
-    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-      void
-    > => {
+    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
       expect.assertions(1);
       discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
       appConfigQueryServiceGetTotalReleaseCountHumanizedSpy.mockReturnValue(`8 birthdays`);
@@ -310,9 +308,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(`the 24th March 2020`);
       });
 
-      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse();
@@ -331,9 +327,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
         appConfigQueryServiceGetFirstReleaseDateFormattedSpy.mockReturnValue(`the 24th March 2020`);
       });
 
-      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<
-        void
-      > => {
+      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse();

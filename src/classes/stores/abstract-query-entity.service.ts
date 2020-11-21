@@ -7,9 +7,10 @@ import { EntityStore, QueryEntity } from '@datorama/akita';
  * Log the creation of the service
  * Used for Query Entity only
  */
-export abstract class AbstractQueryEntityService<T extends EntityStore<TStoreState>, TStoreState> extends QueryEntity<
+export abstract class AbstractQueryEntityService<
+  T extends EntityStore<TStoreState>,
   TStoreState
-> {
+> extends QueryEntity<TStoreState> {
   protected readonly _serviceName: ServiceNameEnum;
 
   protected constructor(serviceName: Readonly<ServiceNameEnum>, store: T) {
