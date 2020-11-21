@@ -39,7 +39,7 @@ export class DiscordService extends AbstractService {
     DiscordMessageScheduleNoonService.getInstance().init();
     DiscordGuildSoniaService.getInstance().init();
     void DiscordActivitySoniaService.getInstance().init();
-    DiscordSoniaEmotionalStateService.getInstance().init();
+    void DiscordSoniaEmotionalStateService.getInstance().init();
 
     return Promise.resolve(true);
   }
