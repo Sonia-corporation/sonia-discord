@@ -65,6 +65,22 @@ export class DiscordMessageService extends AbstractService {
 
   public handleChannelMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void> {
     if (DiscordChannelService.getInstance().isDm(anyDiscordMessage.channel)) {
+      void DiscordChannelTypingService.getInstance().addOneIndicator(anyDiscordMessage.channel);
+
+      return this._dmMessage(anyDiscordMessage)
+        .then(
+          (): Promise<void> => {
+            DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
+            return Promise.resolve();
+          }
+        )
+        .catch(
+          (error: Error): Promise<void> => {
+            DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
+            return Promise.reject(error);
+          }
+        );
+    } else if (DiscordChannelService.getInstance().isText(anyDiscordMessage.channel)) {
       if (
         _.isNil(anyDiscordMessage.guild) ||
         !DiscordMessageRightsService.getInstance().isSoniaAuthorizedForThisGuild(anyDiscordMessage.guild)
@@ -87,22 +103,6 @@ export class DiscordMessageService extends AbstractService {
         return Promise.reject(new Error(`Sonia is not authorized for this guild`));
       }
 
-      void DiscordChannelTypingService.getInstance().addOneIndicator(anyDiscordMessage.channel);
-
-      return this._dmMessage(anyDiscordMessage)
-        .then(
-          (): Promise<void> => {
-            DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
-            return Promise.resolve();
-          }
-        )
-        .catch(
-          (error: Error): Promise<void> => {
-            DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
-            return Promise.reject(error);
-          }
-        );
-    } else if (DiscordChannelService.getInstance().isText(anyDiscordMessage.channel)) {
       if (
         DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author) &&
         DiscordMentionService.getInstance().isValid(anyDiscordMessage.mentions)
