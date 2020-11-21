@@ -1,16 +1,16 @@
-import { DiscordMessageConfigService } from './config/discord-message-config.service';
-import { AbstractService } from '../../../../classes/services/abstract.service';
-import { ServiceNameEnum } from '../../../../enums/service-name.enum';
-import { ellipsis } from '../../../../functions/formatters/ellipsis';
-import { GithubConfigService } from '../../../github/services/config/github-config.service';
-import { LoggerService } from '../../../logger/services/logger.service';
-import { DiscordChannelService } from '../../channels/services/discord-channel.service';
-import { DiscordGuildSoniaChannelNameEnum } from '../../guilds/enums/discord-guild-sonia-channel-name.enum';
-import { DiscordGuildConfigService } from '../../guilds/services/config/discord-guild-config.service';
-import { DiscordGuildSoniaService } from '../../guilds/services/discord-guild-sonia.service';
-import { DiscordSoniaService } from '../../users/services/discord-sonia.service';
-import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
-import { IAnyDiscordMessage } from '../types/any-discord-message';
+import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { ellipsis } from '../../../../../functions/formatters/ellipsis';
+import { GithubConfigService } from '../../../../github/services/config/github-config.service';
+import { LoggerService } from '../../../../logger/services/logger.service';
+import { DiscordChannelService } from '../../../channels/services/discord-channel.service';
+import { DiscordGuildSoniaChannelNameEnum } from '../../../guilds/enums/discord-guild-sonia-channel-name.enum';
+import { DiscordGuildConfigService } from '../../../guilds/services/config/discord-guild-config.service';
+import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild-sonia.service';
+import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
+import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../../types/any-discord-message';
+import { DiscordMessageConfigService } from '../config/discord-message-config.service';
 import {
   EmbedFieldData,
   MessageEmbedAuthor,

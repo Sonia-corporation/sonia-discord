@@ -8,7 +8,7 @@ import { DiscordCommandFlags } from '../../../../../../classes/commands/flags/di
 import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../../../../config/discord-message-config.service';
-import { DiscordMessageHelpService } from '../../../../../discord-message-help.service';
+import { DiscordMessageHelpService } from '../../../../../helpers/discord-message-help.service';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../constants/discord-message-command-feature-noon-flags';
 import { DiscordMessageCommandFeatureNoonFlagEnum } from '../enums/discord-message-command-feature-noon-flag.enum';
 import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';

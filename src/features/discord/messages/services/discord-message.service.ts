@@ -1,6 +1,6 @@
-import { DiscordMessageDmService } from './discord-message-dm.service';
-import { DiscordMessageErrorService } from './discord-message-error.service';
-import { DiscordMessageTextService } from './discord-message-text.service';
+import { DiscordMessageErrorService } from './helpers/discord-message-error.service';
+import { DiscordMessageDmService } from './types/discord-message-dm.service';
+import { DiscordMessageTextService } from './types/discord-message-text.service';
 import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';

@@ -1,7 +1,7 @@
-import { DiscordMessageDmService } from './discord-message-dm.service';
-import { DiscordMessageErrorService } from './discord-message-error.service';
-import { DiscordMessageTextService } from './discord-message-text.service';
 import { DiscordMessageService } from './discord-message.service';
+import { DiscordMessageErrorService } from './helpers/discord-message-error.service';
+import { DiscordMessageDmService } from './types/discord-message-dm.service';
+import { DiscordMessageTextService } from './types/discord-message-text.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../core/services/core-event.service';
 import { ILoggerLog } from '../../../logger/interfaces/logger-log';

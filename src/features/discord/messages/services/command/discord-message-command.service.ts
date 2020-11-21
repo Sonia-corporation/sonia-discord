@@ -9,7 +9,7 @@ import { AbstractService } from '../../../../../classes/services/abstract.servic
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
-import { DiscordMessageContentService } from '../discord-message-content.service';
+import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
 import _ from 'lodash';
 
 export class DiscordMessageCommandService extends AbstractService {
