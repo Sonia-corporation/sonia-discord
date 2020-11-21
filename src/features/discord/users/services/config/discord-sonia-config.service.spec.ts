@@ -64,6 +64,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
         name: `dummy-name`,
         url: `dummy-url`,
       };
+      discordSoniaConfigCoreService.devGuildIdWhitelist = [`dummy-guild-id`];
       discordSoniaConfigCoreService.id = `dummy-id`;
       discordSoniaConfigCoreService.secretToken = `dummy-secret-token`;
     });
@@ -80,6 +81,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
           name: `dummy-name`,
           url: `dummy-url`,
         },
+        devGuildIdWhitelist: [`dummy-guild-id`],
         id: `dummy-id`,
         secretToken: `dummy-secret-token`,
       } as IDiscordSoniaConfig);
@@ -166,6 +168,21 @@ describe(`DiscordSoniaConfigService`, (): void => {
       const result = service.getCorporationMessageEmbedAuthorUrl();
 
       expect(result).toStrictEqual(`dummy-url`);
+    });
+  });
+
+  describe(`getDevGuildIdWhitelist()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordSoniaConfigService.getInstance();
+      discordSoniaConfigCoreService.devGuildIdWhitelist = [`dummy-guild-id`];
+    });
+
+    it(`should return the Discord Sonia dev guild id whitelist`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getDevGuildIdWhitelist();
+
+      expect(result).toStrictEqual([`dummy-guild-id`]);
     });
   });
 

@@ -1,4 +1,5 @@
 import { DiscordMessageErrorService } from './helpers/discord-message-error.service';
+import { DiscordMessageRightsService } from './rights/discord-message-rights.service';
 import { DiscordMessageDmService } from './types/discord-message-dm.service';
 import { DiscordMessageTextService } from './types/discord-message-text.service';
 import { AbstractService } from '../../../../classes/services/abstract.service';
@@ -55,15 +56,18 @@ export class DiscordMessageService extends AbstractService {
       return Promise.reject(new Error(`Discord message author is a Bot`));
     }
 
-    if (DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
-      return this.handleChannelMessage(anyDiscordMessage);
+    if (!DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
+      return Promise.reject(new Error(`Discord message channel is not valid`));
     }
 
-    return Promise.reject(new Error(`Discord message channel is not valid`));
+    return this.handleChannelMessage(anyDiscordMessage);
   }
 
   public handleChannelMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void> {
-    if (DiscordChannelService.getInstance().isDm(anyDiscordMessage.channel)) {
+    if (
+      DiscordChannelService.getInstance().isDm(anyDiscordMessage.channel) &&
+      DiscordMessageRightsService.getInstance().isSoniaAuthorizedForThisGuild()
+    ) {
       void DiscordChannelTypingService.getInstance().addOneIndicator(anyDiscordMessage.channel);
 
       return this._dmMessage(anyDiscordMessage)

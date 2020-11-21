@@ -1,5 +1,6 @@
 import { DiscordMessageService } from './discord-message.service';
 import { DiscordMessageErrorService } from './helpers/discord-message-error.service';
+import { DiscordMessageRightsService } from './rights/discord-message-rights.service';
 import { DiscordMessageDmService } from './types/discord-message-dm.service';
 import { DiscordMessageTextService } from './types/discord-message-text.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
@@ -33,6 +34,7 @@ describe(`DiscordMessageService`, (): void => {
   let discordChannelTypingService: DiscordChannelTypingService;
   let discordMentionService: DiscordMentionService;
   let discordSoniaService: DiscordSoniaService;
+  let discordMessageRightsService: DiscordMessageRightsService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -46,6 +48,7 @@ describe(`DiscordMessageService`, (): void => {
     discordChannelTypingService = DiscordChannelTypingService.getInstance();
     discordMentionService = DiscordMentionService.getInstance();
     discordSoniaService = DiscordSoniaService.getInstance();
+    discordMessageRightsService = DiscordMessageRightsService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -358,6 +361,7 @@ describe(`DiscordMessageService`, (): void => {
 
     let anyDiscordMessageChannelSendMock: jest.Mock;
     let discordChannelServiceIsDmSpy: jest.SpyInstance;
+    let discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy: jest.SpyInstance;
     let discordChannelServiceIsTextSpy: jest.SpyInstance;
     let loggerServiceDebugSpy: jest.SpyInstance;
     let loggerServiceLogSpy: jest.SpyInstance;
@@ -390,8 +394,11 @@ describe(`DiscordMessageService`, (): void => {
         response: `dummy-response`,
       });
 
-      discordChannelServiceIsDmSpy = jest.spyOn(discordChannelService, `isDm`);
-      discordChannelServiceIsTextSpy = jest.spyOn(discordChannelService, `isText`);
+      discordChannelServiceIsDmSpy = jest.spyOn(discordChannelService, `isDm`).mockImplementation();
+      discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy = jest
+        .spyOn(discordMessageRightsService, `isSoniaAuthorizedForThisGuild`)
+        .mockImplementation();
+      discordChannelServiceIsTextSpy = jest.spyOn(discordChannelService, `isText`).mockImplementation();
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
       loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
@@ -1043,116 +1050,81 @@ describe(`DiscordMessageService`, (): void => {
         discordChannelServiceIsDmSpy.mockReturnValue(true);
       });
 
-      it(`should display one typing indicator`, async (): Promise<void> => {
-        expect.assertions(3);
-
-        await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
-
-        expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledTimes(1);
-        expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
-      });
-
-      it(`should log about the DM message`, async (): Promise<void> => {
-        expect.assertions(3);
-
-        await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
-
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-          context: `DiscordMessageService`,
-          hasExtendedContext: true,
-          message: `context-[dummy-id] text-dm message`,
-        } as ILoggerLog);
-      });
-
-      it(`should get a message response for the DM message`, async (): Promise<void> => {
-        expect.assertions(3);
-
-        await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
-
-        expect(discordMessageDmServiceGetMessageSpy).toHaveBeenCalledTimes(1);
-        expect(discordMessageDmServiceGetMessageSpy).toHaveBeenCalledWith(anyDiscordMessage);
-      });
-
-      describe(`when an error occurred when getting a message response`, (): void => {
+      describe(`when the given discord message guild is not authorized for Sonia`, (): void => {
         beforeEach((): void => {
-          discordMessageDmServiceGetMessageSpy.mockRejectedValue(new Error(`getMessage error`));
-        });
-
-        it(`should log about the fail to get a valid message response`, async (): Promise<void> => {
-          expect.assertions(3);
-
-          await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
-
-          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
-          expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
-            context: `DiscordMessageService`,
-            hasExtendedContext: true,
-            message: `context-[dummy-id] text-failed to get a valid message response`,
-          } as ILoggerLog);
-        });
-
-        it(`should hide one typing indicator`, async (): Promise<void> => {
-          expect.assertions(3);
-
-          await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
-
-          expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
-          expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
+          discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy.mockReturnValue(false);
         });
 
         it(`should do nothing`, async (): Promise<void> => {
-          expect.assertions(5);
+          expect.assertions(8);
 
-          await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
+          await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
+            new Error(`Discord message is not a DM channel nor a text channel`)
+          );
 
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(discordChannelTypingServiceAddOneIndicatorSpy).not.toHaveBeenCalled();
+          expect(discordChannelTypingServiceRemoveOneIndicatorSpy).not.toHaveBeenCalled();
+          expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
+          expect(anyDiscordMessageChannelSendMock).not.toHaveBeenCalled();
           expect(discordChannelServiceIsValidSpy).not.toHaveBeenCalled();
           expect(loggerServiceLogSpy).not.toHaveBeenCalled();
           expect(discordMessageErrorServiceHandleErrorSpy).not.toHaveBeenCalled();
         });
       });
 
-      describe(`when getting a message response was successful`, (): void => {
+      describe(`when the given discord message guild is authorized for Sonia`, (): void => {
         beforeEach((): void => {
-          discordMessageDmServiceGetMessageSpy.mockResolvedValue(discordMessageResponse);
+          discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy.mockReturnValue(true);
         });
 
-        describe(`when the given Discord message channel is not valid`, (): void => {
-          beforeEach((): void => {
-            discordChannelServiceIsValidSpy.mockReturnValue(false);
-          });
+        it(`should display one typing indicator`, async (): Promise<void> => {
+          expect.assertions(3);
 
-          it(`should do nothing`, async (): Promise<void> => {
-            expect.assertions(4);
+          await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
 
-            await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-              new Error(`Discord message channel not valid`)
-            );
-
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-            expect(loggerServiceLogSpy).not.toHaveBeenCalled();
-            expect(discordMessageErrorServiceHandleErrorSpy).not.toHaveBeenCalled();
-          });
+          expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledTimes(1);
+          expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
         });
 
-        describe(`when the given Discord message channel is valid`, (): void => {
+        it(`should log about the DM message`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+            context: `DiscordMessageService`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-dm message`,
+          } as ILoggerLog);
+        });
+
+        it(`should get a message response for the DM message`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
+
+          expect(discordMessageDmServiceGetMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessageDmServiceGetMessageSpy).toHaveBeenCalledWith(anyDiscordMessage);
+        });
+
+        describe(`when an error occurred when getting a message response`, (): void => {
           beforeEach((): void => {
-            discordChannelServiceIsValidSpy.mockReturnValue(true);
+            discordMessageDmServiceGetMessageSpy.mockRejectedValue(new Error(`getMessage error`));
           });
 
-          it(`should log about sending a message`, async (): Promise<void> => {
+          it(`should log about the fail to get a valid message response`, async (): Promise<void> => {
             expect.assertions(3);
 
             await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-              new Error(`Fake test error: send`)
+              new Error(`getMessage error`)
             );
 
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
-            expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+            expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
               context: `DiscordMessageService`,
               hasExtendedContext: true,
-              message: `context-[dummy-id] text-sending message...`,
+              message: `context-[dummy-id] text-failed to get a valid message response`,
             } as ILoggerLog);
           });
 
@@ -1160,117 +1132,190 @@ describe(`DiscordMessageService`, (): void => {
             expect.assertions(3);
 
             await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-              new Error(`Fake test error: send`)
+              new Error(`getMessage error`)
             );
 
             expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
             expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
           });
 
-          it(`should send the message response to the given Discord message channel`, async (): Promise<void> => {
-            expect.assertions(3);
+          it(`should do nothing`, async (): Promise<void> => {
+            expect.assertions(5);
 
             await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-              new Error(`Fake test error: send`)
+              new Error(`getMessage error`)
             );
 
-            expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(2);
-            expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(`dummy-response`, {
-              split: false,
-            } as MessageOptions);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(discordChannelServiceIsValidSpy).not.toHaveBeenCalled();
+            expect(loggerServiceLogSpy).not.toHaveBeenCalled();
+            expect(discordMessageErrorServiceHandleErrorSpy).not.toHaveBeenCalled();
+          });
+        });
+
+        describe(`when getting a message response was successful`, (): void => {
+          beforeEach((): void => {
+            discordMessageDmServiceGetMessageSpy.mockResolvedValue(discordMessageResponse);
           });
 
-          describe(`when the message was not successfully sent`, (): void => {
+          describe(`when the given Discord message channel is not valid`, (): void => {
             beforeEach((): void => {
-              anyDiscordMessageChannelSendMock.mockReturnValue(Promise.reject(new Error(`Message sending error`)));
-
-              anyDiscordMessage = createMock<IAnyDiscordMessage>({
-                channel: {
-                  send: anyDiscordMessageChannelSendMock,
-                },
-                id: `dummy-id`,
-              });
+              discordChannelServiceIsValidSpy.mockReturnValue(false);
             });
 
-            it(`should handle the error`, async (): Promise<void> => {
-              expect.assertions(3);
+            it(`should do nothing`, async (): Promise<void> => {
+              expect.assertions(4);
 
               await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-                new Error(`Message sending error`)
+                new Error(`Discord message channel not valid`)
               );
 
-              expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledTimes(1);
-              expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledWith(
-                new Error(`Message sending error`),
-                anyDiscordMessage
-              );
-            });
-
-            it(`should hide one typing indicator`, async (): Promise<void> => {
-              expect.assertions(3);
-
-              await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-                new Error(`Message sending error`)
-              );
-
-              expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
-              expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
-            });
-
-            it(`should not log about the success of the message sending`, async (): Promise<void> => {
-              expect.assertions(2);
-
-              await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-                new Error(`Message sending error`)
-              );
-
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceLogSpy).not.toHaveBeenCalled();
+              expect(discordMessageErrorServiceHandleErrorSpy).not.toHaveBeenCalled();
             });
           });
 
-          describe(`when the message was successfully sent`, (): void => {
+          describe(`when the given Discord message channel is valid`, (): void => {
             beforeEach((): void => {
-              anyDiscordMessageChannelSendMock.mockReturnValue(Promise.resolve());
-
-              anyDiscordMessage = createMock<IAnyDiscordMessage>({
-                channel: {
-                  send: anyDiscordMessageChannelSendMock,
-                },
-                id: `dummy-id`,
-              });
+              discordChannelServiceIsValidSpy.mockReturnValue(true);
             });
 
-            it(`should log about the success of the message sending`, async (): Promise<void> => {
+            it(`should log about sending a message`, async (): Promise<void> => {
               expect.assertions(3);
 
-              const result = await service.handleChannelMessage(anyDiscordMessage);
+              await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
+                new Error(`Fake test error: send`)
+              );
 
-              expect(result).toBeUndefined();
-              expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
-              expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
                 context: `DiscordMessageService`,
                 hasExtendedContext: true,
-                message: `context-[dummy-id] text-message sent`,
+                message: `context-[dummy-id] text-sending message...`,
               } as ILoggerLog);
             });
 
             it(`should hide one typing indicator`, async (): Promise<void> => {
               expect.assertions(3);
 
-              const result = await service.handleChannelMessage(anyDiscordMessage);
+              await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
+                new Error(`Fake test error: send`)
+              );
 
-              expect(result).toBeUndefined();
               expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
               expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
             });
 
-            it(`should not handle the error`, async (): Promise<void> => {
-              expect.assertions(2);
+            it(`should send the message response to the given Discord message channel`, async (): Promise<void> => {
+              expect.assertions(3);
 
-              const result = await service.handleChannelMessage(anyDiscordMessage);
+              await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
+                new Error(`Fake test error: send`)
+              );
 
-              expect(result).toBeUndefined();
-              expect(discordMessageErrorServiceHandleErrorSpy).not.toHaveBeenCalled();
+              expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(2);
+              expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(`dummy-response`, {
+                split: false,
+              } as MessageOptions);
+            });
+
+            describe(`when the message was not successfully sent`, (): void => {
+              beforeEach((): void => {
+                anyDiscordMessageChannelSendMock.mockReturnValue(Promise.reject(new Error(`Message sending error`)));
+
+                anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  channel: {
+                    send: anyDiscordMessageChannelSendMock,
+                  },
+                  id: `dummy-id`,
+                });
+              });
+
+              it(`should handle the error`, async (): Promise<void> => {
+                expect.assertions(3);
+
+                await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`Message sending error`)
+                );
+
+                expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledTimes(1);
+                expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledWith(
+                  new Error(`Message sending error`),
+                  anyDiscordMessage
+                );
+              });
+
+              it(`should hide one typing indicator`, async (): Promise<void> => {
+                expect.assertions(3);
+
+                await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`Message sending error`)
+                );
+
+                expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
+                expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(
+                  anyDiscordMessage.channel
+                );
+              });
+
+              it(`should not log about the success of the message sending`, async (): Promise<void> => {
+                expect.assertions(2);
+
+                await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`Message sending error`)
+                );
+
+                expect(loggerServiceLogSpy).not.toHaveBeenCalled();
+              });
+            });
+
+            describe(`when the message was successfully sent`, (): void => {
+              beforeEach((): void => {
+                anyDiscordMessageChannelSendMock.mockReturnValue(Promise.resolve());
+
+                anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  channel: {
+                    send: anyDiscordMessageChannelSendMock,
+                  },
+                  id: `dummy-id`,
+                });
+              });
+
+              it(`should log about the success of the message sending`, async (): Promise<void> => {
+                expect.assertions(3);
+
+                const result = await service.handleChannelMessage(anyDiscordMessage);
+
+                expect(result).toBeUndefined();
+                expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceLogSpy).toHaveBeenCalledWith({
+                  context: `DiscordMessageService`,
+                  hasExtendedContext: true,
+                  message: `context-[dummy-id] text-message sent`,
+                } as ILoggerLog);
+              });
+
+              it(`should hide one typing indicator`, async (): Promise<void> => {
+                expect.assertions(3);
+
+                const result = await service.handleChannelMessage(anyDiscordMessage);
+
+                expect(result).toBeUndefined();
+                expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
+                expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(
+                  anyDiscordMessage.channel
+                );
+              });
+
+              it(`should not handle the error`, async (): Promise<void> => {
+                expect.assertions(2);
+
+                const result = await service.handleChannelMessage(anyDiscordMessage);
+
+                expect(result).toBeUndefined();
+                expect(discordMessageErrorServiceHandleErrorSpy).not.toHaveBeenCalled();
+              });
             });
           });
         });

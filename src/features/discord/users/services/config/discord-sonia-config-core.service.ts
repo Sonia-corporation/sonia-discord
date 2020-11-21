@@ -3,6 +3,7 @@ import { IconEnum } from '../../../../../enums/icon.enum';
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { IDiscordSoniaConfig } from '../../../interfaces/discord-sonia-config';
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from '../../../interfaces/discord-sonia-corporation-message-embed-author-config';
+import { Snowflake } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordSoniaConfigCoreService extends AbstractService implements IDiscordSoniaConfig {
@@ -22,6 +23,7 @@ export class DiscordSoniaConfigCoreService extends AbstractService implements ID
     name: `Sonia`,
     url: `https://github.com/Sonia-corporation?type=source`,
   };
+  public devGuildIdWhitelist: Snowflake[] = [];
   public id = `unknown`;
   public secretToken = `unknown`;
 
