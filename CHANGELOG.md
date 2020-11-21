@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.89.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.88.0...1.89.0) (2020-11-21)
+
+
+### :rocket: Features
+
+* **noon:** add status flag ([b1daf57](https://github.com/Sonia-corporation/sonia-discord/commit/b1daf579fab92d1f9a6da5ce6a9ab9be3aaa97c4))
+
 # [1.88.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.87.0...1.88.0) (2020-11-18)
 
 
