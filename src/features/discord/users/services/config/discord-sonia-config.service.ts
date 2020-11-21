@@ -4,7 +4,7 @@ import { IconEnum } from '../../../../../enums/icon.enum';
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { IDiscordSoniaConfig } from '../../../interfaces/discord-sonia-config';
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from '../../../interfaces/discord-sonia-corporation-message-embed-author-config';
-import { Snowflake } from 'discord.js';
+import { Guild, Snowflake } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordSoniaConfigService extends AbstractService {
@@ -54,6 +54,10 @@ export class DiscordSoniaConfigService extends AbstractService {
 
   public getDevGuildIdWhitelist(): Snowflake[] {
     return DiscordSoniaConfigCoreService.getInstance().devGuildIdWhitelist;
+  }
+
+  public isGuildWhitelistedInDev({ id }: Readonly<Guild>): boolean {
+    return _.includes(this.getDevGuildIdWhitelist(), id);
   }
 
   public getId(): Snowflake {

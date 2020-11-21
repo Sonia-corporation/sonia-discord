@@ -5,6 +5,8 @@ import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../../core/services/core-event.service';
 import { IDiscordSoniaConfig } from '../../../interfaces/discord-sonia-config';
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from '../../../interfaces/discord-sonia-corporation-message-embed-author-config';
+import { Guild } from 'discord.js';
+import { createMock } from 'ts-auto-mock';
 
 describe(`DiscordSoniaConfigService`, (): void => {
   let service: DiscordSoniaConfigService;
@@ -183,6 +185,44 @@ describe(`DiscordSoniaConfigService`, (): void => {
       const result = service.getDevGuildIdWhitelist();
 
       expect(result).toStrictEqual([`dummy-guild-id`]);
+    });
+  });
+
+  describe(`isGuildWhitelistedInDev()`, (): void => {
+    let guild: Guild;
+
+    beforeEach((): void => {
+      service = DiscordSoniaConfigService.getInstance();
+      guild = createMock<Guild>();
+      discordSoniaConfigCoreService.devGuildIdWhitelist = [`dummy-guild-id`];
+    });
+
+    describe(`when the given guild has its id not whitelisted`, (): void => {
+      beforeEach((): void => {
+        guild.id = `guild-id`;
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.isGuildWhitelistedInDev(guild);
+
+        expect(result).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given guild has its id whitelisted`, (): void => {
+      beforeEach((): void => {
+        guild.id = `dummy-guild-id`;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.isGuildWhitelistedInDev(guild);
+
+        expect(result).toStrictEqual(true);
+      });
     });
   });
 

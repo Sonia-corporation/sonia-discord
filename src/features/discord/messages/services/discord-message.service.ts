@@ -66,7 +66,8 @@ export class DiscordMessageService extends AbstractService {
   public handleChannelMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void> {
     if (
       DiscordChannelService.getInstance().isDm(anyDiscordMessage.channel) &&
-      DiscordMessageRightsService.getInstance().isSoniaAuthorizedForThisGuild()
+      !_.isNil(anyDiscordMessage.guild) &&
+      DiscordMessageRightsService.getInstance().isSoniaAuthorizedForThisGuild(anyDiscordMessage.guild)
     ) {
       void DiscordChannelTypingService.getInstance().addOneIndicator(anyDiscordMessage.channel);
 
