@@ -70,6 +70,21 @@ export class DiscordGuildMemberAddService extends AbstractService {
 
   private _canSendMessage(guild: Readonly<Guild>): boolean {
     if (!DiscordMessageRightsService.getInstance().isSoniaAuthorizedForThisGuild(guild)) {
+      LoggerService.getInstance().warning({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `Sonia is not authorized to send messages to this guild in local environment`
+        ),
+      });
+      LoggerService.getInstance().debug({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `add the guild id ${ChalkService.getInstance().value(
+            guild.id
+          )} to your secret environment under 'discord.sonia.devGuildIdWhitelist' to allow Sonia to interact with it`
+        ),
+      });
+
       return false;
     }
 
