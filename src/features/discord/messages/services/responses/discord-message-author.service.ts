@@ -1,12 +1,12 @@
-import { AbstractService } from '../../../../classes/services/abstract.service';
-import { ServiceNameEnum } from '../../../../enums/service-name.enum';
-import { AppConfigService } from '../../../app/services/config/app-config.service';
-import { ProfileConfigService } from '../../../profile/services/config/profile-config.service';
-import { addDiscordDevPrefix } from '../../functions/dev-prefix/add-discord-dev-prefix';
-import { wrapUserIdIntoMention } from '../../mentions/functions/wrap-user-id-into-mention';
-import { DiscordAuthorService } from '../../users/services/discord-author.service';
-import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
-import { IAnyDiscordMessage } from '../types/any-discord-message';
+import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { AppConfigService } from '../../../../app/services/config/app-config.service';
+import { ProfileConfigService } from '../../../../profile/services/config/profile-config.service';
+import { addDiscordDevPrefix } from '../../../functions/dev-prefix/add-discord-dev-prefix';
+import { wrapUserIdIntoMention } from '../../../mentions/functions/wrap-user-id-into-mention';
+import { DiscordAuthorService } from '../../../users/services/discord-author.service';
+import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import _ from 'lodash';
 
 export class DiscordMessageAuthorService extends AbstractService {

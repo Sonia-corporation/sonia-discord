@@ -83,6 +83,14 @@ describe(`DiscordSoniaConfigCoreService`, (): void => {
     expect(service.corporationMessageEmbedAuthor.url).toStrictEqual(`https://github.com/Sonia-corporation?type=source`);
   });
 
+  it(`should have an empty dev guild id whitelist`, (): void => {
+    expect.assertions(1);
+
+    service = DiscordSoniaConfigCoreService.getInstance();
+
+    expect(service.devGuildIdWhitelist).toStrictEqual([]);
+  });
+
   it(`should have an unknown id`, (): void => {
     expect.assertions(1);
 

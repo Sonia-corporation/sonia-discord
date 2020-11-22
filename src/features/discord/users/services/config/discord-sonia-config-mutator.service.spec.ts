@@ -4,6 +4,7 @@ import { DiscordSoniaConfigService } from './discord-sonia-config.service';
 import { IconEnum } from '../../../../../enums/icon.enum';
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { IPartialNested } from '../../../../../types/partial-nested';
+import { IConfigUpdateArray } from '../../../../config/interfaces/config-update-array';
 import { IConfigUpdateString } from '../../../../config/interfaces/config-update-string';
 import { ConfigService } from '../../../../config/services/config.service';
 import { CoreEventService } from '../../../../core/services/core-event.service';
@@ -11,6 +12,7 @@ import { LoggerService } from '../../../../logger/services/logger.service';
 import { IDiscordConfig } from '../../../interfaces/discord-config';
 import { IDiscordSoniaConfig } from '../../../interfaces/discord-sonia-config';
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from '../../../interfaces/discord-sonia-corporation-message-embed-author-config';
+import { Snowflake } from 'discord.js';
 
 jest.mock(`../../../../time/services/time.service`);
 jest.mock(`../../../../logger/services/chalk/chalk.service`);
@@ -125,6 +127,15 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
         expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url).toStrictEqual(`url`);
       });
 
+      it(`should not update the dev guild id whitelist`, (): void => {
+        expect.assertions(1);
+        discordSoniaConfigCoreService.devGuildIdWhitelist = [`guild-id`];
+
+        service = new DiscordSoniaConfigMutatorService(config);
+
+        expect(discordSoniaConfigCoreService.devGuildIdWhitelist).toStrictEqual([`guild-id`]);
+      });
+
       it(`should not update the current id`, (): void => {
         expect.assertions(1);
         discordSoniaConfigCoreService.id = `id`;
@@ -154,6 +165,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
               name: `dummy-name`,
               url: `dummy-url`,
             },
+            devGuildIdWhitelist: [`dummy-guild-id`],
             id: `dummy-id`,
             secretToken: `dummy-secret-token`,
           },
@@ -194,6 +206,15 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
         service = new DiscordSoniaConfigMutatorService(config);
 
         expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url).toStrictEqual(`dummy-url`);
+      });
+
+      it(`should override the dev guild id whitelist`, (): void => {
+        expect.assertions(1);
+        discordSoniaConfigCoreService.devGuildIdWhitelist = [`guild-id`];
+
+        service = new DiscordSoniaConfigMutatorService(config);
+
+        expect(discordSoniaConfigCoreService.devGuildIdWhitelist).toStrictEqual([`dummy-guild-id`]);
       });
 
       it(`should override the id`, (): void => {
@@ -265,6 +286,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
     beforeEach((): void => {
       service = DiscordSoniaConfigMutatorService.getInstance();
       discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
+      discordSoniaConfigCoreService.devGuildIdWhitelist = [`dummy-guild-id`];
       discordSoniaConfigCoreService.id = `dummy-id`;
       discordSoniaConfigCoreService.secretToken = `dummy-secret-token`;
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor = {
@@ -277,11 +299,12 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
     });
 
     it(`should not update the config`, (): void => {
-      expect.assertions(4);
+      expect.assertions(5);
 
       service.updateConfig();
 
       expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(IconEnum.GIRL);
+      expect(discordSoniaConfigCoreService.devGuildIdWhitelist).toStrictEqual([`dummy-guild-id`]);
       expect(discordSoniaConfigCoreService.id).toStrictEqual(`dummy-id`);
       expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(`dummy-secret-token`);
       expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor).toStrictEqual({
@@ -305,11 +328,12 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
       });
 
       it(`should not update the config`, (): void => {
-        expect.assertions(4);
+        expect.assertions(5);
 
         service.updateConfig(config);
 
         expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(IconEnum.GIRL);
+        expect(discordSoniaConfigCoreService.devGuildIdWhitelist).toStrictEqual([`dummy-guild-id`]);
         expect(discordSoniaConfigCoreService.id).toStrictEqual(`dummy-id`);
         expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(`dummy-secret-token`);
         expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor).toStrictEqual({
@@ -343,6 +367,35 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(IconEnum.ARTIFICIAL_INTELLIGENCE);
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[DiscordSoniaConfigMutatorService][now-format] text-configuration updated`
+        );
+      });
+    });
+
+    describe(`when the given config contains a Sonia dev guild id whitelist`, (): void => {
+      beforeEach((): void => {
+        config = {
+          sonia: {
+            devGuildIdWhitelist: [`guild-id`],
+          },
+        };
+      });
+
+      it(`should update the config dev guild id whitelist`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(discordSoniaConfigCoreService.devGuildIdWhitelist).toStrictEqual([`guild-id`]);
       });
 
       it(`should log about the config update`, (): void => {
@@ -459,6 +512,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
     beforeEach((): void => {
       service = DiscordSoniaConfigMutatorService.getInstance();
       discordSoniaConfigCoreService.corporationImageUrl = IconEnum.GIRL;
+      discordSoniaConfigCoreService.devGuildIdWhitelist = [`dummy-guild-id`];
       discordSoniaConfigCoreService.id = `dummy-id`;
       discordSoniaConfigCoreService.secretToken = `dummy-secret-token`;
       discordSoniaConfigCoreService.corporationMessageEmbedAuthor = {
@@ -474,11 +528,12 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
       });
 
       it(`should not update the config`, (): void => {
-        expect.assertions(4);
+        expect.assertions(5);
 
         service.updateSonia(config);
 
         expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(IconEnum.GIRL);
+        expect(discordSoniaConfigCoreService.devGuildIdWhitelist).toStrictEqual([`dummy-guild-id`]);
         expect(discordSoniaConfigCoreService.id).toStrictEqual(`dummy-id`);
         expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(`dummy-secret-token`);
         expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor).toStrictEqual({
@@ -502,6 +557,22 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
         service.updateSonia(config);
 
         expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(IconEnum.ARTIFICIAL_INTELLIGENCE);
+      });
+    });
+
+    describe(`when the given config contains a dev guild id whitelist`, (): void => {
+      beforeEach((): void => {
+        config = {
+          devGuildIdWhitelist: [`guild-id`],
+        };
+      });
+
+      it(`should update the config dev guild id whitelist`, (): void => {
+        expect.assertions(1);
+
+        service.updateSonia(config);
+
+        expect(discordSoniaConfigCoreService.devGuildIdWhitelist).toStrictEqual([`guild-id`]);
       });
     });
 
@@ -787,6 +858,45 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
       service.updateCorporationMessageEmbedAuthorUrl(url);
 
       expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url).toStrictEqual(`dummy-url`);
+    });
+  });
+
+  describe(`updateDevGuildIdWhitelist()`, (): void => {
+    let devGuildIdWhitelist: undefined | (Snowflake | undefined)[];
+
+    let configServiceGetUpdatedArraySpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = DiscordSoniaConfigMutatorService.getInstance();
+      devGuildIdWhitelist = [`dummy-dummy`, `prefix-dummy`];
+      discordSoniaConfigCoreService.devGuildIdWhitelist = [`dummy`, `prefix`];
+
+      configServiceGetUpdatedArraySpy = jest
+        .spyOn(configService, `getUpdatedArray`)
+        .mockReturnValue([`dummy-dummy`, `prefix-dummy`]);
+    });
+
+    it(`should get the updated string array`, (): void => {
+      expect.assertions(2);
+
+      service.updateDevGuildIdWhitelist(devGuildIdWhitelist);
+
+      expect(configServiceGetUpdatedArraySpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedArraySpy).toHaveBeenCalledWith({
+        context: `DiscordSoniaConfigMutatorService`,
+        isValueHidden: true,
+        newValue: [`dummy-dummy`, `prefix-dummy`],
+        oldValue: [`dummy`, `prefix`],
+        valueName: `dev guild id whitelist`,
+      } as IConfigUpdateArray);
+    });
+
+    it(`should update the Discord Sonia config dev guild id whitelist with the updated array`, (): void => {
+      expect.assertions(1);
+
+      service.updateDevGuildIdWhitelist(devGuildIdWhitelist);
+
+      expect(discordSoniaConfigCoreService.devGuildIdWhitelist).toStrictEqual([`dummy-dummy`, `prefix-dummy`]);
     });
   });
 

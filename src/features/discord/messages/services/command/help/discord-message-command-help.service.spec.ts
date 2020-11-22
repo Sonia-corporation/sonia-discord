@@ -9,7 +9,7 @@ import { DiscordSoniaService } from '../../../../users/services/discord-sonia.se
 import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
-import { DiscordMessageHelpService } from '../../discord-message-help.service';
+import { DiscordMessageHelpService } from '../../helpers/discord-message-help.service';
 import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';

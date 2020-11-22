@@ -10,6 +10,7 @@ import { DiscordChannelGuildService } from '../../channels/services/discord-chan
 import { DiscordLoggerErrorService } from '../../logger/services/discord-logger-error.service';
 import { IDiscordMessageResponse } from '../../messages/interfaces/discord-message-response';
 import { DiscordMessageCommandCookieService } from '../../messages/services/command/cookie/services/discord-message-command-cookie.service';
+import { DiscordMessageRightsService } from '../../messages/services/rights/discord-message-rights.service';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
 import { IDiscordGuildSoniaSendMessageToChannel } from '../interfaces/discord-guild-sonia-send-message-to-channel';
@@ -35,6 +36,7 @@ describe(`DiscordGuildCreateService`, (): void => {
   let discordGuildSoniaService: DiscordGuildSoniaService;
   let discordLoggerErrorService: DiscordLoggerErrorService;
   let firebaseGuildsService: FirebaseGuildsService;
+  let discordMessageRightsService: DiscordMessageRightsService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -46,6 +48,7 @@ describe(`DiscordGuildCreateService`, (): void => {
     discordGuildSoniaService = DiscordGuildSoniaService.getInstance();
     discordLoggerErrorService = DiscordLoggerErrorService.getInstance();
     firebaseGuildsService = FirebaseGuildsService.getInstance();
+    discordMessageRightsService = DiscordMessageRightsService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -93,9 +96,11 @@ describe(`DiscordGuildCreateService`, (): void => {
     let discordClientServiceGetClientOnMock: jest.Mock;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
+    let loggerServiceWarningSpy: jest.SpyInstance;
     let discordClientServiceGetClientSpy: jest.SpyInstance;
     let sendMessageSpy: jest.SpyInstance;
     let addFirebaseGuildSpy: jest.SpyInstance;
+    let discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordGuildCreateService();
@@ -103,12 +108,18 @@ describe(`DiscordGuildCreateService`, (): void => {
       client = createMock<Client>({
         on: discordClientServiceGetClientOnMock,
       });
-      guild = createMock<Guild>();
+      guild = createMock<Guild>({
+        id: `dummy-guild-id`,
+      });
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      loggerServiceWarningSpy = jest.spyOn(loggerService, `warning`).mockImplementation();
       discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(client);
       sendMessageSpy = jest.spyOn(service, `sendMessage`).mockImplementation();
       addFirebaseGuildSpy = jest.spyOn(service, `addFirebaseGuild`).mockImplementation();
+      discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy = jest
+        .spyOn(discordMessageRightsService, `isSoniaAuthorizedForThisGuild`)
+        .mockImplementation();
     });
 
     it(`should get the Discord client`, (): void => {
@@ -146,29 +157,106 @@ describe(`DiscordGuildCreateService`, (): void => {
 
         service.init();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
           context: `DiscordGuildCreateService`,
           message: `text-"guildCreate" event triggered`,
         } as ILoggerLog);
       });
 
-      it(`should send a message`, (): void => {
+      it(`should check if Sonia is authorized to send messages on this guild`, (): void => {
         expect.assertions(2);
 
         service.init();
 
-        expect(sendMessageSpy).toHaveBeenCalledTimes(1);
-        expect(sendMessageSpy).toHaveBeenCalledWith(guild);
+        expect(discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy).toHaveBeenCalledTimes(1);
+        expect(discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy).toHaveBeenCalledWith(guild);
       });
 
-      it(`should add the guild into Firebase`, (): void => {
-        expect.assertions(2);
+      describe(`when Sonia is not authorized to send messages on this guild`, (): void => {
+        beforeEach((): void => {
+          discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy.mockReturnValue(false);
+        });
 
-        service.init();
+        it(`should log about not being able to send local messages to this guild`, (): void => {
+          expect.assertions(2);
 
-        expect(addFirebaseGuildSpy).toHaveBeenCalledTimes(1);
-        expect(addFirebaseGuildSpy).toHaveBeenCalledWith(guild);
+          service.init();
+
+          expect(loggerServiceWarningSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceWarningSpy).toHaveBeenCalledWith({
+            context: `DiscordGuildCreateService`,
+            message: `text-Sonia is not authorized to send messages to this guild in local environment`,
+          } as ILoggerLog);
+        });
+
+        it(`should log a hint for the dev to add the guild id inside the secret environment`, (): void => {
+          expect.assertions(2);
+
+          service.init();
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+            context: `DiscordGuildCreateService`,
+            message: `text-add the guild id value-dummy-guild-id to your secret environment under 'discord.sonia.devGuildIdWhitelist' to allow Sonia to interact with it`,
+          } as ILoggerLog);
+        });
+
+        it(`should not send a message`, (): void => {
+          expect.assertions(1);
+
+          service.init();
+
+          expect(sendMessageSpy).not.toHaveBeenCalled();
+        });
+
+        it(`should not add the guild into Firebase`, (): void => {
+          expect.assertions(1);
+
+          service.init();
+
+          expect(addFirebaseGuildSpy).not.toHaveBeenCalled();
+        });
+      });
+
+      describe(`when Sonia is authorized to send messages on this guild`, (): void => {
+        beforeEach((): void => {
+          discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy.mockReturnValue(true);
+        });
+
+        it(`should send a message`, (): void => {
+          expect.assertions(2);
+
+          service.init();
+
+          expect(sendMessageSpy).toHaveBeenCalledTimes(1);
+          expect(sendMessageSpy).toHaveBeenCalledWith(guild);
+        });
+
+        it(`should add the guild into Firebase`, (): void => {
+          expect.assertions(2);
+
+          service.init();
+
+          expect(addFirebaseGuildSpy).toHaveBeenCalledTimes(1);
+          expect(addFirebaseGuildSpy).toHaveBeenCalledWith(guild);
+        });
+
+        it(`should not log about not being able to send local messages to this guild`, (): void => {
+          expect.assertions(1);
+
+          service.init();
+
+          expect(loggerServiceWarningSpy).not.toHaveBeenCalled();
+        });
+
+        it(`should not log a hint for the dev to add the guild id inside the secret environment`, (): void => {
+          expect.assertions(1);
+
+          service.init();
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+        });
       });
     });
 

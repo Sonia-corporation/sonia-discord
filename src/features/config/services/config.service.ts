@@ -4,6 +4,7 @@ import { wrapInQuotes } from '../../../functions/formatters/wrap-in-quotes';
 import { ChalkService } from '../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../logger/services/logger.service';
 import { TimeService } from '../../time/services/time.service';
+import { IConfigUpdateArray } from '../interfaces/config-update-array';
 import { IConfigUpdateBoolean } from '../interfaces/config-update-boolean';
 import { IConfigUpdateDate } from '../interfaces/config-update-date';
 import { IConfigUpdateDateInternal } from '../interfaces/config-update-date-internal';
@@ -90,6 +91,19 @@ export class ConfigService extends AbstractService {
     return configUpdateStringOrArray.oldValue;
   }
 
+  public getUpdatedArray<TValue = string>(configUpdateArray: Readonly<IConfigUpdateArray<TValue>>): TValue[] {
+    if (_.isArray(configUpdateArray.newValue)) {
+      LoggerService.getInstance().log({
+        context: configUpdateArray.context,
+        message: this._getUpdatedArrayMessage(configUpdateArray),
+      });
+
+      return configUpdateArray.newValue;
+    }
+
+    return configUpdateArray.oldValue;
+  }
+
   public getUpdatedBoolean({
     context,
     // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -149,6 +163,31 @@ export class ConfigService extends AbstractService {
       if (!_.isEqual(isValueDisplay, false) && _.isArray(newValue)) {
         message = ChalkService.getInstance().text(
           `${message} to: ${ChalkService.getInstance().value(LoggerService.getInstance().getStringArray<T>(newValue))}`
+        );
+      } else {
+        message = ChalkService.getInstance().text(message);
+      }
+    }
+
+    return message;
+  }
+
+  private _getUpdatedArrayMessage<TValue = string>({
+    valueName,
+    isValueHidden,
+    isValueDisplay,
+    newValue,
+  }: Readonly<IConfigUpdateArray<TValue>>): string {
+    let message = `${valueName} updated`;
+
+    if (_.isEqual(isValueHidden, true)) {
+      message = LoggerService.getInstance().getHiddenValueArrayUpdate(`${message} to: `, true);
+    } else {
+      if (!_.isEqual(isValueDisplay, false) && _.isArray(newValue)) {
+        message = ChalkService.getInstance().text(
+          `${message} to: ${ChalkService.getInstance().value(
+            LoggerService.getInstance().getStringArray<TValue>(newValue)
+          )}`
         );
       } else {
         message = ChalkService.getInstance().text(message);

@@ -44,7 +44,7 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   public init(): Promise<Presence> {
-    return this._listen().toPromise();
+    return this._listen$().toPromise();
   }
 
   public startSchedule(): void {
@@ -193,7 +193,7 @@ export class DiscordActivitySoniaService extends AbstractService {
     }
   }
 
-  private _listen(): Observable<Presence> {
+  private _listen$(): Observable<Presence> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(`listen ${wrapInQuotes(`ready`)} Discord client state`),

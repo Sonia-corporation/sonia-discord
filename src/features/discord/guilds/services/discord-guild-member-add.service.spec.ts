@@ -3,7 +3,9 @@ import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../core/services/core-event.service';
 import { ILoggerLog } from '../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../logger/services/logger.service';
+import { DiscordMessageRightsService } from '../../messages/services/rights/discord-message-rights.service';
 import { DiscordClientService } from '../../services/discord-client.service';
+import { IAnyGuildMember } from '../types/any-guild-member';
 import { Client } from 'discord.js';
 import { createMock } from 'ts-auto-mock';
 
@@ -14,11 +16,13 @@ describe(`DiscordGuildMemberAddService`, (): void => {
   let coreEventService: CoreEventService;
   let discordClientService: DiscordClientService;
   let loggerService: LoggerService;
+  let discordMessageRightsService: DiscordMessageRightsService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     discordClientService = DiscordClientService.getInstance();
     loggerService = LoggerService.getInstance();
+    discordMessageRightsService = DiscordMessageRightsService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -143,5 +147,35 @@ describe(`DiscordGuildMemberAddService`, (): void => {
         message: `text-listen "guildMemberAdd" event`,
       } as ILoggerLog);
     });
+  });
+
+  describe(`sendMessage()`, (): void => {
+    let member: IAnyGuildMember;
+
+    let discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordGuildMemberAddService();
+      member = createMock<IAnyGuildMember>({
+        guild: {
+          id: `dummy-guild-id`,
+        },
+      });
+
+      discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy = jest
+        .spyOn(discordMessageRightsService, `isSoniaAuthorizedForThisGuild`)
+        .mockImplementation();
+    });
+
+    it(`should check if Sonia is authorized to send a message on the member's guild`, (): void => {
+      expect.assertions(2);
+
+      service.sendMessage(member);
+
+      expect(discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy).toHaveBeenCalledWith(member.guild);
+    });
+
+    // @todo add more coverage but only once there is a feature to configure on which channel we should send a message
   });
 });

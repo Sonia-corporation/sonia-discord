@@ -1,6 +1,6 @@
-export interface IConfigUpdateValue<T = string> {
+export interface IConfigUpdateValue<TValue = string> {
   context: string;
-  newValue: T | undefined;
-  oldValue: T;
+  newValue: TValue | undefined;
+  oldValue: TValue;
   valueName: string;
 }

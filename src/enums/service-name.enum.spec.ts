@@ -369,6 +369,12 @@ describe(`ServiceNameEnum`, (): void => {
     expect(ServiceNameEnum.DISCORD_MESSAGE_HELP_SERVICE).toStrictEqual(`DiscordMessageHelpService`);
   });
 
+  it(`should have a member "DISCORD_MESSAGE_RIGHTS_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_MESSAGE_RIGHTS_SERVICE).toStrictEqual(`DiscordMessageRightsService`);
+  });
+
   it(`should have a member "DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_HUMANIZED_SERVICE"`, (): void => {
     expect.assertions(1);
 

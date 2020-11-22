@@ -3,6 +3,7 @@ import { DiscordSoniaConfigService } from './discord-sonia-config.service';
 import { AbstractConfigService } from '../../../../../classes/services/abstract-config.service';
 import { IconEnum } from '../../../../../enums/icon.enum';
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { removeUndefined } from '../../../../../functions/formatters/remove-undefined';
 import { IPartialNested } from '../../../../../types/partial-nested';
 import { ConfigService } from '../../../../config/services/config.service';
 import { ChalkService } from '../../../../logger/services/chalk/chalk.service';
@@ -11,6 +12,7 @@ import { IDiscordConfig } from '../../../interfaces/discord-config';
 import { IDiscordSoniaConfig } from '../../../interfaces/discord-sonia-config';
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from '../../../interfaces/discord-sonia-corporation-message-embed-author-config';
 import { DiscordSoniaConfigValueNameEnum } from '../../enums/discord-sonia-config-value-name.enum';
+import { Snowflake } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDiscordConfig> {
@@ -49,6 +51,7 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
     if (!_.isNil(sonia)) {
       this.updateCorporationImageUrl(sonia.corporationImageUrl);
       this.updateCorporationMessageEmbedAuthor(sonia.corporationMessageEmbedAuthor);
+      this.updateDevGuildIdWhitelist(sonia.devGuildIdWhitelist);
       this.updateId(sonia.id);
       this.updateSecretToken(sonia.secretToken);
     }
@@ -106,7 +109,23 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
     );
   }
 
-  public updateId(id?: Readonly<string>): void {
+  public updateDevGuildIdWhitelist(whitelist?: Readonly<Snowflake | undefined>[]): void {
+    let updatedDevGuildIdWhitelist: string[] | undefined;
+
+    if (_.isArray(whitelist)) {
+      updatedDevGuildIdWhitelist = removeUndefined(whitelist);
+    }
+
+    DiscordSoniaConfigCoreService.getInstance().devGuildIdWhitelist = ConfigService.getInstance().getUpdatedArray({
+      context: this._serviceName,
+      isValueHidden: true,
+      newValue: updatedDevGuildIdWhitelist,
+      oldValue: DiscordSoniaConfigService.getInstance().getDevGuildIdWhitelist(),
+      valueName: DiscordSoniaConfigValueNameEnum.DEV_GUILD_ID_WHITELIST,
+    });
+  }
+
+  public updateId(id?: Readonly<Snowflake>): void {
     DiscordSoniaConfigCoreService.getInstance().id = ConfigService.getInstance().getUpdatedString({
       context: this._serviceName,
       isValueHidden: true,
