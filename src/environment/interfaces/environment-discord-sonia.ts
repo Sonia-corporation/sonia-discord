@@ -1,4 +1,7 @@
+import { Snowflake } from 'discord.js';
+
 export interface IEnvironmentDiscordSonia {
-  id: string;
+  devGuildIdWhitelist?: Snowflake[];
+  id: Snowflake;
   secretToken: string;
 }

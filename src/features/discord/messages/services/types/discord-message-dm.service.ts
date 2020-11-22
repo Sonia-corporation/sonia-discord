@@ -1,12 +1,12 @@
-import { DiscordMessageCommandService } from './command/discord-message-command.service';
-import { DiscordMessageAuthorService } from './discord-message-author.service';
-import { DiscordMessageContentService } from './discord-message-content.service';
-import { AbstractService } from '../../../../classes/services/abstract.service';
-import { ServiceNameEnum } from '../../../../enums/service-name.enum';
-import { LoggerService } from '../../../logger/services/logger.service';
-import { DiscordAuthorService } from '../../users/services/discord-author.service';
-import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
-import { IAnyDiscordMessage } from '../types/any-discord-message';
+import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { LoggerService } from '../../../../logger/services/logger.service';
+import { DiscordAuthorService } from '../../../users/services/discord-author.service';
+import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../../types/any-discord-message';
+import { DiscordMessageCommandService } from '../command/discord-message-command.service';
+import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
+import { DiscordMessageAuthorService } from '../responses/discord-message-author.service';
 import _ from 'lodash';
 
 export class DiscordMessageDmService extends AbstractService {

@@ -1,8 +1,8 @@
-import { DiscordMessageConfigService } from './config/discord-message-config.service';
-import { AbstractService } from '../../../../classes/services/abstract.service';
-import { ServiceNameEnum } from '../../../../enums/service-name.enum';
-import { DiscordSoniaService } from '../../users/services/discord-sonia.service';
-import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
+import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
+import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
+import { DiscordMessageConfigService } from '../config/discord-message-config.service';
 import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';

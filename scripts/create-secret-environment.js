@@ -23,6 +23,7 @@ FS.access(`${APP_ROOT_PATH.path}/src/environment/secret-environment.json`)
         FS.writeJson(`${APP_ROOT_PATH.path}/src/environment/secret-environment.json`, {
           discord: {
             sonia: {
+              devGuildIdWhitelist: [],
               secretToken: `TO_DEFINE_BY_ASKING_IT`,
             },
           },
