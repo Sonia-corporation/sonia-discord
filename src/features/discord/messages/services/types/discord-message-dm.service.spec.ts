@@ -253,7 +253,7 @@ describe(`DiscordMessageDmService`, (): void => {
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `DiscordMessageDmService`,
               hasExtendedContext: true,
-              message: `context-[dummy-id] text-message with ping pong criteria`,
+              message: `context-[dummy-id] text-message ping pong`,
             } as ILoggerLog);
           });
 
@@ -265,7 +265,7 @@ describe(`DiscordMessageDmService`, (): void => {
             );
 
             expect(discordMessagePingPongServiceReplySpy).toHaveBeenCalledTimes(1);
-            expect(discordMessagePingPongServiceReplySpy).toHaveBeenCalledWith();
+            expect(discordMessagePingPongServiceReplySpy).toHaveBeenCalledWith(anyDiscordMessage);
             expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
             expect(discordMessageAuthorServiceReplySpy).not.toHaveBeenCalled();
           });

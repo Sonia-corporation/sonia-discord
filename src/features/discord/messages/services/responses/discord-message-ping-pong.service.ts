@@ -3,6 +3,8 @@ import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { getReplyWithEnvPrefix } from '../../../../app/functions/get-reply-with-env-prefix';
 import { removeFirstDiscordMention } from '../../../mentions/functions/remove-first-discord-mention';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
+import { IAnyDiscordMessage } from '../../types/any-discord-message';
+import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
 import _ from 'lodash';
 
 export class DiscordMessagePingPongService extends AbstractService {
@@ -34,11 +36,22 @@ export class DiscordMessagePingPongService extends AbstractService {
   public hasCriteria(message: Readonly<string>): boolean {
     const messageWithoutFirstMention: string = this._getMessageWithoutFirstMention(message);
 
-    return _.isEqual(messageWithoutFirstMention, `ping`);
+    return _.isEqual(_.toLower(messageWithoutFirstMention), `ping`);
   }
 
-  public reply(): Promise<IDiscordMessageResponse> {
-    const response = `Pong`;
+  public reply(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+    if (!DiscordMessageContentService.getInstance().hasContent(anyDiscordMessage.content)) {
+      return Promise.reject(new Error(`No content`));
+    }
+
+    const messageWithoutFirstMention: string = this._getMessageWithoutFirstMention(anyDiscordMessage.content);
+    let response = `Pong`;
+
+    if (_.isEqual(messageWithoutFirstMention, `ping`)) {
+      response = `pong`;
+    } else if (_.isEqual(messageWithoutFirstMention, `PING`)) {
+      response = `PONG`;
+    }
 
     return Promise.resolve({
       options: {
@@ -54,8 +67,6 @@ export class DiscordMessagePingPongService extends AbstractService {
      * This is important to only remove the first one
      * We want only to respond on "<@!sonia-id> ping" and not <@!sonia-id> ping<@!other-id>"
      */
-    const messageWithoutFirstMention: string = removeFirstDiscordMention(message);
-
-    return _.toLower(messageWithoutFirstMention);
+    return removeFirstDiscordMention(message);
   }
 }

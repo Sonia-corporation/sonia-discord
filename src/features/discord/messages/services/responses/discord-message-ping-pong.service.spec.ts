@@ -1,13 +1,18 @@
 import { DiscordMessagePingPongService } from './discord-message-ping-pong.service';
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../../core/services/core-event.service';
+import { IAnyDiscordMessage } from '../../types/any-discord-message';
+import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
+import { createMock } from 'ts-auto-mock';
 
 describe(`DiscordMessagePingPongService`, (): void => {
   let service: DiscordMessagePingPongService;
   let coreEventService: CoreEventService;
+  let discordMessageContentService: DiscordMessageContentService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
+    discordMessageContentService = DiscordMessageContentService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -198,24 +203,110 @@ describe(`DiscordMessagePingPongService`, (): void => {
   });
 
   describe(`reply()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+
+    let discordMessageContentServiceHasContentSpy: jest.SpyInstance;
+
     beforeEach((): void => {
       service = new DiscordMessagePingPongService();
+      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+        content: `dummy-content`,
+      });
+
+      discordMessageContentServiceHasContentSpy = jest
+        .spyOn(discordMessageContentService, `hasContent`)
+        .mockImplementation();
     });
 
-    it(`should return a Discord message response not split`, async (): Promise<void> => {
-      expect.assertions(1);
+    it(`should check if the given Discord message is empty`, async (): Promise<void> => {
+      expect.assertions(3);
 
-      const result = await service.reply();
+      await expect(service.reply(anyDiscordMessage)).rejects.toThrow(new Error(`No content`));
 
-      expect(result.options.split).toStrictEqual(false);
+      expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledWith(`dummy-content`);
     });
 
-    it(`should return a Discord message response with pong`, async (): Promise<void> => {
-      expect.assertions(1);
+    describe(`when the given Discord message is empty`, (): void => {
+      beforeEach((): void => {
+        discordMessageContentServiceHasContentSpy.mockReturnValue(false);
+      });
 
-      const result = await service.reply();
+      it(`should throw an error`, async (): Promise<void> => {
+        expect.assertions(1);
 
-      expect(result.response).toStrictEqual(`**[dev]** Pong`);
+        await expect(service.reply(anyDiscordMessage)).rejects.toThrow(new Error(`No content`));
+      });
+    });
+
+    describe(`when the given Discord message is not empty`, (): void => {
+      beforeEach((): void => {
+        discordMessageContentServiceHasContentSpy.mockReturnValue(true);
+      });
+
+      it(`should return a Discord message response not split`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        const result = await service.reply(anyDiscordMessage);
+
+        expect(result.options.split).toStrictEqual(false);
+      });
+
+      describe(`when the given Discord message contains a valid mention with PING`, (): void => {
+        beforeEach((): void => {
+          anyDiscordMessage.content = `<@!123> PING`;
+        });
+
+        it(`should return a Discord message response with Pong`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = await service.reply(anyDiscordMessage);
+
+          expect(result.response).toStrictEqual(`**[dev]** PONG`);
+        });
+      });
+
+      describe(`when the given Discord message contains a valid mention with PiNg`, (): void => {
+        beforeEach((): void => {
+          anyDiscordMessage.content = `<@!123> PiNg`;
+        });
+
+        it(`should return a Discord message response with Pong`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = await service.reply(anyDiscordMessage);
+
+          expect(result.response).toStrictEqual(`**[dev]** Pong`);
+        });
+      });
+
+      describe(`when the given Discord message contains a valid mention with Ping`, (): void => {
+        beforeEach((): void => {
+          anyDiscordMessage.content = `<@!123> Ping`;
+        });
+
+        it(`should return a Discord message response with Pong`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = await service.reply(anyDiscordMessage);
+
+          expect(result.response).toStrictEqual(`**[dev]** Pong`);
+        });
+      });
+
+      describe(`when the given Discord message contains a valid mention with ping`, (): void => {
+        beforeEach((): void => {
+          anyDiscordMessage.content = `<@!123> ping`;
+        });
+
+        it(`should return a Discord message response with pong`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = await service.reply(anyDiscordMessage);
+
+          expect(result.response).toStrictEqual(`**[dev]** pong`);
+        });
+      });
     });
   });
 });

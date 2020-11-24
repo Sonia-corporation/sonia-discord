@@ -63,15 +63,15 @@ export class DiscordMessageDmService extends AbstractService {
     return DiscordMessageCommandService.getInstance().handleCommands(anyDiscordMessage);
   }
 
-  private _getPingPongMessageResponse({
-    id,
-  }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+  private _getPingPongMessageResponse(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(id, `message with ping pong criteria`),
+      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message ping pong`),
     });
 
-    return DiscordMessagePingPongService.getInstance().reply();
+    return DiscordMessagePingPongService.getInstance().reply(anyDiscordMessage);
   }
 }
