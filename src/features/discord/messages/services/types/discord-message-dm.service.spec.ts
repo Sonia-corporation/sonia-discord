@@ -56,6 +56,7 @@ describe(`DiscordMessageDmService`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
 
     let discordAuthorServiceIsValidSpy: jest.SpyInstance;
+    let getMessageResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageDmService();
@@ -66,6 +67,9 @@ describe(`DiscordMessageDmService`, (): void => {
       });
 
       discordAuthorServiceIsValidSpy = jest.spyOn(discordAuthorService, `isValid`).mockImplementation();
+      getMessageResponseSpy = jest
+        .spyOn(service, `getMessageResponse`)
+        .mockRejectedValue(new Error(`getMessageResponse error`));
     });
 
     it(`should check if the author of the message is valid`, async (): Promise<void> => {
@@ -75,6 +79,33 @@ describe(`DiscordMessageDmService`, (): void => {
 
       expect(discordAuthorServiceIsValidSpy).toHaveBeenCalledTimes(1);
       expect(discordAuthorServiceIsValidSpy).toHaveBeenCalledWith(anyDiscordMessage.author);
+    });
+
+    describe(`when the author of the message is not valid`, (): void => {
+      beforeEach((): void => {
+        discordAuthorServiceIsValidSpy.mockReturnValue(false);
+      });
+
+      it(`should throw an error`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        await expect(service.getMessage(anyDiscordMessage)).rejects.toThrow(new Error(`Invalid author`));
+      });
+    });
+
+    describe(`when the author of the message is valid`, (): void => {
+      beforeEach((): void => {
+        discordAuthorServiceIsValidSpy.mockReturnValue(true);
+      });
+
+      it(`should get a message response`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.getMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessageResponse error`));
+
+        expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(getMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
+      });
     });
   });
 });
