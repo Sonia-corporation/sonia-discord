@@ -44,7 +44,7 @@ export class DiscordMessageDmService extends AbstractService {
       }
 
       if (DiscordMessagePingPongService.getInstance().hasCriteria(anyDiscordMessage.content)) {
-        return DiscordMessagePingPongService.getInstance().reply();
+        return this._getPingPongMessageResponse(anyDiscordMessage);
       }
     }
 
@@ -61,5 +61,17 @@ export class DiscordMessageDmService extends AbstractService {
     });
 
     return DiscordMessageCommandService.getInstance().handleCommands(anyDiscordMessage);
+  }
+
+  private _getPingPongMessageResponse({
+    id,
+  }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(id, `message with ping pong criteria`),
+    });
+
+    return DiscordMessagePingPongService.getInstance().reply();
   }
 }

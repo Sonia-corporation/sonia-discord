@@ -2,6 +2,8 @@ import { DiscordMessageTextService } from './discord-message-text.service';
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../../core/services/core-event.service';
 
+jest.mock(`../../../../logger/services/chalk/chalk.service`);
+
 describe(`DiscordMessageTextService`, (): void => {
   let service: DiscordMessageTextService;
   let coreEventService: CoreEventService;
