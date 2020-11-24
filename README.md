@@ -212,10 +212,11 @@ Sonia has nothing to hide and thus she displays her current activity.
 
 #### In a private channel (also known as DM)
 
-Sonia will respond to each of your messages.  
-Special commands will be handled as a priority.
+Sonia will respond to each of your messages but within a predefined priority:
 
-When your message is very basic, Sonia will tell you that it is noon, as usual (even if it is untrue).
+- commands (handle the commands if you follow the right syntax)
+- ping (respond pong)
+- default message (when your message is very basic, Sonia will tell you that it is noon, as usual (even if it is untrue))
 
 #### In a public text channel (also known as text)
 
@@ -225,8 +226,13 @@ A command will enable Sonia on the given channel (a command will also be availab
 This dev is a bit more complicated because Sonia will have to store which channels are ready for her or not in a database.
 
 When a message on the channel is sent, Sonia will only respond if she is mentioned personally.  
-This counts as a DM response for Sonia, so prepare to have a friendly message dedicated to you.  
-Special commands will be handled as a priority.
+This counts as a DM response for Sonia, so prepare to have a friendly message dedicated to you.
+
+Sonia will respond to each of your messages but within a predefined priority:
+
+- commands (handle the commands if you follow the right syntax)
+- ping (respond pong)
+- default message (when your message is very basic, Sonia will tell you that it is noon, as usual (even if it is untrue))
 
 **Example:**
 
