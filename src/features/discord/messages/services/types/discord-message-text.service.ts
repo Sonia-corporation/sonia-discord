@@ -15,6 +15,7 @@ import { IDiscordMessage } from '../../types/discord-message';
 import { DiscordMessageCommandService } from '../command/discord-message-command.service';
 import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
 import { DiscordMessageAuthorService } from '../responses/discord-message-author.service';
+import { DiscordMessagePingPongService } from '../responses/discord-message-ping-pong.service';
 import _ from 'lodash';
 
 export class DiscordMessageTextService extends AbstractService {
@@ -43,26 +44,10 @@ export class DiscordMessageTextService extends AbstractService {
       return Promise.reject(new Error(`Invalid mention`));
     }
 
-    return this._getAnyDiscordMessageResponse(anyDiscordMessage);
+    return this.getAnyDiscordMessageResponse(anyDiscordMessage);
   }
 
-  private _getAnyDiscordMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
-  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message with valid mention`),
-    });
-
-    if (!isDiscordMessage(anyDiscordMessage)) {
-      return Promise.reject(new Error(`Invalid Discord message`));
-    }
-
-    return this._getDiscordMessageResponse(anyDiscordMessage);
-  }
-
-  private _getDiscordMessageResponse(
+  public getDiscordMessageResponse(
     discordMessage: Readonly<IDiscordMessage>
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (DiscordMentionService.getInstance().isForEveryone(discordMessage.mentions)) {
@@ -79,7 +64,45 @@ export class DiscordMessageTextService extends AbstractService {
       return Promise.reject(new Error(`Invalid user mention`));
     }
 
-    return this._getSoniaMentionMessageResponse(discordMessage);
+    return this.getSoniaMentionMessageResponse(discordMessage);
+  }
+
+  public getAnyDiscordMessageResponse(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message with valid mention`),
+    });
+
+    if (!isDiscordMessage(anyDiscordMessage)) {
+      return Promise.reject(new Error(`Invalid Discord message`));
+    }
+
+    return this.getDiscordMessageResponse(anyDiscordMessage);
+  }
+
+  public getSoniaMentionMessageResponse(
+    discordMessage: Readonly<IDiscordMessage>
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(discordMessage.id, `Sonia was mentioned`),
+    });
+
+    if (DiscordMessageContentService.getInstance().hasContent(discordMessage.content)) {
+      if (DiscordMessageCommandService.getInstance().hasCommand(discordMessage.content)) {
+        return DiscordMessageCommandService.getInstance().handleCommands(discordMessage);
+      }
+
+      if (DiscordMessagePingPongService.getInstance().hasCriteria(discordMessage.content)) {
+        return this._getPingPongMessageResponse(discordMessage);
+      }
+    }
+
+    return DiscordMessageAuthorService.getInstance().reply(discordMessage);
   }
 
   private _getEveryoneMentionMessageResponse({ id }: Readonly<IDiscordMessage>): Promise<IDiscordMessageResponse> {
@@ -110,22 +133,15 @@ export class DiscordMessageTextService extends AbstractService {
     return response;
   }
 
-  private _getSoniaMentionMessageResponse(
-    discordMessage: Readonly<IDiscordMessage>
+  private _getPingPongMessageResponse(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(discordMessage.id, `Sonia was mentioned`),
+      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message ping pong`),
     });
 
-    if (
-      DiscordMessageContentService.getInstance().hasContent(discordMessage.content) &&
-      DiscordMessageCommandService.getInstance().hasCommand(discordMessage.content)
-    ) {
-      return DiscordMessageCommandService.getInstance().handleCommands(discordMessage);
-    }
-
-    return DiscordMessageAuthorService.getInstance().reply(discordMessage);
+    return DiscordMessagePingPongService.getInstance().reply(anyDiscordMessage);
   }
 }
