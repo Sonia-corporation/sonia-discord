@@ -74,7 +74,7 @@ describe(`DiscordMessageDmService`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
 
     let discordAuthorServiceIsValidSpy: jest.SpyInstance;
-    let getMessageResponseSpy: jest.SpyInstance;
+    let getDiscordMessageResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageDmService();
@@ -85,8 +85,8 @@ describe(`DiscordMessageDmService`, (): void => {
       });
 
       discordAuthorServiceIsValidSpy = jest.spyOn(discordAuthorService, `isValid`).mockImplementation();
-      getMessageResponseSpy = jest
-        .spyOn(service, `getMessageResponse`)
+      getDiscordMessageResponseSpy = jest
+        .spyOn(service, `getDiscordMessageResponse`)
         .mockRejectedValue(new Error(`getMessageResponse error`));
     });
 
@@ -116,18 +116,18 @@ describe(`DiscordMessageDmService`, (): void => {
         discordAuthorServiceIsValidSpy.mockReturnValue(true);
       });
 
-      it(`should get a message response`, async (): Promise<void> => {
+      it(`should get a Discord message response`, async (): Promise<void> => {
         expect.assertions(3);
 
         await expect(service.getMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessageResponse error`));
 
-        expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
-        expect(getMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
+        expect(getDiscordMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(getDiscordMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
       });
     });
   });
 
-  describe(`getMessageResponse()`, (): void => {
+  describe(`getDiscordMessageResponse()`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
 
     let discordMessageContentServiceHasContentSpy: jest.SpyInstance;
@@ -169,7 +169,7 @@ describe(`DiscordMessageDmService`, (): void => {
     it(`should check if the given Discord message is empty`, async (): Promise<void> => {
       expect.assertions(3);
 
-      await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(new Error(`reply error`));
+      await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(new Error(`reply error`));
 
       expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledTimes(1);
       expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledWith(anyDiscordMessage.content);
@@ -183,7 +183,7 @@ describe(`DiscordMessageDmService`, (): void => {
       it(`should respond with the default replay`, async (): Promise<void> => {
         expect.assertions(5);
 
-        await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(new Error(`reply error`));
+        await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(new Error(`reply error`));
 
         expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledTimes(1);
         expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledWith(anyDiscordMessage);
@@ -200,7 +200,7 @@ describe(`DiscordMessageDmService`, (): void => {
       it(`should check if the given Discord message contains a command`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(new Error(`reply error`));
+        await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(new Error(`reply error`));
 
         expect(discordMessageCommandServiceHasCommandSpy).toHaveBeenCalledTimes(1);
         expect(discordMessageCommandServiceHasCommandSpy).toHaveBeenCalledWith(anyDiscordMessage.content);
@@ -214,7 +214,7 @@ describe(`DiscordMessageDmService`, (): void => {
         it(`should check if the given Discord message contains the criteria for a ping pong response`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(new Error(`reply error`));
+          await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(new Error(`reply error`));
 
           expect(discordMessagePingPongServiceHasCriteriaSpy).toHaveBeenCalledTimes(1);
           expect(discordMessagePingPongServiceHasCriteriaSpy).toHaveBeenCalledWith(anyDiscordMessage.content);
@@ -228,7 +228,9 @@ describe(`DiscordMessageDmService`, (): void => {
           it(`should respond with the default replay`, async (): Promise<void> => {
             expect.assertions(5);
 
-            await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(new Error(`reply error`));
+            await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
+              new Error(`reply error`)
+            );
 
             expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledTimes(1);
             expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledWith(anyDiscordMessage);
@@ -245,7 +247,7 @@ describe(`DiscordMessageDmService`, (): void => {
           it(`should log about responding to ping`, async (): Promise<void> => {
             expect.assertions(3);
 
-            await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+            await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
               new Error(`ping pong reply error`)
             );
 
@@ -260,7 +262,7 @@ describe(`DiscordMessageDmService`, (): void => {
           it(`should respond with pong`, async (): Promise<void> => {
             expect.assertions(5);
 
-            await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+            await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
               new Error(`ping pong reply error`)
             );
 
@@ -280,7 +282,7 @@ describe(`DiscordMessageDmService`, (): void => {
         it(`should log about handling the commands`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+          await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
             new Error(`handleCommands error`)
           );
 
@@ -295,7 +297,7 @@ describe(`DiscordMessageDmService`, (): void => {
         it(`should respond with the appropriate message for the command`, async (): Promise<void> => {
           expect.assertions(5);
 
-          await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+          await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
             new Error(`handleCommands error`)
           );
 

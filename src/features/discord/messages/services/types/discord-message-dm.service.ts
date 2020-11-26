@@ -32,10 +32,10 @@ export class DiscordMessageDmService extends AbstractService {
       return Promise.reject(new Error(`Invalid author`));
     }
 
-    return this.getMessageResponse(anyDiscordMessage);
+    return this.getDiscordMessageResponse(anyDiscordMessage);
   }
 
-  public getMessageResponse(
+  public getDiscordMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     if (DiscordMessageContentService.getInstance().hasContent(anyDiscordMessage.content)) {
