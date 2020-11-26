@@ -1,6 +1,8 @@
 import { DiscordMessagePingPongService } from './discord-message-ping-pong.service';
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../../core/services/core-event.service';
+import { DISCORD_MESSAGE_PING_PONG_RESPONSE_MESSAGES } from '../../constants/discord-message-ping-pong-response-messages';
+import { IDiscordMessagePingPongResponseMessage } from '../../interfaces/discord-message-ping-pong-response-message';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
 import { createMock } from 'ts-auto-mock';
@@ -206,6 +208,7 @@ describe(`DiscordMessagePingPongService`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
 
     let discordMessageContentServiceHasContentSpy: jest.SpyInstance;
+    let discordMessagePingPongResponseMessagesGetHumanizedRandomMessageSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessagePingPongService();
@@ -216,6 +219,9 @@ describe(`DiscordMessagePingPongService`, (): void => {
       discordMessageContentServiceHasContentSpy = jest
         .spyOn(discordMessageContentService, `hasContent`)
         .mockImplementation();
+      discordMessagePingPongResponseMessagesGetHumanizedRandomMessageSpy = jest
+        .spyOn(DISCORD_MESSAGE_PING_PONG_RESPONSE_MESSAGES, `getHumanizedRandomMessage`)
+        .mockReturnValue(`pong`);
     });
 
     it(`should check if the given Discord message is empty`, async (): Promise<void> => {
@@ -257,12 +263,24 @@ describe(`DiscordMessagePingPongService`, (): void => {
           anyDiscordMessage.content = `<@!123> PING`;
         });
 
-        it(`should return a Discord message response with Pong`, async (): Promise<void> => {
+        it(`should get a random ping pong message response with PONG`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          const result = await service.reply(anyDiscordMessage);
+
+          expect(result).toBeDefined();
+          expect(discordMessagePingPongResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessagePingPongResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
+            pong: `PONG`,
+          } as IDiscordMessagePingPongResponseMessage);
+        });
+
+        it(`should return a Discord message response`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** PONG`);
+          expect(result.response).toStrictEqual(`**[dev]** pong`);
         });
       });
 
@@ -271,12 +289,24 @@ describe(`DiscordMessagePingPongService`, (): void => {
           anyDiscordMessage.content = `<@!123> PiNg`;
         });
 
-        it(`should return a Discord message response with Pong`, async (): Promise<void> => {
+        it(`should get a random ping pong message response with Pong`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          const result = await service.reply(anyDiscordMessage);
+
+          expect(result).toBeDefined();
+          expect(discordMessagePingPongResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessagePingPongResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
+            pong: `Pong`,
+          } as IDiscordMessagePingPongResponseMessage);
+        });
+
+        it(`should return a Discord message response`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** Pong`);
+          expect(result.response).toStrictEqual(`**[dev]** pong`);
         });
       });
 
@@ -285,12 +315,24 @@ describe(`DiscordMessagePingPongService`, (): void => {
           anyDiscordMessage.content = `<@!123> Ping`;
         });
 
-        it(`should return a Discord message response with Pong`, async (): Promise<void> => {
+        it(`should get a random ping pong message response with Pong`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          const result = await service.reply(anyDiscordMessage);
+
+          expect(result).toBeDefined();
+          expect(discordMessagePingPongResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessagePingPongResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
+            pong: `Pong`,
+          } as IDiscordMessagePingPongResponseMessage);
+        });
+
+        it(`should return a Discord message response`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** Pong`);
+          expect(result.response).toStrictEqual(`**[dev]** pong`);
         });
       });
 
@@ -299,7 +341,19 @@ describe(`DiscordMessagePingPongService`, (): void => {
           anyDiscordMessage.content = `<@!123> ping`;
         });
 
-        it(`should return a Discord message response with pong`, async (): Promise<void> => {
+        it(`should get a random ping pong message response with pong`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          const result = await service.reply(anyDiscordMessage);
+
+          expect(result).toBeDefined();
+          expect(discordMessagePingPongResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessagePingPongResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
+            pong: `pong`,
+          } as IDiscordMessagePingPongResponseMessage);
+        });
+
+        it(`should return a Discord message response`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.reply(anyDiscordMessage);

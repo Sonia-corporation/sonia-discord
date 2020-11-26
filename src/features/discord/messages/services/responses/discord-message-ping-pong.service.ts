@@ -2,6 +2,7 @@ import { AbstractService } from '../../../../../classes/services/abstract.servic
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { getReplyWithEnvPrefix } from '../../../../app/functions/get-reply-with-env-prefix';
 import { removeFirstDiscordMention } from '../../../mentions/functions/remove-first-discord-mention';
+import { DISCORD_MESSAGE_PING_PONG_RESPONSE_MESSAGES } from '../../constants/discord-message-ping-pong-response-messages';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
@@ -52,6 +53,10 @@ export class DiscordMessagePingPongService extends AbstractService {
     } else if (_.isEqual(messageWithoutFirstMention, `PING`)) {
       response = `PONG`;
     }
+
+    response = DISCORD_MESSAGE_PING_PONG_RESPONSE_MESSAGES.getHumanizedRandomMessage({
+      pong: response,
+    });
 
     return Promise.resolve({
       options: {

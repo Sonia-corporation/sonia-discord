@@ -1,7 +1,7 @@
 import { IObject } from '../../../../types/object';
 
-export interface IMessageConfig<T extends string> {
+export interface IMessageConfig<T extends string, TParams extends IObject | undefined = undefined> {
   defaultMessage: T;
   messages: IObject<T>;
-  params?: IObject | undefined;
+  params?: TParams | undefined;
 }
