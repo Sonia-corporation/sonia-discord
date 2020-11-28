@@ -1,6 +1,36 @@
 import { DiscordMessagePingPongResponseMessagesEnum } from './discord-message-ping-pong-response-messages.enum';
 
 describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
+  it(`should have a member "ARE_YOU_LOOKING_FOR_A_RESPONSE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessagePingPongResponseMessagesEnum.ARE_YOU_LOOKING_FOR_A_RESPONSE).toStrictEqual(
+      `Are you looking for a response?, leave me alone.`
+    );
+  });
+
+  it(`should have a member "ARE_YOU_LOOKING_FOR_A_RESPONSE_PONG"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessagePingPongResponseMessagesEnum.ARE_YOU_LOOKING_FOR_A_RESPONSE_PONG).toStrictEqual(
+      `Are you looking for a response? {{ pong }}`
+    );
+  });
+
+  it(`should have a member "ARE_YOU_SERIOUS"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessagePingPongResponseMessagesEnum.ARE_YOU_SERIOUS).toStrictEqual(`Are you serious?`);
+  });
+
+  it(`should have a member "ARE_YOU_SERIOUS_RIGHT_NOW"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessagePingPongResponseMessagesEnum.ARE_YOU_SERIOUS_RIGHT_NOW).toStrictEqual(
+      `Are you serious right now?`
+    );
+  });
+
   it(`should have a member "BITCH_LEAVE_ME_ALONE"`, (): void => {
     expect.assertions(1);
 
@@ -35,6 +65,12 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessagePingPongResponseMessagesEnum.OH_BOI_PONG).toStrictEqual(`Oh boi! {{ pong }}!`);
+  });
+
+  it(`should have a member "PLEASE_LEAVE_ME_ALONE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessagePingPongResponseMessagesEnum.PLEASE_LEAVE_ME_ALONE).toStrictEqual(`Please, leave me alone.`);
   });
 
   it(`should have a member "PONG"`, (): void => {
@@ -133,15 +169,55 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     expect(DiscordMessagePingPongResponseMessagesEnum.SO_MUCH_FUN).toStrictEqual(`So much fun.`);
   });
 
+  it(`should have a member "STOP"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessagePingPongResponseMessagesEnum.STOP).toStrictEqual(`Stop!`);
+  });
+
+  it(`should have a member "STOP_THAT_SHIT"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessagePingPongResponseMessagesEnum.STOP_THAT_SHIT).toStrictEqual(`Stop that shit?`);
+  });
+
   it(`should have a member "TWO_HUNDRED_IQ_PONG"`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessagePingPongResponseMessagesEnum.TWO_HUNDRED_IQ_PONG).toStrictEqual(`200 IQ => {{ pong }}.`);
   });
 
+  it(`should have a member "WHAT_DID_YOU_EXPECT"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessagePingPongResponseMessagesEnum.WHAT_DID_YOU_EXPECT).toStrictEqual(`What did you expect?`);
+  });
+
+  it(`should have a member "WHAT_DID_YOU_EXPECT_PONG"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessagePingPongResponseMessagesEnum.WHAT_DID_YOU_EXPECT_PONG).toStrictEqual(
+      `What did you expect? {{ pong }}?`
+    );
+  });
+
   it(`should have a member "WOW"`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessagePingPongResponseMessagesEnum.WOW).toStrictEqual(`Wow.`);
+  });
+
+  it(`should have a member "YOU_CAN_NOT_BE_SERIOUS"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessagePingPongResponseMessagesEnum.YOU_CAN_NOT_BE_SERIOUS).toStrictEqual(`You can't be serious?`);
+  });
+
+  it(`should have a member "YOU_CAN_NOT_BE_SERIOUS_RIGHT_NOW"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessagePingPongResponseMessagesEnum.YOU_CAN_NOT_BE_SERIOUS_RIGHT_NOW).toStrictEqual(
+      `You can't be serious right now?`
+    );
   });
 });
