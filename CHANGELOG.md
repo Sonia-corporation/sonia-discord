@@ -1,5 +1,14 @@
 # Semantic Versioning Changelog
 
+# [1.90.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.89.0...1.90.0) (2020-11-28)
+
+
+### :rocket: Features
+
+* **sonia-emotional-state:** change random every 5 to 30 min ([c40a2e6](https://github.com/Sonia-corporation/sonia-discord/commit/c40a2e6569f8290dad60458429f47a6058b7012f)), closes [#616](https://github.com/Sonia-corporation/sonia-discord/issues/616)
+* **response:** respond pong to ping on a channel ([7e05fd5](https://github.com/Sonia-corporation/sonia-discord/commit/7e05fd5a4984115230680d4397165e7de63da59b))
+* **response:** respond pong when mentioned with ping in a DM ([8108216](https://github.com/Sonia-corporation/sonia-discord/commit/81082163013df3368827627791f18dcfbb1223c4))
+
 # [1.89.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.88.0...1.89.0) (2020-11-21)
 
 
