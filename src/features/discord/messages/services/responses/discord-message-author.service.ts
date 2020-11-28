@@ -1,8 +1,6 @@
 import { AbstractService } from '../../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
-import { AppConfigService } from '../../../../app/services/config/app-config.service';
-import { ProfileConfigService } from '../../../../profile/services/config/profile-config.service';
-import { addDiscordDevPrefix } from '../../../functions/dev-prefix/add-discord-dev-prefix';
+import { getReplyWithEnvPrefix } from '../../../../app/functions/get-reply-with-env-prefix';
 import { wrapUserIdIntoMention } from '../../../mentions/functions/wrap-user-id-into-mention';
 import { DiscordAuthorService } from '../../../users/services/discord-author.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
@@ -37,20 +35,7 @@ export class DiscordMessageAuthorService extends AbstractService {
       options: {
         split: false,
       },
-      response: this._getReplyWithEnvPrefix(response),
+      response: getReplyWithEnvPrefix(response),
     });
-  }
-
-  private _getReplyWithEnvPrefix(response: Readonly<string>): string {
-    if (!AppConfigService.getInstance().isProduction()) {
-      return addDiscordDevPrefix({
-        asMention: true,
-        discordId: ProfileConfigService.getInstance().getDiscordId(),
-        message: response,
-        nickname: ProfileConfigService.getInstance().getNickname(),
-      });
-    }
-
-    return response;
   }
 }

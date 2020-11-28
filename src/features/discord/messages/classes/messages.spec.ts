@@ -1,4 +1,5 @@
 import { Messages } from './messages';
+import { IObject } from '../../../../types/object';
 import { DiscordSoniaEmotionalStateEnum } from '../../emotional-states/enums/discord-sonia-emotional-state.enum';
 import { IMessageConfig } from '../interfaces/message-config';
 import _ from 'lodash';
@@ -9,14 +10,14 @@ enum DummyEnum {
 }
 
 describe(`Messages`, (): void => {
-  let messages: Messages<DiscordSoniaEmotionalStateEnum>;
+  let messages: Messages<DiscordSoniaEmotionalStateEnum, IObject>;
 
   describe(`constructor()`, (): void => {
     describe(`when the class is created with a default message`, (): void => {
       it(`should update the default message inside the class`, (): void => {
         expect.assertions(1);
 
-        messages = new Messages<DiscordSoniaEmotionalStateEnum>(
+        messages = new Messages<DiscordSoniaEmotionalStateEnum, IObject>(
           createMock<IMessageConfig<DiscordSoniaEmotionalStateEnum>>({
             defaultMessage: DiscordSoniaEmotionalStateEnum.CRAZY,
           })
@@ -30,7 +31,7 @@ describe(`Messages`, (): void => {
       it(`should update the messages inside the class`, (): void => {
         expect.assertions(1);
 
-        messages = new Messages<DiscordSoniaEmotionalStateEnum>(
+        messages = new Messages<DiscordSoniaEmotionalStateEnum, IObject>(
           createMock<IMessageConfig<DiscordSoniaEmotionalStateEnum>>({
             messages: DiscordSoniaEmotionalStateEnum,
           })
@@ -44,8 +45,8 @@ describe(`Messages`, (): void => {
       it(`should update the params inside the class`, (): void => {
         expect.assertions(1);
 
-        messages = new Messages<DiscordSoniaEmotionalStateEnum>(
-          createMock<IMessageConfig<DiscordSoniaEmotionalStateEnum>>({
+        messages = new Messages<DiscordSoniaEmotionalStateEnum, IObject>(
+          createMock<IMessageConfig<DiscordSoniaEmotionalStateEnum, IObject>>({
             params: {
               key1: `value1`,
             },
@@ -61,7 +62,7 @@ describe(`Messages`, (): void => {
 
   describe(`getDefaultMessage()`, (): void => {
     beforeEach((): void => {
-      messages = new Messages<DiscordSoniaEmotionalStateEnum>(
+      messages = new Messages<DiscordSoniaEmotionalStateEnum, IObject>(
         createMock<IMessageConfig<DiscordSoniaEmotionalStateEnum>>()
       );
     });
@@ -78,7 +79,7 @@ describe(`Messages`, (): void => {
 
   describe(`setDefaultMessage()`, (): void => {
     beforeEach((): void => {
-      messages = new Messages<DiscordSoniaEmotionalStateEnum>(
+      messages = new Messages<DiscordSoniaEmotionalStateEnum, IObject>(
         createMock<IMessageConfig<DiscordSoniaEmotionalStateEnum>>()
       );
     });
@@ -94,7 +95,7 @@ describe(`Messages`, (): void => {
 
   describe(`getMessages()`, (): void => {
     beforeEach((): void => {
-      messages = new Messages<DiscordSoniaEmotionalStateEnum>(
+      messages = new Messages<DiscordSoniaEmotionalStateEnum, IObject>(
         createMock<IMessageConfig<DiscordSoniaEmotionalStateEnum>>()
       );
     });
@@ -111,7 +112,7 @@ describe(`Messages`, (): void => {
 
   describe(`setMessages()`, (): void => {
     beforeEach((): void => {
-      messages = new Messages<DiscordSoniaEmotionalStateEnum>(
+      messages = new Messages<DiscordSoniaEmotionalStateEnum, IObject>(
         createMock<IMessageConfig<DiscordSoniaEmotionalStateEnum>>()
       );
     });
@@ -127,7 +128,7 @@ describe(`Messages`, (): void => {
 
   describe(`getParams()`, (): void => {
     beforeEach((): void => {
-      messages = new Messages<DiscordSoniaEmotionalStateEnum>(
+      messages = new Messages<DiscordSoniaEmotionalStateEnum, IObject>(
         createMock<IMessageConfig<DiscordSoniaEmotionalStateEnum>>()
       );
     });
@@ -148,7 +149,7 @@ describe(`Messages`, (): void => {
 
   describe(`setParams()`, (): void => {
     beforeEach((): void => {
-      messages = new Messages<DiscordSoniaEmotionalStateEnum>(
+      messages = new Messages<DiscordSoniaEmotionalStateEnum, IObject>(
         createMock<IMessageConfig<DiscordSoniaEmotionalStateEnum>>()
       );
     });
@@ -168,7 +169,7 @@ describe(`Messages`, (): void => {
 
   describe(`getRandomMessage()`, (): void => {
     beforeEach((): void => {
-      messages = new Messages<DiscordSoniaEmotionalStateEnum>(
+      messages = new Messages<DiscordSoniaEmotionalStateEnum, IObject>(
         createMock<IMessageConfig<DiscordSoniaEmotionalStateEnum>>({
           defaultMessage: DiscordSoniaEmotionalStateEnum.AGITATED,
         })
@@ -205,10 +206,10 @@ describe(`Messages`, (): void => {
   });
 
   describe(`getHumanizedRandomMessage()`, (): void => {
-    let messages: Messages<DummyEnum>;
+    let messages: Messages<DummyEnum, IObject>;
 
     beforeEach((): void => {
-      messages = new Messages<DummyEnum>(
+      messages = new Messages<DummyEnum, IObject>(
         createMock<IMessageConfig<DummyEnum>>({
           defaultMessage: DummyEnum.WITH_VAR,
         })

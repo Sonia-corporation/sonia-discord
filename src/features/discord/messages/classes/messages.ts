@@ -3,12 +3,12 @@ import { IObject } from '../../../../types/object';
 import { IMessageConfig } from '../interfaces/message-config';
 import _ from 'lodash';
 
-export class Messages<T extends string> {
+export class Messages<T extends string, TParams extends IObject | undefined = undefined> {
   private _defaultMessage: T;
   private _messages: IObject<T>;
-  private _params: IObject | undefined;
+  private _params: TParams | undefined = undefined;
 
-  public constructor({ defaultMessage, messages, params }: Readonly<IMessageConfig<T>>) {
+  public constructor({ defaultMessage, messages, params }: Readonly<IMessageConfig<T, TParams>>) {
     this._defaultMessage = defaultMessage;
     this._messages = messages;
     this._params = params;
@@ -30,11 +30,11 @@ export class Messages<T extends string> {
     this._messages = messages;
   }
 
-  public getParams(): IObject | undefined {
+  public getParams(): TParams | undefined {
     return this._params;
   }
 
-  public setParams(params: Readonly<IObject | undefined>): void {
+  public setParams(params: Readonly<TParams>): void {
     this._params = params;
   }
 
@@ -66,11 +66,11 @@ export class Messages<T extends string> {
    * getHumanizedRandomMessage();
    * // -> 'a message with a dummy'
    *
-   * @param {Readonly<IObject | undefined>} [params=getParams] The object containing the replacements
+   * @param {Readonly<TParams | undefined>} [params=getParams] The object containing the replacements
    *
    * @return {string} The humanized and parsed message
    */
-  public getHumanizedRandomMessage(params: Readonly<IObject | undefined> = this.getParams()): string {
+  public getHumanizedRandomMessage(params: Readonly<TParams | undefined> = this.getParams()): string {
     return replaceInterpolation(this.getRandomMessage(), params ?? _.stubObject());
   }
 }

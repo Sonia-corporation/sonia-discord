@@ -35,6 +35,6 @@
       }
     ]
   },
-  "include": ["./src/**/*.ts", "./scripts/**/*.js", "./config.ts", "./jest.config.js"],
-  "exclude": ["./src/**.*.spec.ts", "./test.ts"]
+  "include": ["./src/**/*.ts", "./scripts/**/*.js", "./jest/*.js", "./jest/*.ts", "./jest.config.js"],
+  "exclude": ["./src/**.*.spec.ts", "./jest/test.ts"]
 }
