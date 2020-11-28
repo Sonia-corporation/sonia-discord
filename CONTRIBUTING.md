@@ -28,6 +28,7 @@ Run `npm run create-secret-environment`.
 {
   "discord": {
     "sonia": {
+      "devGuildIdWhitelist": [],
       "secretToken": "REQUIRED_AND_TO_DEFINE_BY_ASKING_IT"
     }
   },
@@ -40,6 +41,11 @@ Run `npm run create-secret-environment`.
   }
 }
 ```
+
+**Note for the dev guild id whitelist:**
+
+By default, when running locally Sonia (with `npm run start`) you will only be able to make this happen inside the Sonia Discord guild.  
+This may not be of your convenience, so you can simply add into this list some personal Discord guild ids so that you can also test a Sonia feature in the guild(s) of your choice locally.
 
 **Note for the Discord Sonia secret token:**
 

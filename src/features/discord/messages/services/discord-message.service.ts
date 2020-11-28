@@ -1,6 +1,7 @@
-import { DiscordMessageDmService } from './discord-message-dm.service';
-import { DiscordMessageErrorService } from './discord-message-error.service';
-import { DiscordMessageTextService } from './discord-message-text.service';
+import { DiscordMessageErrorService } from './helpers/discord-message-error.service';
+import { DiscordMessageRightsService } from './rights/discord-message-rights.service';
+import { DiscordMessageDmService } from './types/discord-message-dm.service';
+import { DiscordMessageTextService } from './types/discord-message-text.service';
 import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
@@ -55,11 +56,11 @@ export class DiscordMessageService extends AbstractService {
       return Promise.reject(new Error(`Discord message author is a Bot`));
     }
 
-    if (DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
-      return this.handleChannelMessage(anyDiscordMessage);
+    if (!DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
+      return Promise.reject(new Error(`Discord message channel is not valid`));
     }
 
-    return Promise.reject(new Error(`Discord message channel is not valid`));
+    return this.handleChannelMessage(anyDiscordMessage);
   }
 
   public handleChannelMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void> {
@@ -80,6 +81,30 @@ export class DiscordMessageService extends AbstractService {
           }
         );
     } else if (DiscordChannelService.getInstance().isText(anyDiscordMessage.channel)) {
+      if (
+        _.isNil(anyDiscordMessage.guild) ||
+        !DiscordMessageRightsService.getInstance().isSoniaAuthorizedForThisGuild(anyDiscordMessage.guild)
+      ) {
+        LoggerService.getInstance().warning({
+          context: this._serviceName,
+          hasExtendedContext: true,
+          message: LoggerService.getInstance().getSnowflakeContext(
+            anyDiscordMessage.id,
+            `Sonia is not authorized to send messages to this guild in local environment`
+          ),
+        });
+        LoggerService.getInstance().debug({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(
+            `add the guild id ${ChalkService.getInstance().value(
+              anyDiscordMessage.guild?.id
+            )} to your secret environment under 'discord.sonia.devGuildIdWhitelist' to allow Sonia to interact with it`
+          ),
+        });
+
+        return Promise.reject(new Error(`Sonia is not authorized for this guild`));
+      }
+
       if (
         DiscordAuthorService.getInstance().isValid(anyDiscordMessage.author) &&
         DiscordMentionService.getInstance().isValid(anyDiscordMessage.mentions)

@@ -10,7 +10,7 @@ import { DiscordChannelService } from '../../../../../../../channels/services/di
 import { DiscordCommandFlagActionValueless } from '../../../../../../classes/commands/flags/discord-command-flag-action-valueless';
 import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
-import { DiscordMessageHelpService } from '../../../../../discord-message-help.service';
+import { DiscordMessageHelpService } from '../../../../../helpers/discord-message-help.service';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE_DISABLED_MESSAGES } from '../constants/discord-message-command-feature-noon-humanize-disabled-messages';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE_ENABLED_MESSAGES } from '../constants/discord-message-command-feature-noon-humanize-enabled-messages';
 import { MessageEmbedOptions, Snowflake } from 'discord.js';

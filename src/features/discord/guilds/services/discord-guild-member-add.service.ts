@@ -14,10 +14,11 @@ import { addDiscordDevPrefix } from '../../functions/dev-prefix/add-discord-dev-
 import { DiscordLoggerErrorService } from '../../logger/services/discord-logger-error.service';
 import { wrapUserIdIntoMention } from '../../mentions/functions/wrap-user-id-into-mention';
 import { IDiscordMessageResponse } from '../../messages/interfaces/discord-message-response';
+import { DiscordMessageRightsService } from '../../messages/services/rights/discord-message-rights.service';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
 import { IAnyGuildMember } from '../types/any-guild-member';
-import { GuildChannel } from 'discord.js';
+import { Guild, GuildChannel } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordGuildMemberAddService extends AbstractService {
@@ -40,7 +41,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
   }
 
   public sendMessage(member: Readonly<IAnyGuildMember>): void {
-    if (this._canSendMessage()) {
+    if (this._canSendMessage(member.guild)) {
       const primaryChannel: GuildChannel | null = DiscordChannelGuildService.getInstance().getPrimary(member.guild);
 
       if (isDiscordGuildChannel(primaryChannel)) {
@@ -67,17 +68,36 @@ export class DiscordGuildMemberAddService extends AbstractService {
     });
   }
 
-  private _canSendMessage(): boolean {
-    if (DiscordGuildConfigService.getInstance().shouldWelcomeNewMembers()) {
-      return true;
+  private _canSendMessage(guild: Readonly<Guild>): boolean {
+    if (!DiscordMessageRightsService.getInstance().isSoniaAuthorizedForThisGuild(guild)) {
+      LoggerService.getInstance().warning({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `Sonia is not authorized to send messages to this guild in local environment`
+        ),
+      });
+      LoggerService.getInstance().debug({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `add the guild id ${ChalkService.getInstance().value(
+            guild.id
+          )} to your secret environment under 'discord.sonia.devGuildIdWhitelist' to allow Sonia to interact with it`
+        ),
+      });
+
+      return false;
     }
 
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(`welcome new members message sending disabled`),
-    });
+    if (!DiscordGuildConfigService.getInstance().shouldWelcomeNewMembers()) {
+      LoggerService.getInstance().debug({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(`welcome new members message sending disabled`),
+      });
 
-    return false;
+      return false;
+    }
+
+    return true;
   }
 
   private _sendMessage(guildChannel: Readonly<GuildChannel>, member: Readonly<IAnyGuildMember>): void {

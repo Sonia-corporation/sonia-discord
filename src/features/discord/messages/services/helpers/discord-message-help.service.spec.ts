@@ -1,15 +1,15 @@
-import { DiscordMessageConfigService } from './config/discord-message-config.service';
 import { DiscordMessageHelpService } from './discord-message-help.service';
-import { ColorEnum } from '../../../../enums/color.enum';
-import { IconEnum } from '../../../../enums/icon.enum';
-import { ServiceNameEnum } from '../../../../enums/service-name.enum';
-import { CoreEventService } from '../../../core/services/core-event.service';
-import { DiscordSoniaService } from '../../users/services/discord-sonia.service';
+import { ColorEnum } from '../../../../../enums/color.enum';
+import { IconEnum } from '../../../../../enums/icon.enum';
+import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../../core/services/core-event.service';
+import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
+import { DiscordMessageConfigService } from '../config/discord-message-config.service';
 import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
-jest.mock(`../../../logger/services/chalk/chalk.service`);
+jest.mock(`../../../../logger/services/chalk/chalk.service`);
 
 describe(`DiscordMessageHelpService`, (): void => {
   let service: DiscordMessageHelpService;

@@ -31,6 +31,12 @@ describe(`DiscordSoniaConfigValueNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "DEV_GUILD_ID_WHITELIST"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordSoniaConfigValueNameEnum.DEV_GUILD_ID_WHITELIST).toStrictEqual(`dev guild id whitelist`);
+  });
+
   it(`should have a member "ID"`, (): void => {
     expect.assertions(1);
 

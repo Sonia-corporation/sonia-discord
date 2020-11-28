@@ -12,6 +12,7 @@ import { DiscordChannelGuildService } from '../../channels/services/discord-chan
 import { DiscordLoggerErrorService } from '../../logger/services/discord-logger-error.service';
 import { IDiscordMessageResponse } from '../../messages/interfaces/discord-message-response';
 import { DiscordMessageCommandCookieService } from '../../messages/services/command/cookie/services/discord-message-command-cookie.service';
+import { DiscordMessageRightsService } from '../../messages/services/rights/discord-message-rights.service';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
 import { Guild, GuildChannel, Message } from 'discord.js';
@@ -119,6 +120,25 @@ export class DiscordGuildCreateService extends AbstractService {
           context: this._serviceName,
           message: ChalkService.getInstance().text(`${wrapInQuotes(`guildCreate`)} event triggered`),
         });
+
+        if (!DiscordMessageRightsService.getInstance().isSoniaAuthorizedForThisGuild(guild)) {
+          LoggerService.getInstance().warning({
+            context: this._serviceName,
+            message: ChalkService.getInstance().text(
+              `Sonia is not authorized to send messages to this guild in local environment`
+            ),
+          });
+          LoggerService.getInstance().debug({
+            context: this._serviceName,
+            message: ChalkService.getInstance().text(
+              `add the guild id ${ChalkService.getInstance().value(
+                guild.id
+              )} to your secret environment under 'discord.sonia.devGuildIdWhitelist' to allow Sonia to interact with it`
+            ),
+          });
+
+          return;
+        }
 
         void this.sendMessage(guild);
         void this.addFirebaseGuild(guild);

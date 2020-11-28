@@ -6,7 +6,7 @@ import { discordHasThisCommand } from '../../../functions/commands/checks/discor
 import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
-import { DiscordMessageHelpService } from '../../discord-message-help.service';
+import { DiscordMessageHelpService } from '../../helpers/discord-message-help.service';
 import { EmbedFieldData, MessageEmbedOptions } from 'discord.js';
 import _ from 'lodash';
 
