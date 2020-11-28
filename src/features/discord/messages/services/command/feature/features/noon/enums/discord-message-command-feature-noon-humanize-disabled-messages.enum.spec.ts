@@ -1,6 +1,13 @@
 import { DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum } from './discord-message-command-feature-noon-humanize-disabled-messages.enum';
+import { getEnumLength } from '../../../../../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): void => {
+  it(`should have a 25 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum)).toStrictEqual(25);
+  });
+
   it(`should have a member "CAN_I_COUNT_ON_YOU_TO_ENABLE_NOON"`, (): void => {
     expect.assertions(1);
 

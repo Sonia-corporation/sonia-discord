@@ -1,6 +1,13 @@
 import { ClassNameEnum } from './class-name.enum';
+import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`ClassNameEnum`, (): void => {
+  it(`should have a 5 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(ClassNameEnum)).toStrictEqual(5);
+  });
+
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_DISABLED"`, (): void => {
     expect.assertions(1);
 

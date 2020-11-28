@@ -1,6 +1,13 @@
 import { AppConfigValueNameEnum } from './app-config-value-name.enum';
+import { getEnumLength } from '../../../functions/checks/get-enum-length';
 
 describe(`AppConfigValueNameEnum`, (): void => {
+  it(`should have a 7 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(AppConfigValueNameEnum)).toStrictEqual(7);
+  });
+
   it(`should have a member "FIRST_RELEASE_DATE"`, (): void => {
     expect.assertions(1);
 

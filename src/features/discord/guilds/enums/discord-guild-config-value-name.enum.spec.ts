@@ -1,6 +1,13 @@
 import { DiscordGuildConfigValueNameEnum } from './discord-guild-config-value-name.enum';
+import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`DiscordGuildConfigValueNameEnum`, (): void => {
+  it(`should have a 5 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(DiscordGuildConfigValueNameEnum)).toStrictEqual(5);
+  });
+
   it(`should have a member "SHOULD_SEND_COOKIES_ON_CREATE"`, (): void => {
     expect.assertions(1);
 
