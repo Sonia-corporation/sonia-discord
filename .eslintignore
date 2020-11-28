@@ -8,4 +8,4 @@ node_modules
 coverage
 reports
 stryker-tmp
-test.ts
+jest/test.ts

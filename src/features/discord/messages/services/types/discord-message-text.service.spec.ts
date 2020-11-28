@@ -11,6 +11,7 @@ import { ISonia } from '../../../users/types/sonia';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { IDiscordMessage } from '../../types/discord-message';
+import { Message, PartialMessage } from 'discord.js';
 import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../logger/services/chalk/chalk.service`);
@@ -200,7 +201,7 @@ describe(`DiscordMessageTextService`, (): void => {
         discordMentionServiceIsForEveryoneSpy.mockReturnValue(true);
       });
 
-      it(`should get the Sonia Discord instance`, async (): Promise<void> => {
+      it(`should log about sending a message for an everyone mention`, async (): Promise<void> => {
         expect.assertions(3);
 
         const result = await service.getDiscordMessageResponse(discordMessage);
@@ -348,6 +349,89 @@ describe(`DiscordMessageTextService`, (): void => {
             expect(getSoniaMentionMessageResponseSpy).toHaveBeenCalledWith(discordMessage);
           });
         });
+      });
+    });
+  });
+
+  describe(`getAnyDiscordMessageResponse()`, (): void => {
+    let anyDiscordMessage: IAnyDiscordMessage;
+
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let getDiscordMessageResponseSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageTextService();
+      anyDiscordMessage = createMock<PartialMessage>({
+        id: `dummy-id`,
+      });
+
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      getDiscordMessageResponseSpy = jest
+        .spyOn(service, `getDiscordMessageResponse`)
+        .mockRejectedValue(new Error(`getDiscordMessageResponse error`));
+    });
+
+    it(`should log about the fact that the message has a valid mention`, async (): Promise<void> => {
+      expect.assertions(3);
+
+      await expect(service.getAnyDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
+        new Error(`Invalid Discord message`)
+      );
+
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageTextService`,
+        hasExtendedContext: true,
+        message: `context-[dummy-id] text-message with valid mention`,
+      } as ILoggerLog);
+    });
+
+    describe(`when the given message is a partial message`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createMock<PartialMessage>();
+      });
+
+      it(`should throw an error about not being a valid message`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        await expect(service.getAnyDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
+          new Error(`Invalid Discord message`)
+        );
+      });
+
+      it(`should not get a message response`, async (): Promise<void> => {
+        expect.assertions(2);
+
+        await expect(service.getAnyDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
+          new Error(`Invalid Discord message`)
+        );
+
+        expect(getDiscordMessageResponseSpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the given message is a message`, (): void => {
+      beforeEach((): void => {
+        anyDiscordMessage = createInstance(Message.prototype);
+      });
+
+      it(`should not throw an error about not being a valid message`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        await expect(service.getAnyDiscordMessageResponse(anyDiscordMessage)).rejects.not.toThrow(
+          new Error(`Invalid Discord message`)
+        );
+      });
+
+      it(`should get a message response`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.getAnyDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
+          new Error(`getDiscordMessageResponse error`)
+        );
+
+        expect(getDiscordMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(getDiscordMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
       });
     });
   });
