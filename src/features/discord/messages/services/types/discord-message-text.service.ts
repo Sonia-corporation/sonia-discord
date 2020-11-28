@@ -94,7 +94,7 @@ export class DiscordMessageTextService extends AbstractService {
 
     if (DiscordMessageContentService.getInstance().hasContent(discordMessage.content)) {
       if (DiscordMessageCommandService.getInstance().hasCommand(discordMessage.content)) {
-        return DiscordMessageCommandService.getInstance().handleCommands(discordMessage);
+        return this._getCommandMessageResponse(discordMessage);
       }
 
       if (DiscordMessagePingPongService.getInstance().hasCriteria(discordMessage.content)) {
@@ -131,6 +131,18 @@ export class DiscordMessageTextService extends AbstractService {
     }
 
     return response;
+  }
+
+  private _getCommandMessageResponse(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message with command`),
+    });
+
+    return DiscordMessageCommandService.getInstance().handleCommands(anyDiscordMessage);
   }
 
   private _getPingPongMessageResponse(

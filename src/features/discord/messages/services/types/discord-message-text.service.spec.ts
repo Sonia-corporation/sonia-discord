@@ -11,6 +11,10 @@ import { ISonia } from '../../../users/types/sonia';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { IDiscordMessage } from '../../types/discord-message';
+import { DiscordMessageCommandService } from '../command/discord-message-command.service';
+import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
+import { DiscordMessageAuthorService } from '../responses/discord-message-author.service';
+import { DiscordMessagePingPongService } from '../responses/discord-message-ping-pong.service';
 import { Message, PartialMessage } from 'discord.js';
 import { createMock } from 'ts-auto-mock';
 
@@ -24,6 +28,10 @@ describe(`DiscordMessageTextService`, (): void => {
   let discordSoniaService: DiscordSoniaService;
   let loggerService: LoggerService;
   let appConfigService: AppConfigService;
+  let discordMessageContentService: DiscordMessageContentService;
+  let discordMessageAuthorService: DiscordMessageAuthorService;
+  let discordMessageCommandService: DiscordMessageCommandService;
+  let discordMessagePingPongService: DiscordMessagePingPongService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -32,6 +40,10 @@ describe(`DiscordMessageTextService`, (): void => {
     discordSoniaService = DiscordSoniaService.getInstance();
     loggerService = LoggerService.getInstance();
     appConfigService = AppConfigService.getInstance();
+    discordMessageContentService = DiscordMessageContentService.getInstance();
+    discordMessageAuthorService = DiscordMessageAuthorService.getInstance();
+    discordMessageCommandService = DiscordMessageCommandService.getInstance();
+    discordMessagePingPongService = DiscordMessagePingPongService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -432,6 +444,204 @@ describe(`DiscordMessageTextService`, (): void => {
 
         expect(getDiscordMessageResponseSpy).toHaveBeenCalledTimes(1);
         expect(getDiscordMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
+      });
+    });
+  });
+
+  describe(`getSoniaMentionMessageResponse()`, (): void => {
+    let discordMessage: IDiscordMessage;
+
+    let discordMessageContentServiceHasContentSpy: jest.SpyInstance;
+    let discordMessageAuthorServiceReplySpy: jest.SpyInstance;
+    let discordMessageCommandServiceHasCommandSpy: jest.SpyInstance;
+    let discordMessageCommandServiceHandleCommandsSpy: jest.SpyInstance;
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let discordMessagePingPongServiceHasCriteriaSpy: jest.SpyInstance;
+    let discordMessagePingPongServiceReplySpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageTextService();
+      discordMessage = createMock<IDiscordMessage>({
+        content: `dummy-content`,
+        id: `dummy-id`,
+      });
+
+      discordMessageContentServiceHasContentSpy = jest
+        .spyOn(discordMessageContentService, `hasContent`)
+        .mockImplementation();
+      discordMessageAuthorServiceReplySpy = jest
+        .spyOn(discordMessageAuthorService, `reply`)
+        .mockRejectedValue(new Error(`reply error`));
+      discordMessageCommandServiceHasCommandSpy = jest
+        .spyOn(discordMessageCommandService, `hasCommand`)
+        .mockImplementation();
+      discordMessageCommandServiceHandleCommandsSpy = jest
+        .spyOn(discordMessageCommandService, `handleCommands`)
+        .mockRejectedValue(new Error(`handleCommands error`));
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      discordMessagePingPongServiceHasCriteriaSpy = jest
+        .spyOn(discordMessagePingPongService, `hasCriteria`)
+        .mockImplementation();
+      discordMessagePingPongServiceReplySpy = jest
+        .spyOn(discordMessagePingPongService, `reply`)
+        .mockRejectedValue(new Error(`ping pong reply error`));
+    });
+
+    it(`should log about the fact than Sonia was mentioned`, async (): Promise<void> => {
+      expect.assertions(3);
+
+      await expect(service.getSoniaMentionMessageResponse(discordMessage)).rejects.toThrow(new Error(`reply error`));
+
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+        context: `DiscordMessageTextService`,
+        hasExtendedContext: true,
+        message: `context-[dummy-id] text-Sonia was mentioned`,
+      } as ILoggerLog);
+    });
+
+    it(`should check if the given Discord message is empty`, async (): Promise<void> => {
+      expect.assertions(3);
+
+      await expect(service.getSoniaMentionMessageResponse(discordMessage)).rejects.toThrow(new Error(`reply error`));
+
+      expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledWith(discordMessage.content);
+    });
+
+    describe(`when the given Discord message is empty`, (): void => {
+      beforeEach((): void => {
+        discordMessageContentServiceHasContentSpy.mockReturnValue(false);
+      });
+
+      it(`should respond with the default replay`, async (): Promise<void> => {
+        expect.assertions(5);
+
+        await expect(service.getSoniaMentionMessageResponse(discordMessage)).rejects.toThrow(new Error(`reply error`));
+
+        expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledTimes(1);
+        expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledWith(discordMessage);
+        expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
+        expect(discordMessagePingPongServiceReplySpy).not.toHaveBeenCalled();
+      });
+    });
+
+    describe(`when the given Discord message is not empty`, (): void => {
+      beforeEach((): void => {
+        discordMessageContentServiceHasContentSpy.mockReturnValue(true);
+      });
+
+      it(`should check if the given Discord message contains a command`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.getSoniaMentionMessageResponse(discordMessage)).rejects.toThrow(new Error(`reply error`));
+
+        expect(discordMessageCommandServiceHasCommandSpy).toHaveBeenCalledTimes(1);
+        expect(discordMessageCommandServiceHasCommandSpy).toHaveBeenCalledWith(discordMessage.content);
+      });
+
+      describe(`when the given Discord message do not contains a command`, (): void => {
+        beforeEach((): void => {
+          discordMessageCommandServiceHasCommandSpy.mockReturnValue(false);
+        });
+
+        it(`should check if the given Discord message contains the criteria for a ping pong response`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          await expect(service.getSoniaMentionMessageResponse(discordMessage)).rejects.toThrow(
+            new Error(`reply error`)
+          );
+
+          expect(discordMessagePingPongServiceHasCriteriaSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessagePingPongServiceHasCriteriaSpy).toHaveBeenCalledWith(discordMessage.content);
+        });
+
+        describe(`when the given Discord message do not contains the criteria for a ping pong response`, (): void => {
+          beforeEach((): void => {
+            discordMessagePingPongServiceHasCriteriaSpy.mockReturnValue(false);
+          });
+
+          it(`should respond with the default replay`, async (): Promise<void> => {
+            expect.assertions(5);
+
+            await expect(service.getSoniaMentionMessageResponse(discordMessage)).rejects.toThrow(
+              new Error(`reply error`)
+            );
+
+            expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledTimes(1);
+            expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledWith(discordMessage);
+            expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
+            expect(discordMessagePingPongServiceReplySpy).not.toHaveBeenCalled();
+          });
+        });
+
+        describe(`when the given Discord message contains the criteria for a ping pong response`, (): void => {
+          beforeEach((): void => {
+            discordMessagePingPongServiceHasCriteriaSpy.mockReturnValue(true);
+          });
+
+          it(`should log about responding to ping`, async (): Promise<void> => {
+            expect.assertions(3);
+
+            await expect(service.getSoniaMentionMessageResponse(discordMessage)).rejects.toThrow(
+              new Error(`ping pong reply error`)
+            );
+
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+            expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+              context: `DiscordMessageTextService`,
+              hasExtendedContext: true,
+              message: `context-[dummy-id] text-message ping pong`,
+            } as ILoggerLog);
+          });
+
+          it(`should respond with pong`, async (): Promise<void> => {
+            expect.assertions(5);
+
+            await expect(service.getSoniaMentionMessageResponse(discordMessage)).rejects.toThrow(
+              new Error(`ping pong reply error`)
+            );
+
+            expect(discordMessagePingPongServiceReplySpy).toHaveBeenCalledTimes(1);
+            expect(discordMessagePingPongServiceReplySpy).toHaveBeenCalledWith(discordMessage);
+            expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
+            expect(discordMessageAuthorServiceReplySpy).not.toHaveBeenCalled();
+          });
+        });
+      });
+
+      describe(`when the given Discord message contains a command`, (): void => {
+        beforeEach((): void => {
+          discordMessageCommandServiceHasCommandSpy.mockReturnValue(true);
+        });
+
+        it(`should log about handling the commands`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          await expect(service.getSoniaMentionMessageResponse(discordMessage)).rejects.toThrow(
+            new Error(`handleCommands error`)
+          );
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+          expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+            context: `DiscordMessageTextService`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-message with command`,
+          } as ILoggerLog);
+        });
+
+        it(`should respond with the appropriate message for the command`, async (): Promise<void> => {
+          expect.assertions(5);
+
+          await expect(service.getSoniaMentionMessageResponse(discordMessage)).rejects.toThrow(
+            new Error(`handleCommands error`)
+          );
+
+          expect(discordMessageCommandServiceHandleCommandsSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessageCommandServiceHandleCommandsSpy).toHaveBeenCalledWith(discordMessage);
+          expect(discordMessagePingPongServiceReplySpy).not.toHaveBeenCalled();
+          expect(discordMessageAuthorServiceReplySpy).not.toHaveBeenCalled();
+        });
       });
     });
   });
