@@ -4,22 +4,37 @@ import _ from 'lodash';
 
 const FLAG_SIZE = 2;
 
+/**
+ * @param value
+ */
 function isValidValue(value: Readonly<string | undefined>): value is string {
   return _.isString(value) && !_.isEmpty(value);
 }
 
+/**
+ * @param flags
+ */
 function getFlagValue(flags: Readonly<string>[]): string | undefined {
   return _.last(flags);
 }
 
+/**
+ * @param messageFlag
+ */
 function isFlag(messageFlag: Readonly<IDiscordMessageFlag>): boolean {
   return discordCommandIsMessageFlag(messageFlag);
 }
 
+/**
+ * @param messageFlag
+ */
 function separateFlagNameFromValue(messageFlag: Readonly<IDiscordMessageFlag>): string[] {
   return _.split(messageFlag, `=`);
 }
 
+/**
+ * @param splittedFlag
+ */
 function hasValue(splittedFlag: Readonly<string>[]): boolean {
   const splittedFlagSize: number = _.size(splittedFlag);
 
@@ -41,7 +56,7 @@ function hasValue(splittedFlag: Readonly<string>[]): boolean {
  *
  * @param {Readonly<IDiscordMessageFlag>} messageFlag A flag as a message
  *
- * @return {string | null} A string when the flag value exists else null
+ * @returns {string | null} A string when the flag value exists else null
  */
 export function discordCommandGetFlagValue(messageFlag: Readonly<IDiscordMessageFlag>): string | null {
   if (!isFlag(messageFlag)) {

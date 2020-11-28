@@ -12,7 +12,7 @@ import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final'
  *
  * @param {Readonly<IFirebaseGuild>} firebaseGuild The [Firebase guild]{@link IFirebaseGuild} to update
  *
- * @return {IFirebaseGuild} Updated [Firebase guild]{@link IFirebaseGuild}
+ * @returns {IFirebaseGuild} Updated [Firebase guild]{@link IFirebaseGuild}
  */
 export function handleFirebaseGuildBreakingChange(
   firebaseGuild: Readonly<IFirebaseGuild>

@@ -7,7 +7,7 @@ import { INewFirebaseGuild } from '../../interfaces/guilds/new-firebase-guild';
  *
  * @param {Readonly<ICreateFirebaseGuild>} guild Default guild data
  *
- * @return {IFirebaseGuildVFinal} A simple Firebase guild
+ * @returns {IFirebaseGuildVFinal} A simple Firebase guild
  */
 export function createFirebaseGuild({ id }: Readonly<ICreateFirebaseGuild>): INewFirebaseGuild {
   return {

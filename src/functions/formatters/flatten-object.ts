@@ -1,6 +1,10 @@
 import { IObject } from '../../types/object';
 import _ from 'lodash';
 
+/**
+ * @param object
+ * @param path
+ */
 function flatten(
   object: Readonly<IObject> | Readonly<string>[] | Readonly<unknown>,
   path: Readonly<string>[] = []
@@ -17,6 +21,9 @@ function flatten(
   );
 }
 
+/**
+ * @param object
+ */
 export function flattenObject(object: Readonly<IObject>): IObject {
   return flatten(object);
 }

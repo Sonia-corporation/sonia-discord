@@ -10,7 +10,7 @@ import _ from 'lodash';
  *
  * @param {Readonly<IDiscordCommandFlagsResponse>} discordCommandFlagsResponse The list of flags success and message responses
  *
- * @return {boolean} true when a flag
+ * @returns {boolean} true when a flag
  */
 export function discordCommandSplitFlagsResponse(
   discordCommandFlagsResponse: Readonly<IDiscordCommandFlagsResponse>

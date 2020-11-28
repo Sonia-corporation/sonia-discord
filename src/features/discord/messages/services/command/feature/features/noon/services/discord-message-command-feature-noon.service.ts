@@ -60,7 +60,7 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
    * @param {Readonly<IAnyDiscordMessage>} anyDiscordMessage Original message
    * @param {Readonly<string>} messageFlags A partial message containing only a string with flags
    *
-   * @return {Promise<IDiscordMessageResponse[]>} Some embed message to respond
+   * @returns {Promise<IDiscordMessageResponse[]>} Some embed message to respond
    */
   public getMessageResponse(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,

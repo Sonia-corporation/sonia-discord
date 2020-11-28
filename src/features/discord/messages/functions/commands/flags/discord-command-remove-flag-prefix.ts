@@ -13,7 +13,7 @@ import _ from 'lodash';
  *
  * @param {Readonly<IDiscordMessageFlag>} messageFlag A flag as a message
  *
- * @return {string} The flag message without the flag prefix "-" or "--"
+ * @returns {string} The flag message without the flag prefix "-" or "--"
  */
 export function discordCommandRemoveFlagPrefix(messageFlag: Readonly<IDiscordMessageFlag>): string {
   return _.trimStart(messageFlag, `--`);

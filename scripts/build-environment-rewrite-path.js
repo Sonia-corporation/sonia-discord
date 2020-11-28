@@ -7,6 +7,9 @@ const APP_ROOT_PATH = require(`app-root-path`);
 
 const CONTEXT = `build-environment-rewrite-path`;
 
+/**
+ * @param index
+ */
 function updateEnvironmentPath(index) {
   const updatedIndex = _.replace(index, `/src/environment/secret-environment.json`, `/dist/environment.json`);
 

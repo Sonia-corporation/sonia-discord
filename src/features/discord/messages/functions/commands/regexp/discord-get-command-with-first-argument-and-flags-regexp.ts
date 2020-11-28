@@ -10,7 +10,7 @@ import xregexp from 'xregexp';
  *
  * @param {Readonly<IDiscordGetCommandWithFirstArgumentAndFlagsRegexpData>} data The data used as a command
  *
- * @return {RegExp} A RegExp matching a prefix with a command, one argument and at least one flag
+ * @returns {RegExp} A RegExp matching a prefix with a command, one argument and at least one flag
  */
 export function discordGetCommandWithFirstArgumentAndFlagsRegexp({
   prefix,

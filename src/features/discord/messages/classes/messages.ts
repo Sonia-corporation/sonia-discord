@@ -68,7 +68,7 @@ export class Messages<T extends string, TParams extends IObject | undefined = un
    *
    * @param {Readonly<TParams | undefined>} [params=getParams] The object containing the replacements
    *
-   * @return {string} The humanized and parsed message
+   * @returns {string} The humanized and parsed message
    */
   public getHumanizedRandomMessage(params: Readonly<TParams | undefined> = this.getParams()): string {
     return replaceInterpolation(this.getRandomMessage(), params ?? _.stubObject());

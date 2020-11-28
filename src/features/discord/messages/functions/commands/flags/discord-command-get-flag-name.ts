@@ -18,7 +18,7 @@ import _ from 'lodash';
  * @param {Readonly<IDiscordMessageFlag>} messageFlag A flag as a message
  * @param {Readonly<boolean>} [toLowerCase=false] Return the flag name to lower case
  *
- * @return {string | null} A string when the flag name exists
+ * @returns {string | null} A string when the flag name exists
  */
 export function discordCommandGetFlagName(
   messageFlag: Readonly<IDiscordMessageFlag>,

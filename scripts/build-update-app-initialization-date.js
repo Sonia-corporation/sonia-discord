@@ -8,6 +8,9 @@ const APP_ROOT_PATH = require(`app-root-path`);
 
 const CONTEXT = `build-update-app-initialization-date`;
 
+/**
+ * @param environment
+ */
 function updateEnvironmentAppInitializationDate(environment) {
   if (!_.has(environment, `app`)) {
     environment.app = {};
