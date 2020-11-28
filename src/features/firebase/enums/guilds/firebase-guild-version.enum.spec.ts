@@ -1,6 +1,13 @@
 import { FirebaseGuildVersionEnum } from './firebase-guild-version.enum';
+import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`FirebaseGuildVersionEnum`, (): void => {
+  it(`should have a 8 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(FirebaseGuildVersionEnum)).toStrictEqual(8);
+  });
+
   it(`should have a member "V1"`, (): void => {
     expect.assertions(1);
 

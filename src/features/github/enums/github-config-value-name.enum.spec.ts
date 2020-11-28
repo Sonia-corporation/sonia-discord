@@ -1,6 +1,13 @@
 import { GithubConfigValueNameEnum } from './github-config-value-name.enum';
+import { getEnumLength } from '../../../functions/checks/get-enum-length';
 
 describe(`GithubConfigValueNameEnum`, (): void => {
+  it(`should have a 2 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(GithubConfigValueNameEnum)).toStrictEqual(2);
+  });
+
   it(`should have a member "BUG_REPORT_URL"`, (): void => {
     expect.assertions(1);
 

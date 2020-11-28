@@ -1,6 +1,13 @@
 import { ColorEnum } from './color.enum';
+import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`ColorEnum`, (): void => {
+  it(`should have a 12 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(ColorEnum)).toStrictEqual(12);
+  });
+
   it(`should have a member "CANDY"`, (): void => {
     expect.assertions(1);
 

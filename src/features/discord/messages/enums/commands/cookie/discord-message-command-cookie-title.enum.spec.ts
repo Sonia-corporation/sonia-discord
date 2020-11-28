@@ -1,6 +1,13 @@
 import { DiscordMessageCommandCookieTitleEnum } from './discord-message-command-cookie-title.enum';
+import { getEnumLength } from '../../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageCommandCookieTitleEnum`, (): void => {
+  it(`should have a 13 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(DiscordMessageCommandCookieTitleEnum)).toStrictEqual(13);
+  });
+
   it(`should have a member "COOKIE"`, (): void => {
     expect.assertions(1);
 

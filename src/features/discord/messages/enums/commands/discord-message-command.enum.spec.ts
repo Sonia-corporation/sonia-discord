@@ -1,6 +1,13 @@
 import { DiscordMessageCommandEnum } from './discord-message-command.enum';
+import { getEnumLength } from '../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageCommandEnum`, (): void => {
+  it(`should have a 15 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(DiscordMessageCommandEnum)).toStrictEqual(15);
+  });
+
   it(`should have a member "VERSION"`, (): void => {
     expect.assertions(1);
 

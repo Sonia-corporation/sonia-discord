@@ -1,6 +1,13 @@
 import { IconEnum } from './icon.enum';
+import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`IconEnum`, (): void => {
+  it(`should have a 11 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(IconEnum)).toStrictEqual(11);
+  });
+
   it(`should have a member "ALARM"`, (): void => {
     expect.assertions(1);
 

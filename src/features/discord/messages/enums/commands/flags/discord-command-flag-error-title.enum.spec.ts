@@ -1,6 +1,13 @@
 import { DiscordCommandFlagErrorTitleEnum } from './discord-command-flag-error-title.enum';
+import { getEnumLength } from '../../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordCommandFlagErrorTitleEnum`, (): void => {
+  it(`should have a 3 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(DiscordCommandFlagErrorTitleEnum)).toStrictEqual(3);
+  });
+
   it(`should have a member "INVALID_BOOLEAN_FLAG"`, (): void => {
     expect.assertions(1);
 

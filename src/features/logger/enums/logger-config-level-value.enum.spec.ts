@@ -1,6 +1,13 @@
 import { LoggerConfigLevelValueEnum } from './logger-config-level-value.enum';
+import { getEnumLength } from '../../../functions/checks/get-enum-length';
 
 describe(`LoggerConfigLevelValueEnum`, (): void => {
+  it(`should have a 10 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(LoggerConfigLevelValueEnum)).toStrictEqual(10);
+  });
+
   it(`should have a member "error"`, (): void => {
     expect.assertions(1);
 

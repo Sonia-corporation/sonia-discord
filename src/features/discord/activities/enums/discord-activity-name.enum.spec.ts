@@ -1,6 +1,13 @@
 import { DiscordActivityNameEnum } from './discord-activity-name.enum';
+import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`DiscordActivityNameEnum`, (): void => {
+  it(`should have a 122 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(DiscordActivityNameEnum)).toStrictEqual(122);
+  });
+
   it(`should have a member "SPOTIFY"`, (): void => {
     expect.assertions(1);
 

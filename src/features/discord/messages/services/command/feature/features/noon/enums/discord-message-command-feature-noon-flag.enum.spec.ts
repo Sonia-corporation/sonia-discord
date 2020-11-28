@@ -1,6 +1,13 @@
 import { DiscordMessageCommandFeatureNoonFlagEnum } from './discord-message-command-feature-noon-flag.enum';
+import { getEnumLength } from '../../../../../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageCommandFeatureNoonFlagEnum`, (): void => {
+  it(`should have a 10 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(DiscordMessageCommandFeatureNoonFlagEnum)).toStrictEqual(10);
+  });
+
   it(`should have a member "D"`, (): void => {
     expect.assertions(1);
 

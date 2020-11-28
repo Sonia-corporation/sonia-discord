@@ -1,6 +1,13 @@
 import { DiscordSoniaConfigValueNameEnum } from './discord-sonia-config-value-name.enum';
+import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`DiscordSoniaConfigValueNameEnum`, (): void => {
+  it(`should have a 7 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(DiscordSoniaConfigValueNameEnum)).toStrictEqual(7);
+  });
+
   it(`should have a member "CORPORATION_IMAGE_URL"`, (): void => {
     expect.assertions(1);
 
