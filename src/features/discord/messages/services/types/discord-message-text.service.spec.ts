@@ -1,9 +1,16 @@
 import { DiscordMessageTextService } from './discord-message-text.service';
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
+import { AppConfigService } from '../../../../app/services/config/app-config.service';
 import { CoreEventService } from '../../../../core/services/core-event.service';
+import { ILoggerLog } from '../../../../logger/interfaces/logger-log';
+import { LoggerService } from '../../../../logger/services/logger.service';
 import { DiscordMentionService } from '../../../mentions/services/discord-mention.service';
 import { DiscordAuthorService } from '../../../users/services/discord-author.service';
+import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
+import { ISonia } from '../../../users/types/sonia';
+import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
+import { IDiscordMessage } from '../../types/discord-message';
 import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../logger/services/chalk/chalk.service`);
@@ -13,11 +20,17 @@ describe(`DiscordMessageTextService`, (): void => {
   let coreEventService: CoreEventService;
   let discordAuthorService: DiscordAuthorService;
   let discordMentionService: DiscordMentionService;
+  let discordSoniaService: DiscordSoniaService;
+  let loggerService: LoggerService;
+  let appConfigService: AppConfigService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     discordAuthorService = DiscordAuthorService.getInstance();
     discordMentionService = DiscordMentionService.getInstance();
+    discordSoniaService = DiscordSoniaService.getInstance();
+    loggerService = LoggerService.getInstance();
+    appConfigService = AppConfigService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -138,6 +151,202 @@ describe(`DiscordMessageTextService`, (): void => {
 
           expect(getAnyDiscordMessageResponseSpy).toHaveBeenCalledTimes(1);
           expect(getAnyDiscordMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
+        });
+      });
+    });
+  });
+
+  describe(`getDiscordMessageResponse()`, (): void => {
+    let discordMessage: IDiscordMessage;
+
+    let discordMentionServiceIsForEveryoneSpy: jest.SpyInstance;
+    let discordSoniaServiceGetSoniaSpy: jest.SpyInstance;
+    let discordSoniaServiceIsValidSpy: jest.SpyInstance;
+    let discordMentionServiceIsUserMentionedSpy: jest.SpyInstance;
+    let getSoniaMentionMessageResponseSpy: jest.SpyInstance;
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let appConfigServiceIsProductionSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new DiscordMessageTextService();
+      discordMessage = createMock<IDiscordMessage>({
+        id: `dummy-id`,
+      });
+
+      discordMentionServiceIsForEveryoneSpy = jest.spyOn(discordMentionService, `isForEveryone`).mockImplementation();
+      discordSoniaServiceGetSoniaSpy = jest.spyOn(discordSoniaService, `getSonia`).mockReturnValue(null);
+      discordSoniaServiceIsValidSpy = jest.spyOn(discordSoniaService, `isValid`).mockImplementation();
+      discordMentionServiceIsUserMentionedSpy = jest
+        .spyOn(discordMentionService, `isUserMentioned`)
+        .mockImplementation();
+      getSoniaMentionMessageResponseSpy = jest
+        .spyOn(service, `getSoniaMentionMessageResponse`)
+        .mockRejectedValue(new Error(`getSoniaMentionMessageResponse error`));
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      appConfigServiceIsProductionSpy = jest.spyOn(appConfigService, `isProduction`).mockImplementation();
+    });
+
+    it(`should check if the message is for everyone based on the mentions`, async (): Promise<void> => {
+      expect.assertions(3);
+
+      await expect(service.getDiscordMessageResponse(discordMessage)).rejects.toThrow(new Error(`Invalid Sonia`));
+
+      expect(discordMentionServiceIsForEveryoneSpy).toHaveBeenCalledTimes(1);
+      expect(discordMentionServiceIsForEveryoneSpy).toHaveBeenCalledWith(discordMessage.mentions);
+    });
+
+    describe(`when the message is for everyone based on the mentions`, (): void => {
+      beforeEach((): void => {
+        discordMentionServiceIsForEveryoneSpy.mockReturnValue(true);
+      });
+
+      it(`should get the Sonia Discord instance`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        const result = await service.getDiscordMessageResponse(discordMessage);
+
+        expect(result).toBeDefined();
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+          context: `DiscordMessageTextService`,
+          hasExtendedContext: true,
+          message: `context-[dummy-id] text-everyone mention`,
+        } as ILoggerLog);
+      });
+
+      it(`should get a message response not split`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        const result = (await service.getDiscordMessageResponse(discordMessage)) as IDiscordMessageResponse;
+
+        expect(result.options.split).toStrictEqual(false);
+      });
+
+      it(`should check if the app is in production`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        const result = await service.getDiscordMessageResponse(discordMessage);
+
+        expect(result).toBeDefined();
+        expect(appConfigServiceIsProductionSpy).toHaveBeenCalledTimes(1);
+        expect(appConfigServiceIsProductionSpy).toHaveBeenCalledWith();
+      });
+
+      describe(`when the app is in production`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceIsProductionSpy.mockReturnValue(true);
+        });
+
+        it(`should get a message response responding to the all mention`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = (await service.getDiscordMessageResponse(discordMessage)) as IDiscordMessageResponse;
+
+          expect(result.response).toStrictEqual(`Il est midi everyone!`);
+        });
+      });
+
+      describe(`when the app is not in production`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceIsProductionSpy.mockReturnValue(false);
+        });
+
+        it(`should get a message response responding to the all mention with a dev prefix`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = (await service.getDiscordMessageResponse(discordMessage)) as IDiscordMessageResponse;
+
+          expect(result.response).toStrictEqual(`**[dev]** Il est midi everyone!`);
+        });
+      });
+    });
+
+    describe(`when the message is not for everyone based on the mentions`, (): void => {
+      beforeEach((): void => {
+        discordMentionServiceIsForEveryoneSpy.mockReturnValue(false);
+      });
+
+      it(`should get the Sonia Discord instance`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.getDiscordMessageResponse(discordMessage)).rejects.toThrow(new Error(`Invalid Sonia`));
+
+        expect(discordSoniaServiceGetSoniaSpy).toHaveBeenCalledTimes(1);
+        expect(discordSoniaServiceGetSoniaSpy).toHaveBeenCalledWith();
+      });
+
+      it(`should check if the Sonia Discord instance is valid`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.getDiscordMessageResponse(discordMessage)).rejects.toThrow(new Error(`Invalid Sonia`));
+
+        expect(discordSoniaServiceIsValidSpy).toHaveBeenCalledTimes(1);
+        expect(discordSoniaServiceIsValidSpy).toHaveBeenCalledWith(null);
+      });
+
+      describe(`when the Sonia Discord instance is not valid`, (): void => {
+        beforeEach((): void => {
+          discordSoniaServiceGetSoniaSpy.mockReturnValue(null);
+          discordSoniaServiceIsValidSpy.mockReturnValue(false);
+        });
+
+        it(`should throw an error`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          await expect(service.getDiscordMessageResponse(discordMessage)).rejects.toThrow(new Error(`Invalid Sonia`));
+        });
+      });
+
+      describe(`when the Sonia Discord instance is valid`, (): void => {
+        let sonia: ISonia;
+
+        beforeEach((): void => {
+          sonia = createMock<ISonia>();
+
+          discordSoniaServiceGetSoniaSpy.mockReturnValue(sonia);
+          discordSoniaServiceIsValidSpy.mockReturnValue(true);
+        });
+
+        it(`should check if Sonia is mentioned in the message`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          await expect(service.getDiscordMessageResponse(discordMessage)).rejects.toThrow(
+            new Error(`Invalid user mention`)
+          );
+
+          expect(discordMentionServiceIsUserMentionedSpy).toHaveBeenCalledTimes(1);
+          expect(discordMentionServiceIsUserMentionedSpy).toHaveBeenCalledWith(discordMessage.mentions, sonia);
+        });
+
+        describe(`when Sonia is not mentioned in the message`, (): void => {
+          beforeEach((): void => {
+            discordMentionServiceIsUserMentionedSpy.mockReturnValue(false);
+          });
+
+          it(`should throw an error`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            await expect(service.getDiscordMessageResponse(discordMessage)).rejects.toThrow(
+              new Error(`Invalid user mention`)
+            );
+          });
+        });
+
+        describe(`when Sonia is mentioned in the message`, (): void => {
+          beforeEach((): void => {
+            discordMentionServiceIsUserMentionedSpy.mockReturnValue(true);
+          });
+
+          it(`should get a message response`, async (): Promise<void> => {
+            expect.assertions(3);
+
+            await expect(service.getDiscordMessageResponse(discordMessage)).rejects.toThrow(
+              new Error(`getSoniaMentionMessageResponse error`)
+            );
+
+            expect(getSoniaMentionMessageResponseSpy).toHaveBeenCalledTimes(1);
+            expect(getSoniaMentionMessageResponseSpy).toHaveBeenCalledWith(discordMessage);
+          });
         });
       });
     });
