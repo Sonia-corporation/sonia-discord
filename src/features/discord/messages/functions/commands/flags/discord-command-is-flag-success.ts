@@ -9,7 +9,7 @@ import _ from 'lodash';
  *
  * @param {Readonly<IDiscordCommandFlagResponse>} value The value to check
  *
- * @return {boolean} true when a flag
+ * @returns {boolean} true when a flag
  */
 export function discordCommandIsFlagSuccess(
   value: Readonly<IDiscordCommandFlagResponse>

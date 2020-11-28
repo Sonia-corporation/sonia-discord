@@ -17,7 +17,7 @@ import _ from 'lodash';
  *
  * @param {Readonly<IDiscordMessageFlag>} messageFlag The message containing a flag
  *
- * @return {boolean} true when a flag
+ * @returns {boolean} true when a flag
  */
 export function discordCommandIsMessageFlag(
   messageFlag: Readonly<IDiscordMessageFlag>

@@ -7,7 +7,7 @@ import _ from 'lodash';
  * [getDiscordDevPrefix#hasEmphasis]{@link IGetDiscordDevPrefix#hasEmphasis} will be set to true when not a boolean
  * [getDiscordDevPrefix#asMention]{@link IGetDiscordDevPrefix#asMention} will be set to false when not a boolean
  *
- * @return {string} A string representing the current developer profile
+ * @returns {string} A string representing the current developer profile
  */
 export function getDiscordDevPrefix({
   hasEmphasis = true,

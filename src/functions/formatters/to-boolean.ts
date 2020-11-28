@@ -9,6 +9,10 @@ export function toBoolean(
   isTrue: Readonly<boolean | string | null | undefined>,
   asFallback?: Readonly<boolean>
 ): boolean;
+/**
+ * @param isTrue
+ * @param asFallback
+ */
 export function toBoolean(
   isTrue: Readonly<boolean | string | null | undefined>,
   asFallback: Readonly<boolean> = true

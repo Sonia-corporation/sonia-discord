@@ -7,7 +7,7 @@ import _ from 'lodash';
  *
  * @param {Readonly<string>} messageFlags A partial message containing only a string with flags
  *
- * @return {IDiscordMessageFlag[]} An array of Discord message flag
+ * @returns {IDiscordMessageFlag[]} An array of Discord message flag
  */
 export function discordCommandSplitMessageFlags(messageFlags: Readonly<string>): IDiscordMessageFlag[] {
   return _.isEmpty(messageFlags) ? [] : _.split(messageFlags, ` `);

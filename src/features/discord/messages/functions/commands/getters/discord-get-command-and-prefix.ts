@@ -4,6 +4,12 @@ import { IDiscordGetCommandAndPrefixData } from '../../../interfaces/commands/ge
 import { discordExtractFromCommand } from '../checks/discord-extract-from-command';
 import { discordGetFormattedMessage } from '../formatters/discord-get-formatted-message';
 
+/**
+ * @param root0
+ * @param root0.command
+ * @param root0.message
+ * @param root0.prefix
+ */
 function getCommandAndPrefix({
   command,
   message,
@@ -16,6 +22,12 @@ function getCommandAndPrefix({
   });
 }
 
+/**
+ * @param root0
+ * @param root0.commands
+ * @param root0.message
+ * @param root0.prefixes
+ */
 export function discordGetCommandAndPrefix({
   commands,
   message,

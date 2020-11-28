@@ -4,7 +4,7 @@ import xregexp from 'xregexp';
 /**
  * @param {Readonly<IDiscordGetCommandWithFirstArgumentRegexpData>} data The data used as a command
  *
- * @return {RegExp} A RegExp matching a prefix with a command and one argument
+ * @returns {RegExp} A RegExp matching a prefix with a command and one argument
  */
 export function discordGetCommandWithFirstArgumentRegexp({
   prefix,

@@ -3,6 +3,12 @@ import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-messa
 import { IDiscordContainsThisCommandWithPrefixData } from '../../../interfaces/commands/checks/discord-contains-this-command-with-prefix-data';
 import _ from 'lodash';
 
+/**
+ * @param root0
+ * @param root0.commands
+ * @param root0.message
+ * @param root0.prefix
+ */
 export function discordContainsThisCommandWithPrefix({
   commands,
   message,

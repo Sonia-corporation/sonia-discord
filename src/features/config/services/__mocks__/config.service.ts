@@ -20,7 +20,7 @@ export class ConfigService {
     if (_.isNumber(configUpdateNumber.newValue)) {
       LoggerService.getInstance().log({
         context: configUpdateNumber.context,
-        message: `${configUpdateNumber.valueName} updated to: ${configUpdateNumber.newValue}`,
+        message: `${configUpdateNumber.valueName} updated to: ${_.toString(configUpdateNumber.newValue)}`,
       });
 
       return configUpdateNumber.newValue;

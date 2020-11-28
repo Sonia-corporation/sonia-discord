@@ -71,7 +71,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
    * @param {Readonly<boolean>} isEnabled The new [enabled state]{@link IFirebaseGuildVFinal#channels#features#noon#isEnabled}
    * @param {Readonly<IFirebaseGuildVFinal>} firebaseGuild The current guild in the store
    *
-   * @return {IObject} A flatten object updating only the enabled state or a more complete object to also up-to-date the models
+   * @returns {IObject} A flatten object updating only the enabled state or a more complete object to also up-to-date the models
    */
   public getUpdatedGuild(
     channelId: Readonly<IAnyDiscordChannel['id']>,
@@ -191,7 +191,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
    * @param {Readonly<Snowflake>} channelId The [id]{@link Snowflake} of the channel
    * @param {Readonly<boolean>} isEnabled The new [enabled state]{@link IFirebaseGuildVFinal#channels#features#noon#isEnabled}
    *
-   * @return {IObject} A flatten object updating only the enabled state
+   * @returns {IObject} A flatten object updating only the enabled state
    */
   private _getUpdatedGuildWithPathOnly(
     channelId: Readonly<IAnyDiscordChannel['id']>,

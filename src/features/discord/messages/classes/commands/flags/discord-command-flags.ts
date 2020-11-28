@@ -76,7 +76,7 @@ export class DiscordCommandFlags<T extends string> {
    * => --alpha-flag=true
    * => -e
    *
-   * @return {string | undefined} An example or undefined
+   * @returns {string | undefined} An example or undefined
    */
   public getRandomFlagUsageExample(): string | undefined {
     const randomFlag: IDiscordCommandFlagTypes<T> | undefined = this.getRandomFlag();
@@ -114,7 +114,7 @@ export class DiscordCommandFlags<T extends string> {
    * => `--alpha-flag`
    * => `--alpha-flag`, `--beta-flag`
    *
-   * @return {string} The list of all the flags name as example
+   * @returns {string} The list of all the flags name as example
    */
   public getAllFlagsNameExample(): string {
     return _.trimEnd(
@@ -138,7 +138,7 @@ export class DiscordCommandFlags<T extends string> {
    * => `--alpha-flag (or -e)`
    * => `--alpha-flag (or -e, -d)`, `--beta-flag (or -f, -g)`
    *
-   * @return {string} The list of all the flags name as example with their shortcuts
+   * @returns {string} The list of all the flags name as example with their shortcuts
    */
   public getAllFlagsNameWithShortcutsExample(): string {
     return _.trimEnd(
@@ -160,7 +160,7 @@ export class DiscordCommandFlags<T extends string> {
    * => [alpha-flag]
    * => [alpha-flag, beta-flag]
    *
-   * @return {string[]} The list of all the flags name lowered
+   * @returns {string[]} The list of all the flags name lowered
    */
   public getAllFlagsLowerCaseName(): string[] {
     return _.map(this.getOrderedFlags(), (flag: Readonly<IDiscordCommandFlagTypes<T>>): string =>
@@ -177,7 +177,7 @@ export class DiscordCommandFlags<T extends string> {
    * => [alpha-flag]
    * => [alpha-flag, beta-flag]
    *
-   * @return {string[]} The list of all the flags name lowered and their shortcuts
+   * @returns {string[]} The list of all the flags name lowered and their shortcuts
    */
   public getAllFlagsLowerCaseNameWithShortcuts(): string[] {
     return _.flatten(
@@ -200,7 +200,7 @@ export class DiscordCommandFlags<T extends string> {
    *
    * @param {Readonly<string>} messageFlags A partial message containing only a string with flags
    *
-   * @return {IDiscordCommandFlagsErrors | null} A list of errors or null
+   * @returns {IDiscordCommandFlagsErrors | null} A list of errors or null
    */
   public getErrors(messageFlags: Readonly<string>): IDiscordCommandFlagsErrors | null | never {
     if (_.isEmpty(messageFlags)) {
@@ -226,7 +226,7 @@ export class DiscordCommandFlags<T extends string> {
    *
    * @param {Readonly<string>} messageFlags A partial message containing only a string with flags
    *
-   * @return {IDiscordCommandFlagsDuplicated | null} A list of duplicated flags or null
+   * @returns {IDiscordCommandFlagsDuplicated | null} A list of duplicated flags or null
    */
   public getDuplicated(messageFlags: Readonly<string>): IDiscordCommandFlagsDuplicated | null | never {
     if (_.isEmpty(messageFlags)) {
@@ -252,7 +252,7 @@ export class DiscordCommandFlags<T extends string> {
    *
    * @param {Readonly<string>} messageFlags A partial message containing only a string with flags
    *
-   * @return {IDiscordCommandFlagsOpposite | null} A list of opposite flags or null
+   * @returns {IDiscordCommandFlagsOpposite | null} A list of opposite flags or null
    */
   public getOpposites(messageFlags: Readonly<string>): IDiscordCommandFlagsOpposite | null | never {
     if (_.isEmpty(messageFlags)) {
@@ -303,7 +303,7 @@ export class DiscordCommandFlags<T extends string> {
    * @param {Readonly<IAnyDiscordMessage>} anyDiscordMessage The original Discord message
    * @param {Readonly<IDiscordMessageFlag>} messageFlag A message flag
    *
-   * @return {Promise<unknown>}
+   * @returns {Promise<unknown>}
    */
   public execute(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
@@ -522,7 +522,7 @@ export class DiscordCommandFlags<T extends string> {
    *
    * @param {Readonly<string>[]} messageFlags The list of message flags
    *
-   * @return {unknown} A list of list of flags considered not compatibles
+   * @returns {unknown} A list of list of flags considered not compatibles
    */
   private _getOppositeMessagesFlags(messageFlags: Readonly<string>[]): IDiscordCommandMessageFlag<T>[][] {
     const commandMessageFlags: IDiscordCommandMessageFlag<T>[] = this._getMessageFlags(messageFlags);

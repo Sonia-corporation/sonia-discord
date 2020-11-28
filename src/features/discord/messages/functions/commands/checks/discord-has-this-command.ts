@@ -3,6 +3,12 @@ import { discordContainsThisCommandWithPrefix } from './discord-contains-this-co
 import { IDiscordHasThisCommandData } from '../../../interfaces/commands/checks/discord-has-this-command-data';
 import _ from 'lodash';
 
+/**
+ * @param root0
+ * @param root0.prefixes
+ * @param root0.commands
+ * @param root0.message
+ */
 export function discordHasThisCommand({ prefixes, commands, message }: Readonly<IDiscordHasThisCommandData>): boolean {
   if (_.isString(prefixes)) {
     return discordContainsThisCommandWithPrefix({

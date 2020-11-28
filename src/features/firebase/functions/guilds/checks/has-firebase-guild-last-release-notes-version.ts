@@ -13,7 +13,7 @@ import _ from 'lodash';
  *
  * @param {Readonly<IFirebaseGuild>} firebaseGuild The Firebase guild
  *
- * @return {boolean} true when the given guild is at least [v2]{@link FirebaseGuildVersionEnum.V2}
+ * @returns {boolean} true when the given guild is at least [v2]{@link FirebaseGuildVersionEnum.V2}
  */
 export function hasFirebaseGuildLastReleaseNotesVersion(
   firebaseGuild: Readonly<IFirebaseGuild>

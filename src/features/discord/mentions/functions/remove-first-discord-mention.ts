@@ -8,7 +8,7 @@ import xregexp from 'xregexp';
  *
  * @param {Readonly<string>} message The message to alter
  *
- * @return {string} The message without the first encountered mention
+ * @returns {string} The message without the first encountered mention
  */
 export function removeFirstDiscordMention(message: Readonly<string>): string {
   return _.trim(xregexp.replace(message, discordGetMentionRegexp(), ``, `one`));

@@ -18,7 +18,7 @@ export abstract class FirebaseUpdateCoreService<
    *
    * @param {Readonly<TEntity | undefined>} entity The object to check
    *
-   * @return {boolean} true when not undefined and on the latest version
+   * @returns {boolean} true when not undefined and on the latest version
    */
   public isValid(entity: Readonly<TEntity | undefined>): entity is TFinalEntity {
     return this.isSet(entity) && this.isUpToDate(entity);
@@ -30,7 +30,7 @@ export abstract class FirebaseUpdateCoreService<
    *
    * @param {Readonly<TEntity | TFinalEntity | undefined>} entity The object to check
    *
-   * @return {boolean} true when not undefined
+   * @returns {boolean} true when not undefined
    */
   public isSet(entity: Readonly<TFinalEntity | undefined>): entity is TFinalEntity;
   public isSet(entity: Readonly<TEntity | undefined>): entity is TEntity;
@@ -49,7 +49,7 @@ export abstract class FirebaseUpdateCoreService<
    * @param {Readonly<TCreateEntity | undefined>} createEntity Eventually an object containing some custom data.
    * Very useful to customize the new object instead of having arbitrary default values
    *
-   * @return {TFinalEntity | TNewEntity} An object possibly updated
+   * @returns {TFinalEntity | TNewEntity} An object possibly updated
    */
   public getUpToDate(
     entity: Readonly<TEntity | undefined>,
@@ -72,7 +72,7 @@ export abstract class FirebaseUpdateCoreService<
    *
    * @param {Readonly<TEntity | TFinalEntity>} entity The object to check
    *
-   * @return {boolean} true when the given object is on the latest version
+   * @returns {boolean} true when the given object is on the latest version
    */
   public abstract isUpToDate(entity: Readonly<TEntity | TFinalEntity>): entity is TFinalEntity;
 
@@ -83,7 +83,7 @@ export abstract class FirebaseUpdateCoreService<
    * @param {Readonly<TCreateEntity | undefined>} createEntity Eventually an object containing some custom data.
    * Very useful to customize the new object instead of having arbitrary default values
    *
-   * @return {TNewEntity} An object with explicit set value (basically no choices like "string | undefined")
+   * @returns {TNewEntity} An object with explicit set value (basically no choices like "string | undefined")
    */
   public abstract create(createEntity?: Readonly<TCreateEntity | undefined>): TNewEntity;
 
@@ -93,7 +93,7 @@ export abstract class FirebaseUpdateCoreService<
    *
    * @param {Readonly<TEntity>} entity The original object on whatever version possible
    *
-   * @return {TFinalEntity} An object upgraded on the latest version
+   * @returns {TFinalEntity} An object upgraded on the latest version
    */
   public abstract upgrade(entity: Readonly<TEntity>): TFinalEntity;
 }

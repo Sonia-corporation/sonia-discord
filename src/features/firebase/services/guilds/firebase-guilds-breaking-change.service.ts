@@ -136,8 +136,8 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
       context: this._serviceName,
       message: ChalkService.getInstance().text(
         `all Firebase guild${_.gt(countFirebaseGuilds, ONE_GUILD) ? `s` : ``} ${ChalkService.getInstance().hint(
-          `(${countFirebaseGuilds})`
-        )} up-to-date ${ChalkService.getInstance().hint(`(v${FIREBASE_GUILD_CURRENT_VERSION})`)}`
+          `(${_.toString(countFirebaseGuilds)})`
+        )} up-to-date ${ChalkService.getInstance().hint(`(v${_.toString(FIREBASE_GUILD_CURRENT_VERSION)})`)}`
       ),
     });
 
