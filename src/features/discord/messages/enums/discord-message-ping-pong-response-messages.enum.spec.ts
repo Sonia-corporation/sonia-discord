@@ -5,7 +5,7 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessagePingPongResponseMessagesEnum.ARE_YOU_LOOKING_FOR_A_RESPONSE).toStrictEqual(
-      `Are you looking for a response?, leave me alone.`
+      `Are you looking for a response?`
     );
   });
 
@@ -35,6 +35,12 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessagePingPongResponseMessagesEnum.BITCH_LEAVE_ME_ALONE).toStrictEqual(`Bitch, leave me alone.`);
+  });
+
+  it(`should have a member "BITCH_PLEASE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessagePingPongResponseMessagesEnum.BITCH_PLEASE).toStrictEqual(`Bitch please.`);
   });
 
   it(`should have a member "DUDE"`, (): void => {

@@ -4,6 +4,7 @@ export enum DiscordMessagePingPongResponseMessagesEnum {
   ARE_YOU_SERIOUS = `Are you serious?`,
   ARE_YOU_SERIOUS_RIGHT_NOW = `Are you serious right now?`,
   BITCH_LEAVE_ME_ALONE = `Bitch, leave me alone.`,
+  BITCH_PLEASE = `Bitch please.`,
   DUDE = `Dude.`,
   HAHA = `Haha.`,
   JOKER_OF_THE_YEAR = `Joker of the year.`,
