@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.91.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.90.0...1.91.0) (2020-11-29)
+
+
+### :rocket: Features
+
+* **responses:** respond Trivago to hotel in DM and channels ([eaa2276](https://github.com/Sonia-corporation/sonia-discord/commit/eaa2276f3de95e88ddb81218dc393c122b0da3db)), closes [#423](https://github.com/Sonia-corporation/sonia-discord/issues/423)
+
 # [1.90.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.89.0...1.90.0) (2020-11-28)
 
 
