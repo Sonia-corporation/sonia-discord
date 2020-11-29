@@ -8,6 +8,7 @@ import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageCommandService } from '../command/discord-message-command.service';
 import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
 import { DiscordMessageAuthorService } from '../responses/discord-message-author.service';
+import { DiscordMessageHotelTrivagoService } from '../responses/discord-message-hotel-trivago.service';
 import { DiscordMessagePingPongService } from '../responses/discord-message-ping-pong.service';
 import { createMock } from 'ts-auto-mock';
 
@@ -22,6 +23,7 @@ describe(`DiscordMessageDmService`, (): void => {
   let discordMessageCommandService: DiscordMessageCommandService;
   let loggerService: LoggerService;
   let discordMessagePingPongService: DiscordMessagePingPongService;
+  let discordMessageHotelTrivagoService: DiscordMessageHotelTrivagoService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -31,6 +33,7 @@ describe(`DiscordMessageDmService`, (): void => {
     discordMessageCommandService = DiscordMessageCommandService.getInstance();
     loggerService = LoggerService.getInstance();
     discordMessagePingPongService = DiscordMessagePingPongService.getInstance();
+    discordMessageHotelTrivagoService = DiscordMessageHotelTrivagoService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -137,6 +140,8 @@ describe(`DiscordMessageDmService`, (): void => {
     let loggerServiceDebugSpy: jest.SpyInstance;
     let discordMessagePingPongServiceHasCriteriaSpy: jest.SpyInstance;
     let discordMessagePingPongServiceReplySpy: jest.SpyInstance;
+    let discordMessageHotelTrivagoServiceHasCriteriaSpy: jest.SpyInstance;
+    let discordMessageHotelTrivagoServiceReplySpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageDmService();
@@ -164,6 +169,12 @@ describe(`DiscordMessageDmService`, (): void => {
       discordMessagePingPongServiceReplySpy = jest
         .spyOn(discordMessagePingPongService, `reply`)
         .mockRejectedValue(new Error(`ping pong reply error`));
+      discordMessageHotelTrivagoServiceHasCriteriaSpy = jest
+        .spyOn(discordMessageHotelTrivagoService, `hasCriteria`)
+        .mockImplementation();
+      discordMessageHotelTrivagoServiceReplySpy = jest
+        .spyOn(discordMessageHotelTrivagoService, `reply`)
+        .mockRejectedValue(new Error(`hotel trivago reply error`));
     });
 
     it(`should check if the given Discord message is empty`, async (): Promise<void> => {
@@ -225,17 +236,69 @@ describe(`DiscordMessageDmService`, (): void => {
             discordMessagePingPongServiceHasCriteriaSpy.mockReturnValue(false);
           });
 
-          it(`should respond with the default replay`, async (): Promise<void> => {
-            expect.assertions(5);
+          it(`should check if the given Discord message contains the criteria for a hotel trivago response`, async (): Promise<void> => {
+            expect.assertions(3);
 
             await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
               new Error(`reply error`)
             );
 
-            expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledTimes(1);
-            expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledWith(anyDiscordMessage);
-            expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
-            expect(discordMessagePingPongServiceReplySpy).not.toHaveBeenCalled();
+            expect(discordMessageHotelTrivagoServiceHasCriteriaSpy).toHaveBeenCalledTimes(1);
+            expect(discordMessageHotelTrivagoServiceHasCriteriaSpy).toHaveBeenCalledWith(anyDiscordMessage.content);
+          });
+
+          describe(`when the given Discord message do not contains the criteria for a hotel trivago response`, (): void => {
+            beforeEach((): void => {
+              discordMessageHotelTrivagoServiceHasCriteriaSpy.mockReturnValue(false);
+            });
+
+            it(`should respond with the default replay`, async (): Promise<void> => {
+              expect.assertions(6);
+
+              await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                new Error(`reply error`)
+              );
+
+              expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledTimes(1);
+              expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledWith(anyDiscordMessage);
+              expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
+              expect(discordMessagePingPongServiceReplySpy).not.toHaveBeenCalled();
+              expect(discordMessageHotelTrivagoServiceReplySpy).not.toHaveBeenCalled();
+            });
+          });
+
+          describe(`when the given Discord message contains the criteria for a hotel trivago response`, (): void => {
+            beforeEach((): void => {
+              discordMessageHotelTrivagoServiceHasCriteriaSpy.mockReturnValue(true);
+            });
+
+            it(`should log about responding to hotel`, async (): Promise<void> => {
+              expect.assertions(3);
+
+              await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                new Error(`hotel trivago reply error`)
+              );
+
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+                context: `DiscordMessageDmService`,
+                hasExtendedContext: true,
+                message: `context-[dummy-id] text-message hotel trivago`,
+              } as ILoggerLog);
+            });
+
+            it(`should respond with trivago`, async (): Promise<void> => {
+              expect.assertions(5);
+
+              await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                new Error(`hotel trivago reply error`)
+              );
+
+              expect(discordMessageHotelTrivagoServiceReplySpy).toHaveBeenCalledTimes(1);
+              expect(discordMessageHotelTrivagoServiceReplySpy).toHaveBeenCalledWith(anyDiscordMessage);
+              expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
+              expect(discordMessageAuthorServiceReplySpy).not.toHaveBeenCalled();
+            });
           });
         });
 
@@ -295,7 +358,7 @@ describe(`DiscordMessageDmService`, (): void => {
         });
 
         it(`should respond with the appropriate message for the command`, async (): Promise<void> => {
-          expect.assertions(5);
+          expect.assertions(6);
 
           await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
             new Error(`handleCommands error`)
@@ -304,6 +367,7 @@ describe(`DiscordMessageDmService`, (): void => {
           expect(discordMessageCommandServiceHandleCommandsSpy).toHaveBeenCalledTimes(1);
           expect(discordMessageCommandServiceHandleCommandsSpy).toHaveBeenCalledWith(anyDiscordMessage);
           expect(discordMessagePingPongServiceReplySpy).not.toHaveBeenCalled();
+          expect(discordMessageHotelTrivagoServiceReplySpy).not.toHaveBeenCalled();
           expect(discordMessageAuthorServiceReplySpy).not.toHaveBeenCalled();
         });
       });
