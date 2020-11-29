@@ -7,6 +7,7 @@ import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageCommandService } from '../command/discord-message-command.service';
 import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
 import { DiscordMessageAuthorService } from '../responses/discord-message-author.service';
+import { DiscordMessageHotelTrivagoService } from '../responses/discord-message-hotel-trivago.service';
 import { DiscordMessagePingPongService } from '../responses/discord-message-ping-pong.service';
 import _ from 'lodash';
 
@@ -46,6 +47,10 @@ export class DiscordMessageDmService extends AbstractService {
       if (DiscordMessagePingPongService.getInstance().hasCriteria(anyDiscordMessage.content)) {
         return this._getPingPongMessageResponse(anyDiscordMessage);
       }
+
+      if (DiscordMessageHotelTrivagoService.getInstance().hasCriteria(anyDiscordMessage.content)) {
+        return this._getHotelTrivagoMessageResponse(anyDiscordMessage);
+      }
     }
 
     return DiscordMessageAuthorService.getInstance().reply(anyDiscordMessage);
@@ -73,5 +78,17 @@ export class DiscordMessageDmService extends AbstractService {
     });
 
     return DiscordMessagePingPongService.getInstance().reply(anyDiscordMessage);
+  }
+
+  private _getHotelTrivagoMessageResponse(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message hotel trivago`),
+    });
+
+    return DiscordMessageHotelTrivagoService.getInstance().reply(anyDiscordMessage);
   }
 }

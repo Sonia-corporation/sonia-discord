@@ -109,7 +109,7 @@ export abstract class DiscordCommandFlag<T extends string, TAction extends IDisc
    * => `--alpha-flag (or -e)`
    * => `--alpha-flag (or -e, -d)`
    *
-   * @return {string} The flag name as example with his shortcuts
+   * @returns {string} The flag name as example with his shortcuts
    */
   public getLowerCaseNameAndShortcutsExample(): string {
     const shortcuts: string[] | undefined = this.getLowerCaseShortcuts();

@@ -2,6 +2,10 @@ import { getInterpolationRegexp } from './get-interpolation-regexp';
 import { IObject } from '../../types/object';
 import _ from 'lodash';
 
+/**
+ * @param text
+ * @param replacement
+ */
 export function replaceInterpolation(text: Readonly<string>, replacement: Readonly<IObject>): string {
   return _.reduce(
     replacement,

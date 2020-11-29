@@ -36,7 +36,7 @@ export class DiscordCommandValuelessFlag<T extends string> extends DiscordComman
    *
    * @param {Readonly<IDiscordMessageFlag>} messageFlag A flag as a message
    *
-   * @return {boolean} true if the flag value is valid
+   * @returns {boolean} true if the flag value is valid
    */
   public isValid(messageFlag: Readonly<IDiscordMessageFlag>): boolean {
     const splittedFlag: string[] = _.split(messageFlag, `=`);

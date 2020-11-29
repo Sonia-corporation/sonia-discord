@@ -62,7 +62,7 @@ export class AppConfigQueryService extends AbstractService {
 
   public getTotalReleaseCountHumanized(releaseWord: Readonly<string> = `version`): string {
     const totalReleaseCount: number = AppConfigService.getInstance().getTotalReleaseCount();
-    let sentence = `${totalReleaseCount} ${releaseWord}`;
+    let sentence = `${_.toString(totalReleaseCount)} ${releaseWord}`;
 
     if (_.gt(totalReleaseCount, ONE_RELEASE)) {
       sentence = `${sentence}s`;

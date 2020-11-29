@@ -1,5 +1,8 @@
 import _ from 'lodash';
 
+/**
+ * @param releaseNotes
+ */
 export function getHumanizedReleaseNotes(releaseNotes: Readonly<string>): string {
   let updatedReleaseNotes: string = _.clone(releaseNotes);
 

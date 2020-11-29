@@ -1,6 +1,13 @@
 import { DiscordGithubContributorsIdEnum } from './discord-github-contributors-id.enum';
+import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`DiscordGithubContributorsIdEnum`, (): void => {
+  it(`should have a 1 member`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(DiscordGithubContributorsIdEnum)).toStrictEqual(1);
+  });
+
   it(`should have a member "C0ZEN"`, (): void => {
     expect.assertions(1);
 

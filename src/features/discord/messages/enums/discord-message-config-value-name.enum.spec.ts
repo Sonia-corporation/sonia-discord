@@ -1,6 +1,13 @@
 import { DiscordMessageConfigValueNameEnum } from './discord-message-config-value-name.enum';
+import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageConfigValueNameEnum`, (): void => {
+  it(`should have a 21 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(DiscordMessageConfigValueNameEnum)).toStrictEqual(21);
+  });
+
   it(`should have a member "COMMAND_CLI_ERROR_IMAGE_COLOR"`, (): void => {
     expect.assertions(1);
 

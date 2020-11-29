@@ -201,7 +201,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       context: this._serviceName,
       message: ChalkService.getInstance().text(
         `all Firebase guild${_.gt(countFirebaseGuilds, ONE_GUILD) ? `s` : ``} ${ChalkService.getInstance().hint(
-          `(${countFirebaseGuilds})`
+          `(${_.toString(countFirebaseGuilds)})`
         )} release notes already sent`
       ),
     });

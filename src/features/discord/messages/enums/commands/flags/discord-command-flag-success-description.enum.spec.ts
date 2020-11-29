@@ -1,6 +1,13 @@
 import { DiscordCommandFlagSuccessDescriptionEnum } from './discord-command-flag-success-description.enum';
+import { getEnumLength } from '../../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordCommandFlagSuccessDescriptionEnum`, (): void => {
+  it(`should have a 6 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(DiscordCommandFlagSuccessDescriptionEnum)).toStrictEqual(6);
+  });
+
   it(`should have a member "NOT_CONFIGURED_AND_ENABLED"`, (): void => {
     expect.assertions(1);
 

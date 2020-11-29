@@ -1,6 +1,13 @@
 import { DiscordMessagePingPongResponseMessagesEnum } from './discord-message-ping-pong-response-messages.enum';
+import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
+  it(`should have a 36 members`, (): void => {
+    expect.assertions(1);
+
+    expect(getEnumLength(DiscordMessagePingPongResponseMessagesEnum)).toStrictEqual(36);
+  });
+
   it(`should have a member "ARE_YOU_LOOKING_FOR_A_RESPONSE"`, (): void => {
     expect.assertions(1);
 
@@ -185,6 +192,12 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessagePingPongResponseMessagesEnum.STOP_THAT_SHIT).toStrictEqual(`Stop that shit?`);
+  });
+
+  it(`should have a member "STOP_THIS"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessagePingPongResponseMessagesEnum.STOP_THIS).toStrictEqual(`Stop this!`);
   });
 
   it(`should have a member "TWO_HUNDRED_IQ_PONG"`, (): void => {

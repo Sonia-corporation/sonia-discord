@@ -6,6 +6,13 @@ import { IDiscordExtractFromCommandWithMultiplePrefixesData } from '../../../int
 import { discordGetFormattedMessage } from '../formatters/discord-get-formatted-message';
 import _ from 'lodash';
 
+/**
+ * @param root0
+ * @param root0.commands
+ * @param root0.finder
+ * @param root0.message
+ * @param root0.prefix
+ */
 function extractFromCommandWithMultipleCommands({
   commands,
   finder,
@@ -29,6 +36,13 @@ function extractFromCommandWithMultipleCommands({
   return firstArgument;
 }
 
+/**
+ * @param root0
+ * @param root0.command
+ * @param root0.finder
+ * @param root0.message
+ * @param root0.prefixes
+ */
 function extractFromCommandWithMultiplePrefixes({
   command,
   finder,
@@ -52,6 +66,13 @@ function extractFromCommandWithMultiplePrefixes({
   return firstArgument;
 }
 
+/**
+ * @param root0
+ * @param root0.commands
+ * @param root0.finder
+ * @param root0.message
+ * @param root0.prefixes
+ */
 function extractFromCommandWithMultiplePrefixesAndCommands({
   commands,
   finder,
@@ -79,10 +100,16 @@ function extractFromCommandWithMultiplePrefixesAndCommands({
   return firstArgument;
 }
 
+/**
+ * @param value
+ */
 function isPrefix(value: Readonly<string | string[]>): value is string {
   return _.isString(value);
 }
 
+/**
+ * @param value
+ */
 function isCommand(
   value: Readonly<DiscordMessageCommandEnum | DiscordMessageCommandEnum[]>
 ): value is DiscordMessageCommandEnum {
@@ -96,7 +123,7 @@ function isCommand(
  *
  * @param {Readonly<IDiscordExtractFromCommandData>} data The data to analyze the message
  *
- * @return {string | null} The value searched or null
+ * @returns {string | null} The value searched or null
  */
 export function discordExtractFromCommand({
   commands,

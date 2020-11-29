@@ -32,7 +32,7 @@ export class DiscordMessagePingPongService extends AbstractService {
    *
    * @param {Readonly<string>} message The message to check if a response to ping is possible
    *
-   * @return {boolean} Return true when she can respond to ping
+   * @returns {boolean} Return true when she can respond to ping
    */
   public hasCriteria(message: Readonly<string>): boolean {
     const messageWithoutFirstMention: string = this._getMessageWithoutFirstMention(message);

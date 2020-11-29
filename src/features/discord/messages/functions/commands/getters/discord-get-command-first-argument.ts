@@ -6,6 +6,12 @@ import { discordGetCommandWithFirstArgumentRegexp } from '../regexp/discord-get-
 import _ from 'lodash';
 import xregexp, { ExecArray } from 'xregexp';
 
+/**
+ * @param root0
+ * @param root0.command
+ * @param root0.message
+ * @param root0.prefix
+ */
 function getFirstArgument({
   command,
   message,
@@ -26,6 +32,12 @@ function getFirstArgument({
   return execArray.groups.argument1;
 }
 
+/**
+ * @param root0
+ * @param root0.commands
+ * @param root0.message
+ * @param root0.prefixes
+ */
 export function discordGetCommandFirstArgument({
   commands,
   message,
