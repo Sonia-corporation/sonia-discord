@@ -15,6 +15,7 @@ import { IDiscordMessage } from '../../types/discord-message';
 import { DiscordMessageCommandService } from '../command/discord-message-command.service';
 import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
 import { DiscordMessageAuthorService } from '../responses/discord-message-author.service';
+import { DiscordMessageHotelTrivagoService } from '../responses/discord-message-hotel-trivago.service';
 import { DiscordMessagePingPongService } from '../responses/discord-message-ping-pong.service';
 import _ from 'lodash';
 
@@ -100,6 +101,10 @@ export class DiscordMessageTextService extends AbstractService {
       if (DiscordMessagePingPongService.getInstance().hasCriteria(discordMessage.content)) {
         return this._getPingPongMessageResponse(discordMessage);
       }
+
+      if (DiscordMessageHotelTrivagoService.getInstance().hasCriteria(discordMessage.content)) {
+        return this._getHotelTrivagoMessageResponse(discordMessage);
+      }
     }
 
     return DiscordMessageAuthorService.getInstance().reply(discordMessage);
@@ -134,26 +139,38 @@ export class DiscordMessageTextService extends AbstractService {
   }
 
   private _getCommandMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    discordMessage: Readonly<IDiscordMessage>
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message with command`),
+      message: LoggerService.getInstance().getSnowflakeContext(discordMessage.id, `message with command`),
     });
 
-    return DiscordMessageCommandService.getInstance().handleCommands(anyDiscordMessage);
+    return DiscordMessageCommandService.getInstance().handleCommands(discordMessage);
   }
 
   private _getPingPongMessageResponse(
-    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+    discordMessage: Readonly<IDiscordMessage>
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message ping pong`),
+      message: LoggerService.getInstance().getSnowflakeContext(discordMessage.id, `message ping pong`),
     });
 
-    return DiscordMessagePingPongService.getInstance().reply(anyDiscordMessage);
+    return DiscordMessagePingPongService.getInstance().reply(discordMessage);
+  }
+
+  private _getHotelTrivagoMessageResponse(
+    discordMessage: Readonly<IDiscordMessage>
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(discordMessage.id, `message hotel trivago`),
+    });
+
+    return DiscordMessageHotelTrivagoService.getInstance().reply(discordMessage);
   }
 }

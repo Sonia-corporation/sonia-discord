@@ -194,6 +194,12 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
     expect(DiscordMessagePingPongResponseMessagesEnum.STOP_THAT_SHIT).toStrictEqual(`Stop that shit?`);
   });
 
+  it(`should have a member "STOP_THIS"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessagePingPongResponseMessagesEnum.STOP_THIS).toStrictEqual(`Stop this!`);
+  });
+
   it(`should have a member "TWO_HUNDRED_IQ_PONG"`, (): void => {
     expect.assertions(1);
 

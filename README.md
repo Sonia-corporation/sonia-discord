@@ -216,6 +216,7 @@ Sonia will respond to each of your messages but within a predefined priority:
 
 - commands (handle the commands if you follow the right syntax)
 - ping (respond pong)
+- hotel (respond trivago)
 - default message (when your message is very basic, Sonia will tell you that it is noon, as usual (even if it is untrue))
 
 #### In a public text channel (also known as text)
@@ -232,6 +233,7 @@ Sonia will respond to each of your messages but within a predefined priority:
 
 - commands (handle the commands if you follow the right syntax)
 - ping (respond pong)
+- hotel (respond trivago)
 - default message (when your message is very basic, Sonia will tell you that it is noon, as usual (even if it is untrue))
 
 **Example:**
