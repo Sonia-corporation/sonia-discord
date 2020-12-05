@@ -19,6 +19,7 @@ extends:
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
+  createInstance: readonly
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
