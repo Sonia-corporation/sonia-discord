@@ -104,6 +104,12 @@ Sonia will send you a message containing:
 
 **Features (first and only argument followed by optional flags):**
 
+This is a special command used to configure Sonia only for the current Guild or channel.  
+There are multiples option to customize Sonia (some will change her behavior on the whole Guild and other only for the current channel).
+
+Sonia will send you a message containing information about the changes you just made.  
+Basically she will try to help you if you fill bad information and just inform you if the changes were successful.
+
 1. noon
 
 Configure the message sent at noon on the given channel.  
@@ -115,11 +121,15 @@ The default timezone is Europe/Paris and this will be configurable later.
 - humanize (or hu): display the current configuration
 - status (or s): display if the feature is enabled or not
 
-This is a special command used to configure Sonia only for the current Guild or channel.  
-There are multiples option to customize Sonia (some will change her behavior on the whole Guild and other only for the current channel).
+2. release-notes
 
-Sonia will send you a message containing information about the changes you just made.  
-Basically she will try to help you if you fill bad information and just inform you if the changes were successful.
+Configure the message containing the new release notes on the given channel.
+
+- disabled (or d): disable the release notes message on the channel
+- enabled (or e): enable the release notes message on the channel
+- help (or h): get some help with this command
+- humanize (or hu): display the current configuration
+- status (or s): display if the feature is enabled or not
 
 **Example:**
 
