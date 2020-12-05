@@ -180,7 +180,7 @@
     "cz-customizable-ghooks": "2.0.0",
     "eslint": "7.15.0",
     "eslint-config-google": "0.14.0",
-    "eslint-config-prettier": "6.15.0",
+    "eslint-config-prettier": "7.0.0",
     "eslint-config-recommended": "4.1.0",
     "eslint-import-resolver-typescript": "2.3.0",
     "eslint-plugin-import": "2.22.1",
