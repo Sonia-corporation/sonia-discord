@@ -278,7 +278,7 @@ rules:
       trailingComma: es5
       bracketSpacing: true
       arrowParens: always
-      endOfLine: lf
+      endOfLine: auto
       tabWidth: 2
   import/no-unresolved: error
   prefer-template: error
