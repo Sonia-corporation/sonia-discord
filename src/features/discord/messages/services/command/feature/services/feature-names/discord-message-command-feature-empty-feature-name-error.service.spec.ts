@@ -160,7 +160,7 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
 
       expect(result.options.embed?.fields?.[1]).toStrictEqual({
         name: `All features`,
-        value: `\`noon (or n)\``,
+        value: `\`noon (or n)\`, \`release-notes (or r)\``,
       } as EmbedFieldData);
     });
 

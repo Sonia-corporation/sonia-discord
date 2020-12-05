@@ -17,6 +17,6 @@ describe(`FirebaseGuildChannelFeatureVersionEnum`, (): void => {
   it(`should have a member "V2"`, (): void => {
     expect.assertions(1);
 
-    expect(FirebaseGuildChannelFeatureVersionEnum.V2).toStrictEqual(1);
+    expect(FirebaseGuildChannelFeatureVersionEnum.V2).toStrictEqual(2);
   });
 });

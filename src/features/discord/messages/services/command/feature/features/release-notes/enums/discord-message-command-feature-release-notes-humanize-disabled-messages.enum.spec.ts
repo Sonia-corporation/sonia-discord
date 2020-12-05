@@ -2,10 +2,10 @@ import { DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum } 
 import { getEnumLength } from '../../../../../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum`, (): void => {
-  it(`should have a 25 members`, (): void => {
+  it(`should have a 33 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum)).toStrictEqual(25);
+    expect(getEnumLength(DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum)).toStrictEqual(33);
   });
 
   it(`should have a member "CAN_I_COUNT_ON_YOU_TO_ENABLE_RELEASE_NOTES"`, (): void => {
@@ -13,7 +13,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum`,
 
     expect(
       DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum.CAN_I_COUNT_ON_YOU_TO_ENABLE_THE_RELEASE_NOTES
-    ).toStrictEqual(`Can I count on you to enable release notes?`);
+    ).toStrictEqual(`Can I count on you to enable the release notes?`);
   });
 
   it(`should have a member "CAN_I_COUNT_ON_YOU_TO_ENABLE_THE_RELEASE_NOTES"`, (): void => {

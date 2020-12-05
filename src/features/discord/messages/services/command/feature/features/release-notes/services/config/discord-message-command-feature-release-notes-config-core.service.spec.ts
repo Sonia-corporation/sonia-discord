@@ -62,6 +62,6 @@ describe(`DiscordMessageCommandFeatureReleaseNotesConfigCoreService`, (): void =
 
     service = DiscordMessageCommandFeatureReleaseNotesConfigCoreService.getInstance();
 
-    expect(service.releaseNotes.imageUrl).toStrictEqual(`https://i.ibb.co/S7BxtDh/icons8-alarm-512.png`);
+    expect(service.releaseNotes.imageUrl).toStrictEqual(`https://i.ibb.co/9p3Q17S/icons8-new-product-512.png`);
   });
 });

@@ -109,7 +109,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
     describe(`when the given feature name is the shortcut release notes feature`, (): void => {
       beforeEach((): void => {
-        featureName = DiscordMessageCommandFeatureNameEnum.N;
+        featureName = DiscordMessageCommandFeatureNameEnum.R;
       });
 
       it(`should return true`, (): void => {

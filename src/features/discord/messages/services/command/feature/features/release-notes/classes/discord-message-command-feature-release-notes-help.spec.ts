@@ -225,7 +225,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
 
         expect(result.options.embed?.fields?.[1]).toStrictEqual({
           name: `--enabled (or -e)`,
-          value: `Enable the release notes message on this channel. The message will be sent on the Europe/Paris timezone.`,
+          value: `Enable the release notes message on this channel. The message will be sent each time a new release is published.`,
         } as EmbedFieldData);
       });
 
@@ -322,58 +322,58 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
 
       it(`should return a Discord message response embed with a field to show an example of shortcut the command with a random valid flag`, async (): Promise<void> => {
         expect.assertions(1);
-        anyDiscordMessage.content = `dummy message !f n`;
+        anyDiscordMessage.content = `dummy message !f r`;
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
         expect(result.options.embed?.fields?.[5]).toBeOneOf([
           {
             name: `Example`,
-            value: `\`!f n --disabled=true\``,
+            value: `\`!f r --disabled=true\``,
           } as EmbedFieldData,
           {
             name: `Example`,
-            value: `\`!f n --disabled=false\``,
+            value: `\`!f r --disabled=false\``,
           } as EmbedFieldData,
           {
             name: `Example`,
-            value: `\`!f n -d\``,
+            value: `\`!f r -d\``,
           } as EmbedFieldData,
           {
             name: `Example`,
-            value: `\`!f n --enabled=true\``,
+            value: `\`!f r --enabled=true\``,
           } as EmbedFieldData,
           {
             name: `Example`,
-            value: `\`!f n --enabled=false\``,
+            value: `\`!f r --enabled=false\``,
           } as EmbedFieldData,
           {
             name: `Example`,
-            value: `\`!f n -e\``,
+            value: `\`!f r -e\``,
           } as EmbedFieldData,
           {
             name: `Example`,
-            value: `\`!f n --help\``,
+            value: `\`!f r --help\``,
           } as EmbedFieldData,
           {
             name: `Example`,
-            value: `\`!f n -h\``,
+            value: `\`!f r -h\``,
           } as EmbedFieldData,
           {
             name: `Example`,
-            value: `\`!f n --humanize\``,
+            value: `\`!f r --humanize\``,
           } as EmbedFieldData,
           {
             name: `Example`,
-            value: `\`!f n -hu\``,
+            value: `\`!f r -hu\``,
           } as EmbedFieldData,
           {
             name: `Example`,
-            value: `\`!f n --status\``,
+            value: `\`!f r --status\``,
           } as EmbedFieldData,
           {
             name: `Example`,
-            value: `\`!f n -s\``,
+            value: `\`!f r -s\``,
           } as EmbedFieldData,
         ]);
       });
