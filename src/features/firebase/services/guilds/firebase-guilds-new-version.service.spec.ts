@@ -186,7 +186,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       firebaseGuild = createMock<IFirebaseGuildVFinal>({
         id: `dummy-id`,
         lastReleaseNotesVersion: `1.0.0`,
-        version: FirebaseGuildVersionEnum.V4,
+        version: FirebaseGuildVersionEnum.V5,
       });
       queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuild>>({
         data: (): IFirebaseGuild => firebaseGuild,
@@ -939,7 +939,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     beforeEach((): void => {
       service = new FirebaseGuildsNewVersionService();
       firebaseGuild = createMock<IFirebaseGuildVFinal>({
-        version: FirebaseGuildVersionEnum.V4,
+        version: FirebaseGuildVersionEnum.V5,
       });
       guild = createMock<Guild>({
         id: `dummy-id`,

@@ -2,10 +2,10 @@ import { DiscordMessageCommandFeatureNameEnum } from './discord-message-command-
 import { getEnumLength } from '../../../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageCommandFeatureNameEnum`, (): void => {
-  it(`should have a 2 members`, (): void => {
+  it(`should have a 4 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageCommandFeatureNameEnum)).toStrictEqual(2);
+    expect(getEnumLength(DiscordMessageCommandFeatureNameEnum)).toStrictEqual(4);
   });
 
   it(`should have a member "NOON"`, (): void => {
@@ -18,5 +18,17 @@ describe(`DiscordMessageCommandFeatureNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessageCommandFeatureNameEnum.N).toStrictEqual(`n`);
+  });
+
+  it(`should have a member "RELEASE_NOTES"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandFeatureNameEnum.RELEASE_NOTES).toStrictEqual(`release-notes`);
+  });
+
+  it(`should have a member "R"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandFeatureNameEnum.R).toStrictEqual(`r`);
   });
 });

@@ -1,8 +1,8 @@
 import { AbstractService } from '../../../../../../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../../../../../../enums/service-name.enum';
-import { DiscordCommandFlagSuccessDescriptionEnum } from '../../../../../../enums/commands/flags/discord-command-flag-success-description.enum';
-import { DiscordCommandFlagSuccessTitleEnum } from '../../../../../../enums/commands/flags/discord-command-flag-success-title.enum';
 import { IDiscordCommandFlagSuccess } from '../../../../../../interfaces/commands/flags/discord-command-flag-success';
+import { DiscordMessageCommandNoonFlagSuccessDescriptionEnum } from '../enums/discord-message-command-noon-flag-success-description.enum';
+import { DiscordMessageCommandNoonFlagSuccessTitleEnum } from '../enums/discord-message-command-noon-flag-success-title.enum';
 import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureNoonEnabledSuccessFlagService extends AbstractService {
@@ -36,42 +36,42 @@ export class DiscordMessageCommandFeatureNoonEnabledSuccessFlagService extends A
   private _getFlagWhenNotConfigured(shouldEnable: Readonly<boolean>): IDiscordCommandFlagSuccess {
     if (_.isEqual(shouldEnable, true)) {
       return {
-        description: DiscordCommandFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_ENABLED,
-        name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
+        description: DiscordMessageCommandNoonFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_ENABLED,
+        name: DiscordMessageCommandNoonFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
       };
     }
 
     return {
-      description: DiscordCommandFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_DISABLED,
-      name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
+      description: DiscordMessageCommandNoonFlagSuccessDescriptionEnum.NOT_CONFIGURED_AND_DISABLED,
+      name: DiscordMessageCommandNoonFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
     };
   }
 
   private _getFlagWhenEnabled(shouldEnable: Readonly<boolean>): IDiscordCommandFlagSuccess {
     if (_.isEqual(shouldEnable, true)) {
       return {
-        description: DiscordCommandFlagSuccessDescriptionEnum.ENABLED_AND_ENABLED,
-        name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
+        description: DiscordMessageCommandNoonFlagSuccessDescriptionEnum.ENABLED_AND_ENABLED,
+        name: DiscordMessageCommandNoonFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
       };
     }
 
     return {
-      description: DiscordCommandFlagSuccessDescriptionEnum.ENABLED_AND_DISABLED,
-      name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
+      description: DiscordMessageCommandNoonFlagSuccessDescriptionEnum.ENABLED_AND_DISABLED,
+      name: DiscordMessageCommandNoonFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
     };
   }
 
   private _getFlagWhenDisabled(shouldEnable: Readonly<boolean>): IDiscordCommandFlagSuccess {
     if (_.isEqual(shouldEnable, true)) {
       return {
-        description: DiscordCommandFlagSuccessDescriptionEnum.DISABLED_AND_ENABLED,
-        name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
+        description: DiscordMessageCommandNoonFlagSuccessDescriptionEnum.DISABLED_AND_ENABLED,
+        name: DiscordMessageCommandNoonFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
       };
     }
 
     return {
-      description: DiscordCommandFlagSuccessDescriptionEnum.DISABLED_AND_DISABLED,
-      name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
+      description: DiscordMessageCommandNoonFlagSuccessDescriptionEnum.DISABLED_AND_DISABLED,
+      name: DiscordMessageCommandNoonFlagSuccessTitleEnum.NOON_FEATURE_DISABLED,
     };
   }
 }

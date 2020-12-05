@@ -1,7 +1,7 @@
 import { discordCommandIsFlagSuccess } from './discord-command-is-flag-success';
-import { DiscordCommandFlagSuccessTitleEnum } from '../../../enums/commands/flags/discord-command-flag-success-title.enum';
 import { IDiscordCommandFlagSuccess } from '../../../interfaces/commands/flags/discord-command-flag-success';
 import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
+import { DiscordMessageCommandNoonFlagSuccessTitleEnum } from '../../../services/command/feature/features/noon/enums/discord-message-command-noon-flag-success-title.enum';
 import { IDiscordCommandFlagResponse } from '../../../types/commands/flags/discord-command-flag-response';
 import { createMock } from 'ts-auto-mock';
 
@@ -26,7 +26,7 @@ describe(`discordCommandIsFlagSuccess()`, (): void => {
     beforeEach((): void => {
       value = createMock<IDiscordCommandFlagSuccess>({
         description: ``,
-        name: DiscordCommandFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
+        name: DiscordMessageCommandNoonFlagSuccessTitleEnum.NOON_FEATURE_ENABLED,
       });
     });
 

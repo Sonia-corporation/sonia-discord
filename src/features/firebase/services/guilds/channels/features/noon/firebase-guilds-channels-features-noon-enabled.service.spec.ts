@@ -283,7 +283,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
           describe(`when the Firebase guild is a Firebase guild up-to-date`, (): void => {
             beforeEach((): void => {
               firebaseGuild = createMock<IFirebaseGuildVFinal>({
-                version: FirebaseGuildVersionEnum.V4,
+                version: FirebaseGuildVersionEnum.V5,
               });
 
               firebaseGuildsServiceGetGuildSpy.mockResolvedValue(firebaseGuild);
@@ -329,12 +329,12 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
             'dummy-id': {
               features: {
                 noon: {
-                  version: 1,
+                  version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
                 },
-                version: 1,
+                version: FirebaseGuildChannelFeatureVersionEnum.V2,
               },
               id: `dummy-id`,
-              version: 1,
+              version: FirebaseGuildChannelVersionEnum.V2,
             },
           },
         });
@@ -384,7 +384,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
             channels: {
               'other-id': {
                 id: `other-id`,
-                version: FirebaseGuildChannelVersionEnum.V1,
+                version: FirebaseGuildChannelVersionEnum.V2,
               },
             },
           });
@@ -403,9 +403,9 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
             expect(result).toStrictEqual({
               'channels.dummy-id.features.noon.isEnabled': false,
               'channels.dummy-id.features.noon.version': 1,
-              'channels.dummy-id.features.version': 1,
+              'channels.dummy-id.features.version': 2,
               'channels.dummy-id.id': `dummy-id`,
-              'channels.dummy-id.version': 1,
+              'channels.dummy-id.version': 2,
             });
           });
         });
@@ -423,9 +423,9 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
             expect(result).toStrictEqual({
               'channels.dummy-id.features.noon.isEnabled': true,
               'channels.dummy-id.features.noon.version': 1,
-              'channels.dummy-id.features.version': 1,
+              'channels.dummy-id.features.version': 2,
               'channels.dummy-id.id': `dummy-id`,
-              'channels.dummy-id.version': 1,
+              'channels.dummy-id.version': 2,
             });
           });
         });
@@ -437,11 +437,11 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
             channels: {
               'dummy-id': {
                 id: `dummy-id`,
-                version: FirebaseGuildChannelVersionEnum.V1,
+                version: FirebaseGuildChannelVersionEnum.V2,
               },
               'other-id': {
                 id: `other-id`,
-                version: FirebaseGuildChannelVersionEnum.V1,
+                version: FirebaseGuildChannelVersionEnum.V2,
               },
             },
           });
@@ -460,9 +460,9 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
             expect(result).toStrictEqual({
               'channels.dummy-id.features.noon.isEnabled': false,
               'channels.dummy-id.features.noon.version': 1,
-              'channels.dummy-id.features.version': 1,
+              'channels.dummy-id.features.version': 2,
               'channels.dummy-id.id': `dummy-id`,
-              'channels.dummy-id.version': 1,
+              'channels.dummy-id.version': 2,
             });
           });
         });
@@ -480,9 +480,9 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
             expect(result).toStrictEqual({
               'channels.dummy-id.features.noon.isEnabled': true,
               'channels.dummy-id.features.noon.version': 1,
-              'channels.dummy-id.features.version': 1,
+              'channels.dummy-id.features.version': 2,
               'channels.dummy-id.id': `dummy-id`,
-              'channels.dummy-id.version': 1,
+              'channels.dummy-id.version': 2,
             });
           });
         });
@@ -494,14 +494,14 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
             channels: {
               'dummy-id': {
                 features: {
-                  version: FirebaseGuildChannelFeatureVersionEnum.V1,
+                  version: FirebaseGuildChannelFeatureVersionEnum.V2,
                 },
                 id: `dummy-id`,
-                version: FirebaseGuildChannelVersionEnum.V1,
+                version: FirebaseGuildChannelVersionEnum.V2,
               },
               'other-id': {
                 id: `other-id`,
-                version: FirebaseGuildChannelVersionEnum.V1,
+                version: FirebaseGuildChannelVersionEnum.V2,
               },
             },
           });
@@ -520,9 +520,9 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
             expect(result).toStrictEqual({
               'channels.dummy-id.features.noon.isEnabled': false,
               'channels.dummy-id.features.noon.version': 1,
-              'channels.dummy-id.features.version': 1,
+              'channels.dummy-id.features.version': 2,
               'channels.dummy-id.id': `dummy-id`,
-              'channels.dummy-id.version': 1,
+              'channels.dummy-id.version': 2,
             });
           });
         });
@@ -540,9 +540,9 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
             expect(result).toStrictEqual({
               'channels.dummy-id.features.noon.isEnabled': true,
               'channels.dummy-id.features.noon.version': 1,
-              'channels.dummy-id.features.version': 1,
+              'channels.dummy-id.features.version': 2,
               'channels.dummy-id.id': `dummy-id`,
-              'channels.dummy-id.version': 1,
+              'channels.dummy-id.version': 2,
             });
           });
         });
@@ -557,14 +557,14 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
                   noon: {
                     version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
                   },
-                  version: FirebaseGuildChannelFeatureVersionEnum.V1,
+                  version: FirebaseGuildChannelFeatureVersionEnum.V2,
                 },
                 id: `dummy-id`,
-                version: FirebaseGuildChannelVersionEnum.V1,
+                version: FirebaseGuildChannelVersionEnum.V2,
               },
               'other-id': {
                 id: `other-id`,
-                version: FirebaseGuildChannelVersionEnum.V1,
+                version: FirebaseGuildChannelVersionEnum.V2,
               },
             },
           });

@@ -4,4 +4,9 @@ export enum ClassNameEnum {
   DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HELP = `DiscordMessageCommandFeatureNoonHelp`,
   DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE = `DiscordMessageCommandFeatureNoonHumanize`,
   DISCORD_MESSAGE_COMMAND_FEATURE_NOON_STATUS = `DiscordMessageCommandFeatureNoonStatus`,
+  DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_DISABLED = `DiscordMessageCommandFeatureReleaseNotesDisabled`,
+  DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_ENABLED = `DiscordMessageCommandFeatureReleaseNotesEnabled`,
+  DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_HELP = `DiscordMessageCommandFeatureReleaseNotesHelp`,
+  DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_HUMANIZE = `DiscordMessageCommandFeatureReleaseNotesHumanize`,
+  DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_STATUS = `DiscordMessageCommandFeatureReleaseNotesStatus`,
 }

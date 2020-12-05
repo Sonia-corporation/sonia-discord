@@ -9,7 +9,7 @@ import { ConfigService } from '../../../../../../../../../config/services/config
 import { ChalkService } from '../../../../../../../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../../../../../../../logger/services/logger.service';
 import { DiscordMessageConfigValueNameEnum } from '../../../../../../../enums/discord-message-config-value-name.enum';
-import { IDiscordMessageCommandFeatureConfig } from '../../interfaces/discord-message-command-feature-config';
+import { IDiscordMessageCommandFeatureConfig } from '../../../../interfaces/discord-message-command-feature-config';
 import { IDiscordMessageCommandFeatureNoonConfig } from '../../interfaces/discord-message-command-feature-noon-config';
 import _ from 'lodash';
 

@@ -10,7 +10,7 @@ import { IConfigUpdateString } from '../../../../../../../../../config/interface
 import { ConfigService } from '../../../../../../../../../config/services/config.service';
 import { CoreEventService } from '../../../../../../../../../core/services/core-event.service';
 import { LoggerService } from '../../../../../../../../../logger/services/logger.service';
-import { IDiscordMessageCommandFeatureConfig } from '../../interfaces/discord-message-command-feature-config';
+import { IDiscordMessageCommandFeatureConfig } from '../../../../interfaces/discord-message-command-feature-config';
 import { IDiscordMessageCommandFeatureNoonConfig } from '../../interfaces/discord-message-command-feature-noon-config';
 
 jest.mock(`../../../../../../../../../time/services/time.service`);

@@ -3,7 +3,6 @@ import { AbstractService } from '../../../../../../../../../../classes/services/
 import { ColorEnum } from '../../../../../../../../../../enums/color.enum';
 import { IconEnum } from '../../../../../../../../../../enums/icon.enum';
 import { ServiceNameEnum } from '../../../../../../../../../../enums/service-name.enum';
-import { IDiscordMessageCommandFeatureConfig } from '../../interfaces/discord-message-command-feature-config';
 import { IDiscordMessageCommandFeatureNoonConfig } from '../../interfaces/discord-message-command-feature-noon-config';
 import _ from 'lodash';
 
@@ -20,12 +19,6 @@ export class DiscordMessageCommandFeatureNoonConfigService extends AbstractServi
 
   public constructor() {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_SERVICE);
-  }
-
-  public getConfig(): IDiscordMessageCommandFeatureConfig {
-    return {
-      noon: this.getNoonConfig(),
-    };
   }
 
   public getNoonConfig(): IDiscordMessageCommandFeatureNoonConfig {
