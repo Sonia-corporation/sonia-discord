@@ -191,7 +191,7 @@
     "eslint-plugin-rxjs": "2.1.5",
     "eslint-plugin-typescript-sort-keys": "1.5.0",
     "fs-extra": "9.0.1",
-    "husky": "4.3.4",
+    "husky": "4.3.5",
     "jest": "26.6.3",
     "jest-extended": "0.11.5",
     "jest-silent-reporter": "0.4.0",
