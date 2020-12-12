@@ -160,7 +160,7 @@
     "@stryker-mutator/typescript-checker": "4.2.0",
     "@types/app-root-path": "1.2.4",
     "@types/express": "4.17.9",
-    "@types/fs-extra": "9.0.4",
+    "@types/fs-extra": "9.0.5",
     "@types/jest": "26.0.15",
     "@types/lodash": "4.14.165",
     "@types/node": "14.14.12",
