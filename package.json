@@ -172,7 +172,7 @@
     "all-contributors-cli": "6.19.0",
     "app-root-path": "3.0.0",
     "chalk": "4.1.0",
-    "commitizen": "4.2.2",
+    "commitizen": "4.2.3",
     "concurrently": "5.3.0",
     "cross-env": "7.0.3",
     "crypto-random-string": "3.3.0",
