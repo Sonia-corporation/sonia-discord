@@ -190,7 +190,7 @@
     "eslint-plugin-progress": "0.0.1",
     "eslint-plugin-rxjs": "2.1.5",
     "eslint-plugin-typescript-sort-keys": "1.5.0",
-    "fs-extra": "9.0.1",
+    "fs-extra": "9.1.0",
     "husky": "4.3.8",
     "jest": "26.6.3",
     "jest-extended": "0.11.5",
