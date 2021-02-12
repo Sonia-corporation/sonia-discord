@@ -175,7 +175,7 @@
     "commitizen": "4.2.3",
     "concurrently": "5.3.0",
     "cross-env": "7.0.3",
-    "crypto-random-string": "3.3.0",
+    "crypto-random-string": "3.3.1",
     "cz-customizable": "6.3.0",
     "cz-customizable-ghooks": "2.0.0",
     "eslint": "7.19.0",
