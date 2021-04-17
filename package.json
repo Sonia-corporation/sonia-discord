@@ -206,7 +206,7 @@
     "semantic-release": "17.4.2",
     "stryker-cli": "1.0.0",
     "ts-auto-mock": "3.1.2",
-    "ts-jest": "26.5.4",
+    "ts-jest": "26.5.5",
     "ts-node-dev": "1.1.6",
     "tsconfig-paths": "3.9.0",
     "ttypescript": "1.5.12",
