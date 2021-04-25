@@ -2,10 +2,10 @@ import { ServiceNameEnum } from './service-name.enum';
 import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`ServiceNameEnum`, (): void => {
-  it(`should have a 108 members`, (): void => {
+  it(`should have a 111 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ServiceNameEnum)).toStrictEqual(108);
+    expect(getEnumLength(ServiceNameEnum)).toStrictEqual(111);
   });
 
   it(`should have a member "APP_CONFIG_CORE_SERVICE"`, (): void => {
@@ -586,6 +586,30 @@ describe(`ServiceNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_SERVICE).toStrictEqual(`FirebaseGuildsChannelsService`);
+  });
+
+  it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_COUNT_HUMANIZED_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_HUMANIZED_SERVICE).toStrictEqual(
+      `FirebaseGuildsNewVersionCountHumanizedService`
+    );
+  });
+
+  it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_COUNT_MESSAGE_RESPONSE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_MESSAGE_RESPONSE_SERVICE).toStrictEqual(
+      `FirebaseGuildsNewVersionCountMessageResponseService`
+    );
+  });
+
+  it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_COUNT_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_SERVICE).toStrictEqual(
+      `FirebaseGuildsNewVersionCountService`
+    );
   });
 
   it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_SERVICE"`, (): void => {
