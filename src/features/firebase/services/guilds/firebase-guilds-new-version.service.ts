@@ -51,7 +51,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     super(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_SERVICE);
   }
 
-  public init(): Promise<((Message | void)[] | void)[] | void> {
+  public init(): Promise<((Message | null)[] | void)[] | void> {
     return this.sendNewReleaseNotesToEachGuild$().toPromise();
   }
 
@@ -65,17 +65,17 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     return forkJoin([FirebaseGuildsBreakingChangeService.getInstance().hasFinished()]);
   }
 
-  public sendNewReleaseNotesToEachGuild$(): Observable<((Message | void)[] | void)[] | void> {
+  public sendNewReleaseNotesToEachGuild$(): Observable<((Message | null)[] | void)[] | void> {
     return this._sendNewReleaseNotesToEachGuild$().pipe(
       tap({
-        next(guildMessages: ((Message | void)[] | void)[] | void): void {
+        next(guildMessages: ((Message | null)[] | void)[] | void): void {
           FirebaseGuildsNewVersionCountService.getInstance().countChannelsAndGuilds(guildMessages);
         },
       })
     );
   }
 
-  public sendNewReleaseNotesFromFirebaseGuild({ id }: Readonly<IFirebaseGuild>): Promise<(Message | void)[]> {
+  public sendNewReleaseNotesFromFirebaseGuild({ id }: Readonly<IFirebaseGuild>): Promise<(Message | null)[]> {
     if (_.isNil(id)) {
       LoggerService.getInstance().error({
         context: this._serviceName,
@@ -184,16 +184,16 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       );
   }
 
-  public sendNewReleaseNotesFromDiscordGuild(guild: Readonly<Guild>): Promise<(Message | void)[]> {
+  public sendNewReleaseNotesFromDiscordGuild(guild: Readonly<Guild>): Promise<(Message | null)[]> {
     this._logFetchingFirebaseGuild(guild);
 
     return FirebaseGuildsService.getInstance()
       .getGuild(guild.id)
       .then(
-        (firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<(Message | void)[]> => {
+        (firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<(Message | null)[]> => {
           this._logFirebaseGuildFetched(guild);
 
-          if (!this._isValidGuild(firebaseGuild)) {
+          if (!this.isValidGuild(firebaseGuild)) {
             this._logInvalidFirebaseGuild(guild);
 
             return Promise.reject(new Error(`Invalid guild`));
@@ -204,15 +204,31 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           return Promise.all(
             _.map(
               firebaseGuild.channels,
-              (channel: Readonly<IFirebaseGuildChannel>): Promise<Message | void> =>
-                this.sendMessageByChannel(channel, firebaseGuild, guild).catch((): Promise<void> => Promise.resolve())
+              (channel: Readonly<IFirebaseGuildChannel>): Promise<Message | null> =>
+                this.sendMessageByChannel(channel, firebaseGuild, guild)
+                  .then(
+                    (message: Message | void): Promise<Message | null> => {
+                      if (message) {
+                        return Promise.resolve(message);
+                      }
+
+                      return Promise.resolve(null);
+                    }
+                  )
+                  .catch((): Promise<null> => Promise.resolve(null))
             )
           );
         }
       );
   }
 
-  private _sendNewReleaseNotesToEachGuild$(): Observable<((Message | void)[] | void)[] | void> {
+  public isValidGuild(
+    firebaseGuild: Readonly<IFirebaseGuild | null | undefined>
+  ): firebaseGuild is IFirebaseGuildVFinal {
+    return !_.isNil(firebaseGuild) && isUpToDateFirebaseGuild(firebaseGuild);
+  }
+
+  private _sendNewReleaseNotesToEachGuild$(): Observable<((Message | null)[] | void)[] | void> {
     return this.isReady$().pipe(
       take(ONE_EMITTER),
       mergeMap(
@@ -236,14 +252,14 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
         }
       ),
       mergeMap(
-        (firebaseGuilds: IFirebaseGuild[] | void): Promise<((Message | void)[] | void)[] | void> => {
+        (firebaseGuilds: IFirebaseGuild[] | void): Promise<((Message | null)[] | void)[] | void> => {
           if (_.isArray(firebaseGuilds)) {
             LoggerService.getInstance().debug({
               context: this._serviceName,
               message: ChalkService.getInstance().text(`sending release notes messages to each guild...`),
             });
 
-            const messagePromises: Promise<(Message | void)[] | void>[] = [];
+            const messagePromises: Promise<(Message | null)[] | void>[] = [];
 
             _.forEach(firebaseGuilds, (firebaseGuild: Readonly<IFirebaseGuild>): void => {
               messagePromises.push(
@@ -360,12 +376,6 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       context: this._serviceName,
       message: ChalkService.getInstance().text(`Firebase guild ${ChalkService.getInstance().value(id)} fetched`),
     });
-  }
-
-  private _isValidGuild(
-    firebaseGuild: Readonly<IFirebaseGuild | null | undefined>
-  ): firebaseGuild is IFirebaseGuildVFinal {
-    return !_.isNil(firebaseGuild) && isUpToDateFirebaseGuild(firebaseGuild);
   }
 
   private _logInvalidFirebaseGuild({ id }: Readonly<Guild>): void {

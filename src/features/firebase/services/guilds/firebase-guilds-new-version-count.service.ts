@@ -40,7 +40,7 @@ export class FirebaseGuildsNewVersionCountService extends AbstractService {
    *
    * @param {Readonly<((Message | void)[] | void)[] | void>} guildMessages The list received as a response when sending release note messages to all Discord guilds
    */
-  public countChannelsAndGuilds(guildMessages: Readonly<((Message | void)[] | void)[] | void>): void {
+  public countChannelsAndGuilds(guildMessages: Readonly<((Message | null)[] | void)[] | void>): void {
     let totalGuildCount = DEFAULT_GUILD_COUNT;
     let guildCount = DEFAULT_GUILD_COUNT;
     let channelCount = DEFAULT_CHANNEL_COUNT;
