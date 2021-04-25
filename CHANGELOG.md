@@ -1,5 +1,19 @@
 # Semantic Versioning Changelog
 
+# [1.92.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.91.0...1.92.0) (2021-04-25)
+
+
+### :bug: Bug Fixes
+
+* **feature:** allow to have kebab-case feature names ([c1ba9aa](https://github.com/Sonia-corporation/sonia-discord/commit/c1ba9aa33aed515079b8c3b181d5c32b0f138e2e))
+
+
+### :rocket: Features
+
+* **help-command:** add better description for the feature command ([4a7aea8](https://github.com/Sonia-corporation/sonia-discord/commit/4a7aea8d9f4a4d118f6577360f578e9745358b2c))
+* **features:** add release notes feature ([6976d06](https://github.com/Sonia-corporation/sonia-discord/commit/6976d065922f3ddd901bf266a05c6a614539786d))
+* **sonia-guild:** send message in logs channel for release notes count ([a05f676](https://github.com/Sonia-corporation/sonia-discord/commit/a05f676671ae91d1bd2d271689afed660f251a4e))
+
 # [1.91.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.90.0...1.91.0) (2020-11-29)
 
 
