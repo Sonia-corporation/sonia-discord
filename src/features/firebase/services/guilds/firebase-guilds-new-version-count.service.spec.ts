@@ -66,7 +66,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
   });
 
   describe(`countChannelsAndGuilds()`, (): void => {
-    let guildMessages: ((Message | void)[] | void)[] | void;
+    let guildMessages: ((Message | null)[] | void)[] | void;
     let discordMessageResponse: IDiscordMessageResponse;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
@@ -196,7 +196,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
     describe(`when the given guild messages is an array with one array of one undefined value`, (): void => {
       beforeEach((): void => {
-        guildMessages = [[undefined]];
+        guildMessages = [[null]];
       });
 
       it(`should log that no release note message was sent for the one guild`, (): void => {
@@ -214,7 +214,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
     describe(`when the given guild messages is an array with two arrays of one undefined value`, (): void => {
       beforeEach((): void => {
-        guildMessages = [[undefined], [undefined]];
+        guildMessages = [[null], [null]];
       });
 
       it(`should log that no release note message was sent for the two guilds`, (): void => {
@@ -270,10 +270,10 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
       beforeEach((): void => {
         guildMessages = [
           [],
-          [undefined],
+          [null],
           [createMock<Message>()],
-          [undefined, undefined],
-          [createMock<Message>(), undefined],
+          [null, null],
+          [createMock<Message>(), null],
           [createMock<Message>(), createMock<Message>()],
         ];
       });
@@ -295,10 +295,10 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
       expect.assertions(2);
       guildMessages = [
         [],
-        [undefined],
+        [null],
         [createMock<Message>()],
-        [undefined, undefined],
-        [createMock<Message>(), undefined],
+        [null, null],
+        [createMock<Message>(), null],
         [createMock<Message>(), createMock<Message>()],
       ];
 
@@ -312,10 +312,10 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
       expect.assertions(2);
       guildMessages = [
         [],
-        [undefined],
+        [null],
         [createMock<Message>()],
-        [undefined, undefined],
-        [createMock<Message>(), undefined],
+        [null, null],
+        [createMock<Message>(), null],
         [createMock<Message>(), createMock<Message>()],
       ];
 
