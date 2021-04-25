@@ -2011,4 +2011,231 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       });
     });
   });
+
+  describe(`sendMessageResponse()`, (): void => {
+    let guildChannel: GuildChannel;
+    let discordMessageResponse: IDiscordMessageResponse;
+
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let loggerServiceErrorSpy: jest.SpyInstance;
+    let discordGuildSoniaServiceSendMessageToChannelSpy: jest.SpyInstance;
+    let discordLoggerErrorServiceGetErrorMessageResponseSpy: jest.SpyInstance;
+    let getMessageResponseSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsNewVersionService();
+      guildChannel = createMock<GuildChannel>({
+        id: `dummy-guild-channel-id`,
+      });
+      discordMessageResponse = createMock<IDiscordMessageResponse>();
+
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
+      discordGuildSoniaServiceSendMessageToChannelSpy = jest
+        .spyOn(discordGuildSoniaService, `sendMessageToChannel`)
+        .mockImplementation();
+      discordLoggerErrorServiceGetErrorMessageResponseSpy = jest
+        .spyOn(discordLoggerErrorService, `getErrorMessageResponse`)
+        .mockReturnValue(discordMessageResponse);
+      getMessageResponseSpy = jest.spyOn(service, `getMessageResponse`).mockResolvedValue(null);
+    });
+
+    describe(`when the given guild channel is not writable`, (): void => {
+      beforeEach((): void => {
+        guildChannel = createMock<GuildChannel>({
+          id: `dummy-guild-channel-id`,
+          isText(): false {
+            return false;
+          },
+        });
+      });
+
+      it(`should log about the guild channel being not writable`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(
+          new Error(`Guild channel not writable`)
+        );
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+          context: `FirebaseGuildsNewVersionService`,
+          message: `text-the guild channel value-dummy-guild-channel-id is not writable`,
+        } as ILoggerLog);
+      });
+    });
+
+    describe(`when the given guild channel is writable`, (): void => {
+      let sendMock: jest.Mock;
+
+      beforeEach((): void => {
+        sendMock = jest.fn().mockRejectedValue(new Error(`send error`));
+        guildChannel = createMock<TextChannel>({
+          id: `dummy-guild-channel-id`,
+          isText(): true {
+            return true;
+          },
+          send: sendMock,
+        });
+      });
+
+      it(`should get a message response`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(
+          new Error(`No message response fetched`)
+        );
+
+        expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(getMessageResponseSpy).toHaveBeenCalledWith();
+      });
+
+      describe(`when the message response failed to be fetched`, (): void => {
+        beforeEach((): void => {
+          getMessageResponseSpy.mockResolvedValue(null);
+        });
+
+        it(`should throw an error`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(
+            new Error(`No message response fetched`)
+          );
+        });
+      });
+
+      describe(`when the message response was successfully fetched`, (): void => {
+        beforeEach((): void => {
+          getMessageResponseSpy.mockResolvedValue(
+            createMock<IDiscordMessageResponse>({
+              options: {
+                split: false,
+              },
+              response: `dummy-response`,
+            })
+          );
+        });
+
+        it(`should log about sending a release notes message`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
+
+          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+            context: `FirebaseGuildsNewVersionService`,
+            message: `text-sending message for release notes for guild channel value-dummy-guild-channel-id...`,
+          } as ILoggerLog);
+        });
+
+        it(`should send the release notes message`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
+
+          expect(sendMock).toHaveBeenCalledTimes(1);
+          expect(sendMock).toHaveBeenCalledWith(`dummy-response`, {
+            split: false,
+          });
+        });
+
+        describe(`when the sending of the message failed`, (): void => {
+          beforeEach((): void => {
+            sendMock.mockRejectedValue(new Error(`send error`));
+          });
+
+          it(`should log about failing to send the message`, async (): Promise<void> => {
+            expect.assertions(3);
+
+            await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
+
+            expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
+            expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(1, {
+              context: `FirebaseGuildsNewVersionService`,
+              message: `text-release notes message sending failed for guild channel value-dummy-guild-channel-id`,
+            } as ILoggerLog);
+          });
+
+          it(`should log the error`, async (): Promise<void> => {
+            expect.assertions(3);
+
+            await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
+
+            expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
+            expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(2, {
+              context: `FirebaseGuildsNewVersionService`,
+              message: `error-Error: send error`,
+            } as ILoggerLog);
+          });
+
+          it(`should get an humanized error message response`, async (): Promise<void> => {
+            expect.assertions(3);
+
+            await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
+
+            expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).toHaveBeenCalledTimes(1);
+            expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).toHaveBeenCalledWith(new Error(`send error`));
+          });
+
+          it(`should send the error to the Sonia discord errors channel`, async (): Promise<void> => {
+            expect.assertions(3);
+
+            await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
+
+            expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+            expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
+              channelName: `errors`,
+              messageResponse: discordMessageResponse,
+            } as IDiscordGuildSoniaSendMessageToChannel);
+          });
+        });
+
+        describe(`when the sending of the message was successful`, (): void => {
+          let message: Message;
+
+          beforeEach((): void => {
+            message = createMock<Message>();
+
+            sendMock.mockResolvedValue(message);
+          });
+
+          it(`should log about the success of the release notes message sending`, async (): Promise<void> => {
+            expect.assertions(2);
+
+            await service.sendMessageResponse(guildChannel);
+
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+            expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+              context: `FirebaseGuildsNewVersionService`,
+              message: `text-release notes message sent for guild channel value-dummy-guild-channel-id`,
+            } as ILoggerLog);
+          });
+
+          it(`should return the message`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            const result = await service.sendMessageResponse(guildChannel);
+
+            expect(result).toStrictEqual(message);
+          });
+
+          it(`should not get an humanized error message response`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            await service.sendMessageResponse(guildChannel);
+
+            expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).not.toHaveBeenCalled();
+          });
+
+          it(`should not send the error to the Sonia discord errors channel`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            await service.sendMessageResponse(guildChannel);
+
+            expect(discordGuildSoniaServiceSendMessageToChannelSpy).not.toHaveBeenCalled();
+          });
+        });
+      });
+    });
+  });
 });

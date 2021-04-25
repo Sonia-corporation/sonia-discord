@@ -130,16 +130,16 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   }
 
   public async sendMessageResponse(guildChannel: Readonly<GuildChannel>): Promise<Message | void> {
-    const messageResponse: IDiscordMessageResponse | null = await this._getMessageResponse();
-
-    if (_.isNil(messageResponse)) {
-      return Promise.reject(new Error(`No message response fetched`));
-    }
-
     if (!isDiscordGuildChannelWritable(guildChannel)) {
       this._logGuildChannelNotWritable(guildChannel);
 
       return Promise.reject(new Error(`Guild channel not writable`));
+    }
+
+    const messageResponse: IDiscordMessageResponse | null = await this.getMessageResponse();
+
+    if (_.isNil(messageResponse)) {
+      return Promise.reject(new Error(`No message response fetched`));
     }
 
     this._logSendingMessagesForReleaseNotes(guildChannel);
@@ -158,6 +158,28 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           this._onMessageError(error, guildChannel);
 
           return Promise.reject(error);
+        }
+      );
+  }
+
+  public getMessageResponse(): Promise<IDiscordMessageResponse | null> {
+    return DiscordMessageCommandReleaseNotesService.getInstance()
+      .getMessageResponse()
+      .then(
+        (messageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+          const enhanceMessageResponse: IDiscordMessageResponse = _.cloneDeep(messageResponse);
+          enhanceMessageResponse.response = FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
+            userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
+          });
+
+          return Promise.resolve(enhanceMessageResponse);
+        }
+      )
+      .catch(
+        (): Promise<null> => {
+          this._logFetchReleaseNotesCommandMessageResponseError();
+
+          return Promise.resolve(null);
         }
       );
   }
@@ -460,28 +482,6 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
       messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(error),
     });
-  }
-
-  private _getMessageResponse(): Promise<IDiscordMessageResponse | null> {
-    return DiscordMessageCommandReleaseNotesService.getInstance()
-      .getMessageResponse()
-      .then(
-        (messageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
-          const enhanceMessageResponse: IDiscordMessageResponse = _.cloneDeep(messageResponse);
-          enhanceMessageResponse.response = FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
-            userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
-          });
-
-          return Promise.resolve(enhanceMessageResponse);
-        }
-      )
-      .catch(
-        (): Promise<null> => {
-          this._logFetchReleaseNotesCommandMessageResponseError();
-
-          return Promise.resolve(null);
-        }
-      );
   }
 
   private _logFetchReleaseNotesCommandMessageResponseError(): void {
