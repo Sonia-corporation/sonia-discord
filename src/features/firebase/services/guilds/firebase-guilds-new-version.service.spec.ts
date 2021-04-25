@@ -1,3 +1,4 @@
+import { FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService } from './channels/features/release-notes/firebase-guilds-channels-features-release-notes-enabled-state.service';
 import { FirebaseGuildsBreakingChangeService } from './firebase-guilds-breaking-change.service';
 import { FirebaseGuildsNewVersionService } from './firebase-guilds-new-version.service';
 import { FirebaseGuildsService } from './firebase-guilds.service';
@@ -16,15 +17,19 @@ import { DiscordGithubContributorsIdEnum } from '../../../discord/users/enums/di
 import { ILoggerLog } from '../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES } from '../../constants/guilds/firebase-guild-new-version-response-messages';
+import { FirebaseGuildChannelFeatureReleaseNotesVersionEnum } from '../../enums/guilds/channels/features/firebase-guild-channel-feature-release-notes-version.enum';
+import { FirebaseGuildChannelFeatureVersionEnum } from '../../enums/guilds/channels/features/firebase-guild-channel-feature-version.enum';
+import { FirebaseGuildChannelVersionEnum } from '../../enums/guilds/channels/firebase-guild-channel-version.enum';
 import { FirebaseGuildNewVersionResponseEnum } from '../../enums/guilds/firebase-guild-new-version-response.enum';
 import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
 import { IFirebaseGuildV1 } from '../../interfaces/guilds/firebase-guild-v1';
+import { IFirebaseGuildChannel } from '../../types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
 import { IUpdatedFirebaseGuildLastReleaseNotesVersion } from '../../types/guilds/updated-firebase-guild-last-release-notes-version';
 import { Guild, GuildChannel, Message, TextChannel } from 'discord.js';
 import * as admin from 'firebase-admin';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { createMock } from 'ts-auto-mock';
 import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
@@ -47,6 +52,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
   let discordMessageCommandReleaseNotesService: DiscordMessageCommandReleaseNotesService;
   let discordGuildSoniaService: DiscordGuildSoniaService;
   let discordLoggerErrorService: DiscordLoggerErrorService;
+  let firebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService: FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -59,6 +65,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     discordMessageCommandReleaseNotesService = DiscordMessageCommandReleaseNotesService.getInstance();
     discordGuildSoniaService = DiscordGuildSoniaService.getInstance();
     discordLoggerErrorService = DiscordLoggerErrorService.getInstance();
+    firebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService = FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -101,23 +108,20 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
   });
 
   describe(`init()`, (): void => {
-    let sendNewReleaseNotesToEachGuild$: Subject<true>;
-
     let sendNewReleaseNotesToEachGuild$Spy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsNewVersionService();
-      sendNewReleaseNotesToEachGuild$ = new Subject<true>();
 
       sendNewReleaseNotesToEachGuild$Spy = jest
         .spyOn(service, `sendNewReleaseNotesToEachGuild$`)
-        .mockReturnValue(sendNewReleaseNotesToEachGuild$);
+        .mockReturnValue(of(createMock<Message[][]>()));
     });
 
-    it(`should send a new release note to each known guild`, (): void => {
+    it(`should send a new release note to each known guild`, async (): Promise<void> => {
       expect.assertions(2);
 
-      service.init();
+      await service.init();
 
       expect(sendNewReleaseNotesToEachGuild$Spy).toHaveBeenCalledTimes(1);
       expect(sendNewReleaseNotesToEachGuild$Spy).toHaveBeenCalledWith();
@@ -217,7 +221,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       appConfigServiceGetVersionSpy = jest.spyOn(appConfigService, `getVersion`).mockImplementation();
       sendNewReleaseNotesFromFirebaseGuildSpy = jest
         .spyOn(service, `sendNewReleaseNotesFromFirebaseGuild`)
-        .mockResolvedValue(createMock<Message>());
+        .mockResolvedValue(createMock<Message[]>());
     });
 
     it(`should wait that everything is ready`, async (): Promise<void> => {
@@ -1762,6 +1766,244 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 await service.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild);
 
                 expect(discordGuildSoniaServiceSendMessageToChannelSpy).not.toHaveBeenCalled();
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+
+  describe(`sendMessageByChannel()`, (): void => {
+    let channel: IFirebaseGuildChannel;
+    let firebaseGuild: IFirebaseGuildVFinal;
+    let guild: Guild;
+
+    let loggerServiceDebugSpy: jest.SpyInstance;
+    let sendMessageResponseSpy: jest.SpyInstance;
+    let firebaseGuildsChannelsFeaturesReleaseNotesEnabledStateServiceIsEnabledSpy: jest.SpyInstance;
+    let guildChannelsGetMock: jest.Mock;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsNewVersionService();
+      channel = createMock<IFirebaseGuildChannel>();
+      firebaseGuild = createMock<IFirebaseGuildVFinal>();
+      guildChannelsGetMock = jest.fn().mockImplementation();
+      guild = createMock<Guild>({
+        channels: {
+          cache: {
+            get: guildChannelsGetMock,
+          } as any,
+        },
+        id: `dummy-guild-id`,
+      });
+
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
+      sendMessageResponseSpy = jest
+        .spyOn(service, `sendMessageResponse`)
+        .mockRejectedValue(new Error(`sendMessageResponse error`));
+      firebaseGuildsChannelsFeaturesReleaseNotesEnabledStateServiceIsEnabledSpy = jest
+        .spyOn(firebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService, `isEnabled`)
+        .mockImplementation();
+    });
+
+    describe(`when the given Firebase guild channel id is undefined`, (): void => {
+      beforeEach((): void => {
+        channel = createMock<IFirebaseGuildChannel>({
+          id: undefined,
+        });
+      });
+
+      it(`should log about the Firebase guild channel having a disabled release notes feature`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+          new Error(`Release notes state disabled`)
+        );
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+          context: `FirebaseGuildsNewVersionService`,
+          message: `text-Firebase guild value-dummy-guild-id channel value-unknown release notes feature is disabled`,
+        } as ILoggerLog);
+      });
+    });
+
+    describe(`when the given Firebase guild channel id is valid`, (): void => {
+      beforeEach((): void => {
+        channel = createMock<IFirebaseGuildChannel>({
+          id: `dummy-channel-id`,
+        });
+      });
+
+      describe(`when the given Firebase guild has a valid release notes feature`, (): void => {
+        describe(`when the given Firebase guild has a valid release note feature disabled`, (): void => {
+          beforeEach((): void => {
+            firebaseGuild = createMock<IFirebaseGuildVFinal>({
+              channels: {
+                'dummy-channel-id': {
+                  features: {
+                    releaseNotes: {
+                      isEnabled: false,
+                      version: FirebaseGuildChannelFeatureReleaseNotesVersionEnum.V1,
+                    },
+                    version: FirebaseGuildChannelFeatureVersionEnum.V2,
+                  },
+                  version: FirebaseGuildChannelVersionEnum.V2,
+                },
+              },
+              version: FirebaseGuildVersionEnum.V5,
+            });
+
+            firebaseGuildsChannelsFeaturesReleaseNotesEnabledStateServiceIsEnabledSpy.mockReturnValue(false);
+          });
+
+          it(`should log about the Firebase guild channel having a disabled release note feature`, async (): Promise<void> => {
+            expect.assertions(3);
+
+            await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+              new Error(`Release notes state disabled`)
+            );
+
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+              context: `FirebaseGuildsNewVersionService`,
+              message: `text-Firebase guild value-dummy-guild-id channel value-dummy-channel-id release notes feature is disabled`,
+            } as ILoggerLog);
+          });
+        });
+
+        describe(`when the given Firebase guild has a valid release notes feature enabled`, (): void => {
+          beforeEach((): void => {
+            firebaseGuild = createMock<IFirebaseGuildVFinal>({
+              channels: {
+                'dummy-channel-id': {
+                  features: {
+                    releaseNotes: {
+                      isEnabled: true,
+                      version: FirebaseGuildChannelFeatureReleaseNotesVersionEnum.V1,
+                    },
+                    version: FirebaseGuildChannelFeatureVersionEnum.V2,
+                  },
+                  version: FirebaseGuildChannelVersionEnum.V2,
+                },
+              },
+              version: FirebaseGuildVersionEnum.V5,
+            });
+
+            firebaseGuildsChannelsFeaturesReleaseNotesEnabledStateServiceIsEnabledSpy.mockReturnValue(true);
+          });
+
+          it(`should log about the Firebase guild channel having an enabled release notes feature`, async (): Promise<void> => {
+            expect.assertions(3);
+
+            await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+              new Error(`Guild channel not found`)
+            );
+
+            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+            expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+              context: `FirebaseGuildsNewVersionService`,
+              message: `text-Firebase guild value-dummy-guild-id channel value-dummy-channel-id release notes feature is enabled`,
+            } as ILoggerLog);
+          });
+
+          it(`should get the Discord guild channel`, async (): Promise<void> => {
+            expect.assertions(3);
+
+            await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+              new Error(`Guild channel not found`)
+            );
+
+            expect(guildChannelsGetMock).toHaveBeenCalledTimes(1);
+            expect(guildChannelsGetMock).toHaveBeenCalledWith(`dummy-channel-id`);
+          });
+
+          describe(`when the Discord guild channel is undefined`, (): void => {
+            beforeEach((): void => {
+              guildChannelsGetMock.mockReturnValue(undefined);
+            });
+
+            it(`should log about the Discord guild channel not found`, async (): Promise<void> => {
+              expect.assertions(3);
+
+              await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+                new Error(`Guild channel not found`)
+              );
+
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+                context: `FirebaseGuildsNewVersionService`,
+                message: `text-Discord guild value-dummy-guild-id channel value-dummy-channel-id is invalid`,
+              } as ILoggerLog);
+            });
+          });
+
+          describe(`when the Discord guild channel is valid`, (): void => {
+            let guildChannel: GuildChannel;
+
+            beforeEach((): void => {
+              guildChannel = createMock<GuildChannel>({
+                id: `dummy-guild-channel-id`,
+              });
+
+              guildChannelsGetMock.mockReturnValue(guildChannel);
+            });
+
+            it(`should log about the Discord guild channel being valid`, async (): Promise<void> => {
+              expect.assertions(3);
+
+              await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+                new Error(`sendMessageResponse error`)
+              );
+
+              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+              expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+                context: `FirebaseGuildsNewVersionService`,
+                message: `text-Discord guild value-dummy-guild-id channel value-dummy-channel-id is valid`,
+              } as ILoggerLog);
+            });
+
+            it(`should send a message response`, async (): Promise<void> => {
+              expect.assertions(3);
+
+              await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+                new Error(`sendMessageResponse error`)
+              );
+
+              expect(sendMessageResponseSpy).toHaveBeenCalledTimes(1);
+              expect(sendMessageResponseSpy).toHaveBeenCalledWith(guildChannel);
+            });
+
+            describe(`when the message response is invalid`, (): void => {
+              beforeEach((): void => {
+                sendMessageResponseSpy.mockRejectedValue(new Error(`sendMessageResponse error`));
+              });
+
+              it(`should throw an error`, async (): Promise<void> => {
+                expect.assertions(1);
+
+                await expect(service.sendMessageByChannel(channel, firebaseGuild, guild)).rejects.toThrow(
+                  new Error(`sendMessageResponse error`)
+                );
+              });
+            });
+
+            describe(`when the message response is valid`, (): void => {
+              let message: Message;
+
+              beforeEach((): void => {
+                message = createMock<Message>();
+
+                sendMessageResponseSpy.mockResolvedValue(message);
+              });
+
+              it(`should return a message`, async (): Promise<void> => {
+                expect.assertions(1);
+
+                const result = await service.sendMessageByChannel(channel, firebaseGuild, guild);
+
+                expect(result).toStrictEqual(message);
               });
             });
           });

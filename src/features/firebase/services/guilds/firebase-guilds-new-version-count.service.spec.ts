@@ -7,9 +7,8 @@ import { DiscordGuildSoniaService } from '../../../discord/guilds/services/disco
 import { IDiscordMessageResponse } from '../../../discord/messages/interfaces/discord-message-response';
 import { ILoggerLog } from '../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../logger/services/logger.service';
-import { messaging } from 'firebase-admin/lib/messaging';
+import { Message } from 'discord.js';
 import { createMock } from 'ts-auto-mock';
-import Message = messaging.Message;
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 

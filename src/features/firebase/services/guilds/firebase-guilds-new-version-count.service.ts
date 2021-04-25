@@ -6,9 +6,8 @@ import { DiscordGuildSoniaChannelNameEnum } from '../../../discord/guilds/enums/
 import { DiscordGuildSoniaService } from '../../../discord/guilds/services/discord-guild-sonia.service';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../logger/services/logger.service';
-import { messaging } from 'firebase-admin/lib/messaging';
+import { Message } from 'discord.js';
 import _ from 'lodash';
-import Message = messaging.Message;
 
 const DEFAULT_GUILD_COUNT = 0;
 const ONE_GUILD = 1;
