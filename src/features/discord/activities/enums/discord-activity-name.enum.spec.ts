@@ -2,10 +2,10 @@ import { DiscordActivityNameEnum } from './discord-activity-name.enum';
 import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`DiscordActivityNameEnum`, (): void => {
-  it(`should have a 122 members`, (): void => {
+  it(`should have a 139 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordActivityNameEnum)).toStrictEqual(122);
+    expect(getEnumLength(DiscordActivityNameEnum)).toStrictEqual(139);
   });
 
   it(`should have a member "SPOTIFY"`, (): void => {
@@ -80,6 +80,12 @@ describe(`DiscordActivityNameEnum`, (): void => {
     expect(DiscordActivityNameEnum.MINECRAFT).toStrictEqual(`Minecraft`);
   });
 
+  it(`should have a member "MIRA_HATTER"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.MIRA_HATTER).toStrictEqual(`Mira Hatter`);
+  });
+
   it(`should have a member "WORLD_OF_WARCRAFT"`, (): void => {
     expect.assertions(1);
 
@@ -122,10 +128,22 @@ describe(`DiscordActivityNameEnum`, (): void => {
     expect(DiscordActivityNameEnum.DISNEY_PLUS).toStrictEqual(`Disney+`);
   });
 
+  it(`should have a member "DJ_KHALED"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.DJ_KHALED).toStrictEqual(`DJ Khaled`);
+  });
+
   it(`should have a member "YOU_TUBE_PREMIUM"`, (): void => {
     expect.assertions(1);
 
     expect(DiscordActivityNameEnum.YOU_TUBE_PREMIUM).toStrictEqual(`YouTube Premium`);
+  });
+
+  it(`should have a member "ZOLE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.ZOLE).toStrictEqual(`Zole`);
   });
 
   it(`should have a member "FACEBOOK_WATCH"`, (): void => {
@@ -180,6 +198,12 @@ describe(`DiscordActivityNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordActivityNameEnum.THE_FBI).toStrictEqual(`the FBI`);
+  });
+
+  it(`should have a member "THE_KID_LAROI"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.THE_KID_LAROI).toStrictEqual(`The Kid LAROI`);
   });
 
   it(`should have a member "THE_EXCLAMATION_POINT_HELP_COMMAND"`, (): void => {
@@ -362,10 +386,22 @@ describe(`DiscordActivityNameEnum`, (): void => {
     expect(DiscordActivityNameEnum.DOOBIE).toStrictEqual(`Doobie`);
   });
 
+  it(`should have a member "DRAKE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.DRAKE).toStrictEqual(`Drake`);
+  });
+
   it(`should have a member "D_WHY"`, (): void => {
     expect.assertions(1);
 
     expect(DiscordActivityNameEnum.D_WHY).toStrictEqual(`D-WHY`);
+  });
+
+  it(`should have a member "DA_BABY"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.DA_BABY).toStrictEqual(`DaBaby`);
   });
 
   it(`should have a member "EMINEM"`, (): void => {
@@ -428,6 +464,12 @@ describe(`DiscordActivityNameEnum`, (): void => {
     expect(DiscordActivityNameEnum.JAY_PORTAL).toStrictEqual(`Jay Portal`);
   });
 
+  it(`should have a member "JAY_ZOLE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.JAY_ZOLE).toStrictEqual(`Jay Zole`);
+  });
+
   it(`should have a member "JEROME"`, (): void => {
     expect.assertions(1);
 
@@ -444,6 +486,18 @@ describe(`DiscordActivityNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordActivityNameEnum.JOHN_WOLF).toStrictEqual(`John Wolf`);
+  });
+
+  it(`should have a member "JOSH_A"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.JOSH_A).toStrictEqual(`Josh A`);
+  });
+
+  it(`should have a member "JUICE_WRLD"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.JUICE_WRLD).toStrictEqual(`Juice WRLD`);
   });
 
   it(`should have a member "JUSTIN_STONE"`, (): void => {
@@ -464,10 +518,22 @@ describe(`DiscordActivityNameEnum`, (): void => {
     expect(DiscordActivityNameEnum.J_WRIGHT).toStrictEqual(`J-Wright`);
   });
 
+  it(`should have a member "JACK_HARLOW"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.JACK_HARLOW).toStrictEqual(`Jack Harlow`);
+  });
+
   it(`should have a member "K_A_A_N"`, (): void => {
     expect.assertions(1);
 
     expect(DiscordActivityNameEnum.K_A_A_N).toStrictEqual(`K.A.A.N`);
+  });
+
+  it(`should have a member "KEVIN_GATES"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.KEVIN_GATES).toStrictEqual(`Kevin Gates`);
   });
 
   it(`should have a member "KID_INK"`, (): void => {
@@ -492,6 +558,12 @@ describe(`DiscordActivityNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordActivityNameEnum.LIL_PEEP).toStrictEqual(`Lil Peep`);
+  });
+
+  it(`should have a member "LIL_REVIVE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.LIL_REVIVE).toStrictEqual(`Lil Revive`);
   });
 
   it(`should have a member "LOGIC"`, (): void => {
@@ -530,10 +602,22 @@ describe(`DiscordActivityNameEnum`, (): void => {
     expect(DiscordActivityNameEnum.MATT_EASTON).toStrictEqual(`Matt Easton`);
   });
 
+  it(`should have a member "MIGOS"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.MIGOS).toStrictEqual(`Migos`);
+  });
+
   it(`should have a member "MIKE_JOEY_AND_MIZZY"`, (): void => {
     expect.assertions(1);
 
     expect(DiscordActivityNameEnum.MIKE_JOEY_AND_MIZZY).toStrictEqual(`Mike JOEY & Mizzy`);
+  });
+
+  it(`should have a member "MILES_WESLEY"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.MILES_WESLEY).toStrictEqual(`Miles Wesley`);
   });
 
   it(`should have a member "NATE_GOOD"`, (): void => {
@@ -612,6 +696,12 @@ describe(`DiscordActivityNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordActivityNameEnum.PHORA).toStrictEqual(`Phora`);
+  });
+
+  it(`should have a member "POST_MALONE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.POST_MALONE).toStrictEqual(`Post Malone`);
   });
 
   it(`should have a member "POWFU"`, (): void => {
@@ -704,10 +794,22 @@ describe(`DiscordActivityNameEnum`, (): void => {
     expect(DiscordActivityNameEnum.TOBILLA).toStrictEqual(`Tobilla`);
   });
 
+  it(`should have a member "TRAVIS_SCOTT"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.TRAVIS_SCOTT).toStrictEqual(`Travis Scott`);
+  });
+
   it(`should have a member "TRAY_JACK"`, (): void => {
     expect.assertions(1);
 
     expect(DiscordActivityNameEnum.TRAY_JACK).toStrictEqual(`Tray Jack`);
+  });
+
+  it(`should have a member "TREVOR_DANIEL"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordActivityNameEnum.TREVOR_DANIEL).toStrictEqual(`Trevor Daniel`);
   });
 
   it(`should have a member "TRIPPZ_MICHAUD"`, (): void => {
