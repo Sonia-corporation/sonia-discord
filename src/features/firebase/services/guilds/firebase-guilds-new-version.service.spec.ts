@@ -22,6 +22,7 @@ import { FirebaseGuildChannelFeatureVersionEnum } from '../../enums/guilds/chann
 import { FirebaseGuildChannelVersionEnum } from '../../enums/guilds/channels/firebase-guild-channel-version.enum';
 import { FirebaseGuildNewVersionResponseEnum } from '../../enums/guilds/firebase-guild-new-version-response.enum';
 import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
+import * as IsUpToDateFirebaseGuildModule from '../../functions/guilds/is-up-to-date-firebase-guild';
 import { IFirebaseGuildNewVersionResponseMessage } from '../../interfaces/guilds/firebase-guild-new-version-response-message';
 import { IFirebaseGuildV1 } from '../../interfaces/guilds/firebase-guild-v1';
 import { IFirebaseGuildChannel } from '../../types/guilds/channels/firebase-guild-channel';
@@ -2750,6 +2751,91 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               expect(result).toStrictEqual([message, message]);
             });
           });
+        });
+      });
+    });
+  });
+
+  describe(`isValidGuild()`, (): void => {
+    let firebaseGuild: IFirebaseGuild | null | undefined;
+
+    let isUpToDateFirebaseGuildSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsNewVersionService();
+
+      isUpToDateFirebaseGuildSpy = jest
+        .spyOn(IsUpToDateFirebaseGuildModule, `isUpToDateFirebaseGuild`)
+        .mockReturnValue(false);
+    });
+
+    describe(`when the given Firebase guild is undefined`, (): void => {
+      beforeEach((): void => {
+        firebaseGuild = undefined;
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.isValidGuild(firebaseGuild);
+
+        expect(result).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given Firebase guild is null`, (): void => {
+      beforeEach((): void => {
+        firebaseGuild = null;
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.isValidGuild(firebaseGuild);
+
+        expect(result).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given Firebase guild is valid`, (): void => {
+      beforeEach((): void => {
+        firebaseGuild = createMock<IFirebaseGuild>();
+      });
+
+      it(`should check if the guild is up-to-date`, (): void => {
+        expect.assertions(2);
+
+        service.isValidGuild(firebaseGuild);
+
+        expect(isUpToDateFirebaseGuildSpy).toHaveBeenCalledTimes(1);
+        expect(isUpToDateFirebaseGuildSpy).toHaveBeenCalledWith(firebaseGuild);
+      });
+
+      describe(`when the given Firebase guild is not up-to-date`, (): void => {
+        beforeEach((): void => {
+          isUpToDateFirebaseGuildSpy.mockReturnValue(false);
+        });
+
+        it(`should return false`, (): void => {
+          expect.assertions(1);
+
+          const result = service.isValidGuild(firebaseGuild);
+
+          expect(result).toStrictEqual(false);
+        });
+      });
+
+      describe(`when the given Firebase guild is up-to-date`, (): void => {
+        beforeEach((): void => {
+          isUpToDateFirebaseGuildSpy.mockReturnValue(true);
+        });
+
+        it(`should return true`, (): void => {
+          expect.assertions(1);
+
+          const result = service.isValidGuild(firebaseGuild);
+
+          expect(result).toStrictEqual(true);
         });
       });
     });
