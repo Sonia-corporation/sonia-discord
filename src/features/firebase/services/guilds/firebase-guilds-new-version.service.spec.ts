@@ -22,6 +22,7 @@ import { FirebaseGuildChannelFeatureVersionEnum } from '../../enums/guilds/chann
 import { FirebaseGuildChannelVersionEnum } from '../../enums/guilds/channels/firebase-guild-channel-version.enum';
 import { FirebaseGuildNewVersionResponseEnum } from '../../enums/guilds/firebase-guild-new-version-response.enum';
 import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
+import { IFirebaseGuildNewVersionResponseMessage } from '../../interfaces/guilds/firebase-guild-new-version-response-message';
 import { IFirebaseGuildV1 } from '../../interfaces/guilds/firebase-guild-v1';
 import { IFirebaseGuildChannel } from '../../types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
@@ -2235,6 +2236,90 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             expect(discordGuildSoniaServiceSendMessageToChannelSpy).not.toHaveBeenCalled();
           });
         });
+      });
+    });
+  });
+
+  describe(`getMessageResponse()`, (): void => {
+    let discordMessageCommandReleaseNotesServiceGetMessageResponseSpy: jest.SpyInstance;
+    let firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy: jest.SpyInstance;
+    let discordGithubContributorsIdMessagesGetRandomMessageSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = new FirebaseGuildsNewVersionService();
+
+      discordMessageCommandReleaseNotesServiceGetMessageResponseSpy = jest
+        .spyOn(discordMessageCommandReleaseNotesService, `getMessageResponse`)
+        .mockRejectedValue(new Error(`getMessageResponse error`));
+      firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy = jest
+        .spyOn(FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES, `getHumanizedRandomMessage`)
+        .mockReturnValue(`About time <@!${DiscordGithubContributorsIdEnum.C0ZEN}>!`);
+      discordGithubContributorsIdMessagesGetRandomMessageSpy = jest
+        .spyOn(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES, `getRandomMessage`)
+        .mockReturnValue(DiscordGithubContributorsIdEnum.C0ZEN);
+    });
+
+    it(`should fetch a message response`, async (): Promise<void> => {
+      expect.assertions(2);
+
+      await service.getMessageResponse();
+
+      expect(discordMessageCommandReleaseNotesServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageCommandReleaseNotesServiceGetMessageResponseSpy).toHaveBeenCalledWith();
+    });
+
+    describe(`when the message response failed to be fetched`, (): void => {
+      beforeEach((): void => {
+        discordMessageCommandReleaseNotesServiceGetMessageResponseSpy.mockRejectedValue(
+          new Error(`getMessageResponse error`)
+        );
+      });
+
+      it(`should return null`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        const result = await service.getMessageResponse();
+
+        expect(result).toBeNull();
+      });
+    });
+
+    describe(`when the message response was successfully fetched`, (): void => {
+      beforeEach((): void => {
+        discordMessageCommandReleaseNotesServiceGetMessageResponseSpy.mockResolvedValue(
+          createMock<IDiscordMessageResponse>({
+            options: {
+              split: false,
+            },
+            response: `dummy-response`,
+          })
+        );
+      });
+
+      it(`should change the message response for a random one and include a random contributor id`, async (): Promise<void> => {
+        expect.assertions(4);
+
+        await service.getMessageResponse();
+
+        expect(firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
+          userId: `<@!${DiscordGithubContributorsIdEnum.C0ZEN}>`,
+        } as IFirebaseGuildNewVersionResponseMessage);
+        expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledTimes(1);
+        expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledWith();
+      });
+
+      it(`should return the message response`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        const result = await service.getMessageResponse();
+
+        expect(result).toStrictEqual({
+          options: {
+            split: false,
+          },
+          response: `About time <@!${DiscordGithubContributorsIdEnum.C0ZEN}>!`,
+        } as IDiscordMessageResponse);
       });
     });
   });
