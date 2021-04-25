@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.92.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.92.0...1.92.1) (2021-04-25)
+
+
+### :bug: Bug Fixes
+
+* **release-notes:** the feature command will works as expected for the release notes feature ([62bb0d6](https://github.com/Sonia-corporation/sonia-discord/commit/62bb0d6d9acc2000902f19b533a7b74270e1ead9))
+
 # [1.92.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.91.0...1.92.0) (2021-04-25)
 
 
