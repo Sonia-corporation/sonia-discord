@@ -2,13 +2,13 @@ import { AbstractService } from '../../../../../../../../../../classes/services/
 import { ColorEnum } from '../../../../../../../../../../enums/color.enum';
 import { IconEnum } from '../../../../../../../../../../enums/icon.enum';
 import { ServiceNameEnum } from '../../../../../../../../../../enums/service-name.enum';
-import { IDiscordMessageCommandFeatureConfig } from '../../interfaces/discord-message-command-feature-config';
+import { IDiscordMessageCommandFeatureConfig } from '../../../../interfaces/discord-message-command-feature-config';
 import { IDiscordMessageCommandFeatureNoonConfig } from '../../interfaces/discord-message-command-feature-noon-config';
 import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureNoonConfigCoreService
   extends AbstractService
-  implements IDiscordMessageCommandFeatureConfig {
+  implements Pick<IDiscordMessageCommandFeatureConfig, 'noon'> {
   private static _instance: DiscordMessageCommandFeatureNoonConfigCoreService;
 
   public static getInstance(): DiscordMessageCommandFeatureNoonConfigCoreService {

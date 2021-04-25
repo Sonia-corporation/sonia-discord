@@ -4,7 +4,6 @@ import { ColorEnum } from '../../../../../../../../../../enums/color.enum';
 import { IconEnum } from '../../../../../../../../../../enums/icon.enum';
 import { ServiceNameEnum } from '../../../../../../../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../../../../../../../core/services/core-event.service';
-import { IDiscordMessageCommandFeatureConfig } from '../../interfaces/discord-message-command-feature-config';
 import { IDiscordMessageCommandFeatureNoonConfig } from '../../interfaces/discord-message-command-feature-noon-config';
 
 describe(`DiscordMessageCommandFeatureNoonConfigService`, (): void => {
@@ -53,29 +52,6 @@ describe(`DiscordMessageCommandFeatureNoonConfigService`, (): void => {
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_SERVICE
       );
-    });
-  });
-
-  describe(`getConfig()`, (): void => {
-    beforeEach((): void => {
-      service = new DiscordMessageCommandFeatureNoonConfigService();
-      discordMessageCommandFeatureNoonConfigCoreService.noon = {
-        imageColor: ColorEnum.DESERT,
-        imageUrl: IconEnum.ALARM,
-      };
-    });
-
-    it(`should return the Discord message command feature config`, (): void => {
-      expect.assertions(1);
-
-      const result = service.getConfig();
-
-      expect(result).toStrictEqual({
-        noon: {
-          imageColor: ColorEnum.DESERT,
-          imageUrl: IconEnum.ALARM,
-        },
-      } as IDiscordMessageCommandFeatureConfig);
     });
   });
 

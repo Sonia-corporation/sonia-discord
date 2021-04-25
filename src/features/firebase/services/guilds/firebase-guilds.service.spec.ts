@@ -919,7 +919,7 @@ describe(`FirebaseGuildsService`, (): void => {
         expect(setMock.mock.calls[0][0].channels).toStrictEqual({});
         expect(setMock.mock.calls[0][0].id).toStrictEqual(`dummy-id`);
         expect(setMock.mock.calls[0][0].lastReleaseNotesVersion).toStrictEqual(`0.0.0`);
-        expect(setMock.mock.calls[0][0].version).toStrictEqual(FirebaseGuildVersionEnum.V4);
+        expect(setMock.mock.calls[0][0].version).toStrictEqual(FirebaseGuildVersionEnum.V5);
       });
 
       describe(`when the guild was not successfully added into Firebase`, (): void => {

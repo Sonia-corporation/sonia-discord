@@ -7,5 +7,5 @@ export interface INewFirebaseGuild {
   channels: IObject<IFirebaseGuildChannelVFinal>;
   id: Snowflake;
   lastReleaseNotesVersion?: string;
-  version: FirebaseGuildVersionEnum.V4;
+  version: FirebaseGuildVersionEnum.V5;
 }

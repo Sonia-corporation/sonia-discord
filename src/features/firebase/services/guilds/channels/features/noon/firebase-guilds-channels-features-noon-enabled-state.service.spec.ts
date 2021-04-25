@@ -168,7 +168,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
         beforeEach((): void => {
           firebaseGuild.channels = {
             'dummy-channel-id': {
-              version: FirebaseGuildChannelVersionEnum.V1,
+              version: FirebaseGuildChannelVersionEnum.V2,
             },
           };
         });
@@ -178,7 +178,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
             firebaseGuild.channels = {
               'dummy-channel-id': {
                 features: undefined,
-                version: FirebaseGuildChannelVersionEnum.V1,
+                version: FirebaseGuildChannelVersionEnum.V2,
               },
             };
           });
@@ -209,7 +209,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
             firebaseGuild.channels = {
               'dummy-channel-id': {
                 features: {},
-                version: FirebaseGuildChannelVersionEnum.V1,
+                version: FirebaseGuildChannelVersionEnum.V2,
               },
             };
           });
@@ -221,7 +221,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
                   features: {
                     version: undefined,
                   },
-                  version: FirebaseGuildChannelVersionEnum.V1,
+                  version: FirebaseGuildChannelVersionEnum.V2,
                 },
               };
             });
@@ -252,9 +252,9 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
               firebaseGuild.channels = {
                 'dummy-channel-id': {
                   features: {
-                    version: FirebaseGuildChannelFeatureVersionEnum.V1,
+                    version: FirebaseGuildChannelFeatureVersionEnum.V2,
                   },
-                  version: FirebaseGuildChannelVersionEnum.V1,
+                  version: FirebaseGuildChannelVersionEnum.V2,
                 },
               };
             });
@@ -265,9 +265,9 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
                   'dummy-channel-id': {
                     features: {
                       noon: undefined,
-                      version: FirebaseGuildChannelFeatureVersionEnum.V1,
+                      version: FirebaseGuildChannelFeatureVersionEnum.V2,
                     },
-                    version: FirebaseGuildChannelVersionEnum.V1,
+                    version: FirebaseGuildChannelVersionEnum.V2,
                   },
                 };
               });
@@ -299,9 +299,9 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
                   'dummy-channel-id': {
                     features: {
                       noon: {},
-                      version: FirebaseGuildChannelFeatureVersionEnum.V1,
+                      version: FirebaseGuildChannelFeatureVersionEnum.V2,
                     },
-                    version: FirebaseGuildChannelVersionEnum.V1,
+                    version: FirebaseGuildChannelVersionEnum.V2,
                   },
                 };
               });
@@ -314,9 +314,9 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
                         noon: {
                           version: undefined,
                         },
-                        version: FirebaseGuildChannelFeatureVersionEnum.V1,
+                        version: FirebaseGuildChannelFeatureVersionEnum.V2,
                       },
-                      version: FirebaseGuildChannelVersionEnum.V1,
+                      version: FirebaseGuildChannelVersionEnum.V2,
                     },
                   };
                 });
@@ -350,9 +350,9 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
                         noon: {
                           version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
                         },
-                        version: FirebaseGuildChannelFeatureVersionEnum.V1,
+                        version: FirebaseGuildChannelFeatureVersionEnum.V2,
                       },
-                      version: FirebaseGuildChannelVersionEnum.V1,
+                      version: FirebaseGuildChannelVersionEnum.V2,
                     },
                   };
                 });
@@ -366,9 +366,9 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
                             isEnabled: undefined,
                             version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
                           },
-                          version: FirebaseGuildChannelFeatureVersionEnum.V1,
+                          version: FirebaseGuildChannelFeatureVersionEnum.V2,
                         },
-                        version: FirebaseGuildChannelVersionEnum.V1,
+                        version: FirebaseGuildChannelVersionEnum.V2,
                       },
                     };
                   });
@@ -399,9 +399,9 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
                             isEnabled: false,
                             version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
                           },
-                          version: FirebaseGuildChannelFeatureVersionEnum.V1,
+                          version: FirebaseGuildChannelFeatureVersionEnum.V2,
                         },
-                        version: FirebaseGuildChannelVersionEnum.V1,
+                        version: FirebaseGuildChannelVersionEnum.V2,
                       },
                     };
                   });
@@ -432,9 +432,9 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
                             isEnabled: true,
                             version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
                           },
-                          version: FirebaseGuildChannelFeatureVersionEnum.V1,
+                          version: FirebaseGuildChannelFeatureVersionEnum.V2,
                         },
-                        version: FirebaseGuildChannelVersionEnum.V1,
+                        version: FirebaseGuildChannelVersionEnum.V2,
                       },
                     };
                   });

@@ -1,5 +1,3 @@
-import { DiscordCommandFlagSuccessTitleEnum } from '../../../enums/commands/flags/discord-command-flag-success-title.enum';
-
 export interface IDiscordCommandFlagSuccess {
   /**
    * @description
@@ -17,5 +15,5 @@ export interface IDiscordCommandFlagSuccess {
    *
    * Usually used as the title for an [embed field]{@link EmbedFieldData}
    */
-  name: DiscordCommandFlagSuccessTitleEnum;
+  name: string;
 }

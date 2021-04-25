@@ -1023,7 +1023,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
           beforeEach((): void => {
             firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
               channels: {},
-              version: FirebaseGuildVersionEnum.V4,
+              version: FirebaseGuildVersionEnum.V5,
             });
 
             firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -1082,7 +1082,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
                   id: `bad-dummy-channel-id`,
                 }),
               },
-              version: FirebaseGuildVersionEnum.V4,
+              version: FirebaseGuildVersionEnum.V5,
             });
 
             firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -1105,7 +1105,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
                   id: `dummy-channel-id`,
                 }),
               },
-              version: FirebaseGuildVersionEnum.V4,
+              version: FirebaseGuildVersionEnum.V5,
             });
 
             firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -1122,7 +1122,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
                     id: `dummy-channel-id`,
                   }),
                 },
-                version: FirebaseGuildVersionEnum.V4,
+                version: FirebaseGuildVersionEnum.V5,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -1150,7 +1150,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
                     id: `dummy-channel-id`,
                   }),
                 },
-                version: FirebaseGuildVersionEnum.V4,
+                version: FirebaseGuildVersionEnum.V5,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -1178,7 +1178,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
                     id: `dummy-channel-id`,
                   }),
                 },
-                version: FirebaseGuildVersionEnum.V4,
+                version: FirebaseGuildVersionEnum.V5,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -1206,7 +1206,7 @@ describe(`DiscordMessageCommandFeatureNoonDisabled`, (): void => {
                     id: `dummy-channel-id`,
                   }),
                 },
-                version: FirebaseGuildVersionEnum.V4,
+                version: FirebaseGuildVersionEnum.V5,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);

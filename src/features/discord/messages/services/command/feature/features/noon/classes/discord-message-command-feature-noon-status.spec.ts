@@ -352,7 +352,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
           beforeEach((): void => {
             firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
               channels: {},
-              version: FirebaseGuildVersionEnum.V4,
+              version: FirebaseGuildVersionEnum.V5,
             });
 
             firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -411,7 +411,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
                   id: `bad-dummy-channel-id`,
                 }),
               },
-              version: FirebaseGuildVersionEnum.V4,
+              version: FirebaseGuildVersionEnum.V5,
             });
 
             firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -434,7 +434,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
                   id: `dummy-channel-id`,
                 }),
               },
-              version: FirebaseGuildVersionEnum.V4,
+              version: FirebaseGuildVersionEnum.V5,
             });
 
             firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -451,7 +451,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
                     id: `dummy-channel-id`,
                   }),
                 },
-                version: FirebaseGuildVersionEnum.V4,
+                version: FirebaseGuildVersionEnum.V5,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -479,7 +479,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
                     id: `dummy-channel-id`,
                   }),
                 },
-                version: FirebaseGuildVersionEnum.V4,
+                version: FirebaseGuildVersionEnum.V5,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -507,7 +507,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
                     id: `dummy-channel-id`,
                   }),
                 },
-                version: FirebaseGuildVersionEnum.V4,
+                version: FirebaseGuildVersionEnum.V5,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -535,7 +535,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
                     id: `dummy-channel-id`,
                   }),
                 },
-                version: FirebaseGuildVersionEnum.V4,
+                version: FirebaseGuildVersionEnum.V5,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
