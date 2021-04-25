@@ -9,5 +9,5 @@ import { FirebaseGuildChannelFeatureVersionEnum } from '../../../../enums/guilds
  * The model should be upgraded before manipulating it
  * Each change should be followed with a breaking change strategy
  */
-export const FIREBASE_GUILD_CHANNEL_FEATURE_CURRENT_VERSION: FirebaseGuildChannelFeatureVersionEnum.V1 =
-  FirebaseGuildChannelFeatureVersionEnum.V1;
+export const FIREBASE_GUILD_CHANNEL_FEATURE_CURRENT_VERSION: FirebaseGuildChannelFeatureVersionEnum.V2 =
+  FirebaseGuildChannelFeatureVersionEnum.V2;

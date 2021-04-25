@@ -1,6 +1,7 @@
 import { upgradeFirebaseGuildToV2 } from './upgrade-firebase-guild-to-v2';
 import { upgradeFirebaseGuildToV3 } from './upgrade-firebase-guild-to-v3';
 import { upgradeFirebaseGuildToV4 } from './upgrade-firebase-guild-to-v4';
+import { upgradeFirebaseGuildToV5 } from './upgrade-firebase-guild-to-v5';
 import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
 import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
@@ -17,8 +18,12 @@ import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final'
 export function handleFirebaseGuildBreakingChange(
   firebaseGuild: Readonly<IFirebaseGuild>
 ): IFirebaseGuildVFinal | never {
-  if (firebaseGuild.version === FirebaseGuildVersionEnum.V4) {
+  if (firebaseGuild.version === FirebaseGuildVersionEnum.V5) {
     return firebaseGuild;
+  }
+
+  if (firebaseGuild.version === FirebaseGuildVersionEnum.V4) {
+    return handleFirebaseGuildBreakingChange(upgradeFirebaseGuildToV5(firebaseGuild));
   }
 
   if (firebaseGuild.version === FirebaseGuildVersionEnum.V3) {

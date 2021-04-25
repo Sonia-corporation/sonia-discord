@@ -2,10 +2,10 @@ import { DiscordMessageConfigValueNameEnum } from './discord-message-config-valu
 import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageConfigValueNameEnum`, (): void => {
-  it(`should have a 21 members`, (): void => {
+  it(`should have a 23 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageConfigValueNameEnum)).toStrictEqual(21);
+    expect(getEnumLength(DiscordMessageConfigValueNameEnum)).toStrictEqual(23);
   });
 
   it(`should have a member "COMMAND_CLI_ERROR_IMAGE_COLOR"`, (): void => {
@@ -67,6 +67,22 @@ describe(`DiscordMessageConfigValueNameEnum`, (): void => {
 
     expect(DiscordMessageConfigValueNameEnum.COMMAND_FEATURE_NOON_IMAGE_URL).toStrictEqual(
       `message command feature noon image url`
+    );
+  });
+
+  it(`should have a member "COMMAND_FEATURE_RELEASE_NOTES_COLOR"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageConfigValueNameEnum.COMMAND_FEATURE_RELEASE_NOTES_COLOR).toStrictEqual(
+      `message command feature release notes color`
+    );
+  });
+
+  it(`should have a member "COMMAND_FEATURE_RELEASE_NOTES_IMAGE_URL"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageConfigValueNameEnum.COMMAND_FEATURE_RELEASE_NOTES_IMAGE_URL).toStrictEqual(
+      `message command feature release notes image url`
     );
   });
 

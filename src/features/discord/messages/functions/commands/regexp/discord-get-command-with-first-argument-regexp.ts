@@ -12,10 +12,10 @@ export function discordGetCommandWithFirstArgumentRegexp({
 }: Readonly<IDiscordGetCommandWithFirstArgumentRegexpData>): RegExp {
   return xregexp(
     `
-    (?<prefix>\\${prefix}) # Command prefix
-    (?<command>${command}) # Command name
-    (?<separator>\\s)      # Space
-    (?<argument1>\\w+)     # Argument 1
+    (?<prefix>\\${prefix})                      # Command prefix
+    (?<command>${command})                      # Command name
+    (?<separator>\\s)                           # Space
+    (?<argument1>([a-z][a-z0-9]*)(-[a-z0-9]+)*) # Argument 1
     `,
     `gimx`
   );

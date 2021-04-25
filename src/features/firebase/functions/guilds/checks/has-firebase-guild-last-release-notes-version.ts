@@ -19,7 +19,12 @@ export function hasFirebaseGuildLastReleaseNotesVersion(
   firebaseGuild: Readonly<IFirebaseGuild>
 ): firebaseGuild is IFirebaseGuildV2 | IFirebaseGuildV3 | IFirebaseGuildV4 {
   return _.includes(
-    [FirebaseGuildVersionEnum.V2, FirebaseGuildVersionEnum.V3, FirebaseGuildVersionEnum.V4],
+    [
+      FirebaseGuildVersionEnum.V2,
+      FirebaseGuildVersionEnum.V3,
+      FirebaseGuildVersionEnum.V4,
+      FirebaseGuildVersionEnum.V5,
+    ],
     firebaseGuild.version
   );
 }

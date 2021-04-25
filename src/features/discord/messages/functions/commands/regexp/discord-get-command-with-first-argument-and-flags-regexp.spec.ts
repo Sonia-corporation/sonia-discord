@@ -29,7 +29,7 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\!)(?:)(help)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s){0,}(-{1,2}\w+(\=\w+)?){1})(?:)/gim
+          /(\!)(?:)(help)(?:)(\s)(?:)(([a-z][a-z0-9]*)(-[a-z0-9]+)*)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s){0,}(-{1,2}\w+(\=\w+)?){1})(?:)/gim
         );
       });
 
@@ -152,6 +152,60 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
           const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
 
           expect(xregexp.exec(message, result)?.groups?.argument1).toStrictEqual(`me`);
+        });
+
+        it(`should find " " as flags separator`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.groups?.flagsSeparator).toStrictEqual(` `);
+        });
+
+        it(`should find "-arg1" as flags`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.groups?.flags).toStrictEqual(`-arg1`);
+        });
+      });
+
+      describe(`when tested with "!help me-in-kebab -arg1"`, (): void => {
+        beforeEach((): void => {
+          message = `!help me-in-kebab -arg1`;
+        });
+
+        it(`should find "!" as prefix`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.groups?.prefix).toStrictEqual(`!`);
+        });
+
+        it(`should find "help" as command`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.groups?.command).toStrictEqual(`help`);
+        });
+
+        it(`should find " " as separator`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.groups?.separator).toStrictEqual(` `);
+        });
+
+        it(`should find "me-in-kebab" as argument 1`, (): void => {
+          expect.assertions(1);
+
+          const result = discordGetCommandWithFirstArgumentAndFlagsRegexp(data);
+
+          expect(xregexp.exec(message, result)?.groups?.argument1).toStrictEqual(`me-in-kebab`);
         });
 
         it(`should find " " as flags separator`, (): void => {
@@ -346,7 +400,7 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\!)(?:)(feature)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s){0,}(-{1,2}\w+(\=\w+)?){1})(?:)/gim
+          /(\!)(?:)(feature)(?:)(\s)(?:)(([a-z][a-z0-9]*)(-[a-z0-9]+)*)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s){0,}(-{1,2}\w+(\=\w+)?){1})(?:)/gim
         );
       });
 
@@ -523,7 +577,7 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\-)(?:)(help)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s){0,}(-{1,2}\w+(\=\w+)?){1})(?:)/gim
+          /(\-)(?:)(help)(?:)(\s)(?:)(([a-z][a-z0-9]*)(-[a-z0-9]+)*)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s){0,}(-{1,2}\w+(\=\w+)?){1})(?:)/gim
         );
       });
 
@@ -694,7 +748,7 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
 
         expect(result).toStrictEqual(
           // eslint-disable-next-line no-useless-escape
-          /(\-)(?:)(feature)(?:)(\s)(?:)(\w+)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s){0,}(-{1,2}\w+(\=\w+)?){1})(?:)/gim
+          /(\-)(?:)(feature)(?:)(\s)(?:)(([a-z][a-z0-9]*)(-[a-z0-9]+)*)(?:)(\s)(?:)((-{1,2}\w+(\=\w+)?\s){0,}(-{1,2}\w+(\=\w+)?){1})(?:)/gim
         );
       });
 

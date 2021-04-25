@@ -369,7 +369,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           beforeEach((): void => {
             firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
               channels: {},
-              version: FirebaseGuildVersionEnum.V4,
+              version: FirebaseGuildVersionEnum.V5,
             });
 
             firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -428,7 +428,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
                   id: `bad-dummy-channel-id`,
                 }),
               },
-              version: FirebaseGuildVersionEnum.V4,
+              version: FirebaseGuildVersionEnum.V5,
             });
 
             firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -451,7 +451,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
                   id: `dummy-channel-id`,
                 }),
               },
-              version: FirebaseGuildVersionEnum.V4,
+              version: FirebaseGuildVersionEnum.V5,
             });
 
             firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -468,7 +468,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
                     id: `dummy-channel-id`,
                   }),
                 },
-                version: FirebaseGuildVersionEnum.V4,
+                version: FirebaseGuildVersionEnum.V5,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -496,7 +496,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
                     id: `dummy-channel-id`,
                   }),
                 },
-                version: FirebaseGuildVersionEnum.V4,
+                version: FirebaseGuildVersionEnum.V5,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -524,7 +524,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
                     id: `dummy-channel-id`,
                   }),
                 },
-                version: FirebaseGuildVersionEnum.V4,
+                version: FirebaseGuildVersionEnum.V5,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);
@@ -552,7 +552,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
                     id: `dummy-channel-id`,
                   }),
                 },
-                version: FirebaseGuildVersionEnum.V4,
+                version: FirebaseGuildVersionEnum.V5,
               });
 
               firebaseGuildsStoreQueryGetEntitySpy.mockReturnValue(firebaseGuildVFinal);

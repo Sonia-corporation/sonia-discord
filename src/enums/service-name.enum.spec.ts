@@ -2,10 +2,10 @@ import { ServiceNameEnum } from './service-name.enum';
 import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`ServiceNameEnum`, (): void => {
-  it(`should have a 100 members`, (): void => {
+  it(`should have a 111 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ServiceNameEnum)).toStrictEqual(100);
+    expect(getEnumLength(ServiceNameEnum)).toStrictEqual(111);
   });
 
   it(`should have a member "APP_CONFIG_CORE_SERVICE"`, (): void => {
@@ -252,6 +252,14 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SUCCESS_FLAG_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SUCCESS_FLAG_SERVICE).toStrictEqual(
+      `DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`
+    );
+  });
+
   it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_SERVICE"`, (): void => {
     expect.assertions(1);
 
@@ -268,11 +276,43 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
-  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SUCCESS_FLAG_SERVICE"`, (): void => {
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_CORE_SERVICE"`, (): void => {
     expect.assertions(1);
 
-    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SUCCESS_FLAG_SERVICE).toStrictEqual(
-      `DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_CORE_SERVICE).toStrictEqual(
+      `DiscordMessageCommandFeatureReleaseNotesConfigCoreService`
+    );
+  });
+
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_MUTATOR_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_MUTATOR_SERVICE).toStrictEqual(
+      `DiscordMessageCommandFeatureReleaseNotesConfigMutatorService`
+    );
+  });
+
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_SERVICE).toStrictEqual(
+      `DiscordMessageCommandFeatureReleaseNotesConfigService`
+    );
+  });
+
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_ENABLED_SUCCESS_FLAG_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_ENABLED_SUCCESS_FLAG_SERVICE).toStrictEqual(
+      `DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService`
+    );
+  });
+
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_SERVICE).toStrictEqual(
+      `DiscordMessageCommandFeatureReleaseNotesService`
     );
   });
 
@@ -510,6 +550,30 @@ describe(`ServiceNameEnum`, (): void => {
     );
   });
 
+  it(`should have a member "FIREBASE_GUILDS_COMMANDS_FEATURE_RELEASE_NOTES_ENABLED_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_RELEASE_NOTES_ENABLED_SERVICE).toStrictEqual(
+      `FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService`
+    );
+  });
+
+  it(`should have a member "FIREBASE_GUILDS_CHANNELS_FEATURES_RELEASE_NOTES_ENABLED_STATE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_RELEASE_NOTES_ENABLED_STATE_SERVICE).toStrictEqual(
+      `FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService`
+    );
+  });
+
+  it(`should have a member "FIREBASE_GUILDS_CHANNELS_FEATURES_RELEASE_NOTES_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_RELEASE_NOTES_SERVICE).toStrictEqual(
+      `FirebaseGuildsChannelsFeaturesReleaseNotesService`
+    );
+  });
+
   it(`should have a member "FIREBASE_GUILDS_CHANNELS_FEATURES_SERVICE"`, (): void => {
     expect.assertions(1);
 
@@ -522,6 +586,30 @@ describe(`ServiceNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_SERVICE).toStrictEqual(`FirebaseGuildsChannelsService`);
+  });
+
+  it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_COUNT_HUMANIZED_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_HUMANIZED_SERVICE).toStrictEqual(
+      `FirebaseGuildsNewVersionCountHumanizedService`
+    );
+  });
+
+  it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_COUNT_MESSAGE_RESPONSE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_MESSAGE_RESPONSE_SERVICE).toStrictEqual(
+      `FirebaseGuildsNewVersionCountMessageResponseService`
+    );
+  });
+
+  it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_COUNT_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_SERVICE).toStrictEqual(
+      `FirebaseGuildsNewVersionCountService`
+    );
   });
 
   it(`should have a member "FIREBASE_GUILDS_NEW_VERSION_SERVICE"`, (): void => {

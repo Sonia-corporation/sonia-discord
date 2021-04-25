@@ -343,7 +343,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuildVFinal>>({
                 data: (): IFirebaseGuildVFinal =>
                   createMock<IFirebaseGuildVFinal>({
-                    version: FirebaseGuildVersionEnum.V4,
+                    version: FirebaseGuildVersionEnum.V5,
                   }),
                 exists: true,
               });
@@ -383,7 +383,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsBreakingChangeService`,
-                message: `text-all Firebase guild hint-(1) up-to-date hint-(v4)`,
+                message: `text-all Firebase guild hint-(1) up-to-date hint-(v5)`,
               } as ILoggerLog);
             });
           });
@@ -393,7 +393,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuildVFinal>>({
                 data: (): IFirebaseGuildVFinal =>
                   createMock<IFirebaseGuildVFinal>({
-                    version: FirebaseGuildVersionEnum.V4,
+                    version: FirebaseGuildVersionEnum.V5,
                   }),
                 exists: true,
               });
@@ -434,7 +434,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
               expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsBreakingChangeService`,
-                message: `text-all Firebase guilds hint-(2) up-to-date hint-(v4)`,
+                message: `text-all Firebase guilds hint-(2) up-to-date hint-(v5)`,
               } as ILoggerLog);
             });
           });
@@ -473,7 +473,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
                 channels: {},
                 id: `dummy-id`,
                 lastReleaseNotesVersion: `0.0.0`,
-                version: FirebaseGuildVersionEnum.V4,
+                version: FirebaseGuildVersionEnum.V5,
               } as IFirebaseGuildVFinal);
             });
 
@@ -534,7 +534,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
                 channels: {},
                 id: `dummy-id`,
                 lastReleaseNotesVersion: `0.0.0`,
-                version: FirebaseGuildVersionEnum.V4,
+                version: FirebaseGuildVersionEnum.V5,
               } as IFirebaseGuildVFinal);
             });
 

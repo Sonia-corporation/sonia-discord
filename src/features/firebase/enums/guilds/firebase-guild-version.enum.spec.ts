@@ -2,10 +2,10 @@ import { FirebaseGuildVersionEnum } from './firebase-guild-version.enum';
 import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`FirebaseGuildVersionEnum`, (): void => {
-  it(`should have a 8 members`, (): void => {
+  it(`should have a 10 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(FirebaseGuildVersionEnum)).toStrictEqual(8);
+    expect(getEnumLength(FirebaseGuildVersionEnum)).toStrictEqual(10);
   });
 
   it(`should have a member "V1"`, (): void => {
@@ -30,5 +30,11 @@ describe(`FirebaseGuildVersionEnum`, (): void => {
     expect.assertions(1);
 
     expect(FirebaseGuildVersionEnum.V4).toStrictEqual(4);
+  });
+
+  it(`should have a member "V5"`, (): void => {
+    expect.assertions(1);
+
+    expect(FirebaseGuildVersionEnum.V5).toStrictEqual(5);
   });
 });

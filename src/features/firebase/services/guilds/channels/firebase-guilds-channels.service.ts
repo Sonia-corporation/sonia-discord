@@ -1,5 +1,6 @@
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { FIREBASE_GUILD_CHANNEL_CURRENT_VERSION } from '../../../constants/guilds/channels/firebase-guild-channel-current-version';
+import { handleFirebaseGuildChannelBreakingChange } from '../../../functions/guilds/channels/handle-firebase-guild-channel-breaking-change';
 import { ICreateFirebaseGuildChannel } from '../../../interfaces/guilds/channels/create-firebase-guild-channel';
 import { INewFirebaseGuildChannel } from '../../../interfaces/guilds/channels/new-firebase-guild-channel';
 import { IFirebaseGuildChannel } from '../../../types/guilds/channels/firebase-guild-channel';
@@ -41,6 +42,6 @@ export class FirebaseGuildsChannelsService extends FirebaseUpdateCoreService<
   }
 
   public upgrade(channel: Readonly<IFirebaseGuildChannel>): IFirebaseGuildChannelVFinal {
-    return channel;
+    return handleFirebaseGuildChannelBreakingChange(channel);
   }
 }

@@ -21,7 +21,7 @@ export function discordGetCommandWithFirstArgumentAndFlagsRegexp({
     (?<prefix>\\${prefix})                                           # Command prefix
     (?<command>${command})                                           # Command name
     (?<separator>\\s)                                                # Space
-    (?<argument1>\\w+)                                               # Argument 1
+    (?<argument1>([a-z][a-z0-9]*)(-[a-z0-9]+)*)                      # Argument 1
     (?<flagsSeparator>\\s)                                           # Space
     (?<flags>(-{1,2}\\w+(\\=\\w+)?\\s){0,}(-{1,2}\\w+(\\=\\w+)?){1}) # Flags
     `,

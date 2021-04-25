@@ -459,7 +459,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         beforeEach((): void => {
           firebaseGuild = createMock<IFirebaseGuildVFinal>({
             channels: {},
-            version: FirebaseGuildVersionEnum.V4,
+            version: FirebaseGuildVersionEnum.V5,
           });
 
           firebaseGuildsServiceGetGuildSpy.mockResolvedValue(firebaseGuild);
@@ -481,7 +481,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           beforeEach((): void => {
             firebaseGuild = createMock<IFirebaseGuildVFinal>({
               channels: {},
-              version: FirebaseGuildVersionEnum.V4,
+              version: FirebaseGuildVersionEnum.V5,
             });
 
             firebaseGuildsServiceGetGuildSpy.mockResolvedValue(firebaseGuild);
@@ -507,7 +507,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               channels: {
                 one: channel,
               },
-              version: FirebaseGuildVersionEnum.V4,
+              version: FirebaseGuildVersionEnum.V5,
             });
 
             firebaseGuildsServiceGetGuildSpy.mockResolvedValue(firebaseGuild);
@@ -539,7 +539,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
                 one: channel1,
                 two: channel2,
               },
-              version: FirebaseGuildVersionEnum.V4,
+              version: FirebaseGuildVersionEnum.V5,
             });
 
             firebaseGuildsServiceGetGuildSpy.mockResolvedValue(firebaseGuild);
@@ -674,12 +674,12 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
                       isEnabled: false,
                       version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
                     },
-                    version: FirebaseGuildChannelFeatureVersionEnum.V1,
+                    version: FirebaseGuildChannelFeatureVersionEnum.V2,
                   },
-                  version: FirebaseGuildChannelVersionEnum.V1,
+                  version: FirebaseGuildChannelVersionEnum.V2,
                 },
               },
-              version: FirebaseGuildVersionEnum.V4,
+              version: FirebaseGuildVersionEnum.V5,
             });
 
             firebaseGuildsChannelsFeaturesNoonEnabledStateServiceIsEnabledSpy.mockReturnValue(false);
@@ -710,12 +710,12 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
                       isEnabled: true,
                       version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
                     },
-                    version: FirebaseGuildChannelFeatureVersionEnum.V1,
+                    version: FirebaseGuildChannelFeatureVersionEnum.V2,
                   },
-                  version: FirebaseGuildChannelVersionEnum.V1,
+                  version: FirebaseGuildChannelVersionEnum.V2,
                 },
               },
-              version: FirebaseGuildVersionEnum.V4,
+              version: FirebaseGuildVersionEnum.V5,
             });
 
             firebaseGuildsChannelsFeaturesNoonEnabledStateServiceIsEnabledSpy.mockReturnValue(true);

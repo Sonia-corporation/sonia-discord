@@ -1,5 +1,6 @@
 import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
 import { FIREBASE_GUILD_CHANNEL_FEATURE_CURRENT_VERSION } from '../../../../constants/guilds/channels/features/firebase-guild-channel-feature-current-version';
+import { handleFirebaseGuildChannelFeatureBreakingChange } from '../../../../functions/guilds/channels/features/handle-firebase-guild-channel-feature-breaking-change';
 import { INewFirebaseGuildChannelFeature } from '../../../../interfaces/guilds/channels/features/new-firebase-guild-channel-feature';
 import { IFirebaseGuildChannelFeature } from '../../../../types/guilds/channels/features/firebase-guild-channel-feature';
 import { IFirebaseGuildChannelFeatureVFinal } from '../../../../types/guilds/channels/features/firebase-guild-channel-feature-v-final';
@@ -37,6 +38,6 @@ export class FirebaseGuildsChannelsFeaturesService extends FirebaseUpdateCoreSer
   }
 
   public upgrade(feature: Readonly<IFirebaseGuildChannelFeature>): IFirebaseGuildChannelFeatureVFinal {
-    return feature;
+    return handleFirebaseGuildChannelFeatureBreakingChange(feature);
   }
 }
