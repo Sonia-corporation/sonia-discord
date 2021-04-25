@@ -98,7 +98,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       return Promise.reject(new Error(`Discord guild not found`));
     }
 
-    return this._sendNewReleaseNotesFromDiscordGuild(guild);
+    return this.sendNewReleaseNotesFromDiscordGuild(guild);
   }
 
   public sendMessageByChannel(
@@ -180,6 +180,34 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           this._logFetchReleaseNotesCommandMessageResponseError();
 
           return Promise.resolve(null);
+        }
+      );
+  }
+
+  public sendNewReleaseNotesFromDiscordGuild(guild: Readonly<Guild>): Promise<(Message | void)[]> {
+    this._logFetchingFirebaseGuild(guild);
+
+    return FirebaseGuildsService.getInstance()
+      .getGuild(guild.id)
+      .then(
+        (firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<(Message | void)[]> => {
+          this._logFirebaseGuildFetched(guild);
+
+          if (!this._isValidGuild(firebaseGuild)) {
+            this._logInvalidFirebaseGuild(guild);
+
+            return Promise.reject(new Error(`Invalid guild`));
+          }
+
+          this._logValidFirebaseGuild(guild);
+
+          return Promise.all(
+            _.map(
+              firebaseGuild.channels,
+              (channel: Readonly<IFirebaseGuildChannel>): Promise<Message | void> =>
+                this.sendMessageByChannel(channel, firebaseGuild, guild).catch((): Promise<void> => Promise.resolve())
+            )
+          );
         }
       );
   }
@@ -308,34 +336,6 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     });
 
     return Promise.resolve();
-  }
-
-  private _sendNewReleaseNotesFromDiscordGuild(guild: Readonly<Guild>): Promise<(Message | void)[]> {
-    this._logFetchingFirebaseGuild(guild);
-
-    return FirebaseGuildsService.getInstance()
-      .getGuild(guild.id)
-      .then(
-        (firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<(Message | void)[]> => {
-          this._logFirebaseGuildFetched(guild);
-
-          if (!this._isValidGuild(firebaseGuild)) {
-            this._logInvalidFirebaseGuild(guild);
-
-            return Promise.reject(new Error(`Invalid guild`));
-          }
-
-          this._logValidFirebaseGuild(guild);
-
-          return Promise.all(
-            _.map(
-              firebaseGuild.channels,
-              (channel: Readonly<IFirebaseGuildChannel>): Promise<Message | void> =>
-                this.sendMessageByChannel(channel, firebaseGuild, guild).catch((): Promise<void> => Promise.resolve())
-            )
-          );
-        }
-      );
   }
 
   private _shouldSendNewReleaseNotesFromFirebaseGuild(firebaseGuild: Readonly<IFirebaseGuild>): boolean {
