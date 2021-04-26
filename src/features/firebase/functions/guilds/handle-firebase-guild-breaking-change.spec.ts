@@ -11,7 +11,7 @@ import { IFirebaseGuildV2 } from '../../interfaces/guilds/firebase-guild-v2';
 import { IFirebaseGuildV3 } from '../../interfaces/guilds/firebase-guild-v3';
 import { IFirebaseGuildV4 } from '../../interfaces/guilds/firebase-guild-v4';
 import { IFirebaseGuildV5 } from '../../interfaces/guilds/firebase-guild-v5';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`handleFirebaseGuildBreakingChange()`, (): void => {
   describe(`when the given Firebase guild has no version`, (): void => {
@@ -34,7 +34,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
     let firebaseGuild: IFirebaseGuildV1;
 
     beforeEach((): void => {
-      firebaseGuild = createMock<IFirebaseGuildV1>({
+      firebaseGuild = createHydratedMock<IFirebaseGuildV1>({
         id: `dummy-id`,
         version: FirebaseGuildVersionEnum.V1,
       });
@@ -69,7 +69,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
     let firebaseGuild: IFirebaseGuildV2;
 
     beforeEach((): void => {
-      firebaseGuild = createMock<IFirebaseGuildV2>({
+      firebaseGuild = createHydratedMock<IFirebaseGuildV2>({
         id: `dummy-id`,
         lastReleaseNotesVersion: `dummy-last-release-notes-version`,
         version: FirebaseGuildVersionEnum.V2,
@@ -113,8 +113,8 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
     let firebaseGuild: IFirebaseGuildV3;
 
     beforeEach((): void => {
-      firebaseGuild = createMock<IFirebaseGuildV3>({
-        channels: [createMock<IFirebaseGuildChannelV1>()],
+      firebaseGuild = createHydratedMock<IFirebaseGuildV3>({
+        channels: [createHydratedMock<IFirebaseGuildChannelV1>()],
         id: `dummy-id`,
         lastReleaseNotesVersion: `dummy-last-release-notes-version`,
         version: FirebaseGuildVersionEnum.V3,
@@ -158,7 +158,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
     let firebaseGuild: IFirebaseGuildV4;
 
     beforeEach((): void => {
-      firebaseGuild = createMock<IFirebaseGuildV4>({
+      firebaseGuild = createHydratedMock<IFirebaseGuildV4>({
         channels: {},
         id: `dummy-id`,
         lastReleaseNotesVersion: `dummy-last-release-notes-version`,
@@ -183,7 +183,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
     describe(`when there is a channel configured`, (): void => {
       beforeEach((): void => {
         firebaseGuild.channels = {
-          1: createMock<IFirebaseGuildChannelV1>({
+          1: createHydratedMock<IFirebaseGuildChannelV1>({
             features: {
               noon: {
                 isEnabled: false,
@@ -248,7 +248,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
     let firebaseGuild: IFirebaseGuildV5;
 
     beforeEach((): void => {
-      firebaseGuild = createMock<IFirebaseGuildV5>({
+      firebaseGuild = createHydratedMock<IFirebaseGuildV5>({
         version: FirebaseGuildVersionEnum.V5,
       });
     });

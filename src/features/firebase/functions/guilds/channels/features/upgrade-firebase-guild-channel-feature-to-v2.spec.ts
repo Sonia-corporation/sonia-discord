@@ -1,13 +1,13 @@
 import { upgradeFirebaseGuildChannelFeatureToV2 } from './upgrade-firebase-guild-channel-feature-to-v2';
 import { FirebaseGuildChannelFeatureVersionEnum } from '../../../../enums/guilds/channels/features/firebase-guild-channel-feature-version.enum';
 import { IFirebaseGuildChannelFeatureV1 } from '../../../../interfaces/guilds/channels/features/firebase-guild-channel-feature-v1';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`upgradeFirebaseGuildChannelFeatureToV2()`, (): void => {
   let firebaseGuildChannelFeature: IFirebaseGuildChannelFeatureV1;
 
   beforeEach((): void => {
-    firebaseGuildChannelFeature = createMock<IFirebaseGuildChannelFeatureV1>();
+    firebaseGuildChannelFeature = createHydratedMock<IFirebaseGuildChannelFeatureV1>();
   });
 
   it(`should return the same noon configuration`, (): void => {

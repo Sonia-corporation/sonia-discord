@@ -1,13 +1,13 @@
 import { discordGetCommandAndPrefix } from './discord-get-command-and-prefix';
 import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
 import { IDiscordGetCommandAndPrefixData } from '../../../interfaces/commands/getters/discord-get-command-and-prefix-data';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`discordGetCommandAndPrefix()`, (): void => {
   let data: IDiscordGetCommandAndPrefixData;
 
   beforeEach((): void => {
-    data = createMock<IDiscordGetCommandAndPrefixData>();
+    data = createHydratedMock<IDiscordGetCommandAndPrefixData>();
   });
 
   describe(`when the given prefix is !`, (): void => {

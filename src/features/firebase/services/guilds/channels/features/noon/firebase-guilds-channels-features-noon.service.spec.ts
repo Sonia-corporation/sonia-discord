@@ -5,7 +5,7 @@ import { FirebaseGuildChannelFeatureNoonVersionEnum } from '../../../../../enums
 import { IFirebaseGuildChannelFeatureNoonV1 } from '../../../../../interfaces/guilds/channels/features/firebase-guild-channel-feature-noon-v1';
 import { IFirebaseGuildChannelFeatureNoonVFinal } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-noon-v-final';
 import { IFirebaseGuildChannelFeatureNoon } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-noon';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../logger/services/chalk/chalk.service`);
 
@@ -79,7 +79,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
 
     describe(`when the given noon config is a v1 config`, (): void => {
       beforeEach((): void => {
-        noon = createMock<IFirebaseGuildChannelFeatureNoonV1>({
+        noon = createHydratedMock<IFirebaseGuildChannelFeatureNoonV1>({
           version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
         });
       });
@@ -103,7 +103,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
 
     describe(`when the given noon config is a v1 config`, (): void => {
       beforeEach((): void => {
-        noon = createMock<IFirebaseGuildChannelFeatureNoonV1>({
+        noon = createHydratedMock<IFirebaseGuildChannelFeatureNoonV1>({
           version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
         });
       });
@@ -141,7 +141,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
 
     describe(`when the given noon config is a valid config`, (): void => {
       beforeEach((): void => {
-        noon = createMock<IFirebaseGuildChannelFeatureNoonVFinal>();
+        noon = createHydratedMock<IFirebaseGuildChannelFeatureNoonVFinal>();
       });
 
       it(`should return true`, (): void => {
@@ -185,7 +185,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
 
     describe(`when the given noon config is a v1`, (): void => {
       beforeEach((): void => {
-        noon = createMock<IFirebaseGuildChannelFeatureNoon>({
+        noon = createHydratedMock<IFirebaseGuildChannelFeatureNoon>({
           version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
         });
       });
@@ -224,7 +224,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
 
     describe(`when the given noon config is a v1 noon config`, (): void => {
       beforeEach((): void => {
-        noon = createMock<IFirebaseGuildChannelFeatureNoon>({
+        noon = createHydratedMock<IFirebaseGuildChannelFeatureNoon>({
           version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
         });
       });

@@ -6,13 +6,13 @@ import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-vers
 import { IFirebaseGuildChannelV1 } from '../../interfaces/guilds/channels/firebase-guild-channel-v1';
 import { IFirebaseGuildChannelV2 } from '../../interfaces/guilds/channels/firebase-guild-channel-v2';
 import { IFirebaseGuildV4 } from '../../interfaces/guilds/firebase-guild-v4';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`upgradeFirebaseGuildToV5()`, (): void => {
   let firebaseGuild: IFirebaseGuildV4;
 
   beforeEach((): void => {
-    firebaseGuild = createMock<IFirebaseGuildV4>();
+    firebaseGuild = createHydratedMock<IFirebaseGuildV4>();
   });
 
   describe(`when there is no channel`, (): void => {
@@ -32,7 +32,7 @@ describe(`upgradeFirebaseGuildToV5()`, (): void => {
   describe(`when there is a channel configured`, (): void => {
     beforeEach((): void => {
       firebaseGuild.channels = {
-        1: createMock<IFirebaseGuildChannelV1>({
+        1: createHydratedMock<IFirebaseGuildChannelV1>({
           features: {
             noon: {
               isEnabled: false,

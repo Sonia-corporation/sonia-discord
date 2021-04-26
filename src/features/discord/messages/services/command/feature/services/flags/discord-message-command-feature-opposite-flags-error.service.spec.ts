@@ -11,7 +11,7 @@ import { DiscordMessageCommandCliErrorService } from '../../../discord-message-c
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../../features/noon/constants/discord-message-command-feature-noon-flags';
 import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
 import moment from 'moment-timezone';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
   let service: DiscordMessageCommandFeatureOppositeFlagsErrorService;
@@ -77,7 +77,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureOppositeFlagsErrorService();
-      oppositeFlags = createMock<IDiscordCommandFlagsOpposite>();
+      oppositeFlags = createHydratedMock<IDiscordCommandFlagsOpposite>();
 
       discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy = jest.spyOn(
         discordMessageCommandCliErrorService,
@@ -112,7 +112,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse(oppositeFlags);
@@ -131,7 +131,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
 
     describe(`when there is one given opposite flag`, (): void => {
       beforeEach((): void => {
-        oppositeFlags = [createMock<IDiscordCommandFlagOpposite>()];
+        oppositeFlags = [createHydratedMock<IDiscordCommandFlagOpposite>()];
       });
 
       it(`should return a Discord message response embed with a description indicating that one opposite flag has been found`, async (): Promise<void> => {
@@ -177,9 +177,9 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
     describe(`when there is three given opposite flags`, (): void => {
       beforeEach((): void => {
         oppositeFlags = [
-          createMock<IDiscordCommandFlagOpposite>(),
-          createMock<IDiscordCommandFlagOpposite>(),
-          createMock<IDiscordCommandFlagOpposite>(),
+          createHydratedMock<IDiscordCommandFlagOpposite>(),
+          createHydratedMock<IDiscordCommandFlagOpposite>(),
+          createHydratedMock<IDiscordCommandFlagOpposite>(),
         ];
       });
 

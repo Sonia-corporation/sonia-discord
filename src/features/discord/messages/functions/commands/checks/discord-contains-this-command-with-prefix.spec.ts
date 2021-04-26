@@ -1,13 +1,13 @@
 import { discordContainsThisCommandWithPrefix } from './discord-contains-this-command-with-prefix';
 import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
 import { IDiscordContainsThisCommandWithPrefixData } from '../../../interfaces/commands/checks/discord-contains-this-command-with-prefix-data';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`containsThisCommandWithPrefix()`, (): void => {
   let data: IDiscordContainsThisCommandWithPrefixData;
 
   beforeEach((): void => {
-    data = createMock<IDiscordContainsThisCommandWithPrefixData>();
+    data = createHydratedMock<IDiscordContainsThisCommandWithPrefixData>();
   });
 
   describe(`when the message is empty`, (): void => {

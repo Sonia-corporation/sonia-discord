@@ -3,7 +3,7 @@ import { ServiceNameEnum } from '../../../enums/service-name.enum';
 import { CoreEventService } from '../../core/services/core-event.service';
 import { Client } from 'discord.js';
 import { take } from 'rxjs/operators';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`DiscordClientService`, (): void => {
   let service: DiscordClientService;
@@ -71,7 +71,7 @@ describe(`DiscordClientService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordClientService();
-      client = createMock<Client>();
+      client = createHydratedMock<Client>();
     });
 
     describe(`when the Client does not exist`, (): void => {

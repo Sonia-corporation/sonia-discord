@@ -11,7 +11,7 @@ import { DiscordMessageCommandCliErrorService } from '../../../discord-message-c
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NAMES } from '../../constants/discord-message-command-feature-names';
 import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
 import moment from 'moment-timezone';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void => {
   let service: DiscordMessageCommandFeatureWrongFeatureNameErrorService;
@@ -80,7 +80,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureWrongFeatureNameErrorService();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>();
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>();
       commands = [DiscordMessageCommandEnum.COOKIE];
       featureName = `dummy-feature-name`;
 
@@ -119,7 +119,7 @@ describe(`DiscordMessageCommandFeatureWrongFeatureNameErrorService`, (): void =>
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);

@@ -4,7 +4,7 @@ import { CoreEventService } from '../../../core/services/core-event.service';
 import { ILoggerLog } from '../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { DMChannel, NewsChannel, TextChannel } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -67,7 +67,7 @@ describe(`DiscordChannelTypingService`, (): void => {
       service = new DiscordChannelTypingService();
 
       startTypingMock = jest.fn().mockRejectedValue(new Error(`startTyping error`));
-      channel = createMock<TextChannel>({
+      channel = createHydratedMock<TextChannel>({
         startTyping: startTypingMock,
       });
       loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
@@ -85,7 +85,7 @@ describe(`DiscordChannelTypingService`, (): void => {
     describe(`when an error occur with Discord`, (): void => {
       beforeEach((): void => {
         startTypingMock.mockRejectedValue(new Error(`startTyping error`));
-        channel = createMock<TextChannel>({
+        channel = createHydratedMock<TextChannel>({
           id: `dummy-channel-id`,
           startTyping: startTypingMock,
         });
@@ -111,7 +111,7 @@ describe(`DiscordChannelTypingService`, (): void => {
     describe(`when the typing indicator was successfully shown into Discord`, (): void => {
       beforeEach((): void => {
         startTypingMock.mockResolvedValue(undefined);
-        channel = createMock<TextChannel>({
+        channel = createHydratedMock<TextChannel>({
           id: `dummy-channel-id`,
           startTyping: startTypingMock,
         });
@@ -136,7 +136,7 @@ describe(`DiscordChannelTypingService`, (): void => {
       service = new DiscordChannelTypingService();
 
       stopTypingMock = jest.fn().mockImplementation();
-      channel = createMock<TextChannel>({
+      channel = createHydratedMock<TextChannel>({
         stopTyping: stopTypingMock,
       });
     });

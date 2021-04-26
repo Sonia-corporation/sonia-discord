@@ -8,7 +8,7 @@ import { IDiscordGuildSoniaSendMessageToChannel } from '../../../guilds/interfac
 import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild-sonia.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { Message } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../logger/services/chalk/chalk.service`);
 
@@ -75,7 +75,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageScheduleNoonCountService();
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       discordGuildSoniaServiceSendMessageToChannelSpy = jest
@@ -232,7 +232,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
     describe(`when the given guild messages is an array with one array of one message`, (): void => {
       beforeEach((): void => {
-        guildMessages = [[createMock<Message>()]];
+        guildMessages = [[createHydratedMock<Message>()]];
       });
 
       it(`should log that one noon message was sent for one guild of one`, (): void => {
@@ -250,7 +250,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
     describe(`when the given guild messages is an array with two arrays of one message`, (): void => {
       beforeEach((): void => {
-        guildMessages = [[createMock<Message>()], [createMock<Message>()]];
+        guildMessages = [[createHydratedMock<Message>()], [createHydratedMock<Message>()]];
       });
 
       it(`should log that two noon messages were sent for two guilds of two`, (): void => {
@@ -271,10 +271,10 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
         guildMessages = [
           [],
           [undefined],
-          [createMock<Message>()],
+          [createHydratedMock<Message>()],
           [undefined, undefined],
-          [createMock<Message>(), undefined],
-          [createMock<Message>(), createMock<Message>()],
+          [createHydratedMock<Message>(), undefined],
+          [createHydratedMock<Message>(), createHydratedMock<Message>()],
         ];
       });
 
@@ -296,10 +296,10 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
       guildMessages = [
         [],
         [undefined],
-        [createMock<Message>()],
+        [createHydratedMock<Message>()],
         [undefined, undefined],
-        [createMock<Message>(), undefined],
-        [createMock<Message>(), createMock<Message>()],
+        [createHydratedMock<Message>(), undefined],
+        [createHydratedMock<Message>(), createHydratedMock<Message>()],
       ];
 
       service.countChannelsAndGuilds(guildMessages);
@@ -313,10 +313,10 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
       guildMessages = [
         [],
         [undefined],
-        [createMock<Message>()],
+        [createHydratedMock<Message>()],
         [undefined, undefined],
-        [createMock<Message>(), undefined],
-        [createMock<Message>(), createMock<Message>()],
+        [createHydratedMock<Message>(), undefined],
+        [createHydratedMock<Message>(), createHydratedMock<Message>()],
       ];
 
       service.countChannelsAndGuilds(guildMessages);

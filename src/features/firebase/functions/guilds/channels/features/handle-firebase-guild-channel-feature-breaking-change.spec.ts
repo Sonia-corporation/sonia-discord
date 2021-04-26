@@ -5,7 +5,7 @@ import { IFirebaseGuildChannelFeatureNoonV1 } from '../../../../interfaces/guild
 import { IFirebaseGuildChannelFeatureReleaseNotesV1 } from '../../../../interfaces/guilds/channels/features/firebase-guild-channel-feature-release-notes-v1';
 import { IFirebaseGuildChannelFeatureV1 } from '../../../../interfaces/guilds/channels/features/firebase-guild-channel-feature-v1';
 import { IFirebaseGuildChannelFeatureV2 } from '../../../../interfaces/guilds/channels/features/firebase-guild-channel-feature-v2';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`handleFirebaseGuildChannelFeatureBreakingChange()`, (): void => {
   describe(`when the given Firebase guild channel has no version`, (): void => {
@@ -28,7 +28,7 @@ describe(`handleFirebaseGuildChannelFeatureBreakingChange()`, (): void => {
     let firebaseGuildChannelFeature: IFirebaseGuildChannelFeatureV1;
 
     beforeEach((): void => {
-      firebaseGuildChannelFeature = createMock<IFirebaseGuildChannelFeatureV1>({
+      firebaseGuildChannelFeature = createHydratedMock<IFirebaseGuildChannelFeatureV1>({
         noon: undefined,
         version: FirebaseGuildChannelFeatureVersionEnum.V1,
       });
@@ -55,9 +55,9 @@ describe(`handleFirebaseGuildChannelFeatureBreakingChange()`, (): void => {
     let firebaseGuildChannelFeature: IFirebaseGuildChannelFeatureV2;
 
     beforeEach((): void => {
-      firebaseGuildChannelFeature = createMock<IFirebaseGuildChannelFeatureV2>({
-        noon: createMock<IFirebaseGuildChannelFeatureNoonV1>(),
-        releaseNotes: createMock<IFirebaseGuildChannelFeatureReleaseNotesV1>(),
+      firebaseGuildChannelFeature = createHydratedMock<IFirebaseGuildChannelFeatureV2>({
+        noon: createHydratedMock<IFirebaseGuildChannelFeatureNoonV1>(),
+        releaseNotes: createHydratedMock<IFirebaseGuildChannelFeatureReleaseNotesV1>(),
         version: FirebaseGuildChannelFeatureVersionEnum.V2,
       });
     });

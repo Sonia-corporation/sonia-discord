@@ -13,7 +13,7 @@ import { DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS } from '../constant
 import { DiscordMessageCommandFeatureReleaseNotesFlagEnum } from '../enums/discord-message-command-feature-release-notes-flag.enum';
 import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
 import moment from 'moment-timezone';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 
@@ -42,12 +42,12 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureReleaseNotesHelp();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         id: `dummy-id`,
       });
       value = undefined;
       discordCommandFlags = DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS;
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       getMessageResponseSpy = jest
@@ -122,7 +122,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureReleaseNotesHelp();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         id: `dummy-id`,
       });
       discordCommandFlags = DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS;
@@ -172,7 +172,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
     describe(`when the message response for the help command was successfully fetched`, (): void => {
       it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
         expect.assertions(1);
-        const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+        const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);

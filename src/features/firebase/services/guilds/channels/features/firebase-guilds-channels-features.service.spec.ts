@@ -10,7 +10,7 @@ import { IFirebaseGuildChannelFeatureV1 } from '../../../../interfaces/guilds/ch
 import { IFirebaseGuildChannelFeatureV2 } from '../../../../interfaces/guilds/channels/features/firebase-guild-channel-feature-v2';
 import { IFirebaseGuildChannelFeatureVFinal } from '../../../../types/guilds/channels/features/firebase-guild-channel-feature-v-final';
 import { IFirebaseGuildChannelFeature } from '../../../../types/guilds/channels/features/firebase-guild-channel-feature';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
@@ -84,7 +84,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
     describe(`when the given feature is a v1 feature`, (): void => {
       beforeEach((): void => {
-        feature = createMock<IFirebaseGuildChannelFeatureV1>({
+        feature = createHydratedMock<IFirebaseGuildChannelFeatureV1>({
           noon: {
             isEnabled: false,
             version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
@@ -104,7 +104,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
     describe(`when the given feature is a v2 feature`, (): void => {
       beforeEach((): void => {
-        feature = createMock<IFirebaseGuildChannelFeatureV2>({
+        feature = createHydratedMock<IFirebaseGuildChannelFeatureV2>({
           noon: {
             isEnabled: false,
             version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
@@ -136,7 +136,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
     describe(`when the given feature is a v1 feature`, (): void => {
       beforeEach((): void => {
-        feature = createMock<IFirebaseGuildChannelFeatureV1>({
+        feature = createHydratedMock<IFirebaseGuildChannelFeatureV1>({
           noon: {
             isEnabled: false,
             version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
@@ -156,7 +156,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
     describe(`when the given feature is a v2 feature`, (): void => {
       beforeEach((): void => {
-        feature = createMock<IFirebaseGuildChannelFeatureV2>({
+        feature = createHydratedMock<IFirebaseGuildChannelFeatureV2>({
           noon: {
             isEnabled: false,
             version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
@@ -202,7 +202,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
     describe(`when the given feature is a feature`, (): void => {
       beforeEach((): void => {
-        feature = createMock<IFirebaseGuildChannelFeatureVFinal>();
+        feature = createHydratedMock<IFirebaseGuildChannelFeatureVFinal>();
       });
 
       it(`should return true`, (): void => {
@@ -254,7 +254,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
     describe(`when the given feature is a v1`, (): void => {
       beforeEach((): void => {
-        feature = createMock<IFirebaseGuildChannelFeatureV1>({
+        feature = createHydratedMock<IFirebaseGuildChannelFeatureV1>({
           noon: {
             isEnabled: false,
             version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
@@ -281,7 +281,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
     describe(`when the given feature is a v2`, (): void => {
       beforeEach((): void => {
-        feature = createMock<IFirebaseGuildChannelFeatureV2>({
+        feature = createHydratedMock<IFirebaseGuildChannelFeatureV2>({
           noon: {
             isEnabled: false,
             version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
@@ -329,7 +329,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
     describe(`when the given feature is a v1 feature`, (): void => {
       beforeEach((): void => {
-        feature = createMock<IFirebaseGuildChannelFeatureV1>({
+        feature = createHydratedMock<IFirebaseGuildChannelFeatureV1>({
           noon: {
             isEnabled: false,
             version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
@@ -354,7 +354,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
     describe(`when the given feature is a v2 feature`, (): void => {
       beforeEach((): void => {
-        feature = createMock<IFirebaseGuildChannelFeatureV2>({
+        feature = createHydratedMock<IFirebaseGuildChannelFeatureV2>({
           noon: {
             isEnabled: false,
             version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,

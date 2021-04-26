@@ -19,7 +19,7 @@ import { IDiscordMessageResponse } from '../../../interfaces/discord-message-res
 import { IAnyDiscordMessage } from '../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../config/discord-message-config.service';
 import _ from 'lodash';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../logger/services/chalk/chalk.service`);
 
@@ -101,7 +101,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureService();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         id: `dummy-id`,
       });
 
@@ -165,29 +165,29 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureService();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         id: `dummy-id`,
         valueOf: _.stubObject(),
       });
-      discordMessageResponse = createMock<IDiscordMessageResponse>({
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>({
         response: `discordMessageResponse`,
       });
-      getEmptyContentErrorMessageResponse = createMock<IDiscordMessageResponse>({
+      getEmptyContentErrorMessageResponse = createHydratedMock<IDiscordMessageResponse>({
         response: `getEmptyContentErrorMessageResponse`,
       });
-      getEmptyFeatureNameErrorMessageResponse = createMock<IDiscordMessageResponse>({
+      getEmptyFeatureNameErrorMessageResponse = createHydratedMock<IDiscordMessageResponse>({
         response: `getEmptyFeatureNameErrorMessageResponse`,
       });
-      getWrongFeatureNameErrorMessageResponse = createMock<IDiscordMessageResponse>({
+      getWrongFeatureNameErrorMessageResponse = createHydratedMock<IDiscordMessageResponse>({
         response: `getWrongFeatureNameErrorMessageResponse`,
       });
-      getEmptyFlagsErrorMessageResponse = createMock<IDiscordMessageResponse>({
+      getEmptyFlagsErrorMessageResponse = createHydratedMock<IDiscordMessageResponse>({
         response: `getEmptyFlagsErrorMessageResponse`,
       });
-      getWrongFlagsErrorMessageResponse = createMock<IDiscordMessageResponse>({
+      getWrongFlagsErrorMessageResponse = createHydratedMock<IDiscordMessageResponse>({
         response: `getWrongFlagsErrorMessageResponse`,
       });
-      getDuplicatedFlagsErrorMessageResponse = createMock<IDiscordMessageResponse>({
+      getDuplicatedFlagsErrorMessageResponse = createHydratedMock<IDiscordMessageResponse>({
         response: `getDuplicatedFlagsErrorMessageResponse`,
       });
 

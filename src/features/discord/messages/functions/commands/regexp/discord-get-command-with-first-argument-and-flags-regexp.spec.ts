@@ -1,7 +1,7 @@
 import { discordGetCommandWithFirstArgumentAndFlagsRegexp } from './discord-get-command-with-first-argument-and-flags-regexp';
 import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
 import { IDiscordGetCommandWithFirstArgumentAndFlagsRegexpData } from '../../../interfaces/commands/getters/discord-get-command-with-first-argument-and-flags-regexp-data';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 import xregexp from 'xregexp';
 
 describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
@@ -9,7 +9,7 @@ describe(`discordGetCommandWithFirstArgumentAndFlagsRegexp()`, (): void => {
   let message: string;
 
   beforeEach((): void => {
-    data = createMock<IDiscordGetCommandWithFirstArgumentAndFlagsRegexpData>();
+    data = createHydratedMock<IDiscordGetCommandWithFirstArgumentAndFlagsRegexpData>();
   });
 
   describe(`when the given prefix is !`, (): void => {

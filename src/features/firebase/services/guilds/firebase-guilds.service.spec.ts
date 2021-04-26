@@ -11,13 +11,13 @@ import { FirebaseAppService } from '../firebase-app.service';
 import { Guild, Snowflake } from 'discord.js';
 import * as admin from 'firebase-admin';
 import { take } from 'rxjs/operators';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 jest.mock(`firebase-admin`, (): unknown => {
   return {
     credential: {},
-    firestore: jest.fn().mockReturnValue(createMock<admin.firestore.Firestore>()),
+    firestore: jest.fn().mockReturnValue(createHydratedMock<admin.firestore.Firestore>()),
   };
 });
 
@@ -85,7 +85,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
-      app = createMock<admin.app.App>();
+      app = createHydratedMock<admin.app.App>();
       settingsMock = jest.fn();
 
       discordClientServiceIsReadySpy = jest.spyOn(discordClientService, `isReady`).mockResolvedValue(true);
@@ -93,7 +93,7 @@ describe(`FirebaseGuildsService`, (): void => {
       getGuildsCountSpy = jest.spyOn(service, `getGuildsCount`).mockResolvedValue(8);
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       firestoreSpy = jest.spyOn(admin, `firestore`).mockReturnValue(
-        createMock<admin.firestore.Firestore>({
+        createHydratedMock<admin.firestore.Firestore>({
           settings: settingsMock,
         })
       );
@@ -269,11 +269,11 @@ describe(`FirebaseGuildsService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
-      collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>();
+      collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>();
       collectionMock = jest
         .fn<admin.firestore.CollectionReference<IFirebaseGuild>, string[]>()
         .mockReturnValue(collectionReference);
-      firestore = createMock<admin.firestore.Firestore>({
+      firestore = createHydratedMock<admin.firestore.Firestore>({
         collection: collectionMock,
       });
 
@@ -354,8 +354,8 @@ describe(`FirebaseGuildsService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
-      querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>();
-      collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+      querySnapshot = createHydratedMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>();
+      collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
         get: (): Promise<admin.firestore.QuerySnapshot<IFirebaseGuild>> => Promise.resolve(querySnapshot),
       });
 
@@ -406,10 +406,10 @@ describe(`FirebaseGuildsService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
-      querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
+      querySnapshot = createHydratedMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
         size: 8,
       });
-      collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+      collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
         get: (): Promise<admin.firestore.QuerySnapshot<IFirebaseGuild>> => Promise.resolve(querySnapshot),
       });
 
@@ -466,17 +466,17 @@ describe(`FirebaseGuildsService`, (): void => {
     beforeEach((): void => {
       service = new FirebaseGuildsService();
       guildId = `dummy-guild-id`;
-      documentSnapshot = createMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>();
+      documentSnapshot = createHydratedMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>();
       getMock = jest
         .fn<Promise<admin.firestore.DocumentSnapshot<IFirebaseGuild>>, IFirebaseGuild[]>()
         .mockResolvedValue(documentSnapshot);
-      documentReference = createMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
+      documentReference = createHydratedMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
         get: getMock,
       });
       docMock = jest
         .fn<admin.firestore.DocumentReference<IFirebaseGuild>, string[]>()
         .mockReturnValue(documentReference);
-      collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+      collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
         doc: docMock,
       });
 
@@ -534,11 +534,11 @@ describe(`FirebaseGuildsService`, (): void => {
       describe(`when the fetch of the guild failed`, (): void => {
         beforeEach((): void => {
           getMock.mockRejectedValue(new Error(`error`));
-          documentReference = createMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
+          documentReference = createHydratedMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
             get: getMock,
           });
           docMock.mockReturnValue(documentReference);
-          collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+          collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
             doc: docMock,
           });
 
@@ -568,13 +568,13 @@ describe(`FirebaseGuildsService`, (): void => {
 
       describe(`when the fetch of the guild was successful`, (): void => {
         beforeEach((): void => {
-          documentSnapshot = createMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>();
+          documentSnapshot = createHydratedMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>();
           getMock.mockResolvedValue(documentSnapshot);
-          documentReference = createMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
+          documentReference = createHydratedMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
             get: getMock,
           });
           docMock.mockReturnValue(documentReference);
-          collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+          collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
             doc: docMock,
           });
 
@@ -583,15 +583,15 @@ describe(`FirebaseGuildsService`, (): void => {
 
         describe(`when the guild does not exists`, (): void => {
           beforeEach((): void => {
-            documentSnapshot = createMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>({
+            documentSnapshot = createHydratedMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>({
               exists: false,
             });
             getMock.mockResolvedValue(documentSnapshot);
-            documentReference = createMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
+            documentReference = createHydratedMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
               get: getMock,
             });
             docMock.mockReturnValue(documentReference);
-            collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+            collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
               doc: docMock,
             });
 
@@ -609,15 +609,15 @@ describe(`FirebaseGuildsService`, (): void => {
 
         describe(`when the guild exists`, (): void => {
           beforeEach((): void => {
-            documentSnapshot = createMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>({
+            documentSnapshot = createHydratedMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>({
               exists: true,
             });
             getMock.mockResolvedValue(documentSnapshot);
-            documentReference = createMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
+            documentReference = createHydratedMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
               get: getMock,
             });
             docMock.mockReturnValue(documentReference);
-            collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+            collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
               doc: docMock,
             });
 
@@ -651,19 +651,19 @@ describe(`FirebaseGuildsService`, (): void => {
     beforeEach((): void => {
       service = new FirebaseGuildsService();
       guildId = `dummy-guild-id`;
-      documentSnapshot = createMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>();
-      firebaseGuild = createMock<IFirebaseGuild>();
+      documentSnapshot = createHydratedMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>();
+      firebaseGuild = createHydratedMock<IFirebaseGuild>();
 
       getMock = jest
         .fn<Promise<admin.firestore.DocumentSnapshot<IFirebaseGuild>>, IFirebaseGuild[]>()
         .mockResolvedValue(documentSnapshot);
-      documentReference = createMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
+      documentReference = createHydratedMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
         get: getMock,
       });
       docMock = jest
         .fn<admin.firestore.DocumentReference<IFirebaseGuild>, string[]>()
         .mockReturnValue(documentReference);
-      collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+      collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
         doc: docMock,
       });
 
@@ -721,11 +721,11 @@ describe(`FirebaseGuildsService`, (): void => {
       describe(`when the fetch of the guild failed`, (): void => {
         beforeEach((): void => {
           getMock.mockRejectedValue(new Error(`error`));
-          documentReference = createMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
+          documentReference = createHydratedMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
             get: getMock,
           });
           docMock.mockReturnValue(documentReference);
-          collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+          collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
             doc: docMock,
           });
 
@@ -755,13 +755,13 @@ describe(`FirebaseGuildsService`, (): void => {
 
       describe(`when the fetch of the guild was successful`, (): void => {
         beforeEach((): void => {
-          documentSnapshot = createMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>();
+          documentSnapshot = createHydratedMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>();
           getMock.mockResolvedValue(documentSnapshot);
-          documentReference = createMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
+          documentReference = createHydratedMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
             get: getMock,
           });
           docMock.mockReturnValue(documentReference);
-          collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+          collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
             doc: docMock,
           });
 
@@ -770,15 +770,15 @@ describe(`FirebaseGuildsService`, (): void => {
 
         describe(`when the guild does not exists`, (): void => {
           beforeEach((): void => {
-            documentSnapshot = createMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>({
+            documentSnapshot = createHydratedMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>({
               exists: false,
             });
             getMock.mockResolvedValue(documentSnapshot);
-            documentReference = createMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
+            documentReference = createHydratedMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
               get: getMock,
             });
             docMock.mockReturnValue(documentReference);
-            collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+            collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
               doc: docMock,
             });
 
@@ -796,18 +796,18 @@ describe(`FirebaseGuildsService`, (): void => {
 
         describe(`when the guild exists`, (): void => {
           beforeEach((): void => {
-            documentSnapshot = createMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>({
+            documentSnapshot = createHydratedMock<admin.firestore.DocumentSnapshot<IFirebaseGuild>>({
               data(): IFirebaseGuild {
                 return firebaseGuild;
               },
               exists: true,
             });
             getMock.mockResolvedValue(documentSnapshot);
-            documentReference = createMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
+            documentReference = createHydratedMock<admin.firestore.DocumentReference<IFirebaseGuild>>({
               get: getMock,
             });
             docMock.mockReturnValue(documentReference);
-            collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+            collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
               doc: docMock,
             });
 
@@ -840,18 +840,18 @@ describe(`FirebaseGuildsService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
-      guild = createMock<Guild>({
+      guild = createHydratedMock<Guild>({
         id: `dummy-id`,
       });
-      writeResult = createMock<admin.firestore.WriteResult>();
+      writeResult = createHydratedMock<admin.firestore.WriteResult>();
       setMock = jest.fn<Promise<admin.firestore.WriteResult>, [IFirebaseGuildVFinal]>().mockResolvedValue(writeResult);
-      documentReference = createMock<admin.firestore.DocumentReference<IFirebaseGuildVFinal>>({
+      documentReference = createHydratedMock<admin.firestore.DocumentReference<IFirebaseGuildVFinal>>({
         set: setMock,
       });
       docMock = jest
         .fn<admin.firestore.DocumentReference<IFirebaseGuildVFinal>, string[]>()
         .mockReturnValue(documentReference);
-      collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuildVFinal>>({
+      collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuildVFinal>>({
         doc: docMock,
       });
 
@@ -924,11 +924,11 @@ describe(`FirebaseGuildsService`, (): void => {
       describe(`when the guild was not successfully added into Firebase`, (): void => {
         beforeEach((): void => {
           setMock.mockRejectedValue(new Error(`error`));
-          documentReference = createMock<admin.firestore.DocumentReference<IFirebaseGuildVFinal>>({
+          documentReference = createHydratedMock<admin.firestore.DocumentReference<IFirebaseGuildVFinal>>({
             set: setMock,
           });
           docMock.mockReturnValue(documentReference);
-          collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuildVFinal>>({
+          collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuildVFinal>>({
             doc: docMock,
           });
 
@@ -944,13 +944,13 @@ describe(`FirebaseGuildsService`, (): void => {
 
       describe(`when the guild was successfully added into Firebase`, (): void => {
         beforeEach((): void => {
-          writeResult = createMock<admin.firestore.WriteResult>();
+          writeResult = createHydratedMock<admin.firestore.WriteResult>();
           setMock.mockResolvedValue(writeResult);
-          documentReference = createMock<admin.firestore.DocumentReference<IFirebaseGuildVFinal>>({
+          documentReference = createHydratedMock<admin.firestore.DocumentReference<IFirebaseGuildVFinal>>({
             set: setMock,
           });
           docMock.mockReturnValue(documentReference);
-          collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuildVFinal>>({
+          collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuildVFinal>>({
             doc: docMock,
           });
 
@@ -1039,7 +1039,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
-      firebaseGuilds = createMock<IFirebaseGuild[]>();
+      firebaseGuilds = createHydratedMock<IFirebaseGuild[]>();
     });
 
     it(`should be an empty array by default`, async (): Promise<void> => {
@@ -1067,7 +1067,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
-      firebaseGuilds = createMock<IFirebaseGuild[]>();
+      firebaseGuilds = createHydratedMock<IFirebaseGuild[]>();
     });
 
     it(`should notify that the Firebase guilds changed`, async (): Promise<void> => {
@@ -1088,9 +1088,9 @@ describe(`FirebaseGuildsService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
-      writeBatch = createMock<admin.firestore.WriteBatch>();
+      writeBatch = createHydratedMock<admin.firestore.WriteBatch>();
       batchMock = jest.fn<admin.firestore.WriteBatch, unknown[]>().mockReturnValue(writeBatch);
-      firestore = createMock<admin.firestore.Firestore>({
+      firestore = createHydratedMock<admin.firestore.Firestore>({
         batch: batchMock,
       });
 
@@ -1156,8 +1156,8 @@ describe(`FirebaseGuildsService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsService();
-      firebaseGuild = createMock<IFirebaseGuild>();
-      queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
+      firebaseGuild = createHydratedMock<IFirebaseGuild>();
+      queryDocumentSnapshot = createHydratedMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
         data: jest.fn().mockReturnValue(firebaseGuild),
         exists: true,
       });
@@ -1168,7 +1168,7 @@ describe(`FirebaseGuildsService`, (): void => {
             callback(queryDocumentSnapshot);
           }
         );
-      querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
+      querySnapshot = createHydratedMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
         forEach: forEachMock,
       });
       onSnapshotMock = jest
@@ -1176,7 +1176,7 @@ describe(`FirebaseGuildsService`, (): void => {
         .mockImplementation((onNext: (snapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>) => void): void => {
           onNext(querySnapshot);
         });
-      collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+      collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
         onSnapshot: onSnapshotMock,
       });
 
@@ -1249,7 +1249,7 @@ describe(`FirebaseGuildsService`, (): void => {
             .mockImplementation((_callback: () => void, onError: (error: Error) => void): void => {
               onError(new Error(`error`));
             });
-          collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+          collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
             onSnapshot: onSnapshotMock,
           });
 
@@ -1296,7 +1296,7 @@ describe(`FirebaseGuildsService`, (): void => {
             .mockImplementation((onNext: (snapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>) => void): void => {
               onNext(querySnapshot);
             });
-          collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+          collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
             onSnapshot: onSnapshotMock,
           });
 
@@ -1305,7 +1305,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         describe(`when Firebase has one valid guild`, (): void => {
           beforeEach((): void => {
-            queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
+            queryDocumentSnapshot = createHydratedMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
               data: jest.fn().mockReturnValue(firebaseGuild),
               exists: true,
             });
@@ -1316,7 +1316,7 @@ describe(`FirebaseGuildsService`, (): void => {
                   callback(queryDocumentSnapshot);
                 }
               );
-            querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
+            querySnapshot = createHydratedMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
               forEach: forEachMock,
             });
             onSnapshotMock = jest
@@ -1324,7 +1324,7 @@ describe(`FirebaseGuildsService`, (): void => {
               .mockImplementation((onNext: (snapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>) => void): void => {
                 onNext(querySnapshot);
               });
-            collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+            collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
               onSnapshot: onSnapshotMock,
             });
 
@@ -1343,7 +1343,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         describe(`when Firebase has one invalid guild`, (): void => {
           beforeEach((): void => {
-            queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
+            queryDocumentSnapshot = createHydratedMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
               data: jest.fn().mockReturnValue(firebaseGuild),
               exists: false,
             });
@@ -1354,7 +1354,7 @@ describe(`FirebaseGuildsService`, (): void => {
                   callback(queryDocumentSnapshot);
                 }
               );
-            querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
+            querySnapshot = createHydratedMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
               forEach: forEachMock,
             });
             onSnapshotMock = jest
@@ -1362,7 +1362,7 @@ describe(`FirebaseGuildsService`, (): void => {
               .mockImplementation((onNext: (snapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>) => void): void => {
                 onNext(querySnapshot);
               });
-            collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+            collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
               onSnapshot: onSnapshotMock,
             });
 
@@ -1381,7 +1381,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         describe(`when Firebase has multiple valid guild`, (): void => {
           beforeEach((): void => {
-            queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
+            queryDocumentSnapshot = createHydratedMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
               data: jest.fn().mockReturnValue(firebaseGuild),
               exists: true,
             });
@@ -1394,7 +1394,7 @@ describe(`FirebaseGuildsService`, (): void => {
                   callback(queryDocumentSnapshot);
                 }
               );
-            querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
+            querySnapshot = createHydratedMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
               forEach: forEachMock,
             });
             onSnapshotMock = jest
@@ -1402,7 +1402,7 @@ describe(`FirebaseGuildsService`, (): void => {
               .mockImplementation((onNext: (snapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>) => void): void => {
                 onNext(querySnapshot);
               });
-            collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+            collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
               onSnapshot: onSnapshotMock,
             });
 
@@ -1425,7 +1425,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         describe(`when Firebase has multiple invalid guild`, (): void => {
           beforeEach((): void => {
-            queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
+            queryDocumentSnapshot = createHydratedMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
               data: jest.fn().mockReturnValue(firebaseGuild),
               exists: false,
             });
@@ -1438,7 +1438,7 @@ describe(`FirebaseGuildsService`, (): void => {
                   callback(queryDocumentSnapshot);
                 }
               );
-            querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
+            querySnapshot = createHydratedMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
               forEach: forEachMock,
             });
             onSnapshotMock = jest
@@ -1446,7 +1446,7 @@ describe(`FirebaseGuildsService`, (): void => {
               .mockImplementation((onNext: (snapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>) => void): void => {
                 onNext(querySnapshot);
               });
-            collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+            collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
               onSnapshot: onSnapshotMock,
             });
 

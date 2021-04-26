@@ -7,7 +7,7 @@ import { IFirebaseGuildChannelFeatureV1 } from '../../../interfaces/guilds/chann
 import { IFirebaseGuildChannelFeatureV2 } from '../../../interfaces/guilds/channels/features/firebase-guild-channel-feature-v2';
 import { IFirebaseGuildChannelV1 } from '../../../interfaces/guilds/channels/firebase-guild-channel-v1';
 import { IFirebaseGuildChannelV2 } from '../../../interfaces/guilds/channels/firebase-guild-channel-v2';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`handleFirebaseGuildChannelBreakingChange()`, (): void => {
   describe(`when the given Firebase guild channel has no version`, (): void => {
@@ -30,7 +30,7 @@ describe(`handleFirebaseGuildChannelBreakingChange()`, (): void => {
     let firebaseGuildChannel: IFirebaseGuildChannelV1;
 
     beforeEach((): void => {
-      firebaseGuildChannel = createMock<IFirebaseGuildChannelV1>({
+      firebaseGuildChannel = createHydratedMock<IFirebaseGuildChannelV1>({
         features: undefined,
         id: `dummy-id`,
         version: FirebaseGuildChannelVersionEnum.V1,
@@ -53,7 +53,7 @@ describe(`handleFirebaseGuildChannelBreakingChange()`, (): void => {
 
     describe(`when there is some features configured`, (): void => {
       beforeEach((): void => {
-        firebaseGuildChannel.features = createMock<IFirebaseGuildChannelFeatureV1>({
+        firebaseGuildChannel.features = createHydratedMock<IFirebaseGuildChannelFeatureV1>({
           noon: {
             isEnabled: false,
             version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
@@ -99,8 +99,8 @@ describe(`handleFirebaseGuildChannelBreakingChange()`, (): void => {
     let firebaseGuildChannel: IFirebaseGuildChannelV2;
 
     beforeEach((): void => {
-      firebaseGuildChannel = createMock<IFirebaseGuildChannelV2>({
-        features: createMock<IFirebaseGuildChannelFeatureV2>(),
+      firebaseGuildChannel = createHydratedMock<IFirebaseGuildChannelV2>({
+        features: createHydratedMock<IFirebaseGuildChannelFeatureV2>(),
         id: `dummy-id`,
         version: FirebaseGuildChannelVersionEnum.V2,
       });

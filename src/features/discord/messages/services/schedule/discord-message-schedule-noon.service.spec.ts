@@ -28,7 +28,7 @@ import { Client, Collection, Guild, GuildChannel, Message, TextChannel } from 'd
 import moment from 'moment-timezone';
 import * as NodeScheduleModule from 'node-schedule';
 import { noop } from 'rxjs';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 let time: number = new Date(`2020-01-02T02:00:00Z`).getTime();
 
@@ -159,7 +159,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         .spyOn(GetEveryHourScheduleRuleModule, `getEveryHourScheduleRule`)
         .mockReturnValue(`dummy-schedule`);
       service = new DiscordMessageScheduleNoonService();
-      job = createMock<NodeScheduleModule.Job>({
+      job = createHydratedMock<NodeScheduleModule.Job>({
         reschedule: jobRescheduleMock,
       });
 
@@ -302,7 +302,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageScheduleNoonService();
-      guild = createMock<Guild>({
+      guild = createHydratedMock<Guild>({
         id: `dummy-guild-id`,
       });
 
@@ -427,7 +427,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
       describe(`when the Firebase guild data is a Firebase guild but not up-to-date`, (): void => {
         beforeEach((): void => {
-          firebaseGuild = createMock<IFirebaseGuildV3>({
+          firebaseGuild = createHydratedMock<IFirebaseGuildV3>({
             version: FirebaseGuildVersionEnum.V3,
           });
 
@@ -457,7 +457,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
       describe(`when the Firebase guild data is a Firebase guild up-to-date`, (): void => {
         beforeEach((): void => {
-          firebaseGuild = createMock<IFirebaseGuildVFinal>({
+          firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
             channels: {},
             version: FirebaseGuildVersionEnum.V5,
           });
@@ -479,7 +479,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         describe(`when the Firebase guild has no channel`, (): void => {
           beforeEach((): void => {
-            firebaseGuild = createMock<IFirebaseGuildVFinal>({
+            firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
               channels: {},
               version: FirebaseGuildVersionEnum.V5,
             });
@@ -500,10 +500,10 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           let channel: IFirebaseGuildChannelVFinal;
 
           beforeEach((): void => {
-            channel = createMock<IFirebaseGuildChannelVFinal>({
+            channel = createHydratedMock<IFirebaseGuildChannelVFinal>({
               id: `one`,
             });
-            firebaseGuild = createMock<IFirebaseGuildVFinal>({
+            firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
               channels: {
                 one: channel,
               },
@@ -528,13 +528,13 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           let channel2: IFirebaseGuildChannelVFinal;
 
           beforeEach((): void => {
-            channel1 = createMock<IFirebaseGuildChannelVFinal>({
+            channel1 = createHydratedMock<IFirebaseGuildChannelVFinal>({
               id: `one`,
             });
-            channel2 = createMock<IFirebaseGuildChannelVFinal>({
+            channel2 = createHydratedMock<IFirebaseGuildChannelVFinal>({
               id: `two`,
             });
-            firebaseGuild = createMock<IFirebaseGuildVFinal>({
+            firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
               channels: {
                 one: channel1,
                 two: channel2,
@@ -573,7 +573,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
             let message: Message;
 
             beforeEach((): void => {
-              message = createMock<Message>();
+              message = createHydratedMock<Message>();
 
               sendMessageByChannelSpy.mockResolvedValue(message);
             });
@@ -613,10 +613,10 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageScheduleNoonService();
-      channel = createMock<IFirebaseGuildChannel>();
-      firebaseGuild = createMock<IFirebaseGuildVFinal>();
+      channel = createHydratedMock<IFirebaseGuildChannel>();
+      firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>();
       guildChannelsGetMock = jest.fn().mockImplementation();
-      guild = createMock<Guild>({
+      guild = createHydratedMock<Guild>({
         channels: {
           cache: {
             get: guildChannelsGetMock,
@@ -636,7 +636,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
     describe(`when the given Firebase guild channel id is undefined`, (): void => {
       beforeEach((): void => {
-        channel = createMock<IFirebaseGuildChannel>({
+        channel = createHydratedMock<IFirebaseGuildChannel>({
           id: undefined,
         });
       });
@@ -658,7 +658,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
     describe(`when the given Firebase guild channel id is valid`, (): void => {
       beforeEach((): void => {
-        channel = createMock<IFirebaseGuildChannel>({
+        channel = createHydratedMock<IFirebaseGuildChannel>({
           id: `dummy-channel-id`,
         });
       });
@@ -666,7 +666,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       describe(`when the given Firebase guild has a valid noon feature`, (): void => {
         describe(`when the given Firebase guild has a valid noon feature disabled`, (): void => {
           beforeEach((): void => {
-            firebaseGuild = createMock<IFirebaseGuildVFinal>({
+            firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
               channels: {
                 'dummy-channel-id': {
                   features: {
@@ -702,7 +702,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         describe(`when the given Firebase guild has a valid noon feature enabled`, (): void => {
           beforeEach((): void => {
-            firebaseGuild = createMock<IFirebaseGuildVFinal>({
+            firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
               channels: {
                 'dummy-channel-id': {
                   features: {
@@ -770,7 +770,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
             let guildChannel: GuildChannel;
 
             beforeEach((): void => {
-              guildChannel = createMock<GuildChannel>({
+              guildChannel = createHydratedMock<GuildChannel>({
                 id: `dummy-guild-channel-id`,
               });
 
@@ -820,7 +820,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               let message: Message;
 
               beforeEach((): void => {
-                message = createMock<Message>();
+                message = createHydratedMock<Message>();
 
                 sendMessageResponseSpy.mockResolvedValue(message);
               });
@@ -849,7 +849,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       service = new DiscordMessageScheduleNoonService();
 
       discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
-        createMock<Client>({
+        createHydratedMock<Client>({
           guilds: {
             cache: ({
               forEach: noop,
@@ -969,7 +969,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         describe(`when there is no guild`, (): void => {
           beforeEach((): void => {
             discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
-              createMock<Client>({
+              createHydratedMock<Client>({
                 guilds: {
                   cache: ({
                     forEach: noop,
@@ -994,12 +994,12 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           let guild: Guild;
 
           beforeEach((): void => {
-            guild = createMock<Guild>({
+            guild = createHydratedMock<Guild>({
               id: `dummy-guild-id`,
             });
 
             discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
-              createMock<Client>({
+              createHydratedMock<Client>({
                 guilds: {
                   cache: {
                     forEach: (callback): void => callback(guild, `key`, new Map()),
@@ -1044,7 +1044,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
             let messages: Message[];
 
             beforeEach((): void => {
-              messages = [createMock<Message>(), createMock<Message>()];
+              messages = [createHydratedMock<Message>(), createHydratedMock<Message>()];
 
               sendMessageSpy.mockResolvedValue(messages);
             });
@@ -1065,15 +1065,15 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           let guild2: Guild;
 
           beforeEach((): void => {
-            guild1 = createMock<Guild>({
+            guild1 = createHydratedMock<Guild>({
               id: `dummy-guild-id-1`,
             });
-            guild2 = createMock<Guild>({
+            guild2 = createHydratedMock<Guild>({
               id: `dummy-guild-id-2`,
             });
 
             discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
-              createMock<Client>({
+              createHydratedMock<Client>({
                 guilds: {
                   cache: {
                     forEach(callback): void {
@@ -1126,7 +1126,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
             let messages: Message[];
 
             beforeEach((): void => {
-              messages = [createMock<Message>(), createMock<Message>()];
+              messages = [createHydratedMock<Message>(), createHydratedMock<Message>()];
 
               sendMessageSpy.mockResolvedValue(messages);
             });
@@ -1156,10 +1156,10 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageScheduleNoonService();
-      guildChannel = createMock<GuildChannel>({
+      guildChannel = createHydratedMock<GuildChannel>({
         id: `dummy-guild-channel-id`,
       });
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
@@ -1173,7 +1173,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
     describe(`when the given guild channel is not writable`, (): void => {
       beforeEach((): void => {
-        guildChannel = createMock<GuildChannel>({
+        guildChannel = createHydratedMock<GuildChannel>({
           id: `dummy-guild-channel-id`,
           isText(): false {
             return false;
@@ -1201,7 +1201,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
       beforeEach((): void => {
         sendMock = jest.fn().mockRejectedValue(new Error(`send error`));
-        guildChannel = createMock<TextChannel>({
+        guildChannel = createHydratedMock<TextChannel>({
           id: `dummy-guild-channel-id`,
           isText(): true {
             return true;
@@ -1288,7 +1288,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         let message: Message;
 
         beforeEach((): void => {
-          message = createMock<Message>();
+          message = createHydratedMock<Message>();
 
           sendMock.mockResolvedValue(message);
         });
@@ -1339,7 +1339,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageScheduleNoonService();
-      (service as any)._job = createMock<NodeScheduleModule.Job>({
+      (service as any)._job = createHydratedMock<NodeScheduleModule.Job>({
         nextInvocation(): Date {
           return moment().toDate();
         },

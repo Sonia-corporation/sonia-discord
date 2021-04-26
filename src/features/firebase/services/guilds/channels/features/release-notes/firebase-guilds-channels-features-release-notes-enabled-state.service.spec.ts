@@ -8,7 +8,7 @@ import { FirebaseGuildChannelFeatureVersionEnum } from '../../../../../enums/gui
 import { FirebaseGuildChannelVersionEnum } from '../../../../../enums/guilds/channels/firebase-guild-channel-version.enum';
 import { IFirebaseGuildChannel } from '../../../../../types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuildVFinal } from '../../../../../types/guilds/firebase-guild-v-final';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../logger/services/chalk/chalk.service`);
 
@@ -69,8 +69,8 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService`, (): vo
 
     beforeEach((): void => {
       service = new FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService();
-      channel = createMock<IFirebaseGuildChannel>();
-      firebaseGuild = createMock<IFirebaseGuildVFinal>({
+      channel = createHydratedMock<IFirebaseGuildChannel>();
+      firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
         id: `dummy-guild-id`,
       });
 

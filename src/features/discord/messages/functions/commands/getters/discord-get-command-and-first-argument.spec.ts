@@ -1,13 +1,13 @@
 import { discordGetCommandAndFirstArgument } from './discord-get-command-and-first-argument';
 import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
 import { IDiscordGetCommandAndFirstArgumentData } from '../../../interfaces/commands/getters/discord-get-command-and-first-argument-data';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`discordGetCommandAndFirstArgument()`, (): void => {
   let data: IDiscordGetCommandAndFirstArgumentData;
 
   beforeEach((): void => {
-    data = createMock<IDiscordGetCommandAndFirstArgumentData>();
+    data = createHydratedMock<IDiscordGetCommandAndFirstArgumentData>();
   });
 
   describe(`when the given prefix is !`, (): void => {

@@ -17,7 +17,7 @@ import { DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS } from '../constant
 import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 
@@ -134,7 +134,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureReleaseNotesService();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>();
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>();
       messageFlags = `--enabled=true -e`;
 
       executeAllSpy = jest
@@ -187,7 +187,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
       let discordCommandFlagsResponse: IDiscordCommandFlagsResponse;
 
       beforeEach((): void => {
-        discordCommandFlagsResponse = createMock<IDiscordCommandFlagsResponse>();
+        discordCommandFlagsResponse = createHydratedMock<IDiscordCommandFlagsResponse>();
 
         executeAllSpy.mockResolvedValue(discordCommandFlagsResponse);
       });
@@ -196,7 +196,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
         let discordCommandFlagsSuccess: IDiscordCommandFlagsSuccess;
 
         beforeEach((): void => {
-          discordCommandFlagsSuccess = [createMock<IDiscordCommandFlagSuccess>()];
+          discordCommandFlagsSuccess = [createHydratedMock<IDiscordCommandFlagSuccess>()];
           discordCommandFlagsResponse = discordCommandFlagsSuccess;
 
           executeAllSpy.mockResolvedValue(discordCommandFlagsResponse);
@@ -212,7 +212,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
         it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
           expect.assertions(1);
-          const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+          const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
           discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
@@ -358,9 +358,9 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
         beforeEach((): void => {
           discordCommandFlagsSuccess = [
-            createMock<IDiscordCommandFlagSuccess>(),
-            createMock<IDiscordCommandFlagSuccess>(),
-            createMock<IDiscordCommandFlagSuccess>(),
+            createHydratedMock<IDiscordCommandFlagSuccess>(),
+            createHydratedMock<IDiscordCommandFlagSuccess>(),
+            createHydratedMock<IDiscordCommandFlagSuccess>(),
           ];
           discordCommandFlagsResponse = discordCommandFlagsSuccess;
 
@@ -514,7 +514,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
         let discordMessageResponses: IDiscordMessageResponse[];
 
         beforeEach((): void => {
-          discordMessageResponse = createMock<IDiscordMessageResponse>();
+          discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
           discordMessageResponses = [discordMessageResponse];
           discordCommandFlagsResponse = discordMessageResponses;
 
@@ -538,13 +538,13 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
         let discordMessageResponses: IDiscordMessageResponse[];
 
         beforeEach((): void => {
-          discordMessageResponseA = createMock<IDiscordMessageResponse>({
+          discordMessageResponseA = createHydratedMock<IDiscordMessageResponse>({
             response: `dummy-response-a`,
           });
-          discordMessageResponseB = createMock<IDiscordMessageResponse>({
+          discordMessageResponseB = createHydratedMock<IDiscordMessageResponse>({
             response: `dummy-response-b`,
           });
-          discordMessageResponseC = createMock<IDiscordMessageResponse>({
+          discordMessageResponseC = createHydratedMock<IDiscordMessageResponse>({
             response: `dummy-response-c`,
           });
           discordMessageResponses = [discordMessageResponseA, discordMessageResponseB, discordMessageResponseC];
@@ -574,17 +574,17 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
         beforeEach((): void => {
           discordCommandFlagsSuccess = [
-            createMock<IDiscordCommandFlagSuccess>(),
-            createMock<IDiscordCommandFlagSuccess>(),
-            createMock<IDiscordCommandFlagSuccess>(),
+            createHydratedMock<IDiscordCommandFlagSuccess>(),
+            createHydratedMock<IDiscordCommandFlagSuccess>(),
+            createHydratedMock<IDiscordCommandFlagSuccess>(),
           ];
-          discordMessageResponseA = createMock<IDiscordMessageResponse>({
+          discordMessageResponseA = createHydratedMock<IDiscordMessageResponse>({
             response: `dummy-response-a`,
           });
-          discordMessageResponseB = createMock<IDiscordMessageResponse>({
+          discordMessageResponseB = createHydratedMock<IDiscordMessageResponse>({
             response: `dummy-response-b`,
           });
-          discordMessageResponseC = createMock<IDiscordMessageResponse>({
+          discordMessageResponseC = createHydratedMock<IDiscordMessageResponse>({
             response: `dummy-response-c`,
           });
           discordMessageResponses = [discordMessageResponseA, discordMessageResponseB, discordMessageResponseC];

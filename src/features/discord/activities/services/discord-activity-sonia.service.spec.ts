@@ -15,7 +15,7 @@ import { Activity, Client, Presence, PresenceData } from 'discord.js';
 import _ from 'lodash';
 import * as NodeScheduleModule from 'node-schedule';
 import { BehaviorSubject, noop } from 'rxjs';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 jest.mock(`node-schedule`);
@@ -82,7 +82,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordActivitySoniaService();
-      presence = createMock<Presence>();
+      presence = createHydratedMock<Presence>();
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `isReady$`).mockReturnValue(isReady$);
@@ -206,7 +206,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
         .mockReturnValueOnce(`dummy-schedule`)
         .mockReturnValueOnce(`dummy-new-schedule`);
       service = new DiscordActivitySoniaService();
-      job = createMock<NodeScheduleModule.Job>({
+      job = createHydratedMock<NodeScheduleModule.Job>({
         reschedule: jobRescheduleMock,
       });
 
@@ -567,7 +567,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordActivitySoniaService();
-      presence = createMock<Presence>({
+      presence = createHydratedMock<Presence>({
         activities: [
           {
             name: DiscordActivityNameEnum.APOLLO,
@@ -577,12 +577,12 @@ describe(`DiscordActivitySoniaService`, (): void => {
         ],
       });
       setPresenceMock = jest.fn<Promise<Presence>, unknown[]>().mockRejectedValue(new Error(`setPresence: error`));
-      presenceActivity = createMock<IDiscordPresenceActivity>({
+      presenceActivity = createHydratedMock<IDiscordPresenceActivity>({
         name: DiscordActivityNameEnum.APOLLO,
         type: `PLAYING`,
         url: `dummy-url`,
       });
-      client = createMock<Client>({
+      client = createHydratedMock<Client>({
         user: {
           setPresence: setPresenceMock,
         },

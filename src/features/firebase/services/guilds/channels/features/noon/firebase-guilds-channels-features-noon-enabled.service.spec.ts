@@ -15,7 +15,7 @@ import { IFirebaseGuild } from '../../../../../types/guilds/firebase-guild';
 import { FirebaseGuildsService } from '../../../firebase-guilds.service';
 import { Guild } from 'discord.js';
 import * as admin from 'firebase-admin';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../logger/services/chalk/chalk.service`);
 
@@ -128,7 +128,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
 
     describe(`when the Firebase guilds collection is valid`, (): void => {
       beforeEach((): void => {
-        collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>();
+        collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>();
 
         firebaseGuildsServiceGetCollectionReferenceSpy.mockReturnValue(collectionReference);
       });
@@ -241,14 +241,14 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
 
         describe(`when the Firebase guild is a Firebase guild`, (): void => {
           beforeEach((): void => {
-            firebaseGuild = createMock<IFirebaseGuild>();
+            firebaseGuild = createHydratedMock<IFirebaseGuild>();
 
             firebaseGuildsServiceGetGuildSpy.mockResolvedValue(firebaseGuild);
           });
 
           describe(`when the Firebase guild is a Firebase guild not up-to-date`, (): void => {
             beforeEach((): void => {
-              firebaseGuild = createMock<IFirebaseGuildV1>({
+              firebaseGuild = createHydratedMock<IFirebaseGuildV1>({
                 version: FirebaseGuildVersionEnum.V1,
               });
 
@@ -280,7 +280,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
 
           describe(`when the Firebase guild is a Firebase guild up-to-date`, (): void => {
             beforeEach((): void => {
-              firebaseGuild = createMock<IFirebaseGuildVFinal>({
+              firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
                 version: FirebaseGuildVersionEnum.V5,
               });
 
@@ -322,7 +322,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
 
     describe(`when the given Firebase guild is fully up-to-date`, (): void => {
       beforeEach((): void => {
-        firebaseGuild = createMock<IFirebaseGuildVFinal>({
+        firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
           channels: {
             'dummy-id': {
               features: {
@@ -373,12 +373,12 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
 
     describe(`when the given Firebase guild is not fully up-to-date`, (): void => {
       beforeEach((): void => {
-        firebaseGuild = createMock<IFirebaseGuildVFinal>();
+        firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>();
       });
 
       describe(`when the given Firebase guild does not have the channel with the given id`, (): void => {
         beforeEach((): void => {
-          firebaseGuild = createMock<IFirebaseGuildVFinal>({
+          firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
             channels: {
               'other-id': {
                 id: `other-id`,
@@ -431,7 +431,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
 
       describe(`when the given Firebase guild does have a channel with the given id but without any features`, (): void => {
         beforeEach((): void => {
-          firebaseGuild = createMock<IFirebaseGuildVFinal>({
+          firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
             channels: {
               'dummy-id': {
                 id: `dummy-id`,
@@ -488,7 +488,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
 
       describe(`when the given Firebase guild does have a channel with the given id with features but without noon`, (): void => {
         beforeEach((): void => {
-          firebaseGuild = createMock<IFirebaseGuildVFinal>({
+          firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
             channels: {
               'dummy-id': {
                 features: {
@@ -548,7 +548,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
 
       describe(`when the given Firebase guild does have a channel with the given id with noon feature`, (): void => {
         beforeEach((): void => {
-          firebaseGuild = createMock<IFirebaseGuildVFinal>({
+          firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
             channels: {
               'dummy-id': {
                 features: {
@@ -622,14 +622,14 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
       id = `dummy-id`;
       channelId = `dummy-channel-id`;
       isEnabled = true;
-      firebaseGuild = createMock<IFirebaseGuildVFinal>();
-      updatedFirebaseGuild = createMock<IObject>();
+      firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>();
+      updatedFirebaseGuild = createHydratedMock<IObject>();
 
       updateMock = jest.fn().mockRejectedValue(new Error(`update error`));
       docMock = jest.fn().mockReturnValue({
         update: updateMock,
       });
-      collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+      collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
         doc: docMock,
       });
       getUpdatedGuildSpy = jest.spyOn(service, `getUpdatedGuild`).mockReturnValue(updatedFirebaseGuild);
@@ -675,7 +675,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
         docMock = jest.fn().mockReturnValue({
           update: updateMock,
         });
-        collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+        collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
           doc: docMock,
         });
       });
@@ -691,13 +691,13 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
 
     describe(`when the Firebase guild was successfully updated`, (): void => {
       beforeEach((): void => {
-        writeResult = createMock<admin.firestore.WriteResult>();
+        writeResult = createHydratedMock<admin.firestore.WriteResult>();
 
         updateMock = jest.fn().mockResolvedValue(writeResult);
         docMock = jest.fn().mockReturnValue({
           update: updateMock,
         });
-        collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+        collectionReference = createHydratedMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
           doc: docMock,
         });
       });

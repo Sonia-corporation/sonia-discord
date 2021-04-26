@@ -10,7 +10,7 @@ import { IFirebaseGuildChannelV1 } from '../../../interfaces/guilds/channels/fir
 import { IFirebaseGuildChannelV2 } from '../../../interfaces/guilds/channels/firebase-guild-channel-v2';
 import { IFirebaseGuildChannelVFinal } from '../../../types/guilds/channels/firebase-guild-channel-v-final';
 import { IFirebaseGuildChannel } from '../../../types/guilds/channels/firebase-guild-channel';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../logger/services/chalk/chalk.service`);
 
@@ -84,7 +84,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
     describe(`when the given channel is a v1 channel`, (): void => {
       beforeEach((): void => {
-        channel = createMock<IFirebaseGuildChannelV1>({
+        channel = createHydratedMock<IFirebaseGuildChannelV1>({
           features: {
             noon: {
               isEnabled: false,
@@ -108,7 +108,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
     describe(`when the given channel is a v2 channel`, (): void => {
       beforeEach((): void => {
-        channel = createMock<IFirebaseGuildChannelV2>({
+        channel = createHydratedMock<IFirebaseGuildChannelV2>({
           features: {
             noon: {
               isEnabled: false,
@@ -144,7 +144,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
     describe(`when the given channel is a v1 channel`, (): void => {
       beforeEach((): void => {
-        channel = createMock<IFirebaseGuildChannelV1>({
+        channel = createHydratedMock<IFirebaseGuildChannelV1>({
           version: FirebaseGuildChannelVersionEnum.V1,
         });
       });
@@ -160,7 +160,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
     describe(`when the given channel is a v2 channel`, (): void => {
       beforeEach((): void => {
-        channel = createMock<IFirebaseGuildChannelV2>({
+        channel = createHydratedMock<IFirebaseGuildChannelV2>({
           features: {
             noon: {
               isEnabled: false,
@@ -210,7 +210,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
     describe(`when the given channel is a channel`, (): void => {
       beforeEach((): void => {
-        channel = createMock<IFirebaseGuildChannelVFinal>();
+        channel = createHydratedMock<IFirebaseGuildChannelVFinal>();
       });
 
       it(`should return true`, (): void => {
@@ -228,7 +228,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsChannelsService();
-      channel = createMock<ICreateFirebaseGuildChannel>({
+      channel = createHydratedMock<ICreateFirebaseGuildChannel>({
         id: `dummy-id`,
       });
     });
@@ -267,7 +267,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
     describe(`when the given channel is a v1`, (): void => {
       beforeEach((): void => {
-        channel = createMock<IFirebaseGuildChannelV1>({
+        channel = createHydratedMock<IFirebaseGuildChannelV1>({
           features: {
             noon: {
               isEnabled: false,
@@ -302,7 +302,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
     describe(`when the given channel is a v2`, (): void => {
       beforeEach((): void => {
-        channel = createMock<IFirebaseGuildChannelV2>({
+        channel = createHydratedMock<IFirebaseGuildChannelV2>({
           features: {
             noon: {
               isEnabled: false,
@@ -335,7 +335,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsChannelsService();
-      createChannel = createMock<ICreateFirebaseGuildChannel>({
+      createChannel = createHydratedMock<ICreateFirebaseGuildChannel>({
         id: `dummy-id`,
       });
     });
@@ -358,7 +358,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
     describe(`when the given channel is a v1 channel`, (): void => {
       beforeEach((): void => {
-        channel = createMock<IFirebaseGuildChannelV1>({
+        channel = createHydratedMock<IFirebaseGuildChannelV1>({
           features: undefined,
           id: `dummy-id`,
           version: FirebaseGuildChannelVersionEnum.V1,
@@ -378,7 +378,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
     describe(`when the given channel is a v2 channel`, (): void => {
       beforeEach((): void => {
-        channel = createMock<IFirebaseGuildChannelV2>({
+        channel = createHydratedMock<IFirebaseGuildChannelV2>({
           features: undefined,
           id: `dummy-id`,
           version: FirebaseGuildChannelVersionEnum.V2,

@@ -12,7 +12,7 @@ import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import * as admin from 'firebase-admin';
 import { of, throwError } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -88,7 +88,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsBreakingChangeService();
-      queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>();
+      queryDocumentSnapshot = createHydratedMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>();
       forEachMock = jest
         .fn()
         .mockImplementation(
@@ -96,13 +96,13 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
             callback(queryDocumentSnapshot);
           }
         );
-      querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
+      querySnapshot = createHydratedMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
         forEach: forEachMock,
       });
-      writeResults = createMock<admin.firestore.WriteResult[]>();
+      writeResults = createHydratedMock<admin.firestore.WriteResult[]>();
       commitMock = jest.fn().mockResolvedValue(writeResults);
       updateMock = jest.fn().mockImplementation();
-      writeBatch = createMock<admin.firestore.WriteBatch>({
+      writeBatch = createHydratedMock<admin.firestore.WriteBatch>({
         commit: commitMock,
         update: updateMock,
       });
@@ -304,7 +304,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
           describe(`when there is no Firebase guild`, (): void => {
             beforeEach((): void => {
-              queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
+              queryDocumentSnapshot = createHydratedMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
                 exists: false,
               });
               forEachMock = jest
@@ -314,7 +314,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
                     callback(queryDocumentSnapshot);
                   }
                 );
-              querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
+              querySnapshot = createHydratedMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
                 forEach: forEachMock,
               });
 
@@ -340,9 +340,9 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
           describe(`when there is a Firebase guild but on latest version`, (): void => {
             beforeEach((): void => {
-              queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuildVFinal>>({
+              queryDocumentSnapshot = createHydratedMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuildVFinal>>({
                 data: (): IFirebaseGuildVFinal =>
-                  createMock<IFirebaseGuildVFinal>({
+                  createHydratedMock<IFirebaseGuildVFinal>({
                     version: FirebaseGuildVersionEnum.V5,
                   }),
                 exists: true,
@@ -354,7 +354,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
                     callback(queryDocumentSnapshot);
                   }
                 );
-              querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
+              querySnapshot = createHydratedMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
                 forEach: forEachMock,
               });
 
@@ -392,9 +392,9 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
           describe(`when there is two Firebase guilds but on latest version`, (): void => {
             beforeEach((): void => {
-              queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuildVFinal>>({
+              queryDocumentSnapshot = createHydratedMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuildVFinal>>({
                 data: (): IFirebaseGuildVFinal =>
-                  createMock<IFirebaseGuildVFinal>({
+                  createHydratedMock<IFirebaseGuildVFinal>({
                     version: FirebaseGuildVersionEnum.V5,
                   }),
                 exists: true,
@@ -407,7 +407,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
                     callback(queryDocumentSnapshot);
                   }
                 );
-              querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
+              querySnapshot = createHydratedMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
                 forEach: forEachMock,
               });
 
@@ -447,11 +447,11 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
             let firebaseGuildV1: IFirebaseGuildV1;
 
             beforeEach((): void => {
-              firebaseGuildV1 = createMock<IFirebaseGuildV1>({
+              firebaseGuildV1 = createHydratedMock<IFirebaseGuildV1>({
                 id: `dummy-id`,
                 version: FirebaseGuildVersionEnum.V1,
               });
-              queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
+              queryDocumentSnapshot = createHydratedMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
                 data: (): IFirebaseGuildV1 => firebaseGuildV1,
                 exists: true,
               });
@@ -462,7 +462,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
                     callback(queryDocumentSnapshot);
                   }
                 );
-              querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
+              querySnapshot = createHydratedMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
                 forEach: forEachMock,
               });
 
@@ -509,11 +509,11 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
             let firebaseGuildV1: IFirebaseGuildV1;
 
             beforeEach((): void => {
-              firebaseGuildV1 = createMock<IFirebaseGuildV1>({
+              firebaseGuildV1 = createHydratedMock<IFirebaseGuildV1>({
                 id: `dummy-id`,
                 version: FirebaseGuildVersionEnum.V1,
               });
-              queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
+              queryDocumentSnapshot = createHydratedMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
                 data: (): IFirebaseGuildV1 => firebaseGuildV1,
                 exists: true,
               });
@@ -525,7 +525,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
                     callback(queryDocumentSnapshot);
                   }
                 );
-              querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
+              querySnapshot = createHydratedMock<admin.firestore.QuerySnapshot<IFirebaseGuild>>({
                 forEach: forEachMock,
               });
 

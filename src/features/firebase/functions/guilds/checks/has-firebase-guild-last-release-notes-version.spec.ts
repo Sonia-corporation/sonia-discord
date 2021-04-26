@@ -6,14 +6,14 @@ import { IFirebaseGuildV3 } from '../../../interfaces/guilds/firebase-guild-v3';
 import { IFirebaseGuildV4 } from '../../../interfaces/guilds/firebase-guild-v4';
 import { IFirebaseGuildV5 } from '../../../interfaces/guilds/firebase-guild-v5';
 import { IFirebaseGuild } from '../../../types/guilds/firebase-guild';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`hasFirebaseGuildLastReleaseNotesVersion()`, (): void => {
   let firebaseGuild: IFirebaseGuild;
 
   describe(`when the given Firebase guild is a v1`, (): void => {
     beforeEach((): void => {
-      firebaseGuild = createMock<IFirebaseGuildV1>({
+      firebaseGuild = createHydratedMock<IFirebaseGuildV1>({
         version: FirebaseGuildVersionEnum.V1,
       });
     });
@@ -29,7 +29,7 @@ describe(`hasFirebaseGuildLastReleaseNotesVersion()`, (): void => {
 
   describe(`when the given Firebase guild is a v2`, (): void => {
     beforeEach((): void => {
-      firebaseGuild = createMock<IFirebaseGuildV2>({
+      firebaseGuild = createHydratedMock<IFirebaseGuildV2>({
         version: FirebaseGuildVersionEnum.V2,
       });
     });
@@ -45,7 +45,7 @@ describe(`hasFirebaseGuildLastReleaseNotesVersion()`, (): void => {
 
   describe(`when the given Firebase guild is a v3`, (): void => {
     beforeEach((): void => {
-      firebaseGuild = createMock<IFirebaseGuildV3>({
+      firebaseGuild = createHydratedMock<IFirebaseGuildV3>({
         version: FirebaseGuildVersionEnum.V3,
       });
     });
@@ -61,7 +61,7 @@ describe(`hasFirebaseGuildLastReleaseNotesVersion()`, (): void => {
 
   describe(`when the given Firebase guild is a v4`, (): void => {
     beforeEach((): void => {
-      firebaseGuild = createMock<IFirebaseGuildV4>({
+      firebaseGuild = createHydratedMock<IFirebaseGuildV4>({
         version: FirebaseGuildVersionEnum.V4,
       });
     });
@@ -77,7 +77,7 @@ describe(`hasFirebaseGuildLastReleaseNotesVersion()`, (): void => {
 
   describe(`when the given Firebase guild is a v5`, (): void => {
     beforeEach((): void => {
-      firebaseGuild = createMock<IFirebaseGuildV5>({
+      firebaseGuild = createHydratedMock<IFirebaseGuildV5>({
         version: FirebaseGuildVersionEnum.V5,
       });
     });

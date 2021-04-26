@@ -24,7 +24,7 @@ import { DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum } from '..
 import { DiscordMessageCommandFeatureNoonHumanizeEnabledMessagesEnum } from '../enums/discord-message-command-feature-noon-humanize-enabled-messages.enum';
 import { Message, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
 import moment from 'moment-timezone';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 
@@ -56,7 +56,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonHumanize();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         id: `dummy-id`,
       });
 
@@ -106,14 +106,14 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
       let firebaseGuildChannelFeatureNoonState: IFirebaseGuildChannelFeatureNoonState;
 
       beforeEach((): void => {
-        firebaseGuildChannelFeatureNoonState = createMock<IFirebaseGuildChannelFeatureNoonState>();
+        firebaseGuildChannelFeatureNoonState = createHydratedMock<IFirebaseGuildChannelFeatureNoonState>();
 
         getStatesSpy.mockResolvedValue(firebaseGuildChannelFeatureNoonState);
       });
 
       describe(`when the Discord message guild is not valid`, (): void => {
         beforeEach((): void => {
-          anyDiscordMessage = createMock<IAnyDiscordMessage>({
+          anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
             guild: null,
             id: `dummy-id`,
           });
@@ -130,7 +130,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
       describe(`when the Discord message guild is valid`, (): void => {
         beforeEach((): void => {
-          anyDiscordMessage = createMock<IAnyDiscordMessage>({
+          anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
             guild: {},
             id: `dummy-id`,
           });
@@ -140,7 +140,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         describe(`when the Discord message channel is not a text channel`, (): void => {
           beforeEach((): void => {
-            anyDiscordMessage = createMock<IAnyDiscordMessage>({
+            anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
               channel: {
                 id: `dummy-channel-id`,
                 type: `news`,
@@ -163,7 +163,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         describe(`when the Discord message channel is a DM channel`, (): void => {
           beforeEach((): void => {
-            anyDiscordMessage = createMock<IAnyDiscordMessage>({
+            anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
               channel: {
                 id: `dummy-channel-id`,
                 type: `dm`,
@@ -217,7 +217,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         describe(`when the Discord message channel is a text channel`, (): void => {
           beforeEach((): void => {
-            anyDiscordMessage = createMock<Message>({
+            anyDiscordMessage = createHydratedMock<Message>({
               channel: {
                 id: `dummy-channel-id`,
                 type: `text`,
@@ -281,8 +281,8 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonHumanize();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>();
-      firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>();
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>();
+      firebaseGuildVFinal = createHydratedMock<IFirebaseGuildVFinal>();
 
       loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
       firebaseGuildsStoreQueryGetEntitySpy = jest
@@ -292,7 +292,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
     describe(`when the given Discord message guild is null`, (): void => {
       beforeEach((): void => {
-        anyDiscordMessage = createMock<IAnyDiscordMessage>({
+        anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
           guild: null,
           id: `dummy-id`,
         });
@@ -324,7 +324,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
     describe(`when the given Discord message guild is valid`, (): void => {
       beforeEach((): void => {
-        anyDiscordMessage = createMock<Message>({
+        anyDiscordMessage = createHydratedMock<Message>({
           channel: {
             id: `dummy-channel-id`,
           },
@@ -382,7 +382,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         describe(`when the Firebase guilds store channels are empty`, (): void => {
           beforeEach((): void => {
-            firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
+            firebaseGuildVFinal = createHydratedMock<IFirebaseGuildVFinal>({
               channels: {},
               version: FirebaseGuildVersionEnum.V5,
             });
@@ -401,7 +401,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         describe(`when the Firebase guilds are v1`, (): void => {
           beforeEach((): void => {
-            firebaseGuildVFinal = createMock<IFirebaseGuildV1>({
+            firebaseGuildVFinal = createHydratedMock<IFirebaseGuildV1>({
               version: FirebaseGuildVersionEnum.V1,
             });
 
@@ -419,7 +419,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         describe(`when the Firebase guilds are v2`, (): void => {
           beforeEach((): void => {
-            firebaseGuildVFinal = createMock<IFirebaseGuildV2>({
+            firebaseGuildVFinal = createHydratedMock<IFirebaseGuildV2>({
               version: FirebaseGuildVersionEnum.V2,
             });
 
@@ -437,9 +437,9 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         describe(`when the given Discord message channel does not exist in the Firebase guilds store channels`, (): void => {
           beforeEach((): void => {
-            firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
+            firebaseGuildVFinal = createHydratedMock<IFirebaseGuildVFinal>({
               channels: {
-                'bad-dummy-channel-id': createMock<IFirebaseGuildChannelVFinal>({
+                'bad-dummy-channel-id': createHydratedMock<IFirebaseGuildChannelVFinal>({
                   id: `bad-dummy-channel-id`,
                 }),
               },
@@ -460,9 +460,9 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         describe(`when the given Discord message channel exist in the Firebase guilds store channels`, (): void => {
           beforeEach((): void => {
-            firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
+            firebaseGuildVFinal = createHydratedMock<IFirebaseGuildVFinal>({
               channels: {
-                'dummy-channel-id': createMock<IFirebaseGuildChannelVFinal>({
+                'dummy-channel-id': createHydratedMock<IFirebaseGuildChannelVFinal>({
                   id: `dummy-channel-id`,
                 }),
               },
@@ -474,9 +474,9 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           describe(`when the channel does not have the noon feature configured yet`, (): void => {
             beforeEach((): void => {
-              firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
+              firebaseGuildVFinal = createHydratedMock<IFirebaseGuildVFinal>({
                 channels: {
-                  'dummy-channel-id': createMock<IFirebaseGuildChannelVFinal>({
+                  'dummy-channel-id': createHydratedMock<IFirebaseGuildChannelVFinal>({
                     features: {
                       noon: undefined,
                     },
@@ -500,9 +500,9 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           describe(`when the channel does not have the noon feature enabled option configured yet`, (): void => {
             beforeEach((): void => {
-              firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
+              firebaseGuildVFinal = createHydratedMock<IFirebaseGuildVFinal>({
                 channels: {
-                  'dummy-channel-id': createMock<IFirebaseGuildChannelVFinal>({
+                  'dummy-channel-id': createHydratedMock<IFirebaseGuildChannelVFinal>({
                     features: {
                       noon: {
                         isEnabled: undefined,
@@ -528,9 +528,9 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           describe(`when the channel has the noon feature enabled`, (): void => {
             beforeEach((): void => {
-              firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
+              firebaseGuildVFinal = createHydratedMock<IFirebaseGuildVFinal>({
                 channels: {
-                  'dummy-channel-id': createMock<IFirebaseGuildChannelVFinal>({
+                  'dummy-channel-id': createHydratedMock<IFirebaseGuildChannelVFinal>({
                     features: {
                       noon: {
                         isEnabled: true,
@@ -556,9 +556,9 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           describe(`when the channel has the noon feature disabled`, (): void => {
             beforeEach((): void => {
-              firebaseGuildVFinal = createMock<IFirebaseGuildVFinal>({
+              firebaseGuildVFinal = createHydratedMock<IFirebaseGuildVFinal>({
                 channels: {
-                  'dummy-channel-id': createMock<IFirebaseGuildChannelVFinal>({
+                  'dummy-channel-id': createHydratedMock<IFirebaseGuildChannelVFinal>({
                     features: {
                       noon: {
                         isEnabled: false,
@@ -599,7 +599,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonHumanize();
-      state = createMock<IFirebaseGuildChannelFeatureNoonState>({
+      state = createHydratedMock<IFirebaseGuildChannelFeatureNoonState>({
         isEnabled: true,
       });
 
@@ -650,7 +650,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
     describe(`when the message response for the help command was successfully fetched`, (): void => {
       it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
         expect.assertions(1);
-        const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+        const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
         discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
         const result = await service.getMessageResponse(state);

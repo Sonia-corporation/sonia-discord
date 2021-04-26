@@ -5,7 +5,7 @@ import { ILoggerLog } from '../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { Client, Guild, Snowflake } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -111,12 +111,12 @@ describe(`DiscordGuildService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordGuildService();
-      guilds = [createMock<Guild>(), createMock<Guild>()];
+      guilds = [createHydratedMock<Guild>(), createHydratedMock<Guild>()];
 
       arrayMock = jest.fn().mockReturnValue(guilds);
       // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
       discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
-        createMock<Client>({
+        createHydratedMock<Client>({
           guilds: {
             cache: ({
               array: arrayMock,
@@ -155,7 +155,7 @@ describe(`DiscordGuildService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordGuildService();
-      guild = createMock<Guild>();
+      guild = createHydratedMock<Guild>();
 
       findMock = jest.fn().mockImplementation(
         (fn: (value: Guild) => boolean): Guild => {
@@ -166,7 +166,7 @@ describe(`DiscordGuildService`, (): void => {
       );
       // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
       discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
-        createMock<Client>({
+        createHydratedMock<Client>({
           guilds: {
             cache: ({
               find: findMock,
