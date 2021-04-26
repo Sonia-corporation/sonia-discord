@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.93.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.92.1...1.93.0) (2021-04-25)
+
+
+### :rocket: Features
+
+* **activity-listening:** add 17 new hip-hop artists ([b6e8843](https://github.com/Sonia-corporation/sonia-discord/commit/b6e8843f4adebba17c00bb6969a211832bb91a0d))
+
 ## [1.92.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.92.0...1.92.1) (2021-04-25)
 
 
