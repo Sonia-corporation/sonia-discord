@@ -3,9 +3,13 @@ import moment from 'moment-timezone';
 import { Job } from 'node-schedule';
 
 /**
- * @param root0
- * @param root0.nextInvocation
+ * @description
+ * From a job, return the next invocation date humanized
+ *
+ * @param {Readonly<Job>} job The job to check
+ *
+ * @returns {string} The given job next invocation date humanized
  */
-export function getNextJobDateHumanized({ nextInvocation }: Readonly<Job>): string {
-  return fromNow(moment(nextInvocation().toISOString()).toISOString(), false);
+export function getNextJobDateHumanized(job: Readonly<Job>): string {
+  return fromNow(moment(job.nextInvocation().toISOString()).toISOString(), false);
 }
