@@ -2,9 +2,13 @@ import moment from 'moment-timezone';
 import { Job } from 'node-schedule';
 
 /**
- * @param root0
- * @param root0.nextInvocation
+ * @description
+ * From a job, return the next invocation date
+ *
+ * @param {Readonly<Job>} job The job to check
+ *
+ * @returns {string} The given job next invocation date
  */
-export function getNextJobDate({ nextInvocation }: Readonly<Job>): string {
-  return moment(nextInvocation().toISOString()).format(`HH:mm:ss`);
+export function getNextJobDate(job: Readonly<Job>): string {
+  return moment(job.nextInvocation().toISOString()).format(`HH:mm:ss`);
 }
