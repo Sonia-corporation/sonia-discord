@@ -121,7 +121,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
     describe(`when the given message has only one mention without the hotel text`, (): void => {
       beforeEach((): void => {
-        message = ` <@!123> yolo`;
+        message = `<@!123> yolo`;
       });
 
       it(`should return false`, (): void => {
@@ -135,7 +135,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
     describe(`when the given message has only one mention with the hotel text`, (): void => {
       beforeEach((): void => {
-        message = ` <@!123> hotel`;
+        message = `<@!123> hotel`;
       });
 
       it(`should return true`, (): void => {
@@ -149,7 +149,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
     describe(`when the given message has only one mention with the hotel text and another mention`, (): void => {
       beforeEach((): void => {
-        message = ` <@!123><@!456> hotel`;
+        message = `<@!123><@!456> hotel`;
       });
 
       it(`should return false`, (): void => {
@@ -163,7 +163,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
     describe(`when the given message has only one mention with the hotel text and extra spaces after`, (): void => {
       beforeEach((): void => {
-        message = ` <@!123> hotel  `;
+        message = `<@!123> hotel  `;
       });
 
       it(`should return true`, (): void => {
@@ -177,7 +177,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
     describe(`when the given message has only one mention with the hotel text in uppercase`, (): void => {
       beforeEach((): void => {
-        message = ` <@!123> HOTEL`;
+        message = `<@!123> HOTEL`;
       });
 
       it(`should return true`, (): void => {
@@ -191,7 +191,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
     describe(`when the given message has only one mention with the hotel text in uppercase and extra spaces after`, (): void => {
       beforeEach((): void => {
-        message = ` <@!123> HOTEL  `;
+        message = `<@!123> HOTEL  `;
       });
 
       it(`should return true`, (): void => {
