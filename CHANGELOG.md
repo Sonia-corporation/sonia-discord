@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.94.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.93.0...1.94.0) (2021-04-30)
+
+
+### :rocket: Features
+
+* **joke:** add a special joke when asking "any question?" to sonia ([e412972](https://github.com/Sonia-corporation/sonia-discord/commit/e412972c572587b8c9e2d14700bd128cdccd686b))
+
 # [1.93.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.92.1...1.93.0) (2021-04-25)
 
 
