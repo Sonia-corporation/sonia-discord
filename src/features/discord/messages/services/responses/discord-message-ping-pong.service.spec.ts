@@ -121,7 +121,7 @@ describe(`DiscordMessagePingPongService`, (): void => {
 
     describe(`when the given message has only one mention without the ping text`, (): void => {
       beforeEach((): void => {
-        message = ` <@!123> yolo`;
+        message = `<@!123> yolo`;
       });
 
       it(`should return false`, (): void => {
@@ -135,7 +135,7 @@ describe(`DiscordMessagePingPongService`, (): void => {
 
     describe(`when the given message has only one mention with the ping text`, (): void => {
       beforeEach((): void => {
-        message = ` <@!123> ping`;
+        message = `<@!123> ping`;
       });
 
       it(`should return true`, (): void => {
@@ -149,7 +149,7 @@ describe(`DiscordMessagePingPongService`, (): void => {
 
     describe(`when the given message has only one mention with the ping text and another mention`, (): void => {
       beforeEach((): void => {
-        message = ` <@!123><@!456> ping`;
+        message = `<@!123><@!456> ping`;
       });
 
       it(`should return false`, (): void => {
@@ -163,7 +163,7 @@ describe(`DiscordMessagePingPongService`, (): void => {
 
     describe(`when the given message has only one mention with the ping text and extra spaces after`, (): void => {
       beforeEach((): void => {
-        message = ` <@!123> ping  `;
+        message = `<@!123> ping  `;
       });
 
       it(`should return true`, (): void => {
@@ -177,7 +177,7 @@ describe(`DiscordMessagePingPongService`, (): void => {
 
     describe(`when the given message has only one mention with the ping text in uppercase`, (): void => {
       beforeEach((): void => {
-        message = ` <@!123> PING`;
+        message = `<@!123> PING`;
       });
 
       it(`should return true`, (): void => {
@@ -191,7 +191,7 @@ describe(`DiscordMessagePingPongService`, (): void => {
 
     describe(`when the given message has only one mention with the ping text in uppercase and extra spaces after`, (): void => {
       beforeEach((): void => {
-        message = ` <@!123> PING  `;
+        message = `<@!123> PING  `;
       });
 
       it(`should return true`, (): void => {

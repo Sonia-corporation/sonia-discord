@@ -1,14 +1,12 @@
-import { DiscordMessageHotelTrivagoService } from './discord-message-hotel-trivago.service';
+import { DiscordMessageAnyQuestionPineapplePizzaService } from './discord-message-any-question-pineapple-pizza.service';
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../../core/services/core-event.service';
-import { DISCORD_MESSAGE_HOTEL_TRIVAGO_RESPONSE_MESSAGES } from '../../constants/discord-message-hotel-trivago-response-messages';
-import { IDiscordMessageHotelTrivagoResponseMessage } from '../../interfaces/discord-message-hotel-trivago-response-message';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
 import { createMock } from 'ts-auto-mock';
 
-describe(`DiscordMessageHotelTrivagoService`, (): void => {
-  let service: DiscordMessageHotelTrivagoService;
+describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
+  let service: DiscordMessageAnyQuestionPineapplePizzaService;
   let coreEventService: CoreEventService;
   let discordMessageContentService: DiscordMessageContentService;
 
@@ -18,18 +16,18 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
   });
 
   describe(`getInstance()`, (): void => {
-    it(`should create a DiscordMessageHotelTrivago service`, (): void => {
+    it(`should create a DiscordMessageAnyQuestionPineapplePizzaService service`, (): void => {
       expect.assertions(1);
 
-      service = DiscordMessageHotelTrivagoService.getInstance();
+      service = DiscordMessageAnyQuestionPineapplePizzaService.getInstance();
 
-      expect(service).toStrictEqual(expect.any(DiscordMessageHotelTrivagoService));
+      expect(service).toStrictEqual(expect.any(DiscordMessageAnyQuestionPineapplePizzaService));
     });
 
-    it(`should return the created DiscordMessageHotelTrivago service`, (): void => {
+    it(`should return the created DiscordMessageAnyQuestionPineapplePizzaService service`, (): void => {
       expect.assertions(1);
 
-      const result = DiscordMessageHotelTrivagoService.getInstance();
+      const result = DiscordMessageAnyQuestionPineapplePizzaService.getInstance();
 
       expect(result).toStrictEqual(service);
     });
@@ -44,14 +42,14 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should notify the DiscordMessageHotelTrivago service creation`, (): void => {
+    it(`should notify the DiscordMessageAnyQuestionPineapplePizzaService service creation`, (): void => {
       expect.assertions(2);
 
-      service = new DiscordMessageHotelTrivagoService();
+      service = new DiscordMessageAnyQuestionPineapplePizzaService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_MESSAGE_HOTEL_TRIVAGO_SERVICE
+        ServiceNameEnum.DISCORD_MESSAGE_ANY_QUESTION_PINEAPPLE_PIZZA_SERVICE
       );
     });
   });
@@ -60,7 +58,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
     let message: string;
 
     beforeEach((): void => {
-      service = new DiscordMessageHotelTrivagoService();
+      service = new DiscordMessageAnyQuestionPineapplePizzaService();
     });
 
     describe(`when the given message is empty`, (): void => {
@@ -119,7 +117,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
       });
     });
 
-    describe(`when the given message has only one mention without the hotel text`, (): void => {
+    describe(`when the given message has only one mention without the any question text`, (): void => {
       beforeEach((): void => {
         message = `<@!123> yolo`;
       });
@@ -133,23 +131,9 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
       });
     });
 
-    describe(`when the given message has only one mention with the hotel text`, (): void => {
+    describe(`when the given message has only one mention with the any question text without space between any and question`, (): void => {
       beforeEach((): void => {
-        message = `<@!123> hotel`;
-      });
-
-      it(`should return true`, (): void => {
-        expect.assertions(1);
-
-        const result = service.hasCriteria(message);
-
-        expect(result).toStrictEqual(true);
-      });
-    });
-
-    describe(`when the given message has only one mention with the hotel text and another mention`, (): void => {
-      beforeEach((): void => {
-        message = `<@!123><@!456> hotel`;
+        message = `<@!123> anyquestion?`;
       });
 
       it(`should return false`, (): void => {
@@ -161,9 +145,9 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
       });
     });
 
-    describe(`when the given message has only one mention with the hotel text and extra spaces after`, (): void => {
+    describe(`when the given message has only one mention with the any question text`, (): void => {
       beforeEach((): void => {
-        message = `<@!123> hotel  `;
+        message = `<@!123> any question?`;
       });
 
       it(`should return true`, (): void => {
@@ -175,9 +159,23 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
       });
     });
 
-    describe(`when the given message has only one mention with the hotel text in uppercase`, (): void => {
+    describe(`when the given message has only one mention with the any question text and another mention`, (): void => {
       beforeEach((): void => {
-        message = `<@!123> HOTEL`;
+        message = `<@!123><@!456> any question?`;
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.hasCriteria(message);
+
+        expect(result).toStrictEqual(false);
+      });
+    });
+
+    describe(`when the given message has only one mention with the any question text and extra spaces after`, (): void => {
+      beforeEach((): void => {
+        message = `<@!123> any question?  `;
       });
 
       it(`should return true`, (): void => {
@@ -189,9 +187,37 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
       });
     });
 
-    describe(`when the given message has only one mention with the hotel text in uppercase and extra spaces after`, (): void => {
+    describe(`when the given message has only one mention with the any question text and extra spaces inside`, (): void => {
       beforeEach((): void => {
-        message = `<@!123> HOTEL  `;
+        message = `<@!123> any   question?`;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.hasCriteria(message);
+
+        expect(result).toStrictEqual(true);
+      });
+    });
+
+    describe(`when the given message has only one mention with the any question text in uppercase`, (): void => {
+      beforeEach((): void => {
+        message = `<@!123> ANY QUESTION?`;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.hasCriteria(message);
+
+        expect(result).toStrictEqual(true);
+      });
+    });
+
+    describe(`when the given message has only one mention with the any question text in uppercase and extra spaces after`, (): void => {
+      beforeEach((): void => {
+        message = `<@!123> ANY QUESTION?  `;
       });
 
       it(`should return true`, (): void => {
@@ -208,10 +234,9 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
 
     let discordMessageContentServiceHasContentSpy: jest.SpyInstance;
-    let discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      service = new DiscordMessageHotelTrivagoService();
+      service = new DiscordMessageAnyQuestionPineapplePizzaService();
       anyDiscordMessage = createMock<IAnyDiscordMessage>({
         content: `dummy-content`,
       });
@@ -219,9 +244,6 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
       discordMessageContentServiceHasContentSpy = jest
         .spyOn(discordMessageContentService, `hasContent`)
         .mockImplementation();
-      discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy = jest
-        .spyOn(DISCORD_MESSAGE_HOTEL_TRIVAGO_RESPONSE_MESSAGES, `getHumanizedRandomMessage`)
-        .mockReturnValue(`trivago`);
     });
 
     it(`should check if the given Discord message is empty`, async (): Promise<void> => {
@@ -258,21 +280,9 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
         expect(result.options.split).toStrictEqual(false);
       });
 
-      describe(`when the given Discord message contains a valid mention with HOTEL`, (): void => {
+      describe(`when the given Discord message contains a valid mention with ANY QUESTION?`, (): void => {
         beforeEach((): void => {
-          anyDiscordMessage.content = `<@!123> HOTEL`;
-        });
-
-        it(`should get a random hotel trivago message response with TRIVAGO`, async (): Promise<void> => {
-          expect.assertions(3);
-
-          const result = await service.reply(anyDiscordMessage);
-
-          expect(result).toBeDefined();
-          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
-          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
-            trivago: `TRIVAGO`,
-          } as IDiscordMessageHotelTrivagoResponseMessage);
+          anyDiscordMessage.content = `<@!123> ANY QUESTION?`;
         });
 
         it(`should return a Discord message response`, async (): Promise<void> => {
@@ -280,25 +290,13 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** trivago`);
+          expect(result.response).toStrictEqual(`**[dev]** Do you like pineapple pizza?`);
         });
       });
 
-      describe(`when the given Discord message contains a valid mention with HoTeL`, (): void => {
+      describe(`when the given Discord message contains a valid mention with AnY qUeStIoN?`, (): void => {
         beforeEach((): void => {
-          anyDiscordMessage.content = `<@!123> HoTeL`;
-        });
-
-        it(`should get a random hotel trivago message response with Trivago`, async (): Promise<void> => {
-          expect.assertions(3);
-
-          const result = await service.reply(anyDiscordMessage);
-
-          expect(result).toBeDefined();
-          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
-          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
-            trivago: `Trivago`,
-          } as IDiscordMessageHotelTrivagoResponseMessage);
+          anyDiscordMessage.content = `<@!123> AnY qUeStIoN?`;
         });
 
         it(`should return a Discord message response`, async (): Promise<void> => {
@@ -306,25 +304,13 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** trivago`);
+          expect(result.response).toStrictEqual(`**[dev]** Do you like pineapple pizza?`);
         });
       });
 
-      describe(`when the given Discord message contains a valid mention with Hotel`, (): void => {
+      describe(`when the given Discord message contains a valid mention with Any question?`, (): void => {
         beforeEach((): void => {
-          anyDiscordMessage.content = `<@!123> Hotel`;
-        });
-
-        it(`should get a random hotel trivago message response with Trivago`, async (): Promise<void> => {
-          expect.assertions(3);
-
-          const result = await service.reply(anyDiscordMessage);
-
-          expect(result).toBeDefined();
-          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
-          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
-            trivago: `Trivago`,
-          } as IDiscordMessageHotelTrivagoResponseMessage);
+          anyDiscordMessage.content = `<@!123> Any question?`;
         });
 
         it(`should return a Discord message response`, async (): Promise<void> => {
@@ -332,25 +318,13 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** trivago`);
+          expect(result.response).toStrictEqual(`**[dev]** Do you like pineapple pizza?`);
         });
       });
 
-      describe(`when the given Discord message contains a valid mention with hotel`, (): void => {
+      describe(`when the given Discord message contains a valid mention with any question?`, (): void => {
         beforeEach((): void => {
-          anyDiscordMessage.content = `<@!123> hotel`;
-        });
-
-        it(`should get a random hotel trivago message response with trivago`, async (): Promise<void> => {
-          expect.assertions(3);
-
-          const result = await service.reply(anyDiscordMessage);
-
-          expect(result).toBeDefined();
-          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
-          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
-            trivago: `trivago`,
-          } as IDiscordMessageHotelTrivagoResponseMessage);
+          anyDiscordMessage.content = `<@!123> any question?`;
         });
 
         it(`should return a Discord message response`, async (): Promise<void> => {
@@ -358,7 +332,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** trivago`);
+          expect(result.response).toStrictEqual(`**[dev]** Do you like pineapple pizza?`);
         });
       });
     });
