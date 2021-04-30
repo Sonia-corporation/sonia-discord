@@ -14,7 +14,7 @@ import { IDiscordPresenceActivity } from '../interfaces/discord-presence-activit
 import { Activity, Client, Presence, PresenceData } from 'discord.js';
 import _ from 'lodash';
 import * as NodeScheduleModule from 'node-schedule';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, noop } from 'rxjs';
 import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
@@ -444,7 +444,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
     describe(`when the job is valid`, (): void => {
       beforeEach((): void => {
-        scheduleJobSpy.mockReturnValue(job).mockImplementationOnce(_.noop);
+        scheduleJobSpy.mockReturnValue(job).mockImplementationOnce(noop);
       });
 
       it(`should log the updater job rule`, (): void => {
@@ -494,7 +494,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
               return job;
             }
           )
-          .mockImplementationOnce(_.noop);
+          .mockImplementationOnce(noop);
       });
 
       it(`should log the updater job rule`, (): void => {

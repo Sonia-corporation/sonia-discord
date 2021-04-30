@@ -25,9 +25,9 @@ import { DiscordLoggerErrorService } from '../../../logger/services/discord-logg
 import { DiscordClientService } from '../../../services/discord-client.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { Client, Collection, Guild, GuildChannel, Message, TextChannel } from 'discord.js';
-import _ from 'lodash';
 import moment from 'moment-timezone';
 import * as NodeScheduleModule from 'node-schedule';
+import { noop } from 'rxjs';
 import { createMock } from 'ts-auto-mock';
 
 let time: number = new Date(`2020-01-02T02:00:00Z`).getTime();
@@ -852,7 +852,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         createMock<Client>({
           guilds: {
             cache: {
-              forEach: _.noop,
+              forEach: noop,
             } as Collection<string, Guild>,
           },
         })
@@ -972,7 +972,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               createMock<Client>({
                 guilds: {
                   cache: {
-                    forEach: _.noop,
+                    forEach: noop,
                   } as Collection<string, Guild>,
                 },
               })
