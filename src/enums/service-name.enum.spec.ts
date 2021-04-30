@@ -170,6 +170,14 @@ describe(`ServiceNameEnum`, (): void => {
     expect(ServiceNameEnum.DISCORD_MENTION_SERVICE).toStrictEqual(`DiscordMentionService`);
   });
 
+  it(`should have a member "DISCORD_MESSAGE_ANY_QUESTION_PINEAPPLE_PIZZA_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_MESSAGE_ANY_QUESTION_PINEAPPLE_PIZZA_SERVICE).toStrictEqual(
+      `DiscordMessageAnyQuestionPineapplePizzaService`
+    );
+  });
+
   it(`should have a member "DISCORD_MESSAGE_AUTHOR_SERVICE"`, (): void => {
     expect.assertions(1);
 

@@ -6,6 +6,7 @@ import { IDiscordMessageResponse } from '../../interfaces/discord-message-respon
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageCommandService } from '../command/discord-message-command.service';
 import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
+import { DiscordMessageAnyQuestionPineapplePizzaService } from '../responses/discord-message-any-question-pineapple-pizza.service';
 import { DiscordMessageAuthorService } from '../responses/discord-message-author.service';
 import { DiscordMessageHotelTrivagoService } from '../responses/discord-message-hotel-trivago.service';
 import { DiscordMessagePingPongService } from '../responses/discord-message-ping-pong.service';
@@ -51,6 +52,10 @@ export class DiscordMessageDmService extends AbstractService {
       if (DiscordMessageHotelTrivagoService.getInstance().hasCriteria(anyDiscordMessage.content)) {
         return this._getHotelTrivagoMessageResponse(anyDiscordMessage);
       }
+
+      if (DiscordMessageAnyQuestionPineapplePizzaService.getInstance().hasCriteria(anyDiscordMessage.content)) {
+        return this._getAnyQuestionPineapplePizzaMessageResponse(anyDiscordMessage);
+      }
     }
 
     return DiscordMessageAuthorService.getInstance().reply(anyDiscordMessage);
@@ -90,5 +95,20 @@ export class DiscordMessageDmService extends AbstractService {
     });
 
     return DiscordMessageHotelTrivagoService.getInstance().reply(anyDiscordMessage);
+  }
+
+  private _getAnyQuestionPineapplePizzaMessageResponse(
+    anyDiscordMessage: Readonly<IAnyDiscordMessage>
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        anyDiscordMessage.id,
+        `message any question pineapple pizza`
+      ),
+    });
+
+    return DiscordMessageAnyQuestionPineapplePizzaService.getInstance().reply(anyDiscordMessage);
   }
 }

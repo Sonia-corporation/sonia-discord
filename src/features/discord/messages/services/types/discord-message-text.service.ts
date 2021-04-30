@@ -14,6 +14,7 @@ import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { IDiscordMessage } from '../../types/discord-message';
 import { DiscordMessageCommandService } from '../command/discord-message-command.service';
 import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
+import { DiscordMessageAnyQuestionPineapplePizzaService } from '../responses/discord-message-any-question-pineapple-pizza.service';
 import { DiscordMessageAuthorService } from '../responses/discord-message-author.service';
 import { DiscordMessageHotelTrivagoService } from '../responses/discord-message-hotel-trivago.service';
 import { DiscordMessagePingPongService } from '../responses/discord-message-ping-pong.service';
@@ -105,6 +106,10 @@ export class DiscordMessageTextService extends AbstractService {
       if (DiscordMessageHotelTrivagoService.getInstance().hasCriteria(discordMessage.content)) {
         return this._getHotelTrivagoMessageResponse(discordMessage);
       }
+
+      if (DiscordMessageAnyQuestionPineapplePizzaService.getInstance().hasCriteria(discordMessage.content)) {
+        return this._getAnyQuestionPineapplePizzaMessageResponse(discordMessage);
+      }
     }
 
     return DiscordMessageAuthorService.getInstance().reply(discordMessage);
@@ -172,5 +177,20 @@ export class DiscordMessageTextService extends AbstractService {
     });
 
     return DiscordMessageHotelTrivagoService.getInstance().reply(discordMessage);
+  }
+
+  private _getAnyQuestionPineapplePizzaMessageResponse(
+    discordMessage: Readonly<IDiscordMessage>
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        discordMessage.id,
+        `message any question pineapple pizza`
+      ),
+    });
+
+    return DiscordMessageAnyQuestionPineapplePizzaService.getInstance().reply(discordMessage);
   }
 }

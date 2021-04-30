@@ -7,6 +7,7 @@ import { DiscordAuthorService } from '../../../users/services/discord-author.ser
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageCommandService } from '../command/discord-message-command.service';
 import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
+import { DiscordMessageAnyQuestionPineapplePizzaService } from '../responses/discord-message-any-question-pineapple-pizza.service';
 import { DiscordMessageAuthorService } from '../responses/discord-message-author.service';
 import { DiscordMessageHotelTrivagoService } from '../responses/discord-message-hotel-trivago.service';
 import { DiscordMessagePingPongService } from '../responses/discord-message-ping-pong.service';
@@ -24,6 +25,7 @@ describe(`DiscordMessageDmService`, (): void => {
   let loggerService: LoggerService;
   let discordMessagePingPongService: DiscordMessagePingPongService;
   let discordMessageHotelTrivagoService: DiscordMessageHotelTrivagoService;
+  let discordMessageAnyQuestionPineapplePizzaService: DiscordMessageAnyQuestionPineapplePizzaService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -34,6 +36,7 @@ describe(`DiscordMessageDmService`, (): void => {
     loggerService = LoggerService.getInstance();
     discordMessagePingPongService = DiscordMessagePingPongService.getInstance();
     discordMessageHotelTrivagoService = DiscordMessageHotelTrivagoService.getInstance();
+    discordMessageAnyQuestionPineapplePizzaService = DiscordMessageAnyQuestionPineapplePizzaService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -142,6 +145,8 @@ describe(`DiscordMessageDmService`, (): void => {
     let discordMessagePingPongServiceReplySpy: jest.SpyInstance;
     let discordMessageHotelTrivagoServiceHasCriteriaSpy: jest.SpyInstance;
     let discordMessageHotelTrivagoServiceReplySpy: jest.SpyInstance;
+    let discordMessageAnyQuestionPineapplePizzaServiceHasCriteriaSpy: jest.SpyInstance;
+    let discordMessageAnyQuestionPineapplePizzaServiceReplySpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageDmService();
@@ -175,6 +180,12 @@ describe(`DiscordMessageDmService`, (): void => {
       discordMessageHotelTrivagoServiceReplySpy = jest
         .spyOn(discordMessageHotelTrivagoService, `reply`)
         .mockRejectedValue(new Error(`hotel trivago reply error`));
+      discordMessageAnyQuestionPineapplePizzaServiceHasCriteriaSpy = jest
+        .spyOn(discordMessageAnyQuestionPineapplePizzaService, `hasCriteria`)
+        .mockImplementation();
+      discordMessageAnyQuestionPineapplePizzaServiceReplySpy = jest
+        .spyOn(discordMessageAnyQuestionPineapplePizzaService, `reply`)
+        .mockRejectedValue(new Error(`any question pineapple pizza reply error`));
     });
 
     it(`should check if the given Discord message is empty`, async (): Promise<void> => {
@@ -192,7 +203,7 @@ describe(`DiscordMessageDmService`, (): void => {
       });
 
       it(`should respond with the default replay`, async (): Promise<void> => {
-        expect.assertions(5);
+        expect.assertions(7);
 
         await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(new Error(`reply error`));
 
@@ -200,6 +211,8 @@ describe(`DiscordMessageDmService`, (): void => {
         expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledWith(anyDiscordMessage);
         expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
         expect(discordMessagePingPongServiceReplySpy).not.toHaveBeenCalled();
+        expect(discordMessageHotelTrivagoServiceReplySpy).not.toHaveBeenCalled();
+        expect(discordMessageAnyQuestionPineapplePizzaServiceReplySpy).not.toHaveBeenCalled();
       });
     });
 
@@ -252,18 +265,72 @@ describe(`DiscordMessageDmService`, (): void => {
               discordMessageHotelTrivagoServiceHasCriteriaSpy.mockReturnValue(false);
             });
 
-            it(`should respond with the default replay`, async (): Promise<void> => {
-              expect.assertions(6);
+            it(`should check if the given Discord message contains the criteria for an any question pineapple pizza response`, async (): Promise<void> => {
+              expect.assertions(3);
 
               await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
                 new Error(`reply error`)
               );
 
-              expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledTimes(1);
-              expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledWith(anyDiscordMessage);
-              expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
-              expect(discordMessagePingPongServiceReplySpy).not.toHaveBeenCalled();
-              expect(discordMessageHotelTrivagoServiceReplySpy).not.toHaveBeenCalled();
+              expect(discordMessageAnyQuestionPineapplePizzaServiceHasCriteriaSpy).toHaveBeenCalledTimes(1);
+              expect(discordMessageAnyQuestionPineapplePizzaServiceHasCriteriaSpy).toHaveBeenCalledWith(
+                anyDiscordMessage.content
+              );
+            });
+
+            describe(`when the given Discord message do not contains the criteria for an any question pineapple pizza response`, (): void => {
+              beforeEach((): void => {
+                discordMessageAnyQuestionPineapplePizzaServiceHasCriteriaSpy.mockReturnValue(false);
+              });
+
+              it(`should respond with the default replay`, async (): Promise<void> => {
+                expect.assertions(7);
+
+                await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`reply error`)
+                );
+
+                expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledTimes(1);
+                expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledWith(anyDiscordMessage);
+                expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
+                expect(discordMessagePingPongServiceReplySpy).not.toHaveBeenCalled();
+                expect(discordMessageHotelTrivagoServiceReplySpy).not.toHaveBeenCalled();
+                expect(discordMessageAnyQuestionPineapplePizzaServiceReplySpy).not.toHaveBeenCalled();
+              });
+            });
+
+            describe(`when the given Discord message contains the criteria for an any question pineapple pizza response`, (): void => {
+              beforeEach((): void => {
+                discordMessageAnyQuestionPineapplePizzaServiceHasCriteriaSpy.mockReturnValue(true);
+              });
+
+              it(`should log about responding to any question`, async (): Promise<void> => {
+                expect.assertions(3);
+
+                await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`any question pineapple pizza reply error`)
+                );
+
+                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+                  context: `DiscordMessageDmService`,
+                  hasExtendedContext: true,
+                  message: `context-[dummy-id] text-message any question pineapple pizza`,
+                } as ILoggerLog);
+              });
+
+              it(`should respond with pineapple pizza`, async (): Promise<void> => {
+                expect.assertions(5);
+
+                await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
+                  new Error(`any question pineapple pizza reply error`)
+                );
+
+                expect(discordMessageAnyQuestionPineapplePizzaServiceReplySpy).toHaveBeenCalledTimes(1);
+                expect(discordMessageAnyQuestionPineapplePizzaServiceReplySpy).toHaveBeenCalledWith(anyDiscordMessage);
+                expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
+                expect(discordMessageAuthorServiceReplySpy).not.toHaveBeenCalled();
+              });
             });
           });
 
@@ -358,7 +425,7 @@ describe(`DiscordMessageDmService`, (): void => {
         });
 
         it(`should respond with the appropriate message for the command`, async (): Promise<void> => {
-          expect.assertions(6);
+          expect.assertions(7);
 
           await expect(service.getDiscordMessageResponse(anyDiscordMessage)).rejects.toThrow(
             new Error(`handleCommands error`)
@@ -368,6 +435,7 @@ describe(`DiscordMessageDmService`, (): void => {
           expect(discordMessageCommandServiceHandleCommandsSpy).toHaveBeenCalledWith(anyDiscordMessage);
           expect(discordMessagePingPongServiceReplySpy).not.toHaveBeenCalled();
           expect(discordMessageHotelTrivagoServiceReplySpy).not.toHaveBeenCalled();
+          expect(discordMessageAnyQuestionPineapplePizzaServiceReplySpy).not.toHaveBeenCalled();
           expect(discordMessageAuthorServiceReplySpy).not.toHaveBeenCalled();
         });
       });
