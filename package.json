@@ -119,7 +119,7 @@
     "lint": "eslint --fix --fix-type suggestion,layout,problem --cache --cache-location .eslintcache --quiet **/*.{js,ts}",
     "lint:hook": "eslint --fix --fix-type suggestion,layout,problem --cache --cache-location .eslintcache --quiet",
     "lint:ci": "eslint --quiet **/*.{js,ts}",
-    "prettier": "prettier --write --ignore-unknown **/*.{md,json,yml}",
+    "prettier": "prettier --write --ignore-unknown **/*.{md,json,yml,html}",
     "prettier:hook": "prettier --write --ignore-unknown --loglevel warn",
     "\n# UTILS SCRIPTS:": "",
     "cz": "git add . && git-cz && npm run git:push",
