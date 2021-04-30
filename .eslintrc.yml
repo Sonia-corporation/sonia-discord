@@ -12,8 +12,6 @@ extends:
   - 'plugin:import/errors'
   - 'plugin:import/warnings'
   - 'plugin:import/typescript'
-  - 'plugin:jest/style'
-  - 'plugin:jest/all'
   - 'plugin:jsdoc/recommended'
   - 'plugin:prettier/recommended'
 globals:
@@ -44,8 +42,6 @@ settings:
     lifetime: Infinity
 rules:
   progress/activate: 1
-  jest/no-done-callback: error
-  jest/no-disabled-tests: off
   '@typescript-eslint/member-ordering':
     - error
     - default:
@@ -71,17 +67,6 @@ rules:
         - public-abstract-method
         - protected-abstract-method
         - private-abstract-method
-  jest/lowercase-name:
-    - error
-    - ignore:
-        - describe
-  jest/no-hooks:
-    - error
-    - allow:
-        - beforeAll
-        - beforeEach
-        - afterAll
-        - afterEach
   typescript-sort-keys/interface:
     - error
     - asc
@@ -119,13 +104,13 @@ rules:
   import/order:
     - error
     - groups:
-      - index
-      - sibling
-      - parent
-      - internal
-      - external
-      - builtin
-      - object
+        - index
+        - sibling
+        - parent
+        - internal
+        - external
+        - builtin
+        - object
       newlines-between: never
       alphabetize:
         order: asc
@@ -136,7 +121,7 @@ rules:
   new-cap:
     - error
     - capIsNewExceptions:
-      - StoreConfig
+        - StoreConfig
   '@typescript-eslint/naming-convention':
     - error
     - selector: default
@@ -377,7 +362,23 @@ overrides:
       '@typescript-eslint/no-var-requires': error
   - files:
       - '*.spec.ts'
+    extends:
+      - 'plugin:jest/style'
+      - 'plugin:jest/all'
     rules:
+      jest/no-done-callback: error
+      jest/no-disabled-tests: warn
+      jest/lowercase-name:
+        - error
+        - ignore:
+            - describe
+      jest/no-hooks:
+        - error
+        - allow:
+            - beforeAll
+            - beforeEach
+            - afterAll
+            - afterEach
       no-magic-numbers: off
       '@typescript-eslint/ban-types':
         - error
@@ -453,3 +454,5 @@ overrides:
             - Enum
       '@typescript-eslint/no-explicit-any': off
       '@typescript-eslint/ban-ts-comment': off
+      '@typescript-eslint/unbound-method': off # Disabled as expected by jest because it has it's own version
+      jest/unbound-method: error

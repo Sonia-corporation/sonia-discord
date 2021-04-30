@@ -2,16 +2,16 @@ import { getNextJobDate } from './get-next-job-date';
 import { getEveryHourScheduleRule } from '../../../functions/schedule/get-every-hour-schedule-rule';
 import { getEveryMinuteScheduleRule } from '../../../functions/schedule/get-every-minute-schedule-rule';
 import { getNoonScheduleRule } from '../../../functions/schedule/get-noon-schedule-rule';
-import _ from 'lodash';
 import moment from 'moment-timezone';
 import { Job, scheduleJob } from 'node-schedule';
+import { noop } from 'rxjs';
 
 describe(`getNextJobDate()`, (): void => {
   let job: Job;
 
   describe(`when the given job is in one hour`, (): void => {
     beforeEach((): void => {
-      job = scheduleJob(getEveryHourScheduleRule(), _.noop);
+      job = scheduleJob(getEveryHourScheduleRule(), noop);
     });
 
     it(`should return an humanized date set to one hour later from now`, (): void => {
@@ -25,7 +25,7 @@ describe(`getNextJobDate()`, (): void => {
 
   describe(`when the given job is in one minute`, (): void => {
     beforeEach((): void => {
-      job = scheduleJob(getEveryMinuteScheduleRule(), _.noop);
+      job = scheduleJob(getEveryMinuteScheduleRule(), noop);
     });
 
     it(`should return an humanized date set to one minute later from now`, (): void => {
@@ -40,7 +40,7 @@ describe(`getNextJobDate()`, (): void => {
 
   describe(`when the given job is at noon`, (): void => {
     beforeEach((): void => {
-      job = scheduleJob(getNoonScheduleRule(), _.noop);
+      job = scheduleJob(getNoonScheduleRule(), noop);
     });
 
     it(`should return an humanized date set to noon`, (): void => {

@@ -26,6 +26,7 @@ export enum ServiceNameEnum {
   DISCORD_LOGGER_SERVICE = `DiscordLoggerService`,
   DISCORD_LOGGER_WARNING_SERVICE = `DiscordLoggerWarningService`,
   DISCORD_MENTION_SERVICE = `DiscordMentionService`,
+  DISCORD_MESSAGE_ANY_QUESTION_PINEAPPLE_PIZZA_SERVICE = `DiscordMessageAnyQuestionPineapplePizzaService`,
   DISCORD_MESSAGE_AUTHOR_SERVICE = `DiscordMessageAuthorService`,
   DISCORD_MESSAGE_COMMAND_CLI_ERROR_SERVICE = `DiscordMessageCommandCliErrorService`,
   DISCORD_MESSAGE_COMMAND_COOKIE_SERVICE = `DiscordMessageCommandCookieService`,

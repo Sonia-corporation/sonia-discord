@@ -1,8 +1,8 @@
 import { getNextJobDateHumanized } from './get-next-job-date-humanized';
 import { getNoonScheduleRule } from '../../../functions/schedule/get-noon-schedule-rule';
 import * as FromNowModule from '../../time/functions/from-now';
-import _ from 'lodash';
 import { Job, scheduleJob } from 'node-schedule';
+import { noop } from 'rxjs';
 
 describe(`getNextJobDateHumanized()`, (): void => {
   let job: Job;
@@ -15,7 +15,7 @@ describe(`getNextJobDateHumanized()`, (): void => {
 
   describe(`when the given job is at noon`, (): void => {
     beforeEach((): void => {
-      job = scheduleJob(getNoonScheduleRule(), _.noop);
+      job = scheduleJob(getNoonScheduleRule(), noop);
     });
 
     it(`should convert the given job date from now`, (): void => {
