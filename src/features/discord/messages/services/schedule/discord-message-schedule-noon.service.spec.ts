@@ -851,9 +851,9 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
         createMock<Client>({
           guilds: {
-            cache: {
+            cache: ({
               forEach: noop,
-            } as Collection<string, Guild>,
+            } as unknown) as Collection<string, Guild>,
           },
         })
       );
@@ -971,9 +971,9 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
             discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
               createMock<Client>({
                 guilds: {
-                  cache: {
+                  cache: ({
                     forEach: noop,
-                  } as Collection<string, Guild>,
+                  } as unknown) as Collection<string, Guild>,
                 },
               })
             );

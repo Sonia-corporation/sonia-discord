@@ -2,10 +2,10 @@ import { ServiceNameEnum } from './service-name.enum';
 import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`ServiceNameEnum`, (): void => {
-  it(`should have a 111 members`, (): void => {
+  it(`should have a 112 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ServiceNameEnum)).toStrictEqual(111);
+    expect(getEnumLength(ServiceNameEnum)).toStrictEqual(112);
   });
 
   it(`should have a member "APP_CONFIG_CORE_SERVICE"`, (): void => {
