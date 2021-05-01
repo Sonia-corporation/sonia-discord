@@ -1,5 +1,18 @@
 # Semantic Versioning Changelog
 
+# [1.95.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.94.0...1.95.0) (2021-05-01)
+
+
+### :bug: Bug Fixes
+
+* **typo:** fix a typo in one of the release notes message ([76955e0](https://github.com/Sonia-corporation/sonia-discord/commit/76955e0705c2f85811ce6787fe236649f1cc8db4))
+* **release-notes:** stop sending the log message in sonia guild if nothing was sent ([0dfbcad](https://github.com/Sonia-corporation/sonia-discord/commit/0dfbcade1dbe5a131a1ef1fadd073d5fc232f263))
+
+
+### :rocket: Features
+
+* **joke:** respond to simple and basic stuff ([8df6109](https://github.com/Sonia-corporation/sonia-discord/commit/8df610914aa9a71ba9fe7064b56afd1c507dfa5e))
+
 # [1.94.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.93.0...1.94.0) (2021-04-30)
 
 
