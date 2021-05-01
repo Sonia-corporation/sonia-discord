@@ -246,6 +246,8 @@ Sonia will respond to each of your messages but within a predefined priority:
 - ping (respond pong)
 - hotel (respond trivago)
 - any question? (respond a pizza lover joke)
+- simple (respond basic)
+- basic (respond simple)
 - default message (when your message is very basic, Sonia will tell you that it is noon, as usual (even if it is untrue))
 
 **Example:**

@@ -18,6 +18,7 @@ import { DiscordMessageAnyQuestionPineapplePizzaService } from '../responses/dis
 import { DiscordMessageAuthorService } from '../responses/discord-message-author.service';
 import { DiscordMessageHotelTrivagoService } from '../responses/discord-message-hotel-trivago.service';
 import { DiscordMessagePingPongService } from '../responses/discord-message-ping-pong.service';
+import { DiscordMessageSimpleBasicService } from '../responses/discord-message-simple-basic.service';
 import _ from 'lodash';
 
 export class DiscordMessageTextService extends AbstractService {
@@ -110,6 +111,10 @@ export class DiscordMessageTextService extends AbstractService {
       if (DiscordMessageAnyQuestionPineapplePizzaService.getInstance().hasCriteria(discordMessage.content)) {
         return this._getAnyQuestionPineapplePizzaMessageResponse(discordMessage);
       }
+
+      if (DiscordMessageSimpleBasicService.getInstance().hasCriteria(discordMessage.content)) {
+        return this._getSimpleBasicMessageResponse(discordMessage);
+      }
     }
 
     return DiscordMessageAuthorService.getInstance().reply(discordMessage);
@@ -192,5 +197,17 @@ export class DiscordMessageTextService extends AbstractService {
     });
 
     return DiscordMessageAnyQuestionPineapplePizzaService.getInstance().reply(discordMessage);
+  }
+
+  private _getSimpleBasicMessageResponse(
+    discordMessage: Readonly<IDiscordMessage>
+  ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(discordMessage.id, `message simple basic`),
+    });
+
+    return DiscordMessageSimpleBasicService.getInstance().reply(discordMessage);
   }
 }
