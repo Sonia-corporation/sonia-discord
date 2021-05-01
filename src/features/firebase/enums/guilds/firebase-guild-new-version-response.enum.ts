@@ -23,7 +23,7 @@ export enum FirebaseGuildNewVersionResponseEnum {
   I_AM_CLOSER_TO_GOD_RIGHT_NOW = `I am closer to god right now.`,
   I_AM_THE_BOSS = `I am the boss.`,
   I_AM_THRILLED = `I am thrilled.`,
-  I_KNOW_WHAT_I_AM_DOING = `I know what I am doing.`,
+  I_KNOW_WHAT_I_AM_DOING = `I know what I'm doing.`,
   LOVE_THAT_ONE = `Love that one!`,
   MY_THRONE_IS_WAITING_FOR_ME = `My throne is waiting for me.`,
   NO_SPAM_IF_USER_ID_COULD_STOP_WORKING = `No spam if {{ userId }} could stop working...`,
