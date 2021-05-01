@@ -161,7 +161,7 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
   it(`should have a member "I_KNOW_WHAT_I_AM_DOING"`, (): void => {
     expect.assertions(1);
 
-    expect(FirebaseGuildNewVersionResponseEnum.I_KNOW_WHAT_I_AM_DOING).toStrictEqual(`I know what I am doing.`);
+    expect(FirebaseGuildNewVersionResponseEnum.I_KNOW_WHAT_I_AM_DOING).toStrictEqual(`I know what I'm doing.`);
   });
 
   it(`should have a member "LOVE_THAT_ONE"`, (): void => {
