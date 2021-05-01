@@ -13,6 +13,7 @@ const DEFAULT_GUILD_COUNT = 0;
 const ONE_GUILD = 1;
 const DEFAULT_CHANNEL_COUNT = 0;
 const ONE_CHANNEL = 1;
+const NO_CHANNEL = 0;
 
 export class FirebaseGuildsNewVersionCountService extends AbstractService {
   private static _instance: FirebaseGuildsNewVersionCountService;
@@ -68,14 +69,16 @@ export class FirebaseGuildsNewVersionCountService extends AbstractService {
 
     this._logGuildAndChannelCount(totalGuildCount, guildCount, channelCount);
 
-    DiscordGuildSoniaService.getInstance().sendMessageToChannel({
-      channelName: DiscordGuildSoniaChannelNameEnum.LOGS,
-      messageResponse: FirebaseGuildsNewVersionCountMessageResponseService.getInstance().getMessageResponse(
-        totalGuildCount,
-        guildCount,
-        channelCount
-      ),
-    });
+    if (_.gt(channelCount, NO_CHANNEL)) {
+      DiscordGuildSoniaService.getInstance().sendMessageToChannel({
+        channelName: DiscordGuildSoniaChannelNameEnum.LOGS,
+        messageResponse: FirebaseGuildsNewVersionCountMessageResponseService.getInstance().getMessageResponse(
+          totalGuildCount,
+          guildCount,
+          channelCount
+        ),
+      });
+    }
   }
 
   private _logGuildAndChannelCount(

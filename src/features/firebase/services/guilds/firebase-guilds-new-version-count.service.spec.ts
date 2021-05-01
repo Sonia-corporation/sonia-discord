@@ -102,6 +102,22 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
           message: `text-no release note message sent`,
         } as ILoggerLog);
       });
+
+      it(`should not get a message response about the count`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not send the message response about the count into the Sonia logs channel`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).not.toHaveBeenCalled();
+      });
     });
 
     describe(`when the given guild messages is an empty array`, (): void => {
@@ -119,6 +135,22 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-no release note message sent`,
         } as ILoggerLog);
+      });
+
+      it(`should not get a message response about the count`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not send the message response about the count into the Sonia logs channel`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).not.toHaveBeenCalled();
       });
     });
 
@@ -138,6 +170,22 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
           message: `text-no release note message sent for the value-1 guild`,
         } as ILoggerLog);
       });
+
+      it(`should not get a message response about the count`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not send the message response about the count into the Sonia logs channel`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).not.toHaveBeenCalled();
+      });
     });
 
     describe(`when the given guild messages is an array with two undefined values`, (): void => {
@@ -155,6 +203,22 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-no release note message sent for the value-2 guilds`,
         } as ILoggerLog);
+      });
+
+      it(`should not get a message response about the count`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not send the message response about the count into the Sonia logs channel`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).not.toHaveBeenCalled();
       });
     });
 
@@ -174,6 +238,22 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
           message: `text-no release note message sent for the value-1 guild`,
         } as ILoggerLog);
       });
+
+      it(`should not get a message response about the count`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not send the message response about the count into the Sonia logs channel`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).not.toHaveBeenCalled();
+      });
     });
 
     describe(`when the given guild messages is an array with two empty arrays`, (): void => {
@@ -191,6 +271,22 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-no release note message sent for the value-2 guilds`,
         } as ILoggerLog);
+      });
+
+      it(`should not get a message response about the count`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not send the message response about the count into the Sonia logs channel`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).not.toHaveBeenCalled();
       });
     });
 
@@ -210,6 +306,22 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
           message: `text-no release note message sent for the value-1 guild`,
         } as ILoggerLog);
       });
+
+      it(`should not get a message response about the count`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not send the message response about the count into the Sonia logs channel`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).not.toHaveBeenCalled();
+      });
     });
 
     describe(`when the given guild messages is an array with two arrays of one undefined value`, (): void => {
@@ -227,6 +339,22 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-no release note message sent for the value-2 guilds`,
         } as ILoggerLog);
+      });
+
+      it(`should not get a message response about the count`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).not.toHaveBeenCalled();
+      });
+
+      it(`should not send the message response about the count into the Sonia logs channel`, (): void => {
+        expect.assertions(1);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).not.toHaveBeenCalled();
       });
     });
 
@@ -246,6 +374,27 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
           message: `text-value-1 release note message sent over value-1 guild of value-1`,
         } as ILoggerLog);
       });
+
+      it(`should get a message response about the count`, (): void => {
+        expect.assertions(2);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledWith(1, 1, 1);
+      });
+
+      it(`should send the message response about the count into the Sonia logs channel`, (): void => {
+        expect.assertions(2);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
+          channelName: `logs`,
+          messageResponse: discordMessageResponse,
+        } as IDiscordGuildSoniaSendMessageToChannel);
+      });
     });
 
     describe(`when the given guild messages is an array with two arrays of one message`, (): void => {
@@ -263,6 +412,27 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-value-2 release note messages sent over value-2 guilds of value-2`,
         } as ILoggerLog);
+      });
+
+      it(`should get a message response about the count`, (): void => {
+        expect.assertions(2);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledWith(2, 2, 2);
+      });
+
+      it(`should send the message response about the count into the Sonia logs channel`, (): void => {
+        expect.assertions(2);
+
+        service.countChannelsAndGuilds(guildMessages);
+
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
+          channelName: `logs`,
+          messageResponse: discordMessageResponse,
+        } as IDiscordGuildSoniaSendMessageToChannel);
       });
     });
 
@@ -289,43 +459,27 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
           message: `text-value-4 release note messages sent over value-3 guilds of value-6`,
         } as ILoggerLog);
       });
-    });
 
-    it(`should get a message response about the count`, (): void => {
-      expect.assertions(2);
-      guildMessages = [
-        [],
-        [null],
-        [createMock<Message>()],
-        [null, null],
-        [createMock<Message>(), null],
-        [createMock<Message>(), createMock<Message>()],
-      ];
+      it(`should get a message response about the count`, (): void => {
+        expect.assertions(2);
 
-      service.countChannelsAndGuilds(guildMessages);
+        service.countChannelsAndGuilds(guildMessages);
 
-      expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
-      expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledWith(6, 3, 4);
-    });
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledWith(6, 3, 4);
+      });
 
-    it(`should send the message response about the count into the Sonia logs channel`, (): void => {
-      expect.assertions(2);
-      guildMessages = [
-        [],
-        [null],
-        [createMock<Message>()],
-        [null, null],
-        [createMock<Message>(), null],
-        [createMock<Message>(), createMock<Message>()],
-      ];
+      it(`should send the message response about the count into the Sonia logs channel`, (): void => {
+        expect.assertions(2);
 
-      service.countChannelsAndGuilds(guildMessages);
+        service.countChannelsAndGuilds(guildMessages);
 
-      expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
-      expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
-        channelName: `logs`,
-        messageResponse: discordMessageResponse,
-      } as IDiscordGuildSoniaSendMessageToChannel);
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
+          channelName: `logs`,
+          messageResponse: discordMessageResponse,
+        } as IDiscordGuildSoniaSendMessageToChannel);
+      });
     });
   });
 });
