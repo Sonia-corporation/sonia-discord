@@ -12,6 +12,7 @@ import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/fi
 import { IFirebaseGuildVFinal } from '../../../../../../../../firebase/types/guilds/firebase-guild-v-final';
 import { ILoggerLog } from '../../../../../../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../../../../../../logger/services/logger.service';
+import { DiscordChannelService } from '../../../../../../../channels/services/discord-channel.service';
 import { DiscordSoniaService } from '../../../../../../../users/services/discord-sonia.service';
 import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
@@ -36,6 +37,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
   let discordMessageHelpService: DiscordMessageHelpService;
   let firebaseGuildsStoreQuery: FirebaseGuildsStoreQuery;
   let firebaseGuildsChannelsService: FirebaseGuildsChannelsService;
+  let discordChannelService: DiscordChannelService;
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
@@ -44,6 +46,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
     discordMessageHelpService = DiscordMessageHelpService.getInstance();
     firebaseGuildsStoreQuery = FirebaseGuildsStoreQuery.getInstance();
     firebaseGuildsChannelsService = FirebaseGuildsChannelsService.getInstance();
+    discordChannelService = DiscordChannelService.getInstance();
   });
 
   describe(`execute()`, (): void => {
@@ -52,6 +55,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
     let loggerServiceDebugSpy: jest.SpyInstance;
     let getStatesSpy: jest.SpyInstance;
     let getMessageResponseSpy: jest.SpyInstance;
+    let discordChannelServiceIsValidSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureReleaseNotesHumanize();
@@ -64,6 +68,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
       getMessageResponseSpy = jest
         .spyOn(service, `getMessageResponse`)
         .mockRejectedValue(new Error(`getMessageResponse error`));
+      discordChannelServiceIsValidSpy = jest.spyOn(discordChannelService, `isValid`).mockReturnValue(false);
     });
 
     it(`should log about executing the humanize action`, async (): Promise<void> => {
@@ -115,6 +120,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
             guild: null,
             id: `dummy-id`,
           });
+
+          discordChannelServiceIsValidSpy.mockReturnValue(false);
         });
 
         it(`should throw an error about the Firebase guild being invalid`, async (): Promise<void> => {
@@ -130,6 +137,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
             guild: {},
             id: `dummy-id`,
           });
+
+          discordChannelServiceIsValidSpy.mockReturnValue(true);
         });
 
         describe(`when the Discord message channel is not a text channel`, (): void => {
@@ -144,6 +153,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
               },
               id: `dummy-id`,
             });
+
+            discordChannelServiceIsValidSpy.mockReturnValue(false);
           });
 
           it(`should throw an error about the Firebase channel being invalid`, async (): Promise<void> => {
@@ -165,6 +176,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
               },
               id: `dummy-id`,
             });
+
+            discordChannelServiceIsValidSpy.mockReturnValue(true);
           });
 
           it(`should fetch a message response`, async (): Promise<void> => {
@@ -217,6 +230,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
               },
               id: `dummy-id`,
             });
+
+            discordChannelServiceIsValidSpy.mockReturnValue(true);
           });
 
           it(`should fetch a message response`, async (): Promise<void> => {
