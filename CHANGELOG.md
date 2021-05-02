@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.95.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.95.0...1.95.1) (2021-05-02)
+
+
+### :bug: Bug Fixes
+
+* **mention:** sonia will also check for nicknames and real names in the mentions ([4187e8f](https://github.com/Sonia-corporation/sonia-discord/commit/4187e8f1f1baefdb10373b5b3e084cea92b19d67))
+
 # [1.95.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.94.0...1.95.0) (2021-05-01)
 
 
