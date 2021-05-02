@@ -8,7 +8,7 @@ jobs:
     name: Check if the push contains the label "merge-into-master"
     runs-on: ubuntu-latest
     outputs:
-      HAS_LABEL: ${{ steps.check_labels.outputs.HAS_LABEL }}
+      HAS_LABEL: ${{ steps.save-has-label.outputs.HAS_LABEL }}
     steps:
       - name: Check labels
         id: check_labels
@@ -17,6 +17,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           labels: '["merge-into-master"]'
       - name: Save has label result
+        id: save-has-label
         run: echo '::set-output name=HAS_LABEL::${{ steps.check_labels.outputs.result }}'
       - name: Label present
         if: steps.check_labels.outputs.result == 'true'
