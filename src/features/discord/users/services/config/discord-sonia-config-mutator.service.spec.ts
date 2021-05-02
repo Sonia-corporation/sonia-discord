@@ -706,8 +706,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
         };
       });
 
-      // @todo Fix it; I am clueless to find out why this is not working
-      it.skip(`should update the config corporation message embed author icon url`, (): void => {
+      it(`should update the config corporation message embed author icon url`, (): void => {
         expect.assertions(1);
 
         service.updateCorporationMessageEmbedAuthor(config);
@@ -723,8 +722,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
         };
       });
 
-      // @todo Fix it; I am clueless to find out why this is not working
-      it.skip(`should update the config corporation message embed author name`, (): void => {
+      it(`should update the config corporation message embed author name`, (): void => {
         expect.assertions(1);
 
         service.updateCorporationMessageEmbedAuthor(config);
@@ -740,8 +738,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
         };
       });
 
-      // @todo Fix it; I am clueless to find out why this is not working
-      it.skip(`should update the config corporation message embed author url`, (): void => {
+      it(`should update the config corporation message embed author url`, (): void => {
         expect.assertions(1);
 
         service.updateCorporationMessageEmbedAuthor(config);
