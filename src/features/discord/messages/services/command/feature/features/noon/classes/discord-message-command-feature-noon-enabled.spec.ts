@@ -9,6 +9,7 @@ import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/fi
 import { IFirebaseGuildVFinal } from '../../../../../../../../firebase/types/guilds/firebase-guild-v-final';
 import { ILoggerLog } from '../../../../../../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../../../../../../logger/services/logger.service';
+import { DiscordChannelService } from '../../../../../../../channels/services/discord-channel.service';
 import { IAnyDiscordChannel } from '../../../../../../../channels/types/any-discord-channel';
 import { IDiscordCommandFlagSuccess } from '../../../../../../interfaces/commands/flags/discord-command-flag-success';
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
@@ -33,11 +34,13 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
   let loggerService: LoggerService;
   let firebaseGuildsStoreQuery: FirebaseGuildsStoreQuery;
   let firebaseGuildsChannelsFeaturesNoonEnabledService: FirebaseGuildsChannelsFeaturesNoonEnabledService;
+  let discordChannelService: DiscordChannelService;
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
     firebaseGuildsStoreQuery = FirebaseGuildsStoreQuery.getInstance();
     firebaseGuildsChannelsFeaturesNoonEnabledService = FirebaseGuildsChannelsFeaturesNoonEnabledService.getInstance();
+    discordChannelService = DiscordChannelService.getInstance();
   });
 
   describe(`execute()`, (): void => {
@@ -47,6 +50,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
     let loggerServiceDebugSpy: jest.SpyInstance;
     let isEnabledSpy: jest.SpyInstance;
     let updateDatabaseSpy: jest.SpyInstance;
+    let discordChannelServiceIsValidSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonEnabled();
@@ -58,6 +62,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       isEnabledSpy = jest.spyOn(service, `isEnabled`).mockRejectedValue(new Error(`isEnabled error`));
       updateDatabaseSpy = jest.spyOn(service, `updateDatabase`).mockRejectedValue(new Error(`updateDatabase error`));
+      discordChannelServiceIsValidSpy = jest.spyOn(discordChannelService, `isValid`).mockReturnValue(false);
     });
 
     it(`should log about executing the enabled action`, async (): Promise<void> => {
@@ -118,6 +123,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             guild: null,
             id: `dummy-id`,
           });
+
+          discordChannelServiceIsValidSpy.mockReturnValue(false);
         });
 
         it(`should not update the database to enable the noon feature`, async (): Promise<void> => {
@@ -141,6 +148,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             guild: {},
             id: `dummy-id`,
           });
+
+          discordChannelServiceIsValidSpy.mockReturnValue(true);
         });
 
         describe(`when the Discord message channel is not a text channel`, (): void => {
@@ -155,6 +164,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               },
               id: `dummy-id`,
             });
+
+            discordChannelServiceIsValidSpy.mockReturnValue(false);
           });
 
           it(`should not update the database to enable the noon feature`, async (): Promise<void> => {
@@ -188,6 +199,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               },
               id: `dummy-id`,
             });
+
+            discordChannelServiceIsValidSpy.mockReturnValue(true);
           });
 
           describe(`when the current noon feature is not configured`, (): void => {
@@ -554,6 +567,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               },
               id: `dummy-id`,
             });
+
+            discordChannelServiceIsValidSpy.mockReturnValue(true);
           });
 
           describe(`when the current noon feature is not configured`, (): void => {

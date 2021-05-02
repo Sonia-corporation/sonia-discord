@@ -8,6 +8,7 @@ import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/fi
 import { IFirebaseGuildVFinal } from '../../../../../../../../firebase/types/guilds/firebase-guild-v-final';
 import { ILoggerLog } from '../../../../../../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../../../../../../logger/services/logger.service';
+import { DiscordChannelService } from '../../../../../../../channels/services/discord-channel.service';
 import { IDiscordMessageResponse } from '../../../../../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
 import { DiscordMessageCommandFeatureNoonFlagEnum } from '../enums/discord-message-command-feature-noon-flag.enum';
@@ -20,10 +21,12 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
   let service: DiscordMessageCommandFeatureNoonStatus<DiscordMessageCommandFeatureNoonFlagEnum>;
   let loggerService: LoggerService;
   let firebaseGuildsStoreQuery: FirebaseGuildsStoreQuery;
+  let discordChannelService: DiscordChannelService;
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
     firebaseGuildsStoreQuery = FirebaseGuildsStoreQuery.getInstance();
+    discordChannelService = DiscordChannelService.getInstance();
   });
 
   describe(`execute()`, (): void => {
@@ -32,6 +35,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
     let loggerServiceDebugSpy: jest.SpyInstance;
     let isEnabledSpy: jest.SpyInstance;
     let getMessageResponseSpy: jest.SpyInstance;
+    let discordChannelServiceIsValidSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonStatus();
@@ -44,6 +48,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
       getMessageResponseSpy = jest
         .spyOn(service, `getMessageResponse`)
         .mockRejectedValue(new Error(`getMessageResponse error`));
+      discordChannelServiceIsValidSpy = jest.spyOn(discordChannelService, `isValid`).mockReturnValue(false);
     });
 
     it(`should log about executing the status action`, async (): Promise<void> => {
@@ -95,6 +100,8 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
             guild: null,
             id: `dummy-id`,
           });
+
+          discordChannelServiceIsValidSpy.mockReturnValue(false);
         });
 
         it(`should throw an error about the Firebase guild being invalid`, async (): Promise<void> => {
@@ -110,6 +117,8 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
             guild: {},
             id: `dummy-id`,
           });
+
+          discordChannelServiceIsValidSpy.mockReturnValue(true);
         });
 
         describe(`when the Discord message channel is not a text channel`, (): void => {
@@ -124,6 +133,8 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
               },
               id: `dummy-id`,
             });
+
+            discordChannelServiceIsValidSpy.mockReturnValue(false);
           });
 
           it(`should throw an error about the Firebase channel being invalid`, async (): Promise<void> => {
@@ -145,6 +156,8 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
               },
               id: `dummy-id`,
             });
+
+            discordChannelServiceIsValidSpy.mockReturnValue(true);
           });
 
           it(`should fetch a message response`, async (): Promise<void> => {
@@ -197,6 +210,8 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
               },
               id: `dummy-id`,
             });
+
+            discordChannelServiceIsValidSpy.mockReturnValue(true);
           });
 
           it(`should fetch a message response`, async (): Promise<void> => {

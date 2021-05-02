@@ -1,6 +1,5 @@
 import { isDiscordDmChannel } from './is-discord-dm-channel';
 import { DMChannel, NewsChannel, TextChannel } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
 
 describe(`isDiscordDmChannel()`, (): void => {
   let channel: TextChannel | DMChannel | NewsChannel | null | undefined;
@@ -35,11 +34,10 @@ describe(`isDiscordDmChannel()`, (): void => {
 
   describe(`when the given value is a "DMChannel" instance`, (): void => {
     beforeEach((): void => {
-      channel = createMock<DMChannel>();
+      channel = createInstance(DMChannel.prototype);
     });
 
-    // @todo fix it omg this should works
-    it.skip(`should return true`, (): void => {
+    it(`should return true`, (): void => {
       expect.assertions(1);
 
       const result = isDiscordDmChannel(channel);
