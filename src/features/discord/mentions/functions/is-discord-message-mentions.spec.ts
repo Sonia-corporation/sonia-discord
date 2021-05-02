@@ -1,6 +1,5 @@
 import { isDiscordMessageMentions } from './is-discord-message-mentions';
 import { MessageMentions } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
 
 describe(`isDiscordMessageMentions()`, (): void => {
   let mention: unknown;
@@ -65,11 +64,10 @@ describe(`isDiscordMessageMentions()`, (): void => {
 
   describe(`when the given value is a "MessageMentions" instance`, (): void => {
     beforeEach((): void => {
-      mention = createMock<MessageMentions>();
+      mention = createInstance(MessageMentions.prototype);
     });
 
-    // @todo fix it omg this should works
-    it.skip(`should return true`, (): void => {
+    it(`should return true`, (): void => {
       expect.assertions(1);
 
       const result = isDiscordMessageMentions(mention);

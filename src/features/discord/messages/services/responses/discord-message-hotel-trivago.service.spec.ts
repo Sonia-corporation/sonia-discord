@@ -93,7 +93,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
     describe(`when the given message has only one mention`, (): void => {
       beforeEach((): void => {
-        message = `<@!123>`;
+        message = `<@123>`;
       });
 
       it(`should return false`, (): void => {
