@@ -77,12 +77,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Show current tag
         run: echo 'The current tag is ${{ needs.CurrentTag.outputs.CURRENT_TAG }}'
-      - name: Has new tag
-        if: needs.CurrentTag.outputs.CURRENT_TAG != steps.latest-tag.outputs.tag
-        run: echo 'The current tag is not the same after the release. A new tag has been created'
       - name: Has same tag
         if: needs.CurrentTag.outputs.CURRENT_TAG == steps.latest-tag.outputs.tag
         run: echo 'The current tag did not change'
+      - name: Has new tag
+        if: needs.CurrentTag.outputs.CURRENT_TAG != steps.latest-tag.outputs.tag
+        run: echo 'The current tag is not the same after the release. A new tag has been created'
       - name: Create PR from master to develop
         if: needs.CurrentTag.outputs.CURRENT_TAG != steps.latest-tag.outputs.tag
         uses: peter-evans/create-pull-request@v3
