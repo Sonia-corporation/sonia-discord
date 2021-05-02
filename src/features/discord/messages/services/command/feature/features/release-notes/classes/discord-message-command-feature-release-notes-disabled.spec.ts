@@ -10,6 +10,7 @@ import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/fi
 import { IFirebaseGuildVFinal } from '../../../../../../../../firebase/types/guilds/firebase-guild-v-final';
 import { ILoggerLog } from '../../../../../../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../../../../../../logger/services/logger.service';
+import { DiscordChannelService } from '../../../../../../../channels/services/discord-channel.service';
 import { IAnyDiscordChannel } from '../../../../../../../channels/types/any-discord-channel';
 import { IDiscordCommandFlagSuccess } from '../../../../../../interfaces/commands/flags/discord-command-flag-success';
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
@@ -35,12 +36,14 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
   let firebaseGuildsStoreQuery: FirebaseGuildsStoreQuery;
   let firebaseGuildsChannelsFeaturesReleaseNotesEnabledService: FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService;
   let firebaseGuildsChannelsService: FirebaseGuildsChannelsService;
+  let discordChannelService: DiscordChannelService;
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
     firebaseGuildsStoreQuery = FirebaseGuildsStoreQuery.getInstance();
     firebaseGuildsChannelsFeaturesReleaseNotesEnabledService = FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService.getInstance();
     firebaseGuildsChannelsService = FirebaseGuildsChannelsService.getInstance();
+    discordChannelService = DiscordChannelService.getInstance();
   });
 
   describe(`execute()`, (): void => {
@@ -50,6 +53,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
     let loggerServiceDebugSpy: jest.SpyInstance;
     let isDisabledSpy: jest.SpyInstance;
     let updateDatabaseSpy: jest.SpyInstance;
+    let discordChannelServiceIsValidSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureReleaseNotesDisabled();
@@ -61,6 +65,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       isDisabledSpy = jest.spyOn(service, `isDisabled`).mockRejectedValue(new Error(`isDisabled error`));
       updateDatabaseSpy = jest.spyOn(service, `updateDatabase`).mockRejectedValue(new Error(`updateDatabase error`));
+      discordChannelServiceIsValidSpy = jest.spyOn(discordChannelService, `isValid`).mockReturnValue(false);
     });
 
     it(`should log about executing the disabled action`, async (): Promise<void> => {
@@ -121,6 +126,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
             guild: null,
             id: `dummy-id`,
           });
+
+          discordChannelServiceIsValidSpy.mockReturnValue(false);
         });
 
         it(`should not update the database to disable the release notes feature`, async (): Promise<void> => {
@@ -144,6 +151,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
             guild: {},
             id: `dummy-id`,
           });
+
+          discordChannelServiceIsValidSpy.mockReturnValue(true);
         });
 
         describe(`when the Discord message channel is not a text channel`, (): void => {
@@ -158,6 +167,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
               },
               id: `dummy-id`,
             });
+
+            discordChannelServiceIsValidSpy.mockReturnValue(false);
           });
 
           it(`should not update the database to disable the release notes feature`, async (): Promise<void> => {
@@ -191,6 +202,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
               },
               id: `dummy-id`,
             });
+
+            discordChannelServiceIsValidSpy.mockReturnValue(true);
           });
 
           describe(`when the current release notes feature is not configured`, (): void => {
@@ -557,6 +570,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
               },
               id: `dummy-id`,
             });
+
+            discordChannelServiceIsValidSpy.mockReturnValue(true);
           });
 
           describe(`when the current release notes feature is not configured`, (): void => {
