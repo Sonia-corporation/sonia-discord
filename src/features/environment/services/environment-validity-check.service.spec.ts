@@ -62,6 +62,8 @@ describe(`EnvironmentValidityCheckService`, (): void => {
 
     beforeEach((): void => {
       service = new EnvironmentValidityCheckService();
+      process.env.GOOGLE_APPLICATION_CREDENTIALS = `dummy-google-application-credentials`;
+      process.env.SHOULD_DISPLAY_MORE_DEBUG_LOGS = `true`;
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
@@ -87,9 +89,30 @@ describe(`EnvironmentValidityCheckService`, (): void => {
       });
     });
 
-    describe(`when the Google application credential environment variable is valid`, (): void => {
+    describe(`when the should display more debug logs environment variable is not valid`, (): void => {
+      beforeEach((): void => {
+        _.unset(process.env, `SHOULD_DISPLAY_MORE_DEBUG_LOGS`);
+      });
+
+      it(`should log an error with the should display more debug logs environment variable`, (): void => {
+        expect.assertions(3);
+
+        expect((): void => {
+          service.init();
+        }).toThrow(new Error(`SHOULD_DISPLAY_MORE_DEBUG_LOGS env is not either true or false (string)`));
+
+        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
+          context: `EnvironmentValidityCheckService`,
+          message: `text-This error should not happen. If everything is as expected this is not related to the current developer environment and it means that a breaking change happened.`,
+        } as ILoggerLog);
+      });
+    });
+
+    describe(`when all the environment variables are valid`, (): void => {
       beforeEach((): void => {
         process.env.GOOGLE_APPLICATION_CREDENTIALS = `dummy-google-application-credentials`;
+        process.env.SHOULD_DISPLAY_MORE_DEBUG_LOGS = `true`;
       });
 
       it(`should not log an error with the Google application credential environment variable`, (): void => {
@@ -105,12 +128,24 @@ describe(`EnvironmentValidityCheckService`, (): void => {
 
         service.init();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
         expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
           context: `EnvironmentValidityCheckService`,
           message: `text-GOOGLE_APPLICATION_CREDENTIALS env: value-dummy-google-application-credentials`,
         } as ILoggerLog);
       });
+    });
+
+    it(`should log the should display more debug logs environment variable`, (): void => {
+      expect.assertions(2);
+
+      service.init();
+
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+      expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+        context: `EnvironmentValidityCheckService`,
+        message: `text-SHOULD_DISPLAY_MORE_DEBUG_LOGS env: value-true`,
+      } as ILoggerLog);
     });
   });
 });

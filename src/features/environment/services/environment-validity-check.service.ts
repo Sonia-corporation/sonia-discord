@@ -21,6 +21,7 @@ export class EnvironmentValidityCheckService extends AbstractService {
 
   public init(): void {
     this._handleGoogleApplicationCredentials();
+    this._handleShouldDisplayMoreDebugLogs();
   }
 
   private _handleGoogleApplicationCredentials(): void {
@@ -47,6 +48,35 @@ export class EnvironmentValidityCheckService extends AbstractService {
       message: ChalkService.getInstance().text(
         `GOOGLE_APPLICATION_CREDENTIALS env: ${ChalkService.getInstance().value(
           process.env.GOOGLE_APPLICATION_CREDENTIALS
+        )}`
+      ),
+    });
+  }
+
+  private _handleShouldDisplayMoreDebugLogs(): void {
+    this._checkShouldDisplayMoreDebugLogs();
+    this._logShouldDisplayMoreDebugLogs();
+  }
+
+  private _checkShouldDisplayMoreDebugLogs(): void | never {
+    if (!_.includes([`true`, `false`], process.env.SHOULD_DISPLAY_MORE_DEBUG_LOGS)) {
+      LoggerService.getInstance().error({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `This error should not happen. If everything is as expected this is not related to the current developer environment and it means that a breaking change happened.`
+        ),
+      });
+
+      throw new Error(`SHOULD_DISPLAY_MORE_DEBUG_LOGS env is not either true or false (string)`);
+    }
+  }
+
+  private _logShouldDisplayMoreDebugLogs(): void {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(
+        `SHOULD_DISPLAY_MORE_DEBUG_LOGS env: ${ChalkService.getInstance().value(
+          process.env.SHOULD_DISPLAY_MORE_DEBUG_LOGS
         )}`
       ),
     });
