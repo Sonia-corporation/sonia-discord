@@ -82,8 +82,10 @@ export class InitService extends AbstractService {
     return fs
       .readJson(`${_.toString(appRootPath)}/src/environment/secret-environment.json`)
       .then(
-        (environment: Readonly<IEnvironment>): Promise<[true, [number | void, WriteResult[] | void]]> =>
-          this._startApp(this._mergeEnvironments(ENVIRONMENT, environment))
+        (environment: Readonly<IEnvironment>): Promise<[true, [number | void, WriteResult[] | void]] | void> =>
+          this._startApp(this._mergeEnvironments(ENVIRONMENT, environment)).catch((error: Readonly<Error>): void => {
+            console.error(error);
+          })
       )
       .catch(
         (error: unknown): Promise<never> => {
