@@ -5,6 +5,7 @@ import { ILoggerLog } from '../../logger/interfaces/logger-log';
 import { LoggerService } from '../../logger/services/logger.service';
 import { FirebaseAppEnum } from '../enums/firebase-app.enum';
 import * as admin from 'firebase-admin';
+import _ from 'lodash';
 import { createMock } from 'ts-auto-mock';
 import App = admin.app.App;
 
@@ -75,12 +76,9 @@ describe(`FirebaseAppService`, (): void => {
       jest.spyOn(admin.credential, `applicationDefault`).mockReturnValue(credential);
     });
 
-    /**
-     * @todo find a way to override the environment
-     */
-    describe.skip(`when the Google application credential environment variable is not valid`, (): void => {
+    describe(`when the Google application credential environment variable is not valid`, (): void => {
       beforeEach((): void => {
-        process.env.GOOGLE_APPLICATION_CREDENTIALS = undefined;
+        _.unset(process.env, `GOOGLE_APPLICATION_CREDENTIALS`);
       });
 
       it(`should log an error with the Google application credential environment variable`, (): void => {
