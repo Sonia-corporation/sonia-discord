@@ -2,10 +2,10 @@ import { ServiceNameEnum } from './service-name.enum';
 import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`ServiceNameEnum`, (): void => {
-  it(`should have a 113 members`, (): void => {
+  it(`should have a 114 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ServiceNameEnum)).toStrictEqual(113);
+    expect(getEnumLength(ServiceNameEnum)).toStrictEqual(114);
   });
 
   it(`should have a member "APP_CONFIG_CORE_SERVICE"`, (): void => {
@@ -524,6 +524,12 @@ describe(`ServiceNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(ServiceNameEnum.DISCORD_SONIA_SERVICE).toStrictEqual(`DiscordSoniaService`);
+  });
+
+  it(`should have a member "ENVIRONMENT_VALIDITY_CHECK_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.ENVIRONMENT_VALIDITY_CHECK_SERVICE).toStrictEqual(`EnvironmentValidityCheckService`);
   });
 
   it(`should have a member "FIREBASE_APP_SERVICE"`, (): void => {

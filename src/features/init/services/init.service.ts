@@ -10,6 +10,7 @@ import { AppConfigService } from '../../app/services/config/app-config.service';
 import { DiscordMessageConfigMutatorService } from '../../discord/messages/services/config/discord-message-config-mutator.service';
 import { DiscordService } from '../../discord/services/discord.service';
 import { DiscordSoniaConfigMutatorService } from '../../discord/users/services/config/discord-sonia-config-mutator.service';
+import { EnvironmentValidityCheckService } from '../../environment/services/environment-validity-check.service';
 import { FirebaseService } from '../../firebase/services/firebase.service';
 import { GITHUB_API_URL } from '../../github/constants/github-api-url';
 import { getHumanizedReleaseNotes } from '../../github/functions/get-humanized-release-notes';
@@ -103,6 +104,7 @@ export class InitService extends AbstractService {
   }
 
   private _runApp(): Promise<[true, [number | void, WriteResult[] | void]]> {
+    EnvironmentValidityCheckService.getInstance().init();
     ServerService.getInstance().initializeApp();
 
     return Promise.all([DiscordService.getInstance().init(), FirebaseService.getInstance().init()]);

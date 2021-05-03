@@ -26,37 +26,11 @@ export class FirebaseAppService extends AbstractService {
   }
 
   public init(): void {
-    this._checkGoogleApplicationCredentials();
-    this._logGoogleApplicationCredentials();
     this._initializeFirebaseApp();
   }
 
   public getApp(): App | undefined {
     return this._app;
-  }
-
-  private _checkGoogleApplicationCredentials(): void | never {
-    if (_.isNil(process.env.GOOGLE_APPLICATION_CREDENTIALS)) {
-      LoggerService.getInstance().error({
-        context: this._serviceName,
-        message: ChalkService.getInstance().text(
-          `This error should not happen. If everything is as expected this is not related to the current developer environment and it means that a breaking change happened.`
-        ),
-      });
-
-      throw new Error(`GOOGLE_APPLICATION_CREDENTIALS env is undefined`);
-    }
-  }
-
-  private _logGoogleApplicationCredentials(): void {
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(
-        `GOOGLE_APPLICATION_CREDENTIALS env: ${ChalkService.getInstance().value(
-          process.env.GOOGLE_APPLICATION_CREDENTIALS
-        )}`
-      ),
-    });
   }
 
   private _initializeFirebaseApp(): void {

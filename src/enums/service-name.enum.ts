@@ -77,6 +77,7 @@ export enum ServiceNameEnum {
   DISCORD_SONIA_CONFIG_SERVICE = `DiscordSoniaConfigService`,
   DISCORD_SONIA_EMOTIONAL_STATE_SERVICE = `DiscordSoniaEmotionalStateService`,
   DISCORD_SONIA_SERVICE = `DiscordSoniaService`,
+  ENVIRONMENT_VALIDITY_CHECK_SERVICE = `EnvironmentValidityCheckService`,
   FIREBASE_APP_SERVICE = `FirebaseAppService`,
   FIREBASE_GUILDS_BREAKING_CHANGE_SERVICE = `FirebaseGuildsBreakingChangeService`,
   FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_SERVICE = `FirebaseGuildsChannelsFeaturesNoonEnabledService`,
