@@ -91,10 +91,12 @@ export class DiscordGuildSoniaService extends AbstractService {
       return;
     }
 
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(`Sonia guild found`),
-    });
+    if (_.isEqual(process.env.SHOULD_DISPLAY_MORE_DEBUG_LOGS, `true`)) {
+      LoggerService.getInstance().debug({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(`Sonia guild found`),
+      });
+    }
   }
 
   private _sendMessageToChannel(
@@ -104,16 +106,21 @@ export class DiscordGuildSoniaService extends AbstractService {
     guildChannel
       .send(messageResponse.response, messageResponse.options)
       .then((): void => {
-        LoggerService.getInstance().log({
-          context: this._serviceName,
-          message: ChalkService.getInstance().text(`channel message sent`),
-        });
+        if (_.isEqual(process.env.SHOULD_DISPLAY_MORE_DEBUG_LOGS, `true`)) {
+          LoggerService.getInstance().log({
+            context: this._serviceName,
+            message: ChalkService.getInstance().text(`channel message sent`),
+          });
+        }
       })
       .catch((error: unknown): void => {
-        LoggerService.getInstance().error({
-          context: this._serviceName,
-          message: ChalkService.getInstance().text(`channel message sending failed`),
-        });
+        if (_.isEqual(process.env.SHOULD_DISPLAY_MORE_DEBUG_LOGS, `true`)) {
+          LoggerService.getInstance().error({
+            context: this._serviceName,
+            message: ChalkService.getInstance().text(`channel message sending failed`),
+          });
+        }
+
         LoggerService.getInstance().error({
           context: this._serviceName,
           message: ChalkService.getInstance().error(error),

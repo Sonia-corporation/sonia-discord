@@ -56,11 +56,13 @@ export class DiscordMessageErrorService extends AbstractService {
       anyDiscordMessage.channel
         .send(response, options)
         .then((): void => {
-          LoggerService.getInstance().log({
-            context: this._serviceName,
-            hasExtendedContext: true,
-            message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message sent`),
-          });
+          if (_.isEqual(process.env.SHOULD_DISPLAY_MORE_DEBUG_LOGS, `true`)) {
+            LoggerService.getInstance().log({
+              context: this._serviceName,
+              hasExtendedContext: true,
+              message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message sent`),
+            });
+          }
         })
         .catch((error: unknown): void => {
           this._logOnError(error, anyDiscordMessage);
@@ -76,11 +78,14 @@ export class DiscordMessageErrorService extends AbstractService {
   }
 
   private _logOnError(error: unknown, { id }: Readonly<IAnyDiscordMessage>): void {
-    LoggerService.getInstance().error({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(id, `message sending failed`),
-    });
+    if (_.isEqual(process.env.SHOULD_DISPLAY_MORE_DEBUG_LOGS, `true`)) {
+      LoggerService.getInstance().error({
+        context: this._serviceName,
+        hasExtendedContext: true,
+        message: LoggerService.getInstance().getSnowflakeContext(id, `message sending failed`),
+      });
+    }
+
     LoggerService.getInstance().error({
       context: this._serviceName,
       hasExtendedContext: true,

@@ -67,7 +67,7 @@ export class EnvironmentValidityCheckService extends AbstractService {
         ),
       });
 
-      throw new Error(`SHOULD_DISPLAY_MORE_DEBUG_LOGS env is not either true or false (string)`);
+      throw new Error(`SHOULD_DISPLAY_MORE_DEBUG_LOGS env should be either true or false (string)`);
     }
   }
 

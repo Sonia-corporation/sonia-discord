@@ -131,7 +131,7 @@ export class DiscordMessageService extends AbstractService {
           }
         )
         .catch(
-          (error: Error): Promise<void> => {
+          (error: Readonly<Error>): Promise<void> => {
             DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
             return Promise.reject(error);
           }
@@ -147,11 +147,14 @@ export class DiscordMessageService extends AbstractService {
       .on(`message`, (anyDiscordMessage: Readonly<IAnyDiscordMessage>): void => {
         this.sendMessage(anyDiscordMessage).catch((error: Readonly<Error>): void => {
           // @todo add coverage
-          LoggerService.getInstance().debug({
-            context: this._serviceName,
-            hasExtendedContext: true,
-            message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message ignored`),
-          });
+          if (_.isEqual(process.env.SHOULD_DISPLAY_MORE_DEBUG_LOGS, `true`)) {
+            LoggerService.getInstance().debug({
+              context: this._serviceName,
+              hasExtendedContext: true,
+              message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message ignored`),
+            });
+          }
+
           LoggerService.getInstance().warning({
             context: this._serviceName,
             hasExtendedContext: true,

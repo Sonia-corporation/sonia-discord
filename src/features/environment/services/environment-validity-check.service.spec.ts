@@ -99,7 +99,7 @@ describe(`EnvironmentValidityCheckService`, (): void => {
 
         expect((): void => {
           service.init();
-        }).toThrow(new Error(`SHOULD_DISPLAY_MORE_DEBUG_LOGS env is not either true or false (string)`));
+        }).toThrow(new Error(`SHOULD_DISPLAY_MORE_DEBUG_LOGS env should be either true or false (string)`));
 
         expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
