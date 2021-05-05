@@ -74,9 +74,9 @@ describe(`DiscordChannelTypingService`, (): void => {
     });
 
     it(`should add and show one typing indicator for the given channel`, async (): Promise<void> => {
-      expect.assertions(2);
+      expect.assertions(3);
 
-      await service.addOneIndicator(channel);
+      await expect(service.addOneIndicator(channel)).rejects.toThrow(new Error(`startTyping error`));
 
       expect(startTypingMock).toHaveBeenCalledTimes(1);
       expect(startTypingMock).toHaveBeenCalledWith();
