@@ -63,4 +63,12 @@ describe(`LoggerConfigCoreService`, (): void => {
 
     expect(service.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
   });
+
+  it(`should not display more debug logs`, (): void => {
+    expect.assertions(1);
+
+    service = LoggerConfigCoreService.getInstance();
+
+    expect(service.shouldDisplayMoreDebugLogs).toStrictEqual(false);
+  });
 });
