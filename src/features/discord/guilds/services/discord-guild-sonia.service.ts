@@ -5,6 +5,7 @@ import { ONE_EMITTER } from '../../../../constants/one-emitter';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerConfigService } from '../../../logger/services/config/logger-config.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
@@ -91,10 +92,12 @@ export class DiscordGuildSoniaService extends AbstractService {
       return;
     }
 
-    LoggerService.getInstance().debug({
-      context: this._serviceName,
-      message: ChalkService.getInstance().text(`Sonia guild found`),
-    });
+    if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
+      LoggerService.getInstance().debug({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(`Sonia guild found`),
+      });
+    }
   }
 
   private _sendMessageToChannel(
@@ -104,16 +107,21 @@ export class DiscordGuildSoniaService extends AbstractService {
     guildChannel
       .send(messageResponse.response, messageResponse.options)
       .then((): void => {
-        LoggerService.getInstance().log({
-          context: this._serviceName,
-          message: ChalkService.getInstance().text(`channel message sent`),
-        });
+        if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
+          LoggerService.getInstance().log({
+            context: this._serviceName,
+            message: ChalkService.getInstance().text(`channel message sent`),
+          });
+        }
       })
       .catch((error: unknown): void => {
-        LoggerService.getInstance().error({
-          context: this._serviceName,
-          message: ChalkService.getInstance().text(`channel message sending failed`),
-        });
+        if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
+          LoggerService.getInstance().error({
+            context: this._serviceName,
+            message: ChalkService.getInstance().text(`channel message sending failed`),
+          });
+        }
+
         LoggerService.getInstance().error({
           context: this._serviceName,
           message: ChalkService.getInstance().error(error),

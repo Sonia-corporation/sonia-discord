@@ -74,9 +74,9 @@ describe(`DiscordChannelTypingService`, (): void => {
     });
 
     it(`should add and show one typing indicator for the given channel`, async (): Promise<void> => {
-      expect.assertions(2);
+      expect.assertions(3);
 
-      await service.addOneIndicator(channel);
+      await expect(service.addOneIndicator(channel)).rejects.toThrow(new Error(`startTyping error`));
 
       expect(startTypingMock).toHaveBeenCalledTimes(1);
       expect(startTypingMock).toHaveBeenCalledWith();
@@ -92,14 +92,18 @@ describe(`DiscordChannelTypingService`, (): void => {
       });
 
       it(`should log about the error`, async (): Promise<void> => {
-        expect.assertions(2);
+        expect.assertions(4);
 
-        await service.addOneIndicator(channel);
+        await expect(service.addOneIndicator(channel)).rejects.toThrow(new Error(`startTyping error`));
 
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
-        expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
+        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
+        expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(1, {
           context: `DiscordChannelTypingService`,
           message: `text-failed to show a typing indicator for the channel value-dummy-channel-id`,
+        } as ILoggerLog);
+        expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(2, {
+          context: `DiscordChannelTypingService`,
+          message: `text-Error: startTyping error`,
         } as ILoggerLog);
       });
     });

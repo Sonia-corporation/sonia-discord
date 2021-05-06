@@ -102,7 +102,7 @@
     "build:firebase-service-account:copy": "node scripts/build-firebase-service-account-copy.js",
     "build:firebase-service-account:create": "node scripts/build-firebase-service-account-create.js",
     "run:prod": "cross-env NODE_ENV=production node ./dist/index.js --prod true",
-    "run:local-prod": "cross-env NODE_ENV=production GOOGLE_APPLICATION_CREDENTIALS=./dist/firebase-service-account-file.json node ./dist/index.js --prod true",
+    "run:local-prod": "cross-env NODE_ENV=production GOOGLE_APPLICATION_CREDENTIALS=./dist/firebase-service-account-file.json SHOULD_DISPLAY_MORE_DEBUG_LOGS=true node ./dist/index.js --prod true",
     "tsc": "tsc",
     "\n# TEST SCRIPTS:": "",
     "test": "jest",

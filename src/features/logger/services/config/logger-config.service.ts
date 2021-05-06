@@ -24,6 +24,7 @@ export class LoggerConfigService extends AbstractService {
     return {
       isEnabled: this.isEnabled(),
       level: this.getLevel(),
+      shouldDisplayMoreDebugLogs: this.shouldDisplayMoreDebugLogs(),
     };
   }
 
@@ -33,5 +34,9 @@ export class LoggerConfigService extends AbstractService {
 
   public getLevel(): LoggerConfigLevelEnum {
     return LoggerConfigCoreService.getInstance().level;
+  }
+
+  public shouldDisplayMoreDebugLogs(): boolean {
+    return LoggerConfigCoreService.getInstance().shouldDisplayMoreDebugLogs;
   }
 }

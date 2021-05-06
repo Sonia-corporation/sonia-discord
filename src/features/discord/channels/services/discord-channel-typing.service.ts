@@ -21,14 +21,22 @@ export class DiscordChannelTypingService extends AbstractService {
   }
 
   public addOneIndicator(channel: Readonly<TextChannel | DMChannel | NewsChannel>): Promise<void> {
-    return channel.startTyping().catch((): void => {
-      LoggerService.getInstance().error({
-        context: this._serviceName,
-        message: ChalkService.getInstance().text(
-          `failed to show a typing indicator for the channel ${ChalkService.getInstance().value(channel.id)}`
-        ),
-      });
-    });
+    return channel.startTyping().catch(
+      (error: Readonly<Error>): Promise<void> => {
+        LoggerService.getInstance().error({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(
+            `failed to show a typing indicator for the channel ${ChalkService.getInstance().value(channel.id)}`
+          ),
+        });
+        LoggerService.getInstance().error({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(error),
+        });
+
+        return Promise.reject(error);
+      }
+    );
   }
 
   public removeOneIndicator(channel: Readonly<TextChannel | DMChannel | NewsChannel>): void {
