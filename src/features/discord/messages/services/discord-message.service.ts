@@ -6,6 +6,7 @@ import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerConfigService } from '../../../logger/services/config/logger-config.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { DiscordChannelTypingService } from '../../channels/services/discord-channel-typing.service';
 import { DiscordChannelService } from '../../channels/services/discord-channel.service';
@@ -147,7 +148,7 @@ export class DiscordMessageService extends AbstractService {
       .on(`message`, (anyDiscordMessage: Readonly<IAnyDiscordMessage>): void => {
         this.sendMessage(anyDiscordMessage).catch((error: Readonly<Error>): void => {
           // @todo add coverage
-          if (_.isEqual(process.env.SHOULD_DISPLAY_MORE_DEBUG_LOGS, `true`)) {
+          if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
             LoggerService.getInstance().debug({
               context: this._serviceName,
               hasExtendedContext: true,

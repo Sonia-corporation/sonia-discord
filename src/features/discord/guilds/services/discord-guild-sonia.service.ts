@@ -5,6 +5,7 @@ import { ONE_EMITTER } from '../../../../constants/one-emitter';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerConfigService } from '../../../logger/services/config/logger-config.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
@@ -91,7 +92,7 @@ export class DiscordGuildSoniaService extends AbstractService {
       return;
     }
 
-    if (_.isEqual(process.env.SHOULD_DISPLAY_MORE_DEBUG_LOGS, `true`)) {
+    if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
       LoggerService.getInstance().debug({
         context: this._serviceName,
         message: ChalkService.getInstance().text(`Sonia guild found`),
@@ -106,7 +107,7 @@ export class DiscordGuildSoniaService extends AbstractService {
     guildChannel
       .send(messageResponse.response, messageResponse.options)
       .then((): void => {
-        if (_.isEqual(process.env.SHOULD_DISPLAY_MORE_DEBUG_LOGS, `true`)) {
+        if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
           LoggerService.getInstance().log({
             context: this._serviceName,
             message: ChalkService.getInstance().text(`channel message sent`),
@@ -114,7 +115,7 @@ export class DiscordGuildSoniaService extends AbstractService {
         }
       })
       .catch((error: unknown): void => {
-        if (_.isEqual(process.env.SHOULD_DISPLAY_MORE_DEBUG_LOGS, `true`)) {
+        if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
           LoggerService.getInstance().error({
             context: this._serviceName,
             message: ChalkService.getInstance().text(`channel message sending failed`),

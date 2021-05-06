@@ -1,6 +1,8 @@
 import { AbstractService } from '../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import { toBoolean } from '../../../functions/formatters/to-boolean';
 import { ChalkService } from '../../logger/services/chalk/chalk.service';
+import { LoggerConfigMutatorService } from '../../logger/services/config/logger-config-mutator.service';
 import { LoggerService } from '../../logger/services/logger.service';
 import _ from 'lodash';
 
@@ -56,6 +58,7 @@ export class EnvironmentValidityCheckService extends AbstractService {
   private _handleShouldDisplayMoreDebugLogs(): void {
     this._checkShouldDisplayMoreDebugLogs();
     this._logShouldDisplayMoreDebugLogs();
+    this._updateShouldDisplayMoreDebugLogsLoggerConfig();
   }
 
   private _checkShouldDisplayMoreDebugLogs(): void | never {
@@ -80,5 +83,11 @@ export class EnvironmentValidityCheckService extends AbstractService {
         )}`
       ),
     });
+  }
+
+  private _updateShouldDisplayMoreDebugLogsLoggerConfig(): void {
+    LoggerConfigMutatorService.getInstance().updateShouldDisplayMoreDebugLogsState(
+      toBoolean(process.env.SHOULD_DISPLAY_MORE_DEBUG_LOGS)
+    );
   }
 }
