@@ -23,8 +23,8 @@ export class FirebaseGuildsStoreService extends AbstractService {
     super(ServiceNameEnum.FIREBASE_GUILDS_STORE_SERVICE);
   }
 
-  public init(): Promise<IFirebaseGuild[]> {
-    return this._watchFirebaseGuilds$().toPromise();
+  public init(): void {
+    this._watchFirebaseGuilds$().subscribe();
   }
 
   public addOrUpdateEntities(entities: IFirebaseGuild[]): void {
