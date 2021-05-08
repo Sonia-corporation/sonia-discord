@@ -18,7 +18,6 @@ import { Client, Guild, GuildChannel, Message, TextChannel } from 'discord.js';
 import * as admin from 'firebase-admin';
 import { of, throwError } from 'rxjs';
 import { createMock } from 'ts-auto-mock';
-import WriteResult = admin.firestore.WriteResult;
 
 jest.mock(`./discord-guild-sonia.service`);
 jest.mock(`../../../logger/services/chalk/chalk.service`);
@@ -548,7 +547,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
   describe(`addFirebaseGuild()`, (): void => {
     let guild: Guild;
-    let writeResult: WriteResult;
+    let writeResult: admin.firestore.WriteResult;
 
     let firebaseGuildsServiceIsReady$Spy: jest.SpyInstance;
     let firebaseGuildsServiceHasGuildSpy: jest.SpyInstance;
@@ -561,7 +560,7 @@ describe(`DiscordGuildCreateService`, (): void => {
       guild = createMock<Guild>({
         id: `dummy-id`,
       });
-      writeResult = createMock<WriteResult>();
+      writeResult = createMock<admin.firestore.WriteResult>();
 
       firebaseGuildsServiceIsReady$Spy = jest.spyOn(firebaseGuildsService, `isReady$`).mockReturnValue(of(true));
       firebaseGuildsServiceHasGuildSpy = jest

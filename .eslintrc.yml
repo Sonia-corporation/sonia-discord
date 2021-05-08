@@ -328,7 +328,7 @@ rules:
     - error
     - ignoreVoid: true
   no-undef:
-    - warn # @todo change it to error once the issue is resolved (https://stackoverflow.com/questions/65054079/eslint-with-typescript-and-firebase-no-undef-error)
+    - error
     - typeof: true
   no-useless-escape: error
   no-prototype-builtins: error

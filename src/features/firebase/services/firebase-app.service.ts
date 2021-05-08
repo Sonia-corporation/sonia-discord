@@ -5,8 +5,6 @@ import { LoggerService } from '../../logger/services/logger.service';
 import { FirebaseAppEnum } from '../enums/firebase-app.enum';
 import admin, { initializeApp } from 'firebase-admin';
 import _ from 'lodash';
-import App = admin.app.App;
-import applicationDefault = admin.credential.applicationDefault;
 
 export class FirebaseAppService extends AbstractService {
   private static _instance: FirebaseAppService;
@@ -19,7 +17,7 @@ export class FirebaseAppService extends AbstractService {
     return FirebaseAppService._instance;
   }
 
-  private _app: App | undefined = undefined;
+  private _app: admin.app.App | undefined = undefined;
 
   public constructor() {
     super(ServiceNameEnum.FIREBASE_APP_SERVICE);
@@ -29,7 +27,7 @@ export class FirebaseAppService extends AbstractService {
     this._initializeFirebaseApp();
   }
 
-  public getApp(): App | undefined {
+  public getApp(): admin.app.App | undefined {
     return this._app;
   }
 
@@ -41,7 +39,7 @@ export class FirebaseAppService extends AbstractService {
 
     this._app = initializeApp(
       {
-        credential: applicationDefault(),
+        credential: admin.credential.applicationDefault(),
         databaseURL: `https://sonia-discord-api.firebaseio.com`,
       },
       FirebaseAppEnum.SONIA_DISCORD

@@ -9,7 +9,6 @@ import { LoggerService } from '../../logger/services/logger.service';
 import { FirebaseGuildsStoreService } from '../stores/guilds/services/firebase-guilds-store.service';
 import admin from 'firebase-admin';
 import _ from 'lodash';
-import WriteResult = admin.firestore.WriteResult;
 
 export class FirebaseService extends AbstractService {
   private static _instance: FirebaseService;
@@ -26,7 +25,7 @@ export class FirebaseService extends AbstractService {
     super(ServiceNameEnum.FIREBASE_SERVICE);
   }
 
-  public init(): Promise<[number | void, WriteResult[] | void]> {
+  public init(): Promise<[number | void, admin.firestore.WriteResult[] | void]> {
     FirebaseAppService.getInstance().init();
     void FirebaseGuildsNewVersionService.getInstance().init();
     FirebaseGuildsStoreService.getInstance().init();
@@ -40,7 +39,7 @@ export class FirebaseService extends AbstractService {
       FirebaseGuildsBreakingChangeService.getInstance()
         .init()
         .then(
-          (writeResults: WriteResult[] | void): Promise<WriteResult[] | void> => {
+          (writeResults: admin.firestore.WriteResult[] | void): Promise<admin.firestore.WriteResult[] | void> => {
             FirebaseGuildsService.getInstance().watchGuilds();
 
             return Promise.resolve(writeResults);

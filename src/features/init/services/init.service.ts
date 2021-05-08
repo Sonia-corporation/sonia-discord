@@ -32,7 +32,6 @@ import fs from 'fs-extra';
 import _ from 'lodash';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
-import WriteResult = admin.firestore.WriteResult;
 
 export class InitService extends AbstractService {
   private static _instance: InitService;
@@ -78,11 +77,13 @@ export class InitService extends AbstractService {
     this._isAppConfigured$.next(true);
   }
 
-  public readEnvironment(): Promise<[true, [number | void, WriteResult[] | void]] | void> {
+  public readEnvironment(): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]] | void> {
     return fs
       .readJson(`${_.toString(appRootPath)}/src/environment/secret-environment.json`)
       .then(
-        (environment: Readonly<IEnvironment>): Promise<[true, [number | void, WriteResult[] | void]] | void> =>
+        (
+          environment: Readonly<IEnvironment>
+        ): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]] | void> =>
           this._startApp(this._mergeEnvironments(ENVIRONMENT, environment)).catch((error: Readonly<Error>): void => {
             console.error(error);
           })
@@ -105,7 +106,7 @@ export class InitService extends AbstractService {
     return _.merge({}, environmentA, environmentB);
   }
 
-  private _runApp(): Promise<[true, [number | void, WriteResult[] | void]]> {
+  private _runApp(): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]]> {
     EnvironmentValidityCheckService.getInstance().init();
     ServerService.getInstance().initializeApp();
 
@@ -227,9 +228,11 @@ export class InitService extends AbstractService {
       );
   }
 
-  private _startApp(environment: Readonly<IEnvironment>): Promise<[true, [number | void, WriteResult[] | void]]> {
+  private _startApp(
+    environment: Readonly<IEnvironment>
+  ): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]]> {
     return this._configureApp(environment).then(
-      (): Promise<[true, [number | void, WriteResult[] | void]]> => this._runApp()
+      (): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]]> => this._runApp()
     );
   }
 }
