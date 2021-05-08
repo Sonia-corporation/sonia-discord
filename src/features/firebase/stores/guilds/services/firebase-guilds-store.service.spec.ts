@@ -4,7 +4,7 @@ import { CoreEventService } from '../../../../core/services/core-event.service';
 import { FirebaseGuildsService } from '../../../services/guilds/firebase-guilds.service';
 import { IFirebaseGuild } from '../../../types/guilds/firebase-guild';
 import { FirebaseGuildsStore } from '../firebase-guilds-store';
-import { Subject } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { createMock } from 'ts-auto-mock';
 
 describe(`FirebaseGuildsStoreService`, (): void => {
@@ -59,7 +59,6 @@ describe(`FirebaseGuildsStoreService`, (): void => {
   });
 
   describe(`init()`, (): void => {
-    let onGuildsChange$: Subject<IFirebaseGuild[]>;
     let firebaseGuilds: IFirebaseGuild[];
 
     let firebaseGuildsServiceOnGuildsChange$Spy: jest.SpyInstance;
@@ -69,92 +68,91 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsStoreService();
-      onGuildsChange$ = new Subject<IFirebaseGuild[]>();
       firebaseGuilds = createMock<IFirebaseGuild[]>();
 
       firebaseGuildsServiceOnGuildsChange$Spy = jest
         .spyOn(firebaseGuildsService, `onGuildsChange$`)
-        .mockReturnValue(onGuildsChange$);
+        .mockReturnValue(of([]));
       removeAllEntitiesSpy = jest.spyOn(service, `removeAllEntities`).mockImplementation();
       addEntitiesSpy = jest.spyOn(service, `addEntities`).mockImplementation();
       stopLoadingSpy = jest.spyOn(service, `stopLoading`).mockImplementation();
     });
 
-    it(`should watch the Firebase guilds changes`, (): void => {
+    it(`should watch the Firebase guilds changes`, async (): Promise<void> => {
       expect.assertions(2);
+      firebaseGuildsServiceOnGuildsChange$Spy.mockReturnValue(of(firebaseGuilds));
 
-      service.init();
-      onGuildsChange$.next(firebaseGuilds);
+      await service.init();
 
       expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledTimes(1);
       expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledWith();
     });
 
     describe(`when an error occurred when watching the Firebase guilds`, (): void => {
-      it(`should watch the Firebase guilds changes`, (): void => {
-        expect.assertions(2);
+      it(`should watch the Firebase guilds changes`, async (): Promise<void> => {
+        expect.assertions(3);
+        firebaseGuildsServiceOnGuildsChange$Spy.mockReturnValue(throwError(new Error(`error`)));
 
-        service.init();
-        onGuildsChange$.error(new Error(`error`));
+        await expect(service.init()).rejects.toThrow(new Error(`error`));
 
         expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledTimes(1);
         expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledWith();
       });
 
-      it(`should not remove all the Firebase guilds from the store`, (): void => {
-        expect.assertions(1);
+      it(`should not remove all the Firebase guilds from the store`, async (): Promise<void> => {
+        expect.assertions(2);
+        firebaseGuildsServiceOnGuildsChange$Spy.mockReturnValue(throwError(new Error(`error`)));
 
-        service.init();
-        onGuildsChange$.error(new Error(`error`));
+        await expect(service.init()).rejects.toThrow(new Error(`error`));
 
         expect(removeAllEntitiesSpy).not.toHaveBeenCalled();
       });
 
-      it(`should not add the new Firebase guilds into the store`, (): void => {
-        expect.assertions(1);
+      it(`should not add the new Firebase guilds into the store`, async (): Promise<void> => {
+        expect.assertions(2);
+        firebaseGuildsServiceOnGuildsChange$Spy.mockReturnValue(throwError(new Error(`error`)));
 
-        service.init();
-        onGuildsChange$.error(new Error(`error`));
+        await expect(service.init()).rejects.toThrow(new Error(`error`));
 
         expect(addEntitiesSpy).not.toHaveBeenCalled();
       });
 
-      it(`should not stop the loading state of the store`, (): void => {
-        expect.assertions(1);
+      it(`should not stop the loading state of the store`, async (): Promise<void> => {
+        expect.assertions(2);
+        firebaseGuildsServiceOnGuildsChange$Spy.mockReturnValue(throwError(new Error(`error`)));
 
-        service.init();
-        onGuildsChange$.error(new Error(`error`));
+        await expect(service.init()).rejects.toThrow(new Error(`error`));
 
         expect(stopLoadingSpy).not.toHaveBeenCalled();
       });
     });
 
     describe(`when the Firebase guilds changed`, (): void => {
-      it(`should remove all the Firebase guilds from the store`, (): void => {
+      it(`should remove all the Firebase guilds from the store`, async (): Promise<void> => {
         expect.assertions(2);
+        firebaseGuildsServiceOnGuildsChange$Spy.mockReturnValue(of(firebaseGuilds));
 
-        service.init();
-        onGuildsChange$.next(firebaseGuilds);
+        await service.init();
 
         expect(removeAllEntitiesSpy).toHaveBeenCalledTimes(1);
         expect(removeAllEntitiesSpy).toHaveBeenCalledWith();
       });
 
-      it(`should add the new Firebase guilds into the store`, (): void => {
+      it(`should add the new Firebase guilds into the store`, async (): Promise<void> => {
         expect.assertions(2);
+        firebaseGuildsServiceOnGuildsChange$Spy.mockReturnValue(of(firebaseGuilds));
 
-        service.init();
-        onGuildsChange$.next(firebaseGuilds);
+        await service.init();
 
         expect(addEntitiesSpy).toHaveBeenCalledTimes(1);
         expect(addEntitiesSpy).toHaveBeenCalledWith(firebaseGuilds);
       });
 
-      it(`should stop the loading state of the store`, (): void => {
+      it(`should stop the loading state of the store`, async (): Promise<void> => {
         expect.assertions(2);
+        firebaseGuildsServiceOnGuildsChange$Spy.mockReturnValue(of(firebaseGuilds));
 
-        service.init();
-        onGuildsChange$.next(firebaseGuilds);
+        await service.init();
 
         expect(stopLoadingSpy).toHaveBeenCalledTimes(1);
         expect(stopLoadingSpy).toHaveBeenCalledWith();

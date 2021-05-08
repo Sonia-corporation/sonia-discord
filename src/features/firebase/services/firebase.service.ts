@@ -28,7 +28,7 @@ export class FirebaseService extends AbstractService {
   public init(): Promise<[number | void, admin.firestore.WriteResult[] | void]> {
     FirebaseAppService.getInstance().init();
     void FirebaseGuildsNewVersionService.getInstance().init();
-    FirebaseGuildsStoreService.getInstance().init();
+    void FirebaseGuildsStoreService.getInstance().init();
 
     return Promise.all([
       FirebaseGuildsService.getInstance()
