@@ -19,7 +19,6 @@ import { Guild, GuildChannel, Message } from 'discord.js';
 import admin from 'firebase-admin';
 import _ from 'lodash';
 import { filter, mergeMap, take } from 'rxjs/operators';
-import WriteResult = admin.firestore.WriteResult;
 
 export class DiscordGuildCreateService extends AbstractService {
   private static _instance: DiscordGuildCreateService;
@@ -44,18 +43,18 @@ export class DiscordGuildCreateService extends AbstractService {
     return this._sendCookieMessage(guild);
   }
 
-  public addFirebaseGuild(guild: Readonly<Guild>): Promise<WriteResult | void> {
+  public addFirebaseGuild(guild: Readonly<Guild>): Promise<admin.firestore.WriteResult | void> {
     return FirebaseGuildsService.getInstance()
       .isReady$()
       .pipe(
         filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
         take(ONE_EMITTER),
         mergeMap(
-          (): Promise<WriteResult | void> =>
+          (): Promise<admin.firestore.WriteResult | void> =>
             FirebaseGuildsService.getInstance()
               .hasGuild(guild.id)
               .then(
-                (hasGuild: Readonly<boolean>): Promise<WriteResult | void> => {
+                (hasGuild: Readonly<boolean>): Promise<admin.firestore.WriteResult | void> => {
                   if (_.isEqual(hasGuild, false)) {
                     return this._addFirebaseGuild(guild).catch((): void => {
                       LoggerService.getInstance().debug({
@@ -78,7 +77,7 @@ export class DiscordGuildCreateService extends AbstractService {
       .toPromise();
   }
 
-  private _addFirebaseGuild(guild: Readonly<Guild>): Promise<WriteResult> {
+  private _addFirebaseGuild(guild: Readonly<Guild>): Promise<admin.firestore.WriteResult> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(`guild not yet created on Firebase`),
@@ -87,7 +86,7 @@ export class DiscordGuildCreateService extends AbstractService {
     return FirebaseGuildsService.getInstance()
       .addGuild(guild)
       .then(
-        (writeResult: Readonly<WriteResult>): Promise<WriteResult> => {
+        (writeResult: Readonly<admin.firestore.WriteResult>): Promise<admin.firestore.WriteResult> => {
           LoggerService.getInstance().success({
             context: this._serviceName,
             message: ChalkService.getInstance().text(`guild added into Firebase`),

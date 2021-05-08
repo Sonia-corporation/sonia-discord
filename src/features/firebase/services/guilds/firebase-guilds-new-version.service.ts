@@ -29,9 +29,6 @@ import admin from 'firebase-admin';
 import _ from 'lodash';
 import { Observable, forkJoin } from 'rxjs';
 import { mergeMap, take, tap } from 'rxjs/operators';
-import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
-import QuerySnapshot = admin.firestore.QuerySnapshot;
-import WriteBatch = admin.firestore.WriteBatch;
 
 const NO_GUILD = 0;
 const ONE_GUILD = 1;
@@ -232,7 +229,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     return this.isReady$().pipe(
       take(ONE_EMITTER),
       mergeMap(
-        (): Promise<QuerySnapshot<IFirebaseGuild>> => {
+        (): Promise<admin.firestore.QuerySnapshot<IFirebaseGuild>> => {
           LoggerService.getInstance().debug({
             context: this._serviceName,
             message: ChalkService.getInstance().text(`processing the sending of release notes to each guild...`),
@@ -242,7 +239,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
         }
       ),
       mergeMap(
-        (querySnapshot: QuerySnapshot<IFirebaseGuild>): Promise<IFirebaseGuild[] | void> => {
+        (querySnapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>): Promise<IFirebaseGuild[] | void> => {
           LoggerService.getInstance().debug({
             context: this._serviceName,
             message: ChalkService.getInstance().text(`guilds fetched`),
@@ -290,9 +287,9 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   }
 
   private _sendAndUpdateNewReleaseNotesToEachFirebaseGuild(
-    querySnapshot: QuerySnapshot<IFirebaseGuild>
+    querySnapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>
   ): Promise<IFirebaseGuild[] | void> {
-    const batch: WriteBatch | undefined = FirebaseGuildsService.getInstance().getBatch();
+    const batch: admin.firestore.WriteBatch | undefined = FirebaseGuildsService.getInstance().getBatch();
 
     if (_.isNil(batch)) {
       LoggerService.getInstance().error({
@@ -307,7 +304,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     let countFirebaseGuildsUpdated = NO_GUILD;
     let countFirebaseGuilds = NO_GUILD;
 
-    querySnapshot.forEach((queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>): void => {
+    querySnapshot.forEach((queryDocumentSnapshot: admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>): void => {
       if (!_.isEqual(queryDocumentSnapshot.exists, true)) {
         return;
       }

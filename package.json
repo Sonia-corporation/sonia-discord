@@ -107,7 +107,7 @@
     "\n# TEST SCRIPTS:": "",
     "test": "jest",
     "test:watch": "jest --watch-all --unhandled-rejections=strict",
-    "test:watch:no-cache": "jest --watch-all --no-cache",
+    "test:watch:no-cache": "jest --watch-all --no-cache --unhandled-rejections=strict",
     "test:majestic": "majestic --port 3002 --no-open",
     "test:leaks": "jest --unhandled-rejections=strict --detect-leaks",
     "test:ci": "jest --bail=1 --ci",

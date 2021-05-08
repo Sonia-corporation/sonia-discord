@@ -17,7 +17,6 @@ import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message'
 import { Message } from 'discord.js';
 import admin from 'firebase-admin';
 import { createMock } from 'ts-auto-mock';
-import WriteResult = admin.firestore.WriteResult;
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 
@@ -1296,7 +1295,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
     let isEnabled: boolean | undefined;
     let firebaseGuild: IFirebaseGuild;
     let channel: IAnyDiscordChannel;
-    let writeResult: WriteResult;
+    let writeResult: admin.firestore.WriteResult;
 
     let firebaseGuildsChannelsFeaturesReleaseNotesEnabledServiceUpdateStateByGuildIdSpy: jest.SpyInstance;
 
@@ -1308,7 +1307,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
       channel = createMock<IAnyDiscordChannel>({
         id: `dummy-channel-id`,
       });
-      writeResult = createMock<WriteResult>();
+      writeResult = createMock<admin.firestore.WriteResult>();
 
       firebaseGuildsChannelsFeaturesReleaseNotesEnabledServiceUpdateStateByGuildIdSpy = jest
         .spyOn(firebaseGuildsChannelsFeaturesReleaseNotesEnabledService, `updateStateByGuildId`)
