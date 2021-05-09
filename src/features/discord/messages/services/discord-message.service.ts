@@ -72,12 +72,14 @@ export class DiscordMessageService extends AbstractService {
         .then(
           (): Promise<void> => {
             DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
+
             return Promise.resolve();
           }
         )
         .catch(
           (error: Error): Promise<void> => {
             DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
+
             return Promise.reject(error);
           }
         );
@@ -128,12 +130,14 @@ export class DiscordMessageService extends AbstractService {
         .then(
           (): Promise<void> => {
             DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
+
             return Promise.resolve();
           }
         )
         .catch(
           (error: Readonly<Error>): Promise<void> => {
             DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
+
             return Promise.reject(error);
           }
         );

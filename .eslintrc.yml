@@ -347,6 +347,35 @@ rules:
     - error
     - allow:
         - decoratedFunctions
+  padding-line-between-statements:
+    - error
+    - blankLine: always
+      prev:
+        - '*'
+      next:
+        - class
+        - do
+        - for
+        - if
+        - return
+        - switch
+        - try
+    - blankLine: always
+      prev:
+        - block-like
+        - const
+        - let
+        - var
+      next: '*'
+    - blankLine: never
+      prev:
+        - const
+        - let
+        - var
+      next:
+        - const
+        - let
+        - var
   rxjs/finnish:
     - error
     - functions: true
@@ -490,4 +519,21 @@ overrides:
       '@typescript-eslint/ban-ts-comment': off
       '@typescript-eslint/unbound-method': off # Disabled as expected by jest because it has it's own version
       jest/unbound-method: error
+      padding-line-between-statements:
+        - error
+        - blankLine: always
+          prev:
+            - '*'
+          next:
+            - class
+            - do
+            - for
+            - if
+            - return
+            - switch
+            - try
+        - blankLine: always
+          prev:
+            - block-like
+          next: '*'
       rxjs/no-ignored-subscription: off

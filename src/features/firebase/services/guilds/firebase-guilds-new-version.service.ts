@@ -165,6 +165,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       .then(
         (messageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
           const enhanceMessageResponse: IDiscordMessageResponse = _.cloneDeep(messageResponse);
+
           enhanceMessageResponse.response = FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
             userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
           });
