@@ -1,6 +1,7 @@
 import { AppConfigCoreService } from './app-config-core.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../core/services/core-event.service';
+import { AppConfigReleaseTypeEnum } from '../../enums/app-config-release-type.enum';
 
 describe(`AppConfigCoreService`, (): void => {
   let service: AppConfigCoreService;
@@ -85,6 +86,14 @@ describe(`AppConfigCoreService`, (): void => {
     service = AppConfigCoreService.getInstance();
 
     expect(service.releaseNotes).toStrictEqual(``);
+  });
+
+  it(`should have an unknown release type`, (): void => {
+    expect.assertions(1);
+
+    service = AppConfigCoreService.getInstance();
+
+    expect(service.releaseType).toStrictEqual(AppConfigReleaseTypeEnum.UNKNOWN);
   });
 
   it(`should have a total of release count to 0`, (): void => {

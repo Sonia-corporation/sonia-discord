@@ -37,7 +37,7 @@ export class CoreEventService extends AutoUnsubscribe {
   }
 
   private _listenServiceCreated(): void {
-    this.registerSubscription(
+    this._registerSubscription(
       this._serviceCreated$.subscribe({
         next: (serviceName: Readonly<ServiceNameEnum>): void => {
           this._createdServices.push(serviceName);

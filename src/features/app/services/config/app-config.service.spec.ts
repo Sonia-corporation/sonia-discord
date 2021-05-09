@@ -2,6 +2,7 @@ import { AppConfigCoreService } from './app-config-core.service';
 import { AppConfigService } from './app-config.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../core/services/core-event.service';
+import { AppConfigReleaseTypeEnum } from '../../enums/app-config-release-type.enum';
 import { IAppConfig } from '../../interfaces/app-config';
 
 describe(`AppConfigService`, (): void => {
@@ -59,6 +60,7 @@ describe(`AppConfigService`, (): void => {
       appConfigCoreService.isProduction = false;
       appConfigCoreService.releaseDate = `dummy-release-date`;
       appConfigCoreService.releaseNotes = `dummy-release-notes`;
+      appConfigCoreService.releaseType = AppConfigReleaseTypeEnum.FEATURES;
       appConfigCoreService.totalReleaseCount = 0;
       appConfigCoreService.version = `dummy-version`;
     });
@@ -74,6 +76,7 @@ describe(`AppConfigService`, (): void => {
         isProduction: false,
         releaseDate: `dummy-release-date`,
         releaseNotes: `dummy-release-notes`,
+        releaseType: AppConfigReleaseTypeEnum.FEATURES,
         totalReleaseCount: 0,
         version: `dummy-version`,
       } as IAppConfig);
@@ -92,36 +95,6 @@ describe(`AppConfigService`, (): void => {
       const result = service.getFirstReleaseDate();
 
       expect(result).toStrictEqual(`dummy-first-release-date`);
-    });
-  });
-
-  describe(`getVersion()`, (): void => {
-    beforeEach((): void => {
-      service = AppConfigService.getInstance();
-      appConfigCoreService.version = `dummy-version`;
-    });
-
-    it(`should return the app config version`, (): void => {
-      expect.assertions(1);
-
-      const result = service.getVersion();
-
-      expect(result).toStrictEqual(`dummy-version`);
-    });
-  });
-
-  describe(`getReleaseDate()`, (): void => {
-    beforeEach((): void => {
-      service = AppConfigService.getInstance();
-      appConfigCoreService.releaseDate = `dummy-release-date`;
-    });
-
-    it(`should return the app config release date`, (): void => {
-      expect.assertions(1);
-
-      const result = service.getReleaseDate();
-
-      expect(result).toStrictEqual(`dummy-release-date`);
     });
   });
 
@@ -175,18 +148,18 @@ describe(`AppConfigService`, (): void => {
     });
   });
 
-  describe(`getTotalReleaseCount()`, (): void => {
+  describe(`getReleaseDate()`, (): void => {
     beforeEach((): void => {
       service = AppConfigService.getInstance();
-      appConfigCoreService.totalReleaseCount = 8;
+      appConfigCoreService.releaseDate = `dummy-release-date`;
     });
 
-    it(`should return the app config total release count`, (): void => {
+    it(`should return the app config release date`, (): void => {
       expect.assertions(1);
 
-      const result = service.getTotalReleaseCount();
+      const result = service.getReleaseDate();
 
-      expect(result).toStrictEqual(8);
+      expect(result).toStrictEqual(`dummy-release-date`);
     });
   });
 
@@ -202,6 +175,51 @@ describe(`AppConfigService`, (): void => {
       const result = service.getReleaseNotes();
 
       expect(result).toStrictEqual(`dummy-release-notes`);
+    });
+  });
+
+  describe(`getReleaseType()`, (): void => {
+    beforeEach((): void => {
+      service = AppConfigService.getInstance();
+      appConfigCoreService.releaseType = AppConfigReleaseTypeEnum.FEATURES;
+    });
+
+    it(`should return the app config release type`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getReleaseType();
+
+      expect(result).toStrictEqual(AppConfigReleaseTypeEnum.FEATURES);
+    });
+  });
+
+  describe(`getTotalReleaseCount()`, (): void => {
+    beforeEach((): void => {
+      service = AppConfigService.getInstance();
+      appConfigCoreService.totalReleaseCount = 8;
+    });
+
+    it(`should return the app config total release count`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getTotalReleaseCount();
+
+      expect(result).toStrictEqual(8);
+    });
+  });
+
+  describe(`getVersion()`, (): void => {
+    beforeEach((): void => {
+      service = AppConfigService.getInstance();
+      appConfigCoreService.version = `dummy-version`;
+    });
+
+    it(`should return the app config version`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getVersion();
+
+      expect(result).toStrictEqual(`dummy-version`);
     });
   });
 });

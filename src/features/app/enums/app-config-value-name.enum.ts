@@ -4,6 +4,7 @@ export enum AppConfigValueNameEnum {
   IS_PRODUCTION = `production state`,
   RELEASE_DATE = `release date`,
   RELEASE_NOTES = `release notes`,
+  RELEASE_TYPE = `release type`,
   TOTAL_RELEASE_COUNT = `total release count`,
   VERSION = `version`,
 }
