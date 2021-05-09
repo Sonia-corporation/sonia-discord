@@ -134,17 +134,19 @@ export class DiscordGuildSoniaService extends AbstractService {
   }
 
   private _listen(): void {
-    DiscordClientService.getInstance()
-      .isReady$()
-      .pipe(
-        filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
-        take(ONE_EMITTER)
-      )
-      .subscribe({
-        next: (): void => {
-          this.setSoniaGuild();
-        },
-      });
+    this.registerSubscription(
+      DiscordClientService.getInstance()
+        .isReady$()
+        .pipe(
+          filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
+          take(ONE_EMITTER)
+        )
+        .subscribe({
+          next: (): void => {
+            this.setSoniaGuild();
+          },
+        })
+    );
 
     LoggerService.getInstance().debug({
       context: this._serviceName,

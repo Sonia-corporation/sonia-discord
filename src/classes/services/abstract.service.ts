@@ -1,14 +1,16 @@
 import { ServiceNameEnum } from '../../enums/service-name.enum';
 import { CoreEventService } from '../../features/core/services/core-event.service';
+import { AutoUnsubscribe } from '../auto-unsubscribe';
 
 /**
  * @description
  * Log the creation of the service
  */
-export abstract class AbstractService {
+export abstract class AbstractService extends AutoUnsubscribe {
   protected readonly _serviceName: ServiceNameEnum;
 
   protected constructor(serviceName: Readonly<ServiceNameEnum>) {
+    super();
     this._serviceName = serviceName;
 
     this._notifyServiceCreated();

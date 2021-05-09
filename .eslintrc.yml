@@ -490,3 +490,4 @@ overrides:
       '@typescript-eslint/ban-ts-comment': off
       '@typescript-eslint/unbound-method': off # Disabled as expected by jest because it has it's own version
       jest/unbound-method: error
+      rxjs/no-ignored-subscription: off

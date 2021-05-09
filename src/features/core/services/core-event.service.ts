@@ -1,8 +1,9 @@
+import { AutoUnsubscribe } from '../../../classes/auto-unsubscribe';
 import { ServiceNameEnum } from '../../../enums/service-name.enum';
 import _ from 'lodash';
 import { Observable, Subject } from 'rxjs';
 
-export class CoreEventService {
+export class CoreEventService extends AutoUnsubscribe {
   private static _instance: CoreEventService;
 
   public static getInstance(): CoreEventService {
@@ -36,10 +37,12 @@ export class CoreEventService {
   }
 
   private _listenServiceCreated(): void {
-    this._serviceCreated$.subscribe({
-      next: (serviceName: Readonly<ServiceNameEnum>): void => {
-        this._createdServices.push(serviceName);
-      },
-    });
+    this.registerSubscription(
+      this._serviceCreated$.subscribe({
+        next: (serviceName: Readonly<ServiceNameEnum>): void => {
+          this._createdServices.push(serviceName);
+        },
+      })
+    );
   }
 }
