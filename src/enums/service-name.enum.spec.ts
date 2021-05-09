@@ -734,6 +734,12 @@ describe(`ServiceNameEnum`, (): void => {
     expect(ServiceNameEnum.PROFILE_CONFIG_SERVICE).toStrictEqual(`ProfileConfigService`);
   });
 
+  it(`should have a member "RELEASE_TYPE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.RELEASE_TYPE_SERVICE).toStrictEqual(`ReleaseTypeService`);
+  });
+
   it(`should have a member "SERVER_CONFIG_CORE_SERVICE"`, (): void => {
     expect.assertions(1);
 
