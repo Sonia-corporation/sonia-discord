@@ -17,7 +17,7 @@ import _ from 'lodash';
 export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   private static _instance: AppConfigMutatorService;
 
-  public static getInstance(config?: Readonly<IPartialNested<IAppConfig>>): AppConfigMutatorService {
+  public static getInstance(config?: Readonly<IPartialNested<IAppUpdatableConfig>>): AppConfigMutatorService {
     if (_.isNil(AppConfigMutatorService._instance)) {
       AppConfigMutatorService._instance = new AppConfigMutatorService(config);
     }

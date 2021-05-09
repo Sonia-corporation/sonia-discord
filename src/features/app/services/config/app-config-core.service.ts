@@ -22,7 +22,7 @@ export class AppConfigCoreService extends AbstractService implements IAppConfig 
   public isProduction = false;
   public releaseDate = `unknown`;
   public releaseNotes = ``;
-  public releaseType = AppConfigReleaseTypeEnum.MIXED;
+  public releaseType = AppConfigReleaseTypeEnum.UNKNOWN;
   public totalReleaseCount = INITIAL_TOTAL_RELEASE_COUNT;
   public version = `unknown`;
 
