@@ -134,7 +134,7 @@ export class DiscordGuildSoniaService extends AbstractService {
   }
 
   private _listen(): void {
-    this.registerSubscription(
+    this._registerSubscription(
       DiscordClientService.getInstance()
         .isReady$()
         .pipe(

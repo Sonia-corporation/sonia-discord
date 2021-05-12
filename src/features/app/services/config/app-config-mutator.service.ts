@@ -10,12 +10,14 @@ import { isNodeProduction } from '../../../node/functions/is-node-production';
 import { TimeService } from '../../../time/services/time.service';
 import { AppConfigValueNameEnum } from '../../enums/app-config-value-name.enum';
 import { IAppConfig } from '../../interfaces/app-config';
+import { IAppUpdatableConfig } from '../../types/app-updatable-config';
+import { ReleaseTypeService } from '../release-type.service';
 import _ from 'lodash';
 
 export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
   private static _instance: AppConfigMutatorService;
 
-  public static getInstance(config?: Readonly<IPartialNested<IAppConfig>>): AppConfigMutatorService {
+  public static getInstance(config?: Readonly<IPartialNested<IAppUpdatableConfig>>): AppConfigMutatorService {
     if (_.isNil(AppConfigMutatorService._instance)) {
       AppConfigMutatorService._instance = new AppConfigMutatorService(config);
     }
@@ -41,7 +43,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     AppConfigService.getInstance();
   }
 
-  public updateConfig(config?: Readonly<IPartialNested<IAppConfig>>): void {
+  public updateConfig(config?: Readonly<IPartialNested<IAppUpdatableConfig>>): void {
     if (!_.isNil(config)) {
       this.updateFirstReleaseDate(config.firstReleaseDate);
       this.updateInitializationDate(config.initializationDate);
@@ -102,6 +104,7 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
       oldValue: AppConfigService.getInstance().getReleaseNotes(),
       valueName: AppConfigValueNameEnum.RELEASE_NOTES,
     });
+    this._setReleaseType();
   }
 
   public updateTotalReleaseCount(totalReleaseCount?: Readonly<number>): void {
@@ -130,5 +133,14 @@ export class AppConfigMutatorService extends AbstractConfigService<IAppConfig> {
     if (!AppConfigService.getInstance().isProduction()) {
       this.updateInitializationDate(TimeService.getInstance().now());
     }
+  }
+
+  private _setReleaseType(): void {
+    AppConfigCoreService.getInstance().releaseType = ConfigService.getInstance().getUpdatedString({
+      context: this._serviceName,
+      newValue: ReleaseTypeService.getInstance().getReleaseType(AppConfigCoreService.getInstance().releaseNotes),
+      oldValue: AppConfigService.getInstance().getReleaseType(),
+      valueName: AppConfigValueNameEnum.RELEASE_TYPE,
+    });
   }
 }

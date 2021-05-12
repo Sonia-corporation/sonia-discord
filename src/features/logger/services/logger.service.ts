@@ -206,7 +206,7 @@ export class LoggerService extends AutoUnsubscribe {
   }
 
   private _listenServiceCreatedEvent(): void {
-    this.registerSubscription(
+    this._registerSubscription(
       CoreEventService.getInstance()
         .serviceCreated$()
         .subscribe({

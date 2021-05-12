@@ -5,6 +5,7 @@ import { FirebaseGuildsService } from './firebase-guilds.service';
 import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ONE_EMITTER } from '../../../../constants/one-emitter';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { AppConfigReleaseTypeEnum } from '../../../app/enums/app-config-release-type.enum';
 import { AppConfigService } from '../../../app/services/config/app-config.service';
 import { isDiscordGuildChannelWritable } from '../../../discord/channels/functions/types/is-discord-guild-channel-writable';
 import { DiscordGuildSoniaChannelNameEnum } from '../../../discord/guilds/enums/discord-guild-sonia-channel-name.enum';
@@ -17,6 +18,9 @@ import { DiscordMessageCommandReleaseNotesService } from '../../../discord/messa
 import { DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES } from '../../../discord/users/constants/discord-github-contributors-id-messages';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../logger/services/logger.service';
+import { FIREBASE_GUILD_NEW_BUG_FIXES_VERSION_RESPONSE_MESSAGES } from '../../constants/guilds/firebase-guild-new-bug-fixes-version-response-messages';
+import { FIREBASE_GUILD_NEW_FEATURES_VERSION_RESPONSE_MESSAGES } from '../../constants/guilds/firebase-guild-new-features-version-response-messages';
+import { FIREBASE_GUILD_NEW_PERFORMANCE_IMPROVEMENTS_VERSION_RESPONSE_MESSAGES } from '../../constants/guilds/firebase-guild-new-performance-improvements-version-response-messages';
 import { FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES } from '../../constants/guilds/firebase-guild-new-version-response-messages';
 import { hasFirebaseGuildLastReleaseNotesVersion } from '../../functions/guilds/checks/has-firebase-guild-last-release-notes-version';
 import { getUpdatedFirebaseGuildLastReleaseNotesVersion } from '../../functions/guilds/get-updated-firebase-guild-last-release-notes-version';
@@ -27,7 +31,7 @@ import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final'
 import { Guild, GuildChannel, Message } from 'discord.js';
 import admin from 'firebase-admin';
 import _ from 'lodash';
-import { Observable, forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { mergeMap, take, tap } from 'rxjs/operators';
 
 const NO_GUILD = 0;
@@ -165,10 +169,32 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       .then(
         (messageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
           const enhanceMessageResponse: IDiscordMessageResponse = _.cloneDeep(messageResponse);
+          const releaseType: AppConfigReleaseTypeEnum = AppConfigService.getInstance().getReleaseType();
+          const responses: { [key: string]: () => string } = {
+            [AppConfigReleaseTypeEnum.BUG_FIXES](): string {
+              return FIREBASE_GUILD_NEW_BUG_FIXES_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
+                userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
+              });
+            },
+            [AppConfigReleaseTypeEnum.FEATURES](): string {
+              return FIREBASE_GUILD_NEW_FEATURES_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
+                userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
+              });
+            },
+            [AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS](): string {
+              return FIREBASE_GUILD_NEW_PERFORMANCE_IMPROVEMENTS_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
+                userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
+              });
+            },
+          };
 
-          enhanceMessageResponse.response = FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
-            userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
-          });
+          if (_.has(responses, releaseType)) {
+            enhanceMessageResponse.response = responses[releaseType]();
+          } else {
+            enhanceMessageResponse.response = FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
+              userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
+            });
+          }
 
           return Promise.resolve(enhanceMessageResponse);
         }

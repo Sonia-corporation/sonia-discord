@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 export abstract class AutoUnsubscribe {
   private readonly _rootSubscription: Subscription = new Subscription();
 
-  public registerSubscription(subscription: Readonly<Subscription>): void {
+  protected _registerSubscription(subscription: Readonly<Subscription>): void {
     this._rootSubscription.add(subscription);
   }
 }

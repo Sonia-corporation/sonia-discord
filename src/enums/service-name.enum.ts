@@ -108,6 +108,7 @@ export enum ServiceNameEnum {
   PROFILE_CONFIG_CORE_SERVICE = `ProfileConfigCoreService`,
   PROFILE_CONFIG_MUTATOR_SERVICE = `ProfileConfigMutatorService`,
   PROFILE_CONFIG_SERVICE = `ProfileConfigService`,
+  RELEASE_TYPE_SERVICE = `ReleaseTypeService`,
   SERVER_CONFIG_CORE_SERVICE = `ServerConfigCoreService`,
   SERVER_CONFIG_MUTATOR_SERVICE = `ServerConfigMutatorService`,
   SERVER_CONFIG_SERVICE = `ServerConfigService`,
