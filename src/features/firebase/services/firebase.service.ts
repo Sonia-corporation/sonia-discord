@@ -38,13 +38,11 @@ export class FirebaseService extends AbstractService {
         }),
       FirebaseGuildsBreakingChangeService.getInstance()
         .init()
-        .then(
-          (writeResults: admin.firestore.WriteResult[] | void): Promise<admin.firestore.WriteResult[] | void> => {
-            FirebaseGuildsService.getInstance().watchGuilds();
+        .then((writeResults: admin.firestore.WriteResult[] | void): Promise<admin.firestore.WriteResult[] | void> => {
+          FirebaseGuildsService.getInstance().watchGuilds();
 
-            return Promise.resolve(writeResults);
-          }
-        )
+          return Promise.resolve(writeResults);
+        })
         .catch((): void => {
           this._logFirebaseGuildsBreakingChangeServiceInitError();
         }),

@@ -217,17 +217,15 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       return this._getEmptyFlagsErrorMessageResponse(message, DiscordMessageCommandFeatureNameEnum.NOON);
     }
 
-    const flagsErrors: IDiscordCommandFlagsErrors | null = DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getErrors(
-      messageFlags
-    );
+    const flagsErrors: IDiscordCommandFlagsErrors | null =
+      DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getErrors(messageFlags);
 
     if (!_.isNil(flagsErrors)) {
       return this._getWrongFlagsErrorMessageResponse(message, DiscordMessageCommandFeatureNameEnum.NOON, flagsErrors);
     }
 
-    const flagsDuplicated: IDiscordCommandFlagsDuplicated | null = DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getDuplicated(
-      messageFlags
-    );
+    const flagsDuplicated: IDiscordCommandFlagsDuplicated | null =
+      DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getDuplicated(messageFlags);
 
     if (!_.isNil(flagsDuplicated)) {
       return this._getDuplicatedFlagsErrorMessageResponse(
@@ -237,9 +235,8 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       );
     }
 
-    const oppositeFlags: IDiscordCommandFlagsOpposite | null = DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getOpposites(
-      messageFlags
-    );
+    const oppositeFlags: IDiscordCommandFlagsOpposite | null =
+      DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.getOpposites(messageFlags);
 
     if (!_.isNil(oppositeFlags)) {
       return this._getOppositeFlagsErrorMessageResponse(
@@ -261,9 +258,8 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       return this._getEmptyFlagsErrorMessageResponse(message, DiscordMessageCommandFeatureNameEnum.RELEASE_NOTES);
     }
 
-    const flagsErrors: IDiscordCommandFlagsErrors | null = DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS.getErrors(
-      messageFlags
-    );
+    const flagsErrors: IDiscordCommandFlagsErrors | null =
+      DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS.getErrors(messageFlags);
 
     if (!_.isNil(flagsErrors)) {
       return this._getWrongFlagsErrorMessageResponse(
@@ -273,9 +269,8 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       );
     }
 
-    const flagsDuplicated: IDiscordCommandFlagsDuplicated | null = DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS.getDuplicated(
-      messageFlags
-    );
+    const flagsDuplicated: IDiscordCommandFlagsDuplicated | null =
+      DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS.getDuplicated(messageFlags);
 
     if (!_.isNil(flagsDuplicated)) {
       return this._getDuplicatedFlagsErrorMessageResponse(
@@ -285,9 +280,8 @@ export class DiscordMessageCommandFeatureService extends AbstractService {
       );
     }
 
-    const oppositeFlags: IDiscordCommandFlagsOpposite | null = DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS.getOpposites(
-      messageFlags
-    );
+    const oppositeFlags: IDiscordCommandFlagsOpposite | null =
+      DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS.getOpposites(messageFlags);
 
     if (!_.isNil(oppositeFlags)) {
       return this._getOppositeFlagsErrorMessageResponse(

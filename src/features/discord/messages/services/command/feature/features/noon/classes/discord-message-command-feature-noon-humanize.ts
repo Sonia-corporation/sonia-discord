@@ -17,7 +17,8 @@ import { MessageEmbedOptions, Snowflake } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureNoonHumanize<T extends string>
-  implements DiscordCommandFlagActionValueless<T> {
+  implements DiscordCommandFlagActionValueless<T>
+{
   private readonly _serviceName = ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_HUMANIZE;
 
   public execute(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
