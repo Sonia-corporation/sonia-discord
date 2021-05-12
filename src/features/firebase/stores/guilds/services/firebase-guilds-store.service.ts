@@ -24,7 +24,7 @@ export class FirebaseGuildsStoreService extends AbstractService {
   }
 
   public init(): void {
-    this._watchFirebaseGuilds$().subscribe();
+    this._registerSubscription(this._watchFirebaseGuilds$().subscribe());
   }
 
   public addOrUpdateEntities(entities: IFirebaseGuild[]): void {

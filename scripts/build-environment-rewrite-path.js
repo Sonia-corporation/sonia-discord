@@ -4,7 +4,6 @@ const _ = require(`lodash`);
 const CHALK = require(`./chalk`);
 const LOGGER = require(`./logger`);
 const APP_ROOT_PATH = require(`app-root-path`);
-
 const CONTEXT = `build-environment-rewrite-path`;
 
 /**

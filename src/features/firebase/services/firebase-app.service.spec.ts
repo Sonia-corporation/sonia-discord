@@ -6,7 +6,6 @@ import { LoggerService } from '../../logger/services/logger.service';
 import { FirebaseAppEnum } from '../enums/firebase-app.enum';
 import * as admin from 'firebase-admin';
 import { createMock } from 'ts-auto-mock';
-import App = admin.app.App;
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 jest.mock(`firebase-admin`);
@@ -62,7 +61,6 @@ describe(`FirebaseAppService`, (): void => {
     let credential: admin.credential.Credential;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
-    let loggerServiceErrorSpy: jest.SpyInstance;
     let initializeAppSpy: jest.SpyInstance;
 
     beforeEach((): void => {
@@ -70,106 +68,56 @@ describe(`FirebaseAppService`, (): void => {
 
       credential = createMock<admin.credential.Credential>();
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
-      loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
       initializeAppSpy = jest.spyOn(admin, `initializeApp`).mockImplementation();
       jest.spyOn(admin.credential, `applicationDefault`).mockReturnValue(credential);
     });
 
-    /**
-     * @todo find a way to override the environment
-     */
-    describe.skip(`when the Google application credential environment variable is not valid`, (): void => {
-      beforeEach((): void => {
-        process.env.GOOGLE_APPLICATION_CREDENTIALS = undefined;
-      });
+    it(`should log about the creation of the Firebase app`, (): void => {
+      expect.assertions(2);
 
-      it(`should log an error with the Google application credential environment variable`, (): void => {
-        expect.assertions(3);
+      service.init();
 
-        expect((): void => {
-          service.init();
-        }).toThrow(new Error(`GOOGLE_APPLICATION_CREDENTIALS env is undefined`));
-
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
-        expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
-          context: `FirebaseAppService`,
-          message: `text-This error should not happen. If everything is as expected this is not related to the current developer environment and it means that a breaking change happened.`,
-        } as ILoggerLog);
-      });
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+      expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
+        context: `FirebaseAppService`,
+        message: `text-creating app...`,
+      } as ILoggerLog);
     });
 
-    describe(`when the Google application credential environment variable is valid`, (): void => {
-      beforeEach((): void => {
-        process.env.GOOGLE_APPLICATION_CREDENTIALS = `dummy-google-application-credentials`;
-      });
+    it(`should create the Firebase app`, (): void => {
+      expect.assertions(2);
 
-      it(`should not log an error with the Google application credential environment variable`, (): void => {
-        expect.assertions(1);
+      service.init();
 
-        service.init();
+      expect(initializeAppSpy).toHaveBeenCalledTimes(1);
+      expect(initializeAppSpy).toHaveBeenCalledWith(
+        {
+          credential,
+          databaseURL: `https://sonia-discord-api.firebaseio.com`,
+        },
+        FirebaseAppEnum.SONIA_DISCORD
+      );
+    });
 
-        expect(loggerServiceErrorSpy).not.toHaveBeenCalled();
-      });
+    it(`should log about the success of the creation of the Firebase app`, (): void => {
+      expect.assertions(2);
 
-      it(`should log the Google application credential environment variable`, (): void => {
-        expect.assertions(2);
+      service.init();
 
-        service.init();
-
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
-        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(1, {
-          context: `FirebaseAppService`,
-          message: `text-GOOGLE_APPLICATION_CREDENTIALS env: value-dummy-google-application-credentials`,
-        } as ILoggerLog);
-      });
-
-      it(`should log about the creation of the Firebase app`, (): void => {
-        expect.assertions(2);
-
-        service.init();
-
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
-        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
-          context: `FirebaseAppService`,
-          message: `text-creating app...`,
-        } as ILoggerLog);
-      });
-
-      it(`should create the Firebase app`, (): void => {
-        expect.assertions(2);
-
-        service.init();
-
-        expect(initializeAppSpy).toHaveBeenCalledTimes(1);
-        expect(initializeAppSpy).toHaveBeenCalledWith(
-          {
-            credential,
-            databaseURL: `https://sonia-discord-api.firebaseio.com`,
-          },
-          FirebaseAppEnum.SONIA_DISCORD
-        );
-      });
-
-      it(`should log about the success of the creation of the Firebase app`, (): void => {
-        expect.assertions(2);
-
-        service.init();
-
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(3);
-        expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(3, {
-          context: `FirebaseAppService`,
-          message: `text-app created`,
-        } as ILoggerLog);
-      });
+      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(2);
+      expect(loggerServiceDebugSpy).toHaveBeenNthCalledWith(2, {
+        context: `FirebaseAppService`,
+        message: `text-app created`,
+      } as ILoggerLog);
     });
   });
 
   describe(`getApp()`, (): void => {
-    let app: App;
+    let app: admin.app.App;
 
     beforeEach((): void => {
       service = new FirebaseAppService();
-      app = createMock<App>();
+      app = createMock<admin.app.App>();
 
       jest.spyOn(admin, `initializeApp`).mockReturnValue(app);
     });

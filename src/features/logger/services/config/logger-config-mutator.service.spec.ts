@@ -100,6 +100,15 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
       });
+
+      it(`should not update the current extra debug logs state`, (): void => {
+        expect.assertions(1);
+        loggerConfigCoreService.shouldDisplayMoreDebugLogs = false;
+
+        service = new LoggerConfigMutatorService(config);
+
+        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toStrictEqual(false);
+      });
     });
 
     describe(`when the given config is a complete object`, (): void => {
@@ -107,6 +116,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
         config = {
           isEnabled: true,
           level: LoggerConfigLevelEnum.DEBUG,
+          shouldDisplayMoreDebugLogs: false,
         };
       });
 
@@ -126,6 +136,15 @@ describe(`LoggerConfigMutatorService`, (): void => {
         service = new LoggerConfigMutatorService(config);
 
         expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
+      });
+
+      it(`should override the extra debug logs state`, (): void => {
+        expect.assertions(1);
+        loggerConfigCoreService.shouldDisplayMoreDebugLogs = true;
+
+        service = new LoggerConfigMutatorService(config);
+
+        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toStrictEqual(false);
       });
     });
   });
@@ -180,17 +199,19 @@ describe(`LoggerConfigMutatorService`, (): void => {
       service = LoggerConfigMutatorService.getInstance();
       loggerConfigCoreService.isEnabled = true;
       loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
+      loggerConfigCoreService.shouldDisplayMoreDebugLogs = false;
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
     });
 
     it(`should not update the config`, (): void => {
-      expect.assertions(2);
+      expect.assertions(3);
 
       service.updateConfig();
 
       expect(loggerConfigCoreService.isEnabled).toStrictEqual(true);
       expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
+      expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toStrictEqual(false);
     });
 
     it(`should not log about the config update`, (): void => {
@@ -207,12 +228,13 @@ describe(`LoggerConfigMutatorService`, (): void => {
       });
 
       it(`should not update the config`, (): void => {
-        expect.assertions(2);
+        expect.assertions(3);
 
         service.updateConfig(config);
 
         expect(loggerConfigCoreService.isEnabled).toStrictEqual(true);
         expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
+        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toStrictEqual(false);
       });
 
       it(`should not log about the config update`, (): void => {
@@ -265,6 +287,34 @@ describe(`LoggerConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.SUCCESS);
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenLastCalledWith({
+          context: `LoggerConfigMutatorService`,
+          message: `text-configuration updated`,
+        } as ILoggerLog);
+      });
+    });
+
+    describe(`when the given config contains an extra debug logs state`, (): void => {
+      beforeEach((): void => {
+        config = {
+          shouldDisplayMoreDebugLogs: true,
+        };
+      });
+
+      it(`should update the config extra debug logs state`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toStrictEqual(true);
       });
 
       it(`should log about the config update`, (): void => {
@@ -352,6 +402,42 @@ describe(`LoggerConfigMutatorService`, (): void => {
       service.updateLevel(level);
 
       expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
+    });
+  });
+
+  describe(`updateShouldDisplayMoreDebugLogsState()`, (): void => {
+    let shouldDisplayMoreDebugLogs: boolean;
+
+    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = LoggerConfigMutatorService.getInstance();
+      shouldDisplayMoreDebugLogs = false;
+      loggerConfigCoreService.shouldDisplayMoreDebugLogs = true;
+
+      configServiceGetUpdatedStringSpy = jest.spyOn(configService, `getUpdatedBoolean`).mockReturnValue(false);
+    });
+
+    it(`should get the updated boolean`, (): void => {
+      expect.assertions(2);
+
+      service.updateShouldDisplayMoreDebugLogsState(shouldDisplayMoreDebugLogs);
+
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+        context: `LoggerConfigMutatorService`,
+        newValue: false,
+        oldValue: true,
+        valueName: `should display more debug logs`,
+      } as IConfigUpdateBoolean);
+    });
+
+    it(`should update the logger config extra debug logs state with the updated boolean`, (): void => {
+      expect.assertions(1);
+
+      service.updateShouldDisplayMoreDebugLogsState(shouldDisplayMoreDebugLogs);
+
+      expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toStrictEqual(false);
     });
   });
 });

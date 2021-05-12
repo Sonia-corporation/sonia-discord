@@ -16,8 +16,6 @@ import { FirebaseGuildsChannelsFeaturesService } from '../firebase-guilds-channe
 import { Guild } from 'discord.js';
 import admin from 'firebase-admin';
 import _ from 'lodash';
-import CollectionReference = admin.firestore.CollectionReference;
-import WriteResult = admin.firestore.WriteResult;
 
 export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractService {
   private static _instance: FirebaseGuildsChannelsFeaturesNoonEnabledService;
@@ -38,9 +36,9 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
     id: Readonly<Guild['id']>,
     channelId: Readonly<IAnyDiscordChannel['id']>,
     isEnabled: Readonly<boolean>
-  ): Promise<WriteResult | void> {
+  ): Promise<admin.firestore.WriteResult | void> {
     const collectionReference:
-      | CollectionReference<IFirebaseGuild>
+      | admin.firestore.CollectionReference<IFirebaseGuild>
       | undefined = FirebaseGuildsService.getInstance().getCollectionReference();
 
     if (_.isNil(collectionReference)) {
@@ -52,7 +50,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
     return FirebaseGuildsService.getInstance()
       .getGuild(id)
       .then(
-        (firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<WriteResult> => {
+        (firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<admin.firestore.WriteResult> => {
           if (!this._isValidGuild(firebaseGuild)) {
             this._logInvalidFirebaseGuild(id);
 
@@ -90,17 +88,17 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledService extends AbstractSe
   }
 
   public updateState(
-    collectionReference: Readonly<CollectionReference<IFirebaseGuild>>,
+    collectionReference: Readonly<admin.firestore.CollectionReference<IFirebaseGuild>>,
     id: Readonly<Guild['id']>,
     channelId: Readonly<IAnyDiscordChannel['id']>,
     isEnabled: Readonly<boolean>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): Promise<WriteResult> {
+  ): Promise<admin.firestore.WriteResult> {
     return collectionReference
       .doc(id)
       .update(this.getUpdatedGuild(channelId, isEnabled, firebaseGuild))
       .then(
-        (writeResult: Readonly<WriteResult>): Promise<WriteResult> => {
+        (writeResult: Readonly<admin.firestore.WriteResult>): Promise<admin.firestore.WriteResult> => {
           this._logUpdateStateSuccess(id, isEnabled);
 
           return Promise.resolve(writeResult);

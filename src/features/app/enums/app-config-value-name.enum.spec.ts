@@ -2,10 +2,10 @@ import { AppConfigValueNameEnum } from './app-config-value-name.enum';
 import { getEnumLength } from '../../../functions/checks/get-enum-length';
 
 describe(`AppConfigValueNameEnum`, (): void => {
-  it(`should have a 7 members`, (): void => {
+  it(`should have a 8 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(AppConfigValueNameEnum)).toStrictEqual(7);
+    expect(getEnumLength(AppConfigValueNameEnum)).toStrictEqual(8);
   });
 
   it(`should have a member "FIRST_RELEASE_DATE"`, (): void => {
@@ -36,6 +36,12 @@ describe(`AppConfigValueNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(AppConfigValueNameEnum.RELEASE_NOTES).toStrictEqual(`release notes`);
+  });
+
+  it(`should have a member "RELEASE_TYPE"`, (): void => {
+    expect.assertions(1);
+
+    expect(AppConfigValueNameEnum.RELEASE_TYPE).toStrictEqual(`release type`);
   });
 
   it(`should have a member "TOTAL_RELEASE_COUNT"`, (): void => {

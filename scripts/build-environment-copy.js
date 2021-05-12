@@ -2,7 +2,6 @@ const FS = require(`fs-extra`);
 const CHALK = require(`./chalk`);
 const LOGGER = require(`./logger`);
 const APP_ROOT_PATH = require(`app-root-path`);
-
 const CONTEXT = `build-environment-copy`;
 
 LOGGER.debug(CONTEXT, CHALK.text(`Copy environment file to dist...`));

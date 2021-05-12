@@ -13,10 +13,6 @@ import admin from 'firebase-admin';
 import _ from 'lodash';
 import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
 import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
-import WriteBatch = admin.firestore.WriteBatch;
-import QuerySnapshot = admin.firestore.QuerySnapshot;
-import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
-import WriteResult = admin.firestore.WriteResult;
 
 const NO_GUILD = 0;
 const ONE_GUILD = 1;
@@ -38,7 +34,7 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
     super(ServiceNameEnum.FIREBASE_GUILDS_BREAKING_CHANGE_SERVICE);
   }
 
-  public init(): Promise<WriteResult[] | void> {
+  public init(): Promise<admin.firestore.WriteResult[] | void> {
     return this._updateAllFirebaseGuilds$()
       .toPromise()
       .then((): void => {
@@ -68,7 +64,7 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
     return forkJoin([FirebaseGuildsService.getInstance().isReady(), DiscordClientService.getInstance().isReady()]);
   }
 
-  private _updateAllFirebaseGuilds$(): Observable<WriteResult[] | void> {
+  private _updateAllFirebaseGuilds$(): Observable<admin.firestore.WriteResult[] | void> {
     return this.isReady$().pipe(
       take(ONE_EMITTER),
       tap({
@@ -79,9 +75,13 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
           });
         },
       }),
-      mergeMap((): Promise<QuerySnapshot<IFirebaseGuild>> => FirebaseGuildsService.getInstance().getGuilds()),
       mergeMap(
-        (querySnapshot: QuerySnapshot<IFirebaseGuild>): Promise<WriteResult[] | void> => {
+        (): Promise<admin.firestore.QuerySnapshot<IFirebaseGuild>> => FirebaseGuildsService.getInstance().getGuilds()
+      ),
+      mergeMap(
+        (
+          querySnapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>
+        ): Promise<admin.firestore.WriteResult[] | void> => {
           LoggerService.getInstance().debug({
             context: this._serviceName,
             message: ChalkService.getInstance().text(`guilds fetched`),
@@ -93,8 +93,10 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
     );
   }
 
-  private _updateAllFirebaseGuilds(querySnapshot: QuerySnapshot<IFirebaseGuild>): Promise<WriteResult[] | void> {
-    const batch: WriteBatch | undefined = FirebaseGuildsService.getInstance().getBatch();
+  private _updateAllFirebaseGuilds(
+    querySnapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>
+  ): Promise<admin.firestore.WriteResult[] | void> {
+    const batch: admin.firestore.WriteBatch | undefined = FirebaseGuildsService.getInstance().getBatch();
 
     if (_.isNil(batch)) {
       LoggerService.getInstance().error({
@@ -108,7 +110,7 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
     let countFirebaseGuildsUpdated = NO_GUILD;
     let countFirebaseGuilds = NO_GUILD;
 
-    querySnapshot.forEach((queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>): void => {
+    querySnapshot.forEach((queryDocumentSnapshot: admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>): void => {
       if (_.isEqual(queryDocumentSnapshot.exists, true)) {
         countFirebaseGuilds = _.add(countFirebaseGuilds, ONE_GUILD);
 

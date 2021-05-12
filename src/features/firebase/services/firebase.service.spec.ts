@@ -10,7 +10,6 @@ import { LoggerService } from '../../logger/services/logger.service';
 import { FirebaseGuildsStoreService } from '../stores/guilds/services/firebase-guilds-store.service';
 import * as admin from 'firebase-admin';
 import { createMock } from 'ts-auto-mock';
-import WriteResult = admin.firestore.WriteResult;
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 
@@ -256,10 +255,10 @@ describe(`FirebaseService`, (): void => {
     });
 
     describe(`when the FirebaseGuildsBreakingChange service was successfully initialized`, (): void => {
-      let writeResult: WriteResult;
+      let writeResult: admin.firestore.WriteResult;
 
       beforeEach((): void => {
-        writeResult = createMock<WriteResult>();
+        writeResult = createMock<admin.firestore.WriteResult>();
 
         firebaseGuildsBreakingChangeServiceGetInstanceInitSpy.mockResolvedValue(writeResult);
       });

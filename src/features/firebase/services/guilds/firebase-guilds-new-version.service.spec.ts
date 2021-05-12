@@ -3,6 +3,7 @@ import { FirebaseGuildsBreakingChangeService } from './firebase-guilds-breaking-
 import { FirebaseGuildsNewVersionService } from './firebase-guilds-new-version.service';
 import { FirebaseGuildsService } from './firebase-guilds.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { AppConfigReleaseTypeEnum } from '../../../app/enums/app-config-release-type.enum';
 import { AppConfigService } from '../../../app/services/config/app-config.service';
 import { CoreEventService } from '../../../core/services/core-event.service';
 import { IDiscordGuildSoniaSendMessageToChannel } from '../../../discord/guilds/interfaces/discord-guild-sonia-send-message-to-channel';
@@ -15,6 +16,9 @@ import { DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES } from '../../../discord/users/
 import { DiscordGithubContributorsIdEnum } from '../../../discord/users/enums/discord-github-contributors-id.enum';
 import { ILoggerLog } from '../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../logger/services/logger.service';
+import { FIREBASE_GUILD_NEW_BUG_FIXES_VERSION_RESPONSE_MESSAGES } from '../../constants/guilds/firebase-guild-new-bug-fixes-version-response-messages';
+import { FIREBASE_GUILD_NEW_FEATURES_VERSION_RESPONSE_MESSAGES } from '../../constants/guilds/firebase-guild-new-features-version-response-messages';
+import { FIREBASE_GUILD_NEW_PERFORMANCE_IMPROVEMENTS_VERSION_RESPONSE_MESSAGES } from '../../constants/guilds/firebase-guild-new-performance-improvements-version-response-messages';
 import { FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES } from '../../constants/guilds/firebase-guild-new-version-response-messages';
 import { FirebaseGuildChannelFeatureReleaseNotesVersionEnum } from '../../enums/guilds/channels/features/firebase-guild-channel-feature-release-notes-version.enum';
 import { FirebaseGuildChannelFeatureVersionEnum } from '../../enums/guilds/channels/features/firebase-guild-channel-feature-version.enum';
@@ -33,10 +37,6 @@ import * as admin from 'firebase-admin';
 import { BehaviorSubject, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { createMock } from 'ts-auto-mock';
-import QueryDocumentSnapshot = admin.firestore.QueryDocumentSnapshot;
-import QuerySnapshot = admin.firestore.QuerySnapshot;
-import WriteBatch = admin.firestore.WriteBatch;
-import WriteResult = admin.firestore.WriteResult;
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 jest.mock(`firebase-admin`);
@@ -166,9 +166,9 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
   describe(`sendNewReleaseNotesToEachGuild$()`, (): void => {
     let isReady$: BehaviorSubject<[true]>;
-    let querySnapshot: QuerySnapshot<IFirebaseGuildVFinal>;
-    let writeBatch: WriteBatch;
-    let queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>;
+    let querySnapshot: admin.firestore.QuerySnapshot<IFirebaseGuildVFinal>;
+    let writeBatch: admin.firestore.WriteBatch;
+    let queryDocumentSnapshot: admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>;
     let firebaseGuild: IFirebaseGuild;
 
     let isReady$Spy: jest.SpyInstance;
@@ -191,20 +191,22 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         lastReleaseNotesVersion: `1.0.0`,
         version: FirebaseGuildVersionEnum.V5,
       });
-      queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuild>>({
+      queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
         data: (): IFirebaseGuild => firebaseGuild,
       });
       forEachMock = jest
         .fn()
-        .mockImplementation((callback: (result: QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
-          callback(queryDocumentSnapshot);
-        });
-      querySnapshot = createMock<QuerySnapshot<IFirebaseGuildVFinal>>({
+        .mockImplementation(
+          (callback: (result: admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
+            callback(queryDocumentSnapshot);
+          }
+        );
+      querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuildVFinal>>({
         forEach: forEachMock,
       });
       commitMock = jest.fn().mockRejectedValue(new Error(`Commit error`));
       updateMock = jest.fn().mockImplementation();
-      writeBatch = createMock<WriteBatch>({
+      writeBatch = createMock<admin.firestore.WriteBatch>({
         commit: commitMock,
         update: updateMock,
       });
@@ -444,7 +446,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           describe(`when there is no Firebase guild`, (): void => {
             beforeEach((): void => {
               forEachMock = jest.fn().mockImplementation();
-              querySnapshot = createMock<QuerySnapshot<IFirebaseGuildVFinal>>({
+              querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuildVFinal>>({
                 forEach: forEachMock,
               });
 
@@ -490,16 +492,18 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           describe(`when there is one Firebase guild but it does not exists`, (): void => {
             beforeEach((): void => {
-              queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuild>>({
+              queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
                 data: (): IFirebaseGuild => firebaseGuild,
                 exists: false,
               });
               forEachMock = jest
                 .fn()
-                .mockImplementation((callback: (result: QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
-                  callback(queryDocumentSnapshot);
-                });
-              querySnapshot = createMock<QuerySnapshot<IFirebaseGuildVFinal>>({
+                .mockImplementation(
+                  (callback: (result: admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
+                    callback(queryDocumentSnapshot);
+                  }
+                );
+              querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuildVFinal>>({
                 forEach: forEachMock,
               });
 
@@ -549,16 +553,18 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 id: `dummy-id`,
                 version: FirebaseGuildVersionEnum.V1,
               });
-              queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuild>>({
+              queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
                 data: (): IFirebaseGuild => firebaseGuild,
                 exists: true,
               });
               forEachMock = jest
                 .fn()
-                .mockImplementation((callback: (result: QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
-                  callback(queryDocumentSnapshot);
-                });
-              querySnapshot = createMock<QuerySnapshot<IFirebaseGuildVFinal>>({
+                .mockImplementation(
+                  (callback: (result: admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
+                    callback(queryDocumentSnapshot);
+                  }
+                );
+              querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuildVFinal>>({
                 forEach: forEachMock,
               });
 
@@ -604,16 +610,18 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           describe(`when there is one Firebase guild`, (): void => {
             beforeEach((): void => {
-              queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuild>>({
+              queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
                 data: (): IFirebaseGuild => firebaseGuild,
                 exists: true,
               });
               forEachMock = jest
                 .fn()
-                .mockImplementation((callback: (result: QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
-                  callback(queryDocumentSnapshot);
-                });
-              querySnapshot = createMock<QuerySnapshot<IFirebaseGuildVFinal>>({
+                .mockImplementation(
+                  (callback: (result: admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
+                    callback(queryDocumentSnapshot);
+                  }
+                );
+              querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuildVFinal>>({
                 forEach: forEachMock,
               });
 
@@ -723,7 +731,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
               describe(`when the batch commit was successful`, (): void => {
                 beforeEach((): void => {
-                  commitMock.mockResolvedValue(createMock<WriteResult[]>());
+                  commitMock.mockResolvedValue(createMock<admin.firestore.WriteResult[]>());
                 });
 
                 it(`should send the release notes message for the guild`, async (): Promise<void> => {
@@ -760,17 +768,19 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           describe(`when there are two Firebase guilds`, (): void => {
             beforeEach((): void => {
-              queryDocumentSnapshot = createMock<QueryDocumentSnapshot<IFirebaseGuild>>({
+              queryDocumentSnapshot = createMock<admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>>({
                 data: (): IFirebaseGuild => firebaseGuild,
                 exists: true,
               });
               forEachMock = jest
                 .fn()
-                .mockImplementation((callback: (result: QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
-                  callback(queryDocumentSnapshot);
-                  callback(queryDocumentSnapshot);
-                });
-              querySnapshot = createMock<QuerySnapshot<IFirebaseGuildVFinal>>({
+                .mockImplementation(
+                  (callback: (result: admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>) => void): void => {
+                    callback(queryDocumentSnapshot);
+                    callback(queryDocumentSnapshot);
+                  }
+                );
+              querySnapshot = createMock<admin.firestore.QuerySnapshot<IFirebaseGuildVFinal>>({
                 forEach: forEachMock,
               });
 
@@ -880,7 +890,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
               describe(`when the batch commit was successful`, (): void => {
                 beforeEach((): void => {
-                  commitMock.mockResolvedValue(createMock<WriteResult[]>());
+                  commitMock.mockResolvedValue(createMock<admin.firestore.WriteResult[]>());
                 });
 
                 it(`should send the release notes message for the guilds`, async (): Promise<void> => {
@@ -1548,7 +1558,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
   describe(`getMessageResponse()`, (): void => {
     let discordMessageCommandReleaseNotesServiceGetMessageResponseSpy: jest.SpyInstance;
     let firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy: jest.SpyInstance;
+    let firebaseGuildNewBugFixesVersionResponseMessagesGetHumanizedRandomMessageSpy: jest.SpyInstance;
+    let firebaseGuildNewFeaturesVersionResponseMessagesGetHumanizedRandomMessageSpy: jest.SpyInstance;
+    let firebaseGuildNewPerformanceImprovementsVersionResponseMessagesGetHumanizedRandomMessageSpy: jest.SpyInstance;
     let discordGithubContributorsIdMessagesGetRandomMessageSpy: jest.SpyInstance;
+    let appConfigServiceGetReleaseTypeSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsNewVersionService();
@@ -1559,9 +1573,21 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy = jest
         .spyOn(FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES, `getHumanizedRandomMessage`)
         .mockReturnValue(`About time <@!${DiscordGithubContributorsIdEnum.C0ZEN}>!`);
+      firebaseGuildNewBugFixesVersionResponseMessagesGetHumanizedRandomMessageSpy = jest
+        .spyOn(FIREBASE_GUILD_NEW_BUG_FIXES_VERSION_RESPONSE_MESSAGES, `getHumanizedRandomMessage`)
+        .mockReturnValue(`About time <@!${DiscordGithubContributorsIdEnum.C0ZEN}>!`);
+      firebaseGuildNewFeaturesVersionResponseMessagesGetHumanizedRandomMessageSpy = jest
+        .spyOn(FIREBASE_GUILD_NEW_FEATURES_VERSION_RESPONSE_MESSAGES, `getHumanizedRandomMessage`)
+        .mockReturnValue(`About time <@!${DiscordGithubContributorsIdEnum.C0ZEN}>!`);
+      firebaseGuildNewPerformanceImprovementsVersionResponseMessagesGetHumanizedRandomMessageSpy = jest
+        .spyOn(FIREBASE_GUILD_NEW_PERFORMANCE_IMPROVEMENTS_VERSION_RESPONSE_MESSAGES, `getHumanizedRandomMessage`)
+        .mockReturnValue(`About time <@!${DiscordGithubContributorsIdEnum.C0ZEN}>!`);
       discordGithubContributorsIdMessagesGetRandomMessageSpy = jest
         .spyOn(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES, `getRandomMessage`)
         .mockReturnValue(DiscordGithubContributorsIdEnum.C0ZEN);
+      appConfigServiceGetReleaseTypeSpy = jest
+        .spyOn(appConfigService, `getReleaseType`)
+        .mockReturnValue(AppConfigReleaseTypeEnum.UNKNOWN);
     });
 
     it(`should fetch a message response`, async (): Promise<void> => {
@@ -1601,17 +1627,103 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         );
       });
 
-      it(`should change the message response for a random one and include a random contributor id`, async (): Promise<void> => {
-        expect.assertions(4);
+      describe(`when the release notes have an unknown type`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceGetReleaseTypeSpy.mockReturnValue(AppConfigReleaseTypeEnum.UNKNOWN);
+        });
 
-        await service.getMessageResponse();
+        it(`should change the message response for a random one and include a random contributor id`, async (): Promise<void> => {
+          expect.assertions(4);
 
-        expect(firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
-        expect(firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
-          userId: `<@!${DiscordGithubContributorsIdEnum.C0ZEN}>`,
-        } as IFirebaseGuildNewVersionResponseMessage);
-        expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledTimes(1);
-        expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledWith();
+          await service.getMessageResponse();
+
+          expect(firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
+            userId: `<@!${DiscordGithubContributorsIdEnum.C0ZEN}>`,
+          } as IFirebaseGuildNewVersionResponseMessage);
+          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledWith();
+        });
+      });
+
+      describe(`when the release notes have a mixed type`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceGetReleaseTypeSpy.mockReturnValue(AppConfigReleaseTypeEnum.MIXED);
+        });
+
+        it(`should change the message response for a random one and include a random contributor id`, async (): Promise<void> => {
+          expect.assertions(4);
+
+          await service.getMessageResponse();
+
+          expect(firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
+            userId: `<@!${DiscordGithubContributorsIdEnum.C0ZEN}>`,
+          } as IFirebaseGuildNewVersionResponseMessage);
+          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledWith();
+        });
+      });
+
+      describe(`when the release notes have a bug fixes type`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceGetReleaseTypeSpy.mockReturnValue(AppConfigReleaseTypeEnum.BUG_FIXES);
+        });
+
+        it(`should change the message response for a random bug fixes one and include a random contributor id`, async (): Promise<void> => {
+          expect.assertions(4);
+
+          await service.getMessageResponse();
+
+          expect(firebaseGuildNewBugFixesVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(firebaseGuildNewBugFixesVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
+            userId: `<@!${DiscordGithubContributorsIdEnum.C0ZEN}>`,
+          } as IFirebaseGuildNewVersionResponseMessage);
+          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledWith();
+        });
+      });
+
+      describe(`when the release notes have a features type`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceGetReleaseTypeSpy.mockReturnValue(AppConfigReleaseTypeEnum.FEATURES);
+        });
+
+        it(`should change the message response for a random features one and include a random contributor id`, async (): Promise<void> => {
+          expect.assertions(4);
+
+          await service.getMessageResponse();
+
+          expect(firebaseGuildNewFeaturesVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(firebaseGuildNewFeaturesVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
+            userId: `<@!${DiscordGithubContributorsIdEnum.C0ZEN}>`,
+          } as IFirebaseGuildNewVersionResponseMessage);
+          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledWith();
+        });
+      });
+
+      describe(`when the release notes have a performance improvements type`, (): void => {
+        beforeEach((): void => {
+          appConfigServiceGetReleaseTypeSpy.mockReturnValue(AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS);
+        });
+
+        it(`should change the message response for a random performance improvements one and include a random contributor id`, async (): Promise<void> => {
+          expect.assertions(4);
+
+          await service.getMessageResponse();
+
+          expect(
+            firebaseGuildNewPerformanceImprovementsVersionResponseMessagesGetHumanizedRandomMessageSpy
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            firebaseGuildNewPerformanceImprovementsVersionResponseMessagesGetHumanizedRandomMessageSpy
+          ).toHaveBeenCalledWith({
+            userId: `<@!${DiscordGithubContributorsIdEnum.C0ZEN}>`,
+          } as IFirebaseGuildNewVersionResponseMessage);
+          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledWith();
+        });
       });
 
       it(`should return the message response`, async (): Promise<void> => {

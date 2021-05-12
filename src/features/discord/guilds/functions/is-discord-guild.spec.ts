@@ -1,6 +1,5 @@
 import { isDiscordGuild } from './is-discord-guild';
 import { Guild } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
 
 describe(`isDiscordGuild()`, (): void => {
   let guild: unknown;
@@ -65,11 +64,10 @@ describe(`isDiscordGuild()`, (): void => {
 
   describe(`when the given value is a "Guild" instance`, (): void => {
     beforeEach((): void => {
-      guild = createMock<Guild>();
+      guild = createInstance(Guild.prototype);
     });
 
-    // @todo fix it omg this should works
-    it.skip(`should return true`, (): void => {
+    it(`should return true`, (): void => {
       expect.assertions(1);
 
       const result = isDiscordGuild(guild);

@@ -57,6 +57,7 @@ describe(`LoggerConfigService`, (): void => {
       service = LoggerConfigService.getInstance();
       loggerConfigCoreService.isEnabled = true;
       loggerConfigCoreService.level = LoggerConfigLevelEnum.DEBUG;
+      loggerConfigCoreService.shouldDisplayMoreDebugLogs = false;
     });
 
     it(`should return the logger config`, (): void => {
@@ -67,6 +68,7 @@ describe(`LoggerConfigService`, (): void => {
       expect(result).toStrictEqual({
         isEnabled: true,
         level: LoggerConfigLevelEnum.DEBUG,
+        shouldDisplayMoreDebugLogs: false,
       } as ILoggerConfig);
     });
   });
@@ -118,6 +120,41 @@ describe(`LoggerConfigService`, (): void => {
       const result = service.getLevel();
 
       expect(result).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
+    });
+  });
+
+  describe(`shouldDisplayMoreDebugLogs()`, (): void => {
+    beforeEach((): void => {
+      service = LoggerConfigService.getInstance();
+      loggerConfigCoreService.shouldDisplayMoreDebugLogs = true;
+    });
+
+    describe(`when the logger config extra debug logs are enabled`, (): void => {
+      beforeEach((): void => {
+        loggerConfigCoreService.shouldDisplayMoreDebugLogs = true;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.shouldDisplayMoreDebugLogs();
+
+        expect(result).toStrictEqual(true);
+      });
+    });
+
+    describe(`when the logger config extra debug logs not enabled`, (): void => {
+      beforeEach((): void => {
+        loggerConfigCoreService.shouldDisplayMoreDebugLogs = false;
+      });
+
+      it(`should return false`, (): void => {
+        expect.assertions(1);
+
+        const result = service.shouldDisplayMoreDebugLogs();
+
+        expect(result).toStrictEqual(false);
+      });
     });
   });
 });

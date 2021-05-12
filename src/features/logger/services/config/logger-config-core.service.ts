@@ -17,6 +17,7 @@ export class LoggerConfigCoreService extends AbstractService implements ILoggerC
 
   public isEnabled = true;
   public level = LoggerConfigLevelEnum.DEBUG;
+  public shouldDisplayMoreDebugLogs = false;
 
   public constructor() {
     super(ServiceNameEnum.LOGGER_CONFIG_CORE_SERVICE);

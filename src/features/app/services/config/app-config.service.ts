@@ -1,6 +1,7 @@
 import { AppConfigCoreService } from './app-config-core.service';
 import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { AppConfigReleaseTypeEnum } from '../../enums/app-config-release-type.enum';
 import { IAppConfig } from '../../interfaces/app-config';
 import _ from 'lodash';
 
@@ -26,6 +27,7 @@ export class AppConfigService extends AbstractService {
       isProduction: this.isProduction(),
       releaseDate: this.getReleaseDate(),
       releaseNotes: this.getReleaseNotes(),
+      releaseType: this.getReleaseType(),
       totalReleaseCount: this.getTotalReleaseCount(),
       version: this.getVersion(),
     };
@@ -33,14 +35,6 @@ export class AppConfigService extends AbstractService {
 
   public getFirstReleaseDate(): string {
     return AppConfigCoreService.getInstance().firstReleaseDate;
-  }
-
-  public getVersion(): string {
-    return AppConfigCoreService.getInstance().version;
-  }
-
-  public getReleaseDate(): string {
-    return AppConfigCoreService.getInstance().releaseDate;
   }
 
   public getInitializationDate(): string {
@@ -51,11 +45,23 @@ export class AppConfigService extends AbstractService {
     return AppConfigCoreService.getInstance().isProduction;
   }
 
-  public getTotalReleaseCount(): number {
-    return AppConfigCoreService.getInstance().totalReleaseCount;
+  public getReleaseDate(): string {
+    return AppConfigCoreService.getInstance().releaseDate;
   }
 
   public getReleaseNotes(): string {
     return AppConfigCoreService.getInstance().releaseNotes;
+  }
+
+  public getReleaseType(): AppConfigReleaseTypeEnum {
+    return AppConfigCoreService.getInstance().releaseType;
+  }
+
+  public getTotalReleaseCount(): number {
+    return AppConfigCoreService.getInstance().totalReleaseCount;
+  }
+
+  public getVersion(): string {
+    return AppConfigCoreService.getInstance().version;
   }
 }

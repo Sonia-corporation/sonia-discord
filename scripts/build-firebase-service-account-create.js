@@ -2,7 +2,6 @@ const FS = require(`fs-extra`);
 const CHALK = require(`./chalk`);
 const LOGGER = require(`./logger`);
 const APP_ROOT_PATH = require(`app-root-path`);
-
 const CONTEXT = `build-firebase-service-account-create`;
 
 LOGGER.debug(CONTEXT, CHALK.text(`Create Firebase service account file into dist...`));

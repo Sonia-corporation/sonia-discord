@@ -9,13 +9,13 @@ import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/fi
 import { IFirebaseGuildVFinal } from '../../../../../../../../firebase/types/guilds/firebase-guild-v-final';
 import { ILoggerLog } from '../../../../../../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../../../../../../logger/services/logger.service';
+import { DiscordChannelService } from '../../../../../../../channels/services/discord-channel.service';
 import { IAnyDiscordChannel } from '../../../../../../../channels/types/any-discord-channel';
 import { IDiscordCommandFlagSuccess } from '../../../../../../interfaces/commands/flags/discord-command-flag-success';
 import { IAnyDiscordMessage } from '../../../../../../types/any-discord-message';
 import { Message } from 'discord.js';
 import admin from 'firebase-admin';
 import { createMock } from 'ts-auto-mock';
-import WriteResult = admin.firestore.WriteResult;
 
 jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 
@@ -33,11 +33,13 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
   let loggerService: LoggerService;
   let firebaseGuildsStoreQuery: FirebaseGuildsStoreQuery;
   let firebaseGuildsChannelsFeaturesNoonEnabledService: FirebaseGuildsChannelsFeaturesNoonEnabledService;
+  let discordChannelService: DiscordChannelService;
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
     firebaseGuildsStoreQuery = FirebaseGuildsStoreQuery.getInstance();
     firebaseGuildsChannelsFeaturesNoonEnabledService = FirebaseGuildsChannelsFeaturesNoonEnabledService.getInstance();
+    discordChannelService = DiscordChannelService.getInstance();
   });
 
   describe(`execute()`, (): void => {
@@ -47,6 +49,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
     let loggerServiceDebugSpy: jest.SpyInstance;
     let isEnabledSpy: jest.SpyInstance;
     let updateDatabaseSpy: jest.SpyInstance;
+    let discordChannelServiceIsValidSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureNoonEnabled();
@@ -58,6 +61,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       isEnabledSpy = jest.spyOn(service, `isEnabled`).mockRejectedValue(new Error(`isEnabled error`));
       updateDatabaseSpy = jest.spyOn(service, `updateDatabase`).mockRejectedValue(new Error(`updateDatabase error`));
+      discordChannelServiceIsValidSpy = jest.spyOn(discordChannelService, `isValid`).mockReturnValue(false);
     });
 
     it(`should log about executing the enabled action`, async (): Promise<void> => {
@@ -118,6 +122,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             guild: null,
             id: `dummy-id`,
           });
+
+          discordChannelServiceIsValidSpy.mockReturnValue(false);
         });
 
         it(`should not update the database to enable the noon feature`, async (): Promise<void> => {
@@ -141,6 +147,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             guild: {},
             id: `dummy-id`,
           });
+
+          discordChannelServiceIsValidSpy.mockReturnValue(true);
         });
 
         describe(`when the Discord message channel is not a text channel`, (): void => {
@@ -155,6 +163,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               },
               id: `dummy-id`,
             });
+
+            discordChannelServiceIsValidSpy.mockReturnValue(false);
           });
 
           it(`should not update the database to enable the noon feature`, async (): Promise<void> => {
@@ -188,6 +198,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               },
               id: `dummy-id`,
             });
+
+            discordChannelServiceIsValidSpy.mockReturnValue(true);
           });
 
           describe(`when the current noon feature is not configured`, (): void => {
@@ -554,6 +566,8 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
               },
               id: `dummy-id`,
             });
+
+            discordChannelServiceIsValidSpy.mockReturnValue(true);
           });
 
           describe(`when the current noon feature is not configured`, (): void => {
@@ -1230,7 +1244,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
     let isEnabled: boolean | undefined;
     let firebaseGuild: IFirebaseGuild;
     let channel: IAnyDiscordChannel;
-    let writeResult: WriteResult;
+    let writeResult: admin.firestore.WriteResult;
 
     let firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy: jest.SpyInstance;
 
@@ -1242,7 +1256,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
       channel = createMock<IAnyDiscordChannel>({
         id: `dummy-channel-id`,
       });
-      writeResult = createMock<WriteResult>();
+      writeResult = createMock<admin.firestore.WriteResult>();
 
       firebaseGuildsChannelsFeaturesNoonEnabledServiceUpdateStateByGuildIdSpy = jest
         .spyOn(firebaseGuildsChannelsFeaturesNoonEnabledService, `updateStateByGuildId`)

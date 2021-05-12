@@ -115,6 +115,9 @@ Now to avoid creating manually this file when using the local production the sol
 This project use `dotenv` to load some environment variables locally only.  
 On production the CI will provide his own environment variables.
 
+`SHOULD_DISPLAY_MORE_DEBUG_LOGS` is used to display more logs.  
+Locally it is enabled and should be most of the time disabled in production.
+
 ## Package scripts
 
 - `npm run start`: run the Node.js app for the local development

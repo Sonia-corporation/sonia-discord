@@ -11,7 +11,9 @@ import { CoreEventService } from '../../../core/services/core-event.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import * as IsNodeProductionModule from '../../../node/functions/is-node-production';
 import { TimeService } from '../../../time/services/time.service';
-import { IAppConfig } from '../../interfaces/app-config';
+import { AppConfigReleaseTypeEnum } from '../../enums/app-config-release-type.enum';
+import { IAppUpdatableConfig } from '../../types/app-updatable-config';
+import { ReleaseTypeService } from '../release-type.service';
 
 jest.mock(`../../../time/services/time.service`);
 jest.mock(`../../../logger/services/chalk/chalk.service`);
@@ -21,15 +23,17 @@ describe(`AppConfigMutationService`, (): void => {
   let configService: ConfigService;
   let appConfigCoreService: AppConfigCoreService;
   let coreEventService: CoreEventService;
+  let releaseTypeService: ReleaseTypeService;
 
   beforeEach((): void => {
     configService = ConfigService.getInstance();
     appConfigCoreService = AppConfigCoreService.getInstance();
     coreEventService = CoreEventService.getInstance();
+    releaseTypeService = ReleaseTypeService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
-    let config: IPartialNested<IAppConfig> | undefined;
+    let config: IPartialNested<IAppUpdatableConfig> | undefined;
 
     beforeEach((): void => {
       config = {
@@ -61,7 +65,7 @@ describe(`AppConfigMutationService`, (): void => {
   });
 
   describe(`constructor()`, (): void => {
-    let config: IPartialNested<IAppConfig> | undefined;
+    let config: IPartialNested<IAppUpdatableConfig> | undefined;
 
     let coreEventServiceNotifyServiceCreatedSpy: jest.SpyInstance;
 
@@ -128,6 +132,16 @@ describe(`AppConfigMutationService`, (): void => {
         service = new AppConfigMutatorService(config);
 
         expect(appConfigCoreService.releaseNotes).toStrictEqual(`releaseNotes`);
+      });
+
+      it(`should not update the current release type`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.releaseNotes = `releaseNotes`;
+        appConfigCoreService.releaseType = AppConfigReleaseTypeEnum.BUG_FIXES;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.releaseType).toStrictEqual(AppConfigReleaseTypeEnum.BUG_FIXES);
       });
 
       it(`should not update the current total release count`, (): void => {
@@ -205,6 +219,16 @@ describe(`AppConfigMutationService`, (): void => {
         service = new AppConfigMutatorService(config);
 
         expect(appConfigCoreService.releaseNotes).toStrictEqual(`dummy-release-notes`);
+      });
+
+      it(`should override the release type`, (): void => {
+        expect.assertions(1);
+        appConfigCoreService.releaseNotes = `releaseNotes`;
+        appConfigCoreService.releaseType = AppConfigReleaseTypeEnum.BUG_FIXES;
+
+        service = new AppConfigMutatorService(config);
+
+        expect(appConfigCoreService.releaseType).toStrictEqual(AppConfigReleaseTypeEnum.UNKNOWN);
       });
 
       it(`should override the total release count`, (): void => {
@@ -362,9 +386,10 @@ describe(`AppConfigMutationService`, (): void => {
   });
 
   describe(`updateConfig()`, (): void => {
-    let config: IPartialNested<IAppConfig> | undefined;
+    let config: IPartialNested<IAppUpdatableConfig> | undefined;
 
     let loggerLogSpy: jest.SpyInstance;
+    let releaseTypeServiceGetReleaseTypeSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = AppConfigMutatorService.getInstance();
@@ -373,14 +398,16 @@ describe(`AppConfigMutationService`, (): void => {
       appConfigCoreService.isProduction = true;
       appConfigCoreService.releaseDate = `dummy-release-date`;
       appConfigCoreService.releaseNotes = `dummy-release-notes`;
+      appConfigCoreService.releaseType = AppConfigReleaseTypeEnum.FEATURES;
       appConfigCoreService.totalReleaseCount = 8;
       appConfigCoreService.version = `dummy-version`;
 
       loggerLogSpy = jest.spyOn(console, `log`).mockImplementation();
+      releaseTypeServiceGetReleaseTypeSpy = jest.spyOn(releaseTypeService, `getReleaseType`).mockImplementation();
     });
 
     it(`should not update the config`, (): void => {
-      expect.assertions(7);
+      expect.assertions(8);
 
       service.updateConfig();
 
@@ -389,6 +416,7 @@ describe(`AppConfigMutationService`, (): void => {
       expect(appConfigCoreService.isProduction).toStrictEqual(true);
       expect(appConfigCoreService.releaseDate).toStrictEqual(`dummy-release-date`);
       expect(appConfigCoreService.releaseNotes).toStrictEqual(`dummy-release-notes`);
+      expect(appConfigCoreService.releaseType).toStrictEqual(AppConfigReleaseTypeEnum.FEATURES);
       expect(appConfigCoreService.totalReleaseCount).toStrictEqual(8);
       expect(appConfigCoreService.version).toStrictEqual(`dummy-version`);
     });
@@ -407,7 +435,7 @@ describe(`AppConfigMutationService`, (): void => {
       });
 
       it(`should not update the config`, (): void => {
-        expect.assertions(7);
+        expect.assertions(8);
 
         service.updateConfig(config);
 
@@ -416,6 +444,7 @@ describe(`AppConfigMutationService`, (): void => {
         expect(appConfigCoreService.isProduction).toStrictEqual(true);
         expect(appConfigCoreService.releaseDate).toStrictEqual(`dummy-release-date`);
         expect(appConfigCoreService.releaseNotes).toStrictEqual(`dummy-release-notes`);
+        expect(appConfigCoreService.releaseType).toStrictEqual(AppConfigReleaseTypeEnum.FEATURES);
         expect(appConfigCoreService.totalReleaseCount).toStrictEqual(8);
         expect(appConfigCoreService.version).toStrictEqual(`dummy-version`);
       });
@@ -542,6 +571,8 @@ describe(`AppConfigMutationService`, (): void => {
         config = {
           releaseNotes: `release-notes`,
         };
+
+        releaseTypeServiceGetReleaseTypeSpy.mockReturnValue(AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS);
       });
 
       it(`should update the config release notes`, (): void => {
@@ -552,12 +583,20 @@ describe(`AppConfigMutationService`, (): void => {
         expect(appConfigCoreService.releaseNotes).toStrictEqual(`release-notes`);
       });
 
+      it(`should update the config release type`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(appConfigCoreService.releaseType).toStrictEqual(AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS);
+      });
+
       it(`should log about the config update`, (): void => {
         expect.assertions(2);
 
         service.updateConfig(config);
 
-        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenCalledTimes(3);
         expect(loggerLogSpy).toHaveBeenLastCalledWith(
           `debug-● context-[AppConfigMutatorService][now-format] text-configuration updated`
         );
@@ -773,24 +812,30 @@ describe(`AppConfigMutationService`, (): void => {
     let releaseNotes: string;
 
     let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+    let releaseTypeServiceGetReleaseTypeSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = AppConfigMutatorService.getInstance();
       releaseNotes = `dummy-release-notes`;
       appConfigCoreService.releaseNotes = `release-notes`;
+      appConfigCoreService.releaseType = AppConfigReleaseTypeEnum.FEATURES;
 
       configServiceGetUpdatedStringSpy = jest
         .spyOn(configService, `getUpdatedString`)
-        .mockReturnValue(`dummy-release-notes`);
+        .mockReturnValueOnce(`dummy-release-notes`)
+        .mockReturnValueOnce(AppConfigReleaseTypeEnum.BUG_FIXES);
+      releaseTypeServiceGetReleaseTypeSpy = jest
+        .spyOn(releaseTypeService, `getReleaseType`)
+        .mockReturnValue(AppConfigReleaseTypeEnum.BUG_FIXES);
     });
 
-    it(`should get the updated string`, (): void => {
+    it(`should get the updated string for the release notes`, (): void => {
       expect.assertions(2);
 
       service.updateReleaseNotes(releaseNotes);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(2);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenNthCalledWith(1, {
         context: `AppConfigMutatorService`,
         isValueDisplay: false,
         newValue: `dummy-release-notes`,
@@ -805,6 +850,37 @@ describe(`AppConfigMutationService`, (): void => {
       service.updateReleaseNotes(releaseNotes);
 
       expect(appConfigCoreService.releaseNotes).toStrictEqual(`dummy-release-notes`);
+    });
+
+    it(`should define the release type from the new release notes`, (): void => {
+      expect.assertions(2);
+
+      service.updateReleaseNotes(releaseNotes);
+
+      expect(releaseTypeServiceGetReleaseTypeSpy).toHaveBeenCalledTimes(1);
+      expect(releaseTypeServiceGetReleaseTypeSpy).toHaveBeenCalledWith(`dummy-release-notes`);
+    });
+
+    it(`should get the updated string for the release type`, (): void => {
+      expect.assertions(2);
+
+      service.updateReleaseNotes(releaseNotes);
+
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(2);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenNthCalledWith(2, {
+        context: `AppConfigMutatorService`,
+        newValue: AppConfigReleaseTypeEnum.BUG_FIXES,
+        oldValue: AppConfigReleaseTypeEnum.FEATURES,
+        valueName: `release type`,
+      } as IConfigUpdateString);
+    });
+
+    it(`should update the app config release type with the updated type`, (): void => {
+      expect.assertions(1);
+
+      service.updateReleaseNotes(releaseNotes);
+
+      expect(appConfigCoreService.releaseType).toStrictEqual(AppConfigReleaseTypeEnum.BUG_FIXES);
     });
   });
 

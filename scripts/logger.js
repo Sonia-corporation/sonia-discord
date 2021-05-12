@@ -2,7 +2,6 @@ const CHALK = require(`./chalk`);
 const MOMENT = require(`moment-timezone`);
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const _ = require(`lodash`);
-
 const LOG_PREFIX = `● `;
 
 /**

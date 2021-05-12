@@ -35,6 +35,7 @@ export class LoggerConfigMutatorService extends AbstractConfigService<ILoggerCon
     if (!_.isNil(config)) {
       this.updateEnabledState(config.isEnabled);
       this.updateLevel(config.level);
+      this.updateShouldDisplayMoreDebugLogsState(config.shouldDisplayMoreDebugLogs);
 
       LoggerService.getInstance().debug({
         context: this._serviceName,
@@ -58,6 +59,15 @@ export class LoggerConfigMutatorService extends AbstractConfigService<ILoggerCon
       newValue: level,
       oldValue: LoggerConfigService.getInstance().getLevel(),
       valueName: LoggerConfigValueNameEnum.LEVEL,
+    });
+  }
+
+  public updateShouldDisplayMoreDebugLogsState(shouldDisplayMoreDebugLogs?: Readonly<boolean>): void {
+    LoggerConfigCoreService.getInstance().shouldDisplayMoreDebugLogs = ConfigService.getInstance().getUpdatedBoolean({
+      context: this._serviceName,
+      newValue: shouldDisplayMoreDebugLogs,
+      oldValue: LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(),
+      valueName: LoggerConfigValueNameEnum.SHOULD_DISPLAY_MORE_DEBUG_LOGS,
     });
   }
 }

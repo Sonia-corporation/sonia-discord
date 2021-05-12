@@ -3,7 +3,6 @@ import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import admin from 'firebase-admin';
 import _ from 'lodash';
 import { createMock } from 'ts-auto-mock';
-import App = admin.app.App;
 
 export class FirebaseAppService extends AbstractService {
   private static _instance: FirebaseAppService;
@@ -23,7 +22,7 @@ export class FirebaseAppService extends AbstractService {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   public init(): void {}
 
-  public getApp(): App | undefined {
-    return createMock<App>();
+  public getApp(): admin.app.App | undefined {
+    return createMock<admin.app.App>();
   }
 }

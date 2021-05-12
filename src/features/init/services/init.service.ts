@@ -10,6 +10,7 @@ import { AppConfigService } from '../../app/services/config/app-config.service';
 import { DiscordMessageConfigMutatorService } from '../../discord/messages/services/config/discord-message-config-mutator.service';
 import { DiscordService } from '../../discord/services/discord.service';
 import { DiscordSoniaConfigMutatorService } from '../../discord/users/services/config/discord-sonia-config-mutator.service';
+import { EnvironmentValidityCheckService } from '../../environment/services/environment-validity-check.service';
 import { FirebaseService } from '../../firebase/services/firebase.service';
 import { GITHUB_API_URL } from '../../github/constants/github-api-url';
 import { getHumanizedReleaseNotes } from '../../github/functions/get-humanized-release-notes';
@@ -31,7 +32,6 @@ import fs from 'fs-extra';
 import _ from 'lodash';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
-import WriteResult = admin.firestore.WriteResult;
 
 export class InitService extends AbstractService {
   private static _instance: InitService;
@@ -77,12 +77,16 @@ export class InitService extends AbstractService {
     this._isAppConfigured$.next(true);
   }
 
-  public readEnvironment(): Promise<[true, [number | void, WriteResult[] | void]] | void> {
+  public readEnvironment(): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]] | void> {
     return fs
       .readJson(`${_.toString(appRootPath)}/src/environment/secret-environment.json`)
       .then(
-        (environment: Readonly<IEnvironment>): Promise<[true, [number | void, WriteResult[] | void]]> =>
-          this._startApp(this._mergeEnvironments(ENVIRONMENT, environment))
+        (
+          environment: Readonly<IEnvironment>
+        ): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]] | void> =>
+          this._startApp(this._mergeEnvironments(ENVIRONMENT, environment)).catch((error: Readonly<Error>): void => {
+            console.error(error);
+          })
       )
       .catch(
         (error: unknown): Promise<never> => {
@@ -102,7 +106,8 @@ export class InitService extends AbstractService {
     return _.merge({}, environmentA, environmentB);
   }
 
-  private _runApp(): Promise<[true, [number | void, WriteResult[] | void]]> {
+  private _runApp(): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]]> {
+    EnvironmentValidityCheckService.getInstance().init();
     ServerService.getInstance().initializeApp();
 
     return Promise.all([DiscordService.getInstance().init(), FirebaseService.getInstance().init()]);
@@ -223,9 +228,11 @@ export class InitService extends AbstractService {
       );
   }
 
-  private _startApp(environment: Readonly<IEnvironment>): Promise<[true, [number | void, WriteResult[] | void]]> {
+  private _startApp(
+    environment: Readonly<IEnvironment>
+  ): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]]> {
     return this._configureApp(environment).then(
-      (): Promise<[true, [number | void, WriteResult[] | void]]> => this._runApp()
+      (): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]]> => this._runApp()
     );
   }
 }

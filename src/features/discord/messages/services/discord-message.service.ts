@@ -6,6 +6,7 @@ import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerConfigService } from '../../../logger/services/config/logger-config.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { DiscordChannelTypingService } from '../../channels/services/discord-channel-typing.service';
 import { DiscordChannelService } from '../../channels/services/discord-channel.service';
@@ -71,12 +72,14 @@ export class DiscordMessageService extends AbstractService {
         .then(
           (): Promise<void> => {
             DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
+
             return Promise.resolve();
           }
         )
         .catch(
           (error: Error): Promise<void> => {
             DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
+
             return Promise.reject(error);
           }
         );
@@ -127,12 +130,14 @@ export class DiscordMessageService extends AbstractService {
         .then(
           (): Promise<void> => {
             DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
+
             return Promise.resolve();
           }
         )
         .catch(
-          (error: Error): Promise<void> => {
+          (error: Readonly<Error>): Promise<void> => {
             DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
+
             return Promise.reject(error);
           }
         );
@@ -147,11 +152,14 @@ export class DiscordMessageService extends AbstractService {
       .on(`message`, (anyDiscordMessage: Readonly<IAnyDiscordMessage>): void => {
         this.sendMessage(anyDiscordMessage).catch((error: Readonly<Error>): void => {
           // @todo add coverage
-          LoggerService.getInstance().debug({
-            context: this._serviceName,
-            hasExtendedContext: true,
-            message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message ignored`),
-          });
+          if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
+            LoggerService.getInstance().debug({
+              context: this._serviceName,
+              hasExtendedContext: true,
+              message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message ignored`),
+            });
+          }
+
           LoggerService.getInstance().warning({
             context: this._serviceName,
             hasExtendedContext: true,

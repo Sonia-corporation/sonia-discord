@@ -2,6 +2,7 @@ import { AbstractService } from '../../../../../classes/services/abstract.servic
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { ellipsis } from '../../../../../functions/formatters/ellipsis';
 import { GithubConfigService } from '../../../../github/services/config/github-config.service';
+import { LoggerConfigService } from '../../../../logger/services/config/logger-config.service';
 import { LoggerService } from '../../../../logger/services/logger.service';
 import { DiscordChannelService } from '../../../channels/services/discord-channel.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../../../guilds/enums/discord-guild-sonia-channel-name.enum';
@@ -56,11 +57,13 @@ export class DiscordMessageErrorService extends AbstractService {
       anyDiscordMessage.channel
         .send(response, options)
         .then((): void => {
-          LoggerService.getInstance().log({
-            context: this._serviceName,
-            hasExtendedContext: true,
-            message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message sent`),
-          });
+          if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
+            LoggerService.getInstance().log({
+              context: this._serviceName,
+              hasExtendedContext: true,
+              message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `message sent`),
+            });
+          }
         })
         .catch((error: unknown): void => {
           this._logOnError(error, anyDiscordMessage);
@@ -76,11 +79,14 @@ export class DiscordMessageErrorService extends AbstractService {
   }
 
   private _logOnError(error: unknown, { id }: Readonly<IAnyDiscordMessage>): void {
-    LoggerService.getInstance().error({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(id, `message sending failed`),
-    });
+    if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
+      LoggerService.getInstance().error({
+        context: this._serviceName,
+        hasExtendedContext: true,
+        message: LoggerService.getInstance().getSnowflakeContext(id, `message sending failed`),
+      });
+    }
+
     LoggerService.getInstance().error({
       context: this._serviceName,
       hasExtendedContext: true,

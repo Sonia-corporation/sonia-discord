@@ -1,5 +1,6 @@
 import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { AppConfigReleaseTypeEnum } from '../../enums/app-config-release-type.enum';
 import { IAppConfig } from '../../interfaces/app-config';
 import _ from 'lodash';
 
@@ -21,6 +22,7 @@ export class AppConfigCoreService extends AbstractService implements IAppConfig 
   public isProduction = false;
   public releaseDate = `unknown`;
   public releaseNotes = ``;
+  public releaseType = AppConfigReleaseTypeEnum.UNKNOWN;
   public totalReleaseCount = INITIAL_TOTAL_RELEASE_COUNT;
   public version = `unknown`;
 

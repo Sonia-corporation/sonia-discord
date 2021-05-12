@@ -1,6 +1,5 @@
 import { isDiscordClientUser } from './is-discord-client-user';
 import { ClientUser } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
 
 describe(`isDiscordClientUser()`, (): void => {
   let user: unknown;
@@ -65,11 +64,10 @@ describe(`isDiscordClientUser()`, (): void => {
 
   describe(`when the given value is a "ClientUser" instance`, (): void => {
     beforeEach((): void => {
-      user = createMock<ClientUser>();
+      user = createInstance(ClientUser.prototype);
     });
 
-    // @todo fix it omg this should works
-    it.skip(`should return true`, (): void => {
+    it(`should return true`, (): void => {
       expect.assertions(1);
 
       const result = isDiscordClientUser(user);

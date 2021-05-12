@@ -1,5 +1,6 @@
 import { ChalkService } from './chalk/chalk.service';
 import { LoggerConfigService } from './config/logger-config.service';
+import { AutoUnsubscribe } from '../../../classes/auto-unsubscribe';
 import { ServiceNameEnum } from '../../../enums/service-name.enum';
 import { wrapInQuotes } from '../../../functions/formatters/wrap-in-quotes';
 import { CoreEventService } from '../../core/services/core-event.service';
@@ -17,7 +18,7 @@ import { ILoggerLogInternal } from '../interfaces/logger-log-internal';
 import { ILoggerServiceCreated } from '../interfaces/logger-service-created';
 import _ from 'lodash';
 
-export class LoggerService {
+export class LoggerService extends AutoUnsubscribe {
   private static _instance: LoggerService;
 
   public static getInstance(): LoggerService {
@@ -205,14 +206,16 @@ export class LoggerService {
   }
 
   private _listenServiceCreatedEvent(): void {
-    CoreEventService.getInstance()
-      .serviceCreated$()
-      .subscribe({
-        next: (createdService: Readonly<ServiceNameEnum>): void => {
-          this.serviceCreated({
-            service: createdService,
-          });
-        },
-      });
+    this._registerSubscription(
+      CoreEventService.getInstance()
+        .serviceCreated$()
+        .subscribe({
+          next: (createdService: Readonly<ServiceNameEnum>): void => {
+            this.serviceCreated({
+              service: createdService,
+            });
+          },
+        })
+    );
   }
 }
