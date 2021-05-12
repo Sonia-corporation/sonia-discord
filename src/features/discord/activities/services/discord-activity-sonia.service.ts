@@ -65,40 +65,36 @@ export class DiscordActivitySoniaService extends AbstractService {
         afk: false,
         status: `online`,
       })
-      .then(
-        (presence: Readonly<Presence>): Promise<Presence> => {
-          LoggerService.getInstance().debug({
-            context: this._serviceName,
-            message: ChalkService.getInstance().text(
-              `Sonia presence updated to: ${ChalkService.getInstance().value(
-                _.head(presence.activities)?.type
-              )} ${ChalkService.getInstance().text(`x`)} ${ChalkService.getInstance().value(
-                _.head(presence.activities)?.name
-              )}`
-            ),
-          });
+      .then((presence: Readonly<Presence>): Promise<Presence> => {
+        LoggerService.getInstance().debug({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(
+            `Sonia presence updated to: ${ChalkService.getInstance().value(
+              _.head(presence.activities)?.type
+            )} ${ChalkService.getInstance().text(`x`)} ${ChalkService.getInstance().value(
+              _.head(presence.activities)?.name
+            )}`
+          ),
+        });
 
-          return Promise.resolve(presence);
-        }
-      )
-      .catch(
-        (error: Readonly<Error | string>): Promise<never> => {
-          LoggerService.getInstance().error({
-            context: this._serviceName,
-            message: ChalkService.getInstance().text(`could not set the Sonia presence`),
-          });
-          LoggerService.getInstance().error({
-            context: this._serviceName,
-            message: ChalkService.getInstance().error(error),
-          });
-          DiscordGuildSoniaService.getInstance().sendMessageToChannel({
-            channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-            messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(error),
-          });
+        return Promise.resolve(presence);
+      })
+      .catch((error: Readonly<Error | string>): Promise<never> => {
+        LoggerService.getInstance().error({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(`could not set the Sonia presence`),
+        });
+        LoggerService.getInstance().error({
+          context: this._serviceName,
+          message: ChalkService.getInstance().error(error),
+        });
+        DiscordGuildSoniaService.getInstance().sendMessageToChannel({
+          channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
+          messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(error),
+        });
 
-          return Promise.reject(error);
-        }
-      );
+        return Promise.reject(error);
+      });
   }
 
   public setRandomPresence(): Promise<Presence> {

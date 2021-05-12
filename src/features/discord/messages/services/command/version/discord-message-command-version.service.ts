@@ -92,12 +92,10 @@ export class DiscordMessageCommandVersionService extends AbstractService {
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
-    const totalReleaseCountHumanized: string = AppConfigQueryService.getInstance().getTotalReleaseCountHumanized(
-      `birthday`
-    );
-    const firstReleaseDate: string = AppConfigQueryService.getInstance().getFirstReleaseDateFormatted(
-      `[the ]Do MMMM YYYY`
-    );
+    const totalReleaseCountHumanized: string =
+      AppConfigQueryService.getInstance().getTotalReleaseCountHumanized(`birthday`);
+    const firstReleaseDate: string =
+      AppConfigQueryService.getInstance().getFirstReleaseDateFormatted(`[the ]Do MMMM YYYY`);
 
     return {
       iconURL: soniaImageUrl ?? undefined,
@@ -168,7 +166,8 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   }
 
   private _getMessageEmbedFieldStatus(): EmbedFieldData {
-    const appProductionStateHumanized: AppProductionStateEnum = AppConfigQueryService.getInstance().getProductionStateHumanized();
+    const appProductionStateHumanized: AppProductionStateEnum =
+      AppConfigQueryService.getInstance().getProductionStateHumanized();
 
     return {
       inline: false,
@@ -178,9 +177,8 @@ export class DiscordMessageCommandVersionService extends AbstractService {
   }
 
   private _getMessageEmbedFieldEmotionalState(): EmbedFieldData {
-    const soniaEmotionalState:
-      | DiscordSoniaEmotionalStateEnum
-      | undefined = DiscordSoniaEmotionalStateService.getInstance().getEmotionalState();
+    const soniaEmotionalState: DiscordSoniaEmotionalStateEnum | undefined =
+      DiscordSoniaEmotionalStateService.getInstance().getEmotionalState();
 
     return {
       inline: false,

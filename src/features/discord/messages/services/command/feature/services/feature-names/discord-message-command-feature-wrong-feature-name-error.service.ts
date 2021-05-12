@@ -12,7 +12,8 @@ export class DiscordMessageCommandFeatureWrongFeatureNameErrorService extends Di
 
   public static getInstance(): DiscordMessageCommandFeatureWrongFeatureNameErrorService {
     if (_.isNil(DiscordMessageCommandFeatureWrongFeatureNameErrorService._instance)) {
-      DiscordMessageCommandFeatureWrongFeatureNameErrorService._instance = new DiscordMessageCommandFeatureWrongFeatureNameErrorService();
+      DiscordMessageCommandFeatureWrongFeatureNameErrorService._instance =
+        new DiscordMessageCommandFeatureWrongFeatureNameErrorService();
     }
 
     return DiscordMessageCommandFeatureWrongFeatureNameErrorService._instance;
