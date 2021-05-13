@@ -78,18 +78,16 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
       mergeMap(
         (): Promise<admin.firestore.QuerySnapshot<IFirebaseGuild>> => FirebaseGuildsService.getInstance().getGuilds()
       ),
-      mergeMap(
-        (
-          querySnapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>
-        ): Promise<admin.firestore.WriteResult[] | void> => {
-          LoggerService.getInstance().debug({
-            context: this._serviceName,
-            message: ChalkService.getInstance().text(`guilds fetched`),
-          });
+      mergeMap((querySnapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>): Promise<
+        admin.firestore.WriteResult[] | void
+      > => {
+        LoggerService.getInstance().debug({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(`guilds fetched`),
+        });
 
-          return this._updateAllFirebaseGuilds(querySnapshot);
-        }
-      )
+        return this._updateAllFirebaseGuilds(querySnapshot);
+      })
     );
   }
 
