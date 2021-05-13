@@ -105,7 +105,7 @@ Sonia will send you a message containing:
 **Features (first and only argument followed by optional flags):**
 
 This is a special command used to configure Sonia only for the current Guild or channel.  
-There are multiples option to customize Sonia (some will change her behavior on the whole Guild and other only for the current channel).
+There are multiples option to customize Sonia (some will change her behaviour on the whole Guild and other only for the current channel).
 
 Sonia will send you a message containing information about the changes you just made.  
 Basically she will try to help you if you fill bad information and just inform you if the changes were successful.
@@ -214,7 +214,7 @@ Sonia will send you a message containing:
 - `@Sonia !v`
 - `@Sonia !V`
 
-### Sonia behavior
+### Sonia behaviour
 
 Sonia will never respond to herself - no infinite loop :(  
 Sonia will never respond to another bot - love between them will not be tolerated.  
