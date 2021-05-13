@@ -1,6 +1,6 @@
 ## PR Checklist
 
-Please check if your PR fulfills the following requirements:
+Please check if your PR fulfils the following requirements:
 
 - [ ] The commit message follows our [guidelines](https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md)
 - [ ] Tests for the changes have been added/updated (for bugfix/feature)
@@ -22,11 +22,11 @@ What kind of change does this PR introduce?
 - [ ] Docs (changes that affect the documentation)
 - [ ] Chore (anything else), please describe:
 
-## What is the current behavior?
+## What is the current behaviour?
 
-<!-- Please describe the current behavior that you are modifying, or link to a relevant issue. -->
+<!-- Please describe the current behaviour that you are modifying, or link to a relevant issue. -->
 
-## What is the new behavior?
+## What is the new behaviour?
 
 ## Does this PR introduce a breaking change?
 

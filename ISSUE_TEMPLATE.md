@@ -8,7 +8,7 @@ ISSUES MISSING IMPORTANT INFORMATION MAY BE CLOSED WITHOUT INVESTIGATION.
 
 <!-- Check one of the following options with "x" -->
 <pre><code>
-[ ] Regression (a behavior that used to work and stopped working in a new release)
+[ ] Regression (a behaviour that used to work and stopped working in a new release)
 [ ] Bug report  <!-- Please search GitHub for a similar issue or PR before submitting -->
 [ ] Performance issue
 [ ] Feature request
@@ -17,20 +17,20 @@ ISSUES MISSING IMPORTANT INFORMATION MAY BE CLOSED WITHOUT INVESTIGATION.
 [ ] Other... Please describe:
 </code></pre>
 
-## Current behavior
+## Current behaviour
 
 <!-- Describe how the issue manifests. -->
 
-## Expected behavior
+## Expected behaviour
 
-<!-- Describe what the desired behavior would be. -->
+<!-- Describe what the desired behaviour would be. -->
 
 ## Minimal reproduction of the problem with instructions
 
 For bug reports please provide the _STEPS TO REPRODUCE_ and if possible a _MINIMAL DEMO_ of the problem via
 https://stackblitz.com or similar.
 
-## What is the motivation / use case for changing the behavior?
+## What is the motivation / use case for changing the behaviour?
 
 <!-- Describe the motivation or the concrete use case. -->
 
