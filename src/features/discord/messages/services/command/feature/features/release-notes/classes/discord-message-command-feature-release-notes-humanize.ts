@@ -19,7 +19,8 @@ import { MessageEmbedOptions, Snowflake } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureReleaseNotesHumanize<T extends string>
-  implements DiscordCommandFlagActionValueless<T> {
+  implements DiscordCommandFlagActionValueless<T>
+{
   private readonly _serviceName = ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_HUMANIZE;
 
   public execute(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {

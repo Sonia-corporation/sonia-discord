@@ -8,12 +8,14 @@ import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureReleaseNotesConfigCoreService
   extends AbstractService
-  implements Pick<IDiscordMessageCommandFeatureConfig, 'releaseNotes'> {
+  implements Pick<IDiscordMessageCommandFeatureConfig, 'releaseNotes'>
+{
   private static _instance: DiscordMessageCommandFeatureReleaseNotesConfigCoreService;
 
   public static getInstance(): DiscordMessageCommandFeatureReleaseNotesConfigCoreService {
     if (_.isNil(DiscordMessageCommandFeatureReleaseNotesConfigCoreService._instance)) {
-      DiscordMessageCommandFeatureReleaseNotesConfigCoreService._instance = new DiscordMessageCommandFeatureReleaseNotesConfigCoreService();
+      DiscordMessageCommandFeatureReleaseNotesConfigCoreService._instance =
+        new DiscordMessageCommandFeatureReleaseNotesConfigCoreService();
     }
 
     return DiscordMessageCommandFeatureReleaseNotesConfigCoreService._instance;

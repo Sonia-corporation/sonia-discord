@@ -13,7 +13,8 @@ import { EmbedFieldData, MessageEmbedOptions, Snowflake } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureReleaseNotesHelp<T extends string>
-  implements DiscordCommandFlagActionValueless<T> {
+  implements DiscordCommandFlagActionValueless<T>
+{
   private readonly _serviceName = ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_HELP;
 
   public execute(

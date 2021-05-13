@@ -18,7 +18,8 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService exten
 
   public static getInstance(): FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService {
     if (_.isNil(FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService._instance)) {
-      FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService._instance = new FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService();
+      FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService._instance =
+        new FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService();
     }
 
     return FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService._instance;
