@@ -44,20 +44,13 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
     discordMessageCommandFeatureNoonService = DiscordMessageCommandFeatureNoonService.getInstance();
     discordMessageCommandFeatureReleaseNotesService = DiscordMessageCommandFeatureReleaseNotesService.getInstance();
-    discordMessageCommandFeatureEmptyContentErrorService =
-      DiscordMessageCommandFeatureEmptyContentErrorService.getInstance();
-    discordMessageCommandFeatureEmptyFeatureNameErrorService =
-      DiscordMessageCommandFeatureEmptyFeatureNameErrorService.getInstance();
-    discordMessageCommandFeatureWrongFeatureNameErrorService =
-      DiscordMessageCommandFeatureWrongFeatureNameErrorService.getInstance();
-    discordMessageCommandFeatureEmptyFlagsErrorService =
-      DiscordMessageCommandFeatureEmptyFlagsErrorService.getInstance();
-    discordMessageCommandFeatureWrongFlagsErrorService =
-      DiscordMessageCommandFeatureWrongFlagsErrorService.getInstance();
-    discordMessageCommandFeatureDuplicatedFlagsErrorService =
-      DiscordMessageCommandFeatureDuplicatedFlagsErrorService.getInstance();
-    discordMessageCommandFeatureOppositeFlagsErrorService =
-      DiscordMessageCommandFeatureOppositeFlagsErrorService.getInstance();
+    discordMessageCommandFeatureEmptyContentErrorService = DiscordMessageCommandFeatureEmptyContentErrorService.getInstance();
+    discordMessageCommandFeatureEmptyFeatureNameErrorService = DiscordMessageCommandFeatureEmptyFeatureNameErrorService.getInstance();
+    discordMessageCommandFeatureWrongFeatureNameErrorService = DiscordMessageCommandFeatureWrongFeatureNameErrorService.getInstance();
+    discordMessageCommandFeatureEmptyFlagsErrorService = DiscordMessageCommandFeatureEmptyFlagsErrorService.getInstance();
+    discordMessageCommandFeatureWrongFlagsErrorService = DiscordMessageCommandFeatureWrongFlagsErrorService.getInstance();
+    discordMessageCommandFeatureDuplicatedFlagsErrorService = DiscordMessageCommandFeatureDuplicatedFlagsErrorService.getInstance();
+    discordMessageCommandFeatureOppositeFlagsErrorService = DiscordMessageCommandFeatureOppositeFlagsErrorService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -319,10 +312,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           expect(discordMessageCommandFeatureEmptyFeatureNameErrorServiceGetMessageResponseSpy).toHaveBeenCalledTimes(
             1
           );
-          expect(discordMessageCommandFeatureEmptyFeatureNameErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith(
-            anyDiscordMessage,
-            [DiscordMessageCommandEnum.FEATURE, DiscordMessageCommandEnum.F]
-          );
+          expect(
+            discordMessageCommandFeatureEmptyFeatureNameErrorServiceGetMessageResponseSpy
+          ).toHaveBeenCalledWith(anyDiscordMessage, [DiscordMessageCommandEnum.FEATURE, DiscordMessageCommandEnum.F]);
         });
 
         describe(`when the fetch of the empty feature name error message response failed`, (): void => {

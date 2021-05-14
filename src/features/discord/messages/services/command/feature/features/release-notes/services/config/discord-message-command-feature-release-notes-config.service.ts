@@ -11,8 +11,7 @@ export class DiscordMessageCommandFeatureReleaseNotesConfigService extends Abstr
 
   public static getInstance(): DiscordMessageCommandFeatureReleaseNotesConfigService {
     if (_.isNil(DiscordMessageCommandFeatureReleaseNotesConfigService._instance)) {
-      DiscordMessageCommandFeatureReleaseNotesConfigService._instance =
-        new DiscordMessageCommandFeatureReleaseNotesConfigService();
+      DiscordMessageCommandFeatureReleaseNotesConfigService._instance = new DiscordMessageCommandFeatureReleaseNotesConfigService();
     }
 
     return DiscordMessageCommandFeatureReleaseNotesConfigService._instance;

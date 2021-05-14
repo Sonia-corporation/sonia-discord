@@ -40,8 +40,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
     firebaseGuildsStoreQuery = FirebaseGuildsStoreQuery.getInstance();
-    firebaseGuildsChannelsFeaturesReleaseNotesEnabledService =
-      FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService.getInstance();
+    firebaseGuildsChannelsFeaturesReleaseNotesEnabledService = FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService.getInstance();
     firebaseGuildsChannelsService = FirebaseGuildsChannelsService.getInstance();
     discordChannelService = DiscordChannelService.getInstance();
   });

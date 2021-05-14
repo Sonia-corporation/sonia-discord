@@ -81,8 +81,9 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
   private _getMessageEmbedFooter(): MessageEmbedFooter {
     const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
     const totalReleaseCountHumanized: string = AppConfigQueryService.getInstance().getTotalReleaseCountHumanized();
-    const firstReleaseDate: string =
-      AppConfigQueryService.getInstance().getFirstReleaseDateFormatted(`[the ]Do MMMM YYYY`);
+    const firstReleaseDate: string = AppConfigQueryService.getInstance().getFirstReleaseDateFormatted(
+      `[the ]Do MMMM YYYY`
+    );
 
     return {
       iconURL: soniaImageUrl ?? undefined,

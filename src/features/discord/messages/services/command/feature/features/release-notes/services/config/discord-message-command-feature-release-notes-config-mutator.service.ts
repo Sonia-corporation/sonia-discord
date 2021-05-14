@@ -20,8 +20,9 @@ export class DiscordMessageCommandFeatureReleaseNotesConfigMutatorService extend
     config?: Readonly<IPartialNested<IDiscordMessageCommandFeatureConfig>>
   ): DiscordMessageCommandFeatureReleaseNotesConfigMutatorService {
     if (_.isNil(DiscordMessageCommandFeatureReleaseNotesConfigMutatorService._instance)) {
-      DiscordMessageCommandFeatureReleaseNotesConfigMutatorService._instance =
-        new DiscordMessageCommandFeatureReleaseNotesConfigMutatorService(config);
+      DiscordMessageCommandFeatureReleaseNotesConfigMutatorService._instance = new DiscordMessageCommandFeatureReleaseNotesConfigMutatorService(
+        config
+      );
     }
 
     return DiscordMessageCommandFeatureReleaseNotesConfigMutatorService._instance;
@@ -56,22 +57,24 @@ export class DiscordMessageCommandFeatureReleaseNotesConfigMutatorService extend
   }
 
   public updateReleaseNotesImageColor(imageColor?: Readonly<ColorEnum>): void {
-    DiscordMessageCommandFeatureReleaseNotesConfigCoreService.getInstance().releaseNotes.imageColor =
-      ConfigService.getInstance().getUpdatedNumber({
+    DiscordMessageCommandFeatureReleaseNotesConfigCoreService.getInstance().releaseNotes.imageColor = ConfigService.getInstance().getUpdatedNumber(
+      {
         context: this._serviceName,
         newValue: imageColor,
         oldValue: DiscordMessageCommandFeatureReleaseNotesConfigService.getInstance().getReleaseNotesConfigImageColor(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_FEATURE_RELEASE_NOTES_COLOR,
-      });
+      }
+    );
   }
 
   public updateReleaseNotesImageUrl(imageUrl?: Readonly<IconEnum>): void {
-    DiscordMessageCommandFeatureReleaseNotesConfigCoreService.getInstance().releaseNotes.imageUrl =
-      ConfigService.getInstance().getUpdatedString({
+    DiscordMessageCommandFeatureReleaseNotesConfigCoreService.getInstance().releaseNotes.imageUrl = ConfigService.getInstance().getUpdatedString(
+      {
         context: this._serviceName,
         newValue: imageUrl,
         oldValue: DiscordMessageCommandFeatureReleaseNotesConfigService.getInstance().getReleaseNotesConfigImageUrl(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_FEATURE_RELEASE_NOTES_IMAGE_URL,
-      });
+      }
+    );
   }
 }

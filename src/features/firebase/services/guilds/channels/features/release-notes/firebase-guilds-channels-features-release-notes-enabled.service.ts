@@ -22,8 +22,7 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService extends Ab
 
   public static getInstance(): FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService {
     if (_.isNil(FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService._instance)) {
-      FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService._instance =
-        new FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService();
+      FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService._instance = new FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService();
     }
 
     return FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService._instance;
@@ -38,8 +37,9 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService extends Ab
     channelId: Readonly<IAnyDiscordChannel['id']>,
     isEnabled: Readonly<boolean>
   ): Promise<admin.firestore.WriteResult | void> {
-    const collectionReference: admin.firestore.CollectionReference<IFirebaseGuild> | undefined =
-      FirebaseGuildsService.getInstance().getCollectionReference();
+    const collectionReference:
+      | admin.firestore.CollectionReference<IFirebaseGuild>
+      | undefined = FirebaseGuildsService.getInstance().getCollectionReference();
 
     if (_.isNil(collectionReference)) {
       return Promise.reject(new Error(`Collection not available`));
@@ -49,15 +49,17 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService extends Ab
 
     return FirebaseGuildsService.getInstance()
       .getGuild(id)
-      .then((firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<admin.firestore.WriteResult> => {
-        if (!this._isValidGuild(firebaseGuild)) {
-          this._logInvalidFirebaseGuild(id);
+      .then(
+        (firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<admin.firestore.WriteResult> => {
+          if (!this._isValidGuild(firebaseGuild)) {
+            this._logInvalidFirebaseGuild(id);
 
-          return Promise.reject(new Error(`Firebase guild does not exists or is not up-to-date`));
+            return Promise.reject(new Error(`Firebase guild does not exists or is not up-to-date`));
+          }
+
+          return this.updateState(collectionReference, id, channelId, isEnabled, firebaseGuild);
         }
-
-        return this.updateState(collectionReference, id, channelId, isEnabled, firebaseGuild);
-      });
+      );
   }
 
   /**
@@ -95,11 +97,13 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService extends Ab
     return collectionReference
       .doc(id)
       .update(this.getUpdatedGuild(channelId, isEnabled, firebaseGuild))
-      .then((writeResult: Readonly<admin.firestore.WriteResult>): Promise<admin.firestore.WriteResult> => {
-        this._logUpdateStateSuccess(id, isEnabled);
+      .then(
+        (writeResult: Readonly<admin.firestore.WriteResult>): Promise<admin.firestore.WriteResult> => {
+          this._logUpdateStateSuccess(id, isEnabled);
 
-        return Promise.resolve(writeResult);
-      });
+          return Promise.resolve(writeResult);
+        }
+      );
   }
 
   private _isGuildFullyUpToDate(
@@ -162,10 +166,9 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService extends Ab
       firebaseGuildChannel.features = FirebaseGuildsChannelsFeaturesService.getInstance().getUpToDate(
         firebaseGuildChannel.features
       );
-      firebaseGuildChannel.features.releaseNotes =
-        FirebaseGuildsChannelsFeaturesReleaseNotesService.getInstance().getUpToDate(
-          firebaseGuildChannel.features.releaseNotes
-        );
+      firebaseGuildChannel.features.releaseNotes = FirebaseGuildsChannelsFeaturesReleaseNotesService.getInstance().getUpToDate(
+        firebaseGuildChannel.features.releaseNotes
+      );
       firebaseGuildChannel.features.releaseNotes.isEnabled = isEnabled;
       updatedFirebaseGuild.channels[channelId] = firebaseGuildChannel;
     }

@@ -22,8 +22,7 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     discordSoniaService = DiscordSoniaService.getInstance();
-    discordMessageCommandFeatureReleaseNotesConfigService =
-      DiscordMessageCommandFeatureReleaseNotesConfigService.getInstance();
+    discordMessageCommandFeatureReleaseNotesConfigService = DiscordMessageCommandFeatureReleaseNotesConfigService.getInstance();
     firebaseGuildsNewVersionCountHumanizedService = FirebaseGuildsNewVersionCountHumanizedService.getInstance();
   });
 

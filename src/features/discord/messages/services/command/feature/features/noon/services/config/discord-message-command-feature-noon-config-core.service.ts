@@ -8,14 +8,12 @@ import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureNoonConfigCoreService
   extends AbstractService
-  implements Pick<IDiscordMessageCommandFeatureConfig, 'noon'>
-{
+  implements Pick<IDiscordMessageCommandFeatureConfig, 'noon'> {
   private static _instance: DiscordMessageCommandFeatureNoonConfigCoreService;
 
   public static getInstance(): DiscordMessageCommandFeatureNoonConfigCoreService {
     if (_.isNil(DiscordMessageCommandFeatureNoonConfigCoreService._instance)) {
-      DiscordMessageCommandFeatureNoonConfigCoreService._instance =
-        new DiscordMessageCommandFeatureNoonConfigCoreService();
+      DiscordMessageCommandFeatureNoonConfigCoreService._instance = new DiscordMessageCommandFeatureNoonConfigCoreService();
     }
 
     return DiscordMessageCommandFeatureNoonConfigCoreService._instance;

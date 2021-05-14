@@ -49,8 +49,7 @@ export class DiscordSoniaService extends AbstractService {
   }
 
   public getCorporationMessageEmbedAuthor(): MessageEmbedAuthor {
-    const discordSoniaCorporationMessageEmbedAuthorConfig: IDiscordSoniaCorporationMessageEmbedAuthorConfig =
-      DiscordSoniaConfigService.getInstance().getCorporationMessageEmbedAuthor();
+    const discordSoniaCorporationMessageEmbedAuthorConfig: IDiscordSoniaCorporationMessageEmbedAuthorConfig = DiscordSoniaConfigService.getInstance().getCorporationMessageEmbedAuthor();
 
     return {
       iconURL: discordSoniaCorporationMessageEmbedAuthorConfig.iconURL,
@@ -60,8 +59,7 @@ export class DiscordSoniaService extends AbstractService {
   }
 
   public getCorporationMessageEmbedAuthorName(): string {
-    const discordSoniaCorporationMessageEmbedAuthorConfigName: string =
-      DiscordSoniaConfigService.getInstance().getCorporationMessageEmbedAuthorName();
+    const discordSoniaCorporationMessageEmbedAuthorConfigName: string = DiscordSoniaConfigService.getInstance().getCorporationMessageEmbedAuthorName();
 
     if (!AppConfigService.getInstance().isProduction()) {
       return addDiscordDevPrefix({

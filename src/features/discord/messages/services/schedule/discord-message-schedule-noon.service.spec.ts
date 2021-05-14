@@ -67,8 +67,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
     discordGuildConfigService = DiscordGuildConfigService.getInstance();
     discordGuildSoniaService = DiscordGuildSoniaService.getInstance();
     discordLoggerErrorService = DiscordLoggerErrorService.getInstance();
-    firebaseGuildsChannelsFeaturesNoonEnabledStateService =
-      FirebaseGuildsChannelsFeaturesNoonEnabledStateService.getInstance();
+    firebaseGuildsChannelsFeaturesNoonEnabledStateService = FirebaseGuildsChannelsFeaturesNoonEnabledStateService.getInstance();
     discordMessageScheduleNoonCountService = DiscordMessageScheduleNoonCountService.getInstance();
   });
 
@@ -237,11 +236,13 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
     describe(`once the scheduled job is triggered`, (): void => {
       beforeEach((): void => {
-        scheduleJobSpy.mockImplementation((_rule: string, callback: () => void): NodeScheduleModule.Job => {
-          callback();
+        scheduleJobSpy.mockImplementation(
+          (_rule: string, callback: () => void): NodeScheduleModule.Job => {
+            callback();
 
-          return job;
-        });
+            return job;
+          }
+        );
       });
 
       it(`should log the job rule`, (): void => {
@@ -850,9 +851,9 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
         createMock<Client>({
           guilds: {
-            cache: {
+            cache: ({
               forEach: noop,
-            } as unknown as Collection<string, Guild>,
+            } as unknown) as Collection<string, Guild>,
           },
         })
       );
@@ -970,9 +971,9 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
             discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
               createMock<Client>({
                 guilds: {
-                  cache: {
+                  cache: ({
                     forEach: noop,
-                  } as unknown as Collection<string, Guild>,
+                  } as unknown) as Collection<string, Guild>,
                 },
               })
             );
