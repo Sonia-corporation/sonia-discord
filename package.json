@@ -146,7 +146,7 @@
     "discord.js": "12.5.3",
     "dotenv": "9.0.2",
     "express": "4.17.1",
-    "firebase-admin": "9.7.0",
+    "firebase-admin": "9.8.0",
     "lodash": "4.17.21",
     "moment": "2.29.1",
     "moment-timezone": "0.5.33",
