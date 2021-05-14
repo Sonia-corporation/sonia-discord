@@ -14,8 +14,9 @@ LOGGER.debug(CONTEXT, CHALK.text(`NODE_ENV: "${_.toString(process.env.NODE_ENV)}
 
 if (_.isEqual(process.env.NODE_ENV, `production`)) {
   LOGGER.debug(CONTEXT, CHALK.text(`Skipping postinstall`));
-
-  process.exit(EXIT_CODE);
 }
 
 LOGGER.debug(CONTEXT, CHALK.text(`Running postinstall`));
+
+// Used with || to fallback
+process.exit(EXIT_CODE);
