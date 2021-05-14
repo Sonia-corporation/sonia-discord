@@ -137,7 +137,7 @@
     "pre-commit": "lint-staged",
     "commit-msg": "cross-env LOGGING_LEVEL=debug cz-customizable-ghooks",
     "post-commit": "git update-index --again",
-    "postinstall": "node ./scripts/can-run-post-install.js && husky install && shx rm -rf .git/hooks && shx ln -s ../.husky .git/hooks"
+    "postinstall": "node ./scripts/can-run-post-install.js || husky install && shx rm -rf .git/hooks && shx ln -s ../.husky .git/hooks"
   },
   "dependencies": {
     "@datorama/akita": "6.1.3",
