@@ -10,8 +10,8 @@ import { FirebaseGuildChannelFeatureVersionEnum } from '../../../../../enums/gui
 import { FirebaseGuildChannelVersionEnum } from '../../../../../enums/guilds/channels/firebase-guild-channel-version.enum';
 import { FirebaseGuildVersionEnum } from '../../../../../enums/guilds/firebase-guild-version.enum';
 import { IFirebaseGuildV1 } from '../../../../../interfaces/guilds/firebase-guild-v1';
-import { IFirebaseGuild } from '../../../../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../../../../types/guilds/firebase-guild-v-final';
+import { IFirebaseGuild } from '../../../../../types/guilds/firebase-guild';
 import { FirebaseGuildsService } from '../../../firebase-guilds.service';
 import { Guild } from 'discord.js';
 import * as admin from 'firebase-admin';
