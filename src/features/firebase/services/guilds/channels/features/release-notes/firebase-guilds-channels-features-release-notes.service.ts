@@ -16,7 +16,8 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesService extends FirebaseU
 
   public static getInstance(): FirebaseGuildsChannelsFeaturesReleaseNotesService {
     if (_.isNil(FirebaseGuildsChannelsFeaturesReleaseNotesService._instance)) {
-      FirebaseGuildsChannelsFeaturesReleaseNotesService._instance = new FirebaseGuildsChannelsFeaturesReleaseNotesService();
+      FirebaseGuildsChannelsFeaturesReleaseNotesService._instance =
+        new FirebaseGuildsChannelsFeaturesReleaseNotesService();
     }
 
     return FirebaseGuildsChannelsFeaturesReleaseNotesService._instance;

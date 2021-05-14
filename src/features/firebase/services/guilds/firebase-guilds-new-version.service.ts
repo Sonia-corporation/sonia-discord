@@ -147,65 +147,57 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
     return guildChannel
       .send(messageResponse.response, messageResponse.options)
-      .then(
-        (message: Message): Promise<Message> => {
-          this._logReleaseNotesMessageSent(guildChannel);
+      .then((message: Message): Promise<Message> => {
+        this._logReleaseNotesMessageSent(guildChannel);
 
-          return Promise.resolve(message);
-        }
-      )
-      .catch(
-        (error: Readonly<string>): Promise<void> => {
-          this._onMessageError(error, guildChannel);
+        return Promise.resolve(message);
+      })
+      .catch((error: Readonly<string>): Promise<void> => {
+        this._onMessageError(error, guildChannel);
 
-          return Promise.reject(error);
-        }
-      );
+        return Promise.reject(error);
+      });
   }
 
   public getMessageResponse(): Promise<IDiscordMessageResponse | null> {
     return DiscordMessageCommandReleaseNotesService.getInstance()
       .getMessageResponse()
-      .then(
-        (messageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
-          const enhanceMessageResponse: IDiscordMessageResponse = _.cloneDeep(messageResponse);
-          const releaseType: AppConfigReleaseTypeEnum = AppConfigService.getInstance().getReleaseType();
-          const responses: { [key: string]: () => string } = {
-            [AppConfigReleaseTypeEnum.BUG_FIXES](): string {
-              return FIREBASE_GUILD_NEW_BUG_FIXES_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
-                userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
-              });
-            },
-            [AppConfigReleaseTypeEnum.FEATURES](): string {
-              return FIREBASE_GUILD_NEW_FEATURES_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
-                userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
-              });
-            },
-            [AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS](): string {
-              return FIREBASE_GUILD_NEW_PERFORMANCE_IMPROVEMENTS_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
-                userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
-              });
-            },
-          };
-
-          if (_.has(responses, releaseType)) {
-            enhanceMessageResponse.response = responses[releaseType]();
-          } else {
-            enhanceMessageResponse.response = FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
+      .then((messageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+        const enhanceMessageResponse: IDiscordMessageResponse = _.cloneDeep(messageResponse);
+        const releaseType: AppConfigReleaseTypeEnum = AppConfigService.getInstance().getReleaseType();
+        const responses: { [key: string]: () => string } = {
+          [AppConfigReleaseTypeEnum.BUG_FIXES](): string {
+            return FIREBASE_GUILD_NEW_BUG_FIXES_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
               userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
             });
-          }
+          },
+          [AppConfigReleaseTypeEnum.FEATURES](): string {
+            return FIREBASE_GUILD_NEW_FEATURES_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
+              userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
+            });
+          },
+          [AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS](): string {
+            return FIREBASE_GUILD_NEW_PERFORMANCE_IMPROVEMENTS_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
+              userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
+            });
+          },
+        };
 
-          return Promise.resolve(enhanceMessageResponse);
+        if (_.has(responses, releaseType)) {
+          enhanceMessageResponse.response = responses[releaseType]();
+        } else {
+          enhanceMessageResponse.response = FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
+            userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
+          });
         }
-      )
-      .catch(
-        (): Promise<null> => {
-          this._logFetchReleaseNotesCommandMessageResponseError();
 
-          return Promise.resolve(null);
-        }
-      );
+        return Promise.resolve(enhanceMessageResponse);
+      })
+      .catch((): Promise<null> => {
+        this._logFetchReleaseNotesCommandMessageResponseError();
+
+        return Promise.resolve(null);
+      });
   }
 
   public sendNewReleaseNotesFromDiscordGuild(guild: Readonly<Guild>): Promise<(Message | null)[]> {
@@ -213,37 +205,33 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
     return FirebaseGuildsService.getInstance()
       .getGuild(guild.id)
-      .then(
-        (firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<(Message | null)[]> => {
-          this._logFirebaseGuildFetched(guild);
+      .then((firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<(Message | null)[]> => {
+        this._logFirebaseGuildFetched(guild);
 
-          if (!this.isValidGuild(firebaseGuild)) {
-            this._logInvalidFirebaseGuild(guild);
+        if (!this.isValidGuild(firebaseGuild)) {
+          this._logInvalidFirebaseGuild(guild);
 
-            return Promise.reject(new Error(`Invalid guild`));
-          }
-
-          this._logValidFirebaseGuild(guild);
-
-          return Promise.all(
-            _.map(
-              firebaseGuild.channels,
-              (channel: Readonly<IFirebaseGuildChannel>): Promise<Message | null> =>
-                this.sendMessageByChannel(channel, firebaseGuild, guild)
-                  .then(
-                    (message: Message | void): Promise<Message | null> => {
-                      if (message) {
-                        return Promise.resolve(message);
-                      }
-
-                      return Promise.resolve(null);
-                    }
-                  )
-                  .catch((): Promise<null> => Promise.resolve(null))
-            )
-          );
+          return Promise.reject(new Error(`Invalid guild`));
         }
-      );
+
+        this._logValidFirebaseGuild(guild);
+
+        return Promise.all(
+          _.map(
+            firebaseGuild.channels,
+            (channel: Readonly<IFirebaseGuildChannel>): Promise<Message | null> =>
+              this.sendMessageByChannel(channel, firebaseGuild, guild)
+                .then((message: Message | void): Promise<Message | null> => {
+                  if (message) {
+                    return Promise.resolve(message);
+                  }
+
+                  return Promise.resolve(null);
+                })
+                .catch((): Promise<null> => Promise.resolve(null))
+          )
+        );
+      });
   }
 
   public isValidGuild(
@@ -255,61 +243,53 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   private _sendNewReleaseNotesToEachGuild$(): Observable<((Message | null)[] | void)[] | void> {
     return this.isReady$().pipe(
       take(ONE_EMITTER),
-      mergeMap(
-        (): Promise<admin.firestore.QuerySnapshot<IFirebaseGuild>> => {
+      mergeMap((): Promise<admin.firestore.QuerySnapshot<IFirebaseGuild>> => {
+        LoggerService.getInstance().debug({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(`processing the sending of release notes to each guild...`),
+        });
+
+        return FirebaseGuildsService.getInstance().getGuilds();
+      }),
+      mergeMap((querySnapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>): Promise<IFirebaseGuild[] | void> => {
+        LoggerService.getInstance().debug({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(`guilds fetched`),
+        });
+
+        return this._sendAndUpdateNewReleaseNotesToEachFirebaseGuild(querySnapshot);
+      }),
+      mergeMap((firebaseGuilds: IFirebaseGuild[] | void): Promise<((Message | null)[] | void)[] | void> => {
+        if (_.isArray(firebaseGuilds)) {
           LoggerService.getInstance().debug({
             context: this._serviceName,
-            message: ChalkService.getInstance().text(`processing the sending of release notes to each guild...`),
+            message: ChalkService.getInstance().text(`sending release notes messages to each guild...`),
           });
 
-          return FirebaseGuildsService.getInstance().getGuilds();
-        }
-      ),
-      mergeMap(
-        (querySnapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>): Promise<IFirebaseGuild[] | void> => {
-          LoggerService.getInstance().debug({
-            context: this._serviceName,
-            message: ChalkService.getInstance().text(`guilds fetched`),
+          const messagePromises: Promise<(Message | null)[] | void>[] = [];
+
+          _.forEach(firebaseGuilds, (firebaseGuild: Readonly<IFirebaseGuild>): void => {
+            messagePromises.push(
+              this.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild).catch((): Promise<void> => {
+                LoggerService.getInstance().error({
+                  context: this._serviceName,
+                  message: ChalkService.getInstance().text(
+                    `release notes message sending failed for guild ${ChalkService.getInstance().value(
+                      firebaseGuild.id
+                    )}`
+                  ),
+                });
+
+                return Promise.resolve();
+              })
+            );
           });
 
-          return this._sendAndUpdateNewReleaseNotesToEachFirebaseGuild(querySnapshot);
+          return Promise.all(messagePromises);
         }
-      ),
-      mergeMap(
-        (firebaseGuilds: IFirebaseGuild[] | void): Promise<((Message | null)[] | void)[] | void> => {
-          if (_.isArray(firebaseGuilds)) {
-            LoggerService.getInstance().debug({
-              context: this._serviceName,
-              message: ChalkService.getInstance().text(`sending release notes messages to each guild...`),
-            });
 
-            const messagePromises: Promise<(Message | null)[] | void>[] = [];
-
-            _.forEach(firebaseGuilds, (firebaseGuild: Readonly<IFirebaseGuild>): void => {
-              messagePromises.push(
-                this.sendNewReleaseNotesFromFirebaseGuild(firebaseGuild).catch(
-                  (): Promise<void> => {
-                    LoggerService.getInstance().error({
-                      context: this._serviceName,
-                      message: ChalkService.getInstance().text(
-                        `release notes message sending failed for guild ${ChalkService.getInstance().value(
-                          firebaseGuild.id
-                        )}`
-                      ),
-                    });
-
-                    return Promise.resolve();
-                  }
-                )
-              );
-            });
-
-            return Promise.all(messagePromises);
-          }
-
-          return Promise.resolve();
-        }
-      )
+        return Promise.resolve();
+      })
     );
   }
 

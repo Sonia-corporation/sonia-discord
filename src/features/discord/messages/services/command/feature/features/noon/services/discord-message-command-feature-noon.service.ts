@@ -68,9 +68,8 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
   ): Promise<IDiscordMessageResponse[]> {
     return DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS.executeAll(anyDiscordMessage, messageFlags).then(
       (discordCommandFlagsResponse: Readonly<IDiscordCommandFlagsResponse>): Promise<IDiscordMessageResponse[]> => {
-        const discordCommandSplittedFlagsResponse: IDiscordCommandSplittedFlagsResponse = discordCommandSplitFlagsResponse(
-          discordCommandFlagsResponse
-        );
+        const discordCommandSplittedFlagsResponse: IDiscordCommandSplittedFlagsResponse =
+          discordCommandSplitFlagsResponse(discordCommandFlagsResponse);
         const discordMessageResponses: IDiscordMessageResponse[] = discordCommandSplittedFlagsResponse.messageResponses;
 
         if (!_.isEmpty(discordCommandSplittedFlagsResponse.commandFlagsSuccess)) {
@@ -128,16 +127,13 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
   }
 
   private _getMessageEmbedFields(flagsSuccess: Readonly<IDiscordCommandFlagsSuccess>): EmbedFieldData[] {
-    return _.map(
-      flagsSuccess,
-      ({ name, description }: Readonly<IDiscordCommandFlagSuccess>): EmbedFieldData => {
-        return {
-          inline: false,
-          name,
-          value: description,
-        };
-      }
-    );
+    return _.map(flagsSuccess, ({ name, description }: Readonly<IDiscordCommandFlagSuccess>): EmbedFieldData => {
+      return {
+        inline: false,
+        name,
+        value: description,
+      };
+    });
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {

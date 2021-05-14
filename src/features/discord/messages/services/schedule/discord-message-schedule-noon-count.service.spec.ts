@@ -23,7 +23,8 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
     coreEventService = CoreEventService.getInstance();
     loggerService = LoggerService.getInstance();
     discordGuildSoniaService = DiscordGuildSoniaService.getInstance();
-    discordMessageScheduleNoonCountMessageResponseService = DiscordMessageScheduleNoonCountMessageResponseService.getInstance();
+    discordMessageScheduleNoonCountMessageResponseService =
+      DiscordMessageScheduleNoonCountMessageResponseService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
