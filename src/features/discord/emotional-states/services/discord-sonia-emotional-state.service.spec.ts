@@ -5,8 +5,8 @@ import * as GetRandomRangeMinuteScheduleRuleModule from '../../../../functions/s
 import { CoreEventService } from '../../../core/services/core-event.service';
 import { ILoggerLog } from '../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../logger/services/logger.service';
-import * as GetNextJobDateModule from '../../../schedules/functions/get-next-job-date';
 import * as GetNextJobDateHumanizedModule from '../../../schedules/functions/get-next-job-date-humanized';
+import * as GetNextJobDateModule from '../../../schedules/functions/get-next-job-date';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DISCORD_EMOTIONAL_STATE_MESSAGES } from '../constants/discord-emotional-state-messages';
 import { DiscordSoniaEmotionalStateEnum } from '../enums/discord-sonia-emotional-state.enum';

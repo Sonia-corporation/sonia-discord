@@ -3,8 +3,8 @@ import { hasFirebaseGuildChannels } from '../../../../../../../../firebase/funct
 import { FirebaseGuildsChannelsService } from '../../../../../../../../firebase/services/guilds/channels/firebase-guilds-channels.service';
 import { FirebaseGuildsStoreQuery } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query';
 import { IFirebaseGuildChannelFeatureReleaseNotesState } from '../../../../../../../../firebase/types/guilds/channels/features/firebase-guild-channel-feature-release-notes-state';
-import { IFirebaseGuildChannel } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuildChannelVFinal } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final';
+import { IFirebaseGuildChannel } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/firebase-guild';
 import { ChalkService } from '../../../../../../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../../../../../../logger/services/logger.service';

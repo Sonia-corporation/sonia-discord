@@ -1,7 +1,7 @@
 import { wrapInQuotes } from '../../../../functions/formatters/wrap-in-quotes';
 import { LoggerConfigLevelEnum } from '../../enums/logger-config-level.enum';
-import { ILoggerLog } from '../../interfaces/logger-log';
 import { ILoggerLogInternal } from '../../interfaces/logger-log-internal';
+import { ILoggerLog } from '../../interfaces/logger-log';
 import { ILoggerServiceCreated } from '../../interfaces/logger-service-created';
 import _ from 'lodash';
 

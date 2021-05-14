@@ -5,8 +5,8 @@ import { DiscordClientService } from '../../../discord/services/discord-client.s
 import { ILoggerLog } from '../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
-import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
+import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { FirebaseAppService } from '../firebase-app.service';
 import { Guild, Snowflake } from 'discord.js';
 import * as admin from 'firebase-admin';
