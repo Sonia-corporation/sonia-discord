@@ -10,8 +10,8 @@ import { DiscordMessageCommandFeatureNoonHumanize } from '../classes/discord-mes
 import { DiscordMessageCommandFeatureNoonStatus } from '../classes/discord-message-command-feature-noon-status';
 import { DiscordMessageCommandFeatureNoonFlagEnum } from '../enums/discord-message-command-feature-noon-flag.enum';
 
-export const DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS: DiscordCommandFlags<DiscordMessageCommandFeatureNoonFlagEnum> =
-  new DiscordCommandFlags({
+export const DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS: DiscordCommandFlags<DiscordMessageCommandFeatureNoonFlagEnum> = new DiscordCommandFlags(
+  {
     command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
     flags: [
       new DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>({
@@ -47,4 +47,5 @@ export const DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS: DiscordCommandFlags<Dis
         shortcuts: [DiscordMessageCommandFeatureNoonFlagEnum.S],
       }),
     ],
-  });
+  }
+);

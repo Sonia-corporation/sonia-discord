@@ -13,8 +13,7 @@ export class FirebaseGuildsNewVersionCountMessageResponseService extends Abstrac
 
   public static getInstance(): FirebaseGuildsNewVersionCountMessageResponseService {
     if (_.isNil(FirebaseGuildsNewVersionCountMessageResponseService._instance)) {
-      FirebaseGuildsNewVersionCountMessageResponseService._instance =
-        new FirebaseGuildsNewVersionCountMessageResponseService();
+      FirebaseGuildsNewVersionCountMessageResponseService._instance = new FirebaseGuildsNewVersionCountMessageResponseService();
     }
 
     return FirebaseGuildsNewVersionCountMessageResponseService._instance;

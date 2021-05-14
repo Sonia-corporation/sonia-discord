@@ -58,25 +58,27 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
 
     return FirebaseGuildsService.getInstance()
       .getGuild(guild.id)
-      .then((firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<(Message | void)[]> => {
-        this._logFirebaseGuildFetched(guild);
+      .then(
+        (firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<(Message | void)[]> => {
+          this._logFirebaseGuildFetched(guild);
 
-        if (!this._isValidGuild(firebaseGuild)) {
-          this._logInvalidFirebaseGuild(guild);
+          if (!this._isValidGuild(firebaseGuild)) {
+            this._logInvalidFirebaseGuild(guild);
 
-          return Promise.reject(new Error(`Invalid guild`));
+            return Promise.reject(new Error(`Invalid guild`));
+          }
+
+          this._logValidFirebaseGuild(guild);
+
+          return Promise.all(
+            _.map(
+              firebaseGuild.channels,
+              (channel: Readonly<IFirebaseGuildChannel>): Promise<Message | void> =>
+                this.sendMessageByChannel(channel, firebaseGuild, guild).catch((): Promise<void> => Promise.resolve())
+            )
+          );
         }
-
-        this._logValidFirebaseGuild(guild);
-
-        return Promise.all(
-          _.map(
-            firebaseGuild.channels,
-            (channel: Readonly<IFirebaseGuildChannel>): Promise<Message | void> =>
-              this.sendMessageByChannel(channel, firebaseGuild, guild).catch((): Promise<void> => Promise.resolve())
-          )
-        );
-      });
+      );
   }
 
   public sendMessageByChannel(
@@ -116,11 +118,13 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
       .getClient()
       .guilds.cache.forEach((guild: Readonly<Guild>): void => {
         messagePromises.push(
-          this.sendMessage(guild).catch((): Promise<void> => {
-            this._logNoMessageSentForFirebaseGuild(guild);
+          this.sendMessage(guild).catch(
+            (): Promise<void> => {
+              this._logNoMessageSentForFirebaseGuild(guild);
 
-            return Promise.resolve();
-          })
+              return Promise.resolve();
+            }
+          )
         );
       });
 
@@ -140,16 +144,20 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
 
     return guildChannel
       .send(messageResponse.response, messageResponse.options)
-      .then((message: Message): Promise<Message> => {
-        this._logNoonMessageSent(guildChannel);
+      .then(
+        (message: Message): Promise<Message> => {
+          this._logNoonMessageSent(guildChannel);
 
-        return Promise.resolve(message);
-      })
-      .catch((error: Readonly<string>): Promise<void> => {
-        this._onMessageError(error, guildChannel);
+          return Promise.resolve(message);
+        }
+      )
+      .catch(
+        (error: Readonly<string>): Promise<void> => {
+          this._onMessageError(error, guildChannel);
 
-        return Promise.reject(error);
-      });
+          return Promise.reject(error);
+        }
+      );
   }
 
   public executeJob(): Promise<((Message | void)[] | void)[] | void> {

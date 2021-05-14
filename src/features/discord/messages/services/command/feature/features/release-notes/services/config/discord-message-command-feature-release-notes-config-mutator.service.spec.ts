@@ -24,8 +24,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesConfigMutatorService`, (): voi
 
   beforeEach((): void => {
     configService = ConfigService.getInstance();
-    discordMessageCommandFeatureReleaseNotesConfigCoreService =
-      DiscordMessageCommandFeatureReleaseNotesConfigCoreService.getInstance();
+    discordMessageCommandFeatureReleaseNotesConfigCoreService = DiscordMessageCommandFeatureReleaseNotesConfigCoreService.getInstance();
     coreEventService = CoreEventService.getInstance();
   });
 

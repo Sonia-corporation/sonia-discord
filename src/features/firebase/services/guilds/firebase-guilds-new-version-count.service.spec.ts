@@ -23,8 +23,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
     coreEventService = CoreEventService.getInstance();
     loggerService = LoggerService.getInstance();
     discordGuildSoniaService = DiscordGuildSoniaService.getInstance();
-    firebaseGuildsNewVersionCountMessageResponseService =
-      FirebaseGuildsNewVersionCountMessageResponseService.getInstance();
+    firebaseGuildsNewVersionCountMessageResponseService = FirebaseGuildsNewVersionCountMessageResponseService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {

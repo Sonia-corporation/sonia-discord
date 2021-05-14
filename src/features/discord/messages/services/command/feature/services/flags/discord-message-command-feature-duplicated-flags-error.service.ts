@@ -15,8 +15,7 @@ export class DiscordMessageCommandFeatureDuplicatedFlagsErrorService extends Dis
 
   public static getInstance(): DiscordMessageCommandFeatureDuplicatedFlagsErrorService {
     if (_.isNil(DiscordMessageCommandFeatureDuplicatedFlagsErrorService._instance)) {
-      DiscordMessageCommandFeatureDuplicatedFlagsErrorService._instance =
-        new DiscordMessageCommandFeatureDuplicatedFlagsErrorService();
+      DiscordMessageCommandFeatureDuplicatedFlagsErrorService._instance = new DiscordMessageCommandFeatureDuplicatedFlagsErrorService();
     }
 
     return DiscordMessageCommandFeatureDuplicatedFlagsErrorService._instance;
@@ -68,13 +67,16 @@ export class DiscordMessageCommandFeatureDuplicatedFlagsErrorService extends Dis
 
   private _getMessageEmbedFields(flagsDuplicated: Readonly<IDiscordCommandFlagsDuplicated>): EmbedFieldData[] {
     return _.concat(
-      _.map(flagsDuplicated, ({ name, description }: Readonly<IDiscordCommandFlagDuplicated>): EmbedFieldData => {
-        return {
-          inline: false,
-          name,
-          value: description,
-        };
-      }),
+      _.map(
+        flagsDuplicated,
+        ({ name, description }: Readonly<IDiscordCommandFlagDuplicated>): EmbedFieldData => {
+          return {
+            inline: false,
+            name,
+            value: description,
+          };
+        }
+      ),
       this._getMessageEmbedHintField()
     );
   }

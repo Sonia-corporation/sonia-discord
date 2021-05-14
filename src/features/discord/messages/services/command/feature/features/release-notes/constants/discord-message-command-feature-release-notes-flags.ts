@@ -9,8 +9,8 @@ import { DiscordMessageCommandFeatureReleaseNotesHumanize } from '../classes/dis
 import { DiscordMessageCommandFeatureReleaseNotesStatus } from '../classes/discord-message-command-feature-release-notes-status';
 import { DiscordMessageCommandFeatureReleaseNotesFlagEnum } from '../enums/discord-message-command-feature-release-notes-flag.enum';
 
-export const DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS: DiscordCommandFlags<DiscordMessageCommandFeatureReleaseNotesFlagEnum> =
-  new DiscordCommandFlags({
+export const DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS: DiscordCommandFlags<DiscordMessageCommandFeatureReleaseNotesFlagEnum> = new DiscordCommandFlags(
+  {
     command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_RELEASE_NOTES,
     flags: [
       new DiscordCommandBooleanFlag<DiscordMessageCommandFeatureReleaseNotesFlagEnum>({
@@ -46,4 +46,5 @@ export const DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS: DiscordCommand
         shortcuts: [DiscordMessageCommandFeatureReleaseNotesFlagEnum.S],
       }),
     ],
-  });
+  }
+);
