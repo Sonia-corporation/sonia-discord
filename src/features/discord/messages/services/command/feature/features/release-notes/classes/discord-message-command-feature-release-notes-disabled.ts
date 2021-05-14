@@ -19,8 +19,7 @@ import { Snowflake } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageCommandFeatureReleaseNotesDisabled<T extends string>
-  implements DiscordCommandFlagActionBoolean<T>
-{
+  implements DiscordCommandFlagActionBoolean<T> {
   private readonly _serviceName = ClassNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_DISABLED;
 
   public execute(

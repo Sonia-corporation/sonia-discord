@@ -16,8 +16,7 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
 
   public static getInstance(): DiscordMessageCommandFeatureEmptyFlagsErrorService {
     if (_.isNil(DiscordMessageCommandFeatureEmptyFlagsErrorService._instance)) {
-      DiscordMessageCommandFeatureEmptyFlagsErrorService._instance =
-        new DiscordMessageCommandFeatureEmptyFlagsErrorService();
+      DiscordMessageCommandFeatureEmptyFlagsErrorService._instance = new DiscordMessageCommandFeatureEmptyFlagsErrorService();
     }
 
     return DiscordMessageCommandFeatureEmptyFlagsErrorService._instance;

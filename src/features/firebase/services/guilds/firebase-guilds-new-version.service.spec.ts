@@ -64,8 +64,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     discordMessageCommandReleaseNotesService = DiscordMessageCommandReleaseNotesService.getInstance();
     discordGuildSoniaService = DiscordGuildSoniaService.getInstance();
     discordLoggerErrorService = DiscordLoggerErrorService.getInstance();
-    firebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService =
-      FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService.getInstance();
+    firebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService = FirebaseGuildsChannelsFeaturesReleaseNotesEnabledStateService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {

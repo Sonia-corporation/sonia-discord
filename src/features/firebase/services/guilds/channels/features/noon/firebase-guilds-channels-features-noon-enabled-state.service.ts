@@ -18,8 +18,7 @@ export class FirebaseGuildsChannelsFeaturesNoonEnabledStateService extends Abstr
 
   public static getInstance(): FirebaseGuildsChannelsFeaturesNoonEnabledStateService {
     if (_.isNil(FirebaseGuildsChannelsFeaturesNoonEnabledStateService._instance)) {
-      FirebaseGuildsChannelsFeaturesNoonEnabledStateService._instance =
-        new FirebaseGuildsChannelsFeaturesNoonEnabledStateService();
+      FirebaseGuildsChannelsFeaturesNoonEnabledStateService._instance = new FirebaseGuildsChannelsFeaturesNoonEnabledStateService();
     }
 
     return FirebaseGuildsChannelsFeaturesNoonEnabledStateService._instance;

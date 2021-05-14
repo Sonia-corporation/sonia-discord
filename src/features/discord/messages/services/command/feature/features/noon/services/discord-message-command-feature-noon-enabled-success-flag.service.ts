@@ -10,8 +10,7 @@ export class DiscordMessageCommandFeatureNoonEnabledSuccessFlagService extends A
 
   public static getInstance(): DiscordMessageCommandFeatureNoonEnabledSuccessFlagService {
     if (_.isNil(DiscordMessageCommandFeatureNoonEnabledSuccessFlagService._instance)) {
-      DiscordMessageCommandFeatureNoonEnabledSuccessFlagService._instance =
-        new DiscordMessageCommandFeatureNoonEnabledSuccessFlagService();
+      DiscordMessageCommandFeatureNoonEnabledSuccessFlagService._instance = new DiscordMessageCommandFeatureNoonEnabledSuccessFlagService();
     }
 
     return DiscordMessageCommandFeatureNoonEnabledSuccessFlagService._instance;

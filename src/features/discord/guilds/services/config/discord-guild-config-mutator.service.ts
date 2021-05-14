@@ -54,13 +54,14 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<IDis
   }
 
   public updateSendCookiesOnCreateState(shouldSendCookiesOnCreate?: Readonly<boolean>): void {
-    DiscordGuildConfigCoreService.getInstance().shouldSendCookiesOnCreate =
-      ConfigService.getInstance().getUpdatedBoolean({
+    DiscordGuildConfigCoreService.getInstance().shouldSendCookiesOnCreate = ConfigService.getInstance().getUpdatedBoolean(
+      {
         context: this._serviceName,
         newValue: shouldSendCookiesOnCreate,
         oldValue: DiscordGuildConfigService.getInstance().shouldSendCookiesOnCreate(),
         valueName: DiscordGuildConfigValueNameEnum.SHOULD_SEND_COOKIES_ON_CREATE,
-      });
+      }
+    );
   }
 
   public updateSendNoonMessageState(shouldSendNoonMessage?: Readonly<boolean>): void {
@@ -93,12 +94,13 @@ export class DiscordGuildConfigMutatorService extends AbstractConfigService<IDis
   }
 
   public updateSoniaPermanentGuildInviteUrl(soniaPermanentGuildInviteUrl?: Readonly<string>): void {
-    DiscordGuildConfigCoreService.getInstance().soniaPermanentGuildInviteUrl =
-      ConfigService.getInstance().getUpdatedString({
+    DiscordGuildConfigCoreService.getInstance().soniaPermanentGuildInviteUrl = ConfigService.getInstance().getUpdatedString(
+      {
         context: this._serviceName,
         newValue: soniaPermanentGuildInviteUrl,
         oldValue: DiscordGuildConfigService.getInstance().getSoniaPermanentGuildInviteUrl(),
         valueName: DiscordGuildConfigValueNameEnum.SONIA_PERMANENT_GUILD_INVITE_URL,
-      });
+      }
+    );
   }
 }

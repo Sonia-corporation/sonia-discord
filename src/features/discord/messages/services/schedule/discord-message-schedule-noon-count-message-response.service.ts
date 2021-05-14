@@ -13,8 +13,7 @@ export class DiscordMessageScheduleNoonCountMessageResponseService extends Abstr
 
   public static getInstance(): DiscordMessageScheduleNoonCountMessageResponseService {
     if (_.isNil(DiscordMessageScheduleNoonCountMessageResponseService._instance)) {
-      DiscordMessageScheduleNoonCountMessageResponseService._instance =
-        new DiscordMessageScheduleNoonCountMessageResponseService();
+      DiscordMessageScheduleNoonCountMessageResponseService._instance = new DiscordMessageScheduleNoonCountMessageResponseService();
     }
 
     return DiscordMessageScheduleNoonCountMessageResponseService._instance;
