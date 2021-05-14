@@ -1,8 +1,8 @@
 import { ServiceNameEnum } from '../../../../../../../enums/service-name.enum';
 import { FIREBASE_GUILD_CHANNEL_FEATURE_RELEASE_NOTES_CURRENT_VERSION } from '../../../../../constants/guilds/channels/features/firebase-guild-channel-feature-release-notes-current-version';
 import { INewFirebaseGuildChannelFeatureReleaseNotes } from '../../../../../interfaces/guilds/channels/features/new-firebase-guild-channel-feature-release-notes';
-import { IFirebaseGuildChannelFeatureReleaseNotes } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-release-notes';
 import { IFirebaseGuildChannelFeatureReleaseNotesVFinal } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-release-notes-v-final';
+import { IFirebaseGuildChannelFeatureReleaseNotes } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-release-notes';
 import { FirebaseUpdateCoreService } from '../../../../firebase-update-core.service';
 import _ from 'lodash';
 

@@ -3,8 +3,8 @@ import { FIREBASE_GUILD_CHANNEL_CURRENT_VERSION } from '../../../constants/guild
 import { handleFirebaseGuildChannelBreakingChange } from '../../../functions/guilds/channels/handle-firebase-guild-channel-breaking-change';
 import { ICreateFirebaseGuildChannel } from '../../../interfaces/guilds/channels/create-firebase-guild-channel';
 import { INewFirebaseGuildChannel } from '../../../interfaces/guilds/channels/new-firebase-guild-channel';
-import { IFirebaseGuildChannel } from '../../../types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuildChannelVFinal } from '../../../types/guilds/channels/firebase-guild-channel-v-final';
+import { IFirebaseGuildChannel } from '../../../types/guilds/channels/firebase-guild-channel';
 import { FirebaseUpdateCoreService } from '../../firebase-update-core.service';
 import _ from 'lodash';
 

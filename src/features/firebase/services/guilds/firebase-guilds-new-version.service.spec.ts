@@ -27,10 +27,10 @@ import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-vers
 import * as IsUpToDateFirebaseGuildModule from '../../functions/guilds/is-up-to-date-firebase-guild';
 import { IFirebaseGuildNewVersionResponseMessage } from '../../interfaces/guilds/firebase-guild-new-version-response-message';
 import { IFirebaseGuildV1 } from '../../interfaces/guilds/firebase-guild-v1';
-import { IFirebaseGuildChannel } from '../../types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuildChannelVFinal } from '../../types/guilds/channels/firebase-guild-channel-v-final';
-import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
+import { IFirebaseGuildChannel } from '../../types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
+import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IUpdatedFirebaseGuildLastReleaseNotesVersion } from '../../types/guilds/updated-firebase-guild-last-release-notes-version';
 import { Guild, GuildChannel, Message, TextChannel } from 'discord.js';
 import * as admin from 'firebase-admin';

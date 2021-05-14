@@ -13,8 +13,8 @@ import { LOGGER_WARNING_LEVEL } from '../constants/levels/logger-warning-level';
 import { LoggerConfigLevelValueEnum } from '../enums/logger-config-level-value.enum';
 import { LoggerConfigLevelEnum } from '../enums/logger-config-level.enum';
 import { IJobDateLog } from '../interfaces/job-date-log';
-import { ILoggerLog } from '../interfaces/logger-log';
 import { ILoggerLogInternal } from '../interfaces/logger-log-internal';
+import { ILoggerLog } from '../interfaces/logger-log';
 import { ILoggerServiceCreated } from '../interfaces/logger-service-created';
 import _ from 'lodash';
 

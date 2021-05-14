@@ -26,8 +26,8 @@ import { hasFirebaseGuildLastReleaseNotesVersion } from '../../functions/guilds/
 import { getUpdatedFirebaseGuildLastReleaseNotesVersion } from '../../functions/guilds/get-updated-firebase-guild-last-release-notes-version';
 import { isUpToDateFirebaseGuild } from '../../functions/guilds/is-up-to-date-firebase-guild';
 import { IFirebaseGuildChannel } from '../../types/guilds/channels/firebase-guild-channel';
-import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
+import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { Guild, GuildChannel, Message } from 'discord.js';
 import admin from 'firebase-admin';
 import _ from 'lodash';

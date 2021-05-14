@@ -5,8 +5,8 @@ import { IConfigUpdateArray } from '../interfaces/config-update-array';
 import { IConfigUpdateBoolean } from '../interfaces/config-update-boolean';
 import { IConfigUpdateDate } from '../interfaces/config-update-date';
 import { IConfigUpdateNumber } from '../interfaces/config-update-number';
-import { IConfigUpdateString } from '../interfaces/config-update-string';
 import { IConfigUpdateStringOrArray } from '../interfaces/config-update-string-or-array';
+import { IConfigUpdateString } from '../interfaces/config-update-string';
 import moment from 'moment-timezone';
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
