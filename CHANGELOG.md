@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.96.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.95.1...1.96.0) (2021-05-12)
+
+
+### :rocket: Features
+
+* **new-version:** add specific messages based on the release type ([75791f4](https://github.com/Sonia-corporation/sonia-discord/commit/75791f443dc4fc5bc4faf0aad80055e2b7f95ffb))
+
 ## [1.95.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.95.0...1.95.1) (2021-05-02)
 
 
