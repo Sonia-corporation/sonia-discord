@@ -283,17 +283,15 @@ export class DiscordCommandFlags<T extends string> {
         (discordMessageFlag: Readonly<IDiscordMessageFlag>): Promise<IDiscordCommandFlagResponse> =>
           this.execute(anyDiscordMessage, discordMessageFlag)
       )
-    ).then(
-      (discordCommandFlagsSuccess: IDiscordCommandFlagsResponse): Promise<IDiscordCommandFlagsResponse> => {
-        LoggerService.getInstance().success({
-          context: this._className,
-          hasExtendedContext: true,
-          message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `all flags handled`),
-        });
+    ).then((discordCommandFlagsSuccess: IDiscordCommandFlagsResponse): Promise<IDiscordCommandFlagsResponse> => {
+      LoggerService.getInstance().success({
+        context: this._className,
+        hasExtendedContext: true,
+        message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `all flags handled`),
+      });
 
-        return Promise.resolve(discordCommandFlagsSuccess);
-      }
-    );
+      return Promise.resolve(discordCommandFlagsSuccess);
+    });
   }
 
   /**
@@ -338,15 +336,12 @@ export class DiscordCommandFlags<T extends string> {
   }
 
   public getAllFlagsAsEmbedFields(): EmbedFieldData[] {
-    return _.map(
-      this.getOrderedFlags(),
-      (flag: Readonly<IDiscordCommandFlagTypes<T>>): EmbedFieldData => {
-        return {
-          name: flag.getLowerCaseNameAndShortcutsExample(),
-          value: flag.getDescription(),
-        };
-      }
-    );
+    return _.map(this.getOrderedFlags(), (flag: Readonly<IDiscordCommandFlagTypes<T>>): EmbedFieldData => {
+      return {
+        name: flag.getLowerCaseNameAndShortcutsExample(),
+        value: flag.getDescription(),
+      };
+    });
   }
 
   private _getFlagsErrors(messageFlags: Readonly<string>[]): IDiscordCommandFlagsErrors {
@@ -425,9 +420,8 @@ export class DiscordCommandFlags<T extends string> {
   }
 
   private _getFlagsDuplicated(messageFlags: Readonly<string>[]): IDiscordCommandFlagsDuplicated {
-    const messageFlagsWithName: IDiscordCommandMessageFlagWithName[][] = this._getDuplicatedMessagesFlagsByName(
-      messageFlags
-    );
+    const messageFlagsWithName: IDiscordCommandMessageFlagWithName[][] =
+      this._getDuplicatedMessagesFlagsByName(messageFlags);
 
     return _.map(
       messageFlagsWithName,
@@ -441,9 +435,8 @@ export class DiscordCommandFlags<T extends string> {
   }
 
   private _getOppositeFlags(messageFlags: Readonly<string>[]): IDiscordCommandFlagsOpposite {
-    const commandMessageFlagsWithOpposite: IDiscordCommandMessageFlag<T>[][] = this._getOppositeMessagesFlags(
-      messageFlags
-    );
+    const commandMessageFlagsWithOpposite: IDiscordCommandMessageFlag<T>[][] =
+      this._getOppositeMessagesFlags(messageFlags);
 
     return _.map(
       commandMessageFlagsWithOpposite,

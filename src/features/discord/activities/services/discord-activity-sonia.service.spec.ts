@@ -305,13 +305,13 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
     describe(`once the scheduled updater job is triggered`, (): void => {
       beforeEach((): void => {
-        scheduleJobSpy.mockImplementation().mockImplementationOnce(
-          (_rule: string, callback: () => void): NodeScheduleModule.Job => {
+        scheduleJobSpy
+          .mockImplementation()
+          .mockImplementationOnce((_rule: string, callback: () => void): NodeScheduleModule.Job => {
             callback();
 
             return job;
-          }
-        );
+          });
       });
 
       it(`should log the updater job rule`, (): void => {
@@ -385,13 +385,13 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       describe(`when the job is not valid`, (): void => {
         beforeEach((): void => {
-          scheduleJobSpy.mockImplementation().mockImplementationOnce(
-            (_rule: string, callback: () => void): NodeScheduleModule.Job => {
+          scheduleJobSpy
+            .mockImplementation()
+            .mockImplementationOnce((_rule: string, callback: () => void): NodeScheduleModule.Job => {
               callback();
 
               return job;
-            }
-          );
+            });
         });
 
         it(`should not reschedule the job with the new updated job rule`, (): void => {
@@ -405,13 +405,11 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       describe(`when the job is valid`, (): void => {
         beforeEach((): void => {
-          scheduleJobSpy.mockImplementation(
-            (_rule: string, callback: () => void): NodeScheduleModule.Job => {
-              callback();
+          scheduleJobSpy.mockImplementation((_rule: string, callback: () => void): NodeScheduleModule.Job => {
+            callback();
 
-              return job;
-            }
-          );
+            return job;
+          });
         });
 
         /**
@@ -487,13 +485,11 @@ describe(`DiscordActivitySoniaService`, (): void => {
     describe(`once the scheduled job is triggered`, (): void => {
       beforeEach((): void => {
         scheduleJobSpy
-          .mockImplementation(
-            (_rule: string, callback: () => void): NodeScheduleModule.Job => {
-              callback();
+          .mockImplementation((_rule: string, callback: () => void): NodeScheduleModule.Job => {
+            callback();
 
-              return job;
-            }
-          )
+            return job;
+          })
           .mockImplementationOnce(noop);
       });
 

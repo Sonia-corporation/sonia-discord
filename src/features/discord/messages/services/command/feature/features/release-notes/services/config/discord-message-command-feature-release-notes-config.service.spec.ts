@@ -12,7 +12,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesConfigService`, (): void => {
   let coreEventService: CoreEventService;
 
   beforeEach((): void => {
-    discordMessageCommandFeatureReleaseNotesConfigCoreService = DiscordMessageCommandFeatureReleaseNotesConfigCoreService.getInstance();
+    discordMessageCommandFeatureReleaseNotesConfigCoreService =
+      DiscordMessageCommandFeatureReleaseNotesConfigCoreService.getInstance();
     coreEventService = CoreEventService.getInstance();
   });
 

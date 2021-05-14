@@ -29,9 +29,9 @@ export class DiscordChannelGuildService extends AbstractService {
       return null;
     }
 
-    const primaryChannel:
-      | GuildChannel
-      | undefined = guild.channels.cache.find((channel: Readonly<GuildChannel>): boolean => this.isGeneral(channel));
+    const primaryChannel: GuildChannel | undefined = guild.channels.cache.find(
+      (channel: Readonly<GuildChannel>): boolean => this.isGeneral(channel)
+    );
 
     if (!isDiscordGuildChannel(primaryChannel)) {
       return null;

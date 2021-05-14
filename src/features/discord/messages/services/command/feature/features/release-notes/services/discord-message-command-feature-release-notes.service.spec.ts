@@ -29,7 +29,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
-    discordMessageCommandFeatureReleaseNotesConfigService = DiscordMessageCommandFeatureReleaseNotesConfigService.getInstance();
+    discordMessageCommandFeatureReleaseNotesConfigService =
+      DiscordMessageCommandFeatureReleaseNotesConfigService.getInstance();
     discordSoniaService = DiscordSoniaService.getInstance();
   });
 
