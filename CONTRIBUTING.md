@@ -7,6 +7,13 @@
 Run `npm i` to install the dependencies.  
 It will also create the Git hooks with Husky if you Git version is recent enough.
 
+Install the Git hooks to lint the code when creating commits.  
+Run `npm run install-git-hooks`.
+
+**Note:**
+
+I didn't find a suitable way to "skip" the `postinstall` script in Heroku which was causing a deployment issue.
+
 Run `npm run start` to start the local development server.
 
 ### Create the secret environment file
