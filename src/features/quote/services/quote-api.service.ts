@@ -23,17 +23,17 @@ export class QuoteApiService extends AbstractService {
   }
 
   public getQuoteOfTheDay(): Promise<IQuoteOfTheDayApi> {
-    return axios({
-      ...this._getCommonAxiosConfig(),
+    return this._request<IQuoteOfTheDayApi>({
       method: `get`,
       url: this._getUrl(`qotd`),
     }).then(({ data }: Readonly<AxiosResponse<IQuoteOfTheDayApi>>): IQuoteOfTheDayApi => data);
   }
 
-  private _getCommonAxiosConfig(): AxiosRequestConfig {
-    return {
+  private _request<TData>(config: Readonly<AxiosRequestConfig>): Promise<AxiosResponse<TData>> {
+    return axios({
       headers: this._getCommonHeaders(),
-    };
+      ...config,
+    });
   }
 
   private _getUrl(endpoint: Readonly<string>): string {
