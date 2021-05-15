@@ -2,10 +2,10 @@ import { DiscordMessageConfigValueNameEnum } from './discord-message-config-valu
 import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageConfigValueNameEnum`, (): void => {
-  it(`should have a 23 members`, (): void => {
+  it(`should have a 31 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageConfigValueNameEnum)).toStrictEqual(23);
+    expect(getEnumLength(DiscordMessageConfigValueNameEnum)).toStrictEqual(31);
   });
 
   it(`should have a member "COMMAND_CLI_ERROR_IMAGE_COLOR"`, (): void => {
@@ -120,11 +120,43 @@ describe(`DiscordMessageConfigValueNameEnum`, (): void => {
     expect(DiscordMessageConfigValueNameEnum.COMMAND_PREFIX).toStrictEqual(`message command prefix`);
   });
 
+  it(`should have a member "COMMAND_RELEASE_NOTES_BUG_FIXES_IMAGE_COLOR"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_BUG_FIXES_IMAGE_COLOR).toStrictEqual(
+      `message command release notes bug fixes image color`
+    );
+  });
+
+  it(`should have a member "COMMAND_RELEASE_NOTES_BUG_FIXES_IMAGE_URL"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_BUG_FIXES_IMAGE_URL).toStrictEqual(
+      `message command release notes bug fixes image url`
+    );
+  });
+
+  it(`should have a member "COMMAND_RELEASE_NOTES_FEATURES_IMAGE_COLOR"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_FEATURES_IMAGE_COLOR).toStrictEqual(
+      `message command release notes features image color`
+    );
+  });
+
+  it(`should have a member "COMMAND_RELEASE_NOTES_FEATURES_IMAGE_URL"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_FEATURES_IMAGE_URL).toStrictEqual(
+      `message command release notes features image url`
+    );
+  });
+
   it(`should have a member "COMMAND_RELEASE_NOTES_MIXED_IMAGE_COLOR"`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_MIXED_IMAGE_COLOR).toStrictEqual(
-      `message command release notes image mixed color`
+      `message command release notes mixed image color`
     );
   });
 
@@ -132,7 +164,39 @@ describe(`DiscordMessageConfigValueNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_MIXED_IMAGE_URL).toStrictEqual(
-      `message command release notes image mixed url`
+      `message command release notes mixed image url`
+    );
+  });
+
+  it(`should have a member "COMMAND_RELEASE_NOTES_PERFORMANCE_IMPROVEMENTS_IMAGE_COLOR"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_PERFORMANCE_IMPROVEMENTS_IMAGE_COLOR).toStrictEqual(
+      `message command release notes performance improvements image color`
+    );
+  });
+
+  it(`should have a member "COMMAND_RELEASE_NOTES_PERFORMANCE_IMPROVEMENTS_IMAGE_URL"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_PERFORMANCE_IMPROVEMENTS_IMAGE_URL).toStrictEqual(
+      `message command release notes performance improvements image url`
+    );
+  });
+
+  it(`should have a member "COMMAND_RELEASE_NOTES_UNKNOWN_IMAGE_COLOR"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_UNKNOWN_IMAGE_COLOR).toStrictEqual(
+      `message command release notes unknown image color`
+    );
+  });
+
+  it(`should have a member "COMMAND_RELEASE_NOTES_UNKNOWN_IMAGE_URL"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_UNKNOWN_IMAGE_URL).toStrictEqual(
+      `message command release notes unknown image url`
     );
   });
 

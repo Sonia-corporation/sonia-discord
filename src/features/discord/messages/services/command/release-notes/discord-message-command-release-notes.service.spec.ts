@@ -2,6 +2,7 @@ import { DiscordMessageCommandReleaseNotesService } from './discord-message-comm
 import { ColorEnum } from '../../../../../../enums/color.enum';
 import { IconEnum } from '../../../../../../enums/icon.enum';
 import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
+import { AppConfigReleaseTypeEnum } from '../../../../../app/enums/app-config-release-type.enum';
 import { AppConfigQueryService } from '../../../../../app/services/config/app-config-query.service';
 import { AppConfigService } from '../../../../../app/services/config/app-config.service';
 import { CoreEventService } from '../../../../../core/services/core-event.service';
@@ -123,26 +124,54 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
   });
 
   describe(`getMessageResponse()`, (): void => {
+    let releaseType: AppConfigReleaseTypeEnum;
+
     let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandReleaseNotesBugFixesImageColorSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandReleaseNotesFeaturesImageColorSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandReleaseNotesMixedImageColorSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandReleaseNotesPerformanceImprovementsImageColorSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandReleaseNotesUnknownImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
     let appConfigQueryServiceGetTotalReleaseCountHumanizedSpy: jest.SpyInstance;
     let appConfigQueryServiceGetFirstReleaseDateFormattedSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandReleaseNotesBugFixesImageUrlSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandReleaseNotesFeaturesImageUrlSpy: jest.SpyInstance;
     let discordMessageConfigServiceGetMessageCommandReleaseNotesMixedImageUrlSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandReleaseNotesPerformanceImprovementsImageUrlSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandReleaseNotesUnknownImageUrlSpy: jest.SpyInstance;
     let appConfigServiceGetVersionSpy: jest.SpyInstance;
     let appConfigQueryServiceGetReleaseDateHumanizedSpy: jest.SpyInstance;
     let appConfigServiceGetReleaseNotesSpy: jest.SpyInstance;
+    let appConfigServiceGetReleaseTypeSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageCommandReleaseNotesService();
+      releaseType = AppConfigReleaseTypeEnum.UNKNOWN;
 
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy = jest.spyOn(
         discordSoniaService,
         `getCorporationMessageEmbedAuthor`
       );
+      discordMessageConfigServiceGetMessageCommandReleaseNotesBugFixesImageColorSpy = jest.spyOn(
+        discordMessageConfigService,
+        `getMessageCommandReleaseNotesBugFixesImageColor`
+      );
+      discordMessageConfigServiceGetMessageCommandReleaseNotesFeaturesImageColorSpy = jest.spyOn(
+        discordMessageConfigService,
+        `getMessageCommandReleaseNotesFeaturesImageColor`
+      );
       discordMessageConfigServiceGetMessageCommandReleaseNotesMixedImageColorSpy = jest.spyOn(
         discordMessageConfigService,
         `getMessageCommandReleaseNotesMixedImageColor`
+      );
+      discordMessageConfigServiceGetMessageCommandReleaseNotesPerformanceImprovementsImageColorSpy = jest.spyOn(
+        discordMessageConfigService,
+        `getMessageCommandReleaseNotesPerformanceImprovementsImageColor`
+      );
+      discordMessageConfigServiceGetMessageCommandReleaseNotesUnknownImageColorSpy = jest.spyOn(
+        discordMessageConfigService,
+        `getMessageCommandReleaseNotesUnknownImageColor`
       );
       discordSoniaServiceGetImageUrlSpy = jest.spyOn(discordSoniaService, `getImageUrl`);
       appConfigQueryServiceGetTotalReleaseCountHumanizedSpy = jest.spyOn(
@@ -153,13 +182,30 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
         appConfigQueryService,
         `getFirstReleaseDateFormatted`
       );
+      discordMessageConfigServiceGetMessageCommandReleaseNotesBugFixesImageUrlSpy = jest.spyOn(
+        discordMessageConfigService,
+        `getMessageCommandReleaseNotesBugFixesImageUrl`
+      );
+      discordMessageConfigServiceGetMessageCommandReleaseNotesFeaturesImageUrlSpy = jest.spyOn(
+        discordMessageConfigService,
+        `getMessageCommandReleaseNotesFeaturesImageUrl`
+      );
       discordMessageConfigServiceGetMessageCommandReleaseNotesMixedImageUrlSpy = jest.spyOn(
         discordMessageConfigService,
         `getMessageCommandReleaseNotesMixedImageUrl`
       );
+      discordMessageConfigServiceGetMessageCommandReleaseNotesPerformanceImprovementsImageUrlSpy = jest.spyOn(
+        discordMessageConfigService,
+        `getMessageCommandReleaseNotesPerformanceImprovementsImageUrl`
+      );
+      discordMessageConfigServiceGetMessageCommandReleaseNotesUnknownImageUrlSpy = jest.spyOn(
+        discordMessageConfigService,
+        `getMessageCommandReleaseNotesUnknownImageUrl`
+      );
       appConfigServiceGetVersionSpy = jest.spyOn(appConfigService, `getVersion`);
       appConfigQueryServiceGetReleaseDateHumanizedSpy = jest.spyOn(appConfigQueryService, `getReleaseDateHumanized`);
       appConfigServiceGetReleaseNotesSpy = jest.spyOn(appConfigService, `getReleaseNotes`);
+      appConfigServiceGetReleaseTypeSpy = jest.spyOn(appConfigService, `getReleaseType`).mockReturnValue(releaseType);
     });
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
@@ -170,15 +216,6 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
       const result = await service.getMessageResponse();
 
       expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
-    });
-
-    it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
-      expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandReleaseNotesMixedImageColorSpy.mockReturnValue(ColorEnum.CANDY);
-
-      const result = await service.getMessageResponse();
-
-      expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     it(`should return a Discord message response embed with a description`, async (): Promise<void> => {
@@ -244,15 +281,154 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
       });
     });
 
-    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<void> => {
-      expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandReleaseNotesMixedImageUrlSpy.mockReturnValue(IconEnum.NEW_PRODUCT);
+    describe(`when the release type is bug fixes`, (): void => {
+      beforeEach((): void => {
+        releaseType = AppConfigReleaseTypeEnum.BUG_FIXES;
 
-      const result = await service.getMessageResponse();
+        appConfigServiceGetReleaseTypeSpy.mockReturnValue(releaseType);
+      });
 
-      expect(result.options.embed?.thumbnail).toStrictEqual({
-        url: IconEnum.NEW_PRODUCT,
-      } as MessageEmbedThumbnail);
+      it(`should return a Discord message response embed with a bug fixes color`, async (): Promise<void> => {
+        expect.assertions(1);
+        discordMessageConfigServiceGetMessageCommandReleaseNotesBugFixesImageColorSpy.mockReturnValue(ColorEnum.CANDY);
+
+        const result = await service.getMessageResponse();
+
+        expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should return a Discord message response embed with a bug fixes thumbnail`, async (): Promise<void> => {
+        expect.assertions(1);
+        discordMessageConfigServiceGetMessageCommandReleaseNotesBugFixesImageUrlSpy.mockReturnValue(
+          IconEnum.NEW_PRODUCT
+        );
+
+        const result = await service.getMessageResponse();
+
+        expect(result.options.embed?.thumbnail).toStrictEqual({
+          url: IconEnum.NEW_PRODUCT,
+        } as MessageEmbedThumbnail);
+      });
+    });
+
+    describe(`when the release type is features`, (): void => {
+      beforeEach((): void => {
+        releaseType = AppConfigReleaseTypeEnum.FEATURES;
+
+        appConfigServiceGetReleaseTypeSpy.mockReturnValue(releaseType);
+      });
+
+      it(`should return a Discord message response embed with a features color`, async (): Promise<void> => {
+        expect.assertions(1);
+        discordMessageConfigServiceGetMessageCommandReleaseNotesFeaturesImageColorSpy.mockReturnValue(ColorEnum.CANDY);
+
+        const result = await service.getMessageResponse();
+
+        expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should return a Discord message response embed with a features thumbnail`, async (): Promise<void> => {
+        expect.assertions(1);
+        discordMessageConfigServiceGetMessageCommandReleaseNotesFeaturesImageUrlSpy.mockReturnValue(
+          IconEnum.NEW_PRODUCT
+        );
+
+        const result = await service.getMessageResponse();
+
+        expect(result.options.embed?.thumbnail).toStrictEqual({
+          url: IconEnum.NEW_PRODUCT,
+        } as MessageEmbedThumbnail);
+      });
+    });
+
+    describe(`when the release type is mixed`, (): void => {
+      beforeEach((): void => {
+        releaseType = AppConfigReleaseTypeEnum.MIXED;
+
+        appConfigServiceGetReleaseTypeSpy.mockReturnValue(releaseType);
+      });
+
+      it(`should return a Discord message response embed with a mixed color`, async (): Promise<void> => {
+        expect.assertions(1);
+        discordMessageConfigServiceGetMessageCommandReleaseNotesMixedImageColorSpy.mockReturnValue(ColorEnum.CANDY);
+
+        const result = await service.getMessageResponse();
+
+        expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should return a Discord message response embed with a mixed thumbnail`, async (): Promise<void> => {
+        expect.assertions(1);
+        discordMessageConfigServiceGetMessageCommandReleaseNotesMixedImageUrlSpy.mockReturnValue(IconEnum.NEW_PRODUCT);
+
+        const result = await service.getMessageResponse();
+
+        expect(result.options.embed?.thumbnail).toStrictEqual({
+          url: IconEnum.NEW_PRODUCT,
+        } as MessageEmbedThumbnail);
+      });
+    });
+
+    describe(`when the release type is performance improvements`, (): void => {
+      beforeEach((): void => {
+        releaseType = AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS;
+
+        appConfigServiceGetReleaseTypeSpy.mockReturnValue(releaseType);
+      });
+
+      it(`should return a Discord message response embed with a performance improvements color`, async (): Promise<void> => {
+        expect.assertions(1);
+        discordMessageConfigServiceGetMessageCommandReleaseNotesPerformanceImprovementsImageColorSpy.mockReturnValue(
+          ColorEnum.CANDY
+        );
+
+        const result = await service.getMessageResponse();
+
+        expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should return a Discord message response embed with a performance improvements thumbnail`, async (): Promise<void> => {
+        expect.assertions(1);
+        discordMessageConfigServiceGetMessageCommandReleaseNotesPerformanceImprovementsImageUrlSpy.mockReturnValue(
+          IconEnum.NEW_PRODUCT
+        );
+
+        const result = await service.getMessageResponse();
+
+        expect(result.options.embed?.thumbnail).toStrictEqual({
+          url: IconEnum.NEW_PRODUCT,
+        } as MessageEmbedThumbnail);
+      });
+    });
+
+    describe(`when the release type is unknown`, (): void => {
+      beforeEach((): void => {
+        releaseType = AppConfigReleaseTypeEnum.UNKNOWN;
+
+        appConfigServiceGetReleaseTypeSpy.mockReturnValue(releaseType);
+      });
+
+      it(`should return a Discord message response embed with an unknown color`, async (): Promise<void> => {
+        expect.assertions(1);
+        discordMessageConfigServiceGetMessageCommandReleaseNotesUnknownImageColorSpy.mockReturnValue(ColorEnum.CANDY);
+
+        const result = await service.getMessageResponse();
+
+        expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should return a Discord message response embed with an unknown thumbnail`, async (): Promise<void> => {
+        expect.assertions(1);
+        discordMessageConfigServiceGetMessageCommandReleaseNotesUnknownImageUrlSpy.mockReturnValue(
+          IconEnum.NEW_PRODUCT
+        );
+
+        const result = await service.getMessageResponse();
+
+        expect(result.options.embed?.thumbnail).toStrictEqual({
+          url: IconEnum.NEW_PRODUCT,
+        } as MessageEmbedThumbnail);
+      });
     });
 
     it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {

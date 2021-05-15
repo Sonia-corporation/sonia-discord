@@ -2,10 +2,10 @@ import { IconEnum } from './icon.enum';
 import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`IconEnum`, (): void => {
-  it(`should have a 11 members`, (): void => {
+  it(`should have a 14 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(IconEnum)).toStrictEqual(11);
+    expect(getEnumLength(IconEnum)).toStrictEqual(14);
   });
 
   it(`should have a member "ALARM"`, (): void => {
@@ -40,6 +40,12 @@ describe(`IconEnum`, (): void => {
     expect(IconEnum.COOKIES).toStrictEqual(`https://i.ibb.co/RTp4YPx/icons8-cookies-512.png`);
   });
 
+  it(`should have a member "DEADBUG"`, (): void => {
+    expect.assertions(1);
+
+    expect(IconEnum.DEADBUG).toStrictEqual(`https://i.ibb.co/CmxGZG1/icons8-deadbug-512.png`);
+  });
+
   it(`should have a member "ERROR"`, (): void => {
     expect.assertions(1);
 
@@ -58,6 +64,12 @@ describe(`IconEnum`, (): void => {
     expect(IconEnum.INFORMATION).toStrictEqual(`https://i.ibb.co/vLSnVk6/icons8-information-512.png`);
   });
 
+  it(`should have a member "NEW"`, (): void => {
+    expect.assertions(1);
+
+    expect(IconEnum.NEW).toStrictEqual(`https://i.ibb.co/YjzVm0c/icons8-new-512.png`);
+  });
+
   it(`should have a member "NEW_PRODUCT"`, (): void => {
     expect.assertions(1);
 
@@ -68,6 +80,12 @@ describe(`IconEnum`, (): void => {
     expect.assertions(1);
 
     expect(IconEnum.RESTAURANT).toStrictEqual(`https://i.ibb.co/vXwNzWD/icons8-restaurant-512.png`);
+  });
+
+  it(`should have a member "THE_FLASH_SIGN"`, (): void => {
+    expect.assertions(1);
+
+    expect(IconEnum.THE_FLASH_SIGN).toStrictEqual(`https://i.ibb.co/JkmQvS1/icons8-the-flash-sign-512.png`);
   });
 
   it(`should have a member "WARNING_SHIELD"`, (): void => {
