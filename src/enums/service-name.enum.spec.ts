@@ -2,10 +2,10 @@ import { ServiceNameEnum } from './service-name.enum';
 import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`ServiceNameEnum`, (): void => {
-  it(`should have a 115 members`, (): void => {
+  it(`should have a 118 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ServiceNameEnum)).toStrictEqual(115);
+    expect(getEnumLength(ServiceNameEnum)).toStrictEqual(118);
   });
 
   it(`should have a member "APP_CONFIG_CORE_SERVICE"`, (): void => {
@@ -732,6 +732,24 @@ describe(`ServiceNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(ServiceNameEnum.PROFILE_CONFIG_SERVICE).toStrictEqual(`ProfileConfigService`);
+  });
+
+  it(`should have a member "QUOTE_CONFIG_CORE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.QUOTE_CONFIG_CORE_SERVICE).toStrictEqual(`QuoteConfigCoreService`);
+  });
+
+  it(`should have a member "QUOTE_CONFIG_MUTATOR_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.QUOTE_CONFIG_MUTATOR_SERVICE).toStrictEqual(`QuoteConfigMutatorService`);
+  });
+
+  it(`should have a member "QUOTE_CONFIG_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.QUOTE_CONFIG_SERVICE).toStrictEqual(`QuoteConfigService`);
   });
 
   it(`should have a member "RELEASE_TYPE_SERVICE"`, (): void => {
