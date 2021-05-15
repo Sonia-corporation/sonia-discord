@@ -34,8 +34,10 @@ describe(`DiscordMessageCommandFeatureReleaseNotesConfigMutatorService`, (): voi
     beforeEach((): void => {
       config = {
         releaseNotes: {
-          imageColor: ColorEnum.DESERT,
-          imageUrl: IconEnum.NEW_PRODUCT,
+          unknown: {
+            imageColor: ColorEnum.DESERT,
+            imageUrl: IconEnum.NEW_PRODUCT,
+          },
         },
       };
     });
@@ -107,12 +109,49 @@ describe(`DiscordMessageCommandFeatureReleaseNotesConfigMutatorService`, (): voi
       });
     });
 
+    describe(`when the given config is an object which does not configure the unknown release notes`, (): void => {
+      beforeEach((): void => {
+        config = {
+          releaseNotes: {
+            mixed: {
+              imageColor: ColorEnum.DESERT,
+              imageUrl: IconEnum.NEW_PRODUCT,
+            },
+          },
+        };
+      });
+
+      it(`should not update the current command feature release notes image color`, (): void => {
+        expect.assertions(1);
+        discordMessageCommandFeatureReleaseNotesConfigCoreService.releaseNotes.imageColor = ColorEnum.DESERT;
+
+        service = new DiscordMessageCommandFeatureReleaseNotesConfigMutatorService(config);
+
+        expect(discordMessageCommandFeatureReleaseNotesConfigCoreService.releaseNotes.imageColor).toStrictEqual(
+          ColorEnum.DESERT
+        );
+      });
+
+      it(`should not update the current command feature release notes image url`, (): void => {
+        expect.assertions(1);
+        discordMessageCommandFeatureReleaseNotesConfigCoreService.releaseNotes.imageUrl = IconEnum.NEW_PRODUCT;
+
+        service = new DiscordMessageCommandFeatureReleaseNotesConfigMutatorService(config);
+
+        expect(discordMessageCommandFeatureReleaseNotesConfigCoreService.releaseNotes.imageUrl).toStrictEqual(
+          IconEnum.NEW_PRODUCT
+        );
+      });
+    });
+
     describe(`when the given config is a complete object`, (): void => {
       beforeEach((): void => {
         config = {
           releaseNotes: {
-            imageColor: ColorEnum.DESERT,
-            imageUrl: IconEnum.NEW_PRODUCT,
+            unknown: {
+              imageColor: ColorEnum.DESERT,
+              imageUrl: IconEnum.NEW_PRODUCT,
+            },
           },
         };
       });
@@ -247,12 +286,49 @@ describe(`DiscordMessageCommandFeatureReleaseNotesConfigMutatorService`, (): voi
       });
     });
 
-    describe(`when the given config contains a release notes config`, (): void => {
+    describe(`when the given config contains a release notes config without the unknown release notes configuration`, (): void => {
       beforeEach((): void => {
         config = {
           releaseNotes: {
-            imageColor: ColorEnum.DESERT,
-            imageUrl: IconEnum.NEW_PRODUCT,
+            mixed: {
+              imageColor: ColorEnum.DESERT,
+              imageUrl: IconEnum.NEW_PRODUCT,
+            },
+          },
+        };
+      });
+
+      it(`should not update the config`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig();
+
+        expect(discordMessageCommandFeatureReleaseNotesConfigCoreService.releaseNotes).toStrictEqual({
+          imageColor: ColorEnum.DESERT,
+          imageUrl: IconEnum.NEW_PRODUCT,
+        } as IDiscordMessageCommandFeatureReleaseNotesConfig);
+      });
+
+      it(`should log about the config update`, (): void => {
+        expect.assertions(2);
+
+        service.updateConfig(config);
+
+        expect(loggerLogSpy).toHaveBeenCalledTimes(1);
+        expect(loggerLogSpy).toHaveBeenLastCalledWith(
+          `debug-● context-[DiscordMessageCommandFeatureReleaseNotesConfigMutatorService][now-format] text-configuration updated`
+        );
+      });
+    });
+
+    describe(`when the given config contains a release notes config with the unknown release notes configuration`, (): void => {
+      beforeEach((): void => {
+        config = {
+          releaseNotes: {
+            unknown: {
+              imageColor: ColorEnum.DESERT,
+              imageUrl: IconEnum.NEW_PRODUCT,
+            },
           },
         };
       });

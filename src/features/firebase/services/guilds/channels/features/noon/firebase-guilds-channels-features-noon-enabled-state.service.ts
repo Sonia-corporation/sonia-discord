@@ -6,8 +6,8 @@ import { ChalkService } from '../../../../../../logger/services/chalk/chalk.serv
 import { LoggerService } from '../../../../../../logger/services/logger.service';
 import { IFirebaseGuildChannelFeatureNoonVFinal } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-noon-v-final';
 import { IFirebaseGuildChannelFeatureVFinal } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-v-final';
-import { IFirebaseGuildChannel } from '../../../../../types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuildChannelVFinal } from '../../../../../types/guilds/channels/firebase-guild-channel-v-final';
+import { IFirebaseGuildChannel } from '../../../../../types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuildVFinal } from '../../../../../types/guilds/firebase-guild-v-final';
 import { FirebaseGuildsChannelsService } from '../../firebase-guilds-channels.service';
 import { FirebaseGuildsChannelsFeaturesService } from '../firebase-guilds-channels-features.service';

@@ -6,13 +6,13 @@ import { LoggerService } from '../../logger/services/logger.service';
 import { TimeService } from '../../time/services/time.service';
 import { IConfigUpdateArray } from '../interfaces/config-update-array';
 import { IConfigUpdateBoolean } from '../interfaces/config-update-boolean';
-import { IConfigUpdateDate } from '../interfaces/config-update-date';
 import { IConfigUpdateDateInternal } from '../interfaces/config-update-date-internal';
+import { IConfigUpdateDate } from '../interfaces/config-update-date';
 import { IConfigUpdateNumber } from '../interfaces/config-update-number';
-import { IConfigUpdateString } from '../interfaces/config-update-string';
 import { IConfigUpdateStringInternal } from '../interfaces/config-update-string-internal';
-import { IConfigUpdateStringOrArray } from '../interfaces/config-update-string-or-array';
 import { IConfigUpdateStringOrArrayInternal } from '../interfaces/config-update-string-or-array-internal';
+import { IConfigUpdateStringOrArray } from '../interfaces/config-update-string-or-array';
+import { IConfigUpdateString } from '../interfaces/config-update-string';
 import _ from 'lodash';
 
 export class ConfigService extends AbstractService {

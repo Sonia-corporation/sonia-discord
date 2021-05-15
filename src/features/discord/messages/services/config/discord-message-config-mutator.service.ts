@@ -16,6 +16,8 @@ import { IDiscordMessageCommandCookieConfig } from '../../../interfaces/discord-
 import { IDiscordMessageCommandErrorConfig } from '../../../interfaces/discord-message-command-error-config';
 import { IDiscordMessageCommandLunchConfig } from '../../../interfaces/discord-message-command-lunch-config';
 import { IDiscordMessageCommandReleaseNotesConfig } from '../../../interfaces/discord-message-command-release-notes-config';
+import { IDiscordMessageCommandReleaseNotesMixedConfig } from '../../../interfaces/discord-message-command-release-notes-mixed-config';
+import { IDiscordMessageCommandReleaseNotesUnknownConfig } from '../../../interfaces/discord-message-command-release-notes-unknown-config';
 import { IDiscordMessageCommandVersionConfig } from '../../../interfaces/discord-message-command-version-config';
 import { IDiscordMessageConfig } from '../../../interfaces/discord-message-config';
 import { IDiscordMessageErrorConfig } from '../../../interfaces/discord-message-error-config';
@@ -240,29 +242,165 @@ export class DiscordMessageConfigMutatorService extends AbstractConfigService<ID
     releaseNotes?: Readonly<IPartialNested<IDiscordMessageCommandReleaseNotesConfig>>
   ): void {
     if (!_.isNil(releaseNotes)) {
-      this.updateMessageCommandReleaseNotesImageColor(releaseNotes.imageColor);
-      this.updateMessageCommandReleaseNotesImageUrl(releaseNotes.imageUrl);
+      this.updateMessageCommandReleaseNotesBugFixes(releaseNotes.bugFixes);
+      this.updateMessageCommandReleaseNotesFeatures(releaseNotes.features);
+      this.updateMessageCommandReleaseNotesMixed(releaseNotes.mixed);
+      this.updateMessageCommandReleaseNotesPerformanceImprovements(releaseNotes.performanceImprovements);
+      this.updateMessageCommandReleaseNotesUnknown(releaseNotes.unknown);
     }
   }
 
-  public updateMessageCommandReleaseNotesImageColor(imageColor?: Readonly<ColorEnum>): void {
-    DiscordMessageConfigCoreService.getInstance().command.releaseNotes.imageColor = ConfigService.getInstance().getUpdatedNumber(
+  public updateMessageCommandReleaseNotesBugFixes(
+    releaseNotes?: Readonly<IPartialNested<IDiscordMessageCommandReleaseNotesMixedConfig>>
+  ): void {
+    if (!_.isNil(releaseNotes)) {
+      this.updateMessageCommandReleaseNotesBugFixesImageColor(releaseNotes.imageColor);
+      this.updateMessageCommandReleaseNotesBugFixesImageUrl(releaseNotes.imageUrl);
+    }
+  }
+
+  public updateMessageCommandReleaseNotesBugFixesImageColor(imageColor?: Readonly<ColorEnum>): void {
+    DiscordMessageConfigCoreService.getInstance().command.releaseNotes.bugFixes.imageColor = ConfigService.getInstance().getUpdatedNumber(
       {
         context: this._serviceName,
         newValue: imageColor,
-        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesImageColor(),
-        valueName: DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_IMAGE_COLOR,
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesBugFixesImageColor(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_BUG_FIXES_IMAGE_COLOR,
       }
     );
   }
 
-  public updateMessageCommandReleaseNotesImageUrl(imageUrl?: Readonly<IconEnum>): void {
-    DiscordMessageConfigCoreService.getInstance().command.releaseNotes.imageUrl = ConfigService.getInstance().getUpdatedString(
+  public updateMessageCommandReleaseNotesBugFixesImageUrl(imageUrl?: Readonly<IconEnum>): void {
+    DiscordMessageConfigCoreService.getInstance().command.releaseNotes.bugFixes.imageUrl = ConfigService.getInstance().getUpdatedString(
       {
         context: this._serviceName,
         newValue: imageUrl,
-        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesImageUrl(),
-        valueName: DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_IMAGE_URL,
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesBugFixesImageUrl(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_BUG_FIXES_IMAGE_URL,
+      }
+    );
+  }
+
+  public updateMessageCommandReleaseNotesFeatures(
+    releaseNotes?: Readonly<IPartialNested<IDiscordMessageCommandReleaseNotesMixedConfig>>
+  ): void {
+    if (!_.isNil(releaseNotes)) {
+      this.updateMessageCommandReleaseNotesFeaturesImageColor(releaseNotes.imageColor);
+      this.updateMessageCommandReleaseNotesFeaturesImageUrl(releaseNotes.imageUrl);
+    }
+  }
+
+  public updateMessageCommandReleaseNotesFeaturesImageColor(imageColor?: Readonly<ColorEnum>): void {
+    DiscordMessageConfigCoreService.getInstance().command.releaseNotes.features.imageColor = ConfigService.getInstance().getUpdatedNumber(
+      {
+        context: this._serviceName,
+        newValue: imageColor,
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesFeaturesImageColor(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_FEATURES_IMAGE_COLOR,
+      }
+    );
+  }
+
+  public updateMessageCommandReleaseNotesFeaturesImageUrl(imageUrl?: Readonly<IconEnum>): void {
+    DiscordMessageConfigCoreService.getInstance().command.releaseNotes.features.imageUrl = ConfigService.getInstance().getUpdatedString(
+      {
+        context: this._serviceName,
+        newValue: imageUrl,
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesFeaturesImageUrl(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_FEATURES_IMAGE_URL,
+      }
+    );
+  }
+
+  public updateMessageCommandReleaseNotesMixed(
+    releaseNotes?: Readonly<IPartialNested<IDiscordMessageCommandReleaseNotesMixedConfig>>
+  ): void {
+    if (!_.isNil(releaseNotes)) {
+      this.updateMessageCommandReleaseNotesMixedImageColor(releaseNotes.imageColor);
+      this.updateMessageCommandReleaseNotesMixedImageUrl(releaseNotes.imageUrl);
+    }
+  }
+
+  public updateMessageCommandReleaseNotesMixedImageColor(imageColor?: Readonly<ColorEnum>): void {
+    DiscordMessageConfigCoreService.getInstance().command.releaseNotes.mixed.imageColor = ConfigService.getInstance().getUpdatedNumber(
+      {
+        context: this._serviceName,
+        newValue: imageColor,
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesMixedImageColor(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_MIXED_IMAGE_COLOR,
+      }
+    );
+  }
+
+  public updateMessageCommandReleaseNotesMixedImageUrl(imageUrl?: Readonly<IconEnum>): void {
+    DiscordMessageConfigCoreService.getInstance().command.releaseNotes.mixed.imageUrl = ConfigService.getInstance().getUpdatedString(
+      {
+        context: this._serviceName,
+        newValue: imageUrl,
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesMixedImageUrl(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_MIXED_IMAGE_URL,
+      }
+    );
+  }
+
+  public updateMessageCommandReleaseNotesPerformanceImprovements(
+    releaseNotes?: Readonly<IPartialNested<IDiscordMessageCommandReleaseNotesMixedConfig>>
+  ): void {
+    if (!_.isNil(releaseNotes)) {
+      this.updateMessageCommandReleaseNotesPerformanceImprovementsImageColor(releaseNotes.imageColor);
+      this.updateMessageCommandReleaseNotesPerformanceImprovementsImageUrl(releaseNotes.imageUrl);
+    }
+  }
+
+  public updateMessageCommandReleaseNotesPerformanceImprovementsImageColor(imageColor?: Readonly<ColorEnum>): void {
+    DiscordMessageConfigCoreService.getInstance().command.releaseNotes.performanceImprovements.imageColor = ConfigService.getInstance().getUpdatedNumber(
+      {
+        context: this._serviceName,
+        newValue: imageColor,
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesPerformanceImprovementsImageColor(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_PERFORMANCE_IMPROVEMENTS_IMAGE_COLOR,
+      }
+    );
+  }
+
+  public updateMessageCommandReleaseNotesPerformanceImprovementsImageUrl(imageUrl?: Readonly<IconEnum>): void {
+    DiscordMessageConfigCoreService.getInstance().command.releaseNotes.performanceImprovements.imageUrl = ConfigService.getInstance().getUpdatedString(
+      {
+        context: this._serviceName,
+        newValue: imageUrl,
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesPerformanceImprovementsImageUrl(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_PERFORMANCE_IMPROVEMENTS_IMAGE_URL,
+      }
+    );
+  }
+
+  public updateMessageCommandReleaseNotesUnknown(
+    releaseNotes?: Readonly<IPartialNested<IDiscordMessageCommandReleaseNotesUnknownConfig>>
+  ): void {
+    if (!_.isNil(releaseNotes)) {
+      this.updateMessageCommandReleaseNotesUnknownImageColor(releaseNotes.imageColor);
+      this.updateMessageCommandReleaseNotesUnknownImageUrl(releaseNotes.imageUrl);
+    }
+  }
+
+  public updateMessageCommandReleaseNotesUnknownImageColor(imageColor?: Readonly<ColorEnum>): void {
+    DiscordMessageConfigCoreService.getInstance().command.releaseNotes.unknown.imageColor = ConfigService.getInstance().getUpdatedNumber(
+      {
+        context: this._serviceName,
+        newValue: imageColor,
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesUnknownImageColor(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_UNKNOWN_IMAGE_COLOR,
+      }
+    );
+  }
+
+  public updateMessageCommandReleaseNotesUnknownImageUrl(imageUrl?: Readonly<IconEnum>): void {
+    DiscordMessageConfigCoreService.getInstance().command.releaseNotes.unknown.imageUrl = ConfigService.getInstance().getUpdatedString(
+      {
+        context: this._serviceName,
+        newValue: imageUrl,
+        oldValue: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesUnknownImageUrl(),
+        valueName: DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_UNKNOWN_IMAGE_URL,
       }
     );
   }

@@ -137,20 +137,92 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
     expect(service.command.prefix).toStrictEqual(`!`);
   });
 
-  it(`should have a specific color for the image of the release notes command`, (): void => {
+  it(`should have a specific color for the image of the release notes bug fixes command`, (): void => {
     expect.assertions(1);
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.imageColor).toStrictEqual(15718590);
+    expect(service.command.releaseNotes.bugFixes.imageColor).toStrictEqual(9146008);
   });
 
-  it(`should have a specific url for the image of the release notes command`, (): void => {
+  it(`should have a specific url for the image of the release notes bug fixes command`, (): void => {
     expect.assertions(1);
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.imageUrl).toStrictEqual(`https://i.ibb.co/9p3Q17S/icons8-new-product-512.png`);
+    expect(service.command.releaseNotes.bugFixes.imageUrl).toStrictEqual(
+      `https://i.ibb.co/CmxGZG1/icons8-deadbug-512.png`
+    );
+  });
+
+  it(`should have a specific color for the image of the release notes features command`, (): void => {
+    expect.assertions(1);
+
+    service = DiscordMessageConfigCoreService.getInstance();
+
+    expect(service.command.releaseNotes.features.imageColor).toStrictEqual(15562905);
+  });
+
+  it(`should have a specific url for the image of the release notes features command`, (): void => {
+    expect.assertions(1);
+
+    service = DiscordMessageConfigCoreService.getInstance();
+
+    expect(service.command.releaseNotes.features.imageUrl).toStrictEqual(`https://i.ibb.co/YjzVm0c/icons8-new-512.png`);
+  });
+
+  it(`should have a specific color for the image of the release notes mixed command`, (): void => {
+    expect.assertions(1);
+
+    service = DiscordMessageConfigCoreService.getInstance();
+
+    expect(service.command.releaseNotes.mixed.imageColor).toStrictEqual(15718590);
+  });
+
+  it(`should have a specific url for the image of the release notes mixed command`, (): void => {
+    expect.assertions(1);
+
+    service = DiscordMessageConfigCoreService.getInstance();
+
+    expect(service.command.releaseNotes.mixed.imageUrl).toStrictEqual(
+      `https://i.ibb.co/9p3Q17S/icons8-new-product-512.png`
+    );
+  });
+
+  it(`should have a specific color for the image of the release notes performance improvements command`, (): void => {
+    expect.assertions(1);
+
+    service = DiscordMessageConfigCoreService.getInstance();
+
+    expect(service.command.releaseNotes.performanceImprovements.imageColor).toStrictEqual(15562905);
+  });
+
+  it(`should have a specific url for the image of the release notes performance improvements command`, (): void => {
+    expect.assertions(1);
+
+    service = DiscordMessageConfigCoreService.getInstance();
+
+    expect(service.command.releaseNotes.performanceImprovements.imageUrl).toStrictEqual(
+      `https://i.ibb.co/JkmQvS1/icons8-the-flash-sign-512.png`
+    );
+  });
+
+  it(`should have a specific color for the image of the release notes unknown command`, (): void => {
+    expect.assertions(1);
+
+    service = DiscordMessageConfigCoreService.getInstance();
+
+    expect(service.command.releaseNotes.unknown.imageColor).toStrictEqual(15718590);
+  });
+
+  it(`should have a specific url for the image of the release notes unknown command`, (): void => {
+    expect.assertions(1);
+
+    service = DiscordMessageConfigCoreService.getInstance();
+
+    expect(service.command.releaseNotes.unknown.imageUrl).toStrictEqual(
+      `https://i.ibb.co/9p3Q17S/icons8-new-product-512.png`
+    );
   });
 
   it(`should have a specific color for the image of the version command`, (): void => {

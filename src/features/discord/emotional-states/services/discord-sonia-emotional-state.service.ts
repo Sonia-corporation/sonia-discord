@@ -6,8 +6,8 @@ import { getEveryHourScheduleRule } from '../../../../functions/schedule/get-eve
 import { getRandomRangeMinuteScheduleRule } from '../../../../functions/schedule/get-random-range-minute-schedule-rule';
 import { ChalkService } from '../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../logger/services/logger.service';
-import { getNextJobDate } from '../../../schedules/functions/get-next-job-date';
 import { getNextJobDateHumanized } from '../../../schedules/functions/get-next-job-date-humanized';
+import { getNextJobDate } from '../../../schedules/functions/get-next-job-date';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DISCORD_EMOTIONAL_STATE_MESSAGES } from '../constants/discord-emotional-state-messages';
 import { DiscordSoniaEmotionalStateEnum } from '../enums/discord-sonia-emotional-state.enum';

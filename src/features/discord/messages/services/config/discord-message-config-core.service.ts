@@ -42,8 +42,26 @@ export class DiscordMessageConfigCoreService extends AbstractService implements 
     },
     prefix: `!`,
     releaseNotes: {
-      imageColor: ColorEnum.DESERT,
-      imageUrl: IconEnum.NEW_PRODUCT,
+      bugFixes: {
+        imageColor: ColorEnum.DEAD,
+        imageUrl: IconEnum.DEADBUG,
+      },
+      features: {
+        imageColor: ColorEnum.CANDY,
+        imageUrl: IconEnum.NEW,
+      },
+      mixed: {
+        imageColor: ColorEnum.DESERT,
+        imageUrl: IconEnum.NEW_PRODUCT,
+      },
+      performanceImprovements: {
+        imageColor: ColorEnum.CANDY,
+        imageUrl: IconEnum.THE_FLASH_SIGN,
+      },
+      unknown: {
+        imageColor: ColorEnum.DESERT,
+        imageUrl: IconEnum.NEW_PRODUCT,
+      },
     },
     version: {
       imageColor: ColorEnum.SKY,

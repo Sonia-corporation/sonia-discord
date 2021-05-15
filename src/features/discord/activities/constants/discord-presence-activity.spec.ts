@@ -1,6 +1,6 @@
-import { DISCORD_PRESENCE_ACTIVITY } from './discord-presence-activity';
 import { DISCORD_PRESENCE_ACTIVITY_LISTENING } from './discord-presence-activity-listening';
 import { DISCORD_PRESENCE_ACTIVITY_PLAYING } from './discord-presence-activity-playing';
+import { DISCORD_PRESENCE_ACTIVITY } from './discord-presence-activity';
 import { DISCORD_PRESENCE_ACTIVITY_WATCHING } from './discord-presence-activity-watching';
 import { IDiscordPresenceActivity } from '../interfaces/discord-presence-activity';
 

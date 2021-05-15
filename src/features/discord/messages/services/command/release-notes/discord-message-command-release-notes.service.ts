@@ -1,7 +1,9 @@
 import { AbstractService } from '../../../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../../../enums/service-name.enum';
+import { AppConfigReleaseTypeEnum } from '../../../../../app/enums/app-config-release-type.enum';
 import { AppConfigQueryService } from '../../../../../app/services/config/app-config-query.service';
 import { AppConfigService } from '../../../../../app/services/config/app-config.service';
+import { IAppReleaseTypeResponsesFactoryPattern } from '../../../../../app/types/app-release-type-responses-factory-pattern';
 import { LoggerService } from '../../../../../logger/services/logger.service';
 import { DiscordSoniaService } from '../../../../users/services/discord-sonia.service';
 import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
@@ -73,9 +75,36 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
   }
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
-    return {
-      url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesImageUrl(),
+    const releaseType: AppConfigReleaseTypeEnum = AppConfigService.getInstance().getReleaseType();
+    const responsesFactoryPattern: IAppReleaseTypeResponsesFactoryPattern<MessageEmbedThumbnail> = {
+      [AppConfigReleaseTypeEnum.BUG_FIXES](): MessageEmbedThumbnail {
+        return {
+          url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesBugFixesImageUrl(),
+        };
+      },
+      [AppConfigReleaseTypeEnum.FEATURES](): MessageEmbedThumbnail {
+        return {
+          url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesFeaturesImageUrl(),
+        };
+      },
+      [AppConfigReleaseTypeEnum.MIXED](): MessageEmbedThumbnail {
+        return {
+          url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesMixedImageUrl(),
+        };
+      },
+      [AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS](): MessageEmbedThumbnail {
+        return {
+          url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesPerformanceImprovementsImageUrl(),
+        };
+      },
+      [AppConfigReleaseTypeEnum.UNKNOWN](): MessageEmbedThumbnail {
+        return {
+          url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesUnknownImageUrl(),
+        };
+      },
     };
+
+    return responsesFactoryPattern[releaseType]();
   }
 
   private _getMessageEmbedFooter(): MessageEmbedFooter {
@@ -92,7 +121,26 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
   }
 
   private _getMessageEmbedColor(): number {
-    return DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesImageColor();
+    const releaseType: AppConfigReleaseTypeEnum = AppConfigService.getInstance().getReleaseType();
+    const responsesFactoryPattern: IAppReleaseTypeResponsesFactoryPattern<number> = {
+      [AppConfigReleaseTypeEnum.BUG_FIXES](): number {
+        return DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesBugFixesImageColor();
+      },
+      [AppConfigReleaseTypeEnum.FEATURES](): number {
+        return DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesFeaturesImageColor();
+      },
+      [AppConfigReleaseTypeEnum.MIXED](): number {
+        return DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesMixedImageColor();
+      },
+      [AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS](): number {
+        return DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesPerformanceImprovementsImageColor();
+      },
+      [AppConfigReleaseTypeEnum.UNKNOWN](): number {
+        return DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesUnknownImageColor();
+      },
+    };
+
+    return responsesFactoryPattern[releaseType]();
   }
 
   private _getMessageEmbedTimestamp(): Date {
