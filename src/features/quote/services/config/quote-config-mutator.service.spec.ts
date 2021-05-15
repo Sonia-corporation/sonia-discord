@@ -1,16 +1,19 @@
 import { QuoteConfigCoreService } from './quote-config-core.service';
 import { QuoteConfigMutatorService } from './quote-config-mutator.service';
 import { QuoteConfigService } from './quote-config.service';
+import { ColorEnum } from '../../../../enums/color.enum';
+import { IconEnum } from '../../../../enums/icon.enum';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { IPartialNested } from '../../../../types/partial-nested';
+import { IConfigUpdateNumber } from '../../../config/interfaces/config-update-number';
 import { IConfigUpdateString } from '../../../config/interfaces/config-update-string';
 import { ConfigService } from '../../../config/services/config.service';
 import { CoreEventService } from '../../../core/services/core-event.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { IQuoteConfig } from '../../interfaces/quote-config';
 
-jest.mock(`../../../../time/services/time.service`);
-jest.mock(`../../../../logger/services/chalk/chalk.service`);
+jest.mock(`../../../time/services/time.service`);
+jest.mock(`../../../logger/services/chalk/chalk.service`);
 
 describe(`QuoteConfigMutatorService`, (): void => {
   let service: QuoteConfigMutatorService;
@@ -30,6 +33,8 @@ describe(`QuoteConfigMutatorService`, (): void => {
     beforeEach((): void => {
       config = {
         apiKey: `dummy-api-key`,
+        imageColor: ColorEnum.SUN,
+        imageUrl: IconEnum.ERROR,
       };
     });
 
@@ -85,12 +90,32 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
         expect(quoteConfigCoreService.apiKey).toStrictEqual(`apiKey`);
       });
+
+      it(`should not update the current image color`, (): void => {
+        expect.assertions(1);
+        quoteConfigCoreService.imageColor = ColorEnum.SUN;
+
+        service = new QuoteConfigMutatorService(config);
+
+        expect(quoteConfigCoreService.imageColor).toStrictEqual(ColorEnum.SUN);
+      });
+
+      it(`should not update the current image url`, (): void => {
+        expect.assertions(1);
+        quoteConfigCoreService.imageUrl = IconEnum.ERROR;
+
+        service = new QuoteConfigMutatorService(config);
+
+        expect(quoteConfigCoreService.imageUrl).toStrictEqual(IconEnum.ERROR);
+      });
     });
 
     describe(`when the given config is a complete object`, (): void => {
       beforeEach((): void => {
         config = {
           apiKey: `dummy-api-key`,
+          imageColor: ColorEnum.SUN,
+          imageUrl: IconEnum.ERROR,
         };
       });
 
@@ -101,6 +126,24 @@ describe(`QuoteConfigMutatorService`, (): void => {
         service = new QuoteConfigMutatorService(config);
 
         expect(quoteConfigCoreService.apiKey).toStrictEqual(`dummy-api-key`);
+      });
+
+      it(`should override the image color`, (): void => {
+        expect.assertions(1);
+        quoteConfigCoreService.imageColor = ColorEnum.DEAD;
+
+        service = new QuoteConfigMutatorService(config);
+
+        expect(quoteConfigCoreService.imageColor).toStrictEqual(ColorEnum.SUN);
+      });
+
+      it(`should override the image url`, (): void => {
+        expect.assertions(1);
+        quoteConfigCoreService.imageUrl = IconEnum.MOTIVATION_DAILY_QUOTES;
+
+        service = new QuoteConfigMutatorService(config);
+
+        expect(quoteConfigCoreService.imageUrl).toStrictEqual(IconEnum.ERROR);
       });
     });
   });
@@ -154,16 +197,20 @@ describe(`QuoteConfigMutatorService`, (): void => {
     beforeEach((): void => {
       service = QuoteConfigMutatorService.getInstance();
       quoteConfigCoreService.apiKey = `dummy-api-key`;
+      quoteConfigCoreService.imageColor = ColorEnum.CANDY;
+      quoteConfigCoreService.imageUrl = IconEnum.MOTIVATION_DAILY_QUOTES;
 
       loggerLogSpy = jest.spyOn(console, `log`).mockImplementation();
     });
 
     it(`should not update the config`, (): void => {
-      expect.assertions(5);
+      expect.assertions(3);
 
       service.updateConfig();
 
       expect(quoteConfigCoreService.apiKey).toStrictEqual(`dummy-api-key`);
+      expect(quoteConfigCoreService.imageColor).toStrictEqual(ColorEnum.CANDY);
+      expect(quoteConfigCoreService.imageUrl).toStrictEqual(IconEnum.MOTIVATION_DAILY_QUOTES);
     });
 
     it(`should not log about the config update`, (): void => {
@@ -180,11 +227,13 @@ describe(`QuoteConfigMutatorService`, (): void => {
       });
 
       it(`should not update the config`, (): void => {
-        expect.assertions(5);
+        expect.assertions(3);
 
         service.updateConfig();
 
         expect(quoteConfigCoreService.apiKey).toStrictEqual(`dummy-api-key`);
+        expect(quoteConfigCoreService.imageColor).toStrictEqual(ColorEnum.CANDY);
+        expect(quoteConfigCoreService.imageUrl).toStrictEqual(IconEnum.MOTIVATION_DAILY_QUOTES);
       });
 
       it(`should not log about the config update`, (): void => {
@@ -200,6 +249,8 @@ describe(`QuoteConfigMutatorService`, (): void => {
       beforeEach((): void => {
         config = {
           apiKey: `apiKey`,
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.MOTIVATION_DAILY_QUOTES,
         };
       });
 
@@ -211,12 +262,28 @@ describe(`QuoteConfigMutatorService`, (): void => {
         expect(quoteConfigCoreService.apiKey).toStrictEqual(`apiKey`);
       });
 
+      it(`should update the config image color`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(quoteConfigCoreService.imageColor).toStrictEqual(ColorEnum.CANDY);
+      });
+
+      it(`should update the config image url`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(quoteConfigCoreService.imageUrl).toStrictEqual(IconEnum.MOTIVATION_DAILY_QUOTES);
+      });
+
       it(`should log about the config update`, (): void => {
         expect.assertions(2);
 
         service.updateConfig(config);
 
-        expect(loggerLogSpy).toHaveBeenCalledTimes(2);
+        expect(loggerLogSpy).toHaveBeenCalledTimes(4);
         expect(loggerLogSpy).toHaveBeenLastCalledWith(
           `debug-● context-[QuoteConfigMutatorService][now-format] text-configuration updated`
         );
@@ -245,6 +312,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `QuoteConfigMutatorService`,
+        isValueHidden: true,
         newValue: `dummy-api-key`,
         oldValue: `apiKey`,
         valueName: `api key`,
@@ -257,6 +325,80 @@ describe(`QuoteConfigMutatorService`, (): void => {
       service.updateApiKey(apiKey);
 
       expect(quoteConfigCoreService.apiKey).toStrictEqual(`dummy-api-key`);
+    });
+  });
+
+  describe(`updateImageColor()`, (): void => {
+    let imageColor: ColorEnum;
+
+    let configServiceGetUpdatedNumberSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = QuoteConfigMutatorService.getInstance();
+      imageColor = ColorEnum.CANDY;
+      quoteConfigCoreService.imageColor = ColorEnum.DEAD;
+
+      configServiceGetUpdatedNumberSpy = jest.spyOn(configService, `getUpdatedNumber`).mockReturnValue(ColorEnum.CANDY);
+    });
+
+    it(`should get the updated number`, (): void => {
+      expect.assertions(2);
+
+      service.updateImageColor(imageColor);
+
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
+        context: `QuoteConfigMutatorService`,
+        newValue: ColorEnum.CANDY,
+        oldValue: ColorEnum.DEAD,
+        valueName: `image color`,
+      } as IConfigUpdateNumber);
+    });
+
+    it(`should update the config image color with the updated number`, (): void => {
+      expect.assertions(1);
+
+      service.updateImageColor(imageColor);
+
+      expect(quoteConfigCoreService.imageColor).toStrictEqual(ColorEnum.CANDY);
+    });
+  });
+
+  describe(`updateImageUrl()`, (): void => {
+    let imageUrl: IconEnum;
+
+    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = QuoteConfigMutatorService.getInstance();
+      imageUrl = IconEnum.MOTIVATION_DAILY_QUOTES;
+      quoteConfigCoreService.imageUrl = IconEnum.ERROR;
+
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(IconEnum.MOTIVATION_DAILY_QUOTES);
+    });
+
+    it(`should get the updated string`, (): void => {
+      expect.assertions(2);
+
+      service.updateImageUrl(imageUrl);
+
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+        context: `QuoteConfigMutatorService`,
+        newValue: IconEnum.MOTIVATION_DAILY_QUOTES,
+        oldValue: IconEnum.ERROR,
+        valueName: `image url`,
+      } as IConfigUpdateString);
+    });
+
+    it(`should update the config image url with the updated string`, (): void => {
+      expect.assertions(1);
+
+      service.updateImageUrl(imageUrl);
+
+      expect(quoteConfigCoreService.imageUrl).toStrictEqual(IconEnum.MOTIVATION_DAILY_QUOTES);
     });
   });
 });

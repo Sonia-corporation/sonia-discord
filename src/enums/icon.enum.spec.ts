@@ -64,6 +64,14 @@ describe(`IconEnum`, (): void => {
     expect(IconEnum.INFORMATION).toStrictEqual(`https://i.ibb.co/vLSnVk6/icons8-information-512.png`);
   });
 
+  it(`should have a member "MOTIVATION_DAILY_QUOTES"`, (): void => {
+    expect.assertions(1);
+
+    expect(IconEnum.MOTIVATION_DAILY_QUOTES).toStrictEqual(
+      `https://i.ibb.co/qJDxmc8/icons8-motivation-daily-quotes-512.png`
+    );
+  });
+
   it(`should have a member "NEW"`, (): void => {
     expect.assertions(1);
 

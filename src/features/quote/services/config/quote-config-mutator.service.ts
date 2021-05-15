@@ -1,6 +1,8 @@
 import { QuoteConfigCoreService } from './quote-config-core.service';
 import { QuoteConfigService } from './quote-config.service';
 import { AbstractConfigService } from '../../../../classes/services/abstract-config.service';
+import { ColorEnum } from '../../../../enums/color.enum';
+import { IconEnum } from '../../../../enums/icon.enum';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { IPartialNested } from '../../../../types/partial-nested';
 import { ConfigService } from '../../../config/services/config.service';
@@ -34,6 +36,8 @@ export class QuoteConfigMutatorService extends AbstractConfigService<IQuoteConfi
   public updateConfig(config?: Readonly<IPartialNested<IQuoteConfig>>): void {
     if (!_.isNil(config)) {
       this.updateApiKey(config.apiKey);
+      this.updateImageColor(config.imageColor);
+      this.updateImageUrl(config.imageUrl);
 
       LoggerService.getInstance().debug({
         context: this._serviceName,
@@ -49,6 +53,24 @@ export class QuoteConfigMutatorService extends AbstractConfigService<IQuoteConfi
       newValue: apiKey,
       oldValue: QuoteConfigService.getInstance().getApiKey(),
       valueName: QuoteConfigValueNameEnum.API_KEY,
+    });
+  }
+
+  public updateImageColor(imageColor?: Readonly<ColorEnum>): void {
+    QuoteConfigCoreService.getInstance().imageColor = ConfigService.getInstance().getUpdatedNumber({
+      context: this._serviceName,
+      newValue: imageColor,
+      oldValue: QuoteConfigService.getInstance().getImageColor(),
+      valueName: QuoteConfigValueNameEnum.IMAGE_COLOR,
+    });
+  }
+
+  public updateImageUrl(imageUrl?: Readonly<IconEnum>): void {
+    QuoteConfigCoreService.getInstance().imageUrl = ConfigService.getInstance().getUpdatedString({
+      context: this._serviceName,
+      newValue: imageUrl,
+      oldValue: QuoteConfigService.getInstance().getImageUrl(),
+      valueName: QuoteConfigValueNameEnum.IMAGE_URL,
     });
   }
 }

@@ -1,5 +1,7 @@
 import { QuoteConfigCoreService } from './quote-config-core.service';
 import { QuoteConfigService } from './quote-config.service';
+import { ColorEnum } from '../../../../enums/color.enum';
+import { IconEnum } from '../../../../enums/icon.enum';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../core/services/core-event.service';
 import { IQuoteConfig } from '../../interfaces/quote-config';
@@ -55,6 +57,8 @@ describe(`QuoteConfigService`, (): void => {
     beforeEach((): void => {
       service = QuoteConfigService.getInstance();
       quoteConfigCoreService.apiKey = `dummy-api-key`;
+      quoteConfigCoreService.imageColor = ColorEnum.CANDY;
+      quoteConfigCoreService.imageUrl = IconEnum.ERROR;
     });
 
     it(`should return the config`, (): void => {
@@ -64,6 +68,8 @@ describe(`QuoteConfigService`, (): void => {
 
       expect(result).toStrictEqual({
         apiKey: `dummy-api-key`,
+        imageColor: ColorEnum.CANDY,
+        imageUrl: IconEnum.ERROR,
       } as IQuoteConfig);
     });
   });
@@ -80,6 +86,36 @@ describe(`QuoteConfigService`, (): void => {
       const result = service.getApiKey();
 
       expect(result).toStrictEqual(`dummy-api-key`);
+    });
+  });
+
+  describe(`getImageColor()`, (): void => {
+    beforeEach((): void => {
+      service = QuoteConfigService.getInstance();
+      quoteConfigCoreService.imageColor = ColorEnum.CANDY;
+    });
+
+    it(`should return the config image color`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getImageColor();
+
+      expect(result).toStrictEqual(ColorEnum.CANDY);
+    });
+  });
+
+  describe(`getImageUrl()`, (): void => {
+    beforeEach((): void => {
+      service = QuoteConfigService.getInstance();
+      quoteConfigCoreService.imageUrl = IconEnum.ERROR;
+    });
+
+    it(`should return the config image url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getImageUrl();
+
+      expect(result).toStrictEqual(IconEnum.ERROR);
     });
   });
 });

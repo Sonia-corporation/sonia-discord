@@ -8,6 +8,7 @@ export enum IconEnum {
   ERROR = `https://i.ibb.co/5jZmzSB/icons8-error-512.png`,
   GIRL = `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`,
   INFORMATION = `https://i.ibb.co/vLSnVk6/icons8-information-512.png`,
+  MOTIVATION_DAILY_QUOTES = `https://i.ibb.co/qJDxmc8/icons8-motivation-daily-quotes-512.png`,
   NEW = `https://i.ibb.co/YjzVm0c/icons8-new-512.png`,
   NEW_PRODUCT = `https://i.ibb.co/9p3Q17S/icons8-new-product-512.png`,
   RESTAURANT = `https://i.ibb.co/vXwNzWD/icons8-restaurant-512.png`,

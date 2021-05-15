@@ -54,4 +54,20 @@ describe(`QuoteConfigCoreService`, (): void => {
 
     expect(service.apiKey).toStrictEqual(`unknown`);
   });
+
+  it(`should have an image color`, (): void => {
+    expect.assertions(1);
+
+    service = QuoteConfigCoreService.getInstance();
+
+    expect(service.imageColor).toStrictEqual(9146008);
+  });
+
+  it(`should have an image url`, (): void => {
+    expect.assertions(1);
+
+    service = QuoteConfigCoreService.getInstance();
+
+    expect(service.imageUrl).toStrictEqual(`https://i.ibb.co/qJDxmc8/icons8-motivation-daily-quotes-512.png`);
+  });
 });

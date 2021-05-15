@@ -1,5 +1,7 @@
 import { QuoteConfigCoreService } from './quote-config-core.service';
 import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ColorEnum } from '../../../../enums/color.enum';
+import { IconEnum } from '../../../../enums/icon.enum';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { IQuoteConfig } from '../../interfaces/quote-config';
 import _ from 'lodash';
@@ -22,10 +24,20 @@ export class QuoteConfigService extends AbstractService {
   public getConfig(): IQuoteConfig {
     return {
       apiKey: this.getApiKey(),
+      imageColor: this.getImageColor(),
+      imageUrl: this.getImageUrl(),
     };
   }
 
   public getApiKey(): string {
     return QuoteConfigCoreService.getInstance().apiKey;
+  }
+
+  public getImageColor(): ColorEnum {
+    return QuoteConfigCoreService.getInstance().imageColor;
+  }
+
+  public getImageUrl(): IconEnum {
+    return QuoteConfigCoreService.getInstance().imageUrl;
   }
 }
