@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.97.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.96.0...1.97.0) (2021-05-15)
+
+
+### :rocket: Features
+
+* **release-notes:** add a dedicated UI per release type ([cd6270e](https://github.com/Sonia-corporation/sonia-discord/commit/cd6270e226bce4fc5593a78ea344e6b234bdc025))
+
 # [1.96.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.95.1...1.96.0) (2021-05-12)
 
 
