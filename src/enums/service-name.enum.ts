@@ -113,6 +113,7 @@ export enum ServiceNameEnum {
   QUOTE_CONFIG_CORE_SERVICE = `QuoteConfigCoreService`,
   QUOTE_CONFIG_MUTATOR_SERVICE = `QuoteConfigMutatorService`,
   QUOTE_CONFIG_SERVICE = `QuoteConfigService`,
+  QUOTE_ERROR_API_SERVICE = `QuoteErrorApiService`,
   QUOTE_RANDOM_SERVICE = `QuoteRandomService`,
   RELEASE_TYPE_SERVICE = `ReleaseTypeService`,
   SERVER_CONFIG_CORE_SERVICE = `ServerConfigCoreService`,

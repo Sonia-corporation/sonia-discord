@@ -2,12 +2,10 @@ import { QuoteConfigService } from './config/quote-config.service';
 import { AbstractService } from '../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../enums/service-name.enum';
 import { IObject } from '../../../types/object';
-import { DiscordGuildSoniaChannelNameEnum } from '../../discord/guilds/enums/discord-guild-sonia-channel-name.enum';
-import { DiscordGuildSoniaService } from '../../discord/guilds/services/discord-guild-sonia.service';
-import { DiscordLoggerErrorService } from '../../discord/logger/services/discord-logger-error.service';
 import { ChalkService } from '../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../logger/services/logger.service';
 import { QUOTE_API_URL } from '../constants/quote-api-url';
+import { IQuoteErrorApi } from '../interfaces/quote-error-api';
 import { IQuoteOfTheDayApi } from '../interfaces/quote-of-the-day-api';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Snowflake } from 'discord.js';
@@ -33,13 +31,12 @@ export class QuoteApiService extends AbstractService {
    * Call the endpoint to have a quote of the day
    *
    * Logs in case of error
-   * Also send a message in the Discord errors channel
    *
    * @param {Readonly<Snowflake>} messageId The original id of the message (to enhance the logs)
    *
-   * @returns {Promise<IQuoteOfTheDayApi>} A promise containing a quote of the day
+   * @returns {Promise<IQuoteOfTheDayApi | IQuoteErrorApi>} A promise containing a quote of the day or an error
    */
-  public getQuoteOfTheDay(messageId: Readonly<Snowflake>): Promise<IQuoteOfTheDayApi> {
+  public getQuoteOfTheDay(messageId: Readonly<Snowflake>): Promise<IQuoteOfTheDayApi | IQuoteErrorApi> {
     const url: string = this._getUrl(`qotd`);
 
     LoggerService.getInstance().debug({
@@ -51,28 +48,19 @@ export class QuoteApiService extends AbstractService {
       ),
     });
 
-    return this._request<IQuoteOfTheDayApi>({
+    return this._request<IQuoteOfTheDayApi | IQuoteErrorApi>({
       method: `get`,
       url,
     })
-      .then(
-        ({ data }: Readonly<AxiosResponse<IQuoteOfTheDayApi>>): IQuoteOfTheDayApi => {
-          LoggerService.getInstance().debug({
-            context: this._serviceName,
-            hasExtendedContext: true,
-            message: LoggerService.getInstance().getSnowflakeContext(
-              messageId,
-              `${ChalkService.getInstance().value(url)} endpoint succeeded`
-            ),
-          });
+      .then(({ data }: Readonly<AxiosResponse<IQuoteOfTheDayApi | IQuoteErrorApi>>):
+        | IQuoteOfTheDayApi
+        | IQuoteErrorApi => {
+        this._handleSuccess(url, messageId);
 
-          return data;
-        }
-      )
+        return data;
+      })
       .catch((error: Readonly<Error>): never => {
-        this._logError(error, url, messageId);
-
-        throw new Error(error.message);
+        this._handleError(error, url, messageId);
       });
   }
 
@@ -95,7 +83,37 @@ export class QuoteApiService extends AbstractService {
     };
   }
 
-  private _logError(error: Readonly<Error>, url: Readonly<string>, messageId: Readonly<Snowflake>): void {
+  /**
+   * @description
+   * Log the success
+   *
+   * @param {Readonly<string>} url The original endpoint called
+   * @param {Readonly<Snowflake>} messageId The original id of the message (to enhance the logs)
+   *
+   * @private
+   */
+  private _handleSuccess(url: Readonly<string>, messageId: Readonly<Snowflake>): void {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(
+        messageId,
+        `${ChalkService.getInstance().value(url)} endpoint succeeded`
+      ),
+    });
+  }
+
+  /**
+   * @description
+   * Log the error
+   *
+   * @param {Readonly<Error>} error The original http error
+   * @param {Readonly<string>} url The original endpoint called
+   * @param {Readonly<Snowflake>} messageId The original id of the message (to enhance the logs)
+   *
+   * @private
+   */
+  private _handleError(error: Readonly<Error>, url: Readonly<string>, messageId: Readonly<Snowflake>): never {
     LoggerService.getInstance().error({
       context: this._serviceName,
       hasExtendedContext: true,
@@ -104,14 +122,7 @@ export class QuoteApiService extends AbstractService {
         `${ChalkService.getInstance().value(url)} endpoint failed`
       ),
     });
-    LoggerService.getInstance().error({
-      context: this._serviceName,
-      hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(messageId, error),
-    });
-    DiscordGuildSoniaService.getInstance().sendMessageToChannel({
-      channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-      messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(error),
-    });
+
+    throw new Error(error.message);
   }
 }

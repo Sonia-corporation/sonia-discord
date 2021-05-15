@@ -1,8 +1,11 @@
 import { AbstractService } from '../../../../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../../../../enums/service-name.enum';
 import { LoggerService } from '../../../../../../logger/services/logger.service';
+import { isQuoteErrorApi } from '../../../../../../quote/functions/is-quote-error-api';
+import { IQuoteErrorApi } from '../../../../../../quote/interfaces/quote-error-api';
 import { IQuote } from '../../../../../../quote/interfaces/quote';
 import { QuoteConfigService } from '../../../../../../quote/services/config/quote-config.service';
+import { QuoteErrorApiService } from '../../../../../../quote/services/quote-error-api.service';
 import { QuoteRandomService } from '../../../../../../quote/services/quote-random.service';
 import { DiscordSoniaService } from '../../../../../users/services/discord-sonia.service';
 import { DiscordMessageCommandEnum } from '../../../../enums/commands/discord-message-command.enum';
@@ -10,13 +13,8 @@ import { discordHasThisCommand } from '../../../../functions/commands/checks/dis
 import { IDiscordMessageResponse } from '../../../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../../config/discord-message-config.service';
-import {
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedOptions,
-  MessageEmbedThumbnail,
-  Snowflake,
-} from 'discord.js';
+import { DiscordMessageErrorService } from '../../../helpers/discord-message-error.service';
+import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -35,30 +33,39 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
     super(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_QUOTE_SERVICE);
   }
 
-  public handleResponse({ id }: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+  public handleResponse(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       hasExtendedContext: true,
-      message: LoggerService.getInstance().getSnowflakeContext(id, `quote command detected`),
+      message: LoggerService.getInstance().getSnowflakeContext(anyDiscordMessage.id, `quote command detected`),
     });
 
-    return this.getMessageResponse(id);
+    return this.getMessageResponse(anyDiscordMessage);
   }
 
-  public getMessageResponse(messageId: Readonly<Snowflake>): Promise<IDiscordMessageResponse> {
+  public getMessageResponse(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
     return QuoteRandomService.getInstance()
-      .fetchRandomQuote(messageId)
+      .fetchRandomQuote(anyDiscordMessage.id)
       .then(
-        (quote: Readonly<IQuote>): IDiscordMessageResponse => {
-          return {
+        (quote: Readonly<IQuote | IQuoteErrorApi>): Promise<IDiscordMessageResponse> => {
+          if (isQuoteErrorApi(quote)) {
+            return QuoteErrorApiService.getInstance().getMessageResponse(quote);
+          }
+
+          return Promise.resolve({
             options: {
               embed: this._getMessageEmbed(quote),
               split: false,
             },
             response: ``,
-          };
+          });
         }
-      );
+      )
+      .catch((error: Readonly<Error>): never => {
+        DiscordMessageErrorService.getInstance().handleError(error, anyDiscordMessage);
+
+        throw new Error(error.message);
+      });
   }
 
   public hasCommand(message: Readonly<string>): boolean {
