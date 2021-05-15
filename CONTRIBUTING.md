@@ -45,6 +45,9 @@ Run `npm run create-secret-environment`.
   "profile": {
     "discordId": "OPTIONAL_AND_TO_DEFINE_BY_YOU",
     "nickname": "OPTIONAL_AND_TO_DEFINE_BY_YOU"
+  },
+  "quote": {
+    "apiKey": "OPTIONAL_AND_TO_DEFINE_BY_YOU"
   }
 }
 ```
@@ -89,6 +92,12 @@ It can be anything you want however we recommend that you use your Discord name.
 
 The Discord id will be used on simple text messages to use your name as a mention instead of pure text.  
 If the Discord id is not set the username will be used instead as fallback.
+
+**Note for the quote:**
+
+We use [Fav Quotes](https://favqs.com) to get some random quotes.  
+To avoid exposing my own API key, it was added inside the secret environment.  
+If you wish to run Sonia locally and have the quote features working as expected, you need to provide [your own API key](https://favqs.com/api_keys).
 
 ### Create the Firebase service account file
 
