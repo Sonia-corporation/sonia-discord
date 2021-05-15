@@ -120,19 +120,19 @@ describe(`DiscordMessageConfigValueNameEnum`, (): void => {
     expect(DiscordMessageConfigValueNameEnum.COMMAND_PREFIX).toStrictEqual(`message command prefix`);
   });
 
-  it(`should have a member "COMMAND_RELEASE_NOTES_IMAGE_COLOR"`, (): void => {
+  it(`should have a member "COMMAND_RELEASE_NOTES_MIXED_IMAGE_COLOR"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_IMAGE_COLOR).toStrictEqual(
-      `message command release notes image color`
+    expect(DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_MIXED_IMAGE_COLOR).toStrictEqual(
+      `message command release notes image mixed color`
     );
   });
 
-  it(`should have a member "COMMAND_RELEASE_NOTES_IMAGE_URL"`, (): void => {
+  it(`should have a member "COMMAND_RELEASE_NOTES_MIXED_IMAGE_URL"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_IMAGE_URL).toStrictEqual(
-      `message command release notes image url`
+    expect(DiscordMessageConfigValueNameEnum.COMMAND_RELEASE_NOTES_MIXED_IMAGE_URL).toStrictEqual(
+      `message command release notes image mixed url`
     );
   });
 

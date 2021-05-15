@@ -91,8 +91,10 @@ describe(`DiscordMessageConfigService`, (): void => {
         },
         prefix: `dummy-prefix`,
         releaseNotes: {
-          imageColor: ColorEnum.CANDY,
-          imageUrl: IconEnum.WARNING_SHIELD,
+          mixed: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
         },
         version: {
           imageColor: ColorEnum.CANDY,
@@ -138,8 +140,10 @@ describe(`DiscordMessageConfigService`, (): void => {
           },
           prefix: `dummy-prefix`,
           releaseNotes: {
-            imageColor: ColorEnum.CANDY,
-            imageUrl: IconEnum.WARNING_SHIELD,
+            mixed: {
+              imageColor: ColorEnum.CANDY,
+              imageUrl: IconEnum.WARNING_SHIELD,
+            },
           },
           version: {
             imageColor: ColorEnum.CANDY,
@@ -184,8 +188,10 @@ describe(`DiscordMessageConfigService`, (): void => {
         },
         prefix: `dummy-prefix`,
         releaseNotes: {
-          imageColor: ColorEnum.CANDY,
-          imageUrl: IconEnum.WARNING_SHIELD,
+          mixed: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
         },
         version: {
           imageColor: ColorEnum.CANDY,
@@ -222,8 +228,10 @@ describe(`DiscordMessageConfigService`, (): void => {
         },
         prefix: `dummy-prefix`,
         releaseNotes: {
-          imageColor: ColorEnum.CANDY,
-          imageUrl: IconEnum.WARNING_SHIELD,
+          mixed: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
         },
         version: {
           imageColor: ColorEnum.CANDY,
@@ -507,8 +515,10 @@ describe(`DiscordMessageConfigService`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command.releaseNotes = {
-        imageColor: ColorEnum.CANDY,
-        imageUrl: IconEnum.WARNING_SHIELD,
+        mixed: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
       };
     });
 
@@ -518,37 +528,39 @@ describe(`DiscordMessageConfigService`, (): void => {
       const result = service.getMessageCommandReleaseNotes();
 
       expect(result).toStrictEqual({
-        imageColor: ColorEnum.CANDY,
-        imageUrl: IconEnum.WARNING_SHIELD,
+        mixed: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
       } as IDiscordMessageCommandReleaseNotesConfig);
     });
   });
 
-  describe(`getMessageCommandReleaseNotesImageColor()`, (): void => {
+  describe(`getMessageCommandReleaseNotesMixedImageColor()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.releaseNotes.imageColor = ColorEnum.CANDY;
+      discordMessageConfigCoreService.command.releaseNotes.mixed.imageColor = ColorEnum.CANDY;
     });
 
-    it(`should return the Discord message config command release notes image color`, (): void => {
+    it(`should return the Discord message config command mixed release notes image color`, (): void => {
       expect.assertions(1);
 
-      const result = service.getMessageCommandReleaseNotesImageColor();
+      const result = service.getMessageCommandReleaseNotesMixedImageColor();
 
       expect(result).toStrictEqual(ColorEnum.CANDY);
     });
   });
 
-  describe(`getMessageCommandReleaseNotesImageUrl()`, (): void => {
+  describe(`getMessageCommandReleaseNotesMixedImageUrl()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.releaseNotes.imageUrl = IconEnum.WARNING_SHIELD;
+      discordMessageConfigCoreService.command.releaseNotes.mixed.imageUrl = IconEnum.WARNING_SHIELD;
     });
 
-    it(`should return the Discord message config command release notes image url`, (): void => {
+    it(`should return the Discord message config command mixed release notes image url`, (): void => {
       expect.assertions(1);
 
-      const result = service.getMessageCommandReleaseNotesImageUrl();
+      const result = service.getMessageCommandReleaseNotesMixedImageUrl();
 
       expect(result).toStrictEqual(IconEnum.WARNING_SHIELD);
     });

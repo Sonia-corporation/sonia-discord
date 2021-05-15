@@ -1,7 +1,5 @@
-import { ColorEnum } from '../../../enums/color.enum';
-import { IconEnum } from '../../../enums/icon.enum';
+import { IDiscordMessageCommandReleaseNotesMixedConfig } from './discord-message-command-release-notes-mixed-config';
 
 export interface IDiscordMessageCommandReleaseNotesConfig {
-  imageColor: ColorEnum;
-  imageUrl: IconEnum;
+  mixed: IDiscordMessageCommandReleaseNotesMixedConfig;
 }

@@ -124,11 +124,11 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
   describe(`getMessageResponse()`, (): void => {
     let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
-    let discordMessageConfigServiceGetMessageCommandReleaseNotesImageColorSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandReleaseNotesMixedImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
     let appConfigQueryServiceGetTotalReleaseCountHumanizedSpy: jest.SpyInstance;
     let appConfigQueryServiceGetFirstReleaseDateFormattedSpy: jest.SpyInstance;
-    let discordMessageConfigServiceGetMessageCommandReleaseNotesImageUrlSpy: jest.SpyInstance;
+    let discordMessageConfigServiceGetMessageCommandReleaseNotesMixedImageUrlSpy: jest.SpyInstance;
     let appConfigServiceGetVersionSpy: jest.SpyInstance;
     let appConfigQueryServiceGetReleaseDateHumanizedSpy: jest.SpyInstance;
     let appConfigServiceGetReleaseNotesSpy: jest.SpyInstance;
@@ -140,9 +140,9 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
         discordSoniaService,
         `getCorporationMessageEmbedAuthor`
       );
-      discordMessageConfigServiceGetMessageCommandReleaseNotesImageColorSpy = jest.spyOn(
+      discordMessageConfigServiceGetMessageCommandReleaseNotesMixedImageColorSpy = jest.spyOn(
         discordMessageConfigService,
-        `getMessageCommandReleaseNotesImageColor`
+        `getMessageCommandReleaseNotesMixedImageColor`
       );
       discordSoniaServiceGetImageUrlSpy = jest.spyOn(discordSoniaService, `getImageUrl`);
       appConfigQueryServiceGetTotalReleaseCountHumanizedSpy = jest.spyOn(
@@ -153,9 +153,9 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
         appConfigQueryService,
         `getFirstReleaseDateFormatted`
       );
-      discordMessageConfigServiceGetMessageCommandReleaseNotesImageUrlSpy = jest.spyOn(
+      discordMessageConfigServiceGetMessageCommandReleaseNotesMixedImageUrlSpy = jest.spyOn(
         discordMessageConfigService,
-        `getMessageCommandReleaseNotesImageUrl`
+        `getMessageCommandReleaseNotesMixedImageUrl`
       );
       appConfigServiceGetVersionSpy = jest.spyOn(appConfigService, `getVersion`);
       appConfigQueryServiceGetReleaseDateHumanizedSpy = jest.spyOn(appConfigQueryService, `getReleaseDateHumanized`);
@@ -174,7 +174,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
     it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandReleaseNotesImageColorSpy.mockReturnValue(ColorEnum.CANDY);
+      discordMessageConfigServiceGetMessageCommandReleaseNotesMixedImageColorSpy.mockReturnValue(ColorEnum.CANDY);
 
       const result = await service.getMessageResponse();
 
@@ -246,7 +246,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
     it(`should return a Discord message response embed with a thumbnail`, async (): Promise<void> => {
       expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandReleaseNotesImageUrlSpy.mockReturnValue(IconEnum.NEW_PRODUCT);
+      discordMessageConfigServiceGetMessageCommandReleaseNotesMixedImageUrlSpy.mockReturnValue(IconEnum.NEW_PRODUCT);
 
       const result = await service.getMessageResponse();
 

@@ -110,12 +110,12 @@ export class DiscordMessageConfigService extends AbstractService {
     return DiscordMessageConfigCoreService.getInstance().command.releaseNotes;
   }
 
-  public getMessageCommandReleaseNotesImageColor(): ColorEnum {
-    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.imageColor;
+  public getMessageCommandReleaseNotesMixedImageColor(): ColorEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.mixed.imageColor;
   }
 
-  public getMessageCommandReleaseNotesImageUrl(): IconEnum {
-    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.imageUrl;
+  public getMessageCommandReleaseNotesMixedImageUrl(): IconEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.mixed.imageUrl;
   }
 
   public getMessageCommandVersion(): IDiscordMessageCommandVersionConfig {

@@ -74,7 +74,7 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
 
   private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
     return {
-      url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesImageUrl(),
+      url: DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesMixedImageUrl(),
     };
   }
 
@@ -92,7 +92,7 @@ export class DiscordMessageCommandReleaseNotesService extends AbstractService {
   }
 
   private _getMessageEmbedColor(): number {
-    return DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesImageColor();
+    return DiscordMessageConfigService.getInstance().getMessageCommandReleaseNotesMixedImageColor();
   }
 
   private _getMessageEmbedTimestamp(): Date {
