@@ -2,13 +2,10 @@ import { AbstractService } from '../../../../../../../../../../classes/services/
 import { ColorEnum } from '../../../../../../../../../../enums/color.enum';
 import { IconEnum } from '../../../../../../../../../../enums/icon.enum';
 import { ServiceNameEnum } from '../../../../../../../../../../enums/service-name.enum';
-import { IDiscordMessageCommandFeatureConfig } from '../../../../interfaces/discord-message-command-feature-config';
 import { IDiscordMessageCommandFeatureReleaseNotesConfig } from '../../interfaces/discord-message-command-feature-release-notes-config';
 import _ from 'lodash';
 
-export class DiscordMessageCommandFeatureReleaseNotesConfigCoreService
-  extends AbstractService
-  implements Pick<IDiscordMessageCommandFeatureConfig, 'releaseNotes'> {
+export class DiscordMessageCommandFeatureReleaseNotesConfigCoreService extends AbstractService {
   private static _instance: DiscordMessageCommandFeatureReleaseNotesConfigCoreService;
 
   public static getInstance(): DiscordMessageCommandFeatureReleaseNotesConfigCoreService {
