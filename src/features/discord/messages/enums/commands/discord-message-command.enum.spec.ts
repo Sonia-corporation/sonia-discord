@@ -2,10 +2,10 @@ import { DiscordMessageCommandEnum } from './discord-message-command.enum';
 import { getEnumLength } from '../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageCommandEnum`, (): void => {
-  it(`should have a 15 members`, (): void => {
+  it(`should have a 17 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageCommandEnum)).toStrictEqual(15);
+    expect(getEnumLength(DiscordMessageCommandEnum)).toStrictEqual(17);
   });
 
   it(`should have a member "VERSION"`, (): void => {
@@ -96,5 +96,17 @@ describe(`DiscordMessageCommandEnum`, (): void => {
     expect.assertions(1);
 
     expect(DiscordMessageCommandEnum.F).toStrictEqual(`f`);
+  });
+
+  it(`should have a member "QUOTE"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandEnum.QUOTE).toStrictEqual(`quote`);
+  });
+
+  it(`should have a member "Q"`, (): void => {
+    expect.assertions(1);
+
+    expect(DiscordMessageCommandEnum.Q).toStrictEqual(`q`);
   });
 });
