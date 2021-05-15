@@ -40,7 +40,7 @@ export class DiscordMessageCommandFeatureReleaseNotesConfigMutatorService extend
 
   public updateConfig(config?: Readonly<IPartialNested<IDiscordMessageCommandFeatureConfig>>): void {
     if (!_.isNil(config)) {
-      this.updateReleaseNotes(config.releaseNotes);
+      this.updateReleaseNotes(config.releaseNotes?.unknown);
 
       LoggerService.getInstance().debug({
         context: this._serviceName,

@@ -7,6 +7,7 @@ import { ONE_EMITTER } from '../../../../constants/one-emitter';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { AppConfigReleaseTypeEnum } from '../../../app/enums/app-config-release-type.enum';
 import { AppConfigService } from '../../../app/services/config/app-config.service';
+import { IAppReleaseTypeResponsesFactoryPattern } from '../../../app/types/app-release-type-responses-factory-pattern';
 import { isDiscordGuildChannelWritable } from '../../../discord/channels/functions/types/is-discord-guild-channel-writable';
 import { DiscordGuildSoniaChannelNameEnum } from '../../../discord/guilds/enums/discord-guild-sonia-channel-name.enum';
 import { DiscordGuildSoniaService } from '../../../discord/guilds/services/discord-guild-sonia.service';
@@ -170,7 +171,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
         (messageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
           const enhanceMessageResponse: IDiscordMessageResponse = _.cloneDeep(messageResponse);
           const releaseType: AppConfigReleaseTypeEnum = AppConfigService.getInstance().getReleaseType();
-          const responses: { [key: string]: () => string } = {
+          const responsesFactoryPattern: IAppReleaseTypeResponsesFactoryPattern = {
             [AppConfigReleaseTypeEnum.BUG_FIXES](): string {
               return FIREBASE_GUILD_NEW_BUG_FIXES_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
                 userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
@@ -181,20 +182,24 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
                 userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
               });
             },
+            [AppConfigReleaseTypeEnum.MIXED](): string {
+              return FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
+                userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
+              });
+            },
             [AppConfigReleaseTypeEnum.PERFORMANCE_IMPROVEMENTS](): string {
               return FIREBASE_GUILD_NEW_PERFORMANCE_IMPROVEMENTS_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
                 userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
               });
             },
+            [AppConfigReleaseTypeEnum.UNKNOWN](): string {
+              return FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
+                userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
+              });
+            },
           };
 
-          if (_.has(responses, releaseType)) {
-            enhanceMessageResponse.response = responses[releaseType]();
-          } else {
-            enhanceMessageResponse.response = FIREBASE_GUILD_NEW_VERSION_RESPONSE_MESSAGES.getHumanizedRandomMessage({
-              userId: wrapUserIdIntoMention(DISCORD_GITHUB_CONTRIBUTORS_ID_MESSAGES.getRandomMessage()),
-            });
-          }
+          enhanceMessageResponse.response = responsesFactoryPattern[releaseType]();
 
           return Promise.resolve(enhanceMessageResponse);
         }

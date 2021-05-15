@@ -91,8 +91,26 @@ describe(`DiscordMessageConfigService`, (): void => {
         },
         prefix: `dummy-prefix`,
         releaseNotes: {
-          imageColor: ColorEnum.CANDY,
-          imageUrl: IconEnum.WARNING_SHIELD,
+          bugFixes: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
+          features: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
+          mixed: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
+          performanceImprovements: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
+          unknown: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
         },
         version: {
           imageColor: ColorEnum.CANDY,
@@ -138,8 +156,26 @@ describe(`DiscordMessageConfigService`, (): void => {
           },
           prefix: `dummy-prefix`,
           releaseNotes: {
-            imageColor: ColorEnum.CANDY,
-            imageUrl: IconEnum.WARNING_SHIELD,
+            bugFixes: {
+              imageColor: ColorEnum.CANDY,
+              imageUrl: IconEnum.WARNING_SHIELD,
+            },
+            features: {
+              imageColor: ColorEnum.CANDY,
+              imageUrl: IconEnum.WARNING_SHIELD,
+            },
+            mixed: {
+              imageColor: ColorEnum.CANDY,
+              imageUrl: IconEnum.WARNING_SHIELD,
+            },
+            performanceImprovements: {
+              imageColor: ColorEnum.CANDY,
+              imageUrl: IconEnum.WARNING_SHIELD,
+            },
+            unknown: {
+              imageColor: ColorEnum.CANDY,
+              imageUrl: IconEnum.WARNING_SHIELD,
+            },
           },
           version: {
             imageColor: ColorEnum.CANDY,
@@ -184,8 +220,26 @@ describe(`DiscordMessageConfigService`, (): void => {
         },
         prefix: `dummy-prefix`,
         releaseNotes: {
-          imageColor: ColorEnum.CANDY,
-          imageUrl: IconEnum.WARNING_SHIELD,
+          bugFixes: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
+          features: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
+          mixed: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
+          performanceImprovements: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
+          unknown: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
         },
         version: {
           imageColor: ColorEnum.CANDY,
@@ -222,8 +276,26 @@ describe(`DiscordMessageConfigService`, (): void => {
         },
         prefix: `dummy-prefix`,
         releaseNotes: {
-          imageColor: ColorEnum.CANDY,
-          imageUrl: IconEnum.WARNING_SHIELD,
+          bugFixes: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
+          features: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
+          mixed: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
+          performanceImprovements: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
+          unknown: {
+            imageColor: ColorEnum.CANDY,
+            imageUrl: IconEnum.WARNING_SHIELD,
+          },
         },
         version: {
           imageColor: ColorEnum.CANDY,
@@ -507,8 +579,26 @@ describe(`DiscordMessageConfigService`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
       discordMessageConfigCoreService.command.releaseNotes = {
-        imageColor: ColorEnum.CANDY,
-        imageUrl: IconEnum.WARNING_SHIELD,
+        bugFixes: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
+        features: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
+        mixed: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
+        performanceImprovements: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
+        unknown: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
       };
     });
 
@@ -518,37 +608,175 @@ describe(`DiscordMessageConfigService`, (): void => {
       const result = service.getMessageCommandReleaseNotes();
 
       expect(result).toStrictEqual({
-        imageColor: ColorEnum.CANDY,
-        imageUrl: IconEnum.WARNING_SHIELD,
+        bugFixes: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
+        features: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
+        mixed: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
+        performanceImprovements: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
+        unknown: {
+          imageColor: ColorEnum.CANDY,
+          imageUrl: IconEnum.WARNING_SHIELD,
+        },
       } as IDiscordMessageCommandReleaseNotesConfig);
     });
   });
 
-  describe(`getMessageCommandReleaseNotesImageColor()`, (): void => {
+  describe(`getMessageCommandReleaseNotesBugFixesImageColor()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.releaseNotes.imageColor = ColorEnum.CANDY;
+      discordMessageConfigCoreService.command.releaseNotes.bugFixes.imageColor = ColorEnum.CANDY;
     });
 
-    it(`should return the Discord message config command release notes image color`, (): void => {
+    it(`should return the Discord message config command release notes bug fixes image color`, (): void => {
       expect.assertions(1);
 
-      const result = service.getMessageCommandReleaseNotesImageColor();
+      const result = service.getMessageCommandReleaseNotesBugFixesImageColor();
 
       expect(result).toStrictEqual(ColorEnum.CANDY);
     });
   });
 
-  describe(`getMessageCommandReleaseNotesImageUrl()`, (): void => {
+  describe(`getMessageCommandReleaseNotesBugFixesImageUrl()`, (): void => {
     beforeEach((): void => {
       service = DiscordMessageConfigService.getInstance();
-      discordMessageConfigCoreService.command.releaseNotes.imageUrl = IconEnum.WARNING_SHIELD;
+      discordMessageConfigCoreService.command.releaseNotes.bugFixes.imageUrl = IconEnum.WARNING_SHIELD;
     });
 
-    it(`should return the Discord message config command release notes image url`, (): void => {
+    it(`should return the Discord message config command release notes bug fixes image url`, (): void => {
       expect.assertions(1);
 
-      const result = service.getMessageCommandReleaseNotesImageUrl();
+      const result = service.getMessageCommandReleaseNotesBugFixesImageUrl();
+
+      expect(result).toStrictEqual(IconEnum.WARNING_SHIELD);
+    });
+  });
+
+  describe(`getMessageCommandReleaseNotesFeaturesImageColor()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.releaseNotes.features.imageColor = ColorEnum.CANDY;
+    });
+
+    it(`should return the Discord message config command release notes features image color`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandReleaseNotesFeaturesImageColor();
+
+      expect(result).toStrictEqual(ColorEnum.CANDY);
+    });
+  });
+
+  describe(`getMessageCommandReleaseNotesFeaturesImageUrl()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.releaseNotes.features.imageUrl = IconEnum.WARNING_SHIELD;
+    });
+
+    it(`should return the Discord message config command release notes features image url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandReleaseNotesFeaturesImageUrl();
+
+      expect(result).toStrictEqual(IconEnum.WARNING_SHIELD);
+    });
+  });
+
+  describe(`getMessageCommandReleaseNotesMixedImageColor()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.releaseNotes.mixed.imageColor = ColorEnum.CANDY;
+    });
+
+    it(`should return the Discord message config command release notes mixed image color`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandReleaseNotesMixedImageColor();
+
+      expect(result).toStrictEqual(ColorEnum.CANDY);
+    });
+  });
+
+  describe(`getMessageCommandReleaseNotesMixedImageUrl()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.releaseNotes.mixed.imageUrl = IconEnum.WARNING_SHIELD;
+    });
+
+    it(`should return the Discord message config command release notes mixed image url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandReleaseNotesMixedImageUrl();
+
+      expect(result).toStrictEqual(IconEnum.WARNING_SHIELD);
+    });
+  });
+
+  describe(`getMessageCommandReleaseNotesPerformanceImprovementsImageColor()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.releaseNotes.performanceImprovements.imageColor = ColorEnum.CANDY;
+    });
+
+    it(`should return the Discord message config command release notes performance improvements image color`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandReleaseNotesPerformanceImprovementsImageColor();
+
+      expect(result).toStrictEqual(ColorEnum.CANDY);
+    });
+  });
+
+  describe(`getMessageCommandReleaseNotesPerformanceImprovementsImageUrl()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.releaseNotes.performanceImprovements.imageUrl = IconEnum.WARNING_SHIELD;
+    });
+
+    it(`should return the Discord message config command release notes performance improvements image url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandReleaseNotesPerformanceImprovementsImageUrl();
+
+      expect(result).toStrictEqual(IconEnum.WARNING_SHIELD);
+    });
+  });
+
+  describe(`getMessageCommandReleaseNotesUnknownImageColor()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.releaseNotes.unknown.imageColor = ColorEnum.CANDY;
+    });
+
+    it(`should return the Discord message config command release notes unknown image color`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandReleaseNotesUnknownImageColor();
+
+      expect(result).toStrictEqual(ColorEnum.CANDY);
+    });
+  });
+
+  describe(`getMessageCommandReleaseNotesUnknownImageUrl()`, (): void => {
+    beforeEach((): void => {
+      service = DiscordMessageConfigService.getInstance();
+      discordMessageConfigCoreService.command.releaseNotes.unknown.imageUrl = IconEnum.WARNING_SHIELD;
+    });
+
+    it(`should return the Discord message config command release notes unknown image url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getMessageCommandReleaseNotesUnknownImageUrl();
 
       expect(result).toStrictEqual(IconEnum.WARNING_SHIELD);
     });

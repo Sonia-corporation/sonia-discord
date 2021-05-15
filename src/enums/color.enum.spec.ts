@@ -2,16 +2,22 @@ import { ColorEnum } from './color.enum';
 import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`ColorEnum`, (): void => {
-  it(`should have a 12 members`, (): void => {
+  it(`should have a 14 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ColorEnum)).toStrictEqual(12);
+    expect(getEnumLength(ColorEnum)).toStrictEqual(14);
   });
 
   it(`should have a member "CANDY"`, (): void => {
     expect.assertions(1);
 
     expect(ColorEnum.CANDY).toStrictEqual(15562905);
+  });
+
+  it(`should have a member "DEAD"`, (): void => {
+    expect.assertions(1);
+
+    expect(ColorEnum.DEAD).toStrictEqual(9146008);
   });
 
   it(`should have a member "DESERT"`, (): void => {

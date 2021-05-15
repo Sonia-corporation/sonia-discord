@@ -110,12 +110,44 @@ export class DiscordMessageConfigService extends AbstractService {
     return DiscordMessageConfigCoreService.getInstance().command.releaseNotes;
   }
 
-  public getMessageCommandReleaseNotesImageColor(): ColorEnum {
-    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.imageColor;
+  public getMessageCommandReleaseNotesBugFixesImageColor(): ColorEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.bugFixes.imageColor;
   }
 
-  public getMessageCommandReleaseNotesImageUrl(): IconEnum {
-    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.imageUrl;
+  public getMessageCommandReleaseNotesBugFixesImageUrl(): IconEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.bugFixes.imageUrl;
+  }
+
+  public getMessageCommandReleaseNotesFeaturesImageColor(): ColorEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.features.imageColor;
+  }
+
+  public getMessageCommandReleaseNotesFeaturesImageUrl(): IconEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.features.imageUrl;
+  }
+
+  public getMessageCommandReleaseNotesMixedImageColor(): ColorEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.mixed.imageColor;
+  }
+
+  public getMessageCommandReleaseNotesMixedImageUrl(): IconEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.mixed.imageUrl;
+  }
+
+  public getMessageCommandReleaseNotesPerformanceImprovementsImageColor(): ColorEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.performanceImprovements.imageColor;
+  }
+
+  public getMessageCommandReleaseNotesPerformanceImprovementsImageUrl(): IconEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.performanceImprovements.imageUrl;
+  }
+
+  public getMessageCommandReleaseNotesUnknownImageColor(): ColorEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.unknown.imageColor;
+  }
+
+  public getMessageCommandReleaseNotesUnknownImageUrl(): IconEnum {
+    return DiscordMessageConfigCoreService.getInstance().command.releaseNotes.unknown.imageUrl;
   }
 
   public getMessageCommandVersion(): IDiscordMessageCommandVersionConfig {
