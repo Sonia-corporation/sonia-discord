@@ -10,7 +10,7 @@ import { DiscordGuildConfigService } from '../../../guilds/services/config/disco
 import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild-sonia.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
-import { EmbedFieldData } from 'discord.js';
+import { EmbedFieldData, MessageEmbedOptions } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
@@ -98,11 +98,10 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
   ): IDiscordMessageResponse {
     return {
       options: {
-        embed: {
-          ...this._getMessageEmbed(),
+        embed: _.merge({}, this._getMessageEmbed(), {
           fields: this._getMessageEmbedFields(error, anyDiscordMessage),
           title: this._getCustomMessageEmbedTitle(),
-        },
+        } as MessageEmbedOptions),
         split: false,
       },
       response: ``,
