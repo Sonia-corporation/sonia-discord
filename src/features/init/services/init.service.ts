@@ -23,7 +23,7 @@ import { ChalkService } from '../../logger/services/chalk/chalk.service';
 import { LoggerConfigMutatorService } from '../../logger/services/config/logger-config-mutator.service';
 import { LoggerService } from '../../logger/services/logger.service';
 import { ProfileConfigMutatorService } from '../../profile/services/config/profile-config-mutator.service';
-import { QuoteConfigMutatorService } from '../../quote/services/quote-config-mutator.service';
+import { QuoteConfigMutatorService } from '../../quote/services/config/quote-config-mutator.service';
 import { ServerConfigMutatorService } from '../../server/services/config/server-config-mutator.service';
 import { ServerService } from '../../server/services/server.service';
 import appRootPath from 'app-root-path';

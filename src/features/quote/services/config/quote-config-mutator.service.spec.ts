@@ -1,13 +1,13 @@
 import { QuoteConfigCoreService } from './quote-config-core.service';
 import { QuoteConfigMutatorService } from './quote-config-mutator.service';
 import { QuoteConfigService } from './quote-config.service';
-import { ServiceNameEnum } from '../../../enums/service-name.enum';
-import { IPartialNested } from '../../../types/partial-nested';
-import { IConfigUpdateString } from '../../config/interfaces/config-update-string';
-import { ConfigService } from '../../config/services/config.service';
-import { CoreEventService } from '../../core/services/core-event.service';
-import { LoggerService } from '../../logger/services/logger.service';
-import { IQuoteConfig } from '../interfaces/quote-config';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { IPartialNested } from '../../../../types/partial-nested';
+import { IConfigUpdateString } from '../../../config/interfaces/config-update-string';
+import { ConfigService } from '../../../config/services/config.service';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { IQuoteConfig } from '../../interfaces/quote-config';
 
 jest.mock(`../../../../time/services/time.service`);
 jest.mock(`../../../../logger/services/chalk/chalk.service`);

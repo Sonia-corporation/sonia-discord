@@ -1,13 +1,13 @@
 import { QuoteConfigCoreService } from './quote-config-core.service';
 import { QuoteConfigService } from './quote-config.service';
-import { AbstractConfigService } from '../../../classes/services/abstract-config.service';
-import { ServiceNameEnum } from '../../../enums/service-name.enum';
-import { IPartialNested } from '../../../types/partial-nested';
-import { ConfigService } from '../../config/services/config.service';
-import { ChalkService } from '../../logger/services/chalk/chalk.service';
-import { LoggerService } from '../../logger/services/logger.service';
-import { QuoteConfigValueNameEnum } from '../enums/quote-config-value-name.enum';
-import { IQuoteConfig } from '../interfaces/quote-config';
+import { AbstractConfigService } from '../../../../classes/services/abstract-config.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { IPartialNested } from '../../../../types/partial-nested';
+import { ConfigService } from '../../../config/services/config.service';
+import { ChalkService } from '../../../logger/services/chalk/chalk.service';
+import { LoggerService } from '../../../logger/services/logger.service';
+import { QuoteConfigValueNameEnum } from '../../enums/quote-config-value-name.enum';
+import { IQuoteConfig } from '../../interfaces/quote-config';
 import _ from 'lodash';
 
 export class QuoteConfigMutatorService extends AbstractConfigService<IQuoteConfig> {

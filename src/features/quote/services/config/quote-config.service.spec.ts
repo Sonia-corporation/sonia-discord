@@ -1,8 +1,8 @@
 import { QuoteConfigCoreService } from './quote-config-core.service';
 import { QuoteConfigService } from './quote-config.service';
-import { ServiceNameEnum } from '../../../enums/service-name.enum';
-import { CoreEventService } from '../../core/services/core-event.service';
-import { IQuoteConfig } from '../interfaces/quote-config';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { CoreEventService } from '../../../core/services/core-event.service';
+import { IQuoteConfig } from '../../interfaces/quote-config';
 
 describe(`QuoteConfigService`, (): void => {
   let service: QuoteConfigService;

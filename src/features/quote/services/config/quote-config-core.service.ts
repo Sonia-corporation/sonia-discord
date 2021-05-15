@@ -1,6 +1,6 @@
-import { AbstractService } from '../../../classes/services/abstract.service';
-import { ServiceNameEnum } from '../../../enums/service-name.enum';
-import { IQuoteConfig } from '../interfaces/quote-config';
+import { AbstractService } from '../../../../classes/services/abstract.service';
+import { ServiceNameEnum } from '../../../../enums/service-name.enum';
+import { IQuoteConfig } from '../../interfaces/quote-config';
 import _ from 'lodash';
 
 export class QuoteConfigCoreService extends AbstractService implements IQuoteConfig {
