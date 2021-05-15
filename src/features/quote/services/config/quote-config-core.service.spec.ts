@@ -55,6 +55,16 @@ describe(`QuoteConfigCoreService`, (): void => {
     expect(service.apiKey).toStrictEqual(`unknown`);
   });
 
+  it(`should have an author icon url`, (): void => {
+    expect.assertions(1);
+
+    service = QuoteConfigCoreService.getInstance();
+
+    expect(service.authorIconUrl).toStrictEqual(
+      `https://i.ibb.co/4SsVxDQ/icons8-futurama-professor-farnsworth-512.png`
+    );
+  });
+
   it(`should have an image color`, (): void => {
     expect.assertions(1);
 

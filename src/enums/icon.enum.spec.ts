@@ -2,10 +2,10 @@ import { IconEnum } from './icon.enum';
 import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`IconEnum`, (): void => {
-  it(`should have a 14 members`, (): void => {
+  it(`should have a 15 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(IconEnum)).toStrictEqual(14);
+    expect(getEnumLength(IconEnum)).toStrictEqual(15);
   });
 
   it(`should have a member "ALARM"`, (): void => {
@@ -50,6 +50,14 @@ describe(`IconEnum`, (): void => {
     expect.assertions(1);
 
     expect(IconEnum.ERROR).toStrictEqual(`https://i.ibb.co/5jZmzSB/icons8-error-512.png`);
+  });
+
+  it(`should have a member "FUTURAMA_PROFESSOR_FARNSWORTH"`, (): void => {
+    expect.assertions(1);
+
+    expect(IconEnum.FUTURAMA_PROFESSOR_FARNSWORTH).toStrictEqual(
+      `https://i.ibb.co/4SsVxDQ/icons8-futurama-professor-farnsworth-512.png`
+    );
   });
 
   it(`should have a member "GIRL"`, (): void => {

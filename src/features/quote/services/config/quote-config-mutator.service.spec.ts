@@ -33,6 +33,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
     beforeEach((): void => {
       config = {
         apiKey: `dummy-api-key`,
+        authorIconUrl: IconEnum.ERROR,
         imageColor: ColorEnum.SUN,
         imageUrl: IconEnum.ERROR,
       };
@@ -91,6 +92,15 @@ describe(`QuoteConfigMutatorService`, (): void => {
         expect(quoteConfigCoreService.apiKey).toStrictEqual(`apiKey`);
       });
 
+      it(`should not update the current author icon url`, (): void => {
+        expect.assertions(1);
+        quoteConfigCoreService.authorIconUrl = IconEnum.ERROR;
+
+        service = new QuoteConfigMutatorService(config);
+
+        expect(quoteConfigCoreService.authorIconUrl).toStrictEqual(IconEnum.ERROR);
+      });
+
       it(`should not update the current image color`, (): void => {
         expect.assertions(1);
         quoteConfigCoreService.imageColor = ColorEnum.SUN;
@@ -114,6 +124,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
       beforeEach((): void => {
         config = {
           apiKey: `dummy-api-key`,
+          authorIconUrl: IconEnum.ERROR,
           imageColor: ColorEnum.SUN,
           imageUrl: IconEnum.ERROR,
         };
@@ -126,6 +137,15 @@ describe(`QuoteConfigMutatorService`, (): void => {
         service = new QuoteConfigMutatorService(config);
 
         expect(quoteConfigCoreService.apiKey).toStrictEqual(`dummy-api-key`);
+      });
+
+      it(`should override the author icon url`, (): void => {
+        expect.assertions(1);
+        quoteConfigCoreService.authorIconUrl = IconEnum.MOTIVATION_DAILY_QUOTES;
+
+        service = new QuoteConfigMutatorService(config);
+
+        expect(quoteConfigCoreService.authorIconUrl).toStrictEqual(IconEnum.ERROR);
       });
 
       it(`should override the image color`, (): void => {
@@ -197,6 +217,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
     beforeEach((): void => {
       service = QuoteConfigMutatorService.getInstance();
       quoteConfigCoreService.apiKey = `dummy-api-key`;
+      quoteConfigCoreService.authorIconUrl = IconEnum.MOTIVATION_DAILY_QUOTES;
       quoteConfigCoreService.imageColor = ColorEnum.CANDY;
       quoteConfigCoreService.imageUrl = IconEnum.MOTIVATION_DAILY_QUOTES;
 
@@ -204,11 +225,12 @@ describe(`QuoteConfigMutatorService`, (): void => {
     });
 
     it(`should not update the config`, (): void => {
-      expect.assertions(3);
+      expect.assertions(4);
 
       service.updateConfig();
 
       expect(quoteConfigCoreService.apiKey).toStrictEqual(`dummy-api-key`);
+      expect(quoteConfigCoreService.authorIconUrl).toStrictEqual(IconEnum.MOTIVATION_DAILY_QUOTES);
       expect(quoteConfigCoreService.imageColor).toStrictEqual(ColorEnum.CANDY);
       expect(quoteConfigCoreService.imageUrl).toStrictEqual(IconEnum.MOTIVATION_DAILY_QUOTES);
     });
@@ -227,11 +249,12 @@ describe(`QuoteConfigMutatorService`, (): void => {
       });
 
       it(`should not update the config`, (): void => {
-        expect.assertions(3);
+        expect.assertions(4);
 
         service.updateConfig();
 
         expect(quoteConfigCoreService.apiKey).toStrictEqual(`dummy-api-key`);
+        expect(quoteConfigCoreService.authorIconUrl).toStrictEqual(IconEnum.MOTIVATION_DAILY_QUOTES);
         expect(quoteConfigCoreService.imageColor).toStrictEqual(ColorEnum.CANDY);
         expect(quoteConfigCoreService.imageUrl).toStrictEqual(IconEnum.MOTIVATION_DAILY_QUOTES);
       });
@@ -249,6 +272,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
       beforeEach((): void => {
         config = {
           apiKey: `apiKey`,
+          authorIconUrl: IconEnum.MOTIVATION_DAILY_QUOTES,
           imageColor: ColorEnum.CANDY,
           imageUrl: IconEnum.MOTIVATION_DAILY_QUOTES,
         };
@@ -260,6 +284,14 @@ describe(`QuoteConfigMutatorService`, (): void => {
         service.updateConfig(config);
 
         expect(quoteConfigCoreService.apiKey).toStrictEqual(`apiKey`);
+      });
+
+      it(`should update the config author icon url`, (): void => {
+        expect.assertions(1);
+
+        service.updateConfig(config);
+
+        expect(quoteConfigCoreService.authorIconUrl).toStrictEqual(IconEnum.MOTIVATION_DAILY_QUOTES);
       });
 
       it(`should update the config image color`, (): void => {
@@ -283,7 +315,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerLogSpy).toHaveBeenCalledTimes(4);
+        expect(loggerLogSpy).toHaveBeenCalledTimes(5);
         expect(loggerLogSpy).toHaveBeenLastCalledWith(
           `debug-● context-[QuoteConfigMutatorService][now-format] text-configuration updated`
         );
@@ -325,6 +357,44 @@ describe(`QuoteConfigMutatorService`, (): void => {
       service.updateApiKey(apiKey);
 
       expect(quoteConfigCoreService.apiKey).toStrictEqual(`dummy-api-key`);
+    });
+  });
+
+  describe(`updateAuthorIconUrl()`, (): void => {
+    let authorIconUrl: IconEnum;
+
+    let configServiceGetUpdatedStringSpy: jest.SpyInstance;
+
+    beforeEach((): void => {
+      service = QuoteConfigMutatorService.getInstance();
+      authorIconUrl = IconEnum.MOTIVATION_DAILY_QUOTES;
+      quoteConfigCoreService.authorIconUrl = IconEnum.ERROR;
+
+      configServiceGetUpdatedStringSpy = jest
+        .spyOn(configService, `getUpdatedString`)
+        .mockReturnValue(IconEnum.MOTIVATION_DAILY_QUOTES);
+    });
+
+    it(`should get the updated string`, (): void => {
+      expect.assertions(2);
+
+      service.updateAuthorIconUrl(authorIconUrl);
+
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
+        context: `QuoteConfigMutatorService`,
+        newValue: IconEnum.MOTIVATION_DAILY_QUOTES,
+        oldValue: IconEnum.ERROR,
+        valueName: `author icon url`,
+      } as IConfigUpdateString);
+    });
+
+    it(`should update the config author icon url with the updated string`, (): void => {
+      expect.assertions(1);
+
+      service.updateAuthorIconUrl(authorIconUrl);
+
+      expect(quoteConfigCoreService.authorIconUrl).toStrictEqual(IconEnum.MOTIVATION_DAILY_QUOTES);
     });
   });
 

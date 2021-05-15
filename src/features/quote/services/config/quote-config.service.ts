@@ -24,6 +24,7 @@ export class QuoteConfigService extends AbstractService {
   public getConfig(): IQuoteConfig {
     return {
       apiKey: this.getApiKey(),
+      authorIconUrl: this.getAuthorIconUrl(),
       imageColor: this.getImageColor(),
       imageUrl: this.getImageUrl(),
     };
@@ -31,6 +32,10 @@ export class QuoteConfigService extends AbstractService {
 
   public getApiKey(): string {
     return QuoteConfigCoreService.getInstance().apiKey;
+  }
+
+  public getAuthorIconUrl(): IconEnum {
+    return QuoteConfigCoreService.getInstance().authorIconUrl;
   }
 
   public getImageColor(): ColorEnum {

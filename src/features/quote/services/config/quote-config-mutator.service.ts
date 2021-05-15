@@ -36,6 +36,7 @@ export class QuoteConfigMutatorService extends AbstractConfigService<IQuoteConfi
   public updateConfig(config?: Readonly<IPartialNested<IQuoteConfig>>): void {
     if (!_.isNil(config)) {
       this.updateApiKey(config.apiKey);
+      this.updateAuthorIconUrl(config.authorIconUrl);
       this.updateImageColor(config.imageColor);
       this.updateImageUrl(config.imageUrl);
 
@@ -53,6 +54,15 @@ export class QuoteConfigMutatorService extends AbstractConfigService<IQuoteConfi
       newValue: apiKey,
       oldValue: QuoteConfigService.getInstance().getApiKey(),
       valueName: QuoteConfigValueNameEnum.API_KEY,
+    });
+  }
+
+  public updateAuthorIconUrl(authorIconUrl?: Readonly<IconEnum>): void {
+    QuoteConfigCoreService.getInstance().authorIconUrl = ConfigService.getInstance().getUpdatedString({
+      context: this._serviceName,
+      newValue: authorIconUrl,
+      oldValue: QuoteConfigService.getInstance().getAuthorIconUrl(),
+      valueName: QuoteConfigValueNameEnum.AUTHOR_ICON_URL,
     });
   }
 

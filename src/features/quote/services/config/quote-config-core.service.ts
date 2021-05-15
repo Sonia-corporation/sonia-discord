@@ -17,6 +17,7 @@ export class QuoteConfigCoreService extends AbstractService implements IQuoteCon
   }
 
   public apiKey = `unknown`;
+  public authorIconUrl = IconEnum.FUTURAMA_PROFESSOR_FARNSWORTH;
   public imageColor = ColorEnum.DEAD;
   public imageUrl = IconEnum.MOTIVATION_DAILY_QUOTES;
 

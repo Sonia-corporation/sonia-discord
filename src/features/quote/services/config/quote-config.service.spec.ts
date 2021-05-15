@@ -57,6 +57,7 @@ describe(`QuoteConfigService`, (): void => {
     beforeEach((): void => {
       service = QuoteConfigService.getInstance();
       quoteConfigCoreService.apiKey = `dummy-api-key`;
+      quoteConfigCoreService.authorIconUrl = IconEnum.ERROR;
       quoteConfigCoreService.imageColor = ColorEnum.CANDY;
       quoteConfigCoreService.imageUrl = IconEnum.ERROR;
     });
@@ -68,6 +69,7 @@ describe(`QuoteConfigService`, (): void => {
 
       expect(result).toStrictEqual({
         apiKey: `dummy-api-key`,
+        authorIconUrl: IconEnum.ERROR,
         imageColor: ColorEnum.CANDY,
         imageUrl: IconEnum.ERROR,
       } as IQuoteConfig);
@@ -86,6 +88,21 @@ describe(`QuoteConfigService`, (): void => {
       const result = service.getApiKey();
 
       expect(result).toStrictEqual(`dummy-api-key`);
+    });
+  });
+
+  describe(`getAuthorIconUrl()`, (): void => {
+    beforeEach((): void => {
+      service = QuoteConfigService.getInstance();
+      quoteConfigCoreService.authorIconUrl = IconEnum.ERROR;
+    });
+
+    it(`should return the config author icon url`, (): void => {
+      expect.assertions(1);
+
+      const result = service.getAuthorIconUrl();
+
+      expect(result).toStrictEqual(IconEnum.ERROR);
     });
   });
 
