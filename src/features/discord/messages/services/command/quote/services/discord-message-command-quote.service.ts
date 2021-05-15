@@ -10,7 +10,13 @@ import { discordHasThisCommand } from '../../../../functions/commands/checks/dis
 import { IDiscordMessageResponse } from '../../../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../../config/discord-message-config.service';
-import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedOptions, MessageEmbedThumbnail } from 'discord.js';
+import {
+  MessageEmbedAuthor,
+  MessageEmbedFooter,
+  MessageEmbedOptions,
+  MessageEmbedThumbnail,
+  Snowflake,
+} from 'discord.js';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
@@ -36,12 +42,12 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
       message: LoggerService.getInstance().getSnowflakeContext(id, `quote command detected`),
     });
 
-    return this.getMessageResponse();
+    return this.getMessageResponse(id);
   }
 
-  public getMessageResponse(): Promise<IDiscordMessageResponse> {
+  public getMessageResponse(messageId: Readonly<Snowflake>): Promise<IDiscordMessageResponse> {
     return QuoteRandomService.getInstance()
-      .fetchRandomQuote()
+      .fetchRandomQuote(messageId)
       .then(
         (quote: Readonly<IQuote>): IDiscordMessageResponse => {
           return {
@@ -96,7 +102,7 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
 
     return {
       iconURL: soniaImageUrl ?? undefined,
-      text: `Enjoy`,
+      text: `Enjoy my wisdom`,
     };
   }
 
@@ -111,6 +117,6 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
   }
 
   private _getMessageEmbedTitle(): string {
-    return `Quote of the day`;
+    return `Random quote`;
   }
 }

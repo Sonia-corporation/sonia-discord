@@ -1,8 +1,10 @@
 import { QuoteApiService } from './quote-api.service';
 import { AbstractService } from '../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../enums/service-name.enum';
+import { LoggerService } from '../../logger/services/logger.service';
 import { IQuoteOfTheDayApi } from '../interfaces/quote-of-the-day-api';
 import { IQuote } from '../interfaces/quote';
+import { Snowflake } from 'discord.js';
 import _ from 'lodash';
 
 export class QuoteRandomService extends AbstractService {
@@ -20,18 +22,24 @@ export class QuoteRandomService extends AbstractService {
     super(ServiceNameEnum.QUOTE_RANDOM_SERVICE);
   }
 
-  public fetchRandomQuote(): Promise<IQuote> {
+  public fetchRandomQuote(messageId: Readonly<Snowflake>): Promise<IQuote> {
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      hasExtendedContext: true,
+      message: LoggerService.getInstance().getSnowflakeContext(messageId, `fetching a random quote...`),
+    });
+
     return QuoteApiService.getInstance()
-      .getQuoteOfTheDay()
-      .then(
-        (quote: Readonly<IQuoteOfTheDayApi>): IQuote => {
-          return {
-            authorName: quote.quote.author,
-            date: quote.qotd_date,
-            quote: quote.quote.body,
-            quoteUrl: quote.quote.url,
-          };
-        }
-      );
+      .getQuoteOfTheDay(messageId)
+      .then((quote: Readonly<IQuoteOfTheDayApi>): IQuote => this._quoteOfTheDayApiToQuote(quote));
+  }
+
+  private _quoteOfTheDayApiToQuote(quote: Readonly<IQuoteOfTheDayApi>): IQuote {
+    return {
+      authorName: quote.quote.author,
+      date: quote.qotd_date,
+      quote: quote.quote.body,
+      quoteUrl: quote.quote.url,
+    };
   }
 }
