@@ -428,6 +428,9 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       describe(`when the Firebase guild data is a Firebase guild but not up-to-date`, (): void => {
         beforeEach((): void => {
           firebaseGuild = createHydratedMock<IFirebaseGuildV3>({
+            channels: undefined,
+            id: `dummy-id`,
+            lastReleaseNotesVersion: `dummy-last-release-notes-version`,
             version: FirebaseGuildVersionEnum.V3,
           });
 
@@ -458,7 +461,9 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       describe(`when the Firebase guild data is a Firebase guild up-to-date`, (): void => {
         beforeEach((): void => {
           firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
-            channels: {},
+            channels: undefined,
+            id: `dummy-id`,
+            lastReleaseNotesVersion: `dummy-last-release-notes-version`,
             version: FirebaseGuildVersionEnum.V5,
           });
 
@@ -480,7 +485,9 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
         describe(`when the Firebase guild has no channel`, (): void => {
           beforeEach((): void => {
             firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
-              channels: {},
+              channels: undefined,
+              id: `dummy-id`,
+              lastReleaseNotesVersion: `dummy-last-release-notes-version`,
               version: FirebaseGuildVersionEnum.V5,
             });
 
@@ -501,12 +508,16 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
           beforeEach((): void => {
             channel = createHydratedMock<IFirebaseGuildChannelVFinal>({
+              features: undefined,
               id: `one`,
+              version: FirebaseGuildChannelVersionEnum.V2,
             });
             firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
               channels: {
                 one: channel,
               },
+              id: `dummy-id`,
+              lastReleaseNotesVersion: `dummy-last-release-notes-version`,
               version: FirebaseGuildVersionEnum.V5,
             });
 
@@ -529,16 +540,22 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
           beforeEach((): void => {
             channel1 = createHydratedMock<IFirebaseGuildChannelVFinal>({
+              features: undefined,
               id: `one`,
+              version: FirebaseGuildChannelVersionEnum.V2,
             });
             channel2 = createHydratedMock<IFirebaseGuildChannelVFinal>({
+              features: undefined,
               id: `two`,
+              version: FirebaseGuildChannelVersionEnum.V2,
             });
             firebaseGuild = createHydratedMock<IFirebaseGuildVFinal>({
               channels: {
                 one: channel1,
                 two: channel2,
               },
+              id: `dummy-id`,
+              lastReleaseNotesVersion: `dummy-last-release-notes-version`,
               version: FirebaseGuildVersionEnum.V5,
             });
 

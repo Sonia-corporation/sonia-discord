@@ -232,7 +232,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
           return Promise.all(
             _.map(
-              firebaseGuild.channels,
+              _.compact(_.values(firebaseGuild.channels)),
               (channel: Readonly<IFirebaseGuildChannel>): Promise<Message | null> =>
                 this.sendMessageByChannel(channel, firebaseGuild, guild)
                   .then(

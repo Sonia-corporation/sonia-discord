@@ -16,7 +16,7 @@ import { DiscordSoniaService } from '../../users/services/discord-sonia.service'
 import { ISonia } from '../../users/types/sonia';
 import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../types/any-discord-message';
-import { Client, MessageOptions } from 'discord.js';
+import { Client } from 'discord.js';
 import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
@@ -980,15 +980,21 @@ describe(`DiscordMessageService`, (): void => {
                 );
 
                 expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(6);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(1, `dummy-response-a`, {
-                  split: false,
-                } as MessageOptions);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(2, `dummy-response-b`, {
-                  split: false,
-                } as MessageOptions);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(3, `dummy-response-c`, {
-                  split: false,
-                } as MessageOptions);
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(
+                  1,
+                  `dummy-response-a`,
+                  discordMessageResponseA.options
+                );
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(
+                  2,
+                  `dummy-response-b`,
+                  discordMessageResponseB.options
+                );
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(
+                  3,
+                  `dummy-response-c`,
+                  discordMessageResponseC.options
+                );
               });
 
               describe(`when the messages were not successfully sent`, (): void => {
