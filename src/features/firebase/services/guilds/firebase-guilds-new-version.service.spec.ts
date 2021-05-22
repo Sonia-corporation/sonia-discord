@@ -1421,15 +1421,17 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       });
 
       describe(`when the message response was successfully fetched`, (): void => {
+        let messageResponse: IDiscordMessageResponse;
+
         beforeEach((): void => {
-          getMessageResponseSpy.mockResolvedValue(
-            createHydratedMock<IDiscordMessageResponse>({
-              options: {
-                split: false,
-              },
-              response: `dummy-response`,
-            })
-          );
+          messageResponse = createHydratedMock<IDiscordMessageResponse>({
+            options: {
+              split: false,
+            },
+            response: `dummy-response`,
+          });
+
+          getMessageResponseSpy.mockResolvedValue(messageResponse);
         });
 
         it(`should log about sending a release notes message`, async (): Promise<void> => {
@@ -1450,9 +1452,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
           expect(sendMock).toHaveBeenCalledTimes(1);
-          expect(sendMock).toHaveBeenCalledWith(`dummy-response`, {
-            split: false,
-          });
+          expect(sendMock).toHaveBeenCalledWith(`dummy-response`, messageResponse.options);
         });
 
         describe(`when the sending of the message failed`, (): void => {

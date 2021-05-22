@@ -11,7 +11,11 @@ describe(`upgradeFirebaseGuildChannelToV2()`, (): void => {
   let firebaseGuildChannel: IFirebaseGuildChannelV1;
 
   beforeEach((): void => {
-    firebaseGuildChannel = createHydratedMock<IFirebaseGuildChannelV1>();
+    firebaseGuildChannel = createHydratedMock<IFirebaseGuildChannelV1>({
+      features: undefined,
+      id: `dummy-id`,
+      version: FirebaseGuildChannelVersionEnum.V1,
+    });
   });
 
   describe(`when there is no features configured`, (): void => {
@@ -60,7 +64,7 @@ describe(`upgradeFirebaseGuildChannelToV2()`, (): void => {
 
     const result = upgradeFirebaseGuildChannelToV2(firebaseGuildChannel);
 
-    expect(result.id).toStrictEqual(firebaseGuildChannel.id);
+    expect(result.id).toStrictEqual(`dummy-id`);
   });
 
   it(`should return a v2 version`, (): void => {

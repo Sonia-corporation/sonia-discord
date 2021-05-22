@@ -775,9 +775,10 @@ describe(`DiscordMessageService`, (): void => {
                 );
 
                 expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(2);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(`dummy-response`, {
-                  split: false,
-                } as MessageOptions);
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(
+                  `dummy-response`,
+                  discordMessageResponse.options
+                );
               });
 
               describe(`when the message was not successfully sent`, (): void => {
@@ -1251,9 +1252,10 @@ describe(`DiscordMessageService`, (): void => {
             );
 
             expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(2);
-            expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(`dummy-response`, {
-              split: false,
-            } as MessageOptions);
+            expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(
+              `dummy-response`,
+              discordMessageResponse.options
+            );
           });
 
           describe(`when the message was not successfully sent`, (): void => {

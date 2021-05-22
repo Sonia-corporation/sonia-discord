@@ -159,7 +159,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
 
     beforeEach((): void => {
       firebaseGuild = createHydratedMock<IFirebaseGuildV4>({
-        channels: {},
+        channels: undefined,
         id: `dummy-id`,
         lastReleaseNotesVersion: `dummy-last-release-notes-version`,
         version: FirebaseGuildVersionEnum.V4,

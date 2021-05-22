@@ -12,7 +12,12 @@ describe(`upgradeFirebaseGuildToV5()`, (): void => {
   let firebaseGuild: IFirebaseGuildV4;
 
   beforeEach((): void => {
-    firebaseGuild = createHydratedMock<IFirebaseGuildV4>();
+    firebaseGuild = createHydratedMock<IFirebaseGuildV4>({
+      channels: undefined,
+      id: `dummy-id`,
+      lastReleaseNotesVersion: `dummy-last-release-notes-version`,
+      version: FirebaseGuildVersionEnum.V4,
+    });
   });
 
   describe(`when there is no channel`, (): void => {
@@ -73,7 +78,7 @@ describe(`upgradeFirebaseGuildToV5()`, (): void => {
 
     const result = upgradeFirebaseGuildToV5(firebaseGuild);
 
-    expect(result.id).toStrictEqual(firebaseGuild.id);
+    expect(result.id).toStrictEqual(`dummy-id`);
   });
 
   it(`should return the same last release notes version`, (): void => {
@@ -81,7 +86,7 @@ describe(`upgradeFirebaseGuildToV5()`, (): void => {
 
     const result = upgradeFirebaseGuildToV5(firebaseGuild);
 
-    expect(result.lastReleaseNotesVersion).toStrictEqual(firebaseGuild.lastReleaseNotesVersion);
+    expect(result.lastReleaseNotesVersion).toStrictEqual(`dummy-last-release-notes-version`);
   });
 
   it(`should return a v5 version`, (): void => {
