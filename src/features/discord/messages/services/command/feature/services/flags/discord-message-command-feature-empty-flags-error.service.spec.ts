@@ -12,7 +12,7 @@ import { DiscordMessageCommandFeatureNameEnum } from '../../enums/discord-messag
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../../features/noon/constants/discord-message-command-feature-noon-flags';
 import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
 import moment from 'moment-timezone';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
   let service: DiscordMessageCommandFeatureEmptyFlagsErrorService;
@@ -80,7 +80,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureEmptyFlagsErrorService();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>();
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>();
       commands = [DiscordMessageCommandEnum.FEATURE];
       featureName = DiscordMessageCommandFeatureNameEnum.NOON;
 
@@ -117,7 +117,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);

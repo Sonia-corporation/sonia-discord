@@ -17,7 +17,7 @@ import { IDiscordGuildSoniaSendMessageToChannel } from '../interfaces/discord-gu
 import { Client, Guild, GuildChannel, Message, TextChannel } from 'discord.js';
 import * as admin from 'firebase-admin';
 import { of, throwError } from 'rxjs';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`./discord-guild-sonia.service`);
 jest.mock(`../../../logger/services/chalk/chalk.service`);
@@ -104,10 +104,10 @@ describe(`DiscordGuildCreateService`, (): void => {
     beforeEach((): void => {
       service = new DiscordGuildCreateService();
       discordClientServiceGetClientOnMock = jest.fn();
-      client = createMock<Client>({
+      client = createHydratedMock<Client>({
         on: discordClientServiceGetClientOnMock,
       });
-      guild = createMock<Guild>({
+      guild = createHydratedMock<Guild>({
         id: `dummy-guild-id`,
       });
 
@@ -144,7 +144,7 @@ describe(`DiscordGuildCreateService`, (): void => {
         discordClientServiceGetClientOnMock = jest.fn((_event: string, listener: (guild: Guild) => void): void => {
           listener(guild);
         });
-        client = createMock<Client>({
+        client = createHydratedMock<Client>({
           on: discordClientServiceGetClientOnMock,
         });
 
@@ -291,11 +291,11 @@ describe(`DiscordGuildCreateService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordGuildCreateService();
-      guild = createMock<Guild>();
-      primaryGuildChannel = createMock<GuildChannel>();
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
-      discordMessageErrorResponse = createMock<IDiscordMessageResponse>();
-      message = createMock<Message>();
+      guild = createHydratedMock<Guild>();
+      primaryGuildChannel = createHydratedMock<GuildChannel>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
+      discordMessageErrorResponse = createHydratedMock<IDiscordMessageResponse>();
+      message = createHydratedMock<Message>();
 
       discordGuildConfigServiceShouldSendCookiesOnCreateSpy = jest
         .spyOn(discordGuildConfigService, `shouldSendCookiesOnCreate`)
@@ -390,14 +390,14 @@ describe(`DiscordGuildCreateService`, (): void => {
 
       describe(`when the primary guild channel was found`, (): void => {
         beforeEach((): void => {
-          primaryGuildChannel = createMock<TextChannel>();
+          primaryGuildChannel = createHydratedMock<TextChannel>();
 
           discordChannelGuildServiceGetPrimarySpy.mockReturnValue(primaryGuildChannel);
         });
 
         describe(`when the primary guild channel is not writable`, (): void => {
           beforeEach((): void => {
-            primaryGuildChannel = createMock<GuildChannel>({
+            primaryGuildChannel = createHydratedMock<GuildChannel>({
               type: `voice`,
             });
 
@@ -427,7 +427,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
         describe(`when the primary guild channel is writable`, (): void => {
           beforeEach((): void => {
-            primaryGuildChannel = createMock<TextChannel>({
+            primaryGuildChannel = createHydratedMock<TextChannel>({
               isText(): true {
                 return true;
               },
@@ -557,10 +557,10 @@ describe(`DiscordGuildCreateService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordGuildCreateService();
-      guild = createMock<Guild>({
+      guild = createHydratedMock<Guild>({
         id: `dummy-id`,
       });
-      writeResult = createMock<admin.firestore.WriteResult>();
+      writeResult = createHydratedMock<admin.firestore.WriteResult>();
 
       firebaseGuildsServiceIsReady$Spy = jest.spyOn(firebaseGuildsService, `isReady$`).mockReturnValue(of(true));
       firebaseGuildsServiceHasGuildSpy = jest

@@ -5,7 +5,7 @@ import { FirebaseGuildChannelFeatureReleaseNotesVersionEnum } from '../../../../
 import { IFirebaseGuildChannelFeatureReleaseNotesV1 } from '../../../../../interfaces/guilds/channels/features/firebase-guild-channel-feature-release-notes-v1';
 import { IFirebaseGuildChannelFeatureReleaseNotesVFinal } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-release-notes-v-final';
 import { IFirebaseGuildChannelFeatureReleaseNotes } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-release-notes';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../logger/services/chalk/chalk.service`);
 
@@ -79,7 +79,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
     describe(`when the given release notes config is a v1 config`, (): void => {
       beforeEach((): void => {
-        releaseNotes = createMock<IFirebaseGuildChannelFeatureReleaseNotesV1>({
+        releaseNotes = createHydratedMock<IFirebaseGuildChannelFeatureReleaseNotesV1>({
           version: FirebaseGuildChannelFeatureReleaseNotesVersionEnum.V1,
         });
       });
@@ -103,7 +103,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
     describe(`when the given release notes config is a v1 config`, (): void => {
       beforeEach((): void => {
-        releaseNotes = createMock<IFirebaseGuildChannelFeatureReleaseNotesV1>({
+        releaseNotes = createHydratedMock<IFirebaseGuildChannelFeatureReleaseNotesV1>({
           version: FirebaseGuildChannelFeatureReleaseNotesVersionEnum.V1,
         });
       });
@@ -141,7 +141,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
     describe(`when the given release notes config is a valid config`, (): void => {
       beforeEach((): void => {
-        releaseNotes = createMock<IFirebaseGuildChannelFeatureReleaseNotesVFinal>();
+        releaseNotes = createHydratedMock<IFirebaseGuildChannelFeatureReleaseNotesVFinal>();
       });
 
       it(`should return true`, (): void => {
@@ -185,7 +185,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
     describe(`when the given release notes config is a v1`, (): void => {
       beforeEach((): void => {
-        releaseNotes = createMock<IFirebaseGuildChannelFeatureReleaseNotes>({
+        releaseNotes = createHydratedMock<IFirebaseGuildChannelFeatureReleaseNotes>({
           version: FirebaseGuildChannelFeatureReleaseNotesVersionEnum.V1,
         });
       });
@@ -224,7 +224,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
     describe(`when the given release notes config is a v1 release notes config`, (): void => {
       beforeEach((): void => {
-        releaseNotes = createMock<IFirebaseGuildChannelFeatureReleaseNotes>({
+        releaseNotes = createHydratedMock<IFirebaseGuildChannelFeatureReleaseNotes>({
           version: FirebaseGuildChannelFeatureReleaseNotesVersionEnum.V1,
         });
       });

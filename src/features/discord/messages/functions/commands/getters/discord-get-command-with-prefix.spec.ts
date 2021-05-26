@@ -1,13 +1,13 @@
 import { discordGetCommandWithPrefix } from './discord-get-command-with-prefix';
 import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
 import { IDiscordGetCommandWithPrefix } from '../../../interfaces/commands/getters/discord-get-command-with-prefix';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`discordGetCommandWithPrefix()`, (): void => {
   let data: IDiscordGetCommandWithPrefix;
 
   beforeEach((): void => {
-    data = createMock<IDiscordGetCommandWithPrefix>();
+    data = createHydratedMock<IDiscordGetCommandWithPrefix>();
   });
 
   describe(`when the given prefix is $`, (): void => {

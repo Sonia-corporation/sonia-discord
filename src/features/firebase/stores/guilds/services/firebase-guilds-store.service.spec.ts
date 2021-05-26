@@ -5,7 +5,7 @@ import { FirebaseGuildsService } from '../../../services/guilds/firebase-guilds.
 import { IFirebaseGuild } from '../../../types/guilds/firebase-guild';
 import { FirebaseGuildsStore } from '../firebase-guilds-store';
 import { Subject } from 'rxjs';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`FirebaseGuildsStoreService`, (): void => {
   let service: FirebaseGuildsStoreService;
@@ -70,7 +70,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
     beforeEach((): void => {
       service = new FirebaseGuildsStoreService();
       onGuildsChange$ = new Subject<IFirebaseGuild[]>();
-      firebaseGuilds = createMock<IFirebaseGuild[]>();
+      firebaseGuilds = createHydratedMock<IFirebaseGuild[]>();
 
       firebaseGuildsServiceOnGuildsChange$Spy = jest
         .spyOn(firebaseGuildsService, `onGuildsChange$`)
@@ -169,7 +169,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsStoreService();
-      firebaseGuilds = createMock<IFirebaseGuild[]>();
+      firebaseGuilds = createHydratedMock<IFirebaseGuild[]>();
 
       firebaseGuildsStoreUpsertManySpy = jest.spyOn(firebaseGuildsStore, `upsertMany`).mockImplementation();
     });
@@ -191,7 +191,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsStoreService();
-      firebaseGuilds = createMock<IFirebaseGuild[]>();
+      firebaseGuilds = createHydratedMock<IFirebaseGuild[]>();
 
       firebaseGuildsStoreAddSpy = jest.spyOn(firebaseGuildsStore, `add`).mockImplementation();
     });

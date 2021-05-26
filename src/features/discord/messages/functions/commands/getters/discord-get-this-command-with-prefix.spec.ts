@@ -1,13 +1,13 @@
 import { discordGetThisCommandWithPrefix } from './discord-get-this-command-with-prefix';
 import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
 import { IDiscordGetThisCommandWithPrefixData } from '../../../interfaces/commands/getters/discord-get-this-command-with-prefix-data';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`discordGetThisCommandWithPrefix()`, (): void => {
   let data: IDiscordGetThisCommandWithPrefixData;
 
   beforeEach((): void => {
-    data = createMock<IDiscordGetThisCommandWithPrefixData>();
+    data = createHydratedMock<IDiscordGetThisCommandWithPrefixData>();
   });
 
   describe(`when the message is empty`, (): void => {

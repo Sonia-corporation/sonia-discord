@@ -3,7 +3,7 @@ import { ServiceNameEnum } from '../../../../../../../../enums/service-name.enum
 import { IDiscordMessageResponse } from '../../../../../interfaces/discord-message-response';
 import { MessageEmbed } from 'discord.js';
 import _ from 'lodash';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 export class DiscordMessageCommandCookieService extends AbstractService {
   private static _instance: DiscordMessageCommandCookieService;
@@ -27,7 +27,7 @@ export class DiscordMessageCommandCookieService extends AbstractService {
   public getMessageResponse(): IDiscordMessageResponse {
     return {
       options: {
-        embed: createMock<MessageEmbed>(),
+        embed: createHydratedMock<MessageEmbed>(),
         split: false,
       },
       response: ``,

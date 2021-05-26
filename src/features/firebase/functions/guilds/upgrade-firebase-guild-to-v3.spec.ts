@@ -1,13 +1,13 @@
 import { upgradeFirebaseGuildToV3 } from './upgrade-firebase-guild-to-v3';
 import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
 import { IFirebaseGuildV2 } from '../../interfaces/guilds/firebase-guild-v2';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`upgradeFirebaseGuildToV3()`, (): void => {
   let firebaseGuild: IFirebaseGuildV2;
 
   beforeEach((): void => {
-    firebaseGuild = createMock<IFirebaseGuildV2>();
+    firebaseGuild = createHydratedMock<IFirebaseGuildV2>();
   });
 
   it(`should return an empty list of channels`, (): void => {

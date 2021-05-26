@@ -16,8 +16,8 @@ import { DiscordSoniaService } from '../../users/services/discord-sonia.service'
 import { ISonia } from '../../users/types/sonia';
 import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../types/any-discord-message';
-import { Client, MessageOptions } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
+import { Client } from 'discord.js';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -100,10 +100,10 @@ describe(`DiscordMessageService`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageService();
       discordClientServiceGetClientOnMock = jest.fn();
-      client = createMock<Client>({
+      client = createHydratedMock<Client>({
         on: discordClientServiceGetClientOnMock,
       });
-      anyDiscordMessage = createMock<IAnyDiscordMessage>();
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>();
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(client);
@@ -137,7 +137,7 @@ describe(`DiscordMessageService`, (): void => {
             listener(anyDiscordMessage);
           }
         );
-        client = createMock<Client>({
+        client = createHydratedMock<Client>({
           on: discordClientServiceGetClientOnMock,
         });
 
@@ -178,7 +178,7 @@ describe(`DiscordMessageService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageService();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         id: `dummy-id`,
       });
 
@@ -382,7 +382,7 @@ describe(`DiscordMessageService`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageService();
       anyDiscordMessageChannelSendMock = jest.fn().mockRejectedValue(new Error(`Fake test error: send`));
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         channel: {
           send: anyDiscordMessageChannelSendMock,
         },
@@ -391,7 +391,7 @@ describe(`DiscordMessageService`, (): void => {
         },
         id: `dummy-id`,
       });
-      discordMessageResponse = createMock<IDiscordMessageResponse>({
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>({
         options: {
           split: false,
         },
@@ -424,7 +424,7 @@ describe(`DiscordMessageService`, (): void => {
       discordAuthorServiceIsValidSpy = jest.spyOn(discordAuthorService, `isValid`).mockImplementation();
       discordMentionServiceIsValidSpy = jest.spyOn(discordMentionService, `isValid`).mockImplementation();
       discordMentionServiceIsForEveryone = jest.spyOn(discordMentionService, `isForEveryone`).mockImplementation();
-      jest.spyOn(discordSoniaService, `getSonia`).mockReturnValue(createMock<ISonia>());
+      jest.spyOn(discordSoniaService, `getSonia`).mockReturnValue(createHydratedMock<ISonia>());
       discordSoniaServiceIsValidSpy = jest.spyOn(discordSoniaService, `isValid`).mockImplementation();
       discordMentionServiceIsUserMentionedSpy = jest
         .spyOn(discordMentionService, `isUserMentioned`)
@@ -775,16 +775,17 @@ describe(`DiscordMessageService`, (): void => {
                 );
 
                 expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(2);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(`dummy-response`, {
-                  split: false,
-                } as MessageOptions);
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(
+                  `dummy-response`,
+                  discordMessageResponse.options
+                );
               });
 
               describe(`when the message was not successfully sent`, (): void => {
                 beforeEach((): void => {
                   anyDiscordMessageChannelSendMock.mockReturnValue(Promise.reject(new Error(`Message sending error`)));
 
-                  anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                     channel: {
                       send: anyDiscordMessageChannelSendMock,
                     },
@@ -834,7 +835,7 @@ describe(`DiscordMessageService`, (): void => {
                 beforeEach((): void => {
                   anyDiscordMessageChannelSendMock.mockReturnValue(Promise.resolve());
 
-                  anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                     channel: {
                       send: anyDiscordMessageChannelSendMock,
                     },
@@ -887,19 +888,19 @@ describe(`DiscordMessageService`, (): void => {
             let discordMessageResponseC: IDiscordMessageResponse;
 
             beforeEach((): void => {
-              discordMessageResponseA = createMock<IDiscordMessageResponse>({
+              discordMessageResponseA = createHydratedMock<IDiscordMessageResponse>({
                 options: {
                   split: false,
                 },
                 response: `dummy-response-a`,
               });
-              discordMessageResponseB = createMock<IDiscordMessageResponse>({
+              discordMessageResponseB = createHydratedMock<IDiscordMessageResponse>({
                 options: {
                   split: false,
                 },
                 response: `dummy-response-b`,
               });
-              discordMessageResponseC = createMock<IDiscordMessageResponse>({
+              discordMessageResponseC = createHydratedMock<IDiscordMessageResponse>({
                 options: {
                   split: false,
                 },
@@ -979,22 +980,28 @@ describe(`DiscordMessageService`, (): void => {
                 );
 
                 expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(6);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(1, `dummy-response-a`, {
-                  split: false,
-                } as MessageOptions);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(2, `dummy-response-b`, {
-                  split: false,
-                } as MessageOptions);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(3, `dummy-response-c`, {
-                  split: false,
-                } as MessageOptions);
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(
+                  1,
+                  `dummy-response-a`,
+                  discordMessageResponseA.options
+                );
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(
+                  2,
+                  `dummy-response-b`,
+                  discordMessageResponseB.options
+                );
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(
+                  3,
+                  `dummy-response-c`,
+                  discordMessageResponseC.options
+                );
               });
 
               describe(`when the messages were not successfully sent`, (): void => {
                 beforeEach((): void => {
                   anyDiscordMessageChannelSendMock.mockReturnValue(Promise.reject(new Error(`Message sending error`)));
 
-                  anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                     channel: {
                       send: anyDiscordMessageChannelSendMock,
                     },
@@ -1055,7 +1062,7 @@ describe(`DiscordMessageService`, (): void => {
                 beforeEach((): void => {
                   anyDiscordMessageChannelSendMock.mockReturnValue(Promise.resolve());
 
-                  anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                     channel: {
                       send: anyDiscordMessageChannelSendMock,
                     },
@@ -1251,16 +1258,17 @@ describe(`DiscordMessageService`, (): void => {
             );
 
             expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(2);
-            expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(`dummy-response`, {
-              split: false,
-            } as MessageOptions);
+            expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(
+              `dummy-response`,
+              discordMessageResponse.options
+            );
           });
 
           describe(`when the message was not successfully sent`, (): void => {
             beforeEach((): void => {
               anyDiscordMessageChannelSendMock.mockReturnValue(Promise.reject(new Error(`Message sending error`)));
 
-              anyDiscordMessage = createMock<IAnyDiscordMessage>({
+              anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                 channel: {
                   send: anyDiscordMessageChannelSendMock,
                 },
@@ -1308,7 +1316,7 @@ describe(`DiscordMessageService`, (): void => {
             beforeEach((): void => {
               anyDiscordMessageChannelSendMock.mockReturnValue(Promise.resolve());
 
-              anyDiscordMessage = createMock<IAnyDiscordMessage>({
+              anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                 channel: {
                   send: anyDiscordMessageChannelSendMock,
                 },

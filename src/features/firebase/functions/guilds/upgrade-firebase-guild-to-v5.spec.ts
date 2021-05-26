@@ -6,13 +6,18 @@ import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-vers
 import { IFirebaseGuildChannelV1 } from '../../interfaces/guilds/channels/firebase-guild-channel-v1';
 import { IFirebaseGuildChannelV2 } from '../../interfaces/guilds/channels/firebase-guild-channel-v2';
 import { IFirebaseGuildV4 } from '../../interfaces/guilds/firebase-guild-v4';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`upgradeFirebaseGuildToV5()`, (): void => {
   let firebaseGuild: IFirebaseGuildV4;
 
   beforeEach((): void => {
-    firebaseGuild = createMock<IFirebaseGuildV4>();
+    firebaseGuild = createHydratedMock<IFirebaseGuildV4>({
+      channels: undefined,
+      id: `dummy-id`,
+      lastReleaseNotesVersion: `dummy-last-release-notes-version`,
+      version: FirebaseGuildVersionEnum.V4,
+    });
   });
 
   describe(`when there is no channel`, (): void => {
@@ -32,7 +37,7 @@ describe(`upgradeFirebaseGuildToV5()`, (): void => {
   describe(`when there is a channel configured`, (): void => {
     beforeEach((): void => {
       firebaseGuild.channels = {
-        1: createMock<IFirebaseGuildChannelV1>({
+        1: createHydratedMock<IFirebaseGuildChannelV1>({
           features: {
             noon: {
               isEnabled: false,
@@ -73,7 +78,7 @@ describe(`upgradeFirebaseGuildToV5()`, (): void => {
 
     const result = upgradeFirebaseGuildToV5(firebaseGuild);
 
-    expect(result.id).toStrictEqual(firebaseGuild.id);
+    expect(result.id).toStrictEqual(`dummy-id`);
   });
 
   it(`should return the same last release notes version`, (): void => {
@@ -81,7 +86,7 @@ describe(`upgradeFirebaseGuildToV5()`, (): void => {
 
     const result = upgradeFirebaseGuildToV5(firebaseGuild);
 
-    expect(result.lastReleaseNotesVersion).toStrictEqual(firebaseGuild.lastReleaseNotesVersion);
+    expect(result.lastReleaseNotesVersion).toStrictEqual(`dummy-last-release-notes-version`);
   });
 
   it(`should return a v5 version`, (): void => {

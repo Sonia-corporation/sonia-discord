@@ -3,7 +3,7 @@ import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../../core/services/core-event.service';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`DiscordMessageSimpleBasicService`, (): void => {
   let service: DiscordMessageSimpleBasicService;
@@ -279,7 +279,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageSimpleBasicService();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         content: `dummy-content`,
       });
 

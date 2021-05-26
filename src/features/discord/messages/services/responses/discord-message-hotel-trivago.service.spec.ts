@@ -5,7 +5,7 @@ import { DISCORD_MESSAGE_HOTEL_TRIVAGO_RESPONSE_MESSAGES } from '../../constants
 import { IDiscordMessageHotelTrivagoResponseMessage } from '../../interfaces/discord-message-hotel-trivago-response-message';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`DiscordMessageHotelTrivagoService`, (): void => {
   let service: DiscordMessageHotelTrivagoService;
@@ -212,7 +212,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageHotelTrivagoService();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         content: `dummy-content`,
       });
 

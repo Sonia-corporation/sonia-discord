@@ -11,7 +11,7 @@ import { DiscordMessageCommandCliErrorService } from '../../../discord-message-c
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from '../../features/noon/constants/discord-message-command-feature-noon-flags';
 import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
 import moment from 'moment-timezone';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
   let service: DiscordMessageCommandFeatureWrongFlagsErrorService;
@@ -77,7 +77,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageCommandFeatureWrongFlagsErrorService();
-      flagsErrors = createMock<IDiscordCommandFlagsErrors>();
+      flagsErrors = createHydratedMock<IDiscordCommandFlagsErrors>();
 
       discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy = jest.spyOn(
         discordMessageCommandCliErrorService,
@@ -112,7 +112,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
     it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = await service.getMessageResponse(flagsErrors);
@@ -131,7 +131,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
     describe(`when there is one given flag error`, (): void => {
       beforeEach((): void => {
-        flagsErrors = [createMock<IDiscordCommandFlagError>()];
+        flagsErrors = [createHydratedMock<IDiscordCommandFlagError>()];
       });
 
       it(`should return a Discord message response embed with a description indicating that one error has been found`, async (): Promise<void> => {
@@ -166,9 +166,9 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
     describe(`when there is three given flags errors`, (): void => {
       beforeEach((): void => {
         flagsErrors = [
-          createMock<IDiscordCommandFlagError>(),
-          createMock<IDiscordCommandFlagError>(),
-          createMock<IDiscordCommandFlagError>(),
+          createHydratedMock<IDiscordCommandFlagError>(),
+          createHydratedMock<IDiscordCommandFlagError>(),
+          createHydratedMock<IDiscordCommandFlagError>(),
         ];
       });
 

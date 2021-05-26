@@ -7,7 +7,7 @@ import { ILoggerLog } from '../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { Client } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -76,7 +76,7 @@ describe(`DiscordLoggerService`, (): void => {
     beforeEach((): void => {
       service = new DiscordLoggerService();
       discordClientServiceGetClientOnMock = jest.fn();
-      client = createMock<Client>({
+      client = createHydratedMock<Client>({
         on: discordClientServiceGetClientOnMock,
       });
 
@@ -114,7 +114,7 @@ describe(`DiscordLoggerService`, (): void => {
         discordClientServiceGetClientOnMock = jest.fn((_event: string, listener: () => void): void => {
           listener();
         });
-        client = createMock<Client>({
+        client = createHydratedMock<Client>({
           on: discordClientServiceGetClientOnMock,
         });
 
@@ -157,7 +157,7 @@ describe(`DiscordLoggerService`, (): void => {
         discordClientServiceGetClientOnMock = jest.fn((_event: string, listener: () => void): void => {
           listener();
         });
-        client = createMock<Client>({
+        client = createHydratedMock<Client>({
           on: discordClientServiceGetClientOnMock,
         });
 

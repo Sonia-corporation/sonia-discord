@@ -14,7 +14,7 @@ import { DiscordMessageService } from '../messages/services/discord-message.serv
 import { DiscordMessageScheduleNoonService } from '../messages/services/schedule/discord-message-schedule-noon.service';
 import { DiscordSoniaService } from '../users/services/discord-sonia.service';
 import { Presence } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`DiscordService`, (): void => {
   let service: DiscordService;
@@ -97,16 +97,16 @@ describe(`DiscordService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordService();
-      discordLoggerService = createMock<DiscordLoggerService>();
-      discordGuildService = createMock<DiscordGuildService>();
-      discordGuildMemberAddService = createMock<DiscordGuildMemberAddService>();
-      discordGuildCreateService = createMock<DiscordGuildCreateService>();
-      discordMessageService = createMock<DiscordMessageService>();
-      discordAuthenticationService = createMock<DiscordAuthenticationService>();
-      discordMessageScheduleNoonService = createMock<DiscordMessageScheduleNoonService>();
-      discordGuildSoniaService = createMock<DiscordGuildSoniaService>();
-      discordActivitySoniaService = createMock<DiscordActivitySoniaService>();
-      discordSoniaEmotionalStateService = createMock<DiscordSoniaEmotionalStateService>();
+      discordLoggerService = createHydratedMock<DiscordLoggerService>();
+      discordGuildService = createHydratedMock<DiscordGuildService>();
+      discordGuildMemberAddService = createHydratedMock<DiscordGuildMemberAddService>();
+      discordGuildCreateService = createHydratedMock<DiscordGuildCreateService>();
+      discordMessageService = createHydratedMock<DiscordMessageService>();
+      discordAuthenticationService = createHydratedMock<DiscordAuthenticationService>();
+      discordMessageScheduleNoonService = createHydratedMock<DiscordMessageScheduleNoonService>();
+      discordGuildSoniaService = createHydratedMock<DiscordGuildSoniaService>();
+      discordActivitySoniaService = createHydratedMock<DiscordActivitySoniaService>();
+      discordSoniaEmotionalStateService = createHydratedMock<DiscordSoniaEmotionalStateService>();
 
       discordSoniaServiceGetInstanceSpy = jest.spyOn(DiscordSoniaService, `getInstance`);
       discordLoggerServiceGetInstanceSpy = jest
@@ -148,7 +148,7 @@ describe(`DiscordService`, (): void => {
         .mockReturnValue(discordActivitySoniaService);
       discordActivitySoniaServiceInitSpy = jest
         .spyOn(discordActivitySoniaService, `init`)
-        .mockResolvedValue(createMock<Presence>());
+        .mockResolvedValue(createHydratedMock<Presence>());
       discordSoniaEmotionalStateServiceGetInstanceSpy = jest
         .spyOn(DiscordSoniaEmotionalStateService, `getInstance`)
         .mockReturnValue(discordSoniaEmotionalStateService);

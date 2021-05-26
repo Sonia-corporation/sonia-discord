@@ -1,12 +1,12 @@
 import { createFirebaseGuild } from './create-firebase-guild';
 import { ICreateFirebaseGuild } from '../../interfaces/guilds/create-firebase-guild';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`createFirebaseGuild()`, (): void => {
   let data: ICreateFirebaseGuild;
 
   beforeEach((): void => {
-    data = createMock<ICreateFirebaseGuild>({
+    data = createHydratedMock<ICreateFirebaseGuild>({
       id: `dummy-id`,
     });
   });

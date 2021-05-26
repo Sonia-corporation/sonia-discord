@@ -2,7 +2,7 @@ import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import admin from 'firebase-admin';
 import _ from 'lodash';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 export class FirebaseAppService extends AbstractService {
   private static _instance: FirebaseAppService;
@@ -23,6 +23,6 @@ export class FirebaseAppService extends AbstractService {
   public init(): void {}
 
   public getApp(): admin.app.App | undefined {
-    return createMock<admin.app.App>();
+    return createHydratedMock<admin.app.App>();
   }
 }

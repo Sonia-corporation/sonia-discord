@@ -6,7 +6,7 @@ import { CoreEventService } from '../../../../core/services/core-event.service';
 import { IDiscordSoniaConfig } from '../../../interfaces/discord-sonia-config';
 import { IDiscordSoniaCorporationMessageEmbedAuthorConfig } from '../../../interfaces/discord-sonia-corporation-message-embed-author-config';
 import { Guild } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`DiscordSoniaConfigService`, (): void => {
   let service: DiscordSoniaConfigService;
@@ -193,7 +193,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
     beforeEach((): void => {
       service = DiscordSoniaConfigService.getInstance();
-      guild = createMock<Guild>();
+      guild = createHydratedMock<Guild>();
       discordSoniaConfigCoreService.devGuildIdWhitelist = [`dummy-guild-id`];
     });
 

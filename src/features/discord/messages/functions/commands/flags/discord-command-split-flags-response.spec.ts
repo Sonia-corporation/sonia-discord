@@ -2,7 +2,7 @@ import { discordCommandSplitFlagsResponse } from './discord-command-split-flags-
 import { IDiscordCommandFlagSuccess } from '../../../interfaces/commands/flags/discord-command-flag-success';
 import { IDiscordMessageResponse } from '../../../interfaces/discord-message-response';
 import { IDiscordCommandFlagsResponse } from '../../../types/commands/flags/discord-command-flags-response';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`discordCommandSplitFlagsResponse()`, (): void => {
   let discordCommandFlagsResponse: IDiscordCommandFlagsResponse;
@@ -11,7 +11,7 @@ describe(`discordCommandSplitFlagsResponse()`, (): void => {
     let discordCommandFlagSuccess: IDiscordCommandFlagSuccess;
 
     beforeEach((): void => {
-      discordCommandFlagSuccess = createMock<IDiscordCommandFlagSuccess>();
+      discordCommandFlagSuccess = createHydratedMock<IDiscordCommandFlagSuccess>();
       discordCommandFlagsResponse = [discordCommandFlagSuccess];
     });
 
@@ -30,8 +30,8 @@ describe(`discordCommandSplitFlagsResponse()`, (): void => {
     let discordCommandFlagSuccessB: IDiscordCommandFlagSuccess;
 
     beforeEach((): void => {
-      discordCommandFlagSuccessA = createMock<IDiscordCommandFlagSuccess>();
-      discordCommandFlagSuccessB = createMock<IDiscordCommandFlagSuccess>();
+      discordCommandFlagSuccessA = createHydratedMock<IDiscordCommandFlagSuccess>();
+      discordCommandFlagSuccessB = createHydratedMock<IDiscordCommandFlagSuccess>();
       discordCommandFlagsResponse = [discordCommandFlagSuccessA, discordCommandFlagSuccessB];
     });
 
@@ -52,10 +52,10 @@ describe(`discordCommandSplitFlagsResponse()`, (): void => {
     let discordMessageResponseB: IDiscordMessageResponse;
 
     beforeEach((): void => {
-      discordCommandFlagSuccessA = createMock<IDiscordCommandFlagSuccess>();
-      discordCommandFlagSuccessB = createMock<IDiscordCommandFlagSuccess>();
-      discordMessageResponseA = createMock<IDiscordMessageResponse>();
-      discordMessageResponseB = createMock<IDiscordMessageResponse>();
+      discordCommandFlagSuccessA = createHydratedMock<IDiscordCommandFlagSuccess>();
+      discordCommandFlagSuccessB = createHydratedMock<IDiscordCommandFlagSuccess>();
+      discordMessageResponseA = createHydratedMock<IDiscordMessageResponse>();
+      discordMessageResponseB = createHydratedMock<IDiscordMessageResponse>();
       discordCommandFlagsResponse = [
         discordCommandFlagSuccessA,
         discordCommandFlagSuccessB,

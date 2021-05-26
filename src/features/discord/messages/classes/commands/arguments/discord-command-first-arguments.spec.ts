@@ -2,7 +2,7 @@ import { DiscordCommandFirstArgument } from './discord-command-first-argument';
 import { DiscordCommandFirstArguments } from './discord-command-first-arguments';
 import { IDiscordCommandFirstArgument } from '../../../interfaces/commands/discord-command-first-argument';
 import { DiscordMessageCommandFeatureNameEnum } from '../../../services/command/feature/enums/discord-message-command-feature-name.enum';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`DiscordCommandFirstArguments`, (): void => {
   let discordCommandFirstArguments: DiscordCommandFirstArguments<DiscordMessageCommandFeatureNameEnum>;
@@ -11,7 +11,9 @@ describe(`DiscordCommandFirstArguments`, (): void => {
     describe(`when the class is created with some arguments`, (): void => {
       it(`should update the arguments inside the class`, (): void => {
         expect.assertions(1);
-        const firstArguments = createMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>();
+        const firstArguments = createHydratedMock<
+          DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]
+        >();
 
         discordCommandFirstArguments = new DiscordCommandFirstArguments<DiscordMessageCommandFeatureNameEnum>(
           firstArguments
@@ -25,13 +27,13 @@ describe(`DiscordCommandFirstArguments`, (): void => {
   describe(`getArguments()`, (): void => {
     beforeEach((): void => {
       discordCommandFirstArguments = new DiscordCommandFirstArguments<DiscordMessageCommandFeatureNameEnum>(
-        createMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
+        createHydratedMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
       );
     });
 
     it(`should return the arguments`, (): void => {
       expect.assertions(1);
-      const firstArguments = createMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>();
+      const firstArguments = createHydratedMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>();
       discordCommandFirstArguments.setArguments(firstArguments);
 
       const result = discordCommandFirstArguments.getArguments();
@@ -43,13 +45,13 @@ describe(`DiscordCommandFirstArguments`, (): void => {
   describe(`setArguments()`, (): void => {
     beforeEach((): void => {
       discordCommandFirstArguments = new DiscordCommandFirstArguments<DiscordMessageCommandFeatureNameEnum>(
-        createMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
+        createHydratedMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
       );
     });
 
     it(`should update the arguments with the given ones`, (): void => {
       expect.assertions(1);
-      const firstArguments = createMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>();
+      const firstArguments = createHydratedMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>();
 
       discordCommandFirstArguments.setArguments(firstArguments);
 
@@ -60,7 +62,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
   describe(`getRandomArgument()`, (): void => {
     beforeEach((): void => {
       discordCommandFirstArguments = new DiscordCommandFirstArguments<DiscordMessageCommandFeatureNameEnum>(
-        createMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
+        createHydratedMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
       );
     });
 
@@ -82,7 +84,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
       let firstArgument: DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>;
 
       beforeEach((): void => {
-        firstArgument = createMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>();
+        firstArgument = createHydratedMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>();
         discordCommandFirstArguments.setArguments([firstArgument]);
       });
 
@@ -100,8 +102,8 @@ describe(`DiscordCommandFirstArguments`, (): void => {
       let firstArgument2: DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>;
 
       beforeEach((): void => {
-        firstArgument1 = createMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>();
-        firstArgument2 = createMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>();
+        firstArgument1 = createHydratedMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>();
+        firstArgument2 = createHydratedMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>();
         discordCommandFirstArguments.setArguments([firstArgument1, firstArgument2]);
       });
 
@@ -118,7 +120,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
   describe(`getRandomArgumentUsageExample()`, (): void => {
     beforeEach((): void => {
       discordCommandFirstArguments = new DiscordCommandFirstArguments<DiscordMessageCommandFeatureNameEnum>(
-        createMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
+        createHydratedMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
       );
     });
 
@@ -141,7 +143,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
       beforeEach((): void => {
         firstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.NOON,
           })
         );
@@ -161,7 +163,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
   describe(`getAllArgumentsNameExample()`, (): void => {
     beforeEach((): void => {
       discordCommandFirstArguments = new DiscordCommandFirstArguments<DiscordMessageCommandFeatureNameEnum>(
-        createMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
+        createHydratedMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
       );
     });
 
@@ -184,7 +186,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
       beforeEach((): void => {
         firstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.NOON,
           })
         );
@@ -206,12 +208,12 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
       beforeEach((): void => {
         firstArgument1 = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.NOON,
           })
         );
         firstArgument2 = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.N,
           })
         );
@@ -231,7 +233,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
   describe(`getAllArgumentsNameWithShortcutsExample()`, (): void => {
     beforeEach((): void => {
       discordCommandFirstArguments = new DiscordCommandFirstArguments<DiscordMessageCommandFeatureNameEnum>(
-        createMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
+        createHydratedMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
       );
     });
 
@@ -254,7 +256,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
       beforeEach((): void => {
         firstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.NOON,
           })
         );
@@ -275,7 +277,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
       beforeEach((): void => {
         firstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.NOON,
             shortcuts: [DiscordMessageCommandFeatureNameEnum.N, DiscordMessageCommandFeatureNameEnum.N],
           })
@@ -298,12 +300,12 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
       beforeEach((): void => {
         firstArgument1 = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.NOON,
           })
         );
         firstArgument2 = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.N,
           })
         );
@@ -325,13 +327,13 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
       beforeEach((): void => {
         firstArgument1 = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.NOON,
             shortcuts: [DiscordMessageCommandFeatureNameEnum.N, DiscordMessageCommandFeatureNameEnum.N],
           })
         );
         firstArgument2 = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.N,
             shortcuts: [DiscordMessageCommandFeatureNameEnum.N, DiscordMessageCommandFeatureNameEnum.N],
           })
@@ -352,7 +354,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
   describe(`getAllArgumentsLowerCaseName()`, (): void => {
     beforeEach((): void => {
       discordCommandFirstArguments = new DiscordCommandFirstArguments<DiscordMessageCommandFeatureNameEnum>(
-        createMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
+        createHydratedMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
       );
     });
 
@@ -375,7 +377,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
       beforeEach((): void => {
         firstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.NOON,
           })
         );
@@ -397,12 +399,12 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
       beforeEach((): void => {
         firstArgument1 = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.NOON,
           })
         );
         firstArgument2 = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.N,
           })
         );
@@ -422,7 +424,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
   describe(`getAllArgumentsLowerCaseNameWithShortcuts()`, (): void => {
     beforeEach((): void => {
       discordCommandFirstArguments = new DiscordCommandFirstArguments<DiscordMessageCommandFeatureNameEnum>(
-        createMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
+        createHydratedMock<DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>[]>()
       );
     });
 
@@ -445,7 +447,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
       beforeEach((): void => {
         firstArgument = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.NOON,
           })
         );
@@ -467,13 +469,13 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
       beforeEach((): void => {
         firstArgument1 = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.NOON,
             shortcuts: [DiscordMessageCommandFeatureNameEnum.N],
           })
         );
         firstArgument2 = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.N,
             shortcuts: [DiscordMessageCommandFeatureNameEnum.NOON],
           })
@@ -496,13 +498,13 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
       beforeEach((): void => {
         firstArgument1 = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.NOON,
             shortcuts: [DiscordMessageCommandFeatureNameEnum.N, DiscordMessageCommandFeatureNameEnum.N],
           })
         );
         firstArgument2 = new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>(
-          createMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
+          createHydratedMock<IDiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>>({
             name: DiscordMessageCommandFeatureNameEnum.N,
             shortcuts: [DiscordMessageCommandFeatureNameEnum.NOON, DiscordMessageCommandFeatureNameEnum.NOON],
           })

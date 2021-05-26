@@ -1,6 +1,6 @@
 import { CoreService } from './features/core/services/core.service';
 import { InitService } from './features/init/services/init.service';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`Index`, (): void => {
   let coreServiceInitMock: jest.Mock;
@@ -14,12 +14,12 @@ describe(`Index`, (): void => {
     initServiceInitMock = jest.fn();
 
     coreServiceGetInstanceSy = jest.spyOn(CoreService, `getInstance`).mockReturnValue(
-      createMock<CoreService>({
+      createHydratedMock<CoreService>({
         init: coreServiceInitMock,
       })
     );
     initServiceGetInstanceSy = jest.spyOn(InitService, `getInstance`).mockReturnValue(
-      createMock<InitService>({
+      createHydratedMock<InitService>({
         init: initServiceInitMock,
       })
     );

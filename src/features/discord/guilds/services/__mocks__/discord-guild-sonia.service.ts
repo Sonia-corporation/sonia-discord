@@ -2,7 +2,7 @@ import { AbstractService } from '../../../../../classes/services/abstract.servic
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { GuildChannel } from 'discord.js';
 import _ from 'lodash';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 export class DiscordGuildSoniaService extends AbstractService {
   private static _instance: DiscordGuildSoniaService;
@@ -26,7 +26,7 @@ export class DiscordGuildSoniaService extends AbstractService {
   public sendMessageToChannel(): void {}
 
   public getSoniaGuildChannelByName(): GuildChannel | null | undefined {
-    return createMock<GuildChannel>();
+    return createHydratedMock<GuildChannel>();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function

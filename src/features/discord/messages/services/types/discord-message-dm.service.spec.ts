@@ -12,7 +12,7 @@ import { DiscordMessageAuthorService } from '../responses/discord-message-author
 import { DiscordMessageHotelTrivagoService } from '../responses/discord-message-hotel-trivago.service';
 import { DiscordMessagePingPongService } from '../responses/discord-message-ping-pong.service';
 import { DiscordMessageSimpleBasicService } from '../responses/discord-message-simple-basic.service';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../logger/services/chalk/chalk.service`);
 
@@ -87,7 +87,7 @@ describe(`DiscordMessageDmService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageDmService();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         author: {
           id: `dummy-author-id`,
         },
@@ -155,7 +155,7 @@ describe(`DiscordMessageDmService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageDmService();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         content: `dummy-content`,
         id: `dummy-id`,
       });

@@ -1,13 +1,13 @@
 import { discordHasThisCommand } from './discord-has-this-command';
 import { DiscordMessageCommandEnum } from '../../../enums/commands/discord-message-command.enum';
 import { IDiscordHasThisCommandData } from '../../../interfaces/commands/checks/discord-has-this-command-data';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`hasThisCommand()`, (): void => {
   let data: IDiscordHasThisCommandData;
 
   beforeEach((): void => {
-    data = createMock<IDiscordHasThisCommandData>();
+    data = createHydratedMock<IDiscordHasThisCommandData>();
   });
 
   describe(`when the message is empty`, (): void => {

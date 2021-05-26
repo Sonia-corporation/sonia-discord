@@ -1,7 +1,7 @@
 import { FirebaseUpdateCoreService } from './firebase-update-core.service';
 import { ServiceNameEnum } from '../../../enums/service-name.enum';
 import _ from 'lodash';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 
@@ -57,7 +57,7 @@ describe(`FirebaseUpdateCoreService`, (): void => {
 
     describe(`when the given entity is a valid and not up-to-date`, (): void => {
       beforeEach((): void => {
-        entity = createMock<IDummy>({
+        entity = createHydratedMock<IDummy>({
           id: `id`,
         });
       });
@@ -73,7 +73,7 @@ describe(`FirebaseUpdateCoreService`, (): void => {
 
     describe(`when the given entity is a valid and up-to-date`, (): void => {
       beforeEach((): void => {
-        entity = createMock<IDummy>({
+        entity = createHydratedMock<IDummy>({
           id: `dummy-id`,
         });
       });
@@ -107,7 +107,7 @@ describe(`FirebaseUpdateCoreService`, (): void => {
 
     describe(`when the given entity is valid`, (): void => {
       beforeEach((): void => {
-        entity = createMock<IDummy>();
+        entity = createHydratedMock<IDummy>();
       });
 
       it(`should return true`, (): void => {
@@ -144,7 +144,7 @@ describe(`FirebaseUpdateCoreService`, (): void => {
 
     describe(`when the given IDummy is valid and not up-to-date`, (): void => {
       beforeEach((): void => {
-        entity = createMock<IDummy>({
+        entity = createHydratedMock<IDummy>({
           id: `id`,
         });
       });
@@ -162,7 +162,7 @@ describe(`FirebaseUpdateCoreService`, (): void => {
 
     describe(`when the given IDummy is valid and up-to-date`, (): void => {
       beforeEach((): void => {
-        entity = createMock<IDummy>({
+        entity = createHydratedMock<IDummy>({
           id: `dummy-id`,
         });
       });

@@ -4,7 +4,7 @@ import { AppConfigService } from '../../../../app/services/config/app-config.ser
 import { CoreEventService } from '../../../../core/services/core-event.service';
 import { DiscordSoniaConfigService } from '../../../users/services/config/discord-sonia-config.service';
 import { Guild } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`DiscordMessageDmService`, (): void => {
   let service: DiscordMessageRightsService;
@@ -65,7 +65,7 @@ describe(`DiscordMessageDmService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessageRightsService();
-      guild = createMock<Guild>();
+      guild = createHydratedMock<Guild>();
 
       appConfigServiceIsProductionSpy = jest.spyOn(appConfigService, `isProduction`).mockImplementation();
       discordSoniaConfigServiceIsGuildWhitelistedInDevSpy = jest

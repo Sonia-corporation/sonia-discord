@@ -72,7 +72,7 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
 
           return Promise.all(
             _.map(
-              firebaseGuild.channels,
+              _.compact(_.values(firebaseGuild.channels)),
               (channel: Readonly<IFirebaseGuildChannel>): Promise<Message | void> =>
                 this.sendMessageByChannel(channel, firebaseGuild, guild).catch((): Promise<void> => Promise.resolve())
             )

@@ -1,7 +1,7 @@
 import { AbstractStoreService } from './abstract-store.service';
 import { ServiceNameEnum } from '../../enums/service-name.enum';
 import { CoreEventService } from '../../features/core/services/core-event.service';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 interface IDummy {
   name: string;
@@ -9,7 +9,7 @@ interface IDummy {
 
 class DummyService extends AbstractStoreService<IDummy> {
   public constructor(serviceName: ServiceNameEnum) {
-    super(serviceName, createMock<IDummy>());
+    super(serviceName, createHydratedMock<IDummy>());
   }
 }
 

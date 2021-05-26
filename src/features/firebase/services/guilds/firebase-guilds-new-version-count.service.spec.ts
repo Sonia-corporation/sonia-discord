@@ -8,7 +8,7 @@ import { IDiscordMessageResponse } from '../../../discord/messages/interfaces/di
 import { ILoggerLog } from '../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { Message } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -75,7 +75,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseGuildsNewVersionCountService();
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       discordGuildSoniaServiceSendMessageToChannelSpy = jest
@@ -360,7 +360,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
     describe(`when the given guild messages is an array with one array of one message`, (): void => {
       beforeEach((): void => {
-        guildMessages = [[createMock<Message>()]];
+        guildMessages = [[createHydratedMock<Message>()]];
       });
 
       it(`should log that one release note message was sent for one guild of one`, (): void => {
@@ -399,7 +399,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
     describe(`when the given guild messages is an array with two arrays of one message`, (): void => {
       beforeEach((): void => {
-        guildMessages = [[createMock<Message>()], [createMock<Message>()]];
+        guildMessages = [[createHydratedMock<Message>()], [createHydratedMock<Message>()]];
       });
 
       it(`should log that two release note messages were sent for two guilds of two`, (): void => {
@@ -441,10 +441,10 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
         guildMessages = [
           [],
           [null],
-          [createMock<Message>()],
+          [createHydratedMock<Message>()],
           [null, null],
-          [createMock<Message>(), null],
-          [createMock<Message>(), createMock<Message>()],
+          [createHydratedMock<Message>(), null],
+          [createHydratedMock<Message>(), createHydratedMock<Message>()],
         ];
       });
 

@@ -7,7 +7,7 @@ import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordSoniaConfigService } from '../../users/services/config/discord-sonia-config.service';
 import { Client } from 'discord.js';
 import { take } from 'rxjs/operators';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -77,7 +77,7 @@ describe(`DiscordAuthenticationService`, (): void => {
     beforeEach((): void => {
       service = new DiscordAuthenticationService();
       discordClientServiceGetClientOnMock = jest.fn();
-      client = createMock<Client>({
+      client = createHydratedMock<Client>({
         on: discordClientServiceGetClientOnMock,
       });
 
@@ -111,7 +111,7 @@ describe(`DiscordAuthenticationService`, (): void => {
         discordClientServiceGetClientOnMock = jest.fn((_event: string, listener: () => void): void => {
           listener();
         });
-        client = createMock<Client>({
+        client = createHydratedMock<Client>({
           on: discordClientServiceGetClientOnMock,
         });
 
@@ -129,7 +129,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       describe(`when the Discord client user is null`, (): void => {
         beforeEach((): void => {
-          client = createMock<Client>({
+          client = createHydratedMock<Client>({
             on: discordClientServiceGetClientOnMock,
             user: null,
           });
@@ -155,7 +155,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
         beforeEach((): void => {
           tag = `dummy-tag`;
-          client = createMock<Client>({
+          client = createHydratedMock<Client>({
             on: discordClientServiceGetClientOnMock,
             user: {
               tag,
@@ -223,7 +223,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
     beforeEach((): void => {
       loginMock = jest.fn().mockResolvedValue(`login`);
-      client = createMock<Client>({
+      client = createHydratedMock<Client>({
         login: loginMock,
       });
 
@@ -278,7 +278,7 @@ describe(`DiscordAuthenticationService`, (): void => {
     describe(`when the login failed`, (): void => {
       beforeEach((): void => {
         loginMock = jest.fn().mockRejectedValue(new Error(`error`));
-        client = createMock<Client>({
+        client = createHydratedMock<Client>({
           login: loginMock,
         });
 
@@ -329,7 +329,7 @@ describe(`DiscordAuthenticationService`, (): void => {
     describe(`when the login was successful`, (): void => {
       beforeEach((): void => {
         loginMock.mockResolvedValue(``);
-        client = createMock<Client>({
+        client = createHydratedMock<Client>({
           login: loginMock,
         });
 

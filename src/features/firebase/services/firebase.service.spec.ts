@@ -9,7 +9,7 @@ import { ILoggerLog } from '../../logger/interfaces/logger-log';
 import { LoggerService } from '../../logger/services/logger.service';
 import { FirebaseGuildsStoreService } from '../stores/guilds/services/firebase-guilds-store.service';
 import * as admin from 'firebase-admin';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
 
@@ -82,11 +82,11 @@ describe(`FirebaseService`, (): void => {
 
     beforeEach((): void => {
       service = new FirebaseService();
-      firebaseAppService = createMock<FirebaseAppService>();
-      firebaseGuildsService = createMock<FirebaseGuildsService>();
-      firebaseGuildsNewVersionService = createMock<FirebaseGuildsNewVersionService>();
-      firebaseGuildsStoreService = createMock<FirebaseGuildsStoreService>();
-      firebaseGuildsBreakingChangeService = createMock<FirebaseGuildsBreakingChangeService>();
+      firebaseAppService = createHydratedMock<FirebaseAppService>();
+      firebaseGuildsService = createHydratedMock<FirebaseGuildsService>();
+      firebaseGuildsNewVersionService = createHydratedMock<FirebaseGuildsNewVersionService>();
+      firebaseGuildsStoreService = createHydratedMock<FirebaseGuildsStoreService>();
+      firebaseGuildsBreakingChangeService = createHydratedMock<FirebaseGuildsBreakingChangeService>();
 
       firebaseAppServiceGetInstanceSpy = jest
         .spyOn(FirebaseAppService, `getInstance`)
@@ -258,7 +258,7 @@ describe(`FirebaseService`, (): void => {
       let writeResult: admin.firestore.WriteResult;
 
       beforeEach((): void => {
-        writeResult = createMock<admin.firestore.WriteResult>();
+        writeResult = createHydratedMock<admin.firestore.WriteResult>();
 
         firebaseGuildsBreakingChangeServiceGetInstanceInitSpy.mockResolvedValue(writeResult);
       });

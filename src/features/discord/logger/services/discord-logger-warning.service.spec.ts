@@ -12,7 +12,7 @@ import { DiscordMessageConfigService } from '../../messages/services/config/disc
 import { DiscordSoniaService } from '../../users/services/discord-sonia.service';
 import { MessageEmbedAuthor } from 'discord.js';
 import moment from 'moment-timezone';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -83,7 +83,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
     beforeEach((): void => {
       service = new DiscordLoggerWarningService();
       warning = `dummy-warning`;
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
 
       loggerServiceWarningSpy = jest.spyOn(loggerService, `warning`).mockImplementation();
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
@@ -166,7 +166,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
     it(`should return a warning message response with an embed author`, (): void => {
       expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
+      const messageEmbedAuthor: MessageEmbedAuthor = createHydratedMock<MessageEmbedAuthor>();
       discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
 
       const result = service.getWarningMessageResponse(warning);

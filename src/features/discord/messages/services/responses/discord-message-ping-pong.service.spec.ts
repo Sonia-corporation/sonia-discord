@@ -5,7 +5,7 @@ import { DISCORD_MESSAGE_PING_PONG_RESPONSE_MESSAGES } from '../../constants/dis
 import { IDiscordMessagePingPongResponseMessage } from '../../interfaces/discord-message-ping-pong-response-message';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageContentService } from '../helpers/discord-message-content.service';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`DiscordMessagePingPongService`, (): void => {
   let service: DiscordMessagePingPongService;
@@ -212,7 +212,7 @@ describe(`DiscordMessagePingPongService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordMessagePingPongService();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         content: `dummy-content`,
       });
 
