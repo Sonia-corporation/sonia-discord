@@ -2,8 +2,8 @@ import { AbstractService } from '../../../../../../../classes/services/abstract.
 import { ServiceNameEnum } from '../../../../../../../enums/service-name.enum';
 import { LoggerService } from '../../../../../../logger/services/logger.service';
 import { isQuoteErrorApi } from '../../../../../../quote/functions/is-quote-error-api';
-import { IQuoteErrorApi } from '../../../../../../quote/interfaces/quote-error-api';
 import { IQuote } from '../../../../../../quote/interfaces/quote';
+import { IQuoteErrorApi } from '../../../../../../quote/interfaces/quote-error-api';
 import { QuoteConfigService } from '../../../../../../quote/services/config/quote-config.service';
 import { QuoteErrorApiService } from '../../../../../../quote/services/quote-error-api.service';
 import { QuoteRandomService } from '../../../../../../quote/services/quote-random.service';

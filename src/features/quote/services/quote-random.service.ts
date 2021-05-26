@@ -3,9 +3,9 @@ import { AbstractService } from '../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../enums/service-name.enum';
 import { LoggerService } from '../../logger/services/logger.service';
 import { isQuoteErrorApi } from '../functions/is-quote-error-api';
+import { IQuote } from '../interfaces/quote';
 import { IQuoteErrorApi } from '../interfaces/quote-error-api';
 import { IQuoteOfTheDayApi } from '../interfaces/quote-of-the-day-api';
-import { IQuote } from '../interfaces/quote';
 import { Snowflake } from 'discord.js';
 import _ from 'lodash';
 

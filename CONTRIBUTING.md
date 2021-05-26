@@ -161,8 +161,14 @@ Locally it is enabled and should be most of the time disabled in production.
 - `npm run test:mutant`: run the mutation testing once
 - `npm run test:mutant:ci`: run the mutation testing once and update Stryker dashboard
 - `npm run test:clear-cache`: remove the Jest cache
-- `npm run lint`: run the linter and fix the errors
-- `npm run lint:ci`: run the linter
+- `npm run lint:ts`: run the linter for js/ts files and fix the errors
+- `npm run lint:ts:ci`: run the linter for js/ts files without fixing the errors
+- `npm run lint:ts:hook`: run the linter for js/ts files but without searching for the files to lint and fix the errors
+- `npm run lint:other`: run the linter for other files format and fix the errors
+- `npm run lint:other:ci`: run the linter for other files format without fixing the errors
+- `npm run lint:other:hook`: run the linter for other files format but without searching for the files to lint and fix the errors
+- `npm run lint:all`: run the linter for all files and fix the errors
+- `npm run lint:all:ci`: run the linter for all files without fixing the errors
 - `npm run cz`: run a CLI to easily push and commit by following the commit convention of this project
 - `npm run semver`: create a new version, a new tag and update the [CHANGELOG](CHANGELOG.md) file
 - `npm run clean:dist`: remove the dist folder
