@@ -3,8 +3,8 @@ import { ServiceNameEnum } from '../../../../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../../../../core/services/core-event.service';
 import { FirebaseGuildChannelFeatureNoonVersionEnum } from '../../../../../enums/guilds/channels/features/firebase-guild-channel-feature-noon-version.enum';
 import { IFirebaseGuildChannelFeatureNoonV1 } from '../../../../../interfaces/guilds/channels/features/firebase-guild-channel-feature-noon-v1';
-import { IFirebaseGuildChannelFeatureNoonVFinal } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-noon-v-final';
 import { IFirebaseGuildChannelFeatureNoon } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-noon';
+import { IFirebaseGuildChannelFeatureNoonVFinal } from '../../../../../types/guilds/channels/features/firebase-guild-channel-feature-noon-v-final';
 import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../logger/services/chalk/chalk.service`);

@@ -1,10 +1,10 @@
-import { DiscordCommandFlagActionValueless } from './discord-command-flag-action-valueless';
 import { DiscordCommandFlag } from './discord-command-flag';
+import { DiscordCommandFlagActionValueless } from './discord-command-flag-action-valueless';
 import { DiscordCommandFlagTypeEnum } from '../../../enums/commands/discord-command-flag-type.enum';
 import { DiscordCommandFlagErrorTitleEnum } from '../../../enums/commands/flags/discord-command-flag-error-title.enum';
 import { discordCommandGetFlagName } from '../../../functions/commands/flags/discord-command-get-flag-name';
-import { IDiscordCommandFlagError } from '../../../interfaces/commands/flags/discord-command-flag-error';
 import { IDiscordCommandFlag } from '../../../interfaces/commands/flags/discord-command-flag';
+import { IDiscordCommandFlagError } from '../../../interfaces/commands/flags/discord-command-flag-error';
 import { IDiscordMessageFlag } from '../../../types/commands/flags/discord-message-flag';
 import _ from 'lodash';
 

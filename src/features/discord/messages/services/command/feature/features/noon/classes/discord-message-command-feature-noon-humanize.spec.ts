@@ -7,8 +7,8 @@ import { IFirebaseGuildV2 } from '../../../../../../../../firebase/interfaces/gu
 import { FirebaseGuildsStoreQuery } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query';
 import { IFirebaseGuildChannelFeatureNoonState } from '../../../../../../../../firebase/types/guilds/channels/features/firebase-guild-channel-feature-noon-state';
 import { IFirebaseGuildChannelVFinal } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final';
-import { IFirebaseGuildVFinal } from '../../../../../../../../firebase/types/guilds/firebase-guild-v-final';
 import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/firebase-guild';
+import { IFirebaseGuildVFinal } from '../../../../../../../../firebase/types/guilds/firebase-guild-v-final';
 import { ILoggerLog } from '../../../../../../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../../../../../../logger/services/logger.service';
 import { DiscordChannelService } from '../../../../../../../channels/services/discord-channel.service';
