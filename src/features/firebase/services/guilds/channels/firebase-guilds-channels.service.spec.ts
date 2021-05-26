@@ -8,8 +8,8 @@ import { FirebaseGuildChannelVersionEnum } from '../../../enums/guilds/channels/
 import { ICreateFirebaseGuildChannel } from '../../../interfaces/guilds/channels/create-firebase-guild-channel';
 import { IFirebaseGuildChannelV1 } from '../../../interfaces/guilds/channels/firebase-guild-channel-v1';
 import { IFirebaseGuildChannelV2 } from '../../../interfaces/guilds/channels/firebase-guild-channel-v2';
-import { IFirebaseGuildChannelVFinal } from '../../../types/guilds/channels/firebase-guild-channel-v-final';
 import { IFirebaseGuildChannel } from '../../../types/guilds/channels/firebase-guild-channel';
+import { IFirebaseGuildChannelVFinal } from '../../../types/guilds/channels/firebase-guild-channel-v-final';
 import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../logger/services/chalk/chalk.service`);

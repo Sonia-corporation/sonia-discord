@@ -1,7 +1,7 @@
 import { DiscordCommandFlags } from './discord-command-flags';
 import { DiscordCommandFlagTypeEnum } from '../../../enums/commands/discord-command-flag-type.enum';
-import { IDiscordCommandFlagError } from '../../../interfaces/commands/flags/discord-command-flag-error';
 import { IDiscordCommandFlag } from '../../../interfaces/commands/flags/discord-command-flag';
+import { IDiscordCommandFlagError } from '../../../interfaces/commands/flags/discord-command-flag-error';
 import { IAnyDiscordMessage } from '../../../types/any-discord-message';
 import { IDiscordCommandFlagAction } from '../../../types/commands/flags/discord-command-flag-action';
 import { IDiscordCommandFlagResponse } from '../../../types/commands/flags/discord-command-flag-response';

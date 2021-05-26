@@ -1,7 +1,7 @@
 import { upgradeFirebaseGuildChannelToV2 } from './upgrade-firebase-guild-channel-to-v2';
 import { FirebaseGuildChannelVersionEnum } from '../../../enums/guilds/channels/firebase-guild-channel-version.enum';
-import { IFirebaseGuildChannelVFinal } from '../../../types/guilds/channels/firebase-guild-channel-v-final';
 import { IFirebaseGuildChannel } from '../../../types/guilds/channels/firebase-guild-channel';
+import { IFirebaseGuildChannelVFinal } from '../../../types/guilds/channels/firebase-guild-channel-v-final';
 
 /**
  * @description
