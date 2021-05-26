@@ -3,8 +3,8 @@ import { upgradeFirebaseGuildToV3 } from './upgrade-firebase-guild-to-v3';
 import { upgradeFirebaseGuildToV4 } from './upgrade-firebase-guild-to-v4';
 import { upgradeFirebaseGuildToV5 } from './upgrade-firebase-guild-to-v5';
 import { FirebaseGuildVersionEnum } from '../../enums/guilds/firebase-guild-version.enum';
-import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
 import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
+import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
 
 /**
  * @description

@@ -1,7 +1,7 @@
 import { upgradeFirebaseGuildChannelFeatureToV2 } from './upgrade-firebase-guild-channel-feature-to-v2';
 import { FirebaseGuildChannelFeatureVersionEnum } from '../../../../enums/guilds/channels/features/firebase-guild-channel-feature-version.enum';
-import { IFirebaseGuildChannelFeatureVFinal } from '../../../../types/guilds/channels/features/firebase-guild-channel-feature-v-final';
 import { IFirebaseGuildChannelFeature } from '../../../../types/guilds/channels/features/firebase-guild-channel-feature';
+import { IFirebaseGuildChannelFeatureVFinal } from '../../../../types/guilds/channels/features/firebase-guild-channel-feature-v-final';
 
 /**
  * @description
