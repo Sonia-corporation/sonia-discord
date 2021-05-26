@@ -2,7 +2,7 @@ import { DiscordSoniaEmotionalStateEnum } from './discord-sonia-emotional-state.
 import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`DiscordSoniaEmotionalStateEnum`, (): void => {
-  it(`should have a 34 members`, (): void => {
+  it(`should have 34 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(DiscordSoniaEmotionalStateEnum)).toStrictEqual(34);

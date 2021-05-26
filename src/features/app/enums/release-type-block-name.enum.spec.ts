@@ -2,7 +2,7 @@ import { ReleaseTypeBlockNameEnum } from './release-type-block-name.enum';
 import { getEnumLength } from '../../../functions/checks/get-enum-length';
 
 describe(`ReleaseTypeBlockNameEnum`, (): void => {
-  it(`should have a 3 members`, (): void => {
+  it(`should have 3 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(ReleaseTypeBlockNameEnum)).toStrictEqual(3);

@@ -2,7 +2,7 @@ import { DiscordMessageCommandCookieTitleEnum } from './discord-message-command-
 import { getEnumLength } from '../../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageCommandCookieTitleEnum`, (): void => {
-  it(`should have a 13 members`, (): void => {
+  it(`should have 13 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(DiscordMessageCommandCookieTitleEnum)).toStrictEqual(13);

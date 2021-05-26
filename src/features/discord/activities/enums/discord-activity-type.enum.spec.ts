@@ -2,7 +2,7 @@ import { DiscordActivityTypeEnum } from './discord-activity-type.enum';
 import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`DiscordActivityTypeEnum`, (): void => {
-  it(`should have a 5 members`, (): void => {
+  it(`should have 5 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(DiscordActivityTypeEnum)).toStrictEqual(5);

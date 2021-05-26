@@ -2,7 +2,7 @@ import { LoggerConfigValueNameEnum } from './logger-config-value-name.enum';
 import { getEnumLength } from '../../../functions/checks/get-enum-length';
 
 describe(`LoggerConfigValueNameEnum`, (): void => {
-  it(`should have a 3 members`, (): void => {
+  it(`should have 3 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(LoggerConfigValueNameEnum)).toStrictEqual(3);

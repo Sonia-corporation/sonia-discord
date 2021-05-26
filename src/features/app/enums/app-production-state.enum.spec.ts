@@ -2,7 +2,7 @@ import { AppProductionStateEnum } from './app-production-state.enum';
 import { getEnumLength } from '../../../functions/checks/get-enum-length';
 
 describe(`AppProductionStateEnum`, (): void => {
-  it(`should have a 2 members`, (): void => {
+  it(`should have 2 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(AppProductionStateEnum)).toStrictEqual(2);

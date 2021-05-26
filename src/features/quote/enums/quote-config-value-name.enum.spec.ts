@@ -2,7 +2,7 @@ import { QuoteConfigValueNameEnum } from './quote-config-value-name.enum';
 import { getEnumLength } from '../../../functions/checks/get-enum-length';
 
 describe(`QuoteConfigValueNameEnum`, (): void => {
-  it(`should have a 4 members`, (): void => {
+  it(`should have 4 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(QuoteConfigValueNameEnum)).toStrictEqual(4);

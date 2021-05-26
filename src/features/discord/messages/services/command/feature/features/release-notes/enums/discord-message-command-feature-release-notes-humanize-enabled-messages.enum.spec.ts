@@ -2,7 +2,7 @@ import { DiscordMessageCommandFeatureReleaseNotesHumanizeEnabledMessagesEnum } f
 import { getEnumLength } from '../../../../../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageCommandFeatureReleaseNotesHumanizeEnabledMessagesEnum`, (): void => {
-  it(`should have a 10 members`, (): void => {
+  it(`should have 10 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(DiscordMessageCommandFeatureReleaseNotesHumanizeEnabledMessagesEnum)).toStrictEqual(10);

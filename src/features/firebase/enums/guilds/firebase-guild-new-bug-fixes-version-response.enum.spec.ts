@@ -2,7 +2,7 @@ import { FirebaseGuildNewBugFixesVersionResponseEnum } from './firebase-guild-ne
 import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`FirebaseGuildNewBugFixesVersionResponseEnum`, (): void => {
-  it(`should have a 43 members`, (): void => {
+  it(`should have 43 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(FirebaseGuildNewBugFixesVersionResponseEnum)).toStrictEqual(43);
