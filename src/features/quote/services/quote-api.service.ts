@@ -29,11 +29,8 @@ export class QuoteApiService extends AbstractService {
   /**
    * @description
    * Call the endpoint to have a quote of the day
-   *
    * Logs in case of error
-   *
    * @param {Readonly<Snowflake>} messageId The original id of the message (to enhance the logs)
-   *
    * @returns {Promise<IQuoteOfTheDayApi | IQuoteErrorApi>} A promise containing a quote of the day or an error
    */
   public getQuoteOfTheDay(messageId: Readonly<Snowflake>): Promise<IQuoteOfTheDayApi | IQuoteErrorApi> {
@@ -48,10 +45,7 @@ export class QuoteApiService extends AbstractService {
       ),
     });
 
-    return this._request<IQuoteOfTheDayApi | IQuoteErrorApi>({
-      method: `get`,
-      url,
-    })
+    return this._getRequest<IQuoteOfTheDayApi | IQuoteErrorApi>(url)
       .then(({ data }: Readonly<AxiosResponse<IQuoteOfTheDayApi | IQuoteErrorApi>>):
         | IQuoteOfTheDayApi
         | IQuoteErrorApi => {
@@ -64,8 +58,11 @@ export class QuoteApiService extends AbstractService {
       });
   }
 
-  private _request<TData>(config: Readonly<AxiosRequestConfig>): Promise<AxiosResponse<TData>> {
-    return axios({
+  private _getRequest<TData>(
+    url: Readonly<string>,
+    config?: Readonly<AxiosRequestConfig>
+  ): Promise<AxiosResponse<TData>> {
+    return axios.get(url, {
       headers: this._getCommonHeaders(),
       ...config,
     });
@@ -86,10 +83,8 @@ export class QuoteApiService extends AbstractService {
   /**
    * @description
    * Log the success
-   *
    * @param {Readonly<string>} url The original endpoint called
    * @param {Readonly<Snowflake>} messageId The original id of the message (to enhance the logs)
-   *
    * @private
    */
   private _handleSuccess(url: Readonly<string>, messageId: Readonly<Snowflake>): void {
@@ -106,11 +101,9 @@ export class QuoteApiService extends AbstractService {
   /**
    * @description
    * Log the error
-   *
    * @param {Readonly<Error>} error The original http error
    * @param {Readonly<string>} url The original endpoint called
    * @param {Readonly<Snowflake>} messageId The original id of the message (to enhance the logs)
-   *
    * @private
    */
   private _handleError(error: Readonly<Error>, url: Readonly<string>, messageId: Readonly<Snowflake>): never {
