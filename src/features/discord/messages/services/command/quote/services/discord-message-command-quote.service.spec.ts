@@ -1,51 +1,61 @@
-import { DiscordMessageCommandLunchService } from './discord-message-command-lunch.service';
+import { DiscordMessageCommandQuoteService } from './discord-message-command-quote.service';
 import { ColorEnum } from '../../../../../../../enums/color.enum';
 import { IconEnum } from '../../../../../../../enums/icon.enum';
 import { ServiceNameEnum } from '../../../../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../../../../core/services/core-event.service';
 import { ILoggerLog } from '../../../../../../logger/interfaces/logger-log';
 import { LoggerService } from '../../../../../../logger/services/logger.service';
+import { IQuote } from '../../../../../../quote/interfaces/quote';
+import { IQuoteErrorApi } from '../../../../../../quote/interfaces/quote-error-api';
+import { QuoteConfigService } from '../../../../../../quote/services/config/quote-config.service';
+import { QuoteErrorApiService } from '../../../../../../quote/services/quote-error-api.service';
+import { QuoteRandomService } from '../../../../../../quote/services/quote-random.service';
 import { DiscordSoniaService } from '../../../../../users/services/discord-sonia.service';
-import { DiscordMessageCommandLunchDescriptionEnum } from '../../../../enums/commands/lunch/discord-message-command-lunch-description.enum';
-import { DiscordMessageCommandLunchTitleEnum } from '../../../../enums/commands/lunch/discord-message-command-lunch-title.enum';
 import { IDiscordMessageResponse } from '../../../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../../../config/discord-message-config.service';
-import { DISCORD_MESSAGE_COMMAND_LUNCH_DESCRIPTION_MESSAGES } from '../constants/discord-message-command-lunch-description-messages';
-import { DISCORD_MESSAGE_COMMAND_LUNCH_TITLE_MESSAGES } from '../constants/discord-message-command-lunch-title-messages';
+import { DiscordMessageErrorService } from '../../../helpers/discord-message-error.service';
 import { MessageEmbedAuthor, MessageEmbedFooter, MessageEmbedThumbnail } from 'discord.js';
 import moment from 'moment-timezone';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../logger/services/chalk/chalk.service`);
 
-describe(`DiscordMessageCommandLunchService`, (): void => {
-  let service: DiscordMessageCommandLunchService;
+describe(`DiscordMessageCommandQuoteService`, (): void => {
+  let service: DiscordMessageCommandQuoteService;
   let coreEventService: CoreEventService;
   let loggerService: LoggerService;
   let discordSoniaService: DiscordSoniaService;
   let discordMessageConfigService: DiscordMessageConfigService;
+  let quoteRandomService: QuoteRandomService;
+  let discordMessageErrorService: DiscordMessageErrorService;
+  let quoteErrorApiService: QuoteErrorApiService;
+  let quoteConfigService: QuoteConfigService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
     loggerService = LoggerService.getInstance();
     discordSoniaService = DiscordSoniaService.getInstance();
     discordMessageConfigService = DiscordMessageConfigService.getInstance();
+    quoteRandomService = QuoteRandomService.getInstance();
+    discordMessageErrorService = DiscordMessageErrorService.getInstance();
+    quoteErrorApiService = QuoteErrorApiService.getInstance();
+    quoteConfigService = QuoteConfigService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
-    it(`should create a DiscordMessageCommandLunch service`, (): void => {
+    it(`should create a DiscordMessageCommandQuote service`, (): void => {
       expect.assertions(1);
 
-      service = DiscordMessageCommandLunchService.getInstance();
+      service = DiscordMessageCommandQuoteService.getInstance();
 
-      expect(service).toStrictEqual(expect.any(DiscordMessageCommandLunchService));
+      expect(service).toStrictEqual(expect.any(DiscordMessageCommandQuoteService));
     });
 
-    it(`should return the created DiscordMessageCommandLunch service`, (): void => {
+    it(`should return the created DiscordMessageCommandQuote service`, (): void => {
       expect.assertions(1);
 
-      const result = DiscordMessageCommandLunchService.getInstance();
+      const result = DiscordMessageCommandQuoteService.getInstance();
 
       expect(result).toStrictEqual(service);
     });
@@ -60,14 +70,14 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         .mockImplementation();
     });
 
-    it(`should notify the DiscordMessageCommandLunch service creation`, (): void => {
+    it(`should notify the DiscordMessageCommandQuote service creation`, (): void => {
       expect.assertions(2);
 
-      service = new DiscordMessageCommandLunchService();
+      service = new DiscordMessageCommandQuoteService();
 
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
-        ServiceNameEnum.DISCORD_MESSAGE_COMMAND_LUNCH_SERVICE
+        ServiceNameEnum.DISCORD_MESSAGE_COMMAND_QUOTE_SERVICE
       );
     });
   });
@@ -80,8 +90,8 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
     let getMessageResponseSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      service = new DiscordMessageCommandLunchService();
-      anyDiscordMessage = createMock<IAnyDiscordMessage>({
+      service = new DiscordMessageCommandQuoteService();
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
         id: `dummy-id`,
       });
 
@@ -96,9 +106,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-        context: `DiscordMessageCommandLunchService`,
+        context: `DiscordMessageCommandQuoteService`,
         hasExtendedContext: true,
-        message: `context-[dummy-id] text-lunch command detected`,
+        message: `context-[dummy-id] text-quote command detected`,
       } as ILoggerLog);
     });
 
@@ -108,7 +118,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
       await service.handleResponse(anyDiscordMessage);
 
       expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
-      expect(getMessageResponseSpy).toHaveBeenCalledWith();
+      expect(getMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
     });
 
     it(`should return the message response`, async (): Promise<void> => {
@@ -121,150 +131,265 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
   });
 
   describe(`getMessageResponse()`, (): void => {
-    let discordSoniaServiceGetCorporationMessageEmbedAuthorSpy: jest.SpyInstance;
-    let discordMessageConfigServiceGetMessageCommandLunchImageColorSpy: jest.SpyInstance;
+    let anyDiscordMessage: IAnyDiscordMessage;
+    let quote: IQuote;
+
+    let quoteRandomServiceFetchRandomQuoteSpy: jest.SpyInstance;
+    let quoteConfigServiceGetImageColorSpy: jest.SpyInstance;
     let discordSoniaServiceGetImageUrlSpy: jest.SpyInstance;
-    let discordMessageConfigServiceGetMessageCommandLunchImageUrlSpy: jest.SpyInstance;
+    let quoteConfigServiceGetImageUrlSpy: jest.SpyInstance;
+    let discordMessageErrorServiceHandleErrorSpy: jest.SpyInstance;
+    let quoteErrorApiServiceGetMessageResponseSpy: jest.SpyInstance;
+    let quoteConfigServiceGetAuthorIconUrlSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      service = new DiscordMessageCommandLunchService();
+      service = new DiscordMessageCommandQuoteService();
+      anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+        id: `dummy-id`,
+      });
+      quote = createHydratedMock<IQuote>();
 
-      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy = jest.spyOn(
-        discordSoniaService,
-        `getCorporationMessageEmbedAuthor`
-      );
-      discordMessageConfigServiceGetMessageCommandLunchImageColorSpy = jest.spyOn(
-        discordMessageConfigService,
-        `getMessageCommandLunchImageColor`
-      );
+      quoteRandomServiceFetchRandomQuoteSpy = jest
+        .spyOn(quoteRandomService, `fetchRandomQuote`)
+        .mockRejectedValue(new Error(`fetchRandomQuote error`));
+      quoteConfigServiceGetImageColorSpy = jest.spyOn(quoteConfigService, `getImageColor`);
       discordSoniaServiceGetImageUrlSpy = jest.spyOn(discordSoniaService, `getImageUrl`);
-      discordMessageConfigServiceGetMessageCommandLunchImageUrlSpy = jest.spyOn(
-        discordMessageConfigService,
-        `getMessageCommandLunchImageUrl`
-      );
-      jest
-        .spyOn(DISCORD_MESSAGE_COMMAND_LUNCH_DESCRIPTION_MESSAGES, `getRandomMessage`)
-        .mockReturnValue(DiscordMessageCommandLunchDescriptionEnum.I_WAS_STARVING);
-      jest
-        .spyOn(DISCORD_MESSAGE_COMMAND_LUNCH_TITLE_MESSAGES, `getRandomMessage`)
-        .mockReturnValue(DiscordMessageCommandLunchTitleEnum.TIME_TO_EAT);
+      quoteConfigServiceGetImageUrlSpy = jest.spyOn(quoteConfigService, `getImageUrl`);
+      discordMessageErrorServiceHandleErrorSpy = jest
+        .spyOn(discordMessageErrorService, `handleError`)
+        .mockImplementation();
+      quoteErrorApiServiceGetMessageResponseSpy = jest
+        .spyOn(quoteErrorApiService, `getMessageResponse`)
+        .mockRejectedValue(new Error(`getMessageResponse error`));
+      quoteConfigServiceGetAuthorIconUrlSpy = jest.spyOn(quoteConfigService, `getAuthorIconUrl`).mockImplementation();
     });
 
-    it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
-      expect.assertions(1);
-      const messageEmbedAuthor: MessageEmbedAuthor = createMock<MessageEmbedAuthor>();
-      discordSoniaServiceGetCorporationMessageEmbedAuthorSpy.mockReturnValue(messageEmbedAuthor);
+    it(`should fetch a random quote`, async (): Promise<void> => {
+      expect.assertions(3);
 
-      const result = await service.getMessageResponse();
+      await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(new Error(`fetchRandomQuote error`));
 
-      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
+      expect(quoteRandomServiceFetchRandomQuoteSpy).toHaveBeenCalledTimes(1);
+      expect(quoteRandomServiceFetchRandomQuoteSpy).toHaveBeenCalledWith(`dummy-id`);
     });
 
-    it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
-      expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandLunchImageColorSpy.mockReturnValue(ColorEnum.CANDY);
-
-      const result = await service.getMessageResponse();
-
-      expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
-    });
-
-    it(`should return a Discord message response embed with a description`, async (): Promise<void> => {
-      expect.assertions(1);
-
-      const result = await service.getMessageResponse();
-
-      expect(result.options.embed?.description).toStrictEqual(`I was starving.`);
-    });
-
-    it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
-      expect.assertions(1);
-      discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
-
-      const result = await service.getMessageResponse();
-
-      expect(result.options.embed?.footer).toStrictEqual({
-        iconURL: `dummy-image-url`,
-        text: `Bon appétit`,
-      } as MessageEmbedFooter);
-    });
-
-    describe(`when the Sonia image url is null`, (): void => {
+    describe(`when the random quote failed to be fetched`, (): void => {
       beforeEach((): void => {
-        discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
+        quoteRandomServiceFetchRandomQuoteSpy.mockRejectedValue(new Error(`fetchRandomQuote error`));
       });
 
-      it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<void> => {
+      it(`should send an error to the Sonia discord error channel`, async (): Promise<void> => {
+        expect.assertions(3);
+
+        await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+          new Error(`fetchRandomQuote error`)
+        );
+
+        expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledTimes(1);
+        expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledWith(
+          new Error(`fetchRandomQuote error`),
+          anyDiscordMessage
+        );
+      });
+
+      it(`should throw an error`, async (): Promise<void> => {
         expect.assertions(1);
 
-        const result = await service.getMessageResponse();
-
-        expect(result.options.embed?.footer).toStrictEqual({
-          iconURL: undefined,
-          text: `Bon appétit`,
-        } as MessageEmbedFooter);
+        await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+          new Error(`fetchRandomQuote error`)
+        );
       });
     });
 
-    describe(`when the Sonia image url is "image-url"`, (): void => {
+    describe(`when the random quote was successfully fetched`, (): void => {
       beforeEach((): void => {
-        discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
+        quoteRandomServiceFetchRandomQuoteSpy.mockResolvedValue(quote);
       });
 
-      it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
-        expect.assertions(1);
+      describe(`when the random quote fetched is a quote error`, (): void => {
+        let quoteErrorApi: IQuoteErrorApi;
 
-        const result = await service.getMessageResponse();
+        beforeEach((): void => {
+          quoteErrorApi = createHydratedMock<IQuoteErrorApi>();
 
-        expect(result.options.embed?.footer).toStrictEqual({
-          iconURL: `image-url`,
-          text: `Bon appétit`,
-        } as MessageEmbedFooter);
+          quoteRandomServiceFetchRandomQuoteSpy.mockResolvedValue(quoteErrorApi);
+        });
+
+        it(`should fetch a message response to display the quote error`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+            new Error(`getMessageResponse error`)
+          );
+
+          expect(quoteErrorApiServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+          expect(quoteErrorApiServiceGetMessageResponseSpy).toHaveBeenCalledWith(quoteErrorApi);
+        });
+
+        describe(`when the message response failed to be fetched`, (): void => {
+          beforeEach((): void => {
+            quoteErrorApiServiceGetMessageResponseSpy.mockRejectedValue(new Error(`getMessageResponse error`));
+          });
+
+          it(`should throw an error`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            await expect(service.getMessageResponse(anyDiscordMessage)).rejects.toThrow(
+              new Error(`getMessageResponse error`)
+            );
+          });
+        });
+
+        describe(`when the message response was successfully fetched`, (): void => {
+          let quoteErrorMessageResponse: IDiscordMessageResponse;
+
+          beforeEach((): void => {
+            quoteErrorMessageResponse = createHydratedMock<IDiscordMessageResponse>();
+
+            quoteErrorApiServiceGetMessageResponseSpy.mockResolvedValue(quoteErrorMessageResponse);
+          });
+
+          it(`should return the message response`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            const result = await service.getMessageResponse(anyDiscordMessage);
+
+            expect(result).toStrictEqual(quoteErrorMessageResponse);
+          });
+        });
       });
-    });
 
-    it(`should return a Discord message response embed with a thumbnail`, async (): Promise<void> => {
-      expect.assertions(1);
-      discordMessageConfigServiceGetMessageCommandLunchImageUrlSpy.mockReturnValue(IconEnum.ARTIFICIAL_INTELLIGENCE);
+      describe(`when the random quote fetched is a quote`, (): void => {
+        beforeEach((): void => {
+          quoteRandomServiceFetchRandomQuoteSpy.mockResolvedValue(quote);
+        });
 
-      const result = await service.getMessageResponse();
+        it(`should return a Discord message response embed with an author`, async (): Promise<void> => {
+          expect.assertions(3);
+          quoteConfigServiceGetAuthorIconUrlSpy.mockReturnValue(IconEnum.ARTIFICIAL_INTELLIGENCE);
 
-      expect(result.options.embed?.thumbnail).toStrictEqual({
-        url: IconEnum.ARTIFICIAL_INTELLIGENCE,
-      } as MessageEmbedThumbnail);
-    });
+          const result = await service.getMessageResponse(anyDiscordMessage);
 
-    it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
-      expect.assertions(2);
+          expect(quoteConfigServiceGetAuthorIconUrlSpy).toHaveBeenCalledTimes(1);
+          expect(quoteConfigServiceGetAuthorIconUrlSpy).toHaveBeenCalledWith();
+          expect(result.options.embed?.author).toStrictEqual({
+            iconURL: IconEnum.ARTIFICIAL_INTELLIGENCE,
+            name: quote.authorName,
+            url: quote.quoteUrl,
+          } as MessageEmbedAuthor);
+        });
 
-      const result = await service.getMessageResponse();
+        it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
+          expect.assertions(3);
+          quoteConfigServiceGetImageColorSpy.mockReturnValue(ColorEnum.CANDY);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
-    });
+          const result = await service.getMessageResponse(anyDiscordMessage);
 
-    it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
-      expect.assertions(1);
+          expect(quoteConfigServiceGetImageColorSpy).toHaveBeenCalledTimes(1);
+          expect(quoteConfigServiceGetImageColorSpy).toHaveBeenCalledWith();
+          expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+        });
 
-      const result = await service.getMessageResponse();
+        it(`should return a Discord message response embed with a description`, async (): Promise<void> => {
+          expect.assertions(1);
 
-      expect(result.options.embed?.title).toStrictEqual(`Time to eat!`);
-    });
+          const result = await service.getMessageResponse(anyDiscordMessage);
 
-    it(`should return a Discord message response not split`, async (): Promise<void> => {
-      expect.assertions(1);
+          expect(result.options.embed?.description).toStrictEqual(quote.quote);
+        });
 
-      const result = await service.getMessageResponse();
+        it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
+          expect.assertions(1);
+          discordSoniaServiceGetImageUrlSpy.mockReturnValue(`dummy-image-url`);
 
-      expect(result.options.split).toStrictEqual(false);
-    });
+          const result = await service.getMessageResponse(anyDiscordMessage);
 
-    it(`should return a Discord message response without a response text`, async (): Promise<void> => {
-      expect.assertions(1);
+          expect(result.options.embed?.footer).toStrictEqual({
+            iconURL: `dummy-image-url`,
+            text: `Enjoy my wisdom`,
+          } as MessageEmbedFooter);
+        });
 
-      const result = await service.getMessageResponse();
+        describe(`when the Sonia image url is null`, (): void => {
+          beforeEach((): void => {
+            discordSoniaServiceGetImageUrlSpy.mockReturnValue(null);
+          });
 
-      expect(result.response).toStrictEqual(``);
+          it(`should return a Discord message response embed with a footer but without an icon`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            const result = await service.getMessageResponse(anyDiscordMessage);
+
+            expect(result.options.embed?.footer).toStrictEqual({
+              iconURL: undefined,
+              text: `Enjoy my wisdom`,
+            } as MessageEmbedFooter);
+          });
+        });
+
+        describe(`when the Sonia image url is "image-url"`, (): void => {
+          beforeEach((): void => {
+            discordSoniaServiceGetImageUrlSpy.mockReturnValue(`image-url`);
+          });
+
+          it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
+            expect.assertions(1);
+
+            const result = await service.getMessageResponse(anyDiscordMessage);
+
+            expect(result.options.embed?.footer).toStrictEqual({
+              iconURL: `image-url`,
+              text: `Enjoy my wisdom`,
+            } as MessageEmbedFooter);
+          });
+        });
+
+        it(`should return a Discord message response embed with a thumbnail`, async (): Promise<void> => {
+          expect.assertions(3);
+          quoteConfigServiceGetImageUrlSpy.mockReturnValue(IconEnum.ARTIFICIAL_INTELLIGENCE);
+
+          const result = await service.getMessageResponse(anyDiscordMessage);
+
+          expect(quoteConfigServiceGetImageUrlSpy).toHaveBeenCalledTimes(1);
+          expect(quoteConfigServiceGetImageUrlSpy).toHaveBeenCalledWith();
+          expect(result.options.embed?.thumbnail).toStrictEqual({
+            url: IconEnum.ARTIFICIAL_INTELLIGENCE,
+          } as MessageEmbedThumbnail);
+        });
+
+        it(`should return a Discord message response embed with a timestamp`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          const result = await service.getMessageResponse(anyDiscordMessage);
+
+          expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
+          expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+        });
+
+        it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(anyDiscordMessage);
+
+          expect(result.options.embed?.title).toStrictEqual(`Random quote`);
+        });
+
+        it(`should return a Discord message response not split`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(anyDiscordMessage);
+
+          expect(result.options.split).toStrictEqual(false);
+        });
+
+        it(`should return a Discord message response without a response text`, async (): Promise<void> => {
+          expect.assertions(1);
+
+          const result = await service.getMessageResponse(anyDiscordMessage);
+
+          expect(result.response).toStrictEqual(``);
+        });
+      });
     });
   });
 
@@ -274,7 +399,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
     let discordMessageConfigServiceGetMessageCommandPrefixSpy: jest.SpyInstance;
 
     beforeEach((): void => {
-      service = new DiscordMessageCommandLunchService();
+      service = new DiscordMessageCommandQuoteService();
       message = `dummy-message`;
 
       discordMessageConfigServiceGetMessageCommandPrefixSpy = jest
@@ -357,9 +482,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with @`, (): void => {
+      describe(`when the given message is a message with an almost quote command starting with @`, (): void => {
         beforeEach((): void => {
-          message = `@lun`;
+          message = `@quo`;
         });
 
         it(`should return false`, (): void => {
@@ -371,9 +496,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with -`, (): void => {
+      describe(`when the given message is a message with an almost quote command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `-lun`;
+          message = `-quo`;
         });
 
         it(`should return false`, (): void => {
@@ -385,9 +510,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with !`, (): void => {
+      describe(`when the given message is a message with an almost quote command starting with !`, (): void => {
         beforeEach((): void => {
-          message = `!lun`;
+          message = `!quo`;
         });
 
         it(`should return false`, (): void => {
@@ -399,9 +524,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with @ and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost quote command starting with @ and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `@lun dummy`;
+          message = `@quo dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -413,9 +538,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with - and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost quote command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `-lun dummy`;
+          message = `-quo dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -427,9 +552,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with ! and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost quote command starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `!lun dummy`;
+          message = `!quo dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -441,9 +566,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with @`, (): void => {
+      describe(`when the given message is a message with the quote command starting with @`, (): void => {
         beforeEach((): void => {
-          message = `@lunch`;
+          message = `@quote`;
         });
 
         it(`should return true`, (): void => {
@@ -455,9 +580,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with -`, (): void => {
+      describe(`when the given message is a message with the quote command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `-lunch`;
+          message = `-quote`;
         });
 
         it(`should return false`, (): void => {
@@ -469,9 +594,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with !`, (): void => {
+      describe(`when the given message is a message with the quote command starting with !`, (): void => {
         beforeEach((): void => {
-          message = `!lunch`;
+          message = `!quote`;
         });
 
         it(`should return false`, (): void => {
@@ -483,9 +608,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with @ and have more text after that`, (): void => {
+      describe(`when the given message is a message with the quote command starting with @ and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `@lunch dummy`;
+          message = `@quote dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -497,9 +622,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with - and have more text after that`, (): void => {
+      describe(`when the given message is a message with the quote command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `-lunch dummy`;
+          message = `-quote dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -511,9 +636,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with ! and have more text after that`, (): void => {
+      describe(`when the given message is a message with the quote command starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `!lunch dummy`;
+          message = `!quote dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -525,9 +650,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with @`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command starting with @`, (): void => {
         beforeEach((): void => {
-          message = `@l`;
+          message = `@q`;
         });
 
         it(`should return true`, (): void => {
@@ -539,9 +664,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with -`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `-l`;
+          message = `-q`;
         });
 
         it(`should return false`, (): void => {
@@ -553,9 +678,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with !`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command starting with !`, (): void => {
         beforeEach((): void => {
-          message = `!l`;
+          message = `!q`;
         });
 
         it(`should return false`, (): void => {
@@ -567,9 +692,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with @ and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command starting with @ and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `@l dummy`;
+          message = `@q dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -581,9 +706,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with - and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `-l dummy`;
+          message = `-q dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -595,9 +720,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with ! and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `!l dummy`;
+          message = `!q dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -609,9 +734,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting uppercase with @`, (): void => {
+      describe(`when the given message is a message with the quote command starting uppercase with @`, (): void => {
         beforeEach((): void => {
-          message = `@LUNCH`;
+          message = `@QUOTE`;
         });
 
         it(`should return true`, (): void => {
@@ -623,9 +748,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command uppercase starting with -`, (): void => {
+      describe(`when the given message is a message with the quote command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `-LUNCH`;
+          message = `-QUOTE`;
         });
 
         it(`should return false`, (): void => {
@@ -637,9 +762,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command uppercase starting with !`, (): void => {
+      describe(`when the given message is a message with the quote command uppercase starting with !`, (): void => {
         beforeEach((): void => {
-          message = `!LUNCH`;
+          message = `!QUOTE`;
         });
 
         it(`should return false`, (): void => {
@@ -651,9 +776,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command uppercase starting with @ and have more text after that`, (): void => {
+      describe(`when the given message is a message with the quote command uppercase starting with @ and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `@LUNCH dummy`;
+          message = `@QUOTE dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -665,9 +790,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command uppercase starting with - and have more text after that`, (): void => {
+      describe(`when the given message is a message with the quote command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `-LUNCH dummy`;
+          message = `-QUOTE dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -679,9 +804,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command uppercase starting with ! and have more text after that`, (): void => {
+      describe(`when the given message is a message with the quote command uppercase starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `!LUNCH dummy`;
+          message = `!QUOTE dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -693,9 +818,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting uppercase with @`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command starting uppercase with @`, (): void => {
         beforeEach((): void => {
-          message = `@L`;
+          message = `@Q`;
         });
 
         it(`should return true`, (): void => {
@@ -707,9 +832,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command uppercase starting with -`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `-L`;
+          message = `-Q`;
         });
 
         it(`should return false`, (): void => {
@@ -721,9 +846,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command uppercase starting with !`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command uppercase starting with !`, (): void => {
         beforeEach((): void => {
-          message = `!L`;
+          message = `!Q`;
         });
 
         it(`should return false`, (): void => {
@@ -735,9 +860,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command uppercase starting with @ and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command uppercase starting with @ and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `@L dummy`;
+          message = `@Q dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -749,9 +874,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command uppercase starting with - and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `-L dummy`;
+          message = `-Q dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -763,9 +888,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command uppercase starting with ! and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command uppercase starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `!L dummy`;
+          message = `!Q dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -853,9 +978,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with @`, (): void => {
+      describe(`when the given message is a message with an almost quote command starting with @`, (): void => {
         beforeEach((): void => {
-          message = `@lun`;
+          message = `@quo`;
         });
 
         it(`should return false`, (): void => {
@@ -867,9 +992,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with -`, (): void => {
+      describe(`when the given message is a message with an almost quote command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `-lun`;
+          message = `-quo`;
         });
 
         it(`should return false`, (): void => {
@@ -881,9 +1006,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with !`, (): void => {
+      describe(`when the given message is a message with an almost quote command starting with !`, (): void => {
         beforeEach((): void => {
-          message = `!lun`;
+          message = `!quo`;
         });
 
         it(`should return false`, (): void => {
@@ -895,9 +1020,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with @ and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost quote command starting with @ and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `@lun dummy`;
+          message = `@quo dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -909,9 +1034,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with - and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost quote command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `-lun dummy`;
+          message = `-quo dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -923,9 +1048,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with an almost lunch command starting with ! and have more text after that`, (): void => {
+      describe(`when the given message is a message with an almost quote command starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `!lun dummy`;
+          message = `!quo dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -937,9 +1062,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with @`, (): void => {
+      describe(`when the given message is a message with the quote command starting with @`, (): void => {
         beforeEach((): void => {
-          message = `@lunch`;
+          message = `@quote`;
         });
 
         it(`should return false`, (): void => {
@@ -951,9 +1076,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with -`, (): void => {
+      describe(`when the given message is a message with the quote command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `-lunch`;
+          message = `-quote`;
         });
 
         it(`should return true`, (): void => {
@@ -965,9 +1090,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with !`, (): void => {
+      describe(`when the given message is a message with the quote command starting with !`, (): void => {
         beforeEach((): void => {
-          message = `!lunch`;
+          message = `!quote`;
         });
 
         it(`should return true`, (): void => {
@@ -979,9 +1104,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with @ and have more text after that`, (): void => {
+      describe(`when the given message is a message with the quote command starting with @ and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `@lunch dummy`;
+          message = `@quote dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -993,9 +1118,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with - and have more text after that`, (): void => {
+      describe(`when the given message is a message with the quote command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `-lunch dummy`;
+          message = `-quote dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -1007,9 +1132,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command starting with ! and have more text after that`, (): void => {
+      describe(`when the given message is a message with the quote command starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `!lunch dummy`;
+          message = `!quote dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -1021,9 +1146,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command uppercase starting with @`, (): void => {
+      describe(`when the given message is a message with the quote command uppercase starting with @`, (): void => {
         beforeEach((): void => {
-          message = `@LUNCH`;
+          message = `@QUOTE`;
         });
 
         it(`should return false`, (): void => {
@@ -1035,9 +1160,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command uppercase starting with -`, (): void => {
+      describe(`when the given message is a message with the quote command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `-LUNCH`;
+          message = `-QUOTE`;
         });
 
         it(`should return true`, (): void => {
@@ -1049,9 +1174,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command uppercase starting with !`, (): void => {
+      describe(`when the given message is a message with the quote command uppercase starting with !`, (): void => {
         beforeEach((): void => {
-          message = `!LUNCH`;
+          message = `!QUOTE`;
         });
 
         it(`should return true`, (): void => {
@@ -1063,9 +1188,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command uppercase starting with @ and have more text after that`, (): void => {
+      describe(`when the given message is a message with the quote command uppercase starting with @ and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `@LUNCH dummy`;
+          message = `@QUOTE dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -1077,9 +1202,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command uppercase starting with - and have more text after that`, (): void => {
+      describe(`when the given message is a message with the quote command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `-LUNCH dummy`;
+          message = `-QUOTE dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -1091,9 +1216,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the lunch command uppercase starting with ! and have more text after that`, (): void => {
+      describe(`when the given message is a message with the quote command uppercase starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `!LUNCH dummy`;
+          message = `!QUOTE dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -1105,9 +1230,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with @`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command starting with @`, (): void => {
         beforeEach((): void => {
-          message = `@l`;
+          message = `@q`;
         });
 
         it(`should return false`, (): void => {
@@ -1119,9 +1244,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with -`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command starting with -`, (): void => {
         beforeEach((): void => {
-          message = `-l`;
+          message = `-q`;
         });
 
         it(`should return true`, (): void => {
@@ -1133,9 +1258,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with !`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command starting with !`, (): void => {
         beforeEach((): void => {
-          message = `!l`;
+          message = `!q`;
         });
 
         it(`should return true`, (): void => {
@@ -1147,9 +1272,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with @ and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command starting with @ and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `@l dummy`;
+          message = `@q dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -1161,9 +1286,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with - and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `-l dummy`;
+          message = `-q dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -1175,9 +1300,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command starting with ! and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `!l dummy`;
+          message = `!q dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -1189,9 +1314,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command uppercase starting with @`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command uppercase starting with @`, (): void => {
         beforeEach((): void => {
-          message = `@L`;
+          message = `@Q`;
         });
 
         it(`should return false`, (): void => {
@@ -1203,9 +1328,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command uppercase starting with -`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command uppercase starting with -`, (): void => {
         beforeEach((): void => {
-          message = `-L`;
+          message = `-Q`;
         });
 
         it(`should return true`, (): void => {
@@ -1217,9 +1342,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command uppercase starting with !`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command uppercase starting with !`, (): void => {
         beforeEach((): void => {
-          message = `!L`;
+          message = `!Q`;
         });
 
         it(`should return true`, (): void => {
@@ -1231,9 +1356,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command uppercase starting with @ and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command uppercase starting with @ and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `@L dummy`;
+          message = `@Q dummy`;
         });
 
         it(`should return false`, (): void => {
@@ -1245,9 +1370,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command uppercase starting with - and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command uppercase starting with - and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `-L dummy`;
+          message = `-Q dummy`;
         });
 
         it(`should return true`, (): void => {
@@ -1259,9 +1384,9 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         });
       });
 
-      describe(`when the given message is a message with the shortcut lunch command uppercase starting with ! and have more text after that`, (): void => {
+      describe(`when the given message is a message with the shortcut quote command uppercase starting with ! and have more text after that`, (): void => {
         beforeEach((): void => {
-          message = `!L dummy`;
+          message = `!Q dummy`;
         });
 
         it(`should return true`, (): void => {

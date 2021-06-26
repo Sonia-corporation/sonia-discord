@@ -230,7 +230,6 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
       const result = await service.getMessageResponse();
 
       expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
-
       expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
     });
 

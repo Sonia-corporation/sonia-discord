@@ -441,7 +441,6 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
         expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
-
         expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
       });
 
