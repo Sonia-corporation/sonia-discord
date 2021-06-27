@@ -12,7 +12,7 @@ import { CoreEventService } from '../../../../core/services/core-event.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
 import { Message } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock } from 'ts-auto-mock';
 
 describe(`DiscordMessageCommandService`, (): void => {
   let service: DiscordMessageCommandService;
@@ -388,8 +388,8 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
-      anyDiscordMessage = createMock<Message>();
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      anyDiscordMessage = createHydratedMock<Message>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
 
       discordMessageCommandVersionServiceHandleResponseSpy = jest
         .spyOn(discordMessageCommandVersionService, `handleResponse`)
@@ -422,8 +422,8 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
-      anyDiscordMessage = createMock<Message>();
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      anyDiscordMessage = createHydratedMock<Message>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
 
       discordMessageCommandErrorServiceHandleResponseSpy = jest
         .spyOn(discordMessageCommandErrorService, `handleResponse`)
@@ -456,8 +456,8 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
-      anyDiscordMessage = createMock<Message>();
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      anyDiscordMessage = createHydratedMock<Message>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
 
       discordMessageCommandHelpServiceHandleResponseSpy = jest
         .spyOn(discordMessageCommandHelpService, `handleResponse`)
@@ -490,8 +490,8 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
-      anyDiscordMessage = createMock<Message>();
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      anyDiscordMessage = createHydratedMock<Message>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
 
       discordMessageCommandCookieServiceResponseSpy = jest
         .spyOn(discordMessageCommandCookieService, `handleResponse`)
@@ -524,8 +524,8 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
-      anyDiscordMessage = createMock<Message>();
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      anyDiscordMessage = createHydratedMock<Message>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
 
       discordMessageCommandLunchServiceResponseSpy = jest
         .spyOn(discordMessageCommandLunchService, `handleResponse`)
@@ -558,8 +558,8 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
-      anyDiscordMessage = createMock<Message>();
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      anyDiscordMessage = createHydratedMock<Message>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
 
       discordMessageCommandReleaseNotesServiceResponseSpy = jest
         .spyOn(discordMessageCommandReleaseNotesService, `handleResponse`)
@@ -592,8 +592,8 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
-      anyDiscordMessage = createMock<Message>();
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      anyDiscordMessage = createHydratedMock<Message>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
 
       discordMessageCommandQuoteServiceResponseSpy = jest
         .spyOn(discordMessageCommandQuoteService, `handleResponse`)
@@ -626,8 +626,8 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
-      anyDiscordMessage = createMock<Message>();
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      anyDiscordMessage = createHydratedMock<Message>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
 
       discordMessageCommandFeatureServiceResponseSpy = jest
         .spyOn(discordMessageCommandFeatureService, `handleResponse`)
@@ -667,8 +667,8 @@ describe(`DiscordMessageCommandService`, (): void => {
 
     beforeEach((): void => {
       service = DiscordMessageCommandService.getInstance();
-      anyDiscordMessage = createMock<Message>();
-      discordMessageResponse = createMock<IDiscordMessageResponse>();
+      anyDiscordMessage = createHydratedMock<Message>();
+      discordMessageResponse = createHydratedMock<IDiscordMessageResponse>();
 
       discordMessageConfigServiceGetMessageCommandPrefixSpy.mockReturnValue(`-`);
       discordMessageCommandVersionServiceHandleResponseSpy = jest
