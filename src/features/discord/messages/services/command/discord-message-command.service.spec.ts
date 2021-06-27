@@ -350,6 +350,34 @@ describe(`DiscordMessageCommandService`, (): void => {
         expect(result).toStrictEqual(true);
       });
     });
+
+    describe(`when the given message contains the quote command`, (): void => {
+      beforeEach((): void => {
+        message = `-quote`;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.hasCommand(message);
+
+        expect(result).toStrictEqual(true);
+      });
+    });
+
+    describe(`when the given message contains the shortcut quote command`, (): void => {
+      beforeEach((): void => {
+        message = `-q`;
+      });
+
+      it(`should return true`, (): void => {
+        expect.assertions(1);
+
+        const result = service.hasCommand(message);
+
+        expect(result).toStrictEqual(true);
+      });
+    });
   });
 
   describe(`handleVersionCommand()`, (): void => {
