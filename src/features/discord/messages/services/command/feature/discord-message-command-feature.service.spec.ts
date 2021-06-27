@@ -105,7 +105,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         id: `dummy-id`,
       });
 
-      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       getMessageResponseSpy = jest.spyOn(service, `getMessageResponse`).mockResolvedValue(discordMessageResponse);
     });
 

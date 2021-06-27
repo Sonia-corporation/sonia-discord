@@ -2,7 +2,7 @@ import { DiscordEmojiEnum } from './discord-emoji.enum';
 import { getEnumLength } from '../../../functions/checks/get-enum-length';
 
 describe(`DiscordEmojiEnum`, (): void => {
-  it(`should have a 8 members`, (): void => {
+  it(`should have 8 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(DiscordEmojiEnum)).toStrictEqual(8);

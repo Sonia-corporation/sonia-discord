@@ -85,7 +85,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
         id: `dummy-id`,
       });
 
-      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       getMessageResponseSpy = jest.spyOn(service, `getMessageResponse`).mockResolvedValue(discordMessageResponse);
     });
 
@@ -240,7 +240,6 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
       const result = await service.getMessageResponse();
 
       expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
-
       expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
     });
 

@@ -2,7 +2,7 @@ import { DiscordMessagePingPongResponseMessagesEnum } from './discord-message-pi
 import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
-  it(`should have a 36 members`, (): void => {
+  it(`should have 36 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(DiscordMessagePingPongResponseMessagesEnum)).toStrictEqual(36);

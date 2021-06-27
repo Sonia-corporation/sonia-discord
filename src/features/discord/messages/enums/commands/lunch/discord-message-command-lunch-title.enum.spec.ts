@@ -2,7 +2,7 @@ import { DiscordMessageCommandLunchTitleEnum } from './discord-message-command-l
 import { getEnumLength } from '../../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageCommandLunchTitleEnum`, (): void => {
-  it(`should have a 2 members`, (): void => {
+  it(`should have 2 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(DiscordMessageCommandLunchTitleEnum)).toStrictEqual(2);

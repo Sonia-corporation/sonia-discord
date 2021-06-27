@@ -298,7 +298,6 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
       const result = await service.getMessageResponse(oppositeFlags);
 
       expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
-
       expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
     });
 

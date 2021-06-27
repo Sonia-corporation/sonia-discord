@@ -2,7 +2,7 @@ import { ChalkColorEnum } from './chalk-color.enum';
 import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`ChalkColorEnum`, (): void => {
-  it(`should have a 9 members`, (): void => {
+  it(`should have 9 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(ChalkColorEnum)).toStrictEqual(9);

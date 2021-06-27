@@ -1,4 +1,4 @@
-import { AbstractService } from '../../../../../classes/services/abstract.service';
+import { DiscordCommandErrorCoreService } from './discord-command-error-core.service';
 import { ServiceNameEnum } from '../../../../../enums/service-name.enum';
 import { ellipsis } from '../../../../../functions/formatters/ellipsis';
 import { GithubConfigService } from '../../../../github/services/config/github-config.service';
@@ -8,21 +8,12 @@ import { DiscordChannelService } from '../../../channels/services/discord-channe
 import { DiscordGuildSoniaChannelNameEnum } from '../../../guilds/enums/discord-guild-sonia-channel-name.enum';
 import { DiscordGuildConfigService } from '../../../guilds/services/config/discord-guild-config.service';
 import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild-sonia.service';
-import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
-import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import {
-  EmbedFieldData,
-  MessageEmbedAuthor,
-  MessageEmbedFooter,
-  MessageEmbedOptions,
-  MessageEmbedThumbnail,
-} from 'discord.js';
+import { EmbedFieldData, MessageEmbedOptions } from 'discord.js';
 import _ from 'lodash';
-import moment from 'moment-timezone';
 
-export class DiscordMessageErrorService extends AbstractService {
+export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
   private static _instance: DiscordMessageErrorService;
 
   public static getInstance(): DiscordMessageErrorService {
@@ -107,31 +98,14 @@ export class DiscordMessageErrorService extends AbstractService {
   ): IDiscordMessageResponse {
     return {
       options: {
-        embed: this._getMessageEmbed(error, anyDiscordMessage),
+        embed: _.merge({}, this._getMessageEmbed(), {
+          fields: this._getMessageEmbedFields(error, anyDiscordMessage),
+          title: this._getCustomMessageEmbedTitle(),
+        } as MessageEmbedOptions),
         split: false,
       },
       response: ``,
     };
-  }
-
-  private _getMessageEmbed(error: unknown, anyDiscordMessage: Readonly<IAnyDiscordMessage>): MessageEmbedOptions {
-    return {
-      author: this._getMessageEmbedAuthor(),
-      color: this._getMessageEmbedColor(),
-      fields: this._getMessageEmbedFields(error, anyDiscordMessage),
-      footer: this._getMessageEmbedFooter(),
-      thumbnail: this._getMessageEmbedThumbnail(),
-      timestamp: this._getMessageEmbedTimestamp(),
-      title: this._getMessageEmbedTitle(),
-    };
-  }
-
-  private _getMessageEmbedAuthor(): MessageEmbedAuthor {
-    return DiscordSoniaService.getInstance().getCorporationMessageEmbedAuthor();
-  }
-
-  private _getMessageEmbedColor(): number {
-    return DiscordMessageConfigService.getInstance().getMessageCommandErrorImageColor();
   }
 
   private _getMessageEmbedFields(error: unknown, anyDiscordMessage: Readonly<IAnyDiscordMessage>): EmbedFieldData[] {
@@ -166,26 +140,7 @@ export class DiscordMessageErrorService extends AbstractService {
     };
   }
 
-  private _getMessageEmbedFooter(): MessageEmbedFooter {
-    const soniaImageUrl: string | null = DiscordSoniaService.getInstance().getImageUrl();
-
-    return {
-      iconURL: soniaImageUrl ?? undefined,
-      text: `I am very sorry for that`,
-    };
-  }
-
-  private _getMessageEmbedThumbnail(): MessageEmbedThumbnail {
-    return {
-      url: DiscordMessageConfigService.getInstance().getMessageCommandErrorImageUrl(),
-    };
-  }
-
-  private _getMessageEmbedTimestamp(): Date {
-    return moment().toDate();
-  }
-
-  private _getMessageEmbedTitle(): string {
+  private _getCustomMessageEmbedTitle(): string {
     return `Oops, you have found a bug`;
   }
 }

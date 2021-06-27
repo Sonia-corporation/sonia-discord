@@ -84,7 +84,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         id: `dummy-id`,
       });
 
-      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`);
+      loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       getMessageResponseSpy = jest.spyOn(service, `getMessageResponse`).mockResolvedValue(discordMessageResponse);
     });
 
@@ -197,12 +197,12 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         );
       });
 
-      it(`should return a Discord message response embed with 8 fields`, async (): Promise<void> => {
+      it(`should return a Discord message response embed with 9 fields`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.fields).toHaveLength(8);
+        expect(result.options.embed?.fields).toHaveLength(9);
       });
 
       it(`should return a Discord message response embed with a cookie field`, async (): Promise<void> => {
@@ -260,12 +260,23 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         } as EmbedFieldData);
       });
 
-      it(`should return a Discord message response embed with a release notes field`, async (): Promise<void> => {
+      it(`should return a Discord message response embed with a quote field`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse();
 
         expect(result.options.embed?.fields?.[5]).toStrictEqual({
+          name: `Quote (*quote* or *q*)`,
+          value: `I quote others only in order to better express myself.`,
+        } as EmbedFieldData);
+      });
+
+      it(`should return a Discord message response embed with a release notes field`, async (): Promise<void> => {
+        expect.assertions(1);
+
+        const result = await service.getMessageResponse();
+
+        expect(result.options.embed?.fields?.[6]).toStrictEqual({
           name: `Release notes (*release-notes* or *r*)`,
           value: `Display the last version release notes.`,
         } as EmbedFieldData);
@@ -276,7 +287,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.fields?.[6]).toStrictEqual({
+        expect(result.options.embed?.fields?.[7]).toStrictEqual({
           name: `Version (*version* or *v*)`,
           value: `Display my current application version.`,
         } as EmbedFieldData);
@@ -287,7 +298,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.fields?.[7]).toStrictEqual({
+        expect(result.options.embed?.fields?.[8]).toStrictEqual({
           name: `Further help`,
           value: `You can also checkout the [readme](https://github.com/Sonia-corporation/sonia-discord/blob/master/README.md).
       It contains more information about how I work.`,
@@ -357,7 +368,6 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         const result = await service.getMessageResponse();
 
         expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
-
         expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
       });
 

@@ -46,8 +46,9 @@ jobs:
             - [![label: opened-pull-request][~opened-pull-request]](https://github.com/Sonia-corporation/sonia-discord/labels/opened-pull-request)
             - [![label: help wanted][~help-wanted]](https://github.com/Sonia-corporation/sonia-discord/labels/help%20wanted)
           stale-issue-label: 'no-issue-activity'
-          exempt-issue-labels: 'waiting,wontfix,dependency-fix,opened-pull-request,help%20wanted'
+          exempt-issue-labels: 'waiting,wontfix,dependency-fix,opened-pull-request,help wanted'
           stale-pr-label: 'no-pull-request-activity'
-          exempt-pr-labels: 'waiting,wontfix,dependency-fix,opened-pull-request,help%20wanted'
+          exempt-pr-labels: 'waiting,wontfix,dependency-fix,opened-pull-request,help wanted'
           days-before-stale: 60
           days-before-close: 30
+          operations-per-run: 100

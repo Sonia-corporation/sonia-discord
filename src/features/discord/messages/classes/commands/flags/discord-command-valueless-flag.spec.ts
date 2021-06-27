@@ -2,9 +2,9 @@ import { DiscordCommandFlagActionValueless } from './discord-command-flag-action
 import { DiscordCommandFlags } from './discord-command-flags';
 import { DiscordCommandValuelessFlag } from './discord-command-valueless-flag';
 import { DiscordCommandFlagTypeEnum } from '../../../enums/commands/discord-command-flag-type.enum';
+import { IDiscordCommandFlag } from '../../../interfaces/commands/flags/discord-command-flag';
 import { IDiscordCommandFlagError } from '../../../interfaces/commands/flags/discord-command-flag-error';
 import { IDiscordCommandFlagSuccess } from '../../../interfaces/commands/flags/discord-command-flag-success';
-import { IDiscordCommandFlag } from '../../../interfaces/commands/flags/discord-command-flag';
 import { IAnyDiscordMessage } from '../../../types/any-discord-message';
 import { IDiscordMessageFlag } from '../../../types/commands/flags/discord-message-flag';
 import { createMock } from 'ts-auto-mock';

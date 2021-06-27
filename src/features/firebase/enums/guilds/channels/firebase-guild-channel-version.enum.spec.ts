@@ -2,7 +2,7 @@ import { FirebaseGuildChannelVersionEnum } from './firebase-guild-channel-versio
 import { getEnumLength } from '../../../../../functions/checks/get-enum-length';
 
 describe(`FirebaseGuildChannelVersionEnum`, (): void => {
-  it(`should have a 4 members`, (): void => {
+  it(`should have 4 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(FirebaseGuildChannelVersionEnum)).toStrictEqual(4);

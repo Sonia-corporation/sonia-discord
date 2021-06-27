@@ -79,6 +79,7 @@ export class DiscordMessageCommandHelpService extends AbstractService {
       this._getMessageEmbedFieldFeature(),
       this._getMessageEmbedFieldHelp(),
       this._getMessageEmbedFieldLunch(),
+      this._getMessageEmbedFieldQuote(),
       this._getMessageEmbedFieldReleaseNotes(),
       this._getMessageEmbedFieldVersion(),
       this._getMessageEmbedFieldMoreHelp(),
@@ -117,6 +118,13 @@ export class DiscordMessageCommandHelpService extends AbstractService {
     return {
       name: `Lunch (*lunch* or *l*)`,
       value: `There is a time to eat.`,
+    };
+  }
+
+  private _getMessageEmbedFieldQuote(): EmbedFieldData {
+    return {
+      name: `Quote (*quote* or *q*)`,
+      value: `I quote others only in order to better express myself.`,
     };
   }
 

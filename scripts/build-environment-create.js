@@ -20,6 +20,9 @@ FS.createFile(`${APP_ROOT_PATH.path}/dist/environment.json`)
       github: {
         personalAccessToken: process.env.GITHUB_PERSONAL_ACCESS_TOKEN || `unknown`,
       },
+      quote: {
+        apiKey: process.env.QUOTE_API_KEY || `unknown`,
+      },
     })
       .then(() => {
         LOGGER.success(CONTEXT, CHALK.text(`Environment file content successfully rewritten into dist`));

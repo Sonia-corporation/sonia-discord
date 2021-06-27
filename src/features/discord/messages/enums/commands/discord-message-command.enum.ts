@@ -38,4 +38,9 @@ export enum DiscordMessageCommandEnum {
    * Shortcut for {@link FEATURE}
    */
   F = `f`,
+  QUOTE = `quote`,
+  /**
+   * Shortcut for {@link QUOTE}
+   */
+  Q = `q`,
 }

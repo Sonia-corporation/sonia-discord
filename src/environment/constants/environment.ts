@@ -24,4 +24,7 @@ export const ENVIRONMENT: IEnvironment = {
     isEnabled: true,
     level: LoggerConfigLevelEnum.DEBUG,
   },
+  quote: {
+    apiKey: `TO_DEFINE_BY_YOU_AND_ADD_IT_IN_SECRET_ENVIRONMENT_JSON_FILE`,
+  },
 };

@@ -3,6 +3,7 @@ import { DiscordMessageCommandErrorService } from './error/discord-message-comma
 import { DiscordMessageCommandFeatureService } from './feature/discord-message-command-feature.service';
 import { DiscordMessageCommandHelpService } from './help/discord-message-command-help.service';
 import { DiscordMessageCommandLunchService } from './lunch/services/discord-message-command-lunch.service';
+import { DiscordMessageCommandQuoteService } from './quote/services/discord-message-command-quote.service';
 import { DiscordMessageCommandReleaseNotesService } from './release-notes/discord-message-command-release-notes.service';
 import { DiscordMessageCommandVersionService } from './version/discord-message-command-version.service';
 import { AbstractService } from '../../../../../classes/services/abstract.service';
@@ -40,6 +41,8 @@ export class DiscordMessageCommandService extends AbstractService {
       return true;
     } else if (DiscordMessageCommandReleaseNotesService.getInstance().hasCommand(message)) {
       return true;
+    } else if (DiscordMessageCommandQuoteService.getInstance().hasCommand(message)) {
+      return true;
     } else if (DiscordMessageCommandFeatureService.getInstance().hasCommand(message)) {
       return true;
     }
@@ -71,6 +74,10 @@ export class DiscordMessageCommandService extends AbstractService {
     return DiscordMessageCommandReleaseNotesService.getInstance().handleResponse(anyDiscordMessage);
   }
 
+  public handleQuoteCommand(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
+    return DiscordMessageCommandQuoteService.getInstance().handleResponse(anyDiscordMessage);
+  }
+
   public handleFeatureCommand(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): Promise<IDiscordMessageResponse | IDiscordMessageResponse[]> {
@@ -95,6 +102,8 @@ export class DiscordMessageCommandService extends AbstractService {
         return this.handleLunchCommand(anyDiscordMessage);
       } else if (DiscordMessageCommandReleaseNotesService.getInstance().hasCommand(anyDiscordMessage.content)) {
         return this.handleReleaseNotesCommand(anyDiscordMessage);
+      } else if (DiscordMessageCommandQuoteService.getInstance().hasCommand(anyDiscordMessage.content)) {
+        return this.handleQuoteCommand(anyDiscordMessage);
       }
     }
 

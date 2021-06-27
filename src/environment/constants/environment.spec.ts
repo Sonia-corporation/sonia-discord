@@ -47,4 +47,10 @@ describe(`ENVIRONMENT`, (): void => {
 
     expect(ENVIRONMENT.logger?.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
   });
+
+  it(`should have a fake Quote API key`, (): void => {
+    expect.assertions(1);
+
+    expect(ENVIRONMENT.quote?.apiKey).toStrictEqual(`TO_DEFINE_BY_YOU_AND_ADD_IT_IN_SECRET_ENVIRONMENT_JSON_FILE`);
+  });
 });

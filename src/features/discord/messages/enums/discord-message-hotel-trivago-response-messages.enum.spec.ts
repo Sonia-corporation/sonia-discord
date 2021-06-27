@@ -2,7 +2,7 @@ import { DiscordMessageHotelTrivagoResponseMessagesEnum } from './discord-messag
 import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageHotelTrivagoResponseMessagesEnum`, (): void => {
-  it(`should have a 35 members`, (): void => {
+  it(`should have 35 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(DiscordMessageHotelTrivagoResponseMessagesEnum)).toStrictEqual(35);
