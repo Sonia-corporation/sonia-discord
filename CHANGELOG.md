@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+# [1.98.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.97.0...1.98.0) (2021-06-27)
+
+
+### :rocket: Features
+
+* **quote:** add a new command "quote" ([2b1d5c7](https://github.com/Sonia-corporation/sonia-discord/commit/2b1d5c78ce2af7e3ec2185440ff3c1612cf8fbab))
+
 # [1.97.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.96.0...1.97.0) (2021-05-15)
 
 
