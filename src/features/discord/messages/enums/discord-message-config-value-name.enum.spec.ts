@@ -2,7 +2,7 @@ import { DiscordMessageConfigValueNameEnum } from './discord-message-config-valu
 import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageConfigValueNameEnum`, (): void => {
-  it(`should have a 31 members`, (): void => {
+  it(`should have 31 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(DiscordMessageConfigValueNameEnum)).toStrictEqual(31);

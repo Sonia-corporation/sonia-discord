@@ -2,7 +2,7 @@ import { DiscordGuildSoniaChannelNameEnum } from './discord-guild-sonia-channel-
 import { getEnumLength } from '../../../../functions/checks/get-enum-length';
 
 describe(`DiscordGuildSoniaChannelNameEnum`, (): void => {
-  it(`should have a 3 members`, (): void => {
+  it(`should have 3 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(DiscordGuildSoniaChannelNameEnum)).toStrictEqual(3);

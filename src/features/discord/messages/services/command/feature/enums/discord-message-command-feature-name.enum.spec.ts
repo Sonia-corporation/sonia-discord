@@ -2,7 +2,7 @@ import { DiscordMessageCommandFeatureNameEnum } from './discord-message-command-
 import { getEnumLength } from '../../../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageCommandFeatureNameEnum`, (): void => {
-  it(`should have a 4 members`, (): void => {
+  it(`should have 4 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(DiscordMessageCommandFeatureNameEnum)).toStrictEqual(4);

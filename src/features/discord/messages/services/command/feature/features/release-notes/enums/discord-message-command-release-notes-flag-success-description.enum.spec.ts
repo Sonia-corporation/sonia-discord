@@ -2,7 +2,7 @@ import { DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum } from './d
 import { getEnumLength } from '../../../../../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum`, (): void => {
-  it(`should have a 6 members`, (): void => {
+  it(`should have 6 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(DiscordMessageCommandReleaseNotesFlagSuccessDescriptionEnum)).toStrictEqual(6);

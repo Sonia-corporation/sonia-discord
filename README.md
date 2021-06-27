@@ -169,6 +169,22 @@ Sonia will send you a message containing:
 - `@Sonia !lunch`
 - `@Sonia !L`
 
+#### Quote
+
+**Commands:**
+
+- quote
+- q _(shortcut)_
+
+Sonia will send you a message containing:
+
+- A random quote
+
+**Example:**
+
+- `@Sonia !quote`
+- `@Sonia !q`
+
 #### Release notes
 
 **Commands:**

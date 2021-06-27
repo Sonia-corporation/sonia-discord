@@ -868,7 +868,6 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
         const result = await service.getMessageResponse(state);
 
         expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
-
         expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
       });
 

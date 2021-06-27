@@ -2,7 +2,7 @@ import { DiscordMessageCommandNoonFlagSuccessTitleEnum } from './discord-message
 import { getEnumLength } from '../../../../../../../../../functions/checks/get-enum-length';
 
 describe(`DiscordCommandFlagSuccessTitleEnum`, (): void => {
-  it(`should have a 2 members`, (): void => {
+  it(`should have 2 members`, (): void => {
     expect.assertions(1);
 
     expect(getEnumLength(DiscordMessageCommandNoonFlagSuccessTitleEnum)).toStrictEqual(2);

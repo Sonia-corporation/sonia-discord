@@ -33,6 +33,9 @@ FS.access(`${APP_ROOT_PATH.path}/src/environment/secret-environment.json`)
             discordId: undefined,
             nickname: undefined,
           },
+          quote: {
+            apiKey: ``,
+          },
         })
           .then(() => {
             LOGGER.success(CONTEXT, CHALK.text(`Secret environment file content successfully rewritten`));

@@ -2,10 +2,10 @@ import { ServiceNameEnum } from './service-name.enum';
 import { getEnumLength } from '../functions/checks/get-enum-length';
 
 describe(`ServiceNameEnum`, (): void => {
-  it(`should have a 115 members`, (): void => {
+  it(`should have 122 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ServiceNameEnum)).toStrictEqual(115);
+    expect(getEnumLength(ServiceNameEnum)).toStrictEqual(122);
   });
 
   it(`should have a member "APP_CONFIG_CORE_SERVICE"`, (): void => {
@@ -358,6 +358,12 @@ describe(`ServiceNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_LUNCH_SERVICE).toStrictEqual(`DiscordMessageCommandLunchService`);
+  });
+
+  it(`should have a member "DISCORD_MESSAGE_COMMAND_QUOTE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.DISCORD_MESSAGE_COMMAND_QUOTE_SERVICE).toStrictEqual(`DiscordMessageCommandQuoteService`);
   });
 
   it(`should have a member "DISCORD_MESSAGE_COMMAND_RELEASE_NOTES_SERVICE"`, (): void => {
@@ -732,6 +738,42 @@ describe(`ServiceNameEnum`, (): void => {
     expect.assertions(1);
 
     expect(ServiceNameEnum.PROFILE_CONFIG_SERVICE).toStrictEqual(`ProfileConfigService`);
+  });
+
+  it(`should have a member "QUOTE_API_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.QUOTE_API_SERVICE).toStrictEqual(`QuoteApiService`);
+  });
+
+  it(`should have a member "QUOTE_CONFIG_CORE_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.QUOTE_CONFIG_CORE_SERVICE).toStrictEqual(`QuoteConfigCoreService`);
+  });
+
+  it(`should have a member "QUOTE_CONFIG_MUTATOR_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.QUOTE_CONFIG_MUTATOR_SERVICE).toStrictEqual(`QuoteConfigMutatorService`);
+  });
+
+  it(`should have a member "QUOTE_CONFIG_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.QUOTE_CONFIG_SERVICE).toStrictEqual(`QuoteConfigService`);
+  });
+
+  it(`should have a member "QUOTE_ERROR_API_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.QUOTE_ERROR_API_SERVICE).toStrictEqual(`QuoteErrorApiService`);
+  });
+
+  it(`should have a member "QUOTE_RANDOM_SERVICE"`, (): void => {
+    expect.assertions(1);
+
+    expect(ServiceNameEnum.QUOTE_RANDOM_SERVICE).toStrictEqual(`QuoteRandomService`);
   });
 
   it(`should have a member "RELEASE_TYPE_SERVICE"`, (): void => {

@@ -45,6 +45,9 @@ Run `npm run create-secret-environment`.
   "profile": {
     "discordId": "OPTIONAL_AND_TO_DEFINE_BY_YOU",
     "nickname": "OPTIONAL_AND_TO_DEFINE_BY_YOU"
+  },
+  "quote": {
+    "apiKey": "OPTIONAL_AND_TO_DEFINE_BY_YOU"
   }
 }
 ```
@@ -89,6 +92,12 @@ It can be anything you want however we recommend that you use your Discord name.
 
 The Discord id will be used on simple text messages to use your name as a mention instead of pure text.  
 If the Discord id is not set the username will be used instead as fallback.
+
+**Note for the quote:**
+
+We use [Fav Quotes](https://favqs.com) to get some random quotes.  
+To avoid exposing my own API key, it was added inside the secret environment.  
+If you wish to run Sonia locally and have the quote features working as expected, you need to provide [your own API key](https://favqs.com/api_keys).
 
 ### Create the Firebase service account file
 
@@ -152,8 +161,14 @@ Locally it is enabled and should be most of the time disabled in production.
 - `npm run test:mutant`: run the mutation testing once
 - `npm run test:mutant:ci`: run the mutation testing once and update Stryker dashboard
 - `npm run test:clear-cache`: remove the Jest cache
-- `npm run lint`: run the linter and fix the errors
-- `npm run lint:ci`: run the linter
+- `npm run lint:ts`: run the linter for js/ts files and fix the errors
+- `npm run lint:ts:ci`: run the linter for js/ts files without fixing the errors
+- `npm run lint:ts:hook`: run the linter for js/ts files but without searching for the files to lint and fix the errors
+- `npm run lint:other`: run the linter for other files format and fix the errors
+- `npm run lint:other:ci`: run the linter for other files format without fixing the errors
+- `npm run lint:other:hook`: run the linter for other files format but without searching for the files to lint and fix the errors
+- `npm run lint:all`: run the linter for all files and fix the errors
+- `npm run lint:all:ci`: run the linter for all files without fixing the errors
 - `npm run cz`: run a CLI to easily push and commit by following the commit convention of this project
 - `npm run semver`: create a new version, a new tag and update the [CHANGELOG](CHANGELOG.md) file
 - `npm run clean:dist`: remove the dist folder

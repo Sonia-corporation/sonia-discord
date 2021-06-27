@@ -23,6 +23,7 @@ import { ChalkService } from '../../logger/services/chalk/chalk.service';
 import { LoggerConfigMutatorService } from '../../logger/services/config/logger-config-mutator.service';
 import { LoggerService } from '../../logger/services/logger.service';
 import { ProfileConfigMutatorService } from '../../profile/services/config/profile-config-mutator.service';
+import { QuoteConfigMutatorService } from '../../quote/services/config/quote-config-mutator.service';
 import { ServerConfigMutatorService } from '../../server/services/config/server-config-mutator.service';
 import { ServerService } from '../../server/services/server.service';
 import appRootPath from 'app-root-path';
@@ -121,13 +122,14 @@ export class InitService extends AbstractService {
     );
   }
 
-  private _configureAppFromEnvironment({ logger, github, discord, profile, app }: Readonly<IEnvironment>): void {
+  private _configureAppFromEnvironment({ logger, github, discord, profile, app, quote }: Readonly<IEnvironment>): void {
     LoggerConfigMutatorService.getInstance().updateConfig(logger);
     GithubConfigMutatorService.getInstance().updateConfig(github);
     DiscordSoniaConfigMutatorService.getInstance().updateConfig(discord);
     DiscordMessageConfigMutatorService.getInstance().updateConfig(discord);
     ProfileConfigMutatorService.getInstance().updateConfig(profile);
     AppConfigMutatorService.getInstance().init().updateConfig(app);
+    QuoteConfigMutatorService.getInstance().updateConfig(quote);
     ServerConfigMutatorService.getInstance().init();
   }
 
