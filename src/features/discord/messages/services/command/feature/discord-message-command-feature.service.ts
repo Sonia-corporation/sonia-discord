@@ -1,5 +1,4 @@
 import { DiscordMessageCommandFeatureNameEnum } from './enums/discord-message-command-feature-name.enum';
-import { DiscordMessageCommandFeatureFlagsService } from './features/flags/discord-message-command-feature-flags.service';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS } from './features/noon/constants/discord-message-command-feature-noon-flags';
 import { DiscordMessageCommandFeatureNoonService } from './features/noon/services/discord-message-command-feature-noon.service';
 import { DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_FLAGS } from './features/release-notes/constants/discord-message-command-feature-release-notes-flags';
@@ -9,6 +8,7 @@ import { DiscordMessageCommandFeatureEmptyFeatureNameErrorService } from './serv
 import { DiscordMessageCommandFeatureWrongFeatureNameErrorService } from './services/feature-names/discord-message-command-feature-wrong-feature-name-error.service';
 import { DiscordMessageCommandFeatureDuplicatedFlagsErrorService } from './services/flags/discord-message-command-feature-duplicated-flags-error.service';
 import { DiscordMessageCommandFeatureEmptyFlagsErrorService } from './services/flags/discord-message-command-feature-empty-flags-error.service';
+import { DiscordMessageCommandFeatureFlagsService } from './services/flags/discord-message-command-feature-flags.service';
 import { DiscordMessageCommandFeatureOppositeFlagsErrorService } from './services/flags/discord-message-command-feature-opposite-flags-error.service';
 import { DiscordMessageCommandFeatureWrongFlagsErrorService } from './services/flags/discord-message-command-feature-wrong-flags-error.service';
 import { AbstractService } from '../../../../../../classes/services/abstract.service';
