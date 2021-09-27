@@ -182,7 +182,7 @@
     "app-root-path": "3.0.0",
     "chalk": "4.1.2",
     "commitizen": "4.2.4",
-    "concurrently": "6.2.1",
+    "concurrently": "6.2.2",
     "cross-env": "7.0.3",
     "crypto-random-string": "3.3.1",
     "cz-customizable": "6.3.0",
