@@ -132,7 +132,8 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
 
   private _getMessageEmbedFieldHint(): EmbedFieldData {
     const githubBugReportUrl: string = GithubConfigService.getInstance().getBugReportUrl();
-    const discordSoniaPermanentGuildInviteUrl: string = DiscordGuildConfigService.getInstance().getSoniaPermanentGuildInviteUrl();
+    const discordSoniaPermanentGuildInviteUrl: string =
+      DiscordGuildConfigService.getInstance().getSoniaPermanentGuildInviteUrl();
 
     return {
       name: `Help me to help you`,
