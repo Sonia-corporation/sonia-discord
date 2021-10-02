@@ -160,7 +160,7 @@
   "devDependencies": {
     "@datorama/akita-cli": "6.1.1",
     "@semantic-release/changelog": "5.0.1",
-    "@semantic-release/git": "9.0.0",
+    "@semantic-release/git": "9.0.1",
     "@semantic-release/github": "7.2.3",
     "@sonia-corporation/conventional-changelog": "1.0.1",
     "@stryker-mutator/core": "5.4.1",
@@ -214,7 +214,7 @@
     "prettier": "2.4.1",
     "pug": "3.0.2",
     "rimraf": "3.0.2",
-    "semantic-release": "17.4.4",
+    "semantic-release": "17.4.7",
     "shx": "0.3.3",
     "stryker-cli": "1.0.2",
     "ts-auto-mock": "3.3.6",
