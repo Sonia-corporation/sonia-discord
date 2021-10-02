@@ -12,7 +12,8 @@ export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends Di
 
   public static getInstance(): DiscordMessageCommandFeatureEmptyFeatureNameErrorService {
     if (_.isNil(DiscordMessageCommandFeatureEmptyFeatureNameErrorService._instance)) {
-      DiscordMessageCommandFeatureEmptyFeatureNameErrorService._instance = new DiscordMessageCommandFeatureEmptyFeatureNameErrorService();
+      DiscordMessageCommandFeatureEmptyFeatureNameErrorService._instance =
+        new DiscordMessageCommandFeatureEmptyFeatureNameErrorService();
     }
 
     return DiscordMessageCommandFeatureEmptyFeatureNameErrorService._instance;

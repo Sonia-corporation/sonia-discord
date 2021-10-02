@@ -15,7 +15,8 @@ export class DiscordMessageCommandFeatureOppositeFlagsErrorService extends Disco
 
   public static getInstance(): DiscordMessageCommandFeatureOppositeFlagsErrorService {
     if (_.isNil(DiscordMessageCommandFeatureOppositeFlagsErrorService._instance)) {
-      DiscordMessageCommandFeatureOppositeFlagsErrorService._instance = new DiscordMessageCommandFeatureOppositeFlagsErrorService();
+      DiscordMessageCommandFeatureOppositeFlagsErrorService._instance =
+        new DiscordMessageCommandFeatureOppositeFlagsErrorService();
     }
 
     return DiscordMessageCommandFeatureOppositeFlagsErrorService._instance;
@@ -65,16 +66,13 @@ export class DiscordMessageCommandFeatureOppositeFlagsErrorService extends Disco
 
   private _getMessageEmbedFields(oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>): EmbedFieldData[] {
     return _.concat(
-      _.map(
-        oppositeFlags,
-        ({ name, description }: Readonly<IDiscordCommandFlagOpposite>): EmbedFieldData => {
-          return {
-            inline: false,
-            name,
-            value: description,
-          };
-        }
-      ),
+      _.map(oppositeFlags, ({ name, description }: Readonly<IDiscordCommandFlagOpposite>): EmbedFieldData => {
+        return {
+          inline: false,
+          name,
+          value: description,
+        };
+      }),
       this._getMessageEmbedHintField()
     );
   }

@@ -10,7 +10,8 @@ export class DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService e
 
   public static getInstance(): DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService {
     if (_.isNil(DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService._instance)) {
-      DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService._instance = new DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService();
+      DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService._instance =
+        new DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService();
     }
 
     return DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService._instance;

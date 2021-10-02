@@ -89,18 +89,16 @@ export class InitService extends AbstractService {
             console.error(error);
           })
       )
-      .catch(
-        (error: unknown): Promise<never> => {
-          console.error(`Failed to read the secret environment file`);
-          console.error(error);
-          console.debug(`Follow the instructions about the secret environment to fix this:`);
-          console.debug(
-            `https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
-          );
+      .catch((error: unknown): Promise<never> => {
+        console.error(`Failed to read the secret environment file`);
+        console.error(error);
+        console.debug(`Follow the instructions about the secret environment to fix this:`);
+        console.debug(
+          `https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
+        );
 
-          return Promise.reject(error);
-        }
-      );
+        return Promise.reject(error);
+      });
   }
 
   private _mergeEnvironments(environmentA: Readonly<IEnvironment>, environmentB: Readonly<IEnvironment>): IEnvironment {
@@ -136,27 +134,23 @@ export class InitService extends AbstractService {
   private _configureAppFromPackage(): Promise<IPackage> {
     return fs
       .readJson(`${_.toString(appRootPath)}/package.json`)
-      .then(
-        (data: Readonly<IPackage>): Promise<IPackage> => {
-          AppConfigMutatorService.getInstance().updateVersion(data.version);
+      .then((data: Readonly<IPackage>): Promise<IPackage> => {
+        AppConfigMutatorService.getInstance().updateVersion(data.version);
 
-          return Promise.resolve(data);
-        }
-      )
-      .catch(
-        (error: unknown): Promise<never> => {
-          LoggerService.getInstance().error({
-            context: this._serviceName,
-            message: ChalkService.getInstance().text(`failed to read the package file`),
-          });
-          LoggerService.getInstance().error({
-            context: this._serviceName,
-            message: ChalkService.getInstance().text(error),
-          });
+        return Promise.resolve(data);
+      })
+      .catch((error: unknown): Promise<never> => {
+        LoggerService.getInstance().error({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(`failed to read the package file`),
+        });
+        LoggerService.getInstance().error({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(error),
+        });
 
-          return Promise.reject(error);
-        }
-      );
+        return Promise.reject(error);
+      });
   }
 
   private _configureAppFromGitHubReleases(): Promise<IGithubReleaseAndTotalCount> {
@@ -177,57 +171,53 @@ export class InitService extends AbstractService {
       method: `post`,
       url: GITHUB_API_URL,
     })
-      .then(
-        ({ data }: Readonly<AxiosResponse<IGithubReleaseAndTotalCount>>): Promise<IGithubReleaseAndTotalCount> => {
-          AppConfigMutatorService.getInstance().updateTotalReleaseCount(data.data.repository.releases.totalCount);
+      .then(({ data }: Readonly<AxiosResponse<IGithubReleaseAndTotalCount>>): Promise<IGithubReleaseAndTotalCount> => {
+        AppConfigMutatorService.getInstance().updateTotalReleaseCount(data.data.repository.releases.totalCount);
 
-          LoggerService.getInstance().success({
-            context: this._serviceName,
-            message: ChalkService.getInstance().text(`Total release count updated from GitHub API`),
-          });
+        LoggerService.getInstance().success({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(`Total release count updated from GitHub API`),
+        });
 
-          if (_.isNil(data.data.repository.release)) {
-            LoggerService.getInstance().error({
-              context: this._serviceName,
-              message: ChalkService.getInstance().text(
-                `Failed to find a release with the given tag name from GitHub API`
-              ),
-            });
-          } else {
-            AppConfigMutatorService.getInstance().updateReleaseDate(data.data.repository.release.updatedAt);
-            AppConfigMutatorService.getInstance().updateReleaseNotes(
-              getHumanizedReleaseNotes(data.data.repository.release.description)
-            );
-
-            LoggerService.getInstance().success({
-              context: this._serviceName,
-              message: ChalkService.getInstance().text(`Release notes updated from GitHub API`),
-            });
-          }
-
-          return Promise.resolve(data);
-        }
-      )
-      .catch(
-        (error: unknown): Promise<never> => {
-          LoggerService.getInstance().error({
-            context: this._serviceName,
-            message: ChalkService.getInstance().text(`Failed to get the total release count from GitHub API`),
-          });
+        if (_.isNil(data.data.repository.release)) {
           LoggerService.getInstance().error({
             context: this._serviceName,
             message: ChalkService.getInstance().text(
-              `Failed to get the release notes for the app version from GitHub API`
+              `Failed to find a release with the given tag name from GitHub API`
             ),
           });
-          LoggerService.getInstance().error({
-            context: this._serviceName,
-            message: ChalkService.getInstance().text(error),
-          });
+        } else {
+          AppConfigMutatorService.getInstance().updateReleaseDate(data.data.repository.release.updatedAt);
+          AppConfigMutatorService.getInstance().updateReleaseNotes(
+            getHumanizedReleaseNotes(data.data.repository.release.description)
+          );
 
-          return Promise.reject(error);
+          LoggerService.getInstance().success({
+            context: this._serviceName,
+            message: ChalkService.getInstance().text(`Release notes updated from GitHub API`),
+          });
         }
-      );
+
+        return Promise.resolve(data);
+      })
+      .catch((error: unknown): Promise<never> => {
+        LoggerService.getInstance().error({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(`Failed to get the total release count from GitHub API`),
+        });
+        LoggerService.getInstance().error({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(
+            `Failed to get the release notes for the app version from GitHub API`
+          ),
+        });
+        LoggerService.getInstance().error({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(error),
+        });
+
+        return Promise.reject(error);
+      });
   }
 
   private _startApp(
