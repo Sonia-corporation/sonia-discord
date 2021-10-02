@@ -29,7 +29,7 @@
   "separateMultipleMajor": true,
   "separateMinorPatch": true,
   "branchPrefix": "dependencies/",
-  "labels": ["dependencies/other/"],
+  "labels": ["dependencies"],
   "rebaseWhen": "behind-base-branch",
   "baseBranches": ["develop"],
   "prCreation": "immediate",
@@ -59,19 +59,19 @@
   },
   "patch": {
     "branchPrefix": "dependencies/patch/",
-    "automerge": true,
+    "automerge": false,
     "enabled": true,
     "extends": ["schedule:daily"]
   },
   "pin": {
     "branchPrefix": "dependencies/pin/",
-    "automerge": true,
+    "automerge": false,
     "enabled": true,
     "extends": ["schedule:daily"]
   },
   "lockFileMaintenance": {
     "branchPrefix": "dependencies/lock-file/",
-    "automerge": true,
+    "automerge": false,
     "enabled": true,
     "extends": ["schedule:weekly"]
   },
