@@ -91,7 +91,7 @@
     {
       "groupName": "Semantic release dependencies",
       "matchPackagePatterns": ["^@semantic-release/", "^semantic-release$"],
-      "matchUpdateTypes": ["major"],
+      "matchUpdateTypes": ["major"]
     }
   ]
 }
