@@ -89,9 +89,9 @@
       "rangeStrategy": "pin"
     },
     {
-      "groupName": "@semantic-release dependencies",
-      "matchPackagePatterns": ["^@semantic-release/"],
-      "matchUpdateTypes": ["major", "minor", "patch"],
+      "groupName": "Semantic release dependencies",
+      "matchPackagePatterns": ["^@semantic-release/", "^semantic-release$"],
+      "matchUpdateTypes": ["major"],
     }
   ]
 }
