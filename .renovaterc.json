@@ -87,6 +87,11 @@
     {
       "matchDepTypes": ["dependencies", "peerDependencies", "devDependencies"],
       "rangeStrategy": "pin"
+    },
+    {
+      "groupName": "@semantic-release dependencies",
+      "matchPackagePatterns": ["^@semantic-release/"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
     }
   ]
 }
