@@ -6,10 +6,10 @@ jobs:
   Stale:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v4
+      - uses: sonia-corporation/stale@v1.25.0
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          stale-issue-message: |
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-stale-comment: |
             [~waiting]: https://img.shields.io/badge/-waiting-f5cd79.svg
             [~wontfix]: https://img.shields.io/badge/-wontfix-e77f67.svg
             [~dependency-fix]: https://img.shields.io/badge/-dependency%20fix-c44569.svg
@@ -27,7 +27,7 @@ jobs:
             - [![label: dependency-fix][~dependency-fix]](https://github.com/Sonia-corporation/sonia-discord/labels/dependency-fix)
             - [![label: opened-pull-request][~opened-pull-request]](https://github.com/Sonia-corporation/sonia-discord/labels/opened-pull-request)
             - [![label: help wanted][~help-wanted]](https://github.com/Sonia-corporation/sonia-discord/labels/help%20wanted)
-          stale-pr-message: |
+          pull-request-stale-comment: |
             [~waiting]: https://img.shields.io/badge/-waiting-f5cd79.svg
             [~wontfix]: https://img.shields.io/badge/-wontfix-e77f67.svg
             [~dependency-fix]: https://img.shields.io/badge/-dependency%20fix-c44569.svg
@@ -45,11 +45,25 @@ jobs:
             - [![label: dependency-fix][~dependency-fix]](https://github.com/Sonia-corporation/sonia-discord/labels/dependency-fix)
             - [![label: opened-pull-request][~opened-pull-request]](https://github.com/Sonia-corporation/sonia-discord/labels/opened-pull-request)
             - [![label: help wanted][~help-wanted]](https://github.com/Sonia-corporation/sonia-discord/labels/help%20wanted)
-          stale-issue-label: 'no-issue-activity'
-          exempt-issue-labels: 'waiting,wontfix,dependency-fix,opened-pull-request,help wanted'
-          stale-pr-label: 'no-pull-request-activity'
-          exempt-pr-labels: 'waiting,wontfix,dependency-fix,opened-pull-request,help wanted'
-          days-before-stale: 60
-          days-before-close: 30
-          operations-per-run: 100
-          exempt-assignees: C0ZEN
+          issue-stale-label: no-issue-activity
+          issue-ignore-any-labels: |
+            waiting
+            wontfix
+            dependency-fix
+            opened-pull-request
+            help wanted
+          pull-request-stale-label: no-pull-request-activity
+          pull-request-ignore-any-labels: |
+            waiting
+            wontfix
+            dependency-fix
+            opened-pull-request
+            help wanted
+          issue-days-before-stale: 60
+          pull-request-days-before-stale: 60
+          issue-days-before-close: 30
+          pull-request-days-before-close: 30
+          issue-ignore-any-assignees: |
+            C0ZEN
+          pull-request-ignore-any-assignees: |
+            C0ZEN
