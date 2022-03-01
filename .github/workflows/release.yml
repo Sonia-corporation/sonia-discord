@@ -10,7 +10,7 @@ jobs:
       CURRENT_TAG: ${{ steps.save-current-tag.outputs.CURRENT_TAG }}
     steps:
       - name: Checkout develop
-        uses: actions/checkout@v2
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # tag=v2
         with:
           ref: develop
       - name: Reset branch
@@ -30,14 +30,14 @@ jobs:
     needs: [CurrentTag]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # tag=v2
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@1f8c6b94b26d0feae1e387ca63ccbdc44d27b561 # tag=v2
         with:
           node-version: ${{ matrix.node-version }}
       - name: Cache node_modules
         if: github.event_name == 'push' || github.event_name == 'pull_request'
-        uses: actions/cache@v2
+        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # tag=v2
         env:
           cache-name: cache-node-modules
         with:
@@ -63,7 +63,7 @@ jobs:
     needs: [CurrentTag, Release]
     steps:
       - name: Checkout develop
-        uses: actions/checkout@v2
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # tag=v2
         with:
           ref: develop
       - name: Reset branch
@@ -85,7 +85,7 @@ jobs:
         run: echo 'The current tag is not the same after the release. A new tag has been created'
       - name: Create PR from master to develop
         if: needs.CurrentTag.outputs.CURRENT_TAG != steps.latest-tag.outputs.tag
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@18f7dc018cc2cd597073088f7c7591b9d1c02672 # tag=v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: 'chore(develop): merge master into develop due to new version ${{ steps.latest-tag.outputs.tag }}'
