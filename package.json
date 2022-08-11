@@ -218,7 +218,7 @@
     "shx": "0.3.4",
     "stryker-cli": "1.0.2",
     "ts-auto-mock": "3.5.0",
-    "ts-jest": "27.0.4",
+    "ts-jest": "27.0.7",
     "ts-node-dev": "1.1.8",
     "tsconfig-paths": "3.11.0",
     "ttypescript": "1.5.13",
