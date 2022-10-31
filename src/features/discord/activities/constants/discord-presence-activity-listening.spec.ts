@@ -149,11 +149,23 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.DJ_KHALED,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.DOOBIE,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.DRAKE,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.D_WHY,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.DA_BABY,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -209,6 +221,10 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.JAY_ZOLE,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.JEROME,
         type: DiscordActivityTypeEnum.LISTENING,
       },
@@ -218,6 +234,14 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
       },
       {
         name: DiscordActivityNameEnum.JOHN_WOLF,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.JOSH_A,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.JUICE_WRLD,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -233,11 +257,47 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.JACK_HARLOW,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.K_A_A_N,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
         name: DiscordActivityNameEnum.KANYE_WEST,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.KEVIN_GATES,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.LIL_REVIVE,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.MIGOS,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.POST_MALONE,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.THE_KID_LAROI,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.TRAVIS_SCOTT,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.TREVOR_DANIEL,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.ZOLE,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
