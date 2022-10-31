@@ -4,5 +4,6 @@
   "repository": "https://github.com/Sonia-corporation/sonia-discord",
   "logo": "https://i.ibb.co/XSB6Vng/icons8-girl-1024.png",
   "keywords": ["discord", "bot", "discord-bot", "sonia", "node", "express", "heroku"],
-  "image": "heroku/nodejs"
+  "image": "heroku/nodejs",
+  "stack": "heroku-22"
 }
