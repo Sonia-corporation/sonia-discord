@@ -77,36 +77,33 @@ export class DiscordSoniaConfigMutatorService extends AbstractConfigService<IDis
   }
 
   public updateCorporationMessageEmbedAuthorIconUrl(iconUrl?: Readonly<string>): void {
-    DiscordSoniaConfigCoreService.getInstance().corporationMessageEmbedAuthor.iconURL = ConfigService.getInstance().getUpdatedString(
-      {
+    DiscordSoniaConfigCoreService.getInstance().corporationMessageEmbedAuthor.iconURL =
+      ConfigService.getInstance().getUpdatedString({
         context: this._serviceName,
         newValue: iconUrl,
         oldValue: DiscordSoniaConfigService.getInstance().getCorporationMessageEmbedAuthorIconUrl(),
         valueName: DiscordSoniaConfigValueNameEnum.CORPORATION_MESSAGE_EMBED_AUTHOR_ICON_URL,
-      }
-    );
+      });
   }
 
   public updateCorporationMessageEmbedAuthorName(name?: Readonly<string>): void {
-    DiscordSoniaConfigCoreService.getInstance().corporationMessageEmbedAuthor.name = ConfigService.getInstance().getUpdatedString(
-      {
+    DiscordSoniaConfigCoreService.getInstance().corporationMessageEmbedAuthor.name =
+      ConfigService.getInstance().getUpdatedString({
         context: this._serviceName,
         newValue: name,
         oldValue: DiscordSoniaConfigService.getInstance().getCorporationMessageEmbedAuthorName(),
         valueName: DiscordSoniaConfigValueNameEnum.CORPORATION_MESSAGE_EMBED_AUTHOR_NAME,
-      }
-    );
+      });
   }
 
   public updateCorporationMessageEmbedAuthorUrl(url?: Readonly<string>): void {
-    DiscordSoniaConfigCoreService.getInstance().corporationMessageEmbedAuthor.url = ConfigService.getInstance().getUpdatedString(
-      {
+    DiscordSoniaConfigCoreService.getInstance().corporationMessageEmbedAuthor.url =
+      ConfigService.getInstance().getUpdatedString({
         context: this._serviceName,
         newValue: url,
         oldValue: DiscordSoniaConfigService.getInstance().getCorporationMessageEmbedAuthorUrl(),
         valueName: DiscordSoniaConfigValueNameEnum.CORPORATION_MESSAGE_EMBED_AUTHOR_URL,
-      }
-    );
+      });
   }
 
   public updateDevGuildIdWhitelist(whitelist?: Readonly<Snowflake | undefined>[]): void {

@@ -15,7 +15,8 @@ export class DiscordMessageCommandFeatureWrongFlagsErrorService extends DiscordM
 
   public static getInstance(): DiscordMessageCommandFeatureWrongFlagsErrorService {
     if (_.isNil(DiscordMessageCommandFeatureWrongFlagsErrorService._instance)) {
-      DiscordMessageCommandFeatureWrongFlagsErrorService._instance = new DiscordMessageCommandFeatureWrongFlagsErrorService();
+      DiscordMessageCommandFeatureWrongFlagsErrorService._instance =
+        new DiscordMessageCommandFeatureWrongFlagsErrorService();
     }
 
     return DiscordMessageCommandFeatureWrongFlagsErrorService._instance;
@@ -58,16 +59,13 @@ export class DiscordMessageCommandFeatureWrongFlagsErrorService extends DiscordM
   }
 
   private _getMessageEmbedFields(flagsErrors: Readonly<IDiscordCommandFlagsErrors>): EmbedFieldData[] {
-    return _.map(
-      flagsErrors,
-      ({ name, description }: Readonly<IDiscordCommandFlagError>): EmbedFieldData => {
-        return {
-          inline: false,
-          name,
-          value: description,
-        };
-      }
-    );
+    return _.map(flagsErrors, ({ name, description }: Readonly<IDiscordCommandFlagError>): EmbedFieldData => {
+      return {
+        inline: false,
+        name,
+        value: description,
+      };
+    });
   }
 
   private _getFlagsErrorsCount(flagsErrors: Readonly<IDiscordCommandFlagsErrors>): number {

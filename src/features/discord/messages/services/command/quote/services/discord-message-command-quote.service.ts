@@ -46,21 +46,19 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
   public getMessageResponse(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<IDiscordMessageResponse> {
     return QuoteRandomService.getInstance()
       .fetchRandomQuote(anyDiscordMessage.id)
-      .then(
-        (quote: Readonly<IQuote | IQuoteErrorApi>): Promise<IDiscordMessageResponse> => {
-          if (isQuoteErrorApi(quote)) {
-            return QuoteErrorApiService.getInstance().getMessageResponse(quote);
-          }
-
-          return Promise.resolve({
-            options: {
-              embed: this._getMessageEmbed(quote),
-              split: false,
-            },
-            response: ``,
-          });
+      .then((quote: Readonly<IQuote | IQuoteErrorApi>): Promise<IDiscordMessageResponse> => {
+        if (isQuoteErrorApi(quote)) {
+          return QuoteErrorApiService.getInstance().getMessageResponse(quote);
         }
-      )
+
+        return Promise.resolve({
+          options: {
+            embed: this._getMessageEmbed(quote),
+            split: false,
+          },
+          response: ``,
+        });
+      })
       .catch((error: Readonly<Error>): never => {
         DiscordMessageErrorService.getInstance().handleError(error, anyDiscordMessage);
 

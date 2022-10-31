@@ -10,7 +10,8 @@ export class DiscordMessageCommandFeatureReleaseNotesConfigCoreService extends A
 
   public static getInstance(): DiscordMessageCommandFeatureReleaseNotesConfigCoreService {
     if (_.isNil(DiscordMessageCommandFeatureReleaseNotesConfigCoreService._instance)) {
-      DiscordMessageCommandFeatureReleaseNotesConfigCoreService._instance = new DiscordMessageCommandFeatureReleaseNotesConfigCoreService();
+      DiscordMessageCommandFeatureReleaseNotesConfigCoreService._instance =
+        new DiscordMessageCommandFeatureReleaseNotesConfigCoreService();
     }
 
     return DiscordMessageCommandFeatureReleaseNotesConfigCoreService._instance;

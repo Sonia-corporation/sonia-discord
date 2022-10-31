@@ -12,7 +12,8 @@ export class DiscordMessageCommandFeatureEmptyContentErrorService extends Discor
 
   public static getInstance(): DiscordMessageCommandFeatureEmptyContentErrorService {
     if (_.isNil(DiscordMessageCommandFeatureEmptyContentErrorService._instance)) {
-      DiscordMessageCommandFeatureEmptyContentErrorService._instance = new DiscordMessageCommandFeatureEmptyContentErrorService();
+      DiscordMessageCommandFeatureEmptyContentErrorService._instance =
+        new DiscordMessageCommandFeatureEmptyContentErrorService();
     }
 
     return DiscordMessageCommandFeatureEmptyContentErrorService._instance;
@@ -60,7 +61,8 @@ export class DiscordMessageCommandFeatureEmptyContentErrorService extends Discor
 
   private _getMessageEmbedFieldErrorReport(): EmbedFieldData {
     const githubBugReportUrl: string = GithubConfigService.getInstance().getBugReportUrl();
-    const discordSoniaPermanentGuildInviteUrl: string = DiscordGuildConfigService.getInstance().getSoniaPermanentGuildInviteUrl();
+    const discordSoniaPermanentGuildInviteUrl: string =
+      DiscordGuildConfigService.getInstance().getSoniaPermanentGuildInviteUrl();
 
     return {
       name: `Help me to help you`,

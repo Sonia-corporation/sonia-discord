@@ -46,13 +46,13 @@ export class QuoteApiService extends AbstractService {
     });
 
     return this._getRequest<IQuoteOfTheDayApi | IQuoteErrorApi>(url)
-      .then(({ data }: Readonly<AxiosResponse<IQuoteOfTheDayApi | IQuoteErrorApi>>):
-        | IQuoteOfTheDayApi
-        | IQuoteErrorApi => {
-        this._handleSuccess(url, messageId);
+      .then(
+        ({ data }: Readonly<AxiosResponse<IQuoteOfTheDayApi | IQuoteErrorApi>>): IQuoteOfTheDayApi | IQuoteErrorApi => {
+          this._handleSuccess(url, messageId);
 
-        return data;
-      })
+          return data;
+        }
+      )
       .catch((error: Readonly<Error>): never => {
         this._handleError(error, url, messageId);
       });

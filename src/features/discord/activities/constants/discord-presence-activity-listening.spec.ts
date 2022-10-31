@@ -33,6 +33,10 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.DEMPSEY_ROLL_BOY,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.APPLE_MUSIC,
         type: DiscordActivityTypeEnum.LISTENING,
       },
@@ -41,7 +45,15 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.TWENTY_FOUR_KGOLDN,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.TWENTY_SEVEN_CLUB,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.VINNIE_PAZ,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -65,7 +77,15 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.APOLLO_BROWN,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.ARIZONA_ZERVAS,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.ARMY_OF_THE_PHARAOHS,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -82,6 +102,10 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
       },
       {
         name: DiscordActivityNameEnum.BAZANJI,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.BIGFLO_AND_OLI,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -125,7 +149,15 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.DJ_KHALED,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.DOOBIE,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.DRAKE,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -133,11 +165,27 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.DA_BABY,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.EMINEM,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.EVIDENCE,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.G_EAZY,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.GRITS,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.GUNNA,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -173,6 +221,10 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.JAY_ZOLE,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.JEROME,
         type: DiscordActivityTypeEnum.LISTENING,
       },
@@ -182,6 +234,14 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
       },
       {
         name: DiscordActivityNameEnum.JOHN_WOLF,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.JOSH_A,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.JUICE_WRLD,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -197,7 +257,47 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.JACK_HARLOW,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.K_A_A_N,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.KANYE_WEST,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.KEVIN_GATES,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.LIL_REVIVE,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.MIGOS,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.POST_MALONE,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.THE_KID_LAROI,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.TRAVIS_SCOTT,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.TREVOR_DANIEL,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.ZOLE,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -206,6 +306,10 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
       },
       {
         name: DiscordActivityNameEnum.KID_QUILL,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.LIL_BABY,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -222,6 +326,10 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
       },
       {
         name: DiscordActivityNameEnum.LUKE_CHRISTOPHER,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.MAC_MILLER,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -242,6 +350,18 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
       },
       {
         name: DiscordActivityNameEnum.MIKE_JOEY_AND_MIZZY,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.MILES_WESLEY,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.MIRA_HATTER,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.MOBY,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -281,6 +401,10 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.ORELSAN,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.OUSE,
         type: DiscordActivityTypeEnum.LISTENING,
       },
@@ -294,6 +418,10 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
       },
       {
         name: DiscordActivityNameEnum.PHORA,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.POLO_G,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -313,11 +441,23 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.REMA,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.ROWLAN,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
+        name: DiscordActivityNameEnum.ROY_JONES,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
         name: DiscordActivityNameEnum.RUSS,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.RXSEBOY,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -342,6 +482,10 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
       },
       {
         name: DiscordActivityNameEnum.SIK_WORLD,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.SLEEPY_HALLOW,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {
@@ -378,6 +522,10 @@ describe(`DISCORD_PRESENCE_ACTIVITY_LISTENING`, (): void => {
       },
       {
         name: DiscordActivityNameEnum.WITT_LOWRY,
+        type: DiscordActivityTypeEnum.LISTENING,
+      },
+      {
+        name: DiscordActivityNameEnum.WIZ_KHALIFA,
         type: DiscordActivityTypeEnum.LISTENING,
       },
       {

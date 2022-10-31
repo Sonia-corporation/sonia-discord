@@ -20,9 +20,8 @@ export class DiscordMessageCommandFeatureNoonConfigMutatorService extends Abstra
     config?: Readonly<IPartialNested<IDiscordMessageCommandFeatureConfig>>
   ): DiscordMessageCommandFeatureNoonConfigMutatorService {
     if (_.isNil(DiscordMessageCommandFeatureNoonConfigMutatorService._instance)) {
-      DiscordMessageCommandFeatureNoonConfigMutatorService._instance = new DiscordMessageCommandFeatureNoonConfigMutatorService(
-        config
-      );
+      DiscordMessageCommandFeatureNoonConfigMutatorService._instance =
+        new DiscordMessageCommandFeatureNoonConfigMutatorService(config);
     }
 
     return DiscordMessageCommandFeatureNoonConfigMutatorService._instance;
@@ -57,24 +56,22 @@ export class DiscordMessageCommandFeatureNoonConfigMutatorService extends Abstra
   }
 
   public updateNoonImageColor(imageColor?: Readonly<ColorEnum>): void {
-    DiscordMessageCommandFeatureNoonConfigCoreService.getInstance().noon.imageColor = ConfigService.getInstance().getUpdatedNumber(
-      {
+    DiscordMessageCommandFeatureNoonConfigCoreService.getInstance().noon.imageColor =
+      ConfigService.getInstance().getUpdatedNumber({
         context: this._serviceName,
         newValue: imageColor,
         oldValue: DiscordMessageCommandFeatureNoonConfigService.getInstance().getNoonConfigImageColor(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_FEATURE_NOON_COLOR,
-      }
-    );
+      });
   }
 
   public updateNoonImageUrl(imageUrl?: Readonly<IconEnum>): void {
-    DiscordMessageCommandFeatureNoonConfigCoreService.getInstance().noon.imageUrl = ConfigService.getInstance().getUpdatedString(
-      {
+    DiscordMessageCommandFeatureNoonConfigCoreService.getInstance().noon.imageUrl =
+      ConfigService.getInstance().getUpdatedString({
         context: this._serviceName,
         newValue: imageUrl,
         oldValue: DiscordMessageCommandFeatureNoonConfigService.getInstance().getNoonConfigImageUrl(),
         valueName: DiscordMessageConfigValueNameEnum.COMMAND_FEATURE_NOON_IMAGE_URL,
-      }
-    );
+      });
   }
 }
