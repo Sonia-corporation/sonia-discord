@@ -6,13 +6,6 @@
 ### :bug: Bug Fixes
 
 * **activity:** add fifteen missing listening activities for Sonia ([d15e7e1](https://github.com/Sonia-corporation/sonia-discord/commit/d15e7e18151af922c4a3fb0c3a2104b57ae99965))
-* **deps:** update dependency @datorama/akita to v6.2.3 ([fdd7244](https://github.com/Sonia-corporation/sonia-discord/commit/fdd7244d099e97fdd3fa7987703d7f66cfcad37e))
-* **deps:** update dependency @datorama/akita to v6.2.4 ([21d0586](https://github.com/Sonia-corporation/sonia-discord/commit/21d05866dadf7608a2724ca13c0f98418ee6a507))
-* **deps:** update dependency axios to v0.21.2 [security] ([355c7d6](https://github.com/Sonia-corporation/sonia-discord/commit/355c7d6b4b6dcb4ee401e490389472ae39d57cef))
-* **deps:** update dependency axios to v0.21.4 ([fd8f8ce](https://github.com/Sonia-corporation/sonia-discord/commit/fd8f8ce52d4f2e60fac56e09080e81055deae1e0))
-* **deps:** update dependency express to v4.17.2 ([8284333](https://github.com/Sonia-corporation/sonia-discord/commit/8284333289397bd537c04c688b10b1995ee97d05))
-* **deps:** update dependency firebase-admin to v9.12.0 ([ce1ec18](https://github.com/Sonia-corporation/sonia-discord/commit/ce1ec181ac38db21906dab8d2fa03759a4700a68))
-* **deps:** update dependency moment-timezone to v0.5.34 ([40a3906](https://github.com/Sonia-corporation/sonia-discord/commit/40a39068420f1c0115325b320a443598a670575e))
 
 
 ### :rocket: Features
