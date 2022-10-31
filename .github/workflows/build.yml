@@ -11,20 +11,19 @@ on:
     branches:
       - master
       - develop
+env:
+  NODE_VERSION: '16.16.0'
 jobs:
   Lint:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version:
-          - 14.7.x
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93 # tag=v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
       - name: Cache node_modules
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: actions/cache@v2
@@ -43,17 +42,14 @@ jobs:
         run: npm run lint:all:ci
   Test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version:
-          - 14.7.x
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93 # tag=v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
       - name: Cache node_modules
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: actions/cache@v2
@@ -72,17 +68,14 @@ jobs:
         run: npm run test:ci
   CoverageCodeClimate:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version:
-          - 14.7.x
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93 # tag=v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
       - name: Cache node_modules
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: actions/cache@v2
@@ -106,17 +99,14 @@ jobs:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
   CoverageCodecov:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version:
-          - 14.7.x
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93 # tag=v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
       - name: Cache node_modules
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: actions/cache@v2
@@ -142,17 +132,14 @@ jobs:
           name: Sonia-discord
   Build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version:
-          - 14.7.x
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93 # tag=v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
       - name: Cache node_modules
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: actions/cache@v2
