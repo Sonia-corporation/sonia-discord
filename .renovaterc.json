@@ -40,7 +40,7 @@
   "semanticCommits": "enabled",
   "ignoreUnstable": true,
   "respectLatest": true,
-  "enabledManagers": ["npm", "github-actions"],
+  "enabledManagers": ["npm", "github-actions", "nvm"],
   "npm": {
     "enabled": true,
     "fileMatch": ["package.json"]
@@ -92,6 +92,11 @@
       "groupName": "Semantic release dependencies",
       "matchPackagePatterns": ["^@semantic-release$", "^semantic-release$"],
       "matchUpdateTypes": ["major"]
+    },
+    {
+      "groupName": "Stryker dependencies",
+      "matchPackagePatterns": ["^@stryker-mutator/*"],
+      "matchUpdateTypes": ["major", "minor", "patch"]
     }
   ]
 }
