@@ -234,4 +234,20 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
       );
     });
   });
+
+  describe(`when the given release notes contain some \r special characters`, (): void => {
+    beforeEach((): void => {
+      releaseNotes = `# [1.99.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.98.0...1.99.0) (2022-10-31)\r\n\r\n\r\n### :bug: Bug Fixes\r\n\r\n* **activity:** add fifteen missing listening activities for Sonia ([d15e7e1](https://github.com/Sonia-corporation/sonia-discord/commit/d15e7e18151af922c4a3fb0c3a2104b57ae99965))\r\n\r\n\r\n### :rocket: Features\r\n\r\n* **activity:** add twenty new activities for Sonia ([3670324](https://github.com/Sonia-corporation/sonia-discord/commit/3670324f0307968b2aab6fa1eeb339f04c1f63f2))\r\n  add listening activities for Apollo Brown, Army Of The Pharaohs, Bigflo & Oli, DempseyRollBoy,  Evidence, Grits, Gunna, Kanye West, Lil Baby, Mac Miller, Moby, Orelsan, Polo G, Rema, Roy Jones, Rxseboy, Sleepy Hallow, 24KGoldn, Vinnie Paz and Wiz Khalifa.`;
+    });
+
+    it(`should format the given release notes for Discord and remove the special characters`, (): void => {
+      expect.assertions(1);
+
+      const result = getHumanizedReleaseNotes(releaseNotes);
+
+      expect(result).toStrictEqual(
+        `**__Bug Fixes:__\nactivity:** add fifteen missing listening activities for Sonia\n**__Features:__\nactivity:** add twenty new activities for Sonia\nadd listening activities for Apollo Brown, Army Of The Pharaohs, Bigflo & Oli, DempseyRollBoy,  Evidence, Grits, Gunna, Kanye West, Lil Baby, Mac Miller, Moby, Orelsan, Polo G, Rema, Roy Jones, Rxseboy, Sleepy Hallow, 24KGoldn, Vinnie Paz and Wiz Khalifa.`
+      );
+    });
+  });
 });

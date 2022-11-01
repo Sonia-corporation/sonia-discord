@@ -10,6 +10,9 @@ import _ from 'lodash';
 export function getHumanizedReleaseNotes(releaseNotes: Readonly<string>): string {
   let updatedReleaseNotes: string = _.clone(releaseNotes);
 
+  // Remove "\r"
+  updatedReleaseNotes = _.replace(updatedReleaseNotes, /\r/gim, ``);
+
   // Remove the tag
   // Like "# [1.15.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.14.0...1.15.0) (2020-03-24)\n\n\n" by ""
   updatedReleaseNotes = _.replace(updatedReleaseNotes, /^#.+?\n\n\n/im, ``);
@@ -64,6 +67,9 @@ export function getHumanizedReleaseNotes(releaseNotes: Readonly<string>): string
 
   // Remove empty lines
   updatedReleaseNotes = _.replace(updatedReleaseNotes, /\n{2,}/gim, `\n`);
+
+  // Remove blank spaces at the line beginning
+  updatedReleaseNotes = _.replace(updatedReleaseNotes, /^ +/gim, ``);
 
   return updatedReleaseNotes;
 }
