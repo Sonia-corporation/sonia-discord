@@ -6,6 +6,7 @@ import { DiscordMessageTextService } from './types/discord-message-text.service'
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../core/services/core-event.service';
 import { ILoggerLog } from '../../../logger/interfaces/logger-log';
+import { LoggerConfigService } from '../../../logger/services/config/logger-config.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { DiscordChannelTypingService } from '../../channels/services/discord-channel-typing.service';
 import { DiscordChannelService } from '../../channels/services/discord-channel.service';
@@ -35,6 +36,7 @@ describe(`DiscordMessageService`, (): void => {
   let discordMentionService: DiscordMentionService;
   let discordSoniaService: DiscordSoniaService;
   let discordMessageRightsService: DiscordMessageRightsService;
+  let loggerConfigService: LoggerConfigService;
 
   beforeEach((): void => {
     coreEventService = CoreEventService.getInstance();
@@ -49,6 +51,7 @@ describe(`DiscordMessageService`, (): void => {
     discordMentionService = DiscordMentionService.getInstance();
     discordSoniaService = DiscordSoniaService.getInstance();
     discordMessageRightsService = DiscordMessageRightsService.getInstance();
+    loggerConfigService = LoggerConfigService.getInstance();
   });
 
   describe(`getInstance()`, (): void => {
@@ -107,9 +110,7 @@ describe(`DiscordMessageService`, (): void => {
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(client);
-      sendMessageSpy = jest
-        .spyOn(service, `sendMessage`)
-        .mockReturnValue(Promise.reject(new Error(`Fake test error: sendMessage`)));
+      sendMessageSpy = jest.spyOn(service, `sendMessage`).mockRejectedValue(new Error(`Fake test error: sendMessage`));
     });
 
     it(`should get the Discord client`, (): void => {
@@ -171,10 +172,12 @@ describe(`DiscordMessageService`, (): void => {
     let anyDiscordMessage: IAnyDiscordMessage;
 
     let loggerServiceLogSpy: jest.SpyInstance;
+    let loggerServiceWarningSpy: jest.SpyInstance;
     let handleChannelMessageSpy: jest.SpyInstance;
     let discordAuthorServiceIsValidSpy: jest.SpyInstance;
     let discordAuthorServiceIsBotSpy: jest.SpyInstance;
     let discordChannelServiceIsValidSpy: jest.SpyInstance;
+    let loggerConfigServiceShouldDisplayMoreDebugLogsSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordMessageService();
@@ -183,15 +186,56 @@ describe(`DiscordMessageService`, (): void => {
       });
 
       loggerServiceLogSpy = jest.spyOn(loggerService, `log`).mockImplementation();
+      loggerServiceWarningSpy = jest.spyOn(loggerService, `warning`).mockImplementation();
       handleChannelMessageSpy = jest.spyOn(service, `handleChannelMessage`).mockImplementation();
       discordAuthorServiceIsValidSpy = jest.spyOn(discordAuthorService, `isValid`);
       discordAuthorServiceIsBotSpy = jest.spyOn(discordAuthorService, `isBot`);
       discordChannelServiceIsValidSpy = jest.spyOn(discordChannelService, `isValid`).mockReturnValue(false);
+      loggerConfigServiceShouldDisplayMoreDebugLogsSpy = jest
+        .spyOn(loggerConfigService, `shouldDisplayMoreDebugLogs`)
+        .mockReturnValue(false);
     });
 
     describe(`when the given Discord message content is null`, (): void => {
       beforeEach((): void => {
         anyDiscordMessage.content = null;
+      });
+
+      describe(`when more logs should not be displayed`, (): void => {
+        beforeEach((): void => {
+          loggerConfigServiceShouldDisplayMoreDebugLogsSpy.mockReturnValue(false);
+        });
+
+        it(`should log a warning about not supporting other messages than text`, async (): Promise<void> => {
+          expect.assertions(2);
+
+          await expect(service.sendMessage(anyDiscordMessage)).rejects.toThrow(
+            new Error(`Discord message content is invalid or empty`)
+          );
+
+          expect(loggerServiceWarningSpy).not.toHaveBeenCalled();
+        });
+      });
+
+      describe(`when more logs should be displayed`, (): void => {
+        beforeEach((): void => {
+          loggerConfigServiceShouldDisplayMoreDebugLogsSpy.mockReturnValue(true);
+        });
+
+        it(`should log a warning about not supporting other messages than text`, async (): Promise<void> => {
+          expect.assertions(3);
+
+          await expect(service.sendMessage(anyDiscordMessage)).rejects.toThrow(
+            new Error(`Discord message content is invalid or empty`)
+          );
+
+          expect(loggerServiceWarningSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceWarningSpy).toHaveBeenCalledWith({
+            context: `DiscordMessageService`,
+            hasExtendedContext: true,
+            message: `context-[dummy-id] text-We only support for now text messages (embed or such are not handled)`,
+          } as ILoggerLog);
+        });
       });
 
       it(`should not log about the received message`, async (): Promise<void> => {
@@ -417,7 +461,7 @@ describe(`DiscordMessageService`, (): void => {
       discordChannelServiceIsValidSpy = jest.spyOn(discordChannelService, `isValid`);
       discordChannelTypingServiceAddOneIndicatorSpy = jest
         .spyOn(discordChannelTypingService, `addOneIndicator`)
-        .mockRejectedValue(new Error(`addOneIndicator error`));
+        .mockResolvedValue();
       discordChannelTypingServiceRemoveOneIndicatorSpy = jest
         .spyOn(discordChannelTypingService, `removeOneIndicator`)
         .mockImplementation();
@@ -782,7 +826,7 @@ describe(`DiscordMessageService`, (): void => {
 
               describe(`when the message was not successfully sent`, (): void => {
                 beforeEach((): void => {
-                  anyDiscordMessageChannelSendMock.mockReturnValue(Promise.reject(new Error(`Message sending error`)));
+                  anyDiscordMessageChannelSendMock.mockRejectedValue(new Error(`Message sending error`));
 
                   anyDiscordMessage = createMock<IAnyDiscordMessage>({
                     channel: {
@@ -992,7 +1036,7 @@ describe(`DiscordMessageService`, (): void => {
 
               describe(`when the messages were not successfully sent`, (): void => {
                 beforeEach((): void => {
-                  anyDiscordMessageChannelSendMock.mockReturnValue(Promise.reject(new Error(`Message sending error`)));
+                  anyDiscordMessageChannelSendMock.mockRejectedValue(new Error(`Message sending error`));
 
                   anyDiscordMessage = createMock<IAnyDiscordMessage>({
                     channel: {
@@ -1258,7 +1302,7 @@ describe(`DiscordMessageService`, (): void => {
 
           describe(`when the message was not successfully sent`, (): void => {
             beforeEach((): void => {
-              anyDiscordMessageChannelSendMock.mockReturnValue(Promise.reject(new Error(`Message sending error`)));
+              anyDiscordMessageChannelSendMock.mockRejectedValue(new Error(`Message sending error`));
 
               anyDiscordMessage = createMock<IAnyDiscordMessage>({
                 channel: {
