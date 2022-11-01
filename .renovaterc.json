@@ -97,6 +97,11 @@
       "groupName": "Stryker dependencies",
       "matchPackagePatterns": ["^@stryker-mutator/*"],
       "matchUpdateTypes": ["major", "minor", "patch"]
+    },
+    {
+      "groupName": "Jest dependencies",
+      "matchPackagePatterns": ["^jest$", "^@types/jest$", "^ts-jest$"],
+      "matchUpdateTypes": ["major"]
     }
   ]
 }

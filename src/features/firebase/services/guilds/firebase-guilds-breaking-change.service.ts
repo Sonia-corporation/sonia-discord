@@ -9,9 +9,10 @@ import { FIREBASE_GUILD_CURRENT_VERSION } from '../../constants/guilds/firebase-
 import { handleFirebaseGuildBreakingChange } from '../../functions/guilds/handle-firebase-guild-breaking-change';
 import { isUpToDateFirebaseGuild } from '../../functions/guilds/is-up-to-date-firebase-guild';
 import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
+import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
 import admin from 'firebase-admin';
 import _ from 'lodash';
-import { BehaviorSubject, Observable, forkJoin } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
 
 const NO_GUILD = 0;
@@ -114,9 +115,17 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
       if (_.isEqual(queryDocumentSnapshot.exists, true)) {
         countFirebaseGuilds = _.add(countFirebaseGuilds, ONE_GUILD);
 
-        if (!isUpToDateFirebaseGuild(queryDocumentSnapshot.data())) {
+        const firebaseGuild: IFirebaseGuild = queryDocumentSnapshot.data();
+
+        if (!isUpToDateFirebaseGuild(firebaseGuild)) {
           countFirebaseGuildsUpdated = _.add(countFirebaseGuildsUpdated, ONE_GUILD);
-          batch.update(queryDocumentSnapshot.ref, handleFirebaseGuildBreakingChange(queryDocumentSnapshot.data()));
+
+          const updatedFirebaseGuild: IFirebaseGuildVFinal = handleFirebaseGuildBreakingChange(firebaseGuild);
+
+          // @todo avoid casting
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          batch.update(queryDocumentSnapshot.ref, updatedFirebaseGuild);
         }
       }
     });
