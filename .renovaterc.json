@@ -89,7 +89,7 @@
       "rangeStrategy": "pin"
     },
     {
-      "groupName": "Semantic release dependencies",
+      "groupName": "Semantic release major dependencies",
       "matchPackagePatterns": ["^@semantic-release$", "^semantic-release$"],
       "matchUpdateTypes": ["major"]
     },
@@ -99,8 +99,13 @@
       "matchUpdateTypes": ["major", "minor", "patch"]
     },
     {
-      "groupName": "Jest dependencies",
+      "groupName": "Jest major dependencies",
       "matchPackagePatterns": ["^jest$", "^@types/jest$", "^ts-jest$"],
+      "matchUpdateTypes": ["major"]
+    },
+    {
+      "groupName": "ESLint major dependencies",
+      "matchPackagePatterns": ["^@typescript-eslint/eslint-plugin$", "^@typescript-eslint/parser$", "^eslint$"],
       "matchUpdateTypes": ["major"]
     }
   ]
