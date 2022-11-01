@@ -591,7 +591,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
       const result = await service.hasFinished$().pipe(take(1)).toPromise();
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
 
     describe(`when the has finished event is notified`, (): void => {
@@ -601,7 +601,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
         const result = await service.hasFinished$().pipe(take(1)).toPromise();
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -622,7 +622,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
         const result = await service.hasFinished();
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -638,7 +638,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
       const result = await service.hasFinished$().pipe(take(1)).toPromise();
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 

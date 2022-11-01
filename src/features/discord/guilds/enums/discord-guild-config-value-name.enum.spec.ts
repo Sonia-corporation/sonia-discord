@@ -5,7 +5,7 @@ describe(`DiscordGuildConfigValueNameEnum`, (): void => {
   it(`should have 5 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordGuildConfigValueNameEnum)).toStrictEqual(5);
+    expect(getEnumLength(DiscordGuildConfigValueNameEnum)).toBe(5);
   });
 
   it(`should have a member "SHOULD_SEND_COOKIES_ON_CREATE"`, (): void => {

@@ -5,7 +5,7 @@ describe(`DiscordMessageHotelTrivagoResponseMessagesEnum`, (): void => {
   it(`should have 35 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageHotelTrivagoResponseMessagesEnum)).toStrictEqual(35);
+    expect(getEnumLength(DiscordMessageHotelTrivagoResponseMessagesEnum)).toBe(35);
   });
 
   it(`should have a member "ARE_YOU_LOOKING_FOR_A_RESPONSE"`, (): void => {

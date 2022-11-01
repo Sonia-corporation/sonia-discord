@@ -136,7 +136,7 @@ describe(`InitService`, (): void => {
 
       const result = await service.isAppConfigured$().pipe(take(1)).toPromise();
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
 
     describe(`when the is app configured event is notified`, (): void => {
@@ -146,7 +146,7 @@ describe(`InitService`, (): void => {
 
         const result = await service.isAppConfigured$().pipe(take(1)).toPromise();
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -167,7 +167,7 @@ describe(`InitService`, (): void => {
 
         const result = await service.isAppConfigured();
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -183,7 +183,7 @@ describe(`InitService`, (): void => {
 
       const result = await service.isAppConfigured$().pipe(take(1)).toPromise();
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 });

@@ -5,7 +5,7 @@ describe(`DiscordGithubContributorsIdEnum`, (): void => {
   it(`should have a 1 member`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordGithubContributorsIdEnum)).toStrictEqual(1);
+    expect(getEnumLength(DiscordGithubContributorsIdEnum)).toBe(1);
   });
 
   it(`should have a member "C0ZEN"`, (): void => {

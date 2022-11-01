@@ -78,7 +78,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.isValid(channel);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -102,7 +102,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.isValid(channel);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -130,7 +130,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.isValid(channel);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -154,7 +154,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.isUpToDate(channel);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -182,7 +182,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.isUpToDate(channel);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -204,7 +204,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.isSet(channel);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -218,7 +218,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.isSet(channel);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -254,7 +254,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
       const result = service.create(channel);
 
-      expect(result.version).toStrictEqual(2);
+      expect(result.version).toBe(2);
     });
   });
 
@@ -351,7 +351,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
         const result = service.getUpToDate(channel, createChannel);
 
         expect(result.id).toStrictEqual(`dummy-id`);
-        expect(result.version).toStrictEqual(2);
+        expect(result.version).toBe(2);
         expect(result.features).toBeUndefined();
       });
     });
@@ -371,7 +371,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
         const result = service.getUpToDate(channel, createChannel);
 
         expect(result.id).toStrictEqual(`dummy-id`);
-        expect(result.version).toStrictEqual(2);
+        expect(result.version).toBe(2);
         expect(result.features).toBeUndefined();
       });
     });
@@ -391,7 +391,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
         const result = service.getUpToDate(channel, createChannel);
 
         expect(result.id).toStrictEqual(`dummy-id`);
-        expect(result.version).toStrictEqual(2);
+        expect(result.version).toBe(2);
         expect(result.features).toBeUndefined();
       });
     });

@@ -11,7 +11,7 @@ describe(`isNodeProduction()`, (): void => {
 
       const result = isNodeProduction();
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -26,7 +26,7 @@ describe(`isNodeProduction()`, (): void => {
 
         const result = isNodeProduction();
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -41,7 +41,7 @@ describe(`isNodeProduction()`, (): void => {
 
           const result = isNodeProduction();
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -56,7 +56,7 @@ describe(`isNodeProduction()`, (): void => {
 
             const result = isNodeProduction();
 
-            expect(result).toStrictEqual(true);
+            expect(result).toBe(true);
           });
         });
 
@@ -70,7 +70,7 @@ describe(`isNodeProduction()`, (): void => {
 
             const result = isNodeProduction();
 
-            expect(result).toStrictEqual(false);
+            expect(result).toBe(false);
           });
         });
       });

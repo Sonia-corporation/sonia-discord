@@ -83,7 +83,7 @@ describe(`DiscordMessageDmService`, (): void => {
 
         const result = service.isSoniaAuthorizedForThisGuild(guild);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
 
@@ -102,7 +102,7 @@ describe(`DiscordMessageDmService`, (): void => {
 
           const result = service.isSoniaAuthorizedForThisGuild(guild);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -116,7 +116,7 @@ describe(`DiscordMessageDmService`, (): void => {
 
           const result = service.isSoniaAuthorizedForThisGuild(guild);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });

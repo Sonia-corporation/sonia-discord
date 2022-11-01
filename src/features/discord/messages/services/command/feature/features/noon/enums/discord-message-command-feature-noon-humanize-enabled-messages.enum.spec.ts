@@ -5,7 +5,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeEnabledMessagesEnum`, (): void
   it(`should have 10 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageCommandFeatureNoonHumanizeEnabledMessagesEnum)).toStrictEqual(10);
+    expect(getEnumLength(DiscordMessageCommandFeatureNoonHumanizeEnabledMessagesEnum)).toBe(10);
   });
 
   it(`should have a member "I_LOVE_YOU"`, (): void => {

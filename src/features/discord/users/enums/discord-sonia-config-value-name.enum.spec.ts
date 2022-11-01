@@ -5,7 +5,7 @@ describe(`DiscordSoniaConfigValueNameEnum`, (): void => {
   it(`should have 7 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordSoniaConfigValueNameEnum)).toStrictEqual(7);
+    expect(getEnumLength(DiscordSoniaConfigValueNameEnum)).toBe(7);
   });
 
   it(`should have a member "CORPORATION_IMAGE_URL"`, (): void => {

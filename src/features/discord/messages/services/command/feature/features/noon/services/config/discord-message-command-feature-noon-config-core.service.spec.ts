@@ -54,7 +54,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigCoreService`, (): void => {
 
     service = DiscordMessageCommandFeatureNoonConfigCoreService.getInstance();
 
-    expect(service.noon.imageColor).toStrictEqual(15718590);
+    expect(service.noon.imageColor).toBe(15718590);
   });
 
   it(`should have a specific url for the image of the feature noon command`, (): void => {

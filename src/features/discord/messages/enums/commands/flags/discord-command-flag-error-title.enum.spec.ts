@@ -5,7 +5,7 @@ describe(`DiscordCommandFlagErrorTitleEnum`, (): void => {
   it(`should have 3 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordCommandFlagErrorTitleEnum)).toStrictEqual(3);
+    expect(getEnumLength(DiscordCommandFlagErrorTitleEnum)).toBe(3);
   });
 
   it(`should have a member "INVALID_BOOLEAN_FLAG"`, (): void => {

@@ -70,7 +70,7 @@ describe(`QuoteConfigCoreService`, (): void => {
 
     service = QuoteConfigCoreService.getInstance();
 
-    expect(service.imageColor).toStrictEqual(9146008);
+    expect(service.imageColor).toBe(9146008);
   });
 
   it(`should have an image url`, (): void => {

@@ -5,7 +5,7 @@ describe(`DiscordMessageConfigValueNameEnum`, (): void => {
   it(`should have 31 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageConfigValueNameEnum)).toStrictEqual(31);
+    expect(getEnumLength(DiscordMessageConfigValueNameEnum)).toBe(31);
   });
 
   it(`should have a member "COMMAND_CLI_ERROR_IMAGE_COLOR"`, (): void => {

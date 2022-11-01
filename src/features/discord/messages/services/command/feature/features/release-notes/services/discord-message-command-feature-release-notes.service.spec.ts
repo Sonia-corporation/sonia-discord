@@ -90,7 +90,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
         const result = service.isReleaseNotesFeature(featureName);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -104,7 +104,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
         const result = service.isReleaseNotesFeature(featureName);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
 
@@ -118,7 +118,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
         const result = service.isReleaseNotesFeature(featureName);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -324,7 +324,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(moment(result[0].options.embed?.timestamp).isValid()).toStrictEqual(true);
+          expect(moment(result[0].options.embed?.timestamp).isValid()).toBe(true);
 
           expect(moment(result[0].options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
         });
@@ -342,7 +342,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.split).toStrictEqual(false);
+          expect(result[0].options.split).toBe(false);
         });
 
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -480,7 +480,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(moment(result[0].options.embed?.timestamp).isValid()).toStrictEqual(true);
+          expect(moment(result[0].options.embed?.timestamp).isValid()).toBe(true);
 
           expect(moment(result[0].options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
         });
@@ -498,7 +498,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.split).toStrictEqual(false);
+          expect(result[0].options.split).toBe(false);
         });
 
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -712,7 +712,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(moment(result[0].options.embed?.timestamp).isValid()).toStrictEqual(true);
+          expect(moment(result[0].options.embed?.timestamp).isValid()).toBe(true);
 
           expect(moment(result[0].options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
         });
@@ -730,7 +730,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.split).toStrictEqual(false);
+          expect(result[0].options.split).toBe(false);
         });
 
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {

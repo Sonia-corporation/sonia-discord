@@ -64,7 +64,7 @@ describe(`FirebaseGuildsStoreQuery`, (): void => {
 
         const result = await service.wasLoaded();
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });

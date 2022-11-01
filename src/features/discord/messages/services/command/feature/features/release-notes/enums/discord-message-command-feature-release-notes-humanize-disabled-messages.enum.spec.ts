@@ -5,7 +5,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum`,
   it(`should have 33 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum)).toStrictEqual(33);
+    expect(getEnumLength(DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum)).toBe(33);
   });
 
   it(`should have a member "CAN_I_COUNT_ON_YOU_TO_ENABLE_RELEASE_NOTES"`, (): void => {

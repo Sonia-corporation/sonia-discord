@@ -5,7 +5,7 @@ describe(`FirebaseAppEnum`, (): void => {
   it(`should have a 1 member`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(FirebaseAppEnum)).toStrictEqual(1);
+    expect(getEnumLength(FirebaseAppEnum)).toBe(1);
   });
 
   it(`should have a member "SONIA_DISCORD"`, (): void => {

@@ -2034,7 +2034,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
         const result = service.isValidGuild(firebaseGuild);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -2048,7 +2048,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
         const result = service.isValidGuild(firebaseGuild);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -2076,7 +2076,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           const result = service.isValidGuild(firebaseGuild);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -2090,7 +2090,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           const result = service.isValidGuild(firebaseGuild);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
     });

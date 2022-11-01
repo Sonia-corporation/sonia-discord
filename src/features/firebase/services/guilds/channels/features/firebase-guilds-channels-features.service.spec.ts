@@ -78,7 +78,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.isValid(feature);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -98,7 +98,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.isValid(feature);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -122,7 +122,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.isValid(feature);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -150,7 +150,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.isUpToDate(feature);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -174,7 +174,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.isUpToDate(feature);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -196,7 +196,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.isSet(feature);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -210,7 +210,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.isSet(feature);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -241,7 +241,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
       const result = service.create();
 
-      expect(result.version).toStrictEqual(2);
+      expect(result.version).toBe(2);
     });
   });
 
@@ -321,7 +321,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.getUpToDate(feature);
 
-        expect(result.version).toStrictEqual(2);
+        expect(result.version).toBe(2);
         expect(result.noon).toBeUndefined();
         expect(result.releaseNotes).toBeUndefined();
       });
@@ -343,7 +343,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.getUpToDate(feature);
 
-        expect(result.version).toStrictEqual(2);
+        expect(result.version).toBe(2);
         expect(result.noon).toStrictEqual({
           isEnabled: false,
           version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,
@@ -372,7 +372,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.getUpToDate(feature);
 
-        expect(result.version).toStrictEqual(2);
+        expect(result.version).toBe(2);
         expect(result.noon).toStrictEqual({
           isEnabled: false,
           version: FirebaseGuildChannelFeatureNoonVersionEnum.V1,

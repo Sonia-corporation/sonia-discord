@@ -175,7 +175,7 @@ describe(`DiscordMessageScheduleNoonCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
+      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
       expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
     });
 
@@ -201,7 +201,7 @@ describe(`DiscordMessageScheduleNoonCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(result.options.split).toStrictEqual(false);
+      expect(result.options.split).toBe(false);
     });
 
     it(`should return an error message response with an empty response`, (): void => {

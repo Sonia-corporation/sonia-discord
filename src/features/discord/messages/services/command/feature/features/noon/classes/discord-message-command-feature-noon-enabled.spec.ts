@@ -1203,7 +1203,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
 
               const result = await service.isEnabled(anyDiscordMessage);
 
-              expect(result).toStrictEqual(true);
+              expect(result).toBe(true);
             });
           });
 
@@ -1231,7 +1231,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
 
               const result = await service.isEnabled(anyDiscordMessage);
 
-              expect(result).toStrictEqual(false);
+              expect(result).toBe(false);
             });
           });
         });

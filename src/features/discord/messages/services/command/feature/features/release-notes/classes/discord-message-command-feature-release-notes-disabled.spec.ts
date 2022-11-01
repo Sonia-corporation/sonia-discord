@@ -1253,7 +1253,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
 
                   const result = await service.isDisabled(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(false);
+                  expect(result).toBe(false);
                 });
               });
 
@@ -1281,7 +1281,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesDisabled`, (): void => {
 
                   const result = await service.isDisabled(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(true);
+                  expect(result).toBe(true);
                 });
               });
             });

@@ -5,7 +5,7 @@ describe(`FirebaseCollectionEnum`, (): void => {
   it(`should have a 1 member`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(FirebaseCollectionEnum)).toStrictEqual(1);
+    expect(getEnumLength(FirebaseCollectionEnum)).toBe(1);
   });
 
   it(`should have a member "GUILDS"`, (): void => {

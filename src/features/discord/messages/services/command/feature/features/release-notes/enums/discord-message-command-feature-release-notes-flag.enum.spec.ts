@@ -5,7 +5,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesFlagEnum`, (): void => {
   it(`should have 10 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageCommandFeatureReleaseNotesFlagEnum)).toStrictEqual(10);
+    expect(getEnumLength(DiscordMessageCommandFeatureReleaseNotesFlagEnum)).toBe(10);
   });
 
   it(`should have a member "D"`, (): void => {

@@ -243,7 +243,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
+      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
       expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
     });
 
@@ -268,7 +268,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(result.options.split).toStrictEqual(false);
+      expect(result.options.split).toBe(false);
     });
 
     it(`should return a warning message response with an empty response`, (): void => {

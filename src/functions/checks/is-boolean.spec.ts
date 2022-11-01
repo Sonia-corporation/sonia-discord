@@ -13,7 +13,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -27,7 +27,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -41,7 +41,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -55,7 +55,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -69,7 +69,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -83,7 +83,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -97,7 +97,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -111,7 +111,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -125,7 +125,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 });

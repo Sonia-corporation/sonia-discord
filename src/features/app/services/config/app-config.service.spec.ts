@@ -129,7 +129,7 @@ describe(`AppConfigService`, (): void => {
 
         const result = service.isProduction();
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -143,7 +143,7 @@ describe(`AppConfigService`, (): void => {
 
         const result = service.isProduction();
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -204,7 +204,7 @@ describe(`AppConfigService`, (): void => {
 
       const result = service.getTotalReleaseCount();
 
-      expect(result).toStrictEqual(8);
+      expect(result).toBe(8);
     });
   });
 

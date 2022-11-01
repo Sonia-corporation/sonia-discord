@@ -71,7 +71,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -85,7 +85,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -99,7 +99,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -113,7 +113,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -127,7 +127,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -141,7 +141,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -155,7 +155,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
 
@@ -169,7 +169,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -183,7 +183,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
 
@@ -197,7 +197,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
 
@@ -211,7 +211,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
 
@@ -225,7 +225,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -277,7 +277,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = await service.reply(anyDiscordMessage);
 
-        expect(result.options.split).toStrictEqual(false);
+        expect(result.options.split).toBe(false);
       });
 
       describe(`when the given Discord message contains a valid mention with ANY QUESTION?`, (): void => {

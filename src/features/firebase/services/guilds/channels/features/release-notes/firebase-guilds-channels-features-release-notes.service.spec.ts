@@ -73,7 +73,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
         const result = service.isValid(releaseNotes);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -89,7 +89,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
         const result = service.isValid(releaseNotes);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -113,7 +113,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
         const result = service.isUpToDate(releaseNotes);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -135,7 +135,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
         const result = service.isSet(releaseNotes);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -149,7 +149,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
         const result = service.isSet(releaseNotes);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -172,7 +172,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
       const result = service.create();
 
-      expect(result.version).toStrictEqual(1);
+      expect(result.version).toBe(1);
     });
   });
 
@@ -217,7 +217,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
         const result = service.getUpToDate(releaseNotes);
 
-        expect(result.version).toStrictEqual(1);
+        expect(result.version).toBe(1);
         expect(result.isEnabled).toBeUndefined();
       });
     });

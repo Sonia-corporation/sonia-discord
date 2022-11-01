@@ -5,7 +5,7 @@ describe(`DiscordCommandFlagTypeEnum`, (): void => {
   it(`should have 2 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordCommandFlagTypeEnum)).toStrictEqual(2);
+    expect(getEnumLength(DiscordCommandFlagTypeEnum)).toBe(2);
   });
 
   it(`should have a member "BOOLEAN"`, (): void => {

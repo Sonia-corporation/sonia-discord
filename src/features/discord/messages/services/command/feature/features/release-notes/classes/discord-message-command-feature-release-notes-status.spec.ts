@@ -588,7 +588,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
 
                   const result = await service.isEnabled(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(true);
+                  expect(result).toBe(true);
                 });
               });
 
@@ -616,7 +616,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
 
                   const result = await service.isEnabled(anyDiscordMessage);
 
-                  expect(result).toStrictEqual(false);
+                  expect(result).toBe(false);
                 });
               });
             });
@@ -639,7 +639,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
 
       const result = await service.getMessageResponse(isEnabled);
 
-      expect(result.options.split).toStrictEqual(false);
+      expect(result.options.split).toBe(false);
     });
 
     describe(`when the enabled state is undefined`, (): void => {

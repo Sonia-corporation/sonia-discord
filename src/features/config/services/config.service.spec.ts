@@ -55,7 +55,7 @@ describe(`ConfigService`, (): void => {
 
         const result = service.getUpdatedNumber(configUpdateNumber);
 
-        expect(result).toStrictEqual(8);
+        expect(result).toBe(8);
       });
     });
 
@@ -81,7 +81,7 @@ describe(`ConfigService`, (): void => {
 
         const result = service.getUpdatedNumber(configUpdateNumber);
 
-        expect(result).toStrictEqual(5);
+        expect(result).toBe(5);
       });
     });
 
@@ -107,7 +107,7 @@ describe(`ConfigService`, (): void => {
 
         const result = service.getUpdatedNumber(configUpdateNumber);
 
-        expect(result).toStrictEqual(6);
+        expect(result).toBe(6);
       });
     });
   });
@@ -1774,7 +1774,7 @@ describe(`ConfigService`, (): void => {
 
         const result = service.getUpdatedBoolean(configUpdateBoolean);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -1800,7 +1800,7 @@ describe(`ConfigService`, (): void => {
 
         const result = service.getUpdatedBoolean(configUpdateBoolean);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -1826,7 +1826,7 @@ describe(`ConfigService`, (): void => {
 
         const result = service.getUpdatedBoolean(configUpdateBoolean);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });

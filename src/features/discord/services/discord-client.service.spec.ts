@@ -132,7 +132,7 @@ describe(`DiscordClientService`, (): void => {
 
       const result = await service.isReady$().pipe(take(1)).toPromise();
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
 
     describe(`when the is ready event is notified`, (): void => {
@@ -142,7 +142,7 @@ describe(`DiscordClientService`, (): void => {
 
         const result = await service.isReady$().pipe(take(1)).toPromise();
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -163,7 +163,7 @@ describe(`DiscordClientService`, (): void => {
 
         const result = await service.isReady();
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -179,7 +179,7 @@ describe(`DiscordClientService`, (): void => {
 
       const result = await service.isReady$().pipe(take(1)).toPromise();
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 });

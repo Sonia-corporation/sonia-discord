@@ -447,7 +447,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         const result = await service.getGuildsCount();
 
-        expect(result).toStrictEqual(8);
+        expect(result).toBe(8);
       });
     });
   });
@@ -524,7 +524,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         const result = await service.hasGuild(guildId);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
         expect(docMock).toHaveBeenCalledTimes(1);
         expect(docMock).toHaveBeenCalledWith(guildId);
         expect(getMock).toHaveBeenCalledTimes(1);
@@ -562,7 +562,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
           const result = await service.hasGuild(guildId);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -603,7 +603,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
             const result = await service.hasGuild(guildId);
 
-            expect(result).toStrictEqual(false);
+            expect(result).toBe(false);
           });
         });
 
@@ -629,7 +629,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
             const result = await service.hasGuild(guildId);
 
-            expect(result).toStrictEqual(true);
+            expect(result).toBe(true);
           });
         });
       });
@@ -983,7 +983,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
       const result = await service.isReady$().pipe(take(1)).toPromise();
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
 
     describe(`when the is ready event is notified`, (): void => {
@@ -993,7 +993,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         const result = await service.isReady$().pipe(take(1)).toPromise();
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -1014,7 +1014,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         const result = await service.isReady();
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -1030,7 +1030,7 @@ describe(`FirebaseGuildsService`, (): void => {
       service.notifyIsReady();
       const result = await service.isReady$().pipe(take(1)).toPromise();
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 

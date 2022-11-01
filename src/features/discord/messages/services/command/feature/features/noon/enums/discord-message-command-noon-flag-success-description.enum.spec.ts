@@ -5,7 +5,7 @@ describe(`DiscordMessageCommandNoonFlagSuccessDescriptionEnum`, (): void => {
   it(`should have 6 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageCommandNoonFlagSuccessDescriptionEnum)).toStrictEqual(6);
+    expect(getEnumLength(DiscordMessageCommandNoonFlagSuccessDescriptionEnum)).toBe(6);
   });
 
   it(`should have a member "NOT_CONFIGURED_AND_ENABLED"`, (): void => {

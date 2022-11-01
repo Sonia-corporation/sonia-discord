@@ -599,7 +599,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
                   const result = await service.getStates(anyDiscordMessage);
 
-                  expect(result.isEnabled).toStrictEqual(true);
+                  expect(result.isEnabled).toBe(true);
                 });
               });
 
@@ -627,7 +627,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
                   const result = await service.getStates(anyDiscordMessage);
 
-                  expect(result.isEnabled).toStrictEqual(false);
+                  expect(result.isEnabled).toBe(false);
                 });
               });
             });
@@ -867,7 +867,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
+        expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
         expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
       });
 
@@ -876,7 +876,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.options.split).toStrictEqual(false);
+        expect(result.options.split).toBe(false);
       });
 
       it(`should return a Discord message response without a response text`, async (): Promise<void> => {

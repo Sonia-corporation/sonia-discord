@@ -5,7 +5,7 @@ describe(`DiscordMessageCommandCookieDescriptionEnum`, (): void => {
   it(`should have 26 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageCommandCookieDescriptionEnum)).toStrictEqual(26);
+    expect(getEnumLength(DiscordMessageCommandCookieDescriptionEnum)).toBe(26);
   });
 
   it(`should have a member "BETTER_THAN_COOKIE_CLICKER"`, (): void => {

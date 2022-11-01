@@ -69,7 +69,7 @@ describe(`AppConfigCoreService`, (): void => {
 
     service = AppConfigCoreService.getInstance();
 
-    expect(service.isProduction).toStrictEqual(false);
+    expect(service.isProduction).toBe(false);
   });
 
   it(`should have a unknown release date`, (): void => {
@@ -101,7 +101,7 @@ describe(`AppConfigCoreService`, (): void => {
 
     service = AppConfigCoreService.getInstance();
 
-    expect(service.totalReleaseCount).toStrictEqual(0);
+    expect(service.totalReleaseCount).toBe(0);
   });
 
   it(`should have an unknown version`, (): void => {

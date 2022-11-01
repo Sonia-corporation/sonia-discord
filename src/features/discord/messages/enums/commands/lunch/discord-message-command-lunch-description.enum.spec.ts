@@ -5,7 +5,7 @@ describe(`DiscordMessageCommandLunchDescriptionEnum`, (): void => {
   it(`should have 15 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageCommandLunchDescriptionEnum)).toStrictEqual(15);
+    expect(getEnumLength(DiscordMessageCommandLunchDescriptionEnum)).toBe(15);
   });
 
   it(`should have a member "AWESOME"`, (): void => {

@@ -83,7 +83,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
       expect.assertions(1);
 
       // @ts-ignore
-      expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toStrictEqual(3);
+      expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toBe(3);
     });
   });
 
@@ -911,7 +911,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           expect.assertions(1);
 
           // @ts-ignore
-          expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toStrictEqual(8);
+          expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toBe(8);
         });
 
         it(`should log about not being noon in Paris`, async (): Promise<void> => {
@@ -952,7 +952,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           expect.assertions(1);
 
           // @ts-ignore
-          expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toStrictEqual(12);
+          expect(moment().tz(`Europe/Paris`)?.get(`hour`)).toBe(12);
         });
 
         it(`should get the Discord client`, async (): Promise<void> => {
