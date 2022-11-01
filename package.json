@@ -178,7 +178,7 @@
     "@types/xregexp": "4.3.0",
     "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.33.0",
-    "all-contributors-cli": "6.20.0",
+    "all-contributors-cli": "6.20.5",
     "app-root-path": "3.0.0",
     "chalk": "4.1.2",
     "commitizen": "4.2.5",
