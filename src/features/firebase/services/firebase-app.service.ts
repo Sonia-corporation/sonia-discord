@@ -3,7 +3,7 @@ import { ServiceNameEnum } from '../../../enums/service-name.enum';
 import { ChalkService } from '../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../logger/services/logger.service';
 import { FirebaseAppEnum } from '../enums/firebase-app.enum';
-import admin, { initializeApp } from 'firebase-admin';
+import admin from 'firebase-admin';
 import _ from 'lodash';
 
 export class FirebaseAppService extends AbstractService {
@@ -37,7 +37,7 @@ export class FirebaseAppService extends AbstractService {
       message: ChalkService.getInstance().text(`creating app...`),
     });
 
-    this._app = initializeApp(
+    this._app = admin.initializeApp(
       {
         credential: admin.credential.applicationDefault(),
         databaseURL: `https://sonia-discord-api.firebaseio.com`,
