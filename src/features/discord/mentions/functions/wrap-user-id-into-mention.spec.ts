@@ -13,6 +13,6 @@ describe(`wrapUserIdIntoMention()`, (): void => {
 
     const result = wrapUserIdIntoMention(userId);
 
-    expect(result).toStrictEqual(`<@!dummy-user-id>`);
+    expect(result).toBe(`<@!dummy-user-id>`);
   });
 });

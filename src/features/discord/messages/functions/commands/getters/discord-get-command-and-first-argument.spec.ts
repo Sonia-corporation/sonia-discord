@@ -184,7 +184,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!feature noon`);
+          expect(result).toBe(`!feature noon`);
         });
       });
 
@@ -240,7 +240,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!feature noon`);
+          expect(result).toBe(`!feature noon`);
         });
       });
 
@@ -268,7 +268,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!feature other`);
+          expect(result).toBe(`!feature other`);
         });
       });
     });
@@ -484,7 +484,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!feature noon`);
+          expect(result).toBe(`!feature noon`);
         });
       });
 
@@ -498,7 +498,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!cookie noon`);
+          expect(result).toBe(`!cookie noon`);
         });
       });
 
@@ -568,7 +568,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!feature noon`);
+          expect(result).toBe(`!feature noon`);
         });
       });
 
@@ -582,7 +582,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!cookie noon`);
+          expect(result).toBe(`!cookie noon`);
         });
       });
 
@@ -624,7 +624,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!feature other`);
+          expect(result).toBe(`!feature other`);
         });
       });
 
@@ -638,7 +638,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!cookie other`);
+          expect(result).toBe(`!cookie other`);
         });
       });
     });
@@ -874,7 +874,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!feature noon`);
+          expect(result).toBe(`!feature noon`);
         });
       });
 
@@ -888,7 +888,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`@feature noon`);
+          expect(result).toBe(`@feature noon`);
         });
       });
 
@@ -958,7 +958,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`@feature noon`);
+          expect(result).toBe(`@feature noon`);
         });
       });
 
@@ -986,7 +986,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`@feature other`);
+          expect(result).toBe(`@feature other`);
         });
       });
     });
@@ -1258,7 +1258,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!feature noon`);
+          expect(result).toBe(`!feature noon`);
         });
       });
 
@@ -1272,7 +1272,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!cookie noon`);
+          expect(result).toBe(`!cookie noon`);
         });
       });
 
@@ -1300,7 +1300,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`@feature noon`);
+          expect(result).toBe(`@feature noon`);
         });
       });
 
@@ -1314,7 +1314,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`@cookie noon`);
+          expect(result).toBe(`@cookie noon`);
         });
       });
 
@@ -1384,7 +1384,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!feature noon`);
+          expect(result).toBe(`!feature noon`);
         });
       });
 
@@ -1398,7 +1398,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!cookie noon`);
+          expect(result).toBe(`!cookie noon`);
         });
       });
 
@@ -1426,7 +1426,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`@feature noon`);
+          expect(result).toBe(`@feature noon`);
         });
       });
 
@@ -1440,7 +1440,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`@cookie noon`);
+          expect(result).toBe(`@cookie noon`);
         });
       });
 
@@ -1482,7 +1482,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!feature other`);
+          expect(result).toBe(`!feature other`);
         });
       });
 
@@ -1496,7 +1496,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`!cookie other`);
+          expect(result).toBe(`!cookie other`);
         });
       });
 
@@ -1510,7 +1510,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`@feature other`);
+          expect(result).toBe(`@feature other`);
         });
       });
 
@@ -1524,7 +1524,7 @@ describe(`discordGetCommandAndFirstArgument()`, (): void => {
 
           const result = discordGetCommandAndFirstArgument(data);
 
-          expect(result).toStrictEqual(`@cookie other`);
+          expect(result).toBe(`@cookie other`);
         });
       });
     });

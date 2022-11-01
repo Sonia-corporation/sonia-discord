@@ -4,6 +4,6 @@ describe(`QUOTE_API_URL`, (): void => {
   it(`should contains the url to the Quote API`, (): void => {
     expect.assertions(1);
 
-    expect(QUOTE_API_URL).toStrictEqual(`https://favqs.com/api/`);
+    expect(QUOTE_API_URL).toBe(`https://favqs.com/api/`);
   });
 });

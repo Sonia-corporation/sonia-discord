@@ -25,7 +25,7 @@ describe(`discordGetCommandWithPrefix()`, (): void => {
 
         const result = discordGetCommandWithPrefix(data);
 
-        expect(result).toStrictEqual(`$cookie`);
+        expect(result).toBe(`$cookie`);
       });
     });
 
@@ -39,7 +39,7 @@ describe(`discordGetCommandWithPrefix()`, (): void => {
 
         const result = discordGetCommandWithPrefix(data);
 
-        expect(result).toStrictEqual(`$help`);
+        expect(result).toBe(`$help`);
       });
     });
   });
@@ -59,7 +59,7 @@ describe(`discordGetCommandWithPrefix()`, (): void => {
 
         const result = discordGetCommandWithPrefix(data);
 
-        expect(result).toStrictEqual(`!cookie`);
+        expect(result).toBe(`!cookie`);
       });
     });
 
@@ -73,7 +73,7 @@ describe(`discordGetCommandWithPrefix()`, (): void => {
 
         const result = discordGetCommandWithPrefix(data);
 
-        expect(result).toStrictEqual(`!help`);
+        expect(result).toBe(`!help`);
       });
     });
   });
@@ -93,7 +93,7 @@ describe(`discordGetCommandWithPrefix()`, (): void => {
 
         const result = discordGetCommandWithPrefix(data);
 
-        expect(result).toStrictEqual(`yolocookie`);
+        expect(result).toBe(`yolocookie`);
       });
     });
 
@@ -107,7 +107,7 @@ describe(`discordGetCommandWithPrefix()`, (): void => {
 
         const result = discordGetCommandWithPrefix(data);
 
-        expect(result).toStrictEqual(`yolohelp`);
+        expect(result).toBe(`yolohelp`);
       });
     });
   });

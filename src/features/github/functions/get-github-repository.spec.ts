@@ -6,6 +6,6 @@ describe(`getGithubRepository()`, (): void => {
 
     const result = getGithubRepository();
 
-    expect(result).toStrictEqual(`repository(owner: "Sonia-corporation", name: "sonia-discord")`);
+    expect(result).toBe(`repository(owner: "Sonia-corporation", name: "sonia-discord")`);
   });
 });

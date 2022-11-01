@@ -571,7 +571,7 @@ describe(`DiscordMessageConfigService`, (): void => {
 
       const result = service.getMessageCommandPrefix();
 
-      expect(result).toStrictEqual(`dummy-prefix`);
+      expect(result).toBe(`dummy-prefix`);
     });
   });
 

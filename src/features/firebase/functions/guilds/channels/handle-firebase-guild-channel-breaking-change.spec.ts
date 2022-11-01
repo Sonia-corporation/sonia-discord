@@ -83,7 +83,7 @@ describe(`handleFirebaseGuildChannelBreakingChange()`, (): void => {
 
       const result = handleFirebaseGuildChannelBreakingChange(firebaseGuildChannel);
 
-      expect(result.id).toStrictEqual(`dummy-id`);
+      expect(result.id).toBe(`dummy-id`);
     });
 
     it(`should return a v2 version`, (): void => {

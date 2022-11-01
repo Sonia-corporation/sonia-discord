@@ -53,7 +53,7 @@ describe(`AppConfigCoreService`, (): void => {
 
     service = AppConfigCoreService.getInstance();
 
-    expect(service.firstReleaseDate).toStrictEqual(`2020-03-24T00:00:00.000Z`);
+    expect(service.firstReleaseDate).toBe(`2020-03-24T00:00:00.000Z`);
   });
 
   it(`should have a unknown initialization date`, (): void => {
@@ -61,7 +61,7 @@ describe(`AppConfigCoreService`, (): void => {
 
     service = AppConfigCoreService.getInstance();
 
-    expect(service.initializationDate).toStrictEqual(`unknown`);
+    expect(service.initializationDate).toBe(`unknown`);
   });
 
   it(`should not be in a production state`, (): void => {
@@ -77,7 +77,7 @@ describe(`AppConfigCoreService`, (): void => {
 
     service = AppConfigCoreService.getInstance();
 
-    expect(service.releaseDate).toStrictEqual(`unknown`);
+    expect(service.releaseDate).toBe(`unknown`);
   });
 
   it(`should not have some release notes`, (): void => {
@@ -85,7 +85,7 @@ describe(`AppConfigCoreService`, (): void => {
 
     service = AppConfigCoreService.getInstance();
 
-    expect(service.releaseNotes).toStrictEqual(``);
+    expect(service.releaseNotes).toBe(``);
   });
 
   it(`should have an unknown release type`, (): void => {
@@ -109,6 +109,6 @@ describe(`AppConfigCoreService`, (): void => {
 
     service = AppConfigCoreService.getInstance();
 
-    expect(service.version).toStrictEqual(`unknown`);
+    expect(service.version).toBe(`unknown`);
   });
 });

@@ -290,7 +290,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** Do you like pineapple pizza?`);
+          expect(result.response).toBe(`**[dev]** Do you like pineapple pizza?`);
         });
       });
 
@@ -304,7 +304,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** Do you like pineapple pizza?`);
+          expect(result.response).toBe(`**[dev]** Do you like pineapple pizza?`);
         });
       });
 
@@ -318,7 +318,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** Do you like pineapple pizza?`);
+          expect(result.response).toBe(`**[dev]** Do you like pineapple pizza?`);
         });
       });
 
@@ -332,7 +332,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** Do you like pineapple pizza?`);
+          expect(result.response).toBe(`**[dev]** Do you like pineapple pizza?`);
         });
       });
     });

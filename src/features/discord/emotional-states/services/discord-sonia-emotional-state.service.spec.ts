@@ -632,7 +632,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
       const result = service.getEmotionalState();
 
-      expect(result).toStrictEqual(`annoyed`);
+      expect(result).toBe(`annoyed`);
     });
 
     describe(`when the emotional state was updated`, (): void => {
@@ -645,7 +645,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
         const result = service.getEmotionalState();
 
-        expect(result).toStrictEqual(`angry`);
+        expect(result).toBe(`angry`);
       });
     });
   });
@@ -674,7 +674,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
       const result = service.getRandomEmotionalState();
 
-      expect(result).toStrictEqual(`comfortable`);
+      expect(result).toBe(`comfortable`);
     });
   });
 });

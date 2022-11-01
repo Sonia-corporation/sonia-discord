@@ -6,6 +6,6 @@ describe(`getNoonScheduleRule()`, (): void => {
 
     const result = getNoonScheduleRule();
 
-    expect(result).toStrictEqual(`0 12 * * *`);
+    expect(result).toBe(`0 12 * * *`);
   });
 });

@@ -232,7 +232,7 @@ describe(`Messages`, (): void => {
 
             const result = messages.getHumanizedRandomMessage();
 
-            expect(result).toStrictEqual(`dummy message with {{ variable }}`);
+            expect(result).toBe(`dummy message with {{ variable }}`);
           });
         });
 
@@ -244,7 +244,7 @@ describe(`Messages`, (): void => {
               key2: `value2`,
             });
 
-            expect(result).toStrictEqual(`dummy message with {{ variable }}`);
+            expect(result).toBe(`dummy message with {{ variable }}`);
           });
         });
 
@@ -256,7 +256,7 @@ describe(`Messages`, (): void => {
               variable: `replacement argument`,
             });
 
-            expect(result).toStrictEqual(`dummy message with replacement argument`);
+            expect(result).toBe(`dummy message with replacement argument`);
           });
         });
       });
@@ -274,7 +274,7 @@ describe(`Messages`, (): void => {
 
             const result = messages.getHumanizedRandomMessage();
 
-            expect(result).toStrictEqual(`dummy message with {{ variable }}`);
+            expect(result).toBe(`dummy message with {{ variable }}`);
           });
         });
 
@@ -286,7 +286,7 @@ describe(`Messages`, (): void => {
               key2: `value2`,
             });
 
-            expect(result).toStrictEqual(`dummy message with {{ variable }}`);
+            expect(result).toBe(`dummy message with {{ variable }}`);
           });
         });
 
@@ -298,7 +298,7 @@ describe(`Messages`, (): void => {
               variable: `replacement argument`,
             });
 
-            expect(result).toStrictEqual(`dummy message with replacement argument`);
+            expect(result).toBe(`dummy message with replacement argument`);
           });
         });
       });
@@ -316,7 +316,7 @@ describe(`Messages`, (): void => {
 
             const result = messages.getHumanizedRandomMessage();
 
-            expect(result).toStrictEqual(`dummy message with replacement`);
+            expect(result).toBe(`dummy message with replacement`);
           });
         });
 
@@ -328,7 +328,7 @@ describe(`Messages`, (): void => {
               key2: `value2`,
             });
 
-            expect(result).toStrictEqual(`dummy message with {{ variable }}`);
+            expect(result).toBe(`dummy message with {{ variable }}`);
           });
         });
 
@@ -340,7 +340,7 @@ describe(`Messages`, (): void => {
               variable: `replacement argument`,
             });
 
-            expect(result).toStrictEqual(`dummy message with replacement argument`);
+            expect(result).toBe(`dummy message with replacement argument`);
           });
         });
       });

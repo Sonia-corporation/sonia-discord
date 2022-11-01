@@ -280,7 +280,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** trivago`);
+          expect(result.response).toBe(`**[dev]** trivago`);
         });
       });
 
@@ -306,7 +306,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** trivago`);
+          expect(result.response).toBe(`**[dev]** trivago`);
         });
       });
 
@@ -332,7 +332,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** trivago`);
+          expect(result.response).toBe(`**[dev]** trivago`);
         });
       });
 
@@ -358,7 +358,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** trivago`);
+          expect(result.response).toBe(`**[dev]** trivago`);
         });
       });
     });

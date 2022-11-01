@@ -280,7 +280,7 @@ describe(`DiscordMessagePingPongService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** pong`);
+          expect(result.response).toBe(`**[dev]** pong`);
         });
       });
 
@@ -306,7 +306,7 @@ describe(`DiscordMessagePingPongService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** pong`);
+          expect(result.response).toBe(`**[dev]** pong`);
         });
       });
 
@@ -332,7 +332,7 @@ describe(`DiscordMessagePingPongService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** pong`);
+          expect(result.response).toBe(`**[dev]** pong`);
         });
       });
 
@@ -358,7 +358,7 @@ describe(`DiscordMessagePingPongService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** pong`);
+          expect(result.response).toBe(`**[dev]** pong`);
         });
       });
     });

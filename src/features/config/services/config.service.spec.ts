@@ -146,7 +146,7 @@ describe(`ConfigService`, (): void => {
 
         const result = service.getUpdatedString(configUpdateString);
 
-        expect(result).toStrictEqual(`dummy-old-value`);
+        expect(result).toBe(`dummy-old-value`);
       });
     });
 
@@ -219,7 +219,7 @@ describe(`ConfigService`, (): void => {
 
           const result = service.getUpdatedString(configUpdateString);
 
-          expect(result).toStrictEqual(`new-value`);
+          expect(result).toBe(`new-value`);
         });
       });
 
@@ -287,7 +287,7 @@ describe(`ConfigService`, (): void => {
 
           const result = service.getUpdatedString(configUpdateString);
 
-          expect(result).toStrictEqual(`new-value`);
+          expect(result).toBe(`new-value`);
         });
       });
 
@@ -355,7 +355,7 @@ describe(`ConfigService`, (): void => {
 
           const result = service.getUpdatedString(configUpdateString);
 
-          expect(result).toStrictEqual(`new-value`);
+          expect(result).toBe(`new-value`);
         });
       });
     });
@@ -429,7 +429,7 @@ describe(`ConfigService`, (): void => {
 
           const result = service.getUpdatedString(configUpdateString);
 
-          expect(result).toStrictEqual(`marco-polo`);
+          expect(result).toBe(`marco-polo`);
         });
       });
 
@@ -497,7 +497,7 @@ describe(`ConfigService`, (): void => {
 
           const result = service.getUpdatedString(configUpdateString);
 
-          expect(result).toStrictEqual(`marco-polo`);
+          expect(result).toBe(`marco-polo`);
         });
       });
 
@@ -565,7 +565,7 @@ describe(`ConfigService`, (): void => {
 
           const result = service.getUpdatedString(configUpdateString);
 
-          expect(result).toStrictEqual(`marco-polo`);
+          expect(result).toBe(`marco-polo`);
         });
       });
     });
@@ -605,7 +605,7 @@ describe(`ConfigService`, (): void => {
 
         const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-        expect(result).toStrictEqual(`dummy-old-value`);
+        expect(result).toBe(`dummy-old-value`);
       });
     });
 
@@ -678,7 +678,7 @@ describe(`ConfigService`, (): void => {
 
           const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-          expect(result).toStrictEqual(`new-value`);
+          expect(result).toBe(`new-value`);
         });
       });
 
@@ -746,7 +746,7 @@ describe(`ConfigService`, (): void => {
 
           const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-          expect(result).toStrictEqual(`new-value`);
+          expect(result).toBe(`new-value`);
         });
       });
 
@@ -814,7 +814,7 @@ describe(`ConfigService`, (): void => {
 
           const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-          expect(result).toStrictEqual(`new-value`);
+          expect(result).toBe(`new-value`);
         });
       });
     });
@@ -888,7 +888,7 @@ describe(`ConfigService`, (): void => {
 
           const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-          expect(result).toStrictEqual(`marco-polo`);
+          expect(result).toBe(`marco-polo`);
         });
       });
 
@@ -956,7 +956,7 @@ describe(`ConfigService`, (): void => {
 
           const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-          expect(result).toStrictEqual(`marco-polo`);
+          expect(result).toBe(`marco-polo`);
         });
       });
 
@@ -1024,7 +1024,7 @@ describe(`ConfigService`, (): void => {
 
           const result = service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-          expect(result).toStrictEqual(`marco-polo`);
+          expect(result).toBe(`marco-polo`);
         });
       });
     });
@@ -1524,7 +1524,7 @@ describe(`ConfigService`, (): void => {
 
         const result = service.getUpdatedDate(configUpdateDate);
 
-        expect(result).toStrictEqual(`dummy-old-value`);
+        expect(result).toBe(`dummy-old-value`);
       });
     });
 

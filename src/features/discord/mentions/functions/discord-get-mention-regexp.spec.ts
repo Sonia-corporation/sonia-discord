@@ -93,7 +93,7 @@ describe(`discordGetMentionRegexp()`, (): void => {
 
       const result = discordGetMentionRegexp();
 
-      expect(xregexp.exec(message, result)?.toString()).toStrictEqual(`<@0>`);
+      expect(xregexp.exec(message, result)?.toString()).toBe(`<@0>`);
     });
   });
 
@@ -107,7 +107,7 @@ describe(`discordGetMentionRegexp()`, (): void => {
 
       const result = discordGetMentionRegexp();
 
-      expect(xregexp.exec(message, result)?.toString()).toStrictEqual(`<@!0>`);
+      expect(xregexp.exec(message, result)?.toString()).toBe(`<@!0>`);
     });
   });
 
@@ -121,7 +121,7 @@ describe(`discordGetMentionRegexp()`, (): void => {
 
       const result = discordGetMentionRegexp();
 
-      expect(xregexp.exec(message, result)?.toString()).toStrictEqual(`<@0789>`);
+      expect(xregexp.exec(message, result)?.toString()).toBe(`<@0789>`);
     });
   });
 
@@ -135,7 +135,7 @@ describe(`discordGetMentionRegexp()`, (): void => {
 
       const result = discordGetMentionRegexp();
 
-      expect(xregexp.exec(message, result)?.toString()).toStrictEqual(`<@!0789>`);
+      expect(xregexp.exec(message, result)?.toString()).toBe(`<@!0789>`);
     });
   });
 
@@ -149,7 +149,7 @@ describe(`discordGetMentionRegexp()`, (): void => {
 
       const result = discordGetMentionRegexp();
 
-      expect(xregexp.exec(message, result)?.toString()).toStrictEqual(`<@0789>`);
+      expect(xregexp.exec(message, result)?.toString()).toBe(`<@0789>`);
     });
   });
 
@@ -163,7 +163,7 @@ describe(`discordGetMentionRegexp()`, (): void => {
 
       const result = discordGetMentionRegexp();
 
-      expect(xregexp.exec(message, result)?.toString()).toStrictEqual(`<@!0789>`);
+      expect(xregexp.exec(message, result)?.toString()).toBe(`<@!0789>`);
     });
   });
 
@@ -177,7 +177,7 @@ describe(`discordGetMentionRegexp()`, (): void => {
 
       const result = discordGetMentionRegexp();
 
-      expect(xregexp.exec(message, result)?.toString()).toStrictEqual(`<@123>`);
+      expect(xregexp.exec(message, result)?.toString()).toBe(`<@123>`);
     });
   });
 
@@ -191,7 +191,7 @@ describe(`discordGetMentionRegexp()`, (): void => {
 
       const result = discordGetMentionRegexp();
 
-      expect(xregexp.exec(message, result)?.toString()).toStrictEqual(`<@!123>`);
+      expect(xregexp.exec(message, result)?.toString()).toBe(`<@!123>`);
     });
   });
 

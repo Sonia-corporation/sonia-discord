@@ -13,7 +13,7 @@ describe(`removeAllDiscordMentions()`, (): void => {
 
       const result = removeAllDiscordMentions(message);
 
-      expect(result).toStrictEqual(``);
+      expect(result).toBe(``);
     });
   });
 
@@ -27,7 +27,7 @@ describe(`removeAllDiscordMentions()`, (): void => {
 
       const result = removeAllDiscordMentions(message);
 
-      expect(result).toStrictEqual(`dummy message`);
+      expect(result).toBe(`dummy message`);
     });
   });
 
@@ -41,7 +41,7 @@ describe(`removeAllDiscordMentions()`, (): void => {
 
       const result = removeAllDiscordMentions(message);
 
-      expect(result).toStrictEqual(`dummy message with  mentioned`);
+      expect(result).toBe(`dummy message with  mentioned`);
     });
   });
 
@@ -55,7 +55,7 @@ describe(`removeAllDiscordMentions()`, (): void => {
 
       const result = removeAllDiscordMentions(message);
 
-      expect(result).toStrictEqual(`dummy message with  mentioned`);
+      expect(result).toBe(`dummy message with  mentioned`);
     });
   });
 
@@ -69,7 +69,7 @@ describe(`removeAllDiscordMentions()`, (): void => {
 
       const result = removeAllDiscordMentions(message);
 
-      expect(result).toStrictEqual(`dummy message with  mentioned and again here`);
+      expect(result).toBe(`dummy message with  mentioned and again here`);
     });
   });
 
@@ -83,7 +83,7 @@ describe(`removeAllDiscordMentions()`, (): void => {
 
       const result = removeAllDiscordMentions(message);
 
-      expect(result).toStrictEqual(`dummy message with  mentioned and again here`);
+      expect(result).toBe(`dummy message with  mentioned and again here`);
     });
   });
 
@@ -97,7 +97,7 @@ describe(`removeAllDiscordMentions()`, (): void => {
 
       const result = removeAllDiscordMentions(message);
 
-      expect(result).toStrictEqual(`dummy message with  mentioned and again here`);
+      expect(result).toBe(`dummy message with  mentioned and again here`);
     });
   });
 
@@ -111,7 +111,7 @@ describe(`removeAllDiscordMentions()`, (): void => {
 
       const result = removeAllDiscordMentions(message);
 
-      expect(result).toStrictEqual(`dummy message with  mentioned and again here`);
+      expect(result).toBe(`dummy message with  mentioned and again here`);
     });
   });
 });

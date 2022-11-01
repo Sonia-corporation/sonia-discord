@@ -356,7 +356,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
       const result = await service.getMessageResponse();
 
       expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -365,7 +365,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.title).toStrictEqual(`dummy-full-name version`);
+      expect(result.options.embed?.title).toBe(`dummy-full-name version`);
     });
 
     it(`should return a Discord message response not split`, async (): Promise<void> => {
@@ -381,7 +381,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.response).toStrictEqual(``);
+      expect(result.response).toBe(``);
     });
   });
 

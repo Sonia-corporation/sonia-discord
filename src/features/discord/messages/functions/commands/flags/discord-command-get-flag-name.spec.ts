@@ -29,7 +29,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
       const result = discordCommandGetFlagName(messageFlag);
 
-      expect(result).toStrictEqual(`flag`);
+      expect(result).toBe(`flag`);
     });
   });
 
@@ -43,7 +43,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
       const result = discordCommandGetFlagName(messageFlag);
 
-      expect(result).toStrictEqual(`flag`);
+      expect(result).toBe(`flag`);
     });
   });
 
@@ -57,7 +57,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
       const result = discordCommandGetFlagName(messageFlag);
 
-      expect(result).toStrictEqual(`flag`);
+      expect(result).toBe(`flag`);
     });
   });
 
@@ -71,7 +71,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
       const result = discordCommandGetFlagName(messageFlag);
 
-      expect(result).toStrictEqual(`flag`);
+      expect(result).toBe(`flag`);
     });
   });
 
@@ -85,7 +85,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
       const result = discordCommandGetFlagName(messageFlag);
 
-      expect(result).toStrictEqual(`flag`);
+      expect(result).toBe(`flag`);
     });
   });
 
@@ -99,7 +99,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
       const result = discordCommandGetFlagName(messageFlag);
 
-      expect(result).toStrictEqual(`flag`);
+      expect(result).toBe(`flag`);
     });
   });
 
@@ -132,7 +132,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
         const result = discordCommandGetFlagName(messageFlag, toLowerCase);
 
-        expect(result).toStrictEqual(`Flag`);
+        expect(result).toBe(`Flag`);
       });
     });
 
@@ -146,7 +146,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
         const result = discordCommandGetFlagName(messageFlag, toLowerCase);
 
-        expect(result).toStrictEqual(`Flag`);
+        expect(result).toBe(`Flag`);
       });
     });
 
@@ -160,7 +160,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
         const result = discordCommandGetFlagName(messageFlag, toLowerCase);
 
-        expect(result).toStrictEqual(`Flag`);
+        expect(result).toBe(`Flag`);
       });
     });
 
@@ -174,7 +174,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
         const result = discordCommandGetFlagName(messageFlag, toLowerCase);
 
-        expect(result).toStrictEqual(`Flag`);
+        expect(result).toBe(`Flag`);
       });
     });
 
@@ -188,7 +188,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
         const result = discordCommandGetFlagName(messageFlag, toLowerCase);
 
-        expect(result).toStrictEqual(`Flag`);
+        expect(result).toBe(`Flag`);
       });
     });
 
@@ -202,7 +202,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
         const result = discordCommandGetFlagName(messageFlag, toLowerCase);
 
-        expect(result).toStrictEqual(`Flag`);
+        expect(result).toBe(`Flag`);
       });
     });
   });
@@ -236,7 +236,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
         const result = discordCommandGetFlagName(messageFlag, toLowerCase);
 
-        expect(result).toStrictEqual(`flag`);
+        expect(result).toBe(`flag`);
       });
     });
 
@@ -250,7 +250,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
         const result = discordCommandGetFlagName(messageFlag, toLowerCase);
 
-        expect(result).toStrictEqual(`flag`);
+        expect(result).toBe(`flag`);
       });
     });
 
@@ -264,7 +264,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
         const result = discordCommandGetFlagName(messageFlag, toLowerCase);
 
-        expect(result).toStrictEqual(`flag`);
+        expect(result).toBe(`flag`);
       });
     });
 
@@ -278,7 +278,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
         const result = discordCommandGetFlagName(messageFlag, toLowerCase);
 
-        expect(result).toStrictEqual(`flag`);
+        expect(result).toBe(`flag`);
       });
     });
 
@@ -292,7 +292,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
         const result = discordCommandGetFlagName(messageFlag, toLowerCase);
 
-        expect(result).toStrictEqual(`flag`);
+        expect(result).toBe(`flag`);
       });
     });
 
@@ -306,7 +306,7 @@ describe(`discordCommandGetFlagName()`, (): void => {
 
         const result = discordCommandGetFlagName(messageFlag, toLowerCase);
 
-        expect(result).toStrictEqual(`flag`);
+        expect(result).toBe(`flag`);
       });
     });
   });

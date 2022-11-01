@@ -14,7 +14,7 @@ describe(`wrapInQuotes()`, (): void => {
 
       const result = wrapInQuotes(value);
 
-      expect(result).toStrictEqual(`""`);
+      expect(result).toBe(`""`);
     });
 
     describe(`when the given quotes is """`, (): void => {
@@ -27,7 +27,7 @@ describe(`wrapInQuotes()`, (): void => {
 
         const result = wrapInQuotes(value, quotes);
 
-        expect(result).toStrictEqual(`""`);
+        expect(result).toBe(`""`);
       });
     });
 
@@ -41,7 +41,7 @@ describe(`wrapInQuotes()`, (): void => {
 
         const result = wrapInQuotes(value, quotes);
 
-        expect(result).toStrictEqual(`****`);
+        expect(result).toBe(`****`);
       });
     });
   });
@@ -56,7 +56,7 @@ describe(`wrapInQuotes()`, (): void => {
 
       const result = wrapInQuotes(value);
 
-      expect(result).toStrictEqual(`"dummy"`);
+      expect(result).toBe(`"dummy"`);
     });
 
     describe(`when the given quotes is """`, (): void => {
@@ -69,7 +69,7 @@ describe(`wrapInQuotes()`, (): void => {
 
         const result = wrapInQuotes(value, quotes);
 
-        expect(result).toStrictEqual(`"dummy"`);
+        expect(result).toBe(`"dummy"`);
       });
     });
 
@@ -83,7 +83,7 @@ describe(`wrapInQuotes()`, (): void => {
 
         const result = wrapInQuotes(value, quotes);
 
-        expect(result).toStrictEqual(`**dummy**`);
+        expect(result).toBe(`**dummy**`);
       });
     });
   });
@@ -98,7 +98,7 @@ describe(`wrapInQuotes()`, (): void => {
 
       const result = wrapInQuotes(value);
 
-      expect(result).toStrictEqual(`"hello, world!"`);
+      expect(result).toBe(`"hello, world!"`);
     });
 
     describe(`when the given quotes is """`, (): void => {
@@ -111,7 +111,7 @@ describe(`wrapInQuotes()`, (): void => {
 
         const result = wrapInQuotes(value, quotes);
 
-        expect(result).toStrictEqual(`"hello, world!"`);
+        expect(result).toBe(`"hello, world!"`);
       });
     });
 
@@ -125,7 +125,7 @@ describe(`wrapInQuotes()`, (): void => {
 
         const result = wrapInQuotes(value, quotes);
 
-        expect(result).toStrictEqual(`**hello, world!**`);
+        expect(result).toBe(`**hello, world!**`);
       });
     });
   });

@@ -11,23 +11,23 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
   it(`should have a member "CAN_I_COUNT_ON_YOU_TO_ENABLE_NOON"`, (): void => {
     expect.assertions(1);
 
-    expect(
-      DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.CAN_I_COUNT_ON_YOU_TO_ENABLE_NOON
-    ).toStrictEqual(`Can I count on you to enable noon?`);
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.CAN_I_COUNT_ON_YOU_TO_ENABLE_NOON).toBe(
+      `Can I count on you to enable noon?`
+    );
   });
 
   it(`should have a member "CAN_I_COUNT_ON_YOU_TO_ENABLE_THIS_FEATURE"`, (): void => {
     expect.assertions(1);
 
-    expect(
-      DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.CAN_I_COUNT_ON_YOU_TO_ENABLE_THIS_FEATURE
-    ).toStrictEqual(`Can I count on you to enable this feature??`);
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.CAN_I_COUNT_ON_YOU_TO_ENABLE_THIS_FEATURE).toBe(
+      `Can I count on you to enable this feature??`
+    );
   });
 
   it(`should have a member "COME_ON_JUST_DO_IT_ALLOW_ME"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.COME_ON_JUST_DO_IT_ALLOW_ME).toStrictEqual(
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.COME_ON_JUST_DO_IT_ALLOW_ME).toBe(
       `Come on just do it! Allow me!`
     );
   });
@@ -37,7 +37,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
 
     expect(
       DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.COME_ON_YOU_COULD_AT_LEAST_ASK_ME_TO_TELL_YOU_WHEN_IT_IS_NOON
-    ).toStrictEqual(`Come on, you could at least ask me to tell you when it's noon!`);
+    ).toBe(`Come on, you could at least ask me to tell you when it's noon!`);
   });
 
   it(`should have a member "DO_NOT_WORRY_I_WILL_NOT_SEND_A_NOON_MESSAGE_HERE"`, (): void => {
@@ -45,13 +45,13 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
 
     expect(
       DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.DO_NOT_WORRY_I_WILL_NOT_SEND_A_NOON_MESSAGE_HERE
-    ).toStrictEqual(`Don't worry I will not send a noon message here.`);
+    ).toBe(`Don't worry I will not send a noon message here.`);
   });
 
   it(`should have a member "DUH_IT_IS_DISABLED"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.DUH_IT_IS_DISABLED).toStrictEqual(
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.DUH_IT_IS_DISABLED).toBe(
       `Duh? It's disabled...`
     );
   });
@@ -59,7 +59,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
   it(`should have a member "DUH_IT_IS_NOT_EVEN_ENABLED"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.DUH_IT_IS_NOT_EVEN_ENABLED).toStrictEqual(
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.DUH_IT_IS_NOT_EVEN_ENABLED).toBe(
       `Duh? It's not even enabled!`
     );
   });
@@ -67,7 +67,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
   it(`should have a member "I_AM_NOT_PLANING_ON_SPAMMING_YOU"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_AM_NOT_PLANING_ON_SPAMMING_YOU).toStrictEqual(
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_AM_NOT_PLANING_ON_SPAMMING_YOU).toBe(
       `I am not planing on spamming you.`
     );
   });
@@ -75,9 +75,9 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
   it(`should have a member "I_JUST_LOVE_WHEN_IT_IS_NOON_ALLOW_ME"`, (): void => {
     expect.assertions(1);
 
-    expect(
-      DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_JUST_LOVE_WHEN_IT_IS_NOON_ALLOW_ME
-    ).toStrictEqual(`I just love when it's noon. Allow me!`);
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_JUST_LOVE_WHEN_IT_IS_NOON_ALLOW_ME).toBe(
+      `I just love when it's noon. Allow me!`
+    );
   });
 
   it(`should have a member "I_SWEAR_I_AM_NOT_PLANING_DO_SPAM_THIS_CHANNEL_AT_ALL"`, (): void => {
@@ -85,7 +85,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
 
     expect(
       DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_SWEAR_I_AM_NOT_PLANING_DO_SPAM_THIS_CHANNEL_AT_ALL
-    ).toStrictEqual(`I swear I am not planing do spam this channel at all.`);
+    ).toBe(`I swear I am not planing do spam this channel at all.`);
   });
 
   it(`should have a member "I_WANT_TO_TELL_YOU_WHEN_IT_IS_NOON_BUT_YOU_NEED_TO_ALLOW_ME_FIRST"`, (): void => {
@@ -93,13 +93,13 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
 
     expect(
       DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WANT_TO_TELL_YOU_WHEN_IT_IS_NOON_BUT_YOU_NEED_TO_ALLOW_ME_FIRST
-    ).toStrictEqual(`I want to tell you when it's noon but you need to allow me first!`);
+    ).toBe(`I want to tell you when it's noon but you need to allow me first!`);
   });
 
   it(`should have a member "I_WILL_LEAVE_YOU_ALONE"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_LEAVE_YOU_ALONE).toStrictEqual(
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_LEAVE_YOU_ALONE).toBe(
       `I will leave you alone.`
     );
   });
@@ -107,15 +107,15 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
   it(`should have a member "I_WILL_LEAVE_YOU_ALONE_DO_NOT_WORRY"`, (): void => {
     expect.assertions(1);
 
-    expect(
-      DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_LEAVE_YOU_ALONE_DO_NOT_WORRY
-    ).toStrictEqual(`I will leave you alone, don't worry.`);
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_LEAVE_YOU_ALONE_DO_NOT_WORRY).toBe(
+      `I will leave you alone, don't worry.`
+    );
   });
 
   it(`should have a member "I_WILL_LET_YOU_LIVE"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_LET_YOU_LIVE).toStrictEqual(
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_LET_YOU_LIVE).toBe(
       `I will let you live.`
     );
   });
@@ -123,7 +123,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
   it(`should have a member "I_WILL_LET_YOU_LIVE_DO_NOT_WORRY"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_LET_YOU_LIVE_DO_NOT_WORRY).toStrictEqual(
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_LET_YOU_LIVE_DO_NOT_WORRY).toBe(
       `I will let you live, don't worry.`
     );
   });
@@ -131,7 +131,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
   it(`should have a member "I_WILL_NOT_BOTHER_YOU"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU).toStrictEqual(
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU).toBe(
       `I will not bother you.`
     );
   });
@@ -139,17 +139,17 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
   it(`should have a member "I_WILL_NOT_BOTHER_YOU_DO_NOT_WORRY"`, (): void => {
     expect.assertions(1);
 
-    expect(
-      DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU_DO_NOT_WORRY
-    ).toStrictEqual(`I will not bother you, don't worry.`);
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU_DO_NOT_WORRY).toBe(
+      `I will not bother you, don't worry.`
+    );
   });
 
   it(`should have a member "IS_IT_TOO_MUCH_TO_ASK_TO_ENABLE_NOON"`, (): void => {
     expect.assertions(1);
 
-    expect(
-      DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.IS_IT_TOO_MUCH_TO_ASK_TO_ENABLE_NOON
-    ).toStrictEqual(`Is it too much to ask to enable noon?`);
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.IS_IT_TOO_MUCH_TO_ASK_TO_ENABLE_NOON).toBe(
+      `Is it too much to ask to enable noon?`
+    );
   });
 
   it(`should have a member "IS_IT_TOO_MUCH_TO_ASK_TO_ENABLE_THIS_FEATURE"`, (): void => {
@@ -157,13 +157,13 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
 
     expect(
       DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.IS_IT_TOO_MUCH_TO_ASK_TO_ENABLE_THIS_FEATURE
-    ).toStrictEqual(`Is it too much to ask to enable this feature?`);
+    ).toBe(`Is it too much to ask to enable this feature?`);
   });
 
   it(`should have a member "NOON_IS_LIFE_NOON_IS_DISABLED"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.NOON_IS_LIFE_NOON_IS_DISABLED).toStrictEqual(
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.NOON_IS_LIFE_NOON_IS_DISABLED).toBe(
       `Noon is life, noon is disabled...`
     );
   });
@@ -171,7 +171,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
   it(`should have a member "NOON_IS_LIFE_NOON_IS_NOT_ENABLED"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.NOON_IS_LIFE_NOON_IS_NOT_ENABLED).toStrictEqual(
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.NOON_IS_LIFE_NOON_IS_NOT_ENABLED).toBe(
       `Noon is life, noon is not enabled...`
     );
   });
@@ -179,15 +179,15 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
   it(`should have a member "PLEASE_LET_ME_SPAM_YOU_WHEN_IT_IS_NOON"`, (): void => {
     expect.assertions(1);
 
-    expect(
-      DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.PLEASE_LET_ME_SPAM_YOU_WHEN_IT_IS_NOON
-    ).toStrictEqual(`Please let me spam you when it's noon!`);
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.PLEASE_LET_ME_SPAM_YOU_WHEN_IT_IS_NOON).toBe(
+      `Please let me spam you when it's noon!`
+    );
   });
 
   it(`should have a member "PLEASE_PLEASE_PLEASE_ALLOW_ME"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.PLEASE_PLEASE_PLEASE_ALLOW_ME).toStrictEqual(
+    expect(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.PLEASE_PLEASE_PLEASE_ALLOW_ME).toBe(
       `Please, please, please! Allow me!`
     );
   });
@@ -197,7 +197,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
 
     expect(
       DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.ROSES_ARE_RED_VIOLETS_ARE_BLUE_NOON_IS_DISABLED
-    ).toStrictEqual(`Roses are red. Violets are blue. Noon is disabled.`);
+    ).toBe(`Roses are red. Violets are blue. Noon is disabled.`);
   });
 
   it(`should have a member "SHOULD_NOT_I_DESERVE_AT_LEAST_THIS_ENABLE_IT"`, (): void => {
@@ -205,6 +205,6 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
 
     expect(
       DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.SHOULD_NOT_I_DESERVE_AT_LEAST_THIS_ENABLE_IT
-    ).toStrictEqual(`Shouldn't I deserve at least this? Enable it!`);
+    ).toBe(`Shouldn't I deserve at least this? Enable it!`);
   });
 });

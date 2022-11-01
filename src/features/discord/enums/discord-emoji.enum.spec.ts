@@ -11,48 +11,48 @@ describe(`DiscordEmojiEnum`, (): void => {
   it(`should have a member "FACE_WITH_RAISED_EYEBROW"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordEmojiEnum.FACE_WITH_RAISED_EYEBROW).toStrictEqual(`:face_with_raised_eyebrow:`);
+    expect(DiscordEmojiEnum.FACE_WITH_RAISED_EYEBROW).toBe(`:face_with_raised_eyebrow:`);
   });
 
   it(`should have a member "FACE_WITH_SYMBOLS_OVER_MOUTH"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordEmojiEnum.FACE_WITH_SYMBOLS_OVER_MOUTH).toStrictEqual(`:face_with_symbols_over_mouth:`);
+    expect(DiscordEmojiEnum.FACE_WITH_SYMBOLS_OVER_MOUTH).toBe(`:face_with_symbols_over_mouth:`);
   });
 
   it(`should have a member "GIFT_HEART"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordEmojiEnum.GIFT_HEART).toStrictEqual(`:gift_heart:`);
+    expect(DiscordEmojiEnum.GIFT_HEART).toBe(`:gift_heart:`);
   });
 
   it(`should have a member "PRAY"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordEmojiEnum.PRAY).toStrictEqual(`:pray:`);
+    expect(DiscordEmojiEnum.PRAY).toBe(`:pray:`);
   });
 
   it(`should have a member "THINKING"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordEmojiEnum.THINKING).toStrictEqual(`:thinking:`);
+    expect(DiscordEmojiEnum.THINKING).toBe(`:thinking:`);
   });
 
   it(`should have a member "WARNING"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordEmojiEnum.WARNING).toStrictEqual(`:warning:`);
+    expect(DiscordEmojiEnum.WARNING).toBe(`:warning:`);
   });
 
   it(`should have a member "WORRIED"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordEmojiEnum.WORRIED).toStrictEqual(`:worried:`);
+    expect(DiscordEmojiEnum.WORRIED).toBe(`:worried:`);
   });
 
   it(`should have a member "YUM"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordEmojiEnum.YUM).toStrictEqual(`:yum:`);
+    expect(DiscordEmojiEnum.YUM).toBe(`:yum:`);
   });
 });

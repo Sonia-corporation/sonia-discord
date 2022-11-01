@@ -264,7 +264,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
           const result = (await service.getDiscordMessageResponse(discordMessage)) as IDiscordMessageResponse;
 
-          expect(result.response).toStrictEqual(`Il est midi everyone!`);
+          expect(result.response).toBe(`Il est midi everyone!`);
         });
       });
 
@@ -278,7 +278,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
           const result = (await service.getDiscordMessageResponse(discordMessage)) as IDiscordMessageResponse;
 
-          expect(result.response).toStrictEqual(`**[dev]** Il est midi everyone!`);
+          expect(result.response).toBe(`**[dev]** Il est midi everyone!`);
         });
       });
     });

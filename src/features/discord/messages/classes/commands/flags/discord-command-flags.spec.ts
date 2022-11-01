@@ -493,7 +493,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameExample();
 
-        expect(result).toStrictEqual(``);
+        expect(result).toBe(``);
       });
     });
 
@@ -514,7 +514,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameExample();
 
-        expect(result).toStrictEqual(`\`--alpha-flag\``);
+        expect(result).toBe(`\`--alpha-flag\``);
       });
     });
 
@@ -541,7 +541,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameExample();
 
-        expect(result).toStrictEqual(`\`--alpha-flag\`, \`--beta-flag\``);
+        expect(result).toBe(`\`--alpha-flag\`, \`--beta-flag\``);
       });
     });
   });
@@ -572,7 +572,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(``);
+        expect(result).toBe(``);
       });
     });
 
@@ -593,7 +593,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(`\`--alpha-flag\``);
+        expect(result).toBe(`\`--alpha-flag\``);
       });
     });
 
@@ -615,7 +615,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(`\`--alpha-flag (or -beta-flag, -charlie-flag)\``);
+        expect(result).toBe(`\`--alpha-flag (or -beta-flag, -charlie-flag)\``);
       });
     });
 
@@ -642,7 +642,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(`\`--alpha-flag\`, \`--beta-flag\``);
+        expect(result).toBe(`\`--alpha-flag\`, \`--beta-flag\``);
       });
     });
 
@@ -671,7 +671,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
         const result = discordCommandFlags.getAllFlagsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(
+        expect(result).toBe(
           `\`--alpha-flag (or -beta-flag, -charlie-flag)\`, \`--delta-flag (or -echo-flag, -foxtrot-flag)\``
         );
       });
@@ -2756,7 +2756,7 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(result).toStrictEqual([discordCommandFlagSuccess]);
           expect(actionMock).toHaveBeenCalledTimes(1);
           expect(actionMock.mock.calls[0][0]).toStrictEqual(anyDiscordMessage);
-          expect(actionMock.mock.calls[0][1]).toStrictEqual(`true`);
+          expect(actionMock.mock.calls[0][1]).toBe(`true`);
           expect(actionMock.mock.calls[0][2]).toBeDefined();
         });
 
@@ -2966,10 +2966,10 @@ describe(`DiscordCommandFlags`, (): void => {
           expect(result).toStrictEqual([discordCommandFlagSuccess, discordCommandFlagSuccess]);
           expect(actionMock).toHaveBeenCalledTimes(2);
           expect(actionMock.mock.calls[0][0]).toStrictEqual(anyDiscordMessage);
-          expect(actionMock.mock.calls[0][1]).toStrictEqual(`true`);
+          expect(actionMock.mock.calls[0][1]).toBe(`true`);
           expect(actionMock.mock.calls[0][2]).toBeDefined();
           expect(actionMock.mock.calls[1][0]).toStrictEqual(anyDiscordMessage);
-          expect(actionMock.mock.calls[1][1]).toStrictEqual(`true`);
+          expect(actionMock.mock.calls[1][1]).toBe(`true`);
           expect(actionMock.mock.calls[1][2]).toBeDefined();
         });
 
@@ -3198,7 +3198,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
           expect(result).toStrictEqual(discordCommandFlagSuccess);
           expect(actionMock.mock.calls[0][0]).toStrictEqual(anyDiscordMessage);
-          expect(actionMock.mock.calls[0][1]).toStrictEqual(`true`);
+          expect(actionMock.mock.calls[0][1]).toBe(`true`);
           expect(actionMock.mock.calls[0][2]).toBeDefined();
         });
       });

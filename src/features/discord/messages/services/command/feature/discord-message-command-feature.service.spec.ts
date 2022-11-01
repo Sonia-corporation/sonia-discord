@@ -3358,7 +3358,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
         const result = service.getFlags(message);
 
-        expect(result).toStrictEqual(`--enabled=true`);
+        expect(result).toBe(`--enabled=true`);
       });
     });
 
@@ -3372,7 +3372,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
         const result = service.getFlags(message);
 
-        expect(result).toStrictEqual(`--disabled=true`);
+        expect(result).toBe(`--disabled=true`);
       });
     });
 
@@ -3386,7 +3386,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
         const result = service.getFlags(message);
 
-        expect(result).toStrictEqual(`--help`);
+        expect(result).toBe(`--help`);
       });
     });
 
@@ -3400,7 +3400,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
         const result = service.getFlags(message);
 
-        expect(result).toStrictEqual(`--enabled=true -e --enabled=false`);
+        expect(result).toBe(`--enabled=true -e --enabled=false`);
       });
     });
 
@@ -3414,7 +3414,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
         const result = service.getFlags(message);
 
-        expect(result).toStrictEqual(`--disabled=true -d --disabled=false`);
+        expect(result).toBe(`--disabled=true -d --disabled=false`);
       });
     });
 
@@ -3428,7 +3428,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
         const result = service.getFlags(message);
 
-        expect(result).toStrictEqual(`--help -h --help`);
+        expect(result).toBe(`--help -h --help`);
       });
     });
   });

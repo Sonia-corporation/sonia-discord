@@ -139,7 +139,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
       const result = service.getCorporationMessageEmbedAuthorIconUrl();
 
-      expect(result).toStrictEqual(`dummy-icon-url`);
+      expect(result).toBe(`dummy-icon-url`);
     });
   });
 
@@ -154,7 +154,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
       const result = service.getCorporationMessageEmbedAuthorName();
 
-      expect(result).toStrictEqual(`dummy-name`);
+      expect(result).toBe(`dummy-name`);
     });
   });
 
@@ -169,7 +169,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
       const result = service.getCorporationMessageEmbedAuthorUrl();
 
-      expect(result).toStrictEqual(`dummy-url`);
+      expect(result).toBe(`dummy-url`);
     });
   });
 
@@ -237,7 +237,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
       const result = service.getId();
 
-      expect(result).toStrictEqual(`dummy-id`);
+      expect(result).toBe(`dummy-id`);
     });
   });
 
@@ -252,7 +252,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
       const result = service.getSecretToken();
 
-      expect(result).toStrictEqual(`dummy-secret-token`);
+      expect(result).toBe(`dummy-secret-token`);
     });
   });
 });

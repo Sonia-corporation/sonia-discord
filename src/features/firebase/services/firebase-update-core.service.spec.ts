@@ -138,7 +138,7 @@ describe(`FirebaseUpdateCoreService`, (): void => {
 
         const result = service.getUpToDate(entity, createEntity);
 
-        expect(result.id).toStrictEqual(`dummy-id`);
+        expect(result.id).toBe(`dummy-id`);
       });
     });
 

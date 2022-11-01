@@ -11,18 +11,18 @@ describe(`LoggerConfigValueNameEnum`, (): void => {
   it(`should have a member "IS_ENABLED"`, (): void => {
     expect.assertions(1);
 
-    expect(LoggerConfigValueNameEnum.IS_ENABLED).toStrictEqual(`enable state`);
+    expect(LoggerConfigValueNameEnum.IS_ENABLED).toBe(`enable state`);
   });
 
   it(`should have a member "LEVEL"`, (): void => {
     expect.assertions(1);
 
-    expect(LoggerConfigValueNameEnum.LEVEL).toStrictEqual(`level`);
+    expect(LoggerConfigValueNameEnum.LEVEL).toBe(`level`);
   });
 
   it(`should have a member "SHOULD_DISPLAY_MORE_DEBUG_LOGS"`, (): void => {
     expect.assertions(1);
 
-    expect(LoggerConfigValueNameEnum.SHOULD_DISPLAY_MORE_DEBUG_LOGS).toStrictEqual(`should display more debug logs`);
+    expect(LoggerConfigValueNameEnum.SHOULD_DISPLAY_MORE_DEBUG_LOGS).toBe(`should display more debug logs`);
   });
 });

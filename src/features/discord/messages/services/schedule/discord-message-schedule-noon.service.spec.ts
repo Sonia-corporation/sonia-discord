@@ -30,6 +30,7 @@ import * as NodeScheduleModule from 'node-schedule';
 import { noop } from 'rxjs';
 import { createMock } from 'ts-auto-mock';
 
+// eslint-disable-next-line jest/require-hook
 let time: number = new Date(`2020-01-02T02:00:00Z`).getTime();
 
 jest.mock(`../../../../logger/services/chalk/chalk.service`);

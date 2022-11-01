@@ -652,7 +652,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
 
         const result = await service.getMessageResponse(isEnabled);
 
-        expect(result.response).toStrictEqual(`The release notes feature is disabled.`);
+        expect(result.response).toBe(`The release notes feature is disabled.`);
       });
     });
 
@@ -666,7 +666,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
 
         const result = await service.getMessageResponse(isEnabled);
 
-        expect(result.response).toStrictEqual(`The release notes feature is disabled.`);
+        expect(result.response).toBe(`The release notes feature is disabled.`);
       });
     });
 
@@ -680,7 +680,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
 
         const result = await service.getMessageResponse(isEnabled);
 
-        expect(result.response).toStrictEqual(`The release notes feature is enabled.`);
+        expect(result.response).toBe(`The release notes feature is enabled.`);
       });
     });
   });

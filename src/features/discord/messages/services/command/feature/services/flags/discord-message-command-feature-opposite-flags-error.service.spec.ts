@@ -139,7 +139,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(oppositeFlags);
 
-        expect(result.options.embed?.description).toStrictEqual(`**1** opposite flag error found.`);
+        expect(result.options.embed?.description).toBe(`**1** opposite flag error found.`);
       });
 
       it(`should return a Discord message response embed with 2 fields`, async (): Promise<void> => {
@@ -188,7 +188,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(oppositeFlags);
 
-        expect(result.options.embed?.description).toStrictEqual(`**3** opposite flag errors found.`);
+        expect(result.options.embed?.description).toBe(`**3** opposite flag errors found.`);
       });
 
       it(`should return a Discord message response embed with 4 fields`, async (): Promise<void> => {
@@ -298,7 +298,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
       const result = await service.getMessageResponse(oppositeFlags);
 
       expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -306,7 +306,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(oppositeFlags);
 
-      expect(result.options.embed?.title).toStrictEqual(`I can not handle your request.`);
+      expect(result.options.embed?.title).toBe(`I can not handle your request.`);
     });
 
     it(`should return a Discord message response not split`, async (): Promise<void> => {
@@ -322,7 +322,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(oppositeFlags);
 
-      expect(result.response).toStrictEqual(``);
+      expect(result.response).toBe(``);
     });
   });
 });

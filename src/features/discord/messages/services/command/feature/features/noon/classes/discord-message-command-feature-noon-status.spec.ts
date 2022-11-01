@@ -595,7 +595,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
         const result = await service.getMessageResponse(isEnabled);
 
-        expect(result.response).toStrictEqual(`The noon feature is disabled.`);
+        expect(result.response).toBe(`The noon feature is disabled.`);
       });
     });
 
@@ -609,7 +609,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
         const result = await service.getMessageResponse(isEnabled);
 
-        expect(result.response).toStrictEqual(`The noon feature is disabled.`);
+        expect(result.response).toBe(`The noon feature is disabled.`);
       });
     });
 
@@ -623,7 +623,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
         const result = await service.getMessageResponse(isEnabled);
 
-        expect(result.response).toStrictEqual(`The noon feature is enabled.`);
+        expect(result.response).toBe(`The noon feature is enabled.`);
       });
     });
   });

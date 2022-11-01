@@ -139,7 +139,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
-        expect(result.options.embed?.description).toStrictEqual(`**1** duplicated flag found.`);
+        expect(result.options.embed?.description).toBe(`**1** duplicated flag found.`);
       });
 
       it(`should return a Discord message response embed with 2 fields`, async (): Promise<void> => {
@@ -188,7 +188,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
-        expect(result.options.embed?.description).toStrictEqual(`**3** duplicated flags found.`);
+        expect(result.options.embed?.description).toBe(`**3** duplicated flags found.`);
       });
 
       it(`should return a Discord message response embed with 4 fields`, async (): Promise<void> => {
@@ -298,7 +298,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
       const result = await service.getMessageResponse(flagsDuplicated);
 
       expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -306,7 +306,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
       const result = await service.getMessageResponse(flagsDuplicated);
 
-      expect(result.options.embed?.title).toStrictEqual(`I can not handle your request.`);
+      expect(result.options.embed?.title).toBe(`I can not handle your request.`);
     });
 
     it(`should return a Discord message response not split`, async (): Promise<void> => {
@@ -322,7 +322,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
       const result = await service.getMessageResponse(flagsDuplicated);
 
-      expect(result.response).toStrictEqual(``);
+      expect(result.response).toBe(``);
     });
   });
 });

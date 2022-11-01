@@ -246,7 +246,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
       const result = service.create(channel);
 
-      expect(result.id).toStrictEqual(`dummy-id`);
+      expect(result.id).toBe(`dummy-id`);
     });
 
     it(`should return a channel on v2`, (): void => {
@@ -350,7 +350,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.getUpToDate(channel, createChannel);
 
-        expect(result.id).toStrictEqual(`dummy-id`);
+        expect(result.id).toBe(`dummy-id`);
         expect(result.version).toBe(2);
         expect(result.features).toBeUndefined();
       });
@@ -370,7 +370,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.getUpToDate(channel, createChannel);
 
-        expect(result.id).toStrictEqual(`dummy-id`);
+        expect(result.id).toBe(`dummy-id`);
         expect(result.version).toBe(2);
         expect(result.features).toBeUndefined();
       });
@@ -390,7 +390,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.getUpToDate(channel, createChannel);
 
-        expect(result.id).toStrictEqual(`dummy-id`);
+        expect(result.id).toBe(`dummy-id`);
         expect(result.version).toBe(2);
         expect(result.features).toBeUndefined();
       });

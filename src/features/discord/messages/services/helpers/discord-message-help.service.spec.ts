@@ -184,7 +184,7 @@ describe(`DiscordMessageHelpService`, (): void => {
       const result = await service.getMessageResponse();
 
       expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed without a title`, async (): Promise<void> => {
@@ -208,7 +208,7 @@ describe(`DiscordMessageHelpService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.response).toStrictEqual(``);
+      expect(result.response).toBe(``);
     });
   });
 });

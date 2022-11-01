@@ -52,7 +52,7 @@ describe(`QuoteConfigCoreService`, (): void => {
 
     service = QuoteConfigCoreService.getInstance();
 
-    expect(service.apiKey).toStrictEqual(`unknown`);
+    expect(service.apiKey).toBe(`unknown`);
   });
 
   it(`should have an author icon url`, (): void => {
@@ -60,9 +60,7 @@ describe(`QuoteConfigCoreService`, (): void => {
 
     service = QuoteConfigCoreService.getInstance();
 
-    expect(service.authorIconUrl).toStrictEqual(
-      `https://i.ibb.co/4SsVxDQ/icons8-futurama-professor-farnsworth-512.png`
-    );
+    expect(service.authorIconUrl).toBe(`https://i.ibb.co/4SsVxDQ/icons8-futurama-professor-farnsworth-512.png`);
   });
 
   it(`should have an image color`, (): void => {
@@ -78,6 +76,6 @@ describe(`QuoteConfigCoreService`, (): void => {
 
     service = QuoteConfigCoreService.getInstance();
 
-    expect(service.imageUrl).toStrictEqual(`https://i.ibb.co/qJDxmc8/icons8-motivation-daily-quotes-512.png`);
+    expect(service.imageUrl).toBe(`https://i.ibb.co/qJDxmc8/icons8-motivation-daily-quotes-512.png`);
   });
 });
