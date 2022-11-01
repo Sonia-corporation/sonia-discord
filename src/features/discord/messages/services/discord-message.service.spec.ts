@@ -461,7 +461,7 @@ describe(`DiscordMessageService`, (): void => {
       discordChannelServiceIsValidSpy = jest.spyOn(discordChannelService, `isValid`);
       discordChannelTypingServiceAddOneIndicatorSpy = jest
         .spyOn(discordChannelTypingService, `addOneIndicator`)
-        .mockRejectedValue(new Error(`addOneIndicator error`));
+        .mockResolvedValue();
       discordChannelTypingServiceRemoveOneIndicatorSpy = jest
         .spyOn(discordChannelTypingService, `removeOneIndicator`)
         .mockImplementation();
