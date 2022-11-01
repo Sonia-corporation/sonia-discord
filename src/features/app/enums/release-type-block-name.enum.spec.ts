@@ -5,7 +5,7 @@ describe(`ReleaseTypeBlockNameEnum`, (): void => {
   it(`should have 3 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ReleaseTypeBlockNameEnum)).toStrictEqual(3);
+    expect(getEnumLength(ReleaseTypeBlockNameEnum)).toBe(3);
   });
 
   it(`should have a member "BUG_FIXES"`, (): void => {

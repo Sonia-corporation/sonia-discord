@@ -385,7 +385,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       const result = await service.isAuthenticated$().pipe(take(1)).toPromise();
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
 
     describe(`when the is authenticated event is notified`, (): void => {
@@ -395,7 +395,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
         const result = await service.isAuthenticated$().pipe(take(1)).toPromise();
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -411,7 +411,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       const result = await service.isAuthenticated$().pipe(take(1)).toPromise();
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 });

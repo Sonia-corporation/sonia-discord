@@ -89,7 +89,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
       const result = service.shouldSendCookiesOnCreate();
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -104,7 +104,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
       const result = service.shouldSendNoonMessage();
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -119,7 +119,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
       const result = service.shouldWelcomeNewMembers();
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 

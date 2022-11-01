@@ -5,7 +5,7 @@ describe(`ChalkColorEnum`, (): void => {
   it(`should have 9 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ChalkColorEnum)).toStrictEqual(9);
+    expect(getEnumLength(ChalkColorEnum)).toBe(9);
   });
 
   it(`should have a member "AURORA_GREEN"`, (): void => {

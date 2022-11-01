@@ -5,7 +5,7 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
   it(`should have 36 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessagePingPongResponseMessagesEnum)).toStrictEqual(36);
+    expect(getEnumLength(DiscordMessagePingPongResponseMessagesEnum)).toBe(36);
   });
 
   it(`should have a member "ARE_YOU_LOOKING_FOR_A_RESPONSE"`, (): void => {

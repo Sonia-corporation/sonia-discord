@@ -5,7 +5,7 @@ describe(`LoggerConfigLevelEnum`, (): void => {
   it(`should have 5 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(LoggerConfigLevelEnum)).toStrictEqual(5);
+    expect(getEnumLength(LoggerConfigLevelEnum)).toBe(5);
   });
 
   it(`should have a member "ERROR"`, (): void => {

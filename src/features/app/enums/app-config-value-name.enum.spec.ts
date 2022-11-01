@@ -5,7 +5,7 @@ describe(`AppConfigValueNameEnum`, (): void => {
   it(`should have 8 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(AppConfigValueNameEnum)).toStrictEqual(8);
+    expect(getEnumLength(AppConfigValueNameEnum)).toBe(8);
   });
 
   it(`should have a member "FIRST_RELEASE_DATE"`, (): void => {

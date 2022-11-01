@@ -5,7 +5,7 @@ describe(`DiscordSoniaEmotionalStateEnum`, (): void => {
   it(`should have 34 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordSoniaEmotionalStateEnum)).toStrictEqual(34);
+    expect(getEnumLength(DiscordSoniaEmotionalStateEnum)).toBe(34);
   });
 
   it(`should have a member "AGITATED"`, (): void => {

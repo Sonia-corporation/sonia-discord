@@ -5,7 +5,7 @@ describe(`ServiceNameEnum`, (): void => {
   it(`should have 122 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ServiceNameEnum)).toStrictEqual(122);
+    expect(getEnumLength(ServiceNameEnum)).toBe(122);
   });
 
   it(`should have a member "APP_CONFIG_CORE_SERVICE"`, (): void => {

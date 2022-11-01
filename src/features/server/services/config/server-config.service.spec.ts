@@ -79,7 +79,7 @@ describe(`ServerConfigService`, (): void => {
 
       const result = service.getPort();
 
-      expect(result).toStrictEqual(1234);
+      expect(result).toBe(1234);
     });
   });
 });

@@ -54,7 +54,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = new DiscordMessageConfigCoreService();
 
-    expect(service.command.cliError.imageColor).toStrictEqual(15562905);
+    expect(service.command.cliError.imageColor).toBe(15562905);
   });
 
   it(`should have a specific url for the image of the CLI error command`, (): void => {
@@ -70,7 +70,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.cookie.imageColor).toStrictEqual(16376750);
+    expect(service.command.cookie.imageColor).toBe(16376750);
   });
 
   it(`should have a specific url for the image of the cookie command`, (): void => {
@@ -86,7 +86,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.error.imageColor).toStrictEqual(15562905);
+    expect(service.command.error.imageColor).toBe(15562905);
   });
 
   it(`should have a specific url for the image of the error command`, (): void => {
@@ -102,7 +102,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.help.imageColor).toStrictEqual(7522991);
+    expect(service.command.help.imageColor).toBe(7522991);
   });
 
   it(`should have a specific url for the image of the help command`, (): void => {
@@ -118,7 +118,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.lunch.imageColor).toStrictEqual(14082034);
+    expect(service.command.lunch.imageColor).toBe(14082034);
   });
 
   it(`should have a specific url for the image of the lunch command`, (): void => {
@@ -142,7 +142,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.bugFixes.imageColor).toStrictEqual(9146008);
+    expect(service.command.releaseNotes.bugFixes.imageColor).toBe(9146008);
   });
 
   it(`should have a specific url for the image of the release notes bug fixes command`, (): void => {
@@ -160,7 +160,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.features.imageColor).toStrictEqual(15562905);
+    expect(service.command.releaseNotes.features.imageColor).toBe(15562905);
   });
 
   it(`should have a specific url for the image of the release notes features command`, (): void => {
@@ -176,7 +176,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.mixed.imageColor).toStrictEqual(15718590);
+    expect(service.command.releaseNotes.mixed.imageColor).toBe(15718590);
   });
 
   it(`should have a specific url for the image of the release notes mixed command`, (): void => {
@@ -194,7 +194,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.performanceImprovements.imageColor).toStrictEqual(15562905);
+    expect(service.command.releaseNotes.performanceImprovements.imageColor).toBe(15562905);
   });
 
   it(`should have a specific url for the image of the release notes performance improvements command`, (): void => {
@@ -212,7 +212,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.releaseNotes.unknown.imageColor).toStrictEqual(15718590);
+    expect(service.command.releaseNotes.unknown.imageColor).toBe(15718590);
   });
 
   it(`should have a specific url for the image of the release notes unknown command`, (): void => {
@@ -230,7 +230,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.command.version.imageColor).toStrictEqual(11912416);
+    expect(service.command.version.imageColor).toBe(11912416);
   });
 
   it(`should have a specific url for the image of the version command`, (): void => {
@@ -248,7 +248,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.error.imageColor).toStrictEqual(15562905);
+    expect(service.error.imageColor).toBe(15562905);
   });
 
   it(`should have a specific url for the image of the error`, (): void => {
@@ -264,7 +264,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
     service = DiscordMessageConfigCoreService.getInstance();
 
-    expect(service.warning.imageColor).toStrictEqual(15562905);
+    expect(service.warning.imageColor).toBe(15562905);
   });
 
   it(`should have a specific url for the image of the warning`, (): void => {

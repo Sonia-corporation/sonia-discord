@@ -352,7 +352,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(moment(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.timestamp).isValid()).toStrictEqual(true);
+        expect(moment(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.timestamp).isValid()).toBe(true);
         expect(moment(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.timestamp).fromNow()).toStrictEqual(
           `a few seconds ago`
         );
@@ -373,7 +373,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].split).toStrictEqual(false);
+        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].split).toBe(false);
       });
 
       it(`should send a message to this channel without a response`, (): void => {
@@ -562,7 +562,7 @@ describe(`DiscordMessageErrorService`, (): void => {
         moment(
           discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.timestamp
         ).isValid()
-      ).toStrictEqual(true);
+      ).toBe(true);
       expect(
         moment(
           discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.timestamp
@@ -585,9 +585,9 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service.handleError(error, anyDiscordMessage);
 
-      expect(
-        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.split
-      ).toStrictEqual(false);
+      expect(discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.split).toBe(
+        false
+      );
     });
 
     it(`should send a message to the Sonia error channel without a response`, (): void => {

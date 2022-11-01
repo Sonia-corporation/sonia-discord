@@ -4,6 +4,6 @@ describe(`LOGGER_DEBUG_LEVEL`, (): void => {
   it(`should be 4`, (): void => {
     expect.assertions(1);
 
-    expect(LOGGER_DEBUG_LEVEL).toStrictEqual(4);
+    expect(LOGGER_DEBUG_LEVEL).toBe(4);
   });
 });

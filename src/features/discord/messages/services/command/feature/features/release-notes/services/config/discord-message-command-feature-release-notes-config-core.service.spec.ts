@@ -54,7 +54,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesConfigCoreService`, (): void =
 
     service = DiscordMessageCommandFeatureReleaseNotesConfigCoreService.getInstance();
 
-    expect(service.releaseNotes.imageColor).toStrictEqual(15718590);
+    expect(service.releaseNotes.imageColor).toBe(15718590);
   });
 
   it(`should have a specific url for the image of the feature release notes command`, (): void => {

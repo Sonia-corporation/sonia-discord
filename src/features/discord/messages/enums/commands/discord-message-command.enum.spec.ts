@@ -5,7 +5,7 @@ describe(`DiscordMessageCommandEnum`, (): void => {
   it(`should have 17 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageCommandEnum)).toStrictEqual(17);
+    expect(getEnumLength(DiscordMessageCommandEnum)).toBe(17);
   });
 
   it(`should have a member "VERSION"`, (): void => {

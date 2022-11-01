@@ -5,7 +5,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum`, (): voi
   it(`should have 25 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum)).toStrictEqual(25);
+    expect(getEnumLength(DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum)).toBe(25);
   });
 
   it(`should have a member "CAN_I_COUNT_ON_YOU_TO_ENABLE_NOON"`, (): void => {

@@ -5,7 +5,7 @@ describe(`AppProductionStateEnum`, (): void => {
   it(`should have 2 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(AppProductionStateEnum)).toStrictEqual(2);
+    expect(getEnumLength(AppProductionStateEnum)).toBe(2);
   });
 
   it(`should have a member "DEVELOPMENT"`, (): void => {

@@ -40,6 +40,6 @@ describe(`createFirebaseGuild()`, (): void => {
 
     const result = createFirebaseGuild(data);
 
-    expect(result.version).toStrictEqual(5);
+    expect(result.version).toBe(5);
   });
 });

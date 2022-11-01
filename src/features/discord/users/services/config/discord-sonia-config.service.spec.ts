@@ -207,7 +207,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
         const result = service.isGuildWhitelistedInDev(guild);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -221,7 +221,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
         const result = service.isGuildWhitelistedInDev(guild);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });

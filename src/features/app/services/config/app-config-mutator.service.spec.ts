@@ -113,7 +113,7 @@ describe(`AppConfigMutationService`, (): void => {
 
         service = new AppConfigMutatorService(config);
 
-        expect(appConfigCoreService.isProduction).toStrictEqual(false);
+        expect(appConfigCoreService.isProduction).toBe(false);
       });
 
       it(`should not update the current release date`, (): void => {
@@ -150,7 +150,7 @@ describe(`AppConfigMutationService`, (): void => {
 
         service = new AppConfigMutatorService(config);
 
-        expect(appConfigCoreService.totalReleaseCount).toStrictEqual(8);
+        expect(appConfigCoreService.totalReleaseCount).toBe(8);
       });
 
       it(`should not update the current version`, (): void => {
@@ -200,7 +200,7 @@ describe(`AppConfigMutationService`, (): void => {
 
         service = new AppConfigMutatorService(config);
 
-        expect(appConfigCoreService.isProduction).toStrictEqual(true);
+        expect(appConfigCoreService.isProduction).toBe(true);
       });
 
       it(`should override the release date`, (): void => {
@@ -237,7 +237,7 @@ describe(`AppConfigMutationService`, (): void => {
 
         service = new AppConfigMutatorService(config);
 
-        expect(appConfigCoreService.totalReleaseCount).toStrictEqual(88);
+        expect(appConfigCoreService.totalReleaseCount).toBe(88);
       });
 
       it(`should override the version`, (): void => {
@@ -272,7 +272,7 @@ describe(`AppConfigMutationService`, (): void => {
 
         service.init();
 
-        expect(appConfigCoreService.isProduction).toStrictEqual(true);
+        expect(appConfigCoreService.isProduction).toBe(true);
       });
     });
 
@@ -288,7 +288,7 @@ describe(`AppConfigMutationService`, (): void => {
 
         service.init();
 
-        expect(appConfigCoreService.isProduction).toStrictEqual(false);
+        expect(appConfigCoreService.isProduction).toBe(false);
       });
     });
 
@@ -413,11 +413,11 @@ describe(`AppConfigMutationService`, (): void => {
 
       expect(appConfigCoreService.firstReleaseDate).toStrictEqual(`dummy-first-release-date`);
       expect(appConfigCoreService.initializationDate).toStrictEqual(`dummy-initialization-date`);
-      expect(appConfigCoreService.isProduction).toStrictEqual(true);
+      expect(appConfigCoreService.isProduction).toBe(true);
       expect(appConfigCoreService.releaseDate).toStrictEqual(`dummy-release-date`);
       expect(appConfigCoreService.releaseNotes).toStrictEqual(`dummy-release-notes`);
       expect(appConfigCoreService.releaseType).toStrictEqual(AppConfigReleaseTypeEnum.FEATURES);
-      expect(appConfigCoreService.totalReleaseCount).toStrictEqual(8);
+      expect(appConfigCoreService.totalReleaseCount).toBe(8);
       expect(appConfigCoreService.version).toStrictEqual(`dummy-version`);
     });
 
@@ -441,11 +441,11 @@ describe(`AppConfigMutationService`, (): void => {
 
         expect(appConfigCoreService.firstReleaseDate).toStrictEqual(`dummy-first-release-date`);
         expect(appConfigCoreService.initializationDate).toStrictEqual(`dummy-initialization-date`);
-        expect(appConfigCoreService.isProduction).toStrictEqual(true);
+        expect(appConfigCoreService.isProduction).toBe(true);
         expect(appConfigCoreService.releaseDate).toStrictEqual(`dummy-release-date`);
         expect(appConfigCoreService.releaseNotes).toStrictEqual(`dummy-release-notes`);
         expect(appConfigCoreService.releaseType).toStrictEqual(AppConfigReleaseTypeEnum.FEATURES);
-        expect(appConfigCoreService.totalReleaseCount).toStrictEqual(8);
+        expect(appConfigCoreService.totalReleaseCount).toBe(8);
         expect(appConfigCoreService.version).toStrictEqual(`dummy-version`);
       });
 
@@ -524,7 +524,7 @@ describe(`AppConfigMutationService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(appConfigCoreService.isProduction).toStrictEqual(false);
+        expect(appConfigCoreService.isProduction).toBe(false);
       });
 
       it(`should log about the config update`, (): void => {
@@ -615,7 +615,7 @@ describe(`AppConfigMutationService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(appConfigCoreService.totalReleaseCount).toStrictEqual(9);
+        expect(appConfigCoreService.totalReleaseCount).toBe(9);
       });
 
       it(`should log about the config update`, (): void => {
@@ -766,7 +766,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.updateProductionState(isProduction);
 
-      expect(appConfigCoreService.isProduction).toStrictEqual(false);
+      expect(appConfigCoreService.isProduction).toBe(false);
     });
   });
 
@@ -916,7 +916,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.updateTotalReleaseCount(totalReleaseCount);
 
-      expect(appConfigCoreService.totalReleaseCount).toStrictEqual(8);
+      expect(appConfigCoreService.totalReleaseCount).toBe(8);
     });
   });
 

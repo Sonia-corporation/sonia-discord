@@ -89,7 +89,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service = new LoggerConfigMutatorService(config);
 
-        expect(loggerConfigCoreService.isEnabled).toStrictEqual(true);
+        expect(loggerConfigCoreService.isEnabled).toBe(true);
       });
 
       it(`should not update the current level`, (): void => {
@@ -107,7 +107,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service = new LoggerConfigMutatorService(config);
 
-        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toStrictEqual(false);
+        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBe(false);
       });
     });
 
@@ -126,7 +126,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service = new LoggerConfigMutatorService(config);
 
-        expect(loggerConfigCoreService.isEnabled).toStrictEqual(true);
+        expect(loggerConfigCoreService.isEnabled).toBe(true);
       });
 
       it(`should override the level`, (): void => {
@@ -144,7 +144,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service = new LoggerConfigMutatorService(config);
 
-        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toStrictEqual(false);
+        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBe(false);
       });
     });
   });
@@ -209,9 +209,9 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
       service.updateConfig();
 
-      expect(loggerConfigCoreService.isEnabled).toStrictEqual(true);
+      expect(loggerConfigCoreService.isEnabled).toBe(true);
       expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
-      expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toStrictEqual(false);
+      expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBe(false);
     });
 
     it(`should not log about the config update`, (): void => {
@@ -232,9 +232,9 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerConfigCoreService.isEnabled).toStrictEqual(true);
+        expect(loggerConfigCoreService.isEnabled).toBe(true);
         expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
-        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toStrictEqual(false);
+        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBe(false);
       });
 
       it(`should not log about the config update`, (): void => {
@@ -258,7 +258,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerConfigCoreService.isEnabled).toStrictEqual(false);
+        expect(loggerConfigCoreService.isEnabled).toBe(false);
       });
 
       it(`should log about the config update`, (): void => {
@@ -314,7 +314,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toStrictEqual(true);
+        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBe(true);
       });
 
       it(`should log about the config update`, (): void => {
@@ -363,7 +363,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
       service.updateEnabledState(isEnabled);
 
-      expect(loggerConfigCoreService.isEnabled).toStrictEqual(true);
+      expect(loggerConfigCoreService.isEnabled).toBe(true);
     });
   });
 
@@ -437,7 +437,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
       service.updateShouldDisplayMoreDebugLogsState(shouldDisplayMoreDebugLogs);
 
-      expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toStrictEqual(false);
+      expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBe(false);
     });
   });
 });

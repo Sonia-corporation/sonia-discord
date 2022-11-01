@@ -5,7 +5,7 @@ describe(`LoggerConfigValueNameEnum`, (): void => {
   it(`should have 3 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(LoggerConfigValueNameEnum)).toStrictEqual(3);
+    expect(getEnumLength(LoggerConfigValueNameEnum)).toBe(3);
   });
 
   it(`should have a member "IS_ENABLED"`, (): void => {

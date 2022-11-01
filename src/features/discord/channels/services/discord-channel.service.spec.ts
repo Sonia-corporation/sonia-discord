@@ -79,7 +79,7 @@ describe(`DiscordChannelService`, (): void => {
 
           const result = service.isValid(channel);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -93,7 +93,7 @@ describe(`DiscordChannelService`, (): void => {
 
           const result = service.isValid(channel);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
     });
@@ -113,7 +113,7 @@ describe(`DiscordChannelService`, (): void => {
 
           const result = service.isValid(channel);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
 
@@ -127,7 +127,7 @@ describe(`DiscordChannelService`, (): void => {
 
           const result = service.isValid(channel);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
     });
@@ -154,7 +154,7 @@ describe(`DiscordChannelService`, (): void => {
 
         const result = service.isText(channel);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -168,7 +168,7 @@ describe(`DiscordChannelService`, (): void => {
 
         const result = service.isText(channel);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });
@@ -194,7 +194,7 @@ describe(`DiscordChannelService`, (): void => {
 
         const result = service.isDm(channel);
 
-        expect(result).toStrictEqual(false);
+        expect(result).toBe(false);
       });
     });
 
@@ -208,7 +208,7 @@ describe(`DiscordChannelService`, (): void => {
 
         const result = service.isDm(channel);
 
-        expect(result).toStrictEqual(true);
+        expect(result).toBe(true);
       });
     });
   });

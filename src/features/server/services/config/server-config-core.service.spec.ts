@@ -52,6 +52,6 @@ describe(`ServerConfigCoreService`, (): void => {
 
     service = ServerConfigCoreService.getInstance();
 
-    expect(service.port).toStrictEqual(3001);
+    expect(service.port).toBe(3001);
   });
 });

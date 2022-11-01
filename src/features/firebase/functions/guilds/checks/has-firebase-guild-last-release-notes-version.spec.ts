@@ -23,7 +23,7 @@ describe(`hasFirebaseGuildLastReleaseNotesVersion()`, (): void => {
 
       const result = hasFirebaseGuildLastReleaseNotesVersion(firebaseGuild);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -39,7 +39,7 @@ describe(`hasFirebaseGuildLastReleaseNotesVersion()`, (): void => {
 
       const result = hasFirebaseGuildLastReleaseNotesVersion(firebaseGuild);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -55,7 +55,7 @@ describe(`hasFirebaseGuildLastReleaseNotesVersion()`, (): void => {
 
       const result = hasFirebaseGuildLastReleaseNotesVersion(firebaseGuild);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -71,7 +71,7 @@ describe(`hasFirebaseGuildLastReleaseNotesVersion()`, (): void => {
 
       const result = hasFirebaseGuildLastReleaseNotesVersion(firebaseGuild);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -87,7 +87,7 @@ describe(`hasFirebaseGuildLastReleaseNotesVersion()`, (): void => {
 
       const result = hasFirebaseGuildLastReleaseNotesVersion(firebaseGuild);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 });

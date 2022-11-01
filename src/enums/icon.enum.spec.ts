@@ -5,7 +5,7 @@ describe(`IconEnum`, (): void => {
   it(`should have 16 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(IconEnum)).toStrictEqual(16);
+    expect(getEnumLength(IconEnum)).toBe(16);
   });
 
   it(`should have a member "ALARM"`, (): void => {

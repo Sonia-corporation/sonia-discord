@@ -429,6 +429,12 @@ overrides:
       - 'plugin:jest/style'
       - 'plugin:jest/all'
     rules:
+      jest/max-nested-describe: off
+      jest/prefer-expect-resolves: error
+      jest/prefer-to-be: error
+      jest/valid-expect-in-promise: error
+      jest/valid-title: error
+      jest/require-hook: error
       jest/no-done-callback: error
       jest/no-disabled-tests: warn
       jest/lowercase-name:

@@ -28,7 +28,7 @@ describe(`getInterpolationRegexp()`, (): void => {
 
         const result = getInterpolationRegexp(value);
 
-        expect(xregexp.test(text, result)).toStrictEqual(false);
+        expect(xregexp.test(text, result)).toBe(false);
       });
     });
 
@@ -42,7 +42,7 @@ describe(`getInterpolationRegexp()`, (): void => {
 
         const result = getInterpolationRegexp(value);
 
-        expect(xregexp.test(text, result)).toStrictEqual(false);
+        expect(xregexp.test(text, result)).toBe(false);
       });
     });
 
@@ -56,7 +56,7 @@ describe(`getInterpolationRegexp()`, (): void => {
 
         const result = getInterpolationRegexp(value);
 
-        expect(xregexp.test(text, result)).toStrictEqual(true);
+        expect(xregexp.test(text, result)).toBe(true);
       });
     });
 
@@ -70,7 +70,7 @@ describe(`getInterpolationRegexp()`, (): void => {
 
         const result = getInterpolationRegexp(value);
 
-        expect(xregexp.test(text, result)).toStrictEqual(true);
+        expect(xregexp.test(text, result)).toBe(true);
       });
     });
 
@@ -84,7 +84,7 @@ describe(`getInterpolationRegexp()`, (): void => {
 
         const result = getInterpolationRegexp(value);
 
-        expect(xregexp.test(text, result)).toStrictEqual(true);
+        expect(xregexp.test(text, result)).toBe(true);
       });
     });
   });

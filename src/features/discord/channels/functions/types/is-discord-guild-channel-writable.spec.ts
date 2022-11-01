@@ -20,7 +20,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
 
       const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -38,7 +38,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
 
       const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -56,7 +56,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
 
       const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 
@@ -74,7 +74,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
 
       const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(result).toStrictEqual(true);
+      expect(result).toBe(true);
     });
   });
 
@@ -92,7 +92,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
 
       const result = isDiscordGuildChannelWritable(guildChannel);
 
-      expect(result).toStrictEqual(false);
+      expect(result).toBe(false);
     });
   });
 });

@@ -4,6 +4,6 @@ describe(`LOGGER_WARNING_LEVEL`, (): void => {
   it(`should be 1`, (): void => {
     expect.assertions(1);
 
-    expect(LOGGER_WARNING_LEVEL).toStrictEqual(1);
+    expect(LOGGER_WARNING_LEVEL).toBe(1);
   });
 });

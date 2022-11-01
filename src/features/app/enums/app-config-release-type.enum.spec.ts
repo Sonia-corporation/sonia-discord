@@ -5,7 +5,7 @@ describe(`AppConfigReleaseTypeEnum`, (): void => {
   it(`should have 5 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(AppConfigReleaseTypeEnum)).toStrictEqual(5);
+    expect(getEnumLength(AppConfigReleaseTypeEnum)).toBe(5);
   });
 
   it(`should have a member "UNKNOWN"`, (): void => {

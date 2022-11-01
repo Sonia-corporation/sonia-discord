@@ -30,7 +30,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -44,7 +44,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -64,7 +64,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -78,7 +78,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -98,7 +98,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -112,7 +112,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -132,7 +132,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -146,7 +146,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -172,7 +172,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -186,7 +186,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -206,7 +206,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -220,7 +220,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -240,7 +240,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -254,7 +254,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -274,7 +274,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -288,7 +288,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -314,7 +314,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -328,7 +328,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -348,7 +348,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -362,7 +362,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -382,7 +382,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -396,7 +396,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -416,7 +416,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -430,7 +430,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -456,7 +456,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -470,7 +470,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
     });
@@ -490,7 +490,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -504,7 +504,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -524,7 +524,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -538,7 +538,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
     });
@@ -558,7 +558,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -572,7 +572,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -598,7 +598,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -612,7 +612,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
     });
@@ -632,7 +632,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -646,7 +646,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });
@@ -666,7 +666,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -680,7 +680,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(true);
+          expect(result).toBe(true);
         });
       });
     });
@@ -700,7 +700,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
 
@@ -714,7 +714,7 @@ describe(`containsThisCommandWithPrefix()`, (): void => {
 
           const result = discordContainsThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(false);
+          expect(result).toBe(false);
         });
       });
     });

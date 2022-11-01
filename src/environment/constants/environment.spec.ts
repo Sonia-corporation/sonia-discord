@@ -39,7 +39,7 @@ describe(`ENVIRONMENT`, (): void => {
   it(`should allow to log`, (): void => {
     expect.assertions(1);
 
-    expect(ENVIRONMENT.logger?.isEnabled).toStrictEqual(true);
+    expect(ENVIRONMENT.logger?.isEnabled).toBe(true);
   });
 
   it(`should log with the debug level`, (): void => {

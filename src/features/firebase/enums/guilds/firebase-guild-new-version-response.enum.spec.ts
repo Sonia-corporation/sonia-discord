@@ -5,7 +5,7 @@ describe(`FirebaseGuildNewVersionResponseEnum`, (): void => {
   it(`should have 53 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(FirebaseGuildNewVersionResponseEnum)).toStrictEqual(53);
+    expect(getEnumLength(FirebaseGuildNewVersionResponseEnum)).toBe(53);
   });
 
   it(`should have a member "A_QUEEN_HAS_TO_WORK"`, (): void => {

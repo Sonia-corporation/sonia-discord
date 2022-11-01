@@ -275,7 +275,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
+      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
       expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
     });
 
@@ -292,7 +292,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(result.options.split).toStrictEqual(false);
+      expect(result.options.split).toBe(false);
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {

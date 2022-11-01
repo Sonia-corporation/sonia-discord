@@ -5,7 +5,7 @@ describe(`DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum`, (): void => {
   it(`should have 2 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum)).toStrictEqual(2);
+    expect(getEnumLength(DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum)).toBe(2);
   });
 
   it(`should have a member "RELEASE_NOTES_FEATURE_DISABLED"`, (): void => {

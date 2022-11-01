@@ -5,7 +5,7 @@ describe(`DiscordActivityTypeEnum`, (): void => {
   it(`should have 5 members`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(DiscordActivityTypeEnum)).toStrictEqual(5);
+    expect(getEnumLength(DiscordActivityTypeEnum)).toBe(5);
   });
 
   it(`should have a member "CUSTOM_STATUS"`, (): void => {

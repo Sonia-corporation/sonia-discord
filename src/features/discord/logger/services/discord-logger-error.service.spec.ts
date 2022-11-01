@@ -301,7 +301,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
       const result = service.getErrorMessageResponse(error);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toStrictEqual(true);
+      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
       expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
     });
 
@@ -382,7 +382,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
           const result = service.getErrorMessageResponse(error);
 
-          expect(result.options.embed?.fields?.length).toStrictEqual(1);
+          expect(result.options.embed?.fields?.length).toBe(1);
         });
 
         it(`should return an error message response with an embed field title`, (): void => {
@@ -415,7 +415,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
           const result = service.getErrorMessageResponse(error);
 
-          expect(result.options.embed?.fields?.length).toStrictEqual(1);
+          expect(result.options.embed?.fields?.length).toBe(1);
         });
 
         it(`should return an error message response with an embed field title`, (): void => {
@@ -431,8 +431,8 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
           const result = service.getErrorMessageResponse(error);
 
-          expect(result.options.embed?.fields?.[0].value.length).toStrictEqual(1024);
-          expect(_.endsWith(result.options.embed?.fields?.[0].value, `...`)).toStrictEqual(true);
+          expect(result.options.embed?.fields?.[0].value.length).toBe(1024);
+          expect(_.endsWith(result.options.embed?.fields?.[0].value, `...`)).toBe(true);
         });
       });
     });
@@ -442,7 +442,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
       const result = service.getErrorMessageResponse(error);
 
-      expect(result.options.split).toStrictEqual(false);
+      expect(result.options.split).toBe(false);
     });
 
     it(`should return an error message response with an empty response`, (): void => {

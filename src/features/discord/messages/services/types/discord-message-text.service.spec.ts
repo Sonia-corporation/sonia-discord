@@ -241,7 +241,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
         const result = (await service.getDiscordMessageResponse(discordMessage)) as IDiscordMessageResponse;
 
-        expect(result.options.split).toStrictEqual(false);
+        expect(result.options.split).toBe(false);
       });
 
       it(`should check if the app is in production`, async (): Promise<void> => {

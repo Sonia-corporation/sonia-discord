@@ -5,7 +5,7 @@ describe(`ServerConfigValueNameEnum`, (): void => {
   it(`should have a 1 member`, (): void => {
     expect.assertions(1);
 
-    expect(getEnumLength(ServerConfigValueNameEnum)).toStrictEqual(1);
+    expect(getEnumLength(ServerConfigValueNameEnum)).toBe(1);
   });
 
   it(`should have a member "PORT"`, (): void => {
