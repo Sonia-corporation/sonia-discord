@@ -15,6 +15,7 @@ import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordAuthorService } from '../../users/services/discord-author.service';
 import { DiscordSoniaService } from '../../users/services/discord-sonia.service';
 import { ISonia } from '../../users/types/sonia';
+import { isDiscordValidTextMessage } from '../functions/is-discord-valid-text-message';
 import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../types/any-discord-message';
 import _ from 'lodash';
@@ -39,7 +40,7 @@ export class DiscordMessageService extends AbstractService {
   }
 
   public sendMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void> {
-    if (!_.isString(anyDiscordMessage.content) || _.isEmpty(anyDiscordMessage.content)) {
+    if (!isDiscordValidTextMessage(anyDiscordMessage)) {
       return Promise.reject(new Error(`Discord message content is invalid or empty`));
     }
 
