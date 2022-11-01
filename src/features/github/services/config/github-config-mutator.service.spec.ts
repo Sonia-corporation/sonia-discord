@@ -22,6 +22,9 @@ describe(`GithubConfigMutatorService`, (): void => {
     configService = ConfigService.getInstance();
     githubConfigCoreService = GithubConfigCoreService.getInstance();
     coreEventService = CoreEventService.getInstance();
+
+    // Set it to avoid throwing due to the default value being 'unknown'
+    githubConfigCoreService.personalAccessToken = `personal-access-token`;
   });
 
   describe(`getInstance()`, (): void => {

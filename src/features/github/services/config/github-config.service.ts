@@ -2,6 +2,7 @@ import { GithubConfigCoreService } from './github-config-core.service';
 import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { IGithubConfig } from '../../interfaces/github-config';
+import { ISecretPersonalAccessToken } from '../../types/secret-personal-access-token';
 import _ from 'lodash';
 
 export class GithubConfigService extends AbstractService {
@@ -30,7 +31,13 @@ export class GithubConfigService extends AbstractService {
     return GithubConfigCoreService.getInstance().bugReportUrl;
   }
 
-  public getPersonalAccessToken(): string {
-    return GithubConfigCoreService.getInstance().personalAccessToken;
+  public getPersonalAccessToken(): ISecretPersonalAccessToken | never {
+    const { personalAccessToken } = GithubConfigCoreService.getInstance();
+
+    if (personalAccessToken === `unknown`) {
+      throw new Error(`Hard-coded personal access token is still used! Something is wrong with the configuration!`);
+    }
+
+    return personalAccessToken;
   }
 }

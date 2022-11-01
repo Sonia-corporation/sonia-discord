@@ -1,4 +1,6 @@
+import { IPersonalAccessToken } from '../types/personal-access-token';
+
 export interface IGithubConfig {
-  bugReportUrl: string;
-  personalAccessToken: string;
+  readonly bugReportUrl: string;
+  readonly personalAccessToken: IPersonalAccessToken;
 }
