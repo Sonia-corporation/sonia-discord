@@ -1,5 +1,14 @@
 # Semantic Versioning Changelog
 
+## [1.99.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.99.0...1.99.1) (2022-11-01)
+
+
+### :bug: Bug Fixes
+
+* **database:** fix an issue with the database initialization ([323e36e](https://github.com/Sonia-corporation/sonia-discord/commit/323e36ecb64704d5e730b1e4b58e60e00b103e41))
+  This was causing many issues, for example the release notes were not sent automatically to the channels as expected.
+* **release-notes:** format properly the release notes in CLRF format ([e25cdd4](https://github.com/Sonia-corporation/sonia-discord/commit/e25cdd42c954378ab6e6c28c957721e1f89d1ef7))
+
 # [1.99.0](https://github.com/Sonia-corporation/sonia-discord/compare/1.98.0...1.99.0) (2022-10-31)
 
 
