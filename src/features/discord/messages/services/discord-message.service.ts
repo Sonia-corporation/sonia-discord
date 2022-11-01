@@ -41,6 +41,17 @@ export class DiscordMessageService extends AbstractService {
 
   public sendMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void> {
     if (!isDiscordValidTextMessage(anyDiscordMessage)) {
+      if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
+        LoggerService.getInstance().warning({
+          context: this._serviceName,
+          hasExtendedContext: true,
+          message: LoggerService.getInstance().getSnowflakeContext(
+            anyDiscordMessage.id,
+            `We only support for now text messages (embed or such are not handled)`
+          ),
+        });
+      }
+
       return Promise.reject(new Error(`Discord message content is invalid or empty`));
     }
 
