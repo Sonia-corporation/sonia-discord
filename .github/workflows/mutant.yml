@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@e2f20e631ae6d7dd3b768f56a5d2af784dd54791 # tag=v2
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # tag=v3
         with:
@@ -21,7 +21,7 @@ jobs:
           cache: npm
       - name: Cache node_modules
         if: github.event_name == 'push' || github.event_name == 'pull_request'
-        uses: actions/cache@v2
+        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # tag=v2
         env:
           cache-name: cache-node-modules
         with:
