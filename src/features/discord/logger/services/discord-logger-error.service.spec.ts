@@ -10,8 +10,8 @@ import { DiscordGuildSoniaService } from '../../guilds/services/discord-guild-so
 import { IDiscordMessageResponse } from '../../messages/interfaces/discord-message-response';
 import { DiscordMessageConfigService } from '../../messages/services/config/discord-message-config.service';
 import { DiscordSoniaService } from '../../users/services/discord-sonia.service';
-import cryptoRandomString from 'crypto-random-string';
 import { MessageEmbedAuthor } from 'discord.js';
+import faker from 'faker';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
@@ -405,9 +405,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
       describe(`when the given error stack is a string greater than the Discord limit`, (): void => {
         beforeEach((): void => {
           error = new Error(`dummy-error`);
-          error.stack = cryptoRandomString({
-            length: 1050,
-          });
+          error.stack = faker.datatype.string(1050);
         });
 
         it(`should return an error message response with an embed field`, (): void => {
