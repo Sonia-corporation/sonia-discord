@@ -100,7 +100,7 @@
     },
     {
       "groupName": "Jest dependencies",
-      "matchPackagePatterns": ["^jest$", "^@types/jest$"],
+      "matchPackagePatterns": ["^jest$", "^@types/jest$", "^ts-jest$"],
       "matchUpdateTypes": ["major"]
     }
   ]
