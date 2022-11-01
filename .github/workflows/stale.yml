@@ -7,7 +7,7 @@ jobs:
   Stale:
     runs-on: ubuntu-latest
     steps:
-      - uses: sonia-corporation/stale@dbac176e205f0351790b53994229405669595df0 # tag=1.29.0
+      - uses: sonia-corporation/stale@ef485caab3f7d560098aac7f434072ee1271e1e1 # tag=2.4.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           issue-stale-comment: |
