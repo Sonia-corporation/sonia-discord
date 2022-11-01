@@ -155,7 +155,7 @@
     "moment-timezone": "0.5.35",
     "node-schedule": "2.0.0",
     "rxjs": "6.6.7",
-    "xregexp": "5.1.0"
+    "xregexp": "5.1.1"
   },
   "devDependencies": {
     "@datorama/akita-cli": "6.1.1",
