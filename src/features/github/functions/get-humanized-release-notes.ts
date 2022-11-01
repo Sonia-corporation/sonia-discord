@@ -1,7 +1,11 @@
 import _ from 'lodash';
 
 /**
- * @param releaseNotes
+ * @description
+ * Parse the release notes to remove all useless information related to GitHub
+ * Basically, from a correct GitHub POV release note to a humanized one, adapted to be displayed in the messages
+ * @param {Readonly<string>} releaseNotes The GitHub release notes
+ * @returns {string} The humanized release notes
  */
 export function getHumanizedReleaseNotes(releaseNotes: Readonly<string>): string {
   let updatedReleaseNotes: string = _.clone(releaseNotes);
