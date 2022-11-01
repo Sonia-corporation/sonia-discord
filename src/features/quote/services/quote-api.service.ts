@@ -1,13 +1,12 @@
 import { QuoteConfigService } from './config/quote-config.service';
 import { AbstractService } from '../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../enums/service-name.enum';
-import { IObject } from '../../../types/object';
 import { ChalkService } from '../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../logger/services/logger.service';
 import { QUOTE_API_URL } from '../constants/quote-api-url';
 import { IQuoteErrorApi } from '../interfaces/quote-error-api';
 import { IQuoteOfTheDayApi } from '../interfaces/quote-of-the-day-api';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from 'axios';
 import { Snowflake } from 'discord.js';
 import _ from 'lodash';
 
@@ -72,7 +71,7 @@ export class QuoteApiService extends AbstractService {
     return `${QUOTE_API_URL}${endpoint}`;
   }
 
-  private _getCommonHeaders(): IObject {
+  private _getCommonHeaders(): AxiosRequestHeaders {
     return {
       'accept': `application/vnd.favqs.v2+json;`,
       'authorization': `Token token="${QuoteConfigService.getInstance().getApiKey()}"`,
