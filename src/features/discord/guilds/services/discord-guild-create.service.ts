@@ -18,6 +18,7 @@ import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-c
 import { Guild, GuildChannel, Message } from 'discord.js';
 import admin from 'firebase-admin';
 import _ from 'lodash';
+import { firstValueFrom } from 'rxjs';
 import { filter, mergeMap, take } from 'rxjs/operators';
 
 export class DiscordGuildCreateService extends AbstractService {
@@ -44,35 +45,36 @@ export class DiscordGuildCreateService extends AbstractService {
   }
 
   public addFirebaseGuild(guild: Readonly<Guild>): Promise<admin.firestore.WriteResult | void> {
-    return FirebaseGuildsService.getInstance()
-      .isReady$()
-      .pipe(
-        filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
-        take(ONE_EMITTER),
-        mergeMap(
-          (): Promise<admin.firestore.WriteResult | void> =>
-            FirebaseGuildsService.getInstance()
-              .hasGuild(guild.id)
-              .then((hasGuild: Readonly<boolean>): Promise<admin.firestore.WriteResult | void> => {
-                if (_.isEqual(hasGuild, false)) {
-                  return this._addFirebaseGuild(guild).catch((): void => {
-                    LoggerService.getInstance().debug({
-                      context: this._serviceName,
-                      message: ChalkService.getInstance().text(`could not add the guild into Firestore`),
+    return firstValueFrom(
+      FirebaseGuildsService.getInstance()
+        .isReady$()
+        .pipe(
+          filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
+          take(ONE_EMITTER),
+          mergeMap(
+            (): Promise<admin.firestore.WriteResult | void> =>
+              FirebaseGuildsService.getInstance()
+                .hasGuild(guild.id)
+                .then((hasGuild: Readonly<boolean>): Promise<admin.firestore.WriteResult | void> => {
+                  if (_.isEqual(hasGuild, false)) {
+                    return this._addFirebaseGuild(guild).catch((): void => {
+                      LoggerService.getInstance().debug({
+                        context: this._serviceName,
+                        message: ChalkService.getInstance().text(`could not add the guild into Firestore`),
+                      });
                     });
+                  }
+
+                  LoggerService.getInstance().debug({
+                    context: this._serviceName,
+                    message: ChalkService.getInstance().text(`Firebase guild already created`),
                   });
-                }
 
-                LoggerService.getInstance().debug({
-                  context: this._serviceName,
-                  message: ChalkService.getInstance().text(`Firebase guild already created`),
-                });
-
-                return Promise.resolve();
-              })
+                  return Promise.resolve();
+                })
+          )
         )
-      )
-      .toPromise();
+    );
   }
 
   private _addFirebaseGuild(guild: Readonly<Guild>): Promise<admin.firestore.WriteResult> {

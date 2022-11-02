@@ -10,6 +10,7 @@ import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final'
 import { FirebaseAppService } from '../firebase-app.service';
 import { Guild, Snowflake } from 'discord.js';
 import * as admin from 'firebase-admin';
+import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { createMock } from 'ts-auto-mock';
 
@@ -981,7 +982,7 @@ describe(`FirebaseGuildsService`, (): void => {
     it(`should be false by default`, async (): Promise<void> => {
       expect.assertions(1);
 
-      const result = await service.isReady$().pipe(take(1)).toPromise();
+      const result = await firstValueFrom(service.isReady$().pipe(take(1)));
 
       expect(result).toBe(false);
     });
@@ -991,7 +992,7 @@ describe(`FirebaseGuildsService`, (): void => {
         expect.assertions(1);
         service.notifyIsReady();
 
-        const result = await service.isReady$().pipe(take(1)).toPromise();
+        const result = await firstValueFrom(service.isReady$().pipe(take(1)));
 
         expect(result).toBe(true);
       });
@@ -1028,7 +1029,7 @@ describe(`FirebaseGuildsService`, (): void => {
       expect.assertions(1);
 
       service.notifyIsReady();
-      const result = await service.isReady$().pipe(take(1)).toPromise();
+      const result = await firstValueFrom(service.isReady$().pipe(take(1)));
 
       expect(result).toBe(true);
     });
@@ -1045,7 +1046,7 @@ describe(`FirebaseGuildsService`, (): void => {
     it(`should be an empty array by default`, async (): Promise<void> => {
       expect.assertions(1);
 
-      const result = await service.onGuildsChange$().pipe(take(1)).toPromise();
+      const result = await firstValueFrom(service.onGuildsChange$().pipe(take(1)));
 
       expect(result).toStrictEqual([]);
     });
@@ -1055,7 +1056,7 @@ describe(`FirebaseGuildsService`, (): void => {
         expect.assertions(1);
         service.notifyOnGuildsChange(firebaseGuilds);
 
-        const result = await service.onGuildsChange$().pipe(take(1)).toPromise();
+        const result = await firstValueFrom(service.onGuildsChange$().pipe(take(1)));
 
         expect(result).toStrictEqual(firebaseGuilds);
       });
@@ -1074,7 +1075,7 @@ describe(`FirebaseGuildsService`, (): void => {
       expect.assertions(1);
       service.notifyOnGuildsChange(firebaseGuilds);
 
-      const result = await service.onGuildsChange$().pipe(take(1)).toPromise();
+      const result = await firstValueFrom(service.onGuildsChange$().pipe(take(1)));
 
       expect(result).toStrictEqual(firebaseGuilds);
     });

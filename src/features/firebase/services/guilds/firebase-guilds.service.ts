@@ -11,7 +11,7 @@ import { FirebaseAppService } from '../firebase-app.service';
 import { Guild, Snowflake } from 'discord.js';
 import admin, { firestore } from 'firebase-admin';
 import _ from 'lodash';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
 const ONE_GUILD = 1;
@@ -165,13 +165,13 @@ export class FirebaseGuildsService extends AbstractService {
   }
 
   public isReady(): Promise<true> {
-    return this.isReady$()
-      .pipe(
+    return firstValueFrom(
+      this.isReady$().pipe(
         filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
         take(ONE_EMITTER),
         map((): true => true)
       )
-      .toPromise();
+    );
   }
 
   public notifyIsReady(): void {

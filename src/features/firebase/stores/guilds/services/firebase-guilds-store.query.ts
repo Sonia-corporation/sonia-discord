@@ -6,6 +6,7 @@ import { FirebaseGuildsStore } from '../firebase-guilds-store';
 import { IFirebaseGuildState } from '../types/firebase-guild-state';
 import { StoreConfig } from '@datorama/akita';
 import _ from 'lodash';
+import { firstValueFrom } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
 @StoreConfig({
@@ -27,12 +28,12 @@ export class FirebaseGuildsStoreQuery extends AbstractQueryEntityService<Firebas
   }
 
   public wasLoaded(): Promise<true> {
-    return this.selectLoading()
-      .pipe(
+    return firstValueFrom(
+      this.selectLoading().pipe(
         filter((isLoaded: Readonly<boolean>): boolean => _.isEqual(isLoaded, true)),
         take(ONE_EMITTER),
         map((): true => true)
       )
-      .toPromise();
+    );
   }
 }

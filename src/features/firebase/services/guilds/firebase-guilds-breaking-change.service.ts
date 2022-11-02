@@ -12,7 +12,7 @@ import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
 import admin from 'firebase-admin';
 import _ from 'lodash';
-import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, forkJoin, Observable } from 'rxjs';
 import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
 
 const NO_GUILD = 0;
@@ -36,11 +36,9 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
   }
 
   public init(): Promise<admin.firestore.WriteResult[] | void> {
-    return this._updateAllFirebaseGuilds$()
-      .toPromise()
-      .then((): void => {
-        this.notifyHasFinished();
-      });
+    return firstValueFrom(this._updateAllFirebaseGuilds$()).then((): void => {
+      this.notifyHasFinished();
+    });
   }
 
   public hasFinished$(): Observable<boolean> {
@@ -48,13 +46,13 @@ export class FirebaseGuildsBreakingChangeService extends AbstractService {
   }
 
   public hasFinished(): Promise<true> {
-    return this.hasFinished$()
-      .pipe(
+    return firstValueFrom(
+      this.hasFinished$().pipe(
         filter((hasFinished: Readonly<boolean>): boolean => _.isEqual(hasFinished, true)),
         take(ONE_EMITTER),
         map((): true => true)
       )
-      .toPromise();
+    );
   }
 
   public notifyHasFinished(): void {

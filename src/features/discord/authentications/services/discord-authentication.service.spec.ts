@@ -6,6 +6,7 @@ import { LoggerService } from '../../../logger/services/logger.service';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordSoniaConfigService } from '../../users/services/config/discord-sonia-config.service';
 import { Client } from 'discord.js';
+import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { createMock } from 'ts-auto-mock';
 
@@ -383,7 +384,7 @@ describe(`DiscordAuthenticationService`, (): void => {
     it(`should be false by default`, async (): Promise<void> => {
       expect.assertions(1);
 
-      const result = await service.isAuthenticated$().pipe(take(1)).toPromise();
+      const result = await firstValueFrom(service.isAuthenticated$().pipe(take(1)));
 
       expect(result).toBe(false);
     });
@@ -393,7 +394,7 @@ describe(`DiscordAuthenticationService`, (): void => {
         expect.assertions(1);
         service.notifyIsAuthenticated();
 
-        const result = await service.isAuthenticated$().pipe(take(1)).toPromise();
+        const result = await firstValueFrom(service.isAuthenticated$().pipe(take(1)));
 
         expect(result).toBe(true);
       });
@@ -409,7 +410,7 @@ describe(`DiscordAuthenticationService`, (): void => {
       expect.assertions(1);
       service.notifyIsAuthenticated();
 
-      const result = await service.isAuthenticated$().pipe(take(1)).toPromise();
+      const result = await firstValueFrom(service.isAuthenticated$().pipe(take(1)));
 
       expect(result).toBe(true);
     });

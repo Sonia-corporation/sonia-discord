@@ -17,7 +17,7 @@ import { IDiscordPresenceActivity } from '../interfaces/discord-presence-activit
 import { ClientUser, Presence } from 'discord.js';
 import _ from 'lodash';
 import { Job, scheduleJob } from 'node-schedule';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { filter, mergeMap, take, tap } from 'rxjs/operators';
 
 const MINIMAL_RANGE_MINUTES = 5;
@@ -44,7 +44,7 @@ export class DiscordActivitySoniaService extends AbstractService {
   }
 
   public init(): Promise<Presence> {
-    return this._listen$().toPromise();
+    return firstValueFrom(this._listen$());
   }
 
   public startSchedule(): void {

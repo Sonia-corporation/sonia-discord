@@ -3,7 +3,7 @@ import { ONE_EMITTER } from '../../../constants/one-emitter';
 import { ServiceNameEnum } from '../../../enums/service-name.enum';
 import { Client } from 'discord.js';
 import _ from 'lodash';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
 export class DiscordClientService extends AbstractService {
@@ -43,13 +43,13 @@ export class DiscordClientService extends AbstractService {
   }
 
   public isReady(): Promise<true> {
-    return this.isReady$()
-      .pipe(
+    return firstValueFrom(
+      this.isReady$().pipe(
         filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
         take(ONE_EMITTER),
         map((): true => true)
       )
-      .toPromise();
+    );
   }
 
   public notifyIsReady(): void {
