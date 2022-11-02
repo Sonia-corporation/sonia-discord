@@ -183,11 +183,6 @@ const config: Config.InitialOptions = {
   // Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
   timers: `fake`,
 
-  // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  // transformIgnorePatterns: [
-  //   "\\\\node_modules\\\\"
-  // ],
-
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
 
@@ -195,6 +190,10 @@ const config: Config.InitialOptions = {
   transform: {
     '.ts': `ts-jest`,
   },
+
+  // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
+  // @datorama/akita -> https://github.com/salesforce/akita/issues/778 & https://stackoverflow.com/questions/49263429/jest-gives-an-error-syntaxerror-unexpected-token-export
+  transformIgnorePatterns: [`node_modules/(?!@datorama/akita)`],
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
   // watchPathIgnorePatterns: [],
