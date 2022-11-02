@@ -205,7 +205,7 @@
     "jest-extended": "0.11.5",
     "jest-silent-reporter": "0.5.0",
     "jest-ts-auto-mock": "2.1.0",
-    "lint-staged": "11.2.6",
+    "lint-staged": "12.5.0",
     "madge": "5.0.1",
     "majestic": "1.8.1",
     "node-notifier": "10.0.1",
