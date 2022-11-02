@@ -75,14 +75,17 @@ const config: Config.InitialOptions = {
   // An array of directory names to be searched recursively up from the requiring module's location
   moduleDirectories: [`./node_modules`],
 
-  // A map from regular expressions to module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
-
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
 
   // An array of file extensions your modules use
   moduleFileExtensions: [`js`, `json`, `ts`, `node`],
+
+  // A map from regular expressions to module names that allow to stub out resources with a single module
+  moduleNameMapper: {
+    // See https://github.com/axios/axios/issues/5101#issuecomment-1276572468
+    '^axios$': require.resolve(`axios`),
+  },
 
   // Activates notifications for test results
   notify: true,
