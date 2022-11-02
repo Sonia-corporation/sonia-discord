@@ -6,7 +6,7 @@ import { LoggerService } from '../../logger/services/logger.service';
 import { QUOTE_API_URL } from '../constants/quote-api-url';
 import { IQuoteErrorApi } from '../interfaces/quote-error-api';
 import { IQuoteOfTheDayApi } from '../interfaces/quote-of-the-day-api';
-import axios, { AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse, RawAxiosRequestHeaders } from 'axios';
 import { Snowflake } from 'discord.js';
 import _ from 'lodash';
 
@@ -71,7 +71,7 @@ export class QuoteApiService extends AbstractService {
     return `${QUOTE_API_URL}${endpoint}`;
   }
 
-  private _getCommonHeaders(): AxiosRequestHeaders {
+  private _getCommonHeaders(): RawAxiosRequestHeaders {
     return {
       'accept': `application/vnd.favqs.v2+json;`,
       'authorization': `Token token="${QuoteConfigService.getInstance().getApiKey()}"`,

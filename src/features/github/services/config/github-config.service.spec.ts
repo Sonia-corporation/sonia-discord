@@ -88,34 +88,16 @@ describe(`GithubConfigService`, (): void => {
   describe(`getPersonalAccessToken()`, (): void => {
     beforeEach((): void => {
       service = GithubConfigService.getInstance();
+
+      githubConfigCoreService.personalAccessToken = `dummy-personal-access-token`;
     });
 
-    describe(`when the personal access token is set to unknown (default value)`, (): void => {
-      beforeEach((): void => {
-        githubConfigCoreService.personalAccessToken = `unknown`;
-      });
+    it(`should return the GitHub config personal access token`, (): void => {
+      expect.assertions(1);
 
-      it(`should throw an error`, (): void => {
-        expect.assertions(1);
+      const result = service.getPersonalAccessToken();
 
-        expect((): string => service.getPersonalAccessToken()).toThrow(
-          new Error(`Hard-coded personal access token is still used! Something is wrong with the configuration!`)
-        );
-      });
-    });
-
-    describe(`when the personal access token is set`, (): void => {
-      beforeEach((): void => {
-        githubConfigCoreService.personalAccessToken = `dummy-personal-access-token`;
-      });
-
-      it(`should return the GitHub config personal access token`, (): void => {
-        expect.assertions(1);
-
-        const result = service.getPersonalAccessToken();
-
-        expect(result).toBe(`dummy-personal-access-token`);
-      });
+      expect(result).toBe(`dummy-personal-access-token`);
     });
   });
 });
