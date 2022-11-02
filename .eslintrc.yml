@@ -428,6 +428,9 @@ overrides:
     extends:
       - 'plugin:jest/style'
       - 'plugin:jest/all'
+      - 'plugin:jest-extended/all'
+    plugins:
+      - 'jest-extended'
     rules:
       jest/max-nested-describe: off
       jest/prefer-expect-resolves: error
