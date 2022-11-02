@@ -40,7 +40,7 @@ jobs:
           cache: npm
       - name: Cache node_modules
         if: github.event_name == 'push' || github.event_name == 'pull_request'
-        uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # tag=v2
+        uses: actions/cache@1c73980b09e7aea7201f325a7aa3ad00beddcdda # tag=v3
         env:
           cache-name: cache-node-modules
         with:
