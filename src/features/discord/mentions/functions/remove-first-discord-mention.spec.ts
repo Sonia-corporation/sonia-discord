@@ -13,7 +13,7 @@ describe(`removeFirstDiscordMention()`, (): void => {
 
       const result = removeFirstDiscordMention(message);
 
-      expect(result).toStrictEqual(``);
+      expect(result).toBe(``);
     });
   });
 
@@ -27,7 +27,7 @@ describe(`removeFirstDiscordMention()`, (): void => {
 
       const result = removeFirstDiscordMention(message);
 
-      expect(result).toStrictEqual(`dummy message`);
+      expect(result).toBe(`dummy message`);
     });
   });
 
@@ -41,7 +41,7 @@ describe(`removeFirstDiscordMention()`, (): void => {
 
       const result = removeFirstDiscordMention(message);
 
-      expect(result).toStrictEqual(`dummy message with  mentioned`);
+      expect(result).toBe(`dummy message with  mentioned`);
     });
   });
 
@@ -55,7 +55,7 @@ describe(`removeFirstDiscordMention()`, (): void => {
 
       const result = removeFirstDiscordMention(message);
 
-      expect(result).toStrictEqual(`dummy message with  mentioned`);
+      expect(result).toBe(`dummy message with  mentioned`);
     });
   });
 
@@ -69,7 +69,7 @@ describe(`removeFirstDiscordMention()`, (): void => {
 
       const result = removeFirstDiscordMention(message);
 
-      expect(result).toStrictEqual(`dummy message with  mentioned and again here <@123>`);
+      expect(result).toBe(`dummy message with  mentioned and again here <@123>`);
     });
   });
 
@@ -83,7 +83,7 @@ describe(`removeFirstDiscordMention()`, (): void => {
 
       const result = removeFirstDiscordMention(message);
 
-      expect(result).toStrictEqual(`dummy message with  mentioned and again here <@!123>`);
+      expect(result).toBe(`dummy message with  mentioned and again here <@!123>`);
     });
   });
 
@@ -97,7 +97,7 @@ describe(`removeFirstDiscordMention()`, (): void => {
 
       const result = removeFirstDiscordMention(message);
 
-      expect(result).toStrictEqual(`dummy message with  mentioned and again here <@456>`);
+      expect(result).toBe(`dummy message with  mentioned and again here <@456>`);
     });
   });
 
@@ -111,7 +111,7 @@ describe(`removeFirstDiscordMention()`, (): void => {
 
       const result = removeFirstDiscordMention(message);
 
-      expect(result).toStrictEqual(`dummy message with  mentioned and again here <@!456>`);
+      expect(result).toBe(`dummy message with  mentioned and again here <@!456>`);
     });
   });
 });

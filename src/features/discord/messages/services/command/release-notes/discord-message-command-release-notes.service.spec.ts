@@ -224,7 +224,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.description).toStrictEqual(
+      expect(result.options.embed?.description).toBe(
         `dummy-release-notes\n\nCheckout all the [release notes](https://github.com/Sonia-corporation/sonia-discord/blob/master/CHANGELOG.md).`
       );
     });
@@ -437,7 +437,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
       const result = await service.getMessageResponse();
 
       expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -447,7 +447,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.title).toStrictEqual(`**8** release notes - dummy-release-date-humanized`);
+      expect(result.options.embed?.title).toBe(`**8** release notes - dummy-release-date-humanized`);
     });
 
     it(`should return a Discord message response not split`, async (): Promise<void> => {
@@ -463,7 +463,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.response).toStrictEqual(``);
+      expect(result.response).toBe(``);
     });
   });
 

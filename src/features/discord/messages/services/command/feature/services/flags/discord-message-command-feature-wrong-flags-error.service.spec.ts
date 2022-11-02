@@ -139,7 +139,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embed?.description).toStrictEqual(`**1** error found.`);
+        expect(result.options.embed?.description).toBe(`**1** error found.`);
       });
 
       it(`should return a Discord message response embed with 1 field`, async (): Promise<void> => {
@@ -177,7 +177,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embed?.description).toStrictEqual(`**3** errors found.`);
+        expect(result.options.embed?.description).toBe(`**3** errors found.`);
       });
 
       it(`should return a Discord message response embed with 3 fields`, async (): Promise<void> => {
@@ -276,7 +276,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
       const result = await service.getMessageResponse(flagsErrors);
 
       expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -284,7 +284,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(result.options.embed?.title).toStrictEqual(`I can not handle your request.`);
+      expect(result.options.embed?.title).toBe(`I can not handle your request.`);
     });
 
     it(`should return a Discord message response not split`, async (): Promise<void> => {
@@ -300,7 +300,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(result.response).toStrictEqual(``);
+      expect(result.response).toBe(``);
     });
   });
 });

@@ -11,7 +11,7 @@ describe(`DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum`, (): void => {
   it(`should have a member "RELEASE_NOTES_FEATURE_DISABLED"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum.RELEASE_NOTES_FEATURE_DISABLED).toStrictEqual(
+    expect(DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum.RELEASE_NOTES_FEATURE_DISABLED).toBe(
       `Release notes feature disabled`
     );
   });
@@ -19,7 +19,7 @@ describe(`DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum`, (): void => {
   it(`should have a member "RELEASE_NOTES_FEATURE_ENABLED"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum.RELEASE_NOTES_FEATURE_ENABLED).toStrictEqual(
+    expect(DiscordMessageCommandReleaseNotesFlagSuccessTitleEnum.RELEASE_NOTES_FEATURE_ENABLED).toBe(
       `Release notes feature enabled`
     );
   });

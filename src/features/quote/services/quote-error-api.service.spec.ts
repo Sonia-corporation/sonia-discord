@@ -123,7 +123,7 @@ describe(`QuoteErrorApiService`, (): void => {
 
         const result = await service.getMessageResponse(error);
 
-        expect(result.options.embed?.title).toStrictEqual(`Oops, something went wrong`);
+        expect(result.options.embed?.title).toBe(`Oops, something went wrong`);
       });
     });
   });

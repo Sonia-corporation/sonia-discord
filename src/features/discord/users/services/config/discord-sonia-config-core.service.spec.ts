@@ -54,7 +54,7 @@ describe(`DiscordSoniaConfigCoreService`, (): void => {
 
     service = DiscordSoniaConfigCoreService.getInstance();
 
-    expect(service.corporationImageUrl).toStrictEqual(`https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`);
+    expect(service.corporationImageUrl).toBe(`https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`);
   });
 
   it(`should have a corporation message embed author icon url`, (): void => {
@@ -62,9 +62,7 @@ describe(`DiscordSoniaConfigCoreService`, (): void => {
 
     service = DiscordSoniaConfigCoreService.getInstance();
 
-    expect(service.corporationMessageEmbedAuthor.iconURL).toStrictEqual(
-      `https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`
-    );
+    expect(service.corporationMessageEmbedAuthor.iconURL).toBe(`https://i.ibb.co/XSB6Vng/icons8-girl-1024.png`);
   });
 
   it(`should have a corporation message embed author name`, (): void => {
@@ -72,7 +70,7 @@ describe(`DiscordSoniaConfigCoreService`, (): void => {
 
     service = DiscordSoniaConfigCoreService.getInstance();
 
-    expect(service.corporationMessageEmbedAuthor.name).toStrictEqual(`Sonia`);
+    expect(service.corporationMessageEmbedAuthor.name).toBe(`Sonia`);
   });
 
   it(`should have a corporation message embed author url`, (): void => {
@@ -80,7 +78,7 @@ describe(`DiscordSoniaConfigCoreService`, (): void => {
 
     service = DiscordSoniaConfigCoreService.getInstance();
 
-    expect(service.corporationMessageEmbedAuthor.url).toStrictEqual(`https://github.com/Sonia-corporation?type=source`);
+    expect(service.corporationMessageEmbedAuthor.url).toBe(`https://github.com/Sonia-corporation?type=source`);
   });
 
   it(`should have an empty dev guild id whitelist`, (): void => {
@@ -96,7 +94,7 @@ describe(`DiscordSoniaConfigCoreService`, (): void => {
 
     service = DiscordSoniaConfigCoreService.getInstance();
 
-    expect(service.id).toStrictEqual(`unknown`);
+    expect(service.id).toBe(`unknown`);
   });
 
   it(`should have an unknown secret token`, (): void => {
@@ -104,6 +102,6 @@ describe(`DiscordSoniaConfigCoreService`, (): void => {
 
     service = DiscordSoniaConfigCoreService.getInstance();
 
-    expect(service.secretToken).toStrictEqual(`unknown`);
+    expect(service.secretToken).toBe(`unknown`);
   });
 });

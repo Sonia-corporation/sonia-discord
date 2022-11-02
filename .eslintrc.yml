@@ -431,13 +431,17 @@ overrides:
     rules:
       jest/max-nested-describe: off
       jest/prefer-expect-resolves: error
+      jest/prefer-to-have-length: error
+      jest/no-identical-title: error
       jest/prefer-to-be: error
       jest/valid-expect-in-promise: error
+      jest/prefer-comparison-matcher: error
+      jest/prefer-equality-matcher: error
       jest/valid-title: error
       jest/require-hook: error
       jest/no-done-callback: error
       jest/no-disabled-tests: warn
-      jest/lowercase-name:
+      jest/prefer-lowercase-title:
         - error
         - ignore:
             - describe

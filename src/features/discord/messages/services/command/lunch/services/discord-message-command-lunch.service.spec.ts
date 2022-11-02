@@ -174,7 +174,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.description).toStrictEqual(`I was starving.`);
+      expect(result.options.embed?.description).toBe(`I was starving.`);
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -240,7 +240,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
       const result = await service.getMessageResponse();
 
       expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -248,7 +248,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.title).toStrictEqual(`Time to eat!`);
+      expect(result.options.embed?.title).toBe(`Time to eat!`);
     });
 
     it(`should return a Discord message response not split`, async (): Promise<void> => {
@@ -264,7 +264,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.response).toStrictEqual(``);
+      expect(result.response).toBe(``);
     });
   });
 

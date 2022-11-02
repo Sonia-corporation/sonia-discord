@@ -64,7 +64,7 @@ describe(`getLastSequenceRegexp()`, (): void => {
 
         const result = getLastSequenceRegexp(value);
 
-        expect(xregexp.replace(text, result, `dummy`)).toStrictEqual(`simple text with a userId and another dummy`);
+        expect(xregexp.replace(text, result, `dummy`)).toBe(`simple text with a userId and another dummy`);
       });
     });
   });

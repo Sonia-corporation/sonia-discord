@@ -14,7 +14,7 @@ describe(`discordCommandRemoveFlagPrefix()`, (): void => {
 
       const result = discordCommandRemoveFlagPrefix(messageFlag);
 
-      expect(result).toStrictEqual(``);
+      expect(result).toBe(``);
     });
   });
 
@@ -28,7 +28,7 @@ describe(`discordCommandRemoveFlagPrefix()`, (): void => {
 
       const result = discordCommandRemoveFlagPrefix(messageFlag);
 
-      expect(result).toStrictEqual(`dummy`);
+      expect(result).toBe(`dummy`);
     });
   });
 
@@ -42,7 +42,7 @@ describe(`discordCommandRemoveFlagPrefix()`, (): void => {
 
       const result = discordCommandRemoveFlagPrefix(messageFlag);
 
-      expect(result).toStrictEqual(`e`);
+      expect(result).toBe(`e`);
     });
   });
 
@@ -56,7 +56,7 @@ describe(`discordCommandRemoveFlagPrefix()`, (): void => {
 
       const result = discordCommandRemoveFlagPrefix(messageFlag);
 
-      expect(result).toStrictEqual(`enabled=true`);
+      expect(result).toBe(`enabled=true`);
     });
   });
 });

@@ -690,7 +690,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.description).toStrictEqual(
+          expect(result.options.embed?.description).toBe(
             `I will not send a message at noon since it was never enabled on this channel.`
           );
         });
@@ -719,7 +719,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.description).toStrictEqual(
+          expect(result.options.embed?.description).toBe(
             `I will not send a message at noon since it was disabled on this channel.`
           );
         });
@@ -748,7 +748,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.description).toStrictEqual(
+          expect(result.options.embed?.description).toBe(
             `I will send a message each day at noon (12 A.M) on Paris timezone on this channel.`
           );
         });
@@ -817,7 +817,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
         const result = await service.getMessageResponse(state);
 
         expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-        expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+        expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
       });
 
       it(`should return a Discord message response not split`, async (): Promise<void> => {
@@ -833,7 +833,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.response).toStrictEqual(``);
+        expect(result.response).toBe(``);
       });
     });
   });

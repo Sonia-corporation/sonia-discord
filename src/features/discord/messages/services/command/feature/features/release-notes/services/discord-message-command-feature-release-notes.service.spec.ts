@@ -237,7 +237,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.description).toStrictEqual(`**1** release notes feature option updated.`);
+          expect(result[0].options.embed?.description).toBe(`**1** release notes feature option updated.`);
         });
 
         it(`should return a Discord message response embed with 1 field`, async (): Promise<void> => {
@@ -326,7 +326,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           expect(moment(result[0].options.embed?.timestamp).isValid()).toBe(true);
 
-          expect(moment(result[0].options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+          expect(moment(result[0].options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
         });
 
         it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -334,7 +334,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.title).toStrictEqual(`Release notes feature updated.`);
+          expect(result[0].options.embed?.title).toBe(`Release notes feature updated.`);
         });
 
         it(`should return a Discord message response not split`, async (): Promise<void> => {
@@ -350,7 +350,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].response).toStrictEqual(``);
+          expect(result[0].response).toBe(``);
         });
       });
 
@@ -381,7 +381,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.description).toStrictEqual(`**3** release notes feature options updated.`);
+          expect(result[0].options.embed?.description).toBe(`**3** release notes feature options updated.`);
         });
 
         it(`should return a Discord message response embed with 3 fields`, async (): Promise<void> => {
@@ -482,7 +482,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           expect(moment(result[0].options.embed?.timestamp).isValid()).toBe(true);
 
-          expect(moment(result[0].options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+          expect(moment(result[0].options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
         });
 
         it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -490,7 +490,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.title).toStrictEqual(`Release notes feature updated.`);
+          expect(result[0].options.embed?.title).toBe(`Release notes feature updated.`);
         });
 
         it(`should return a Discord message response not split`, async (): Promise<void> => {
@@ -506,7 +506,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].response).toStrictEqual(``);
+          expect(result[0].response).toBe(``);
         });
       });
 
@@ -613,7 +613,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.description).toStrictEqual(`**3** release notes feature options updated.`);
+          expect(result[0].options.embed?.description).toBe(`**3** release notes feature options updated.`);
         });
 
         it(`should return a Discord message response embed with 3 fields`, async (): Promise<void> => {
@@ -714,7 +714,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           expect(moment(result[0].options.embed?.timestamp).isValid()).toBe(true);
 
-          expect(moment(result[0].options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+          expect(moment(result[0].options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
         });
 
         it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -722,7 +722,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.embed?.title).toStrictEqual(`Release notes feature updated.`);
+          expect(result[0].options.embed?.title).toBe(`Release notes feature updated.`);
         });
 
         it(`should return a Discord message response not split`, async (): Promise<void> => {
@@ -738,7 +738,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].response).toStrictEqual(``);
+          expect(result[0].response).toBe(``);
         });
       });
     });

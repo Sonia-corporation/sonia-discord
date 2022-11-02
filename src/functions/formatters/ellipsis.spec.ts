@@ -14,7 +14,7 @@ describe(`ellipsis()`, (): void => {
 
       const result = ellipsis(value);
 
-      expect(result).toStrictEqual(``);
+      expect(result).toBe(``);
     });
   });
 
@@ -28,7 +28,7 @@ describe(`ellipsis()`, (): void => {
 
       const result = ellipsis(value);
 
-      expect(result).toStrictEqual(`0123456789`);
+      expect(result).toBe(`0123456789`);
     });
 
     describe(`when the given limit is 8`, (): void => {
@@ -41,7 +41,7 @@ describe(`ellipsis()`, (): void => {
 
         const result = ellipsis(value, limit);
 
-        expect(result).toStrictEqual(`01234...`);
+        expect(result).toBe(`01234...`);
       });
     });
 
@@ -55,7 +55,7 @@ describe(`ellipsis()`, (): void => {
 
         const result = ellipsis(value, limit);
 
-        expect(result).toStrictEqual(`012345...`);
+        expect(result).toBe(`012345...`);
       });
     });
 
@@ -69,7 +69,7 @@ describe(`ellipsis()`, (): void => {
 
         const result = ellipsis(value, limit);
 
-        expect(result).toStrictEqual(`0123456789`);
+        expect(result).toBe(`0123456789`);
       });
     });
 
@@ -83,7 +83,7 @@ describe(`ellipsis()`, (): void => {
 
         const result = ellipsis(value, limit);
 
-        expect(result).toStrictEqual(`0123456789`);
+        expect(result).toBe(`0123456789`);
       });
     });
   });

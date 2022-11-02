@@ -13,7 +13,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(`dummy notes`);
+      expect(result).toBe(`dummy notes`);
     });
   });
 
@@ -27,7 +27,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(``);
+      expect(result).toBe(``);
     });
   });
 
@@ -41,7 +41,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(`**__Bug Fixes:__**`);
+      expect(result).toBe(`**__Bug Fixes:__**`);
     });
   });
 
@@ -55,7 +55,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(`**__Bug Fixes:__**`);
+      expect(result).toBe(`**__Bug Fixes:__**`);
     });
   });
 
@@ -69,7 +69,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(`**logs:**`);
+      expect(result).toBe(`**logs:**`);
     });
   });
 
@@ -83,7 +83,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(``);
+      expect(result).toBe(``);
     });
   });
 
@@ -97,7 +97,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(`dummy text`);
+      expect(result).toBe(`dummy text`);
     });
   });
 
@@ -111,7 +111,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(`dummy text`);
+      expect(result).toBe(`dummy text`);
     });
   });
 
@@ -125,7 +125,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(`dummy text for good`);
+      expect(result).toBe(`dummy text for good`);
     });
   });
 
@@ -139,7 +139,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(`dummy text`);
+      expect(result).toBe(`dummy text`);
     });
   });
 
@@ -153,7 +153,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(`dummy text`);
+      expect(result).toBe(`dummy text`);
     });
   });
 
@@ -167,7 +167,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(`dummy text for good`);
+      expect(result).toBe(`dummy text for good`);
     });
   });
 
@@ -181,7 +181,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(
+      expect(result).toBe(
         `**__Bug Fixes:__\nlabeler:** fix build error\n**environment:** fix type error due to --fix tslint option failing\n**__Features:__\ncommand-version:** add a footer\n**app-total-release-count:** add axios xhr call to get the total tags from the github api\n**logs:** add more logs for the messages\n**github:** add new github config service\n**command-version:** add the real number of release in the footer\n**init-service:** used the github config service to get the personal access token`
       );
     });
@@ -197,7 +197,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(
+      expect(result).toBe(
         `**__Bug Fixes:__\nlabeler:** fix build error\n**environment:** fix type error due to --fix tslint option failing\n**__Features:__\ncommand-version:** add a footer\n**app-total-release-count:** add axios xhr call to get the total tags from the github api\n**logs:** add more logs for the messages\n**github:** add new github config service\n**command-version:** add the real number of release in the footer\n**init-service:** used the github config service to get the personal access token`
       );
     });
@@ -213,7 +213,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(
+      expect(result).toBe(
         `**__Bug Fixes:__\nlabeler:** fix build error\n**environment:** fix type error due to --fix tslint option failing\n**__Features:__\ncommand-version:** add a footer\n**app-total-release-count:** add axios xhr call to get the total tags from the github api\n**logs:** add more logs for the messages\n**github:** add new github config service\n**command-version:** add the real number of release in the footer\n**init-service:** used the github config service to get the personal access token`
       );
     });
@@ -229,7 +229,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(
+      expect(result).toBe(
         `**__Bug Fixes:__\nrelease-notes:** continue to send the release notes when a new version is available even when a fail occur on another guild`
       );
     });
@@ -245,7 +245,7 @@ describe(`getHumanizedReleaseNotes()`, (): void => {
 
       const result = getHumanizedReleaseNotes(releaseNotes);
 
-      expect(result).toStrictEqual(
+      expect(result).toBe(
         `**__Bug Fixes:__\nactivity:** add fifteen missing listening activities for Sonia\n**__Features:__\nactivity:** add twenty new activities for Sonia\nadd listening activities for Apollo Brown, Army Of The Pharaohs, Bigflo & Oli, DempseyRollBoy,  Evidence, Grits, Gunna, Kanye West, Lil Baby, Mac Miller, Moby, Orelsan, Polo G, Rema, Roy Jones, Rxseboy, Sleepy Hallow, 24KGoldn, Vinnie Paz and Wiz Khalifa.`
       );
     });

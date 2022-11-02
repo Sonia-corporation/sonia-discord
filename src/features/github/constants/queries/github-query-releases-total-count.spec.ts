@@ -4,8 +4,7 @@ describe(`GITHUB_QUERY_RELEASES_TOTAL_COUNT`, (): void => {
   it(`should contains the query to fetch the GitHub total release count`, (): void => {
     expect.assertions(1);
 
-    expect(GITHUB_QUERY_RELEASES_TOTAL_COUNT)
-      .toStrictEqual(`{repository(owner: "Sonia-corporation", name: "sonia-discord") {
+    expect(GITHUB_QUERY_RELEASES_TOTAL_COUNT).toBe(`{repository(owner: "Sonia-corporation", name: "sonia-discord") {
   releases {
     totalCount
   }

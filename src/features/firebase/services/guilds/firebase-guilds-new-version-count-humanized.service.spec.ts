@@ -85,7 +85,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`No release note messages were sent today.`);
+            expect(result).toBe(`No release note messages were sent today.`);
           });
         });
 
@@ -99,7 +99,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`No release note messages were sent today.`);
+            expect(result).toBe(`No release note messages were sent today.`);
           });
         });
 
@@ -113,7 +113,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`No release note messages were sent today.`);
+            expect(result).toBe(`No release note messages were sent today.`);
           });
         });
       });
@@ -133,7 +133,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`No release note messages were sent today.`);
+            expect(result).toBe(`No release note messages were sent today.`);
           });
         });
 
@@ -147,7 +147,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`No release note messages were sent today.`);
+            expect(result).toBe(`No release note messages were sent today.`);
           });
         });
 
@@ -161,7 +161,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`No release note messages were sent today.`);
+            expect(result).toBe(`No release note messages were sent today.`);
           });
         });
       });
@@ -181,7 +181,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`No release note messages were sent today.`);
+            expect(result).toBe(`No release note messages were sent today.`);
           });
         });
 
@@ -195,7 +195,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`No release note messages were sent today.`);
+            expect(result).toBe(`No release note messages were sent today.`);
           });
         });
 
@@ -209,7 +209,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`No release note messages were sent today.`);
+            expect(result).toBe(`No release note messages were sent today.`);
           });
         });
       });
@@ -235,9 +235,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `No release note messages were sent today for the **1** guild using <@!1234>.`
-            );
+            expect(result).toBe(`No release note messages were sent today for the **1** guild using <@!1234>.`);
           });
         });
 
@@ -251,9 +249,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**1** release note message was sent over **0** of **1** guild using <@!1234>.`
-            );
+            expect(result).toBe(`**1** release note message was sent over **0** of **1** guild using <@!1234>.`);
           });
         });
 
@@ -267,9 +263,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**2** release note messages were sent over **0** of **1** guild using <@!1234>.`
-            );
+            expect(result).toBe(`**2** release note messages were sent over **0** of **1** guild using <@!1234>.`);
           });
         });
       });
@@ -289,9 +283,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `No release note messages were sent today for the **1** guild using <@!1234>.`
-            );
+            expect(result).toBe(`No release note messages were sent today for the **1** guild using <@!1234>.`);
           });
         });
 
@@ -305,9 +297,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**1** release note message was sent over **1** of **1** guild using <@!1234>.`
-            );
+            expect(result).toBe(`**1** release note message was sent over **1** of **1** guild using <@!1234>.`);
           });
         });
 
@@ -321,9 +311,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**2** release note messages were sent over **1** of **1** guild using <@!1234>.`
-            );
+            expect(result).toBe(`**2** release note messages were sent over **1** of **1** guild using <@!1234>.`);
           });
         });
       });
@@ -343,9 +331,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `No release note messages were sent today for the **1** guild using <@!1234>.`
-            );
+            expect(result).toBe(`No release note messages were sent today for the **1** guild using <@!1234>.`);
           });
         });
 
@@ -359,9 +345,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**1** release note message was sent over **2** of **1** guilds using <@!1234>.`
-            );
+            expect(result).toBe(`**1** release note message was sent over **2** of **1** guilds using <@!1234>.`);
           });
         });
 
@@ -375,9 +359,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**2** release note messages were sent over **2** of **1** guilds using <@!1234>.`
-            );
+            expect(result).toBe(`**2** release note messages were sent over **2** of **1** guilds using <@!1234>.`);
           });
         });
       });
@@ -403,9 +385,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `No release note messages were sent today for the **2** guilds using <@!1234>.`
-            );
+            expect(result).toBe(`No release note messages were sent today for the **2** guilds using <@!1234>.`);
           });
         });
 
@@ -419,9 +399,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**1** release note message was sent over **0** of **2** guild using <@!1234>.`
-            );
+            expect(result).toBe(`**1** release note message was sent over **0** of **2** guild using <@!1234>.`);
           });
         });
 
@@ -435,9 +413,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**2** release note messages were sent over **0** of **2** guild using <@!1234>.`
-            );
+            expect(result).toBe(`**2** release note messages were sent over **0** of **2** guild using <@!1234>.`);
           });
         });
       });
@@ -457,9 +433,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `No release note messages were sent today for the **2** guilds using <@!1234>.`
-            );
+            expect(result).toBe(`No release note messages were sent today for the **2** guilds using <@!1234>.`);
           });
         });
 
@@ -473,9 +447,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**1** release note message was sent over **1** of **2** guild using <@!1234>.`
-            );
+            expect(result).toBe(`**1** release note message was sent over **1** of **2** guild using <@!1234>.`);
           });
         });
 
@@ -489,9 +461,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**2** release note messages were sent over **1** of **2** guild using <@!1234>.`
-            );
+            expect(result).toBe(`**2** release note messages were sent over **1** of **2** guild using <@!1234>.`);
           });
         });
       });
@@ -511,9 +481,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `No release note messages were sent today for the **2** guilds using <@!1234>.`
-            );
+            expect(result).toBe(`No release note messages were sent today for the **2** guilds using <@!1234>.`);
           });
         });
 
@@ -527,9 +495,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**1** release note message was sent over **2** of **2** guilds using <@!1234>.`
-            );
+            expect(result).toBe(`**1** release note message was sent over **2** of **2** guilds using <@!1234>.`);
           });
         });
 
@@ -543,9 +509,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCount(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(
-              `**2** release note messages were sent over **2** of **2** guilds using <@!1234>.`
-            );
+            expect(result).toBe(`**2** release note messages were sent over **2** of **2** guilds using <@!1234>.`);
           });
         });
       });
@@ -581,7 +545,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`no release note message sent`);
+            expect(result).toBe(`no release note message sent`);
           });
         });
 
@@ -595,7 +559,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`no release note message sent`);
+            expect(result).toBe(`no release note message sent`);
           });
         });
 
@@ -609,7 +573,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`no release note message sent`);
+            expect(result).toBe(`no release note message sent`);
           });
         });
       });
@@ -629,7 +593,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`no release note message sent`);
+            expect(result).toBe(`no release note message sent`);
           });
         });
 
@@ -643,7 +607,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`no release note message sent`);
+            expect(result).toBe(`no release note message sent`);
           });
         });
 
@@ -657,7 +621,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`no release note message sent`);
+            expect(result).toBe(`no release note message sent`);
           });
         });
       });
@@ -677,7 +641,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`no release note message sent`);
+            expect(result).toBe(`no release note message sent`);
           });
         });
 
@@ -691,7 +655,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`no release note message sent`);
+            expect(result).toBe(`no release note message sent`);
           });
         });
 
@@ -705,7 +669,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`no release note message sent`);
+            expect(result).toBe(`no release note message sent`);
           });
         });
       });
@@ -731,7 +695,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`no release note message sent for the value-1 guild`);
+            expect(result).toBe(`no release note message sent for the value-1 guild`);
           });
         });
 
@@ -745,7 +709,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`value-1 release note message sent over value-0 guild of value-1`);
+            expect(result).toBe(`value-1 release note message sent over value-0 guild of value-1`);
           });
         });
 
@@ -759,7 +723,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`value-2 release note messages sent over value-0 guild of value-1`);
+            expect(result).toBe(`value-2 release note messages sent over value-0 guild of value-1`);
           });
         });
       });
@@ -779,7 +743,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`no release note message sent for the value-1 guild`);
+            expect(result).toBe(`no release note message sent for the value-1 guild`);
           });
         });
 
@@ -793,7 +757,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`value-1 release note message sent over value-1 guild of value-1`);
+            expect(result).toBe(`value-1 release note message sent over value-1 guild of value-1`);
           });
         });
 
@@ -807,7 +771,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`value-2 release note messages sent over value-1 guild of value-1`);
+            expect(result).toBe(`value-2 release note messages sent over value-1 guild of value-1`);
           });
         });
       });
@@ -827,7 +791,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`no release note message sent for the value-1 guild`);
+            expect(result).toBe(`no release note message sent for the value-1 guild`);
           });
         });
 
@@ -841,7 +805,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`value-1 release note message sent over value-2 guilds of value-1`);
+            expect(result).toBe(`value-1 release note message sent over value-2 guilds of value-1`);
           });
         });
 
@@ -855,7 +819,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`value-2 release note messages sent over value-2 guilds of value-1`);
+            expect(result).toBe(`value-2 release note messages sent over value-2 guilds of value-1`);
           });
         });
       });
@@ -881,7 +845,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`no release note message sent for the value-2 guilds`);
+            expect(result).toBe(`no release note message sent for the value-2 guilds`);
           });
         });
 
@@ -895,7 +859,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`value-1 release note message sent over value-0 guild of value-2`);
+            expect(result).toBe(`value-1 release note message sent over value-0 guild of value-2`);
           });
         });
 
@@ -909,7 +873,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`value-2 release note messages sent over value-0 guild of value-2`);
+            expect(result).toBe(`value-2 release note messages sent over value-0 guild of value-2`);
           });
         });
       });
@@ -929,7 +893,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`no release note message sent for the value-2 guilds`);
+            expect(result).toBe(`no release note message sent for the value-2 guilds`);
           });
         });
 
@@ -943,7 +907,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`value-1 release note message sent over value-1 guild of value-2`);
+            expect(result).toBe(`value-1 release note message sent over value-1 guild of value-2`);
           });
         });
 
@@ -957,7 +921,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`value-2 release note messages sent over value-1 guild of value-2`);
+            expect(result).toBe(`value-2 release note messages sent over value-1 guild of value-2`);
           });
         });
       });
@@ -977,7 +941,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`no release note message sent for the value-2 guilds`);
+            expect(result).toBe(`no release note message sent for the value-2 guilds`);
           });
         });
 
@@ -991,7 +955,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`value-1 release note message sent over value-2 guilds of value-2`);
+            expect(result).toBe(`value-1 release note message sent over value-2 guilds of value-2`);
           });
         });
 
@@ -1005,7 +969,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
             const result = service.getHumanizedCountForLogs(totalGuildCount, guildCount, channelCount);
 
-            expect(result).toStrictEqual(`value-2 release note messages sent over value-2 guilds of value-2`);
+            expect(result).toBe(`value-2 release note messages sent over value-2 guilds of value-2`);
           });
         });
       });

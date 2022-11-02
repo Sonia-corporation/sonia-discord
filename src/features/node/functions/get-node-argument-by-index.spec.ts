@@ -92,7 +92,7 @@ describe(`getNodeArgumentByIndex()`, (): void => {
 
             const result = getNodeArgumentByIndex(argumentIndex);
 
-            expect(result).toStrictEqual(`value1`);
+            expect(result).toBe(`value1`);
           });
         });
       });
@@ -142,7 +142,7 @@ describe(`getNodeArgumentByIndex()`, (): void => {
 
             const result = getNodeArgumentByIndex(argumentIndex);
 
-            expect(result).toStrictEqual(`value2`);
+            expect(result).toBe(`value2`);
           });
         });
       });

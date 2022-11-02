@@ -332,7 +332,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** BASIC`);
+          expect(result.response).toBe(`**[dev]** BASIC`);
         });
       });
 
@@ -346,7 +346,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** SIMPLE`);
+          expect(result.response).toBe(`**[dev]** SIMPLE`);
         });
       });
 
@@ -360,7 +360,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** Basic`);
+          expect(result.response).toBe(`**[dev]** Basic`);
         });
       });
 
@@ -374,7 +374,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** Simple`);
+          expect(result.response).toBe(`**[dev]** Simple`);
         });
       });
 
@@ -388,7 +388,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** Basic`);
+          expect(result.response).toBe(`**[dev]** Basic`);
         });
       });
 
@@ -402,7 +402,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** Simple`);
+          expect(result.response).toBe(`**[dev]** Simple`);
         });
       });
 
@@ -416,7 +416,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** basic`);
+          expect(result.response).toBe(`**[dev]** basic`);
         });
       });
 
@@ -430,7 +430,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toStrictEqual(`**[dev]** simple`);
+          expect(result.response).toBe(`**[dev]** simple`);
         });
       });
     });

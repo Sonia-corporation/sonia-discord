@@ -11,6 +11,6 @@ describe(`DiscordGithubContributorsIdEnum`, (): void => {
   it(`should have a member "C0ZEN"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordGithubContributorsIdEnum.C0ZEN).toStrictEqual(`260525899991089165`);
+    expect(DiscordGithubContributorsIdEnum.C0ZEN).toBe(`260525899991089165`);
   });
 });

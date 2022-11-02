@@ -45,7 +45,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
 
       const result = handleFirebaseGuildBreakingChange(firebaseGuild);
 
-      expect(result.id).toStrictEqual(`dummy-id`);
+      expect(result.id).toBe(`dummy-id`);
     });
 
     it(`should return a last release notes version of 0.0.0`, (): void => {
@@ -53,7 +53,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
 
       const result = handleFirebaseGuildBreakingChange(firebaseGuild);
 
-      expect(result.lastReleaseNotesVersion).toStrictEqual(`0.0.0`);
+      expect(result.lastReleaseNotesVersion).toBe(`0.0.0`);
     });
 
     it(`should return a v5 version`, (): void => {
@@ -89,7 +89,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
 
       const result = handleFirebaseGuildBreakingChange(firebaseGuild);
 
-      expect(result.id).toStrictEqual(`dummy-id`);
+      expect(result.id).toBe(`dummy-id`);
     });
 
     it(`should return the same last release notes version`, (): void => {
@@ -97,7 +97,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
 
       const result = handleFirebaseGuildBreakingChange(firebaseGuild);
 
-      expect(result.lastReleaseNotesVersion).toStrictEqual(`dummy-last-release-notes-version`);
+      expect(result.lastReleaseNotesVersion).toBe(`dummy-last-release-notes-version`);
     });
 
     it(`should return a v5 version`, (): void => {
@@ -134,7 +134,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
 
       const result = handleFirebaseGuildBreakingChange(firebaseGuild);
 
-      expect(result.id).toStrictEqual(`dummy-id`);
+      expect(result.id).toBe(`dummy-id`);
     });
 
     it(`should return the same last release notes version`, (): void => {
@@ -142,7 +142,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
 
       const result = handleFirebaseGuildBreakingChange(firebaseGuild);
 
-      expect(result.lastReleaseNotesVersion).toStrictEqual(`dummy-last-release-notes-version`);
+      expect(result.lastReleaseNotesVersion).toBe(`dummy-last-release-notes-version`);
     });
 
     it(`should return a v5 version`, (): void => {
@@ -224,7 +224,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
 
       const result = handleFirebaseGuildBreakingChange(firebaseGuild);
 
-      expect(result.id).toStrictEqual(`dummy-id`);
+      expect(result.id).toBe(`dummy-id`);
     });
 
     it(`should return the same last release notes version`, (): void => {
@@ -232,7 +232,7 @@ describe(`handleFirebaseGuildBreakingChange()`, (): void => {
 
       const result = handleFirebaseGuildBreakingChange(firebaseGuild);
 
-      expect(result.lastReleaseNotesVersion).toStrictEqual(`dummy-last-release-notes-version`);
+      expect(result.lastReleaseNotesVersion).toBe(`dummy-last-release-notes-version`);
     });
 
     it(`should return a v5 version`, (): void => {

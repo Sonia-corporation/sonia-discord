@@ -98,7 +98,7 @@ describe(`discordCommandGetFlagValue()`, (): void => {
 
       const result = discordCommandGetFlagValue(messageFlag);
 
-      expect(result).toStrictEqual(`dummy`);
+      expect(result).toBe(`dummy`);
     });
   });
 });

@@ -179,7 +179,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.description).toStrictEqual(`Chuck Norris can't beat me.`);
+      expect(result.options.embed?.description).toBe(`Chuck Norris can't beat me.`);
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -245,7 +245,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
       const result = await service.getMessageResponse();
 
       expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -253,7 +253,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.title).toStrictEqual(`Cookie delivery!`);
+      expect(result.options.embed?.title).toBe(`Cookie delivery!`);
     });
 
     it(`should return a Discord message response not split`, async (): Promise<void> => {
@@ -269,7 +269,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result = await service.handleResponse(anyDiscordMessage);
 
-      expect(result.response).toStrictEqual(``);
+      expect(result.response).toBe(``);
     });
   });
 

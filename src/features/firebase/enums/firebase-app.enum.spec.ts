@@ -11,6 +11,6 @@ describe(`FirebaseAppEnum`, (): void => {
   it(`should have a member "SONIA_DISCORD"`, (): void => {
     expect.assertions(1);
 
-    expect(FirebaseAppEnum.SONIA_DISCORD).toStrictEqual(`sonia-discord`);
+    expect(FirebaseAppEnum.SONIA_DISCORD).toBe(`sonia-discord`);
   });
 });

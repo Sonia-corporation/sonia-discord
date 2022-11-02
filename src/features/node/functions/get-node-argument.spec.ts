@@ -60,7 +60,7 @@ describe(`getNodeArgument()`, (): void => {
 
         const result = getNodeArgument(name);
 
-        expect(result).toStrictEqual(`value1`);
+        expect(result).toBe(`value1`);
       });
     });
   });

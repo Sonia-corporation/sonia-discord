@@ -11,30 +11,30 @@ describe(`DiscordActivityTypeEnum`, (): void => {
   it(`should have a member "CUSTOM_STATUS"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordActivityTypeEnum.CUSTOM_STATUS).toStrictEqual(`CUSTOM_STATUS`);
+    expect(DiscordActivityTypeEnum.CUSTOM_STATUS).toBe(`CUSTOM_STATUS`);
   });
 
   it(`should have a member "LISTENING"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordActivityTypeEnum.LISTENING).toStrictEqual(`LISTENING`);
+    expect(DiscordActivityTypeEnum.LISTENING).toBe(`LISTENING`);
   });
 
   it(`should have a member "PLAYING"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordActivityTypeEnum.PLAYING).toStrictEqual(`PLAYING`);
+    expect(DiscordActivityTypeEnum.PLAYING).toBe(`PLAYING`);
   });
 
   it(`should have a member "STREAMING"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordActivityTypeEnum.STREAMING).toStrictEqual(`STREAMING`);
+    expect(DiscordActivityTypeEnum.STREAMING).toBe(`STREAMING`);
   });
 
   it(`should have a member "WATCHING"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordActivityTypeEnum.WATCHING).toStrictEqual(`WATCHING`);
+    expect(DiscordActivityTypeEnum.WATCHING).toBe(`WATCHING`);
   });
 });

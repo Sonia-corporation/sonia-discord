@@ -149,7 +149,7 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
         const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-        expect(result.options.embed?.footer?.iconURL).toStrictEqual(`dummy-image-url`);
+        expect(result.options.embed?.footer?.iconURL).toBe(`dummy-image-url`);
       });
     });
 
@@ -158,7 +158,7 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(result.options.embed?.footer?.text).toStrictEqual(`Sonia reporter out`);
+      expect(result.options.embed?.footer?.text).toBe(`Sonia reporter out`);
     });
 
     it(`should return a message response with an embed thumbnail icon`, (): void => {
@@ -177,7 +177,7 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
       expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a message response with an embed title`, (): void => {
@@ -185,7 +185,7 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(result.options.embed?.title).toStrictEqual(`Release notes report`);
+      expect(result.options.embed?.title).toBe(`Release notes report`);
     });
 
     it(`should return a message response with an embed description`, (): void => {
@@ -194,7 +194,7 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(result.options.embed?.description).toStrictEqual(`dummy-description`);
+      expect(result.options.embed?.description).toBe(`dummy-description`);
     });
 
     it(`should return an unify error message response`, (): void => {
@@ -210,7 +210,7 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(result.response).toStrictEqual(``);
+      expect(result.response).toBe(``);
     });
   });
 });

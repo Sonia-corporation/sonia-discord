@@ -192,7 +192,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.description).toStrictEqual(
+        expect(result.options.embed?.description).toBe(
           `Below is the complete list of commands.\nYou can either use \`-\`, \`!\` or \`$\` as prefix to run a command.`
         );
       });
@@ -368,7 +368,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
         const result = await service.getMessageResponse();
 
         expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-        expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+        expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
       });
 
       it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -376,7 +376,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.title).toStrictEqual(`So, you need my help? Cool.`);
+        expect(result.options.embed?.title).toBe(`So, you need my help? Cool.`);
       });
 
       it(`should return a Discord message response not split`, async (): Promise<void> => {
@@ -392,7 +392,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.response).toStrictEqual(``);
+        expect(result.response).toBe(``);
       });
     });
 

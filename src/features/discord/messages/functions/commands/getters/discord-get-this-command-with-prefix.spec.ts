@@ -266,7 +266,7 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
 
           const result = discordGetThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(`!help`);
+          expect(result).toBe(`!help`);
         });
       });
     });
@@ -340,7 +340,7 @@ describe(`discordGetThisCommandWithPrefix()`, (): void => {
 
           const result = discordGetThisCommandWithPrefix(data);
 
-          expect(result).toStrictEqual(`!HELP`);
+          expect(result).toBe(`!HELP`);
         });
       });
     });

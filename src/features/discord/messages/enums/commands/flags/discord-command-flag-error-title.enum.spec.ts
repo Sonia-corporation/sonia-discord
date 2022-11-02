@@ -11,18 +11,18 @@ describe(`DiscordCommandFlagErrorTitleEnum`, (): void => {
   it(`should have a member "INVALID_BOOLEAN_FLAG"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordCommandFlagErrorTitleEnum.INVALID_BOOLEAN_FLAG).toStrictEqual(`Invalid boolean flag`);
+    expect(DiscordCommandFlagErrorTitleEnum.INVALID_BOOLEAN_FLAG).toBe(`Invalid boolean flag`);
   });
 
   it(`should have a member "INVALID_VALUELESS_FLAG"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordCommandFlagErrorTitleEnum.INVALID_VALUELESS_FLAG).toStrictEqual(`Invalid valueless flag`);
+    expect(DiscordCommandFlagErrorTitleEnum.INVALID_VALUELESS_FLAG).toBe(`Invalid valueless flag`);
   });
 
   it(`should have a member "UNKNOWN_FLAG"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordCommandFlagErrorTitleEnum.UNKNOWN_FLAG).toStrictEqual(`Unknown flag`);
+    expect(DiscordCommandFlagErrorTitleEnum.UNKNOWN_FLAG).toBe(`Unknown flag`);
   });
 });

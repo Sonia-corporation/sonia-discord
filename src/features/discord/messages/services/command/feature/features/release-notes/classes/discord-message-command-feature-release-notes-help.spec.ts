@@ -194,7 +194,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
-        expect(result.options.embed?.description).toStrictEqual(
+        expect(result.options.embed?.description).toBe(
           `Below is the complete list of all flags available for the release notes feature. You can even combine them!`
         );
       });
@@ -441,7 +441,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
         expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-        expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+        expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
       });
 
       it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -449,7 +449,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
-        expect(result.options.embed?.title).toStrictEqual(`So, you need my help with the release notes feature? Cool.`);
+        expect(result.options.embed?.title).toBe(`So, you need my help with the release notes feature? Cool.`);
       });
 
       it(`should return a Discord message response not split`, async (): Promise<void> => {
@@ -465,7 +465,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
-        expect(result.response).toStrictEqual(``);
+        expect(result.response).toBe(``);
       });
     });
   });

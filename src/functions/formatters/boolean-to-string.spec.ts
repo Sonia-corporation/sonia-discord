@@ -13,7 +13,7 @@ describe(`booleanToString()`, (): void => {
 
       const result = booleanToString(isDummy);
 
-      expect(result).toStrictEqual(`false`);
+      expect(result).toBe(`false`);
     });
   });
 
@@ -27,7 +27,7 @@ describe(`booleanToString()`, (): void => {
 
       const result = booleanToString(isDummy);
 
-      expect(result).toStrictEqual(`true`);
+      expect(result).toBe(`true`);
     });
   });
 });

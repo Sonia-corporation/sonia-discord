@@ -11,102 +11,102 @@ describe(`DiscordMessageCommandEnum`, (): void => {
   it(`should have a member "VERSION"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.VERSION).toStrictEqual(`version`);
+    expect(DiscordMessageCommandEnum.VERSION).toBe(`version`);
   });
 
   it(`should have a member "V"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.V).toStrictEqual(`v`);
+    expect(DiscordMessageCommandEnum.V).toBe(`v`);
   });
 
   it(`should have a member "ERROR"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.ERROR).toStrictEqual(`error`);
+    expect(DiscordMessageCommandEnum.ERROR).toBe(`error`);
   });
 
   it(`should have a member "BUG"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.BUG).toStrictEqual(`bug`);
+    expect(DiscordMessageCommandEnum.BUG).toBe(`bug`);
   });
 
   it(`should have a member "HELP"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.HELP).toStrictEqual(`help`);
+    expect(DiscordMessageCommandEnum.HELP).toBe(`help`);
   });
 
   it(`should have a member "H"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.H).toStrictEqual(`h`);
+    expect(DiscordMessageCommandEnum.H).toBe(`h`);
   });
 
   it(`should have a member "COOKIE"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.COOKIE).toStrictEqual(`cookie`);
+    expect(DiscordMessageCommandEnum.COOKIE).toBe(`cookie`);
   });
 
   it(`should have a member "COOKIES"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.COOKIES).toStrictEqual(`cookies`);
+    expect(DiscordMessageCommandEnum.COOKIES).toBe(`cookies`);
   });
 
   it(`should have a member "C"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.C).toStrictEqual(`c`);
+    expect(DiscordMessageCommandEnum.C).toBe(`c`);
   });
 
   it(`should have a member "LUNCH"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.LUNCH).toStrictEqual(`lunch`);
+    expect(DiscordMessageCommandEnum.LUNCH).toBe(`lunch`);
   });
 
   it(`should have a member "L"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.L).toStrictEqual(`l`);
+    expect(DiscordMessageCommandEnum.L).toBe(`l`);
   });
 
   it(`should have a member "RELEASE_NOTES"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.RELEASE_NOTES).toStrictEqual(`release-notes`);
+    expect(DiscordMessageCommandEnum.RELEASE_NOTES).toBe(`release-notes`);
   });
 
   it(`should have a member "R"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.R).toStrictEqual(`r`);
+    expect(DiscordMessageCommandEnum.R).toBe(`r`);
   });
 
   it(`should have a member "FEATURE"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.FEATURE).toStrictEqual(`feature`);
+    expect(DiscordMessageCommandEnum.FEATURE).toBe(`feature`);
   });
 
   it(`should have a member "F"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.F).toStrictEqual(`f`);
+    expect(DiscordMessageCommandEnum.F).toBe(`f`);
   });
 
   it(`should have a member "QUOTE"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.QUOTE).toStrictEqual(`quote`);
+    expect(DiscordMessageCommandEnum.QUOTE).toBe(`quote`);
   });
 
   it(`should have a member "Q"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordMessageCommandEnum.Q).toStrictEqual(`q`);
+    expect(DiscordMessageCommandEnum.Q).toBe(`q`);
   });
 });

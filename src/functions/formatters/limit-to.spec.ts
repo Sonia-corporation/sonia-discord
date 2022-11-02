@@ -14,7 +14,7 @@ describe(`limitTo()`, (): void => {
 
       const result = limitTo(value);
 
-      expect(result).toStrictEqual(``);
+      expect(result).toBe(``);
     });
   });
 
@@ -28,7 +28,7 @@ describe(`limitTo()`, (): void => {
 
       const result = limitTo(value);
 
-      expect(result).toStrictEqual(`0123456789`);
+      expect(result).toBe(`0123456789`);
     });
 
     describe(`when the given limit is 8`, (): void => {
@@ -41,7 +41,7 @@ describe(`limitTo()`, (): void => {
 
         const result = limitTo(value, limit);
 
-        expect(result).toStrictEqual(`01234567`);
+        expect(result).toBe(`01234567`);
       });
     });
 
@@ -55,7 +55,7 @@ describe(`limitTo()`, (): void => {
 
         const result = limitTo(value, limit);
 
-        expect(result).toStrictEqual(`012345678`);
+        expect(result).toBe(`012345678`);
       });
     });
 
@@ -69,7 +69,7 @@ describe(`limitTo()`, (): void => {
 
         const result = limitTo(value, limit);
 
-        expect(result).toStrictEqual(`0123456789`);
+        expect(result).toBe(`0123456789`);
       });
     });
 
@@ -83,7 +83,7 @@ describe(`limitTo()`, (): void => {
 
         const result = limitTo(value, limit);
 
-        expect(result).toStrictEqual(`0123456789`);
+        expect(result).toBe(`0123456789`);
       });
     });
   });

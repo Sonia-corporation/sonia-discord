@@ -17,13 +17,13 @@ describe(`ENVIRONMENT`, (): void => {
   it(`should have a Discord application id for Sonia`, (): void => {
     expect.assertions(1);
 
-    expect(ENVIRONMENT.discord.sonia?.id).toStrictEqual(`689829775317139460`);
+    expect(ENVIRONMENT.discord.sonia?.id).toBe(`689829775317139460`);
   });
 
   it(`should have a fake Discord secret token for the Sonia bot`, (): void => {
     expect.assertions(1);
 
-    expect(ENVIRONMENT.discord.sonia?.secretToken).toStrictEqual(
+    expect(ENVIRONMENT.discord.sonia?.secretToken).toBe(
       `TO_DEFINE_BY_ASKING_IT_AND_ADD_IT_IN_SECRET_ENVIRONMENT_JSON_FILE`
     );
   });
@@ -31,9 +31,7 @@ describe(`ENVIRONMENT`, (): void => {
   it(`should have a fake GitHub personal access token`, (): void => {
     expect.assertions(1);
 
-    expect(ENVIRONMENT.github?.personalAccessToken).toStrictEqual(
-      `TO_DEFINE_BY_YOU_AND_ADD_IT_IN_SECRET_ENVIRONMENT_JSON_FILE`
-    );
+    expect(ENVIRONMENT.github?.personalAccessToken).toBe(`TO_DEFINE_BY_YOU_AND_ADD_IT_IN_SECRET_ENVIRONMENT_JSON_FILE`);
   });
 
   it(`should allow to log`, (): void => {
@@ -51,6 +49,6 @@ describe(`ENVIRONMENT`, (): void => {
   it(`should have a fake Quote API key`, (): void => {
     expect.assertions(1);
 
-    expect(ENVIRONMENT.quote?.apiKey).toStrictEqual(`TO_DEFINE_BY_YOU_AND_ADD_IT_IN_SECRET_ENVIRONMENT_JSON_FILE`);
+    expect(ENVIRONMENT.quote?.apiKey).toBe(`TO_DEFINE_BY_YOU_AND_ADD_IT_IN_SECRET_ENVIRONMENT_JSON_FILE`);
   });
 });

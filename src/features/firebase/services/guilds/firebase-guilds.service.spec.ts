@@ -916,8 +916,8 @@ describe(`FirebaseGuildsService`, (): void => {
         expect(docMock).toHaveBeenCalledWith(`dummy-id`);
         expect(setMock).toHaveBeenCalledTimes(1);
         expect(setMock.mock.calls[0][0].channels).toStrictEqual({});
-        expect(setMock.mock.calls[0][0].id).toStrictEqual(`dummy-id`);
-        expect(setMock.mock.calls[0][0].lastReleaseNotesVersion).toStrictEqual(`0.0.0`);
+        expect(setMock.mock.calls[0][0].id).toBe(`dummy-id`);
+        expect(setMock.mock.calls[0][0].lastReleaseNotesVersion).toBe(`0.0.0`);
         expect(setMock.mock.calls[0][0].version).toStrictEqual(FirebaseGuildVersionEnum.V5);
       });
 

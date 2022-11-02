@@ -62,6 +62,6 @@ describe(`DiscordMessageCommandFeatureNoonConfigCoreService`, (): void => {
 
     service = DiscordMessageCommandFeatureNoonConfigCoreService.getInstance();
 
-    expect(service.noon.imageUrl).toStrictEqual(`https://i.ibb.co/S7BxtDh/icons8-alarm-512.png`);
+    expect(service.noon.imageUrl).toBe(`https://i.ibb.co/S7BxtDh/icons8-alarm-512.png`);
   });
 });

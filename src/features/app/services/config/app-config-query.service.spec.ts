@@ -68,7 +68,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getFirstReleaseDateFormatted();
 
-        expect(result).toStrictEqual(``);
+        expect(result).toBe(``);
       });
     });
 
@@ -101,7 +101,7 @@ describe(`AppConfigQueryService`, (): void => {
 
           const result = service.getFirstReleaseDateFormatted(format);
 
-          expect(result).toStrictEqual(``);
+          expect(result).toBe(``);
         });
       });
 
@@ -122,7 +122,7 @@ describe(`AppConfigQueryService`, (): void => {
 
           const result = service.getFirstReleaseDateFormatted(format);
 
-          expect(result).toStrictEqual(`the 24th March 2020`);
+          expect(result).toBe(`the 24th March 2020`);
         });
       });
     });
@@ -144,7 +144,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getInitializationDateHumanized();
 
-        expect(result).toStrictEqual(``);
+        expect(result).toBe(``);
       });
     });
 
@@ -158,7 +158,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getInitializationDateHumanized();
 
-        expect(result).toStrictEqual(`unknown`);
+        expect(result).toBe(`unknown`);
       });
     });
 
@@ -172,7 +172,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getInitializationDateHumanized();
 
-        expect(result).toStrictEqual(`A few seconds ago`);
+        expect(result).toBe(`A few seconds ago`);
       });
     });
 
@@ -186,7 +186,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getInitializationDateHumanized();
 
-        expect(result).toStrictEqual(`An hour ago`);
+        expect(result).toBe(`An hour ago`);
       });
     });
 
@@ -200,7 +200,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getInitializationDateHumanized();
 
-        expect(result).toStrictEqual(`2 hours ago`);
+        expect(result).toBe(`2 hours ago`);
       });
     });
   });
@@ -221,7 +221,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getProductionStateHumanized();
 
-        expect(result).toStrictEqual(`development`);
+        expect(result).toBe(`development`);
       });
     });
 
@@ -235,7 +235,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getProductionStateHumanized();
 
-        expect(result).toStrictEqual(`production`);
+        expect(result).toBe(`production`);
       });
     });
   });
@@ -256,7 +256,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getReleaseDateHumanized();
 
-        expect(result).toStrictEqual(``);
+        expect(result).toBe(``);
       });
     });
 
@@ -270,7 +270,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getReleaseDateHumanized();
 
-        expect(result).toStrictEqual(`unknown`);
+        expect(result).toBe(`unknown`);
       });
     });
 
@@ -284,7 +284,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getReleaseDateHumanized();
 
-        expect(result).toStrictEqual(`A few seconds ago`);
+        expect(result).toBe(`A few seconds ago`);
       });
     });
 
@@ -298,7 +298,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getReleaseDateHumanized();
 
-        expect(result).toStrictEqual(`An hour ago`);
+        expect(result).toBe(`An hour ago`);
       });
     });
 
@@ -312,7 +312,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getReleaseDateHumanized();
 
-        expect(result).toStrictEqual(`2 hours ago`);
+        expect(result).toBe(`2 hours ago`);
       });
     });
   });
@@ -335,7 +335,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getTotalReleaseCountHumanized();
 
-        expect(result).toStrictEqual(`0 version`);
+        expect(result).toBe(`0 version`);
       });
     });
 
@@ -349,7 +349,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getTotalReleaseCountHumanized();
 
-        expect(result).toStrictEqual(`1 version`);
+        expect(result).toBe(`1 version`);
       });
     });
 
@@ -363,7 +363,7 @@ describe(`AppConfigQueryService`, (): void => {
 
         const result = service.getTotalReleaseCountHumanized();
 
-        expect(result).toStrictEqual(`8 versions`);
+        expect(result).toBe(`8 versions`);
       });
     });
 
@@ -382,7 +382,7 @@ describe(`AppConfigQueryService`, (): void => {
 
           const result = service.getTotalReleaseCountHumanized(releaseWord);
 
-          expect(result).toStrictEqual(`0 birthday`);
+          expect(result).toBe(`0 birthday`);
         });
       });
 
@@ -396,7 +396,7 @@ describe(`AppConfigQueryService`, (): void => {
 
           const result = service.getTotalReleaseCountHumanized(releaseWord);
 
-          expect(result).toStrictEqual(`1 birthday`);
+          expect(result).toBe(`1 birthday`);
         });
       });
 
@@ -410,7 +410,7 @@ describe(`AppConfigQueryService`, (): void => {
 
           const result = service.getTotalReleaseCountHumanized(releaseWord);
 
-          expect(result).toStrictEqual(`8 birthdays`);
+          expect(result).toBe(`8 birthdays`);
         });
       });
     });

@@ -106,7 +106,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service = new DiscordSoniaConfigMutatorService(config);
 
-        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.iconURL).toStrictEqual(`iconURL`);
+        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.iconURL).toBe(`iconURL`);
       });
 
       it(`should not update the current corporation message embed author name`, (): void => {
@@ -115,7 +115,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service = new DiscordSoniaConfigMutatorService(config);
 
-        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.name).toStrictEqual(`name`);
+        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.name).toBe(`name`);
       });
 
       it(`should not update the current corporation message embed author url`, (): void => {
@@ -124,7 +124,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service = new DiscordSoniaConfigMutatorService(config);
 
-        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url).toStrictEqual(`url`);
+        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url).toBe(`url`);
       });
 
       it(`should not update the dev guild id whitelist`, (): void => {
@@ -142,7 +142,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service = new DiscordSoniaConfigMutatorService(config);
 
-        expect(discordSoniaConfigCoreService.id).toStrictEqual(`id`);
+        expect(discordSoniaConfigCoreService.id).toBe(`id`);
       });
 
       it(`should not update the current secret token`, (): void => {
@@ -151,7 +151,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service = new DiscordSoniaConfigMutatorService(config);
 
-        expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(`secretToken`);
+        expect(discordSoniaConfigCoreService.secretToken).toBe(`secretToken`);
       });
     });
 
@@ -187,7 +187,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service = new DiscordSoniaConfigMutatorService(config);
 
-        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.iconURL).toStrictEqual(`dummy-icon-url`);
+        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.iconURL).toBe(`dummy-icon-url`);
       });
 
       it(`should override the corporation message embed author name`, (): void => {
@@ -196,7 +196,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service = new DiscordSoniaConfigMutatorService(config);
 
-        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.name).toStrictEqual(`dummy-name`);
+        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.name).toBe(`dummy-name`);
       });
 
       it(`should override the corporation message embed author url`, (): void => {
@@ -205,7 +205,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service = new DiscordSoniaConfigMutatorService(config);
 
-        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url).toStrictEqual(`dummy-url`);
+        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url).toBe(`dummy-url`);
       });
 
       it(`should override the dev guild id whitelist`, (): void => {
@@ -223,7 +223,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service = new DiscordSoniaConfigMutatorService(config);
 
-        expect(discordSoniaConfigCoreService.id).toStrictEqual(`dummy-id`);
+        expect(discordSoniaConfigCoreService.id).toBe(`dummy-id`);
       });
 
       it(`should override the secret token`, (): void => {
@@ -232,7 +232,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service = new DiscordSoniaConfigMutatorService(config);
 
-        expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(`dummy-secret-token`);
+        expect(discordSoniaConfigCoreService.secretToken).toBe(`dummy-secret-token`);
       });
     });
   });
@@ -305,8 +305,8 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(IconEnum.GIRL);
       expect(discordSoniaConfigCoreService.devGuildIdWhitelist).toStrictEqual([`dummy-guild-id`]);
-      expect(discordSoniaConfigCoreService.id).toStrictEqual(`dummy-id`);
-      expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(`dummy-secret-token`);
+      expect(discordSoniaConfigCoreService.id).toBe(`dummy-id`);
+      expect(discordSoniaConfigCoreService.secretToken).toBe(`dummy-secret-token`);
       expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor).toStrictEqual({
         iconURL: `dummy-icon-url`,
         name: `dummy-name`,
@@ -334,8 +334,8 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(IconEnum.GIRL);
         expect(discordSoniaConfigCoreService.devGuildIdWhitelist).toStrictEqual([`dummy-guild-id`]);
-        expect(discordSoniaConfigCoreService.id).toStrictEqual(`dummy-id`);
-        expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(`dummy-secret-token`);
+        expect(discordSoniaConfigCoreService.id).toBe(`dummy-id`);
+        expect(discordSoniaConfigCoreService.secretToken).toBe(`dummy-secret-token`);
         expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor).toStrictEqual({
           iconURL: `dummy-icon-url`,
           name: `dummy-name`,
@@ -424,7 +424,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(discordSoniaConfigCoreService.id).toStrictEqual(`id`);
+        expect(discordSoniaConfigCoreService.id).toBe(`id`);
       });
 
       it(`should log about the config update`, (): void => {
@@ -453,7 +453,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(`secret-token`);
+        expect(discordSoniaConfigCoreService.secretToken).toBe(`secret-token`);
       });
 
       it(`should log about the config update`, (): void => {
@@ -534,8 +534,8 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         expect(discordSoniaConfigCoreService.corporationImageUrl).toStrictEqual(IconEnum.GIRL);
         expect(discordSoniaConfigCoreService.devGuildIdWhitelist).toStrictEqual([`dummy-guild-id`]);
-        expect(discordSoniaConfigCoreService.id).toStrictEqual(`dummy-id`);
-        expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(`dummy-secret-token`);
+        expect(discordSoniaConfigCoreService.id).toBe(`dummy-id`);
+        expect(discordSoniaConfigCoreService.secretToken).toBe(`dummy-secret-token`);
         expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor).toStrictEqual({
           iconURL: `dummy-icon-url`,
           name: `dummy-name`,
@@ -588,7 +588,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service.updateSonia(config);
 
-        expect(discordSoniaConfigCoreService.id).toStrictEqual(`id`);
+        expect(discordSoniaConfigCoreService.id).toBe(`id`);
       });
     });
 
@@ -604,7 +604,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service.updateSonia(config);
 
-        expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(`secret-token`);
+        expect(discordSoniaConfigCoreService.secretToken).toBe(`secret-token`);
       });
     });
 
@@ -711,7 +711,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service.updateCorporationMessageEmbedAuthor(config);
 
-        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.iconURL).toStrictEqual(`icon-url`);
+        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.iconURL).toBe(`icon-url`);
       });
     });
 
@@ -727,7 +727,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service.updateCorporationMessageEmbedAuthor(config);
 
-        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.name).toStrictEqual(`name`);
+        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.name).toBe(`name`);
       });
     });
 
@@ -743,7 +743,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
         service.updateCorporationMessageEmbedAuthor(config);
 
-        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url).toStrictEqual(`url`);
+        expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url).toBe(`url`);
       });
     });
   });
@@ -782,7 +782,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service.updateCorporationMessageEmbedAuthorIconUrl(iconUrl);
 
-      expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.iconURL).toStrictEqual(`dummy-icon-url`);
+      expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.iconURL).toBe(`dummy-icon-url`);
     });
   });
 
@@ -818,7 +818,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service.updateCorporationMessageEmbedAuthorName(name);
 
-      expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.name).toStrictEqual(`dummy-name`);
+      expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.name).toBe(`dummy-name`);
     });
   });
 
@@ -854,7 +854,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service.updateCorporationMessageEmbedAuthorUrl(url);
 
-      expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url).toStrictEqual(`dummy-url`);
+      expect(discordSoniaConfigCoreService.corporationMessageEmbedAuthor.url).toBe(`dummy-url`);
     });
   });
 
@@ -930,7 +930,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service.updateId(id);
 
-      expect(discordSoniaConfigCoreService.id).toStrictEqual(`dummy-id`);
+      expect(discordSoniaConfigCoreService.id).toBe(`dummy-id`);
     });
   });
 
@@ -969,7 +969,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service.updateSecretToken(secretToken);
 
-      expect(discordSoniaConfigCoreService.secretToken).toStrictEqual(`dummy-secret-token`);
+      expect(discordSoniaConfigCoreService.secretToken).toBe(`dummy-secret-token`);
     });
   });
 });

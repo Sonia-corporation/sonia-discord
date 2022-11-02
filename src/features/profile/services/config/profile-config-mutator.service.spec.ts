@@ -83,7 +83,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
         service = new ProfileConfigMutatorService(config);
 
-        expect(profileConfigCoreService.discordId).toStrictEqual(`discordId`);
+        expect(profileConfigCoreService.discordId).toBe(`discordId`);
       });
 
       it(`should not update the current nickname`, (): void => {
@@ -92,7 +92,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
         service = new ProfileConfigMutatorService(config);
 
-        expect(profileConfigCoreService.nickname).toStrictEqual(`nickname`);
+        expect(profileConfigCoreService.nickname).toBe(`nickname`);
       });
     });
 
@@ -110,7 +110,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
         service = new ProfileConfigMutatorService(config);
 
-        expect(profileConfigCoreService.discordId).toStrictEqual(`dummy-discord-id`);
+        expect(profileConfigCoreService.discordId).toBe(`dummy-discord-id`);
       });
 
       it(`should override the nickname`, (): void => {
@@ -119,7 +119,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
         service = new ProfileConfigMutatorService(config);
 
-        expect(profileConfigCoreService.nickname).toStrictEqual(`dummy-nickname`);
+        expect(profileConfigCoreService.nickname).toBe(`dummy-nickname`);
       });
     });
   });
@@ -183,8 +183,8 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
       service.updateConfig();
 
-      expect(profileConfigCoreService.discordId).toStrictEqual(`dummy-discord-id`);
-      expect(profileConfigCoreService.nickname).toStrictEqual(`dummy-nickname`);
+      expect(profileConfigCoreService.discordId).toBe(`dummy-discord-id`);
+      expect(profileConfigCoreService.nickname).toBe(`dummy-nickname`);
     });
 
     it(`should not log about the config update`, (): void => {
@@ -205,8 +205,8 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(profileConfigCoreService.discordId).toStrictEqual(`dummy-discord-id`);
-        expect(profileConfigCoreService.nickname).toStrictEqual(`dummy-nickname`);
+        expect(profileConfigCoreService.discordId).toBe(`dummy-discord-id`);
+        expect(profileConfigCoreService.nickname).toBe(`dummy-nickname`);
       });
 
       it(`should not log about the config update`, (): void => {
@@ -230,7 +230,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(profileConfigCoreService.discordId).toStrictEqual(`discord-id`);
+        expect(profileConfigCoreService.discordId).toBe(`discord-id`);
       });
 
       it(`should log about the config update`, (): void => {
@@ -257,7 +257,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(profileConfigCoreService.nickname).toStrictEqual(`nickname`);
+        expect(profileConfigCoreService.nickname).toBe(`nickname`);
       });
 
       it(`should log about the config update`, (): void => {
@@ -305,7 +305,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
       service.updateDiscordId(discordId);
 
-      expect(profileConfigCoreService.discordId).toStrictEqual(`discord-id`);
+      expect(profileConfigCoreService.discordId).toBe(`discord-id`);
     });
   });
 
@@ -341,7 +341,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
       service.updateNickname(nickname);
 
-      expect(profileConfigCoreService.nickname).toStrictEqual(`nickname`);
+      expect(profileConfigCoreService.nickname).toBe(`nickname`);
     });
   });
 });

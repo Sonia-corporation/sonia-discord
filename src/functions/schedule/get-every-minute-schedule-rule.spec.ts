@@ -6,6 +6,6 @@ describe(`getEveryMinuteScheduleRule()`, (): void => {
 
     const result = getEveryMinuteScheduleRule();
 
-    expect(result).toStrictEqual(`* * * * *`);
+    expect(result).toBe(`* * * * *`);
   });
 });

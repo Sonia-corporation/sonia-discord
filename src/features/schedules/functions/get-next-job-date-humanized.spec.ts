@@ -32,7 +32,7 @@ describe(`getNextJobDateHumanized()`, (): void => {
 
       const result = getNextJobDateHumanized(job);
 
-      expect(result).toStrictEqual(`humanized-date`);
+      expect(result).toBe(`humanized-date`);
     });
   });
 });

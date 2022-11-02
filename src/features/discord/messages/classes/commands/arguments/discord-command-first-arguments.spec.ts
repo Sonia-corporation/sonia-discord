@@ -153,7 +153,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
         const result = discordCommandFirstArguments.getRandomArgumentUsageExample();
 
-        expect(result).toStrictEqual(`noon`);
+        expect(result).toBe(`noon`);
       });
     });
   });
@@ -175,7 +175,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
         const result = discordCommandFirstArguments.getAllArgumentsNameExample();
 
-        expect(result).toStrictEqual(``);
+        expect(result).toBe(``);
       });
     });
 
@@ -196,7 +196,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
         const result = discordCommandFirstArguments.getAllArgumentsNameExample();
 
-        expect(result).toStrictEqual(`\`noon\``);
+        expect(result).toBe(`\`noon\``);
       });
     });
 
@@ -223,7 +223,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
         const result = discordCommandFirstArguments.getAllArgumentsNameExample();
 
-        expect(result).toStrictEqual(`\`noon\`, \`n\``);
+        expect(result).toBe(`\`noon\`, \`n\``);
       });
     });
   });
@@ -245,7 +245,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
         const result = discordCommandFirstArguments.getAllArgumentsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(``);
+        expect(result).toBe(``);
       });
     });
 
@@ -266,7 +266,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
         const result = discordCommandFirstArguments.getAllArgumentsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(`\`noon\``);
+        expect(result).toBe(`\`noon\``);
       });
     });
 
@@ -288,7 +288,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
         const result = discordCommandFirstArguments.getAllArgumentsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(`\`noon (or n, n)\``);
+        expect(result).toBe(`\`noon (or n, n)\``);
       });
     });
 
@@ -315,7 +315,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
         const result = discordCommandFirstArguments.getAllArgumentsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(`\`noon\`, \`n\``);
+        expect(result).toBe(`\`noon\`, \`n\``);
       });
     });
 
@@ -344,7 +344,7 @@ describe(`DiscordCommandFirstArguments`, (): void => {
 
         const result = discordCommandFirstArguments.getAllArgumentsNameWithShortcutsExample();
 
-        expect(result).toStrictEqual(`\`noon (or n, n)\`, \`n (or n, n)\``);
+        expect(result).toBe(`\`noon (or n, n)\`, \`n (or n, n)\``);
       });
     });
   });

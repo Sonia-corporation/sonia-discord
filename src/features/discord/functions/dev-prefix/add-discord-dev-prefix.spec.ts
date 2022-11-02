@@ -42,7 +42,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -56,7 +56,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -70,7 +70,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -90,7 +90,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -104,7 +104,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -118,7 +118,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -138,7 +138,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -152,7 +152,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -166,7 +166,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -192,7 +192,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -206,7 +206,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -220,7 +220,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -240,7 +240,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -254,7 +254,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -268,7 +268,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -288,7 +288,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -302,7 +302,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -316,7 +316,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -342,7 +342,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -356,7 +356,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -370,7 +370,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -390,7 +390,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -404,7 +404,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -418,7 +418,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -438,7 +438,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** `);
             });
           });
 
@@ -452,7 +452,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** `);
             });
           });
 
@@ -466,7 +466,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!dummy-discord-id>] `);
+              expect(result).toBe(`[dev - <@!dummy-discord-id>] `);
             });
           });
         });
@@ -492,7 +492,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -506,7 +506,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -520,7 +520,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -540,7 +540,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -554,7 +554,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -568,7 +568,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -588,7 +588,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!discord-id>]** `);
             });
           });
 
@@ -602,7 +602,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!discord-id>]** `);
             });
           });
 
@@ -616,7 +616,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!discord-id>] `);
+              expect(result).toBe(`[dev - <@!discord-id>] `);
             });
           });
         });
@@ -648,7 +648,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -662,7 +662,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -676,7 +676,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -696,7 +696,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -710,7 +710,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -724,7 +724,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -744,7 +744,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -758,7 +758,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -772,7 +772,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -798,7 +798,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -812,7 +812,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -826,7 +826,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -846,7 +846,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -860,7 +860,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -874,7 +874,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -894,7 +894,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -908,7 +908,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -922,7 +922,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -948,7 +948,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -962,7 +962,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -976,7 +976,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -996,7 +996,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -1010,7 +1010,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -1024,7 +1024,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -1044,7 +1044,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** `);
             });
           });
 
@@ -1058,7 +1058,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** `);
             });
           });
 
@@ -1072,7 +1072,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!dummy-discord-id>] `);
+              expect(result).toBe(`[dev - <@!dummy-discord-id>] `);
             });
           });
         });
@@ -1098,7 +1098,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -1112,7 +1112,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -1126,7 +1126,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -1146,7 +1146,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -1160,7 +1160,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** `);
+              expect(result).toBe(`**[dev]** `);
             });
           });
 
@@ -1174,7 +1174,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] `);
+              expect(result).toBe(`[dev] `);
             });
           });
         });
@@ -1194,7 +1194,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!discord-id>]** `);
             });
           });
 
@@ -1208,7 +1208,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!discord-id>]** `);
             });
           });
 
@@ -1222,7 +1222,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!discord-id>] `);
+              expect(result).toBe(`[dev - <@!discord-id>] `);
             });
           });
         });
@@ -1254,7 +1254,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1268,7 +1268,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1282,7 +1282,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] `);
+              expect(result).toBe(`[dev - dummy-nickname] `);
             });
           });
         });
@@ -1302,7 +1302,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1316,7 +1316,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1330,7 +1330,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] `);
+              expect(result).toBe(`[dev - dummy-nickname] `);
             });
           });
         });
@@ -1350,7 +1350,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1364,7 +1364,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1378,7 +1378,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] `);
+              expect(result).toBe(`[dev - dummy-nickname] `);
             });
           });
         });
@@ -1404,7 +1404,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1418,7 +1418,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1432,7 +1432,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] `);
+              expect(result).toBe(`[dev - dummy-nickname] `);
             });
           });
         });
@@ -1452,7 +1452,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1466,7 +1466,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1480,7 +1480,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] `);
+              expect(result).toBe(`[dev - dummy-nickname] `);
             });
           });
         });
@@ -1500,7 +1500,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1514,7 +1514,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1528,7 +1528,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] `);
+              expect(result).toBe(`[dev - dummy-nickname] `);
             });
           });
         });
@@ -1554,7 +1554,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1568,7 +1568,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1582,7 +1582,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] `);
+              expect(result).toBe(`[dev - dummy-nickname] `);
             });
           });
         });
@@ -1602,7 +1602,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1616,7 +1616,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1630,7 +1630,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] `);
+              expect(result).toBe(`[dev - dummy-nickname] `);
             });
           });
         });
@@ -1650,7 +1650,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** `);
             });
           });
 
@@ -1664,7 +1664,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** `);
             });
           });
 
@@ -1678,7 +1678,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!dummy-discord-id>] `);
+              expect(result).toBe(`[dev - <@!dummy-discord-id>] `);
             });
           });
         });
@@ -1704,7 +1704,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1718,7 +1718,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1732,7 +1732,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] `);
+              expect(result).toBe(`[dev - dummy-nickname] `);
             });
           });
         });
@@ -1752,7 +1752,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1766,7 +1766,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** `);
+              expect(result).toBe(`**[dev - dummy-nickname]** `);
             });
           });
 
@@ -1780,7 +1780,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] `);
+              expect(result).toBe(`[dev - dummy-nickname] `);
             });
           });
         });
@@ -1800,7 +1800,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!discord-id>]** `);
             });
           });
 
@@ -1814,7 +1814,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!discord-id>]** `);
             });
           });
 
@@ -1828,7 +1828,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!discord-id>] `);
+              expect(result).toBe(`[dev - <@!discord-id>] `);
             });
           });
         });
@@ -1860,7 +1860,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -1874,7 +1874,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -1888,7 +1888,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] `);
+              expect(result).toBe(`[dev - sonia] `);
             });
           });
         });
@@ -1908,7 +1908,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -1922,7 +1922,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -1936,7 +1936,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] `);
+              expect(result).toBe(`[dev - sonia] `);
             });
           });
         });
@@ -1956,7 +1956,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -1970,7 +1970,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -1984,7 +1984,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] `);
+              expect(result).toBe(`[dev - sonia] `);
             });
           });
         });
@@ -2010,7 +2010,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -2024,7 +2024,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -2038,7 +2038,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] `);
+              expect(result).toBe(`[dev - sonia] `);
             });
           });
         });
@@ -2058,7 +2058,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -2072,7 +2072,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -2086,7 +2086,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] `);
+              expect(result).toBe(`[dev - sonia] `);
             });
           });
         });
@@ -2106,7 +2106,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -2120,7 +2120,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -2134,7 +2134,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] `);
+              expect(result).toBe(`[dev - sonia] `);
             });
           });
         });
@@ -2160,7 +2160,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -2174,7 +2174,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -2188,7 +2188,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] `);
+              expect(result).toBe(`[dev - sonia] `);
             });
           });
         });
@@ -2208,7 +2208,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -2222,7 +2222,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -2236,7 +2236,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] `);
+              expect(result).toBe(`[dev - sonia] `);
             });
           });
         });
@@ -2256,7 +2256,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** `);
             });
           });
 
@@ -2270,7 +2270,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** `);
             });
           });
 
@@ -2284,7 +2284,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!dummy-discord-id>] `);
+              expect(result).toBe(`[dev - <@!dummy-discord-id>] `);
             });
           });
         });
@@ -2310,7 +2310,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -2324,7 +2324,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -2338,7 +2338,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] `);
+              expect(result).toBe(`[dev - sonia] `);
             });
           });
         });
@@ -2358,7 +2358,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -2372,7 +2372,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** `);
+              expect(result).toBe(`**[dev - sonia]** `);
             });
           });
 
@@ -2386,7 +2386,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] `);
+              expect(result).toBe(`[dev - sonia] `);
             });
           });
         });
@@ -2406,7 +2406,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!discord-id>]** `);
             });
           });
 
@@ -2420,7 +2420,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** `);
+              expect(result).toBe(`**[dev - <@!discord-id>]** `);
             });
           });
 
@@ -2434,7 +2434,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!discord-id>] `);
+              expect(result).toBe(`[dev - <@!discord-id>] `);
             });
           });
         });
@@ -2472,7 +2472,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2486,7 +2486,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2500,7 +2500,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -2520,7 +2520,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2534,7 +2534,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2548,7 +2548,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -2568,7 +2568,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2582,7 +2582,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2596,7 +2596,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -2622,7 +2622,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2636,7 +2636,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2650,7 +2650,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -2670,7 +2670,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2684,7 +2684,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2698,7 +2698,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -2718,7 +2718,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2732,7 +2732,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2746,7 +2746,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -2772,7 +2772,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2786,7 +2786,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2800,7 +2800,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -2820,7 +2820,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2834,7 +2834,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2848,7 +2848,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -2868,7 +2868,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** hello world`);
             });
           });
 
@@ -2882,7 +2882,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** hello world`);
             });
           });
 
@@ -2896,7 +2896,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!dummy-discord-id>] hello world`);
+              expect(result).toBe(`[dev - <@!dummy-discord-id>] hello world`);
             });
           });
         });
@@ -2922,7 +2922,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2936,7 +2936,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2950,7 +2950,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -2970,7 +2970,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2984,7 +2984,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -2998,7 +2998,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -3018,7 +3018,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!discord-id>]** hello world`);
             });
           });
 
@@ -3032,7 +3032,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!discord-id>]** hello world`);
             });
           });
 
@@ -3046,7 +3046,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!discord-id>] hello world`);
+              expect(result).toBe(`[dev - <@!discord-id>] hello world`);
             });
           });
         });
@@ -3078,7 +3078,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3092,7 +3092,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3106,7 +3106,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -3126,7 +3126,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3140,7 +3140,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3154,7 +3154,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -3174,7 +3174,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3188,7 +3188,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3202,7 +3202,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -3228,7 +3228,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3242,7 +3242,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3256,7 +3256,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -3276,7 +3276,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3290,7 +3290,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3304,7 +3304,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -3324,7 +3324,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3338,7 +3338,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3352,7 +3352,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -3378,7 +3378,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3392,7 +3392,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3406,7 +3406,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -3426,7 +3426,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3440,7 +3440,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3454,7 +3454,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -3474,7 +3474,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** hello world`);
             });
           });
 
@@ -3488,7 +3488,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** hello world`);
             });
           });
 
@@ -3502,7 +3502,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!dummy-discord-id>] hello world`);
+              expect(result).toBe(`[dev - <@!dummy-discord-id>] hello world`);
             });
           });
         });
@@ -3528,7 +3528,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3542,7 +3542,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3556,7 +3556,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -3576,7 +3576,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3590,7 +3590,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev]** hello world`);
+              expect(result).toBe(`**[dev]** hello world`);
             });
           });
 
@@ -3604,7 +3604,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev] hello world`);
+              expect(result).toBe(`[dev] hello world`);
             });
           });
         });
@@ -3624,7 +3624,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!discord-id>]** hello world`);
             });
           });
 
@@ -3638,7 +3638,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!discord-id>]** hello world`);
             });
           });
 
@@ -3652,7 +3652,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!discord-id>] hello world`);
+              expect(result).toBe(`[dev - <@!discord-id>] hello world`);
             });
           });
         });
@@ -3684,7 +3684,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -3698,7 +3698,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -3712,7 +3712,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] hello world`);
+              expect(result).toBe(`[dev - dummy-nickname] hello world`);
             });
           });
         });
@@ -3732,7 +3732,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -3746,7 +3746,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -3760,7 +3760,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] hello world`);
+              expect(result).toBe(`[dev - dummy-nickname] hello world`);
             });
           });
         });
@@ -3780,7 +3780,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -3794,7 +3794,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -3808,7 +3808,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] hello world`);
+              expect(result).toBe(`[dev - dummy-nickname] hello world`);
             });
           });
         });
@@ -3834,7 +3834,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -3848,7 +3848,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -3862,7 +3862,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] hello world`);
+              expect(result).toBe(`[dev - dummy-nickname] hello world`);
             });
           });
         });
@@ -3882,7 +3882,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -3896,7 +3896,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -3910,7 +3910,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] hello world`);
+              expect(result).toBe(`[dev - dummy-nickname] hello world`);
             });
           });
         });
@@ -3930,7 +3930,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -3944,7 +3944,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -3958,7 +3958,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] hello world`);
+              expect(result).toBe(`[dev - dummy-nickname] hello world`);
             });
           });
         });
@@ -3984,7 +3984,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -3998,7 +3998,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -4012,7 +4012,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] hello world`);
+              expect(result).toBe(`[dev - dummy-nickname] hello world`);
             });
           });
         });
@@ -4032,7 +4032,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -4046,7 +4046,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -4060,7 +4060,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] hello world`);
+              expect(result).toBe(`[dev - dummy-nickname] hello world`);
             });
           });
         });
@@ -4080,7 +4080,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** hello world`);
             });
           });
 
@@ -4094,7 +4094,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** hello world`);
             });
           });
 
@@ -4108,7 +4108,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!dummy-discord-id>] hello world`);
+              expect(result).toBe(`[dev - <@!dummy-discord-id>] hello world`);
             });
           });
         });
@@ -4134,7 +4134,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -4148,7 +4148,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -4162,7 +4162,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] hello world`);
+              expect(result).toBe(`[dev - dummy-nickname] hello world`);
             });
           });
         });
@@ -4182,7 +4182,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -4196,7 +4196,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - dummy-nickname]** hello world`);
+              expect(result).toBe(`**[dev - dummy-nickname]** hello world`);
             });
           });
 
@@ -4210,7 +4210,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - dummy-nickname] hello world`);
+              expect(result).toBe(`[dev - dummy-nickname] hello world`);
             });
           });
         });
@@ -4230,7 +4230,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!discord-id>]** hello world`);
             });
           });
 
@@ -4244,7 +4244,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!discord-id>]** hello world`);
             });
           });
 
@@ -4258,7 +4258,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!discord-id>] hello world`);
+              expect(result).toBe(`[dev - <@!discord-id>] hello world`);
             });
           });
         });
@@ -4290,7 +4290,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4304,7 +4304,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4318,7 +4318,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] hello world`);
+              expect(result).toBe(`[dev - sonia] hello world`);
             });
           });
         });
@@ -4338,7 +4338,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4352,7 +4352,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4366,7 +4366,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] hello world`);
+              expect(result).toBe(`[dev - sonia] hello world`);
             });
           });
         });
@@ -4386,7 +4386,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4400,7 +4400,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4414,7 +4414,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] hello world`);
+              expect(result).toBe(`[dev - sonia] hello world`);
             });
           });
         });
@@ -4440,7 +4440,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4454,7 +4454,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4468,7 +4468,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] hello world`);
+              expect(result).toBe(`[dev - sonia] hello world`);
             });
           });
         });
@@ -4488,7 +4488,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4502,7 +4502,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4516,7 +4516,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] hello world`);
+              expect(result).toBe(`[dev - sonia] hello world`);
             });
           });
         });
@@ -4536,7 +4536,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4550,7 +4550,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4564,7 +4564,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] hello world`);
+              expect(result).toBe(`[dev - sonia] hello world`);
             });
           });
         });
@@ -4590,7 +4590,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4604,7 +4604,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4618,7 +4618,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] hello world`);
+              expect(result).toBe(`[dev - sonia] hello world`);
             });
           });
         });
@@ -4638,7 +4638,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4652,7 +4652,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4666,7 +4666,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] hello world`);
+              expect(result).toBe(`[dev - sonia] hello world`);
             });
           });
         });
@@ -4686,7 +4686,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** hello world`);
             });
           });
 
@@ -4700,7 +4700,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!dummy-discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!dummy-discord-id>]** hello world`);
             });
           });
 
@@ -4714,7 +4714,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!dummy-discord-id>] hello world`);
+              expect(result).toBe(`[dev - <@!dummy-discord-id>] hello world`);
             });
           });
         });
@@ -4740,7 +4740,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4754,7 +4754,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4768,7 +4768,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] hello world`);
+              expect(result).toBe(`[dev - sonia] hello world`);
             });
           });
         });
@@ -4788,7 +4788,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4802,7 +4802,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - sonia]** hello world`);
+              expect(result).toBe(`**[dev - sonia]** hello world`);
             });
           });
 
@@ -4816,7 +4816,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - sonia] hello world`);
+              expect(result).toBe(`[dev - sonia] hello world`);
             });
           });
         });
@@ -4836,7 +4836,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!discord-id>]** hello world`);
             });
           });
 
@@ -4850,7 +4850,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`**[dev - <@!discord-id>]** hello world`);
+              expect(result).toBe(`**[dev - <@!discord-id>]** hello world`);
             });
           });
 
@@ -4864,7 +4864,7 @@ describe(`addDiscordDevPrefix()`, (): void => {
 
               const result = addDiscordDevPrefix(config);
 
-              expect(result).toStrictEqual(`[dev - <@!discord-id>] hello world`);
+              expect(result).toBe(`[dev - <@!discord-id>] hello world`);
             });
           });
         });

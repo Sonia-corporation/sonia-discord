@@ -216,7 +216,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
         const result = service.getWarningMessageResponse(warning);
 
-        expect(result.options.embed?.footer?.iconURL).toStrictEqual(`dummy-image-url`);
+        expect(result.options.embed?.footer?.iconURL).toBe(`dummy-image-url`);
       });
     });
 
@@ -225,7 +225,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(result.options.embed?.footer?.text).toStrictEqual(`Discord warning`);
+      expect(result.options.embed?.footer?.text).toBe(`Discord warning`);
     });
 
     it(`should return a warning message response with an embed thumbnail icon`, (): void => {
@@ -244,7 +244,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
       const result = service.getWarningMessageResponse(warning);
 
       expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toStrictEqual(`a few seconds ago`);
+      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a warning message response with an embed title`, (): void => {
@@ -252,7 +252,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(result.options.embed?.title).toStrictEqual(`Warning!`);
+      expect(result.options.embed?.title).toBe(`Warning!`);
     });
 
     it(`should return a warning message response with an embed description displaying the given warning`, (): void => {
@@ -260,7 +260,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(result.options.embed?.description).toStrictEqual(`dummy-warning`);
+      expect(result.options.embed?.description).toBe(`dummy-warning`);
     });
 
     it(`should return an unify warning message response`, (): void => {
@@ -276,7 +276,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(result.response).toStrictEqual(``);
+      expect(result.response).toBe(``);
     });
   });
 });

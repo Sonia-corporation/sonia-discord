@@ -78,7 +78,7 @@ describe(`DiscordGuildConfigCoreService`, (): void => {
 
     service = DiscordGuildConfigCoreService.getInstance();
 
-    expect(service.soniaGuildId).toStrictEqual(`689833865279307782`);
+    expect(service.soniaGuildId).toBe(`689833865279307782`);
   });
 
   it(`should have a Sonia permanent invitation url to joins`, (): void => {
@@ -86,6 +86,6 @@ describe(`DiscordGuildConfigCoreService`, (): void => {
 
     service = DiscordGuildConfigCoreService.getInstance();
 
-    expect(service.soniaPermanentGuildInviteUrl).toStrictEqual(`https://discord.gg/PW4JSkv`);
+    expect(service.soniaPermanentGuildInviteUrl).toBe(`https://discord.gg/PW4JSkv`);
   });
 });
