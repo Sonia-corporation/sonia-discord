@@ -12,6 +12,6 @@ jobs:
   Labeler:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/labeler@26546f6c4d63b6c0623e8e39bde7869e3c2b1d7b # tag=v3
+      - uses: actions/labeler@5c7539237e04b714afd8ad9b4aed733815b9fab4 # tag=v4
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
