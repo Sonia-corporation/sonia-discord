@@ -34,7 +34,7 @@ import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final'
 import { IUpdatedFirebaseGuildLastReleaseNotesVersion } from '../../types/guilds/updated-firebase-guild-last-release-notes-version';
 import { Guild, GuildChannel, Message, TextChannel } from 'discord.js';
 import * as admin from 'firebase-admin';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { createMock } from 'ts-auto-mock';
 
@@ -146,7 +146,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       it(`should consider that the service is not ready`, async (): Promise<void> => {
         expect.assertions(1);
 
-        await expect(service.isReady$().pipe(take(1)).toPromise()).rejects.toThrow(new Error(`error`));
+        await expect(firstValueFrom(service.isReady$().pipe(take(1)))).rejects.toThrow(new Error(`error`));
       });
     });
 
@@ -158,7 +158,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       it(`should consider that the service is ready`, async (): Promise<void> => {
         expect.assertions(1);
 
-        const result = await service.isReady$().pipe(take(1)).toPromise();
+        const result = await firstValueFrom(service.isReady$().pipe(take(1)));
 
         expect(result).toStrictEqual([true]);
       });
@@ -229,7 +229,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
     it(`should wait that everything is ready`, async (): Promise<void> => {
       expect.assertions(3);
 
-      await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+      await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
         new Error(`Firebase guilds batch not available`)
       );
 
@@ -245,7 +245,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       it(`should not get the guilds`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(new Error(`error`));
+        await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(new Error(`error`));
 
         expect(firebaseGuildsServiceGetGuildsSpy).not.toHaveBeenCalled();
       });
@@ -253,7 +253,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       it(`should not get a Firebase guilds batch`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(new Error(`error`));
+        await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(new Error(`error`));
 
         expect(firebaseGuildsServiceGetBatchSpy).not.toHaveBeenCalled();
       });
@@ -261,7 +261,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       it(`should not update the Firebase guild batch`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(new Error(`error`));
+        await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(new Error(`error`));
 
         expect(updateMock).not.toHaveBeenCalled();
       });
@@ -269,7 +269,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       it(`should not commit the batch`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(new Error(`error`));
+        await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(new Error(`error`));
 
         expect(commitMock).not.toHaveBeenCalled();
       });
@@ -277,7 +277,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       it(`should not send the release notes message for the guilds`, async (): Promise<void> => {
         expect.assertions(2);
 
-        await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(new Error(`error`));
+        await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(new Error(`error`));
 
         expect(sendNewReleaseNotesFromFirebaseGuildSpy).not.toHaveBeenCalled();
       });
@@ -291,7 +291,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       it(`should log about processing the sending of release notes to each guild...`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+        await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
           new Error(`Firebase guilds batch not available`)
         );
 
@@ -305,7 +305,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       it(`should get the guilds`, async (): Promise<void> => {
         expect.assertions(3);
 
-        await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+        await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
           new Error(`Firebase guilds batch not available`)
         );
 
@@ -321,7 +321,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         it(`should not get a Firebase guilds batch`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(new Error(`error`));
+          await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(new Error(`error`));
 
           expect(firebaseGuildsServiceGetBatchSpy).not.toHaveBeenCalled();
         });
@@ -329,7 +329,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         it(`should not update the Firebase guild batch`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(new Error(`error`));
+          await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(new Error(`error`));
 
           expect(updateMock).not.toHaveBeenCalled();
         });
@@ -337,7 +337,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         it(`should not commit the batch`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(new Error(`error`));
+          await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(new Error(`error`));
 
           expect(commitMock).not.toHaveBeenCalled();
         });
@@ -345,7 +345,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         it(`should not send the release notes message for the guilds`, async (): Promise<void> => {
           expect.assertions(2);
 
-          await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(new Error(`error`));
+          await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(new Error(`error`));
 
           expect(sendNewReleaseNotesFromFirebaseGuildSpy).not.toHaveBeenCalled();
         });
@@ -359,7 +359,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         it(`should log about the guilds fetched success`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+          await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
             new Error(`Firebase guilds batch not available`)
           );
 
@@ -373,7 +373,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         it(`should get a Firebase guilds batch`, async (): Promise<void> => {
           expect.assertions(3);
 
-          await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+          await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
             new Error(`Firebase guilds batch not available`)
           );
 
@@ -389,7 +389,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           it(`should log about the Firebase guilds batch not being available`, async (): Promise<void> => {
             expect.assertions(3);
 
-            await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+            await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
               new Error(`Firebase guilds batch not available`)
             );
 
@@ -403,7 +403,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           it(`should throw an error`, async (): Promise<void> => {
             expect.assertions(1);
 
-            await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+            await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
               new Error(`Firebase guilds batch not available`)
             );
           });
@@ -411,7 +411,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           it(`should not update the Firebase guild batch`, async (): Promise<void> => {
             expect.assertions(2);
 
-            await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+            await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
               new Error(`Firebase guilds batch not available`)
             );
 
@@ -421,7 +421,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           it(`should not commit the batch`, async (): Promise<void> => {
             expect.assertions(2);
 
-            await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+            await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
               new Error(`Firebase guilds batch not available`)
             );
 
@@ -431,7 +431,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           it(`should not send the release notes message for the guilds`, async (): Promise<void> => {
             expect.assertions(2);
 
-            await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+            await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
               new Error(`Firebase guilds batch not available`)
             );
 
@@ -457,7 +457,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             it(`should log that all Firebase guilds release notes were already sent`, async (): Promise<void> => {
               expect.assertions(2);
 
-              await service.sendNewReleaseNotesToEachGuild$().toPromise();
+              await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
               expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
@@ -469,7 +469,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             it(`should not update the Firebase guild batch`, async (): Promise<void> => {
               expect.assertions(1);
 
-              await service.sendNewReleaseNotesToEachGuild$().toPromise();
+              await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
               expect(updateMock).not.toHaveBeenCalled();
             });
@@ -477,7 +477,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             it(`should not commit the batch`, async (): Promise<void> => {
               expect.assertions(1);
 
-              await service.sendNewReleaseNotesToEachGuild$().toPromise();
+              await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
               expect(commitMock).not.toHaveBeenCalled();
             });
@@ -485,7 +485,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             it(`should not send the release notes message for the guilds`, async (): Promise<void> => {
               expect.assertions(1);
 
-              await service.sendNewReleaseNotesToEachGuild$().toPromise();
+              await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
               expect(sendNewReleaseNotesFromFirebaseGuildSpy).not.toHaveBeenCalled();
             });
@@ -514,7 +514,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             it(`should log that all Firebase guilds release notes were already sent`, async (): Promise<void> => {
               expect.assertions(2);
 
-              await service.sendNewReleaseNotesToEachGuild$().toPromise();
+              await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
               expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
@@ -526,7 +526,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             it(`should not update the Firebase guild batch`, async (): Promise<void> => {
               expect.assertions(1);
 
-              await service.sendNewReleaseNotesToEachGuild$().toPromise();
+              await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
               expect(updateMock).not.toHaveBeenCalled();
             });
@@ -534,7 +534,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             it(`should not commit the batch`, async (): Promise<void> => {
               expect.assertions(1);
 
-              await service.sendNewReleaseNotesToEachGuild$().toPromise();
+              await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
               expect(commitMock).not.toHaveBeenCalled();
             });
@@ -542,7 +542,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             it(`should not send the release notes message for the guilds`, async (): Promise<void> => {
               expect.assertions(1);
 
-              await service.sendNewReleaseNotesToEachGuild$().toPromise();
+              await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
               expect(sendNewReleaseNotesFromFirebaseGuildSpy).not.toHaveBeenCalled();
             });
@@ -575,7 +575,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             it(`should log that all Firebase guilds release notes were already sent`, async (): Promise<void> => {
               expect.assertions(2);
 
-              await service.sendNewReleaseNotesToEachGuild$().toPromise();
+              await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
               expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
@@ -587,7 +587,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             it(`should not update the Firebase guild batch`, async (): Promise<void> => {
               expect.assertions(1);
 
-              await service.sendNewReleaseNotesToEachGuild$().toPromise();
+              await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
               expect(updateMock).not.toHaveBeenCalled();
             });
@@ -595,7 +595,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             it(`should not commit the batch`, async (): Promise<void> => {
               expect.assertions(1);
 
-              await service.sendNewReleaseNotesToEachGuild$().toPromise();
+              await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
               expect(commitMock).not.toHaveBeenCalled();
             });
@@ -603,7 +603,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             it(`should not send the release notes message for the guilds`, async (): Promise<void> => {
               expect.assertions(1);
 
-              await service.sendNewReleaseNotesToEachGuild$().toPromise();
+              await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
               expect(sendNewReleaseNotesFromFirebaseGuildSpy).not.toHaveBeenCalled();
             });
@@ -637,7 +637,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               it(`should log that all Firebase guilds release notes were already sent`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await service.sendNewReleaseNotesToEachGuild$().toPromise();
+                await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
                 expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
                 expect(loggerServiceLogSpy).toHaveBeenCalledWith({
@@ -649,7 +649,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               it(`should not update the Firebase guild batch`, async (): Promise<void> => {
                 expect.assertions(1);
 
-                await service.sendNewReleaseNotesToEachGuild$().toPromise();
+                await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
                 expect(updateMock).not.toHaveBeenCalled();
               });
@@ -657,7 +657,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               it(`should not commit the batch`, async (): Promise<void> => {
                 expect.assertions(1);
 
-                await service.sendNewReleaseNotesToEachGuild$().toPromise();
+                await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
                 expect(commitMock).not.toHaveBeenCalled();
               });
@@ -665,7 +665,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               it(`should not send the release notes message for the guilds`, async (): Promise<void> => {
                 expect.assertions(1);
 
-                await service.sendNewReleaseNotesToEachGuild$().toPromise();
+                await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
                 expect(sendNewReleaseNotesFromFirebaseGuildSpy).not.toHaveBeenCalled();
               });
@@ -679,7 +679,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               it(`should update the Firebase guild last release notes version in the batch`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+                await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
                   new Error(`Commit error`)
                 );
 
@@ -692,7 +692,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               it(`should log that one Firebase guild is updating`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+                await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
                   new Error(`Commit error`)
                 );
 
@@ -706,7 +706,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               it(`should commit the batch`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+                await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
                   new Error(`Commit error`)
                 );
 
@@ -722,7 +722,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 it(`should not send the release notes message for the guild`, async (): Promise<void> => {
                   expect.assertions(2);
 
-                  await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+                  await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
                     new Error(`Commit error`)
                   );
 
@@ -738,7 +738,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 it(`should send the release notes message for the guild`, async (): Promise<void> => {
                   expect.assertions(2);
 
-                  await service.sendNewReleaseNotesToEachGuild$().toPromise();
+                  await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
                   expect(sendNewReleaseNotesFromFirebaseGuildSpy).toHaveBeenCalledTimes(1);
                   expect(sendNewReleaseNotesFromFirebaseGuildSpy).toHaveBeenCalledWith(firebaseGuild);
@@ -754,7 +754,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   it(`should log about the fail of the release notes message sending`, async (): Promise<void> => {
                     expect.assertions(2);
 
-                    await service.sendNewReleaseNotesToEachGuild$().toPromise();
+                    await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
                     expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
                     expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
@@ -796,7 +796,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               it(`should log that all Firebase guilds release notes were already sent`, async (): Promise<void> => {
                 expect.assertions(2);
 
-                await service.sendNewReleaseNotesToEachGuild$().toPromise();
+                await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
                 expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
                 expect(loggerServiceLogSpy).toHaveBeenCalledWith({
@@ -808,7 +808,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               it(`should not update the Firebase guild batch`, async (): Promise<void> => {
                 expect.assertions(1);
 
-                await service.sendNewReleaseNotesToEachGuild$().toPromise();
+                await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
                 expect(updateMock).not.toHaveBeenCalled();
               });
@@ -816,7 +816,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               it(`should not commit the batch`, async (): Promise<void> => {
                 expect.assertions(1);
 
-                await service.sendNewReleaseNotesToEachGuild$().toPromise();
+                await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
                 expect(commitMock).not.toHaveBeenCalled();
               });
@@ -824,7 +824,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               it(`should not send the release notes message for the guilds`, async (): Promise<void> => {
                 expect.assertions(1);
 
-                await service.sendNewReleaseNotesToEachGuild$().toPromise();
+                await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
                 expect(sendNewReleaseNotesFromFirebaseGuildSpy).not.toHaveBeenCalled();
               });
@@ -838,7 +838,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               it(`should update the Firebase guilds last release notes version in the batch`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+                await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
                   new Error(`Commit error`)
                 );
 
@@ -851,7 +851,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               it(`should log that two Firebase guilds are updating`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+                await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
                   new Error(`Commit error`)
                 );
 
@@ -865,7 +865,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               it(`should commit the batch`, async (): Promise<void> => {
                 expect.assertions(3);
 
-                await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+                await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
                   new Error(`Commit error`)
                 );
 
@@ -881,7 +881,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 it(`should not send the release notes message for the guilds`, async (): Promise<void> => {
                   expect.assertions(2);
 
-                  await expect(service.sendNewReleaseNotesToEachGuild$().toPromise()).rejects.toThrow(
+                  await expect(firstValueFrom(service.sendNewReleaseNotesToEachGuild$())).rejects.toThrow(
                     new Error(`Commit error`)
                   );
 
@@ -897,7 +897,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 it(`should send the release notes message for the guilds`, async (): Promise<void> => {
                   expect.assertions(2);
 
-                  await service.sendNewReleaseNotesToEachGuild$().toPromise();
+                  await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
                   expect(sendNewReleaseNotesFromFirebaseGuildSpy).toHaveBeenCalledTimes(2);
                   expect(sendNewReleaseNotesFromFirebaseGuildSpy).toHaveBeenCalledWith(firebaseGuild);
@@ -913,7 +913,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   it(`should log about the fail of the release notes message sending`, async (): Promise<void> => {
                     expect.assertions(2);
 
-                    await service.sendNewReleaseNotesToEachGuild$().toPromise();
+                    await firstValueFrom(service.sendNewReleaseNotesToEachGuild$());
 
                     expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
                     expect(loggerServiceErrorSpy).toHaveBeenCalledWith({

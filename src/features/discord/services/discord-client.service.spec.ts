@@ -2,6 +2,7 @@ import { DiscordClientService } from './discord-client.service';
 import { ServiceNameEnum } from '../../../enums/service-name.enum';
 import { CoreEventService } from '../../core/services/core-event.service';
 import { Client } from 'discord.js';
+import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { createMock } from 'ts-auto-mock';
 
@@ -130,7 +131,7 @@ describe(`DiscordClientService`, (): void => {
     it(`should be false by default`, async (): Promise<void> => {
       expect.assertions(1);
 
-      const result = await service.isReady$().pipe(take(1)).toPromise();
+      const result = await firstValueFrom(service.isReady$().pipe(take(1)));
 
       expect(result).toBe(false);
     });
@@ -140,7 +141,7 @@ describe(`DiscordClientService`, (): void => {
         expect.assertions(1);
         service.notifyIsReady();
 
-        const result = await service.isReady$().pipe(take(1)).toPromise();
+        const result = await firstValueFrom(service.isReady$().pipe(take(1)));
 
         expect(result).toBe(true);
       });
@@ -177,7 +178,7 @@ describe(`DiscordClientService`, (): void => {
       expect.assertions(1);
       service.notifyIsReady();
 
-      const result = await service.isReady$().pipe(take(1)).toPromise();
+      const result = await firstValueFrom(service.isReady$().pipe(take(1)));
 
       expect(result).toBe(true);
     });

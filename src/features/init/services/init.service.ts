@@ -32,7 +32,7 @@ import axios, { AxiosResponse } from 'axios';
 import admin from 'firebase-admin';
 import fs from 'fs-extra';
 import _ from 'lodash';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
 export class InitService extends AbstractService {
@@ -66,13 +66,13 @@ export class InitService extends AbstractService {
   }
 
   public isAppConfigured(): Promise<true> {
-    return this.isAppConfigured$()
-      .pipe(
+    return firstValueFrom(
+      this.isAppConfigured$().pipe(
         filter((isAppConfigured: Readonly<boolean>): boolean => _.isEqual(isAppConfigured, true)),
         take(ONE_EMITTER),
         map((): true => true)
       )
-      .toPromise();
+    );
   }
 
   public notifyIsAppConfigured(): void {

@@ -3,6 +3,7 @@ import { ServiceNameEnum } from '../../../enums/service-name.enum';
 import { CoreEventService } from '../../core/services/core-event.service';
 import { ChalkColorService } from '../../logger/services/chalk/chalk-color.service';
 import { LoggerService } from '../../logger/services/logger.service';
+import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 describe(`InitService`, (): void => {
@@ -134,7 +135,7 @@ describe(`InitService`, (): void => {
     it(`should be false by default`, async (): Promise<void> => {
       expect.assertions(1);
 
-      const result = await service.isAppConfigured$().pipe(take(1)).toPromise();
+      const result = await firstValueFrom(service.isAppConfigured$().pipe(take(1)));
 
       expect(result).toBe(false);
     });
@@ -144,7 +145,7 @@ describe(`InitService`, (): void => {
         expect.assertions(1);
         service.notifyIsAppConfigured();
 
-        const result = await service.isAppConfigured$().pipe(take(1)).toPromise();
+        const result = await firstValueFrom(service.isAppConfigured$().pipe(take(1)));
 
         expect(result).toBe(true);
       });
@@ -181,7 +182,7 @@ describe(`InitService`, (): void => {
       expect.assertions(1);
       service.notifyIsAppConfigured();
 
-      const result = await service.isAppConfigured$().pipe(take(1)).toPromise();
+      const result = await firstValueFrom(service.isAppConfigured$().pipe(take(1)));
 
       expect(result).toBe(true);
     });

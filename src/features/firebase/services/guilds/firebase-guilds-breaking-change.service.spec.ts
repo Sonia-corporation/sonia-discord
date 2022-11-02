@@ -10,7 +10,7 @@ import { IFirebaseGuildV1 } from '../../interfaces/guilds/firebase-guild-v1';
 import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
 import * as admin from 'firebase-admin';
-import { of, throwError } from 'rxjs';
+import { firstValueFrom, of, throwError } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { createMock } from 'ts-auto-mock';
 
@@ -589,7 +589,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
     it(`should be false by default`, async (): Promise<void> => {
       expect.assertions(1);
 
-      const result = await service.hasFinished$().pipe(take(1)).toPromise();
+      const result = await firstValueFrom(service.hasFinished$().pipe(take(1)));
 
       expect(result).toBe(false);
     });
@@ -599,7 +599,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
         expect.assertions(1);
         service.notifyHasFinished();
 
-        const result = await service.hasFinished$().pipe(take(1)).toPromise();
+        const result = await firstValueFrom(service.hasFinished$().pipe(take(1)));
 
         expect(result).toBe(true);
       });
@@ -636,7 +636,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
       expect.assertions(1);
       service.notifyHasFinished();
 
-      const result = await service.hasFinished$().pipe(take(1)).toPromise();
+      const result = await firstValueFrom(service.hasFinished$().pipe(take(1)));
 
       expect(result).toBe(true);
     });
@@ -660,7 +660,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
       it(`should consider that the service is not ready`, async (): Promise<void> => {
         expect.assertions(1);
 
-        await expect(service.isReady$().pipe(take(1)).toPromise()).rejects.toThrow(new Error(`error`));
+        await expect(firstValueFrom(service.isReady$().pipe(take(1)))).rejects.toThrow(new Error(`error`));
       });
     });
 
@@ -677,7 +677,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
         it(`should consider that the service is not ready`, async (): Promise<void> => {
           expect.assertions(1);
 
-          await expect(service.isReady$().pipe(take(1)).toPromise()).rejects.toThrow(new Error(`error`));
+          await expect(firstValueFrom(service.isReady$().pipe(take(1)))).rejects.toThrow(new Error(`error`));
         });
       });
 
@@ -689,7 +689,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
         it(`should consider that the service is ready`, async (): Promise<void> => {
           expect.assertions(1);
 
-          const result = await service.isReady$().pipe(take(1)).toPromise();
+          const result = await firstValueFrom(service.isReady$().pipe(take(1)));
 
           expect(result).toStrictEqual([true, true]);
         });

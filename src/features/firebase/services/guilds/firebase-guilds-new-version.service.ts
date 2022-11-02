@@ -32,7 +32,7 @@ import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final'
 import { Guild, GuildChannel, Message } from 'discord.js';
 import admin from 'firebase-admin';
 import _ from 'lodash';
-import { forkJoin, Observable } from 'rxjs';
+import { firstValueFrom, forkJoin, Observable } from 'rxjs';
 import { mergeMap, take, tap } from 'rxjs/operators';
 
 const NO_GUILD = 0;
@@ -54,13 +54,12 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   }
 
   public init(): Promise<((Message | null)[] | void)[] | void> {
-    return this.sendNewReleaseNotesToEachGuild$().toPromise();
+    return firstValueFrom(this.sendNewReleaseNotesToEachGuild$());
   }
 
   /**
    * @description
    * Wait Firebase to handle the breaking changes
-   *
    * @returns {Observable<[boolean]>} An observable
    */
   public isReady$(): Observable<[true]> {
