@@ -18,7 +18,7 @@ import { getGithubQueryReleaseByTagAndTotalCount } from '../../github/functions/
 import { IGithubReleaseAndTotalCount } from '../../github/interfaces/github-release-and-total-count';
 import { GithubConfigMutatorService } from '../../github/services/config/github-config-mutator.service';
 import { GithubConfigService } from '../../github/services/config/github-config.service';
-import { ISecretPersonalAccessToken } from '../../github/types/secret-personal-access-token';
+import { IPersonalAccessToken } from '../../github/types/personal-access-token';
 import { ChalkColorService } from '../../logger/services/chalk/chalk-color.service';
 import { ChalkService } from '../../logger/services/chalk/chalk.service';
 import { LoggerConfigMutatorService } from '../../logger/services/config/logger-config-mutator.service';
@@ -157,7 +157,7 @@ export class InitService extends AbstractService {
 
   private _configureAppFromGitHubReleases(): Promise<IGithubReleaseAndTotalCount> {
     const appVersion: string = AppConfigService.getInstance().getVersion();
-    const personalAccessToken: ISecretPersonalAccessToken = GithubConfigService.getInstance().getPersonalAccessToken();
+    const personalAccessToken: IPersonalAccessToken = GithubConfigService.getInstance().getPersonalAccessToken();
 
     LoggerService.getInstance().debug({
       context: this._serviceName,
