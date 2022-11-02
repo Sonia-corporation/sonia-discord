@@ -179,7 +179,7 @@
     "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.33.0",
     "all-contributors-cli": "6.24.0",
-    "app-root-path": "3.0.0",
+    "app-root-path": "3.1.0",
     "chalk": "4.1.2",
     "commitizen": "4.2.5",
     "concurrently": "6.3.0",
