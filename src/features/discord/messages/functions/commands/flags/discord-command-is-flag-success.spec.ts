@@ -18,7 +18,7 @@ describe(`discordCommandIsFlagSuccess()`, (): void => {
 
       const result = discordCommandIsFlagSuccess(value);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -35,7 +35,7 @@ describe(`discordCommandIsFlagSuccess()`, (): void => {
 
       const result = discordCommandIsFlagSuccess(value);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 });

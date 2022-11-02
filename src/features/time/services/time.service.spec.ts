@@ -43,7 +43,7 @@ describe(`TimeService`, (): void => {
 
       service = new TimeService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.TIME_SERVICE);
     });
   });

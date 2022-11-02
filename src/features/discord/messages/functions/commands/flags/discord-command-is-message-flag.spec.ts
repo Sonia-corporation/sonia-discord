@@ -14,7 +14,7 @@ describe(`discordCommandIsMessageFlag()`, (): void => {
 
       const result = discordCommandIsMessageFlag(messageFlag);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -28,7 +28,7 @@ describe(`discordCommandIsMessageFlag()`, (): void => {
 
       const result = discordCommandIsMessageFlag(messageFlag);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -42,7 +42,7 @@ describe(`discordCommandIsMessageFlag()`, (): void => {
 
       const result = discordCommandIsMessageFlag(messageFlag);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -56,7 +56,7 @@ describe(`discordCommandIsMessageFlag()`, (): void => {
 
       const result = discordCommandIsMessageFlag(messageFlag);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -70,7 +70,7 @@ describe(`discordCommandIsMessageFlag()`, (): void => {
 
       const result = discordCommandIsMessageFlag(messageFlag);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -84,7 +84,7 @@ describe(`discordCommandIsMessageFlag()`, (): void => {
 
       const result = discordCommandIsMessageFlag(messageFlag);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 });

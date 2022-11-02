@@ -42,7 +42,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigCoreService`, (): void => {
 
       service = new DiscordMessageCommandFeatureNoonConfigCoreService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_CORE_SERVICE
       );

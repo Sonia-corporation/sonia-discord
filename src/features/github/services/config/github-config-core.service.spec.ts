@@ -42,7 +42,7 @@ describe(`GithubConfigCoreService`, (): void => {
 
       service = new GithubConfigCoreService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.GITHUB_CONFIG_CORE_SERVICE);
     });
   });

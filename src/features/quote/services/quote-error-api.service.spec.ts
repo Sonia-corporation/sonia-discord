@@ -50,7 +50,7 @@ describe(`QuoteErrorApiService`, (): void => {
 
       service = new QuoteErrorApiService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.QUOTE_ERROR_API_SERVICE);
     });
   });
@@ -76,7 +76,7 @@ describe(`QuoteErrorApiService`, (): void => {
 
       await expect(service.getMessageResponse(error)).rejects.toThrow(new Error(`getCliErrorMessageResponse error`));
 
-      expect(discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy).toHaveBeenCalledOnce();
       expect(discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy).toHaveBeenCalledWith();
     });
 

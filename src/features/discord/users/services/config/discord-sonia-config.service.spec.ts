@@ -50,7 +50,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
       service = new DiscordSoniaConfigService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_SONIA_CONFIG_SERVICE
       );
@@ -207,7 +207,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
         const result = service.isGuildWhitelistedInDev(guild);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -221,7 +221,7 @@ describe(`DiscordSoniaConfigService`, (): void => {
 
         const result = service.isGuildWhitelistedInDev(guild);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });

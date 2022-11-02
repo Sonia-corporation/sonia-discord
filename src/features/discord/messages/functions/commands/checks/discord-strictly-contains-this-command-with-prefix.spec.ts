@@ -30,7 +30,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -44,7 +44,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -64,7 +64,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -78,7 +78,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -104,7 +104,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -118,7 +118,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -138,7 +138,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -152,7 +152,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -178,7 +178,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -192,7 +192,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -212,7 +212,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -226,7 +226,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -252,7 +252,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -266,7 +266,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
     });
@@ -286,7 +286,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -300,7 +300,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -326,7 +326,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -340,7 +340,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
     });
@@ -360,7 +360,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -374,7 +374,7 @@ describe(`strictlyContainsThisCommandWithPrefix()`, (): void => {
 
           const result = discordStrictlyContainsThisCommandWithPrefix(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });

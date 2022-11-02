@@ -69,7 +69,7 @@ describe(`ConfigService`, (): void => {
 
         service.getUpdatedNumber(configUpdateNumber);
 
-        expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
           message: `text-dummy-value-name updated to: value-5`,
@@ -95,7 +95,7 @@ describe(`ConfigService`, (): void => {
 
         service.getUpdatedNumber(configUpdateNumber);
 
-        expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
           message: `text-dummy-value-name updated to: value-6`,
@@ -170,7 +170,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"new-value"`,
@@ -188,7 +188,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated`,
@@ -206,7 +206,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"new-value"`,
@@ -238,7 +238,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"new-value"`,
@@ -256,7 +256,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated`,
@@ -274,7 +274,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"new-value"`,
@@ -306,7 +306,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: "********" (hidden)`,
@@ -324,7 +324,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: "********" (hidden)`,
@@ -342,7 +342,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: "********" (hidden)`,
@@ -380,7 +380,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"marco-polo"`,
@@ -398,7 +398,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated`,
@@ -416,7 +416,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"marco-polo"`,
@@ -448,7 +448,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"marco-polo"`,
@@ -466,7 +466,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated`,
@@ -484,7 +484,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"marco-polo"`,
@@ -516,7 +516,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: "********" (hidden)`,
@@ -534,7 +534,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: "********" (hidden)`,
@@ -552,7 +552,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedString(configUpdateString);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: "********" (hidden)`,
@@ -629,7 +629,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"new-value"`,
@@ -647,7 +647,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated`,
@@ -665,7 +665,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"new-value"`,
@@ -697,7 +697,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"new-value"`,
@@ -715,7 +715,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated`,
@@ -733,7 +733,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"new-value"`,
@@ -765,7 +765,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: "********" (hidden)`,
@@ -783,7 +783,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: "********" (hidden)`,
@@ -801,7 +801,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: "********" (hidden)`,
@@ -839,7 +839,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"marco-polo"`,
@@ -857,7 +857,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated`,
@@ -875,7 +875,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"marco-polo"`,
@@ -907,7 +907,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"marco-polo"`,
@@ -925,7 +925,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated`,
@@ -943,7 +943,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"marco-polo"`,
@@ -975,7 +975,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: "********" (hidden)`,
@@ -993,7 +993,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: "********" (hidden)`,
@@ -1011,7 +1011,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: "********" (hidden)`,
@@ -1049,7 +1049,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-[ "new-value", "marco-polo" ]`,
@@ -1067,7 +1067,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated`,
@@ -1085,7 +1085,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-[ "new-value", "marco-polo" ]`,
@@ -1117,7 +1117,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-[ "new-value", "marco-polo" ]`,
@@ -1135,7 +1135,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated`,
@@ -1153,7 +1153,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-[ "new-value", "marco-polo" ]`,
@@ -1185,7 +1185,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: [ "********" ] (hidden)`,
@@ -1203,7 +1203,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: [ "********" ] (hidden)`,
@@ -1221,7 +1221,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedStringOrArray(configUpdateStringOrArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: [ "********" ] (hidden)`,
@@ -1298,7 +1298,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedArray(configUpdateArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-[ "new-value", "marco-polo" ]`,
@@ -1316,7 +1316,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedArray(configUpdateArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated`,
@@ -1334,7 +1334,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedArray(configUpdateArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-[ "new-value", "marco-polo" ]`,
@@ -1366,7 +1366,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedArray(configUpdateArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-[ "new-value", "marco-polo" ]`,
@@ -1384,7 +1384,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedArray(configUpdateArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated`,
@@ -1402,7 +1402,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedArray(configUpdateArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-[ "new-value", "marco-polo" ]`,
@@ -1434,7 +1434,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedArray(configUpdateArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: [ "********" ] (hidden)`,
@@ -1452,7 +1452,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedArray(configUpdateArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: [ "********" ] (hidden)`,
@@ -1470,7 +1470,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedArray(configUpdateArray);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: [ "********" ] (hidden)`,
@@ -1549,7 +1549,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedDate(configUpdateDate);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"${newValue}" hint-(a few seconds ago)`,
@@ -1567,7 +1567,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedDate(configUpdateDate);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated`,
@@ -1585,7 +1585,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedDate(configUpdateDate);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"${newValue}" hint-(a few seconds ago)`,
@@ -1617,7 +1617,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedDate(configUpdateDate);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"${newValue}" hint-(a few seconds ago)`,
@@ -1635,7 +1635,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedDate(configUpdateDate);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated`,
@@ -1653,7 +1653,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedDate(configUpdateDate);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `text-dummy-value-name updated to: value-"${newValue}" hint-(a few seconds ago)`,
@@ -1685,7 +1685,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedDate(configUpdateDate);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: "********" (hidden)`,
@@ -1703,7 +1703,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedDate(configUpdateDate);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: "********" (hidden)`,
@@ -1721,7 +1721,7 @@ describe(`ConfigService`, (): void => {
 
             service.getUpdatedDate(configUpdateDate);
 
-            expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).toHaveBeenCalledWith({
               context: `dummy-context`,
               message: `dummy-value-name updated to: "********" (hidden)`,
@@ -1774,7 +1774,7 @@ describe(`ConfigService`, (): void => {
 
         const result = service.getUpdatedBoolean(configUpdateBoolean);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -1788,7 +1788,7 @@ describe(`ConfigService`, (): void => {
 
         service.getUpdatedBoolean(configUpdateBoolean);
 
-        expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
           message: `text-dummy-value-name updated to: value-false`,
@@ -1800,7 +1800,7 @@ describe(`ConfigService`, (): void => {
 
         const result = service.getUpdatedBoolean(configUpdateBoolean);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -1814,7 +1814,7 @@ describe(`ConfigService`, (): void => {
 
         service.getUpdatedBoolean(configUpdateBoolean);
 
-        expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `dummy-context`,
           message: `text-dummy-value-name updated to: value-true`,
@@ -1826,7 +1826,7 @@ describe(`ConfigService`, (): void => {
 
         const result = service.getUpdatedBoolean(configUpdateBoolean);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });

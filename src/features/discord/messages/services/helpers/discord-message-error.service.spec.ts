@@ -77,7 +77,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service = new DiscordMessageErrorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_ERROR_SERVICE
       );
@@ -161,7 +161,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
         expect(loggerServiceErrorSpy).not.toHaveBeenCalledWith({
           context: `DiscordMessageErrorService`,
           hasExtendedContext: true,
@@ -175,7 +175,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service.handleError(error, anyDiscordMessage);
 
-      expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
       expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
         context: `DiscordMessageErrorService`,
         hasExtendedContext: true,
@@ -207,7 +207,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(anyDiscordMessageChannelSendSpy).toHaveBeenCalledTimes(1);
+        expect(anyDiscordMessageChannelSendSpy).toHaveBeenCalledOnce();
       });
 
       it(`should send a message to this channel with an author`, (): void => {
@@ -348,7 +348,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(moment(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.timestamp).isValid()).toBe(true);
+        expect(moment(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.timestamp).isValid()).toBeTrue();
         expect(moment(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.timestamp).fromNow()).toBe(
           `a few seconds ago`
         );
@@ -367,7 +367,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].split).toBe(false);
+        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].split).toBeFalse();
       });
 
       it(`should send a message to this channel without a response`, (): void => {
@@ -384,7 +384,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service.handleError(error, anyDiscordMessage);
 
-      expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+      expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledOnce();
       expect(discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].channelName).toStrictEqual(
         DiscordGuildSoniaChannelNameEnum.ERRORS
       );
@@ -556,7 +556,7 @@ describe(`DiscordMessageErrorService`, (): void => {
         moment(
           discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.timestamp
         ).isValid()
-      ).toBe(true);
+      ).toBeTrue();
       expect(
         moment(
           discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.timestamp
@@ -579,9 +579,9 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service.handleError(error, anyDiscordMessage);
 
-      expect(discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.split).toBe(
-        false
-      );
+      expect(
+        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.split
+      ).toBeFalse();
     });
 
     it(`should send a message to the Sonia error channel without a response`, (): void => {

@@ -18,7 +18,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -32,7 +32,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -46,7 +46,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -66,7 +66,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -80,7 +80,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -94,7 +94,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -114,7 +114,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -128,7 +128,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -142,7 +142,7 @@ describe(`isExistingArgument()`, (): void => {
 
         const result = isExistingArgument(argumentIndex);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
   });

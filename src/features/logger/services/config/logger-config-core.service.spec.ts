@@ -43,7 +43,7 @@ describe(`LoggerConfigCoreService`, (): void => {
 
       service = new LoggerConfigCoreService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.LOGGER_CONFIG_CORE_SERVICE);
     });
   });
@@ -53,7 +53,7 @@ describe(`LoggerConfigCoreService`, (): void => {
 
     service = LoggerConfigCoreService.getInstance();
 
-    expect(service.isEnabled).toBe(true);
+    expect(service.isEnabled).toBeTrue();
   });
 
   it(`should have a debug level`, (): void => {
@@ -69,6 +69,6 @@ describe(`LoggerConfigCoreService`, (): void => {
 
     service = LoggerConfigCoreService.getInstance();
 
-    expect(service.shouldDisplayMoreDebugLogs).toBe(false);
+    expect(service.shouldDisplayMoreDebugLogs).toBeFalse();
   });
 });

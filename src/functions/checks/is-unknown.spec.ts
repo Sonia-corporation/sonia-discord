@@ -13,7 +13,7 @@ describe(`isUnknown()`, (): void => {
 
       const result = isUnknown(value);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -27,7 +27,7 @@ describe(`isUnknown()`, (): void => {
 
       const result = isUnknown(value);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -41,7 +41,7 @@ describe(`isUnknown()`, (): void => {
 
       const result = isUnknown(value);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -55,7 +55,7 @@ describe(`isUnknown()`, (): void => {
 
       const result = isUnknown(value);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 });

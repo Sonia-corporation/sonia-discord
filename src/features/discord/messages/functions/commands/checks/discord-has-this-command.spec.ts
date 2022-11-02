@@ -30,7 +30,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -44,7 +44,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -58,7 +58,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -72,7 +72,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -92,7 +92,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -106,7 +106,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -120,7 +120,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -134,7 +134,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -154,7 +154,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -168,7 +168,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -182,7 +182,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -196,7 +196,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -216,7 +216,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -230,7 +230,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -244,7 +244,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -258,7 +258,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -284,7 +284,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -298,7 +298,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -312,7 +312,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -326,7 +326,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -346,7 +346,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -360,7 +360,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -374,7 +374,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -388,7 +388,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -408,7 +408,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -422,7 +422,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -436,7 +436,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -450,7 +450,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -470,7 +470,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -484,7 +484,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -498,7 +498,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -512,7 +512,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -538,7 +538,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -552,7 +552,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -566,7 +566,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -580,7 +580,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -600,7 +600,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -614,7 +614,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -628,7 +628,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -642,7 +642,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -662,7 +662,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -676,7 +676,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -690,7 +690,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -704,7 +704,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -724,7 +724,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -738,7 +738,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -752,7 +752,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -766,7 +766,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -792,7 +792,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -806,7 +806,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -820,7 +820,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -834,7 +834,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
     });
@@ -854,7 +854,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -868,7 +868,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -882,7 +882,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -896,7 +896,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -916,7 +916,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -930,7 +930,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -944,7 +944,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -958,7 +958,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
     });
@@ -978,7 +978,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -992,7 +992,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1006,7 +1006,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1020,7 +1020,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -1046,7 +1046,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1060,7 +1060,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1074,7 +1074,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1088,7 +1088,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
     });
@@ -1108,7 +1108,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1122,7 +1122,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1136,7 +1136,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1150,7 +1150,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -1170,7 +1170,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1184,7 +1184,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1198,7 +1198,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1212,7 +1212,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
     });
@@ -1232,7 +1232,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1246,7 +1246,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1260,7 +1260,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1274,7 +1274,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -1300,7 +1300,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -1320,7 +1320,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
     });
@@ -1340,7 +1340,7 @@ describe(`hasThisCommand()`, (): void => {
 
           const result = discordHasThisCommand(data);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
     });

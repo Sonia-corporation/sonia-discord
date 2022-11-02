@@ -63,7 +63,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
 
       service = new FirebaseGuildsChannelsFeaturesNoonEnabledService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_SERVICE
       );
@@ -108,7 +108,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
         new Error(`Collection not available`)
       );
 
-      expect(firebaseGuildsServiceGetCollectionReferenceSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsServiceGetCollectionReferenceSpy).toHaveBeenCalledOnce();
       expect(firebaseGuildsServiceGetCollectionReferenceSpy).toHaveBeenCalledWith();
     });
 
@@ -140,7 +140,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
           new Error(`getGuild error`)
         );
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsChannelsFeaturesNoonEnabledService`,
           message: `text-updating Firebase guild noon feature enabled state...`,
@@ -154,7 +154,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
           new Error(`getGuild error`)
         );
 
-        expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledOnce();
         expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledWith(`dummy-id`);
       });
 
@@ -201,7 +201,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
               new Error(`Firebase guild does not exists or is not up-to-date`)
             );
 
-            expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
             expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
               context: `FirebaseGuildsChannelsFeaturesNoonEnabledService`,
               message: `text-the Firebase guild value-dummy-id is not valid or up-to-date`,
@@ -231,7 +231,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
               new Error(`Firebase guild does not exists or is not up-to-date`)
             );
 
-            expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
             expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
               context: `FirebaseGuildsChannelsFeaturesNoonEnabledService`,
               message: `text-the Firebase guild value-dummy-id is not valid or up-to-date`,
@@ -270,7 +270,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
                 new Error(`Firebase guild does not exists or is not up-to-date`)
               );
 
-              expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
               expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsChannelsFeaturesNoonEnabledService`,
                 message: `text-the Firebase guild value-dummy-id is not valid or up-to-date`,
@@ -294,7 +294,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
               const result = await service.updateStateByGuildId(id, channelId, isEnabled);
 
               expect(result).toStrictEqual(writeResult);
-              expect(updateStateSpy).toHaveBeenCalledTimes(1);
+              expect(updateStateSpy).toHaveBeenCalledOnce();
               expect(updateStateSpy).toHaveBeenCalledWith(
                 collectionReference,
                 `dummy-id`,
@@ -643,7 +643,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
         new Error(`update error`)
       );
 
-      expect(docMock).toHaveBeenCalledTimes(1);
+      expect(docMock).toHaveBeenCalledOnce();
       expect(docMock).toHaveBeenCalledWith(`dummy-id`);
     });
 
@@ -654,7 +654,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
         new Error(`update error`)
       );
 
-      expect(getUpdatedGuildSpy).toHaveBeenCalledTimes(1);
+      expect(getUpdatedGuildSpy).toHaveBeenCalledOnce();
       expect(getUpdatedGuildSpy).toHaveBeenCalledWith(`dummy-channel-id`, true, firebaseGuild);
     });
 
@@ -665,7 +665,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
         new Error(`update error`)
       );
 
-      expect(updateMock).toHaveBeenCalledTimes(1);
+      expect(updateMock).toHaveBeenCalledOnce();
       expect(updateMock).toHaveBeenCalledWith(updatedFirebaseGuild);
     });
 
@@ -707,7 +707,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledService`, (): void => {
 
         await service.updateState(collectionReference, id, channelId, isEnabled, firebaseGuild);
 
-        expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceSuccessSpy).toHaveBeenCalledOnce();
         expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsChannelsFeaturesNoonEnabledService`,
           message: `text-Firebase guild value-dummy-id noon feature enabled state updated to value-true`,

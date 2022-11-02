@@ -49,7 +49,7 @@ describe(`InitService`, (): void => {
 
       service = new InitService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.INIT_SERVICE);
     });
   });
@@ -74,7 +74,7 @@ describe(`InitService`, (): void => {
 
       await service.init();
 
-      expect(loggerServiceInitSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceInitSpy).toHaveBeenCalledOnce();
       expect(loggerServiceInitSpy).toHaveBeenLastCalledWith();
     });
 
@@ -83,7 +83,7 @@ describe(`InitService`, (): void => {
 
       await service.init();
 
-      expect(chalkColorServiceInitSpy).toHaveBeenCalledTimes(1);
+      expect(chalkColorServiceInitSpy).toHaveBeenCalledOnce();
       expect(chalkColorServiceInitSpy).toHaveBeenLastCalledWith();
     });
 
@@ -92,7 +92,7 @@ describe(`InitService`, (): void => {
 
       await service.init();
 
-      expect(readEnvironmentSpy).toHaveBeenCalledTimes(1);
+      expect(readEnvironmentSpy).toHaveBeenCalledOnce();
       expect(readEnvironmentSpy).toHaveBeenLastCalledWith();
     });
 
@@ -120,7 +120,7 @@ describe(`InitService`, (): void => {
 
         await service.init();
 
-        expect(notifyIsAppConfiguredSpy).toHaveBeenCalledTimes(1);
+        expect(notifyIsAppConfiguredSpy).toHaveBeenCalledOnce();
         expect(notifyIsAppConfiguredSpy).toHaveBeenLastCalledWith();
       });
     });
@@ -136,7 +136,7 @@ describe(`InitService`, (): void => {
 
       const result = await service.isAppConfigured$().pipe(take(1)).toPromise();
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
 
     describe(`when the is app configured event is notified`, (): void => {
@@ -146,7 +146,7 @@ describe(`InitService`, (): void => {
 
         const result = await service.isAppConfigured$().pipe(take(1)).toPromise();
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -167,7 +167,7 @@ describe(`InitService`, (): void => {
 
         const result = await service.isAppConfigured();
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -183,7 +183,7 @@ describe(`InitService`, (): void => {
 
       const result = await service.isAppConfigured$().pipe(take(1)).toPromise();
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 });

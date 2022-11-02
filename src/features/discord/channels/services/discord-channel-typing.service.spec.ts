@@ -50,7 +50,7 @@ describe(`DiscordChannelTypingService`, (): void => {
 
       service = new DiscordChannelTypingService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_CHANNEL_TYPING_SERVICE
       );
@@ -78,7 +78,7 @@ describe(`DiscordChannelTypingService`, (): void => {
 
       await expect(service.addOneIndicator(channel)).rejects.toThrow(new Error(`startTyping error`));
 
-      expect(startTypingMock).toHaveBeenCalledTimes(1);
+      expect(startTypingMock).toHaveBeenCalledOnce();
       expect(startTypingMock).toHaveBeenCalledWith();
     });
 
@@ -146,7 +146,7 @@ describe(`DiscordChannelTypingService`, (): void => {
 
       service.removeOneIndicator(channel);
 
-      expect(stopTypingMock).toHaveBeenCalledTimes(1);
+      expect(stopTypingMock).toHaveBeenCalledOnce();
       expect(stopTypingMock).toHaveBeenCalledWith();
     });
   });

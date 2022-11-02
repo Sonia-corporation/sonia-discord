@@ -2754,7 +2754,7 @@ describe(`DiscordCommandFlags`, (): void => {
           const result = await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
 
           expect(result).toStrictEqual([discordCommandFlagSuccess]);
-          expect(actionMock).toHaveBeenCalledTimes(1);
+          expect(actionMock).toHaveBeenCalledOnce();
           expect(actionMock.mock.calls[0][0]).toStrictEqual(anyDiscordMessage);
           expect(actionMock.mock.calls[0][1]).toBe(`true`);
           expect(actionMock.mock.calls[0][2]).toBeDefined();
@@ -2766,7 +2766,7 @@ describe(`DiscordCommandFlags`, (): void => {
           const result = await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
 
           expect(result).toStrictEqual([discordCommandFlagSuccess]);
-          expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceSuccessSpy).toHaveBeenCalledOnce();
           expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
             context: `DiscordCommandFlags`,
             hasExtendedContext: true,
@@ -2854,7 +2854,7 @@ describe(`DiscordCommandFlags`, (): void => {
           const result = await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
 
           expect(result).toStrictEqual([discordCommandFlagSuccess]);
-          expect(actionMock).toHaveBeenCalledTimes(1);
+          expect(actionMock).toHaveBeenCalledOnce();
           expect(actionMock.mock.calls[0][0]).toStrictEqual(anyDiscordMessage);
           expect(actionMock.mock.calls[0][1]).toBeUndefined();
           expect(actionMock.mock.calls[0][2]).toBeDefined();
@@ -2866,7 +2866,7 @@ describe(`DiscordCommandFlags`, (): void => {
           const result = await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
 
           expect(result).toStrictEqual([discordCommandFlagSuccess]);
-          expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceSuccessSpy).toHaveBeenCalledOnce();
           expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
             context: `DiscordCommandFlags`,
             hasExtendedContext: true,
@@ -2979,7 +2979,7 @@ describe(`DiscordCommandFlags`, (): void => {
           const result = await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
 
           expect(result).toStrictEqual([discordCommandFlagSuccess, discordCommandFlagSuccess]);
-          expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceSuccessSpy).toHaveBeenCalledOnce();
           expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
             context: `DiscordCommandFlags`,
             hasExtendedContext: true,
@@ -3092,7 +3092,7 @@ describe(`DiscordCommandFlags`, (): void => {
           const result = await discordCommandFlags.executeAll(anyDiscordMessage, messageFlags);
 
           expect(result).toStrictEqual([discordCommandFlagSuccess, discordCommandFlagSuccess]);
-          expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceSuccessSpy).toHaveBeenCalledOnce();
           expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
             context: `DiscordCommandFlags`,
             hasExtendedContext: true,
@@ -3149,7 +3149,7 @@ describe(`DiscordCommandFlags`, (): void => {
 
       await discordCommandFlags.execute(anyDiscordMessage, messageFlag);
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordCommandFlags`,
         hasExtendedContext: true,
@@ -3244,7 +3244,7 @@ describe(`DiscordCommandFlags`, (): void => {
           const result = await discordCommandFlags.execute(anyDiscordMessage, messageFlag);
 
           expect(result).toStrictEqual(discordCommandFlagSuccess);
-          expect(actionMock).toHaveBeenCalledTimes(1);
+          expect(actionMock).toHaveBeenCalledOnce();
           expect(actionMock.mock.calls[0][0]).toStrictEqual(anyDiscordMessage);
           expect(actionMock.mock.calls[0][1]).toBeUndefined();
           expect(actionMock.mock.calls[0][2]).toBeDefined();

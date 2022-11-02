@@ -80,7 +80,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service = new DiscordSoniaConfigMutatorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_SONIA_CONFIG_MUTATOR_SERVICE
       );
@@ -255,7 +255,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -264,7 +264,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(discordSoniaConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(discordSoniaConfigCoreServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(discordSoniaConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -273,7 +273,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(discordSoniaConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(discordSoniaConfigServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(discordSoniaConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
   });
@@ -651,7 +651,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service.updateCorporationImageUrl(corporationImageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordSoniaConfigMutatorService`,
         newValue: IconEnum.BUG,
@@ -768,7 +768,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service.updateCorporationMessageEmbedAuthorIconUrl(iconUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordSoniaConfigMutatorService`,
         newValue: `dummy-icon-url`,
@@ -804,7 +804,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service.updateCorporationMessageEmbedAuthorName(name);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordSoniaConfigMutatorService`,
         newValue: `dummy-name`,
@@ -840,7 +840,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service.updateCorporationMessageEmbedAuthorUrl(url);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordSoniaConfigMutatorService`,
         newValue: `dummy-url`,
@@ -878,7 +878,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service.updateDevGuildIdWhitelist(devGuildIdWhitelist);
 
-      expect(configServiceGetUpdatedArraySpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedArraySpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedArraySpy).toHaveBeenCalledWith({
         context: `DiscordSoniaConfigMutatorService`,
         isValueHidden: true,
@@ -915,7 +915,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service.updateId(id);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordSoniaConfigMutatorService`,
         isValueHidden: true,
@@ -954,7 +954,7 @@ describe(`DiscordSoniaConfigMutatorService`, (): void => {
 
       service.updateSecretToken(secretToken);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordSoniaConfigMutatorService`,
         isValueHidden: true,

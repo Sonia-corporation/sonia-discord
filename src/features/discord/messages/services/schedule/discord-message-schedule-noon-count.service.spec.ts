@@ -59,7 +59,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
       service = new DiscordMessageScheduleNoonCountService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_SERVICE
       );
@@ -97,7 +97,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonCountService`,
           message: `text-no noon message sent`,
@@ -115,7 +115,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonCountService`,
           message: `text-no noon message sent`,
@@ -133,7 +133,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonCountService`,
           message: `text-no noon message sent for the value-1 guild`,
@@ -151,7 +151,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonCountService`,
           message: `text-no noon message sent for the value-2 guilds`,
@@ -169,7 +169,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonCountService`,
           message: `text-no noon message sent for the value-1 guild`,
@@ -187,7 +187,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonCountService`,
           message: `text-no noon message sent for the value-2 guilds`,
@@ -205,7 +205,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonCountService`,
           message: `text-no noon message sent for the value-1 guild`,
@@ -223,7 +223,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonCountService`,
           message: `text-no noon message sent for the value-2 guilds`,
@@ -241,7 +241,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonCountService`,
           message: `text-value-1 noon message sent over value-1 guild of value-1`,
@@ -259,7 +259,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonCountService`,
           message: `text-value-2 noon messages sent over value-2 guilds of value-2`,
@@ -284,7 +284,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonCountService`,
           message: `text-value-4 noon messages sent over value-3 guilds of value-6`,
@@ -305,7 +305,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
       service.countChannelsAndGuilds(guildMessages);
 
-      expect(discordMessageScheduleNoonCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageScheduleNoonCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
       expect(discordMessageScheduleNoonCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledWith(6, 3, 4);
     });
 
@@ -322,7 +322,7 @@ describe(`DiscordMessageScheduleNoonCountService`, (): void => {
 
       service.countChannelsAndGuilds(guildMessages);
 
-      expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+      expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledOnce();
       expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
         channelName: `logs`,
         messageResponse: discordMessageResponse,

@@ -28,7 +28,7 @@ describe(`getLastSequenceRegexp()`, (): void => {
 
         const result = getLastSequenceRegexp(value);
 
-        expect(xregexp.test(text, result)).toBe(false);
+        expect(xregexp.test(text, result)).toBeFalse();
       });
     });
 
@@ -42,7 +42,7 @@ describe(`getLastSequenceRegexp()`, (): void => {
 
         const result = getLastSequenceRegexp(value);
 
-        expect(xregexp.test(text, result)).toBe(true);
+        expect(xregexp.test(text, result)).toBeTrue();
       });
     });
 
@@ -56,7 +56,7 @@ describe(`getLastSequenceRegexp()`, (): void => {
 
         const result = getLastSequenceRegexp(value);
 
-        expect(xregexp.test(text, result)).toBe(true);
+        expect(xregexp.test(text, result)).toBeTrue();
       });
 
       it(`should can able to replace on the last given value`, (): void => {

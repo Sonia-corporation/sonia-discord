@@ -22,7 +22,7 @@ describe(`isUpToDateFirebaseGuild()`, (): void => {
 
       const result = isUpToDateFirebaseGuild(firebaseGuild);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -40,7 +40,7 @@ describe(`isUpToDateFirebaseGuild()`, (): void => {
 
       const result = isUpToDateFirebaseGuild(firebaseGuild);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -58,7 +58,7 @@ describe(`isUpToDateFirebaseGuild()`, (): void => {
 
       const result = isUpToDateFirebaseGuild(firebaseGuild);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -76,7 +76,7 @@ describe(`isUpToDateFirebaseGuild()`, (): void => {
 
       const result = isUpToDateFirebaseGuild(firebaseGuild);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -94,7 +94,7 @@ describe(`isUpToDateFirebaseGuild()`, (): void => {
 
       const result = isUpToDateFirebaseGuild(firebaseGuild);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 });

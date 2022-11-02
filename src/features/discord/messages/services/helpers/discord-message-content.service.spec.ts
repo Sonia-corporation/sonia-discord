@@ -42,7 +42,7 @@ describe(`DiscordMessageContentService`, (): void => {
 
       service = new DiscordMessageContentService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_CONTENT_SERVICE
       );

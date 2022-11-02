@@ -42,7 +42,7 @@ describe(`QuoteConfigCoreService`, (): void => {
 
       service = new QuoteConfigCoreService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.QUOTE_CONFIG_CORE_SERVICE);
     });
   });

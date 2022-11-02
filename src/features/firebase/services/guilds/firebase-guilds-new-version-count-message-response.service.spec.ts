@@ -59,7 +59,7 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
       service = new FirebaseGuildsNewVersionCountMessageResponseService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_MESSAGE_RESPONSE_SERVICE
       );
@@ -176,7 +176,7 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
+      expect(moment(result.options.embed?.timestamp).isValid()).toBeTrue();
       expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
@@ -202,7 +202,7 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(result.options.split).toBe(false);
+      expect(result.options.split).toBeFalse();
     });
 
     it(`should return an error message response with an empty response`, (): void => {

@@ -100,7 +100,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
       service = new FirebaseGuildsNewVersionService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_SERVICE
       );
@@ -123,7 +123,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
       await service.init();
 
-      expect(sendNewReleaseNotesToEachGuild$Spy).toHaveBeenCalledTimes(1);
+      expect(sendNewReleaseNotesToEachGuild$Spy).toHaveBeenCalledOnce();
       expect(sendNewReleaseNotesToEachGuild$Spy).toHaveBeenCalledWith();
     });
   });
@@ -233,7 +233,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         new Error(`Firebase guilds batch not available`)
       );
 
-      expect(isReady$Spy).toHaveBeenCalledTimes(1);
+      expect(isReady$Spy).toHaveBeenCalledOnce();
       expect(isReady$Spy).toHaveBeenCalledWith();
     });
 
@@ -309,7 +309,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           new Error(`Firebase guilds batch not available`)
         );
 
-        expect(firebaseGuildsServiceGetGuildsSpy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildsServiceGetGuildsSpy).toHaveBeenCalledOnce();
         expect(firebaseGuildsServiceGetGuildsSpy).toHaveBeenCalledWith();
       });
 
@@ -377,7 +377,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             new Error(`Firebase guilds batch not available`)
           );
 
-          expect(firebaseGuildsServiceGetBatchSpy).toHaveBeenCalledTimes(1);
+          expect(firebaseGuildsServiceGetBatchSpy).toHaveBeenCalledOnce();
           expect(firebaseGuildsServiceGetBatchSpy).toHaveBeenCalledWith();
         });
 
@@ -393,7 +393,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               new Error(`Firebase guilds batch not available`)
             );
 
-            expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
             expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
               context: `FirebaseGuildsNewVersionService`,
               message: `text-Firebase guilds batch not available`,
@@ -459,7 +459,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
               await service.sendNewReleaseNotesToEachGuild$().toPromise();
 
-              expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsNewVersionService`,
                 message: `text-all Firebase guild hint-(0) release notes already sent`,
@@ -516,7 +516,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
               await service.sendNewReleaseNotesToEachGuild$().toPromise();
 
-              expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsNewVersionService`,
                 message: `text-all Firebase guild hint-(0) release notes already sent`,
@@ -577,7 +577,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
               await service.sendNewReleaseNotesToEachGuild$().toPromise();
 
-              expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsNewVersionService`,
                 message: `text-all Firebase guild hint-(1) release notes already sent`,
@@ -639,7 +639,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
                 await service.sendNewReleaseNotesToEachGuild$().toPromise();
 
-                expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                   context: `FirebaseGuildsNewVersionService`,
                   message: `text-all Firebase guild hint-(1) release notes already sent`,
@@ -683,7 +683,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   new Error(`Commit error`)
                 );
 
-                expect(updateMock).toHaveBeenCalledTimes(1);
+                expect(updateMock).toHaveBeenCalledOnce();
                 expect(updateMock).toHaveBeenCalledWith(queryDocumentSnapshot.ref, {
                   lastReleaseNotesVersion: `2.0.0`,
                 } as IUpdatedFirebaseGuildLastReleaseNotesVersion);
@@ -696,7 +696,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   new Error(`Commit error`)
                 );
 
-                expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                   context: `FirebaseGuildsNewVersionService`,
                   message: `text-updating value-1 Firebase guild...`,
@@ -710,7 +710,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   new Error(`Commit error`)
                 );
 
-                expect(commitMock).toHaveBeenCalledTimes(1);
+                expect(commitMock).toHaveBeenCalledOnce();
                 expect(commitMock).toHaveBeenCalledWith();
               });
 
@@ -740,7 +740,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
                   await service.sendNewReleaseNotesToEachGuild$().toPromise();
 
-                  expect(sendNewReleaseNotesFromFirebaseGuildSpy).toHaveBeenCalledTimes(1);
+                  expect(sendNewReleaseNotesFromFirebaseGuildSpy).toHaveBeenCalledOnce();
                   expect(sendNewReleaseNotesFromFirebaseGuildSpy).toHaveBeenCalledWith(firebaseGuild);
                 });
 
@@ -756,7 +756,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
                     await service.sendNewReleaseNotesToEachGuild$().toPromise();
 
-                    expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+                    expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
                     expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
                       context: `FirebaseGuildsNewVersionService`,
                       message: `text-release notes message sending failed for guild value-dummy-id`,
@@ -798,7 +798,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
                 await service.sendNewReleaseNotesToEachGuild$().toPromise();
 
-                expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                   context: `FirebaseGuildsNewVersionService`,
                   message: `text-all Firebase guilds hint-(2) release notes already sent`,
@@ -855,7 +855,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   new Error(`Commit error`)
                 );
 
-                expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                   context: `FirebaseGuildsNewVersionService`,
                   message: `text-updating value-2 Firebase guilds...`,
@@ -869,7 +869,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                   new Error(`Commit error`)
                 );
 
-                expect(commitMock).toHaveBeenCalledTimes(1);
+                expect(commitMock).toHaveBeenCalledOnce();
                 expect(commitMock).toHaveBeenCalledWith();
               });
 
@@ -966,7 +966,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           new Error(`Firebase guild id nil`)
         );
 
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionService`,
           message: `text-Firebase guild id nil`,
@@ -1007,7 +1007,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           new Error(`Discord guild not found`)
         );
 
-        expect(discordGuildServiceGetGuildByIdSpy).toHaveBeenCalledTimes(1);
+        expect(discordGuildServiceGetGuildByIdSpy).toHaveBeenCalledOnce();
         expect(discordGuildServiceGetGuildByIdSpy).toHaveBeenCalledWith(`dummy-id`);
       });
 
@@ -1033,7 +1033,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             new Error(`Discord guild not found`)
           );
 
-          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
           expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
             context: `FirebaseGuildsNewVersionService`,
             message: `text-Discord guild value-dummy-id does not exists`,
@@ -1084,7 +1084,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
             new Error(`sendNewReleaseNotesFromDiscordGuild error`)
           );
 
-          expect(sendNewReleaseNotesFromDiscordGuildSpy).toHaveBeenCalledTimes(1);
+          expect(sendNewReleaseNotesFromDiscordGuildSpy).toHaveBeenCalledOnce();
           expect(sendNewReleaseNotesFromDiscordGuildSpy).toHaveBeenCalledWith(guild);
         });
       });
@@ -1138,7 +1138,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           new Error(`Release notes state disabled`)
         );
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionService`,
           message: `text-Firebase guild value-dummy-guild-id channel value-unknown release notes feature is disabled`,
@@ -1182,7 +1182,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               new Error(`Release notes state disabled`)
             );
 
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `FirebaseGuildsNewVersionService`,
               message: `text-Firebase guild value-dummy-guild-id channel value-dummy-channel-id release notes feature is disabled`,
@@ -1232,7 +1232,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
               new Error(`Guild channel not found`)
             );
 
-            expect(guildChannelsGetMock).toHaveBeenCalledTimes(1);
+            expect(guildChannelsGetMock).toHaveBeenCalledOnce();
             expect(guildChannelsGetMock).toHaveBeenCalledWith(`dummy-channel-id`);
           });
 
@@ -1288,7 +1288,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
                 new Error(`sendMessageResponse error`)
               );
 
-              expect(sendMessageResponseSpy).toHaveBeenCalledTimes(1);
+              expect(sendMessageResponseSpy).toHaveBeenCalledOnce();
               expect(sendMessageResponseSpy).toHaveBeenCalledWith(guildChannel);
             });
 
@@ -1374,7 +1374,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           new Error(`Guild channel not writable`)
         );
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionService`,
           message: `text-the guild channel value-dummy-guild-channel-id is not writable`,
@@ -1403,7 +1403,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           new Error(`No message response fetched`)
         );
 
-        expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(getMessageResponseSpy).toHaveBeenCalledOnce();
         expect(getMessageResponseSpy).toHaveBeenCalledWith();
       });
 
@@ -1438,7 +1438,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
             context: `FirebaseGuildsNewVersionService`,
             message: `text-sending message for release notes for guild channel value-dummy-guild-channel-id...`,
@@ -1450,7 +1450,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
-          expect(sendMock).toHaveBeenCalledTimes(1);
+          expect(sendMock).toHaveBeenCalledOnce();
           expect(sendMock).toHaveBeenCalledWith(`dummy-response`, {
             split: false,
           });
@@ -1490,7 +1490,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
             await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
-            expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).toHaveBeenCalledTimes(1);
+            expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).toHaveBeenCalledOnce();
             expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).toHaveBeenCalledWith(new Error(`send error`));
           });
 
@@ -1499,7 +1499,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
             await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
-            expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+            expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledOnce();
             expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
               channelName: `errors`,
               messageResponse: discordMessageResponse,
@@ -1596,7 +1596,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
       await service.getMessageResponse();
 
-      expect(discordMessageCommandReleaseNotesServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageCommandReleaseNotesServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
       expect(discordMessageCommandReleaseNotesServiceGetMessageResponseSpy).toHaveBeenCalledWith();
     });
 
@@ -1638,11 +1638,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           await service.getMessageResponse();
 
-          expect(firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledOnce();
           expect(firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
             userId: `<@!${DiscordGithubContributorsIdEnum.C0ZEN}>`,
           } as IFirebaseGuildNewVersionResponseMessage);
-          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledOnce();
           expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledWith();
         });
       });
@@ -1657,11 +1657,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           await service.getMessageResponse();
 
-          expect(firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledOnce();
           expect(firebaseGuildNewVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
             userId: `<@!${DiscordGithubContributorsIdEnum.C0ZEN}>`,
           } as IFirebaseGuildNewVersionResponseMessage);
-          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledOnce();
           expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledWith();
         });
       });
@@ -1676,11 +1676,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           await service.getMessageResponse();
 
-          expect(firebaseGuildNewBugFixesVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(firebaseGuildNewBugFixesVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledOnce();
           expect(firebaseGuildNewBugFixesVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
             userId: `<@!${DiscordGithubContributorsIdEnum.C0ZEN}>`,
           } as IFirebaseGuildNewVersionResponseMessage);
-          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledOnce();
           expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledWith();
         });
       });
@@ -1695,11 +1695,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           await service.getMessageResponse();
 
-          expect(firebaseGuildNewFeaturesVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(firebaseGuildNewFeaturesVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledOnce();
           expect(firebaseGuildNewFeaturesVersionResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
             userId: `<@!${DiscordGithubContributorsIdEnum.C0ZEN}>`,
           } as IFirebaseGuildNewVersionResponseMessage);
-          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledOnce();
           expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledWith();
         });
       });
@@ -1716,13 +1716,13 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           expect(
             firebaseGuildNewPerformanceImprovementsVersionResponseMessagesGetHumanizedRandomMessageSpy
-          ).toHaveBeenCalledTimes(1);
+          ).toHaveBeenCalledOnce();
           expect(
             firebaseGuildNewPerformanceImprovementsVersionResponseMessagesGetHumanizedRandomMessageSpy
           ).toHaveBeenCalledWith({
             userId: `<@!${DiscordGithubContributorsIdEnum.C0ZEN}>`,
           } as IFirebaseGuildNewVersionResponseMessage);
-          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledOnce();
           expect(discordGithubContributorsIdMessagesGetRandomMessageSpy).toHaveBeenCalledWith();
         });
       });
@@ -1772,7 +1772,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
       await expect(service.sendNewReleaseNotesFromDiscordGuild(guild)).rejects.toThrow(new Error(`getGuild error`));
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `FirebaseGuildsNewVersionService`,
         message: `text-fetching Firebase guild value-dummy-guild-id`,
@@ -1784,7 +1784,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
       await expect(service.sendNewReleaseNotesFromDiscordGuild(guild)).rejects.toThrow(new Error(`getGuild error`));
 
-      expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledOnce();
       expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledWith(`dummy-guild-id`);
     });
 
@@ -1798,7 +1798,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
         await expect(service.sendNewReleaseNotesFromDiscordGuild(guild)).rejects.toThrow(new Error(`getGuild error`));
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionService`,
           message: `text-fetching Firebase guild value-dummy-guild-id`,
@@ -1838,7 +1838,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
         await expect(service.sendNewReleaseNotesFromDiscordGuild(guild)).rejects.toThrow(new Error(`Invalid guild`));
 
-        expect(isValidGuildSpy).toHaveBeenCalledTimes(1);
+        expect(isValidGuildSpy).toHaveBeenCalledOnce();
         expect(isValidGuildSpy).toHaveBeenCalledWith(firebaseGuild);
       });
 
@@ -2034,7 +2034,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
         const result = service.isValidGuild(firebaseGuild);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -2048,7 +2048,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
         const result = service.isValidGuild(firebaseGuild);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -2062,7 +2062,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
         service.isValidGuild(firebaseGuild);
 
-        expect(isUpToDateFirebaseGuildSpy).toHaveBeenCalledTimes(1);
+        expect(isUpToDateFirebaseGuildSpy).toHaveBeenCalledOnce();
         expect(isUpToDateFirebaseGuildSpy).toHaveBeenCalledWith(firebaseGuild);
       });
 
@@ -2076,7 +2076,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           const result = service.isValidGuild(firebaseGuild);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2090,7 +2090,7 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           const result = service.isValidGuild(firebaseGuild);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
     });

@@ -42,7 +42,7 @@ describe(`DiscordSoniaConfigCoreService`, (): void => {
 
       service = new DiscordSoniaConfigCoreService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_SONIA_CONFIG_CORE_SERVICE
       );

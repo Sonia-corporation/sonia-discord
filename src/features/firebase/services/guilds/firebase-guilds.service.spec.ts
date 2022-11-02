@@ -67,7 +67,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
       service = new FirebaseGuildsService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.FIREBASE_GUILDS_SERVICE);
     });
   });
@@ -105,7 +105,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
       await service.init();
 
-      expect(discordClientServiceIsReadySpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceIsReadySpy).toHaveBeenCalledOnce();
       expect(discordClientServiceIsReadySpy).toHaveBeenCalledWith();
     });
 
@@ -157,7 +157,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         await service.init();
 
-        expect(firebaseAppServiceGetAppSpy).toHaveBeenCalledTimes(1);
+        expect(firebaseAppServiceGetAppSpy).toHaveBeenCalledOnce();
         expect(firebaseAppServiceGetAppSpy).toHaveBeenCalledWith();
       });
 
@@ -166,7 +166,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         await service.init();
 
-        expect(firestoreSpy).toHaveBeenCalledTimes(1);
+        expect(firestoreSpy).toHaveBeenCalledOnce();
         expect(firestoreSpy).toHaveBeenCalledWith(app);
       });
 
@@ -175,7 +175,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         await service.init();
 
-        expect(settingsMock).toHaveBeenCalledTimes(1);
+        expect(settingsMock).toHaveBeenCalledOnce();
         expect(settingsMock).toHaveBeenCalledWith({
           ignoreUndefinedProperties: true,
         });
@@ -186,7 +186,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         await service.init();
 
-        expect(notifyIsReadySpy).toHaveBeenCalledTimes(1);
+        expect(notifyIsReadySpy).toHaveBeenCalledOnce();
         expect(notifyIsReadySpy).toHaveBeenCalledWith();
       });
 
@@ -195,7 +195,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         await service.init();
 
-        expect(getGuildsCountSpy).toHaveBeenCalledTimes(1);
+        expect(getGuildsCountSpy).toHaveBeenCalledOnce();
         expect(getGuildsCountSpy).toHaveBeenCalledWith();
       });
 
@@ -231,7 +231,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
             await service.init();
 
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `FirebaseGuildsService`,
               message: `text-value-1 guild found`,
@@ -249,7 +249,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
             await service.init();
 
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `FirebaseGuildsService`,
               message: `text-value-8 guilds found`,
@@ -295,7 +295,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         service.getCollectionReference();
 
-        expect(loggerServiceWarningSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceWarningSpy).toHaveBeenCalledOnce();
         expect(loggerServiceWarningSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsService`,
           message: `text-store not set`,
@@ -367,7 +367,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
       await expect(service.getGuilds()).rejects.toThrow(new Error(`Collection not available`));
 
-      expect(getCollectionReferenceSpy).toHaveBeenCalledTimes(1);
+      expect(getCollectionReferenceSpy).toHaveBeenCalledOnce();
       expect(getCollectionReferenceSpy).toHaveBeenCalledWith();
     });
 
@@ -421,7 +421,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
       await expect(service.getGuildsCount()).rejects.toThrow(new Error(`Collection not available`));
 
-      expect(getCollectionReferenceSpy).toHaveBeenCalledTimes(1);
+      expect(getCollectionReferenceSpy).toHaveBeenCalledOnce();
       expect(getCollectionReferenceSpy).toHaveBeenCalledWith();
     });
 
@@ -489,7 +489,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
       await expect(service.hasGuild(guildId)).rejects.toThrow(new Error(`Collection not available`));
 
-      expect(getCollectionReferenceSpy).toHaveBeenCalledTimes(1);
+      expect(getCollectionReferenceSpy).toHaveBeenCalledOnce();
       expect(getCollectionReferenceSpy).toHaveBeenCalledWith();
     });
 
@@ -524,10 +524,10 @@ describe(`FirebaseGuildsService`, (): void => {
 
         const result = await service.hasGuild(guildId);
 
-        expect(result).toBe(false);
-        expect(docMock).toHaveBeenCalledTimes(1);
+        expect(result).toBeFalse();
+        expect(docMock).toHaveBeenCalledOnce();
         expect(docMock).toHaveBeenCalledWith(guildId);
-        expect(getMock).toHaveBeenCalledTimes(1);
+        expect(getMock).toHaveBeenCalledOnce();
         expect(getMock).toHaveBeenCalledWith();
       });
 
@@ -550,7 +550,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
           await service.hasGuild(guildId);
 
-          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
           expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
             context: `FirebaseGuildsService`,
             message: `text-failed to check if Firebase has value-dummy-guild-id guild`,
@@ -562,7 +562,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
           const result = await service.hasGuild(guildId);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -603,7 +603,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
             const result = await service.hasGuild(guildId);
 
-            expect(result).toBe(false);
+            expect(result).toBeFalse();
           });
         });
 
@@ -629,7 +629,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
             const result = await service.hasGuild(guildId);
 
-            expect(result).toBe(true);
+            expect(result).toBeTrue();
           });
         });
       });
@@ -676,7 +676,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
       await expect(service.getGuild(guildId)).rejects.toThrow(new Error(`Collection not available`));
 
-      expect(getCollectionReferenceSpy).toHaveBeenCalledTimes(1);
+      expect(getCollectionReferenceSpy).toHaveBeenCalledOnce();
       expect(getCollectionReferenceSpy).toHaveBeenCalledWith();
     });
 
@@ -712,9 +712,9 @@ describe(`FirebaseGuildsService`, (): void => {
         const result = await service.getGuild(guildId);
 
         expect(result).toBeNull();
-        expect(docMock).toHaveBeenCalledTimes(1);
+        expect(docMock).toHaveBeenCalledOnce();
         expect(docMock).toHaveBeenCalledWith(guildId);
-        expect(getMock).toHaveBeenCalledTimes(1);
+        expect(getMock).toHaveBeenCalledOnce();
         expect(getMock).toHaveBeenCalledWith();
       });
 
@@ -737,7 +737,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
           await service.getGuild(guildId);
 
-          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
           expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
             context: `FirebaseGuildsService`,
             message: `text-failed to get the value-dummy-guild-id guild from Firebase`,
@@ -865,7 +865,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
       await expect(service.addGuild(guild)).rejects.toThrow(new Error(`Collection not available`));
 
-      expect(getCollectionReferenceSpy).toHaveBeenCalledTimes(1);
+      expect(getCollectionReferenceSpy).toHaveBeenCalledOnce();
       expect(getCollectionReferenceSpy).toHaveBeenCalledWith();
     });
 
@@ -900,7 +900,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         await service.addGuild(guild);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsService`,
           message: `text-creating Firebase guild...`,
@@ -912,9 +912,9 @@ describe(`FirebaseGuildsService`, (): void => {
 
         await service.addGuild(guild);
 
-        expect(docMock).toHaveBeenCalledTimes(1);
+        expect(docMock).toHaveBeenCalledOnce();
         expect(docMock).toHaveBeenCalledWith(`dummy-id`);
-        expect(setMock).toHaveBeenCalledTimes(1);
+        expect(setMock).toHaveBeenCalledOnce();
         expect(setMock.mock.calls[0][0].channels).toStrictEqual({});
         expect(setMock.mock.calls[0][0].id).toBe(`dummy-id`);
         expect(setMock.mock.calls[0][0].lastReleaseNotesVersion).toBe(`0.0.0`);
@@ -963,7 +963,7 @@ describe(`FirebaseGuildsService`, (): void => {
           const result = await service.addGuild(guild);
 
           expect(result).toStrictEqual(writeResult);
-          expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceSuccessSpy).toHaveBeenCalledOnce();
           expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
             context: `FirebaseGuildsService`,
             message: `text-Firebase guild value-dummy-id created`,
@@ -983,7 +983,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
       const result = await service.isReady$().pipe(take(1)).toPromise();
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
 
     describe(`when the is ready event is notified`, (): void => {
@@ -993,7 +993,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         const result = await service.isReady$().pipe(take(1)).toPromise();
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -1014,7 +1014,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         const result = await service.isReady();
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -1030,7 +1030,7 @@ describe(`FirebaseGuildsService`, (): void => {
       service.notifyIsReady();
       const result = await service.isReady$().pipe(take(1)).toPromise();
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -1126,7 +1126,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         service.getBatch();
 
-        expect(batchMock).toHaveBeenCalledTimes(1);
+        expect(batchMock).toHaveBeenCalledOnce();
         expect(batchMock).toHaveBeenCalledWith();
       });
 
@@ -1191,7 +1191,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
       await expect(service.getGuilds()).rejects.toThrow(new Error(`Collection not available`));
 
-      expect(getCollectionReferenceSpy).toHaveBeenCalledTimes(1);
+      expect(getCollectionReferenceSpy).toHaveBeenCalledOnce();
       expect(getCollectionReferenceSpy).toHaveBeenCalledWith();
     });
 
@@ -1227,7 +1227,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         service.watchGuilds();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsService`,
           message: `text-watching Firebase guilds...`,
@@ -1239,7 +1239,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         service.watchGuilds();
 
-        expect(onSnapshotMock).toHaveBeenCalledTimes(1);
+        expect(onSnapshotMock).toHaveBeenCalledOnce();
       });
 
       describe(`when an error occurred when fetching the Firebase guilds`, (): void => {
@@ -1336,7 +1336,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
             service.watchGuilds();
 
-            expect(notifyOnGuildsChangeSpy).toHaveBeenCalledTimes(1);
+            expect(notifyOnGuildsChangeSpy).toHaveBeenCalledOnce();
             expect(notifyOnGuildsChangeSpy).toHaveBeenCalledWith([firebaseGuild] as IFirebaseGuild[]);
           });
         });
@@ -1374,7 +1374,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
             service.watchGuilds();
 
-            expect(notifyOnGuildsChangeSpy).toHaveBeenCalledTimes(1);
+            expect(notifyOnGuildsChangeSpy).toHaveBeenCalledOnce();
             expect(notifyOnGuildsChangeSpy).toHaveBeenCalledWith([] as IFirebaseGuild[]);
           });
         });
@@ -1414,7 +1414,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
             service.watchGuilds();
 
-            expect(notifyOnGuildsChangeSpy).toHaveBeenCalledTimes(1);
+            expect(notifyOnGuildsChangeSpy).toHaveBeenCalledOnce();
             expect(notifyOnGuildsChangeSpy).toHaveBeenCalledWith([
               firebaseGuild,
               firebaseGuild,
@@ -1458,7 +1458,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
             service.watchGuilds();
 
-            expect(notifyOnGuildsChangeSpy).toHaveBeenCalledTimes(1);
+            expect(notifyOnGuildsChangeSpy).toHaveBeenCalledOnce();
             expect(notifyOnGuildsChangeSpy).toHaveBeenCalledWith([] as IFirebaseGuild[]);
           });
         });

@@ -59,7 +59,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
       service = new FirebaseGuildsNewVersionCountService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_SERVICE
       );
@@ -97,7 +97,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-no release note message sent`,
@@ -131,7 +131,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-no release note message sent`,
@@ -165,7 +165,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-no release note message sent for the value-1 guild`,
@@ -199,7 +199,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-no release note message sent for the value-2 guilds`,
@@ -233,7 +233,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-no release note message sent for the value-1 guild`,
@@ -267,7 +267,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-no release note message sent for the value-2 guilds`,
@@ -301,7 +301,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-no release note message sent for the value-1 guild`,
@@ -335,7 +335,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-no release note message sent for the value-2 guilds`,
@@ -369,7 +369,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-value-1 release note message sent over value-1 guild of value-1`,
@@ -381,7 +381,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
         expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledWith(1, 1, 1);
       });
 
@@ -390,7 +390,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledOnce();
         expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
           channelName: `logs`,
           messageResponse: discordMessageResponse,
@@ -408,7 +408,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-value-2 release note messages sent over value-2 guilds of value-2`,
@@ -420,7 +420,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
         expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledWith(2, 2, 2);
       });
 
@@ -429,7 +429,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledOnce();
         expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
           channelName: `logs`,
           messageResponse: discordMessageResponse,
@@ -454,7 +454,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsNewVersionCountService`,
           message: `text-value-4 release note messages sent over value-3 guilds of value-6`,
@@ -466,7 +466,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
         expect(firebaseGuildsNewVersionCountMessageResponseServiceGetMessageResponseSpy).toHaveBeenCalledWith(6, 3, 4);
       });
 
@@ -475,7 +475,7 @@ describe(`FirebaseGuildsNewVersionCountService`, (): void => {
 
         service.countChannelsAndGuilds(guildMessages);
 
-        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledOnce();
         expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
           channelName: `logs`,
           messageResponse: discordMessageResponse,

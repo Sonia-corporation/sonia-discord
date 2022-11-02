@@ -52,7 +52,7 @@ describe(`ChalkColorService`, (): void => {
 
       service = new ChalkColorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.CHALK_COLOR_SERVICE);
     });
   });
@@ -75,7 +75,7 @@ describe(`ChalkColorService`, (): void => {
 
       service.init();
 
-      expect(chalkServiceGetLevelSpy).toHaveBeenCalledTimes(1);
+      expect(chalkServiceGetLevelSpy).toHaveBeenCalledOnce();
       expect(chalkServiceGetLevelSpy).toHaveBeenCalledWith();
     });
 
@@ -91,7 +91,7 @@ describe(`ChalkColorService`, (): void => {
 
         service.init();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `ChalkColorService`,
           message: `text-chalk color level: value-0hint- (All colors disabled)`,
@@ -111,7 +111,7 @@ describe(`ChalkColorService`, (): void => {
 
         service.init();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `ChalkColorService`,
           message: `text-chalk color level: value-1hint- (Basic 16 colors support)`,
@@ -131,7 +131,7 @@ describe(`ChalkColorService`, (): void => {
 
         service.init();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `ChalkColorService`,
           message: `text-chalk color level: value-2hint- (ANSI 256 colors support)`,
@@ -151,7 +151,7 @@ describe(`ChalkColorService`, (): void => {
 
         service.init();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `ChalkColorService`,
           message: `text-chalk color level: value-3hint- (Truecolor 16 million colors support)`,

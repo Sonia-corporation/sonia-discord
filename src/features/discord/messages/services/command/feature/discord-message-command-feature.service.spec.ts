@@ -92,7 +92,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
       service = new DiscordMessageCommandFeatureService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_SERVICE
       );
@@ -121,7 +121,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
       await service.handleResponse(anyDiscordMessage);
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandFeatureService`,
         hasExtendedContext: true,
@@ -134,7 +134,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
       await service.handleResponse(anyDiscordMessage);
 
-      expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(getMessageResponseSpy).toHaveBeenCalledOnce();
       expect(getMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
     });
 
@@ -252,7 +252,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
           new Error(`discordMessageCommandFeatureEmptyContentErrorService getMessageResponse error`)
         );
 
-        expect(discordMessageCommandFeatureEmptyContentErrorServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(discordMessageCommandFeatureEmptyContentErrorServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
         expect(discordMessageCommandFeatureEmptyContentErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith();
       });
 
@@ -316,9 +316,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
             new Error(`discordMessageCommandFeatureEmptyFeatureNameErrorService getMessageResponse error`)
           );
 
-          expect(discordMessageCommandFeatureEmptyFeatureNameErrorServiceGetMessageResponseSpy).toHaveBeenCalledTimes(
-            1
-          );
+          expect(discordMessageCommandFeatureEmptyFeatureNameErrorServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
           expect(discordMessageCommandFeatureEmptyFeatureNameErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith(
             anyDiscordMessage,
             [DiscordMessageCommandEnum.FEATURE, DiscordMessageCommandEnum.F]
@@ -364,7 +362,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
             new Error(`discordMessageCommandFeatureEmptyFeatureNameErrorService getMessageResponse error`)
           );
 
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
             context: `DiscordMessageCommandFeatureService`,
             hasExtendedContext: true,
@@ -401,9 +399,9 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
               new Error(`discordMessageCommandFeatureWrongFeatureNameErrorService getMessageResponse error`)
             );
 
-            expect(discordMessageCommandFeatureWrongFeatureNameErrorServiceGetMessageResponseSpy).toHaveBeenCalledTimes(
-              1
-            );
+            expect(
+              discordMessageCommandFeatureWrongFeatureNameErrorServiceGetMessageResponseSpy
+            ).toHaveBeenCalledOnce();
             expect(discordMessageCommandFeatureWrongFeatureNameErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith(
               anyDiscordMessage,
               [DiscordMessageCommandEnum.FEATURE, DiscordMessageCommandEnum.F],
@@ -450,7 +448,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
               new Error(`discordMessageCommandFeatureWrongFeatureNameErrorService getMessageResponse error`)
             );
 
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `DiscordMessageCommandFeatureService`,
               hasExtendedContext: true,
@@ -486,7 +484,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 new Error(`discordMessageCommandFeatureEmptyFlagsErrorService getMessageResponse error`)
               );
 
-              expect(discordMessageCommandFeatureEmptyFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+              expect(discordMessageCommandFeatureEmptyFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
               expect(discordMessageCommandFeatureEmptyFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith(
                 anyDiscordMessage,
                 [DiscordMessageCommandEnum.FEATURE, DiscordMessageCommandEnum.F],
@@ -533,7 +531,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 new Error(`discordMessageCommandFeatureEmptyFlagsErrorService getMessageResponse error`)
               );
 
-              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
               expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                 context: `DiscordMessageCommandFeatureService`,
                 hasExtendedContext: true,
@@ -559,9 +557,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(discordMessageCommandFeatureWrongFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledTimes(
-                  1
-                );
+                expect(discordMessageCommandFeatureWrongFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
                 expect(discordMessageCommandFeatureWrongFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith([
                   {
                     description: `The flag \`yo\` is unknown to the noon feature.`,
@@ -610,7 +606,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -633,7 +629,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledWith([
@@ -683,7 +679,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -706,7 +702,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledWith([
@@ -756,7 +752,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -779,7 +775,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledWith([
@@ -829,7 +825,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -852,7 +848,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledWith([
@@ -902,7 +898,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -925,7 +921,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledWith([
@@ -975,7 +971,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -998,7 +994,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledWith([
@@ -1048,7 +1044,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -1071,7 +1067,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith(
                   [
                     {
@@ -1121,7 +1117,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -1144,7 +1140,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith(
                   [
                     {
@@ -1194,7 +1190,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -1215,7 +1211,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureNoonService getMessageResponse error`)
                 );
 
-                expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+                expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
                 expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).toHaveBeenCalledWith(
                   anyDiscordMessage,
                   `--enabled=true`
@@ -1267,7 +1263,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureNoonService getMessageResponse error`)
                 );
 
-                expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+                expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
                 expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).toHaveBeenCalledWith(
                   anyDiscordMessage,
                   `--disabled=true`
@@ -1319,7 +1315,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureNoonService getMessageResponse error`)
                 );
 
-                expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+                expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
                 expect(discordMessageCommandFeatureNoonServiceGetMessageResponseSpy).toHaveBeenCalledWith(
                   anyDiscordMessage,
                   `--help`
@@ -1378,7 +1374,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 new Error(`discordMessageCommandFeatureEmptyFlagsErrorService getMessageResponse error`)
               );
 
-              expect(discordMessageCommandFeatureEmptyFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+              expect(discordMessageCommandFeatureEmptyFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
               expect(discordMessageCommandFeatureEmptyFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith(
                 anyDiscordMessage,
                 [DiscordMessageCommandEnum.FEATURE, DiscordMessageCommandEnum.F],
@@ -1425,7 +1421,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                 new Error(`discordMessageCommandFeatureEmptyFlagsErrorService getMessageResponse error`)
               );
 
-              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
               expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                 context: `DiscordMessageCommandFeatureService`,
                 hasExtendedContext: true,
@@ -1451,9 +1447,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(discordMessageCommandFeatureWrongFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledTimes(
-                  1
-                );
+                expect(discordMessageCommandFeatureWrongFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
                 expect(discordMessageCommandFeatureWrongFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith([
                   {
                     description: `The flag \`yo\` is unknown to the release-notes feature.`,
@@ -1502,7 +1496,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureWrongFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -1525,7 +1519,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledWith([
@@ -1575,7 +1569,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -1598,7 +1592,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledWith([
@@ -1648,7 +1642,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -1671,7 +1665,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledWith([
@@ -1721,7 +1715,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -1744,7 +1738,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledWith([
@@ -1794,7 +1788,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -1817,7 +1811,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledWith([
@@ -1867,7 +1861,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -1890,7 +1884,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(
                   discordMessageCommandFeatureDuplicatedFlagsErrorServiceGetMessageResponseSpy
                 ).toHaveBeenCalledWith([
@@ -1940,7 +1934,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureDuplicatedFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -1963,7 +1957,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith(
                   [
                     {
@@ -2013,7 +2007,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -2036,7 +2030,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
                 expect(
                   discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy
-                ).toHaveBeenCalledTimes(1);
+                ).toHaveBeenCalledOnce();
                 expect(discordMessageCommandFeatureOppositeFlagsErrorServiceGetMessageResponseSpy).toHaveBeenCalledWith(
                   [
                     {
@@ -2086,7 +2080,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureOppositeFlagsErrorService getMessageResponse error`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `DiscordMessageCommandFeatureService`,
                   hasExtendedContext: true,
@@ -2107,7 +2101,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureReleaseNotesService getMessageResponse error`)
                 );
 
-                expect(discordMessageCommandFeatureReleaseNotesServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+                expect(discordMessageCommandFeatureReleaseNotesServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
                 expect(discordMessageCommandFeatureReleaseNotesServiceGetMessageResponseSpy).toHaveBeenCalledWith(
                   anyDiscordMessage,
                   `--enabled=true`
@@ -2159,7 +2153,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureReleaseNotesService getMessageResponse error`)
                 );
 
-                expect(discordMessageCommandFeatureReleaseNotesServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+                expect(discordMessageCommandFeatureReleaseNotesServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
                 expect(discordMessageCommandFeatureReleaseNotesServiceGetMessageResponseSpy).toHaveBeenCalledWith(
                   anyDiscordMessage,
                   `--disabled=true`
@@ -2211,7 +2205,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
                   new Error(`discordMessageCommandFeatureReleaseNotesService getMessageResponse error`)
                 );
 
-                expect(discordMessageCommandFeatureReleaseNotesServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+                expect(discordMessageCommandFeatureReleaseNotesServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
                 expect(discordMessageCommandFeatureReleaseNotesServiceGetMessageResponseSpy).toHaveBeenCalledWith(
                   anyDiscordMessage,
                   `--help`
@@ -2285,7 +2279,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2299,7 +2293,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2313,7 +2307,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2327,7 +2321,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2341,7 +2335,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2355,7 +2349,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2369,7 +2363,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2383,7 +2377,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2397,7 +2391,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2411,7 +2405,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2425,7 +2419,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2439,7 +2433,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -2453,7 +2447,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2467,7 +2461,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2481,7 +2475,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -2495,7 +2489,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2509,7 +2503,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2523,7 +2517,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -2537,7 +2531,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2551,7 +2545,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2565,7 +2559,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -2579,7 +2573,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2593,7 +2587,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2607,7 +2601,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -2621,7 +2615,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2635,7 +2629,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2649,7 +2643,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -2663,7 +2657,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2677,7 +2671,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2691,7 +2685,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -2705,7 +2699,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2719,7 +2713,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2733,7 +2727,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -2747,7 +2741,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2761,7 +2755,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -2781,7 +2775,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2795,7 +2789,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2809,7 +2803,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2823,7 +2817,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2837,7 +2831,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2851,7 +2845,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2865,7 +2859,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2879,7 +2873,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2893,7 +2887,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2907,7 +2901,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2921,7 +2915,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2935,7 +2929,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2949,7 +2943,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -2963,7 +2957,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -2977,7 +2971,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -2991,7 +2985,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -3005,7 +2999,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -3019,7 +3013,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -3033,7 +3027,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -3047,7 +3041,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -3061,7 +3055,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -3075,7 +3069,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -3089,7 +3083,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -3103,7 +3097,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -3117,7 +3111,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -3131,7 +3125,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -3145,7 +3139,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -3159,7 +3153,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -3173,7 +3167,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -3187,7 +3181,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -3201,7 +3195,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -3215,7 +3209,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -3229,7 +3223,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -3243,7 +3237,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -3257,7 +3251,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
     });
@@ -3280,7 +3274,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
         const result = service.hasFlags(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -3294,7 +3288,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
         const result = service.hasFlags(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -3308,7 +3302,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
         const result = service.hasFlags(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -3322,7 +3316,7 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
 
         const result = service.hasFlags(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });

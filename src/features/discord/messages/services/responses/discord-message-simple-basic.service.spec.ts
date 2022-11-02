@@ -47,7 +47,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
       service = new DiscordMessageSimpleBasicService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_SIMPLE_BASIC_SERVICE
       );
@@ -71,7 +71,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -85,7 +85,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -99,7 +99,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -113,7 +113,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -127,7 +127,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -141,7 +141,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -155,7 +155,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -169,7 +169,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -183,7 +183,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -197,7 +197,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -211,7 +211,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -225,7 +225,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -239,7 +239,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -253,7 +253,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -267,7 +267,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -293,7 +293,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
       await expect(service.reply(anyDiscordMessage)).rejects.toThrow(new Error(`No content`));
 
-      expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledOnce();
       expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledWith(`dummy-content`);
     });
 
@@ -319,7 +319,7 @@ describe(`DiscordMessageSimpleBasicService`, (): void => {
 
         const result = await service.reply(anyDiscordMessage);
 
-        expect(result.options.split).toBe(false);
+        expect(result.options.split).toBeFalse();
       });
 
       describe(`when the given Discord message contains a valid mention with SIMPLE`, (): void => {

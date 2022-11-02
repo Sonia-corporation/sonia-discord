@@ -65,7 +65,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
       service = new DiscordMessageCommandFeatureNoonService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_SERVICE
       );
@@ -89,7 +89,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
         const result = service.isNoonFeature(featureName);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -103,7 +103,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
         const result = service.isNoonFeature(featureName);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -117,7 +117,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
         const result = service.isNoonFeature(featureName);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -163,7 +163,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
         new Error(`executeAll error`)
       );
 
-      expect(executeAllSpy).toHaveBeenCalledTimes(1);
+      expect(executeAllSpy).toHaveBeenCalledOnce();
       expect(executeAllSpy).toHaveBeenCalledWith(anyDiscordMessage, messageFlags);
     });
 
@@ -317,7 +317,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(moment(result[0].options.embed?.timestamp).isValid()).toBe(true);
+          expect(moment(result[0].options.embed?.timestamp).isValid()).toBeTrue();
 
           expect(moment(result[0].options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
         });
@@ -335,7 +335,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.split).toBe(false);
+          expect(result[0].options.split).toBeFalse();
         });
 
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -471,7 +471,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(moment(result[0].options.embed?.timestamp).isValid()).toBe(true);
+          expect(moment(result[0].options.embed?.timestamp).isValid()).toBeTrue();
 
           expect(moment(result[0].options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
         });
@@ -489,7 +489,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.split).toBe(false);
+          expect(result[0].options.split).toBeFalse();
         });
 
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -701,7 +701,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(moment(result[0].options.embed?.timestamp).isValid()).toBe(true);
+          expect(moment(result[0].options.embed?.timestamp).isValid()).toBeTrue();
 
           expect(moment(result[0].options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
         });
@@ -719,7 +719,7 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].options.split).toBe(false);
+          expect(result[0].options.split).toBeFalse();
         });
 
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {

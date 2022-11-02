@@ -49,7 +49,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
       service = new DiscordMessageHotelTrivagoService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_HOTEL_TRIVAGO_SERVICE
       );
@@ -73,7 +73,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -87,7 +87,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -101,7 +101,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -115,7 +115,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -129,7 +129,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -143,7 +143,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -157,7 +157,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -171,7 +171,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -185,7 +185,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -199,7 +199,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -229,7 +229,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
       await expect(service.reply(anyDiscordMessage)).rejects.toThrow(new Error(`No content`));
 
-      expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledOnce();
       expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledWith(`dummy-content`);
     });
 
@@ -255,7 +255,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
         const result = await service.reply(anyDiscordMessage);
 
-        expect(result.options.split).toBe(false);
+        expect(result.options.split).toBeFalse();
       });
 
       describe(`when the given Discord message contains a valid mention with HOTEL`, (): void => {
@@ -269,7 +269,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
           const result = await service.reply(anyDiscordMessage);
 
           expect(result).toBeDefined();
-          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledOnce();
           expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
             trivago: `TRIVAGO`,
           } as IDiscordMessageHotelTrivagoResponseMessage);
@@ -295,7 +295,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
           const result = await service.reply(anyDiscordMessage);
 
           expect(result).toBeDefined();
-          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledOnce();
           expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
             trivago: `Trivago`,
           } as IDiscordMessageHotelTrivagoResponseMessage);
@@ -321,7 +321,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
           const result = await service.reply(anyDiscordMessage);
 
           expect(result).toBeDefined();
-          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledOnce();
           expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
             trivago: `Trivago`,
           } as IDiscordMessageHotelTrivagoResponseMessage);
@@ -347,7 +347,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
           const result = await service.reply(anyDiscordMessage);
 
           expect(result).toBeDefined();
-          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledOnce();
           expect(discordMessageHotelTrivagoResponseMessagesGetHumanizedRandomMessageSpy).toHaveBeenCalledWith({
             trivago: `trivago`,
           } as IDiscordMessageHotelTrivagoResponseMessage);

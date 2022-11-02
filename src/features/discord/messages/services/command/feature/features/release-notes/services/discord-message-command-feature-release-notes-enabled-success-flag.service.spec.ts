@@ -45,7 +45,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService`, ()
 
       service = new DiscordMessageCommandFeatureReleaseNotesEnabledSuccessFlagService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_ENABLED_SUCCESS_FLAG_SERVICE
       );

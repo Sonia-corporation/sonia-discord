@@ -72,7 +72,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       service = new DiscordMessageCommandVersionService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_COMMAND_VERSION_SERVICE
       );
@@ -101,7 +101,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       await service.handleResponse(anyDiscordMessage);
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandVersionService`,
         hasExtendedContext: true,
@@ -114,7 +114,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       await service.handleResponse(anyDiscordMessage);
 
-      expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(getMessageResponseSpy).toHaveBeenCalledOnce();
       expect(getMessageResponseSpy).toHaveBeenCalledWith();
     });
 
@@ -355,7 +355,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
+      expect(moment(result.options.embed?.timestamp).isValid()).toBeTrue();
       expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
@@ -373,7 +373,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.split).toBe(false);
+      expect(result.options.split).toBeFalse();
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -414,7 +414,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -428,7 +428,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -442,7 +442,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -456,7 +456,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -470,7 +470,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -484,7 +484,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -498,7 +498,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -512,7 +512,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -526,7 +526,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -540,7 +540,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -554,7 +554,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -568,7 +568,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -582,7 +582,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -596,7 +596,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -610,7 +610,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -624,7 +624,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -638,7 +638,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -652,7 +652,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -666,7 +666,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -680,7 +680,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -694,7 +694,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -708,7 +708,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -722,7 +722,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -736,7 +736,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -750,7 +750,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -764,7 +764,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -778,7 +778,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -792,7 +792,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -806,7 +806,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -820,7 +820,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -834,7 +834,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -848,7 +848,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -862,7 +862,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -876,7 +876,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -890,7 +890,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -910,7 +910,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -924,7 +924,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -938,7 +938,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -952,7 +952,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -966,7 +966,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -980,7 +980,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -994,7 +994,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1008,7 +1008,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1022,7 +1022,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1036,7 +1036,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1050,7 +1050,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1064,7 +1064,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1078,7 +1078,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1092,7 +1092,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1106,7 +1106,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1120,7 +1120,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1134,7 +1134,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1148,7 +1148,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1162,7 +1162,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1176,7 +1176,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1190,7 +1190,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1204,7 +1204,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1218,7 +1218,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1232,7 +1232,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1246,7 +1246,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1260,7 +1260,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1274,7 +1274,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1288,7 +1288,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1302,7 +1302,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1316,7 +1316,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1330,7 +1330,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1344,7 +1344,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1358,7 +1358,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1372,7 +1372,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1386,7 +1386,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
     });

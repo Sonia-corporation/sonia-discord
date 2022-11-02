@@ -46,7 +46,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
       service = new DiscordGuildConfigService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_GUILD_CONFIG_SERVICE
       );
@@ -89,7 +89,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
       const result = service.shouldSendCookiesOnCreate();
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -104,7 +104,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
       const result = service.shouldSendNoonMessage();
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -119,7 +119,7 @@ describe(`DiscordGuildConfigService`, (): void => {
 
       const result = service.shouldWelcomeNewMembers();
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 

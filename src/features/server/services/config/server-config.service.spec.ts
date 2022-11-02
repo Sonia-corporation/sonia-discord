@@ -46,7 +46,7 @@ describe(`ServerConfigService`, (): void => {
 
       service = new ServerConfigService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.SERVER_CONFIG_SERVICE);
     });
   });

@@ -99,7 +99,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
 
       await expect(service.execute(anyDiscordMessage, value)).rejects.toThrow(new Error(`isEnabled error`));
 
-      expect(isEnabledSpy).toHaveBeenCalledTimes(1);
+      expect(isEnabledSpy).toHaveBeenCalledOnce();
       expect(isEnabledSpy).toHaveBeenCalledWith(anyDiscordMessage);
     });
 
@@ -238,7 +238,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -254,7 +254,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -270,7 +270,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -286,7 +286,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -302,7 +302,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -318,7 +318,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
           });
@@ -355,7 +355,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -371,7 +371,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -387,7 +387,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -403,7 +403,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -419,7 +419,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -435,7 +435,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
           });
@@ -472,7 +472,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -488,7 +488,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -504,7 +504,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -520,7 +520,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -536,7 +536,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -552,7 +552,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
           });
@@ -606,7 +606,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -622,7 +622,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -638,7 +638,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -654,7 +654,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -670,7 +670,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -686,7 +686,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
           });
@@ -723,7 +723,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -739,7 +739,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -755,7 +755,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -771,7 +771,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -787,7 +787,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -803,7 +803,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
           });
@@ -840,7 +840,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -856,7 +856,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -872,7 +872,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -888,7 +888,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -904,7 +904,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
 
@@ -920,7 +920,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
                   new Error(`updateDatabase error`)
                 );
 
-                expect(updateDatabaseSpy).toHaveBeenCalledTimes(1);
+                expect(updateDatabaseSpy).toHaveBeenCalledOnce();
               });
             });
           });
@@ -970,7 +970,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
           new Error(`Could not get the guild from the message`)
         );
 
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
           context: `DiscordMessageCommandFeatureReleaseNotesEnabled`,
           hasExtendedContext: true,
@@ -1007,7 +1007,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
           new Error(`Could not find the guild dummy-guild-id in Firebase`)
         );
 
-        expect(firebaseGuildsStoreQueryGetEntitySpy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildsStoreQueryGetEntitySpy).toHaveBeenCalledOnce();
         expect(firebaseGuildsStoreQueryGetEntitySpy).toHaveBeenCalledWith(`dummy-guild-id`);
       });
 
@@ -1023,7 +1023,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
             new Error(`Could not find the guild dummy-guild-id in Firebase`)
           );
 
-          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
           expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
             context: `DiscordMessageCommandFeatureReleaseNotesEnabled`,
             hasExtendedContext: true,
@@ -1253,7 +1253,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
 
                   const result = await service.isEnabled(anyDiscordMessage);
 
-                  expect(result).toBe(true);
+                  expect(result).toBeTrue();
                 });
               });
 
@@ -1281,7 +1281,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
 
                   const result = await service.isEnabled(anyDiscordMessage);
 
-                  expect(result).toBe(false);
+                  expect(result).toBeFalse();
                 });
               });
             });
@@ -1356,9 +1356,9 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
             new Error(`updateState error`)
           );
 
-          expect(firebaseGuildsChannelsFeaturesReleaseNotesEnabledServiceUpdateStateByGuildIdSpy).toHaveBeenCalledTimes(
-            1
-          );
+          expect(
+            firebaseGuildsChannelsFeaturesReleaseNotesEnabledServiceUpdateStateByGuildIdSpy
+          ).toHaveBeenCalledOnce();
           expect(firebaseGuildsChannelsFeaturesReleaseNotesEnabledServiceUpdateStateByGuildIdSpy).toHaveBeenCalledWith(
             `dummy-id`,
             `dummy-channel-id`,
@@ -1379,9 +1379,9 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
             new Error(`updateState error`)
           );
 
-          expect(firebaseGuildsChannelsFeaturesReleaseNotesEnabledServiceUpdateStateByGuildIdSpy).toHaveBeenCalledTimes(
-            1
-          );
+          expect(
+            firebaseGuildsChannelsFeaturesReleaseNotesEnabledServiceUpdateStateByGuildIdSpy
+          ).toHaveBeenCalledOnce();
           expect(firebaseGuildsChannelsFeaturesReleaseNotesEnabledServiceUpdateStateByGuildIdSpy).toHaveBeenCalledWith(
             `dummy-id`,
             `dummy-channel-id`,

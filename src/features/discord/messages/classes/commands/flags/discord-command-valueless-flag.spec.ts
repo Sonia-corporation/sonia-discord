@@ -437,7 +437,7 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
 
         const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -451,7 +451,7 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
 
         const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -465,7 +465,7 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
 
         const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -479,7 +479,7 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
 
         const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -493,7 +493,7 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
 
         const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -507,7 +507,7 @@ describe(`DiscordCommandValuelessFlag`, (): void => {
 
         const result = discordCommandFlag.isValid(messageFlag);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
   });

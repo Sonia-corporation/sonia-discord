@@ -53,7 +53,7 @@ describe(`DiscordGuildService`, (): void => {
 
       service = new DiscordGuildService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_GUILD_SERVICE);
     });
   });
@@ -74,7 +74,7 @@ describe(`DiscordGuildService`, (): void => {
 
       await service.init();
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordGuildService`,
         message: `text-listen "ready" Discord client state`,
@@ -86,7 +86,7 @@ describe(`DiscordGuildService`, (): void => {
 
       await service.init();
 
-      expect(discordClientServiceIsReadySpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceIsReadySpy).toHaveBeenCalledOnce();
       expect(discordClientServiceIsReadySpy).toHaveBeenCalledWith();
     });
 
@@ -131,7 +131,7 @@ describe(`DiscordGuildService`, (): void => {
 
       service.getGuilds();
 
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledOnce();
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
     });
 
@@ -140,7 +140,7 @@ describe(`DiscordGuildService`, (): void => {
 
       const result = service.getGuilds();
 
-      expect(arrayMock).toHaveBeenCalledTimes(1);
+      expect(arrayMock).toHaveBeenCalledOnce();
       expect(arrayMock).toHaveBeenCalledWith();
       expect(result).toStrictEqual(guilds);
     });
@@ -179,7 +179,7 @@ describe(`DiscordGuildService`, (): void => {
 
       service.getGuildById(guildId);
 
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledOnce();
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
     });
 
@@ -188,7 +188,7 @@ describe(`DiscordGuildService`, (): void => {
 
       const result = service.getGuildById(guildId);
 
-      expect(findMock).toHaveBeenCalledTimes(1);
+      expect(findMock).toHaveBeenCalledOnce();
       expect(result).toStrictEqual(guild);
     });
   });

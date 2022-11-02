@@ -120,7 +120,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
       service = new DiscordMessageScheduleNoonService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_SERVICE
       );
@@ -141,7 +141,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
       service.init();
 
-      expect(startScheduleSpy).toHaveBeenCalledTimes(1);
+      expect(startScheduleSpy).toHaveBeenCalledOnce();
       expect(startScheduleSpy).toHaveBeenCalledWith();
     });
   });
@@ -179,7 +179,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
       service.startSchedule();
 
-      expect(getEveryHourScheduleRuleSpy).toHaveBeenCalledTimes(1);
+      expect(getEveryHourScheduleRuleSpy).toHaveBeenCalledOnce();
       expect(getEveryHourScheduleRuleSpy).toHaveBeenCalledWith();
     });
 
@@ -188,7 +188,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
       service.startSchedule();
 
-      expect(scheduleJobSpy).toHaveBeenCalledTimes(1);
+      expect(scheduleJobSpy).toHaveBeenCalledOnce();
       expect(scheduleJobSpy).toHaveBeenCalledWith(`dummy-schedule`, expect.any(Function));
     });
 
@@ -202,7 +202,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         service.startSchedule();
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       });
     });
 
@@ -274,7 +274,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         service.startSchedule();
 
-        expect(handleMessagesSpy).toHaveBeenCalledTimes(1);
+        expect(handleMessagesSpy).toHaveBeenCalledOnce();
         expect(handleMessagesSpy).toHaveBeenCalledWith();
       });
 
@@ -320,7 +320,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
       await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`getGuild error`));
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageScheduleNoonService`,
         message: `text-fetching Firebase guild value-dummy-guild-id`,
@@ -332,7 +332,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
       await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`getGuild error`));
 
-      expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledOnce();
       expect(firebaseGuildsServiceGetGuildSpy).toHaveBeenCalledWith(`dummy-guild-id`);
     });
 
@@ -518,7 +518,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
             await service.sendMessage(guild);
 
-            expect(sendMessageByChannelSpy).toHaveBeenCalledTimes(1);
+            expect(sendMessageByChannelSpy).toHaveBeenCalledOnce();
             expect(sendMessageByChannelSpy).toHaveBeenCalledWith(channel, firebaseGuild, guild);
           });
         });
@@ -648,7 +648,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           new Error(`Noon state disabled`)
         );
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonService`,
           message: `text-Firebase guild value-dummy-guild-id channel value-unknown noon feature is disabled`,
@@ -692,7 +692,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               new Error(`Noon state disabled`)
             );
 
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `DiscordMessageScheduleNoonService`,
               message: `text-Firebase guild value-dummy-guild-id channel value-dummy-channel-id noon feature is disabled`,
@@ -742,7 +742,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               new Error(`Guild channel not found`)
             );
 
-            expect(guildChannelsGetMock).toHaveBeenCalledTimes(1);
+            expect(guildChannelsGetMock).toHaveBeenCalledOnce();
             expect(guildChannelsGetMock).toHaveBeenCalledWith(`dummy-channel-id`);
           });
 
@@ -798,7 +798,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
                 new Error(`sendMessageResponse error`)
               );
 
-              expect(sendMessageResponseSpy).toHaveBeenCalledTimes(1);
+              expect(sendMessageResponseSpy).toHaveBeenCalledOnce();
               expect(sendMessageResponseSpy).toHaveBeenCalledWith(guildChannel);
             });
 
@@ -874,7 +874,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         await expect(service.handleMessages()).rejects.toThrow(new Error(`Can not send message`));
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonService`,
           message: `text-noon message sending disabled`,
@@ -920,7 +920,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
           await expect(service.handleMessages()).rejects.toThrow(new Error(`Can not send message`));
 
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
             context: `DiscordMessageScheduleNoonService`,
             message: `text-not noon in Paris`,
@@ -962,7 +962,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           const result = await service.handleMessages();
 
           expect(result).toStrictEqual([]);
-          expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+          expect(discordClientServiceGetClientSpy).toHaveBeenCalledOnce();
           expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
         });
 
@@ -1016,7 +1016,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
             expect(result).toStrictEqual([undefined]);
 
-            expect(sendMessageSpy).toHaveBeenCalledTimes(1);
+            expect(sendMessageSpy).toHaveBeenCalledOnce();
             expect(sendMessageSpy).toHaveBeenCalledWith(guild);
           });
 
@@ -1032,7 +1032,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
               expect(result).toStrictEqual([undefined]);
 
-              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
               expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                 context: `DiscordMessageScheduleNoonService`,
                 message: `text-no message sent for Firebase guild value-dummy-guild-id`,
@@ -1188,7 +1188,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
           new Error(`Guild channel not writable`)
         );
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonService`,
           message: `text-the guild channel value-dummy-guild-channel-id is not writable`,
@@ -1215,7 +1215,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageScheduleNoonService`,
           message: `text-sending message for noon for guild channel value-dummy-guild-channel-id...`,
@@ -1227,7 +1227,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
-        expect(sendMock).toHaveBeenCalledTimes(1);
+        expect(sendMock).toHaveBeenCalledOnce();
         expect(sendMock).toHaveBeenCalledWith(`Il est midi!`, {
           split: false,
         });
@@ -1267,7 +1267,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
           await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
-          expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).toHaveBeenCalledTimes(1);
+          expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).toHaveBeenCalledOnce();
           expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).toHaveBeenCalledWith(new Error(`send error`));
         });
 
@@ -1276,7 +1276,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
           await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
-          expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+          expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledOnce();
           expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
             channelName: `errors`,
             messageResponse: discordMessageResponse,
@@ -1382,7 +1382,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
       await service.executeJob();
 
-      expect(handleMessagesSpy).toHaveBeenCalledTimes(1);
+      expect(handleMessagesSpy).toHaveBeenCalledOnce();
       expect(handleMessagesSpy).toHaveBeenCalledWith();
     });
 
@@ -1422,7 +1422,7 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         await service.executeJob();
 
-        expect(discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy).toHaveBeenCalledTimes(1);
+        expect(discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy).toHaveBeenCalledOnce();
         expect(discordMessageScheduleNoonCountServiceCountChannelsAndGuildsSpy).toHaveBeenCalledWith([]);
       });
 

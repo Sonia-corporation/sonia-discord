@@ -29,7 +29,7 @@ describe(`getReleaseTypeBlockRegexp()`, (): void => {
 
         const result = getReleaseTypeBlockRegexp(blockName);
 
-        expect(xregexp.test(text, result)).toBe(false);
+        expect(xregexp.test(text, result)).toBeFalse();
       });
     });
 
@@ -43,7 +43,7 @@ describe(`getReleaseTypeBlockRegexp()`, (): void => {
 
         const result = getReleaseTypeBlockRegexp(blockName);
 
-        expect(xregexp.test(text, result)).toBe(true);
+        expect(xregexp.test(text, result)).toBeTrue();
       });
     });
 
@@ -57,7 +57,7 @@ describe(`getReleaseTypeBlockRegexp()`, (): void => {
 
         const result = getReleaseTypeBlockRegexp(blockName);
 
-        expect(xregexp.test(text, result)).toBe(true);
+        expect(xregexp.test(text, result)).toBeTrue();
       });
     });
 
@@ -71,7 +71,7 @@ describe(`getReleaseTypeBlockRegexp()`, (): void => {
 
         const result = getReleaseTypeBlockRegexp(blockName);
 
-        expect(xregexp.test(text, result)).toBe(true);
+        expect(xregexp.test(text, result)).toBeTrue();
       });
     });
   });
@@ -99,7 +99,7 @@ describe(`getReleaseTypeBlockRegexp()`, (): void => {
 
         const result = getReleaseTypeBlockRegexp(blockName);
 
-        expect(xregexp.test(text, result)).toBe(false);
+        expect(xregexp.test(text, result)).toBeFalse();
       });
     });
 
@@ -113,7 +113,7 @@ describe(`getReleaseTypeBlockRegexp()`, (): void => {
 
         const result = getReleaseTypeBlockRegexp(blockName);
 
-        expect(xregexp.test(text, result)).toBe(true);
+        expect(xregexp.test(text, result)).toBeTrue();
       });
     });
 
@@ -127,7 +127,7 @@ describe(`getReleaseTypeBlockRegexp()`, (): void => {
 
         const result = getReleaseTypeBlockRegexp(blockName);
 
-        expect(xregexp.test(text, result)).toBe(true);
+        expect(xregexp.test(text, result)).toBeTrue();
       });
     });
 
@@ -141,7 +141,7 @@ describe(`getReleaseTypeBlockRegexp()`, (): void => {
 
         const result = getReleaseTypeBlockRegexp(blockName);
 
-        expect(xregexp.test(text, result)).toBe(true);
+        expect(xregexp.test(text, result)).toBeTrue();
       });
     });
   });
@@ -169,7 +169,7 @@ describe(`getReleaseTypeBlockRegexp()`, (): void => {
 
         const result = getReleaseTypeBlockRegexp(blockName);
 
-        expect(xregexp.test(text, result)).toBe(false);
+        expect(xregexp.test(text, result)).toBeFalse();
       });
     });
 
@@ -183,7 +183,7 @@ describe(`getReleaseTypeBlockRegexp()`, (): void => {
 
         const result = getReleaseTypeBlockRegexp(blockName);
 
-        expect(xregexp.test(text, result)).toBe(true);
+        expect(xregexp.test(text, result)).toBeTrue();
       });
     });
 
@@ -197,7 +197,7 @@ describe(`getReleaseTypeBlockRegexp()`, (): void => {
 
         const result = getReleaseTypeBlockRegexp(blockName);
 
-        expect(xregexp.test(text, result)).toBe(true);
+        expect(xregexp.test(text, result)).toBeTrue();
       });
     });
 
@@ -211,7 +211,7 @@ describe(`getReleaseTypeBlockRegexp()`, (): void => {
 
         const result = getReleaseTypeBlockRegexp(blockName);
 
-        expect(xregexp.test(text, result)).toBe(true);
+        expect(xregexp.test(text, result)).toBeTrue();
       });
     });
   });

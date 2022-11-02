@@ -13,7 +13,7 @@ describe(`toBoolean()`, (): void => {
 
       const result = toBoolean(value);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -27,7 +27,7 @@ describe(`toBoolean()`, (): void => {
 
       const result = toBoolean(value);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -41,7 +41,7 @@ describe(`toBoolean()`, (): void => {
 
       const result = toBoolean(value);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -55,7 +55,7 @@ describe(`toBoolean()`, (): void => {
 
       const result = toBoolean(value);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -69,7 +69,7 @@ describe(`toBoolean()`, (): void => {
 
       const result = toBoolean(value);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -83,7 +83,7 @@ describe(`toBoolean()`, (): void => {
 
       const result = toBoolean(value);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -97,7 +97,7 @@ describe(`toBoolean()`, (): void => {
 
       const result = toBoolean(value);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -111,7 +111,7 @@ describe(`toBoolean()`, (): void => {
 
       const result = toBoolean(value);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -125,7 +125,7 @@ describe(`toBoolean()`, (): void => {
 
       const result = toBoolean(value);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -146,7 +146,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -160,7 +160,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -174,7 +174,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -188,7 +188,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -202,7 +202,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -216,7 +216,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -230,7 +230,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -244,7 +244,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -258,7 +258,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
   });
@@ -280,7 +280,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -294,7 +294,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -308,7 +308,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -322,7 +322,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -336,7 +336,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -350,7 +350,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -364,7 +364,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -378,7 +378,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -392,7 +392,7 @@ describe(`toBoolean()`, (): void => {
 
         const result = toBoolean(value, asFallback);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
   });

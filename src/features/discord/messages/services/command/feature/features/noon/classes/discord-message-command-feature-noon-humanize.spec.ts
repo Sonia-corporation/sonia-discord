@@ -73,7 +73,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
       await expect(service.execute(anyDiscordMessage)).rejects.toThrow(new Error(`getStates error`));
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandFeatureNoonHumanize`,
         hasExtendedContext: true,
@@ -86,7 +86,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
       await expect(service.execute(anyDiscordMessage)).rejects.toThrow(new Error(`getStates error`));
 
-      expect(getStatesSpy).toHaveBeenCalledTimes(1);
+      expect(getStatesSpy).toHaveBeenCalledOnce();
       expect(getStatesSpy).toHaveBeenCalledWith(anyDiscordMessage);
     });
 
@@ -182,7 +182,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
             await expect(service.execute(anyDiscordMessage)).rejects.toThrow(new Error(`getMessageResponse error`));
 
-            expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+            expect(getMessageResponseSpy).toHaveBeenCalledOnce();
             expect(getMessageResponseSpy).toHaveBeenCalledWith(firebaseGuildChannelFeatureNoonState);
           });
 
@@ -236,7 +236,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
             await expect(service.execute(anyDiscordMessage)).rejects.toThrow(new Error(`getMessageResponse error`));
 
-            expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+            expect(getMessageResponseSpy).toHaveBeenCalledOnce();
             expect(getMessageResponseSpy).toHaveBeenCalledWith(firebaseGuildChannelFeatureNoonState);
           });
 
@@ -305,7 +305,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           new Error(`Could not get the guild from the message`)
         );
 
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
           context: `DiscordMessageCommandFeatureNoonHumanize`,
           hasExtendedContext: true,
@@ -342,7 +342,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
           new Error(`Could not find the guild dummy-guild-id in Firebase`)
         );
 
-        expect(firebaseGuildsStoreQueryGetEntitySpy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildsStoreQueryGetEntitySpy).toHaveBeenCalledOnce();
         expect(firebaseGuildsStoreQueryGetEntitySpy).toHaveBeenCalledWith(`dummy-guild-id`);
       });
 
@@ -358,7 +358,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
             new Error(`Could not find the guild dummy-guild-id in Firebase`)
           );
 
-          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
           expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
             context: `DiscordMessageCommandFeatureNoonHumanize`,
             hasExtendedContext: true,
@@ -550,7 +550,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
               const result = await service.getStates(anyDiscordMessage);
 
-              expect(result.isEnabled).toBe(true);
+              expect(result.isEnabled).toBeTrue();
             });
           });
 
@@ -578,7 +578,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
               const result = await service.getStates(anyDiscordMessage);
 
-              expect(result.isEnabled).toBe(false);
+              expect(result.isEnabled).toBeFalse();
             });
           });
         });
@@ -631,7 +631,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
       await expect(service.getMessageResponse(state)).rejects.toThrow(new Error(`getMessageResponse help error`));
 
-      expect(discordMessageHelpServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageHelpServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
       expect(discordMessageHelpServiceGetMessageResponseSpy).toHaveBeenCalledWith();
     });
 
@@ -816,7 +816,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
+        expect(moment(result.options.embed?.timestamp).isValid()).toBeTrue();
         expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
       });
 
@@ -825,7 +825,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.options.split).toBe(false);
+        expect(result.options.split).toBeFalse();
       });
 
       it(`should return a Discord message response without a response text`, async (): Promise<void> => {

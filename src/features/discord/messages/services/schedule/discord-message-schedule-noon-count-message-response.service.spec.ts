@@ -58,7 +58,7 @@ describe(`DiscordMessageScheduleNoonCountMessageResponseService`, (): void => {
 
       service = new DiscordMessageScheduleNoonCountMessageResponseService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_SCHEDULE_NOON_COUNT_MESSAGE_RESPONSE_SERVICE
       );
@@ -175,7 +175,7 @@ describe(`DiscordMessageScheduleNoonCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
+      expect(moment(result.options.embed?.timestamp).isValid()).toBeTrue();
       expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
@@ -201,7 +201,7 @@ describe(`DiscordMessageScheduleNoonCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(result.options.split).toBe(false);
+      expect(result.options.split).toBeFalse();
     });
 
     it(`should return an error message response with an empty response`, (): void => {

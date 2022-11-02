@@ -36,7 +36,7 @@ describe(`CoreService`, (): void => {
 
       service.init();
 
-      expect(coreEventServiceGetInstanceSy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceGetInstanceSy).toHaveBeenCalledOnce();
       expect(coreEventServiceGetInstanceSy).toHaveBeenCalledWith();
     });
   });

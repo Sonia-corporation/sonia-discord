@@ -13,7 +13,7 @@ describe(`isValidArgumentIndex()`, (): void => {
 
       const result = isValidArgumentIndex(argumentIndex);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -28,7 +28,7 @@ describe(`isValidArgumentIndex()`, (): void => {
 
         const result = isValidArgumentIndex(argumentIndex);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -42,7 +42,7 @@ describe(`isValidArgumentIndex()`, (): void => {
 
         const result = isValidArgumentIndex(argumentIndex);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
   });
@@ -58,7 +58,7 @@ describe(`isValidArgumentIndex()`, (): void => {
 
         const result = isValidArgumentIndex(argumentIndex);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -72,7 +72,7 @@ describe(`isValidArgumentIndex()`, (): void => {
 
         const result = isValidArgumentIndex(argumentIndex);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -86,7 +86,7 @@ describe(`isValidArgumentIndex()`, (): void => {
 
         const result = isValidArgumentIndex(argumentIndex);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });

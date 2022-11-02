@@ -51,7 +51,7 @@ describe(`FirebaseUpdateCoreService`, (): void => {
 
         const result = service.isValid(entity);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -67,7 +67,7 @@ describe(`FirebaseUpdateCoreService`, (): void => {
 
         const result = service.isValid(entity);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -83,7 +83,7 @@ describe(`FirebaseUpdateCoreService`, (): void => {
 
         const result = service.isValid(entity);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -101,7 +101,7 @@ describe(`FirebaseUpdateCoreService`, (): void => {
 
         const result = service.isSet(entity);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -115,7 +115,7 @@ describe(`FirebaseUpdateCoreService`, (): void => {
 
         const result = service.isSet(entity);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });

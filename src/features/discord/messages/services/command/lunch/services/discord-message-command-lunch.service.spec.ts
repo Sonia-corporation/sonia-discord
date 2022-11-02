@@ -65,7 +65,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       service = new DiscordMessageCommandLunchService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_COMMAND_LUNCH_SERVICE
       );
@@ -94,7 +94,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       await service.handleResponse(anyDiscordMessage);
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandLunchService`,
         hasExtendedContext: true,
@@ -107,7 +107,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       await service.handleResponse(anyDiscordMessage);
 
-      expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(getMessageResponseSpy).toHaveBeenCalledOnce();
       expect(getMessageResponseSpy).toHaveBeenCalledWith();
     });
 
@@ -239,7 +239,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
+      expect(moment(result.options.embed?.timestamp).isValid()).toBeTrue();
       expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
@@ -256,7 +256,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.split).toBe(false);
+      expect(result.options.split).toBeFalse();
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -297,7 +297,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -311,7 +311,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -325,7 +325,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -339,7 +339,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -353,7 +353,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -367,7 +367,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -381,7 +381,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -395,7 +395,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -409,7 +409,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -423,7 +423,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -437,7 +437,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -451,7 +451,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -465,7 +465,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -479,7 +479,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -493,7 +493,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -507,7 +507,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -521,7 +521,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -535,7 +535,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -549,7 +549,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -563,7 +563,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -577,7 +577,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -591,7 +591,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -605,7 +605,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -619,7 +619,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -633,7 +633,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -647,7 +647,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -661,7 +661,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -675,7 +675,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -689,7 +689,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -703,7 +703,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -717,7 +717,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -731,7 +731,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -745,7 +745,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -759,7 +759,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -773,7 +773,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });
@@ -793,7 +793,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -807,7 +807,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -821,7 +821,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -835,7 +835,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -849,7 +849,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -863,7 +863,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -877,7 +877,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -891,7 +891,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -905,7 +905,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -919,7 +919,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -933,7 +933,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -947,7 +947,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -961,7 +961,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -975,7 +975,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -989,7 +989,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1003,7 +1003,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1017,7 +1017,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1031,7 +1031,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1045,7 +1045,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1059,7 +1059,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1073,7 +1073,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1087,7 +1087,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1101,7 +1101,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1115,7 +1115,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1129,7 +1129,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1143,7 +1143,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1157,7 +1157,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1171,7 +1171,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1185,7 +1185,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1199,7 +1199,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1213,7 +1213,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1227,7 +1227,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1241,7 +1241,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -1255,7 +1255,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -1269,7 +1269,7 @@ describe(`DiscordMessageCommandLunchService`, (): void => {
 
           const result = service.hasCommand(message);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
     });

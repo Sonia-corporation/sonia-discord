@@ -45,7 +45,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabledSuccessFlagService`, (): void =
 
       service = new DiscordMessageCommandFeatureNoonEnabledSuccessFlagService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_ENABLED_SUCCESS_FLAG_SERVICE
       );

@@ -80,7 +80,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       service = new AppConfigMutatorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.APP_CONFIG_MUTATOR_SERVICE);
     });
 
@@ -113,7 +113,7 @@ describe(`AppConfigMutationService`, (): void => {
 
         service = new AppConfigMutatorService(config);
 
-        expect(appConfigCoreService.isProduction).toBe(false);
+        expect(appConfigCoreService.isProduction).toBeFalse();
       });
 
       it(`should not update the current release date`, (): void => {
@@ -200,7 +200,7 @@ describe(`AppConfigMutationService`, (): void => {
 
         service = new AppConfigMutatorService(config);
 
-        expect(appConfigCoreService.isProduction).toBe(true);
+        expect(appConfigCoreService.isProduction).toBeTrue();
       });
 
       it(`should override the release date`, (): void => {
@@ -272,7 +272,7 @@ describe(`AppConfigMutationService`, (): void => {
 
         service.init();
 
-        expect(appConfigCoreService.isProduction).toBe(true);
+        expect(appConfigCoreService.isProduction).toBeTrue();
       });
     });
 
@@ -288,7 +288,7 @@ describe(`AppConfigMutationService`, (): void => {
 
         service.init();
 
-        expect(appConfigCoreService.isProduction).toBe(false);
+        expect(appConfigCoreService.isProduction).toBeFalse();
       });
     });
 
@@ -353,7 +353,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -362,7 +362,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(timeServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(timeServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(timeServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -371,7 +371,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(appConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(appConfigCoreServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(appConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -380,7 +380,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(appConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(appConfigServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(appConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
   });
@@ -413,7 +413,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       expect(appConfigCoreService.firstReleaseDate).toBe(`dummy-first-release-date`);
       expect(appConfigCoreService.initializationDate).toBe(`dummy-initialization-date`);
-      expect(appConfigCoreService.isProduction).toBe(true);
+      expect(appConfigCoreService.isProduction).toBeTrue();
       expect(appConfigCoreService.releaseDate).toBe(`dummy-release-date`);
       expect(appConfigCoreService.releaseNotes).toBe(`dummy-release-notes`);
       expect(appConfigCoreService.releaseType).toStrictEqual(AppConfigReleaseTypeEnum.FEATURES);
@@ -441,7 +441,7 @@ describe(`AppConfigMutationService`, (): void => {
 
         expect(appConfigCoreService.firstReleaseDate).toBe(`dummy-first-release-date`);
         expect(appConfigCoreService.initializationDate).toBe(`dummy-initialization-date`);
-        expect(appConfigCoreService.isProduction).toBe(true);
+        expect(appConfigCoreService.isProduction).toBeTrue();
         expect(appConfigCoreService.releaseDate).toBe(`dummy-release-date`);
         expect(appConfigCoreService.releaseNotes).toBe(`dummy-release-notes`);
         expect(appConfigCoreService.releaseType).toStrictEqual(AppConfigReleaseTypeEnum.FEATURES);
@@ -524,7 +524,7 @@ describe(`AppConfigMutationService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(appConfigCoreService.isProduction).toBe(false);
+        expect(appConfigCoreService.isProduction).toBeFalse();
       });
 
       it(`should log about the config update`, (): void => {
@@ -678,7 +678,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.updateFirstReleaseDate(firstReleaseDate);
 
-      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledWith({
         context: `AppConfigMutatorService`,
         newValue: `dummy-first-release-date`,
@@ -716,7 +716,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.updateInitializationDate(initializationDate);
 
-      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledWith({
         context: `AppConfigMutatorService`,
         newValue: `dummy-initialization-date`,
@@ -752,7 +752,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.updateProductionState(isProduction);
 
-      expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledWith({
         context: `AppConfigMutatorService`,
         newValue: false,
@@ -766,7 +766,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.updateProductionState(isProduction);
 
-      expect(appConfigCoreService.isProduction).toBe(false);
+      expect(appConfigCoreService.isProduction).toBeFalse();
     });
   });
 
@@ -790,7 +790,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.updateReleaseDate(releaseDate);
 
-      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledWith({
         context: `AppConfigMutatorService`,
         newValue: `dummy-release-date`,
@@ -857,7 +857,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.updateReleaseNotes(releaseNotes);
 
-      expect(releaseTypeServiceGetReleaseTypeSpy).toHaveBeenCalledTimes(1);
+      expect(releaseTypeServiceGetReleaseTypeSpy).toHaveBeenCalledOnce();
       expect(releaseTypeServiceGetReleaseTypeSpy).toHaveBeenCalledWith(`dummy-release-notes`);
     });
 
@@ -902,7 +902,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.updateTotalReleaseCount(totalReleaseCount);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `AppConfigMutatorService`,
         newValue: 8,
@@ -938,7 +938,7 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.updateVersion(version);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `AppConfigMutatorService`,
         newValue: `dummy-version`,

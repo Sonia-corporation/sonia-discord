@@ -42,7 +42,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesConfigCoreService`, (): void =
 
       service = new DiscordMessageCommandFeatureReleaseNotesConfigCoreService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_CORE_SERVICE
       );

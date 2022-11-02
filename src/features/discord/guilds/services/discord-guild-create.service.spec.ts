@@ -82,7 +82,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
       service = new DiscordGuildCreateService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_GUILD_CREATE_SERVICE
       );
@@ -126,7 +126,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
       service.init();
 
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledOnce();
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
     });
 
@@ -135,7 +135,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
       service.init();
 
-      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledOnce();
       expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(`guildCreate`, expect.any(Function));
     });
 
@@ -168,7 +168,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
         service.init();
 
-        expect(discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy).toHaveBeenCalledTimes(1);
+        expect(discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy).toHaveBeenCalledOnce();
         expect(discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy).toHaveBeenCalledWith(guild);
       });
 
@@ -182,7 +182,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
           service.init();
 
-          expect(loggerServiceWarningSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceWarningSpy).toHaveBeenCalledOnce();
           expect(loggerServiceWarningSpy).toHaveBeenCalledWith({
             context: `DiscordGuildCreateService`,
             message: `text-Sonia is not authorized to send messages to this guild in local environment`,
@@ -228,7 +228,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
           service.init();
 
-          expect(sendMessageSpy).toHaveBeenCalledTimes(1);
+          expect(sendMessageSpy).toHaveBeenCalledOnce();
           expect(sendMessageSpy).toHaveBeenCalledWith(guild);
         });
 
@@ -237,7 +237,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
           service.init();
 
-          expect(addFirebaseGuildSpy).toHaveBeenCalledTimes(1);
+          expect(addFirebaseGuildSpy).toHaveBeenCalledOnce();
           expect(addFirebaseGuildSpy).toHaveBeenCalledWith(guild);
         });
 
@@ -264,7 +264,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
       service.init();
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordGuildCreateService`,
         message: `text-listen "guildCreate" event`,
@@ -328,7 +328,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
         await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Can not send cookies message`));
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordGuildCreateService`,
           message: `text-guild create cookies message sending disabled`,
@@ -362,7 +362,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
         await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Primary guild channel not writable`));
 
-        expect(discordChannelGuildServiceGetPrimarySpy).toHaveBeenCalledTimes(1);
+        expect(discordChannelGuildServiceGetPrimarySpy).toHaveBeenCalledOnce();
         expect(discordChannelGuildServiceGetPrimarySpy).toHaveBeenCalledWith(guild);
       });
 
@@ -409,7 +409,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
             await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`Primary guild channel not writable`));
 
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `DiscordGuildCreateService`,
               message: `text-primary guild channel not writable`,
@@ -443,7 +443,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
             await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
 
-            expect(discordMessageCommandCookieServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+            expect(discordMessageCommandCookieServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
             expect(discordMessageCommandCookieServiceGetMessageResponseSpy).toHaveBeenCalledWith();
           });
 
@@ -452,7 +452,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
             await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
 
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `DiscordGuildCreateService`,
               message: `text-sending message for the guild create...`,
@@ -464,7 +464,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
             await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
 
-            expect(guildChannelSendMock).toHaveBeenCalledTimes(1);
+            expect(guildChannelSendMock).toHaveBeenCalledOnce();
             expect(guildChannelSendMock).toHaveBeenCalledWith(
               discordMessageResponse.response,
               discordMessageResponse.options
@@ -505,7 +505,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
               await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
 
-              expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).toHaveBeenCalledTimes(1);
+              expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).toHaveBeenCalledOnce();
               expect(discordLoggerErrorServiceGetErrorMessageResponseSpy).toHaveBeenCalledWith(new Error(`error`));
             });
 
@@ -514,7 +514,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
               await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
 
-              expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+              expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledOnce();
               expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
                 channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
                 messageResponse: discordMessageErrorResponse,
@@ -533,7 +533,7 @@ describe(`DiscordGuildCreateService`, (): void => {
               const result = await service.sendMessage(guild);
 
               expect(result).toStrictEqual(message);
-              expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `DiscordGuildCreateService`,
                 message: `text-cookies message for the create guild sent`,
@@ -578,7 +578,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
       await expect(service.addFirebaseGuild(guild)).rejects.toThrow(new Error(`error`));
 
-      expect(firebaseGuildsServiceIsReady$Spy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsServiceIsReady$Spy).toHaveBeenCalledOnce();
       expect(firebaseGuildsServiceIsReady$Spy).toHaveBeenCalledWith();
     });
 
@@ -606,7 +606,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
         await expect(service.addFirebaseGuild(guild)).rejects.toThrow(new Error(`error`));
 
-        expect(firebaseGuildsServiceHasGuildSpy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildsServiceHasGuildSpy).toHaveBeenCalledOnce();
         expect(firebaseGuildsServiceHasGuildSpy).toHaveBeenCalledWith(`dummy-id`);
       });
 
@@ -636,7 +636,7 @@ describe(`DiscordGuildCreateService`, (): void => {
             const result = await service.addFirebaseGuild(guild);
 
             expect(result).toBeUndefined();
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `DiscordGuildCreateService`,
               message: `text-Firebase guild already created`,
@@ -677,7 +677,7 @@ describe(`DiscordGuildCreateService`, (): void => {
             const result = await service.addFirebaseGuild(guild);
 
             expect(result).toBeUndefined();
-            expect(firebaseGuildsServiceAddGuildSpy).toHaveBeenCalledTimes(1);
+            expect(firebaseGuildsServiceAddGuildSpy).toHaveBeenCalledOnce();
             expect(firebaseGuildsServiceAddGuildSpy).toHaveBeenCalledWith(guild);
           });
 
@@ -711,7 +711,7 @@ describe(`DiscordGuildCreateService`, (): void => {
               const result = await service.addFirebaseGuild(guild);
 
               expect(result).toStrictEqual(writeResult);
-              expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceSuccessSpy).toHaveBeenCalledOnce();
               expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
                 context: `DiscordGuildCreateService`,
                 message: `text-guild added into Firebase`,

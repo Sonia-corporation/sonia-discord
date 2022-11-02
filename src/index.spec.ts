@@ -30,13 +30,13 @@ describe(`Index`, (): void => {
 
     require(`./index`);
 
-    expect(coreServiceGetInstanceSy).toHaveBeenCalledTimes(1);
+    expect(coreServiceGetInstanceSy).toHaveBeenCalledOnce();
     expect(coreServiceGetInstanceSy).toHaveBeenCalledWith();
-    expect(coreServiceInitMock).toHaveBeenCalledTimes(1);
+    expect(coreServiceInitMock).toHaveBeenCalledOnce();
     expect(coreServiceInitMock).toHaveBeenCalledWith();
-    expect(initServiceGetInstanceSy).toHaveBeenCalledTimes(1);
+    expect(initServiceGetInstanceSy).toHaveBeenCalledOnce();
     expect(initServiceGetInstanceSy).toHaveBeenCalledWith();
-    expect(initServiceInitMock).toHaveBeenCalledTimes(1);
+    expect(initServiceInitMock).toHaveBeenCalledOnce();
     expect(initServiceInitMock).toHaveBeenCalledWith();
   });
 });

@@ -23,7 +23,7 @@ describe(`hasFirebaseGuildChannels()`, (): void => {
 
       const result = hasFirebaseGuildChannels(firebaseGuild);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -39,7 +39,7 @@ describe(`hasFirebaseGuildChannels()`, (): void => {
 
       const result = hasFirebaseGuildChannels(firebaseGuild);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -55,7 +55,7 @@ describe(`hasFirebaseGuildChannels()`, (): void => {
 
       const result = hasFirebaseGuildChannels(firebaseGuild);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -71,7 +71,7 @@ describe(`hasFirebaseGuildChannels()`, (): void => {
 
       const result = hasFirebaseGuildChannels(firebaseGuild);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -87,7 +87,7 @@ describe(`hasFirebaseGuildChannels()`, (): void => {
 
       const result = hasFirebaseGuildChannels(firebaseGuild);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 });

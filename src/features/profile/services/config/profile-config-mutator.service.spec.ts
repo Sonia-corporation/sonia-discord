@@ -66,7 +66,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
       service = new ProfileConfigMutatorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.PROFILE_CONFIG_MUTATOR_SERVICE
       );
@@ -142,7 +142,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -151,7 +151,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(profileConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(profileConfigCoreServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(profileConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -160,7 +160,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(profileConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(profileConfigServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(profileConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
   });
@@ -291,7 +291,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
       service.updateDiscordId(discordId);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `ProfileConfigMutatorService`,
         newValue: `discord-id`,
@@ -327,7 +327,7 @@ describe(`ProfileConfigMutatorService`, (): void => {
 
       service.updateNickname(nickname);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `ProfileConfigMutatorService`,
         newValue: `nickname`,

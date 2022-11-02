@@ -47,7 +47,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
       service = new DiscordMessageAnyQuestionPineapplePizzaService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_ANY_QUESTION_PINEAPPLE_PIZZA_SERVICE
       );
@@ -71,7 +71,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -85,7 +85,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -99,7 +99,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -113,7 +113,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -127,7 +127,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -141,7 +141,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -155,7 +155,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -169,7 +169,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -183,7 +183,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -197,7 +197,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -211,7 +211,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -225,7 +225,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = service.hasCriteria(message);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -251,7 +251,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
       await expect(service.reply(anyDiscordMessage)).rejects.toThrow(new Error(`No content`));
 
-      expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledOnce();
       expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledWith(`dummy-content`);
     });
 
@@ -277,7 +277,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
         const result = await service.reply(anyDiscordMessage);
 
-        expect(result.options.split).toBe(false);
+        expect(result.options.split).toBeFalse();
       });
 
       describe(`when the given Discord message contains a valid mention with ANY QUESTION?`, (): void => {

@@ -57,7 +57,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       service = new DiscordAuthenticationService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_AUTHENTICATION_SERVICE
       );
@@ -93,7 +93,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       await service.init();
 
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledOnce();
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
     });
 
@@ -102,7 +102,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       await service.init();
 
-      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledOnce();
       expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(`ready`, expect.any(Function));
     });
 
@@ -142,7 +142,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
           await service.init();
 
-          expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
           expect(loggerServiceLogSpy).toHaveBeenCalledWith({
             context: `DiscordAuthenticationService`,
             message: `text-authenticated as: value-unknown user`,
@@ -170,7 +170,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
           await service.init();
 
-          expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
           expect(loggerServiceLogSpy).toHaveBeenCalledWith({
             context: `DiscordAuthenticationService`,
             message: `text-authenticated as: value-"dummy-tag"`,
@@ -183,7 +183,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
         await service.init();
 
-        expect(discordClientServiceNotifyIsReadySpy).toHaveBeenCalledTimes(1);
+        expect(discordClientServiceNotifyIsReadySpy).toHaveBeenCalledOnce();
         expect(discordClientServiceNotifyIsReadySpy).toHaveBeenCalledWith();
       });
     });
@@ -193,7 +193,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       await service.init();
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordAuthenticationService`,
         message: `text-listen "ready" event`,
@@ -205,7 +205,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       await service.init();
 
-      expect(loginSpy).toHaveBeenCalledTimes(1);
+      expect(loginSpy).toHaveBeenCalledOnce();
       expect(loginSpy).toHaveBeenCalledWith();
     });
   });
@@ -242,7 +242,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       await service.login();
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordAuthenticationService`,
         message: `text-authenticating...`,
@@ -254,7 +254,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       await service.login();
 
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledOnce();
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
     });
 
@@ -263,7 +263,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       await service.login();
 
-      expect(discordSoniaConfigServiceGetSecretTokenSpy).toHaveBeenCalledTimes(1);
+      expect(discordSoniaConfigServiceGetSecretTokenSpy).toHaveBeenCalledOnce();
       expect(discordSoniaConfigServiceGetSecretTokenSpy).toHaveBeenCalledWith();
     });
 
@@ -272,7 +272,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       await service.login();
 
-      expect(loginMock).toHaveBeenCalledTimes(1);
+      expect(loginMock).toHaveBeenCalledOnce();
     });
 
     describe(`when the login failed`, (): void => {
@@ -341,7 +341,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
         await service.login();
 
-        expect(loggerServiceSuccessSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceSuccessSpy).toHaveBeenCalledOnce();
         expect(loggerServiceSuccessSpy).toHaveBeenCalledWith({
           context: `DiscordAuthenticationService`,
           message: `text-authentication successful`,
@@ -353,7 +353,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
         await service.login();
 
-        expect(notifyIsAuthenticatedSpy).toHaveBeenCalledTimes(1);
+        expect(notifyIsAuthenticatedSpy).toHaveBeenCalledOnce();
         expect(notifyIsAuthenticatedSpy).toHaveBeenCalledWith();
       });
 
@@ -385,7 +385,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       const result = await service.isAuthenticated$().pipe(take(1)).toPromise();
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
 
     describe(`when the is authenticated event is notified`, (): void => {
@@ -395,7 +395,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
         const result = await service.isAuthenticated$().pipe(take(1)).toPromise();
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -411,7 +411,7 @@ describe(`DiscordAuthenticationService`, (): void => {
 
       const result = await service.isAuthenticated$().pipe(take(1)).toPromise();
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 });

@@ -49,7 +49,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
 
       service = new FirebaseGuildsChannelsFeaturesNoonService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_SERVICE
       );
@@ -73,7 +73,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
 
         const result = service.isValid(noon);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -89,7 +89,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
 
         const result = service.isValid(noon);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -113,7 +113,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
 
         const result = service.isUpToDate(noon);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -135,7 +135,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
 
         const result = service.isSet(noon);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -149,7 +149,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonService`, (): void => {
 
         const result = service.isSet(noon);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });

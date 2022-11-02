@@ -86,7 +86,7 @@ describe(`DiscordMessageService`, (): void => {
 
       service = new DiscordMessageService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_MESSAGE_SERVICE);
     });
   });
@@ -118,7 +118,7 @@ describe(`DiscordMessageService`, (): void => {
 
       service.init();
 
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledOnce();
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
     });
 
@@ -127,7 +127,7 @@ describe(`DiscordMessageService`, (): void => {
 
       service.init();
 
-      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledOnce();
       expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(`message`, expect.any(Function));
     });
 
@@ -150,7 +150,7 @@ describe(`DiscordMessageService`, (): void => {
 
         service.init();
 
-        expect(sendMessageSpy).toHaveBeenCalledTimes(1);
+        expect(sendMessageSpy).toHaveBeenCalledOnce();
         expect(sendMessageSpy).toHaveBeenCalledWith(anyDiscordMessage);
       });
     });
@@ -160,7 +160,7 @@ describe(`DiscordMessageService`, (): void => {
 
       service.init();
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageService`,
         message: `text-listen "message" event`,
@@ -229,7 +229,7 @@ describe(`DiscordMessageService`, (): void => {
             new Error(`Discord message content is invalid or empty`)
           );
 
-          expect(loggerServiceWarningSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceWarningSpy).toHaveBeenCalledOnce();
           expect(loggerServiceWarningSpy).toHaveBeenCalledWith({
             context: `DiscordMessageService`,
             hasExtendedContext: true,
@@ -295,7 +295,7 @@ describe(`DiscordMessageService`, (): void => {
 
         await expect(service.sendMessage(anyDiscordMessage)).rejects.toThrow(new Error(`Invalid author`));
 
-        expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
         expect(loggerServiceLogSpy).toHaveBeenCalledWith({
           context: `DiscordMessageService`,
           hasExtendedContext: true,
@@ -356,7 +356,7 @@ describe(`DiscordMessageService`, (): void => {
               const result = await service.sendMessage(anyDiscordMessage);
 
               expect(result).toBeUndefined();
-              expect(handleChannelMessageSpy).toHaveBeenCalledTimes(1);
+              expect(handleChannelMessageSpy).toHaveBeenCalledOnce();
               expect(handleChannelMessageSpy).toHaveBeenCalledWith(anyDiscordMessage);
             });
           });
@@ -519,7 +519,7 @@ describe(`DiscordMessageService`, (): void => {
               new Error(`Sonia is not authorized for this guild`)
             );
 
-            expect(loggerServiceWarningSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceWarningSpy).toHaveBeenCalledOnce();
             expect(loggerServiceWarningSpy).toHaveBeenCalledWith({
               context: `DiscordMessageService`,
               hasExtendedContext: true,
@@ -534,7 +534,7 @@ describe(`DiscordMessageService`, (): void => {
               new Error(`Sonia is not authorized for this guild`)
             );
 
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `DiscordMessageService`,
               message: `text-add the guild id value-dummy-guild-id to your secret environment under 'discord.sonia.devGuildIdWhitelist' to allow Sonia to interact with it`,
@@ -660,7 +660,7 @@ describe(`DiscordMessageService`, (): void => {
                     new Error(`getMessage error`)
                   );
 
-                  expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledTimes(1);
+                  expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledOnce();
                   expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
                 });
               });
@@ -678,7 +678,7 @@ describe(`DiscordMessageService`, (): void => {
                   new Error(`getMessage error`)
                 );
 
-                expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledTimes(1);
+                expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledOnce();
                 expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
               });
             });
@@ -691,7 +691,7 @@ describe(`DiscordMessageService`, (): void => {
               new Error(`getMessage error`)
             );
 
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `DiscordMessageService`,
               hasExtendedContext: true,
@@ -706,7 +706,7 @@ describe(`DiscordMessageService`, (): void => {
               new Error(`getMessage error`)
             );
 
-            expect(discordMessageTextServiceGetMessageSpy).toHaveBeenCalledTimes(1);
+            expect(discordMessageTextServiceGetMessageSpy).toHaveBeenCalledOnce();
             expect(discordMessageTextServiceGetMessageSpy).toHaveBeenCalledWith(anyDiscordMessage);
           });
 
@@ -722,7 +722,7 @@ describe(`DiscordMessageService`, (): void => {
                 new Error(`getMessage error`)
               );
 
-              expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
               expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
                 context: `DiscordMessageService`,
                 hasExtendedContext: true,
@@ -737,7 +737,7 @@ describe(`DiscordMessageService`, (): void => {
                 new Error(`getMessage error`)
               );
 
-              expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
+              expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledOnce();
               expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
             });
 
@@ -748,7 +748,7 @@ describe(`DiscordMessageService`, (): void => {
                 new Error(`getMessage error`)
               );
 
-              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
               expect(discordChannelServiceIsValidSpy).not.toHaveBeenCalled();
               expect(loggerServiceLogSpy).not.toHaveBeenCalled();
               expect(discordMessageErrorServiceHandleErrorSpy).not.toHaveBeenCalled();
@@ -772,7 +772,7 @@ describe(`DiscordMessageService`, (): void => {
                   new Error(`Discord message channel not valid`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceLogSpy).not.toHaveBeenCalled();
                 expect(discordMessageErrorServiceHandleErrorSpy).not.toHaveBeenCalled();
               });
@@ -805,7 +805,7 @@ describe(`DiscordMessageService`, (): void => {
                   new Error(`Fake test error: send`)
                 );
 
-                expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
+                expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledOnce();
                 expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(
                   anyDiscordMessage.channel
                 );
@@ -843,7 +843,7 @@ describe(`DiscordMessageService`, (): void => {
                     new Error(`Message sending error`)
                   );
 
-                  expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledTimes(1);
+                  expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledOnce();
                   expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledWith(
                     new Error(`Message sending error`),
                     anyDiscordMessage
@@ -857,7 +857,7 @@ describe(`DiscordMessageService`, (): void => {
                     new Error(`Message sending error`)
                   );
 
-                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
+                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledOnce();
                   expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(
                     anyDiscordMessage.channel
                   );
@@ -892,7 +892,7 @@ describe(`DiscordMessageService`, (): void => {
                   const result = await service.handleChannelMessage(anyDiscordMessage);
 
                   expect(result).toBeUndefined();
-                  expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+                  expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
                   expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                     context: `DiscordMessageService`,
                     hasExtendedContext: true,
@@ -906,7 +906,7 @@ describe(`DiscordMessageService`, (): void => {
                   const result = await service.handleChannelMessage(anyDiscordMessage);
 
                   expect(result).toBeUndefined();
-                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
+                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledOnce();
                   expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(
                     anyDiscordMessage.channel
                   );
@@ -966,7 +966,7 @@ describe(`DiscordMessageService`, (): void => {
                   new Error(`Discord message channel not valid`)
                 );
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceLogSpy).not.toHaveBeenCalled();
                 expect(discordMessageErrorServiceHandleErrorSpy).not.toHaveBeenCalled();
               });
@@ -1009,7 +1009,7 @@ describe(`DiscordMessageService`, (): void => {
                   new Error(`Fake test error: send`)
                 );
 
-                expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
+                expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledOnce();
                 expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(
                   anyDiscordMessage.channel
                 );
@@ -1078,7 +1078,7 @@ describe(`DiscordMessageService`, (): void => {
                     new Error(`Message sending error`)
                   );
 
-                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
+                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledOnce();
                   expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(
                     anyDiscordMessage.channel
                   );
@@ -1137,7 +1137,7 @@ describe(`DiscordMessageService`, (): void => {
                   const result = await service.handleChannelMessage(anyDiscordMessage);
 
                   expect(result).toBeUndefined();
-                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
+                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledOnce();
                   expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(
                     anyDiscordMessage.channel
                   );
@@ -1168,7 +1168,7 @@ describe(`DiscordMessageService`, (): void => {
 
         await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
 
-        expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledTimes(1);
+        expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledOnce();
         expect(discordChannelTypingServiceAddOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
       });
 
@@ -1177,7 +1177,7 @@ describe(`DiscordMessageService`, (): void => {
 
         await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageService`,
           hasExtendedContext: true,
@@ -1190,7 +1190,7 @@ describe(`DiscordMessageService`, (): void => {
 
         await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
 
-        expect(discordMessageDmServiceGetMessageSpy).toHaveBeenCalledTimes(1);
+        expect(discordMessageDmServiceGetMessageSpy).toHaveBeenCalledOnce();
         expect(discordMessageDmServiceGetMessageSpy).toHaveBeenCalledWith(anyDiscordMessage);
       });
 
@@ -1204,7 +1204,7 @@ describe(`DiscordMessageService`, (): void => {
 
           await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
 
-          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
           expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
             context: `DiscordMessageService`,
             hasExtendedContext: true,
@@ -1217,7 +1217,7 @@ describe(`DiscordMessageService`, (): void => {
 
           await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
 
-          expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
+          expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledOnce();
           expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
         });
 
@@ -1226,7 +1226,7 @@ describe(`DiscordMessageService`, (): void => {
 
           await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
 
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
           expect(discordChannelServiceIsValidSpy).not.toHaveBeenCalled();
           expect(loggerServiceLogSpy).not.toHaveBeenCalled();
           expect(discordMessageErrorServiceHandleErrorSpy).not.toHaveBeenCalled();
@@ -1250,7 +1250,7 @@ describe(`DiscordMessageService`, (): void => {
               new Error(`Discord message channel not valid`)
             );
 
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
             expect(loggerServiceLogSpy).not.toHaveBeenCalled();
             expect(discordMessageErrorServiceHandleErrorSpy).not.toHaveBeenCalled();
           });
@@ -1283,7 +1283,7 @@ describe(`DiscordMessageService`, (): void => {
               new Error(`Fake test error: send`)
             );
 
-            expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
+            expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledOnce();
             expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
           });
 
@@ -1319,7 +1319,7 @@ describe(`DiscordMessageService`, (): void => {
                 new Error(`Message sending error`)
               );
 
-              expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledTimes(1);
+              expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledOnce();
               expect(discordMessageErrorServiceHandleErrorSpy).toHaveBeenCalledWith(
                 new Error(`Message sending error`),
                 anyDiscordMessage
@@ -1333,7 +1333,7 @@ describe(`DiscordMessageService`, (): void => {
                 new Error(`Message sending error`)
               );
 
-              expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
+              expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledOnce();
               expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
             });
 
@@ -1366,7 +1366,7 @@ describe(`DiscordMessageService`, (): void => {
               const result = await service.handleChannelMessage(anyDiscordMessage);
 
               expect(result).toBeUndefined();
-              expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `DiscordMessageService`,
                 hasExtendedContext: true,
@@ -1380,7 +1380,7 @@ describe(`DiscordMessageService`, (): void => {
               const result = await service.handleChannelMessage(anyDiscordMessage);
 
               expect(result).toBeUndefined();
-              expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
+              expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledOnce();
               expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
             });
 

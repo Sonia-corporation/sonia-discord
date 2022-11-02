@@ -50,7 +50,7 @@ describe(`DiscordMessageDmService`, (): void => {
 
       service = new DiscordMessageRightsService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_RIGHTS_SERVICE
       );
@@ -83,7 +83,7 @@ describe(`DiscordMessageDmService`, (): void => {
 
         const result = service.isSoniaAuthorizedForThisGuild(guild);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -102,7 +102,7 @@ describe(`DiscordMessageDmService`, (): void => {
 
           const result = service.isSoniaAuthorizedForThisGuild(guild);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -116,7 +116,7 @@ describe(`DiscordMessageDmService`, (): void => {
 
           const result = service.isSoniaAuthorizedForThisGuild(guild);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
     });

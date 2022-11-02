@@ -64,7 +64,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       service = new DiscordLoggerWarningService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_LOGGER_WARNING_SERVICE
       );
@@ -100,7 +100,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       service.handleWarning(warning);
 
-      expect(loggerServiceWarningSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceWarningSpy).toHaveBeenCalledOnce();
       expect(loggerServiceWarningSpy).toHaveBeenCalledWith({
         context: `DiscordLoggerWarningService`,
         message: `text-dummy-warning`,
@@ -112,7 +112,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       service.handleWarning(warning);
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordLoggerWarningService`,
         message: `text-send message to Sonia Discord warnings channel`,
@@ -124,7 +124,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       service.handleWarning(warning);
 
-      expect(getWarningMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(getWarningMessageResponseSpy).toHaveBeenCalledOnce();
       expect(getWarningMessageResponseSpy).toHaveBeenCalledWith(`dummy-warning`);
     });
 
@@ -133,7 +133,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       service.handleWarning(warning);
 
-      expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+      expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledOnce();
       expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
         channelName: `warnings`,
         messageResponse: discordMessageResponse,
@@ -243,7 +243,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
+      expect(moment(result.options.embed?.timestamp).isValid()).toBeTrue();
       expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
@@ -268,7 +268,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(result.options.split).toBe(false);
+      expect(result.options.split).toBeFalse();
     });
 
     it(`should return a warning message response with an empty response`, (): void => {

@@ -61,7 +61,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
       service = new DiscordSoniaEmotionalStateService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_SONIA_EMOTIONAL_STATE_SERVICE
       );
@@ -94,7 +94,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
       await service.init();
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordSoniaEmotionalStateService`,
         message: `text-listen "ready" Discord client state`,
@@ -108,7 +108,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
       await service.init();
 
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledOnce();
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
     });
 
@@ -120,7 +120,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
         await service.init();
 
-        expect(setRandomEmotionalStateSpy).toHaveBeenCalledTimes(1);
+        expect(setRandomEmotionalStateSpy).toHaveBeenCalledOnce();
         expect(setRandomEmotionalStateSpy).toHaveBeenCalledWith();
       });
 
@@ -152,7 +152,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
           await service.init();
 
-          expect(startScheduleSpy).toHaveBeenCalledTimes(1);
+          expect(startScheduleSpy).toHaveBeenCalledOnce();
           expect(startScheduleSpy).toHaveBeenCalledWith();
         });
       });
@@ -221,7 +221,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
       service.startSchedule();
 
-      expect(getEveryHourScheduleRuleSpy).toHaveBeenCalledTimes(1);
+      expect(getEveryHourScheduleRuleSpy).toHaveBeenCalledOnce();
       expect(getEveryHourScheduleRuleSpy).toHaveBeenCalledWith();
     });
 
@@ -230,7 +230,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
       service.startSchedule();
 
-      expect(getRandomRangeMinuteScheduleRuleSpy).toHaveBeenCalledTimes(1);
+      expect(getRandomRangeMinuteScheduleRuleSpy).toHaveBeenCalledOnce();
       expect(getRandomRangeMinuteScheduleRuleSpy).toHaveBeenCalledWith(5, 30);
     });
 
@@ -417,7 +417,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
           service.startSchedule();
 
-          expect(jobRescheduleMock).toHaveBeenCalledTimes(1);
+          expect(jobRescheduleMock).toHaveBeenCalledOnce();
           expect(jobRescheduleMock).toHaveBeenCalledWith(`dummy-new-schedule`);
         });
       });
@@ -531,7 +531,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
         service.startSchedule();
 
-        expect(setRandomEmotionalStateSpy).toHaveBeenCalledTimes(1);
+        expect(setRandomEmotionalStateSpy).toHaveBeenCalledOnce();
         expect(setRandomEmotionalStateSpy).toHaveBeenCalledWith();
       });
 
@@ -574,7 +574,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
       service.setEmotionalState(emotionalState);
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordSoniaEmotionalStateService`,
         message: `text-Sonia emotional state updated to: value-annoyed`,
@@ -600,7 +600,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
       await service.setRandomEmotionalState();
 
-      expect(getRandomEmotionalStateSpy).toHaveBeenCalledTimes(1);
+      expect(getRandomEmotionalStateSpy).toHaveBeenCalledOnce();
       expect(getRandomEmotionalStateSpy).toHaveBeenCalledWith();
     });
 
@@ -609,7 +609,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
       await service.setRandomEmotionalState();
 
-      expect(setEmotionalStateSpy).toHaveBeenCalledTimes(1);
+      expect(setEmotionalStateSpy).toHaveBeenCalledOnce();
       expect(setEmotionalStateSpy).toHaveBeenCalledWith(DiscordSoniaEmotionalStateEnum.AGITATED);
     });
 
@@ -666,7 +666,7 @@ describe(`DiscordSoniaEmotionalStateService`, (): void => {
 
       service.getRandomEmotionalState();
 
-      expect(getRandomMessageSpy).toHaveBeenCalledTimes(1);
+      expect(getRandomMessageSpy).toHaveBeenCalledOnce();
     });
 
     it(`should return the random Sonia emotional state`, (): void => {

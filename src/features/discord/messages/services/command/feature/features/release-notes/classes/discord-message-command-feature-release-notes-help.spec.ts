@@ -62,7 +62,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
         new Error(`getMessageResponse error`)
       );
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandFeatureReleaseNotesHelp`,
         hasExtendedContext: true,
@@ -77,7 +77,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
         new Error(`getMessageResponse error`)
       );
 
-      expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(getMessageResponseSpy).toHaveBeenCalledOnce();
       expect(getMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage, discordCommandFlags);
     });
 
@@ -151,7 +151,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
         new Error(`getMessageResponse help error`)
       );
 
-      expect(discordMessageHelpServiceGetMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageHelpServiceGetMessageResponseSpy).toHaveBeenCalledOnce();
       expect(discordMessageHelpServiceGetMessageResponseSpy).toHaveBeenCalledWith();
     });
 
@@ -440,7 +440,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
-        expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
+        expect(moment(result.options.embed?.timestamp).isValid()).toBeTrue();
         expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
       });
 
@@ -457,7 +457,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
-        expect(result.options.split).toBe(false);
+        expect(result.options.split).toBeFalse();
       });
 
       it(`should return a Discord message response without a response text`, async (): Promise<void> => {

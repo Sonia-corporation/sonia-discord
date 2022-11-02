@@ -46,7 +46,7 @@ describe(`GithubConfigService`, (): void => {
 
       service = new GithubConfigService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.GITHUB_CONFIG_SERVICE);
     });
   });

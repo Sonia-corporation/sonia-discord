@@ -55,7 +55,7 @@ describe(`FirebaseService`, (): void => {
 
       service = new FirebaseService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.FIREBASE_SERVICE);
     });
   });
@@ -134,7 +134,7 @@ describe(`FirebaseService`, (): void => {
       await service.init();
 
       expect(firebaseAppServiceGetInstanceSpy).toHaveBeenCalledWith();
-      expect(firebaseAppServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseAppServiceGetInstanceInitSpy).toHaveBeenCalledOnce();
       expect(firebaseAppServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
@@ -152,7 +152,7 @@ describe(`FirebaseService`, (): void => {
       await service.init();
 
       expect(firebaseGuildsServiceGetInstanceSpy).toHaveBeenCalledWith();
-      expect(firebaseGuildsServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsServiceGetInstanceInitSpy).toHaveBeenCalledOnce();
       expect(firebaseGuildsServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
@@ -166,7 +166,7 @@ describe(`FirebaseService`, (): void => {
 
         await service.init();
 
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
           context: `FirebaseService`,
           message: `text-FirebaseGuildsService init failed`,
@@ -188,7 +188,7 @@ describe(`FirebaseService`, (): void => {
       await service.init();
 
       expect(firebaseGuildsNewVersionServiceGetInstanceSpy).toHaveBeenCalledWith();
-      expect(firebaseGuildsNewVersionServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsNewVersionServiceGetInstanceInitSpy).toHaveBeenCalledOnce();
       expect(firebaseGuildsNewVersionServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
@@ -206,7 +206,7 @@ describe(`FirebaseService`, (): void => {
       await service.init();
 
       expect(firebaseGuildsStoreServiceGetInstanceSpy).toHaveBeenCalledWith();
-      expect(firebaseGuildsStoreServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsStoreServiceGetInstanceInitSpy).toHaveBeenCalledOnce();
       expect(firebaseGuildsStoreServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
@@ -224,7 +224,7 @@ describe(`FirebaseService`, (): void => {
       await service.init();
 
       expect(firebaseGuildsBreakingChangeServiceGetInstanceSpy).toHaveBeenCalledWith();
-      expect(firebaseGuildsBreakingChangeServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsBreakingChangeServiceGetInstanceInitSpy).toHaveBeenCalledOnce();
       expect(firebaseGuildsBreakingChangeServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
@@ -246,7 +246,7 @@ describe(`FirebaseService`, (): void => {
 
         await service.init();
 
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
           context: `FirebaseService`,
           message: `text-FirebaseGuildsBreakingChangeService init failed`,
@@ -268,7 +268,7 @@ describe(`FirebaseService`, (): void => {
 
         await service.init();
 
-        expect(firebaseGuildsServiceGetInstanceWatchGuildsSpy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildsServiceGetInstanceWatchGuildsSpy).toHaveBeenCalledOnce();
         expect(firebaseGuildsServiceGetInstanceWatchGuildsSpy).toHaveBeenCalledWith();
       });
     });

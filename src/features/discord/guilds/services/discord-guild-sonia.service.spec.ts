@@ -52,7 +52,7 @@ describe(`DiscordGuildSoniaService`, (): void => {
 
       service = new DiscordGuildSoniaService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_GUILD_SONIA_SERVICE);
     });
   });
@@ -80,7 +80,7 @@ describe(`DiscordGuildSoniaService`, (): void => {
 
       service.init();
 
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledOnce();
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
     });
 
@@ -99,7 +99,7 @@ describe(`DiscordGuildSoniaService`, (): void => {
         service.init();
         isReady$.next(true);
 
-        expect(setSoniaGuildSpy).toHaveBeenCalledTimes(1);
+        expect(setSoniaGuildSpy).toHaveBeenCalledOnce();
         expect(setSoniaGuildSpy).toHaveBeenCalledWith();
       });
     });
@@ -131,7 +131,7 @@ describe(`DiscordGuildSoniaService`, (): void => {
 
       service.init();
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordGuildSoniaService`,
         message: `text-listen "ready" Discord client state`,

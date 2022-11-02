@@ -66,7 +66,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
       service = new DiscordLoggerErrorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_LOGGER_ERROR_SERVICE
       );
@@ -106,7 +106,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         service.handleError(error);
 
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
           context: `DiscordLoggerErrorService`,
           message: `text-dummy-error`,
@@ -118,7 +118,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         service.handleError(error);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordLoggerErrorService`,
           message: `text-send message to Sonia Discord errors channel`,
@@ -130,7 +130,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         service.handleError(error);
 
-        expect(getErrorMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(getErrorMessageResponseSpy).toHaveBeenCalledOnce();
         expect(getErrorMessageResponseSpy).toHaveBeenCalledWith(`dummy-error`);
       });
 
@@ -139,7 +139,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         service.handleError(error);
 
-        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledOnce();
         expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
           channelName: `errors`,
           messageResponse: discordMessageResponse,
@@ -157,7 +157,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         service.handleError(error);
 
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
           context: `DiscordLoggerErrorService`,
           message: `text-Error: dummy-error`,
@@ -169,7 +169,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         service.handleError(error);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordLoggerErrorService`,
           message: `text-send message to Sonia Discord errors channel`,
@@ -181,7 +181,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         service.handleError(error);
 
-        expect(getErrorMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(getErrorMessageResponseSpy).toHaveBeenCalledOnce();
         expect(getErrorMessageResponseSpy).toHaveBeenCalledWith(new Error(`dummy-error`));
       });
 
@@ -190,7 +190,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         service.handleError(error);
 
-        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledTimes(1);
+        expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledOnce();
         expect(discordGuildSoniaServiceSendMessageToChannelSpy).toHaveBeenCalledWith({
           channelName: `errors`,
           messageResponse: discordMessageResponse,
@@ -301,7 +301,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
       const result = service.getErrorMessageResponse(error);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
+      expect(moment(result.options.embed?.timestamp).isValid()).toBeTrue();
       expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
@@ -430,7 +430,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
           const result = service.getErrorMessageResponse(error);
 
           expect(result.options.embed?.fields?.[0].value.length).toBe(1024);
-          expect(_.endsWith(result.options.embed?.fields?.[0].value, `...`)).toBe(true);
+          expect(_.endsWith(result.options.embed?.fields?.[0].value, `...`)).toBeTrue();
         });
       });
     });
@@ -440,7 +440,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
       const result = service.getErrorMessageResponse(error);
 
-      expect(result.options.split).toBe(false);
+      expect(result.options.split).toBeFalse();
     });
 
     it(`should return an error message response with an empty response`, (): void => {

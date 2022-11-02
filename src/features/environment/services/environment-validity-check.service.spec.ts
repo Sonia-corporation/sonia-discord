@@ -52,7 +52,7 @@ describe(`EnvironmentValidityCheckService`, (): void => {
 
       service = new EnvironmentValidityCheckService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.ENVIRONMENT_VALIDITY_CHECK_SERVICE
       );
@@ -88,7 +88,7 @@ describe(`EnvironmentValidityCheckService`, (): void => {
           service.init();
         }).toThrow(new Error(`GOOGLE_APPLICATION_CREDENTIALS env is not a string`));
 
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
           context: `EnvironmentValidityCheckService`,
           message: `text-This error should not happen. If everything is as expected this is not related to the current developer environment and it means that a breaking change happened.`,
@@ -145,7 +145,7 @@ describe(`EnvironmentValidityCheckService`, (): void => {
           service.init();
         }).toThrow(new Error(`SHOULD_DISPLAY_MORE_DEBUG_LOGS env should be either true or false (string)`));
 
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
           context: `EnvironmentValidityCheckService`,
           message: `text-This error should not happen. If everything is as expected this is not related to the current developer environment and it means that a breaking change happened.`,
@@ -196,7 +196,7 @@ describe(`EnvironmentValidityCheckService`, (): void => {
 
         service.init();
 
-        expect(loggerConfigMutatorServiceUpdateShouldDisplayMoreDebugLogsStateSpy).toHaveBeenCalledTimes(1);
+        expect(loggerConfigMutatorServiceUpdateShouldDisplayMoreDebugLogsStateSpy).toHaveBeenCalledOnce();
         expect(loggerConfigMutatorServiceUpdateShouldDisplayMoreDebugLogsStateSpy).toHaveBeenCalledWith(
           value.configValue
         );

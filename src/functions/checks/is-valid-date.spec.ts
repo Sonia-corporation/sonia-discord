@@ -14,7 +14,7 @@ describe(`isValidDate()`, (): void => {
 
       const result = isValidDate(date);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -28,7 +28,7 @@ describe(`isValidDate()`, (): void => {
 
       const result = isValidDate(date);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -42,7 +42,7 @@ describe(`isValidDate()`, (): void => {
 
       const result = isValidDate(date);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -56,7 +56,7 @@ describe(`isValidDate()`, (): void => {
 
       const result = isValidDate(date);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -70,7 +70,7 @@ describe(`isValidDate()`, (): void => {
 
       const result = isValidDate(date);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 });

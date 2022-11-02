@@ -12,7 +12,7 @@ describe(`hasCommandLineArguments()`, (): void => {
 
         const result = hasCommandLineArguments();
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -26,7 +26,7 @@ describe(`hasCommandLineArguments()`, (): void => {
 
         const result = hasCommandLineArguments();
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -40,7 +40,7 @@ describe(`hasCommandLineArguments()`, (): void => {
 
         const result = hasCommandLineArguments();
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -54,7 +54,7 @@ describe(`hasCommandLineArguments()`, (): void => {
 
         const result = hasCommandLineArguments();
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });

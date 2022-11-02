@@ -64,7 +64,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       service = new DiscordActivitySoniaService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_ACTIVITY_SONIA_SERVICE
       );
@@ -97,7 +97,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       await service.init();
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordActivitySoniaService`,
         message: `text-listen "ready" Discord client state`,
@@ -111,7 +111,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       await service.init();
 
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledOnce();
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
     });
 
@@ -123,7 +123,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         await service.init();
 
-        expect(setRandomPresenceSpy).toHaveBeenCalledTimes(1);
+        expect(setRandomPresenceSpy).toHaveBeenCalledOnce();
         expect(setRandomPresenceSpy).toHaveBeenCalledWith();
       });
 
@@ -155,7 +155,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
           await service.init();
 
-          expect(startScheduleSpy).toHaveBeenCalledTimes(1);
+          expect(startScheduleSpy).toHaveBeenCalledOnce();
           expect(startScheduleSpy).toHaveBeenCalledWith();
         });
       });
@@ -224,7 +224,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       service.startSchedule();
 
-      expect(getEveryHourScheduleRuleSpy).toHaveBeenCalledTimes(1);
+      expect(getEveryHourScheduleRuleSpy).toHaveBeenCalledOnce();
       expect(getEveryHourScheduleRuleSpy).toHaveBeenCalledWith();
     });
 
@@ -233,7 +233,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       service.startSchedule();
 
-      expect(getRandomRangeMinuteScheduleRuleSpy).toHaveBeenCalledTimes(1);
+      expect(getRandomRangeMinuteScheduleRuleSpy).toHaveBeenCalledOnce();
       expect(getRandomRangeMinuteScheduleRuleSpy).toHaveBeenCalledWith(5, 15);
     });
 
@@ -420,7 +420,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
           service.startSchedule();
 
-          expect(jobRescheduleMock).toHaveBeenCalledTimes(1);
+          expect(jobRescheduleMock).toHaveBeenCalledOnce();
           expect(jobRescheduleMock).toHaveBeenCalledWith(`dummy-new-schedule`);
         });
       });
@@ -534,7 +534,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         service.startSchedule();
 
-        expect(setRandomPresenceSpy).toHaveBeenCalledTimes(1);
+        expect(setRandomPresenceSpy).toHaveBeenCalledOnce();
         expect(setRandomPresenceSpy).toHaveBeenCalledWith();
       });
 
@@ -625,7 +625,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`setPresence: error`));
 
-        expect(setPresenceMock).toHaveBeenCalledTimes(1);
+        expect(setPresenceMock).toHaveBeenCalledOnce();
         expect(setPresenceMock).toHaveBeenCalledWith({
           activity: {
             name: DiscordActivityNameEnum.APOLLO,
@@ -658,7 +658,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
           const result = await service.setPresence(presenceActivity);
 
           expect(result).toStrictEqual(presence);
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
             context: `DiscordActivitySoniaService`,
             message: `text-Sonia presence updated to: value-PLAYING text-x value-Apollo`,
@@ -684,7 +684,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       await expect(service.setRandomPresence()).rejects.toThrow(new Error(`No presence activity`));
 
-      expect(sampleSpy).toHaveBeenCalledTimes(1);
+      expect(sampleSpy).toHaveBeenCalledOnce();
       expect(sampleSpy).toHaveBeenCalledWith(DISCORD_PRESENCE_ACTIVITY);
     });
 
@@ -712,7 +712,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
         await service.setRandomPresence();
 
-        expect(setPresenceSpy).toHaveBeenCalledTimes(1);
+        expect(setPresenceSpy).toHaveBeenCalledOnce();
         expect(setPresenceSpy).toHaveBeenCalledWith(DISCORD_PRESENCE_ACTIVITY[0]);
       });
     });

@@ -51,7 +51,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
       service = new FirebaseGuildsStoreService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.FIREBASE_GUILDS_STORE_SERVICE
       );
@@ -86,7 +86,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
       service.init();
       onGuildsChange$.next(firebaseGuilds);
 
-      expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledOnce();
       expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledWith();
     });
 
@@ -97,7 +97,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
         service.init();
         onGuildsChange$.error(new Error(`error`));
 
-        expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledOnce();
         expect(firebaseGuildsServiceOnGuildsChange$Spy).toHaveBeenCalledWith();
       });
 
@@ -136,7 +136,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
         service.init();
         onGuildsChange$.next(firebaseGuilds);
 
-        expect(removeAllEntitiesSpy).toHaveBeenCalledTimes(1);
+        expect(removeAllEntitiesSpy).toHaveBeenCalledOnce();
         expect(removeAllEntitiesSpy).toHaveBeenCalledWith();
       });
 
@@ -146,7 +146,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
         service.init();
         onGuildsChange$.next(firebaseGuilds);
 
-        expect(addEntitiesSpy).toHaveBeenCalledTimes(1);
+        expect(addEntitiesSpy).toHaveBeenCalledOnce();
         expect(addEntitiesSpy).toHaveBeenCalledWith(firebaseGuilds);
       });
 
@@ -156,7 +156,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
         service.init();
         onGuildsChange$.next(firebaseGuilds);
 
-        expect(stopLoadingSpy).toHaveBeenCalledTimes(1);
+        expect(stopLoadingSpy).toHaveBeenCalledOnce();
         expect(stopLoadingSpy).toHaveBeenCalledWith();
       });
     });
@@ -179,7 +179,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
       service.addOrUpdateEntities(firebaseGuilds);
 
-      expect(firebaseGuildsStoreUpsertManySpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsStoreUpsertManySpy).toHaveBeenCalledOnce();
       expect(firebaseGuildsStoreUpsertManySpy).toHaveBeenCalledWith(firebaseGuilds);
     });
   });
@@ -201,7 +201,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
       service.addEntities(firebaseGuilds);
 
-      expect(firebaseGuildsStoreAddSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsStoreAddSpy).toHaveBeenCalledOnce();
       expect(firebaseGuildsStoreAddSpy).toHaveBeenCalledWith(firebaseGuilds);
     });
   });
@@ -220,7 +220,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
       service.removeAllEntities();
 
-      expect(firebaseGuildsStoreRemoveSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsStoreRemoveSpy).toHaveBeenCalledOnce();
       expect(firebaseGuildsStoreRemoveSpy).toHaveBeenCalledWith();
     });
   });
@@ -239,7 +239,7 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
       service.stopLoading();
 
-      expect(firebaseGuildsStoreSetLoadingSpy).toHaveBeenCalledTimes(1);
+      expect(firebaseGuildsStoreSetLoadingSpy).toHaveBeenCalledOnce();
       expect(firebaseGuildsStoreSetLoadingSpy).toHaveBeenCalledWith(false);
     });
   });

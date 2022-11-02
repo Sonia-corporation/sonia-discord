@@ -54,7 +54,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
       service = new FirebaseGuildsChannelsFeaturesService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_SERVICE
       );
@@ -78,7 +78,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.isValid(feature);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -98,7 +98,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.isValid(feature);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -122,7 +122,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.isValid(feature);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -150,7 +150,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.isUpToDate(feature);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -174,7 +174,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.isUpToDate(feature);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -196,7 +196,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.isSet(feature);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -210,7 +210,7 @@ describe(`FirebaseGuildsChannelsFeaturesService`, (): void => {
 
         const result = service.isSet(feature);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });

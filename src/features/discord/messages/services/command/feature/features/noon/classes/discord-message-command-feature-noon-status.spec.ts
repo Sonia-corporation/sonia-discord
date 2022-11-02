@@ -56,7 +56,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
       await expect(service.execute(anyDiscordMessage)).rejects.toThrow(new Error(`isEnabled error`));
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandFeatureNoonStatus`,
         hasExtendedContext: true,
@@ -69,7 +69,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
       await expect(service.execute(anyDiscordMessage)).rejects.toThrow(new Error(`isEnabled error`));
 
-      expect(isEnabledSpy).toHaveBeenCalledTimes(1);
+      expect(isEnabledSpy).toHaveBeenCalledOnce();
       expect(isEnabledSpy).toHaveBeenCalledWith(anyDiscordMessage);
     });
 
@@ -165,7 +165,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
             await expect(service.execute(anyDiscordMessage)).rejects.toThrow(new Error(`getMessageResponse error`));
 
-            expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+            expect(getMessageResponseSpy).toHaveBeenCalledOnce();
             expect(getMessageResponseSpy).toHaveBeenCalledWith(firebaseGuildChannelFeatureNoonEnabledState);
           });
 
@@ -219,7 +219,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
             await expect(service.execute(anyDiscordMessage)).rejects.toThrow(new Error(`getMessageResponse error`));
 
-            expect(getMessageResponseSpy).toHaveBeenCalledTimes(1);
+            expect(getMessageResponseSpy).toHaveBeenCalledOnce();
             expect(getMessageResponseSpy).toHaveBeenCalledWith(firebaseGuildChannelFeatureNoonEnabledState);
           });
 
@@ -288,7 +288,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
           new Error(`Could not get the guild from the message`)
         );
 
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
           context: `DiscordMessageCommandFeatureNoonStatus`,
           hasExtendedContext: true,
@@ -325,7 +325,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
           new Error(`Could not find the guild dummy-guild-id in Firebase`)
         );
 
-        expect(firebaseGuildsStoreQueryGetEntitySpy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildsStoreQueryGetEntitySpy).toHaveBeenCalledOnce();
         expect(firebaseGuildsStoreQueryGetEntitySpy).toHaveBeenCalledWith(`dummy-guild-id`);
       });
 
@@ -341,7 +341,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
             new Error(`Could not find the guild dummy-guild-id in Firebase`)
           );
 
-          expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
           expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
             context: `DiscordMessageCommandFeatureNoonStatus`,
             hasExtendedContext: true,
@@ -533,7 +533,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
               const result = await service.isEnabled(anyDiscordMessage);
 
-              expect(result).toBe(true);
+              expect(result).toBeTrue();
             });
           });
 
@@ -561,7 +561,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
               const result = await service.isEnabled(anyDiscordMessage);
 
-              expect(result).toBe(false);
+              expect(result).toBeFalse();
             });
           });
         });
@@ -582,7 +582,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
       const result = await service.getMessageResponse(isEnabled);
 
-      expect(result.options.split).toBe(false);
+      expect(result.options.split).toBeFalse();
     });
 
     describe(`when the enabled state is undefined`, (): void => {

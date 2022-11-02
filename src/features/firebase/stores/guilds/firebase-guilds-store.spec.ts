@@ -42,7 +42,7 @@ describe(`FirebaseGuildsStore`, (): void => {
 
       service = new FirebaseGuildsStore();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.FIREBASE_GUILDS_STORE);
     });
   });

@@ -74,7 +74,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service = new DiscordGuildConfigMutatorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_GUILD_CONFIG_MUTATOR_SERVICE
       );
@@ -91,7 +91,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBe(true);
+        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBeTrue();
       });
 
       it(`should not update the current send noon message state`, (): void => {
@@ -100,7 +100,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBe(true);
+        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBeTrue();
       });
 
       it(`should not update the current welcome new members state`, (): void => {
@@ -109,7 +109,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBe(true);
+        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBeTrue();
       });
 
       it(`should not update the current sonia guild id`, (): void => {
@@ -150,7 +150,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBe(true);
+        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBeTrue();
       });
 
       it(`should override the send noon message state`, (): void => {
@@ -159,7 +159,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBe(true);
+        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBeTrue();
       });
 
       it(`should override the welcome new members state`, (): void => {
@@ -168,7 +168,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service = new DiscordGuildConfigMutatorService(config);
 
-        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBe(true);
+        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBeTrue();
       });
 
       it(`should override the send sonia guild id`, (): void => {
@@ -211,7 +211,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -220,7 +220,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(discordGuildConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(discordGuildConfigCoreServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(discordGuildConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -229,7 +229,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(discordGuildConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(discordGuildConfigServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(discordGuildConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
   });
@@ -255,9 +255,9 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.updateConfig();
 
-      expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBe(true);
-      expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBe(true);
-      expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBe(true);
+      expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBeTrue();
+      expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBeTrue();
+      expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBeTrue();
       expect(discordGuildConfigCoreService.soniaGuildId).toBe(`dummy-sonia-guild-id`);
       expect(discordGuildConfigCoreService.soniaPermanentGuildInviteUrl).toBe(`dummy-sonia-permanent-guild-invite-url`);
     });
@@ -280,9 +280,9 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBe(true);
-        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBe(true);
-        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBe(true);
+        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBeTrue();
+        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBeTrue();
+        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBeTrue();
         expect(discordGuildConfigCoreService.soniaGuildId).toBe(`dummy-sonia-guild-id`);
         expect(discordGuildConfigCoreService.soniaPermanentGuildInviteUrl).toBe(
           `dummy-sonia-permanent-guild-invite-url`
@@ -312,7 +312,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBe(false);
+        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBeFalse();
       });
 
       it(`should log about the config update`, (): void => {
@@ -341,7 +341,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBe(false);
+        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBeFalse();
       });
 
       it(`should log about the config update`, (): void => {
@@ -370,7 +370,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBe(false);
+        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBeFalse();
       });
 
       it(`should log about the config update`, (): void => {
@@ -466,9 +466,9 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateGuild(config);
 
-        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBe(true);
-        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBe(true);
-        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBe(true);
+        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBeTrue();
+        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBeTrue();
+        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBeTrue();
         expect(discordGuildConfigCoreService.soniaGuildId).toBe(`dummy-sonia-guild-id`);
         expect(discordGuildConfigCoreService.soniaPermanentGuildInviteUrl).toBe(
           `dummy-sonia-permanent-guild-invite-url`
@@ -488,7 +488,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateGuild(config);
 
-        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBe(false);
+        expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBeFalse();
       });
     });
 
@@ -504,7 +504,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateGuild(config);
 
-        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBe(false);
+        expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBeFalse();
       });
     });
 
@@ -520,7 +520,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
         service.updateGuild(config);
 
-        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBe(false);
+        expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBeFalse();
       });
     });
 
@@ -575,7 +575,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.updateSendCookiesOnCreateState(shouldSendCookiesOnCreate);
 
-      expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledWith({
         context: `DiscordGuildConfigMutatorService`,
         newValue: true,
@@ -589,7 +589,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.updateSendCookiesOnCreateState(shouldSendCookiesOnCreate);
 
-      expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBe(true);
+      expect(discordGuildConfigCoreService.shouldSendCookiesOnCreate).toBeTrue();
     });
   });
 
@@ -611,7 +611,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.updateSendNoonMessageState(shouldSendNoonMessage);
 
-      expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledWith({
         context: `DiscordGuildConfigMutatorService`,
         newValue: true,
@@ -625,7 +625,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.updateSendNoonMessageState(shouldSendNoonMessage);
 
-      expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBe(true);
+      expect(discordGuildConfigCoreService.shouldSendNoonMessage).toBeTrue();
     });
   });
 
@@ -647,7 +647,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.updateWelcomeNewMembersState(shouldWelcomeNewMembers);
 
-      expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedBooleanSpy).toHaveBeenCalledWith({
         context: `DiscordGuildConfigMutatorService`,
         newValue: true,
@@ -661,7 +661,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.updateWelcomeNewMembersState(shouldWelcomeNewMembers);
 
-      expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBe(true);
+      expect(discordGuildConfigCoreService.shouldWelcomeNewMembers).toBeTrue();
     });
   });
 
@@ -685,7 +685,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.updateSoniaGuildId(soniaGuildId);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordGuildConfigMutatorService`,
         newValue: `dummy-sonia-guild-id`,
@@ -723,7 +723,7 @@ describe(`DiscordGuildConfigMutatorService`, (): void => {
 
       service.updateSoniaPermanentGuildInviteUrl(soniaPermanentGuildInviteUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordGuildConfigMutatorService`,
         newValue: `dummy-sonia-permanent-guild-invite-url`,

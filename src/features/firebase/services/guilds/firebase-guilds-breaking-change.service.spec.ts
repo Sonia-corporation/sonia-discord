@@ -62,7 +62,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
       service = new FirebaseGuildsBreakingChangeService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.FIREBASE_GUILDS_BREAKING_CHANGE_SERVICE
       );
@@ -123,7 +123,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
       await expect(service.init()).rejects.toThrow(new Error(`isReady$ error`));
 
-      expect(isReady$Spy).toHaveBeenCalledTimes(1);
+      expect(isReady$Spy).toHaveBeenCalledOnce();
       expect(isReady$Spy).toHaveBeenCalledWith();
     });
 
@@ -175,7 +175,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
         await expect(service.init()).rejects.toThrow(new Error(`getGuilds error`));
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsBreakingChangeService`,
           message: `text-handling breaking changes for all Firebase guilds...`,
@@ -187,7 +187,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
         await expect(service.init()).rejects.toThrow(new Error(`getGuilds error`));
 
-        expect(firebaseGuildsServiceGetGuildsSpy).toHaveBeenCalledTimes(1);
+        expect(firebaseGuildsServiceGetGuildsSpy).toHaveBeenCalledOnce();
         expect(firebaseGuildsServiceGetGuildsSpy).toHaveBeenCalledWith();
       });
 
@@ -251,7 +251,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
           await expect(service.init()).rejects.toThrow(new Error(`Firebase guilds batch not available`));
 
-          expect(firebaseGuildsServiceGetBatchSpy).toHaveBeenCalledTimes(1);
+          expect(firebaseGuildsServiceGetBatchSpy).toHaveBeenCalledOnce();
           expect(firebaseGuildsServiceGetBatchSpy).toHaveBeenCalledWith();
         });
 
@@ -265,7 +265,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
             await expect(service.init()).rejects.toThrow(new Error(`Firebase guilds batch not available`));
 
-            expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
             expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
               context: `FirebaseGuildsBreakingChangeService`,
               message: `text-Firebase guilds batch not available`,
@@ -382,7 +382,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
               await service.init();
 
-              expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsBreakingChangeService`,
                 message: `text-all Firebase guild hint-(1) up-to-date hint-(v5)`,
@@ -435,7 +435,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
               await service.init();
 
-              expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsBreakingChangeService`,
                 message: `text-all Firebase guilds hint-(2) up-to-date hint-(v5)`,
@@ -474,7 +474,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
               await service.init();
 
-              expect(updateMock).toHaveBeenCalledTimes(1);
+              expect(updateMock).toHaveBeenCalledOnce();
               expect(updateMock).toHaveBeenCalledWith(queryDocumentSnapshot.ref, {
                 channels: {},
                 id: `dummy-id`,
@@ -488,7 +488,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
               await service.init();
 
-              expect(commitMock).toHaveBeenCalledTimes(1);
+              expect(commitMock).toHaveBeenCalledOnce();
               expect(commitMock).toHaveBeenCalledWith();
             });
 
@@ -497,7 +497,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
               await service.init();
 
-              expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsBreakingChangeService`,
                 message: `text-updating value-1 Firebase guild...`,
@@ -551,7 +551,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
               await service.init();
 
-              expect(commitMock).toHaveBeenCalledTimes(1);
+              expect(commitMock).toHaveBeenCalledOnce();
               expect(commitMock).toHaveBeenCalledWith();
             });
 
@@ -560,7 +560,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
               await service.init();
 
-              expect(loggerServiceLogSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceLogSpy).toHaveBeenCalledOnce();
               expect(loggerServiceLogSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsBreakingChangeService`,
                 message: `text-updating value-2 Firebase guilds...`,
@@ -573,7 +573,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
             await service.init();
 
-            expect(notifyHasFinishedSpy).toHaveBeenCalledTimes(1);
+            expect(notifyHasFinishedSpy).toHaveBeenCalledOnce();
             expect(notifyHasFinishedSpy).toHaveBeenCalledWith();
           });
         });
@@ -591,7 +591,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
       const result = await service.hasFinished$().pipe(take(1)).toPromise();
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
 
     describe(`when the has finished event is notified`, (): void => {
@@ -601,7 +601,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
         const result = await service.hasFinished$().pipe(take(1)).toPromise();
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -622,7 +622,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
         const result = await service.hasFinished();
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -638,7 +638,7 @@ describe(`FirebaseGuildsBreakingChangeService`, (): void => {
 
       const result = await service.hasFinished$().pipe(take(1)).toPromise();
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 

@@ -46,7 +46,7 @@ describe(`FirebaseGuildsStoreQuery`, (): void => {
 
       service = new FirebaseGuildsStoreQuery(firebaseGuildsStore);
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.FIREBASE_GUILDS_STORE_QUERY);
     });
   });
@@ -64,7 +64,7 @@ describe(`FirebaseGuildsStoreQuery`, (): void => {
 
         const result = await service.wasLoaded();
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });

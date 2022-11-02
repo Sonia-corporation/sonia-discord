@@ -144,7 +144,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service = new DiscordMessageConfigMutatorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_CONFIG_MUTATOR_SERVICE
       );
@@ -735,7 +735,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -744,7 +744,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(discordMessageConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageConfigCoreServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(discordMessageConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -753,7 +753,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(discordMessageConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageConfigServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(discordMessageConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
   });
@@ -1832,7 +1832,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandCliErrorImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: ColorEnum.SUN,
@@ -1868,7 +1868,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandCliErrorImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: IconEnum.GIRL,
@@ -1965,7 +1965,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandCookieImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: ColorEnum.SUN,
@@ -2001,7 +2001,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandCookieImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: IconEnum.GIRL,
@@ -2098,7 +2098,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandErrorImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: ColorEnum.SUN,
@@ -2134,7 +2134,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandErrorImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: IconEnum.GIRL,
@@ -2231,7 +2231,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandHelpImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: ColorEnum.SUN,
@@ -2267,7 +2267,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandHelpImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: IconEnum.GIRL,
@@ -2364,7 +2364,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandLunchImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: ColorEnum.SUN,
@@ -2400,7 +2400,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandLunchImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: IconEnum.GIRL,
@@ -2444,7 +2444,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
         service.updateMessageCommandPrefix(prefix);
 
-        expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledTimes(1);
+        expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledOnce();
         expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledWith({
           context: `DiscordMessageConfigMutatorService`,
           newValue: `dummy-prefix`,
@@ -2475,7 +2475,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
         service.updateMessageCommandPrefix(prefix);
 
-        expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledTimes(1);
+        expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledOnce();
         expect(configServiceGetUpdatedStringOrArraySpy).toHaveBeenCalledWith({
           context: `DiscordMessageConfigMutatorService`,
           newValue: [`dummy-dummy`, `prefix-dummy`],
@@ -2830,7 +2830,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandReleaseNotesBugFixesImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: ColorEnum.SUN,
@@ -2866,7 +2866,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandReleaseNotesBugFixesImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: IconEnum.GIRL,
@@ -2965,7 +2965,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandReleaseNotesFeaturesImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: ColorEnum.SUN,
@@ -3001,7 +3001,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandReleaseNotesFeaturesImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: IconEnum.GIRL,
@@ -3098,7 +3098,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandReleaseNotesMixedImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: ColorEnum.SUN,
@@ -3134,7 +3134,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandReleaseNotesMixedImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: IconEnum.GIRL,
@@ -3235,7 +3235,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandReleaseNotesPerformanceImprovementsImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: ColorEnum.SUN,
@@ -3273,7 +3273,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandReleaseNotesPerformanceImprovementsImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: IconEnum.GIRL,
@@ -3374,7 +3374,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandReleaseNotesUnknownImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: ColorEnum.SUN,
@@ -3410,7 +3410,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandReleaseNotesUnknownImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: IconEnum.GIRL,
@@ -3507,7 +3507,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandVersionImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: ColorEnum.SUN,
@@ -3543,7 +3543,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageCommandVersionImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: IconEnum.GIRL,
@@ -3640,7 +3640,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageErrorImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: ColorEnum.SUN,
@@ -3676,7 +3676,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageErrorImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: IconEnum.GIRL,
@@ -3773,7 +3773,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageWarningImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: ColorEnum.SUN,
@@ -3809,7 +3809,7 @@ describe(`DiscordMessageConfigMutatorService`, (): void => {
 
       service.updateMessageWarningImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordMessageConfigMutatorService`,
         newValue: IconEnum.GIRL,

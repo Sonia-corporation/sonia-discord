@@ -42,7 +42,7 @@ describe(`DiscordAuthorService`, (): void => {
 
       service = new DiscordAuthorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_AUTHOR_SERVICE);
     });
   });

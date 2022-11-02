@@ -54,7 +54,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
       service = new FirebaseGuildsChannelsService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_SERVICE
       );
@@ -78,7 +78,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.isValid(channel);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -102,7 +102,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.isValid(channel);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -130,7 +130,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.isValid(channel);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -154,7 +154,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.isUpToDate(channel);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -182,7 +182,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.isUpToDate(channel);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -204,7 +204,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.isSet(channel);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -218,7 +218,7 @@ describe(`FirebaseGuildsChannelsService`, (): void => {
 
         const result = service.isSet(channel);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });

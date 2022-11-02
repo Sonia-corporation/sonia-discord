@@ -52,7 +52,7 @@ describe(`FirebaseAppService`, (): void => {
 
       service = new FirebaseAppService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.FIREBASE_APP_SERVICE);
     });
   });
@@ -89,7 +89,7 @@ describe(`FirebaseAppService`, (): void => {
 
       service.init();
 
-      expect(initializeAppSpy).toHaveBeenCalledTimes(1);
+      expect(initializeAppSpy).toHaveBeenCalledOnce();
       expect(initializeAppSpy).toHaveBeenCalledWith(
         {
           credential,

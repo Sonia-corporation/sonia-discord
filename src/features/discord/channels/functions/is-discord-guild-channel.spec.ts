@@ -14,7 +14,7 @@ describe(`isDiscordGuildChannel()`, (): void => {
 
       const result = isDiscordGuildChannel(channel);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -28,7 +28,7 @@ describe(`isDiscordGuildChannel()`, (): void => {
 
       const result = isDiscordGuildChannel(channel);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -42,7 +42,7 @@ describe(`isDiscordGuildChannel()`, (): void => {
 
       const result = isDiscordGuildChannel(channel);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -58,7 +58,7 @@ describe(`isDiscordGuildChannel()`, (): void => {
 
       const result = isDiscordGuildChannel(channel);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -72,7 +72,7 @@ describe(`isDiscordGuildChannel()`, (): void => {
 
       const result = isDiscordGuildChannel(channel);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 });

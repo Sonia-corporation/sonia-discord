@@ -45,7 +45,7 @@ describe(`DiscordClientService`, (): void => {
 
       service = new DiscordClientService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_CLIENT_SERVICE);
     });
   });
@@ -84,7 +84,7 @@ describe(`DiscordClientService`, (): void => {
 
         service.getClient();
 
-        expect(createClientSpy).toHaveBeenCalledTimes(1);
+        expect(createClientSpy).toHaveBeenCalledOnce();
         expect(createClientSpy).toHaveBeenCalledWith();
       });
 
@@ -132,7 +132,7 @@ describe(`DiscordClientService`, (): void => {
 
       const result = await service.isReady$().pipe(take(1)).toPromise();
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
 
     describe(`when the is ready event is notified`, (): void => {
@@ -142,7 +142,7 @@ describe(`DiscordClientService`, (): void => {
 
         const result = await service.isReady$().pipe(take(1)).toPromise();
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -163,7 +163,7 @@ describe(`DiscordClientService`, (): void => {
 
         const result = await service.isReady();
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -179,7 +179,7 @@ describe(`DiscordClientService`, (): void => {
 
       const result = await service.isReady$().pipe(take(1)).toPromise();
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 });

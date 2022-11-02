@@ -47,7 +47,7 @@ describe(`LoggerConfigService`, (): void => {
 
       service = new LoggerConfigService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.LOGGER_CONFIG_SERVICE);
     });
   });
@@ -89,7 +89,7 @@ describe(`LoggerConfigService`, (): void => {
 
         const result = service.isEnabled();
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -103,7 +103,7 @@ describe(`LoggerConfigService`, (): void => {
 
         const result = service.isEnabled();
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
   });
@@ -139,7 +139,7 @@ describe(`LoggerConfigService`, (): void => {
 
         const result = service.shouldDisplayMoreDebugLogs();
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
 
@@ -153,7 +153,7 @@ describe(`LoggerConfigService`, (): void => {
 
         const result = service.shouldDisplayMoreDebugLogs();
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
   });

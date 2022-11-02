@@ -73,7 +73,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
       service = new DiscordMessageCommandFeatureNoonConfigMutatorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_NOON_CONFIG_MUTATOR_SERVICE
       );
@@ -157,7 +157,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -166,7 +166,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(discordMessageCommandFeatureNoonConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageCommandFeatureNoonConfigCoreServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(discordMessageCommandFeatureNoonConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -175,7 +175,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(discordMessageCommandFeatureNoonConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageCommandFeatureNoonConfigServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(discordMessageCommandFeatureNoonConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
   });
@@ -352,7 +352,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
       service.updateNoonImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandFeatureNoonConfigMutatorService`,
         newValue: ColorEnum.SUN,
@@ -388,7 +388,7 @@ describe(`DiscordMessageCommandFeatureNoonConfigMutatorService`, (): void => {
 
       service.updateNoonImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandFeatureNoonConfigMutatorService`,
         newValue: IconEnum.GIRL,

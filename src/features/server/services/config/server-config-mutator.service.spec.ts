@@ -67,7 +67,7 @@ describe(`ServerConfigMutatorService`, (): void => {
 
       service = new ServerConfigMutatorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.SERVER_CONFIG_MUTATOR_SERVICE
       );
@@ -174,7 +174,7 @@ describe(`ServerConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -183,7 +183,7 @@ describe(`ServerConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(serverConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(serverConfigCoreServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(serverConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -192,7 +192,7 @@ describe(`ServerConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(serverConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(serverConfigServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(serverConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
   });
@@ -293,7 +293,7 @@ describe(`ServerConfigMutatorService`, (): void => {
 
       service.updatePort(port);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `ServerConfigMutatorService`,
         newValue: 1234,

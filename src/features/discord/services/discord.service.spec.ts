@@ -56,7 +56,7 @@ describe(`DiscordService`, (): void => {
 
       service = new DiscordService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_SERVICE);
     });
   });
@@ -171,7 +171,7 @@ describe(`DiscordService`, (): void => {
       await service.init();
 
       expect(discordLoggerServiceGetInstanceSpy).toHaveBeenCalledWith();
-      expect(discordLoggerServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
+      expect(discordLoggerServiceGetInstanceInitSpy).toHaveBeenCalledOnce();
       expect(discordLoggerServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
@@ -181,7 +181,7 @@ describe(`DiscordService`, (): void => {
       await service.init();
 
       expect(discordGuildServiceGetInstanceSpy).toHaveBeenCalledWith();
-      expect(discordGuildServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
+      expect(discordGuildServiceGetInstanceInitSpy).toHaveBeenCalledOnce();
       expect(discordGuildServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
@@ -191,7 +191,7 @@ describe(`DiscordService`, (): void => {
       await service.init();
 
       expect(discordGuildMemberAddServiceGetInstanceSpy).toHaveBeenCalledWith();
-      expect(discordGuildMemberAddServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
+      expect(discordGuildMemberAddServiceGetInstanceInitSpy).toHaveBeenCalledOnce();
       expect(discordGuildMemberAddServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
@@ -201,7 +201,7 @@ describe(`DiscordService`, (): void => {
       await service.init();
 
       expect(discordGuildCreateServiceGetInstanceSpy).toHaveBeenCalledWith();
-      expect(discordGuildCreateServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
+      expect(discordGuildCreateServiceGetInstanceInitSpy).toHaveBeenCalledOnce();
       expect(discordGuildCreateServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
@@ -211,7 +211,7 @@ describe(`DiscordService`, (): void => {
       await service.init();
 
       expect(discordMessageServiceGetInstanceSpy).toHaveBeenCalledWith();
-      expect(discordMessageServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageServiceGetInstanceInitSpy).toHaveBeenCalledOnce();
       expect(discordMessageServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
@@ -221,7 +221,7 @@ describe(`DiscordService`, (): void => {
       await service.init();
 
       expect(discordAuthenticationServiceGetInstanceSpy).toHaveBeenCalledWith();
-      expect(discordAuthenticationServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
+      expect(discordAuthenticationServiceGetInstanceInitSpy).toHaveBeenCalledOnce();
       expect(discordAuthenticationServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
@@ -231,7 +231,7 @@ describe(`DiscordService`, (): void => {
       await service.init();
 
       expect(discordMessageScheduleNoonServiceGetInstanceSpy).toHaveBeenCalledWith();
-      expect(discordMessageScheduleNoonServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageScheduleNoonServiceGetInstanceInitSpy).toHaveBeenCalledOnce();
       expect(discordMessageScheduleNoonServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
@@ -241,7 +241,7 @@ describe(`DiscordService`, (): void => {
       await service.init();
 
       expect(discordGuildSoniaServiceGetInstanceSpy).toHaveBeenCalledWith();
-      expect(discordGuildSoniaServiceGetInstanceInitSpy).toHaveBeenCalledTimes(1);
+      expect(discordGuildSoniaServiceGetInstanceInitSpy).toHaveBeenCalledOnce();
       expect(discordGuildSoniaServiceGetInstanceInitSpy).toHaveBeenCalledWith();
     });
 
@@ -251,7 +251,7 @@ describe(`DiscordService`, (): void => {
       await service.init();
 
       expect(discordActivitySoniaServiceGetInstanceSpy).toHaveBeenCalledWith();
-      expect(discordActivitySoniaServiceInitSpy).toHaveBeenCalledTimes(1);
+      expect(discordActivitySoniaServiceInitSpy).toHaveBeenCalledOnce();
       expect(discordActivitySoniaServiceInitSpy).toHaveBeenCalledWith();
     });
 
@@ -261,7 +261,7 @@ describe(`DiscordService`, (): void => {
       await service.init();
 
       expect(discordSoniaEmotionalStateServiceGetInstanceSpy).toHaveBeenCalledWith();
-      expect(discordSoniaEmotionalStateServiceInitSpy).toHaveBeenCalledTimes(1);
+      expect(discordSoniaEmotionalStateServiceInitSpy).toHaveBeenCalledOnce();
       expect(discordSoniaEmotionalStateServiceInitSpy).toHaveBeenCalledWith();
     });
   });

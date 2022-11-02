@@ -56,7 +56,7 @@ describe(`QuoteRandomService`, (): void => {
 
       service = new QuoteRandomService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.QUOTE_RANDOM_SERVICE);
     });
   });
@@ -82,7 +82,7 @@ describe(`QuoteRandomService`, (): void => {
 
       await expect(service.fetchRandomQuote(messageId)).rejects.toThrow(new Error(`getQuoteOfTheDay error`));
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `QuoteRandomService`,
         hasExtendedContext: true,
@@ -95,7 +95,7 @@ describe(`QuoteRandomService`, (): void => {
 
       await expect(service.fetchRandomQuote(messageId)).rejects.toThrow(new Error(`getQuoteOfTheDay error`));
 
-      expect(quoteApiServiceGetQuoteOfTheDaySpy).toHaveBeenCalledTimes(1);
+      expect(quoteApiServiceGetQuoteOfTheDaySpy).toHaveBeenCalledOnce();
       expect(quoteApiServiceGetQuoteOfTheDaySpy).toHaveBeenCalledWith(messageId);
     });
 

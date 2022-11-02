@@ -42,7 +42,7 @@ describe(`DiscordChannelGuildService`, (): void => {
 
       service = new DiscordChannelGuildService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_CHANNEL_GUILD_SERVICE
       );

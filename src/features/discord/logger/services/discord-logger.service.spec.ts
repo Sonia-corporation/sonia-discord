@@ -59,7 +59,7 @@ describe(`DiscordLoggerService`, (): void => {
 
       service = new DiscordLoggerService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_LOGGER_SERVICE);
     });
   });
@@ -126,7 +126,7 @@ describe(`DiscordLoggerService`, (): void => {
 
         service.init();
 
-        expect(discordLoggerWarningServiceHandleWarningSpy).toHaveBeenCalledTimes(1);
+        expect(discordLoggerWarningServiceHandleWarningSpy).toHaveBeenCalledOnce();
         expect(discordLoggerWarningServiceHandleWarningSpy).toHaveBeenCalledWith(undefined);
       });
     });
@@ -169,7 +169,7 @@ describe(`DiscordLoggerService`, (): void => {
 
         service.init();
 
-        expect(discordLoggerErrorServiceHandleErrorSpy).toHaveBeenCalledTimes(1);
+        expect(discordLoggerErrorServiceHandleErrorSpy).toHaveBeenCalledOnce();
         expect(discordLoggerErrorServiceHandleErrorSpy).toHaveBeenCalledWith(undefined);
       });
     });

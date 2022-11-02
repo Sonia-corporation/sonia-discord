@@ -45,7 +45,7 @@ describe(`DiscordChannelService`, (): void => {
 
       service = new DiscordChannelService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_CHANNEL_SERVICE);
     });
   });
@@ -79,7 +79,7 @@ describe(`DiscordChannelService`, (): void => {
 
           const result = service.isValid(channel);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -93,7 +93,7 @@ describe(`DiscordChannelService`, (): void => {
 
           const result = service.isValid(channel);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
     });
@@ -113,7 +113,7 @@ describe(`DiscordChannelService`, (): void => {
 
           const result = service.isValid(channel);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
 
@@ -127,7 +127,7 @@ describe(`DiscordChannelService`, (): void => {
 
           const result = service.isValid(channel);
 
-          expect(result).toBe(true);
+          expect(result).toBeTrue();
         });
       });
     });
@@ -154,7 +154,7 @@ describe(`DiscordChannelService`, (): void => {
 
         const result = service.isText(channel);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -168,7 +168,7 @@ describe(`DiscordChannelService`, (): void => {
 
         const result = service.isText(channel);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -194,7 +194,7 @@ describe(`DiscordChannelService`, (): void => {
 
         const result = service.isDm(channel);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -208,7 +208,7 @@ describe(`DiscordChannelService`, (): void => {
 
         const result = service.isDm(channel);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });

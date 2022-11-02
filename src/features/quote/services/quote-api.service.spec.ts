@@ -55,7 +55,7 @@ describe(`QuoteApiService`, (): void => {
 
       service = new QuoteApiService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.QUOTE_API_SERVICE);
     });
   });
@@ -83,7 +83,7 @@ describe(`QuoteApiService`, (): void => {
 
       await expect(service.getQuoteOfTheDay(messageId)).rejects.toThrow(new Error(`get error`));
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `QuoteApiService`,
         hasExtendedContext: true,
@@ -97,7 +97,7 @@ describe(`QuoteApiService`, (): void => {
 
       await expect(service.getQuoteOfTheDay(messageId)).rejects.toThrow(new Error(`get error`));
 
-      expect(axiosGetSpy).toHaveBeenCalledTimes(1);
+      expect(axiosGetSpy).toHaveBeenCalledOnce();
       expect(axiosGetSpy).toHaveBeenCalledWith(`https://favqs.com/api/qotd`, {
         headers: {
           'accept': `application/vnd.favqs.v2+json;`,
@@ -117,7 +117,7 @@ describe(`QuoteApiService`, (): void => {
 
         await expect(service.getQuoteOfTheDay(messageId)).rejects.toThrow(new Error(`get error`));
 
-        expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceErrorSpy).toHaveBeenCalledOnce();
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
           context: `QuoteApiService`,
           hasExtendedContext: true,

@@ -70,7 +70,7 @@ describe(`GithubConfigMutatorService`, (): void => {
 
       service = new GithubConfigMutatorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.GITHUB_CONFIG_MUTATOR_SERVICE
       );
@@ -146,7 +146,7 @@ describe(`GithubConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -155,7 +155,7 @@ describe(`GithubConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(githubConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(githubConfigCoreServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(githubConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -164,7 +164,7 @@ describe(`GithubConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(githubConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(githubConfigServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(githubConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
   });
@@ -297,7 +297,7 @@ describe(`GithubConfigMutatorService`, (): void => {
 
       service.updateBugReportUrl(bugReportUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `GithubConfigMutatorService`,
         newValue: `bug-report-url`,
@@ -335,7 +335,7 @@ describe(`GithubConfigMutatorService`, (): void => {
 
       service.updatePersonalAccessToken(personalAccessToken);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `GithubConfigMutatorService`,
         isValueHidden: true,

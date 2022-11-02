@@ -57,7 +57,7 @@ describe(`DiscordGuildMemberAddService`, (): void => {
 
       service = new DiscordGuildMemberAddService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_GUILD_MEMBER_ADD_SERVICE
       );
@@ -89,7 +89,7 @@ describe(`DiscordGuildMemberAddService`, (): void => {
 
       service.init();
 
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledOnce();
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
     });
 
@@ -98,7 +98,7 @@ describe(`DiscordGuildMemberAddService`, (): void => {
 
       service.init();
 
-      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledTimes(1);
+      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledOnce();
       expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(`guildMemberAdd`, expect.any(Function));
     });
 
@@ -131,7 +131,7 @@ describe(`DiscordGuildMemberAddService`, (): void => {
 
         service.init();
 
-        expect(sendMessageSpy).toHaveBeenCalledTimes(1);
+        expect(sendMessageSpy).toHaveBeenCalledOnce();
         expect(sendMessageSpy).toHaveBeenCalledWith(undefined);
       });
     });
@@ -141,7 +141,7 @@ describe(`DiscordGuildMemberAddService`, (): void => {
 
       service.init();
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordGuildMemberAddService`,
         message: `text-listen "guildMemberAdd" event`,
@@ -172,7 +172,7 @@ describe(`DiscordGuildMemberAddService`, (): void => {
 
       service.sendMessage(member);
 
-      expect(discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy).toHaveBeenCalledOnce();
       expect(discordMessageRightsServiceIsSoniaAuthorizedForThisGuildSpy).toHaveBeenCalledWith(member.guild);
     });
 

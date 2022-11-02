@@ -13,7 +13,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -27,7 +27,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -41,7 +41,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -55,7 +55,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -69,7 +69,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -83,7 +83,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -97,7 +97,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -111,7 +111,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 
@@ -125,7 +125,7 @@ describe(`isBoolean()`, (): void => {
 
       const result = isBoolean(value);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 });

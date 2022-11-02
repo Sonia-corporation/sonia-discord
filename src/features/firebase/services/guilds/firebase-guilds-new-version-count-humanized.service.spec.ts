@@ -47,7 +47,7 @@ describe(`FirebaseGuildsNewVersionCountHumanizedService`, (): void => {
 
       service = new FirebaseGuildsNewVersionCountHumanizedService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.FIREBASE_GUILDS_NEW_VERSION_COUNT_HUMANIZED_SERVICE
       );

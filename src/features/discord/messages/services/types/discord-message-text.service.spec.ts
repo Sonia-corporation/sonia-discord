@@ -87,7 +87,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
       service = new DiscordMessageTextService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_TEXT_SERVICE
       );
@@ -117,7 +117,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
       await expect(service.getMessage(anyDiscordMessage)).rejects.toThrow(new Error(`Invalid author`));
 
-      expect(discordAuthorServiceIsValidSpy).toHaveBeenCalledTimes(1);
+      expect(discordAuthorServiceIsValidSpy).toHaveBeenCalledOnce();
       expect(discordAuthorServiceIsValidSpy).toHaveBeenCalledWith(anyDiscordMessage.author);
     });
 
@@ -143,7 +143,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
         await expect(service.getMessage(anyDiscordMessage)).rejects.toThrow(new Error(`Invalid mention`));
 
-        expect(discordMentionServiceIsValidSpy).toHaveBeenCalledTimes(1);
+        expect(discordMentionServiceIsValidSpy).toHaveBeenCalledOnce();
         expect(discordMentionServiceIsValidSpy).toHaveBeenCalledWith(anyDiscordMessage.mentions);
       });
 
@@ -171,7 +171,7 @@ describe(`DiscordMessageTextService`, (): void => {
             new Error(`getAnyDiscordMessageResponse error`)
           );
 
-          expect(getAnyDiscordMessageResponseSpy).toHaveBeenCalledTimes(1);
+          expect(getAnyDiscordMessageResponseSpy).toHaveBeenCalledOnce();
           expect(getAnyDiscordMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
         });
       });
@@ -213,7 +213,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
       await expect(service.getDiscordMessageResponse(discordMessage)).rejects.toThrow(new Error(`Invalid Sonia`));
 
-      expect(discordMentionServiceIsForEveryoneSpy).toHaveBeenCalledTimes(1);
+      expect(discordMentionServiceIsForEveryoneSpy).toHaveBeenCalledOnce();
       expect(discordMentionServiceIsForEveryoneSpy).toHaveBeenCalledWith(discordMessage.mentions);
     });
 
@@ -228,7 +228,7 @@ describe(`DiscordMessageTextService`, (): void => {
         const result = await service.getDiscordMessageResponse(discordMessage);
 
         expect(result).toBeDefined();
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `DiscordMessageTextService`,
           hasExtendedContext: true,
@@ -241,7 +241,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
         const result = (await service.getDiscordMessageResponse(discordMessage)) as IDiscordMessageResponse;
 
-        expect(result.options.split).toBe(false);
+        expect(result.options.split).toBeFalse();
       });
 
       it(`should check if the app is in production`, async (): Promise<void> => {
@@ -250,7 +250,7 @@ describe(`DiscordMessageTextService`, (): void => {
         const result = await service.getDiscordMessageResponse(discordMessage);
 
         expect(result).toBeDefined();
-        expect(appConfigServiceIsProductionSpy).toHaveBeenCalledTimes(1);
+        expect(appConfigServiceIsProductionSpy).toHaveBeenCalledOnce();
         expect(appConfigServiceIsProductionSpy).toHaveBeenCalledWith();
       });
 
@@ -293,7 +293,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
         await expect(service.getDiscordMessageResponse(discordMessage)).rejects.toThrow(new Error(`Invalid Sonia`));
 
-        expect(discordSoniaServiceGetSoniaSpy).toHaveBeenCalledTimes(1);
+        expect(discordSoniaServiceGetSoniaSpy).toHaveBeenCalledOnce();
         expect(discordSoniaServiceGetSoniaSpy).toHaveBeenCalledWith();
       });
 
@@ -302,7 +302,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
         await expect(service.getDiscordMessageResponse(discordMessage)).rejects.toThrow(new Error(`Invalid Sonia`));
 
-        expect(discordSoniaServiceIsValidSpy).toHaveBeenCalledTimes(1);
+        expect(discordSoniaServiceIsValidSpy).toHaveBeenCalledOnce();
         expect(discordSoniaServiceIsValidSpy).toHaveBeenCalledWith(null);
       });
 
@@ -336,7 +336,7 @@ describe(`DiscordMessageTextService`, (): void => {
             new Error(`Invalid user mention`)
           );
 
-          expect(discordMentionServiceIsUserMentionedSpy).toHaveBeenCalledTimes(1);
+          expect(discordMentionServiceIsUserMentionedSpy).toHaveBeenCalledOnce();
           expect(discordMentionServiceIsUserMentionedSpy).toHaveBeenCalledWith(discordMessage.mentions, sonia);
         });
 
@@ -366,7 +366,7 @@ describe(`DiscordMessageTextService`, (): void => {
               new Error(`getSoniaMentionMessageResponse error`)
             );
 
-            expect(getSoniaMentionMessageResponseSpy).toHaveBeenCalledTimes(1);
+            expect(getSoniaMentionMessageResponseSpy).toHaveBeenCalledOnce();
             expect(getSoniaMentionMessageResponseSpy).toHaveBeenCalledWith(discordMessage);
           });
         });
@@ -399,7 +399,7 @@ describe(`DiscordMessageTextService`, (): void => {
         new Error(`Invalid Discord message`)
       );
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageTextService`,
         hasExtendedContext: true,
@@ -451,7 +451,7 @@ describe(`DiscordMessageTextService`, (): void => {
           new Error(`getDiscordMessageResponse error`)
         );
 
-        expect(getDiscordMessageResponseSpy).toHaveBeenCalledTimes(1);
+        expect(getDiscordMessageResponseSpy).toHaveBeenCalledOnce();
         expect(getDiscordMessageResponseSpy).toHaveBeenCalledWith(anyDiscordMessage);
       });
     });
@@ -525,7 +525,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
       await expect(service.getSoniaMentionMessageResponse(discordMessage)).rejects.toThrow(new Error(`reply error`));
 
-      expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
       expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
         context: `DiscordMessageTextService`,
         hasExtendedContext: true,
@@ -538,7 +538,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
       await expect(service.getSoniaMentionMessageResponse(discordMessage)).rejects.toThrow(new Error(`reply error`));
 
-      expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledOnce();
       expect(discordMessageContentServiceHasContentSpy).toHaveBeenCalledWith(discordMessage.content);
     });
 
@@ -552,7 +552,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
         await expect(service.getSoniaMentionMessageResponse(discordMessage)).rejects.toThrow(new Error(`reply error`));
 
-        expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledTimes(1);
+        expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledOnce();
         expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledWith(discordMessage);
         expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
         expect(discordMessagePingPongServiceReplySpy).not.toHaveBeenCalled();
@@ -572,7 +572,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
         await expect(service.getSoniaMentionMessageResponse(discordMessage)).rejects.toThrow(new Error(`reply error`));
 
-        expect(discordMessageCommandServiceHasCommandSpy).toHaveBeenCalledTimes(1);
+        expect(discordMessageCommandServiceHasCommandSpy).toHaveBeenCalledOnce();
         expect(discordMessageCommandServiceHasCommandSpy).toHaveBeenCalledWith(discordMessage.content);
       });
 
@@ -588,7 +588,7 @@ describe(`DiscordMessageTextService`, (): void => {
             new Error(`reply error`)
           );
 
-          expect(discordMessagePingPongServiceHasCriteriaSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessagePingPongServiceHasCriteriaSpy).toHaveBeenCalledOnce();
           expect(discordMessagePingPongServiceHasCriteriaSpy).toHaveBeenCalledWith(discordMessage.content);
         });
 
@@ -604,7 +604,7 @@ describe(`DiscordMessageTextService`, (): void => {
               new Error(`reply error`)
             );
 
-            expect(discordMessageHotelTrivagoServiceHasCriteriaSpy).toHaveBeenCalledTimes(1);
+            expect(discordMessageHotelTrivagoServiceHasCriteriaSpy).toHaveBeenCalledOnce();
             expect(discordMessageHotelTrivagoServiceHasCriteriaSpy).toHaveBeenCalledWith(discordMessage.content);
           });
 
@@ -620,7 +620,7 @@ describe(`DiscordMessageTextService`, (): void => {
                 new Error(`reply error`)
               );
 
-              expect(discordMessageAnyQuestionPineapplePizzaServiceHasCriteriaSpy).toHaveBeenCalledTimes(1);
+              expect(discordMessageAnyQuestionPineapplePizzaServiceHasCriteriaSpy).toHaveBeenCalledOnce();
               expect(discordMessageAnyQuestionPineapplePizzaServiceHasCriteriaSpy).toHaveBeenCalledWith(
                 discordMessage.content
               );
@@ -638,7 +638,7 @@ describe(`DiscordMessageTextService`, (): void => {
                   new Error(`reply error`)
                 );
 
-                expect(discordMessageSimpleBasicServiceHasCriteriaSpy).toHaveBeenCalledTimes(1);
+                expect(discordMessageSimpleBasicServiceHasCriteriaSpy).toHaveBeenCalledOnce();
                 expect(discordMessageSimpleBasicServiceHasCriteriaSpy).toHaveBeenCalledWith(discordMessage.content);
               });
 
@@ -654,7 +654,7 @@ describe(`DiscordMessageTextService`, (): void => {
                     new Error(`reply error`)
                   );
 
-                  expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledTimes(1);
+                  expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledOnce();
                   expect(discordMessageAuthorServiceReplySpy).toHaveBeenCalledWith(discordMessage);
                   expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
                   expect(discordMessagePingPongServiceReplySpy).not.toHaveBeenCalled();
@@ -691,7 +691,7 @@ describe(`DiscordMessageTextService`, (): void => {
                     new Error(`simple basic reply error`)
                   );
 
-                  expect(discordMessageSimpleBasicServiceReplySpy).toHaveBeenCalledTimes(1);
+                  expect(discordMessageSimpleBasicServiceReplySpy).toHaveBeenCalledOnce();
                   expect(discordMessageSimpleBasicServiceReplySpy).toHaveBeenCalledWith(discordMessage);
                   expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
                   expect(discordMessageAuthorServiceReplySpy).not.toHaveBeenCalled();
@@ -726,7 +726,7 @@ describe(`DiscordMessageTextService`, (): void => {
                   new Error(`any question pineapple pizza reply error`)
                 );
 
-                expect(discordMessageAnyQuestionPineapplePizzaServiceReplySpy).toHaveBeenCalledTimes(1);
+                expect(discordMessageAnyQuestionPineapplePizzaServiceReplySpy).toHaveBeenCalledOnce();
                 expect(discordMessageAnyQuestionPineapplePizzaServiceReplySpy).toHaveBeenCalledWith(discordMessage);
                 expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
                 expect(discordMessageAuthorServiceReplySpy).not.toHaveBeenCalled();
@@ -761,7 +761,7 @@ describe(`DiscordMessageTextService`, (): void => {
                 new Error(`hotel trivago reply error`)
               );
 
-              expect(discordMessageHotelTrivagoServiceReplySpy).toHaveBeenCalledTimes(1);
+              expect(discordMessageHotelTrivagoServiceReplySpy).toHaveBeenCalledOnce();
               expect(discordMessageHotelTrivagoServiceReplySpy).toHaveBeenCalledWith(discordMessage);
               expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
               expect(discordMessageAuthorServiceReplySpy).not.toHaveBeenCalled();
@@ -796,7 +796,7 @@ describe(`DiscordMessageTextService`, (): void => {
               new Error(`ping pong reply error`)
             );
 
-            expect(discordMessagePingPongServiceReplySpy).toHaveBeenCalledTimes(1);
+            expect(discordMessagePingPongServiceReplySpy).toHaveBeenCalledOnce();
             expect(discordMessagePingPongServiceReplySpy).toHaveBeenCalledWith(discordMessage);
             expect(discordMessageCommandServiceHandleCommandsSpy).not.toHaveBeenCalled();
             expect(discordMessageAuthorServiceReplySpy).not.toHaveBeenCalled();
@@ -831,7 +831,7 @@ describe(`DiscordMessageTextService`, (): void => {
             new Error(`handleCommands error`)
           );
 
-          expect(discordMessageCommandServiceHandleCommandsSpy).toHaveBeenCalledTimes(1);
+          expect(discordMessageCommandServiceHandleCommandsSpy).toHaveBeenCalledOnce();
           expect(discordMessageCommandServiceHandleCommandsSpy).toHaveBeenCalledWith(discordMessage);
           expect(discordMessagePingPongServiceReplySpy).not.toHaveBeenCalled();
           expect(discordMessageHotelTrivagoServiceReplySpy).not.toHaveBeenCalled();

@@ -43,7 +43,7 @@ describe(`ReleaseTypeService`, (): void => {
 
       service = new ReleaseTypeService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.APP_CONFIG_QUERY_SERVICE);
     });
   });

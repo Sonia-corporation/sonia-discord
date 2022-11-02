@@ -47,7 +47,7 @@ describe(`AppConfigService`, (): void => {
 
       service = new AppConfigService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.APP_CONFIG_SERVICE);
     });
   });
@@ -129,7 +129,7 @@ describe(`AppConfigService`, (): void => {
 
         const result = service.isProduction();
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -143,7 +143,7 @@ describe(`AppConfigService`, (): void => {
 
         const result = service.isProduction();
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });

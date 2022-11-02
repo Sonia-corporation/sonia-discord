@@ -54,7 +54,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
       service = new FirebaseGuildsChannelsFeaturesNoonEnabledStateService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_NOON_ENABLED_STATE_SERVICE
       );
@@ -87,7 +87,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
         service.isEnabled(channel, firebaseGuild);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
           context: `FirebaseGuildsChannelsFeaturesNoonEnabledStateService`,
           message: `text-Firebase guild value-dummy-guild-id channel value-unknown has an invalid id`,
@@ -99,7 +99,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
         const result = service.isEnabled(channel, firebaseGuild);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -118,7 +118,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
           service.isEnabled(channel, firebaseGuild);
 
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
             context: `FirebaseGuildsChannelsFeaturesNoonEnabledStateService`,
             message: `text-Firebase guild value-dummy-guild-id channel value-dummy-channel-id not set`,
@@ -130,7 +130,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
           const result = service.isEnabled(channel, firebaseGuild);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -148,7 +148,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
           service.isEnabled(channel, firebaseGuild);
 
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+          expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
           expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
             context: `FirebaseGuildsChannelsFeaturesNoonEnabledStateService`,
             message: `text-Firebase guild value-dummy-guild-id channel value-dummy-channel-id not up-to-date`,
@@ -160,7 +160,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
           const result = service.isEnabled(channel, firebaseGuild);
 
-          expect(result).toBe(false);
+          expect(result).toBeFalse();
         });
       });
 
@@ -188,7 +188,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
             service.isEnabled(channel, firebaseGuild);
 
-            expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+            expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
             expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
               context: `FirebaseGuildsChannelsFeaturesNoonEnabledStateService`,
               message: `text-Firebase guild value-dummy-guild-id channel value-dummy-channel-id features not set`,
@@ -200,7 +200,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
             const result = service.isEnabled(channel, firebaseGuild);
 
-            expect(result).toBe(false);
+            expect(result).toBeFalse();
           });
         });
 
@@ -231,7 +231,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
               service.isEnabled(channel, firebaseGuild);
 
-              expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+              expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
               expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                 context: `FirebaseGuildsChannelsFeaturesNoonEnabledStateService`,
                 message: `text-Firebase guild value-dummy-guild-id channel value-dummy-channel-id features not up-to-date`,
@@ -243,7 +243,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
               const result = service.isEnabled(channel, firebaseGuild);
 
-              expect(result).toBe(false);
+              expect(result).toBeFalse();
             });
           });
 
@@ -277,7 +277,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
                 service.isEnabled(channel, firebaseGuild);
 
-                expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                 expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                   context: `FirebaseGuildsChannelsFeaturesNoonEnabledStateService`,
                   message: `text-Firebase guild value-dummy-guild-id channel value-dummy-channel-id noon feature not set`,
@@ -289,7 +289,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
                 const result = service.isEnabled(channel, firebaseGuild);
 
-                expect(result).toBe(false);
+                expect(result).toBeFalse();
               });
             });
 
@@ -326,7 +326,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
                   service.isEnabled(channel, firebaseGuild);
 
-                  expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+                  expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
                   expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
                     context: `FirebaseGuildsChannelsFeaturesNoonEnabledStateService`,
                     message: `text-Firebase guild value-dummy-guild-id channel value-dummy-channel-id noon feature not up-to-date`,
@@ -338,7 +338,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
                   const result = service.isEnabled(channel, firebaseGuild);
 
-                  expect(result).toBe(false);
+                  expect(result).toBeFalse();
                 });
               });
 
@@ -386,7 +386,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
                     const result = service.isEnabled(channel, firebaseGuild);
 
-                    expect(result).toBe(false);
+                    expect(result).toBeFalse();
                   });
                 });
 
@@ -419,7 +419,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
                     const result = service.isEnabled(channel, firebaseGuild);
 
-                    expect(result).toBe(false);
+                    expect(result).toBeFalse();
                   });
                 });
 
@@ -452,7 +452,7 @@ describe(`FirebaseGuildsChannelsFeaturesNoonEnabledStateService`, (): void => {
 
                     const result = service.isEnabled(channel, firebaseGuild);
 
-                    expect(result).toBe(true);
+                    expect(result).toBeTrue();
                   });
                 });
               });

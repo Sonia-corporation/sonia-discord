@@ -72,7 +72,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
       service = new QuoteConfigMutatorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.QUOTE_CONFIG_MUTATOR_SERVICE
       );
@@ -186,7 +186,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -195,7 +195,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(quoteConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(quoteConfigCoreServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(quoteConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -204,7 +204,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(quoteConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(quoteConfigServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(quoteConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
   });
@@ -341,7 +341,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
       service.updateApiKey(apiKey);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `QuoteConfigMutatorService`,
         isValueHidden: true,
@@ -380,7 +380,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
       service.updateAuthorIconUrl(authorIconUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `QuoteConfigMutatorService`,
         newValue: IconEnum.MOTIVATION_DAILY_QUOTES,
@@ -416,7 +416,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
       service.updateImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `QuoteConfigMutatorService`,
         newValue: ColorEnum.CANDY,
@@ -454,7 +454,7 @@ describe(`QuoteConfigMutatorService`, (): void => {
 
       service.updateImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `QuoteConfigMutatorService`,
         newValue: IconEnum.MOTIVATION_DAILY_QUOTES,

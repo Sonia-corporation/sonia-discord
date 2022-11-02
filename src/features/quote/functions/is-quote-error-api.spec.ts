@@ -15,7 +15,7 @@ describe(`isQuoteErrorApi()`, (): void => {
 
       const result = isQuoteErrorApi(quoteErrorApi);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -31,7 +31,7 @@ describe(`isQuoteErrorApi()`, (): void => {
 
       const result = isQuoteErrorApi(quoteErrorApi);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -48,7 +48,7 @@ describe(`isQuoteErrorApi()`, (): void => {
 
       const result = isQuoteErrorApi(quoteErrorApi);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 });

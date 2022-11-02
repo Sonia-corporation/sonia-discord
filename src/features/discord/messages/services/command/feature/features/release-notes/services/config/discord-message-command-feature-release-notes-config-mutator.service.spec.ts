@@ -76,7 +76,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesConfigMutatorService`, (): voi
 
       service = new DiscordMessageCommandFeatureReleaseNotesConfigMutatorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_RELEASE_NOTES_CONFIG_MUTATOR_SERVICE
       );
@@ -205,7 +205,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesConfigMutatorService`, (): voi
 
       service.preUpdateConfig();
 
-      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -214,7 +214,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesConfigMutatorService`, (): voi
 
       service.preUpdateConfig();
 
-      expect(discordMessageCommandFeatureReleaseNotesConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageCommandFeatureReleaseNotesConfigCoreServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(discordMessageCommandFeatureReleaseNotesConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -223,7 +223,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesConfigMutatorService`, (): voi
 
       service.preUpdateConfig();
 
-      expect(discordMessageCommandFeatureReleaseNotesConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageCommandFeatureReleaseNotesConfigServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(discordMessageCommandFeatureReleaseNotesConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
   });
@@ -315,7 +315,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesConfigMutatorService`, (): voi
 
         service.updateConfig(config);
 
-        expect(loggerLogSpy).toHaveBeenCalledTimes(1);
+        expect(loggerLogSpy).toHaveBeenCalledOnce();
         expect(loggerLogSpy).toHaveBeenLastCalledWith(
           `debug-● context-[DiscordMessageCommandFeatureReleaseNotesConfigMutatorService][now-format] text-configuration updated`
         );
@@ -441,7 +441,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesConfigMutatorService`, (): voi
 
       service.updateReleaseNotesImageColor(imageColor);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandFeatureReleaseNotesConfigMutatorService`,
         newValue: ColorEnum.SUN,
@@ -479,7 +479,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesConfigMutatorService`, (): voi
 
       service.updateReleaseNotesImageUrl(imageUrl);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `DiscordMessageCommandFeatureReleaseNotesConfigMutatorService`,
         newValue: IconEnum.GIRL,

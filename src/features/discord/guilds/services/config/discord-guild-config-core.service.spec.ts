@@ -42,7 +42,7 @@ describe(`DiscordGuildConfigCoreService`, (): void => {
 
       service = new DiscordGuildConfigCoreService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_GUILD_CONFIG_CORE_SERVICE
       );
@@ -54,7 +54,7 @@ describe(`DiscordGuildConfigCoreService`, (): void => {
 
     service = DiscordGuildConfigCoreService.getInstance();
 
-    expect(service.shouldSendCookiesOnCreate).toBe(true);
+    expect(service.shouldSendCookiesOnCreate).toBeTrue();
   });
 
   it(`should send noon message when it is noon`, (): void => {
@@ -62,7 +62,7 @@ describe(`DiscordGuildConfigCoreService`, (): void => {
 
     service = DiscordGuildConfigCoreService.getInstance();
 
-    expect(service.shouldSendNoonMessage).toBe(true);
+    expect(service.shouldSendNoonMessage).toBeTrue();
   });
 
   it(`should send a message when new members joins the current guild`, (): void => {
@@ -70,7 +70,7 @@ describe(`DiscordGuildConfigCoreService`, (): void => {
 
     service = DiscordGuildConfigCoreService.getInstance();
 
-    expect(service.shouldWelcomeNewMembers).toBe(true);
+    expect(service.shouldWelcomeNewMembers).toBeTrue();
   });
 
   it(`should have a Sonia guild id`, (): void => {

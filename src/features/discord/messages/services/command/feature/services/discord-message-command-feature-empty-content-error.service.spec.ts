@@ -62,7 +62,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
       service = new DiscordMessageCommandFeatureEmptyContentErrorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_COMMAND_FEATURE_EMPTY_CONTENT_ERROR_SERVICE
       );
@@ -110,7 +110,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
       await service.getMessageResponse();
 
-      expect(discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy).toHaveBeenCalledTimes(1);
+      expect(discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy).toHaveBeenCalledOnce();
       expect(discordMessageCommandCliErrorServiceGetCliErrorMessageResponseSpy).toHaveBeenCalledWith();
     });
 
@@ -229,7 +229,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
+      expect(moment(result.options.embed?.timestamp).isValid()).toBeTrue();
       expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
@@ -246,7 +246,7 @@ describe(`DiscordMessageCommandFeatureEmptyContentErrorService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.split).toBe(false);
+      expect(result.options.split).toBeFalse();
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {

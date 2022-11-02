@@ -49,7 +49,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
       service = new FirebaseGuildsChannelsFeaturesReleaseNotesService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.FIREBASE_GUILDS_CHANNELS_FEATURES_RELEASE_NOTES_SERVICE
       );
@@ -73,7 +73,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
         const result = service.isValid(releaseNotes);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -89,7 +89,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
         const result = service.isValid(releaseNotes);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -113,7 +113,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
         const result = service.isUpToDate(releaseNotes);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });
@@ -135,7 +135,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
         const result = service.isSet(releaseNotes);
 
-        expect(result).toBe(false);
+        expect(result).toBeFalse();
       });
     });
 
@@ -149,7 +149,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesService`, (): void => {
 
         const result = service.isSet(releaseNotes);
 
-        expect(result).toBe(true);
+        expect(result).toBeTrue();
       });
     });
   });

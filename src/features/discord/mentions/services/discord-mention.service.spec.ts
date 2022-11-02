@@ -42,7 +42,7 @@ describe(`DiscordMentionService`, (): void => {
 
       service = new DiscordMentionService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.DISCORD_MENTION_SERVICE);
     });
   });

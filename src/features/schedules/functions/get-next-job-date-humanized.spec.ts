@@ -23,7 +23,7 @@ describe(`getNextJobDateHumanized()`, (): void => {
 
       getNextJobDateHumanized(job);
 
-      expect(fromNowSpy).toHaveBeenCalledTimes(1);
+      expect(fromNowSpy).toHaveBeenCalledOnce();
       expect(fromNowSpy).toHaveBeenCalledWith(expect.any(String), false);
     });
 

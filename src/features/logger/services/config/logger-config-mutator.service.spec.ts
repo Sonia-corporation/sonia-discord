@@ -72,7 +72,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
       service = new LoggerConfigMutatorService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.LOGGER_CONFIG_MUTATOR_SERVICE
       );
@@ -89,7 +89,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service = new LoggerConfigMutatorService(config);
 
-        expect(loggerConfigCoreService.isEnabled).toBe(true);
+        expect(loggerConfigCoreService.isEnabled).toBeTrue();
       });
 
       it(`should not update the current level`, (): void => {
@@ -107,7 +107,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service = new LoggerConfigMutatorService(config);
 
-        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBe(false);
+        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBeFalse();
       });
     });
 
@@ -126,7 +126,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service = new LoggerConfigMutatorService(config);
 
-        expect(loggerConfigCoreService.isEnabled).toBe(true);
+        expect(loggerConfigCoreService.isEnabled).toBeTrue();
       });
 
       it(`should override the level`, (): void => {
@@ -144,7 +144,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service = new LoggerConfigMutatorService(config);
 
-        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBe(false);
+        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBeFalse();
       });
     });
   });
@@ -167,7 +167,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(loggerServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -176,7 +176,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(loggerConfigCoreServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerConfigCoreServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(loggerConfigCoreServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
 
@@ -185,7 +185,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
       service.preUpdateConfig();
 
-      expect(loggerConfigServiceGetInstanceSpy).toHaveBeenCalledTimes(1);
+      expect(loggerConfigServiceGetInstanceSpy).toHaveBeenCalledOnce();
       expect(loggerConfigServiceGetInstanceSpy).toHaveBeenCalledWith();
     });
   });
@@ -209,9 +209,9 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
       service.updateConfig();
 
-      expect(loggerConfigCoreService.isEnabled).toBe(true);
+      expect(loggerConfigCoreService.isEnabled).toBeTrue();
       expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
-      expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBe(false);
+      expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBeFalse();
     });
 
     it(`should not log about the config update`, (): void => {
@@ -232,9 +232,9 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerConfigCoreService.isEnabled).toBe(true);
+        expect(loggerConfigCoreService.isEnabled).toBeTrue();
         expect(loggerConfigCoreService.level).toStrictEqual(LoggerConfigLevelEnum.DEBUG);
-        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBe(false);
+        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBeFalse();
       });
 
       it(`should not log about the config update`, (): void => {
@@ -258,7 +258,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerConfigCoreService.isEnabled).toBe(false);
+        expect(loggerConfigCoreService.isEnabled).toBeFalse();
       });
 
       it(`should log about the config update`, (): void => {
@@ -266,7 +266,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenLastCalledWith({
           context: `LoggerConfigMutatorService`,
           message: `text-configuration updated`,
@@ -294,7 +294,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenLastCalledWith({
           context: `LoggerConfigMutatorService`,
           message: `text-configuration updated`,
@@ -314,7 +314,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBe(true);
+        expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBeTrue();
       });
 
       it(`should log about the config update`, (): void => {
@@ -322,7 +322,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
         service.updateConfig(config);
 
-        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledOnce();
         expect(loggerServiceDebugSpy).toHaveBeenLastCalledWith({
           context: `LoggerConfigMutatorService`,
           message: `text-configuration updated`,
@@ -349,7 +349,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
       service.updateEnabledState(isEnabled);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `LoggerConfigMutatorService`,
         newValue: true,
@@ -363,7 +363,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
       service.updateEnabledState(isEnabled);
 
-      expect(loggerConfigCoreService.isEnabled).toBe(true);
+      expect(loggerConfigCoreService.isEnabled).toBeTrue();
     });
   });
 
@@ -387,7 +387,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
       service.updateLevel(level);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `LoggerConfigMutatorService`,
         newValue: LoggerConfigLevelEnum.DEBUG,
@@ -423,7 +423,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
       service.updateShouldDisplayMoreDebugLogsState(shouldDisplayMoreDebugLogs);
 
-      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledOnce();
       expect(configServiceGetUpdatedStringSpy).toHaveBeenCalledWith({
         context: `LoggerConfigMutatorService`,
         newValue: false,
@@ -437,7 +437,7 @@ describe(`LoggerConfigMutatorService`, (): void => {
 
       service.updateShouldDisplayMoreDebugLogsState(shouldDisplayMoreDebugLogs);
 
-      expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBe(false);
+      expect(loggerConfigCoreService.shouldDisplayMoreDebugLogs).toBeFalse();
     });
   });
 });

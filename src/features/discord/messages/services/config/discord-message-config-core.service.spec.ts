@@ -42,7 +42,7 @@ describe(`DiscordMessageConfigCoreService`, (): void => {
 
       service = new DiscordMessageConfigCoreService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(
         ServiceNameEnum.DISCORD_MESSAGE_CONFIG_CORE_SERVICE
       );

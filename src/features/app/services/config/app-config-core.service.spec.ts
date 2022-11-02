@@ -43,7 +43,7 @@ describe(`AppConfigCoreService`, (): void => {
 
       service = new AppConfigCoreService();
 
-      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledTimes(1);
+      expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledOnce();
       expect(coreEventServiceNotifyServiceCreatedSpy).toHaveBeenCalledWith(ServiceNameEnum.APP_CONFIG_CORE_SERVICE);
     });
   });
@@ -69,7 +69,7 @@ describe(`AppConfigCoreService`, (): void => {
 
     service = AppConfigCoreService.getInstance();
 
-    expect(service.isProduction).toBe(false);
+    expect(service.isProduction).toBeFalse();
   });
 
   it(`should have a unknown release date`, (): void => {

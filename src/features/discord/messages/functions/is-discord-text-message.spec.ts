@@ -17,7 +17,7 @@ describe(`isDiscordValidTextMessage()`, (): void => {
 
       const result = isDiscordValidTextMessage(message);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -33,7 +33,7 @@ describe(`isDiscordValidTextMessage()`, (): void => {
 
       const result = isDiscordValidTextMessage(message);
 
-      expect(result).toBe(false);
+      expect(result).toBeFalse();
     });
   });
 
@@ -49,7 +49,7 @@ describe(`isDiscordValidTextMessage()`, (): void => {
 
       const result = isDiscordValidTextMessage(message);
 
-      expect(result).toBe(true);
+      expect(result).toBeTrue();
     });
   });
 });
