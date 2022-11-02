@@ -47,7 +47,7 @@ jobs:
         run: echo 'The PR should not be created'
       - name: Create PR from develop to master
         if: needs.HasLabel.outputs.HAS_LABEL == 'true'
-        uses: peter-evans/create-pull-request@18f7dc018cc2cd597073088f7c7591b9d1c02672 # tag=v3
+        uses: peter-evans/create-pull-request@b4d51739f96fca8047ad065eccef63442d8e99f7 # tag=v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           title: 'chore(master): merge develop into master'
