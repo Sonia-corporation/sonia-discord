@@ -1,4 +1,4 @@
-import type { Config } from '@jest/types';
+import { Config } from '@jest/types';
 
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
@@ -50,6 +50,11 @@ const config: Config.InitialOptions = {
 
   // Make calling deprecated APIs throw helpful error messages
   errorOnDeprecated: true,
+
+  // Setting this value (enableGlobally) to "true" allows the use of fake timers for functions such as "setTimeout"
+  fakeTimers: {
+    enableGlobally: true,
+  },
 
   // Force coverage collection from ignored files using an array of glob patterns
   // forceCoverageMatch: [],
@@ -175,13 +180,7 @@ const config: Config.InitialOptions = {
   // This option allows use of a custom test runner
   // testRunner: "jasmine2",
 
-  // This option sets the URL for the jsdom environment. It is reflected in properties such as location.href
-  // testURL: "http://localhost",
-
   testTimeout: 5000,
-
-  // Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
-  timers: `fake`,
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
