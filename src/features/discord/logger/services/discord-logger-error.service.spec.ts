@@ -427,10 +427,10 @@ describe(`DiscordLoggerErrorService`, (): void => {
         it(`should return an error message response with an embed field value displaying the given error stack trace with an ellipsis when the limit is reached`, (): void => {
           expect.assertions(2);
 
-          const result = service.getErrorMessageResponse(error);
+          const result: IDiscordMessageResponse = service.getErrorMessageResponse(error);
 
           expect(result.options.embed?.fields?.[0].value.length).toBe(1024);
-          expect(_.endsWith(result.options.embed?.fields?.[0].value, `...`)).toBe(true);
+          expect(_.endsWith(_.toString(result.options.embed?.fields?.[0].value), `...`)).toBe(true);
         });
       });
     });

@@ -205,6 +205,8 @@ rules:
         - PascalCase
       suffix:
         - Enum
+    - selector: objectLiteralProperty
+      format: null
   '@typescript-eslint/no-explicit-any':
     - error
     - fixToUnknown: false
@@ -532,6 +534,8 @@ overrides:
             - PascalCase
           suffix:
             - Enum
+        - selector: objectLiteralProperty
+          format: null
       '@typescript-eslint/no-explicit-any': off
       '@typescript-eslint/ban-ts-comment': off
       '@typescript-eslint/unbound-method': off # Disabled as expected by jest because it has it's own version
