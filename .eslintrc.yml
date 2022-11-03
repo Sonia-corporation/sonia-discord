@@ -254,12 +254,7 @@ rules:
   '@typescript-eslint/ban-ts-comment': error
   no-undef-init: error
   no-magic-numbers: off
-  '@typescript-eslint/no-magic-numbers':
-    - error
-    - ignoreEnums: false
-      ignoreNumericLiteralTypes: false
-      ignoreReadonlyClassProperties: false
-      ignoreTypeIndexes: false
+  '@typescript-eslint/no-magic-numbers': error
   prettier/prettier:
     - error
     - printWidth: 120
