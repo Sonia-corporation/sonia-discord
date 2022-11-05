@@ -76,7 +76,8 @@
   },
   "private": false,
   "files": [
-    "dist/*",
+    "dist/index.js",
+    "dist/index.js.map",
     "CHANGELOG.md",
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
