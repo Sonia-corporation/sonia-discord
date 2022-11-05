@@ -558,3 +558,11 @@ overrides:
             - block-like
           next: '*'
       rxjs/no-ignored-subscription: off
+      jest/no-conditional-in-test: error
+      jest/prefer-mock-promise-shorthand: error
+      jest/prefer-each: error
+      jest/prefer-hooks-in-order: error
+      jest/max-expects: off
+      jest/prefer-snapshot-hint:
+        - error
+        - always

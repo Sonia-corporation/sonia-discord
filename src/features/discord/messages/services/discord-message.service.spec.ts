@@ -876,7 +876,7 @@ describe(`DiscordMessageService`, (): void => {
 
               describe(`when the message was successfully sent`, (): void => {
                 beforeEach((): void => {
-                  anyDiscordMessageChannelSendMock.mockReturnValue(Promise.resolve());
+                  anyDiscordMessageChannelSendMock.mockResolvedValue(undefined);
 
                   anyDiscordMessage = createMock<IAnyDiscordMessage>({
                     channel: {
@@ -1097,7 +1097,7 @@ describe(`DiscordMessageService`, (): void => {
 
               describe(`when the messages were successfully sent`, (): void => {
                 beforeEach((): void => {
-                  anyDiscordMessageChannelSendMock.mockReturnValue(Promise.resolve());
+                  anyDiscordMessageChannelSendMock.mockResolvedValue(undefined);
 
                   anyDiscordMessage = createMock<IAnyDiscordMessage>({
                     channel: {
@@ -1350,7 +1350,7 @@ describe(`DiscordMessageService`, (): void => {
 
           describe(`when the message was successfully sent`, (): void => {
             beforeEach((): void => {
-              anyDiscordMessageChannelSendMock.mockReturnValue(Promise.resolve());
+              anyDiscordMessageChannelSendMock.mockResolvedValue(undefined);
 
               anyDiscordMessage = createMock<IAnyDiscordMessage>({
                 channel: {
