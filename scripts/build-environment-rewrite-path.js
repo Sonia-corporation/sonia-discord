@@ -10,7 +10,11 @@ const CONTEXT = `build-environment-rewrite-path`;
  * @param index
  */
 function updateEnvironmentPath(index) {
-  const updatedIndex = _.replace(index, `/src/environment/secret-environment.json`, `/dist/environment.json`);
+  const updatedIndex = _.replace(
+    _.toString(index),
+    `/src/environment/secret-environment.json`,
+    `/dist/environment.json`
+  );
 
   if (_.isEqual(_.toString(index), _.toString(updatedIndex))) {
     LOGGER.warning(CONTEXT, CHALK.text(`Index file from dist was not updated`));

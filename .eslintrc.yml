@@ -118,7 +118,8 @@ rules:
         order: asc
         caseInsensitive: false
   indent: off
-  no-duplicate-imports: error
+  # Prefer import/no-duplicates
+  no-duplicate-imports: off
   sort-imports: off
   new-cap:
     - error
@@ -204,6 +205,8 @@ rules:
         - PascalCase
       suffix:
         - Enum
+    - selector: objectLiteralProperty
+      format: null
   '@typescript-eslint/no-explicit-any':
     - error
     - fixToUnknown: false
@@ -252,10 +255,8 @@ rules:
   '@typescript-eslint/unified-signatures': error
   '@typescript-eslint/ban-ts-comment': error
   no-undef-init: error
-  no-magic-numbers:
-    - error
-    - enforceConst: true
-      detectObjects: false
+  no-magic-numbers: off
+  '@typescript-eslint/no-magic-numbers': error
   prettier/prettier:
     - error
     - printWidth: 120
@@ -289,6 +290,7 @@ rules:
     - error
     - checksConditionals: true
       checksVoidReturn: true
+      checksSpreads: true
   no-invalid-this: off
   '@typescript-eslint/no-invalid-this': error
   prefer-const:
@@ -408,6 +410,12 @@ rules:
   rxjs/no-unsafe-takeuntil: error
   rxjs/prefer-observer: error
   rxjs/throw-error: error
+  '@typescript-eslint/no-redundant-type-constituents': off
+  '@typescript-eslint/no-useless-empty-export': error
+  'space-before-blocks': off
+  '@typescript-eslint/space-before-blocks': error
+  '@typescript-eslint/no-duplicate-enum-values': error
+  '@typescript-eslint/consistent-generic-constructors': error
 overrides:
   - files:
       - '*.js'
@@ -453,6 +461,7 @@ overrides:
             - afterAll
             - afterEach
       no-magic-numbers: off
+      '@typescript-eslint/no-magic-numbers': off
       '@typescript-eslint/ban-types':
         - error
         - types:
@@ -525,6 +534,8 @@ overrides:
             - PascalCase
           suffix:
             - Enum
+        - selector: objectLiteralProperty
+          format: null
       '@typescript-eslint/no-explicit-any': off
       '@typescript-eslint/ban-ts-comment': off
       '@typescript-eslint/unbound-method': off # Disabled as expected by jest because it has it's own version

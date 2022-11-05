@@ -223,7 +223,7 @@ describe(`Messages`, (): void => {
 
       describe(`when there is no params`, (): void => {
         beforeEach((): void => {
-          messages.setParams(_.stubObject());
+          messages.setParams({});
         });
 
         describe(`when there is no given params`, (): void => {

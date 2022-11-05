@@ -2,7 +2,7 @@ import { DiscordCommandFirstArgument } from '../../../../classes/commands/argume
 import { DiscordMessageCommandFeatureNameEnum } from '../enums/discord-message-command-feature-name.enum';
 
 export const DISCORD_MESSAGE_COMMAND_FEATURE_NAME_RELEASE_NOTES: DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum> =
-  new DiscordCommandFirstArgument({
+  new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>({
     description: `Configure the message sent when there is a new release note`,
     name: DiscordMessageCommandFeatureNameEnum.RELEASE_NOTES,
     shortcuts: [DiscordMessageCommandFeatureNameEnum.R],

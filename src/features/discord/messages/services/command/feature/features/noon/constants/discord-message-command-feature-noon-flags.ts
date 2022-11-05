@@ -11,7 +11,7 @@ import { DiscordMessageCommandFeatureNoonStatus } from '../classes/discord-messa
 import { DiscordMessageCommandFeatureNoonFlagEnum } from '../enums/discord-message-command-feature-noon-flag.enum';
 
 export const DISCORD_MESSAGE_COMMAND_FEATURE_NOON_FLAGS: DiscordCommandFlags<DiscordMessageCommandFeatureNoonFlagEnum> =
-  new DiscordCommandFlags({
+  new DiscordCommandFlags<DiscordMessageCommandFeatureNoonFlagEnum>({
     command: DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON,
     flags: [
       new DiscordCommandBooleanFlag<DiscordMessageCommandFeatureNoonFlagEnum>({

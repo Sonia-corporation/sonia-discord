@@ -38,7 +38,6 @@ export class FirebaseGuildsNewVersionCountService extends AbstractService {
    * The goal here is to count the number of guilds
    * Then the number of messages (ak channels)
    * Then the number of messages per guild
-   *
    * @param {Readonly<((Message | void)[] | void)[] | void>} guildMessages The list received as a response when sending release note messages to all Discord guilds
    */
   public countChannelsAndGuilds(guildMessages: Readonly<((Message | null)[] | void)[] | void>): void {
@@ -47,13 +46,16 @@ export class FirebaseGuildsNewVersionCountService extends AbstractService {
     let channelCount = DEFAULT_CHANNEL_COUNT;
 
     if (_.isArray(guildMessages)) {
-      _.forEach(guildMessages, (guildMessage: Readonly<(Message | void)[] | void>): void => {
+      const typedGuildMessages: ((Message | void)[] | void)[] = guildMessages;
+
+      _.forEach(typedGuildMessages, (messages: Readonly<(Message | void)[] | void>): void => {
         totalGuildCount = _.add(totalGuildCount, ONE_GUILD);
 
-        if (_.isArray(guildMessage)) {
+        if (_.isArray(messages)) {
+          const typedGuildMessage: (Message | void)[] = messages;
           let hasCountThisGuild = false;
 
-          _.forEach(guildMessage, (message: Readonly<Message | void>): void => {
+          _.forEach(typedGuildMessage, (message: Readonly<Message | void>): void => {
             if (!_.isNil(message)) {
               channelCount = _.add(channelCount, ONE_CHANNEL);
 

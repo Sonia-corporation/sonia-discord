@@ -16,7 +16,7 @@ import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
 import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedThumbnail } from 'discord.js';
 import faker from 'faker';
-import moment from 'moment-timezone';
+import moment, { MomentInput } from 'moment-timezone';
 import { createHydratedMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../logger/services/chalk/chalk.service`);
@@ -348,8 +348,10 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(moment(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.timestamp).isValid()).toBe(true);
-        expect(moment(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.timestamp).fromNow()).toBe(
+        expect(moment(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.timestamp as MomentInput).isValid()).toBe(
+          true
+        );
+        expect(moment(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.timestamp as MomentInput).fromNow()).toBe(
           `a few seconds ago`
         );
       });
@@ -554,12 +556,14 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       expect(
         moment(
-          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.timestamp
+          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed
+            .timestamp as MomentInput
         ).isValid()
       ).toBe(true);
       expect(
         moment(
-          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.timestamp
+          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed
+            .timestamp as MomentInput
         ).fromNow()
       ).toBe(`a few seconds ago`);
     });

@@ -1,4 +1,4 @@
-/* eslint-disable no-magic-numbers */
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 export enum QuoteErrorApiErrorCodeEnum {
   INVALID_REQUEST = 10,
   PERMISSION_DENIED = 11,

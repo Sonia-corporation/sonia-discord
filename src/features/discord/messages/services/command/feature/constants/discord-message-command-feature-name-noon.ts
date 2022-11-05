@@ -2,7 +2,7 @@ import { DiscordCommandFirstArgument } from '../../../../classes/commands/argume
 import { DiscordMessageCommandFeatureNameEnum } from '../enums/discord-message-command-feature-name.enum';
 
 export const DISCORD_MESSAGE_COMMAND_FEATURE_NAME_NOON: DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum> =
-  new DiscordCommandFirstArgument({
+  new DiscordCommandFirstArgument<DiscordMessageCommandFeatureNameEnum>({
     description: `Configure the noon message sent at 12 A.M.`,
     name: DiscordMessageCommandFeatureNameEnum.NOON,
     shortcuts: [DiscordMessageCommandFeatureNameEnum.N],
