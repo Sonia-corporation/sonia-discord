@@ -398,7 +398,7 @@ describe(`DiscordGuildCreateService`, (): void => {
         describe(`when the primary guild channel is not writable`, (): void => {
           beforeEach((): void => {
             primaryGuildChannel = createMock<GuildChannel>({
-              type: `voice`,
+              type: `GUILD_VOICE`,
             });
 
             discordChannelGuildServiceGetPrimarySpy.mockReturnValue(primaryGuildChannel);
@@ -432,7 +432,7 @@ describe(`DiscordGuildCreateService`, (): void => {
                 return true;
               },
               send: guildChannelSendMock,
-              type: `text`,
+              type: `GUILD_TEXT`,
             });
 
             discordChannelGuildServiceGetPrimarySpy.mockReturnValue(primaryGuildChannel);

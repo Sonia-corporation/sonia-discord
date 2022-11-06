@@ -121,6 +121,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       return Promise.reject(new Error(`Guild channel id nil!`));
     }
 
+    // TODO add support for ThreadChannel
     const guildOrThreadChannel: GuildChannel | ThreadChannel | undefined = guild.channels.cache.get(channel.id);
 
     if (_.isNil(guildOrThreadChannel)) {
@@ -134,9 +135,11 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     return this.sendMessageResponse(guildOrThreadChannel);
   }
 
-  public async sendMessageResponse(guildChannel: Readonly<GuildChannel | ThreadChannel>): Promise<Message | void> {
-    if (!isDiscordGuildChannelWritable(guildChannel)) {
-      this._logGuildChannelNotWritable(guildChannel);
+  public async sendMessageResponse(
+    guildOrThreadChannel: Readonly<GuildChannel | ThreadChannel>
+  ): Promise<Message | void> {
+    if (!isDiscordGuildChannelWritable(guildOrThreadChannel)) {
+      this._logGuildChannelNotWritable(guildOrThreadChannel);
 
       return Promise.reject(new Error(`Guild channel not writable`));
     }
@@ -147,20 +150,20 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       return Promise.reject(new Error(`No message response fetched`));
     }
 
-    this._logSendingMessagesForReleaseNotes(guildChannel);
+    this._logSendingMessagesForReleaseNotes(guildOrThreadChannel);
 
-    return guildChannel
+    return guildOrThreadChannel
       .send({
         ...messageResponse.options,
         content: messageResponse.response,
       })
       .then((message: Message): Promise<Message> => {
-        this._logReleaseNotesMessageSent(guildChannel);
+        this._logReleaseNotesMessageSent(guildOrThreadChannel);
 
         return Promise.resolve(message);
       })
       .catch((error: Readonly<string>): Promise<void> => {
-        this._onMessageError(error, guildChannel);
+        this._onMessageError(error, guildOrThreadChannel);
 
         return Promise.reject(error);
       });

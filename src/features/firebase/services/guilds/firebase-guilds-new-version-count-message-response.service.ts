@@ -31,7 +31,7 @@ export class FirebaseGuildsNewVersionCountMessageResponseService extends Abstrac
   ): IDiscordMessageResponse {
     return {
       options: {
-        embed: this._getMessageEmbed(totalGuildCount, guildCount, channelCount),
+        embeds: [this._getMessageEmbed(totalGuildCount, guildCount, channelCount)],
         split: false,
       },
       response: ``,

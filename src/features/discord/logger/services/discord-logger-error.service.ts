@@ -52,7 +52,7 @@ export class DiscordLoggerErrorService extends AbstractService {
   public getErrorMessageResponse(error: Readonly<Error | string>): IDiscordMessageResponse {
     return {
       options: {
-        embed: this._getMessageEmbed(error),
+        embeds: [this._getMessageEmbed(error)],
         split: false,
       },
       response: ``,

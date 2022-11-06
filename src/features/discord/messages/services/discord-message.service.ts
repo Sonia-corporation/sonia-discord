@@ -39,7 +39,7 @@ export class DiscordMessageService extends AbstractService {
     this._listen();
   }
 
-  public sendMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void> {
+  public sendMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void | void[]> {
     if (!isDiscordValidTextMessage(anyDiscordMessage)) {
       if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
         LoggerService.getInstance().warning({
@@ -76,7 +76,7 @@ export class DiscordMessageService extends AbstractService {
     return this.handleChannelMessage(anyDiscordMessage);
   }
 
-  public handleChannelMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void> {
+  public handleChannelMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void | void[]> {
     if (DiscordChannelService.getInstance().isDm(anyDiscordMessage.channel)) {
       void DiscordChannelTypingService.getInstance().sendTyping(anyDiscordMessage.channel);
 

@@ -26,7 +26,7 @@ export class DiscordLoggerErrorService extends AbstractService {
   public getErrorMessageResponse(): IDiscordMessageResponse {
     return {
       options: {
-        embed: createMock<MessageEmbed>(),
+        embeds: [createMock<MessageEmbed>()],
         split: false,
       },
       response: ``,

@@ -848,15 +848,13 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
     beforeEach((): void => {
       service = new DiscordMessageScheduleNoonService();
 
-      discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
-        createMock<Client>({
-          guilds: {
-            cache: {
-              forEach: noop,
-            } as unknown as Collection<string, Guild>,
-          },
-        })
-      );
+      discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue({
+        guilds: {
+          cache: {
+            forEach: noop,
+          } as unknown as Collection<string, Guild>,
+        },
+      } as Client);
       discordGuildConfigServiceShouldSendNoonMessageSpy = jest
         .spyOn(discordGuildConfigService, `shouldSendNoonMessage`)
         .mockImplementation();
@@ -968,15 +966,13 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         describe(`when there is no guild`, (): void => {
           beforeEach((): void => {
-            discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
-              createMock<Client>({
-                guilds: {
-                  cache: {
-                    forEach: noop,
-                  } as unknown as Collection<string, Guild>,
-                },
-              })
-            );
+            discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue({
+              guilds: {
+                cache: {
+                  forEach: noop,
+                } as unknown as Collection<string, Guild>,
+              },
+            } as Client);
           });
 
           it(`should not send a message`, async (): Promise<void> => {
@@ -998,15 +994,13 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               id: `dummy-guild-id`,
             });
 
-            discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
-              createMock<Client>({
-                guilds: {
-                  cache: {
-                    forEach: (callback): void => callback(guild, `key`, new Map()),
-                  } as Collection<string, Guild>,
-                },
-              })
-            );
+            discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue({
+              guilds: {
+                cache: {
+                  forEach: (callback): void => callback(guild, `key`, new Map()),
+                } as Collection<string, Guild>,
+              },
+            } as Client);
           });
 
           it(`should send a message for the guild`, async (): Promise<void> => {
@@ -1072,18 +1066,16 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
               id: `dummy-guild-id-2`,
             });
 
-            discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
-              createMock<Client>({
-                guilds: {
-                  cache: {
-                    forEach(callback): void {
-                      callback(guild1, `key`, new Map());
-                      callback(guild2, `key`, new Map());
-                    },
-                  } as Collection<string, Guild>,
-                },
-              })
-            );
+            discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue({
+              guilds: {
+                cache: {
+                  forEach(callback): void {
+                    callback(guild1, `key`, new Map());
+                    callback(guild2, `key`, new Map());
+                  },
+                } as Collection<string, Guild>,
+              },
+            } as Client);
           });
 
           it(`should send a message for the guild`, async (): Promise<void> => {

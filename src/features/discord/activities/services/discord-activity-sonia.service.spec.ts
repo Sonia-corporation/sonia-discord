@@ -11,7 +11,7 @@ import { DiscordClientService } from '../../services/discord-client.service';
 import { DISCORD_PRESENCE_ACTIVITY } from '../constants/discord-presence-activity';
 import { DiscordActivityNameEnum } from '../enums/discord-activity-name.enum';
 import { IDiscordPresenceActivity } from '../interfaces/discord-presence-activity';
-import { Activity, Client, Presence, PresenceData } from 'discord.js';
+import { Activity, Client, ClientUser, Presence, PresenceData } from 'discord.js';
 import _ from 'lodash';
 import * as NodeScheduleModule from 'node-schedule';
 import { BehaviorSubject, noop } from 'rxjs';
@@ -77,7 +77,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let discordClientServiceGetClientSpy: jest.SpyInstance;
-    let setRandomPresenceSpy: jest.SpyInstance<Promise<Presence>>;
+    let setRandomPresenceSpy: jest.SpyInstance;
     let startScheduleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
@@ -86,7 +86,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `isReady$`).mockReturnValue(isReady$);
-      setRandomPresenceSpy = jest.spyOn(service, `setRandomPresence`).mockResolvedValue(presence);
+      setRandomPresenceSpy = jest.spyOn(service, `setRandomPresence`).mockReturnValue(presence);
       startScheduleSpy = jest.spyOn(service, `startSchedule`).mockImplementation();
     });
 
@@ -129,7 +129,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       describe(`when the random presence for Sonia failed to be set`, (): void => {
         beforeEach((): void => {
-          setRandomPresenceSpy.mockRejectedValue(new Error(`setRandomPresence error`));
+          setRandomPresenceSpy.mockReturnValue(new Error(`setRandomPresence error`));
         });
 
         it(`should not start the schedule`, async (): Promise<void> => {
@@ -145,7 +145,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       describe(`when the random presence for Sonia was successfully set`, (): void => {
         beforeEach((): void => {
-          setRandomPresenceSpy.mockResolvedValue(presence);
+          setRandomPresenceSpy.mockReturnValue(presence);
         });
 
         it(`should start the schedule`, async (): Promise<void> => {
@@ -563,15 +563,15 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordActivitySoniaService();
-      presence = createMock<Presence>({
+      presence = {
         activities: [
-          createMock<Activity>({
+          {
             name: DiscordActivityNameEnum.APOLLO,
             type: `PLAYING`,
             url: `dummy-url`,
-          }),
+          } as Activity,
         ],
-      });
+      } as Presence;
       setPresenceMock = jest.fn().mockReturnValue(presence);
       presenceActivity = createMock<IDiscordPresenceActivity>({
         name: DiscordActivityNameEnum.APOLLO,
@@ -627,7 +627,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
     describe(`when the Discord client user is valid`, (): void => {
       beforeEach((): void => {
-        client.user = createMock<Client>({
+        client.user = createMock<ClientUser>({
           setPresence: setPresenceMock,
         });
       });

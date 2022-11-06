@@ -100,10 +100,12 @@ describe(`QuoteErrorApiService`, (): void => {
       beforeEach((): void => {
         discordMessageResponse = createHydratedMock<IDiscordMessageResponse>({
           options: {
-            embed: {
-              description: `dummy-description`,
-              title: `dummy-title`,
-            },
+            embeds: [
+              {
+                description: `dummy-description`,
+                title: `dummy-title`,
+              },
+            ],
           },
         });
 
