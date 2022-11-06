@@ -179,7 +179,10 @@ export class DiscordGuildCreateService extends AbstractService {
       .then(
         ({ response, options }: Readonly<IDiscordMessageResponse>): Promise<Message | void> =>
           guildChannel
-            .send(response, options)
+            .send({
+              ...options,
+              content: response,
+            })
             .then((message: Message): Promise<Message> => {
               LoggerService.getInstance().log({
                 context: this._serviceName,

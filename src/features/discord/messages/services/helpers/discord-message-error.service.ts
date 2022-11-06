@@ -46,7 +46,10 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
   ): void {
     if (DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
       anyDiscordMessage.channel
-        .send(response, options)
+        .send({
+          ...options,
+          content: response,
+        })
         .then((): void => {
           if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
             LoggerService.getInstance().log({

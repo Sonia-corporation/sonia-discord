@@ -105,7 +105,10 @@ export class DiscordGuildSoniaService extends AbstractService {
     guildChannel: Readonly<TextChannel | NewsChannel>
   ): void {
     guildChannel
-      .send(messageResponse.response, messageResponse.options)
+      .send({
+        ...messageResponse.options,
+        content: messageResponse.response,
+      })
       .then((): void => {
         if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
           LoggerService.getInstance().log({

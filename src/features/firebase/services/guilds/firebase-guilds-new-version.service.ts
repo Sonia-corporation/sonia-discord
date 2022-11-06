@@ -146,7 +146,10 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     this._logSendingMessagesForReleaseNotes(guildChannel);
 
     return guildChannel
-      .send(messageResponse.response, messageResponse.options)
+      .send({
+        ...messageResponse.options,
+        content: messageResponse.response,
+      })
       .then((message: Message): Promise<Message> => {
         this._logReleaseNotesMessageSent(guildChannel);
 

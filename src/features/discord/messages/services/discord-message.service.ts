@@ -253,7 +253,10 @@ export class DiscordMessageService extends AbstractService {
     });
 
     return anyDiscordMessage.channel
-      .send(response, options)
+      .send({
+        ...options,
+        content: response,
+      })
       .then((): Promise<void> => {
         LoggerService.getInstance().log({
           context: this._serviceName,

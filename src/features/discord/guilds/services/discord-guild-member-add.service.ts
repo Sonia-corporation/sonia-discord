@@ -118,7 +118,10 @@ export class DiscordGuildMemberAddService extends AbstractService {
     });
 
     guildChannel
-      .send(messageResponse.response, messageResponse.options)
+      .send({
+        ...messageResponse.options,
+        content: messageResponse.response,
+      })
       .then((): void => {
         // @todo add coverage
         LoggerService.getInstance().log({
