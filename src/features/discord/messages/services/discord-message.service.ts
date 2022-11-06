@@ -78,19 +78,9 @@ export class DiscordMessageService extends AbstractService {
 
   public handleChannelMessage(anyDiscordMessage: Readonly<IAnyDiscordMessage>): Promise<void> {
     if (DiscordChannelService.getInstance().isDm(anyDiscordMessage.channel)) {
-      void DiscordChannelTypingService.getInstance().addOneIndicator(anyDiscordMessage.channel);
+      void DiscordChannelTypingService.getInstance().sendTyping(anyDiscordMessage.channel);
 
-      return this._dmMessage(anyDiscordMessage)
-        .then((): Promise<void> => {
-          DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
-
-          return Promise.resolve();
-        })
-        .catch((error: Error): Promise<void> => {
-          DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
-
-          return Promise.reject(error);
-        });
+      return this._dmMessage(anyDiscordMessage);
     } else if (DiscordChannelService.getInstance().isText(anyDiscordMessage.channel)) {
       if (
         _.isNil(anyDiscordMessage.guild) ||
@@ -121,7 +111,7 @@ export class DiscordMessageService extends AbstractService {
         DiscordMentionService.getInstance().isValid(anyDiscordMessage.mentions)
       ) {
         if (DiscordMentionService.getInstance().isForEveryone(anyDiscordMessage.mentions)) {
-          void DiscordChannelTypingService.getInstance().addOneIndicator(anyDiscordMessage.channel);
+          void DiscordChannelTypingService.getInstance().sendTyping(anyDiscordMessage.channel);
         } else {
           const sonia: ISonia | null = DiscordSoniaService.getInstance().getSonia();
 
@@ -129,22 +119,12 @@ export class DiscordMessageService extends AbstractService {
             DiscordSoniaService.getInstance().isValid(sonia) &&
             DiscordMentionService.getInstance().isUserMentioned(anyDiscordMessage.mentions, sonia)
           ) {
-            void DiscordChannelTypingService.getInstance().addOneIndicator(anyDiscordMessage.channel);
+            void DiscordChannelTypingService.getInstance().sendTyping(anyDiscordMessage.channel);
           }
         }
       }
 
-      return this._textMessage(anyDiscordMessage)
-        .then((): Promise<void> => {
-          DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
-
-          return Promise.resolve();
-        })
-        .catch((error: Readonly<Error>): Promise<void> => {
-          DiscordChannelTypingService.getInstance().removeOneIndicator(anyDiscordMessage.channel);
-
-          return Promise.reject(error);
-        });
+      return this._textMessage(anyDiscordMessage);
     }
 
     return Promise.reject(new Error(`Discord message is not a DM channel nor a text channel`));

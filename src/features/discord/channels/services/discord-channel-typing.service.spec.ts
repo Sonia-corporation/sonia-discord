@@ -57,18 +57,18 @@ describe(`DiscordChannelTypingService`, (): void => {
     });
   });
 
-  describe(`addOneIndicator()`, (): void => {
+  describe(`sendTyping()`, (): void => {
     let channel: TextChannel | DMChannel | NewsChannel;
 
-    let startTypingMock: jest.Mock;
+    let sendTypingMock: jest.Mock;
     let loggerServiceErrorSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new DiscordChannelTypingService();
 
-      startTypingMock = jest.fn().mockRejectedValue(new Error(`startTyping error`));
+      sendTypingMock = jest.fn().mockRejectedValue(new Error(`sendTyping error`));
       channel = createMock<TextChannel>({
-        startTyping: startTypingMock,
+        sendTyping: sendTypingMock,
       });
       loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
     });
@@ -76,25 +76,25 @@ describe(`DiscordChannelTypingService`, (): void => {
     it(`should add and show one typing indicator for the given channel`, async (): Promise<void> => {
       expect.assertions(3);
 
-      await expect(service.addOneIndicator(channel)).rejects.toThrow(new Error(`startTyping error`));
+      await expect(service.sendTyping(channel)).rejects.toThrow(new Error(`sendTyping error`));
 
-      expect(startTypingMock).toHaveBeenCalledTimes(1);
-      expect(startTypingMock).toHaveBeenCalledWith();
+      expect(sendTypingMock).toHaveBeenCalledTimes(1);
+      expect(sendTypingMock).toHaveBeenCalledWith();
     });
 
     describe(`when an error occur with Discord`, (): void => {
       beforeEach((): void => {
-        startTypingMock.mockRejectedValue(new Error(`startTyping error`));
+        sendTypingMock.mockRejectedValue(new Error(`sendTyping error`));
         channel = createMock<TextChannel>({
           id: `dummy-channel-id`,
-          startTyping: startTypingMock,
+          sendTyping: sendTypingMock,
         });
       });
 
       it(`should log about the error`, async (): Promise<void> => {
         expect.assertions(4);
 
-        await expect(service.addOneIndicator(channel)).rejects.toThrow(new Error(`startTyping error`));
+        await expect(service.sendTyping(channel)).rejects.toThrow(new Error(`sendTyping error`));
 
         expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(2);
         expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(1, {
@@ -103,51 +103,27 @@ describe(`DiscordChannelTypingService`, (): void => {
         } as ILoggerLog);
         expect(loggerServiceErrorSpy).toHaveBeenNthCalledWith(2, {
           context: `DiscordChannelTypingService`,
-          message: `text-Error: startTyping error`,
+          message: `text-Error: sendTyping error`,
         } as ILoggerLog);
       });
     });
 
     describe(`when the typing indicator was successfully shown into Discord`, (): void => {
       beforeEach((): void => {
-        startTypingMock.mockResolvedValue(undefined);
+        sendTypingMock.mockResolvedValue(undefined);
         channel = createMock<TextChannel>({
           id: `dummy-channel-id`,
-          startTyping: startTypingMock,
+          sendTyping: sendTypingMock,
         });
       });
 
       it(`should not log about the error`, async (): Promise<void> => {
         expect.assertions(1);
 
-        await service.addOneIndicator(channel);
+        await service.sendTyping(channel);
 
         expect(loggerServiceErrorSpy).not.toHaveBeenCalled();
       });
-    });
-  });
-
-  describe(`removeOneIndicator()`, (): void => {
-    let channel: TextChannel | DMChannel | NewsChannel;
-
-    let stopTypingMock: jest.Mock;
-
-    beforeEach((): void => {
-      service = new DiscordChannelTypingService();
-
-      stopTypingMock = jest.fn().mockImplementation();
-      channel = createMock<TextChannel>({
-        stopTyping: stopTypingMock,
-      });
-    });
-
-    it(`should remove and hide one typing indicator for the given channel`, (): void => {
-      expect.assertions(2);
-
-      service.removeOneIndicator(channel);
-
-      expect(stopTypingMock).toHaveBeenCalledTimes(1);
-      expect(stopTypingMock).toHaveBeenCalledWith();
     });
   });
 });

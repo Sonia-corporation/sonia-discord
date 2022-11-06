@@ -460,11 +460,8 @@ describe(`DiscordMessageService`, (): void => {
       discordMessageErrorServiceHandleErrorSpy = jest.spyOn(discordMessageErrorService, `handleError`);
       discordChannelServiceIsValidSpy = jest.spyOn(discordChannelService, `isValid`);
       discordChannelTypingServiceAddOneIndicatorSpy = jest
-        .spyOn(discordChannelTypingService, `addOneIndicator`)
+        .spyOn(discordChannelTypingService, `sendTyping`)
         .mockResolvedValue();
-      discordChannelTypingServiceRemoveOneIndicatorSpy = jest
-        .spyOn(discordChannelTypingService, `removeOneIndicator`)
-        .mockImplementation();
       discordAuthorServiceIsValidSpy = jest.spyOn(discordAuthorService, `isValid`).mockImplementation();
       discordMentionServiceIsValidSpy = jest.spyOn(discordMentionService, `isValid`).mockImplementation();
       discordMentionServiceIsForEveryone = jest.spyOn(discordMentionService, `isForEveryone`).mockImplementation();
