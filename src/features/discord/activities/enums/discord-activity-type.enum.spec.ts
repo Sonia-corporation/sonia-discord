@@ -8,10 +8,10 @@ describe(`DiscordActivityTypeEnum`, (): void => {
     expect(getEnumLength(DiscordActivityTypeEnum)).toBe(5);
   });
 
-  it(`should have a member "CUSTOM_STATUS"`, (): void => {
+  it(`should have a member "CUSTOM"`, (): void => {
     expect.assertions(1);
 
-    expect(DiscordActivityTypeEnum.CUSTOM_STATUS).toBe(`CUSTOM_STATUS`);
+    expect(DiscordActivityTypeEnum.CUSTOM).toBe(`CUSTOM`);
   });
 
   it(`should have a member "LISTENING"`, (): void => {
