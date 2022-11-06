@@ -171,7 +171,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
+      expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a warning message response with an embed color`, (): void => {
@@ -181,7 +181,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+      expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     describe(`when the Discord Sonia image url is null`, (): void => {
@@ -198,7 +198,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
         const result = service.getWarningMessageResponse(warning);
 
-        expect(result.options.embed?.footer?.iconURL).toBeUndefined();
+        expect(result.options.embeds?.[0]?.footer?.iconURL).toBeUndefined();
       });
     });
 
@@ -216,7 +216,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
         const result = service.getWarningMessageResponse(warning);
 
-        expect(result.options.embed?.footer?.iconURL).toBe(`dummy-image-url`);
+        expect(result.options.embeds?.[0]?.footer?.iconURL).toBe(`dummy-image-url`);
       });
     });
 
@@ -225,7 +225,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(result.options.embed?.footer?.text).toBe(`Discord warning`);
+      expect(result.options.embeds?.[0]?.footer?.text).toBe(`Discord warning`);
     });
 
     it(`should return a warning message response with an embed thumbnail icon`, (): void => {
@@ -235,7 +235,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(result.options.embed?.thumbnail?.url).toStrictEqual(IconEnum.ALARM);
+      expect(result.options.embeds?.[0]?.thumbnail?.url).toStrictEqual(IconEnum.ALARM);
     });
 
     it(`should return a warning message response with an embed timestamp set as now`, (): void => {
@@ -243,8 +243,8 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
+      expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
+      expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a warning message response with an embed title`, (): void => {
@@ -252,7 +252,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(result.options.embed?.title).toBe(`Warning!`);
+      expect(result.options.embeds?.[0]?.title).toBe(`Warning!`);
     });
 
     it(`should return a warning message response with an embed description displaying the given warning`, (): void => {
@@ -260,7 +260,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(result.options.embed?.description).toBe(`dummy-warning`);
+      expect(result.options.embeds?.[0]?.description).toBe(`dummy-warning`);
     });
 
     it(`should return an unify warning message response`, (): void => {

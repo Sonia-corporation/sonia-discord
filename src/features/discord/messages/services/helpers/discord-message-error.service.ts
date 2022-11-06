@@ -98,10 +98,12 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
   ): IDiscordMessageResponse {
     return {
       options: {
-        embed: _.merge({}, this._getMessageEmbed(), {
-          fields: this._getMessageEmbedFields(error, anyDiscordMessage),
-          title: this._getCustomMessageEmbedTitle(),
-        } as MessageEmbedOptions),
+        embeds: [
+          _.merge({}, this._getMessageEmbed(), {
+            fields: this._getMessageEmbedFields(error, anyDiscordMessage),
+            title: this._getCustomMessageEmbedTitle(),
+          } as MessageEmbedOptions),
+        ],
         split: false,
       },
       response: ``,

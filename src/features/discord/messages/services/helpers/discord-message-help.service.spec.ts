@@ -93,7 +93,7 @@ describe(`DiscordMessageHelpService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
+      expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -102,7 +102,7 @@ describe(`DiscordMessageHelpService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+      expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     it(`should return a Discord message response embed without a description`, async (): Promise<void> => {
@@ -110,7 +110,7 @@ describe(`DiscordMessageHelpService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.description).toBeUndefined();
+      expect(result.options.embeds?.[0]?.description).toBeUndefined();
     });
 
     it(`should return a Discord message response embed without fields`, async (): Promise<void> => {
@@ -118,7 +118,7 @@ describe(`DiscordMessageHelpService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.fields).toBeUndefined();
+      expect(result.options.embeds?.[0]?.fields).toBeUndefined();
     });
 
     it(`should return a Discord message response embed with a footer containing an icon and a text`, async (): Promise<void> => {
@@ -127,7 +127,7 @@ describe(`DiscordMessageHelpService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.footer).toStrictEqual({
+      expect(result.options.embeds?.[0]?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `At your service`,
       } as MessageEmbedFooter);
@@ -143,7 +143,7 @@ describe(`DiscordMessageHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: undefined,
           text: `At your service`,
         } as MessageEmbedFooter);
@@ -160,7 +160,7 @@ describe(`DiscordMessageHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `At your service`,
         } as MessageEmbedFooter);
@@ -173,7 +173,7 @@ describe(`DiscordMessageHelpService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.thumbnail).toStrictEqual({
+      expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
       } as MessageEmbedThumbnail);
     });
@@ -183,8 +183,8 @@ describe(`DiscordMessageHelpService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
+      expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
+      expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed without a title`, async (): Promise<void> => {
@@ -192,7 +192,7 @@ describe(`DiscordMessageHelpService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.title).toBeUndefined();
+      expect(result.options.embeds?.[0]?.title).toBeUndefined();
     });
 
     it(`should return a Discord message response not split`, async (): Promise<void> => {

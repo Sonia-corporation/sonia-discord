@@ -706,7 +706,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
+        expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
       });
 
       it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -715,7 +715,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       describe(`when the enabled state is undefined`, (): void => {
@@ -731,7 +731,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.title).toStrictEqual(
+          expect(result.options.embeds?.[0]?.title).toStrictEqual(
             DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU
           );
         });
@@ -741,7 +741,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.description).toBe(
+          expect(result.options.embeds?.[0]?.description).toBe(
             `I will not send a message containing the release notes when a new feature is deployed since it was never enabled on this channel.`
           );
         });
@@ -760,7 +760,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.title).toStrictEqual(
+          expect(result.options.embeds?.[0]?.title).toStrictEqual(
             DiscordMessageCommandFeatureReleaseNotesHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU
           );
         });
@@ -770,7 +770,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.description).toBe(
+          expect(result.options.embeds?.[0]?.description).toBe(
             `I will not send a message containing the release notes when a new feature is deployed since it was disabled on this channel.`
           );
         });
@@ -789,7 +789,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.title).toStrictEqual(
+          expect(result.options.embeds?.[0]?.title).toStrictEqual(
             DiscordMessageCommandFeatureReleaseNotesHumanizeEnabledMessagesEnum.I_LOVE_YOU
           );
         });
@@ -799,7 +799,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.description).toBe(
+          expect(result.options.embeds?.[0]?.description).toBe(
             `I will send a message on this channel containing the release notes when a new feature is deployed.`
           );
         });
@@ -811,7 +811,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `dummy-image-url`,
           text: `At your service`,
         } as MessageEmbedFooter);
@@ -827,7 +827,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.footer).toStrictEqual({
+          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: undefined,
             text: `At your service`,
           } as MessageEmbedFooter);
@@ -844,7 +844,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.footer).toStrictEqual({
+          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `image-url`,
             text: `At your service`,
           } as MessageEmbedFooter);
@@ -857,7 +857,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.options.embed?.thumbnail).toStrictEqual({
+        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
         } as MessageEmbedThumbnail);
       });
@@ -867,8 +867,8 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-        expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
+        expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
+        expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
       });
 
       it(`should return a Discord message response not split`, async (): Promise<void> => {

@@ -655,7 +655,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
+        expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
       });
 
       it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -664,7 +664,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       describe(`when the enabled state is undefined`, (): void => {
@@ -680,7 +680,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.title).toStrictEqual(
+          expect(result.options.embeds?.[0]?.title).toStrictEqual(
             DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU
           );
         });
@@ -690,7 +690,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.description).toBe(
+          expect(result.options.embeds?.[0]?.description).toBe(
             `I will not send a message at noon since it was never enabled on this channel.`
           );
         });
@@ -709,7 +709,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.title).toStrictEqual(
+          expect(result.options.embeds?.[0]?.title).toStrictEqual(
             DiscordMessageCommandFeatureNoonHumanizeDisabledMessagesEnum.I_WILL_NOT_BOTHER_YOU
           );
         });
@@ -719,7 +719,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.description).toBe(
+          expect(result.options.embeds?.[0]?.description).toBe(
             `I will not send a message at noon since it was disabled on this channel.`
           );
         });
@@ -738,7 +738,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.title).toStrictEqual(
+          expect(result.options.embeds?.[0]?.title).toStrictEqual(
             DiscordMessageCommandFeatureNoonHumanizeEnabledMessagesEnum.I_LOVE_YOU
           );
         });
@@ -748,7 +748,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.description).toBe(
+          expect(result.options.embeds?.[0]?.description).toBe(
             `I will send a message each day at noon (12 A.M) on Paris timezone on this channel.`
           );
         });
@@ -760,7 +760,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `dummy-image-url`,
           text: `At your service`,
         } as MessageEmbedFooter);
@@ -776,7 +776,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.footer).toStrictEqual({
+          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: undefined,
             text: `At your service`,
           } as MessageEmbedFooter);
@@ -793,7 +793,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
           const result = await service.getMessageResponse(state);
 
-          expect(result.options.embed?.footer).toStrictEqual({
+          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `image-url`,
             text: `At your service`,
           } as MessageEmbedFooter);
@@ -806,7 +806,7 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.options.embed?.thumbnail).toStrictEqual({
+        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
         } as MessageEmbedThumbnail);
       });
@@ -816,8 +816,8 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
 
         const result = await service.getMessageResponse(state);
 
-        expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-        expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
+        expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
+        expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
       });
 
       it(`should return a Discord message response not split`, async (): Promise<void> => {

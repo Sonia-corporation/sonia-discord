@@ -175,7 +175,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
+        expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
       });
 
       it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -184,7 +184,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       it(`should return a Discord message response embed with a description`, async (): Promise<void> => {
@@ -192,7 +192,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.description).toBe(
+        expect(result.options.embeds?.[0]?.description).toBe(
           `Below is the complete list of commands.\nYou can either use \`-\`, \`!\` or \`$\` as prefix to run a command.`
         );
       });
@@ -202,7 +202,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.fields).toHaveLength(9);
+        expect(result.options.embeds?.[0]?.fields).toHaveLength(9);
       });
 
       it(`should return a Discord message response embed with a cookie field`, async (): Promise<void> => {
@@ -210,7 +210,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.fields?.[0]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
           name: `Cookie (*cookie*, *cookies* or *c*)`,
           value: `Because I am good, life gave me cookies. Now it is my turn to give you some.`,
         } as EmbedFieldData);
@@ -221,7 +221,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.fields?.[1]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
           name: `Error (*error* or *bug*)`,
           value: `Create a bug in my core system. Do not do this one, of course!`,
         } as EmbedFieldData);
@@ -232,7 +232,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.fields?.[2]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
           name: `Feature (*feature* or *f*)`,
           value: `Change my behavior on this guild or on this channel. Help me to be better! I have some cool abilities you know!`,
         } as EmbedFieldData);
@@ -243,7 +243,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.fields?.[3]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[3]).toStrictEqual({
           name: `Help (*help* or *h*)`,
           value: `Ask for my help, it is obvious! And maybe I will, who knows?`,
         } as EmbedFieldData);
@@ -254,7 +254,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.fields?.[4]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[4]).toStrictEqual({
           name: `Lunch (*lunch* or *l*)`,
           value: `There is a time to eat.`,
         } as EmbedFieldData);
@@ -265,7 +265,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.fields?.[5]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[5]).toStrictEqual({
           name: `Quote (*quote* or *q*)`,
           value: `I quote others only in order to better express myself.`,
         } as EmbedFieldData);
@@ -276,7 +276,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.fields?.[6]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[6]).toStrictEqual({
           name: `Release notes (*release-notes* or *r*)`,
           value: `Display the last version release notes.`,
         } as EmbedFieldData);
@@ -287,7 +287,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.fields?.[7]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[7]).toStrictEqual({
           name: `Version (*version* or *v*)`,
           value: `Display my current application version.`,
         } as EmbedFieldData);
@@ -298,7 +298,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.fields?.[8]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[8]).toStrictEqual({
           name: `Further help`,
           value: `You can also checkout the [readme](https://github.com/Sonia-corporation/sonia-discord/blob/master/README.md).
       It contains more information about how I work.`,
@@ -311,7 +311,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `dummy-image-url`,
           text: `At your service`,
         } as MessageEmbedFooter);
@@ -327,7 +327,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
           const result = await service.getMessageResponse();
 
-          expect(result.options.embed?.footer).toStrictEqual({
+          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: undefined,
             text: `At your service`,
           } as MessageEmbedFooter);
@@ -344,7 +344,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
           const result = await service.getMessageResponse();
 
-          expect(result.options.embed?.footer).toStrictEqual({
+          expect(result.options.embeds?.[0]?.footer).toStrictEqual({
             iconURL: `image-url`,
             text: `At your service`,
           } as MessageEmbedFooter);
@@ -357,7 +357,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.thumbnail).toStrictEqual({
+        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.ARTIFICIAL_INTELLIGENCE,
         } as MessageEmbedThumbnail);
       });
@@ -367,8 +367,8 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-        expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
+        expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
+        expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
       });
 
       it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -376,7 +376,7 @@ describe(`DiscordMessageCommandHelpService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.title).toBe(`So, you need my help? Cool.`);
+        expect(result.options.embeds?.[0]?.title).toBe(`So, you need my help? Cool.`);
       });
 
       it(`should return a Discord message response not split`, async (): Promise<void> => {

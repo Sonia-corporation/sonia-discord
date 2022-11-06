@@ -115,7 +115,7 @@ describe(`QuoteErrorApiService`, (): void => {
 
         const result = await service.getMessageResponse(error);
 
-        expect(result.options.embed?.description).toStrictEqual(error.message);
+        expect(result.options.embeds?.[0]?.description).toStrictEqual(error.message);
       });
 
       it(`should return an error message response with a specific title`, async (): Promise<void> => {
@@ -123,7 +123,7 @@ describe(`QuoteErrorApiService`, (): void => {
 
         const result = await service.getMessageResponse(error);
 
-        expect(result.options.embed?.title).toBe(`Oops, something went wrong`);
+        expect(result.options.embeds?.[0]?.title).toBe(`Oops, something went wrong`);
       });
     });
   });

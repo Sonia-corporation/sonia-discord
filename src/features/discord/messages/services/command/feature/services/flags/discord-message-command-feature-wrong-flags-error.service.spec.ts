@@ -117,7 +117,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
+      expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -126,7 +126,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+      expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     describe(`when there is one given flag error`, (): void => {
@@ -139,7 +139,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embed?.description).toBe(`**1** error found.`);
+        expect(result.options.embeds?.[0]?.description).toBe(`**1** error found.`);
       });
 
       it(`should return a Discord message response embed with 1 field`, async (): Promise<void> => {
@@ -147,7 +147,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embed?.fields).toHaveLength(1);
+        expect(result.options.embeds?.[0]?.fields).toHaveLength(1);
       });
 
       it(`should return a Discord message response embed with the fields containing the flags errors`, async (): Promise<void> => {
@@ -155,7 +155,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embed?.fields?.[0]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
           inline: false,
           name: flagsErrors[0].name,
           value: flagsErrors[0].description,
@@ -177,7 +177,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embed?.description).toBe(`**3** errors found.`);
+        expect(result.options.embeds?.[0]?.description).toBe(`**3** errors found.`);
       });
 
       it(`should return a Discord message response embed with 3 fields`, async (): Promise<void> => {
@@ -185,7 +185,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embed?.fields).toHaveLength(3);
+        expect(result.options.embeds?.[0]?.fields).toHaveLength(3);
       });
 
       it(`should return a Discord message response embed with the fields containing the flags errors`, async (): Promise<void> => {
@@ -193,19 +193,19 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embed?.fields?.[0]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
           inline: false,
           name: flagsErrors[0].name,
           value: flagsErrors[0].description,
         } as EmbedFieldData);
 
-        expect(result.options.embed?.fields?.[1]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
           inline: false,
           name: flagsErrors[1].name,
           value: flagsErrors[1].description,
         } as EmbedFieldData);
 
-        expect(result.options.embed?.fields?.[2]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
           inline: false,
           name: flagsErrors[2].name,
           value: flagsErrors[2].description,
@@ -219,7 +219,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(result.options.embed?.footer).toStrictEqual({
+      expect(result.options.embeds?.[0]?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `Invalid feature command`,
       } as MessageEmbedFooter);
@@ -235,7 +235,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: undefined,
           text: `Invalid feature command`,
         } as MessageEmbedFooter);
@@ -252,7 +252,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(flagsErrors);
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `Invalid feature command`,
         } as MessageEmbedFooter);
@@ -265,7 +265,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(result.options.embed?.thumbnail).toStrictEqual({
+      expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
       } as MessageEmbedThumbnail);
     });
@@ -275,8 +275,8 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
+      expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
+      expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -284,7 +284,7 @@ describe(`DiscordMessageCommandFeatureWrongFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(flagsErrors);
 
-      expect(result.options.embed?.title).toBe(`I can not handle your request.`);
+      expect(result.options.embeds?.[0]?.title).toBe(`I can not handle your request.`);
     });
 
     it(`should return a Discord message response not split`, async (): Promise<void> => {
