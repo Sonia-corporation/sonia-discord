@@ -554,7 +554,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
   describe(`setPresence()`, (): void => {
     let presence: Presence;
-    let setPresenceMock: jest.Mock<Promise<Presence>, unknown[]>;
+    let setPresenceMock: jest.Mock;
     let presenceActivity: IDiscordPresenceActivity;
     let client: Client;
 
@@ -565,14 +565,14 @@ describe(`DiscordActivitySoniaService`, (): void => {
       service = new DiscordActivitySoniaService();
       presence = createMock<Presence>({
         activities: [
-          {
+          createMock<Activity>({
             name: DiscordActivityNameEnum.APOLLO,
             type: `PLAYING`,
             url: `dummy-url`,
-          } as Activity,
+          }),
         ],
       });
-      setPresenceMock = jest.fn<Promise<Presence>, unknown[]>().mockRejectedValue(new Error(`setPresence: error`));
+      setPresenceMock = jest.fn().mockReturnValue(presence);
       presenceActivity = createMock<IDiscordPresenceActivity>({
         name: DiscordActivityNameEnum.APOLLO,
         type: `PLAYING`,
@@ -588,10 +588,10 @@ describe(`DiscordActivitySoniaService`, (): void => {
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
     });
 
-    it(`should get the Discord client`, async (): Promise<void> => {
+    it(`should get the Discord client`, (): void => {
       expect.assertions(3);
 
-      await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`setPresence: error`));
+      expect((): Presence => service.setPresence(presenceActivity)).toThrow(new Error(`setPresence: error`));
 
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(2);
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
@@ -602,68 +602,66 @@ describe(`DiscordActivitySoniaService`, (): void => {
         client.user = null;
       });
 
-      it(`should not set the presence`, async (): Promise<void> => {
+      it(`should throw`, (): void => {
+        expect.assertions(1);
+
+        expect((): Presence => service.setPresence(presenceActivity)).toThrow(new Error(`Client user is not valid`));
+      });
+
+      it(`should not set the presence`, (): void => {
         expect.assertions(2);
 
-        await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`Client user is not valid`));
+        expect((): Presence => service.setPresence(presenceActivity)).toThrow(new Error(`Client user is not valid`));
 
         expect(setPresenceMock).not.toHaveBeenCalled();
       });
 
-      it(`should not log about the update of the presence`, async (): Promise<void> => {
+      it(`should not log about the update of the presence`, (): void => {
         expect.assertions(2);
 
-        await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`Client user is not valid`));
+        expect((): Presence => service.setPresence(presenceActivity)).toThrow(new Error(`Client user is not valid`));
 
         expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
       });
     });
 
     describe(`when the Discord client user is valid`, (): void => {
-      it(`should set the presence`, async (): Promise<void> => {
-        expect.assertions(3);
+      beforeEach((): void => {
+        client.user = {
+          setPresence: setPresenceMock,
+        };
+      });
 
-        await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`setPresence: error`));
+      it(`should set the presence`, (): void => {
+        expect.assertions(2);
+
+        service.setPresence(presenceActivity);
 
         expect(setPresenceMock).toHaveBeenCalledTimes(1);
         expect(setPresenceMock).toHaveBeenCalledWith({
-          activity: {
-            name: DiscordActivityNameEnum.APOLLO,
-            type: `PLAYING`,
-            url: `dummy-url`,
-          },
+          activities: [
+            {
+              name: DiscordActivityNameEnum.APOLLO,
+              type: `PLAYING`,
+              url: `dummy-url`,
+            },
+          ],
           afk: false,
           status: `online`,
         } as PresenceData);
       });
 
-      describe(`when the presence was not successfully set`, (): void => {
-        it(`should not log about the update of the presence`, async (): Promise<void> => {
-          expect.assertions(2);
+      it(`should log about the update of the presence`, (): void => {
+        expect.assertions(2);
 
-          await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`setPresence: error`));
+        const result = service.setPresence(presenceActivity);
 
-          expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
-        });
-      });
-
-      describe(`when the presence was successfully set`, (): void => {
-        beforeEach((): void => {
-          setPresenceMock.mockResolvedValue(presence);
-        });
-
-        it(`should log about the update of the presence`, async (): Promise<void> => {
-          expect.assertions(3);
-
-          const result = await service.setPresence(presenceActivity);
-
-          expect(result).toStrictEqual(presence);
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-          expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-            context: `DiscordActivitySoniaService`,
-            message: `text-Sonia presence updated to: value-PLAYING text-x value-Apollo`,
-          } as ILoggerLog);
-        });
+        expect(result).toStrictEqual(presence);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+          context: `DiscordActivitySoniaService`,
+          message: `text-Sonia presence updated to: value-PLAYING text-x value-Apollo`,
+        } as ILoggerLog);
       });
     });
   });

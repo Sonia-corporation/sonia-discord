@@ -8,9 +8,6 @@ import { ChalkService } from '../../../logger/services/chalk/chalk.service';
 import { LoggerService } from '../../../logger/services/logger.service';
 import { getNextJobDate } from '../../../schedules/functions/get-next-job-date';
 import { getNextJobDateHumanized } from '../../../schedules/functions/get-next-job-date-humanized';
-import { DiscordGuildSoniaChannelNameEnum } from '../../guilds/enums/discord-guild-sonia-channel-name.enum';
-import { DiscordGuildSoniaService } from '../../guilds/services/discord-guild-sonia.service';
-import { DiscordLoggerErrorService } from '../../logger/services/discord-logger-error.service';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DISCORD_PRESENCE_ACTIVITY } from '../constants/discord-presence-activity';
 import { IDiscordPresenceActivity } from '../interfaces/discord-presence-activity';
@@ -52,49 +49,31 @@ export class DiscordActivitySoniaService extends AbstractService {
     this._createSchedule();
   }
 
-  public setPresence(presenceActivity: Readonly<IDiscordPresenceActivity>): Promise<Presence> {
+  public setPresence(presenceActivity: Readonly<IDiscordPresenceActivity>): Presence {
     const clientUser: ClientUser | null = DiscordClientService.getInstance().getClient().user;
 
     if (_.isNil(clientUser)) {
-      return Promise.reject(new Error(`Client user is not valid`));
+      throw new Error(`Client user is not valid`);
     }
 
-    return clientUser
-      .setPresence({
-        activity: presenceActivity,
-        afk: false,
-        status: `online`,
-      })
-      .then((presence: Readonly<Presence>): Promise<Presence> => {
-        LoggerService.getInstance().debug({
-          context: this._serviceName,
-          message: ChalkService.getInstance().text(
-            `Sonia presence updated to: ${ChalkService.getInstance().value(
-              _.head(presence.activities)?.type
-            )} ${ChalkService.getInstance().text(`x`)} ${ChalkService.getInstance().value(
-              _.head(presence.activities)?.name
-            )}`
-          ),
-        });
+    const presence: Presence = clientUser.setPresence({
+      activities: [presenceActivity],
+      afk: false,
+      status: `online`,
+    });
 
-        return Promise.resolve(presence);
-      })
-      .catch((error: Readonly<Error | string>): Promise<never> => {
-        LoggerService.getInstance().error({
-          context: this._serviceName,
-          message: ChalkService.getInstance().text(`could not set the Sonia presence`),
-        });
-        LoggerService.getInstance().error({
-          context: this._serviceName,
-          message: ChalkService.getInstance().error(error),
-        });
-        DiscordGuildSoniaService.getInstance().sendMessageToChannel({
-          channelName: DiscordGuildSoniaChannelNameEnum.ERRORS,
-          messageResponse: DiscordLoggerErrorService.getInstance().getErrorMessageResponse(error),
-        });
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(
+        `Sonia presence updated to: ${ChalkService.getInstance().value(
+          _.head(presence.activities)?.type
+        )} ${ChalkService.getInstance().text(`x`)} ${ChalkService.getInstance().value(
+          _.head(presence.activities)?.name
+        )}`
+      ),
+    });
 
-        return Promise.reject(error);
-      });
+    return presence;
   }
 
   public setRandomPresence(): Promise<Presence> {
