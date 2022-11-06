@@ -24,19 +24,21 @@ export class QuoteErrorApiService extends DiscordCommandErrorCoreService {
   public getMessageResponse(error: Readonly<IQuoteErrorApi>): Promise<IDiscordMessageResponse> {
     return DiscordMessageCommandCliErrorService.getInstance()
       .getCliErrorMessageResponse()
-      .then(
-        (messageResponse: Readonly<IDiscordMessageResponse>): IDiscordMessageResponse =>
-          _.merge(messageResponse, {
-            options: {
-              embed: _.merge({}, this._getMessageEmbed(), {
-                description: this._getMessageEmbedDescription(error),
-                title: this._getCustomMessageEmbedTitle(),
-              } as MessageEmbedOptions),
-              split: false,
-            },
-            response: ``,
-          } as IDiscordMessageResponse)
-      );
+      .then((messageResponse: Readonly<IDiscordMessageResponse>): IDiscordMessageResponse => {
+        const options: MessageEmbedOptions = {
+          description: this._getMessageEmbedDescription(error),
+          title: this._getCustomMessageEmbedTitle(),
+        };
+        const message: IDiscordMessageResponse = {
+          options: {
+            embeds: [_.merge({}, this._getMessageEmbed(), options)],
+            split: false,
+          },
+          response: ``,
+        };
+
+        return _.merge(messageResponse, message);
+      });
   }
 
   private _getMessageEmbedDescription({ message }: Readonly<IQuoteErrorApi>): string {

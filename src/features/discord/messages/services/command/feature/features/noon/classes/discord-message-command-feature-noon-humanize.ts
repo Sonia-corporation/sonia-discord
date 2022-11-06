@@ -60,18 +60,17 @@ export class DiscordMessageCommandFeatureNoonHumanize<T extends string>
   public getMessageResponse(state: Readonly<IFirebaseGuildChannelFeatureNoonState>): Promise<IDiscordMessageResponse> {
     return DiscordMessageHelpService.getInstance()
       .getMessageResponse()
-      .then(
-        (helpMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> =>
-          Promise.resolve(
-            _.merge({}, helpMessageResponse, {
-              options: {
-                embed: this._getMessageEmbed(state),
-                split: false,
-              },
-              response: ``,
-            })
-          )
-      );
+      .then((helpMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+        const message: IDiscordMessageResponse = {
+          options: {
+            embeds: [this._getMessageEmbed(state)],
+            split: false,
+          },
+          response: ``,
+        };
+
+        return Promise.resolve(_.merge({}, helpMessageResponse, message));
+      });
   }
 
   private _isNoonEnabled(firebaseGuild: Readonly<IFirebaseGuild>, channelId: Readonly<Snowflake>): boolean | undefined {

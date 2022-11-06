@@ -99,14 +99,14 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
     error: unknown,
     anyDiscordMessage: Readonly<IAnyDiscordMessage>
   ): IDiscordMessageResponse {
+    const options: MessageEmbedOptions = {
+      fields: this._getMessageEmbedFields(error, anyDiscordMessage),
+      title: this._getCustomMessageEmbedTitle(),
+    };
+
     return {
       options: {
-        embeds: [
-          _.merge({}, this._getMessageEmbed(), {
-            fields: this._getMessageEmbedFields(error, anyDiscordMessage),
-            title: this._getCustomMessageEmbedTitle(),
-          } as MessageEmbedOptions),
-        ],
+        embeds: [_.merge({}, this._getMessageEmbed(), options)],
         split: false,
       },
       response: ``,

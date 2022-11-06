@@ -29,18 +29,17 @@ export class DiscordMessageCommandFeatureOppositeFlagsErrorService extends Disco
   public getMessageResponse(oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>): Promise<IDiscordMessageResponse> {
     return DiscordMessageCommandCliErrorService.getInstance()
       .getCliErrorMessageResponse()
-      .then(
-        (cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> =>
-          Promise.resolve(
-            _.merge(cliErrorMessageResponse, {
-              options: {
-                embed: this._getMessageEmbed(oppositeFlags),
-                split: false,
-              },
-              response: ``,
-            } as IDiscordMessageResponse)
-          )
-      );
+      .then((cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+        const message: IDiscordMessageResponse = {
+          options: {
+            embeds: [this._getMessageEmbed(oppositeFlags)],
+            split: false,
+          },
+          response: ``,
+        };
+
+        return Promise.resolve(_.merge(cliErrorMessageResponse, message));
+      });
   }
 
   private _getMessageEmbed(oppositeFlags: Readonly<IDiscordCommandFlagsOpposite>): MessageEmbedOptions {

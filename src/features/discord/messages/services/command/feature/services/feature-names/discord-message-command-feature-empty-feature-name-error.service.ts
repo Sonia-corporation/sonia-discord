@@ -29,18 +29,17 @@ export class DiscordMessageCommandFeatureEmptyFeatureNameErrorService extends Di
   ): Promise<IDiscordMessageResponse> {
     return DiscordMessageCommandCliErrorService.getInstance()
       .getCliErrorMessageResponse()
-      .then(
-        (cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> =>
-          Promise.resolve(
-            _.merge(cliErrorMessageResponse, {
-              options: {
-                embed: this._getMessageEmbed(anyDiscordMessage, commands),
-                split: false,
-              },
-              response: ``,
-            } as IDiscordMessageResponse)
-          )
-      );
+      .then((cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+        const message: IDiscordMessageResponse = {
+          options: {
+            embeds: [this._getMessageEmbed(anyDiscordMessage, commands)],
+            split: false,
+          },
+          response: ``,
+        };
+
+        return Promise.resolve(_.merge(cliErrorMessageResponse, message));
+      });
   }
 
   private _getMessageEmbed(

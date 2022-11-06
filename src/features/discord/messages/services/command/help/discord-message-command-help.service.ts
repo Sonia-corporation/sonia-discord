@@ -38,18 +38,17 @@ export class DiscordMessageCommandHelpService extends AbstractService {
   public getMessageResponse(): Promise<IDiscordMessageResponse> {
     return DiscordMessageHelpService.getInstance()
       .getMessageResponse()
-      .then(
-        (helpDiscordMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> =>
-          Promise.resolve(
-            _.merge({}, helpDiscordMessageResponse, {
-              options: {
-                embed: this._getMessageEmbed(),
-                split: false,
-              },
-              response: ``,
-            })
-          )
-      );
+      .then((helpDiscordMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+        const message: IDiscordMessageResponse = {
+          options: {
+            embeds: [this._getMessageEmbed()],
+            split: false,
+          },
+          response: ``,
+        };
+
+        return Promise.resolve(_.merge({}, helpDiscordMessageResponse, message));
+      });
   }
 
   public hasCommand(message: Readonly<string>): boolean {

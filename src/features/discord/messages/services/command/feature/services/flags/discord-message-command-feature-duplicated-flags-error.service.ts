@@ -31,18 +31,17 @@ export class DiscordMessageCommandFeatureDuplicatedFlagsErrorService extends Dis
   ): Promise<IDiscordMessageResponse> {
     return DiscordMessageCommandCliErrorService.getInstance()
       .getCliErrorMessageResponse()
-      .then(
-        (cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> =>
-          Promise.resolve(
-            _.merge(cliErrorMessageResponse, {
-              options: {
-                embed: this._getMessageEmbed(flagsDuplicated),
-                split: false,
-              },
-              response: ``,
-            } as IDiscordMessageResponse)
-          )
-      );
+      .then((cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+        const message: IDiscordMessageResponse = {
+          options: {
+            embeds: [this._getMessageEmbed(flagsDuplicated)],
+            split: false,
+          },
+          response: ``,
+        };
+
+        return Promise.resolve(_.merge(cliErrorMessageResponse, message));
+      });
   }
 
   private _getMessageEmbed(flagsDuplicated: Readonly<IDiscordCommandFlagsDuplicated>): MessageEmbedOptions {

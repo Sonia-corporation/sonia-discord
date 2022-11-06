@@ -26,18 +26,17 @@ export class DiscordMessageCommandFeatureEmptyContentErrorService extends Discor
   public getMessageResponse(): Promise<IDiscordMessageResponse> {
     return DiscordMessageCommandCliErrorService.getInstance()
       .getCliErrorMessageResponse()
-      .then(
-        (cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> =>
-          Promise.resolve(
-            _.merge(cliErrorMessageResponse, {
-              options: {
-                embed: this._getMessageEmbed(),
-                split: false,
-              },
-              response: ``,
-            } as IDiscordMessageResponse)
-          )
-      );
+      .then((cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+        const message: IDiscordMessageResponse = {
+          options: {
+            embeds: [this._getMessageEmbed()],
+            split: false,
+          },
+          response: ``,
+        };
+
+        return Promise.resolve(_.merge(cliErrorMessageResponse, message));
+      });
   }
 
   private _getMessageEmbed(): MessageEmbedOptions {
