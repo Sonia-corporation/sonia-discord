@@ -45,7 +45,7 @@ export class DiscordLoggerWarningService extends AbstractService {
   public getWarningMessageResponse(warning: Readonly<string>): IDiscordMessageResponse {
     return {
       options: {
-        embed: this._getMessageEmbed(warning),
+        embeds: [this._getMessageEmbed(warning)],
         split: false,
       },
       response: ``,

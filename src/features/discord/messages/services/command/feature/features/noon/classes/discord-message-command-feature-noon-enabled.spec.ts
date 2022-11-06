@@ -156,7 +156,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               channel: {
                 id: `dummy-channel-id`,
-                type: `news`,
+                type: `GUILD_NEWS`,
               },
               guild: {
                 id: `dummy-guild-id`,
@@ -191,7 +191,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             anyDiscordMessage = createMock<IAnyDiscordMessage>({
               channel: {
                 id: `dummy-channel-id`,
-                type: `dm`,
+                type: `DM`,
               },
               guild: {
                 id: `dummy-guild-id`,
@@ -559,7 +559,7 @@ describe(`DiscordMessageCommandFeatureNoonEnabled`, (): void => {
             anyDiscordMessage = createMock<Message>({
               channel: {
                 id: `dummy-channel-id`,
-                type: `text`,
+                type: `GUILD_TEXT`,
               },
               guild: {
                 id: `dummy-guild-id`,

@@ -15,7 +15,7 @@ import { DiscordMessageCommandCookieService } from '../../messages/services/comm
 import { DiscordMessageRightsService } from '../../messages/services/rights/discord-message-rights.service';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
-import { Guild, GuildChannel, Message } from 'discord.js';
+import { Guild, GuildChannel, Message, ThreadChannel } from 'discord.js';
 import admin from 'firebase-admin';
 import _ from 'lodash';
 import { firstValueFrom } from 'rxjs';
@@ -100,7 +100,8 @@ export class DiscordGuildCreateService extends AbstractService {
       return Promise.reject(new Error(`Can not send cookies message`));
     }
 
-    const primaryGuildChannel: GuildChannel | null = DiscordChannelGuildService.getInstance().getPrimary(guild);
+    const primaryGuildChannel: GuildChannel | ThreadChannel | null =
+      DiscordChannelGuildService.getInstance().getPrimary(guild);
 
     if (_.isNil(primaryGuildChannel)) {
       return Promise.reject(new Error(`No primary guild channel found`));
@@ -160,7 +161,7 @@ export class DiscordGuildCreateService extends AbstractService {
     return false;
   }
 
-  private _sendCookieMessageToChannel(guildChannel: Readonly<GuildChannel>): Promise<Message | void> {
+  private _sendCookieMessageToChannel(guildChannel: Readonly<GuildChannel | ThreadChannel>): Promise<Message | void> {
     if (!isDiscordGuildChannelWritable(guildChannel)) {
       LoggerService.getInstance().debug({
         context: this._serviceName,

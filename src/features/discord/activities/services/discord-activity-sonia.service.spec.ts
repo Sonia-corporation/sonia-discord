@@ -627,9 +627,9 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
     describe(`when the Discord client user is valid`, (): void => {
       beforeEach((): void => {
-        client.user = {
+        client.user = createMock<Client>({
           setPresence: setPresenceMock,
-        };
+        });
       });
 
       it(`should set the presence`, (): void => {
@@ -677,10 +677,10 @@ describe(`DiscordActivitySoniaService`, (): void => {
       setPresenceSpy = jest.spyOn(service, `setPresence`).mockImplementation();
     });
 
-    it(`should get a random Discord presence activity`, async (): Promise<void> => {
+    it(`should get a random Discord presence activity`, (): void => {
       expect.assertions(3);
 
-      await expect(service.setRandomPresence()).rejects.toThrow(new Error(`No presence activity`));
+      expect((): Presence => service.setRandomPresence()).toThrow(new Error(`No presence activity`));
 
       expect(sampleSpy).toHaveBeenCalledTimes(1);
       expect(sampleSpy).toHaveBeenCalledWith(DISCORD_PRESENCE_ACTIVITY);
@@ -691,10 +691,10 @@ describe(`DiscordActivitySoniaService`, (): void => {
         sampleSpy.mockReturnValue(undefined);
       });
 
-      it(`should not set the Discord presence activity`, async (): Promise<void> => {
+      it(`should not set the Discord presence activity`, (): void => {
         expect.assertions(2);
 
-        await expect(service.setRandomPresence()).rejects.toThrow(new Error(`No presence activity`));
+        expect((): Presence => service.setRandomPresence()).toThrow(new Error(`No presence activity`));
 
         expect(setPresenceSpy).not.toHaveBeenCalled();
       });
@@ -705,10 +705,10 @@ describe(`DiscordActivitySoniaService`, (): void => {
         sampleSpy.mockReturnValue(DISCORD_PRESENCE_ACTIVITY[0]);
       });
 
-      it(`should set the Discord presence activity`, async (): Promise<void> => {
+      it(`should set the Discord presence activity`, (): void => {
         expect.assertions(2);
 
-        await service.setRandomPresence();
+        service.setRandomPresence();
 
         expect(setPresenceSpy).toHaveBeenCalledTimes(1);
         expect(setPresenceSpy).toHaveBeenCalledWith(DISCORD_PRESENCE_ACTIVITY[0]);

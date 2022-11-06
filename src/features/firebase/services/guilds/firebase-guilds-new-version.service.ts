@@ -29,7 +29,7 @@ import { isUpToDateFirebaseGuild } from '../../functions/guilds/is-up-to-date-fi
 import { IFirebaseGuildChannel } from '../../types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
-import { Guild, GuildChannel, Message } from 'discord.js';
+import { Guild, GuildChannel, Message, ThreadChannel } from 'discord.js';
 import admin from 'firebase-admin';
 import _ from 'lodash';
 import { firstValueFrom, forkJoin, Observable } from 'rxjs';
@@ -117,9 +117,13 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
     this._logFirebaseGuildChannelReleaseNotesEnabled(guild, channel);
 
-    const guildChannel: GuildChannel | undefined = guild.channels.cache.get(channel.id as string);
+    if (_.isNil(channel.id)) {
+      return Promise.reject(new Error(`Guild channel id nil!`));
+    }
 
-    if (_.isNil(guildChannel)) {
+    const guildOrThreadChannel: GuildChannel | ThreadChannel | undefined = guild.channels.cache.get(channel.id);
+
+    if (_.isNil(guildOrThreadChannel)) {
       this._logInValidDiscordGuildChannel(guild, channel);
 
       return Promise.reject(new Error(`Guild channel not found`));
@@ -127,10 +131,10 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
     this._logValidDiscordGuildChannel(guild, channel);
 
-    return this.sendMessageResponse(guildChannel);
+    return this.sendMessageResponse(guildOrThreadChannel);
   }
 
-  public async sendMessageResponse(guildChannel: Readonly<GuildChannel>): Promise<Message | void> {
+  public async sendMessageResponse(guildChannel: Readonly<GuildChannel | ThreadChannel>): Promise<Message | void> {
     if (!isDiscordGuildChannelWritable(guildChannel)) {
       this._logGuildChannelNotWritable(guildChannel);
 
@@ -453,7 +457,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     });
   }
 
-  private _logGuildChannelNotWritable({ id }: Readonly<GuildChannel>): void {
+  private _logGuildChannelNotWritable({ id }: Readonly<GuildChannel | ThreadChannel>): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(

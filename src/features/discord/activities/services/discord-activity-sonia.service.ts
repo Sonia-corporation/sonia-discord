@@ -15,7 +15,7 @@ import { ClientUser, Presence } from 'discord.js';
 import _ from 'lodash';
 import { Job, scheduleJob } from 'node-schedule';
 import { firstValueFrom, Observable } from 'rxjs';
-import { filter, mergeMap, take, tap } from 'rxjs/operators';
+import { filter, map, take, tap } from 'rxjs/operators';
 
 const MINIMAL_RANGE_MINUTES = 5;
 const MAXIMUM_RANGE_MINUTES = 15;
@@ -76,11 +76,11 @@ export class DiscordActivitySoniaService extends AbstractService {
     return presence;
   }
 
-  public setRandomPresence(): Promise<Presence> {
+  public setRandomPresence(): Presence {
     const presenceActivity: IDiscordPresenceActivity | undefined = _.sample(DISCORD_PRESENCE_ACTIVITY);
 
     if (_.isNil(presenceActivity)) {
-      return Promise.reject(new Error(`No presence activity`));
+      throw new Error(`No presence activity`);
     }
 
     return this.setPresence(presenceActivity);
@@ -138,7 +138,7 @@ export class DiscordActivitySoniaService extends AbstractService {
     this._logNextUpdaterJobDate();
   }
 
-  private _executeJob(): Promise<Presence> {
+  private _executeJob(): Presence {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(`job triggered`),
@@ -178,7 +178,7 @@ export class DiscordActivitySoniaService extends AbstractService {
       .isReady$()
       .pipe(
         filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
-        mergeMap((): Promise<Presence> => this.setRandomPresence()),
+        map((): Presence => this.setRandomPresence()),
         take(ONE_EMITTER),
         tap({
           next: (): void => {
