@@ -22,7 +22,10 @@ globals:
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
-  project: ./tsconfig.json
+  project:
+    - './tsconfig.*?.json'
+  extraFileExtensions:
+    - .mjs
 parser: '@typescript-eslint/parser'
 plugins:
   - '@typescript-eslint'
@@ -36,12 +39,19 @@ plugins:
 settings:
   import/extensions:
     - .js
+    - .mjs
     - .ts
   import/parsers:
     '@typescript-eslint/parser':
       - .ts
   import/cache:
     lifetime: Infinity
+  import/resolver:
+    typescript:
+      alwaysTryTypes: true
+      project:
+        - './tsconfig.app.json'
+        - './tsconfig.spec.json'
 rules:
   progress/activate: 1
   '@typescript-eslint/member-ordering':
