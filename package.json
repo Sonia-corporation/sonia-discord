@@ -71,7 +71,7 @@
     "template": "ts"
   },
   "engines": {
-    "node": "16.16.0",
+    "node": "16.18.1",
     "npm": "8.19.2"
   },
   "private": false,
