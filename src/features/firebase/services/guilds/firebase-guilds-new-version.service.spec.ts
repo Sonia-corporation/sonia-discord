@@ -1451,7 +1451,8 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
           await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
           expect(sendMock).toHaveBeenCalledTimes(1);
-          expect(sendMock).toHaveBeenCalledWith(`dummy-response`, {
+          expect(sendMock).toHaveBeenCalledWith({
+            content: `dummy-response`,
             split: false,
           });
         });

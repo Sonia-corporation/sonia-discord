@@ -52,9 +52,11 @@ export class DiscordMessageCommandFeatureNoonHumanize<T extends string>
       return this._getNoFirebaseGuildError(anyDiscordMessage.id, anyDiscordMessage.guild.id);
     }
 
-    return Promise.resolve({
+    const state: IFirebaseGuildChannelFeatureNoonState = {
       isEnabled: this._isNoonEnabled(firebaseGuild, anyDiscordMessage.channel.id),
-    });
+    };
+
+    return Promise.resolve(state);
   }
 
   public getMessageResponse(state: Readonly<IFirebaseGuildChannelFeatureNoonState>): Promise<IDiscordMessageResponse> {

@@ -39,13 +39,15 @@ export class DiscordMessageCommandLunchService extends AbstractService {
   }
 
   public getMessageResponse(): Promise<IDiscordMessageResponse> {
-    return Promise.resolve({
+    const message: IDiscordMessageResponse = {
       options: {
-        embed: this._getMessageEmbed(),
+        embeds: [this._getMessageEmbed()],
         split: false,
       },
       response: ``,
-    });
+    };
+
+    return Promise.resolve(message);
   }
 
   public hasCommand(message: Readonly<string>): boolean {

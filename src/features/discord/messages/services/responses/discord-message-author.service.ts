@@ -31,11 +31,13 @@ export class DiscordMessageAuthorService extends AbstractService {
       }
     }
 
-    return Promise.resolve({
+    const message: IDiscordMessageResponse = {
       options: {
         split: false,
       },
       response: getReplyWithEnvPrefix(response),
-    });
+    };
+
+    return Promise.resolve(message);
   }
 }

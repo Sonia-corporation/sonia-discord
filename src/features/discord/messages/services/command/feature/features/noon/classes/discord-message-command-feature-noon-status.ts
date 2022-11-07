@@ -50,12 +50,14 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
   }
 
   public getMessageResponse(isEnabled: Readonly<boolean | undefined>): Promise<IDiscordMessageResponse> {
-    return Promise.resolve({
+    const message: IDiscordMessageResponse = {
       options: {
         split: false,
       },
       response: this._getResponse(isEnabled),
-    });
+    };
+
+    return Promise.resolve(message);
   }
 
   private _getResponse(isEnabled: Readonly<boolean | undefined>): string {

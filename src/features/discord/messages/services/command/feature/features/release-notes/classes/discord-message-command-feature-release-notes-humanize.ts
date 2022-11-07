@@ -56,9 +56,11 @@ export class DiscordMessageCommandFeatureReleaseNotesHumanize<T extends string>
       return this._getNoFirebaseGuildError(anyDiscordMessage.id, anyDiscordMessage.guild.id);
     }
 
-    return Promise.resolve({
+    const state: IFirebaseGuildChannelFeatureReleaseNotesState = {
       isEnabled: this._isReleaseNotesEnabled(firebaseGuild, anyDiscordMessage.channel.id),
-    });
+    };
+
+    return Promise.resolve(state);
   }
 
   public getMessageResponse(

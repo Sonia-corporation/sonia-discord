@@ -51,13 +51,15 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
           return QuoteErrorApiService.getInstance().getMessageResponse(quote);
         }
 
-        return Promise.resolve({
+        const message: IDiscordMessageResponse = {
           options: {
-            embed: this._getMessageEmbed(quote),
+            embeds: [this._getMessageEmbed(quote)],
             split: false,
           },
           response: ``,
-        });
+        };
+
+        return Promise.resolve(message);
       })
       .catch((error: Readonly<Error>): never => {
         DiscordMessageErrorService.getInstance().handleError(error, anyDiscordMessage);
