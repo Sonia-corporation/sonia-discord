@@ -435,20 +435,12 @@ describe(`DiscordLoggerErrorService`, (): void => {
       });
     });
 
-    it(`should return an unify error message response`, (): void => {
-      expect.assertions(1);
-
-      const result = service.getErrorMessageResponse(error);
-
-      expect(result.options.split).toBe(false);
-    });
-
     it(`should return an error message response with an empty response`, (): void => {
       expect.assertions(1);
 
       const result = service.getErrorMessageResponse(error);
 
-      expect(result.response).toBe(``);
+      expect(result.content).toBe(``);
     });
   });
 });

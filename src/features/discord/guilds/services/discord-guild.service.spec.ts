@@ -107,19 +107,19 @@ describe(`DiscordGuildService`, (): void => {
     let guilds: Guild[];
 
     let discordClientServiceGetClientSpy: jest.SpyInstance;
-    let arrayMock: jest.Mock;
+    let toJSONMock: jest.Mock;
 
     beforeEach((): void => {
       service = new DiscordGuildService();
       guilds = [createMock<Guild>(), createMock<Guild>()];
 
-      arrayMock = jest.fn().mockReturnValue(guilds);
+      toJSONMock = jest.fn().mockReturnValue(guilds);
       // @todo remove casting once https://github.com/Typescript-TDD/ts-auto-mock/issues/464 is fixed
       discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `getClient`).mockReturnValue(
         createMock<Client>({
           guilds: {
             cache: {
-              array: arrayMock,
+              toJSON: toJSONMock,
             } as unknown as undefined,
           },
         })
@@ -140,8 +140,8 @@ describe(`DiscordGuildService`, (): void => {
 
       const result = service.getGuilds();
 
-      expect(arrayMock).toHaveBeenCalledTimes(1);
-      expect(arrayMock).toHaveBeenCalledWith();
+      expect(toJSONMock).toHaveBeenCalledTimes(1);
+      expect(toJSONMock).toHaveBeenCalledWith();
       expect(result).toStrictEqual(guilds);
     });
   });

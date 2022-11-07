@@ -17,7 +17,7 @@ import { DiscordSoniaService } from '../../users/services/discord-sonia.service'
 import { ISonia } from '../../users/types/sonia';
 import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../types/any-discord-message';
-import { Client, MessageOptions } from 'discord.js';
+import { Client, MessageOptions, MessagePayload } from 'discord.js';
 import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
@@ -435,10 +435,8 @@ describe(`DiscordMessageService`, (): void => {
         id: `dummy-id`,
       });
       discordMessageResponse = createMock<IDiscordMessageResponse>({
-        options: {
-          split: false,
-        },
-        response: `dummy-response`,
+        content: `dummy-response`,
+        options: {},
       });
 
       discordChannelServiceIsDmSpy = jest.spyOn(discordChannelService, `isDm`).mockImplementation();
@@ -482,7 +480,7 @@ describe(`DiscordMessageService`, (): void => {
         });
 
         it(`should do nothing`, async (): Promise<void> => {
-          expect.assertions(8);
+          expect.assertions(7);
 
           await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
             new Error(`Discord message is not a DM channel nor a text channel`)
@@ -537,7 +535,7 @@ describe(`DiscordMessageService`, (): void => {
           });
 
           it(`should do nothing`, async (): Promise<void> => {
-            expect.assertions(7);
+            expect.assertions(6);
 
             await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
               new Error(`Sonia is not authorized for this guild`)
@@ -788,10 +786,11 @@ describe(`DiscordMessageService`, (): void => {
                   new Error(`Fake test error: send`)
                 );
 
+                const message: string | MessagePayload | MessageOptions = {
+                  content: `dummy-response`,
+                };
                 expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(2);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(`dummy-response`, {
-                  split: false,
-                } as MessageOptions);
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(message);
               });
 
               describe(`when the message was not successfully sent`, (): void => {
@@ -877,22 +876,16 @@ describe(`DiscordMessageService`, (): void => {
 
             beforeEach((): void => {
               discordMessageResponseA = createMock<IDiscordMessageResponse>({
-                options: {
-                  split: false,
-                },
-                response: `dummy-response-a`,
+                content: `dummy-response-a`,
+                options: {},
               });
               discordMessageResponseB = createMock<IDiscordMessageResponse>({
-                options: {
-                  split: false,
-                },
-                response: `dummy-response-b`,
+                content: `dummy-response-b`,
+                options: {},
               });
               discordMessageResponseC = createMock<IDiscordMessageResponse>({
-                options: {
-                  split: false,
-                },
-                response: `dummy-response-c`,
+                content: `dummy-response-c`,
+                options: {},
               });
               discordMessageResponses = [discordMessageResponseA, discordMessageResponseB, discordMessageResponseC];
 
@@ -954,16 +947,19 @@ describe(`DiscordMessageService`, (): void => {
                   new Error(`Fake test error: send`)
                 );
 
+                const messageA: string | MessagePayload | MessageOptions = {
+                  content: `dummy-response-a`,
+                };
+                const messageB: string | MessagePayload | MessageOptions = {
+                  content: `dummy-response-b`,
+                };
+                const messageC: string | MessagePayload | MessageOptions = {
+                  content: `dummy-response-c`,
+                };
                 expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(6);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(1, `dummy-response-a`, {
-                  split: false,
-                } as MessageOptions);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(2, `dummy-response-b`, {
-                  split: false,
-                } as MessageOptions);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(3, `dummy-response-c`, {
-                  split: false,
-                } as MessageOptions);
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(1, messageA);
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(2, messageB);
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(3, messageC);
               });
 
               describe(`when the messages were not successfully sent`, (): void => {
@@ -1031,7 +1027,7 @@ describe(`DiscordMessageService`, (): void => {
 
                   const result = await service.handleChannelMessage(anyDiscordMessage);
 
-                  expect(result).toBeUndefined();
+                  expect(result).toStrictEqual([undefined, undefined, undefined]);
                   expect(loggerServiceLogSpy).toHaveBeenCalledTimes(3);
                   expect(loggerServiceLogSpy).toHaveBeenNthCalledWith(1, {
                     context: `DiscordMessageService`,
@@ -1055,7 +1051,7 @@ describe(`DiscordMessageService`, (): void => {
 
                   const result = await service.handleChannelMessage(anyDiscordMessage);
 
-                  expect(result).toBeUndefined();
+                  expect(result).toStrictEqual([undefined, undefined, undefined]);
                   expect(discordMessageErrorServiceHandleErrorSpy).not.toHaveBeenCalled();
                 });
               });
@@ -1181,10 +1177,11 @@ describe(`DiscordMessageService`, (): void => {
               new Error(`Fake test error: send`)
             );
 
+            const message: string | MessagePayload | MessageOptions = {
+              content: `dummy-response`,
+            };
             expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(2);
-            expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(`dummy-response`, {
-              split: false,
-            } as MessageOptions);
+            expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(message);
           });
 
           describe(`when the message was not successfully sent`, (): void => {

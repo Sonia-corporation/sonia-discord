@@ -32,10 +32,8 @@ export class DiscordMessageAuthorService extends AbstractService {
     }
 
     const message: IDiscordMessageResponse = {
-      options: {
-        split: false,
-      },
-      response: getReplyWithEnvPrefix(response),
+      content: getReplyWithEnvPrefix(response),
+      options: {},
     };
 
     return Promise.resolve(message);

@@ -40,11 +40,10 @@ export class DiscordMessageCommandCookieService extends AbstractService {
 
   public getMessageResponse(): Promise<IDiscordMessageResponse> {
     const message: IDiscordMessageResponse = {
+      content: ``,
       options: {
         embeds: [this._getMessageEmbed()],
-        split: false,
       },
-      response: ``,
     };
 
     return Promise.resolve(message);

@@ -356,20 +356,12 @@ describe(`DiscordMessageCommandFeatureEmptyFeatureNameErrorService`, (): void =>
       expect(result.options.embeds?.[0]?.title).toBe(`I can not handle your request.`);
     });
 
-    it(`should return a Discord message response not split`, async (): Promise<void> => {
-      expect.assertions(1);
-
-      const result = await service.getMessageResponse(anyDiscordMessage, commands);
-
-      expect(result.options.split).toBe(false);
-    });
-
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {
       expect.assertions(1);
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands);
 
-      expect(result.response).toBe(``);
+      expect(result.content).toBe(``);
     });
   });
 });

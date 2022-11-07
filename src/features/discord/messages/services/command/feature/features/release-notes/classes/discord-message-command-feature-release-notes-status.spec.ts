@@ -634,14 +634,6 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
       isEnabled = false;
     });
 
-    it(`should return a Discord message response not split`, async (): Promise<void> => {
-      expect.assertions(1);
-
-      const result = await service.getMessageResponse(isEnabled);
-
-      expect(result.options.split).toBe(false);
-    });
-
     describe(`when the enabled state is undefined`, (): void => {
       beforeEach((): void => {
         isEnabled = undefined;
@@ -652,7 +644,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
 
         const result = await service.getMessageResponse(isEnabled);
 
-        expect(result.response).toBe(`The release notes feature is disabled.`);
+        expect(result.content).toBe(`The release notes feature is disabled.`);
       });
     });
 
@@ -666,7 +658,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
 
         const result = await service.getMessageResponse(isEnabled);
 
-        expect(result.response).toBe(`The release notes feature is disabled.`);
+        expect(result.content).toBe(`The release notes feature is disabled.`);
       });
     });
 
@@ -680,7 +672,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesStatus`, (): void => {
 
         const result = await service.getMessageResponse(isEnabled);
 
-        expect(result.response).toBe(`The release notes feature is enabled.`);
+        expect(result.content).toBe(`The release notes feature is enabled.`);
       });
     });
   });

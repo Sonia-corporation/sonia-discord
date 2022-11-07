@@ -146,7 +146,7 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
     return guildOrThreadChannel
       .send({
         ...messageResponse.options,
-        content: messageResponse.response,
+        content: messageResponse.content,
       })
       .then((message: Message): Promise<Message> => {
         this._logNoonMessageSent(guildOrThreadChannel);
@@ -303,10 +303,8 @@ export class DiscordMessageScheduleNoonService extends AbstractService {
 
   private _getMessageResponse(): IDiscordMessageResponse {
     return {
-      options: {
-        split: false,
-      },
-      response: `Il est midi!`,
+      content: `Il est midi!`,
+      options: {},
     };
   }
 

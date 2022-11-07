@@ -250,14 +250,6 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
         discordMessageContentServiceHasContentSpy.mockReturnValue(true);
       });
 
-      it(`should return a Discord message response not split`, async (): Promise<void> => {
-        expect.assertions(1);
-
-        const result = await service.reply(anyDiscordMessage);
-
-        expect(result.options.split).toBe(false);
-      });
-
       describe(`when the given Discord message contains a valid mention with HOTEL`, (): void => {
         beforeEach((): void => {
           anyDiscordMessage.content = `<@!123> HOTEL`;
@@ -280,7 +272,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toBe(`**[dev]** trivago`);
+          expect(result.content).toBe(`**[dev]** trivago`);
         });
       });
 
@@ -306,7 +298,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toBe(`**[dev]** trivago`);
+          expect(result.content).toBe(`**[dev]** trivago`);
         });
       });
 
@@ -332,7 +324,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toBe(`**[dev]** trivago`);
+          expect(result.content).toBe(`**[dev]** trivago`);
         });
       });
 
@@ -358,7 +350,7 @@ describe(`DiscordMessageHotelTrivagoService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toBe(`**[dev]** trivago`);
+          expect(result.content).toBe(`**[dev]** trivago`);
         });
       });
     });

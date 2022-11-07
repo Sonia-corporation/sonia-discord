@@ -46,10 +46,8 @@ export class DiscordMessageAnyQuestionPineapplePizzaService extends AbstractServ
     }
 
     const message: IDiscordMessageResponse = {
-      options: {
-        split: false,
-      },
-      response: getReplyWithEnvPrefix(`Do you like pineapple pizza?`),
+      content: getReplyWithEnvPrefix(`Do you like pineapple pizza?`),
+      options: {},
     };
 
     return Promise.resolve(message);

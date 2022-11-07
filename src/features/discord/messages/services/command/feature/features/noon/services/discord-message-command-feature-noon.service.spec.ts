@@ -330,20 +330,12 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           expect(result[0].options.embeds?.[0]?.title).toBe(`Noon feature updated.`);
         });
 
-        it(`should return a Discord message response not split`, async (): Promise<void> => {
-          expect.assertions(1);
-
-          const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
-
-          expect(result[0].options.split).toBe(false);
-        });
-
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].response).toBe(``);
+          expect(result[0].content).toBe(``);
         });
       });
 
@@ -484,20 +476,12 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           expect(result[0].options.embeds?.[0]?.title).toBe(`Noon feature updated.`);
         });
 
-        it(`should return a Discord message response not split`, async (): Promise<void> => {
-          expect.assertions(1);
-
-          const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
-
-          expect(result[0].options.split).toBe(false);
-        });
-
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].response).toBe(``);
+          expect(result[0].content).toBe(``);
         });
       });
 
@@ -531,13 +515,13 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
 
         beforeEach((): void => {
           discordMessageResponseA = createMock<IDiscordMessageResponse>({
-            response: `dummy-response-a`,
+            content: `dummy-response-a`,
           });
           discordMessageResponseB = createMock<IDiscordMessageResponse>({
-            response: `dummy-response-b`,
+            content: `dummy-response-b`,
           });
           discordMessageResponseC = createMock<IDiscordMessageResponse>({
-            response: `dummy-response-c`,
+            content: `dummy-response-c`,
           });
           discordMessageResponses = [discordMessageResponseA, discordMessageResponseB, discordMessageResponseC];
           discordCommandFlagsResponse = discordMessageResponses;
@@ -571,13 +555,13 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
             createMock<IDiscordCommandFlagSuccess>(),
           ];
           discordMessageResponseA = createMock<IDiscordMessageResponse>({
-            response: `dummy-response-a`,
+            content: `dummy-response-a`,
           });
           discordMessageResponseB = createMock<IDiscordMessageResponse>({
-            response: `dummy-response-b`,
+            content: `dummy-response-b`,
           });
           discordMessageResponseC = createMock<IDiscordMessageResponse>({
-            response: `dummy-response-c`,
+            content: `dummy-response-c`,
           });
           discordMessageResponses = [discordMessageResponseA, discordMessageResponseB, discordMessageResponseC];
           discordCommandFlagsResponse = _.concat<IDiscordCommandFlagResponse>(
@@ -714,20 +698,12 @@ describe(`DiscordMessageCommandFeatureNoonService`, (): void => {
           expect(result[0].options.embeds?.[0]?.title).toBe(`Noon feature updated.`);
         });
 
-        it(`should return a Discord message response not split`, async (): Promise<void> => {
-          expect.assertions(1);
-
-          const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
-
-          expect(result[0].options.split).toBe(false);
-        });
-
         it(`should return a Discord message response without a response text`, async (): Promise<void> => {
           expect.assertions(1);
 
           const result = await service.getMessageResponse(anyDiscordMessage, messageFlags);
 
-          expect(result[0].response).toBe(``);
+          expect(result[0].content).toBe(``);
         });
       });
     });

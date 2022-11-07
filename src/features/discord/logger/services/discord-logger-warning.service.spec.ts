@@ -263,20 +263,12 @@ describe(`DiscordLoggerWarningService`, (): void => {
       expect(result.options.embeds?.[0]?.description).toBe(`dummy-warning`);
     });
 
-    it(`should return an unify warning message response`, (): void => {
-      expect.assertions(1);
-
-      const result = service.getWarningMessageResponse(warning);
-
-      expect(result.options.split).toBe(false);
-    });
-
     it(`should return a warning message response with an empty response`, (): void => {
       expect.assertions(1);
 
       const result = service.getWarningMessageResponse(warning);
 
-      expect(result.response).toBe(``);
+      expect(result.content).toBe(``);
     });
   });
 });

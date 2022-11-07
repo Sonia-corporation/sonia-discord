@@ -197,20 +197,12 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
       expect(result.options.embeds?.[0]?.description).toBe(`dummy-description`);
     });
 
-    it(`should return an unify error message response`, (): void => {
-      expect.assertions(1);
-
-      const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
-
-      expect(result.options.split).toBe(false);
-    });
-
     it(`should return an error message response with an empty response`, (): void => {
       expect.assertions(1);
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(result.response).toBe(``);
+      expect(result.content).toBe(``);
     });
   });
 });

@@ -128,10 +128,8 @@ export class DiscordMessageTextService extends AbstractService {
     });
 
     const message: IDiscordMessageResponse = {
-      options: {
-        split: false,
-      },
-      response: this._getEveryoneMentionMessageResponseWithEnvPrefix(`Il est midi everyone!`),
+      content: this._getEveryoneMentionMessageResponseWithEnvPrefix(`Il est midi everyone!`),
+      options: {},
     };
 
     return Promise.resolve(message);

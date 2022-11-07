@@ -40,11 +40,10 @@ export class DiscordMessageCommandHelpService extends AbstractService {
       .getMessageResponse()
       .then((helpDiscordMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
         const message: IDiscordMessageResponse = {
+          content: ``,
           options: {
             embeds: [this._getMessageEmbed()],
-            split: false,
           },
-          response: ``,
         };
 
         return Promise.resolve(_.merge({}, helpDiscordMessageResponse, message));

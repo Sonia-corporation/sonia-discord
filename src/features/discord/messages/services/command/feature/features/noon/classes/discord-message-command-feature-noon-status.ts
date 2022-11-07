@@ -51,10 +51,8 @@ export class DiscordMessageCommandFeatureNoonStatus<T extends string> implements
 
   public getMessageResponse(isEnabled: Readonly<boolean | undefined>): Promise<IDiscordMessageResponse> {
     const message: IDiscordMessageResponse = {
-      options: {
-        split: false,
-      },
-      response: this._getResponse(isEnabled),
+      content: this._getResponse(isEnabled),
+      options: {},
     };
 
     return Promise.resolve(message);

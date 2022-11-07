@@ -30,11 +30,10 @@ export class DiscordMessageScheduleNoonCountMessageResponseService extends Abstr
     channelCount: Readonly<number>
   ): IDiscordMessageResponse {
     return {
+      content: ``,
       options: {
         embeds: [this._getMessageEmbed(totalGuildCount, guildCount, channelCount)],
-        split: false,
       },
-      response: ``,
     };
   }
 

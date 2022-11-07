@@ -64,11 +64,10 @@ export class DiscordMessageCommandFeatureNoonHumanize<T extends string>
       .getMessageResponse()
       .then((helpMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
         const message: IDiscordMessageResponse = {
+          content: ``,
           options: {
             embeds: [this._getMessageEmbed(state)],
-            split: false,
           },
-          response: ``,
         };
 
         return Promise.resolve(_.merge({}, helpMessageResponse, message));

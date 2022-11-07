@@ -36,11 +36,10 @@ export class DiscordMessageCommandFeatureEmptyFlagsErrorService extends DiscordM
       .getCliErrorMessageResponse()
       .then((cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
         const message: IDiscordMessageResponse = {
+          content: ``,
           options: {
             embeds: [this._getMessageEmbed(anyDiscordMessage, commands, featureName)],
-            split: false,
           },
-          response: ``,
         };
 
         return Promise.resolve(_.merge(cliErrorMessageResponse, message));

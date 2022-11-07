@@ -24,7 +24,16 @@ import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild
 import { DiscordLoggerErrorService } from '../../../logger/services/discord-logger-error.service';
 import { DiscordClientService } from '../../../services/discord-client.service';
 import { IDiscordMessageResponse } from '../../interfaces/discord-message-response';
-import { Client, Collection, Guild, GuildChannel, Message, TextChannel } from 'discord.js';
+import {
+  Client,
+  Collection,
+  Guild,
+  GuildChannel,
+  Message,
+  MessageOptions,
+  MessagePayload,
+  TextChannel,
+} from 'discord.js';
 import moment from 'moment-timezone';
 import * as NodeScheduleModule from 'node-schedule';
 import { noop } from 'rxjs';
@@ -1219,10 +1228,11 @@ describe(`DiscordMessageScheduleNoonService`, (): void => {
 
         await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
+        const message: string | MessagePayload | MessageOptions = {
+          content: `Il est midi!`,
+        };
         expect(sendMock).toHaveBeenCalledTimes(1);
-        expect(sendMock).toHaveBeenCalledWith(`Il est midi!`, {
-          split: false,
-        });
+        expect(sendMock).toHaveBeenCalledWith(message);
       });
 
       describe(`when the sending of the message failed`, (): void => {

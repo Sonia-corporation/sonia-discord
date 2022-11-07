@@ -272,14 +272,6 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
         discordMessageContentServiceHasContentSpy.mockReturnValue(true);
       });
 
-      it(`should return a Discord message response not split`, async (): Promise<void> => {
-        expect.assertions(1);
-
-        const result = await service.reply(anyDiscordMessage);
-
-        expect(result.options.split).toBe(false);
-      });
-
       describe(`when the given Discord message contains a valid mention with ANY QUESTION?`, (): void => {
         beforeEach((): void => {
           anyDiscordMessage.content = `<@!123> ANY QUESTION?`;
@@ -290,7 +282,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toBe(`**[dev]** Do you like pineapple pizza?`);
+          expect(result.content).toBe(`**[dev]** Do you like pineapple pizza?`);
         });
       });
 
@@ -304,7 +296,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toBe(`**[dev]** Do you like pineapple pizza?`);
+          expect(result.content).toBe(`**[dev]** Do you like pineapple pizza?`);
         });
       });
 
@@ -318,7 +310,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toBe(`**[dev]** Do you like pineapple pizza?`);
+          expect(result.content).toBe(`**[dev]** Do you like pineapple pizza?`);
         });
       });
 
@@ -332,7 +324,7 @@ describe(`DiscordMessageAnyQuestionPineapplePizzaService`, (): void => {
 
           const result = await service.reply(anyDiscordMessage);
 
-          expect(result.response).toBe(`**[dev]** Do you like pineapple pizza?`);
+          expect(result.content).toBe(`**[dev]** Do you like pineapple pizza?`);
         });
       });
     });

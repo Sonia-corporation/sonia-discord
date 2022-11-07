@@ -177,25 +177,25 @@ describe(`DiscordMessageCommandFeatureService`, (): void => {
         valueOf: _.stubObject(),
       });
       discordMessageResponse = createMock<IDiscordMessageResponse>({
-        response: `discordMessageResponse`,
+        content: `discordMessageResponse`,
       });
       getEmptyContentErrorMessageResponse = createMock<IDiscordMessageResponse>({
-        response: `getEmptyContentErrorMessageResponse`,
+        content: `getEmptyContentErrorMessageResponse`,
       });
       getEmptyFeatureNameErrorMessageResponse = createMock<IDiscordMessageResponse>({
-        response: `getEmptyFeatureNameErrorMessageResponse`,
+        content: `getEmptyFeatureNameErrorMessageResponse`,
       });
       getWrongFeatureNameErrorMessageResponse = createMock<IDiscordMessageResponse>({
-        response: `getWrongFeatureNameErrorMessageResponse`,
+        content: `getWrongFeatureNameErrorMessageResponse`,
       });
       getEmptyFlagsErrorMessageResponse = createMock<IDiscordMessageResponse>({
-        response: `getEmptyFlagsErrorMessageResponse`,
+        content: `getEmptyFlagsErrorMessageResponse`,
       });
       getWrongFlagsErrorMessageResponse = createMock<IDiscordMessageResponse>({
-        response: `getWrongFlagsErrorMessageResponse`,
+        content: `getWrongFlagsErrorMessageResponse`,
       });
       getDuplicatedFlagsErrorMessageResponse = createMock<IDiscordMessageResponse>({
-        response: `getDuplicatedFlagsErrorMessageResponse`,
+        content: `getDuplicatedFlagsErrorMessageResponse`,
       });
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();

@@ -120,7 +120,7 @@ export class DiscordGuildSoniaService extends AbstractService {
     channel
       .send({
         ...messageResponse.options,
-        content: messageResponse.response,
+        content: messageResponse.content,
       })
       .then((): void => {
         if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {

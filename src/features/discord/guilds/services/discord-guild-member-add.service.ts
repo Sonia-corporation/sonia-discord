@@ -122,7 +122,7 @@ export class DiscordGuildMemberAddService extends AbstractService {
     guildChannel
       .send({
         ...messageResponse.options,
-        content: messageResponse.response,
+        content: messageResponse.content,
       })
       .then((): void => {
         // @todo add coverage
@@ -150,10 +150,8 @@ export class DiscordGuildMemberAddService extends AbstractService {
 
   private _getMessageResponse({ id }: Readonly<IAnyGuildMember>): IDiscordMessageResponse {
     return {
-      options: {
-        split: false,
-      },
-      response: this._getMessageResponseWithEnvPrefix(`Welcome ${wrapUserIdIntoMention(id)}! il est midi!`),
+      content: this._getMessageResponseWithEnvPrefix(`Welcome ${wrapUserIdIntoMention(id)}! il est midi!`),
+      options: {},
     };
   }
 

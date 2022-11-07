@@ -577,14 +577,6 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
       isEnabled = false;
     });
 
-    it(`should return a Discord message response not split`, async (): Promise<void> => {
-      expect.assertions(1);
-
-      const result = await service.getMessageResponse(isEnabled);
-
-      expect(result.options.split).toBe(false);
-    });
-
     describe(`when the enabled state is undefined`, (): void => {
       beforeEach((): void => {
         isEnabled = undefined;
@@ -595,7 +587,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
         const result = await service.getMessageResponse(isEnabled);
 
-        expect(result.response).toBe(`The noon feature is disabled.`);
+        expect(result.content).toBe(`The noon feature is disabled.`);
       });
     });
 
@@ -609,7 +601,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
         const result = await service.getMessageResponse(isEnabled);
 
-        expect(result.response).toBe(`The noon feature is disabled.`);
+        expect(result.content).toBe(`The noon feature is disabled.`);
       });
     });
 
@@ -623,7 +615,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
         const result = await service.getMessageResponse(isEnabled);
 
-        expect(result.response).toBe(`The noon feature is enabled.`);
+        expect(result.content).toBe(`The noon feature is enabled.`);
       });
     });
   });

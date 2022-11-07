@@ -820,20 +820,12 @@ describe(`DiscordMessageCommandFeatureNoonHumanize`, (): void => {
         expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
       });
 
-      it(`should return a Discord message response not split`, async (): Promise<void> => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse(state);
-
-        expect(result.options.split).toBe(false);
-      });
-
       it(`should return a Discord message response without a response text`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(state);
 
-        expect(result.response).toBe(``);
+        expect(result.content).toBe(``);
       });
     });
   });

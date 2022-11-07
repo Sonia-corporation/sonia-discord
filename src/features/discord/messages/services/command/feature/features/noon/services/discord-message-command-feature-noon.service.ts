@@ -72,11 +72,10 @@ export class DiscordMessageCommandFeatureNoonService extends AbstractService {
 
         if (!_.isEmpty(discordCommandSplittedFlagsResponse.commandFlagsSuccess)) {
           discordMessageResponses.unshift({
+            content: ``,
             options: {
               embeds: [this._getMessageEmbed(discordCommandSplittedFlagsResponse.commandFlagsSuccess)],
-              split: false,
             },
-            response: ``,
           });
         }
 

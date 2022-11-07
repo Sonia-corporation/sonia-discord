@@ -32,7 +32,7 @@ import { IFirebaseGuildChannelVFinal } from '../../types/guilds/channels/firebas
 import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
 import { IUpdatedFirebaseGuildLastReleaseNotesVersion } from '../../types/guilds/updated-firebase-guild-last-release-notes-version';
-import { Guild, GuildChannel, Message, TextChannel } from 'discord.js';
+import { Guild, GuildChannel, Message, MessageOptions, MessagePayload, TextChannel } from 'discord.js';
 import * as admin from 'firebase-admin';
 import { BehaviorSubject, firstValueFrom, of } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -1425,10 +1425,8 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         beforeEach((): void => {
           getMessageResponseSpy.mockResolvedValue(
             createMock<IDiscordMessageResponse>({
-              options: {
-                split: false,
-              },
-              response: `dummy-response`,
+              content: `dummy-response`,
+              options: {},
             })
           );
         });
@@ -1450,11 +1448,11 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
 
           await expect(service.sendMessageResponse(guildChannel)).rejects.toThrow(new Error(`send error`));
 
-          expect(sendMock).toHaveBeenCalledTimes(1);
-          expect(sendMock).toHaveBeenCalledWith({
+          const message: string | MessagePayload | MessageOptions = {
             content: `dummy-response`,
-            split: false,
-          });
+          };
+          expect(sendMock).toHaveBeenCalledTimes(1);
+          expect(sendMock).toHaveBeenCalledWith(message);
         });
 
         describe(`when the sending of the message failed`, (): void => {
@@ -1621,10 +1619,8 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
       beforeEach((): void => {
         discordMessageCommandReleaseNotesServiceGetMessageResponseSpy.mockResolvedValue(
           createMock<IDiscordMessageResponse>({
-            options: {
-              split: false,
-            },
-            response: `dummy-response`,
+            content: `dummy-response`,
+            options: {},
           })
         );
       });
@@ -1734,10 +1730,8 @@ describe(`FirebaseGuildsNewVersionService`, (): void => {
         const result = await service.getMessageResponse();
 
         expect(result).toStrictEqual({
-          options: {
-            split: false,
-          },
-          response: `About time <@!${DiscordGithubContributorsIdEnum.C0ZEN}>!`,
+          content: `About time <@!${DiscordGithubContributorsIdEnum.C0ZEN}>!`,
+          options: {},
         } as IDiscordMessageResponse);
       });
     });

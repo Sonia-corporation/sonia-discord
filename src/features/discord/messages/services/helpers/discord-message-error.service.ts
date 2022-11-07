@@ -42,13 +42,13 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
 
   private _sendMessageToOriginalChannel(
     anyDiscordMessage: Readonly<IAnyDiscordMessage>,
-    { response, options }: Readonly<IDiscordMessageResponse>
+    { content, options }: Readonly<IDiscordMessageResponse>
   ): void {
     if (DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
       anyDiscordMessage.channel
         .send({
           ...options,
-          content: response,
+          content,
         })
         .then((): void => {
           if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
@@ -105,11 +105,10 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
     };
 
     return {
+      content: ``,
       options: {
         embeds: [_.merge({}, this._getMessageEmbed(), options)],
-        split: false,
       },
-      response: ``,
     };
   }
 

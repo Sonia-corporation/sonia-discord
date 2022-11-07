@@ -52,11 +52,10 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
         }
 
         const message: IDiscordMessageResponse = {
+          content: ``,
           options: {
             embeds: [this._getMessageEmbed(quote)],
-            split: false,
           },
-          response: ``,
         };
 
         return Promise.resolve(message);

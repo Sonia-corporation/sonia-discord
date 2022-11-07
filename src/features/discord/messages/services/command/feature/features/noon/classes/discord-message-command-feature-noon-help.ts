@@ -33,11 +33,10 @@ export class DiscordMessageCommandFeatureNoonHelp<T extends string> implements D
       .getMessageResponse()
       .then((helpMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
         const message: IDiscordMessageResponse = {
+          content: ``,
           options: {
             embeds: [this._getMessageEmbed(anyDiscordMessage, discordCommandFlags)],
-            split: false,
           },
-          response: ``,
         };
 
         return Promise.resolve(_.merge({}, helpMessageResponse, message));

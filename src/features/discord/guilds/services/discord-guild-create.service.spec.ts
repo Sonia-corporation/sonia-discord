@@ -14,7 +14,7 @@ import { DiscordMessageRightsService } from '../../messages/services/rights/disc
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
 import { IDiscordGuildSoniaSendMessageToChannel } from '../interfaces/discord-guild-sonia-send-message-to-channel';
-import { Client, Guild, GuildChannel, Message, TextChannel } from 'discord.js';
+import { Client, Guild, GuildChannel, Message, MessageOptions, MessagePayload, TextChannel } from 'discord.js';
 import * as admin from 'firebase-admin';
 import { of, throwError } from 'rxjs';
 import { createMock } from 'ts-auto-mock';
@@ -464,11 +464,11 @@ describe(`DiscordGuildCreateService`, (): void => {
 
             await expect(service.sendMessage(guild)).rejects.toThrow(new Error(`error`));
 
+            const message: string | MessagePayload | MessageOptions = {
+              content: discordMessageResponse.content,
+            };
             expect(guildChannelSendMock).toHaveBeenCalledTimes(1);
-            expect(guildChannelSendMock).toHaveBeenCalledWith(
-              discordMessageResponse.response,
-              discordMessageResponse.options
-            );
+            expect(guildChannelSendMock).toHaveBeenCalledWith(message);
           });
 
           describe(`when the message was not successfully sent`, (): void => {

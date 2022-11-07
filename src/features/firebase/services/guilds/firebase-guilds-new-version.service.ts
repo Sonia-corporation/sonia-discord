@@ -155,7 +155,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     return guildOrThreadChannel
       .send({
         ...messageResponse.options,
-        content: messageResponse.response,
+        content: messageResponse.content,
       })
       .then((message: Message): Promise<Message> => {
         this._logReleaseNotesMessageSent(guildOrThreadChannel);
@@ -203,7 +203,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           },
         };
 
-        enhanceMessageResponse.response = responsesFactoryPattern[releaseType]();
+        enhanceMessageResponse.content = responsesFactoryPattern[releaseType]();
 
         return Promise.resolve(enhanceMessageResponse);
       })

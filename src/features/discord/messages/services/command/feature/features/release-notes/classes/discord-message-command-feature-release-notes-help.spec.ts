@@ -452,20 +452,12 @@ describe(`DiscordMessageCommandFeatureReleaseNotesHelp`, (): void => {
         expect(result.options.embeds?.[0]?.title).toBe(`So, you need my help with the release notes feature? Cool.`);
       });
 
-      it(`should return a Discord message response not split`, async (): Promise<void> => {
-        expect.assertions(1);
-
-        const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
-
-        expect(result.options.split).toBe(false);
-      });
-
       it(`should return a Discord message response without a response text`, async (): Promise<void> => {
         expect.assertions(1);
 
         const result = await service.getMessageResponse(anyDiscordMessage, discordCommandFlags);
 
-        expect(result.response).toBe(``);
+        expect(result.content).toBe(``);
       });
     });
   });
