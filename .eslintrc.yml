@@ -26,6 +26,7 @@ parserOptions:
     - './tsconfig.*?.json'
   extraFileExtensions:
     - .mjs
+    - .cjs
 parser: '@typescript-eslint/parser'
 plugins:
   - '@typescript-eslint'
@@ -40,6 +41,7 @@ settings:
   import/extensions:
     - .js
     - .mjs
+    - .cjs
     - .ts
   import/parsers:
     '@typescript-eslint/parser':
@@ -429,6 +431,7 @@ rules:
 overrides:
   - files:
       - '*.js'
+      - '*.cjs'
     rules:
       '@typescript-eslint/explicit-module-boundary-types': off
       import/no-commonjs: off

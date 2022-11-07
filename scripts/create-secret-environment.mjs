@@ -1,7 +1,8 @@
-const FS = require(`fs-extra`);
-const CHALK = require(`./chalk`);
-const LOGGER = require(`./logger`);
-const APP_ROOT_PATH = require(`app-root-path`);
+import * as CHALK from './chalk.mjs';
+import * as LOGGER from './logger.mjs';
+import APP_ROOT_PATH from 'app-root-path';
+import FS from 'fs-extra';
+
 const CONTEXT = `create-secret-environment`;
 
 LOGGER.debug(CONTEXT, CHALK.text(`Read secret environment file...`));

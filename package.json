@@ -59,7 +59,7 @@
       "path": "./node_modules/cz-customizable"
     },
     "cz-customizable": {
-      "config": "./scripts/commitizen.js"
+      "config": "./scripts/commitizen.cjs"
     }
   },
   "majestic": {
@@ -105,7 +105,7 @@
     "build:environment:copy": "node scripts/build-environment-copy.mjs",
     "build:environment:create": "node scripts/build-environment-create.mjs",
     "build:environment:rewrite-path": "node scripts/build-environment-rewrite-path.mjs",
-    "build:update-app-initialization-date": "node ./scripts/build-update-app-initialization-date",
+    "build:update-app-initialization-date": "node ./scripts/build-update-app-initialization-date.mjs",
     "build:firebase-service-account": "npm run build:firebase-service-account:create && npm run build:firebase-service-account:copy",
     "build:firebase-service-account:copy": "node scripts/build-firebase-service-account-copy.mjs",
     "build:firebase-service-account:create": "node scripts/build-firebase-service-account-create.mjs",

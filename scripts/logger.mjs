@@ -1,7 +1,7 @@
-const CHALK = require(`./chalk`);
-const MOMENT = require(`moment-timezone`);
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const _ = require(`lodash`);
+import _ from 'lodash';
+import MOMENT from 'moment-timezone';
+import * as CHALK from './chalk.mjs';
+
 const LOG_PREFIX = `● `;
 
 /**
@@ -25,48 +25,38 @@ function getContext(scope) {
  * @param scope
  * @param message
  */
-function error(scope, message) {
+export function error(scope, message) {
   console.log(`${_.toString(getLogTypePrefix(`error`))}${getContext(scope)}${_.toString(message)}`);
 }
 
-module.exports.error = error;
-
 /**
  * @param scope
  * @param message
  */
-function warning(scope, message) {
+export function warning(scope, message) {
   console.log(`${_.toString(getLogTypePrefix(`warning`))}${getContext(scope)}${_.toString(message)}`);
 }
 
-module.exports.warning = warning;
-
 /**
  * @param scope
  * @param message
  */
-function success(scope, message) {
+export function success(scope, message) {
   console.log(`${_.toString(getLogTypePrefix(`success`))}${getContext(scope)}${_.toString(message)}`);
 }
 
-module.exports.success = success;
-
 /**
  * @param scope
  * @param message
  */
-function log(scope, message) {
+export function log(scope, message) {
   console.log(`${_.toString(getLogTypePrefix(`log`))}${getContext(scope)}${_.toString(message)}`);
 }
 
-module.exports.log = log;
-
 /**
  * @param scope
  * @param message
  */
-function debug(scope, message) {
+export function debug(scope, message) {
   console.log(`${_.toString(getLogTypePrefix(`debug`))}${getContext(scope)}${_.toString(message)}`);
 }
-
-module.exports.debug = debug;
