@@ -9,3 +9,6 @@ coverage
 reports
 stryker-tmp
 jest/test.ts
+
+# Parcel
+.parcel-cache

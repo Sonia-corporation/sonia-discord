@@ -9,3 +9,6 @@ stryker-tmp
 stryker.log
 package-lock.json
 coverage
+
+# Parcel
+.parcel-cache

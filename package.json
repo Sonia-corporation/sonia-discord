@@ -87,13 +87,19 @@
     "README.md"
   ],
   "main": "./src/index.ts",
+  "targets": {
+    "main": false,
+    "default": {
+      "includeNodeModules": false
+    }
+  },
   "scripts": {
     "\n# RUN SCRIPTS:": "",
     "start": "cross-env NODE_ENV=development ts-node-dev --debounce --clear --cache-directory dist-local-dev --respawn --transpile-only .",
     "start:prod": "npm run build && npm run run:prod",
     "start:local-prod": "npm run build && npm run run:local-prod",
     "\n# BUILD SCRIPTS:": "",
-    "build": "npm run clean:dist && parcel build ./src/index.ts --target node && npm run concurrently -- --prefix-colors green,cyan \"npm:build:environment\" \"npm:build:firebase-service-account\"",
+    "build": "npm run clean:dist && parcel build ./src/index.ts && npm run concurrently -- --prefix-colors green,cyan \"npm:build:environment\" \"npm:build:firebase-service-account\"",
     "build:environment": "npm run build:environment:create && npm run concurrently -- --prefix-colors green,cyan,red \"npm:build:environment:copy\" \"npm:build:environment:rewrite-path\" \"npm:build:update-app-initialization-date\"",
     "build:environment:copy": "node scripts/build-environment-copy.js",
     "build:environment:create": "node scripts/build-environment-create.js",
@@ -210,7 +216,7 @@
     "madge": "5.0.1",
     "majestic": "1.8.1",
     "node-notifier": "10.0.1",
-    "parcel-bundler": "1.12.5",
+    "parcel": "2.7.0",
     "prettier": "2.7.1",
     "pug": "3.0.2",
     "rimraf": "3.0.2",
