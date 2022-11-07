@@ -11,19 +11,17 @@ on:
     branches:
       - master
       - develop
-env:
-  NODE_VERSION: '16.16.0'
 jobs:
   Lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # tag=v3
-      - name: Use Node.js ${{ env.NODE_VERSION }}
+      - name: Use Node.js
         uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # tag=v3
         with:
-          node-version: ${{ env.NODE_VERSION }}
           cache: npm
+          node-version-file: '.nvmrc'
       - name: Cache node_modules
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: actions/cache@1c73980b09e7aea7201f325a7aa3ad00beddcdda # tag=v3
@@ -45,11 +43,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # tag=v3
-      - name: Use Node.js ${{ env.NODE_VERSION }}
+      - name: Use Node.js
         uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # tag=v3
         with:
-          node-version: ${{ env.NODE_VERSION }}
           cache: npm
+          node-version-file: '.nvmrc'
       - name: Cache node_modules
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: actions/cache@1c73980b09e7aea7201f325a7aa3ad00beddcdda # tag=v3
@@ -71,11 +69,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # tag=v3
-      - name: Use Node.js ${{ env.NODE_VERSION }}
+      - name: Use Node.js
         uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # tag=v3
         with:
-          node-version: ${{ env.NODE_VERSION }}
           cache: npm
+          node-version-file: '.nvmrc'
       - name: Cache node_modules
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: actions/cache@1c73980b09e7aea7201f325a7aa3ad00beddcdda # tag=v3
@@ -102,11 +100,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # tag=v3
-      - name: Use Node.js ${{ env.NODE_VERSION }}
+      - name: Use Node.js
         uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # tag=v3
         with:
-          node-version: ${{ env.NODE_VERSION }}
           cache: npm
+          node-version-file: '.nvmrc'
       - name: Cache node_modules
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: actions/cache@1c73980b09e7aea7201f325a7aa3ad00beddcdda # tag=v3
@@ -135,11 +133,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # tag=v3
-      - name: Use Node.js ${{ env.NODE_VERSION }}
+      - name: Use Node.js
         uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # tag=v3
         with:
-          node-version: ${{ env.NODE_VERSION }}
           cache: npm
+          node-version-file: '.nvmrc'
       - name: Cache node_modules
         if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: actions/cache@1c73980b09e7aea7201f325a7aa3ad00beddcdda # tag=v3
