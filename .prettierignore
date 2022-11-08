@@ -9,6 +9,7 @@ stryker-tmp
 stryker.log
 package-lock.json
 coverage
+out-tsc
 
 # Parcel
 .parcel-cache

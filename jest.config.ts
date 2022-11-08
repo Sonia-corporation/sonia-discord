@@ -192,7 +192,7 @@ const config: Config.InitialOptions = {
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // @datorama/akita -> https://github.com/salesforce/akita/issues/778 & https://stackoverflow.com/questions/49263429/jest-gives-an-error-syntaxerror-unexpected-token-export
-  transformIgnorePatterns: [`node_modules/(?!@datorama/akita)`],
+  transformIgnorePatterns: [`node_modules/(?!@datorama/akita|?!chalk)`],
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
   // watchPathIgnorePatterns: [],

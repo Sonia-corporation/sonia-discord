@@ -81,23 +81,52 @@ export class InitService extends AbstractService {
 
   // @todo add coverage
   public readEnvironment(): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]] | void> {
+    const environmentPath = `${_.toString(appRootPath)}/src/environment/secret-environment.json`;
+
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(`Reading environment file...`),
+    });
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().value(environmentPath),
+    });
+
     return fs
-      .readJson(`${_.toString(appRootPath)}/src/environment/secret-environment.json`)
+      .readJson(environmentPath)
       .then(
         (
           environment: Readonly<IEnvironment>
         ): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]] | void> =>
           this._startApp(this._mergeEnvironments(ENVIRONMENT, environment)).catch((error: Readonly<Error>): void => {
+            LoggerService.getInstance().error({
+              context: this._serviceName,
+              message: ChalkService.getInstance().text(error),
+            });
+
+            // Important to show the whole stacktrace
             console.error(error);
           })
       )
       .catch((error: unknown): Promise<never> => {
-        console.error(`Failed to read the secret environment file`);
-        console.error(error);
-        console.debug(`Follow the instructions about the secret environment to fix this:`);
-        console.debug(
-          `https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
-        );
+        LoggerService.getInstance().error({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(`Failed to read the secret environment file`),
+        });
+        LoggerService.getInstance().error({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(error),
+        });
+        LoggerService.getInstance().debug({
+          context: this._serviceName,
+          message: ChalkService.getInstance().text(`Follow the instructions about the secret environment to fix this:`),
+        });
+        LoggerService.getInstance().debug({
+          context: this._serviceName,
+          message: ChalkService.getInstance().value(
+            `https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#create-the-secret-environment-file`
+          ),
+        });
 
         return Promise.reject(error);
       });
@@ -134,8 +163,27 @@ export class InitService extends AbstractService {
   }
 
   private _configureAppFromPackage(): Promise<IPackage> {
+    const rootPath: string = _.toString(appRootPath);
+    let packagePath: string;
+
+    // For local purpose, the root is dist, so the package is at the root of the project, one folder above
+    if (rootPath === `dist`) {
+      packagePath = `../package.json`;
+    } else {
+      packagePath = `package.json`;
+    }
+
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().text(`Reading package file...`),
+    });
+    LoggerService.getInstance().debug({
+      context: this._serviceName,
+      message: ChalkService.getInstance().value(packagePath),
+    });
+
     return fs
-      .readJson(`${_.toString(appRootPath)}/package.json`)
+      .readJson(packagePath)
       .then((data: Readonly<IPackage>): Promise<IPackage> => {
         AppConfigMutatorService.getInstance().updateVersion(data.version);
 
