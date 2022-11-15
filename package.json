@@ -171,7 +171,7 @@
     "@types/express": "4.17.14",
     "@types/faker": "5.5.9",
     "@types/fs-extra": "9.0.13",
-    "@types/jest": "29.2.2",
+    "@types/jest": "29.2.3",
     "@types/lodash": "4.14.189",
     "@types/node": "14.18.33",
     "@types/node-schedule": "2.1.0",
