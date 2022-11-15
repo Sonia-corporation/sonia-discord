@@ -8,7 +8,7 @@ import { CoreEventService } from '../../core/services/core-event.service';
 import { ILoggerLog } from '../../logger/interfaces/logger-log';
 import { LoggerService } from '../../logger/services/logger.service';
 import { FirebaseGuildsStoreService } from '../stores/guilds/services/firebase-guilds-store.service';
-import * as admin from 'firebase-admin';
+import { WriteResult } from 'firebase-admin/firestore';
 import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
@@ -255,10 +255,10 @@ describe(`FirebaseService`, (): void => {
     });
 
     describe(`when the FirebaseGuildsBreakingChange service was successfully initialized`, (): void => {
-      let writeResult: admin.firestore.WriteResult;
+      let writeResult: WriteResult;
 
       beforeEach((): void => {
-        writeResult = createMock<admin.firestore.WriteResult>();
+        writeResult = createMock<WriteResult>();
 
         firebaseGuildsBreakingChangeServiceGetInstanceInitSpy.mockResolvedValue(writeResult);
       });

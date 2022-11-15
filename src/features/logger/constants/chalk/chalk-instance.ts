@@ -1,3 +1,3 @@
-import { Chalk, ChalkInstance } from 'chalk';
+import chalk from 'chalk';
 
-export const CHALK_INSTANCE: ChalkInstance = new Chalk();
+export const CHALK_INSTANCE: chalk.Chalk = new chalk.Instance();

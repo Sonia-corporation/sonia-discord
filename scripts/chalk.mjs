@@ -1,6 +1,6 @@
-import { Chalk } from 'chalk';
+import chalk from 'chalk';
 
-const CHALK = new Chalk();
+const CHALK = new chalk.Instance();
 const COLOR_AURORA_GREEN = `#78E08F`;
 const COLOR_BLUE_CARACAO = `#3DC1D3`;
 const COLOR_DEEP_ROSE = `#C44569`;

@@ -136,7 +136,7 @@ export class DiscordMessageService extends AbstractService {
   private _listen(): void {
     DiscordClientService.getInstance()
       .getClient()
-      .on(`message`, (anyDiscordMessage: Readonly<IAnyDiscordMessage>): void => {
+      .on(`messageCreate`, (anyDiscordMessage: Readonly<IAnyDiscordMessage>): void => {
         this.sendMessage(anyDiscordMessage).catch((error: Readonly<Error>): void => {
           // @todo add coverage
           if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {

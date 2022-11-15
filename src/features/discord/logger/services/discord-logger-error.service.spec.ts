@@ -256,7 +256,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         const result = service.getErrorMessageResponse(error);
 
-        expect(result.options.embeds?.[0]?.footer?.iconURL).toBeUndefined();
+        expect(_.get(result.options.embeds?.[0]?.footer, `iconURL`)).toBeUndefined();
       });
     });
 
@@ -274,7 +274,7 @@ describe(`DiscordLoggerErrorService`, (): void => {
 
         const result = service.getErrorMessageResponse(error);
 
-        expect(result.options.embeds?.[0]?.footer?.iconURL).toBe(`dummy-image-url`);
+        expect(_.get(result.options.embeds?.[0]?.footer, `iconURL`)).toBe(`dummy-image-url`);
       });
     });
 

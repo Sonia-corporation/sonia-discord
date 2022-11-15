@@ -2,7 +2,7 @@ import { AbstractService } from '../../../../classes/services/abstract.service';
 import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { CHALK_INSTANCE } from '../../constants/chalk/chalk-instance';
 import { ChalkColorEnum } from '../../enums/chalk/chalk-color.enum';
-import { ColorSupportLevel } from 'chalk';
+import chalk from 'chalk';
 import _ from 'lodash';
 
 const TRUE_COLOR_LEVEL = 3;
@@ -94,7 +94,7 @@ export class ChalkService extends AbstractService {
     return CHALK_INSTANCE.magenta(message);
   }
 
-  public getLevel(): ColorSupportLevel {
+  public getLevel(): chalk.Level {
     return CHALK_INSTANCE.level;
   }
 }

@@ -60,10 +60,10 @@ export class DiscordMessageCommandQuoteService extends AbstractService {
 
         return Promise.resolve(message);
       })
-      .catch((error: Readonly<Error>): never => {
+      .catch((error: Error): never => {
         DiscordMessageErrorService.getInstance().handleError(error, anyDiscordMessage);
 
-        throw new Error(error.message);
+        throw error;
       });
   }
 

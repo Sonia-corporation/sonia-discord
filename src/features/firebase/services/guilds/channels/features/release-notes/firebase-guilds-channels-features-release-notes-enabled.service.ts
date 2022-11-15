@@ -5,6 +5,7 @@ import { flattenObject } from '../../../../../../../functions/formatters/flatten
 import { IObject } from '../../../../../../../types/object';
 import { IAnyDiscordChannel } from '../../../../../../discord/channels/types/any-discord-channel';
 import { ChalkService } from '../../../../../../logger/services/chalk/chalk.service';
+import { LoggerConfigService } from '../../../../../../logger/services/config/logger-config.service';
 import { LoggerService } from '../../../../../../logger/services/logger.service';
 import { isUpToDateFirebaseGuild } from '../../../../../functions/guilds/is-up-to-date-firebase-guild';
 import { IFirebaseGuildChannelVFinal } from '../../../../../types/guilds/channels/firebase-guild-channel-v-final';
@@ -14,7 +15,7 @@ import { FirebaseGuildsService } from '../../../firebase-guilds.service';
 import { FirebaseGuildsChannelsService } from '../../firebase-guilds-channels.service';
 import { FirebaseGuildsChannelsFeaturesService } from '../firebase-guilds-channels-features.service';
 import { Guild } from 'discord.js';
-import admin from 'firebase-admin';
+import { CollectionReference, WriteResult } from 'firebase-admin/firestore';
 import _ from 'lodash';
 
 export class FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService extends AbstractService {
@@ -37,19 +38,28 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService extends Ab
     id: Readonly<Guild['id']>,
     channelId: Readonly<IAnyDiscordChannel['id']>,
     isEnabled: Readonly<boolean>
-  ): Promise<admin.firestore.WriteResult | void> {
-    const collectionReference: admin.firestore.CollectionReference<IFirebaseGuild> | undefined =
+  ): Promise<WriteResult | void> {
+    const collectionReference: CollectionReference<IFirebaseGuild> | undefined =
       FirebaseGuildsService.getInstance().getCollectionReference();
 
     if (_.isNil(collectionReference)) {
       return Promise.reject(new Error(`Collection not available`));
     }
 
+    if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
+      LoggerService.getInstance().debug({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `Collection reference ID: ${ChalkService.getInstance().value(collectionReference.id)}`
+        ),
+      });
+    }
+
     this._logUpdatingStateStart();
 
     return FirebaseGuildsService.getInstance()
       .getGuild(id)
-      .then((firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<admin.firestore.WriteResult> => {
+      .then((firebaseGuild: Readonly<IFirebaseGuild | null | undefined>): Promise<WriteResult> => {
         if (!this._isValidGuild(firebaseGuild)) {
           this._logInvalidFirebaseGuild(id);
 
@@ -62,11 +72,9 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService extends Ab
 
   /**
    * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-002}
-   *
    * @param {Readonly<Snowflake>} channelId The [id]{@link Snowflake} of the channel
    * @param {Readonly<boolean>} isEnabled The new [enabled state]{@link IFirebaseGuildVFinal#channels#features#releaseNotes#isEnabled}
    * @param {Readonly<IFirebaseGuildVFinal>} firebaseGuild The current guild in the store
-   *
    * @returns {IObject} A flatten object updating only the enabled state or a more complete object to also up-to-date the models
    */
   public getUpdatedGuild(
@@ -86,16 +94,16 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService extends Ab
   }
 
   public updateState(
-    collectionReference: Readonly<admin.firestore.CollectionReference<IFirebaseGuild>>,
+    collectionReference: Readonly<CollectionReference<IFirebaseGuild>>,
     id: Readonly<Guild['id']>,
     channelId: Readonly<IAnyDiscordChannel['id']>,
     isEnabled: Readonly<boolean>,
     firebaseGuild: Readonly<IFirebaseGuildVFinal>
-  ): Promise<admin.firestore.WriteResult> {
+  ): Promise<WriteResult> {
     return collectionReference
       .doc(id)
       .update(this.getUpdatedGuild(channelId, isEnabled, firebaseGuild))
-      .then((writeResult: Readonly<admin.firestore.WriteResult>): Promise<admin.firestore.WriteResult> => {
+      .then((writeResult: Readonly<WriteResult>): Promise<WriteResult> => {
         this._logUpdateStateSuccess(id, isEnabled);
 
         return Promise.resolve(writeResult);
@@ -172,7 +180,6 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService extends Ab
 
     /**
      * @todo remove the spread once TS handle this properly
-     *
      * @see https://github.com/microsoft/TypeScript/issues/15300#issuecomment-436793742 for the destructuring part
      */
     return flattenObject({ ...updatedFirebaseGuild });
@@ -180,12 +187,9 @@ export class FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService extends Ab
 
   /**
    * @private
-   *
    * @see [sonia-link-002]{@link https://github.com/Sonia-corporation/sonia-discord/blob/master/CONTRIBUTING.md#sonia-link-002}
-   *
    * @param {Readonly<Snowflake>} channelId The [id]{@link Snowflake} of the channel
    * @param {Readonly<boolean>} isEnabled The new [enabled state]{@link IFirebaseGuildVFinal#channels#features#releaseNotes#isEnabled}
-   *
    * @returns {IObject} A flatten object updating only the enabled state
    */
   private _getUpdatedGuildWithPathOnly(

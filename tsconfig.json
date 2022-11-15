@@ -29,7 +29,6 @@
     "target": "es2015",
     "typeRoots": ["node_modules/@types", "node_modules/@types/", "types"],
     "lib": ["es2018", "dom"],
-    "types": ["node", "jest"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "plugins": [

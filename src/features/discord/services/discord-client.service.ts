@@ -37,6 +37,8 @@ export class DiscordClientService extends AbstractService {
         Intents.FLAGS.DIRECT_MESSAGES,
         Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
         Intents.FLAGS.DIRECT_MESSAGE_TYPING,
+        Intents.FLAGS.GUILD_WEBHOOKS,
+        Intents.FLAGS.MESSAGE_CONTENT,
       ],
     });
 

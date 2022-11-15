@@ -1,5 +1,5 @@
 import { CHALK_INSTANCE } from '../../../constants/chalk/chalk-instance';
-import { ColorSupportLevel } from 'chalk';
+import chalk from 'chalk';
 import _ from 'lodash';
 
 export class ChalkService {
@@ -49,7 +49,7 @@ export class ChalkService {
     return `debug-${_.toString(message)}`;
   }
 
-  public getLevel(): ColorSupportLevel {
+  public getLevel(): chalk.Level {
     return CHALK_INSTANCE.level;
   }
 }

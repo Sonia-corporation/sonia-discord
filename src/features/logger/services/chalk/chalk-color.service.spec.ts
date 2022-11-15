@@ -4,7 +4,7 @@ import { ServiceNameEnum } from '../../../../enums/service-name.enum';
 import { CoreEventService } from '../../../core/services/core-event.service';
 import { ILoggerLog } from '../../interfaces/logger-log';
 import { LoggerService } from '../logger.service';
-import { ColorSupportLevel } from 'chalk';
+import chalk from 'chalk';
 
 jest.mock(`./chalk.service`);
 
@@ -58,7 +58,7 @@ describe(`ChalkColorService`, (): void => {
   });
 
   describe(`init()`, (): void => {
-    let chalkLevel: ColorSupportLevel;
+    let chalkLevel: chalk.Level;
 
     let chalkServiceGetLevelSpy: jest.SpyInstance;
     let loggerServiceDebugSpy: jest.SpyInstance;

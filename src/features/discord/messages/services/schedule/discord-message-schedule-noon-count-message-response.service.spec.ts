@@ -7,6 +7,7 @@ import { CoreEventService } from '../../../../core/services/core-event.service';
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { DiscordMessageCommandFeatureNoonConfigService } from '../command/feature/features/noon/services/config/discord-message-command-feature-noon-config.service';
 import { MessageEmbedAuthor } from 'discord.js';
+import _ from 'lodash';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
@@ -130,7 +131,7 @@ describe(`DiscordMessageScheduleNoonCountMessageResponseService`, (): void => {
 
         const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-        expect(result.options.embeds?.[0]?.footer?.iconURL).toBeUndefined();
+        expect(_.get(result.options.embeds?.[0]?.footer, `iconURL`)).toBeUndefined();
       });
     });
 
@@ -148,7 +149,7 @@ describe(`DiscordMessageScheduleNoonCountMessageResponseService`, (): void => {
 
         const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-        expect(result.options.embeds?.[0]?.footer?.iconURL).toBe(`dummy-image-url`);
+        expect(_.get(result.options.embeds?.[0]?.footer, `iconURL`)).toBe(`dummy-image-url`);
       });
     });
 

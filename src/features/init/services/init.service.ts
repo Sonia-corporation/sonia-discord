@@ -29,7 +29,7 @@ import { ServerConfigMutatorService } from '../../server/services/config/server-
 import { ServerService } from '../../server/services/server.service';
 import appRootPath from 'app-root-path';
 import axios, { AxiosResponse } from 'axios';
-import admin from 'firebase-admin';
+import { WriteResult } from 'firebase-admin/firestore';
 import fs from 'fs-extra';
 import _ from 'lodash';
 import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
@@ -80,7 +80,7 @@ export class InitService extends AbstractService {
   }
 
   // @todo add coverage
-  public readEnvironment(): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]] | void> {
+  public readEnvironment(): Promise<[true, [number | void, WriteResult[] | void]] | void> {
     const environmentPath = `${_.toString(appRootPath)}/src/environment/secret-environment.json`;
 
     LoggerService.getInstance().debug({
@@ -95,9 +95,7 @@ export class InitService extends AbstractService {
     return fs
       .readJson(environmentPath)
       .then(
-        (
-          environment: Readonly<IEnvironment>
-        ): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]] | void> =>
+        (environment: Readonly<IEnvironment>): Promise<[true, [number | void, WriteResult[] | void]] | void> =>
           this._startApp(this._mergeEnvironments(ENVIRONMENT, environment)).catch((error: Readonly<Error>): void => {
             LoggerService.getInstance().error({
               context: this._serviceName,
@@ -136,7 +134,7 @@ export class InitService extends AbstractService {
     return _.merge({}, environmentA, environmentB);
   }
 
-  private _runApp(): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]]> {
+  private _runApp(): Promise<[true, [number | void, WriteResult[] | void]]> {
     EnvironmentValidityCheckService.getInstance().init();
     ServerService.getInstance().initializeApp();
 
@@ -271,11 +269,9 @@ export class InitService extends AbstractService {
       });
   }
 
-  private _startApp(
-    environment: Readonly<IEnvironment>
-  ): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]]> {
+  private _startApp(environment: Readonly<IEnvironment>): Promise<[true, [number | void, WriteResult[] | void]]> {
     return this._configureApp(environment).then(
-      (): Promise<[true, [number | void, admin.firestore.WriteResult[] | void]]> => this._runApp()
+      (): Promise<[true, [number | void, WriteResult[] | void]]> => this._runApp()
     );
   }
 }

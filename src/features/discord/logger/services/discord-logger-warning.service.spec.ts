@@ -11,6 +11,7 @@ import { IDiscordMessageResponse } from '../../messages/interfaces/discord-messa
 import { DiscordMessageConfigService } from '../../messages/services/config/discord-message-config.service';
 import { DiscordSoniaService } from '../../users/services/discord-sonia.service';
 import { MessageEmbedAuthor } from 'discord.js';
+import _ from 'lodash';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
@@ -198,7 +199,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
         const result = service.getWarningMessageResponse(warning);
 
-        expect(result.options.embeds?.[0]?.footer?.iconURL).toBeUndefined();
+        expect(_.get(result.options.embeds?.[0]?.footer, `iconURL`)).toBeUndefined();
       });
     });
 
@@ -216,7 +217,7 @@ describe(`DiscordLoggerWarningService`, (): void => {
 
         const result = service.getWarningMessageResponse(warning);
 
-        expect(result.options.embeds?.[0]?.footer?.iconURL).toBe(`dummy-image-url`);
+        expect(_.get(result.options.embeds?.[0]?.footer, `iconURL`)).toBe(`dummy-image-url`);
       });
     });
 

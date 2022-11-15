@@ -7,6 +7,7 @@ import { CoreEventService } from '../../../core/services/core-event.service';
 import { DiscordMessageCommandFeatureReleaseNotesConfigService } from '../../../discord/messages/services/command/feature/features/release-notes/services/config/discord-message-command-feature-release-notes-config.service';
 import { DiscordSoniaService } from '../../../discord/users/services/discord-sonia.service';
 import { MessageEmbedAuthor } from 'discord.js';
+import _ from 'lodash';
 import moment from 'moment-timezone';
 import { createMock } from 'ts-auto-mock';
 
@@ -131,7 +132,7 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
         const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-        expect(result.options.embeds?.[0]?.footer?.iconURL).toBeUndefined();
+        expect(_.get(result.options.embeds?.[0]?.footer, `iconURL`)).toBeUndefined();
       });
     });
 
@@ -149,7 +150,7 @@ describe(`FirebaseGuildsNewVersionCountMessageResponseService`, (): void => {
 
         const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-        expect(result.options.embeds?.[0]?.footer?.iconURL).toBe(`dummy-image-url`);
+        expect(_.get(result.options.embeds?.[0]?.footer, `iconURL`)).toBe(`dummy-image-url`);
       });
     });
 

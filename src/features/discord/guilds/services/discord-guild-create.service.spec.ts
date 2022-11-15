@@ -15,7 +15,7 @@ import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
 import { IDiscordGuildSoniaSendMessageToChannel } from '../interfaces/discord-guild-sonia-send-message-to-channel';
 import { Client, Guild, GuildChannel, Message, MessageOptions, MessagePayload, TextChannel } from 'discord.js';
-import * as admin from 'firebase-admin';
+import { WriteResult } from 'firebase-admin/firestore';
 import { of, throwError } from 'rxjs';
 import { createMock } from 'ts-auto-mock';
 
@@ -547,7 +547,7 @@ describe(`DiscordGuildCreateService`, (): void => {
 
   describe(`addFirebaseGuild()`, (): void => {
     let guild: Guild;
-    let writeResult: admin.firestore.WriteResult;
+    let writeResult: WriteResult;
 
     let firebaseGuildsServiceIsReady$Spy: jest.SpyInstance;
     let firebaseGuildsServiceHasGuildSpy: jest.SpyInstance;
@@ -560,7 +560,7 @@ describe(`DiscordGuildCreateService`, (): void => {
       guild = createMock<Guild>({
         id: `dummy-id`,
       });
-      writeResult = createMock<admin.firestore.WriteResult>();
+      writeResult = createMock<WriteResult>();
 
       firebaseGuildsServiceIsReady$Spy = jest.spyOn(firebaseGuildsService, `isReady$`).mockReturnValue(of(true));
       firebaseGuildsServiceHasGuildSpy = jest

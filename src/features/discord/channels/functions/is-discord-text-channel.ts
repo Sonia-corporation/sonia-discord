@@ -1,8 +1,8 @@
-import { TextBasedChannels, TextChannel } from 'discord.js';
+import { TextBasedChannel, TextChannel } from 'discord.js';
 
 /**
  * @param channel
  */
-export function isDiscordTextChannel(channel: Readonly<TextBasedChannels | null | undefined>): channel is TextChannel {
+export function isDiscordTextChannel(channel: Readonly<TextBasedChannel | null | undefined>): channel is TextChannel {
   return channel instanceof TextChannel;
 }

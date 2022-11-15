@@ -24,9 +24,6 @@ parserOptions:
   sourceType: module
   project:
     - './tsconfig.*?.json'
-  extraFileExtensions:
-    - .mjs
-    - .cjs
 parser: '@typescript-eslint/parser'
 plugins:
   - '@typescript-eslint'
@@ -56,6 +53,12 @@ settings:
         - './tsconfig.spec.json'
 rules:
   progress/activate: 1
+  no-restricted-imports:
+    - error
+    - patterns:
+        - message: 'Use instead firebase-admin/'
+          group:
+            - 'firebase-admin/lib/*'
   '@typescript-eslint/member-ordering':
     - error
     - default:
