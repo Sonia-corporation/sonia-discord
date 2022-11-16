@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.99.3](https://github.com/Sonia-corporation/sonia-discord/compare/1.99.2...1.99.3) (2022-11-16)
+
+
+### :bug: Bug Fixes
+
+* **messages:** allow to send empty messages with only embeds. ([#1849](https://github.com/Sonia-corporation/sonia-discord/issues/1849)) ([97fe68f](https://github.com/Sonia-corporation/sonia-discord/commit/97fe68f51b3dc16540feadcc6808b4c91dd54b66))
+
 ## [1.99.2](https://github.com/Sonia-corporation/sonia-discord/compare/1.99.1...1.99.2) (2022-11-16)
 
 
