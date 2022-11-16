@@ -53,6 +53,11 @@ settings:
         - './tsconfig.spec.json'
 rules:
   progress/activate: 1
+  import/no-named-default: error
+  import/no-default-export: error
+  import/no-relative-packages: error
+  import/prefer-default-export: off
+  import/no-named-export: off
   no-restricted-imports:
     - error
     - patterns:
