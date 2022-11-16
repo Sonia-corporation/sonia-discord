@@ -1,5 +1,17 @@
 # Semantic Versioning Changelog
 
+## [1.99.2](https://github.com/Sonia-corporation/sonia-discord/compare/1.99.1...1.99.2) (2022-11-16)
+
+
+### :bug: Bug Fixes
+
+* **release-notes:** stop sending previously sent ones ([#1845](https://github.com/Sonia-corporation/sonia-discord/issues/1845)) ([c2deaaf](https://github.com/Sonia-corporation/sonia-discord/commit/c2deaaffa4957313263d46057d8a8c0b75b06d70))
+* **deps:** update dependency @datorama/akita to v7 ([99529cd](https://github.com/Sonia-corporation/sonia-discord/commit/99529cd6442c95a612543e0c8dc832e27824f084))
+* **deps:** update dependency axios to v1 ([4ee14d5](https://github.com/Sonia-corporation/sonia-discord/commit/4ee14d50ce25eed76e609ecd86ba8ec696b9d418))
+* **deps:** update dependency firebase-admin to v11.2.1 ([#1831](https://github.com/Sonia-corporation/sonia-discord/issues/1831)) ([cac1991](https://github.com/Sonia-corporation/sonia-discord/commit/cac19915edea28d28f4159aae9d05455f8db1c6e))
+  Co-authored-by: renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
+* **deps:** update dependency rxjs to v7 ([7381ce5](https://github.com/Sonia-corporation/sonia-discord/commit/7381ce56221118934c1256fc4af81c54ba857888))
+
 ## [1.99.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.99.0...1.99.1) (2022-11-01)
 
 
