@@ -210,7 +210,7 @@
     "eslint-plugin-jsdoc": "39.6.2",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-progress": "0.0.1",
-    "eslint-plugin-rxjs": "3.3.7",
+    "eslint-plugin-rxjs": "4.0.4",
     "eslint-plugin-typescript-sort-keys": "2.1.0",
     "faker": "5.5.3",
     "husky": "8.0.2",
