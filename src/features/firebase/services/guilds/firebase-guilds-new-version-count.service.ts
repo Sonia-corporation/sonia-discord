@@ -34,7 +34,6 @@ export class FirebaseGuildsNewVersionCountService extends AbstractService {
    * @description
    * Each array is like a guild (without or without messages)
    * Each {@link Message} is a message sent to Discord on a channel
-   *
    * The goal here is to count the number of guilds
    * Then the number of messages (ak channels)
    * Then the number of messages per guild

@@ -29,6 +29,7 @@ import { isUpToDateFirebaseGuild } from '../../functions/guilds/is-up-to-date-fi
 import { IFirebaseGuildChannel } from '../../types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
+import { compareVersions } from 'compare-versions';
 import { Guild, GuildChannel, Message, ThreadChannel } from 'discord.js';
 import { QueryDocumentSnapshot, QuerySnapshot, WriteBatch } from 'firebase-admin/firestore';
 import _ from 'lodash';
@@ -37,6 +38,18 @@ import { mergeMap, take, tap } from 'rxjs/operators';
 
 const NO_GUILD = 0;
 const ONE_GUILD = 1;
+const LOWER_VERSION = -1;
+
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+type IGreaterVersion = 1;
+
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+type ILowerVersion = -1;
+
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+type ISameVersion = 0;
+
+type IComparisonVersion = ISameVersion | IGreaterVersion | ILowerVersion;
 
 export class FirebaseGuildsNewVersionService extends AbstractService {
   private static _instance: FirebaseGuildsNewVersionService;
@@ -376,7 +389,11 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     const appVersion: string = AppConfigService.getInstance().getVersion();
 
     if (hasFirebaseGuildLastReleaseNotesVersion(firebaseGuild)) {
-      return !_.isEqual(firebaseGuild.lastReleaseNotesVersion, appVersion);
+      const comparison: IComparisonVersion = compareVersions(firebaseGuild.lastReleaseNotesVersion, appVersion);
+
+      if (comparison === LOWER_VERSION) {
+        return true;
+      }
     }
 
     return false;
