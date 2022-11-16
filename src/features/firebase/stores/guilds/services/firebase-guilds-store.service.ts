@@ -30,19 +30,19 @@ export class FirebaseGuildsStoreService extends AbstractService {
   }
 
   public addOrUpdateEntities(entities: IFirebaseGuild[]): void {
-    FirebaseGuildsStore.getInstance().store.update(upsertEntities(entities));
+    FirebaseGuildsStore.getInstance().update(upsertEntities(entities));
   }
 
   public addEntities(entities: IFirebaseGuild[]): void {
-    FirebaseGuildsStore.getInstance().store.update(addEntities(entities));
+    FirebaseGuildsStore.getInstance().update(addEntities(entities));
   }
 
   public removeAllEntities(): void {
-    FirebaseGuildsStore.getInstance().store.update(deleteAllEntities());
+    FirebaseGuildsStore.getInstance().update(deleteAllEntities());
   }
 
   public getEntity(id: Readonly<Snowflake>): IFirebaseGuild | undefined {
-    return FirebaseGuildsStore.getInstance().store.query(getEntity(id));
+    return FirebaseGuildsStore.getInstance().query(getEntity(id));
   }
 
   private _watchFirebaseGuilds$(): Observable<IFirebaseGuild[]> {
