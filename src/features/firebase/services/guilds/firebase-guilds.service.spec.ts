@@ -9,7 +9,6 @@ import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
 import { FirebaseAppService } from '../firebase-app.service';
 import { Guild, Snowflake } from 'discord.js';
-import * as admin from 'firebase-admin';
 import { App } from 'firebase-admin/app';
 import {
   CollectionReference,
@@ -21,17 +20,12 @@ import {
   WriteBatch,
   WriteResult,
 } from 'firebase-admin/firestore';
+import * as FirebaseAdminFirestoreModule from 'firebase-admin/firestore';
 import { firstValueFrom } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
-jest.mock(`firebase-admin`, (): unknown => {
-  return {
-    credential: {},
-    firestore: jest.fn().mockReturnValue(createMock<Firestore>()),
-  };
-});
 
 describe(`FirebaseGuildsService`, (): void => {
   let service: FirebaseGuildsService;
@@ -91,7 +85,7 @@ describe(`FirebaseGuildsService`, (): void => {
     let firebaseAppServiceGetAppSpy: jest.SpyInstance;
     let getGuildsCountSpy: jest.SpyInstance;
     let loggerServiceDebugSpy: jest.SpyInstance;
-    let firestoreSpy: jest.SpyInstance;
+    let getFirestoreSpy: jest.SpyInstance;
     let notifyIsReadySpy: jest.SpyInstance;
     let settingsMock: jest.Mock;
 
@@ -104,7 +98,7 @@ describe(`FirebaseGuildsService`, (): void => {
       firebaseAppServiceGetAppSpy = jest.spyOn(firebaseAppService, `getApp`).mockReturnValue(app);
       getGuildsCountSpy = jest.spyOn(service, `getGuildsCount`).mockResolvedValue(8);
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
-      firestoreSpy = jest.spyOn(admin, `firestore`).mockReturnValue(
+      getFirestoreSpy = jest.spyOn(FirebaseAdminFirestoreModule, `getFirestore`).mockReturnValue(
         createMock<Firestore>({
           settings: settingsMock,
         })
@@ -139,7 +133,7 @@ describe(`FirebaseGuildsService`, (): void => {
 
         await expect(service.init()).rejects.toThrow(new Error(`error`));
 
-        expect(firestoreSpy).not.toHaveBeenCalled();
+        expect(getFirestoreSpy).not.toHaveBeenCalled();
       });
 
       it(`should not configure the store`, async (): Promise<void> => {
@@ -178,8 +172,8 @@ describe(`FirebaseGuildsService`, (): void => {
 
         await service.init();
 
-        expect(firestoreSpy).toHaveBeenCalledTimes(1);
-        expect(firestoreSpy).toHaveBeenCalledWith(app);
+        expect(getFirestoreSpy).toHaveBeenCalledTimes(1);
+        expect(getFirestoreSpy).toHaveBeenCalledWith(app);
       });
 
       it(`should configure the store`, async (): Promise<void> => {
@@ -322,8 +316,13 @@ describe(`FirebaseGuildsService`, (): void => {
     });
 
     describe(`when the store is set`, (): void => {
+      let app: App;
+
       beforeEach((): void => {
-        jest.spyOn(admin, `firestore`).mockReturnValue(firestore);
+        app = createMock<App>();
+
+        jest.spyOn(firebaseAppService, `getApp`).mockReturnValue(app);
+        jest.spyOn(FirebaseAdminFirestoreModule, `getFirestore`).mockReturnValue(firestore);
       });
 
       it(`should get the guilds collection from the store`, async (): Promise<void> => {
@@ -333,7 +332,7 @@ describe(`FirebaseGuildsService`, (): void => {
         service.getCollectionReference();
 
         expect(collectionMock).toHaveBeenCalledTimes(2);
-        expect(collectionMock).toHaveBeenNthCalledWith(2, `/guilds`);
+        expect(collectionMock).toHaveBeenNthCalledWith(2, `guilds`);
       });
 
       it(`should not log a warning about the store being not set`, async (): Promise<void> => {
@@ -1120,8 +1119,13 @@ describe(`FirebaseGuildsService`, (): void => {
     });
 
     describe(`when the store is set`, (): void => {
+      let app: App;
+
       beforeEach((): void => {
-        jest.spyOn(admin, `firestore`).mockReturnValue(firestore);
+        app = createMock<App>();
+
+        jest.spyOn(firebaseAppService, `getApp`).mockReturnValue(app);
+        jest.spyOn(FirebaseAdminFirestoreModule, `getFirestore`).mockReturnValue(firestore);
       });
 
       it(`should get the batch from the store`, async (): Promise<void> => {

@@ -18,7 +18,7 @@ import { ISonia } from '../../users/types/sonia';
 import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../types/any-discord-message';
 import { Client, MessageOptions, MessagePayload } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock, createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -128,7 +128,7 @@ describe(`DiscordMessageService`, (): void => {
       service.init();
 
       expect(discordClientServiceGetClientOnMock).toHaveBeenCalledTimes(1);
-      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(`message`, expect.any(Function));
+      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(`messageCreate`, expect.any(Function));
     });
 
     describe(`when the Discord client message event is triggered`, (): void => {
@@ -797,9 +797,12 @@ describe(`DiscordMessageService`, (): void => {
                 beforeEach((): void => {
                   anyDiscordMessageChannelSendMock.mockRejectedValue(new Error(`Message sending error`));
 
-                  anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                     channel: {
                       send: anyDiscordMessageChannelSendMock,
+                    },
+                    guild: {
+                      id: `dummy-guild-id`,
                     },
                     id: `dummy-id`,
                   });
@@ -834,9 +837,12 @@ describe(`DiscordMessageService`, (): void => {
                 beforeEach((): void => {
                   anyDiscordMessageChannelSendMock.mockResolvedValue(undefined);
 
-                  anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                     channel: {
                       send: anyDiscordMessageChannelSendMock,
+                    },
+                    guild: {
+                      id: `dummy-guild-id`,
                     },
                     id: `dummy-id`,
                   });
@@ -966,9 +972,12 @@ describe(`DiscordMessageService`, (): void => {
                 beforeEach((): void => {
                   anyDiscordMessageChannelSendMock.mockRejectedValue(new Error(`Message sending error`));
 
-                  anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                     channel: {
                       send: anyDiscordMessageChannelSendMock,
+                    },
+                    guild: {
+                      id: `dummy-guild-id`,
                     },
                     id: `dummy-id`,
                   });
@@ -1014,9 +1023,12 @@ describe(`DiscordMessageService`, (): void => {
                 beforeEach((): void => {
                   anyDiscordMessageChannelSendMock.mockResolvedValue(undefined);
 
-                  anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                     channel: {
                       send: anyDiscordMessageChannelSendMock,
+                    },
+                    guild: {
+                      id: `dummy-guild-id`,
                     },
                     id: `dummy-id`,
                   });

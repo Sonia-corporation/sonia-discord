@@ -44,5 +44,6 @@
     <orderEntry type="library" name="crypto-random-string" level="project" />
     <orderEntry type="library" name="axios" level="project" />
     <orderEntry type="library" name="faker" level="project" />
+    <orderEntry type="library" name="ngneat" level="project" />
   </component>
 </module>

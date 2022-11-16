@@ -2,7 +2,7 @@ import { DiscordMessageCommandFeatureNoonStatus } from './discord-message-comman
 import { FirebaseGuildVersionEnum } from '../../../../../../../../firebase/enums/guilds/firebase-guild-version.enum';
 import { IFirebaseGuildV1 } from '../../../../../../../../firebase/interfaces/guilds/firebase-guild-v1';
 import { IFirebaseGuildV2 } from '../../../../../../../../firebase/interfaces/guilds/firebase-guild-v2';
-import { FirebaseGuildsStoreQuery } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query';
+import { FirebaseGuildsStoreService } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.service';
 import { IFirebaseGuildChannelVFinal } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final';
 import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../../../../../../../firebase/types/guilds/firebase-guild-v-final';
@@ -20,12 +20,12 @@ jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
   let service: DiscordMessageCommandFeatureNoonStatus<DiscordMessageCommandFeatureNoonFlagEnum>;
   let loggerService: LoggerService;
-  let firebaseGuildsStoreQuery: FirebaseGuildsStoreQuery;
+  let firebaseGuildsStoreService: FirebaseGuildsStoreService;
   let discordChannelService: DiscordChannelService;
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
-    firebaseGuildsStoreQuery = FirebaseGuildsStoreQuery.getInstance();
+    firebaseGuildsStoreService = FirebaseGuildsStoreService.getInstance();
     discordChannelService = DiscordChannelService.getInstance();
   });
 
@@ -269,7 +269,7 @@ describe(`DiscordMessageCommandFeatureNoonStatus`, (): void => {
 
       loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
       firebaseGuildsStoreQueryGetEntitySpy = jest
-        .spyOn(firebaseGuildsStoreQuery, `getEntity`)
+        .spyOn(firebaseGuildsStoreService, `getEntity`)
         .mockReturnValue(undefined);
     });
 

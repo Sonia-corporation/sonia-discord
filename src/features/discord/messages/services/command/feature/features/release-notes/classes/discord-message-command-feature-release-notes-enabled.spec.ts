@@ -4,7 +4,7 @@ import { IFirebaseGuildV1 } from '../../../../../../../../firebase/interfaces/gu
 import { IFirebaseGuildV2 } from '../../../../../../../../firebase/interfaces/guilds/firebase-guild-v2';
 import { FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService } from '../../../../../../../../firebase/services/guilds/channels/features/release-notes/firebase-guilds-channels-features-release-notes-enabled.service';
 import { FirebaseGuildsChannelsService } from '../../../../../../../../firebase/services/guilds/channels/firebase-guilds-channels.service';
-import { FirebaseGuildsStoreQuery } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query';
+import { FirebaseGuildsStoreService } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.service';
 import { IFirebaseGuildChannelVFinal } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel-v-final';
 import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../../../../../../../firebase/types/guilds/firebase-guild-v-final';
@@ -32,14 +32,14 @@ jest.mock(`../../../../../../../../logger/services/chalk/chalk.service`);
 describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
   let service: DiscordMessageCommandFeatureReleaseNotesEnabled<string>;
   let loggerService: LoggerService;
-  let firebaseGuildsStoreQuery: FirebaseGuildsStoreQuery;
+  let firebaseGuildsStoreService: FirebaseGuildsStoreService;
   let firebaseGuildsChannelsFeaturesReleaseNotesEnabledService: FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService;
   let firebaseGuildsChannelsService: FirebaseGuildsChannelsService;
   let discordChannelService: DiscordChannelService;
 
   beforeEach((): void => {
     loggerService = LoggerService.getInstance();
-    firebaseGuildsStoreQuery = FirebaseGuildsStoreQuery.getInstance();
+    firebaseGuildsStoreService = FirebaseGuildsStoreService.getInstance();
     firebaseGuildsChannelsFeaturesReleaseNotesEnabledService =
       FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService.getInstance();
     firebaseGuildsChannelsService = FirebaseGuildsChannelsService.getInstance();
@@ -945,7 +945,7 @@ describe(`DiscordMessageCommandFeatureReleaseNotesEnabled`, (): void => {
 
       loggerServiceErrorSpy = jest.spyOn(loggerService, `error`).mockImplementation();
       firebaseGuildsStoreQueryGetEntitySpy = jest
-        .spyOn(firebaseGuildsStoreQuery, `getEntity`)
+        .spyOn(firebaseGuildsStoreService, `getEntity`)
         .mockReturnValue(undefined);
       firebaseGuildsChannelsServiceIsValidSpy = jest
         .spyOn(firebaseGuildsChannelsService, `isValid`)

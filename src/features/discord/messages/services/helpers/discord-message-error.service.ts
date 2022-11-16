@@ -59,7 +59,7 @@ export class DiscordMessageErrorService extends DiscordCommandErrorCoreService {
             });
           }
         })
-        .catch((error: unknown): void => {
+        .catch((error: Error): void => {
           this._logOnError(error, anyDiscordMessage);
         });
     }

@@ -181,7 +181,7 @@ export class DiscordMessageService extends AbstractService {
           return this._sendMessages(anyDiscordMessage, discordMessageResponses);
         }
       )
-      .catch((error: Readonly<Error>): Promise<void> => {
+      .catch((error: Error): Promise<void> => {
         LoggerService.getInstance().error({
           context: this._serviceName,
           hasExtendedContext: true,
@@ -191,7 +191,7 @@ export class DiscordMessageService extends AbstractService {
           ),
         });
 
-        return Promise.reject(error);
+        throw error;
       });
   }
 
@@ -217,7 +217,7 @@ export class DiscordMessageService extends AbstractService {
           return this._sendMessages(anyDiscordMessage, discordMessageResponses);
         }
       )
-      .catch((error: Readonly<Error>): Promise<void> => {
+      .catch((error: Error): Promise<void> => {
         LoggerService.getInstance().error({
           context: this._serviceName,
           hasExtendedContext: true,
@@ -227,7 +227,7 @@ export class DiscordMessageService extends AbstractService {
           ),
         });
 
-        return Promise.reject(error);
+        throw error;
       });
   }
 
@@ -236,7 +236,7 @@ export class DiscordMessageService extends AbstractService {
     { content, options }: Readonly<IDiscordMessageResponse>
   ): Promise<Message | void> {
     if (!DiscordChannelService.getInstance().isValid(anyDiscordMessage.channel)) {
-      return Promise.reject(new Error(`Discord message channel not valid`));
+      throw new Error(`Discord message channel not valid`);
     }
 
     LoggerService.getInstance().debug({
@@ -259,10 +259,10 @@ export class DiscordMessageService extends AbstractService {
 
         return Promise.resolve(message);
       })
-      .catch((error: unknown): Promise<void> => {
+      .catch((error: Error): Promise<void> => {
         DiscordMessageErrorService.getInstance().handleError(error, anyDiscordMessage);
 
-        return Promise.reject(error);
+        throw error;
       });
   }
 

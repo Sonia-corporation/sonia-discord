@@ -162,9 +162,9 @@ describe(`FirebaseService`, (): void => {
       });
 
       it(`should log about the init error`, async (): Promise<void> => {
-        expect.assertions(2);
+        expect.assertions(3);
 
-        await service.init();
+        await expect(service.init()).rejects.toThrow(new Error(`init error`));
 
         expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
@@ -234,17 +234,17 @@ describe(`FirebaseService`, (): void => {
       });
 
       it(`should not watch the Firebase guilds`, async (): Promise<void> => {
-        expect.assertions(1);
+        expect.assertions(2);
 
-        await service.init();
+        await expect(service.init()).rejects.toThrow(new Error(`init error`));
 
         expect(firebaseGuildsServiceGetInstanceWatchGuildsSpy).not.toHaveBeenCalled();
       });
 
       it(`should log about the init error`, async (): Promise<void> => {
-        expect.assertions(2);
+        expect.assertions(3);
 
-        await service.init();
+        await expect(service.init()).rejects.toThrow(new Error(`init error`));
 
         expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({

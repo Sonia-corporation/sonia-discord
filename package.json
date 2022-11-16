@@ -67,8 +67,11 @@
       "CI": "true"
     }
   },
-  "akitaCli": {
-    "template": "ts"
+  "elf": {
+    "cli": {
+      "repoTemplate": "class",
+      "inlineStoreInClass": true
+    }
   },
   "engines": {
     "node": "16.18.1",
@@ -77,6 +80,7 @@
   "private": false,
   "files": [
     "dist/index.js",
+    "dist/index.js.map",
     "CHANGELOG.md",
     "CODE_OF_CONDUCT.md",
     "CONTRIBUTING.md",
@@ -86,13 +90,19 @@
     "README.md"
   ],
   "main": "./src/index.ts",
+  "targets": {
+    "main": false,
+    "default": {
+      "includeNodeModules": false
+    }
+  },
   "scripts": {
     "\n# RUN SCRIPTS:": "",
     "start": "cross-env NODE_ENV=development ts-node-dev --debounce --clear --cache-directory dist-local-dev --respawn --transpile-only .",
     "start:prod": "npm run build && npm run run:prod",
     "start:local-prod": "npm run build && npm run run:local-prod",
     "\n# BUILD SCRIPTS:": "",
-    "build": "npm run clean:dist && ncc build --minify && npm run concurrently -- --prefix-colors green,cyan \"npm:build:environment\" \"npm:build:firebase-service-account\"",
+    "build": "npm run clean:dist && parcel build ./src/index.ts && npm run concurrently -- --prefix-colors green,cyan \"npm:build:environment\" \"npm:build:firebase-service-account\"",
     "build:environment": "npm run build:environment:create && npm run concurrently -- --prefix-colors green,cyan,red \"npm:build:environment:copy\" \"npm:build:environment:rewrite-path\" \"npm:build:update-app-initialization-date\"",
     "build:environment:copy": "node scripts/build-environment-copy.mjs",
     "build:environment:create": "node scripts/build-environment-create.mjs",
@@ -143,7 +153,9 @@
     "install-git-hooks": "husky install && shx rm -rf .git/hooks && shx ln -s ../.husky .git/hooks"
   },
   "dependencies": {
-    "@datorama/akita": "7.1.1",
+    "@ngneat/effects": "1.1.1",
+    "@ngneat/elf": "2.2.0",
+    "@ngneat/elf-entities": "4.4.2",
     "@scout_apm/scout-apm": "0.2.3",
     "app-root-path": "3.1.0",
     "axios": "1.1.3",
@@ -161,7 +173,7 @@
     "xregexp": "5.1.1"
   },
   "devDependencies": {
-    "@datorama/akita-cli": "6.1.1",
+    "@ngneat/elf-cli-ng": "1.0.0",
     "@semantic-release/changelog": "6.0.1",
     "@semantic-release/git": "10.0.1",
     "@semantic-release/github": "8.0.6",
@@ -210,6 +222,7 @@
     "madge": "5.0.1",
     "majestic": "1.8.1",
     "node-notifier": "10.0.1",
+    "parcel": "2.8.0",
     "prettier": "2.7.1",
     "pug": "3.0.2",
     "rimraf": "3.0.2",

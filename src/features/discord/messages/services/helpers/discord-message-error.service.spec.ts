@@ -14,7 +14,7 @@ import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedFieldData, Message, MessageEmbedAuthor, MessageEmbedThumbnail } from 'discord.js';
 import faker from 'faker';
 import moment, { MomentInput } from 'moment-timezone';
 import { createHydratedMock } from 'ts-auto-mock';
@@ -102,6 +102,11 @@ describe(`DiscordMessageErrorService`, (): void => {
       service = new DiscordMessageErrorService();
       error = new Error(`dummy error`);
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+        channel: {
+          send(): Promise<Message<boolean>> {
+            return Promise.resolve(createHydratedMock<Message<boolean>>());
+          },
+        },
         id: `dummy-id`,
       });
 
