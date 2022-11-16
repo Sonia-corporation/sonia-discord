@@ -53,6 +53,9 @@ settings:
         - './tsconfig.spec.json'
 rules:
   progress/activate: 1
+  no-new-native-nonconstructor: error
+  no-empty-static-block: error
+  no-constant-binary-expression: error
   import/no-named-default: error
   import/no-default-export: error
   import/no-relative-packages: error
