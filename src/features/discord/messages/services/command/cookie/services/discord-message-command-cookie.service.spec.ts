@@ -261,7 +261,7 @@ describe(`DiscordMessageCommandCookieService`, (): void => {
 
       const result = await service.handleResponse(anyDiscordMessage);
 
-      expect(result.content).toBe(``);
+      expect(result.content).toBeUndefined();
     });
   });
 

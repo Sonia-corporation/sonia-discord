@@ -255,7 +255,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
 
-      expect(result.content).toBe(``);
+      expect(result.content).toBeUndefined();
     });
   });
 });

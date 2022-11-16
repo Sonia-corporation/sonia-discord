@@ -33,7 +33,6 @@ export class DiscordMessageCommandFeatureDuplicatedFlagsErrorService extends Dis
       .getCliErrorMessageResponse()
       .then((cliErrorMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
         const message: IDiscordMessageResponse = {
-          content: ``,
           options: {
             embeds: [this._getMessageEmbed(flagsDuplicated)],
           },

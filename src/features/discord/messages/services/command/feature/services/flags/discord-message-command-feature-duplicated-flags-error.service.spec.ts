@@ -314,7 +314,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
       const result = await service.getMessageResponse(flagsDuplicated);
 
-      expect(result.content).toBe(``);
+      expect(result.content).toBeUndefined();
     });
   });
 });

@@ -373,7 +373,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.content).toBe(``);
+      expect(result.content).toBeUndefined();
     });
   });
 

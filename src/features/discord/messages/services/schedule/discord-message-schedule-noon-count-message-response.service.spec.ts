@@ -202,7 +202,7 @@ describe(`DiscordMessageScheduleNoonCountMessageResponseService`, (): void => {
 
       const result = service.getMessageResponse(totalGuildCount, guildCount, channelCount);
 
-      expect(result.content).toBe(``);
+      expect(result.content).toBeUndefined();
     });
   });
 });

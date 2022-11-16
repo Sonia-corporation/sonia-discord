@@ -30,7 +30,6 @@ export class DiscordMessageCommandCliErrorService extends AbstractService {
    */
   public getCliErrorMessageResponse(): Promise<IDiscordMessageResponse> {
     const message: IDiscordMessageResponse = {
-      content: ``,
       options: {
         embeds: [this._getMessageEmbed()],
       },

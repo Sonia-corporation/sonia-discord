@@ -314,7 +314,7 @@ describe(`DiscordMessageCommandFeatureOppositeFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(oppositeFlags);
 
-      expect(result.content).toBe(``);
+      expect(result.content).toBeUndefined();
     });
   });
 });

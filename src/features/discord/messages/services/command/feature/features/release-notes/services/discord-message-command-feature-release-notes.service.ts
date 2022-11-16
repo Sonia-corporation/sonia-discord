@@ -72,7 +72,6 @@ export class DiscordMessageCommandFeatureReleaseNotesService extends AbstractSer
 
         if (!_.isEmpty(discordCommandSplittedFlagsResponse.commandFlagsSuccess)) {
           discordMessageResponses.unshift({
-            content: ``,
             options: {
               embeds: [this._getMessageEmbed(discordCommandSplittedFlagsResponse.commandFlagsSuccess)],
             },

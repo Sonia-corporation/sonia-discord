@@ -40,7 +40,6 @@ export class DiscordMessageCommandLunchService extends AbstractService {
 
   public getMessageResponse(): Promise<IDiscordMessageResponse> {
     const message: IDiscordMessageResponse = {
-      content: ``,
       options: {
         embeds: [this._getMessageEmbed()],
       },
