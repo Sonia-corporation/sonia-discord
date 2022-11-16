@@ -10,7 +10,7 @@ import { LoggerService } from '../../../logger/services/logger.service';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
 import { IDiscordGuildSoniaSendMessageToChannel } from '../interfaces/discord-guild-sonia-send-message-to-channel';
-import { Guild, GuildChannel, NewsChannel, TextChannel } from 'discord.js';
+import { Guild, GuildChannel, NewsChannel, TextChannel, ThreadChannel } from 'discord.js';
 import _ from 'lodash';
 import { filter, take } from 'rxjs/operators';
 
@@ -45,11 +45,11 @@ export class DiscordGuildSoniaService extends AbstractService {
       return;
     }
 
-    const guildChannel: GuildChannel | null | undefined = this.getSoniaGuildChannelByName(
+    const channel: GuildChannel | ThreadChannel | null | undefined = this.getSoniaGuildChannelByName(
       sendMessageToChannel.channelName
     );
 
-    if (_.isNil(guildChannel) || !guildChannel.isText()) {
+    if (_.isNil(channel) || !channel.isText()) {
       LoggerService.getInstance().warning({
         context: this._serviceName,
         message: ChalkService.getInstance().text(
@@ -60,12 +60,25 @@ export class DiscordGuildSoniaService extends AbstractService {
       return;
     }
 
-    this._sendMessageToChannel(sendMessageToChannel, guildChannel);
+    if (channel.isThread()) {
+      LoggerService.getInstance().warning({
+        context: this._serviceName,
+        message: ChalkService.getInstance().text(
+          `The channel ${ChalkService.getInstance().value(
+            sendMessageToChannel.channelName
+          )} is actually a thread channel! We do not yet support it.`
+        ),
+      });
+
+      return;
+    }
+
+    this._sendMessageToChannel(sendMessageToChannel, channel);
   }
 
   public getSoniaGuildChannelByName(
     channelName: Readonly<DiscordGuildSoniaChannelNameEnum>
-  ): GuildChannel | null | undefined {
+  ): GuildChannel | ThreadChannel | null | undefined {
     if (_.isNil(this._soniaGuild)) {
       LoggerService.getInstance().warning({
         context: this._serviceName,
@@ -75,7 +88,7 @@ export class DiscordGuildSoniaService extends AbstractService {
       return null;
     }
 
-    return this._soniaGuild.channels.cache.find(({ name }: Readonly<GuildChannel>): boolean =>
+    return this._soniaGuild.channels.cache.find(({ name }: Readonly<GuildChannel | ThreadChannel>): boolean =>
       _.isEqual(_.toLower(_.deburr(name)), _.toLower(channelName))
     );
   }
@@ -102,10 +115,13 @@ export class DiscordGuildSoniaService extends AbstractService {
 
   private _sendMessageToChannel(
     { messageResponse }: Readonly<IDiscordGuildSoniaSendMessageToChannel>,
-    guildChannel: Readonly<TextChannel | NewsChannel>
+    channel: Readonly<TextChannel | NewsChannel>
   ): void {
-    guildChannel
-      .send(messageResponse.response, messageResponse.options)
+    channel
+      .send({
+        ...messageResponse.options,
+        content: messageResponse.content,
+      })
       .then((): void => {
         if (_.isEqual(LoggerConfigService.getInstance().shouldDisplayMoreDebugLogs(), true)) {
           LoggerService.getInstance().log({

@@ -678,13 +678,14 @@ describe(`AppConfigMutationService`, (): void => {
 
       service.updateFirstReleaseDate(firstReleaseDate);
 
-      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledTimes(1);
-      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledWith({
+      const configUpdateString: IConfigUpdateString = {
         context: `AppConfigMutatorService`,
         newValue: `dummy-first-release-date`,
         oldValue: `first-release-date`,
         valueName: `first release date`,
-      } as IConfigUpdateString);
+      };
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedDateSpy).toHaveBeenCalledWith(configUpdateString);
     });
 
     it(`should update the app config first release date with the updated string`, (): void => {

@@ -10,7 +10,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
     beforeEach((): void => {
       guildChannel = createMock<TextChannel>({
         isText(): boolean {
-          return _.includes([`text`, `news`], guildChannel.type);
+          return _.includes([`GUILD_TEXT`, `GUILD_NEWS`], guildChannel.type);
         },
       });
     });
@@ -28,7 +28,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
     beforeEach((): void => {
       guildChannel = createMock<VoiceChannel>({
         isText(): boolean {
-          return _.includes([`text`, `news`], guildChannel.type);
+          return _.includes([`GUILD_TEXT`, `GUILD_NEWS`], guildChannel.type);
         },
       });
     });
@@ -46,7 +46,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
     beforeEach((): void => {
       guildChannel = createMock<CategoryChannel>({
         isText(): boolean {
-          return _.includes([`text`, `news`], guildChannel.type);
+          return _.includes([`GUILD_TEXT`, `GUILD_NEWS`], guildChannel.type);
         },
       });
     });
@@ -64,7 +64,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
     beforeEach((): void => {
       guildChannel = createMock<NewsChannel>({
         isText(): boolean {
-          return _.includes([`text`, `news`], guildChannel.type);
+          return _.includes([`GUILD_TEXT`, `GUILD_NEWS`], guildChannel.type);
         },
       });
     });
@@ -82,7 +82,7 @@ describe(`isDiscordGuildChannelWritable()`, (): void => {
     beforeEach((): void => {
       guildChannel = createMock<StoreChannel>({
         isText(): boolean {
-          return _.includes([`text`, `news`], guildChannel.type);
+          return _.includes([`GUILD_TEXT`, `GUILD_NEWS`], guildChannel.type);
         },
       });
     });

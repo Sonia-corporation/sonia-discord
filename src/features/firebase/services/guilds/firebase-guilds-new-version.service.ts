@@ -29,8 +29,8 @@ import { isUpToDateFirebaseGuild } from '../../functions/guilds/is-up-to-date-fi
 import { IFirebaseGuildChannel } from '../../types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuild } from '../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../types/guilds/firebase-guild-v-final';
-import { Guild, GuildChannel, Message } from 'discord.js';
-import admin from 'firebase-admin';
+import { Guild, GuildChannel, Message, ThreadChannel } from 'discord.js';
+import { QueryDocumentSnapshot, QuerySnapshot, WriteBatch } from 'firebase-admin/firestore';
 import _ from 'lodash';
 import { firstValueFrom, forkJoin, Observable } from 'rxjs';
 import { mergeMap, take, tap } from 'rxjs/operators';
@@ -117,9 +117,14 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
     this._logFirebaseGuildChannelReleaseNotesEnabled(guild, channel);
 
-    const guildChannel: GuildChannel | undefined = guild.channels.cache.get(channel.id as string);
+    if (_.isNil(channel.id)) {
+      return Promise.reject(new Error(`Guild channel id nil!`));
+    }
 
-    if (_.isNil(guildChannel)) {
+    // TODO add support for ThreadChannel
+    const guildOrThreadChannel: GuildChannel | ThreadChannel | undefined = guild.channels.cache.get(channel.id);
+
+    if (_.isNil(guildOrThreadChannel)) {
       this._logInValidDiscordGuildChannel(guild, channel);
 
       return Promise.reject(new Error(`Guild channel not found`));
@@ -127,12 +132,14 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
     this._logValidDiscordGuildChannel(guild, channel);
 
-    return this.sendMessageResponse(guildChannel);
+    return this.sendMessageResponse(guildOrThreadChannel);
   }
 
-  public async sendMessageResponse(guildChannel: Readonly<GuildChannel>): Promise<Message | void> {
-    if (!isDiscordGuildChannelWritable(guildChannel)) {
-      this._logGuildChannelNotWritable(guildChannel);
+  public async sendMessageResponse(
+    guildOrThreadChannel: Readonly<GuildChannel | ThreadChannel>
+  ): Promise<Message | void> {
+    if (!isDiscordGuildChannelWritable(guildOrThreadChannel)) {
+      this._logGuildChannelNotWritable(guildOrThreadChannel);
 
       return Promise.reject(new Error(`Guild channel not writable`));
     }
@@ -143,17 +150,20 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
       return Promise.reject(new Error(`No message response fetched`));
     }
 
-    this._logSendingMessagesForReleaseNotes(guildChannel);
+    this._logSendingMessagesForReleaseNotes(guildOrThreadChannel);
 
-    return guildChannel
-      .send(messageResponse.response, messageResponse.options)
+    return guildOrThreadChannel
+      .send({
+        ...messageResponse.options,
+        content: messageResponse.content,
+      })
       .then((message: Message): Promise<Message> => {
-        this._logReleaseNotesMessageSent(guildChannel);
+        this._logReleaseNotesMessageSent(guildOrThreadChannel);
 
         return Promise.resolve(message);
       })
       .catch((error: Readonly<string>): Promise<void> => {
-        this._onMessageError(error, guildChannel);
+        this._onMessageError(error, guildOrThreadChannel);
 
         return Promise.reject(error);
       });
@@ -193,7 +203,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
           },
         };
 
-        enhanceMessageResponse.response = responsesFactoryPattern[releaseType]();
+        enhanceMessageResponse.content = responsesFactoryPattern[releaseType]();
 
         return Promise.resolve(enhanceMessageResponse);
       })
@@ -247,7 +257,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   private _sendNewReleaseNotesToEachGuild$(): Observable<((Message | null)[] | void)[] | void> {
     return this.isReady$().pipe(
       take(ONE_EMITTER),
-      mergeMap((): Promise<admin.firestore.QuerySnapshot<IFirebaseGuild>> => {
+      mergeMap((): Promise<QuerySnapshot<IFirebaseGuild>> => {
         LoggerService.getInstance().debug({
           context: this._serviceName,
           message: ChalkService.getInstance().text(`processing the sending of release notes to each guild...`),
@@ -255,7 +265,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
 
         return FirebaseGuildsService.getInstance().getGuilds();
       }),
-      mergeMap((querySnapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>): Promise<IFirebaseGuild[] | void> => {
+      mergeMap((querySnapshot: QuerySnapshot<IFirebaseGuild>): Promise<IFirebaseGuild[] | void> => {
         LoggerService.getInstance().debug({
           context: this._serviceName,
           message: ChalkService.getInstance().text(`guilds fetched`),
@@ -298,9 +308,9 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
   }
 
   private _sendAndUpdateNewReleaseNotesToEachFirebaseGuild(
-    querySnapshot: admin.firestore.QuerySnapshot<IFirebaseGuild>
+    querySnapshot: QuerySnapshot<IFirebaseGuild>
   ): Promise<IFirebaseGuild[] | void> {
-    const batch: admin.firestore.WriteBatch | undefined = FirebaseGuildsService.getInstance().getBatch();
+    const batch: WriteBatch | undefined = FirebaseGuildsService.getInstance().getBatch();
 
     if (_.isNil(batch)) {
       LoggerService.getInstance().error({
@@ -315,7 +325,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     let countFirebaseGuildsUpdated = NO_GUILD;
     let countFirebaseGuilds = NO_GUILD;
 
-    querySnapshot.forEach((queryDocumentSnapshot: admin.firestore.QueryDocumentSnapshot<IFirebaseGuild>): void => {
+    querySnapshot.forEach((queryDocumentSnapshot: QueryDocumentSnapshot<IFirebaseGuild>): void => {
       if (!_.isEqual(queryDocumentSnapshot.exists, true)) {
         return;
       }
@@ -450,7 +460,7 @@ export class FirebaseGuildsNewVersionService extends AbstractService {
     });
   }
 
-  private _logGuildChannelNotWritable({ id }: Readonly<GuildChannel>): void {
+  private _logGuildChannelNotWritable({ id }: Readonly<GuildChannel | ThreadChannel>): void {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(

@@ -18,7 +18,7 @@ import { DiscordMessageRightsService } from '../../messages/services/rights/disc
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
 import { IAnyGuildMember } from '../types/any-guild-member';
-import { Guild, GuildChannel } from 'discord.js';
+import { Guild, GuildChannel, ThreadChannel } from 'discord.js';
 import _ from 'lodash';
 
 export class DiscordGuildMemberAddService extends AbstractService {
@@ -42,7 +42,9 @@ export class DiscordGuildMemberAddService extends AbstractService {
 
   public sendMessage(member: Readonly<IAnyGuildMember>): void {
     if (this._canSendMessage(member.guild)) {
-      const primaryChannel: GuildChannel | null = DiscordChannelGuildService.getInstance().getPrimary(member.guild);
+      const primaryChannel: GuildChannel | ThreadChannel | null = DiscordChannelGuildService.getInstance().getPrimary(
+        member.guild
+      );
 
       if (isDiscordGuildChannel(primaryChannel)) {
         this._sendMessage(primaryChannel, member);
@@ -118,7 +120,10 @@ export class DiscordGuildMemberAddService extends AbstractService {
     });
 
     guildChannel
-      .send(messageResponse.response, messageResponse.options)
+      .send({
+        ...messageResponse.options,
+        content: messageResponse.content,
+      })
       .then((): void => {
         // @todo add coverage
         LoggerService.getInstance().log({
@@ -145,10 +150,8 @@ export class DiscordGuildMemberAddService extends AbstractService {
 
   private _getMessageResponse({ id }: Readonly<IAnyGuildMember>): IDiscordMessageResponse {
     return {
-      options: {
-        split: false,
-      },
-      response: this._getMessageResponseWithEnvPrefix(`Welcome ${wrapUserIdIntoMention(id)}! il est midi!`),
+      content: this._getMessageResponseWithEnvPrefix(`Welcome ${wrapUserIdIntoMention(id)}! il est midi!`),
+      options: {},
     };
   }
 

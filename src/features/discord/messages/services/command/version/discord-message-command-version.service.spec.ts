@@ -191,7 +191,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
+      expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -200,7 +200,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+      expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     it(`should return a Discord message response embed with 6 fields`, async (): Promise<void> => {
@@ -208,7 +208,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.fields).toHaveLength(6);
+      expect(result.options.embeds?.[0]?.fields).toHaveLength(6);
     });
 
     it(`should return a Discord message response embed with an application version field`, async (): Promise<void> => {
@@ -217,7 +217,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.fields?.[0]).toStrictEqual({
+      expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
         name: `My age`,
         value: `[8](https://github.com/Sonia-corporation/sonia-discord/releases/tag/8)`,
       } as EmbedFieldData);
@@ -229,7 +229,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.fields?.[1]).toStrictEqual({
+      expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
         inline: false,
         name: `My last birthday`,
         value: `dummy-release-date-humanized`,
@@ -242,7 +242,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.fields?.[2]).toStrictEqual({
+      expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
         inline: false,
         name: `The last time I woken up`,
         value: `dummy-initialization-date-humanized`,
@@ -255,7 +255,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.fields?.[3]).toStrictEqual({
+      expect(result.options.embeds?.[0]?.fields?.[3]).toStrictEqual({
         name: `My birthday card`,
         value: `dummy-release-notes\n\nCheckout all my [birthday cards](https://github.com/Sonia-corporation/sonia-discord/blob/master/CHANGELOG.md).`,
       } as EmbedFieldData);
@@ -267,7 +267,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.fields?.[4]).toStrictEqual({
+      expect(result.options.embeds?.[0]?.fields?.[4]).toStrictEqual({
         inline: false,
         name: `My location`,
         value: `Running in development`,
@@ -280,7 +280,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.fields?.[5]).toStrictEqual({
+      expect(result.options.embeds?.[0]?.fields?.[5]).toStrictEqual({
         inline: false,
         name: `My emotional state`,
         value: `Agitated`,
@@ -295,7 +295,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.footer).toStrictEqual({
+      expect(result.options.embeds?.[0]?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `8 birthdays since the 24th March 2020`,
       } as MessageEmbedFooter);
@@ -313,7 +313,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: undefined,
           text: `8 birthdays since the 24th March 2020`,
         } as MessageEmbedFooter);
@@ -332,7 +332,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `8 birthdays since the 24th March 2020`,
         } as MessageEmbedFooter);
@@ -345,7 +345,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.thumbnail).toStrictEqual({
+      expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
       } as MessageEmbedThumbnail);
     });
@@ -355,8 +355,8 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
+      expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
+      expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -365,15 +365,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.title).toBe(`dummy-full-name version`);
-    });
-
-    it(`should return a Discord message response not split`, async (): Promise<void> => {
-      expect.assertions(1);
-
-      const result = await service.getMessageResponse();
-
-      expect(result.options.split).toBe(false);
+      expect(result.options.embeds?.[0]?.title).toBe(`dummy-full-name version`);
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -381,7 +373,7 @@ describe(`DiscordMessageCommandVersionService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.response).toBe(``);
+      expect(result.content).toBe(``);
     });
   });
 

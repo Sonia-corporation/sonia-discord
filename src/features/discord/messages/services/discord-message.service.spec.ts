@@ -17,8 +17,8 @@ import { DiscordSoniaService } from '../../users/services/discord-sonia.service'
 import { ISonia } from '../../users/types/sonia';
 import { IDiscordMessageResponse } from '../interfaces/discord-message-response';
 import { IAnyDiscordMessage } from '../types/any-discord-message';
-import { Client, MessageOptions } from 'discord.js';
-import { createMock } from 'ts-auto-mock';
+import { Client, MessageOptions, MessagePayload } from 'discord.js';
+import { createHydratedMock, createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../logger/services/chalk/chalk.service`);
 
@@ -128,7 +128,7 @@ describe(`DiscordMessageService`, (): void => {
       service.init();
 
       expect(discordClientServiceGetClientOnMock).toHaveBeenCalledTimes(1);
-      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(`message`, expect.any(Function));
+      expect(discordClientServiceGetClientOnMock).toHaveBeenCalledWith(`messageCreate`, expect.any(Function));
     });
 
     describe(`when the Discord client message event is triggered`, (): void => {
@@ -416,7 +416,6 @@ describe(`DiscordMessageService`, (): void => {
     let discordMessageErrorServiceHandleErrorSpy: jest.SpyInstance;
     let discordChannelServiceIsValidSpy: jest.SpyInstance;
     let discordChannelTypingServiceAddOneIndicatorSpy: jest.SpyInstance;
-    let discordChannelTypingServiceRemoveOneIndicatorSpy: jest.SpyInstance;
     let discordAuthorServiceIsValidSpy: jest.SpyInstance;
     let discordMentionServiceIsValidSpy: jest.SpyInstance;
     let discordMentionServiceIsForEveryone: jest.SpyInstance;
@@ -436,10 +435,8 @@ describe(`DiscordMessageService`, (): void => {
         id: `dummy-id`,
       });
       discordMessageResponse = createMock<IDiscordMessageResponse>({
-        options: {
-          split: false,
-        },
-        response: `dummy-response`,
+        content: `dummy-response`,
+        options: {},
       });
 
       discordChannelServiceIsDmSpy = jest.spyOn(discordChannelService, `isDm`).mockImplementation();
@@ -460,11 +457,8 @@ describe(`DiscordMessageService`, (): void => {
       discordMessageErrorServiceHandleErrorSpy = jest.spyOn(discordMessageErrorService, `handleError`);
       discordChannelServiceIsValidSpy = jest.spyOn(discordChannelService, `isValid`);
       discordChannelTypingServiceAddOneIndicatorSpy = jest
-        .spyOn(discordChannelTypingService, `addOneIndicator`)
+        .spyOn(discordChannelTypingService, `sendTyping`)
         .mockResolvedValue();
-      discordChannelTypingServiceRemoveOneIndicatorSpy = jest
-        .spyOn(discordChannelTypingService, `removeOneIndicator`)
-        .mockImplementation();
       discordAuthorServiceIsValidSpy = jest.spyOn(discordAuthorService, `isValid`).mockImplementation();
       discordMentionServiceIsValidSpy = jest.spyOn(discordMentionService, `isValid`).mockImplementation();
       discordMentionServiceIsForEveryone = jest.spyOn(discordMentionService, `isForEveryone`).mockImplementation();
@@ -486,14 +480,13 @@ describe(`DiscordMessageService`, (): void => {
         });
 
         it(`should do nothing`, async (): Promise<void> => {
-          expect.assertions(8);
+          expect.assertions(7);
 
           await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
             new Error(`Discord message is not a DM channel nor a text channel`)
           );
 
           expect(discordChannelTypingServiceAddOneIndicatorSpy).not.toHaveBeenCalled();
-          expect(discordChannelTypingServiceRemoveOneIndicatorSpy).not.toHaveBeenCalled();
           expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
           expect(anyDiscordMessageChannelSendMock).not.toHaveBeenCalled();
           expect(discordChannelServiceIsValidSpy).not.toHaveBeenCalled();
@@ -542,14 +535,13 @@ describe(`DiscordMessageService`, (): void => {
           });
 
           it(`should do nothing`, async (): Promise<void> => {
-            expect.assertions(7);
+            expect.assertions(6);
 
             await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
               new Error(`Sonia is not authorized for this guild`)
             );
 
             expect(discordChannelTypingServiceAddOneIndicatorSpy).not.toHaveBeenCalled();
-            expect(discordChannelTypingServiceRemoveOneIndicatorSpy).not.toHaveBeenCalled();
             expect(anyDiscordMessageChannelSendMock).not.toHaveBeenCalled();
             expect(discordChannelServiceIsValidSpy).not.toHaveBeenCalled();
             expect(loggerServiceLogSpy).not.toHaveBeenCalled();
@@ -730,17 +722,6 @@ describe(`DiscordMessageService`, (): void => {
               } as ILoggerLog);
             });
 
-            it(`should hide one typing indicator`, async (): Promise<void> => {
-              expect.assertions(3);
-
-              await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-                new Error(`getMessage error`)
-              );
-
-              expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
-              expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
-            });
-
             it(`should do nothing`, async (): Promise<void> => {
               expect.assertions(5);
 
@@ -798,19 +779,6 @@ describe(`DiscordMessageService`, (): void => {
                 } as ILoggerLog);
               });
 
-              it(`should hide one typing indicator`, async (): Promise<void> => {
-                expect.assertions(3);
-
-                await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-                  new Error(`Fake test error: send`)
-                );
-
-                expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
-                expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(
-                  anyDiscordMessage.channel
-                );
-              });
-
               it(`should send the message response to the given Discord message channel`, async (): Promise<void> => {
                 expect.assertions(3);
 
@@ -818,19 +786,23 @@ describe(`DiscordMessageService`, (): void => {
                   new Error(`Fake test error: send`)
                 );
 
+                const message: string | MessagePayload | MessageOptions = {
+                  content: `dummy-response`,
+                };
                 expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(2);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(`dummy-response`, {
-                  split: false,
-                } as MessageOptions);
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(message);
               });
 
               describe(`when the message was not successfully sent`, (): void => {
                 beforeEach((): void => {
                   anyDiscordMessageChannelSendMock.mockRejectedValue(new Error(`Message sending error`));
 
-                  anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                     channel: {
                       send: anyDiscordMessageChannelSendMock,
+                    },
+                    guild: {
+                      id: `dummy-guild-id`,
                     },
                     id: `dummy-id`,
                   });
@@ -850,19 +822,6 @@ describe(`DiscordMessageService`, (): void => {
                   );
                 });
 
-                it(`should hide one typing indicator`, async (): Promise<void> => {
-                  expect.assertions(3);
-
-                  await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-                    new Error(`Message sending error`)
-                  );
-
-                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
-                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(
-                    anyDiscordMessage.channel
-                  );
-                });
-
                 it(`should not log about the success of the message sending`, async (): Promise<void> => {
                   expect.assertions(2);
 
@@ -878,9 +837,12 @@ describe(`DiscordMessageService`, (): void => {
                 beforeEach((): void => {
                   anyDiscordMessageChannelSendMock.mockResolvedValue(undefined);
 
-                  anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                     channel: {
                       send: anyDiscordMessageChannelSendMock,
+                    },
+                    guild: {
+                      id: `dummy-guild-id`,
                     },
                     id: `dummy-id`,
                   });
@@ -898,18 +860,6 @@ describe(`DiscordMessageService`, (): void => {
                     hasExtendedContext: true,
                     message: `context-[dummy-id] text-message sent`,
                   } as ILoggerLog);
-                });
-
-                it(`should hide one typing indicator`, async (): Promise<void> => {
-                  expect.assertions(3);
-
-                  const result = await service.handleChannelMessage(anyDiscordMessage);
-
-                  expect(result).toBeUndefined();
-                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
-                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(
-                    anyDiscordMessage.channel
-                  );
                 });
 
                 it(`should not handle the error`, async (): Promise<void> => {
@@ -932,22 +882,16 @@ describe(`DiscordMessageService`, (): void => {
 
             beforeEach((): void => {
               discordMessageResponseA = createMock<IDiscordMessageResponse>({
-                options: {
-                  split: false,
-                },
-                response: `dummy-response-a`,
+                content: `dummy-response-a`,
+                options: {},
               });
               discordMessageResponseB = createMock<IDiscordMessageResponse>({
-                options: {
-                  split: false,
-                },
-                response: `dummy-response-b`,
+                content: `dummy-response-b`,
+                options: {},
               });
               discordMessageResponseC = createMock<IDiscordMessageResponse>({
-                options: {
-                  split: false,
-                },
-                response: `dummy-response-c`,
+                content: `dummy-response-c`,
+                options: {},
               });
               discordMessageResponses = [discordMessageResponseA, discordMessageResponseB, discordMessageResponseC];
 
@@ -1002,19 +946,6 @@ describe(`DiscordMessageService`, (): void => {
                 } as ILoggerLog);
               });
 
-              it(`should hide one typing indicator`, async (): Promise<void> => {
-                expect.assertions(3);
-
-                await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-                  new Error(`Fake test error: send`)
-                );
-
-                expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
-                expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(
-                  anyDiscordMessage.channel
-                );
-              });
-
               it(`should send three message responses to the given Discord message channel`, async (): Promise<void> => {
                 expect.assertions(5);
 
@@ -1022,25 +953,31 @@ describe(`DiscordMessageService`, (): void => {
                   new Error(`Fake test error: send`)
                 );
 
+                const messageA: string | MessagePayload | MessageOptions = {
+                  content: `dummy-response-a`,
+                };
+                const messageB: string | MessagePayload | MessageOptions = {
+                  content: `dummy-response-b`,
+                };
+                const messageC: string | MessagePayload | MessageOptions = {
+                  content: `dummy-response-c`,
+                };
                 expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(6);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(1, `dummy-response-a`, {
-                  split: false,
-                } as MessageOptions);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(2, `dummy-response-b`, {
-                  split: false,
-                } as MessageOptions);
-                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(3, `dummy-response-c`, {
-                  split: false,
-                } as MessageOptions);
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(1, messageA);
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(2, messageB);
+                expect(anyDiscordMessageChannelSendMock).toHaveBeenNthCalledWith(3, messageC);
               });
 
               describe(`when the messages were not successfully sent`, (): void => {
                 beforeEach((): void => {
                   anyDiscordMessageChannelSendMock.mockRejectedValue(new Error(`Message sending error`));
 
-                  anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                     channel: {
                       send: anyDiscordMessageChannelSendMock,
+                    },
+                    guild: {
+                      id: `dummy-guild-id`,
                     },
                     id: `dummy-id`,
                   });
@@ -1071,19 +1008,6 @@ describe(`DiscordMessageService`, (): void => {
                   );
                 });
 
-                it(`should hide one typing indicator`, async (): Promise<void> => {
-                  expect.assertions(3);
-
-                  await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-                    new Error(`Message sending error`)
-                  );
-
-                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
-                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(
-                    anyDiscordMessage.channel
-                  );
-                });
-
                 it(`should not log about the success of the message sending`, async (): Promise<void> => {
                   expect.assertions(2);
 
@@ -1099,9 +1023,12 @@ describe(`DiscordMessageService`, (): void => {
                 beforeEach((): void => {
                   anyDiscordMessageChannelSendMock.mockResolvedValue(undefined);
 
-                  anyDiscordMessage = createMock<IAnyDiscordMessage>({
+                  anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
                     channel: {
                       send: anyDiscordMessageChannelSendMock,
+                    },
+                    guild: {
+                      id: `dummy-guild-id`,
                     },
                     id: `dummy-id`,
                   });
@@ -1112,7 +1039,7 @@ describe(`DiscordMessageService`, (): void => {
 
                   const result = await service.handleChannelMessage(anyDiscordMessage);
 
-                  expect(result).toBeUndefined();
+                  expect(result).toStrictEqual([undefined, undefined, undefined]);
                   expect(loggerServiceLogSpy).toHaveBeenCalledTimes(3);
                   expect(loggerServiceLogSpy).toHaveBeenNthCalledWith(1, {
                     context: `DiscordMessageService`,
@@ -1131,24 +1058,12 @@ describe(`DiscordMessageService`, (): void => {
                   } as ILoggerLog);
                 });
 
-                it(`should hide one typing indicator`, async (): Promise<void> => {
-                  expect.assertions(3);
-
-                  const result = await service.handleChannelMessage(anyDiscordMessage);
-
-                  expect(result).toBeUndefined();
-                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
-                  expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(
-                    anyDiscordMessage.channel
-                  );
-                });
-
                 it(`should not handle the error`, async (): Promise<void> => {
                   expect.assertions(2);
 
                   const result = await service.handleChannelMessage(anyDiscordMessage);
 
-                  expect(result).toBeUndefined();
+                  expect(result).toStrictEqual([undefined, undefined, undefined]);
                   expect(discordMessageErrorServiceHandleErrorSpy).not.toHaveBeenCalled();
                 });
               });
@@ -1212,15 +1127,6 @@ describe(`DiscordMessageService`, (): void => {
           } as ILoggerLog);
         });
 
-        it(`should hide one typing indicator`, async (): Promise<void> => {
-          expect.assertions(3);
-
-          await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(new Error(`getMessage error`));
-
-          expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
-          expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
-        });
-
         it(`should do nothing`, async (): Promise<void> => {
           expect.assertions(5);
 
@@ -1276,17 +1182,6 @@ describe(`DiscordMessageService`, (): void => {
             } as ILoggerLog);
           });
 
-          it(`should hide one typing indicator`, async (): Promise<void> => {
-            expect.assertions(3);
-
-            await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-              new Error(`Fake test error: send`)
-            );
-
-            expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
-            expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
-          });
-
           it(`should send the message response to the given Discord message channel`, async (): Promise<void> => {
             expect.assertions(3);
 
@@ -1294,10 +1189,11 @@ describe(`DiscordMessageService`, (): void => {
               new Error(`Fake test error: send`)
             );
 
+            const message: string | MessagePayload | MessageOptions = {
+              content: `dummy-response`,
+            };
             expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledTimes(2);
-            expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(`dummy-response`, {
-              split: false,
-            } as MessageOptions);
+            expect(anyDiscordMessageChannelSendMock).toHaveBeenCalledWith(message);
           });
 
           describe(`when the message was not successfully sent`, (): void => {
@@ -1324,17 +1220,6 @@ describe(`DiscordMessageService`, (): void => {
                 new Error(`Message sending error`),
                 anyDiscordMessage
               );
-            });
-
-            it(`should hide one typing indicator`, async (): Promise<void> => {
-              expect.assertions(3);
-
-              await expect(service.handleChannelMessage(anyDiscordMessage)).rejects.toThrow(
-                new Error(`Message sending error`)
-              );
-
-              expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
-              expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
             });
 
             it(`should not log about the success of the message sending`, async (): Promise<void> => {
@@ -1372,16 +1257,6 @@ describe(`DiscordMessageService`, (): void => {
                 hasExtendedContext: true,
                 message: `context-[dummy-id] text-message sent`,
               } as ILoggerLog);
-            });
-
-            it(`should hide one typing indicator`, async (): Promise<void> => {
-              expect.assertions(3);
-
-              const result = await service.handleChannelMessage(anyDiscordMessage);
-
-              expect(result).toBeUndefined();
-              expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledTimes(1);
-              expect(discordChannelTypingServiceRemoveOneIndicatorSpy).toHaveBeenCalledWith(anyDiscordMessage.channel);
             });
 
             it(`should not handle the error`, async (): Promise<void> => {

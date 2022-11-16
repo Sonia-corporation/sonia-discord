@@ -14,7 +14,7 @@ import { IFirebaseGuild } from '../../../../../types/guilds/firebase-guild';
 import { IFirebaseGuildVFinal } from '../../../../../types/guilds/firebase-guild-v-final';
 import { FirebaseGuildsService } from '../../../firebase-guilds.service';
 import { Guild } from 'discord.js';
-import * as admin from 'firebase-admin';
+import { CollectionReference, WriteResult } from 'firebase-admin/firestore';
 import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../../../../../logger/services/chalk/chalk.service`);
@@ -74,9 +74,9 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService`, (): void =>
     let id: Guild['id'];
     let channelId: IAnyDiscordChannel['id'];
     let isEnabled: boolean;
-    let collectionReference: admin.firestore.CollectionReference<IFirebaseGuild> | undefined;
+    let collectionReference: CollectionReference<IFirebaseGuild> | undefined;
     let firebaseGuild: IFirebaseGuild | null | undefined;
-    let writeResult: admin.firestore.WriteResult;
+    let writeResult: WriteResult;
 
     let firebaseGuildsServiceGetCollectionReferenceSpy: jest.SpyInstance;
     let loggerServiceDebugSpy: jest.SpyInstance;
@@ -128,7 +128,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService`, (): void =>
 
     describe(`when the Firebase guilds collection is valid`, (): void => {
       beforeEach((): void => {
-        collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>();
+        collectionReference = createMock<CollectionReference<IFirebaseGuild>>();
 
         firebaseGuildsServiceGetCollectionReferenceSpy.mockReturnValue(collectionReference);
       });
@@ -604,13 +604,13 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService`, (): void =>
   });
 
   describe(`updateState()`, (): void => {
-    let collectionReference: admin.firestore.CollectionReference<IFirebaseGuild>;
+    let collectionReference: CollectionReference<IFirebaseGuild>;
     let id: Guild['id'];
     let channelId: IAnyDiscordChannel['id'];
     let isEnabled: boolean;
     let firebaseGuild: IFirebaseGuildVFinal;
     let updatedFirebaseGuild: IObject;
-    let writeResult: admin.firestore.WriteResult;
+    let writeResult: WriteResult;
 
     let docMock: jest.Mock;
     let updateMock: jest.Mock;
@@ -629,7 +629,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService`, (): void =>
       docMock = jest.fn().mockReturnValue({
         update: updateMock,
       });
-      collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+      collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
         doc: docMock,
       });
       getUpdatedGuildSpy = jest.spyOn(service, `getUpdatedGuild`).mockReturnValue(updatedFirebaseGuild);
@@ -675,7 +675,7 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService`, (): void =>
         docMock = jest.fn().mockReturnValue({
           update: updateMock,
         });
-        collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+        collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
           doc: docMock,
         });
       });
@@ -691,13 +691,13 @@ describe(`FirebaseGuildsChannelsFeaturesReleaseNotesEnabledService`, (): void =>
 
     describe(`when the Firebase guild was successfully updated`, (): void => {
       beforeEach((): void => {
-        writeResult = createMock<admin.firestore.WriteResult>();
+        writeResult = createMock<WriteResult>();
 
         updateMock = jest.fn().mockResolvedValue(writeResult);
         docMock = jest.fn().mockReturnValue({
           update: updateMock,
         });
-        collectionReference = createMock<admin.firestore.CollectionReference<IFirebaseGuild>>({
+        collectionReference = createMock<CollectionReference<IFirebaseGuild>>({
           doc: docMock,
         });
       });

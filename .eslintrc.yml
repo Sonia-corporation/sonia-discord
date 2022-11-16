@@ -22,7 +22,8 @@ globals:
 parserOptions:
   ecmaVersion: 2018
   sourceType: module
-  project: ./tsconfig.json
+  project:
+    - './tsconfig.*?.json'
 parser: '@typescript-eslint/parser'
 plugins:
   - '@typescript-eslint'
@@ -36,14 +37,28 @@ plugins:
 settings:
   import/extensions:
     - .js
+    - .mjs
+    - .cjs
     - .ts
   import/parsers:
     '@typescript-eslint/parser':
       - .ts
   import/cache:
     lifetime: Infinity
+  import/resolver:
+    typescript:
+      alwaysTryTypes: true
+      project:
+        - './tsconfig.app.json'
+        - './tsconfig.spec.json'
 rules:
   progress/activate: 1
+  no-restricted-imports:
+    - error
+    - patterns:
+        - message: 'Use instead firebase-admin/'
+          group:
+            - 'firebase-admin/lib/*'
   '@typescript-eslint/member-ordering':
     - error
     - default:
@@ -419,6 +434,7 @@ rules:
 overrides:
   - files:
       - '*.js'
+      - '*.cjs'
     rules:
       '@typescript-eslint/explicit-module-boundary-types': off
       import/no-commonjs: off

@@ -4,8 +4,10 @@ import { CoreEventService } from '../../../../core/services/core-event.service';
 import { FirebaseGuildsService } from '../../../services/guilds/firebase-guilds.service';
 import { IFirebaseGuild } from '../../../types/guilds/firebase-guild';
 import { FirebaseGuildsStore } from '../firebase-guilds-store';
+import * as ElfEntitiesModule from '@ngneat/elf-entities';
+import { Snowflake } from 'discord.js';
 import { Subject } from 'rxjs';
-import { createMock } from 'ts-auto-mock';
+import { createHydratedMock, createMock } from 'ts-auto-mock';
 
 describe(`FirebaseGuildsStoreService`, (): void => {
   let service: FirebaseGuildsStoreService;
@@ -65,7 +67,6 @@ describe(`FirebaseGuildsStoreService`, (): void => {
     let firebaseGuildsServiceOnGuildsChange$Spy: jest.SpyInstance;
     let removeAllEntitiesSpy: jest.SpyInstance;
     let addEntitiesSpy: jest.SpyInstance;
-    let stopLoadingSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsStoreService();
@@ -77,7 +78,6 @@ describe(`FirebaseGuildsStoreService`, (): void => {
         .mockReturnValue(onGuildsChange$);
       removeAllEntitiesSpy = jest.spyOn(service, `removeAllEntities`).mockImplementation();
       addEntitiesSpy = jest.spyOn(service, `addEntities`).mockImplementation();
-      stopLoadingSpy = jest.spyOn(service, `stopLoading`).mockImplementation();
     });
 
     it(`should watch the Firebase guilds changes`, (): void => {
@@ -118,15 +118,6 @@ describe(`FirebaseGuildsStoreService`, (): void => {
 
         expect(addEntitiesSpy).not.toHaveBeenCalled();
       });
-
-      it(`should not stop the loading state of the store`, (): void => {
-        expect.assertions(1);
-
-        service.init();
-        onGuildsChange$.error(new Error(`error`));
-
-        expect(stopLoadingSpy).not.toHaveBeenCalled();
-      });
     });
 
     describe(`when the Firebase guilds changed`, (): void => {
@@ -149,98 +140,106 @@ describe(`FirebaseGuildsStoreService`, (): void => {
         expect(addEntitiesSpy).toHaveBeenCalledTimes(1);
         expect(addEntitiesSpy).toHaveBeenCalledWith(firebaseGuilds);
       });
-
-      it(`should stop the loading state of the store`, (): void => {
-        expect.assertions(2);
-
-        service.init();
-        onGuildsChange$.next(firebaseGuilds);
-
-        expect(stopLoadingSpy).toHaveBeenCalledTimes(1);
-        expect(stopLoadingSpy).toHaveBeenCalledWith();
-      });
     });
   });
 
   describe(`addOrUpdateEntities()`, (): void => {
     let firebaseGuilds: IFirebaseGuild[];
 
-    let firebaseGuildsStoreUpsertManySpy: jest.SpyInstance;
+    let firebaseGuildsStoreStoreUpdateSpy: jest.SpyInstance;
+    let upsertEntitiesSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsStoreService();
       firebaseGuilds = createMock<IFirebaseGuild[]>();
 
-      firebaseGuildsStoreUpsertManySpy = jest.spyOn(firebaseGuildsStore, `upsertMany`).mockImplementation();
+      firebaseGuildsStoreStoreUpdateSpy = jest.spyOn(firebaseGuildsStore.store, `update`).mockImplementation();
+      upsertEntitiesSpy = jest.spyOn(ElfEntitiesModule, `upsertEntities`).mockImplementation();
     });
 
     it(`should update or add the given Firebase guilds into the store`, (): void => {
-      expect.assertions(2);
+      expect.assertions(3);
 
       service.addOrUpdateEntities(firebaseGuilds);
 
-      expect(firebaseGuildsStoreUpsertManySpy).toHaveBeenCalledTimes(1);
-      expect(firebaseGuildsStoreUpsertManySpy).toHaveBeenCalledWith(firebaseGuilds);
+      expect(firebaseGuildsStoreStoreUpdateSpy).toHaveBeenCalledTimes(1);
+      expect(upsertEntitiesSpy).toHaveBeenCalledTimes(1);
+      expect(upsertEntitiesSpy).toHaveBeenCalledWith(firebaseGuilds);
     });
   });
 
   describe(`addEntities()`, (): void => {
     let firebaseGuilds: IFirebaseGuild[];
 
-    let firebaseGuildsStoreAddSpy: jest.SpyInstance;
+    let firebaseGuildsStoreStoreUpdateSpy: jest.SpyInstance;
+    let addEntitiesSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsStoreService();
       firebaseGuilds = createMock<IFirebaseGuild[]>();
 
-      firebaseGuildsStoreAddSpy = jest.spyOn(firebaseGuildsStore, `add`).mockImplementation();
+      firebaseGuildsStoreStoreUpdateSpy = jest.spyOn(firebaseGuildsStore.store, `update`).mockImplementation();
+      addEntitiesSpy = jest.spyOn(ElfEntitiesModule, `addEntities`).mockImplementation();
     });
 
     it(`should add the given Firebase guilds into the store`, (): void => {
-      expect.assertions(2);
+      expect.assertions(3);
 
       service.addEntities(firebaseGuilds);
 
-      expect(firebaseGuildsStoreAddSpy).toHaveBeenCalledTimes(1);
-      expect(firebaseGuildsStoreAddSpy).toHaveBeenCalledWith(firebaseGuilds);
+      expect(firebaseGuildsStoreStoreUpdateSpy).toHaveBeenCalledTimes(1);
+      expect(addEntitiesSpy).toHaveBeenCalledTimes(1);
+      expect(addEntitiesSpy).toHaveBeenCalledWith(firebaseGuilds);
     });
   });
 
   describe(`removeAllEntities()`, (): void => {
-    let firebaseGuildsStoreRemoveSpy: jest.SpyInstance;
+    let firebaseGuildsStoreStoreUpdateSpy: jest.SpyInstance;
+    let deleteAllEntitiesSpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsStoreService();
 
-      firebaseGuildsStoreRemoveSpy = jest.spyOn(firebaseGuildsStore, `remove`).mockImplementation();
+      firebaseGuildsStoreStoreUpdateSpy = jest.spyOn(firebaseGuildsStore.store, `update`).mockImplementation();
+      deleteAllEntitiesSpy = jest.spyOn(ElfEntitiesModule, `deleteAllEntities`).mockImplementation();
     });
 
     it(`should remove all the Firebase guilds in the store`, (): void => {
-      expect.assertions(2);
+      expect.assertions(3);
 
       service.removeAllEntities();
 
-      expect(firebaseGuildsStoreRemoveSpy).toHaveBeenCalledTimes(1);
-      expect(firebaseGuildsStoreRemoveSpy).toHaveBeenCalledWith();
+      expect(firebaseGuildsStoreStoreUpdateSpy).toHaveBeenCalledTimes(1);
+      expect(deleteAllEntitiesSpy).toHaveBeenCalledTimes(1);
+      expect(deleteAllEntitiesSpy).toHaveBeenCalledWith();
     });
   });
 
-  describe(`stopLoading()`, (): void => {
-    let firebaseGuildsStoreSetLoadingSpy: jest.SpyInstance;
+  describe(`getEntity()`, (): void => {
+    let id: Snowflake;
+    let firebaseGuild: IFirebaseGuild;
+
+    let firebaseGuildsStoreStoreQuerySpy: jest.SpyInstance;
+    let getEntitySpy: jest.SpyInstance;
 
     beforeEach((): void => {
       service = new FirebaseGuildsStoreService();
+      id = `dummy-id`;
+      firebaseGuild = createHydratedMock<IFirebaseGuild>();
 
-      firebaseGuildsStoreSetLoadingSpy = jest.spyOn(firebaseGuildsStore, `setLoading`).mockImplementation();
+      firebaseGuildsStoreStoreQuerySpy = jest.spyOn(firebaseGuildsStore.store, `query`).mockReturnValue(firebaseGuild);
+      getEntitySpy = jest.spyOn(ElfEntitiesModule, `getEntity`).mockImplementation();
     });
 
-    it(`should stop the loading state of the store`, (): void => {
-      expect.assertions(2);
+    it(`should return the guild by id`, (): void => {
+      expect.assertions(4);
 
-      service.stopLoading();
+      const result = service.getEntity(id);
 
-      expect(firebaseGuildsStoreSetLoadingSpy).toHaveBeenCalledTimes(1);
-      expect(firebaseGuildsStoreSetLoadingSpy).toHaveBeenCalledWith(false);
+      expect(firebaseGuildsStoreStoreQuerySpy).toHaveBeenCalledTimes(1);
+      expect(getEntitySpy).toHaveBeenCalledTimes(1);
+      expect(getEntitySpy).toHaveBeenCalledWith(id);
+      expect(result).toStrictEqual(firebaseGuild);
     });
   });
 });

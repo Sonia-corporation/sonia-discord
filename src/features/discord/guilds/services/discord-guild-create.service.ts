@@ -15,8 +15,8 @@ import { DiscordMessageCommandCookieService } from '../../messages/services/comm
 import { DiscordMessageRightsService } from '../../messages/services/rights/discord-message-rights.service';
 import { DiscordClientService } from '../../services/discord-client.service';
 import { DiscordGuildSoniaChannelNameEnum } from '../enums/discord-guild-sonia-channel-name.enum';
-import { Guild, GuildChannel, Message } from 'discord.js';
-import admin from 'firebase-admin';
+import { Guild, GuildChannel, Message, ThreadChannel } from 'discord.js';
+import { WriteResult } from 'firebase-admin/firestore';
 import _ from 'lodash';
 import { firstValueFrom } from 'rxjs';
 import { filter, mergeMap, take } from 'rxjs/operators';
@@ -44,7 +44,7 @@ export class DiscordGuildCreateService extends AbstractService {
     return this._sendCookieMessage(guild);
   }
 
-  public addFirebaseGuild(guild: Readonly<Guild>): Promise<admin.firestore.WriteResult | void> {
+  public addFirebaseGuild(guild: Readonly<Guild>): Promise<WriteResult | void> {
     return firstValueFrom(
       FirebaseGuildsService.getInstance()
         .isReady$()
@@ -52,10 +52,10 @@ export class DiscordGuildCreateService extends AbstractService {
           filter((isReady: Readonly<boolean>): boolean => _.isEqual(isReady, true)),
           take(ONE_EMITTER),
           mergeMap(
-            (): Promise<admin.firestore.WriteResult | void> =>
+            (): Promise<WriteResult | void> =>
               FirebaseGuildsService.getInstance()
                 .hasGuild(guild.id)
-                .then((hasGuild: Readonly<boolean>): Promise<admin.firestore.WriteResult | void> => {
+                .then((hasGuild: Readonly<boolean>): Promise<WriteResult | void> => {
                   if (_.isEqual(hasGuild, false)) {
                     return this._addFirebaseGuild(guild).catch((): void => {
                       LoggerService.getInstance().debug({
@@ -77,7 +77,7 @@ export class DiscordGuildCreateService extends AbstractService {
     );
   }
 
-  private _addFirebaseGuild(guild: Readonly<Guild>): Promise<admin.firestore.WriteResult> {
+  private _addFirebaseGuild(guild: Readonly<Guild>): Promise<WriteResult> {
     LoggerService.getInstance().debug({
       context: this._serviceName,
       message: ChalkService.getInstance().text(`guild not yet created on Firebase`),
@@ -85,7 +85,7 @@ export class DiscordGuildCreateService extends AbstractService {
 
     return FirebaseGuildsService.getInstance()
       .addGuild(guild)
-      .then((writeResult: Readonly<admin.firestore.WriteResult>): Promise<admin.firestore.WriteResult> => {
+      .then((writeResult: Readonly<WriteResult>): Promise<WriteResult> => {
         LoggerService.getInstance().success({
           context: this._serviceName,
           message: ChalkService.getInstance().text(`guild added into Firebase`),
@@ -100,7 +100,8 @@ export class DiscordGuildCreateService extends AbstractService {
       return Promise.reject(new Error(`Can not send cookies message`));
     }
 
-    const primaryGuildChannel: GuildChannel | null = DiscordChannelGuildService.getInstance().getPrimary(guild);
+    const primaryGuildChannel: GuildChannel | ThreadChannel | null =
+      DiscordChannelGuildService.getInstance().getPrimary(guild);
 
     if (_.isNil(primaryGuildChannel)) {
       return Promise.reject(new Error(`No primary guild channel found`));
@@ -160,7 +161,7 @@ export class DiscordGuildCreateService extends AbstractService {
     return false;
   }
 
-  private _sendCookieMessageToChannel(guildChannel: Readonly<GuildChannel>): Promise<Message | void> {
+  private _sendCookieMessageToChannel(guildChannel: Readonly<GuildChannel | ThreadChannel>): Promise<Message | void> {
     if (!isDiscordGuildChannelWritable(guildChannel)) {
       LoggerService.getInstance().debug({
         context: this._serviceName,
@@ -177,9 +178,12 @@ export class DiscordGuildCreateService extends AbstractService {
 
     return this._getMessageResponse()
       .then(
-        ({ response, options }: Readonly<IDiscordMessageResponse>): Promise<Message | void> =>
+        ({ content, options }: Readonly<IDiscordMessageResponse>): Promise<Message | void> =>
           guildChannel
-            .send(response, options)
+            .send({
+              ...options,
+              content,
+            })
             .then((message: Message): Promise<Message> => {
               LoggerService.getInstance().log({
                 context: this._serviceName,

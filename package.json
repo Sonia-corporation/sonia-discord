@@ -59,7 +59,7 @@
       "path": "./node_modules/cz-customizable"
     },
     "cz-customizable": {
-      "config": "./scripts/commitizen.js"
+      "config": "./scripts/commitizen.cjs"
     }
   },
   "majestic": {
@@ -67,8 +67,11 @@
       "CI": "true"
     }
   },
-  "akitaCli": {
-    "template": "ts"
+  "elf": {
+    "cli": {
+      "repoTemplate": "class",
+      "inlineStoreInClass": true
+    }
   },
   "engines": {
     "node": "16.18.1",
@@ -87,21 +90,27 @@
     "README.md"
   ],
   "main": "./src/index.ts",
+  "targets": {
+    "main": false,
+    "default": {
+      "includeNodeModules": false
+    }
+  },
   "scripts": {
     "\n# RUN SCRIPTS:": "",
     "start": "cross-env NODE_ENV=development ts-node-dev --debounce --clear --cache-directory dist-local-dev --respawn --transpile-only .",
     "start:prod": "npm run build && npm run run:prod",
     "start:local-prod": "npm run build && npm run run:local-prod",
     "\n# BUILD SCRIPTS:": "",
-    "build": "npm run clean:dist && parcel build ./src/index.ts --target node && npm run concurrently -- --prefix-colors green,cyan \"npm:build:environment\" \"npm:build:firebase-service-account\"",
+    "build": "npm run clean:dist && parcel build ./src/index.ts && npm run concurrently -- --prefix-colors green,cyan \"npm:build:environment\" \"npm:build:firebase-service-account\"",
     "build:environment": "npm run build:environment:create && npm run concurrently -- --prefix-colors green,cyan,red \"npm:build:environment:copy\" \"npm:build:environment:rewrite-path\" \"npm:build:update-app-initialization-date\"",
-    "build:environment:copy": "node scripts/build-environment-copy.js",
-    "build:environment:create": "node scripts/build-environment-create.js",
-    "build:environment:rewrite-path": "node ./scripts/build-environment-rewrite-path.js",
-    "build:update-app-initialization-date": "node ./scripts/build-update-app-initialization-date",
+    "build:environment:copy": "node scripts/build-environment-copy.mjs",
+    "build:environment:create": "node scripts/build-environment-create.mjs",
+    "build:environment:rewrite-path": "node scripts/build-environment-rewrite-path.mjs",
+    "build:update-app-initialization-date": "node ./scripts/build-update-app-initialization-date.mjs",
     "build:firebase-service-account": "npm run build:firebase-service-account:create && npm run build:firebase-service-account:copy",
-    "build:firebase-service-account:copy": "node scripts/build-firebase-service-account-copy.js",
-    "build:firebase-service-account:create": "node scripts/build-firebase-service-account-create.js",
+    "build:firebase-service-account:copy": "node scripts/build-firebase-service-account-copy.mjs",
+    "build:firebase-service-account:create": "node scripts/build-firebase-service-account-create.mjs",
     "run:prod": "cross-env NODE_ENV=production node ./dist/index.js --prod true",
     "run:local-prod": "cross-env NODE_ENV=production GOOGLE_APPLICATION_CREDENTIALS=./dist/firebase-service-account-file.json SHOULD_DISPLAY_MORE_DEBUG_LOGS=true node ./dist/index.js --prod true",
     "tsc": "tsc",
@@ -130,7 +139,7 @@
     "semver": "semantic-release",
     "clean:dist": "rimraf dist",
     "commit": "npm run cz",
-    "create-secret-environment": "node ./scripts/create-secret-environment.js",
+    "create-secret-environment": "node scripts/create-secret-environment.mjs",
     "git:push": "git push-upstream",
     "madge:circular-dependencies-check": "madge ./src/ --circular --extensions ts,js --image ./dist/circular-dependencies-graph.svg --warning",
     "madge:image": "madge ./src/ --extensions ts,js --image ./dist/graph.svg --warning",
@@ -144,13 +153,18 @@
     "install-git-hooks": "husky install && shx rm -rf .git/hooks && shx ln -s ../.husky .git/hooks"
   },
   "dependencies": {
-    "@datorama/akita": "7.1.1",
+    "@ngneat/effects": "1.1.1",
+    "@ngneat/elf": "2.2.0",
+    "@ngneat/elf-entities": "4.4.2",
     "@scout_apm/scout-apm": "0.2.3",
+    "app-root-path": "3.1.0",
     "axios": "1.1.3",
-    "discord.js": "12.5.3",
+    "chalk": "4.1.2",
+    "discord.js": "13.12.0",
     "dotenv": "14.3.2",
     "express": "4.18.2",
     "firebase-admin": "11.2.1",
+    "fs-extra": "10.1.0",
     "lodash": "4.17.21",
     "moment": "2.29.4",
     "moment-timezone": "0.5.38",
@@ -159,7 +173,7 @@
     "xregexp": "5.1.1"
   },
   "devDependencies": {
-    "@datorama/akita-cli": "6.1.1",
+    "@ngneat/elf-cli-ng": "1.0.0",
     "@semantic-release/changelog": "6.0.1",
     "@semantic-release/git": "10.0.1",
     "@semantic-release/github": "8.0.6",
@@ -179,9 +193,8 @@
     "@types/xregexp": "4.3.0",
     "@typescript-eslint/eslint-plugin": "5.42.1",
     "@typescript-eslint/parser": "5.42.1",
+    "@vercel/ncc": "^0.34.0",
     "all-contributors-cli": "6.24.0",
-    "app-root-path": "3.1.0",
-    "chalk": "4.1.2",
     "commitizen": "4.2.5",
     "concurrently": "7.5.0",
     "cross-env": "7.0.3",
@@ -200,7 +213,6 @@
     "eslint-plugin-rxjs": "3.3.7",
     "eslint-plugin-typescript-sort-keys": "2.1.0",
     "faker": "5.5.3",
-    "fs-extra": "10.1.0",
     "husky": "8.0.2",
     "jest": "29.3.1",
     "jest-extended": "3.1.0",
@@ -210,7 +222,7 @@
     "madge": "5.0.1",
     "majestic": "1.8.1",
     "node-notifier": "10.0.1",
-    "parcel-bundler": "1.12.5",
+    "parcel": "2.8.0",
     "prettier": "2.7.1",
     "pug": "3.0.2",
     "rimraf": "3.0.2",
@@ -222,7 +234,7 @@
     "ts-node-dev": "2.0.0",
     "tsconfig-paths": "4.1.0",
     "ttypescript": "1.5.13",
-    "typescript": "4.4.4",
+    "typescript": "4.7.4",
     "weak-napi": "2.0.2"
   }
 }

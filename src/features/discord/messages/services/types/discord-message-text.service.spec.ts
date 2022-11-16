@@ -236,14 +236,6 @@ describe(`DiscordMessageTextService`, (): void => {
         } as ILoggerLog);
       });
 
-      it(`should get a message response not split`, async (): Promise<void> => {
-        expect.assertions(1);
-
-        const result = (await service.getDiscordMessageResponse(discordMessage)) as IDiscordMessageResponse;
-
-        expect(result.options.split).toBe(false);
-      });
-
       it(`should check if the app is in production`, async (): Promise<void> => {
         expect.assertions(3);
 
@@ -264,7 +256,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
           const result = (await service.getDiscordMessageResponse(discordMessage)) as IDiscordMessageResponse;
 
-          expect(result.response).toBe(`Il est midi everyone!`);
+          expect(result.content).toBe(`Il est midi everyone!`);
         });
       });
 
@@ -278,7 +270,7 @@ describe(`DiscordMessageTextService`, (): void => {
 
           const result = (await service.getDiscordMessageResponse(discordMessage)) as IDiscordMessageResponse;
 
-          expect(result.response).toBe(`**[dev]** Il est midi everyone!`);
+          expect(result.content).toBe(`**[dev]** Il est midi everyone!`);
         });
       });
     });

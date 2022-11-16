@@ -61,3 +61,6 @@ stryker.log
 
 # Firebase
 src/environment/firebase-service-account-file.json
+
+# Parcel
+.parcel-cache

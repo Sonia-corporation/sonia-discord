@@ -117,7 +117,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
       const result = await service.getMessageResponse(flagsDuplicated);
 
-      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
+      expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -126,7 +126,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
       const result = await service.getMessageResponse(flagsDuplicated);
 
-      expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+      expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     describe(`when there is one given duplicated flag`, (): void => {
@@ -139,7 +139,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
-        expect(result.options.embed?.description).toBe(`**1** duplicated flag found.`);
+        expect(result.options.embeds?.[0]?.description).toBe(`**1** duplicated flag found.`);
       });
 
       it(`should return a Discord message response embed with 2 fields`, async (): Promise<void> => {
@@ -147,7 +147,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
-        expect(result.options.embed?.fields).toHaveLength(2);
+        expect(result.options.embeds?.[0]?.fields).toHaveLength(2);
       });
 
       it(`should return a Discord message response embed with the fields containing the duplicated flags`, async (): Promise<void> => {
@@ -155,7 +155,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
-        expect(result.options.embed?.fields?.[0]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
           inline: false,
           name: flagsDuplicated[0].name,
           value: flagsDuplicated[0].description,
@@ -167,7 +167,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
-        expect(result.options.embed?.fields?.[1]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
           name: `How to solve this?`,
           value: `I am here to help you but do not mess with me!\nTry again but remove the extra duplicated flags and then we can talk.`,
         } as EmbedFieldData);
@@ -188,7 +188,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
-        expect(result.options.embed?.description).toBe(`**3** duplicated flags found.`);
+        expect(result.options.embeds?.[0]?.description).toBe(`**3** duplicated flags found.`);
       });
 
       it(`should return a Discord message response embed with 4 fields`, async (): Promise<void> => {
@@ -196,7 +196,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
-        expect(result.options.embed?.fields).toHaveLength(4);
+        expect(result.options.embeds?.[0]?.fields).toHaveLength(4);
       });
 
       it(`should return a Discord message response embed with the fields containing the duplicated flags`, async (): Promise<void> => {
@@ -204,19 +204,19 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
-        expect(result.options.embed?.fields?.[0]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
           inline: false,
           name: flagsDuplicated[0].name,
           value: flagsDuplicated[0].description,
         } as EmbedFieldData);
 
-        expect(result.options.embed?.fields?.[1]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
           inline: false,
           name: flagsDuplicated[1].name,
           value: flagsDuplicated[1].description,
         } as EmbedFieldData);
 
-        expect(result.options.embed?.fields?.[2]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
           inline: false,
           name: flagsDuplicated[2].name,
           value: flagsDuplicated[2].description,
@@ -228,7 +228,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
-        expect(result.options.embed?.fields?.[3]).toStrictEqual({
+        expect(result.options.embeds?.[0]?.fields?.[3]).toStrictEqual({
           name: `How to solve this?`,
           value: `I am here to help you but do not mess with me!\nTry again but remove the extra duplicated flags and then we can talk.`,
         } as EmbedFieldData);
@@ -241,7 +241,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
       const result = await service.getMessageResponse(flagsDuplicated);
 
-      expect(result.options.embed?.footer).toStrictEqual({
+      expect(result.options.embeds?.[0]?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `Invalid feature command`,
       } as MessageEmbedFooter);
@@ -257,7 +257,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: undefined,
           text: `Invalid feature command`,
         } as MessageEmbedFooter);
@@ -274,7 +274,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
         const result = await service.getMessageResponse(flagsDuplicated);
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `Invalid feature command`,
         } as MessageEmbedFooter);
@@ -287,7 +287,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
       const result = await service.getMessageResponse(flagsDuplicated);
 
-      expect(result.options.embed?.thumbnail).toStrictEqual({
+      expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
       } as MessageEmbedThumbnail);
     });
@@ -297,8 +297,8 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
       const result = await service.getMessageResponse(flagsDuplicated);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
+      expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
+      expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -306,15 +306,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
       const result = await service.getMessageResponse(flagsDuplicated);
 
-      expect(result.options.embed?.title).toBe(`I can not handle your request.`);
-    });
-
-    it(`should return a Discord message response not split`, async (): Promise<void> => {
-      expect.assertions(1);
-
-      const result = await service.getMessageResponse(flagsDuplicated);
-
-      expect(result.options.split).toBe(false);
+      expect(result.options.embeds?.[0]?.title).toBe(`I can not handle your request.`);
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -322,7 +314,7 @@ describe(`DiscordMessageCommandFeatureDuplicatedFlagsErrorService`, (): void => 
 
       const result = await service.getMessageResponse(flagsDuplicated);
 
-      expect(result.response).toBe(``);
+      expect(result.content).toBe(``);
     });
   });
 });

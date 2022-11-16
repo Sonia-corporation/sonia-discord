@@ -1,15 +1,19 @@
 import { AbstractEntityStoreService } from './abstract-entity-store.service';
 import { ServiceNameEnum } from '../../enums/service-name.enum';
 import { CoreEventService } from '../../features/core/services/core-event.service';
-import { createMock } from 'ts-auto-mock';
+import { createStore } from '@ngneat/elf';
+import { withEntities } from '@ngneat/elf-entities';
 
 interface IDummy {
-  name: string;
+  readonly id: number;
+  readonly name: string;
 }
 
-class DummyService extends AbstractEntityStoreService<IDummy> {
+class DummyService extends AbstractEntityStoreService {
+  public readonly store = createStore({ name: `dummy` }, withEntities<IDummy>());
+
   public constructor(serviceName: ServiceNameEnum) {
-    super(serviceName, createMock<IDummy>());
+    super(serviceName);
   }
 }
 

@@ -14,7 +14,7 @@ import { DiscordGuildSoniaService } from '../../../guilds/services/discord-guild
 import { DiscordSoniaService } from '../../../users/services/discord-sonia.service';
 import { IAnyDiscordMessage } from '../../types/any-discord-message';
 import { DiscordMessageConfigService } from '../config/discord-message-config.service';
-import { EmbedFieldData, MessageEmbedAuthor, MessageEmbedThumbnail } from 'discord.js';
+import { EmbedFieldData, Message, MessageEmbedAuthor, MessageEmbedThumbnail } from 'discord.js';
 import faker from 'faker';
 import moment, { MomentInput } from 'moment-timezone';
 import { createHydratedMock } from 'ts-auto-mock';
@@ -102,6 +102,11 @@ describe(`DiscordMessageErrorService`, (): void => {
       service = new DiscordMessageErrorService();
       error = new Error(`dummy error`);
       anyDiscordMessage = createHydratedMock<IAnyDiscordMessage>({
+        channel: {
+          send(): Promise<Message<boolean>> {
+            return Promise.resolve(createHydratedMock<Message<boolean>>());
+          },
+        },
         id: `dummy-id`,
       });
 
@@ -217,7 +222,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.author).toStrictEqual(messageEmbedAuthor);
+        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].author).toStrictEqual(messageEmbedAuthor);
       });
 
       it(`should send a message to this channel with a color`, (): void => {
@@ -227,7 +232,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.color).toStrictEqual(color);
+        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].color).toStrictEqual(color);
       });
 
       describe(`when the Discord Sonia image url is null`, (): void => {
@@ -244,7 +249,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
           service.handleError(error, anyDiscordMessage);
 
-          expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.footer.iconURL).toBeUndefined();
+          expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].footer.iconURL).toBeUndefined();
         });
       });
 
@@ -262,7 +267,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
           service.handleError(error, anyDiscordMessage);
 
-          expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.footer.iconURL).toBe(`dummy-image-url`);
+          expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].footer.iconURL).toBe(`dummy-image-url`);
         });
       });
 
@@ -271,7 +276,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.footer.text).toBe(`I am very sorry for that`);
+        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].footer.text).toBe(`I am very sorry for that`);
       });
 
       it(`should send a message to this channel with a thumbnail`, (): void => {
@@ -281,7 +286,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.thumbnail).toStrictEqual({
+        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].thumbnail).toStrictEqual({
           url: icon,
         } as MessageEmbedThumbnail);
       });
@@ -291,7 +296,7 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.fields).toHaveLength(3);
+        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].fields).toHaveLength(3);
       });
 
       it(`should send a message to this channel with a message id field`, (): void => {
@@ -299,10 +304,11 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.fields[0]).toStrictEqual({
+        const embedFieldData: EmbedFieldData = {
           name: `The message's id that killed me`,
           value: `dummy-id`,
-        } as EmbedFieldData);
+        };
+        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].fields[0]).toStrictEqual(embedFieldData);
       });
 
       it(`should send a message to this channel with a blood trace field`, (): void => {
@@ -310,10 +316,11 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.fields[1]).toStrictEqual({
+        const embedFieldData: EmbedFieldData = {
           name: `My blood trace`,
           value: `Error: dummy error`,
-        } as EmbedFieldData);
+        };
+        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].fields[1]).toStrictEqual(embedFieldData);
       });
 
       describe(`when the given error is longer than 1024 characters`, (): void => {
@@ -326,9 +333,9 @@ describe(`DiscordMessageErrorService`, (): void => {
 
           service.handleError(error, anyDiscordMessage);
 
-          expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.fields[1].name).toBe(`My blood trace`);
-          expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.fields[1].value).toHaveLength(1024);
-          expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.fields[1].value).toEndWith(`...`);
+          expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].fields[1].name).toBe(`My blood trace`);
+          expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].fields[1].value).toHaveLength(1024);
+          expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].fields[1].value).toEndWith(`...`);
         });
       });
 
@@ -337,10 +344,11 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.fields[2]).toStrictEqual({
+        const embedFieldData: EmbedFieldData = {
           name: `Help me to help you`,
           value: `You can create a [bug report](dummy-bug-report-url) or reach my creators on [discord](dummy-sonia-permanent-guild-invite-url).`,
-        } as EmbedFieldData);
+        };
+        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].fields[2]).toStrictEqual(embedFieldData);
       });
 
       it(`should send a message to this channel with a timestamp set as now`, (): void => {
@@ -348,12 +356,12 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(moment(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.timestamp as MomentInput).isValid()).toBe(
-          true
-        );
-        expect(moment(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.timestamp as MomentInput).fromNow()).toBe(
-          `a few seconds ago`
-        );
+        expect(
+          moment(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].timestamp as MomentInput).isValid()
+        ).toBe(true);
+        expect(
+          moment(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].timestamp as MomentInput).fromNow()
+        ).toBe(`a few seconds ago`);
       });
 
       it(`should send a message to this channel with a title`, (): void => {
@@ -361,23 +369,15 @@ describe(`DiscordMessageErrorService`, (): void => {
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].embed.title).toBe(`Oops, you have found a bug`);
+        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].embeds[0].title).toBe(`Oops, you have found a bug`);
       });
 
-      it(`should send a message to this channel which is not split`, (): void => {
+      it(`should send a message to this channel without a content`, (): void => {
         expect.assertions(1);
 
         service.handleError(error, anyDiscordMessage);
 
-        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][1].split).toBe(false);
-      });
-
-      it(`should send a message to this channel without a response`, (): void => {
-        expect.assertions(1);
-
-        service.handleError(error, anyDiscordMessage);
-
-        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0]).toBe(``);
+        expect(anyDiscordMessageChannelSendSpy.mock.calls[0][0].content).toBe(``);
       });
     });
 
@@ -400,7 +400,7 @@ describe(`DiscordMessageErrorService`, (): void => {
       service.handleError(error, anyDiscordMessage);
 
       expect(
-        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.author
+        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].author
       ).toStrictEqual(messageEmbedAuthor);
     });
 
@@ -412,7 +412,7 @@ describe(`DiscordMessageErrorService`, (): void => {
       service.handleError(error, anyDiscordMessage);
 
       expect(
-        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.color
+        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].color
       ).toStrictEqual(color);
     });
 
@@ -431,7 +431,8 @@ describe(`DiscordMessageErrorService`, (): void => {
         service.handleError(error, anyDiscordMessage);
 
         expect(
-          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.footer.iconURL
+          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].footer
+            .iconURL
         ).toBeUndefined();
       });
     });
@@ -451,7 +452,8 @@ describe(`DiscordMessageErrorService`, (): void => {
         service.handleError(error, anyDiscordMessage);
 
         expect(
-          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.footer.iconURL
+          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].footer
+            .iconURL
         ).toBe(`dummy-image-url`);
       });
     });
@@ -462,7 +464,7 @@ describe(`DiscordMessageErrorService`, (): void => {
       service.handleError(error, anyDiscordMessage);
 
       expect(
-        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.footer.text
+        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].footer.text
       ).toBe(`I am very sorry for that`);
     });
 
@@ -474,7 +476,7 @@ describe(`DiscordMessageErrorService`, (): void => {
       service.handleError(error, anyDiscordMessage);
 
       expect(
-        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.thumbnail
+        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].thumbnail
       ).toStrictEqual({ url: icon } as MessageEmbedThumbnail);
     });
 
@@ -484,7 +486,7 @@ describe(`DiscordMessageErrorService`, (): void => {
       service.handleError(error, anyDiscordMessage);
 
       expect(
-        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.fields
+        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].fields
       ).toHaveLength(3);
     });
 
@@ -493,12 +495,13 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service.handleError(error, anyDiscordMessage);
 
-      expect(
-        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.fields[0]
-      ).toStrictEqual({
+      const embedFieldData: EmbedFieldData = {
         name: `The message's id that killed me`,
         value: `dummy-id`,
-      } as EmbedFieldData);
+      };
+      expect(
+        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].fields[0]
+      ).toStrictEqual(embedFieldData);
     });
 
     it(`should send a message to the Sonia error channel with a blood trace field`, (): void => {
@@ -506,12 +509,13 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service.handleError(error, anyDiscordMessage);
 
-      expect(
-        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.fields[1]
-      ).toStrictEqual({
+      const embedFieldData: EmbedFieldData = {
         name: `My blood trace`,
         value: `Error: dummy error`,
-      } as EmbedFieldData);
+      };
+      expect(
+        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].fields[1]
+      ).toStrictEqual(embedFieldData);
     });
 
     describe(`when the given error is longer than 1024 characters`, (): void => {
@@ -525,13 +529,16 @@ describe(`DiscordMessageErrorService`, (): void => {
         service.handleError(error, anyDiscordMessage);
 
         expect(
-          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.fields[1].name
+          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].fields[1]
+            .name
         ).toBe(`My blood trace`);
         expect(
-          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.fields[1].value
+          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].fields[1]
+            .value
         ).toHaveLength(1024);
         expect(
-          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.fields[1].value
+          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].fields[1]
+            .value
         ).toEndWith(`...`);
       });
     });
@@ -541,12 +548,13 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service.handleError(error, anyDiscordMessage);
 
-      expect(
-        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.fields[2]
-      ).toStrictEqual({
+      const embedFieldData: EmbedFieldData = {
         name: `Help me to help you`,
         value: `You can create a [bug report](dummy-bug-report-url) or reach my creators on [discord](dummy-sonia-permanent-guild-invite-url).`,
-      } as EmbedFieldData);
+      };
+      expect(
+        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].fields[2]
+      ).toStrictEqual(embedFieldData);
     });
 
     it(`should send a message to the Sonia error channel with a timestamp set as now`, (): void => {
@@ -556,13 +564,13 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       expect(
         moment(
-          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed
+          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0]
             .timestamp as MomentInput
         ).isValid()
       ).toBe(true);
       expect(
         moment(
-          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed
+          discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0]
             .timestamp as MomentInput
         ).fromNow()
       ).toBe(`a few seconds ago`);
@@ -573,27 +581,17 @@ describe(`DiscordMessageErrorService`, (): void => {
 
       service.handleError(error, anyDiscordMessage);
 
-      expect(discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embed.title).toBe(
-        `Oops, you have found a bug`
-      );
+      expect(
+        discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.embeds[0].title
+      ).toBe(`Oops, you have found a bug`);
     });
 
-    it(`should send a message to the Sonia error channel which is not split`, (): void => {
+    it(`should send a message to the Sonia error channel without a content`, (): void => {
       expect.assertions(1);
 
       service.handleError(error, anyDiscordMessage);
 
-      expect(discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.options.split).toBe(
-        false
-      );
-    });
-
-    it(`should send a message to the Sonia error channel without a response`, (): void => {
-      expect.assertions(1);
-
-      service.handleError(error, anyDiscordMessage);
-
-      expect(discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.response).toBe(``);
+      expect(discordGuildSoniaServiceSendMessageToChannelSpy.mock.calls[0][0].messageResponse.content).toBe(``);
     });
   });
 });

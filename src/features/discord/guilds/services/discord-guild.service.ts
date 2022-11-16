@@ -27,7 +27,7 @@ export class DiscordGuildService extends AbstractService {
   }
 
   public getGuilds(): Guild[] {
-    return DiscordClientService.getInstance().getClient().guilds.cache.array();
+    return DiscordClientService.getInstance().getClient().guilds.cache.toJSON();
   }
 
   public getGuildById(guildId: Readonly<Snowflake>): Guild | undefined {

@@ -326,7 +326,7 @@ Each guild has its own configuration through Firebase based on the guild's Snowf
 Basically, any option edited via Sonia's commands is stored per guild on a Firestore.  
 The guilds have a version to easily maintain and handle the breaking changes during the new releases.  
 The breaking changes are handled at the start of the application and no other operation related to Firebase guilds are allowed during that time.  
-Once the breaking changes are handled the Firestore is watched and any changes that occurred trigger a DML with an Akita store.  
+Once the breaking changes are handled the Firestore is watched and any changes that occurred trigger a DML with an Elf store.  
 This is a very efficient way to handle the data and avoid performance issues related to Network.
 
 Once the store loading is done - where the first Firebase guilds were received -, Sonia will try to send the release notes on each guild.

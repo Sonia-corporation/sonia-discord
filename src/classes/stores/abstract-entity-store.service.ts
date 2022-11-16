@@ -1,17 +1,17 @@
 import { ServiceNameEnum } from '../../enums/service-name.enum';
 import { CoreEventService } from '../../features/core/services/core-event.service';
-import { EntityState, EntityStore } from '@datorama/akita';
+import { Store } from '@ngneat/elf';
 
 /**
  * @description
  * Log the creation of the service
  * Used for Entity Store only
  */
-export abstract class AbstractEntityStoreService<T extends EntityState> extends EntityStore<T> {
+export abstract class AbstractEntityStoreService {
+  public abstract readonly store: Store;
   protected readonly _serviceName: ServiceNameEnum;
 
-  protected constructor(serviceName: Readonly<ServiceNameEnum>, storeState?: Readonly<T | undefined>) {
-    super(storeState);
+  protected constructor(serviceName: Readonly<ServiceNameEnum>) {
     this._serviceName = serviceName;
 
     this._notifyServiceCreated();

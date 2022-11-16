@@ -8,7 +8,7 @@ import { CoreEventService } from '../../core/services/core-event.service';
 import { ILoggerLog } from '../../logger/interfaces/logger-log';
 import { LoggerService } from '../../logger/services/logger.service';
 import { FirebaseGuildsStoreService } from '../stores/guilds/services/firebase-guilds-store.service';
-import * as admin from 'firebase-admin';
+import { WriteResult } from 'firebase-admin/firestore';
 import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
@@ -162,9 +162,9 @@ describe(`FirebaseService`, (): void => {
       });
 
       it(`should log about the init error`, async (): Promise<void> => {
-        expect.assertions(2);
+        expect.assertions(3);
 
-        await service.init();
+        await expect(service.init()).rejects.toThrow(new Error(`init error`));
 
         expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
@@ -234,17 +234,17 @@ describe(`FirebaseService`, (): void => {
       });
 
       it(`should not watch the Firebase guilds`, async (): Promise<void> => {
-        expect.assertions(1);
+        expect.assertions(2);
 
-        await service.init();
+        await expect(service.init()).rejects.toThrow(new Error(`init error`));
 
         expect(firebaseGuildsServiceGetInstanceWatchGuildsSpy).not.toHaveBeenCalled();
       });
 
       it(`should log about the init error`, async (): Promise<void> => {
-        expect.assertions(2);
+        expect.assertions(3);
 
-        await service.init();
+        await expect(service.init()).rejects.toThrow(new Error(`init error`));
 
         expect(loggerServiceErrorSpy).toHaveBeenCalledTimes(1);
         expect(loggerServiceErrorSpy).toHaveBeenCalledWith({
@@ -255,10 +255,10 @@ describe(`FirebaseService`, (): void => {
     });
 
     describe(`when the FirebaseGuildsBreakingChange service was successfully initialized`, (): void => {
-      let writeResult: admin.firestore.WriteResult;
+      let writeResult: WriteResult;
 
       beforeEach((): void => {
-        writeResult = createMock<admin.firestore.WriteResult>();
+        writeResult = createMock<WriteResult>();
 
         firebaseGuildsBreakingChangeServiceGetInstanceInitSpy.mockResolvedValue(writeResult);
       });

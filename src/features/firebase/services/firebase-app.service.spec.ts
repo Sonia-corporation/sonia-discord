@@ -4,7 +4,8 @@ import { CoreEventService } from '../../core/services/core-event.service';
 import { ILoggerLog } from '../../logger/interfaces/logger-log';
 import { LoggerService } from '../../logger/services/logger.service';
 import { FirebaseAppEnum } from '../enums/firebase-app.enum';
-import * as admin from 'firebase-admin';
+import { App, Credential } from 'firebase-admin/app';
+import * as FirebaseAdminAppModule from 'firebase-admin/app';
 import { createMock } from 'ts-auto-mock';
 
 jest.mock(`../../logger/services/chalk/chalk.service`);
@@ -58,7 +59,7 @@ describe(`FirebaseAppService`, (): void => {
   });
 
   describe(`init()`, (): void => {
-    let credential: admin.credential.Credential;
+    let credential: Credential;
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let initializeAppSpy: jest.SpyInstance;
@@ -66,10 +67,10 @@ describe(`FirebaseAppService`, (): void => {
     beforeEach((): void => {
       service = new FirebaseAppService();
 
-      credential = createMock<admin.credential.Credential>();
+      credential = createMock<Credential>();
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
-      initializeAppSpy = jest.spyOn(admin, `initializeApp`).mockImplementation();
-      jest.spyOn(admin.credential, `applicationDefault`).mockReturnValue(credential);
+      initializeAppSpy = jest.spyOn(FirebaseAdminAppModule, `initializeApp`).mockImplementation();
+      jest.spyOn(FirebaseAdminAppModule, `applicationDefault`).mockReturnValue(credential);
     });
 
     it(`should log about the creation of the Firebase app`, (): void => {
@@ -113,13 +114,13 @@ describe(`FirebaseAppService`, (): void => {
   });
 
   describe(`getApp()`, (): void => {
-    let app: admin.app.App;
+    let app: App;
 
     beforeEach((): void => {
       service = new FirebaseAppService();
-      app = createMock<admin.app.App>();
+      app = createMock<App>();
 
-      jest.spyOn(admin, `initializeApp`).mockReturnValue(app);
+      jest.spyOn(FirebaseAdminAppModule, `initializeApp`).mockReturnValue(app);
     });
 
     describe(`when the app is undefined`, (): void => {

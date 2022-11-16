@@ -16,15 +16,19 @@
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "resolveJsonModule": true,
+    "isolatedModules": true,
     "strict": true,
+    "incremental": true,
     "target": "es2015",
     "typeRoots": ["node_modules/@types", "node_modules/@types/", "types"],
     "lib": ["es2018", "dom"],
-    "types": ["node", "jest"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "plugins": [
@@ -35,6 +39,12 @@
       }
     ]
   },
-  "include": ["./src/**/*.ts", "./scripts/**/*.js", "./jest/*.js", "./jest/*.ts", "./jest.config.ts"],
-  "exclude": ["./src/**.*.spec.ts", "./jest/test.ts"]
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
 }

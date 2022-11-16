@@ -1,6 +1,6 @@
 import { ClassNameEnum } from '../../../../../../../../../enums/class-name.enum';
 import { hasFirebaseGuildChannels } from '../../../../../../../../firebase/functions/guilds/checks/has-firebase-guild-channels';
-import { FirebaseGuildsStoreQuery } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.query';
+import { FirebaseGuildsStoreService } from '../../../../../../../../firebase/stores/guilds/services/firebase-guilds-store.service';
 import { IFirebaseGuildChannelFeatureNoonState } from '../../../../../../../../firebase/types/guilds/channels/features/firebase-guild-channel-feature-noon-state';
 import { IFirebaseGuildChannel } from '../../../../../../../../firebase/types/guilds/channels/firebase-guild-channel';
 import { IFirebaseGuild } from '../../../../../../../../firebase/types/guilds/firebase-guild';
@@ -44,7 +44,7 @@ export class DiscordMessageCommandFeatureNoonHumanize<T extends string>
       return this._getNoGuildMessageError(anyDiscordMessage.id);
     }
 
-    const firebaseGuild: IFirebaseGuild | undefined = FirebaseGuildsStoreQuery.getInstance().getEntity(
+    const firebaseGuild: IFirebaseGuild | undefined = FirebaseGuildsStoreService.getInstance().getEntity(
       anyDiscordMessage.guild.id
     );
 
@@ -52,26 +52,26 @@ export class DiscordMessageCommandFeatureNoonHumanize<T extends string>
       return this._getNoFirebaseGuildError(anyDiscordMessage.id, anyDiscordMessage.guild.id);
     }
 
-    return Promise.resolve({
+    const state: IFirebaseGuildChannelFeatureNoonState = {
       isEnabled: this._isNoonEnabled(firebaseGuild, anyDiscordMessage.channel.id),
-    });
+    };
+
+    return Promise.resolve(state);
   }
 
   public getMessageResponse(state: Readonly<IFirebaseGuildChannelFeatureNoonState>): Promise<IDiscordMessageResponse> {
     return DiscordMessageHelpService.getInstance()
       .getMessageResponse()
-      .then(
-        (helpMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> =>
-          Promise.resolve(
-            _.merge({}, helpMessageResponse, {
-              options: {
-                embed: this._getMessageEmbed(state),
-                split: false,
-              },
-              response: ``,
-            })
-          )
-      );
+      .then((helpMessageResponse: Readonly<IDiscordMessageResponse>): Promise<IDiscordMessageResponse> => {
+        const message: IDiscordMessageResponse = {
+          content: ``,
+          options: {
+            embeds: [this._getMessageEmbed(state)],
+          },
+        };
+
+        return Promise.resolve(_.merge({}, helpMessageResponse, message));
+      });
   }
 
   private _isNoonEnabled(firebaseGuild: Readonly<IFirebaseGuild>, channelId: Readonly<Snowflake>): boolean | undefined {

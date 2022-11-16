@@ -1,5 +1,5 @@
 export enum DiscordActivityTypeEnum {
-  CUSTOM_STATUS = `CUSTOM_STATUS`,
+  CUSTOM = `CUSTOM`,
   LISTENING = `LISTENING`,
   PLAYING = `PLAYING`,
   STREAMING = `STREAMING`,

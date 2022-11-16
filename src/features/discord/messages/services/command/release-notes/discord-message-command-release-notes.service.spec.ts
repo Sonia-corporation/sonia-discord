@@ -215,7 +215,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
+      expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a description`, async (): Promise<void> => {
@@ -224,7 +224,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.description).toBe(
+      expect(result.options.embeds?.[0]?.description).toBe(
         `dummy-release-notes\n\nCheckout all the [release notes](https://github.com/Sonia-corporation/sonia-discord/blob/master/CHANGELOG.md).`
       );
     });
@@ -237,7 +237,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.footer).toStrictEqual({
+      expect(result.options.embeds?.[0]?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `8 versions since the 24th March 2020`,
       } as MessageEmbedFooter);
@@ -255,7 +255,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: undefined,
           text: `8 versions since the 24th March 2020`,
         } as MessageEmbedFooter);
@@ -274,7 +274,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `8 versions since the 24th March 2020`,
         } as MessageEmbedFooter);
@@ -294,7 +294,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       it(`should return a Discord message response embed with a bug fixes thumbnail`, async (): Promise<void> => {
@@ -305,7 +305,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.thumbnail).toStrictEqual({
+        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.NEW_PRODUCT,
         } as MessageEmbedThumbnail);
       });
@@ -324,7 +324,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       it(`should return a Discord message response embed with a features thumbnail`, async (): Promise<void> => {
@@ -335,7 +335,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.thumbnail).toStrictEqual({
+        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.NEW_PRODUCT,
         } as MessageEmbedThumbnail);
       });
@@ -354,7 +354,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       it(`should return a Discord message response embed with a mixed thumbnail`, async (): Promise<void> => {
@@ -363,7 +363,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.thumbnail).toStrictEqual({
+        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.NEW_PRODUCT,
         } as MessageEmbedThumbnail);
       });
@@ -384,7 +384,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       it(`should return a Discord message response embed with a performance improvements thumbnail`, async (): Promise<void> => {
@@ -395,7 +395,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.thumbnail).toStrictEqual({
+        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.NEW_PRODUCT,
         } as MessageEmbedThumbnail);
       });
@@ -414,7 +414,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+        expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
       });
 
       it(`should return a Discord message response embed with an unknown thumbnail`, async (): Promise<void> => {
@@ -425,7 +425,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
         const result = await service.getMessageResponse();
 
-        expect(result.options.embed?.thumbnail).toStrictEqual({
+        expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
           url: IconEnum.NEW_PRODUCT,
         } as MessageEmbedThumbnail);
       });
@@ -436,8 +436,8 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
+      expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
+      expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -447,15 +447,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.options.embed?.title).toBe(`**8** release notes - dummy-release-date-humanized`);
-    });
-
-    it(`should return a Discord message response not split`, async (): Promise<void> => {
-      expect.assertions(1);
-
-      const result = await service.getMessageResponse();
-
-      expect(result.options.split).toBe(false);
+      expect(result.options.embeds?.[0]?.title).toBe(`**8** release notes - dummy-release-date-humanized`);
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -463,7 +455,7 @@ describe(`DiscordMessageCommandReleaseNotesService`, (): void => {
 
       const result = await service.getMessageResponse();
 
-      expect(result.response).toBe(``);
+      expect(result.content).toBe(``);
     });
   });
 

@@ -293,13 +293,14 @@ describe(`ServerConfigMutatorService`, (): void => {
 
       service.updatePort(port);
 
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
-      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith({
+      const configUpdateNumber: IConfigUpdateNumber = {
         context: `ServerConfigMutatorService`,
         newValue: 1234,
         oldValue: 8888,
         valueName: `port`,
-      } as IConfigUpdateNumber);
+      };
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledTimes(1);
+      expect(configServiceGetUpdatedNumberSpy).toHaveBeenCalledWith(configUpdateNumber);
     });
 
     it(`should update the server config port with the updated number`, (): void => {

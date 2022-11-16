@@ -122,7 +122,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
 
-      expect(result.options.embed?.author).toStrictEqual(messageEmbedAuthor);
+      expect(result.options.embeds?.[0]?.author).toStrictEqual(messageEmbedAuthor);
     });
 
     it(`should return a Discord message response embed with a color`, async (): Promise<void> => {
@@ -131,7 +131,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
 
-      expect(result.options.embed?.color).toStrictEqual(ColorEnum.CANDY);
+      expect(result.options.embeds?.[0]?.color).toStrictEqual(ColorEnum.CANDY);
     });
 
     it(`should return a Discord message response embed with 3 fields`, async (): Promise<void> => {
@@ -139,7 +139,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
 
-      expect(result.options.embed?.fields).toHaveLength(3);
+      expect(result.options.embeds?.[0]?.fields).toHaveLength(3);
     });
 
     it(`should return a Discord message response embed with a field explaining the error`, async (): Promise<void> => {
@@ -147,7 +147,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
 
-      expect(result.options.embed?.fields?.[0]).toStrictEqual({
+      expect(result.options.embeds?.[0]?.fields?.[0]).toStrictEqual({
         name: `No flags specified`,
         value: `You did not specify a flag to configure the noon feature.\nI will not guess what you wish to configure so please try again with a flag!\nAnd because I am kind and generous here is the list of all the flags available for the noon feature with an example.`,
       } as EmbedFieldData);
@@ -158,7 +158,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
 
-      expect(result.options.embed?.fields?.[1]).toStrictEqual({
+      expect(result.options.embeds?.[0]?.fields?.[1]).toStrictEqual({
         name: `All flags`,
         value: `\`--disabled (or -d)\`, \`--enabled (or -e)\`, \`--help (or -h)\`, \`--humanize (or -hu)\`, \`--status (or -s)\``,
       } as EmbedFieldData);
@@ -170,7 +170,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
 
-      expect(result.options.embed?.fields?.[2]).toStrictEqual({
+      expect(result.options.embeds?.[0]?.fields?.[2]).toStrictEqual({
         name: `Example`,
         value: `\`!feature noon --dummy-flag=dummy-value\``,
       } as EmbedFieldData);
@@ -182,7 +182,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
 
-      expect(result.options.embed?.footer).toStrictEqual({
+      expect(result.options.embeds?.[0]?.footer).toStrictEqual({
         iconURL: `dummy-image-url`,
         text: `Invalid feature command`,
       } as MessageEmbedFooter);
@@ -198,7 +198,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: undefined,
           text: `Invalid feature command`,
         } as MessageEmbedFooter);
@@ -215,7 +215,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
         const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
 
-        expect(result.options.embed?.footer).toStrictEqual({
+        expect(result.options.embeds?.[0]?.footer).toStrictEqual({
           iconURL: `image-url`,
           text: `Invalid feature command`,
         } as MessageEmbedFooter);
@@ -228,7 +228,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
 
-      expect(result.options.embed?.thumbnail).toStrictEqual({
+      expect(result.options.embeds?.[0]?.thumbnail).toStrictEqual({
         url: IconEnum.ARTIFICIAL_INTELLIGENCE,
       } as MessageEmbedThumbnail);
     });
@@ -238,8 +238,8 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
 
-      expect(moment(result.options.embed?.timestamp).isValid()).toBe(true);
-      expect(moment(result.options.embed?.timestamp).fromNow()).toBe(`a few seconds ago`);
+      expect(moment(result.options.embeds?.[0]?.timestamp).isValid()).toBe(true);
+      expect(moment(result.options.embeds?.[0]?.timestamp).fromNow()).toBe(`a few seconds ago`);
     });
 
     it(`should return a Discord message response embed with a title`, async (): Promise<void> => {
@@ -247,15 +247,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
 
-      expect(result.options.embed?.title).toBe(`I can not handle your request.`);
-    });
-
-    it(`should return a Discord message response not split`, async (): Promise<void> => {
-      expect.assertions(1);
-
-      const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
-
-      expect(result.options.split).toBe(false);
+      expect(result.options.embeds?.[0]?.title).toBe(`I can not handle your request.`);
     });
 
     it(`should return a Discord message response without a response text`, async (): Promise<void> => {
@@ -263,7 +255,7 @@ describe(`DiscordMessageCommandFeatureEmptyFlagsErrorService`, (): void => {
 
       const result = await service.getMessageResponse(anyDiscordMessage, commands, featureName);
 
-      expect(result.response).toBe(``);
+      expect(result.content).toBe(``);
     });
   });
 });

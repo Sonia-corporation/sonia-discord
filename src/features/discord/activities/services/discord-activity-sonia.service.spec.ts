@@ -11,7 +11,7 @@ import { DiscordClientService } from '../../services/discord-client.service';
 import { DISCORD_PRESENCE_ACTIVITY } from '../constants/discord-presence-activity';
 import { DiscordActivityNameEnum } from '../enums/discord-activity-name.enum';
 import { IDiscordPresenceActivity } from '../interfaces/discord-presence-activity';
-import { Activity, Client, Presence, PresenceData } from 'discord.js';
+import { Activity, Client, ClientUser, Presence, PresenceData } from 'discord.js';
 import _ from 'lodash';
 import * as NodeScheduleModule from 'node-schedule';
 import { BehaviorSubject, noop } from 'rxjs';
@@ -77,7 +77,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
     let loggerServiceDebugSpy: jest.SpyInstance;
     let discordClientServiceGetClientSpy: jest.SpyInstance;
-    let setRandomPresenceSpy: jest.SpyInstance<Promise<Presence>>;
+    let setRandomPresenceSpy: jest.SpyInstance;
     let startScheduleSpy: jest.SpyInstance;
 
     beforeEach((): void => {
@@ -86,7 +86,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
       discordClientServiceGetClientSpy = jest.spyOn(discordClientService, `isReady$`).mockReturnValue(isReady$);
-      setRandomPresenceSpy = jest.spyOn(service, `setRandomPresence`).mockResolvedValue(presence);
+      setRandomPresenceSpy = jest.spyOn(service, `setRandomPresence`).mockReturnValue(presence);
       startScheduleSpy = jest.spyOn(service, `startSchedule`).mockImplementation();
     });
 
@@ -127,37 +127,15 @@ describe(`DiscordActivitySoniaService`, (): void => {
         expect(setRandomPresenceSpy).toHaveBeenCalledWith();
       });
 
-      describe(`when the random presence for Sonia failed to be set`, (): void => {
-        beforeEach((): void => {
-          setRandomPresenceSpy.mockRejectedValue(new Error(`setRandomPresence error`));
-        });
+      it(`should start the schedule`, async (): Promise<void> => {
+        expect.assertions(2);
+        isReady$ = new BehaviorSubject<boolean>(true);
+        discordClientServiceGetClientSpy.mockReturnValue(isReady$);
 
-        it(`should not start the schedule`, async (): Promise<void> => {
-          expect.assertions(2);
-          isReady$ = new BehaviorSubject<boolean>(true);
-          discordClientServiceGetClientSpy.mockReturnValue(isReady$);
+        await service.init();
 
-          await expect(service.init()).rejects.toThrow(new Error(`setRandomPresence error`));
-
-          expect(startScheduleSpy).not.toHaveBeenCalled();
-        });
-      });
-
-      describe(`when the random presence for Sonia was successfully set`, (): void => {
-        beforeEach((): void => {
-          setRandomPresenceSpy.mockResolvedValue(presence);
-        });
-
-        it(`should start the schedule`, async (): Promise<void> => {
-          expect.assertions(2);
-          isReady$ = new BehaviorSubject<boolean>(true);
-          discordClientServiceGetClientSpy.mockReturnValue(isReady$);
-
-          await service.init();
-
-          expect(startScheduleSpy).toHaveBeenCalledTimes(1);
-          expect(startScheduleSpy).toHaveBeenCalledWith();
-        });
+        expect(startScheduleSpy).toHaveBeenCalledTimes(1);
+        expect(startScheduleSpy).toHaveBeenCalledWith();
       });
     });
 
@@ -554,7 +532,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
   describe(`setPresence()`, (): void => {
     let presence: Presence;
-    let setPresenceMock: jest.Mock<Promise<Presence>, unknown[]>;
+    let setPresenceMock: jest.Mock;
     let presenceActivity: IDiscordPresenceActivity;
     let client: Client;
 
@@ -563,7 +541,7 @@ describe(`DiscordActivitySoniaService`, (): void => {
 
     beforeEach((): void => {
       service = new DiscordActivitySoniaService();
-      presence = createMock<Presence>({
+      presence = {
         activities: [
           {
             name: DiscordActivityNameEnum.APOLLO,
@@ -571,8 +549,8 @@ describe(`DiscordActivitySoniaService`, (): void => {
             url: `dummy-url`,
           } as Activity,
         ],
-      });
-      setPresenceMock = jest.fn<Promise<Presence>, unknown[]>().mockRejectedValue(new Error(`setPresence: error`));
+      } as Presence;
+      setPresenceMock = jest.fn().mockReturnValue(presence);
       presenceActivity = createMock<IDiscordPresenceActivity>({
         name: DiscordActivityNameEnum.APOLLO,
         type: `PLAYING`,
@@ -588,12 +566,12 @@ describe(`DiscordActivitySoniaService`, (): void => {
       loggerServiceDebugSpy = jest.spyOn(loggerService, `debug`).mockImplementation();
     });
 
-    it(`should get the Discord client`, async (): Promise<void> => {
-      expect.assertions(3);
+    it(`should get the Discord client`, (): void => {
+      expect.assertions(2);
 
-      await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`setPresence: error`));
+      service.setPresence(presenceActivity);
 
-      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(2);
+      expect(discordClientServiceGetClientSpy).toHaveBeenCalledTimes(1);
       expect(discordClientServiceGetClientSpy).toHaveBeenCalledWith();
     });
 
@@ -602,68 +580,66 @@ describe(`DiscordActivitySoniaService`, (): void => {
         client.user = null;
       });
 
-      it(`should not set the presence`, async (): Promise<void> => {
+      it(`should throw`, (): void => {
+        expect.assertions(1);
+
+        expect((): Presence => service.setPresence(presenceActivity)).toThrow(new Error(`Client user is not valid`));
+      });
+
+      it(`should not set the presence`, (): void => {
         expect.assertions(2);
 
-        await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`Client user is not valid`));
+        expect((): Presence => service.setPresence(presenceActivity)).toThrow(new Error(`Client user is not valid`));
 
         expect(setPresenceMock).not.toHaveBeenCalled();
       });
 
-      it(`should not log about the update of the presence`, async (): Promise<void> => {
+      it(`should not log about the update of the presence`, (): void => {
         expect.assertions(2);
 
-        await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`Client user is not valid`));
+        expect((): Presence => service.setPresence(presenceActivity)).toThrow(new Error(`Client user is not valid`));
 
         expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
       });
     });
 
     describe(`when the Discord client user is valid`, (): void => {
-      it(`should set the presence`, async (): Promise<void> => {
-        expect.assertions(3);
+      beforeEach((): void => {
+        client.user = createMock<ClientUser>({
+          setPresence: setPresenceMock,
+        });
+      });
 
-        await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`setPresence: error`));
+      it(`should set the presence`, (): void => {
+        expect.assertions(2);
+
+        service.setPresence(presenceActivity);
 
         expect(setPresenceMock).toHaveBeenCalledTimes(1);
         expect(setPresenceMock).toHaveBeenCalledWith({
-          activity: {
-            name: DiscordActivityNameEnum.APOLLO,
-            type: `PLAYING`,
-            url: `dummy-url`,
-          },
+          activities: [
+            {
+              name: DiscordActivityNameEnum.APOLLO,
+              type: `PLAYING`,
+              url: `dummy-url`,
+            },
+          ],
           afk: false,
           status: `online`,
         } as PresenceData);
       });
 
-      describe(`when the presence was not successfully set`, (): void => {
-        it(`should not log about the update of the presence`, async (): Promise<void> => {
-          expect.assertions(2);
+      it(`should log about the update of the presence`, (): void => {
+        expect.assertions(3);
 
-          await expect(service.setPresence(presenceActivity)).rejects.toThrow(new Error(`setPresence: error`));
+        const result = service.setPresence(presenceActivity);
 
-          expect(loggerServiceDebugSpy).not.toHaveBeenCalled();
-        });
-      });
-
-      describe(`when the presence was successfully set`, (): void => {
-        beforeEach((): void => {
-          setPresenceMock.mockResolvedValue(presence);
-        });
-
-        it(`should log about the update of the presence`, async (): Promise<void> => {
-          expect.assertions(3);
-
-          const result = await service.setPresence(presenceActivity);
-
-          expect(result).toStrictEqual(presence);
-          expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
-          expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
-            context: `DiscordActivitySoniaService`,
-            message: `text-Sonia presence updated to: value-PLAYING text-x value-Apollo`,
-          } as ILoggerLog);
-        });
+        expect(result).toStrictEqual(presence);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledTimes(1);
+        expect(loggerServiceDebugSpy).toHaveBeenCalledWith({
+          context: `DiscordActivitySoniaService`,
+          message: `text-Sonia presence updated to: value-PLAYING text-x value-Apollo`,
+        } as ILoggerLog);
       });
     });
   });
@@ -679,10 +655,10 @@ describe(`DiscordActivitySoniaService`, (): void => {
       setPresenceSpy = jest.spyOn(service, `setPresence`).mockImplementation();
     });
 
-    it(`should get a random Discord presence activity`, async (): Promise<void> => {
+    it(`should get a random Discord presence activity`, (): void => {
       expect.assertions(3);
 
-      await expect(service.setRandomPresence()).rejects.toThrow(new Error(`No presence activity`));
+      expect((): Presence => service.setRandomPresence()).toThrow(new Error(`No presence activity`));
 
       expect(sampleSpy).toHaveBeenCalledTimes(1);
       expect(sampleSpy).toHaveBeenCalledWith(DISCORD_PRESENCE_ACTIVITY);
@@ -693,10 +669,10 @@ describe(`DiscordActivitySoniaService`, (): void => {
         sampleSpy.mockReturnValue(undefined);
       });
 
-      it(`should not set the Discord presence activity`, async (): Promise<void> => {
+      it(`should not set the Discord presence activity`, (): void => {
         expect.assertions(2);
 
-        await expect(service.setRandomPresence()).rejects.toThrow(new Error(`No presence activity`));
+        expect((): Presence => service.setRandomPresence()).toThrow(new Error(`No presence activity`));
 
         expect(setPresenceSpy).not.toHaveBeenCalled();
       });
@@ -707,10 +683,10 @@ describe(`DiscordActivitySoniaService`, (): void => {
         sampleSpy.mockReturnValue(DISCORD_PRESENCE_ACTIVITY[0]);
       });
 
-      it(`should set the Discord presence activity`, async (): Promise<void> => {
+      it(`should set the Discord presence activity`, (): void => {
         expect.assertions(2);
 
-        await service.setRandomPresence();
+        service.setRandomPresence();
 
         expect(setPresenceSpy).toHaveBeenCalledTimes(1);
         expect(setPresenceSpy).toHaveBeenCalledWith(DISCORD_PRESENCE_ACTIVITY[0]);
