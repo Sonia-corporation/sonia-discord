@@ -1,5 +1,12 @@
 # Semantic Versioning Changelog
 
+## [1.99.2](https://github.com/Sonia-corporation/sonia-discord/compare/1.99.1...1.99.2) (2022-11-16)
+
+
+### :bug: Bug Fixes
+
+* **release-notes:** stop sending previously sent ones ([#1845](https://github.com/Sonia-corporation/sonia-discord/issues/1845)) ([c2deaaf](https://github.com/Sonia-corporation/sonia-discord/commit/c2deaaffa4957313263d46057d8a8c0b75b06d70))
+
 ## [1.99.1](https://github.com/Sonia-corporation/sonia-discord/compare/1.99.0...1.99.1) (2022-11-01)
 
 
